@@ -173,11 +173,15 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
     exclude = {}
   } = granuleParams
 
-  const { selected_variables: variables } = accessMethod
+  const {
+    selected_variables: variables,
+    selected_output_format: format
+  } = accessMethod
 
   const ousPayload = {
     boundingBox,
     echoCollectionId: collectionId,
+    format,
     temporal,
     variables
   }
@@ -189,7 +193,6 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
     ousPayload.granules = excludedGranuleIds
   }
 
-  // TODO: Add output format (EDSC-2329)
   const response = requestObject.search(ousPayload)
     .then((response) => {
       const { data } = response

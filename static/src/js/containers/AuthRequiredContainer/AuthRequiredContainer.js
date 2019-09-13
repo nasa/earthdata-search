@@ -22,7 +22,7 @@ export class AuthRequiredContainer extends Component {
 
     const returnPath = window.location.href
 
-    if (token === null) {
+    if (token === null || token === '') {
       window.location.href = `${apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
     } else {
       this.setState({ isLoggedIn: true })

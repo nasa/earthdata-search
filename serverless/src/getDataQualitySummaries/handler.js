@@ -5,8 +5,7 @@ import request from 'request-promise'
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
-import { getEdlConfig } from '../util/configUtil'
-import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
+import { getEchoToken } from '../util/urs/getEchoToken'
 
 // AWS SQS adapter
 let sqs
@@ -20,12 +19,8 @@ const getDataQualitySummaries = async (event) => {
   }
 
   const jwtToken = getJwtToken(event)
-  const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
 
-  // The client id is part of our Earthdata Login credentials
-  const edlConfig = await getEdlConfig()
-  const { client } = edlConfig
-  const { id: clientId } = client
+  const echoToken = await getEchoToken(jwtToken)
 
   const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
@@ -41,7 +36,7 @@ const getDataQualitySummaries = async (event) => {
         catalog_item_id: catalogItemId
       },
       headers: {
-        'Echo-Token': `${accessToken}:${clientId}`,
+        'Echo-Token': echoToken,
         'Client-Id': getClientId().background
       },
       json: true,
@@ -71,7 +66,7 @@ const getDataQualitySummaries = async (event) => {
         const dqsResponse = await request.get({
           uri: `${echoRestRoot}/data_quality_summary_definitions/${dqsId}.json`,
           headers: {
-            'Echo-Token': `${accessToken}:${clientId}`,
+            'Echo-Token': echoToken,
             'Client-Id': getClientId().background
           },
           json: true,

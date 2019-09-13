@@ -78,12 +78,38 @@ const encodeSelectedVariables = (projectCollection) => {
   return selectedVariables.join('!')
 }
 
+const encodeOutputFormat = (projectCollection) => {
+  if (!projectCollection) return null
+
+  const {
+    accessMethods,
+    selectedAccessMethod
+  } = projectCollection
+
+  if (!accessMethods || !selectedAccessMethod) return null
+
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const {
+    selectedOutputFormat
+  } = selectedMethod
+
+  if (!selectedOutputFormat) return null
+
+  return selectedOutputFormat
+}
+
 const decodedSelectedVariables = (pgParam) => {
   const { uv: variableIds } = pgParam
 
-  if (!variableIds) return null
+  if (!variableIds) return undefined
 
   return variableIds.split('!')
+}
+
+const decodedOutputFormat = (pgParam) => {
+  const { of: outputFormat } = pgParam
+
+  return outputFormat
 }
 
 /**
@@ -161,6 +187,9 @@ export const encodeCollections = (props) => {
       // Encode selected variables
       pg.uv = encodeSelectedVariables(projectById[collectionId])
 
+      // Encode selected output format
+      pg.of = encodeOutputFormat(projectById[collectionId])
+
       pgParameter[index] = pg
     })
   }
@@ -207,6 +236,7 @@ export const decodeCollections = (params) => {
 
     let granuleIds = []
     let granuleFilters = {}
+    let selectedOutputFormat
     let isCwic
     let isVisible = false
 
@@ -225,7 +255,8 @@ export const decodeCollections = (params) => {
       // Decode granule filters
       granuleFilters = decodeGranuleFilters(pg[index])
 
-      // TODO: Decode output format (EDSC-2329)
+      // Decode output format
+      selectedOutputFormat = decodedOutputFormat(pg[index])
     }
 
     // Populate the collection object for the redux store
@@ -244,11 +275,12 @@ export const decodeCollections = (params) => {
       projectById[collectionId] = {}
     }
 
-    if (variableIds) {
+    if (variableIds || selectedOutputFormat) {
       projectById[collectionId] = {
         accessMethods: {
           opendap: {
-            selectedVariables: variableIds
+            selectedVariables: variableIds,
+            selectedOutputFormat
           }
         }
       }

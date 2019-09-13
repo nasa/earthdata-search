@@ -1,8 +1,7 @@
 import request from 'request-promise'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { getClientId } from '../../../../sharedUtils/config'
-import { getEdlConfig } from '../configUtil'
-import { getAccessTokenFromJwtToken } from '../urs/getAccessTokenFromJwtToken'
+import { getEchoToken } from '../urs/getEchoToken'
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -10,21 +9,14 @@ import { getAccessTokenFromJwtToken } from '../urs/getAccessTokenFromJwtToken'
  * @param {string} url URL for to perform search
  */
 export const doSearchRequest = async (jwtToken, url) => {
-  const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
-
   try {
-    // The client id is part of our Earthdata Login credentials
-    const edlConfig = await getEdlConfig()
-    const { client } = edlConfig
-    const { id: clientId } = client
-
     const response = await request.get({
       uri: url,
       json: true,
       resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().lambda,
-        'Echo-Token': `${accessToken}:${clientId}`
+        'Echo-Token': await getEchoToken(jwtToken)
       }
     })
 

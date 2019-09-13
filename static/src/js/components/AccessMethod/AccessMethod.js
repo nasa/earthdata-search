@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
@@ -118,6 +118,13 @@ const opendapButton = (collectionId, methodKey) => (
   </Radio>
 )
 
+const formatMapping = {
+  'NETCDF-3': 'nc',
+  'NETCDF-4': 'nc4',
+  BINARY: 'dods',
+  ASCII: 'ascii'
+}
+
 /**
  * Renders AccessMethod.
  * @param {object} props - The props passed into the component.
@@ -130,147 +137,253 @@ const opendapButton = (collectionId, methodKey) => (
  * @param {function} props.onSetActivePanel - Switches the currently active panel.
  * @param {function} props.onUpdateAccessMethod - Updates an access method.
  */
-export const AccessMethod = ({
-  accessMethods,
-  index,
-  isActive,
-  metadata,
-  selectedAccessMethod,
-  shapefileId,
-  spatial,
-  onSelectAccessMethod,
-  onSetActivePanel,
-  onUpdateAccessMethod
-}) => {
-  const { id: collectionId } = metadata
+export class AccessMethod extends Component {
+  constructor(props) {
+    super(props)
 
-  const handleAccessMethodSelection = (method) => {
+    const {
+      accessMethods,
+      selectedAccessMethod
+    } = props
+    const selectedMethod = accessMethods[selectedAccessMethod]
+    const {
+      selectedOutputFormat = ''
+    } = selectedMethod || {}
+
+    this.state = { selectedOutputFormat }
+
+    this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
+    this.handleOutputFormatSelection = this.handleOutputFormatSelection.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { selectedOutputFormat } = this.state
+    const {
+      accessMethods,
+      selectedAccessMethod
+    } = nextProps
+
+    if (selectedAccessMethod === 'opendap') {
+      const selectedMethod = accessMethods[selectedAccessMethod]
+      const {
+        selectedOutputFormat: nextSelectedOutputFormat,
+        supportedOutputFormats = []
+      } = selectedMethod || {}
+
+      // If there is no selected option, select the first option
+      if (nextSelectedOutputFormat !== selectedOutputFormat) {
+        if (!nextSelectedOutputFormat) {
+          // Filter the supportedOutputFormats to only those formats CMR supports
+          const cmrSupportedFormats = supportedOutputFormats.filter(
+            format => formatMapping[format] !== undefined
+          )
+
+          const defaultSelectedOutputFormat = formatMapping[cmrSupportedFormats[0]]
+          this.setState({ selectedOutputFormat: defaultSelectedOutputFormat })
+        } else {
+          this.setState({ selectedOutputFormat: nextSelectedOutputFormat })
+        }
+      }
+    }
+  }
+
+  handleAccessMethodSelection(method) {
+    const { metadata, onSelectAccessMethod } = this.props
+    const { id: collectionId } = metadata
+
     onSelectAccessMethod({
       collectionId,
       selectedAccessMethod: method
     })
   }
 
-  const radioList = []
-  Object.keys(accessMethods).forEach((methodKey) => {
-    const accessMethod = accessMethods[methodKey]
-    const { type } = accessMethod
+  handleOutputFormatSelection(event) {
+    const { metadata, onUpdateAccessMethod } = this.props
+    const { id: collectionId } = metadata
 
-    switch (type) {
-      case 'download':
-        radioList.push(downloadButton(collectionId))
-        break
-      case 'ECHO ORDERS':
-        radioList.push(echoOrderButton(collectionId, methodKey))
-        break
-      case 'ESI':
-        radioList.push(esiButton(collectionId, methodKey))
-        break
-      case 'OPeNDAP':
-        radioList.push(opendapButton(collectionId, methodKey))
-        break
-      default:
-        break
+    const { target } = event
+    const { value } = target
+
+    this.setState({ selectedOutputFormat: value })
+
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        opendap: {
+          selectedOutputFormat: value
+        }
+      }
+    })
+  }
+
+  render() {
+    const { selectedOutputFormat } = this.state
+    const {
+      accessMethods,
+      index,
+      isActive,
+      metadata,
+      selectedAccessMethod,
+      shapefileId,
+      spatial,
+      onSetActivePanel,
+      onUpdateAccessMethod
+    } = this.props
+
+    const { id: collectionId } = metadata
+
+    const radioList = []
+    Object.keys(accessMethods).forEach((methodKey) => {
+      const accessMethod = accessMethods[methodKey]
+      const { type } = accessMethod
+
+      switch (type) {
+        case 'download':
+          radioList.push(downloadButton(collectionId))
+          break
+        case 'ECHO ORDERS':
+          radioList.push(echoOrderButton(collectionId, methodKey))
+          break
+        case 'ESI':
+          radioList.push(esiButton(collectionId, methodKey))
+          break
+        case 'OPeNDAP':
+          radioList.push(opendapButton(collectionId, methodKey))
+          break
+        default:
+          break
+      }
+    })
+
+    const skeleton = [1, 2, 3].map((skeleton, i) => {
+      const key = `skeleton_${i}`
+      return (
+        <Skeleton
+          key={key}
+          containerStyle={{ height: '2.9375rem', width: '18.75rem' }}
+          shapes={[{
+            shape: 'rectangle',
+            x: 0,
+            y: 0,
+            height: 40,
+            width: 300,
+            radius: 3
+          }]}
+        />
+      )
+    })
+
+    const selectedMethod = accessMethods[selectedAccessMethod]
+    const {
+      form,
+      rawModel,
+      selectedVariables = [],
+      supportedOutputFormats = []
+    } = selectedMethod || {}
+
+    const isOpendap = (selectedAccessMethod === 'opendap')
+
+    let supportedOutputFormatOptions
+    if (isOpendap) {
+      // Filter the supportedOutputFormats to only those formats CMR supports
+      const cmrSupportedFormats = supportedOutputFormats.filter(
+        format => formatMapping[format] !== undefined
+      )
+
+      // Build options for supportedOutputFormats
+      supportedOutputFormatOptions = cmrSupportedFormats.map(format => (
+        <option key={format} value={formatMapping[format]}>{format}</option>
+      ))
     }
-  })
 
-  const skeleton = [1, 2, 3].map((skeleton, i) => {
-    const key = `skeleton_${i}`
     return (
-      <Skeleton
-        key={key}
-        containerStyle={{ height: '2.9375rem', width: '18.75rem' }}
-        shapes={[{
-          shape: 'rectangle',
-          x: 0,
-          y: 0,
-          height: 40,
-          width: 300,
-          radius: 3
-        }]}
-      />
-    )
-  })
+      <div className="access-method">
+        <ProjectPanelSection heading="Select Data Access Method">
+          <div className="access-method__radio-list">
+            {
+              radioList.length === 0
+                ? skeleton
+                : (
+                  <RadioList
+                    defaultValue={selectedAccessMethod}
+                    onChange={methodName => this.handleAccessMethodSelection(methodName)}
+                  >
+                    {radioList}
+                  </RadioList>
+                )
+            }
+          </div>
+        </ProjectPanelSection>
+        {
+          form && isActive && (
+            <ProjectPanelSection>
+              <EchoForm
+                collectionId={collectionId}
+                form={form}
+                methodKey={selectedAccessMethod}
+                rawModel={rawModel}
+                shapefileId={shapefileId}
+                spatial={spatial}
+                onUpdateAccessMethod={onUpdateAccessMethod}
+              />
+            </ProjectPanelSection>
+          )
+        }
+        {
+          isOpendap && (
+            <>
+              <ProjectPanelSection heading="Variable Selection">
+                <p className="access-method__section-intro">
+                  Use science keywords to subset your collection
+                  granules by measurements and variables.
+                </p>
 
-  const selectedMethod = accessMethods[selectedAccessMethod]
-  const {
-    form,
-    rawModel,
-    selectedVariables = []
-  } = selectedMethod || {}
+                {
+                  selectedVariables.length > 0 && (
+                    <p className="access-method__section-status">
+                      {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
+                    </p>
+                  )
+                }
 
-  const isOpendap = (selectedAccessMethod === 'opendap')
+                {
+                  selectedVariables.length === 0 && (
+                    <p className="access-method__section-status">
+                      No variables selected. All variables will be included in download.
+                    </p>
+                  )
+                }
 
-  return (
-    <div className="access-method">
-      <ProjectPanelSection heading="Select Data Access Method">
-        <div className="access-method__radio-list">
-          {
-            radioList.length === 0
-              ? skeleton
-              : (
-                <RadioList
-                  defaultValue={selectedAccessMethod}
-                  onChange={methodName => handleAccessMethodSelection(methodName)}
+                <Button
+                  type="button"
+                  bootstrapVariant="primary"
+                  label="Edit Variables"
+                  bootstrapSize="sm"
+                  onClick={() => onSetActivePanel(`0.${index}.1`)}
                 >
-                  {radioList}
-                </RadioList>
-              )
-          }
-        </div>
-      </ProjectPanelSection>
-      {
-        form && isActive && (
-          <ProjectPanelSection>
-            <EchoForm
-              collectionId={collectionId}
-              form={form}
-              methodKey={selectedAccessMethod}
-              rawModel={rawModel}
-              shapefileId={shapefileId}
-              spatial={spatial}
-              onUpdateAccessMethod={onUpdateAccessMethod}
-            />
-          </ProjectPanelSection>
-        )
-      }
-      {
-        isOpendap && (
-          <ProjectPanelSection heading="Variable Selection">
-            <p className="access-method__section-intro">
-              Use science keywords to subset your collection granules by measurements and variables.
-            </p>
-
-            {
-              selectedVariables.length > 0 && (
-                <p className="access-method__section-status">
-                  {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
+                  Edit Variables
+                </Button>
+              </ProjectPanelSection>
+              <ProjectPanelSection heading="Output Format Selection">
+                <p className="access-method__section-intro">
+                  Choose from output format options like GeoTIFF, NETCDF, and other file types.
                 </p>
-              )
-            }
 
-            {
-              selectedVariables.length === 0 && (
-                <p className="access-method__section-status">
-                  No variables selected. All variables will be included in download.
-                </p>
-              )
-            }
-
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              label="Edit Variables"
-              bootstrapSize="sm"
-              onClick={() => onSetActivePanel(`0.${index}.1`)}
-            >
-              Edit Variables
-            </Button>
-          </ProjectPanelSection>
-        )
-      }
-    </div>
-  )
+                <select
+                  id="input__output-format"
+                  className="form-control form-control-sm"
+                  onChange={this.handleOutputFormatSelection}
+                  value={selectedOutputFormat}
+                >
+                  {supportedOutputFormatOptions}
+                </select>
+              </ProjectPanelSection>
+            </>
+          )
+        }
+      </div>
+    )
+  }
 }
 
 AccessMethod.defaultProps = {

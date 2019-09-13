@@ -7,6 +7,7 @@ import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { isWarmUp } from '../util/isWarmup'
 import { getVariables } from './getVariables'
+import { getOutputFormats } from './getOutputFormats'
 
 // Knex database connection object
 let dbConnection = null
@@ -78,15 +79,18 @@ const getAccessMethods = async (event) => {
 
   if (hasOpendap) {
     const opendapData = getValueForTag('subset_service.opendap', tags)
+    const { id: serviceId } = opendapData
     const { variables: variableIds } = associations
 
     const { keywordMappings, variables } = await getVariables(variableIds, jwtToken)
+    const { supportedOutputFormats } = await getOutputFormats(serviceId, jwtToken)
 
     accessMethods.opendap = {
       ...opendapData,
       isValid: true,
       keywordMappings,
-      variables
+      variables,
+      supportedOutputFormats
     }
   }
 
