@@ -3,21 +3,19 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
 const TerserJsPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CSSNano = require('cssnano')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
-const extractHtml = new HtmlWebPackPlugin({
-  template: './static/src/public/index.html',
-  filename: './index.html'
-})
-
-const Config = merge(StaticCommonConfig, {
+const Config = merge.smartStrategy({
+  devtool: 'replace'
+})(StaticCommonConfig, {
   mode: 'production',
+  devtool: 'source-map',
   output: {
     filename: '[name].[contenthash].bundle.js',
     chunkFilename: '[name].[contenthash].bundle.js',
@@ -57,13 +55,29 @@ const Config = merge(StaticCommonConfig, {
     },
     runtimeChunk: true
   },
+  module: {
+    rules: [
+      {
+        test: /\.(css|scss)$/,
+        exclude: /portals/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          }
+        ]
+      }
+    ]
+  },
   plugins: [
-    extractHtml,
     new webpack.HashedModuleIdsPlugin(),
     new CleanWebpackPlugin([path.resolve(__dirname, 'static/dist')]),
     new CopyWebpackPlugin([
       { from: './static/src/public', to: './' }
-    ])
+    ]),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].min.css',
+      chunkFilename: '[id].[contenthash].min.css',
+    })
     // new BundleAnalyzerPlugin()
   ]
 })

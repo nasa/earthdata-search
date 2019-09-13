@@ -51,7 +51,8 @@ function setup() {
     onChangeMap: jest.fn(),
     onExcludeGranule: jest.fn(),
     onSaveShapefile: jest.fn(),
-    onShapefileErrored: jest.fn()
+    onShapefileErrored: jest.fn(),
+    onMetricsMap: jest.fn()
   }
 
   // Mount is required here so we can have access to the mapRef

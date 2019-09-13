@@ -38,7 +38,8 @@ function setup() {
     },
     collectionSearch: {},
     savedProject: {},
-    onUpdateProjectName: jest.fn()
+    onUpdateProjectName: jest.fn(),
+    onMetricsDataAccess: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsContainer {...props} />)

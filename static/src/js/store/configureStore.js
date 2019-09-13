@@ -4,6 +4,7 @@ import { routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import createRootReducer from '../reducers'
+import { metricsMiddleware } from '../middleware/metrics'
 
 import history from '../util/history'
 
@@ -17,14 +18,8 @@ const store = createStore(
 
   // Build out the Redux middleware
   composeWithDevTools(
-    // Add the Redux Thunk middleware
-    applyMiddleware(thunk),
-
-    applyMiddleware(
-      // Set up Redux's connection with React Router
-      routerMiddleware(history),
-    )
-  ),
+    applyMiddleware(routerMiddleware(history), metricsMiddleware, thunk)
+  )
 )
 
 export default store

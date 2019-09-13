@@ -24,7 +24,8 @@ function setup() {
     location: { search: 'value' },
     onChangeGranulePageNum: jest.fn(),
     onExcludeGranule: jest.fn(),
-    onFocusedGranuleChange: jest.fn()
+    onFocusedGranuleChange: jest.fn(),
+    onMetricsDataAccess: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsBodyContainer {...props} />)

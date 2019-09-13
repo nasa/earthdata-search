@@ -13,18 +13,29 @@
   "environment": {
     "test": {
       "apiHost": "http://localhost:3000",
-      "edscHost": "http://localhost:8080"
+      "edscHost": "http://localhost:8080",
+      "includeGoogleTagManager": false,
+      "gtmPropertyId": "GTM-XXXXX",
+      "includeNtPageTag": false
     },
     "development": {
       "dbHost": "127.0.0.1",
       "dbName": "edsc_dev",
       "dbPort": 5432,
       "apiHost": "http://localhost:3001",
-      "edscHost": "http://localhost:8080"
+      "edscHost": "http://localhost:8080",
+      "includeGoogleTagManager": true,
+      "gtmPropertyId": "GTM-WNP7MLF",
+      "includeDevGoogleAnalytics": false,
+      "gaId": "UA-50960810-4",
+      "includeNtPageTag": false
     },
     "production": {
       "apiHost": "http://localhost:3001",
-      "edscHost": "http://localhost:8080"
+      "edscHost": "http://localhost:8080",
+      "includeGoogleTagManager": true,
+      "gtmPropertyId": "GTM-WNP7MLF",
+      "includeNtPageTag": true
     }
   },
   "earthdata": {

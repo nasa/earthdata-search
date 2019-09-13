@@ -9,7 +9,8 @@ import './CollectionResultsHeader.scss'
 const CollectionResultsHeader = ({
   collectionQuery,
   portal,
-  onChangeQuery
+  onChangeQuery,
+  onMetricsCollectionSortChange
 }) => {
   const { hideCollectionFilters } = portal
 
@@ -23,6 +24,8 @@ const CollectionResultsHeader = ({
         sortKey
       }
     })
+
+    onMetricsCollectionSortChange({ value })
   }
 
   const handleCheckboxCheck = (event) => {
@@ -126,7 +129,8 @@ const CollectionResultsHeader = ({
 CollectionResultsHeader.propTypes = {
   collectionQuery: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
-  onChangeQuery: PropTypes.func.isRequired
+  onChangeQuery: PropTypes.func.isRequired,
+  onMetricsCollectionSortChange: PropTypes.func.isRequired
 }
 
 export default CollectionResultsHeader

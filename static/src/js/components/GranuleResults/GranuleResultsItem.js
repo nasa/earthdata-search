@@ -42,7 +42,11 @@ CustomDataLinksToggle.propTypes = {
   onClick: PropTypes.func.isRequired
 }
 
-const DataLinksButton = ({ dataLinks }) => {
+const DataLinksButton = ({
+  collectionId,
+  dataLinks,
+  onMetricsDataAccess
+}) => {
   if (dataLinks.length > 1) {
     return (
       <Dropdown>
@@ -52,7 +56,16 @@ const DataLinksButton = ({ dataLinks }) => {
             dataLinks.map((dataLink, i) => {
               const key = `data_link_${i}`
               return (
-                <Dropdown.Item key={key} href={dataLink.href} className="granule-results-item__dropdown-item">
+                <Dropdown.Item
+                  key={key}
+                  href={dataLink.href}
+                  onClick={() => onMetricsDataAccess({
+                    type: 'single_granule_download',
+                    collections: [{
+                      collectionId
+                    }]
+                  })}
+                >
                   {dataLink.title}
                 </Dropdown.Item>
               )
@@ -66,6 +79,13 @@ const DataLinksButton = ({ dataLinks }) => {
     <a
       className="button granule-results-item__button"
       href={dataLinks[0].href}
+      onClick={() => onMetricsDataAccess({
+        accessMethods: [{
+          collectionId,
+          method: 'single_granule',
+          type: 'Single Granule'
+        }]
+      })}
       rel="noopener noreferrer"
       title="Download single granule data"
       target="_blank"
@@ -76,7 +96,9 @@ const DataLinksButton = ({ dataLinks }) => {
 }
 
 DataLinksButton.propTypes = {
-  dataLinks: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  collectionId: PropTypes.string.isRequired,
+  dataLinks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired
 }
 
 /**
@@ -93,7 +115,8 @@ const GranuleResultsItem = ({
   location,
   waypointEnter,
   onExcludeGranule,
-  onFocusedGranuleChange
+  onFocusedGranuleChange,
+  onMetricsDataAccess
 }) => {
   const handleRemoveClick = () => {
     let { id } = granule
@@ -130,7 +153,6 @@ const GranuleResultsItem = ({
   const thumbnailWidth = getApplicationConfig().thumbnailSize.width
 
   const dataLinks = createDataLinks(links)
-
   const isFocusedGranule = isFocused || focusedGranule === id
 
   const handleClick = () => {
@@ -202,7 +224,11 @@ const GranuleResultsItem = ({
               </PortalLinkContainer>
               {
                 onlineAccessFlag && (
-                  <DataLinksButton dataLinks={dataLinks} />
+                  <DataLinksButton
+                    collectionId={collectionId}
+                    dataLinks={dataLinks}
+                    onMetricsDataAccess={onMetricsDataAccess}
+                  />
                 )
               }
               <button
@@ -231,7 +257,8 @@ GranuleResultsItem.propTypes = {
   location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired
+  onFocusedGranuleChange: PropTypes.func.isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired
 }
 
 export default GranuleResultsItem

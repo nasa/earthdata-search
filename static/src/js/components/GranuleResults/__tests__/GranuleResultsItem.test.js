@@ -15,7 +15,8 @@ function setup(type) {
     location: { search: 'location' },
     waypointEnter: jest.fn(),
     onExcludeGranule: jest.fn(),
-    onFocusedGranuleChange: jest.fn()
+    onFocusedGranuleChange: jest.fn(),
+    onMetricsDataAccess: jest.fn()
   }
   let props
 
@@ -25,6 +26,7 @@ function setup(type) {
       granule: {
         id: 'granuleId',
         browse_flag: true,
+        online_access_flag: true,
         formatted_temporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
@@ -33,9 +35,9 @@ function setup(type) {
         title: 'Granule title',
         links: [
           {
-            rel: 'http://linkrel',
+            rel: 'http://linkrel/data#',
             title: 'linktitle',
-            href: 'htt[://linkhref'
+            href: 'http://linkhref'
           }
         ]
       }
@@ -58,7 +60,7 @@ function setup(type) {
           {
             rel: 'http://linkrel',
             title: 'linktitle',
-            href: 'htt[://linkhref'
+            href: 'http://linkhref'
           }
         ]
       }
@@ -204,6 +206,15 @@ describe('GranuleResultsItem component', () => {
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: '170417722' }])
       })
+    })
+  })
+
+  describe('download button', () => {
+    test('is passed the metrics callback', () => {
+      const { enzymeWrapper, props } = setup('cmr')
+      const dataLinksButton = enzymeWrapper.find('DataLinksButton')
+
+      expect(dataLinksButton.props().onMetricsDataAccess).toEqual(props.onMetricsDataAccess)
     })
   })
 

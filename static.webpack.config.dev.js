@@ -1,21 +1,35 @@
+const webpack = require('webpack')
 const merge = require('webpack-merge')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
-
-const extractHtml = new HtmlWebPackPlugin({
-  template: './static/src/public/index.html',
-  filename: './index.html'
-})
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
-const Config = merge(StaticCommonConfig, {
+const Config = merge.smartStrategy(
+  {
+    devtool: 'replace',
+    'module.rules.use': 'prepend'
+  }
+)(StaticCommonConfig, {
   mode: 'development',
   devtool: 'source-map',
   devServer: {
+    hot: true,
     historyApiFallback: true
   },
+  module: {
+    rules: [
+      {
+        test: /\.(css|scss)$/,
+        exclude: /portals/i,
+        use: [
+          {
+            loader: 'style-loader'
+          }
+        ]
+      }
+    ]
+  },
   plugins: [
-    extractHtml
+    new webpack.HotModuleReplacementPlugin()
   ]
 })
 

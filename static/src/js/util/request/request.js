@@ -2,6 +2,8 @@ import axios from 'axios'
 import pick from 'lodash/pick'
 import snakeCaseKeys from 'snakecase-keys'
 
+import store from '../../store/configureStore'
+import { metricsTiming } from '../../middleware/metrics/actions'
 import { prepKeysForCmr } from '../url/url'
 import { getEnvironmentConfig, getClientId } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
@@ -19,6 +21,7 @@ export default class Request {
     this.baseUrl = baseUrl
     this.lambda = false
     this.searchPath = ''
+    this.startTime = null
   }
 
   /**
@@ -84,7 +87,14 @@ export default class Request {
    * @return {Object} The transformed response.
    */
   transformResponse(data) {
+    const timing = Date.now() - this.startTime
+    store.dispatch(metricsTiming({
+      url: this.fullUrl,
+      timing
+    }))
+
     this.handleUnauthorized(data)
+
     return data
   }
 
@@ -95,6 +105,9 @@ export default class Request {
    * @return {Promise} A Promise object representing the request that was made
    */
   post(url, data) {
+    this.startTimer()
+    this.setFullUrl(url)
+
     return axios({
       method: 'post',
       baseURL: this.baseUrl,
@@ -115,6 +128,9 @@ export default class Request {
    * @return {Promise} A Promise object representing the request that was made
    */
   get(url) {
+    this.startTimer()
+    this.setFullUrl(url)
+
     let requestOptions = {
       method: 'get',
       baseURL: this.baseUrl,
@@ -186,5 +202,13 @@ export default class Request {
 
       window.location.href = redirectPath
     }
+  }
+
+  startTimer() {
+    this.startTime = Date.now()
+  }
+
+  setFullUrl(url) {
+    this.fullUrl = `${this.baseUrl}/${url}`
   }
 }

@@ -26,6 +26,7 @@
     }
 
     .collapse-panel__panel {
+      widows: 100%;
       position: absolute;
       background-color: $color__pale-yellow;
       border-bottom: 1px solid $color__pale-yellow--dark;

@@ -1,6 +1,11 @@
 * > * {
   box-sizing: inherit;
+}
 
+* > a,
+* > button,
+* > input,
+* > textarea {
   &:focus {
     border-color: $color__black--300;
     outline: 0;

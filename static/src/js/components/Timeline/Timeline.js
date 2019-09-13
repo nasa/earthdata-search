@@ -17,10 +17,18 @@ class Timeline extends Component {
     super(props)
 
     this.rows = {}
+    this.panTimeout = null
 
     this.handleTemporalSet = this.handleTemporalSet.bind(this)
     this.handleRangeChange = this.handleRangeChange.bind(this)
     this.handleFocusChange = this.handleFocusChange.bind(this)
+    this.handleButtonZoom = this.handleButtonZoom.bind(this)
+    this.handleArrowPan = this.handleArrowPan.bind(this)
+    this.handleClickLabel = this.handleClickLabel.bind(this)
+    this.handleCreatedTemporal = this.handleCreatedTemporal.bind(this)
+    this.handleScrollZoom = this.handleScrollZoom.bind(this)
+    this.handleScrollPan = this.handleScrollPan.bind(this)
+    this.handleDraggingPan = this.handleDraggingPan.bind(this)
   }
 
   componentDidMount() {
@@ -36,6 +44,7 @@ class Timeline extends Component {
       timeline,
       onToggleOverrideTemporalModal
     } = this.props
+
     const { query } = timeline
     const {
       center,
@@ -53,6 +62,13 @@ class Timeline extends Component {
     this.$el.on('rangechange.timeline', this.handleRangeChange)
     this.$el.on('focuschange.timeline', this.handleFocusChange)
     this.$el.on('rowtemporalchange.timeline', this.handleRowTemporalChange)
+    this.$el.on('buttonzoom.timeline', this.handleButtonZoom)
+    this.$el.on('arrowpan.timeline', this.handleArrowPan)
+    this.$el.on('clicklabel.timeline', this.handleClickLabel)
+    this.$el.on('createdtemporal.timeline', this.handleCreatedTemporal)
+    this.$el.on('scrollzoom.timeline', this.handleScrollZoom)
+    this.$el.on('scrollpan.timeline', this.handleScrollPan)
+    this.$el.on('draggingpan.timeline', this.handleDraggingPan)
 
     this.$el.trigger('rangechange.timeline')
 
@@ -208,9 +224,19 @@ class Timeline extends Component {
 
   componentWillUnmount() {
     // Remove the timeline
+    this.$el.off('temporalchange.timeline', this.handleTemporalSet)
+    this.$el.off('rangechange.timeline', this.handleRangeChange)
+    this.$el.off('focuschange.timeline', this.handleFocusChange)
+    this.$el.off('rowtemporalchange.timeline', this.handleRowTemporalChange)
+    this.$el.off('buttonzoom.timeline', this.handleButtonZoom)
+    this.$el.off('arrowpan.timeline', this.handleArrowPan)
+    this.$el.off('clicklabel.timeline', this.handleClickLabel)
+    this.$el.off('createdtemporal.timeline', this.handleCreatedTemporal)
+    this.$el.off('scrollzoom.timeline', this.handleScrollZoom)
+    this.$el.off('scrollpan.timeline', this.handleScrollPan)
+    this.$el.off('draggingpan.timeline', this.handleDraggingPan)
     this.$el.timeline('destroy')
   }
-
 
   /**
    * Set temporal values in the timeline, causes the orange 'fenceposts' to appear
@@ -472,6 +498,44 @@ class Timeline extends Component {
     onChangeTimelineQuery(timelineQuery)
   }
 
+  handleButtonZoom() {
+    const { onMetricsTimeline } = this.props
+    onMetricsTimeline('Button Zoom')
+  }
+
+  handleArrowPan() {
+    const { onMetricsTimeline } = this.props
+    onMetricsTimeline('Left/Right Arrow Pan')
+  }
+
+  handleClickLabel() {
+    const { onMetricsTimeline } = this.props
+    onMetricsTimeline('Click Label')
+  }
+
+  handleCreatedTemporal() {
+    const { onMetricsTimeline } = this.props
+    onMetricsTimeline('Created Temporal')
+  }
+
+  handleScrollZoom() {
+    const { onMetricsTimeline } = this.props
+    onMetricsTimeline('Scroll Zoom')
+  }
+
+  handleScrollPan() {
+    const { onMetricsTimeline } = this.props
+    clearTimeout(this.panTimeout)
+
+    const sendPanEvent = () => onMetricsTimeline('Scroll Pan')
+    setTimeout(sendPanEvent, 300)
+  }
+
+  handleDraggingPan() {
+    const { onMetricsTimeline } = this.props
+    onMetricsTimeline('Dragging Pan')
+  }
+
   render() {
     return (
       <section className="timeline">
@@ -496,7 +560,8 @@ Timeline.propTypes = {
   timeline: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,
-  onToggleOverrideTemporalModal: PropTypes.func.isRequired
+  onToggleOverrideTemporalModal: PropTypes.func.isRequired,
+  onMetricsTimeline: PropTypes.func.isRequired
 }
 
 export default Timeline

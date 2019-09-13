@@ -245,6 +245,7 @@ class SpatialDisplay extends Component {
                   sm="auto"
                   size="sm"
                   value={pointSearch.split(',').reverse().join(', ')}
+                  onChange={e => console.warn(e.target.value)}
                 />
               </Col>
             </Form.Group>
@@ -286,6 +287,7 @@ class SpatialDisplay extends Component {
                   placeholder="lat, lon (e.g. 44.2, 130)"
                   size="sm"
                   value={points[0]}
+                  onChange={e => console.warn(e.target.value)}
                 />
               </Col>
             </Form.Group>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 
 import actions from '../../actions/index'
+import { metricsTimeline } from '../../middleware/metrics/actions'
 
 import Timeline from '../../components/Timeline/Timeline'
 import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
@@ -14,7 +15,9 @@ const mapDispatchToProps = dispatch => ({
   onChangeProjectQuery: query => dispatch(actions.changeProjectQuery(query)),
   onChangeTimelineQuery: query => dispatch(actions.changeTimelineQuery(query)),
   onToggleOverrideTemporalModal:
-    open => dispatch(actions.toggleOverrideTemporalModal(open))
+    open => dispatch(actions.toggleOverrideTemporalModal(open)),
+  onMetricsTimeline:
+    type => dispatch(metricsTimeline(type))
 })
 
 const mapStateToProps = state => ({
@@ -37,7 +40,8 @@ export const TimelineContainer = (props) => {
     onChangeQuery,
     onChangeProjectQuery,
     onChangeTimelineQuery,
-    onToggleOverrideTemporalModal
+    onToggleOverrideTemporalModal,
+    onMetricsTimeline
   } = props
 
   let changeQueryMethod = onChangeQuery
@@ -84,6 +88,7 @@ export const TimelineContainer = (props) => {
       onChangeQuery={changeQueryMethod}
       onChangeTimelineQuery={onChangeTimelineQuery}
       onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
+      onMetricsTimeline={onMetricsTimeline}
     />
   )
 }
@@ -102,7 +107,8 @@ TimelineContainer.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   onChangeProjectQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,
-  onToggleOverrideTemporalModal: PropTypes.func.isRequired
+  onToggleOverrideTemporalModal: PropTypes.func.isRequired,
+  onMetricsTimeline: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineContainer)

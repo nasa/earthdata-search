@@ -12,6 +12,7 @@ function setup(propsOverride) {
     collectionQuery: {},
     portal: {},
     onChangeQuery: jest.fn(),
+    onMetricsCollectionSortChange: jest.fn(),
     ...propsOverride
   }
 
@@ -58,6 +59,11 @@ describe('CollectionResultsHeader component', () => {
         collection: {
           sortKey: ['-ongoing']
         }
+      })
+
+      expect(props.onMetricsCollectionSortChange).toBeCalledTimes(1)
+      expect(props.onMetricsCollectionSortChange).toBeCalledWith({
+        value: '-ongoing'
       })
     })
 

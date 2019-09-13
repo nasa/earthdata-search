@@ -7,6 +7,9 @@ import App from './js/App'
 
 const wrapper = document.getElementById('root')
 
+
+if (process.env.NODE_ENV === 'development' && module.hot) module.hot.accept()
+
 if (wrapper) {
   ReactDOM.render(
     <App />,

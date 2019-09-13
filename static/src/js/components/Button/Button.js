@@ -43,11 +43,18 @@ export const Button = ({
 
   let iconClasses
 
+  const buildIconClass = (icon) => {
+    if (icon.indexOf('edsc') > -1) {
+      return icon
+    }
+    return `fa fa-${icon}`
+  }
+
   if (icon) {
     iconClasses = classNames(
       'button__icon',
       children ? 'button__icon--push' : null,
-      icon ? `fa fa-${icon}` : null
+      icon ? buildIconClass(icon) : null
     )
   }
 
@@ -66,8 +73,9 @@ export const Button = ({
       size={bootstrapSize}
       onClick={onClick}
       href={href}
-      title={title}
+      title={title || label}
       role="button"
+      label={label}
       aria-label={label}
       type={type}
       disabled={disabled}

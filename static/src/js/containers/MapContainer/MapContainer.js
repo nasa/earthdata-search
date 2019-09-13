@@ -15,6 +15,7 @@ import { difference } from 'lodash'
 
 import '../../util/map/sphericalPolygon'
 import isPath from '../../util/isPath'
+import { metricsMap } from '../../middleware/metrics/actions'
 
 import LayerBuilder
   from '../../components/Map/LayerBuilder'
@@ -47,7 +48,8 @@ const mapDispatchToProps = dispatch => ({
   onExcludeGranule:
     data => dispatch(actions.excludeGranule(data)),
   onSaveShapefile: data => dispatch(actions.saveShapefile(data)),
-  onShapefileErrored: data => dispatch(actions.shapefileErrored(data))
+  onShapefileErrored: data => dispatch(actions.shapefileErrored(data)),
+  onMetricsMap: type => dispatch(metricsMap(type))
 })
 
 const mapStateToProps = state => ({
@@ -124,7 +126,7 @@ export class MapContainer extends Component {
   }
 
   handleBaseLayerChange(event) {
-    const { onChangeMap } = this.props
+    const { onChangeMap, onMetricsMap } = this.props
     const base = {
       blueMarble: false,
       trueColor: false,
@@ -134,6 +136,8 @@ export class MapContainer extends Component {
     if (event.name === 'Blue Marble') base.blueMarble = true
     if (event.name === 'Corrected Reflectance (True Color)') base.trueColor = true
     if (event.name === 'Land / Water Map *') base.landWaterMap = true
+
+    onMetricsMap(`Set Base Map: ${event.name}`)
 
     onChangeMap({ base })
   }
@@ -161,13 +165,17 @@ export class MapContainer extends Component {
   }
 
   handleProjectionSwitching(projection) {
-    const { onChangeMap } = this.props
+    const { onChangeMap, onMetricsMap } = this.props
     const map = {
       latitude: 0,
       longitude: 0,
       projection,
       zoom: 2
     }
+
+    const Projection = Object.keys(projections).find((key => (
+      projections[key] === projection
+    )))
 
     if (projection === projections.arctic) {
       map.latitude = 90
@@ -180,6 +188,8 @@ export class MapContainer extends Component {
     }
 
     this.mapRef.leafletElement.options.crs = crsProjections[projection]
+
+    onMetricsMap(`Set Projection: ${Projection}`)
     onChangeMap({ ...map })
   }
 
@@ -197,7 +207,8 @@ export class MapContainer extends Component {
       onChangeFocusedGranule,
       onExcludeGranule,
       onSaveShapefile,
-      onShapefileErrored
+      onShapefileErrored,
+      onMetricsMap
     } = this.props
 
     const {
@@ -338,6 +349,7 @@ export class MapContainer extends Component {
           projection={projection}
           onChangeFocusedGranule={onChangeFocusedGranule}
           onExcludeGranule={onExcludeGranule}
+          onMetricsMap={onMetricsMap}
         />
         <MouseEventsLayer />
         <ZoomHome />
@@ -355,6 +367,7 @@ export class MapContainer extends Component {
             shapefile={shapefile}
             onSaveShapefile={onSaveShapefile}
             onShapefileErrored={onShapefileErrored}
+            onMetricsMap={onMetricsMap}
           />
           )
         }
@@ -382,7 +395,8 @@ MapContainer.propTypes = {
   onChangeMap: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onSaveShapefile: PropTypes.func.isRequired,
-  onShapefileErrored: PropTypes.func.isRequired
+  onShapefileErrored: PropTypes.func.isRequired,
+  onMetricsMap: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

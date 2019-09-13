@@ -4,9 +4,11 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
+import { metricsDataAccess } from '../../middleware/metrics/actions'
 import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
+
 
 const mapDispatchToProps = dispatch => ({
   onChangeGranulePageNum:
@@ -14,7 +16,9 @@ const mapDispatchToProps = dispatch => ({
   onExcludeGranule:
     data => dispatch(actions.excludeGranule(data)),
   onFocusedGranuleChange:
-    granuleId => dispatch(actions.changeFocusedGranule(granuleId))
+    granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
+  onMetricsDataAccess:
+    data => dispatch(metricsDataAccess(data))
 })
 
 const mapStateToProps = state => ({
@@ -35,7 +39,8 @@ export const GranuleResultsBodyContainer = (props) => {
     location,
     onChangeGranulePageNum,
     onExcludeGranule,
-    onFocusedGranuleChange
+    onFocusedGranuleChange,
+    onMetricsDataAccess
   } = props
 
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
@@ -67,6 +72,7 @@ export const GranuleResultsBodyContainer = (props) => {
       waypointEnter={onWaypointEnter}
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
+      onMetricsDataAccess={onMetricsDataAccess}
     />
   )
 }
@@ -80,7 +86,8 @@ GranuleResultsBodyContainer.propTypes = {
   location: PropTypes.shape({}).isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired
+  onFocusedGranuleChange: PropTypes.func.isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired
 }
 
 export default withRouter(

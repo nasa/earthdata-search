@@ -30,6 +30,8 @@ class MasterOverlayPanel extends PureComponent {
       minHeight: 0
     }
 
+    this.browserHistoryUnlisten = null
+
     this.onMasterOverlayHeightChange = props.onMasterOverlayHeightChange.bind(this)
     this.onMasterOverlayPanelDragStart = props.onMasterOverlayPanelDragStart.bind(this)
     this.onMasterOverlayPanelDragEnd = props.onMasterOverlayPanelDragEnd.bind(this)
@@ -42,7 +44,7 @@ class MasterOverlayPanel extends PureComponent {
 
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize)
-    history.listen(this.onWindowResize)
+    this.browserHistoryUnlisten = history.listen(this.onWindowResize)
 
     const maxHeight = this.calculateMaxHeight()
 
@@ -53,6 +55,7 @@ class MasterOverlayPanel extends PureComponent {
 
   componentWillUnmount() {
     this.onMasterOverlayPanelToggle()
+    if (this.browserHistoryUnlisten) this.browserHistoryUnlisten()
     window.addEventListener('resize', this.onWindowResize)
   }
 

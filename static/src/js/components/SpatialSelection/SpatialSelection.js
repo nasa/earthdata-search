@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { startCase } from 'lodash'
 
 import { FeatureGroup } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
@@ -82,6 +83,8 @@ class SpatialSelection extends Component {
     this.onDrawStop = this.onDrawStop.bind(this)
     this.onEdited = this.onEdited.bind(this)
     this.onDeleted = this.onDeleted.bind(this)
+    this.onEditStart = this.onEditStart.bind(this)
+    this.onEditStop = this.onEditStop.bind(this)
     this.updateStateAndQuery = this.updateStateAndQuery.bind(this)
   }
 
@@ -135,8 +138,12 @@ class SpatialSelection extends Component {
       })
     }
 
-    const { layerType } = e
-    const { onToggleDrawingNewLayer } = this.props
+    let { layerType } = e
+    const { onToggleDrawingNewLayer, onMetricsMap } = this.props
+
+    if (layerType === 'shapefile') layerType = 'Shape File'
+
+    onMetricsMap(`Spatial: ${startCase(layerType)}`)
     onToggleDrawingNewLayer(layerType)
   }
 
@@ -155,8 +162,26 @@ class SpatialSelection extends Component {
     })
   }
 
-  onEditStart(e) {
-    console.log('onEditStart', e, this)
+  onEditStart() {
+    this.preEditBounds = this.boundsToPoints(this.layer)
+  }
+
+  onEditStop() {
+    const { type: layerType } = this.layer
+    const { onMetricsSpatialEdit } = this.props
+    const postEditBounds = this.boundsToPoints(this.layer)
+
+    let distanceSum = 0
+
+    this.preEditBounds.forEach((p0, i) => {
+      const p1 = postEditBounds[i]
+      distanceSum += p0.distanceTo(p1)
+    })
+
+    onMetricsSpatialEdit({
+      type: layerType,
+      distanceSum
+    })
   }
 
   // Callback from EditControl, called when the layer is edited
@@ -189,6 +214,10 @@ class SpatialSelection extends Component {
         spatial: {}
       }
     })
+  }
+
+  setLayer(layer) {
+    this.layer = layer
   }
 
   // Determine the latLngs from the layer and type, then update the component state and the query
@@ -228,10 +257,25 @@ class SpatialSelection extends Component {
     })
   }
 
+  boundsToPoints(layer) {
+    const { mapRef } = this.props
+    const map = mapRef.leafletElement
+    let bounds = []
+
+    if (layer.type === 'marker') {
+      bounds = [layer.getLatLng()]
+    } else {
+      bounds = layer.getLatLngs()
+    }
+
+    return bounds.map(latLng => map.latLngToLayerPoint(latLng))
+  }
+
   // Draws a leaflet shape based on provided props
   renderShape(props) {
     const { featureGroupRef = {} } = this
-    const { leafletElement: featureGroup } = featureGroupRef
+    if (featureGroupRef === null) return
+    const { leafletElement: featureGroup = null } = featureGroupRef
 
     const {
       pointSearch,
@@ -260,11 +304,14 @@ class SpatialSelection extends Component {
         icon: L.Draw.Marker.prototype.options.icon
       })
 
+      marker.type = 'marker'
       marker.addTo(featureGroup)
+
       this.setState({
         drawnLayer: marker,
         drawnLayerType: 'point'
       })
+      this.setLayer(marker)
     }
   }
 
@@ -285,11 +332,14 @@ class SpatialSelection extends Component {
       )
       const rect = new L.Rectangle(bounds, options)
 
+      rect.type = 'rectangle'
       rect.addTo(featureGroup)
+
       this.setState({
         drawnLayer: rect,
         drawnLayerType: 'boundingBox'
       })
+      this.setLayer(rect)
     }
   }
 
@@ -303,11 +353,14 @@ class SpatialSelection extends Component {
       )
       const poly = new L.SphericalPolygon(polygon, options)
 
+      poly.type = 'polygon'
       poly.addTo(featureGroup)
+
       this.setState({
         drawnLayer: poly,
         drawnLayerType: 'polygon'
       })
+      this.setLayer(poly)
     }
   }
 
@@ -322,8 +375,8 @@ class SpatialSelection extends Component {
         onCreated={this.onCreated}
         onMounted={this.onMounted}
         onEdited={this.onEdited}
-        onDeleted={this.onDeleted}
         onEditStart={this.onEditStart}
+        onEditStop={this.onEditStop}
         draw={{
           polygon: {
             drawError: errorOptions,
@@ -367,7 +420,9 @@ SpatialSelection.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.string,
   polygonSearch: PropTypes.string,
-  onToggleDrawingNewLayer: PropTypes.func.isRequired
+  onToggleDrawingNewLayer: PropTypes.func.isRequired,
+  onMetricsMap: PropTypes.func.isRequired,
+  onMetricsSpatialEdit: PropTypes.func.isRequired
 }
 
 export default SpatialSelection

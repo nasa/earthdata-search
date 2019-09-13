@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
+import { metricsDataAccess } from '../../middleware/metrics/actions'
 import { setActivePanel } from '../../actions/projectPanels'
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
@@ -14,7 +15,9 @@ const mapDispatchToProps = dispatch => ({
   onSetActivePanel:
     panelId => dispatch(setActivePanel(panelId)),
   onUpdateProjectName:
-    name => dispatch(actions.updateProjectName(name))
+    name => dispatch(actions.updateProjectName(name)),
+  onMetricsDataAccess:
+    data => dispatch(metricsDataAccess(data))
 })
 
 const mapStateToProps = state => ({
@@ -34,6 +37,7 @@ export const ProjectCollectionsContainer = (props) => {
     project,
     projectPanels,
     savedProject,
+    onMetricsDataAccess,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
     onSetActivePanel,
@@ -48,6 +52,7 @@ export const ProjectCollectionsContainer = (props) => {
       project={project}
       projectPanels={projectPanels}
       savedProject={savedProject}
+      onMetricsDataAccess={onMetricsDataAccess}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onToggleCollectionVisibility={onToggleCollectionVisibility}
       onSetActivePanel={onSetActivePanel}
@@ -63,6 +68,7 @@ ProjectCollectionsContainer.propTypes = {
   project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,

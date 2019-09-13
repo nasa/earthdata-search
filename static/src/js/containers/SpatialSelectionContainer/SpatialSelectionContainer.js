@@ -5,12 +5,15 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions'
+import { metricsMap, metricsSpatialEdit } from '../../middleware/metrics/actions'
 
 import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
 
 const mapDispathToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onToggleDrawingNewLayer: state => dispatch(actions.toggleDrawingNewLayer(state))
+  onToggleDrawingNewLayer: state => dispatch(actions.toggleDrawingNewLayer(state)),
+  onMetricsMap: type => dispatch(metricsMap(type)),
+  onMetricsSpatialEdit: data => dispatch(metricsSpatialEdit(data))
 })
 
 const mapStateToProps = state => ({
@@ -28,7 +31,9 @@ export const SpatialSelectionContainer = (props) => {
     pathname,
     pointSearch,
     polygonSearch,
-    onToggleDrawingNewLayer
+    onToggleDrawingNewLayer,
+    onMetricsMap,
+    onMetricsSpatialEdit
   } = props
 
   const isProjectPage = pathname.startsWith('/project')
@@ -42,6 +47,8 @@ export const SpatialSelectionContainer = (props) => {
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
+      onMetricsMap={onMetricsMap}
+      onMetricsSpatialEdit={onMetricsSpatialEdit}
     />
   )
 }
@@ -60,7 +67,9 @@ SpatialSelectionContainer.propTypes = {
   pathname: PropTypes.string.isRequired,
   pointSearch: PropTypes.string,
   polygonSearch: PropTypes.string,
-  onToggleDrawingNewLayer: PropTypes.func.isRequired
+  onToggleDrawingNewLayer: PropTypes.func.isRequired,
+  onMetricsMap: PropTypes.func.isRequired,
+  onMetricsSpatialEdit: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispathToProps)(SpatialSelectionContainer)

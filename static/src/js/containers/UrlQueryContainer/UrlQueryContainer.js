@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 import { encodeUrlQuery } from '../../util/url/url'
 
-
 const mapDispatchToProps = dispatch => ({
   onChangePath:
     path => dispatch(actions.changePath(path)),
@@ -62,7 +61,10 @@ export class UrlQueryContainer extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { search: nextSearch } = nextProps
-    const { onChangeUrl, search } = this.props
+    const {
+      onChangeUrl,
+      search
+    } = this.props
     const { currentPath } = this.state
 
     // The only time the search prop changes is after the URL has been updated

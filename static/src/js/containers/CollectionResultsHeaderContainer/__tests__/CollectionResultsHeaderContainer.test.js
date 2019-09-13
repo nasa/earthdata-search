@@ -12,7 +12,8 @@ function setup() {
     portal: {
       portalId: ''
     },
-    onChangeQuery: jest.fn()
+    onChangeQuery: jest.fn(),
+    onMetricsCollectionSortChange: jest.fn()
   }
 
   const enzymeWrapper = shallow(<CollectionResultsHeaderContainer {...props} />)
