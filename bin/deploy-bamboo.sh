@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# Bail on unset variables
-set -u
-
-# Bail on errors
-set -e
+# Bail on unset variables, errors and trace execution
+set -eux
 
 # Deployment configuration/variables
 ####################################
@@ -75,13 +72,17 @@ dockerRun() {
 stageOpts="--stage $bamboo_STAGE_NAME"
 
 # Deploy AWS Infrastructure Resources
+echo 'Deploying AWS Infrastructure Resources...'
 dockerRun serverless deploy $stageOpts --config serverless-infrastructure.yml
 
 # Deploy AWS Application Resources
+echo 'Deploying AWS Application Resources...'
 dockerRun serverless deploy $stageOpts
 
 # Migrate the database
+echo 'Migrating the database...'
 dockerRun serverless invoke $stageOpts --function migrateDatabase
 
 # Deploy static assets
+echo 'Deploying static assets to S3...'
 dockerRun serverless client deploy $stageOpts --no-confirm
