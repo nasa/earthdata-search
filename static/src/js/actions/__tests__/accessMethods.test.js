@@ -58,7 +58,7 @@ describe('fetchAccessMethods', () => {
           methods: {
             download: {
               isValid: true,
-              type: 'DOWNLOAD'
+              type: 'download'
             }
           },
           selectedAccessMethod: 'download'

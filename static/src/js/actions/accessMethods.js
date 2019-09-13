@@ -63,7 +63,7 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
         methods: {
           download: {
             isValid: true,
-            type: 'DOWNLOAD'
+            type: 'download'
           }
         },
         selectedAccessMethod: 'download'

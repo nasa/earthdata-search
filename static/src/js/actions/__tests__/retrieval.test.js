@@ -57,7 +57,7 @@ describe('submitRetrieval', () => {
           collectionId: {
             accessMethods: {
               download: {
-                type: 'DOWNLOAD'
+                type: 'download'
               }
             },
             selectedAccessMethod: 'download'

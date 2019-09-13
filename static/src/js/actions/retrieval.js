@@ -39,7 +39,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
     let selectedService
     let selectedType
 
-    if (type === 'DOWNLOAD') {
+    if (type === 'download') {
       selectedService = 'Download'
       selectedType = 'download'
     } else if (type === 'ECHO ORDERS') {
