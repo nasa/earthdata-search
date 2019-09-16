@@ -4,7 +4,7 @@ import nock from 'nock'
 import { stringify } from 'qs'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
-import * as startOrderStatusUpdateWorkflow from '../../../../sharedUtils/orderStatus'
+import * as startOrderStatusUpdateWorkflow from '../../util/startOrderStatusUpdateWorkflow'
 import { mockCatalogRestOrder } from './mocks'
 import submitCatalogRestOrder from '../handler'
 
