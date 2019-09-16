@@ -16,17 +16,20 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
   }
 
   try {
-    const granuleSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/granules.json?${stringify(cmrParams)}`
+    const granuleSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/granules.json`
 
-    const cmrResponse = await request.get({
+    const cmrResponse = await request.post({
       uri: granuleSearchUrl,
-      json: true,
-      resolveWithFullResponse: true,
+      form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
       headers: {
         'Client-Id': getClientId().background,
-        'Echo-Client': cmrToken
-      }
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Echo-Token': cmrToken
+      },
+      json: true,
+      resolveWithFullResponse: true
     })
+
     const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)
 
     return responseBody[0]
