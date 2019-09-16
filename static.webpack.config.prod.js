@@ -2,7 +2,6 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const TerserJsPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CSSNano = require('cssnano')
@@ -12,10 +11,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const StaticCommonConfig = require('./static.webpack.config.common')
 
 const Config = merge.smartStrategy({
-  devtool: 'replace'
+  devtool: 'replace',
+  'module.rules.use': 'prepend'
 })(StaticCommonConfig, {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   output: {
     filename: '[name].[contenthash].bundle.js',
     chunkFilename: '[name].[contenthash].bundle.js',
@@ -23,6 +23,8 @@ const Config = merge.smartStrategy({
     publicPath: '/'
   },
   optimization: {
+    nodeEnv: 'production',
+    concatenateModules: true,
     minimizer: [
       new TerserJsPlugin({
         cache: true,
@@ -40,20 +42,20 @@ const Config = merge.smartStrategy({
     splitChunks: {
       cacheGroups: {
         vendor: {
-          chunks: 'all',
           name: 'vendor',
           test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
           maxSize: 500000
         },
         styles: {
           name: 'styles',
           test: /\.css$/,
-          chunks: 'all',
-          enforce: true
+          chunks: 'all'
         }
       }
     },
-    runtimeChunk: true
+    runtimeChunk: true,
+    sideEffects: true
   },
   module: {
     rules: [
@@ -61,6 +63,9 @@ const Config = merge.smartStrategy({
         test: /\.(css|scss)$/,
         exclude: /portals/i,
         use: [
+          {
+            loader: 'style-loader'
+          },
           {
             loader: MiniCssExtractPlugin.loader
           }
@@ -71,9 +76,6 @@ const Config = merge.smartStrategy({
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
     new CleanWebpackPlugin([path.resolve(__dirname, 'static/dist')]),
-    new CopyWebpackPlugin([
-      { from: './static/src/public', to: './' }
-    ]),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].min.css',
       chunkFilename: '[id].[contenthash].min.css',

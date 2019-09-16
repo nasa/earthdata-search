@@ -16,7 +16,7 @@ import { getSubsetDataLayers } from '../util/echoForms/getSubsetDataLayers'
 import { getSwitchFields } from '../util/echoForms/getSwitchFields'
 import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
 import { getEdlConfig } from '../util/configUtil'
-import { startOrderStatusUpdateWorkflow } from '../../../sharedUtils/orderStatus'
+import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 import { portalPath } from '../../../sharedUtils/portalPath'
 
 

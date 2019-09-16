@@ -7,7 +7,7 @@ import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { startOrderStatusUpdateWorkflow } from '../../../sharedUtils/orderStatus'
+import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 
 // Knex database connection object
 let dbConnection = null
