@@ -23,18 +23,18 @@ export default class ProjectRequest extends Request {
 
   all() {
     this.authenticated = true
-    return this.get('/projects')
+    return this.get('projects')
   }
 
   save(params) {
-    return this.post('/projects', params)
+    return this.post('projects', params)
   }
 
   fetch(projectId) {
-    return this.get(`/projects/${projectId}`)
+    return this.get(`projects/${projectId}`)
   }
 
   remove(projectId) {
-    return this.delete(`/projects/${projectId}`)
+    return this.delete(`projects/${projectId}`)
   }
 }

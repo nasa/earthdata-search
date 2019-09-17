@@ -65,7 +65,7 @@ describe('RetrievalRequest#all', () => {
     request.all()
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('/retrievals')
+    expect(getMock).toBeCalledWith('retrievals')
   })
 })
 
@@ -79,7 +79,7 @@ describe('RetrievalRequest#fetch', () => {
     request.fetch(projectId)
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('/retrievals/12345')
+    expect(getMock).toBeCalledWith('retrievals/12345')
   })
 })
 
@@ -94,7 +94,7 @@ describe('RetrievalRequest#remove', () => {
     request.remove(projectId)
 
     expect(deleteMock).toBeCalledTimes(1)
-    expect(deleteMock).toBeCalledWith('/retrievals/12345')
+    expect(deleteMock).toBeCalledWith('retrievals/12345')
   })
 })
 
@@ -108,6 +108,6 @@ describe('RetrievalRequest#save', () => {
     request.submit(params)
 
     expect(postMock).toBeCalledTimes(1)
-    expect(postMock).toBeCalledWith('/retrievals', params)
+    expect(postMock).toBeCalledWith('retrievals', params)
   })
 })

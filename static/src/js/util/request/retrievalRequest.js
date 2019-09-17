@@ -17,18 +17,18 @@ export default class RetrievalRequest extends Request {
   }
 
   all() {
-    return this.get('/retrievals')
+    return this.get('retrievals')
   }
 
   remove(id) {
-    return this.delete(`/retrievals/${id}`)
+    return this.delete(`retrievals/${id}`)
   }
 
   fetch(id) {
-    return this.get(`/retrievals/${id}`)
+    return this.get(`retrievals/${id}`)
   }
 
   submit(params) {
-    return this.post('/retrievals', params)
+    return this.post('retrievals', params)
   }
 }

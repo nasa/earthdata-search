@@ -6,7 +6,7 @@ export default class AccessMethodsRequest extends Request {
     super(getEnvironmentConfig().apiHost)
     this.authenticated = true
     this.authToken = authToken
-    this.searchPath = '/access_methods'
+    this.searchPath = 'access_methods'
   }
 
   permittedCmrKeys() {

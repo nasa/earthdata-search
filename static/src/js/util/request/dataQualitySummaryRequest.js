@@ -15,6 +15,6 @@ export default class DataQualitySummaryRequest extends Request {
   }
 
   fetch(params) {
-    return this.post('/dqs', params)
+    return this.post('dqs', params)
   }
 }
