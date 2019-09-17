@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Col, Dropdown, Form } from 'react-bootstrap'
 
-import isPath from '../../util/isPath'
+import { isPath } from '../../util/isPath'
+import { pathStartsWith } from '../../util/pathStartsWith'
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -242,7 +243,7 @@ class SecondaryToolbar extends Component {
           (!isPath(location.pathname, ['/projects']) && projectIds.length > 0) && projectLink
         }
         {
-          isPath(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
+          pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
         }
         {
           !loggedIn ? loginLink : loggedInDropdown
