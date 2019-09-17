@@ -181,7 +181,7 @@ class SecondaryToolbar extends Component {
           </Dropdown.Item>
           <Dropdown.Item
             className="secondary-toolbar__saved-projects"
-            href={`${portalPath(portal)}/saved_projects`}
+            href={`${portalPath(portal)}/projects`}
           >
             Saved Projects
           </Dropdown.Item>

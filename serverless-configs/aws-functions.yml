@@ -249,6 +249,14 @@
           cors: true
           path: urs_callback
 
+  errorLogger:
+    handler: serverless/src/errorLogger/handler.default
+    events:
+      - http:
+          method: post
+          cors: true
+          path: error_logger
+
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer/handler.default
     warmer:

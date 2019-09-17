@@ -21,10 +21,10 @@ import ConnectedAuthCallbackContainer
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import ConnectedPortalContainer from './containers/PortalContainer/PortalContainer'
-import SavedProjectsContainer from './containers/SavedProjectsContainer/SavedProjectsContainer'
-import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
+import ErrorBoundary from './components/Errors/ErrorBoundary'
+import NotFound from './components/Errors/NotFound'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -53,74 +53,59 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={this.store}>
-        <ConnectedRouter history={history}>
-          <MetricsEventsContainer />
-          <Switch>
-            <Route path={this.portalPaths('/')} component={ConnectedPortalContainer} />
-          </Switch>
-          <ErrorBannerContainer />
-          <ConnectedAuthTokenContainer>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <MetricsEventsContainer />
             <Switch>
-              <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
-              <Route
-                path={this.portalPaths('/downloads')}
-                render={() => (
-                  <AuthRequiredContainer>
-                    <Downloads />
-                  </AuthRequiredContainer>
-                )}
-              />
-              <Route
-                exact
-                path={this.portalPaths('/saved_projects')}
-                render={() => (
-                  <AuthRequiredContainer>
-                    <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
-                      <div className="route-wrapper__content">
-                        <header className="route-wrapper__header">
-                          <div className="route-wrapper__header-primary">
-                            <SecondaryToolbarContainer />
-                          </div>
-                        </header>
-                        <div className="route-wrapper__content-inner">
-                          <SavedProjectsContainer />
-                        </div>
-                      </div>
-                    </div>
-                  </AuthRequiredContainer>
-                )}
-              />
-              <Route path={this.portalPaths('/')}>
-                <ConnectedUrlQueryContainer>
-                  <Switch>
-                    <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
-                    <Redirect exact from="/" to="/search" />
-                    <Route path={this.portalPaths('/search')} component={Search} />
-                    <Route
-                      path={this.portalPaths('/projects')}
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <Project />
-                        </AuthRequiredContainer>
-                      )}
-                    />
-                    <Route exact path="/auth_callback" component={ConnectedAuthCallbackContainer} />
-                  </Switch>
-                  <ConnectedEdscMapContainer />
-                </ConnectedUrlQueryContainer>
-              </Route>
+              <Route exact path={this.portalPaths('/')} component={ConnectedPortalContainer} />
             </Switch>
-            <FooterContainer />
-            <Switch>
-              <Route path={this.portalPaths('/')}>
-                <ShapefileUploadModalContainer />
-                <ShapefileDropzoneContainer />
-              </Route>
-            </Switch>
-          </ConnectedAuthTokenContainer>
-        </ConnectedRouter>
-      </Provider>
+            <ErrorBannerContainer />
+            <ConnectedAuthTokenContainer>
+              <Switch>
+                <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
+                <Route
+                  path={this.portalPaths('/downloads')}
+                  render={() => (
+                    <AuthRequiredContainer>
+                      <Downloads />
+                    </AuthRequiredContainer>
+                  )}
+                />
+                <Route path={this.portalPaths('/projects')} component={Project} />
+                <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
+                <Redirect exact from="/" to="/search" />
+                <Route
+                  path={this.portalPaths('/search')}
+                  render={() => (
+                    <ConnectedUrlQueryContainer>
+                      <Search />
+                      <ConnectedEdscMapContainer />
+                    </ConnectedUrlQueryContainer>
+                  )}
+                />
+                <Route
+                  exact
+                  path="/auth_callback"
+                  render={() => (
+                    <ConnectedUrlQueryContainer>
+                      <ConnectedAuthCallbackContainer />
+                    </ConnectedUrlQueryContainer>
+                  )}
+                />
+                <Route component={NotFound} />
+              </Switch>
+              <FooterContainer />
+              <Switch>
+                <Route path={this.portalPaths('/')}>
+                  <ShapefileUploadModalContainer />
+                  <ShapefileDropzoneContainer />
+                </Route>
+              </Switch>
+            </ConnectedAuthTokenContainer>
+          </ConnectedRouter>
+        </Provider>
+      </ErrorBoundary>
     )
   }
 }
