@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import request from 'promise-request-retry'
 import { stringify } from 'qs'
 import { readCmrResults } from './readCmrResults'
 import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
@@ -15,28 +15,24 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     page_size: 1
   }
 
-  try {
-    const granuleSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/granules.json`
+  const granuleSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/granules.json`
 
-    const cmrResponse = await request.post({
-      uri: granuleSearchUrl,
-      form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
-      headers: {
-        'Client-Id': getClientId().background,
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Echo-Token': cmrToken
-      },
-      json: true,
-      resolveWithFullResponse: true
-    })
+  console.log(`Retrieving a single granule for ${collectionId}`)
+  const cmrResponse = await request.post({
+    uri: granuleSearchUrl,
+    form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+    headers: {
+      'Client-Id': getClientId().background,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Echo-Token': cmrToken
+    },
+    json: true,
+    resolveWithFullResponse: true,
+    // in case of ENOTFOUND
+    retry: 4
+  })
 
-    const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)
+  const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)
 
-    return responseBody[0]
-  } catch (e) {
-    console.log(`Failed retrieving a single granule for ${collectionId}`)
-    console.log(e)
-  }
-
-  return null
+  return responseBody[0]
 }
