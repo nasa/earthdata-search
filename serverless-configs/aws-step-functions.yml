@@ -53,3 +53,27 @@ stateMachines:
           Type: Succeed
         OrderFailed:
           Type: Fail
+  GenerateCollectionCapabilityTagsWorkflow:
+    name: GenerateCollectionCapabilityTags-${self:provider.stage}
+    role:
+      Fn::ImportValue: ${self:provider.stage}-ApplicationRole
+    definition:
+      StartAt: ProcessCollectionPage
+      States:
+        ProcessCollectionPage:
+          Type: Task
+          Resource:
+            Fn::GetAtt:
+              - GenerateCollectionCapabilityTagsLambdaFunction
+              - Arn
+          Next: CheckMoreCollections
+        CheckMoreCollections:
+          Type: Choice
+          Choices:
+            - Variable: '$.hasMoreCollections'
+              BooleanEquals: true
+              Next: ProcessCollectionPage
+          Default:
+            TaggingComplete
+        TaggingComplete:
+          Type: Succeed

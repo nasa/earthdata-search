@@ -116,8 +116,8 @@
     "events": "^3.0.0",
     "fast-xml-parser": "^3.12.16",
     "formik": "^1.5.8",
-    "jsonwebtoken": "^8.5.1",
     "history": "^4.7.2",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.17.6",
     "leaflet": "^1.4.0",
     "leaflet-draw": "^1.0.4",
@@ -131,6 +131,7 @@
     "popper.js": "^1.14.7",
     "proj4": "^2.5.0",
     "proj4leaflet": "^1.0.2",
+    "promise-request-retry": "^1.0.1",
     "prop-types": "^15.6.2",
     "qs": "^6.6.0",
     "react": "^16.7.0",
@@ -160,9 +161,9 @@
     "snakecase-keys": "^2.1.0",
     "tiny-cookie": "^2.3.1",
     "uuid": "^3.3.3",
-    "yup": "^0.27.0",
     "xmldom": "^0.1.27",
-    "xpath": "0.0.27"
+    "xpath": "0.0.27",
+    "yup": "^0.27.0"
   },
   "engines": {
     "yarn": "YARN NO LONGER USED - use npm instead."

@@ -158,12 +158,6 @@
     timeout: 600
     warmup:
       enabled: false
-    events:
-      - schedule:
-          rate: cron(0 0/4 * * ? *)
-          input:
-            pageNumber: 1
-            perPage: 2000
 
   #
   # API Gateway Endpoints
