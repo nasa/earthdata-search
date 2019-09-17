@@ -27,6 +27,6 @@ describe('LogoutRequest#logout', () => {
     request.logout()
 
     expect(deleteMock).toBeCalledTimes(1)
-    expect(deleteMock).toBeCalledWith('/logout')
+    expect(deleteMock).toBeCalledWith('logout')
   })
 })

@@ -9,7 +9,7 @@ export default class OusGranuleRequest extends Request {
     super(getEnvironmentConfig().apiHost)
     this.authenticated = true
     this.authToken = authToken
-    this.searchPath = '/granules/ous'
+    this.searchPath = 'granules/ous'
   }
 
   permittedCmrKeys() {

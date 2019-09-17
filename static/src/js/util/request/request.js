@@ -160,6 +160,9 @@ export default class Request {
    * @param {url} url URL to send the request to
    */
   delete(url) {
+    this.startTimer()
+    this.setFullUrl(url)
+
     let requestOptions = {
       method: 'delete',
       baseURL: this.baseUrl,

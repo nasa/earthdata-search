@@ -38,7 +38,7 @@ describe('ProjectRequest#all', () => {
     request.all()
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('/projects')
+    expect(getMock).toBeCalledWith('projects')
   })
 })
 
@@ -52,7 +52,7 @@ describe('ProjectRequest#save', () => {
     request.save(params)
 
     expect(postMock).toBeCalledTimes(1)
-    expect(postMock).toBeCalledWith('/projects', params)
+    expect(postMock).toBeCalledWith('projects', params)
   })
 })
 
@@ -66,7 +66,7 @@ describe('ProjectRequest#fetch', () => {
     request.fetch(projectId)
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('/projects/12345')
+    expect(getMock).toBeCalledWith('projects/12345')
   })
 })
 
@@ -81,6 +81,6 @@ describe('ProjectRequest#remove', () => {
     request.remove(projectId)
 
     expect(deleteMock).toBeCalledTimes(1)
-    expect(deleteMock).toBeCalledWith('/projects/12345')
+    expect(deleteMock).toBeCalledWith('projects/12345')
   })
 })

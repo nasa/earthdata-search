@@ -68,11 +68,14 @@ const generateCollectionCapabilityTags = async (event) => {
 
   const responseBody = readCmrResults(collectionSearchUrl, cmrCollectionResponse)
 
+  // Chunk the results into 100 collections to minimize the size of the payloads we send to the tagging endpoint
   const chunkedCollections = chunkArray(responseBody, 100)
 
+  // Each chunk of 100 collections
   await chunkedCollections.forEachAsync(async (collectionList) => {
     const associationPayload = []
 
+    // Construct the tag data for each collection in this chunk
     await collectionList.forEachAsync(async (collection) => {
       const {
         id,
