@@ -145,7 +145,7 @@
   generateSubsettingTags:
     handler: serverless/src/generateSubsettingTags/handler.default
     description: Tag CMR collections with umm service subsetting information
-    timeout: 300
+    timeout: 600
     warmup:
       enabled: false
     events:
@@ -155,7 +155,7 @@
   generateCollectionCapabilityTags:
     handler: serverless/src/generateCollectionCapabilityTags/handler.default
     description: Iterate over all CMR collections adding tags specific to EDSC
-    timeout: 300
+    timeout: 600
     warmup:
       enabled: false
     events:
