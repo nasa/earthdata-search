@@ -1,4 +1,7 @@
 export const collectionListItemProps = {
+  browser: {
+    name: 'browser name'
+  },
   collection: {
     dataset_id: 'Test Collection',
     id: 'collectionId1',

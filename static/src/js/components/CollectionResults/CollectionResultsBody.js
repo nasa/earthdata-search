@@ -15,6 +15,7 @@ import './CollectionResultsBody.scss'
 class CollectionResultsBody extends PureComponent {
   render() {
     const {
+      browser,
       collections,
       portal,
       projectIds,
@@ -28,6 +29,7 @@ class CollectionResultsBody extends PureComponent {
     return (
       <div className="collection-results-body">
         <CollectionResultsList
+          browser={browser}
           collections={collections}
           portal={portal}
           projectIds={projectIds}
@@ -43,6 +45,7 @@ class CollectionResultsBody extends PureComponent {
 }
 
 CollectionResultsBody.propTypes = {
+  browser: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,

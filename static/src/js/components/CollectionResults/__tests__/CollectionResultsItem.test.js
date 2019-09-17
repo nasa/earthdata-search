@@ -3,6 +3,8 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
+import * as detectBrowser from 'detect-browser'
+
 import CollectionResultsItem from '../CollectionResultsItem'
 import SplitBadge from '../../SplitBadge/SplitBadge'
 import { collectionListItemProps, longSummary } from './mocks'
@@ -97,15 +99,35 @@ describe('CollectionResultsList component', () => {
         .toContain('This is a short summary.')
     })
 
-    test('renders long description correctly', () => {
-      const { enzymeWrapper } = setup({
-        collection: {
-          ...collectionListItemProps.collection,
-          summary: longSummary
-        }
+    describe('renders long description correctly', () => {
+      test('for ie browsers', () => {
+        const { enzymeWrapper } = setup({
+          browser: {
+            name: 'ie'
+          },
+          collection: {
+            ...collectionListItemProps.collection,
+            summary: longSummary
+          }
+        })
+
+        expect(enzymeWrapper.find('.collection-results-item__desc').text())
+          .toContain('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt...')
       })
-      expect(enzymeWrapper.find('.collection-results-item__desc').text())
-        .toContain('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt...')
+
+      test('for non-ie browsers', () => {
+        const { enzymeWrapper } = setup({
+          browser: {
+            name: 'something else'
+          },
+          collection: {
+            ...collectionListItemProps.collection,
+            summary: longSummary
+          }
+        })
+        expect(enzymeWrapper.find('.collection-results-item__desc').text())
+          .toContain(longSummary)
+      })
     })
 
     test('renders a cwic collection correctly', () => {

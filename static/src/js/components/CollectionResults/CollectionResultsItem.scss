@@ -55,6 +55,10 @@
   }
 
   &__desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     margin-bottom: $spacer * 0.25;
     font-size: 0.75rem;
     color: $color__black--600;

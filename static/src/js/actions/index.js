@@ -105,6 +105,7 @@ import { fetchDataQualitySummaries } from './dataQualitySummaries'
 import { deleteSavedProject, updateProjectName, updateSavedProject } from './savedProject'
 import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 import { handleError, removeError } from './errors'
+import { updateBrowserVersion } from './browser'
 
 const actions = {
   addAccessMethods,
@@ -177,6 +178,7 @@ const actions = {
   undoExcludeGranule,
   updateAccessMethod,
   updateAuthToken,
+  updateBrowserVersion,
   updateCmrFacet,
   updateCollectionGranuleFilters,
   updateFeatureFacet,

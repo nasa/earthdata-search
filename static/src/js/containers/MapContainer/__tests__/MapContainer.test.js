@@ -15,10 +15,12 @@ import ConnectedSpatialSelectionContainer
   from '../../SpatialSelectionContainer/SpatialSelectionContainer'
 import GranuleGridLayer from '../../../components/Map/GranuleGridLayer'
 
-import store from '../../../store/configureStore'
+import configureStore from '../../../store/configureStore'
 import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
+
+const store = configureStore()
 
 function setup() {
   const props = {

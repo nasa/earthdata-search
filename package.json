@@ -110,14 +110,15 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^6.4.0",
     "core-js": "^3.2.1",
+    "detect-browser": "^4.7.0",
     "dropzone": "^5.5.1",
     "edsc-echoforms": "git+https://github.com/nasa/edsc-echoforms.git",
     "edsc-timeline": "git+https://github.com/nasa/edsc-timeline.git",
     "events": "^3.0.0",
     "fast-xml-parser": "^3.12.16",
     "formik": "^1.5.8",
-    "jsonwebtoken": "^8.5.1",
     "history": "^4.7.2",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.17.6",
     "leaflet": "^1.4.0",
     "leaflet-draw": "^1.0.4",
@@ -146,7 +147,6 @@
     "react-router-dom": "^5.0.1",
     "react-sanitized-html": "^2.0.0",
     "react-timeago": "^4.4.0",
-    "react-truncate-text": "^1.0.1",
     "react-waypoint": "^9.0.2",
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
@@ -160,9 +160,9 @@
     "snakecase-keys": "^2.1.0",
     "tiny-cookie": "^2.3.1",
     "uuid": "^3.3.3",
-    "yup": "^0.27.0",
     "xmldom": "^0.1.27",
-    "xpath": "0.0.27"
+    "xpath": "0.0.27",
+    "yup": "^0.27.0"
   },
   "engines": {
     "yarn": "YARN NO LONGER USED - use npm instead."

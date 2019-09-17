@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import store from './store/configureStore'
+import configureStore from './store/configureStore'
 import history from './util/history'
 
 import FooterContainer from './containers/FooterContainer/FooterContainer'
@@ -40,6 +40,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.store = configureStore()
   }
 
   componentDidMount() {
@@ -52,7 +53,7 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={this.store}>
         <ConnectedRouter history={history}>
           <MetricsEventsContainer />
           <Switch>
