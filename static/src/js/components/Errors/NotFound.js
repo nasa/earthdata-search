@@ -14,7 +14,7 @@ const NotFound = ({ location }) => {
   requestObject.log({
     error: {
       guid,
-      message: '404 error',
+      message: '404 Not Found',
       location
     }
   })

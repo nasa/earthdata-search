@@ -8,6 +8,11 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('getServiceOptionDefinitions', () => {
   test('fetches option definitions from CMR', async () => {
     nock(/cmr/)

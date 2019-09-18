@@ -10,6 +10,11 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('getVariables', () => {
   test('fetches variables from CMR', async () => {
     nock(/cmr/)

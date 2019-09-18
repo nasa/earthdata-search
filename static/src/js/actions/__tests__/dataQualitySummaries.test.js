@@ -1,4 +1,4 @@
-import moxios from 'moxios'
+import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
@@ -8,13 +8,12 @@ import { setDataQualitySummaries, fetchDataQualitySummaries } from '../dataQuali
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
-  moxios.install()
-
   jest.clearAllMocks()
 })
 
 afterEach(() => {
-  moxios.uninstall()
+  nock.cleanAll()
+  nock.enableNetConnect()
 })
 
 describe('setDataQualitySummaries', () => {
@@ -41,16 +40,15 @@ describe('setDataQualitySummaries', () => {
 
 describe('fetchDataQualitySummaries', () => {
   test('should load the portal config from a file', async () => {
-    moxios.stubRequest(/\/dqs/, {
-      status: 200,
-      response: [{
+    nock(/localhost/)
+      .post(/dqs/)
+      .reply(200, [{
         id: '1234-ABCD-5678-EFGH-91011',
         name: 'EDSC',
         provider_id: 'EDSC-TEST',
         summary: 'data quality summary',
         updated_at: '2011-01-31T20:42:08Z'
-      }]
-    })
+      }])
 
     const catalogItemId = 'C10000001-EDSC'
 

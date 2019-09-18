@@ -18,6 +18,11 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('submitRetrieval', () => {
   test('calls lambda to submit an order', async () => {
     nock(/localhost/)
@@ -113,6 +118,10 @@ describe('submitRetrieval', () => {
       .reply(500, {
         errors: ['An error occured.']
       })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const store = mockStore({
       authToken: 'mockToken',
@@ -379,6 +388,10 @@ describe('fetchRetrieval', () => {
         errors: ['An error occured.']
       })
 
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
     const store = mockStore({
       authToken: 'mockToken',
       metadata: {
@@ -433,7 +446,7 @@ describe('deleteRetrieval', () => {
   test('calls lambda to delete a retrieval', async () => {
     nock(/localhost/)
       .delete(/2057964173/)
-      .reply(null)
+      .reply(204)
 
     // mockStore with initialState
     const store = mockStore({
@@ -457,6 +470,10 @@ describe('deleteRetrieval', () => {
       .reply(500, {
         errors: ['An error occured.']
       })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const store = mockStore({
       authToken: 'mockToken',

@@ -1,9 +1,9 @@
-import moxios from 'moxios'
+import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import actions from '../index'
-import { updateFocusedCollection } from '../focusedCollection'
+import { updateFocusedCollection, getFocusedCollection } from '../focusedCollection'
 import { getCollectionsResponseUnauth, getCollectionsResponseAuth } from './mocks'
 import {
   UPDATE_FOCUSED_COLLECTION,
@@ -22,6 +22,11 @@ const mockStore = configureMockStore([thunk])
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
+})
+
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
 })
 
 describe('updateFocusedCollection', () => {
@@ -205,22 +210,12 @@ describe('changeFocusedCollection', () => {
 })
 
 describe('getFocusedCollection', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
   test('should update the focusedCollection and call getGranules', async () => {
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
-    moxios.stubRequest(/search\/collections\.json/, {
-      status: 200,
-      response: {
+    nock(/cmr/)
+      .post(/collections\.json/)
+      .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
@@ -233,15 +228,13 @@ describe('getFocusedCollection', () => {
           facets: {},
           hits: 1
         }
-      },
-      headers: {
+      }, {
         'cmr-hits': 1
-      }
-    })
+      })
 
-    moxios.stubRequest(/search\/collections\.umm_json/, {
-      status: 200,
-      response: {
+    nock(/cmr/)
+      .post(/collections\.umm_json/)
+      .reply(200, {
         hits: 1,
         took: 234,
         items: [{
@@ -252,11 +245,9 @@ describe('getFocusedCollection', () => {
             data: 'collectionId1'
           }
         }]
-      },
-      headers: {
+      }, {
         'cmr-hits': 1
-      }
-    })
+      })
 
     const collectionId = 'collectionId'
 
@@ -279,7 +270,7 @@ describe('getFocusedCollection', () => {
     })
 
     // call the dispatch
-    await store.dispatch(actions.getFocusedCollection()).then(() => {
+    await store.dispatch(getFocusedCollection()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: UPDATE_GRANULE_QUERY,
@@ -307,9 +298,9 @@ describe('getFocusedCollection', () => {
     }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
-    moxios.stubRequest(/3000\/collections\/json/, {
-      status: 200,
-      response: {
+    nock(/localhost/)
+      .post(/collections\/json/)
+      .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
@@ -322,16 +313,14 @@ describe('getFocusedCollection', () => {
           facets: {},
           hits: 1
         }
-      },
-      headers: {
+      }, {
         'cmr-hits': 1,
         'jwt-token': 'token'
-      }
-    })
+      })
 
-    moxios.stubRequest(/3000\/collections\/umm_json/, {
-      status: 200,
-      response: {
+    nock(/localhost/)
+      .post(/collections\/umm_json/)
+      .reply(200, {
         hits: 1,
         took: 234,
         items: [{
@@ -342,12 +331,10 @@ describe('getFocusedCollection', () => {
             data: 'collectionId1'
           }
         }]
-      },
-      headers: {
+      }, {
         'cmr-hits': 1,
         'jwt-token': 'token'
-      }
-    })
+      })
 
     const collectionId = 'collectionId'
 
@@ -394,9 +381,9 @@ describe('getFocusedCollection', () => {
   test('should not call getGranules is previous granules are used', async () => {
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
-    moxios.stubRequest(/search\/collections\.json/, {
-      status: 200,
-      response: {
+    nock(/cmr/)
+      .post(/collections\.json/)
+      .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
@@ -409,15 +396,13 @@ describe('getFocusedCollection', () => {
           facets: {},
           hits: 1
         }
-      },
-      headers: {
+      }, {
         'cmr-hits': 1
-      }
-    })
+      })
 
-    moxios.stubRequest(/search\/collections\.umm_json/, {
-      status: 200,
-      response: {
+    nock(/cmr/)
+      .post(/collections\.umm_json/)
+      .reply(200, {
         hits: 1,
         took: 234,
         items: [{
@@ -428,11 +413,9 @@ describe('getFocusedCollection', () => {
             data: 'collectionId1'
           }
         }]
-      },
-      headers: {
+      }, {
         'cmr-hits': 1
-      }
-    })
+      })
 
     const collectionId = 'collectionId'
 
@@ -506,10 +489,13 @@ describe('getFocusedCollection', () => {
   })
 
   test('does not call updateFocusedCollection on error', async () => {
-    moxios.stubRequest(/collections.*/, {
-      status: 500,
-      response: {}
-    })
+    nock(/localhost/)
+      .post(/collections/)
+      .reply(500)
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const store = mockStore({
       authToken: '',

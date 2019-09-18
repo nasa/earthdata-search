@@ -1,4 +1,4 @@
-import moxios from 'moxios'
+import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
@@ -34,6 +34,11 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
+})
+
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
 })
 
 describe('updateCollectionResults', () => {
@@ -191,20 +196,10 @@ describe('updateCollectionGranuleFilters', () => {
 })
 
 describe('getCollections', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
   test('calls the API to get collections', async () => {
-    moxios.stubRequest(/gov\/search\/collections.*/, {
-      status: 200,
-      response: {
+    nock(/cmr/)
+      .post(/collections/)
+      .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic',
@@ -214,11 +209,9 @@ describe('getCollections', () => {
           }],
           facets: {}
         }
-      },
-      headers: {
+      }, {
         'cmr-hits': 1
-      }
-    })
+      })
 
     // mockStore with initialState
     const store = mockStore({
@@ -278,16 +271,16 @@ describe('getCollections', () => {
             mockCollectionData: 'goes here'
           }],
           facets: [],
-          hits: 1
+          hits: '1'
         }
       })
     })
   })
 
   test('calls lambda to get authenticated collections', async () => {
-    moxios.stubRequest(/3000\/collections.*/, {
-      status: 200,
-      response: {
+    nock(/localhost/)
+      .post(/collections/)
+      .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic',
@@ -297,12 +290,10 @@ describe('getCollections', () => {
           }],
           facets: {}
         }
-      },
-      headers: {
+      }, {
         'cmr-hits': 1,
         'jwt-token': 'token'
-      }
-    })
+      })
 
     // mockStore with initialState
     const store = mockStore({
@@ -355,17 +346,20 @@ describe('getCollections', () => {
             mockCollectionData: 'goes here'
           }],
           facets: [],
-          hits: 1
+          hits: '1'
         }
       })
     })
   })
 
   test('does not call updateCollectionResults on error', async () => {
-    moxios.stubRequest(/collections.*/, {
-      status: 500,
-      response: {}
-    })
+    nock(/cmr/)
+      .post(/collections/)
+      .reply(500)
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const store = mockStore({
       authToken: '',

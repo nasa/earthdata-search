@@ -12,6 +12,11 @@ beforeEach(() => {
   jest.restoreAllMocks()
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('updateSavedProject', () => {
   test('should create an action to update the savedProject', () => {
     const payload = {

@@ -11,6 +11,11 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('fetchAccessMethods', () => {
   test('does not fetch access methods if the user is not logged in', () => {
     const store = mockStore({

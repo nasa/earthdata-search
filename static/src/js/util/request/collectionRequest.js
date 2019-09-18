@@ -110,12 +110,14 @@ export default class CollectionRequest extends Request {
     const { statusCode = 200 } = data
     if (statusCode !== 200) return data
 
+    if (!data || Object.keys(data).length === 0) return data
+
     let entry
 
     if (data.items) {
       entry = data.items
     } else {
-      const { feed } = data
+      const { feed = {} } = data
       // eslint-disable-next-line prefer-destructuring
       entry = feed.entry
     }

@@ -1,10 +1,15 @@
-import moxios from 'moxios'
+import nock from 'nock'
 import CwicRequest from '../cwic'
 import { singleCwicGranuleResponse, multipleCwicGranulesResponse } from './mocks'
 
 
 beforeEach(() => {
   jest.clearAllMocks()
+})
+
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
 })
 
 describe('CwicRequest#transformRequest', () => {
@@ -72,28 +77,21 @@ describe('CwicRequest#transformResponse', () => {
 
 describe('CwicRequest#search', () => {
   beforeEach(() => {
-    moxios.install()
-
     jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
   })
 
   // TODO: Test that when we call our search method that the transformations actually get called
   // test('all transformations are called', async () => {
-  //   moxios.stubRequest(/cwic\/granules/, {
-  //     status: 200,
-  //     response: {
+  //   nock('/localhost/')
+  //     .post(/cwic/)
+  //     .reply(200, {
   //       feed: {
   //         updated: '2019-03-27T20:21:14.705Z',
   //         entry: [{
   //           mockCollectionData: 'goes here'
   //         }]
   //       }
-  //     }
-  //   })
+  //     })
 
   //   const cwicRequest = new CwicRequest()
 

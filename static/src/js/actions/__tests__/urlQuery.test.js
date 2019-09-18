@@ -13,6 +13,11 @@ beforeEach(() => {
   jest.restoreAllMocks()
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('updateStore', () => {
   test('calls restoreFromUrl and gets new search results', () => {
     const params = {

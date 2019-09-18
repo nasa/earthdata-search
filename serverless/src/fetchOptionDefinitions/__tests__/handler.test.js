@@ -19,6 +19,9 @@ beforeEach(() => {
 afterEach(() => {
   // Restore any ENV variables overwritten in tests
   process.env = OLD_ENV
+
+  nock.cleanAll()
+  nock.enableNetConnect()
 })
 
 describe('generateSubsettingTags', () => {
