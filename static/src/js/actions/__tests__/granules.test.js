@@ -28,6 +28,10 @@ import {
 
 const mockStore = configureMockStore([thunk])
 
+beforeEach(() => {
+  nock.disableNetConnect()
+})
+
 afterEach(() => {
   nock.cleanAll()
   nock.enableNetConnect()
