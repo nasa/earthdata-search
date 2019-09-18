@@ -5,8 +5,9 @@ import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
- * Retrieves a single granule result from CMR
- * @param {String} collectionId CMR Collection ID
+ * Returns tags for a collection based on a single granule sample
+ * @param {String} cmrToken The CMR token used to authenticate the request
+ * @param {Object} collectionId CMR Collection ID
  */
 export const getSingleGranule = async (cmrToken, collectionId) => {
   const cmrParams = {
@@ -18,7 +19,10 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
   const granuleSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/granules.json`
 
   console.log(`Retrieving a single granule for ${collectionId}`)
-  const cmrResponse = await request.post({
+
+  // Using an extension of request promise that supports retries
+  const cmrResponse = await request({
+    method: 'POST',
     uri: granuleSearchUrl,
     form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {
@@ -28,7 +32,8 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     },
     json: true,
     resolveWithFullResponse: true,
-    // in case of ENOTFOUND
+
+    // Compensate for intermittent ENOTFOUND issues
     retry: 4
   })
 
