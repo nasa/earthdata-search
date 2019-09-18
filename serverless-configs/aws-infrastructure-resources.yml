@@ -79,7 +79,7 @@ Resources:
             {
               "Ref": "AWS::AccountId"
             },
-            ":policy/NGAPShNonProdRoleBoundary"
+            ":policy/NGAPShRoleBoundary"
           ]
         ]
       AssumeRolePolicyDocument:
