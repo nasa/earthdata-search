@@ -8,13 +8,6 @@ import { variablesResponse, mockKeywordMappings, mockVariables } from './mocks'
 
 beforeEach(() => {
   jest.clearAllMocks()
-
-  nock.disableNetConnect()
-})
-
-afterEach(() => {
-  nock.cleanAll()
-  nock.enableNetConnect()
 })
 
 describe('getVariables', () => {

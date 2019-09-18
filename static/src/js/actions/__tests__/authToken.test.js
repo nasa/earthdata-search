@@ -10,13 +10,6 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
-
-  nock.disableNetConnect()
-})
-
-afterEach(() => {
-  nock.cleanAll()
-  nock.enableNetConnect()
 })
 
 describe('updateAuthToken', () => {

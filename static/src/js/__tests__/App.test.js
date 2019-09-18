@@ -20,13 +20,6 @@ function setup() {
 
 beforeEach(() => {
   jest.clearAllMocks()
-
-  nock.disableNetConnect()
-})
-
-afterEach(() => {
-  nock.cleanAll()
-  nock.enableNetConnect()
 })
 
 describe('App component', () => {

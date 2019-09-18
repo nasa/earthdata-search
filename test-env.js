@@ -4,6 +4,8 @@
 // jQuery
 import $ from 'jquery'
 
+import nock from 'nock'
+
 global.$ = $
 global.jQuery = $
 
@@ -25,3 +27,6 @@ const consoleError = function errorOverride(message) {
 }
 
 console.error = consoleError
+
+nock.cleanAll()
+nock.disableNetConnect()

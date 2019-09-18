@@ -15,13 +15,6 @@ const mockStore = configureMockStore([thunk])
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
-
-  nock.disableNetConnect()
-})
-
-afterEach(() => {
-  nock.cleanAll()
-  nock.enableNetConnect()
 })
 
 describe('updateFocusedGranule', () => {

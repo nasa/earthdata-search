@@ -43,13 +43,6 @@ beforeEach(() => {
   jest.restoreAllMocks()
 
   jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
-  nock.disableNetConnect()
-})
-
-afterEach(() => {
-  nock.cleanAll()
-  nock.enableNetConnect()
 })
 
 describe('addCollectionToProject', () => {

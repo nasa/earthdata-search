@@ -14,16 +14,11 @@ beforeEach(() => {
   jest.resetModules()
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
-
-  nock.disableNetConnect()
 })
 
 afterEach(() => {
   // Restore any ENV variables overwritten in tests
   process.env = OLD_ENV
-
-  nock.cleanAll()
-  nock.enableNetConnect()
 })
 
 describe('generateSubsettingTags', () => {

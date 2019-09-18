@@ -1,6 +1,7 @@
 import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import * as tinyCookie from 'tiny-cookie'
 
 import {
   applyViewAllFacets,
@@ -13,6 +14,7 @@ import {
   triggerViewAllFacets,
   updateViewAllFacets
 } from '../viewAllFacets'
+// import * as actions from '../viewAllFacets'
 import {
   COPY_CMR_FACETS_TO_VIEW_ALL,
   ERRORED_VIEW_ALL_FACETS,
@@ -30,13 +32,6 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
-
-  nock.disableNetConnect()
-})
-
-afterEach(() => {
-  nock.cleanAll()
-  nock.enableNetConnect()
 })
 
 describe('updateViewAllFacets', () => {
@@ -90,7 +85,7 @@ describe('applyViewAllFacets', () => {
           entry: [],
           facets: {}
         }
-      }, { 'cmr-hits': 1 })
+      }, { 'cmr-hits': 0 })
 
     const store = mockStore({
       ui: {
@@ -425,86 +420,112 @@ describe('getViewAllFacets', () => {
   })
 })
 
-test('triggerViewAllFacets', () => {
-  // mockStore with initialState
-  const store = mockStore({
-    searchResults: {
-      collections: {},
-      facets: {},
-      granules: {},
-      viewAllFacets: {}
-    },
-    query: {
-      collection: {
-        keyword: 'search keyword'
+describe('triggerViewAllFacets', () => {
+  test('calls copyCMRFacets and getViewAllFacets', async () => {
+    jest.spyOn(tinyCookie, 'set').mockImplementation(() => jest.fn())
+
+    nock(/cmr/)
+      .post(/collections/)
+      .reply(200, {
+        feed: {
+          entry: [],
+          facets: {}
+        }
+      }, { 'cmr-hits': 0 })
+
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: '',
+      searchResults: {
+        collections: {},
+        facets: {},
+        granules: {},
+        viewAllFacets: {}
+      },
+      query: {
+        collection: {
+          keyword: 'search keyword'
+        }
+      },
+      facetsParams: {
+        cmr: {
+          instrument_h: ['1 Test facet', 'Test facet 2']
+        }
       }
-    },
-    facetsParams: {
-      cmr: {
+    })
+
+    // call the dispatch
+    store.dispatch(triggerViewAllFacets('Instruments'))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: COPY_CMR_FACETS_TO_VIEW_ALL,
+      payload: {
         instrument_h: ['1 Test facet', 'Test facet 2']
       }
-    }
-  })
-
-  // call the dispatch
-  store.dispatch(triggerViewAllFacets('Instruments'))
-
-  const storeActions = store.getActions()
-  expect(storeActions[0]).toEqual({
-    type: COPY_CMR_FACETS_TO_VIEW_ALL,
-    payload: {
-      instrument_h: ['1 Test facet', 'Test facet 2']
-    }
-  })
-  expect(storeActions[1]).toEqual({
-    type: LOADING_VIEW_ALL_FACETS,
-    payload: {
-      selectedCategory: 'Instruments'
-    }
+    })
+    expect(storeActions[1]).toEqual({
+      type: LOADING_VIEW_ALL_FACETS,
+      payload: {
+        selectedCategory: 'Instruments'
+      }
+    })
   })
 })
 
-test('changeViewAllFacet', () => {
-  // mockStore with initialState
-  const store = mockStore({
-    searchResults: {
-      collections: {},
-      facets: {},
-      granules: {},
-      viewAllFacets: {}
-    },
-    query: {
-      collection: {
-        keyword: 'search keyword'
-      }
-    },
-    facetsParams: {
-      viewAll: {
-        instrument_h: ['1 Test facet', 'Test facet 2']
-      }
-    }
-  })
+describe('changeViewAllFacet', () => {
+  test('calls updateViewAllFacet and getViewAllFacets', () => {
+    jest.spyOn(tinyCookie, 'set').mockImplementation(() => jest.fn())
 
-  // call the dispatch
-  const newFacets = { instrument_h: ['1 Test facet', 'Test facet 2', 'And another'] }
-  store.dispatch(changeViewAllFacet(newFacets))
+    nock(/cmr/)
+      .post(/collections/)
+      .reply(200, {
+        feed: {
+          entry: [],
+          facets: {}
+        }
+      }, { 'cmr-hits': 0 })
 
-  const storeActions = store.getActions()
-  expect(storeActions[0]).toEqual({
-    type: UPDATE_SELECTED_VIEW_ALL_FACET,
-    payload: {
-      data_center_h: undefined,
-      instrument_h: ['1 Test facet', 'Test facet 2', 'And another'],
-      platform_h: undefined,
-      processing_level_id_h: undefined,
-      project_h: undefined,
-      science_keywords_h: undefined
-    }
-  })
-  expect(storeActions[1]).toEqual({
-    type: LOADING_VIEW_ALL_FACETS,
-    payload: {
-      selectedCategory: ''
-    }
+    // mockStore with initialState
+    const store = mockStore({
+      searchResults: {
+        collections: {},
+        facets: {},
+        granules: {},
+        viewAllFacets: {}
+      },
+      query: {
+        collection: {
+          keyword: 'search keyword'
+        }
+      },
+      facetsParams: {
+        viewAll: {
+          instrument_h: ['1 Test facet', 'Test facet 2']
+        }
+      }
+    })
+
+    // call the dispatch
+    const newFacets = { instrument_h: ['1 Test facet', 'Test facet 2', 'And another'] }
+    store.dispatch(changeViewAllFacet(newFacets))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_SELECTED_VIEW_ALL_FACET,
+      payload: {
+        data_center_h: undefined,
+        instrument_h: ['1 Test facet', 'Test facet 2', 'And another'],
+        platform_h: undefined,
+        processing_level_id_h: undefined,
+        project_h: undefined,
+        science_keywords_h: undefined
+      }
+    })
+    expect(storeActions[1]).toEqual({
+      type: LOADING_VIEW_ALL_FACETS,
+      payload: {
+        selectedCategory: ''
+      }
+    })
   })
 })
