@@ -28,15 +28,6 @@ import {
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  nock.disableNetConnect()
-})
-
-afterEach(() => {
-  nock.cleanAll()
-  nock.enableNetConnect()
-})
-
 describe('updateGranuleResults', () => {
   test('should create an action to update the search query', () => {
     const payload = []
