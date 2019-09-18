@@ -20,6 +20,8 @@ function setup() {
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  nock.disableNetConnect()
 })
 
 afterEach(() => {

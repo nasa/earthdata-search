@@ -31,6 +31,8 @@ beforeEach(() => {
 
   dbTracker = mockKnex.getTracker()
   dbTracker.install()
+
+  nock.disableNetConnect()
 })
 
 afterEach(() => {

@@ -11,6 +11,8 @@ beforeEach(() => {
   jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ token: { access_token: 'access_token' } }))
   jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
   jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ echoRestRoot: 'http://echorest.example.com' }))
+
+  nock.disableNetConnect()
 })
 
 afterEach(() => {

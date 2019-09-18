@@ -9,6 +9,8 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  nock.disableNetConnect()
 })
 
 afterEach(() => {

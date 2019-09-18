@@ -6,6 +6,8 @@ import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJw
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  nock.disableNetConnect()
 })
 
 afterEach(() => {

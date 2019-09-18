@@ -46,5 +46,5 @@ export const handleError = ({
       message,
       error
     }
-  })
+  }).then(() => {})
 }

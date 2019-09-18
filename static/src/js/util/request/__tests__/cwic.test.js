@@ -5,6 +5,8 @@ import { singleCwicGranuleResponse, multipleCwicGranulesResponse } from './mocks
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  nock.disableNetConnect()
 })
 
 afterEach(() => {

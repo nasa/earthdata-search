@@ -30,6 +30,8 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  nock.disableNetConnect()
 })
 
 afterEach(() => {
@@ -81,6 +83,15 @@ describe('onViewAllFacetsErrored', () => {
 
 describe('applyViewAllFacets', () => {
   test('should create an action to update CMR facets', () => {
+    nock(/cmr/)
+      .post(/collections/)
+      .reply(200, {
+        feed: {
+          entry: [],
+          facets: {}
+        }
+      }, { 'cmr-hits': 1 })
+
     const store = mockStore({
       ui: {
         facetsModal: {
@@ -235,7 +246,6 @@ describe('getViewAllFacets', () => {
     nock(/cmr/)
       .post(/collections/)
       .reply(200, stubResponse, { 'cmr-hits': 1 })
-      .log(console.log)
 
     // mockStore with initialState
     const store = mockStore({
