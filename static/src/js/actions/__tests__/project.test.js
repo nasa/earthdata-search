@@ -1,4 +1,4 @@
-import moxios from 'moxios'
+import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { getProjectCollectionsResponse } from './mocks'
@@ -43,6 +43,11 @@ beforeEach(() => {
   jest.restoreAllMocks()
 
   jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+})
+
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
 })
 
 describe('addCollectionToProject', () => {
@@ -206,16 +211,6 @@ describe('selectAccessMethod', () => {
 })
 
 describe('getProjectGranules', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
   test('calls lambda to get authenticated granules', async () => {
     const granules = [{
       id: 'granuleId1',
@@ -225,9 +220,11 @@ describe('getProjectGranules', () => {
       id: 'granuleId2',
       mockCollectionData: 'collection data 2'
     }]
-    moxios.stubRequest(/3000\/granules.*/, {
-      status: 200,
-      response: {
+
+    nock(/localhost/)
+      .post(/granules/)
+      .twice()
+      .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
           id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json',
@@ -236,11 +233,10 @@ describe('getProjectGranules', () => {
           facets: {}
         }
       },
-      headers: {
+      {
         'cmr-hits': 2,
         'jwt-token': 'token'
-      }
-    })
+      })
 
     // mockStore with initialState
     const store = mockStore({
@@ -284,7 +280,40 @@ describe('getProjectGranules', () => {
           collectionId: 'collectionId1',
           hits: 2,
           isCwic: false,
-          results: granules,
+          results: [{
+            ...granules[0],
+            formatted_temporal: [null, null],
+            is_cwic: false,
+            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId1?h=85&w=85'
+          }, {
+            ...granules[1],
+            formatted_temporal: [null, null],
+            is_cwic: false,
+            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId2?h=85&w=85'
+          }],
+          totalSize: {
+            size: '0.0',
+            unit: 'MB'
+          }
+        }
+      })
+      expect(storeActions[3]).toEqual({
+        type: UPDATE_PROJECT_GRANULES,
+        payload: {
+          collectionId: 'collectionId2',
+          hits: 2,
+          isCwic: false,
+          results: [{
+            ...granules[0],
+            formatted_temporal: [null, null],
+            is_cwic: false,
+            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId1?h=85&w=85'
+          }, {
+            ...granules[1],
+            formatted_temporal: [null, null],
+            is_cwic: false,
+            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId2?h=85&w=85'
+          }],
           totalSize: {
             size: '0.0',
             unit: 'MB'
@@ -295,10 +324,13 @@ describe('getProjectGranules', () => {
   })
 
   test('does not call updateProjectGranules on error', async () => {
-    moxios.stubRequest(/3000\/granules.*/, {
-      status: 500,
-      response: {}
-    })
+    nock(/localhost/)
+      .post(/granules/)
+      .reply(500)
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const store = mockStore({
       authToken: 'token',
@@ -335,13 +367,7 @@ describe('getProjectGranules', () => {
 
 describe('getProjectCollections', () => {
   beforeEach(() => {
-    moxios.install()
-
     jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
   })
 
   test('calls lambda to get authenticated collections', async () => {
@@ -350,10 +376,11 @@ describe('getProjectCollections', () => {
       opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
     }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+    jest.spyOn(actions, 'fetchDataQualitySummaries').mockImplementation(() => jest.fn())
 
-    moxios.stubRequest(/3000\/collections\/json/, {
-      status: 200,
-      response: {
+    nock(/localhost/)
+      .post(/collections\/json/)
+      .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
           id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic',
@@ -369,15 +396,14 @@ describe('getProjectCollections', () => {
           facets: {}
         }
       },
-      headers: {
+      {
         'cmr-hits': 1,
         'jwt-token': 'token'
-      }
-    })
+      })
 
-    moxios.stubRequest(/3000\/collections\/umm_json/, {
-      status: 200,
-      response: {
+    nock(/localhost/)
+      .post(/collections\/umm_json/)
+      .reply(200, {
         hits: 1,
         took: 234,
         items: [
@@ -399,11 +425,10 @@ describe('getProjectCollections', () => {
           }
         ]
       },
-      headers: {
+      {
         'cmr-hits': 1,
         'jwt-token': 'token'
-      }
-    })
+      })
 
     const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
     getProjectGranulesMock.mockImplementation(() => jest.fn())
@@ -467,10 +492,13 @@ describe('getProjectCollections', () => {
   })
 
   test('does not call updateCollectionMetadata on error', async () => {
-    moxios.stubRequest(/3000\/collections.*/, {
-      status: 500,
-      response: {}
-    })
+    nock(/localhost/)
+      .post(/collections/)
+      .reply(500)
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const store = mockStore({
       authToken: 'token',

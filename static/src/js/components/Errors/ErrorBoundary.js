@@ -17,11 +17,13 @@ class ErrorBoundary extends Component {
   static getDerivedStateFromError(error) {
     const guid = uuidv4()
     const { message, stack } = error
+    const { location } = window
 
     const requestObject = new LoggerRequest()
     requestObject.log({
       error: {
         guid,
+        location,
         message,
         stack
       }

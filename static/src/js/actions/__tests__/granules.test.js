@@ -1,4 +1,3 @@
-import moxios from 'moxios'
 import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -28,6 +27,11 @@ import {
 
 
 const mockStore = configureMockStore([thunk])
+
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
 
 describe('updateGranuleResults', () => {
   test('should create an action to update the search query', () => {
@@ -85,20 +89,10 @@ describe('updateGranuleResults', () => {
 // })
 
 describe('getGranules', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
   test('calls the API to get granules', async () => {
-    moxios.stubRequest(/gov\/search\/granules.*/, {
-      status: 200,
-      response: {
+    nock(/cmr/)
+      .post(/granules/)
+      .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
@@ -108,10 +102,9 @@ describe('getGranules', () => {
           }]
         }
       },
-      headers: {
+      {
         'cmr-hits': 1
-      }
-    })
+      })
 
     // mockStore with initialState
     const store = mockStore({
@@ -176,9 +169,9 @@ describe('getGranules', () => {
   })
 
   test('calls lambda to get authenticated granules', async () => {
-    moxios.stubRequest(/3000\/granules.*/, {
-      status: 200,
-      response: {
+    nock(/localhost/)
+      .post(/granules/)
+      .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
@@ -188,11 +181,10 @@ describe('getGranules', () => {
           }]
         }
       },
-      headers: {
+      {
         'cmr-hits': 1,
         'jwt-token': 'token'
-      }
-    })
+      })
 
     // mockStore with initialState
     const store = mockStore({
@@ -279,10 +271,13 @@ describe('getGranules', () => {
   })
 
   test('does not call updateGranuleResults on error', async () => {
-    moxios.stubRequest(/granules.*/, {
-      status: 500,
-      response: {}
-    })
+    nock(/cmr/)
+      .post(/granules/)
+      .reply(500)
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const store = mockStore({
       authToken: '',

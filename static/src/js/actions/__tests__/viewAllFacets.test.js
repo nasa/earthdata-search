@@ -1,4 +1,4 @@
-import moxios from 'moxios'
+import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
@@ -30,6 +30,11 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
+})
+
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
 })
 
 describe('updateViewAllFacets', () => {
@@ -152,16 +157,6 @@ describe('copyCMRFacets', () => {
 })
 
 describe('getViewAllFacets', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
   const stubResponse = {
     feed: {
       updated: '2019-03-27T20:21:14.705Z',
@@ -204,7 +199,7 @@ describe('getViewAllFacets', () => {
   }
 
   const facetsPayload = {
-    hits: 1,
+    hits: '1',
     selectedCategory: undefined,
     facets: {
       instrument: {
@@ -237,13 +232,10 @@ describe('getViewAllFacets', () => {
   }
 
   test('calls the API to get the View All Facets', async () => {
-    moxios.stubRequest(/gov\/search\/collections.*/, {
-      status: 200,
-      response: stubResponse,
-      headers: {
-        'cmr-hits': 1
-      }
-    })
+    nock(/cmr/)
+      .post(/collections/)
+      .reply(200, stubResponse, { 'cmr-hits': 1 })
+      .log(console.log)
 
     // mockStore with initialState
     const store = mockStore({
@@ -300,14 +292,12 @@ describe('getViewAllFacets', () => {
   })
 
   test('calls lambda to get the authenticated View All Facets', async () => {
-    moxios.stubRequest(/3000\/collections.*/, {
-      status: 200,
-      response: stubResponse,
-      headers: {
+    nock(/localhost/)
+      .post(/collections/)
+      .reply(200, stubResponse, {
         'cmr-hits': 1,
         'jwt-token': 'token'
-      }
-    })
+      })
 
     // mockStore with initialState
     const store = mockStore({
@@ -366,13 +356,13 @@ describe('getViewAllFacets', () => {
   test('does not call updateCollectionResults on error', async () => {
     const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
 
-    moxios.stubRequest(/collections.*/, {
-      status: 500,
-      response: {},
-      headers: {
-        'cmr-hits': 1
-      }
-    })
+    nock(/cmr/)
+      .post(/collections/)
+      .reply(500, {}, { 'cmr-hits': 1 })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     // mockStore with initialState
     const store = mockStore({

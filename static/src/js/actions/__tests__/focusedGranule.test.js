@@ -1,4 +1,4 @@
-import moxios from 'moxios'
+import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
@@ -15,6 +15,11 @@ const mockStore = configureMockStore([thunk])
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
+})
+
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
 })
 
 describe('updateFocusedGranule', () => {
@@ -88,23 +93,12 @@ describe('getFocusedGranule', () => {
     }
   }
 
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
   test('should update the granule metadata', async () => {
     const metadata = '<MockGranule>Data</MockGranule>'
 
-    moxios.stubRequest(/gov\/search\/concepts.*/, {
-      status: 200,
-      response: metadata
-    })
+    nock(/cmr/)
+      .get(/concepts/)
+      .reply(200, metadata)
 
     const granuleId = 'granuleId'
 
@@ -139,13 +133,9 @@ describe('getFocusedGranule', () => {
   test('should update the authenticated granule metadata', async () => {
     const metadata = '<MockGranule>Data</MockGranule>'
 
-    moxios.stubRequest(/3000\/concepts.*/, {
-      status: 200,
-      response: metadata,
-      headers: {
-        'jwt-token': 'token'
-      }
-    })
+    nock(/localhost/)
+      .get(/concepts/)
+      .reply(200, metadata, { 'jwt-token': 'token' })
 
     const granuleId = 'granuleId'
 
@@ -214,10 +204,13 @@ describe('getFocusedGranule', () => {
   })
 
   test('does not call updateGranuleMetadata on error', async () => {
-    moxios.stubRequest(/concept.*/, {
-      status: 500,
-      response: {}
-    })
+    nock(/cmr/)
+      .get(/concepts/)
+      .reply(500)
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const store = mockStore({
       focusedGranule: 'granuleId',

@@ -72,7 +72,12 @@ export const copyGranulesFromCollection = collectionId => (dispatch, getState) =
  * Perform a collection request based on the focusedCollection from the store.
  */
 export const getFocusedCollection = () => async (dispatch, getState) => {
-  const { focusedCollection, metadata, searchResults } = getState()
+  const {
+    authToken,
+    focusedCollection,
+    metadata,
+    searchResults
+  } = getState()
 
   const { granules } = searchResults
   const { allIds = [] } = granules
@@ -96,8 +101,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       return null
     }
   }
-
-  const { authToken } = getState()
 
   const response = getCollectionMetadata({
     concept_id: [focusedCollection],

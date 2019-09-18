@@ -11,6 +11,11 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('saveShapefile', () => {
   test('calls the API to get collections', async () => {
     nock(/localhost/)
@@ -65,6 +70,10 @@ describe('saveShapefile', () => {
     nock(/localhost/)
       .post(/shapefiles/)
       .reply(500)
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const data = {
       filename: 'test file',

@@ -1,4 +1,4 @@
-import moxios from 'moxios'
+import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
@@ -16,6 +16,15 @@ import {
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
 
 describe('updateTimelineIntervals', () => {
   test('should create an action to update the timeline granules', () => {
@@ -40,20 +49,10 @@ describe('updateTimelineQuery', () => {
 })
 
 describe('getTimeline', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
   test('calls the API to get timeline granules', async () => {
-    moxios.stubRequest(/gov\/search\/granules\/timeline.*/, {
-      status: 200,
-      response: [{
+    nock(/cmr/)
+      .post(/granules\/timeline/)
+      .reply(200, [{
         'concept-id': 'collectionId',
         intervals: [
           [
@@ -62,8 +61,7 @@ describe('getTimeline', () => {
             3
           ]
         ]
-      }]
-    })
+      }])
 
     // mockStore with initialState
     const store = mockStore({
@@ -116,9 +114,9 @@ describe('getTimeline', () => {
   })
 
   test('calls lambda to get authenticated timeline granules', async () => {
-    moxios.stubRequest(/3000\/granules\/timeline.*/, {
-      status: 200,
-      response: [{
+    nock(/localhost/)
+      .post(/granules\/timeline/)
+      .reply(200, [{
         'concept-id': 'collectionId',
         intervals: [
           [
@@ -128,10 +126,9 @@ describe('getTimeline', () => {
           ]
         ]
       }],
-      headers: {
+      {
         'jwt-token': 'token'
-      }
-    })
+      })
 
     // mockStore with initialState
     const store = mockStore({
@@ -209,10 +206,13 @@ describe('getTimeline', () => {
   })
 
   test('does not call updateTimelineIntervals on error', async () => {
-    moxios.stubRequest(/granules\/timeline.*/, {
-      status: 500,
-      response: {}
-    })
+    nock(/cmr/)
+      .post(/granules\/timeline/)
+      .reply(500)
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
     const store = mockStore({
       authToken: '',

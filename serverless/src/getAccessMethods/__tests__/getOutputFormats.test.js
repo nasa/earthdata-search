@@ -8,6 +8,11 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('getOutputFormats', () => {
   test('fetches UMM-S record from CMR and returns the SupportedOutputFormats', async () => {
     nock(/cmr/)

@@ -34,6 +34,8 @@ beforeEach(() => {
 
 afterEach(() => {
   dbTracker.uninstall()
+  nock.cleanAll()
+  nock.enableNetConnect()
 })
 
 describe('fetchLegacyServicesOrder', () => {

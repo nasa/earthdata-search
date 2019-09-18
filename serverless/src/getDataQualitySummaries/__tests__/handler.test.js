@@ -13,6 +13,11 @@ beforeEach(() => {
   jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ echoRestRoot: 'http://echorest.example.com' }))
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('getDataQualitySummaries', () => {
   test('returns data quality summaries when they exist', async () => {
     nock(/echorest/)

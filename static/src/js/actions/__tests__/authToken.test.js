@@ -12,6 +12,11 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+afterEach(() => {
+  nock.cleanAll()
+  nock.enableNetConnect()
+})
+
 describe('updateAuthToken', () => {
   test('should create an action to update the authToken', () => {
     const payload = 'authToken-token'
