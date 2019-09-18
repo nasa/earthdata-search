@@ -17,6 +17,8 @@ const tagName = 'edsc.extra.serverless.collection_capabilities'
 
 /**
  * Returns tags for a collection based on a single granule sample
+ * @param {String} cmrToken The CMR token used to authenticate the request
+ * @param {Object} collection Collection metadata
  */
 const collectionTags = async (cmrToken, collection) => {
   const {
@@ -46,7 +48,7 @@ const generateCollectionCapabilityTags = async (input) => {
   // CMR uses 1-based indexing for pages, default to page 1
   const { pageNumber = 1 } = input
 
-  // lazily initialize system token
+  // Lazily initialize system token
   cmrToken = await getSystemToken(cmrToken)
 
   const cmrParams = {
@@ -59,8 +61,6 @@ const generateCollectionCapabilityTags = async (input) => {
 
   const { cmrHost } = getEarthdataConfig(cmrEnv())
   const collectionSearchUrl = `${cmrHost}/search/collections.json`
-
-  console.log(`Requesting collections from ${collectionSearchUrl}`)
 
   const cmrCollectionResponse = await request.post({
     uri: collectionSearchUrl,
@@ -78,14 +78,17 @@ const generateCollectionCapabilityTags = async (input) => {
 
   console.log(`CMR returned ${cmrHits} collections. Current page number is ${pageNumber}, tagging ${pageSize} collections.`)
 
+  // All of the collections requested
   const collections = readCmrResults(collectionSearchUrl, cmrCollectionResponse)
 
+  // Filter out collections that dont have any granules
   const collectionsWithGranules = collections.filter(collection => collection.granule_count > 0)
 
-  console.log(`number of collections with granules: ${collectionsWithGranules.length}`)
+  console.log(`Number of collections with granules: ${collectionsWithGranules.length}`)
 
-  // build a list of associations to create
+  // Build a list of associations to create
   const associationPayload = []
+
   await collectionsWithGranules.forEachAsync(async (collection) => {
     const { id } = collection
     const tagData = await collectionTags(cmrToken, collection)
@@ -95,9 +98,9 @@ const generateCollectionCapabilityTags = async (input) => {
     })
   })
 
-  console.log(`associationPayload = ${JSON.stringify(associationPayload, null, 4)}`)
-
   if (associationPayload.length > 0) {
+    console.log(`Submitting ${associationPayload.length} tags to SQS for tagging`)
+
     await sqs.sendMessage({
       QueueUrl: process.env.tagQueueUrl,
       MessageBody: JSON.stringify({
