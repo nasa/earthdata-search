@@ -91,11 +91,16 @@ const generateCollectionCapabilityTags = async (input) => {
 
   await collectionsWithGranules.forEachAsync(async (collection) => {
     const { id } = collection
-    const tagData = await collectionTags(cmrToken, collection)
-    associationPayload.push({
-      'concept-id': id,
-      data: tagData
-    })
+    try {
+      // Discovered CMR-5890, need to skip records throwing 500s
+      const tagData = await collectionTags(cmrToken, collection)
+      associationPayload.push({
+        'concept-id': id,
+        data: tagData
+      })
+    } catch (e) {
+      console.log(e)
+    }
   })
 
   if (associationPayload.length > 0) {
