@@ -266,7 +266,7 @@ describe('getCollections', () => {
             mockCollectionData: 'goes here'
           }],
           facets: [],
-          hits: 1
+          hits: '1'
         }
       })
     })
@@ -341,7 +341,7 @@ describe('getCollections', () => {
             mockCollectionData: 'goes here'
           }],
           facets: [],
-          hits: 1
+          hits: '1'
         }
       })
     })
