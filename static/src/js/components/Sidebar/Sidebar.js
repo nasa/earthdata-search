@@ -27,7 +27,7 @@ const Sidebar = ({
           edscEnv={edscEnv}
           portal={portal}
         />
-        <SimpleBar className="sidebar__content">
+        <SimpleBar className="sidebar__content" style={{ height: '100%', overflowX: 'hidden' }}>
           {children}
         </SimpleBar>
       </div>

@@ -4,6 +4,8 @@ import classNames from 'classnames'
 import { isEmpty } from 'lodash'
 import $ from 'jquery'
 
+import SimpleBar from 'simplebar-react'
+
 import PanelGroupFooter from './PanelGroupFooter'
 import Button from '../Button/Button'
 
@@ -27,25 +29,29 @@ export class PanelItem extends Component {
       hasScrolled: false
     }
 
-    this.panelItemInnerRef = null
+    this.panelItemRef = null
 
     this.handleScroll = this.handleScroll.bind(this)
   }
 
   componentDidMount() {
-    const { panelItemInnerRef } = this
-    panelItemInnerRef.addEventListener('scroll', this.handleScroll)
+    const { panelItemRef } = this
+    console.warn('panelItemRef', panelItemRef)
+    const panelInner = panelItemRef.querySelector('.simplebar-content-wrapper')
+    if (panelInner) panelInner.addEventListener('scroll', this.handleScroll)
   }
 
   componentWillUnmount() {
-    const { panelItemInnerRef } = this
-    panelItemInnerRef.removeEventListener('scroll', this.handleScroll)
+    const { panelItemRef } = this
+    const panelInner = panelItemRef.querySelector('.simplebar-content-wrapper')
+    if (panelInner) panelInner.removeEventListener('scroll', this.handleScroll)
   }
 
   handleScroll() {
-    const { panelItemInnerRef } = this
+    const { panelItemRef } = this
+    const panelInner = panelItemRef.querySelector('.simplebar-content-wrapper')
     this.setState({
-      hasScrolled: $(panelItemInnerRef).scrollTop() > 20
+      hasScrolled: $(panelInner).scrollTop() > 20
     })
   }
 
@@ -106,6 +112,7 @@ export class PanelItem extends Component {
     return (
       <div
         className={className}
+        ref={(panelItem) => { this.panelItemRef = panelItem }}
       >
         <header className="panel-item__header">
           {
@@ -119,10 +126,7 @@ export class PanelItem extends Component {
             {backButton}
           </div>
         </header>
-        <div
-          className="panel-item__content"
-          ref={(panelItemInner) => { this.panelItemInnerRef = panelItemInner }}
-        >
+        <SimpleBar className="panel-item__content">
           {
             typeof children === 'string' && (
               children
@@ -133,7 +137,7 @@ export class PanelItem extends Component {
               React.cloneElement(children, { isActive })
             )
           }
-        </div>
+        </SimpleBar>
         {
           (footer && !hideFooter) && (
             <PanelGroupFooter

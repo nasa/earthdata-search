@@ -2,11 +2,14 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
+import SimpleBar from 'simplebar-react'
+
 import ProjectCollectionItem from './ProjectCollectionsItem'
 import { getColorByIndex } from '../../util/colors'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ProjectCollectionsList.scss'
+
 
 /**
  * Renders ProjectCollectionsList.
@@ -55,7 +58,7 @@ export const ProjectCollectionsList = (props) => {
   })
 
   return (
-    <div className="project-collections-list">
+    <SimpleBar className="project-collections-list" style={{ height: '100%', overflowX: 'hidden' }}>
       {projectIsEmpty && (
         <p className="project-collections-list__notice">
           {'Your project is empty. Click '}
@@ -76,7 +79,7 @@ export const ProjectCollectionsList = (props) => {
         </ul>
       )}
       <div className="project-collections-list__filler" />
-    </div>
+    </SimpleBar>
   )
 }
 
