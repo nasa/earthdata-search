@@ -28,6 +28,7 @@ provider:
       Ref: OptionDefinitionsQueue
 
     obfuscationSpin: ${env:OBFUSCATION_SPIN}
+    obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES}
 
     configSecretId:
       Fn::ImportValue: ${self:provider.stage}-DbPasswordSecret
@@ -103,7 +104,7 @@ custom:
       Fn::ImportValue: ${self:provider.stage}-ApplicationRole
     prewarm: true
     timeout: 30
-    events: 
+    events:
       - schedule: 'cron(0/20 8-22 ? * MON-FRI *)'
 
   # Manage resource count (Maximum of 200) by splitting up the cloudformation templates

@@ -58,7 +58,7 @@ describe('saveShapefile', () => {
 
       const result = await saveShapefile(event)
 
-      const expectedBody = JSON.stringify({ shapefile_id: 123 })
+      const expectedBody = JSON.stringify({ shapefile_id: '2059944173' })
 
       expect(result.body).toEqual(expectedBody)
     })
@@ -85,7 +85,7 @@ describe('saveShapefile', () => {
 
       const result = await saveShapefile(event)
 
-      const expectedBody = JSON.stringify({ shapefile_id: 12 })
+      const expectedBody = JSON.stringify({ shapefile_id: '6249150326' })
 
       expect(result.body).toEqual(expectedBody)
     })
@@ -115,7 +115,7 @@ describe('saveShapefile', () => {
 
       const result = await saveShapefile(event)
 
-      const expectedBody = JSON.stringify({ shapefile_id: 123 })
+      const expectedBody = JSON.stringify({ shapefile_id: '2059944173' })
 
       expect(result.body).toEqual(expectedBody)
     })
@@ -143,7 +143,7 @@ describe('saveShapefile', () => {
 
       const result = await saveShapefile(event)
 
-      const expectedBody = JSON.stringify({ shapefile_id: 12 })
+      const expectedBody = JSON.stringify({ shapefile_id: '6249150326' })
 
       expect(result.body).toEqual(expectedBody)
     })
