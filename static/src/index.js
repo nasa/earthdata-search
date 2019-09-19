@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import './css/main.scss'
 
 import App from './js/App'
+import './js/util/polyfill'
 
 const wrapper = document.getElementById('root')
 

@@ -1,4 +1,6 @@
 .master-overlay-panel {
+  align-self: flex-end;
+  margin-top: auto;
   position: relative;
   width: 100%;
   height: 300px;
@@ -78,11 +80,12 @@
   &__body {
     height: 100%;
     width: 100%;
-    overflow-y: scroll;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
 
     & > * {
+      height: 100%;
       flex-grow: 1;
     }
   }

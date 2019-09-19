@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import SimpleBar from 'simplebar-react'
+
 import GranuleResultsList from './GranuleResultsList'
 
 import './GranuleResultsBody.scss'
@@ -23,7 +25,7 @@ const GranuleResultsBody = ({
   onFocusedGranuleChange,
   onMetricsDataAccess
 }) => (
-  <div className="granule-results-body">
+  <SimpleBar className="granule-results-body">
     <GranuleResultsList
       collectionId={collectionId}
       excludedGranuleIds={excludedGranuleIds}
@@ -37,7 +39,7 @@ const GranuleResultsBody = ({
       onFocusedGranuleChange={onFocusedGranuleChange}
       onMetricsDataAccess={onMetricsDataAccess}
     />
-  </div>
+  </SimpleBar>
 )
 
 GranuleResultsBody.propTypes = {
