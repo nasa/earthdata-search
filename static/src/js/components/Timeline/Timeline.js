@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import $ from 'jquery'
-import { difference, isEqual } from 'lodash'
+import { isEqual } from 'lodash'
 
 import '../../../../../node_modules/edsc-timeline/dist/edsc-timeline.min'
 import { timelineIntervals } from '../../util/timeline'
@@ -137,8 +137,8 @@ class Timeline extends Component {
     if (oldTemporalSearch !== nextTemporalSearch) this.setTimelineTemporal(nextTemporalSearch)
 
     const newRows = {}
-    // Setup a row for each collection in collectionMetadata
-    if (difference(Object.keys(nextCollectionMetadata), Object.keys(this.rows)).length > 0) {
+    // Setup a row for each collection in collectionMetadata if the rows have changed
+    if (Object.keys(nextCollectionMetadata) !== Object.keys(this.rows)) {
       const timelineRows = []
       Object.keys(nextCollectionMetadata).forEach((collectionId) => {
         if (!nextCollectionMetadata[collectionId]) return
@@ -146,7 +146,7 @@ class Timeline extends Component {
         if (Object.keys(metadata).length === 0) return
 
         const {
-          title
+          title = ''
         } = metadata
 
         newRows[collectionId] = []
