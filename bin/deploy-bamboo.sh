@@ -59,6 +59,7 @@ dockerRun() {
         -e "NODE_ENV=production" \
         -e "AWS_ACCESS_KEY_ID=$bamboo_AWS_ACCESS_KEY_ID" \
         -e "AWS_SECRET_ACCESS_KEY=$bamboo_AWS_SECRET_ACCESS_KEY" \
+        -e "DB_INSTANCE_CLASS=$bamboo_DB_INSTANCE_CLASS" \
         -e "OBFUSCATION_SPIN=$bamboo_OBFUSCATION_SPIN" \
         -e "OBFUSCATION_SPIN_SHAPEFILES=$bamboo_OBFUSCATION_SPIN_SHAPEFILES" \
         -e "VPC_ID=$bamboo_VPC_ID" \

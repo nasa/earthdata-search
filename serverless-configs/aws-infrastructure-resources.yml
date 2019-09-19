@@ -36,7 +36,7 @@ Resources:
     Properties:
       DBName: edsc_${self:provider.stage}
       AllocatedStorage: '20'
-      DBInstanceClass: db.t2.micro
+      DBInstanceClass: ${env:DB_INSTANCE_CLASS}
       Engine: postgres
       EngineVersion: '10.6'
       MasterUsername: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:username}}"] ] }
