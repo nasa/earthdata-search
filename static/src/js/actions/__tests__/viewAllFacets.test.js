@@ -205,7 +205,7 @@ describe('getViewAllFacets', () => {
   }
 
   const facetsPayload = {
-    hits: '1',
+    hits: 1,
     selectedCategory: undefined,
     facets: {
       instrument: {
