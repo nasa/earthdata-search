@@ -41,6 +41,7 @@ Resources:
       EngineVersion: '10.6'
       MasterUsername: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:username}}"] ] }
       MasterUserPassword: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:password}}"] ] }
+      MultiAZ: true
       StorageType: gp2
       DBSubnetGroupName:
         Ref: DBSubnetGroup
