@@ -4,7 +4,6 @@ import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
 import classNames from 'classnames'
 import abbreviate from 'number-abbreviate'
-import TruncateText from 'react-truncate-text'
 
 import Button from '../Button/Button'
 
@@ -56,7 +55,15 @@ const ProjectCollectionItem = ({
     totalSize = {}
   } = granules
 
-  const granuleCount = (hits - excludedGranuleIds.length)
+  let granuleCount
+
+  if (hits > 0) {
+    if (excludedGranuleIds.length > 0) {
+      granuleCount = hits - excludedGranuleIds.length
+    } else {
+      granuleCount = hits
+    }
+  }
 
   const { size = '', unit = '' } = totalSize
 
@@ -82,9 +89,9 @@ const ProjectCollectionItem = ({
           label={`${title} Collection Details`}
           onClick={() => onSetActivePanel(`1.${index}.0`)}
         >
-          <TruncateText as="h3" lines={3} className="project-collections-item__title">
+          <h3 className="project-collections-item__title">
             {title}
-          </TruncateText>
+          </h3>
         </Button>
 
         <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
@@ -107,16 +114,22 @@ const ProjectCollectionItem = ({
         </MoreActionsDropdown>
       </div>
       <ul className="project-collections-item__stats-list">
-        <li
-          className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
-        >
-          {`${abbreviate(granuleCount, 1)} Granules`}
-        </li>
-        <li
-          className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
-        >
-          {`Est. Size ${size} ${unit}`}
-        </li>
+        {
+          (typeof granuleCount !== 'undefined' && size && unit) && (
+            <>
+              <li
+                className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
+              >
+                {`${abbreviate(granuleCount, 1)} Granules`}
+              </li>
+              <li
+                className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
+              >
+                {`Est. Size ${size} ${unit}`}
+              </li>
+            </>
+          )
+        }
       </ul>
       <div className="project-collections-item__footer">
         {

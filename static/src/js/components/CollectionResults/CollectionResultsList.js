@@ -7,6 +7,7 @@ import CollectionResultsItem from './CollectionResultsItem'
 import './CollectionResultsList.scss'
 
 export const CollectionResultsList = ({
+  browser,
   collections,
   portal,
   projectIds,
@@ -27,13 +28,14 @@ export const CollectionResultsList = ({
     return (
       <CollectionResultsItem
         key={collection.id}
-        isCollectionInProject={isCollectionInProject}
+        browser={browser}
         collection={collection}
+        isCollectionInProject={isCollectionInProject}
+        isLast={isLast}
         onAddProjectCollection={onAddProjectCollection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onViewCollectionGranules={onViewCollectionGranules}
         onViewCollectionDetails={onViewCollectionDetails}
-        isLast={isLast}
         waypointEnter={waypointEnter}
       />
     )
@@ -76,6 +78,7 @@ export const CollectionResultsList = ({
 }
 
 CollectionResultsList.propTypes = {
+  browser: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,

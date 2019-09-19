@@ -30,9 +30,11 @@ import shapefileReducer from './shapefile'
 import savedProjectReducer from './savedProject'
 import savedProjectsReducer from './savedProjects'
 import errorsReducer from './errors'
+import browserReducer from './browser'
 
 export default history => combineReducers({
   authToken: authTokenReducer,
+  browser: browserReducer,
   dataQualitySummaries: dataQualitySummariesReducer,
   errors: errorsReducer,
   facetsParams: combineReducers({

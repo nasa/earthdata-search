@@ -5,6 +5,14 @@
     list-style: none;
   }
 
+  &__links-item {
+    margin-bottom: $spacer;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+
   &__links-title {
     font-size: 1.25rem;
     font-weight: 700;

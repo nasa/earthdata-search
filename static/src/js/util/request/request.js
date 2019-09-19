@@ -2,11 +2,13 @@ import axios from 'axios'
 import pick from 'lodash/pick'
 import snakeCaseKeys from 'snakecase-keys'
 
-import store from '../../store/configureStore'
+import configureStore from '../../store/configureStore'
 import { metricsTiming } from '../../middleware/metrics/actions'
 import { prepKeysForCmr } from '../url/url'
 import { getEnvironmentConfig, getClientId } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+
+const store = configureStore()
 
 /**
  * Parent class for the application API layer to communicate with external services

@@ -47,10 +47,7 @@ describe('ProjectCollectionItem component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('t').props().as).toEqual('h3')
-    expect(enzymeWrapper.find('t').props().className).toEqual('project-collections-item__title')
-    expect(enzymeWrapper.find('t').props().children).toEqual('Collection Title')
-    expect(enzymeWrapper.find('t').props().lines).toEqual(3)
+    expect(enzymeWrapper.find('h3').text()).toEqual('Collection Title')
     expect(enzymeWrapper.find('.project-collections-item__stats-item--granule-count').text()).toEqual('3 Granules')
     expect(enzymeWrapper.find('.project-collections-item__stats-item--total-size').text()).toEqual('Est. Size 4.0 MB')
   })

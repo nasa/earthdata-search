@@ -10,6 +10,7 @@ import actions from '../../actions/index'
 import CollectionResultsBody from '../../components/CollectionResults/CollectionResultsBody'
 
 const mapStateToProps = state => ({
+  browser: state.browser,
   collections: state.searchResults.collections,
   portal: state.portal,
   project: state.project,
@@ -31,6 +32,7 @@ const mapDispatchToProps = dispatch => ({
 
 export const CollectionResultsBodyContainer = (props) => {
   const {
+    browser,
     collections,
     query,
     location,
@@ -54,6 +56,7 @@ export const CollectionResultsBodyContainer = (props) => {
 
   return (
     <CollectionResultsBody
+      browser={browser}
       collections={collections}
       portal={portal}
       projectIds={projectIds}
@@ -68,6 +71,7 @@ export const CollectionResultsBodyContainer = (props) => {
 }
 
 CollectionResultsBodyContainer.propTypes = {
+  browser: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
   query: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,

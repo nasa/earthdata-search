@@ -13,6 +13,7 @@ import SplitBadge from '../SplitBadge/SplitBadge'
 import './CollectionResultsItem.scss'
 
 export const CollectionResultsItem = ({
+  browser,
   collection,
   isCollectionInProject,
   isLast,
@@ -39,6 +40,10 @@ export const CollectionResultsItem = ({
     time_end: timeEnd = null,
     time_start: timeStart = null
   } = collection
+
+  const {
+    name: browserName
+  } = browser
 
   let displayOrganization = ''
 
@@ -68,7 +73,9 @@ export const CollectionResultsItem = ({
     }
   }
 
-  const description = summary.length > 280 ? `${summary.substring(0, 280)}...` : summary
+  let description = summary
+  if (browserName === 'ie') description = `${description.substring(0, 280)}...`
+
   const thumbnailHeight = getApplicationConfig().thumbnailSize.height
   const thumbnailWidth = getApplicationConfig().thumbnailSize.width
 
@@ -376,6 +383,7 @@ export const CollectionResultsItem = ({
 }
 
 CollectionResultsItem.propTypes = {
+  browser: PropTypes.shape({}).isRequired,
   collection: PropTypes.shape({}).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   isLast: PropTypes.bool.isRequired,

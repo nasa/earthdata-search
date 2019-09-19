@@ -6,9 +6,11 @@ import { StaticRouter } from 'react-router'
 import { retrievalStatusProps, retrievalStatusPropsTwo } from './mocks'
 import { Well } from '../../Well/Well'
 import { OrderStatus } from '../OrderStatus'
-import store from '../../../store/configureStore'
+import configureStore from '../../../store/configureStore'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import * as getEnvironmentConfig from '../../../../../../sharedUtils/config'
+
+const store = configureStore()
 
 beforeEach(() => {
   jest.clearAllMocks()

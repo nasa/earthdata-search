@@ -10,6 +10,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    browser: {
+      name: 'browser name'
+    },
     collections: {
       allIds: ['collectionId1', 'collectionId2'],
       byId: {
