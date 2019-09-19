@@ -5,9 +5,6 @@ import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getClientId } from '../../../sharedUtils/config'
 
-// Knex database connection object
-let dbConnection = null
-
 // Name of the db table that this lambda operates on
 const colorMapsTableName = 'colormaps'
 
@@ -28,7 +25,7 @@ const getProjectionCapabilities = async (projection) => {
 
   try {
     // Retrieve a connection to the database
-    dbConnection = await getDbConnection(dbConnection)
+    const dbConnection = await getDbConnection()
 
     // Delete colormaps that havent been updated in the last 5 days
     await dbConnection(colorMapsTableName).whereRaw("updated_at <= now() - INTERVAL '5 DAYS'").del()

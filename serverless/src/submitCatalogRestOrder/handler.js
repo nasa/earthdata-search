@@ -20,10 +20,6 @@ import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWo
 import { portalPath } from '../../../sharedUtils/portalPath'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
-
-// Knex database connection object
-let dbConnection = null
-
 let sqs
 
 const submitCatalogRestOrder = async (event, context) => {
@@ -32,7 +28,7 @@ const submitCatalogRestOrder = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   // Retrieve a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   if (!sqs) {
     sqs = new AWS.SQS({ apiVersion: '2012-11-05' })

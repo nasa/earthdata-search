@@ -2,8 +2,6 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
-let dbConnection = null
-
 const getProject = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
@@ -16,7 +14,7 @@ const getProject = async (event) => {
   const decodedProjectId = deobfuscateId(providedProjectId)
 
   // Retrive a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   try {
     const existingProjectRecord = await dbConnection('projects')

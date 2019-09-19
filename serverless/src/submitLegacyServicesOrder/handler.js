@@ -9,9 +9,6 @@ import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 
-// Knex database connection object
-let dbConnection = null
-
 let sqs
 
 const submitLegacyServicesOrder = async (event, context) => {
@@ -20,7 +17,7 @@ const submitLegacyServicesOrder = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   // Retrieve a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   if (!sqs) {
     sqs = new AWS.SQS({ apiVersion: '2012-11-05' })

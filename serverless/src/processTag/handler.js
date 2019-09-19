@@ -3,8 +3,6 @@ import { getSystemToken } from '../util/urs/getSystemToken'
 import { addTag } from './addTag'
 import { removeTag } from './removeTag'
 
-let cmrToken
-
 /**
  * Handler that accepts a Tag (or array of Tags) from SQS to process and store in our database
  */
@@ -17,7 +15,8 @@ const processTag = async (event, context) => {
 
   console.log(`Processing ${sqsRecords.length} tag(s)`)
 
-  cmrToken = await getSystemToken(cmrToken)
+  // Retrieve a connection to the database
+  const cmrToken = await getSystemToken()
 
   await sqsRecords.forEachAsync(async (sqsRecord) => {
     const { body } = sqsRecord

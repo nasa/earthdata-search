@@ -9,9 +9,9 @@ import { isWarmUp } from '../util/isWarmup'
 import { getVariables } from './getVariables'
 import { getOutputFormats } from './getOutputFormats'
 
-// Knex database connection object
-let dbConnection = null
-
+/**
+ * Handler to retrieve access methods for a provided collection
+ */
 const getAccessMethods = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
@@ -95,7 +95,7 @@ const getAccessMethods = async (event) => {
   }
 
   // Retrive a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   // Retrieve the savedAccessConfig for this user and collection
   const accessConfigRecord = await dbConnection('access_configurations')

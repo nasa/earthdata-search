@@ -79,7 +79,7 @@ describe('submitRetrieval', () => {
       }
     })
 
-    const orderResponse = await submitRetrieval(orderPayload)
+    const orderResponse = await submitRetrieval(orderPayload, {})
 
     const { queries } = dbTracker.queries
 
@@ -147,7 +147,7 @@ describe('submitRetrieval', () => {
         sendMessageBatch: sqsSendMessagePromise
       }))
 
-    const orderResponse = await submitRetrieval(echoOrderPayload)
+    const orderResponse = await submitRetrieval(echoOrderPayload, {})
 
     const { queries } = dbTracker.queries
 
@@ -193,7 +193,7 @@ describe('submitRetrieval', () => {
       }
     })
 
-    const orderResponse = await submitRetrieval(badOrderPayload)
+    const orderResponse = await submitRetrieval(badOrderPayload, {})
 
     const { queries } = dbTracker.queries
 

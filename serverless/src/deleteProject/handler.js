@@ -4,8 +4,6 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
-let dbConnection = null
-
 const deleteProject = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
@@ -21,7 +19,7 @@ const deleteProject = async (event) => {
   const decodedProjectId = deobfuscateId(providedProjectId)
 
   // Retrive a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   try {
     const affectedRows = await dbConnection('projects')

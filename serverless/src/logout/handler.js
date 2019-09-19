@@ -3,8 +3,6 @@ import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 
-let dbConnection = null
-
 const logout = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
@@ -13,7 +11,7 @@ const logout = async (event) => {
   const { id: userId } = getVerifiedJwtToken(jwtToken)
 
   // Retrive a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   try {
     const affectedRows = await dbConnection('user_tokens')

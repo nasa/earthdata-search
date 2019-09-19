@@ -4,9 +4,6 @@ import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getClientId } from '../../../sharedUtils/config'
 
-// Knex database connection object
-let dbConnection = null
-
 /**
  * Converts a single color component to hex
  * @param {String} component An OpenSearch string template representing the URL to retreive granules with.
@@ -36,7 +33,7 @@ export default async function processColorMap(event, context) {
   const { Records: sqsRecords = {} } = event
 
   // Retrieve a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   console.log(`Processing ${sqsRecords.length} color map(s)`)
 

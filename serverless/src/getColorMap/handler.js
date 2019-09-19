@@ -1,8 +1,5 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 
-// Knex database connection object
-let dbConnection = null
-
 /**
  * Handler to retrieve a single color map record from the application database
  */
@@ -15,7 +12,7 @@ export default async function getColorMap(event, context) {
     const { product: providedProduct } = event.pathParameters
 
     // Retrieve a connection to the database
-    dbConnection = await getDbConnection(dbConnection)
+    const dbConnection = await getDbConnection()
 
     const colorMapResponse = await dbConnection('colormaps')
       .first('jsondata')

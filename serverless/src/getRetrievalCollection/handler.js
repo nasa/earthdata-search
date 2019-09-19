@@ -4,9 +4,6 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
-// Knex database connection object
-let dbConnection = null
-
 /**
  * Handler to retrieve a single color map record from the application database
  */
@@ -28,7 +25,7 @@ const getRetrievalCollection = async (event, context) => {
     const { id: userId } = getVerifiedJwtToken(jwtToken)
 
     // Retrieve a connection to the database
-    dbConnection = await getDbConnection(dbConnection)
+    const dbConnection = await getDbConnection()
 
     const retrievalCollectionResponse = await dbConnection('retrieval_collections')
       .select(

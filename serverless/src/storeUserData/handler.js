@@ -5,9 +5,9 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { isWarmUp } from '../util/isWarmup'
 
-// Knex database connection object
-let dbConnection = null
-
+/**
+ * Handler that a username and token to fetch profile information from URS and ECHO
+ */
 const storeUserData = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
@@ -15,7 +15,7 @@ const storeUserData = async (event) => {
   const { username, token } = event
 
   // Retrieve a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   const ursUserData = await getUrsUserData(username, token)
   const echoProfileData = await getEchoProfileData(token)

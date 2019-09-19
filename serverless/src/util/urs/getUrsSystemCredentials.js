@@ -4,11 +4,13 @@ import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
 
+let ursSystemCredentials
+
 /**
  * Returns the decrypted urs system credentials from Secrets Manager
  */
-export const getUrsSystemCredentials = async (ursSystemCredentials) => {
-  if (ursSystemCredentials === null) {
+export const getUrsSystemCredentials = async () => {
+  if (ursSystemCredentials == null) {
     if (process.env.NODE_ENV === 'development') {
       const { cmrSystemUsername, cmrSystemPassword } = getSecretEarthdataConfig(cmrEnv())
 
@@ -30,7 +32,7 @@ export const getUrsSystemCredentials = async (ursSystemCredentials) => {
     // If not running in development mode fetch secrets from AWS
     const secretValue = await secretsmanager.getSecretValue(params).promise()
 
-    return JSON.parse(secretValue.SecretString)
+    ursSystemCredentials = JSON.parse(secretValue.SecretString)
   }
 
   return ursSystemCredentials

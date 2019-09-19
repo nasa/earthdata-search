@@ -6,8 +6,9 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
-let dbConnection = null
-
+/**
+ * Handler that accepts a shapefile to store in the database
+ */
 const saveShapefile = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
@@ -21,7 +22,7 @@ const saveShapefile = async (event) => {
   } = params
 
   // Retrive a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   const fileHash = forge.md.md5.create()
   fileHash.update(JSON.stringify(file))

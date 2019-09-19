@@ -8,9 +8,6 @@ import { isWarmUp } from '../util/isWarmup'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 
-// Knex database connection object
-let dbConnection = null
-
 /**
  * Handler for the EDL callback. Fetches an EDL token based on 'code' param supplied by EDL. Sets
  * a cookie containing a JWT containing the EDL token
@@ -20,7 +17,7 @@ const edlCallback = async (event) => {
   if (await isWarmUp(event)) return false
 
   // Retrieve a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   const edlConfig = await getEdlConfig()
 
