@@ -78,7 +78,6 @@ const submitCatalogRestOrder = async (event, context) => {
       granule_params: granuleParams
     } = retrievalRecord
     const { portalId, shapefileId } = jsondata
-    const deobfuscatedShapefileId = deobfuscateId(shapefileId, process.env.obfuscationSpinShapefiles)
 
     const granuleResponse = await request.get({
       uri: cmrUrl('search/granules.json', granuleParams),
@@ -103,7 +102,12 @@ const submitCatalogRestOrder = async (event, context) => {
 
     // Retrieve the shapefile if one was provided
     let shapefileParam = {}
-    if (deobfuscatedShapefileId) {
+    if (shapefileId) {
+      const deobfuscatedShapefileId = deobfuscateId(
+        shapefileId,
+        process.env.obfuscationSpinShapefiles
+      )
+
       const shapefileRecord = await dbConnection('shapefiles')
         .first('file')
         .where({ id: deobfuscatedShapefileId })

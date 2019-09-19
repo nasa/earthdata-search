@@ -52,7 +52,12 @@ const saveShapefile = async (event) => {
         isBase64Encoded: false,
         statusCode: 200,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ shapefile_id: obfuscateId(existingShapefileRecord.id, process.env.obfuscationSpinShapefiles) })
+        body: JSON.stringify({
+          shapefile_id: obfuscateId(
+            existingShapefileRecord.id,
+            process.env.obfuscationSpinShapefiles
+          )
+        })
       }
     }
 
@@ -65,7 +70,9 @@ const saveShapefile = async (event) => {
       isBase64Encoded: false,
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ shapefile_id: obfuscateId(newShapefileRecord[0].id, process.env.obfuscationSpinShapefiles) })
+      body: JSON.stringify({
+        shapefile_id: obfuscateId(newShapefileRecord[0].id, process.env.obfuscationSpinShapefiles)
+      })
     }
   } catch (e) {
     console.log(e)
