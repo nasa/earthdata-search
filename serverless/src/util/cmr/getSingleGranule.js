@@ -1,12 +1,13 @@
-import request from 'request-promise'
+import request from 'promise-request-retry'
 import { stringify } from 'qs'
 import { readCmrResults } from './readCmrResults'
 import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
- * Retrieves a single granule result from CMR
- * @param {String} collectionId CMR Collection ID
+ * Returns tags for a collection based on a single granule sample
+ * @param {String} cmrToken The CMR token used to authenticate the request
+ * @param {Object} collectionId CMR Collection ID
  */
 export const getSingleGranule = async (cmrToken, collectionId) => {
   const cmrParams = {
@@ -15,28 +16,28 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     page_size: 1
   }
 
-  try {
-    const granuleSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/granules.json`
+  const granuleSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/granules.json`
 
-    const cmrResponse = await request.post({
-      uri: granuleSearchUrl,
-      form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
-      headers: {
-        'Client-Id': getClientId().background,
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Echo-Token': cmrToken
-      },
-      json: true,
-      resolveWithFullResponse: true
-    })
+  console.log(`Retrieving a single granule for ${collectionId}`)
 
-    const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)
+  // Using an extension of request promise that supports retries
+  const cmrResponse = await request({
+    method: 'POST',
+    uri: granuleSearchUrl,
+    form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+    headers: {
+      'Client-Id': getClientId().background,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Echo-Token': cmrToken
+    },
+    json: true,
+    resolveWithFullResponse: true,
 
-    return responseBody[0]
-  } catch (e) {
-    console.log(`Failed retrieving a single granule for ${collectionId}`)
-    console.log(e)
-  }
+    // Compensate for intermittent ENOTFOUND issues
+    retry: 4
+  })
 
-  return null
+  const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)
+
+  return responseBody[0]
 }

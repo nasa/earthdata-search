@@ -132,6 +132,7 @@
     "popper.js": "^1.14.7",
     "proj4": "^2.5.0",
     "proj4leaflet": "^1.0.2",
+    "promise-request-retry": "^1.0.1",
     "prop-types": "^15.6.2",
     "qs": "^6.6.0",
     "react": "^16.7.0",

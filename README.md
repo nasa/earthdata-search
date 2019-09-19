@@ -57,7 +57,7 @@ Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already 
 Once npm is installed locally, you need to download the dependencies by executing the command below in the project root directory:
 
     npm install
-    
+
 ##### Configuration
 
 ###### Secrets
@@ -65,7 +65,7 @@ Once npm is installed locally, you need to download the dependencies by executin
 For local development Earthata Search uses a json configuration file to store secure files, an example is provided and should be copied and completed before attempting to go any further.
 
 	cp secret.config.json.example secret.config.json
-    
+
 In order to operate against a local databse this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally)
 
 ###### Public (Non Secure)
@@ -87,8 +87,8 @@ Our database migrations run within Lambda due to the fact that in non-develoment
 The production build of the application will be output in the `/static/dist/` directory:
 
     npm run build
-    
-    
+
+
 ### Run the Application Locally
 
 The local development environment for the static assets can be started by executing the command below in the project root directory:
@@ -138,12 +138,13 @@ This application runs in a VPC for NASA security purposes, therefor the followin
 - SUBNET_ID_A
 - SUBNET_ID_B
 
-For production use this application uses Scatter Swap to obfuscate some IDs -- the library does not require a value be provided but if you'd like to control it you can se the following ENV var:
+For production use this application uses Scatter Swap to obfuscate some IDs -- the library does not require a value be provided but if you'd like to control it you can set the following ENV vars:
 
 - OBFUSCATION_SPIN
+- OBFUSCATION_SPIN_SHAPEFILES
 
 To deploy the full application use the following:
 
 	NODE_ENV=production serverless deploy --stage UNIQUE_STAGE
-    
+
 We specify `NODE_ENV` here because we are using `dotenv` which breaks our environment variables out into logical files that contain environment specific values. `UNIQUE_STAGE` defaults to `dev` but customizing it here allows you to deploy multiple stacks within the same account.

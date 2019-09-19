@@ -18,6 +18,7 @@ import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
 import { getEdlConfig } from '../util/configUtil'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 import { portalPath } from '../../../sharedUtils/portalPath'
+import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
 
 // Knex database connection object
@@ -102,9 +103,14 @@ const submitCatalogRestOrder = async (event, context) => {
     // Retrieve the shapefile if one was provided
     let shapefileParam = {}
     if (shapefileId) {
+      const deobfuscatedShapefileId = deobfuscateId(
+        shapefileId,
+        process.env.obfuscationSpinShapefiles
+      )
+
       const shapefileRecord = await dbConnection('shapefiles')
         .first('file')
-        .where({ id: shapefileId })
+        .where({ id: deobfuscatedShapefileId })
       const { file } = shapefileRecord
 
       shapefileParam = getShapefile(model, file)
