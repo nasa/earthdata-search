@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
+import SimpleBar from 'simplebar-react'
+
 import CollectionResultsList from './CollectionResultsList'
 
 import './CollectionResultsBody.scss'
@@ -27,7 +29,7 @@ class CollectionResultsBody extends PureComponent {
     } = this.props
 
     return (
-      <div className="collection-results-body">
+      <SimpleBar className="collection-results-body">
         <CollectionResultsList
           browser={browser}
           collections={collections}
@@ -39,7 +41,7 @@ class CollectionResultsBody extends PureComponent {
           onViewCollectionDetails={onViewCollectionDetails}
           waypointEnter={waypointEnter}
         />
-      </div>
+      </SimpleBar>
     )
   }
 }

@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import SimpleBar from 'simplebar-react'
+
 import ArrowTags from '../ArrowTags/ArrowTags'
 import Button from '../Button/Button'
 import CollapsePanel from '../CollapsePanel/CollapsePanel'
@@ -117,7 +119,7 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
   }
 
   return (
-    <div className="collection-details-body">
+    <SimpleBar className="collection-details-body">
       <div className="collection-details-body__content">
         <div className="row collection-details-body__row">
           <div className="col col-auto">
@@ -254,7 +256,7 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
           </div>
         </div>
       </CollapsePanel>
-    </div>
+    </SimpleBar>
   )
 }
 

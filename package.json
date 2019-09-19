@@ -158,6 +158,8 @@
     "sanitize-html": "^1.20.1",
     "scatter-swap": "^0.1.0",
     "simple-oauth2": "^2.2.1",
+    "simplebar": "^4.2.2",
+    "simplebar-react": "^1.2.2",
     "snakecase-keys": "^2.1.0",
     "tiny-cookie": "^2.3.1",
     "uuid": "^3.3.3",

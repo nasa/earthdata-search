@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
+import SimpleBar from 'simplebar-react'
+
 import Header from './SidebarHeader'
 
 import './Sidebar.scss'
@@ -25,9 +27,9 @@ const Sidebar = ({
           edscEnv={edscEnv}
           portal={portal}
         />
-        <section className="sidebar__content">
+        <SimpleBar className="sidebar__content">
           {children}
-        </section>
+        </SimpleBar>
       </div>
       {panels && panels}
     </section>
