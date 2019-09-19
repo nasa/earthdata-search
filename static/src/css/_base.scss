@@ -5,11 +5,12 @@
 * > a,
 * > button,
 * > input,
-* > textarea {
+* > textarea,
+.btn {
   &:focus {
-    border-color: $color__black--300;
+    border-color: transparent;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem $color__black--200;
+    box-shadow: 0 0 0 0.2rem rgba(83,130,177, 0.3);
   }
 }
 
