@@ -7,13 +7,17 @@ import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 
-// Knex database connection object
-let dbConnection = null
-
 // AWS SQS adapter
 let sqs
 
-const submitRetrieval = async (event) => {
+/**
+ * Handler that accepts a retrieval payload to create a new order
+ */
+const submitRetrieval = async (event, context) => {
+  // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
+  // eslint-disable-next-line no-param-reassign
+  context.callbackWaitsForEmptyEventLoop = false
+
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 
@@ -32,7 +36,7 @@ const submitRetrieval = async (event) => {
   } = await getAccessTokenFromJwtToken(jwtToken)
 
   // Retrieve a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   // Initiate (BEGIN) a database transaction to ensure that no database
   // rows are created and orphaned in the event of an error

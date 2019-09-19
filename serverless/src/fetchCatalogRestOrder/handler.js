@@ -2,21 +2,13 @@ import 'array-foreach-async'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getSystemToken } from '../util/urs/getSystemToken'
 import { getClientId } from '../../../sharedUtils/config'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
-// Knex database connection object
-let dbConnection = null
-
-let cmrToken
-
 const fetchCatalogRestOrder = async (input) => {
   // Retrieve a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
-
-  cmrToken = await getSystemToken(cmrToken)
+  const dbConnection = await getDbConnection()
 
   // Destruct the payload from the step function input
   const {

@@ -8,7 +8,6 @@ import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSystemToken } from '../util/urs/getSystemToken'
 
-let cmrToken
 const sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
 
 const pageSize = 100
@@ -48,8 +47,8 @@ const generateCollectionCapabilityTags = async (input) => {
   // CMR uses 1-based indexing for pages, default to page 1
   const { pageNumber = 1 } = input
 
-  // Lazily initialize system token
-  cmrToken = await getSystemToken(cmrToken)
+  // Retrieve a connection to the database
+  const cmrToken = await getSystemToken()
 
   const cmrParams = {
     has_granules: true,

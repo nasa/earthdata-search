@@ -10,7 +10,6 @@ import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 // AWS SQS adapter
 let sqs
-let cmrToken
 
 const fetchOptionDefinitions = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
@@ -25,7 +24,8 @@ const fetchOptionDefinitions = async (event, context) => {
 
   console.log(`Processing ${sqsRecords.length} tag(s)`)
 
-  cmrToken = await getSystemToken(cmrToken)
+  // Retrieve a connection to the database
+  const cmrToken = await getSystemToken()
 
   const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 

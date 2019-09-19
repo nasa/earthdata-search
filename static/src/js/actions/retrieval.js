@@ -52,6 +52,9 @@ export const submitRetrieval = () => (dispatch, getState) => {
       const { name } = optionDefinition
       selectedService = name
       selectedType = 'esi'
+    } else if (type === 'OPeNDAP') {
+      selectedService = 'OPeNDAP'
+      selectedType = 'opendap'
     }
 
     return {

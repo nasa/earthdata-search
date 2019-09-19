@@ -4,9 +4,6 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { isWarmUp } from '../util/isWarmup'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
-// Knex database connection object
-let dbConnection = null
-
 /**
  * Handler to retrieve a single color map record from the application database
  */
@@ -23,7 +20,7 @@ export default async function deleteRetrieval(event) {
     const { id: userId } = getVerifiedJwtToken(jwtToken)
 
     // Retrieve a connection to the database
-    dbConnection = await getDbConnection(dbConnection)
+    const dbConnection = await getDbConnection()
 
     // Retrieve the authenticated users' id to ensure the retrieval being deleted belongs to them
     const affectedRows = await dbConnection('retrievals')

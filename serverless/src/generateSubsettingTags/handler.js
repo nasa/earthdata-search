@@ -61,7 +61,6 @@ const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOptionIds)
 
 // AWS SQS adapter
 let sqs
-let cmrToken
 
 /**
  * Handler to process subsetting information from UMM S associations on collections
@@ -73,7 +72,8 @@ const generateSubsettingTags = async (event, context) => {
 
   sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
 
-  cmrToken = await getSystemToken(cmrToken)
+  // Retrieve a connection to the database
+  const cmrToken = await getSystemToken()
 
   // The headers we'll send back regardless of our response
   const responseHeaders = {

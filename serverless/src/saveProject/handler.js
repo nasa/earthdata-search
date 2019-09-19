@@ -4,8 +4,9 @@ import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
-let dbConnection = null
-
+/**
+ * Handler that accepts a project payload to upsert a project
+ */
 const saveProject = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
@@ -20,7 +21,7 @@ const saveProject = async (event) => {
   } = params
 
   // Retrive a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   let newProjectId
 

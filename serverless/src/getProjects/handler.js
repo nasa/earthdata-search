@@ -4,8 +4,9 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
-let dbConnection = null
-
+/**
+ * Handler for retreiving a users projects
+ */
 const getProjects = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
@@ -14,7 +15,7 @@ const getProjects = async (event) => {
   const { username } = getVerifiedJwtToken(jwtToken)
 
   // Retrive a connection to the database
-  dbConnection = await getDbConnection(dbConnection)
+  const dbConnection = await getDbConnection()
 
   try {
     const projectRecords = await dbConnection('projects')

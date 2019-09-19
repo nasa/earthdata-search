@@ -1,19 +1,12 @@
 import 'array-foreach-async'
 import request from 'request-promise'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getSystemToken } from '../util/urs/getSystemToken'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
-// Knex database connection object
-let dbConnection = null
-
-let cmrToken
-
 const fetchLegacyServicesOrder = async (input) => {
-  dbConnection = await getDbConnection(dbConnection)
-  cmrToken = await getSystemToken(cmrToken)
+  const dbConnection = await getDbConnection()
 
   // Destructure the payload from step function input
   const {

@@ -34,9 +34,6 @@ const generatePolicy = (username, jwtToken, effect, resource) => {
   return authResponse
 }
 
-// Knex database connection object
-let dbConnection = null
-
 /**
  * API Gateway Authorizer to verify requets are authenticated
  */
@@ -56,7 +53,7 @@ const edlAuthorizer = async (event) => {
 
   try {
     // Retrieve a connection to the database
-    dbConnection = await getDbConnection(dbConnection)
+    const dbConnection = await getDbConnection()
 
     // Pull the secret used to encrypt our jwtTokens
     const { secret } = getSecretEarthdataConfig(cmrEnv())
