@@ -45,7 +45,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       .first(
         'retrievals.id',
         'retrieval_collections.access_method',
-        'retrieval_collections.granule_params',
+        'retrieval_orders.granule_params',
         'users.echo_profile',
         'users.urs_profile'
       )
