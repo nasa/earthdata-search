@@ -1,12 +1,4 @@
 .spinner {
-  &--dots {
-    width: 3.5rem;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: space-between;
-  }
-
   &__inner {
     .spinner--dots & {
       width: 0.8rem;
@@ -23,6 +15,32 @@
         animation-delay: -0.2s;
       }
     }
+
+    .spinner--white & {
+      background-color: $color__white;
+    }
+
+    .spinner--small & {
+      width: 0.65rem;
+      height: 0.65rem;
+    }
+  }
+
+  &--dots {
+    width: 3.5rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &--inline {
+    display: inline-flex;
+    line-height: 1;
+  }
+
+  &--small {
+    width: 2.8rem;
   }
 }
 

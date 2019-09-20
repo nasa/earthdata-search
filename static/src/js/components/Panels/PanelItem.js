@@ -36,7 +36,6 @@ export class PanelItem extends Component {
 
   componentDidMount() {
     const { panelItemRef } = this
-    console.warn('panelItemRef', panelItemRef)
     const panelInner = panelItemRef.querySelector('.simplebar-content-wrapper')
     if (panelInner) panelInner.addEventListener('scroll', this.handleScroll)
   }

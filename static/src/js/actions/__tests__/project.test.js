@@ -16,7 +16,9 @@ import {
   RESTORE_PROJECT,
   UPDATE_ACCESS_METHOD,
   SELECT_ACCESS_METHOD,
-  ADD_ACCESS_METHODS
+  ADD_ACCESS_METHODS,
+  SUBMITTING_PROJECT,
+  SUBMITTED_PROJECT
 } from '../../constants/actionTypes'
 
 import {
@@ -29,7 +31,9 @@ import {
   restoreProject,
   updateAccessMethod,
   selectAccessMethod,
-  addAccessMethods
+  addAccessMethods,
+  submittingProject,
+  submittedProject
 } from '../project'
 
 const mockStore = configureMockStore([thunk])
@@ -146,6 +150,24 @@ describe('selectAccessMethod', () => {
     expect(storeActions[0]).toEqual({
       type: SELECT_ACCESS_METHOD,
       payload
+    })
+  })
+
+  describe('submittingProject', () => {
+    test('should create an action to update the project submitting state', () => {
+      const expectedAction = {
+        type: SUBMITTING_PROJECT
+      }
+      expect(submittingProject()).toEqual(expectedAction)
+    })
+  })
+
+  describe('submittedProject', () => {
+    test('should create an action to update the project submitted state', () => {
+      const expectedAction = {
+        type: SUBMITTED_PROJECT
+      }
+      expect(submittedProject()).toEqual(expectedAction)
     })
   })
 

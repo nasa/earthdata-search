@@ -8,6 +8,8 @@ import {
   Tooltip
 } from 'react-bootstrap'
 
+import Spinner from '../Spinner/Spinner'
+
 import './Button.scss'
 
 export const Button = ({
@@ -23,6 +25,7 @@ export const Button = ({
   label,
   onClick,
   overlayClass,
+  spinner,
   title,
   tooltip,
   tooltipPlacement,
@@ -78,11 +81,18 @@ export const Button = ({
       label={label}
       aria-label={label}
       type={type}
-      disabled={disabled}
+      disabled={disabled || spinner}
     >
-      {icon && <i className={iconClasses} /> }
+      {(!spinner && icon) && <i className={iconClasses} /> }
       <span className="button__contents">
-        { children }
+        { spinner
+          ? (
+            <span>
+              <Spinner type="dots" color="white" size="small" inline />
+            </span>
+          )
+          : children
+        }
       </span>
       {badge && (
         <>
@@ -127,6 +137,7 @@ Button.defaultProps = {
   overlayClass: null,
   popover: null,
   popoverId: null,
+  spinner: false,
   title: null,
   tooltip: null,
   tooltipId: null,
@@ -148,6 +159,7 @@ Button.propTypes = {
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   overlayClass: PropTypes.string,
+  spinner: PropTypes.bool,
   title: PropTypes.string,
   tooltip: PropTypes.oneOfType([
     PropTypes.string,

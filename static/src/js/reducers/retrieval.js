@@ -1,4 +1,7 @@
-import { UPDATE_RETRIEVAL, UPDATE_RETRIEVAL_COLLECTION } from '../constants/actionTypes'
+import {
+  UPDATE_RETRIEVAL,
+  UPDATE_RETRIEVAL_COLLECTION
+} from '../constants/actionTypes'
 
 const initialState = {
   id: null,

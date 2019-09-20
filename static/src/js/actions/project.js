@@ -7,7 +7,9 @@ import {
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
   UPDATE_PROJECT_GRANULES,
-  ADD_ACCESS_METHODS
+  ADD_ACCESS_METHODS,
+  SUBMITTING_PROJECT,
+  SUBMITTED_PROJECT
 } from '../constants/actionTypes'
 import GranuleRequest from '../util/request/granuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
@@ -18,6 +20,15 @@ import { convertSize } from '../util/project'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import isProjectCollectionValid from '../util/isProjectCollectionValid'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
+
+
+export const submittingProject = () => ({
+  type: SUBMITTING_PROJECT
+})
+
+export const submittedProject = () => ({
+  type: SUBMITTED_PROJECT
+})
 
 export const addCollectionToProject = payload => ({
   type: ADD_COLLECTION_TO_PROJECT,

@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import Button from '../Button'
+import Spinner from '../../Spinner/Spinner'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -21,6 +23,10 @@ function setup(type) {
 
   if (type === 'badge') {
     props.badge = 'badge test'
+  }
+
+  if (type === 'spinner') {
+    props.spinner = true
   }
 
   const enzymeWrapper = mount(<Button {...props}>Button Text</Button>)
@@ -81,8 +87,17 @@ describe('Button component', () => {
     expect(enzymeWrapper.find('button').prop('label')).toEqual('Test Label')
   })
 
-  test('should render self with a label', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('button').prop('label')).toEqual('Test Label')
+  describe('when spinner is true', () => {
+    test('should render disabled', () => {
+      const { enzymeWrapper } = setup('spinner')
+      expect(enzymeWrapper.find('button').prop('label')).toEqual('Test Label')
+    })
+
+    test('should render Spinner correctly', () => {
+      const { enzymeWrapper } = setup('spinner')
+      expect(enzymeWrapper.find(Spinner).prop('size')).toEqual('small')
+      expect(enzymeWrapper.find(Spinner).prop('inline')).toEqual(true)
+      expect(enzymeWrapper.find(Spinner).prop('color')).toEqual('white')
+    })
   })
 })

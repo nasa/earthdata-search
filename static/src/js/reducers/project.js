@@ -4,12 +4,16 @@ import {
   SELECT_ACCESS_METHOD,
   UPDATE_ACCESS_METHOD,
   ADD_ACCESS_METHODS,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  SUBMITTING_PROJECT,
+  SUBMITTED_PROJECT
 } from '../constants/actionTypes'
 
 const initialState = {
   byId: {},
-  collectionIds: []
+  collectionIds: [],
+  isSubmitted: false,
+  isSubmitting: false
 }
 
 const projectReducer = (state = initialState, action) => {
@@ -137,6 +141,20 @@ const projectReducer = (state = initialState, action) => {
           ...state.byId,
           ...byId
         }
+      }
+    }
+    case SUBMITTING_PROJECT: {
+      return {
+        ...state,
+        isSubmitted: false,
+        isSubmitting: true
+      }
+    }
+    case SUBMITTED_PROJECT: {
+      return {
+        ...state,
+        isSubmitted: true,
+        isSubmitting: false
       }
     }
     default:
