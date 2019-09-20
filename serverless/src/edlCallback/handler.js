@@ -9,10 +9,15 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 
 /**
- * Handler for the EDL callback. Fetches an EDL token based on 'code' param supplied by EDL. Sets
- * a cookie containing a JWT containing the EDL token
+ * Fetches an EDL token based on the 'code' param supplied by EDL. Sets a cookie containing a JWT containing the EDL token
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-const edlCallback = async (event) => {
+const edlCallback = async (event, context) => {
+  // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
+  // eslint-disable-next-line no-param-reassign
+  context.callbackWaitsForEmptyEventLoop = false
+
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 

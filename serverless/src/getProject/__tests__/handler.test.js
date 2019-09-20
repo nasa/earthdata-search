@@ -53,7 +53,7 @@ describe('getProject', () => {
       }
     }
 
-    const result = await getProject(event)
+    const result = await getProject(event, {})
 
     const expectedBody = JSON.stringify({ name, path })
 
@@ -76,7 +76,7 @@ describe('getProject', () => {
       }
     }
 
-    const result = await getProject(event)
+    const result = await getProject(event, {})
 
     const expectedBody = JSON.stringify({ errors: ['Project \'123\' not found.'] })
 

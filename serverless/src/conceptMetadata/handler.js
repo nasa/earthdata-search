@@ -3,7 +3,8 @@ import { isWarmUp } from '../util/isWarmup'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 
 /**
- * Handler to perform an authenticated CMR concept metadata download
+ * Perform an authenticated CMR Concept Metadata search
+ * @param {Object} event Details about the HTTP request that it received
  */
 const conceptMetadata = async (event) => {
   // Prevent execution if the event source is the warmer

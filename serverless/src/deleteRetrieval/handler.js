@@ -5,9 +5,15 @@ import { isWarmUp } from '../util/isWarmup'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
 /**
- * Handler to retrieve a single color map record from the application database
+ * Delete a retrieval from the database
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-export default async function deleteRetrieval(event) {
+export default async function deleteRetrieval(event, context) {
+  // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
+  // eslint-disable-next-line no-param-reassign
+  context.callbackWaitsForEmptyEventLoop = false
+
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
   try {

@@ -1,8 +1,6 @@
 import 'array-foreach-async'
-import AWS from 'aws-sdk'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
-
 import { getClientId, getEnvironmentConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
@@ -20,8 +18,11 @@ import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWo
 import { portalPath } from '../../../sharedUtils/portalPath'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
-let sqs
-
+/**
+ * Submits an order to Catalog Rest (ESI)
+ * @param {Object} event Queue messages from SQS
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
+ */
 const submitCatalogRestOrder = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
@@ -29,10 +30,6 @@ const submitCatalogRestOrder = async (event, context) => {
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
-
-  if (!sqs) {
-    sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
-  }
 
   const { Records: sqsRecords = [] } = event
 

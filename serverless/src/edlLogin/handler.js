@@ -4,7 +4,9 @@ import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/c
 import { isWarmUp } from '../util/isWarmup'
 
 /**
- * Handler for redirecting the user to the correct EDL login URL
+ * Redirects the user to the correct EDL login URL
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const edlLogin = async (event) => {
   // Prevent execution if the event source is the warmer

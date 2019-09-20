@@ -65,7 +65,7 @@ describe('storeUserData', () => {
       query.response([])
     })
 
-    await storeUserData({ username: 'urs_user', token: 'fake.access.token' })
+    await storeUserData({ username: 'urs_user', token: 'fake.access.token' }, {})
 
     expect(ursUserDataMock).toBeCalledTimes(1)
     expect(ursUserDataMock).toBeCalledWith('urs_user', 'fake.access.token')
@@ -94,7 +94,7 @@ describe('storeUserData', () => {
       }
     })
 
-    await storeUserData({ username: 'urs_user', token: 'fake.access.token' })
+    await storeUserData({ username: 'urs_user', token: 'fake.access.token' }, {})
 
     expect(ursUserDataMock).toBeCalledTimes(1)
     expect(ursUserDataMock).toBeCalledWith('urs_user', 'fake.access.token')

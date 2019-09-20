@@ -1,5 +1,3 @@
-import AWS from 'aws-sdk'
-
 import 'array-foreach-async'
 import request from 'request-promise'
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
@@ -7,16 +5,13 @@ import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEchoToken } from '../util/urs/getEchoToken'
 
-// AWS SQS adapter
-let sqs
-
+/**
+ * Retrieve data quality summaries for a given CMR Collection
+ * @param {Object} event Details about the HTTP request that it received
+ */
 const getDataQualitySummaries = async (event) => {
   const { body } = event
   const { params = {} } = JSON.parse(body)
-
-  if (!sqs) {
-    sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
-  }
 
   const jwtToken = getJwtToken(event)
 

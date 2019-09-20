@@ -1,8 +1,9 @@
 import AWS from 'aws-sdk'
 import { getEnvironmentConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getSecretsManagerConfig } from './aws/getSecretsManagerConfig'
 
-const secretsmanager = new AWS.SecretsManager()
+const secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
 
 /**
  * Returns the decrypted database credentials from Secrets Manager

@@ -6,12 +6,15 @@ import { generateRetrievalPayloads } from './generateRetrievalPayloads'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
 
 // AWS SQS adapter
 let sqs
 
 /**
- * Handler that accepts a retrieval payload to create a new order
+ * Saves a retrieval to the database
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const submitRetrieval = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
@@ -26,9 +29,11 @@ const submitRetrieval = async (event, context) => {
 
   const { collections, environment, json_data: jsonData } = params
 
-  sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
-
   const jwtToken = getJwtToken(event)
+
+  // TODO: Determine why jest wont mock this correctly if this is wrapped
+  // in a cehck to ensure that its not already set
+  sqs = new AWS.SQS(getSqsConfig())
 
   const {
     access_token: accessToken,

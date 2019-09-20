@@ -86,7 +86,7 @@ describe('edlCallback', () => {
       }
     }
 
-    const response = await edlCallback(event)
+    const response = await edlCallback(event, {})
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')
@@ -117,7 +117,7 @@ describe('edlCallback', () => {
       }
     }
 
-    const response = await edlCallback(event)
+    const response = await edlCallback(event, {})
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')

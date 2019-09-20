@@ -52,7 +52,7 @@ describe('deleteRetrieval', () => {
       }
     }
 
-    const response = await deleteRetrieval(event)
+    const response = await deleteRetrieval(event, {})
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('del')
@@ -77,7 +77,7 @@ describe('deleteRetrieval', () => {
       }
     }
 
-    const response = await deleteRetrieval(event)
+    const response = await deleteRetrieval(event, {})
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('del')
@@ -98,7 +98,7 @@ describe('deleteRetrieval', () => {
       }
     }
 
-    const response = await deleteRetrieval(event)
+    const response = await deleteRetrieval(event, {})
 
     expect(response.statusCode).toEqual(500)
   })

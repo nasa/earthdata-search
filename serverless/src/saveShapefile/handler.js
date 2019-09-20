@@ -7,9 +7,15 @@ import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 /**
- * Handler that accepts a shapefile to store in the database
+ * Saves a shapefile to the database
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-const saveShapefile = async (event) => {
+const saveShapefile = async (event, context) => {
+  // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
+  // eslint-disable-next-line no-param-reassign
+  context.callbackWaitsForEmptyEventLoop = false
+
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 

@@ -4,12 +4,13 @@ import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getClientId } from '../../../sharedUtils/config'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
 
 // Name of the db table that this lambda operates on
 const colorMapsTableName = 'colormaps'
 
 // AWS SQS adapter
-let sqs
+const sqs = new AWS.SQS(getSqsConfig())
 
 /**
  * Parse the GIBS capabilities document and provide individual ColorMaps to SQS for further processing
@@ -17,8 +18,6 @@ let sqs
  * @return {Object} An object containing a valid response code and a JSON body
  */
 const getProjectionCapabilities = async (projection) => {
-  sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
-
   const capabilitiesUrl = `https://gibs.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?SERVICE=WMTS&request=GetCapabilities`
 
   console.log(`GIBS Capabilties URL: ${capabilitiesUrl}`)

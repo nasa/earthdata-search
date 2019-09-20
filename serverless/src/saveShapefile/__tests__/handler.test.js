@@ -56,7 +56,7 @@ describe('saveShapefile', () => {
         })
       }
 
-      const result = await saveShapefile(event)
+      const result = await saveShapefile(event, {})
 
       const expectedBody = JSON.stringify({ shapefile_id: '2059944173' })
 
@@ -83,7 +83,7 @@ describe('saveShapefile', () => {
         })
       }
 
-      const result = await saveShapefile(event)
+      const result = await saveShapefile(event, {})
 
       const expectedBody = JSON.stringify({ shapefile_id: '6249150326' })
 
@@ -113,7 +113,7 @@ describe('saveShapefile', () => {
         })
       }
 
-      const result = await saveShapefile(event)
+      const result = await saveShapefile(event, {})
 
       const expectedBody = JSON.stringify({ shapefile_id: '2059944173' })
 
@@ -141,7 +141,7 @@ describe('saveShapefile', () => {
         })
       }
 
-      const result = await saveShapefile(event)
+      const result = await saveShapefile(event, {})
 
       const expectedBody = JSON.stringify({ shapefile_id: '6249150326' })
 

@@ -9,10 +9,17 @@ import { isWarmUp } from '../util/isWarmup'
 import { getVariables } from './getVariables'
 import { getOutputFormats } from './getOutputFormats'
 
+
 /**
- * Handler to retrieve access methods for a provided collection
+ * Retrieve access methods for a provided collection
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-const getAccessMethods = async (event) => {
+const getAccessMethods = async (event, context) => {
+  // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
+  // eslint-disable-next-line no-param-reassign
+  context.callbackWaitsForEmptyEventLoop = false
+
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 

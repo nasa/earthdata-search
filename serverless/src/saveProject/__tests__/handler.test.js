@@ -58,7 +58,7 @@ describe('saveProject', () => {
         })
       }
 
-      const result = await saveProject(event)
+      const result = await saveProject(event, {})
 
       const expectedBody = JSON.stringify({
         name: '',
@@ -99,7 +99,7 @@ describe('saveProject', () => {
         })
       }
 
-      const result = await saveProject(event)
+      const result = await saveProject(event, {})
 
       const expectedBody = JSON.stringify({
         name: '',
@@ -140,7 +140,7 @@ describe('saveProject', () => {
         })
       }
 
-      const result = await saveProject(event)
+      const result = await saveProject(event, {})
 
       const expectedBody = JSON.stringify({
         name: '',
@@ -184,7 +184,7 @@ describe('saveProject', () => {
         })
       }
 
-      const result = await saveProject(event)
+      const result = await saveProject(event, {})
 
       const expectedBody = JSON.stringify({
         name: '',
@@ -228,7 +228,7 @@ describe('saveProject', () => {
         })
       }
 
-      const result = await saveProject(event)
+      const result = await saveProject(event, {})
 
       const expectedBody = JSON.stringify({
         name: '',

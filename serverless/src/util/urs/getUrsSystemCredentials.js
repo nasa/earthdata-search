@@ -1,8 +1,9 @@
 import AWS from 'aws-sdk'
 import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { getSecretsManagerConfig } from '../aws/getSecretsManagerConfig'
 
-const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
+const secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
 
 let ursSystemCredentials
 

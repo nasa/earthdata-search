@@ -4,7 +4,8 @@ import { getJwtToken } from '../util/getJwtToken'
 import { isWarmUp } from '../util/isWarmup'
 
 /**
- * Handler to perform an authenticated CMR Granule search
+ * Perform an authenticated CMR Granule search
+ * @param {Object} event Details about the HTTP request that it received
  */
 const cmrGranuleSearch = async (event) => {
   // Prevent execution if the event source is the warmer

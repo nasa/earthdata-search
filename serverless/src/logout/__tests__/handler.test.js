@@ -40,7 +40,7 @@ describe('logout', () => {
       query.response(1)
     })
 
-    const result = await logout({})
+    const result = await logout({}, {})
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('del')
@@ -54,7 +54,7 @@ describe('logout', () => {
       query.response(0)
     })
 
-    const result = await logout({})
+    const result = await logout({}, {})
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('del')

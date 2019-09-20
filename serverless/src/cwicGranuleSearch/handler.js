@@ -103,7 +103,8 @@ const renderOpenSearchTemplate = (template, params) => {
 }
 
 /**
- * Handler to retrieve granules from CWIC
+ * Retrieve granules from CWIC
+ * @param {Object} event Details about the HTTP request that it received
  */
 const cwicGranuleSearch = async (event) => {
   // Prevent execution if the event source is the warmer

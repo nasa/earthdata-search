@@ -7,8 +7,10 @@ import { readCmrResults } from '../util/cmr/readCmrResults'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSystemToken } from '../util/urs/getSystemToken'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
 
-const sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
+// AWS SQS Adapter
+let sqs
 
 const pageSize = 100
 
@@ -49,6 +51,10 @@ const generateCollectionCapabilityTags = async (input) => {
 
   // Retrieve a connection to the database
   const cmrToken = await getSystemToken()
+
+  if (sqs == null) {
+    sqs = new AWS.SQS(getSqsConfig())
+  }
 
   const cmrParams = {
     has_granules: true,
