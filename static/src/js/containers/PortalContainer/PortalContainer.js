@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet'
 import { startCase } from 'lodash'
 
 import actions from '../../actions/index'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 const mapDispatchToProps = dispatch => ({
   onLoadPortalConfig:
@@ -32,9 +33,14 @@ export class PortalContainer extends Component {
     let portalTitle = ''
     if (portalId.length > 0) portalTitle = ` :: ${title || startCase(portalId)} Portal`
 
+    const { env } = getApplicationConfig()
+    const titleEnv = env.toUpperCase() === 'PROD' ? '' : `[${env.toUpperCase()}] `
+
+
     return (
       <Helmet>
         <title>
+          {titleEnv}
           Earthdata Search
           {portalTitle}
         </title>
