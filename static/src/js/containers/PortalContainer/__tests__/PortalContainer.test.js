@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import { PortalContainer } from '../PortalContainer'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -26,8 +27,20 @@ function setup(overrideProps) {
   }
 }
 
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.restoreAllMocks()
+})
+
 describe('PortalContainer component', () => {
   test('renders the page title without a portal', () => {
+    const { enzymeWrapper } = setup()
+
+    expect(enzymeWrapper.find('title').text()).toEqual('[DEV] Earthdata Search')
+  })
+
+  test('does not include the env in the site title in prod', () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({ env: 'prod' }))
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find('title').text()).toEqual('Earthdata Search')
@@ -41,7 +54,7 @@ describe('PortalContainer component', () => {
       }
     })
 
-    expect(enzymeWrapper.find('title').text()).toEqual('Earthdata Search :: Simple Portal')
+    expect(enzymeWrapper.find('title').text()).toEqual('[DEV] Earthdata Search :: Simple Portal')
   })
 
   test('should call onLoadPortalConfig on mount without a portal', () => {
