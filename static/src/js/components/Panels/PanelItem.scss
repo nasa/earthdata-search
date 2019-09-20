@@ -11,9 +11,15 @@
   }
 
   &__content {
+    min-height: 0;
     height: 100%;
     width: 100%;
     padding-top: 3rem;
+  }
+
+  &__header {
+    position: relative;
+    z-index: 1;
   }
 
   &__header-nav {
