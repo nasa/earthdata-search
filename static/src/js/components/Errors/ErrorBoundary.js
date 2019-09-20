@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import uuidv4 from 'uuid/v4'
 
+import { eventEmitter } from '../../events/events'
+
 import LoggerRequest from '../../util/request/loggerRequest'
 
 class ErrorBoundary extends Component {
@@ -35,14 +37,20 @@ class ErrorBoundary extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { hasError: prevHasError } = prevState
+    const { hasError } = this.state
+
+    if (prevHasError !== hasError) {
+      eventEmitter.emit('error.global', hasError)
+    }
+  }
+
   render() {
     const { errorGuid, hasError } = this.state
     const { children } = this.props
 
     if (hasError) {
-      // eslint-disable-next-line global-require
-      require('./ErrorBoundary.scss')
-
       return (
         <div className="wrap">
           <h1>
