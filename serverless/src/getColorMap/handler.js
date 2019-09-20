@@ -1,7 +1,9 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 
 /**
- * Handler to retrieve a single color map record from the application database
+ * Retrieve single colormap record from the database
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 export default async function getColorMap(event, context) {
   try {

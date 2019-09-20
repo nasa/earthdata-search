@@ -5,7 +5,8 @@ import { getDbConnectionConfig } from '../util/database'
 let dbConnectionConfig = null
 
 /**
- * Handler that migrates the application database
+ * Runs migrations using node-pg-migrate
+ * @param {Object} event Details about the HTTP request that it received
  */
 const migrateDatabase = async (event) => {
   try {

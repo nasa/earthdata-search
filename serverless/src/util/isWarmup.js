@@ -1,6 +1,6 @@
 /**
  * Determine whether or not the event provided is
- * @param {Object} event Lambda function event parameter
+ * @param {Object} event Details about the HTTP request that it received
  */
 export const isWarmUp = async (event) => {
   if (event.source === 'serverless-plugin-warmup') {

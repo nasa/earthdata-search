@@ -5,7 +5,9 @@ import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { isWarmUp } from '../util/isWarmup'
 
 /**
- * Handler to perform an authenticated CMR concept search
+ * Perform an authenticated CMR concept search
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const retrieveConcept = async (event) => {
   // Prevent execution if the event source is the warmer

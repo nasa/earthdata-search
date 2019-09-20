@@ -7,18 +7,20 @@ import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
 
 // AWS SQS adapter
 let sqs
 
+/**
+ * Redirects the user to the correct EDL login URL
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
+ */
 const fetchOptionDefinitions = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  if (!sqs) {
-    sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
-  }
 
   const { Records: sqsRecords = [] } = event
 
@@ -26,6 +28,10 @@ const fetchOptionDefinitions = async (event, context) => {
 
   // Retrieve a connection to the database
   const cmrToken = await getSystemToken()
+
+  if (sqs == null) {
+    sqs = new AWS.SQS(getSqsConfig())
+  }
 
   const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 

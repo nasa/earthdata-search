@@ -1,5 +1,4 @@
 import 'array-foreach-async'
-import AWS from 'aws-sdk'
 import request from 'request-promise'
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -9,8 +8,11 @@ import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 
-let sqs
-
+/**
+ * Submits an order to Legacy Services (CMR)
+ * @param {Object} event Queue messages from SQS
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
+ */
 const submitLegacyServicesOrder = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
@@ -18,10 +20,6 @@ const submitLegacyServicesOrder = async (event, context) => {
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
-
-  if (!sqs) {
-    sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
-  }
 
   const { Records: sqsRecords = [] } = event
 

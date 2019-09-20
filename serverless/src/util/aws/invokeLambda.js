@@ -7,19 +7,17 @@ import { getLambdaConfig } from './getLambdaConfig'
  * @param {Object} payload Payload to send to Lambda
  */
 export const invokeLambda = async (name, payload, type = 'Event') => {
+  // TODO: The purpose of this method is to return the appropriate
+  // configuration regardless of environment (offline or aws)
+  // but I can't yet figure out how to get serverless-offline-direct-lambda
+  // working correctly
   if (process.env.IS_OFFLINE) {
     console.info(`Ignoring lambda invocation for ${name}`)
 
     return false
   }
 
-  // The purpose of this method is to return the appropriate
-  // configuration regardless of environment (offline or aws)
-  // but I can't yet figure out how to get serverless-offline-direct-lambda
-  // working correctly
-  const lambdaConfig = getLambdaConfig()
-
-  const lambda = new AWS.Lambda(lambdaConfig)
+  const lambda = new AWS.Lambda(getLambdaConfig())
 
   const lambdaPayload = {
     FunctionName: name,

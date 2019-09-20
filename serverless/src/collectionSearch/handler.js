@@ -50,7 +50,8 @@ function getPermittedCmrKeys(format) {
 }
 
 /**
- * Handler to perform an authenticated CMR Collection search
+ * Perform an authenticated CMR Collection search
+ * @param {Object} event Details about the HTTP request that it received
  */
 const collectionSearch = async (event) => {
   // Prevent execution if the event source is the warmer

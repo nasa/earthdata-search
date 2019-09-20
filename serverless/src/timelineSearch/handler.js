@@ -4,7 +4,8 @@ import { getJwtToken } from '../util/getJwtToken'
 import { isWarmUp } from '../util/isWarmup'
 
 /**
- * Handler to perform an authenticated CMR Timeline search
+ * Perform an authenticated CMR Timeline search
+ * @param {Object} event Details about the HTTP request that it received
  */
 const timelineSearch = async (event) => {
   // Prevent execution if the event source is the warmer

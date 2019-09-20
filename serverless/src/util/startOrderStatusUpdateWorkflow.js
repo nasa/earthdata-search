@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk'
+import { getStepFunctionsConfig } from './aws/getStepFunctionsConfig'
 
 /**
  * Initiate an order status workflow
@@ -7,7 +8,7 @@ import AWS from 'aws-sdk'
  */
 export const startOrderStatusUpdateWorkflow = async (orderId, accessToken, orderType) => {
   try {
-    const stepfunctions = new AWS.StepFunctions()
+    const stepfunctions = new AWS.StepFunctions(getStepFunctionsConfig())
 
     const stepFunctionResponse = await stepfunctions.startExecution({
       stateMachineArn: process.env.updateOrderStatusStateMachineArn,

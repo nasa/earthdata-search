@@ -1,6 +1,6 @@
 /**
  * Returns the JWT Token from our custom authorizer context
- * @param {Object} event Lambda function event parameter
+ * @param {Object} event Details about the HTTP request that it received
  */
 export const getJwtToken = (event) => {
   const { requestContext } = event

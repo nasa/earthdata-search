@@ -8,6 +8,7 @@ import { getRelevantServices } from './getRelevantServices'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
 
 /**
  * Retrieve service option definition records
@@ -63,17 +64,21 @@ const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOptionIds)
 let sqs
 
 /**
- * Handler to process subsetting information from UMM S associations on collections
+ * Process subsetting information from UMM S associations on collections
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const generateSubsettingTags = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line
   context.callbackWaitsForEmptyEventLoop = false
 
-  sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
-
   // Retrieve a connection to the database
   const cmrToken = await getSystemToken()
+
+  if (sqs == null) {
+    sqs = new AWS.SQS(getSqsConfig())
+  }
 
   // The headers we'll send back regardless of our response
   const responseHeaders = {

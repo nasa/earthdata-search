@@ -52,7 +52,7 @@ describe('deleteProject', () => {
       }
     }
 
-    const result = await deleteProject(event)
+    const result = await deleteProject(event, {})
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('del')
@@ -78,7 +78,7 @@ describe('deleteProject', () => {
       }
     }
 
-    const result = await deleteProject(event)
+    const result = await deleteProject(event, {})
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('del')

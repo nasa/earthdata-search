@@ -3,6 +3,7 @@ import request from 'request-promise'
 import AWS from 'aws-sdk'
 import customGibsProducts from '../static/gibs'
 import { getClientId } from '../../../sharedUtils/config'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
 
 // AWS SQS adapter
 let sqs
@@ -222,7 +223,9 @@ const generateGibsTags = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
+  if (sqs == null) {
+    sqs = new AWS.SQS(getSqsConfig())
+  }
 
   // The headers we'll send back regardless of our response
   const responseHeaders = {
