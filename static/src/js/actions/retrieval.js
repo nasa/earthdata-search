@@ -2,10 +2,13 @@ import { push } from 'connected-react-router'
 import prepareRetrievalParams from '../util/retrievals'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
-import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
+import {
+  UPDATE_RETRIEVAL
+} from '../constants/actionTypes'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { removeRetrievalHistory } from './retrievalHistory'
+import { submittingProject, submittedProject } from './project'
 import { handleError } from './errors'
 
 export const updateRetrieval = retrievalData => ({
@@ -69,10 +72,13 @@ export const submitRetrieval = () => (dispatch, getState) => {
     collections: metricsCollections
   }))
 
+  dispatch(submittingProject())
+
   const response = requestObject.submit(orderParams)
     .then((response) => {
       const { id: retrievalId } = response.data
 
+      dispatch(submittedProject())
       dispatch(push(`${portalPathFromState(state)}/downloads/${retrievalId}`))
     })
     .catch((error) => {

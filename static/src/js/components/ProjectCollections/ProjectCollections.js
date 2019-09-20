@@ -75,6 +75,8 @@ export class ProjectCollections extends Component {
     const projectCollections = project.collectionIds.map(collectionId => project.byId[collectionId])
     const isValid = isProjectValid(projectCollections)
 
+    const { isSubmitting } = project
+
     return (
       <section className="project-collections">
         <ProjectHeader
@@ -118,6 +120,7 @@ export class ProjectCollections extends Component {
             icon="download"
             label="Download project data"
             disabled={!isValid}
+            spinner={isSubmitting}
           >
             Download Data
           </Button>

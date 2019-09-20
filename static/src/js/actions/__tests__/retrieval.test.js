@@ -75,7 +75,7 @@ describe('submitRetrieval', () => {
 
     // call the dispatch
     await store.dispatch(submitRetrieval()).then(() => {
-      expect(store.getActions().length).toEqual(2)
+      expect(store.getActions().length).toEqual(4)
 
       expect(store.getActions()[0]).toEqual({
         payload: {
@@ -90,6 +90,14 @@ describe('submitRetrieval', () => {
       })
 
       expect(store.getActions()[1]).toEqual({
+        type: 'SUBMITTING_PROJECT'
+      })
+
+      expect(store.getActions()[2]).toEqual({
+        type: 'SUBMITTED_PROJECT'
+      })
+
+      expect(store.getActions()[3]).toEqual({
         payload: {
           args: ['/downloads/7'],
           method: 'push'

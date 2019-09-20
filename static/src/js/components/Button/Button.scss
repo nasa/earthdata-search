@@ -1,6 +1,10 @@
 .button {
   vertical-align: middle;
 
+  &:disabled {
+    cursor: not-allowed;
+  }
+
   &--naked {
     padding: 0;
   }

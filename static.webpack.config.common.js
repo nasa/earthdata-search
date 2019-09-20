@@ -13,7 +13,11 @@ const envConfig = config.getEnvironmentConfig()
 const StaticCommonConfig = {
   name: 'static',
   entry: {
-    client: ['core-js/stable', 'regenerator-runtime/runtime', './static/src/index.js']
+    client: [
+      'core-js/stable',
+      'regenerator-runtime/runtime',
+      './static/src/index.js'
+    ]
   },
   output: {
     filename: '[name].bundle.js',

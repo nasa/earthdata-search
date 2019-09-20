@@ -88,7 +88,7 @@ export class FacetsModal extends Component {
             {
               isFirstLoad
                 ? (
-                  <Spinner type="dots" />
+                  <Spinner type="dots" color="white" />
                 )
                 : (
                   <FacetsList

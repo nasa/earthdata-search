@@ -5,12 +5,16 @@ import {
   REMOVE_COLLECTION_FROM_PROJECT,
   SELECT_ACCESS_METHOD,
   UPDATE_ACCESS_METHOD,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  SUBMITTING_PROJECT,
+  SUBMITTED_PROJECT
 } from '../../constants/actionTypes'
 
 const initialState = {
   byId: {},
-  collectionIds: []
+  collectionIds: [],
+  isSubmitted: false,
+  isSubmitting: false
 }
 
 describe('INITIAL_STATE', () => {
@@ -203,7 +207,9 @@ describe('UPDATE_ACCESS_METHOD', () => {
           }
         }
       },
-      collectionIds: [collectionId]
+      collectionIds: [collectionId],
+      isSubmitted: false,
+      isSubmitting: false
     }
 
     const expectedState = {
@@ -218,9 +224,45 @@ describe('UPDATE_ACCESS_METHOD', () => {
           }
         }
       },
-      collectionIds: [collectionId]
+      collectionIds: [collectionId],
     }
 
     expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+
+  describe('SUBMITTING_PROJECT', () => {
+    test('returns the correct state', () => {
+      const collectionId = 'collectionId'
+
+      const action = {
+        type: SUBMITTING_PROJECT
+      }
+
+      const expectedState = {
+        ...initialState,
+        isSubmitted: false,
+        isSubmitting: true
+      }
+
+      expect(projectReducer(undefined, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('SUBMITTED_PROJECT', () => {
+    test('returns the correct state', () => {
+      const collectionId = 'collectionId'
+
+      const action = {
+        type: SUBMITTED_PROJECT
+      }
+
+      const expectedState = {
+        ...initialState,
+        isSubmitted: true,
+        isSubmitting: false
+      }
+
+      expect(projectReducer(undefined, action)).toEqual(expectedState)
+    })
   })
 })
