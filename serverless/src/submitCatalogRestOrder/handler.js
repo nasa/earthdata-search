@@ -56,7 +56,7 @@ const submitCatalogRestOrder = async (event, context) => {
         'retrievals.id',
         'retrievals.jsondata',
         'retrieval_collections.access_method',
-        'retrieval_collections.granule_params'
+        'retrieval_orders.granule_params'
       )
       .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
