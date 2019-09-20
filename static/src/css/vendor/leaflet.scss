@@ -1,4 +1,28 @@
 .root {
+  .projection-switcher {
+    &__button {
+      background-image: url('~Images/projection-sprite.png');
+      background-size: 90px 30px;
+      background-repeat: no-repeat;
+
+      &--arctic {
+        background-position: -57px -1px;
+      }
+
+      &--geo {
+        background-position: -29px -1px;
+      }
+
+      &--antarctic {
+        background-position: -1px -1px;
+      }
+
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        background-image: url('~Images/projection-sprite@2x.png');
+      }
+    }
+  }
+
   // Reposition the container and controls
   .leaflet-container {
     height: 100%;
@@ -73,15 +97,17 @@
 
   // Force the layers toggle to be the same size as the other elements
   .leaflet-control-layers-toggle,
-  .leaflet-touch .leaflet-control-layers-toggle {
+  .leaflet-touch .leaflet-control-layers-toggle,
+  .leaflet-retina .leaflet-control-layers-toggle {
     width: 30px;
     height: 30px;
     line-height: 30px;
     background-size: 16px 16px;
   }
 
-  .leaflet-control-layers {
-    top: 0;
+  .leaflet-control-layers,
+  .leaflet-touch .leaflet-control-layers {
+    border-radius: 2px;
 
     label {
       margin-bottom: 5px;
@@ -137,22 +163,46 @@
 
   // Force the horizontal toolbar and adjust button radius
   .leaflet-bar a,
-  .leaflet-touch .leaflet-bar a {
+  .leaflet-bar button,
+  .leaflet-touch .leaflet-bar a,
+  .leaflet-touch .leaflet-bar button {
     float: left;
     border: 0;
+    background-color: #fff;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
 
     &:hover,
     &:last-child {
       border: 0;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
     }
 
     &:first-child {
       border-bottom-left-radius: 2px;
-      border-top-right-radius: 0;
+      border-top-left-radius: 2px;
+      border-bottom-right-radius: 0px;
+      border-top-right-radius: 0px;
     }
 
     &:last-child {
       border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      border-bottom-right-radius: 2px;
+      border-top-right-radius: 2px;
+    }
+
+    &:only-child {
+      border-bottom-left-radius: 2px;
+      border-top-left-radius: 2px;
+      border-bottom-right-radius: 2px;
       border-top-right-radius: 2px;
     }
   }

@@ -1,5 +1,7 @@
 .facets-modal-nav {
   display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
   padding: $spacer;
   border-bottom: 1px solid #dee2e6;
 
