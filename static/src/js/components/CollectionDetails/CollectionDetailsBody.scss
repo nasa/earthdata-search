@@ -3,6 +3,7 @@
   flex-direction: column;
 
   &__content {
+    flex-shrink: 0;
     flex-grow: 1;
     padding: $spacer;
   }
@@ -125,5 +126,12 @@
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+  .simplebar-content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    height: 100%;
   }
 }

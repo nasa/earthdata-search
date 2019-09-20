@@ -119,7 +119,7 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
   }
 
   return (
-    <SimpleBar className="collection-details-body">
+    <SimpleBar className="collection-details-body" style={{ height: '100%' }}>
       <div className="collection-details-body__content">
         <div className="row collection-details-body__row">
           <div className="col col-auto">
