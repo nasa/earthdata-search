@@ -54,7 +54,7 @@ class App extends Component {
   render() {
     return (
       <ErrorBoundary>
-        <Provider store={store}>
+        <Provider store={this.store}>
           <ConnectedRouter history={history}>
             <MetricsEventsContainer />
             <Switch>
