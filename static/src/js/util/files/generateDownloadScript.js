@@ -116,9 +116,7 @@ fetch_urls() {
 }
 
 fetch_urls <<'EDSCEOF'
-
 ${granuleLinks.join('\n')}
-
 EDSCEOF`
 }
 
