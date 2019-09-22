@@ -9,10 +9,13 @@ import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 let cmrToken
 
 /**
- * Returns a token from URS
+ * Returns a token from Legacy Services
+ *  * @param {String} providedCmrEnv The CMR Environment to retrieve a token from
  */
-export const getSystemToken = async () => {
+export const getSystemToken = async (providedCmrEnv) => {
   if (cmrToken == null) {
+    const cmrEnvironment = (providedCmrEnv || cmrEnv())
+
     const dbCredentials = await getUrsSystemCredentials()
     const { username: dbUsername, password: dbPassword } = dbCredentials
 
@@ -25,10 +28,12 @@ export const getSystemToken = async () => {
       username: dbUsername,
       password: dbPassword,
       client_id: clientId,
+
+      // TODO: User the IP from the request
       user_ip_address: '127.0.0.1'
     }
 
-    const authenticationUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/tokens.json`
+    const authenticationUrl = `${getEarthdataConfig(cmrEnvironment).cmrHost}/legacy-services/rest/tokens.json`
     const tokenResponse = await request.post({
       uri: authenticationUrl,
       body: {
@@ -52,7 +57,7 @@ export const getSystemToken = async () => {
     const { token } = body
     const { id, username } = token
 
-    console.log(`Successfully retrieved a token for '${username}'`)
+    console.log(`Successfully retrieved a ${cmrEnvironment.toUpperCase()} token for '${username}'`)
 
     // The actual token is returned as `id`
     cmrToken = id

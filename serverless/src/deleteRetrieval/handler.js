@@ -16,6 +16,7 @@ export default async function deleteRetrieval(event, context) {
 
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
+
   try {
     const { id: providedRetrieval } = event.pathParameters
 

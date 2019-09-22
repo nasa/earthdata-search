@@ -9,6 +9,11 @@
     warmup:
       enabled: false
 
+  migrateData:
+    handler: serverless/src/migrateData/handler.default
+    warmup:
+      enabled: false
+
   storeUserData:
     timeout: 300
     handler: serverless/src/storeUserData/handler.default
@@ -19,11 +24,6 @@
     handler: serverless/src/generateCollectionCapabilityTags/handler.default
     description: Iterate over all CMR collections adding tags specific to EDSC
     timeout: 600
-    warmup:
-      enabled: false
-
-  editableDebugger:
-    handler: serverless/src/editableDebugger/handler.default
     warmup:
       enabled: false
 

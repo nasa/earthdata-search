@@ -119,11 +119,11 @@ describe('getRetrievals', () => {
   })
 
   test('correctly returns false when the warmUp payload is received', async () => {
-    const retrievalsPayload = {
+    const payload = {
       source: 'serverless-plugin-warmup'
     }
 
-    const retrievalResponse = await getRetrievals(retrievalsPayload, {})
+    const retrievalResponse = await getRetrievals(payload, {})
 
     expect(retrievalResponse).toEqual(false)
   })

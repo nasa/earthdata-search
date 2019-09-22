@@ -149,7 +149,7 @@ const submitCatalogRestOrder = async (event, context) => {
       const { order } = agentResponse
       const { orderId } = order
 
-      await dbConnection('retrieval_orders').update({ order_number: orderId }).where({ id })
+      await dbConnection('retrieval_orders').update({ order_number: orderId, state: 'initialized' }).where({ id })
 
       // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)

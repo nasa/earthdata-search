@@ -1,5 +1,6 @@
 import { encodeTemporal } from './url/temporalEncoders'
 import { categoryNameToCMRParam } from './facets'
+import { tagName } from '../../../../sharedUtils/tags'
 
 /**
  * Prepare parameters used in getCollections() based on current Redux State
@@ -58,8 +59,8 @@ export const prepareCollectionParams = (state) => {
 
   const tagKey = []
   if (selectedTag) tagKey.push(selectedTag)
-  if (featureFacets.customizable) tagKey.push('edsc.extra.subset_service.*')
-  if (featureFacets.mapImagery) tagKey.push('edsc.extra.serverless.gibs')
+  if (featureFacets.customizable) tagKey.push(tagName('subset_service.*'))
+  if (featureFacets.mapImagery) tagKey.push(tagName('gibs'))
 
   const { query: portalQuery = {} } = portal
 
@@ -132,7 +133,7 @@ export const buildCollectionSearchParams = (params) => {
     includeFacets: 'v2',
     includeGranuleCounts: true,
     includeHasGranules: true,
-    includeTags: 'edsc.extra*,org.ceos.wgiss.cwic.granules.prod',
+    includeTags: `${tagName('*', 'edsc.extra')},org.ceos.wgiss.cwic.granules.prod`,
     options: {
       science_keywords_h: {
         or: true

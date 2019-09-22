@@ -53,6 +53,7 @@ stateMachines:
           Type: Succeed
         OrderFailed:
           Type: Fail
+
   GenerateCollectionCapabilityTagsWorkflow:
     name: GenerateCollectionCapabilityTags-${self:provider.stage}
     role:

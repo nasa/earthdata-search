@@ -9,6 +9,7 @@ import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { tagName } from '../../../sharedUtils/tags'
 
 /**
  * Retrieve service option definition records
@@ -133,7 +134,7 @@ const generateSubsettingTags = async (event, context) => {
   const chunkedServices = chunkArray(Object.keys(serviceObjects), 100)
 
   await chunkedServices.forEachAsync(async (chunk) => {
-    const allCmrCollections = await pageAllCmrResults(cmrToken, 'search/collections.json', {
+    const allCmrCollections = await pageAllCmrResults(cmrToken, cmrEnv(), 'search/collections.json', {
       service_concept_id: chunk,
       has_granules: true
     })
@@ -226,7 +227,7 @@ const generateSubsettingTags = async (event, context) => {
             await sqs.sendMessage({
               QueueUrl: process.env.tagQueueUrl,
               MessageBody: JSON.stringify({
-                tagName: `edsc.extra.serverless.subset_service.${tagPostFix}`,
+                tagName: tagName(`subset_service.${tagPostFix}`),
                 action: 'ADD',
                 append: false,
                 requireGranules: false,
@@ -247,7 +248,7 @@ const generateSubsettingTags = async (event, context) => {
       condition: {
         and: [
           {
-            tag: { tag_key: `edsc.extra.serverless.subset_service.${tagPostFix}` }
+            tag: { tag_key: tagName(`subset_service.${tagPostFix}`) }
           }
         ]
       }
@@ -264,7 +265,7 @@ const generateSubsettingTags = async (event, context) => {
         await sqs.sendMessage({
           QueueUrl: process.env.tagQueueUrl,
           MessageBody: JSON.stringify({
-            tagName: `edsc.extra.serverless.subset_service.${tagPostFix}`,
+            tagName: tagName(`subset_service.${tagPostFix}`),
             action: 'REMOVE',
             searchCriteria: removeTagCriteria
           })

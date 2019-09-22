@@ -4,11 +4,10 @@ import AWS from 'aws-sdk'
 import customGibsProducts from '../static/gibs'
 import { getClientId } from '../../../sharedUtils/config'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { tagName } from '../../../sharedUtils/tags'
 
 // AWS SQS adapter
 let sqs
-
-const tagName = 'edsc.extra.serverless.gibs'
 
 /*
  * Retrieve the worldview configuration file and pull out products that Earthdata Search supports
@@ -260,7 +259,7 @@ const generateGibsTags = async (event, context) => {
       await sqs.sendMessage({
         QueueUrl: process.env.tagQueueUrl,
         MessageBody: JSON.stringify({
-          tagName,
+          tagName: tagName('gibs'),
           action: 'ADD',
           append: true,
           requireGranules: false,
@@ -280,14 +279,14 @@ const generateGibsTags = async (event, context) => {
     await sqs.sendMessage({
       QueueUrl: process.env.tagQueueUrl,
       MessageBody: JSON.stringify({
-        tagName,
+        tagName: tagName('gibs'),
         action: 'REMOVE',
         searchCriteria: {
           condition: {
             and: [
               {
                 tag: {
-                  tag_key: tagName
+                  tag_key: tagName('gibs')
                 }
               },
               {

@@ -3,7 +3,6 @@ import { stringify } from 'qs'
 import request from 'request-promise'
 import { readCmrResults } from './readCmrResults'
 import { getClientId, getEarthdataConfig } from '../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
  * CMR has a maximum page size of 2000, this method will automatically page through all results regardless of how many there are
@@ -11,7 +10,7 @@ import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
  * @param {Object} queryParams An object that will represent the query parameters in the url
  * @return {Array} An array representing all results from CMR
  */
-export const pageAllCmrResults = async (cmrToken, path, queryParams = {}) => {
+export const pageAllCmrResults = async (cmrToken, cmrEnvironment, path, queryParams = {}) => {
   const pageSize = 500
 
   try {
@@ -24,7 +23,7 @@ export const pageAllCmrResults = async (cmrToken, path, queryParams = {}) => {
     // Make an initial request so that we can get cmr-hits from the header, this
     // will help determine how many additional requests we'll need to make to get
     // all of the results
-    const { cmrHost } = getEarthdataConfig(cmrEnv())
+    const { cmrHost } = getEarthdataConfig(cmrEnvironment)
 
     const cmrResponse = await request.post({
       uri: `${cmrHost}/${path}`,

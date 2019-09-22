@@ -102,4 +102,14 @@ describe('deleteRetrieval', () => {
 
     expect(response.statusCode).toEqual(500)
   })
+
+  test('correctly returns false when the warmUp payload is received', async () => {
+    const payload = {
+      source: 'serverless-plugin-warmup'
+    }
+
+    const response = await deleteRetrieval(payload, {})
+
+    expect(response).toEqual(false)
+  })
 })

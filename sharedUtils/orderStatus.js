@@ -20,6 +20,7 @@ export const orderStates = {
     'not_found' // Custom EDSC status for orders that aren't found in the DB
   ],
   in_progress: [
+    'initialized', // Custom EDSC status for orders that have been submitted but we dont have a status for yet
     'in progress',
     'processing',
     'pending',
