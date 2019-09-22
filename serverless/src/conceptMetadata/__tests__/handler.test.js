@@ -23,4 +23,14 @@ describe('conceptMetadata', () => {
     expect(result.headers).toEqual({ Location: 'http://example.com/concepts?token=access_token:clientId' })
     expect(result.statusCode).toBe(307)
   })
+
+  test('correctly returns false when the warmUp payload is received', async () => {
+    const payload = {
+      source: 'serverless-plugin-warmup'
+    }
+
+    const response = await conceptMetadata(payload, {})
+
+    expect(response).toEqual(false)
+  })
 })

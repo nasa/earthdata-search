@@ -21,10 +21,13 @@ export const buildOauthConfig = clientConfig => ({
  * Get the Earthdata Login configuration, from either secret.config.json or AWS
  * @param {Object} edlConfig A previously defined config object, or null if one has not be instantiated
  */
-export const getEdlConfig = async () => {
+export const getEdlConfig = async (providedCmrEnv) => {
   try {
+    // If provided an environment, us it -- otherwise use the configured value
+    const cmrEnvironment = (providedCmrEnv || cmrEnv())
+
     if (['development', 'test'].includes(process.env.NODE_ENV)) {
-      const { clientId, password } = getSecretEarthdataConfig(cmrEnv())
+      const { clientId, password } = getSecretEarthdataConfig(cmrEnvironment)
 
       return buildOauthConfig({
         id: clientId,
@@ -33,7 +36,7 @@ export const getEdlConfig = async () => {
     }
 
     // Use a variable here for easier find/replace until cmr_env is implemented
-    const environment = cmrEnv()
+    const environment = cmrEnvironment
 
     console.log(`Fetching UrsClientConfigSecret_${environment}`)
 

@@ -15,7 +15,7 @@ describe('pageAllCmrResults', () => {
       body: { items: [] }
     }))
 
-    await pageAllCmrResults('test-token', 'search/services')
+    await pageAllCmrResults('test-token', 'sit', 'search/services')
 
     expect(cmrMock).toBeCalledTimes(1)
   })
@@ -34,7 +34,7 @@ describe('pageAllCmrResults', () => {
       .mockImplementationOnce(() => pageResponse)
       .mockImplementationOnce(() => pageResponse)
 
-    await pageAllCmrResults('test-token', 'search/services')
+    await pageAllCmrResults('test-token', 'sit', 'search/services')
 
     expect(cmrMock).toBeCalledTimes(4)
   })

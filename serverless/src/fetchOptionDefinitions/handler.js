@@ -8,6 +8,7 @@ import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { tagName } from '../../../sharedUtils/tags'
 
 // AWS SQS adapter
 let sqs
@@ -87,13 +88,13 @@ const fetchOptionDefinitions = async (event, context) => {
         await sqs.sendMessage({
           QueueUrl: process.env.tagQueueUrl,
           MessageBody: JSON.stringify({
-            tagName: 'edsc.extra.serverless.subset_service.echo_orders',
+            tagName: tagName('subset_service.echo_orders'),
             action: 'ADD',
             tagData
           })
         }).promise()
       } else {
-        console.log(`No Option Definitions for ${collectionId}, skipping 'edsc.extra.serverless.subset_service.echo_orders' tag.`)
+        console.log(`No Option Definitions for ${collectionId}, skipping '${tagName('subset_service.echo_orders')}' tag.`)
       }
     } catch (e) {
       console.log(e)

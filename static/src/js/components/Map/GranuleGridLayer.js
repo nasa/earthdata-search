@@ -30,6 +30,7 @@ import { getTemporal } from '../../util/edscDate'
 
 import './GranuleGridLayer.scss'
 import projections from '../../util/map/projections'
+import { tagName } from '../../../../../sharedUtils/tags'
 
 const config = {
   // debug: true,
@@ -553,8 +554,9 @@ class GranuleGridLayerExtended extends L.GridLayer {
     if (metadata) {
       // Set multiOptions (gibs data)
       const { tags = {} } = metadata
-      const { 'edsc.extra.serverless.gibs': gibsTag = {} } = tags
+      const gibsTag = tags[tagName('gibs')] || {}
       const { data } = gibsTag
+
       this.multiOptions = data
     }
 

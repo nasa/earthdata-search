@@ -8,13 +8,12 @@ import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { tagName } from '../../../sharedUtils/tags'
 
 // AWS SQS Adapter
 let sqs
 
 const pageSize = 100
-
-const tagName = 'edsc.extra.serverless.collection_capabilities'
 
 /**
  * Returns tags for a collection based on a single granule sample
@@ -61,7 +60,7 @@ const generateCollectionCapabilityTags = async (input) => {
     page_num: pageNumber,
     page_size: pageSize,
     include_granule_counts: true,
-    include_tags: 'edsc.extra.serverless.*'
+    include_tags: tagName('*')
   }
 
   const { cmrHost } = getEarthdataConfig(cmrEnv())
@@ -114,7 +113,7 @@ const generateCollectionCapabilityTags = async (input) => {
     await sqs.sendMessage({
       QueueUrl: process.env.tagQueueUrl,
       MessageBody: JSON.stringify({
-        tagName,
+        tagName: tagName('collection_capabilities'),
         action: 'ADD',
         tagData: associationPayload
       })
