@@ -22,5 +22,6 @@
     flex-grow: 1;
     padding: $spacer;
     background-color: $color__white;
+    overflow-y: scroll;
   }
 }
