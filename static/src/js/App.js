@@ -58,7 +58,7 @@ class App extends Component {
           <ConnectedRouter history={history}>
             <MetricsEventsContainer />
             <Switch>
-              <Route exact path={this.portalPaths('/')} component={ConnectedPortalContainer} />
+              <Route path={this.portalPaths('/')} component={ConnectedPortalContainer} />
             </Switch>
             <ErrorBannerContainer />
             <ConnectedAuthTokenContainer>
