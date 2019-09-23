@@ -52,10 +52,8 @@ export const GranuleResultsBodyContainer = (props) => {
 
   const { pageNum } = granuleQuery
 
-  const onWaypointEnter = (params) => {
-    if (params.event !== null) {
-      onChangeGranulePageNum(pageNum + 1)
-    }
+  const onWaypointEnter = () => {
+    onChangeGranulePageNum(pageNum + 1)
   }
 
   const { excludedGranuleIds } = collections.byId[focusedCollection]

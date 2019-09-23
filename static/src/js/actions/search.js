@@ -75,9 +75,17 @@ export const changeCollectionPageNum = pageNum => (dispatch) => {
   dispatch(actions.getCollections())
 }
 
-export const changeGranulePageNum = pageNum => (dispatch) => {
-  dispatch(updateGranuleQuery({ pageNum }))
-  dispatch(actions.getGranules())
+export const changeGranulePageNum = pageNum => (dispatch, getState) => {
+  const { searchResults } = getState()
+  const { granules } = searchResults
+  const { allIds, hits } = granules
+
+  // Only load the next page of granules if there are granule results already loaded
+  // and the granules loaded is less than the total granules
+  if (allIds.length > 0 && allIds.length < hits) {
+    dispatch(updateGranuleQuery({ pageNum }))
+    dispatch(actions.getGranules())
+  }
 }
 
 export const changeGranuleGridCoords = gridCoords => (dispatch) => {
