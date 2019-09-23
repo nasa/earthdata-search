@@ -29,7 +29,7 @@ export const getSystemToken = async (providedCmrEnv) => {
       password: dbPassword,
       client_id: clientId,
 
-      // TODO: User the IP from the request
+      // TODO: Use the IP from the request
       user_ip_address: '127.0.0.1'
     }
 

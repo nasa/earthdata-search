@@ -9,7 +9,6 @@ import { migrateRetrievalCollections } from './migrateRetrievalCollections'
 import { migrateRetrievalOrders } from './migrateRetrievalOrders'
 import { migrateShapefiles } from './migrateShapefiles'
 
-// let cmrToken
 let oldDbConnection
 let newDbConnection
 
@@ -21,7 +20,9 @@ const migrateData = async () => {
     client: 'pg',
     connection: {
       ...oldDbConfig,
-      database: 'edsc-uat'
+
+      // Existing database imported from dump
+      database: ''
     }
   })
 
@@ -32,7 +33,9 @@ const migrateData = async () => {
     client: 'pg',
     connection: {
       ...newDbConfig,
-      database: 'edsc-uat-migrated'
+
+      // New database to store migrated data in
+      database: ''
     }
   })
 
