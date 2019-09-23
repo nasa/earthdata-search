@@ -127,6 +127,9 @@ export const buildCollectionSearchParams = (params) => {
     }
   }
 
+  // If there is a keyword, add the wildcard character between words and following the final character
+  const keywordWithWildcard = !keyword ? undefined : `${keyword.replace(/\s+/g, '* ')}*`
+
   // Set up params that are not driven by the URL
   const defaultParams = {
     includeFacets: 'v2',
@@ -155,7 +158,7 @@ export const buildCollectionSearchParams = (params) => {
     echoCollectionId,
     hasGranulesOrCwic,
     instrumentH: facetsToSend.instrument_h,
-    keyword,
+    keyword: keywordWithWildcard,
     pageNum,
     platformH: facetsToSend.platform_h,
     point,
