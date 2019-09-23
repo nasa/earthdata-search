@@ -9,6 +9,8 @@ const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
 const config = require('./sharedUtils/config')
 
 const envConfig = config.getEnvironmentConfig()
+const appEnv = config.getApplicationConfig().env
+const earthdataConfig = config.getEarthdataConfig(appEnv)
 
 const StaticCommonConfig = {
   name: 'static',
@@ -158,6 +160,7 @@ const StaticCommonConfig = {
       {
         path: path.join(__dirname, './static/src/partials/body.html'),
         options: {
+          feedbackApp: earthdataConfig.feedbackApp,
           gtmPropertyId: envConfig.gtmPropertyId
         }
       },
