@@ -57,14 +57,4 @@ describe('GranuleResultsBodyContainer component', () => {
     expect(props.onChangeGranulePageNum.mock.calls.length).toBe(1)
     expect(props.onChangeGranulePageNum.mock.calls[0]).toEqual([2])
   })
-
-  test('waypointEnter does not call onChangeGranulePageNum if there is no scroll event', () => {
-    const { enzymeWrapper, props } = setup()
-
-    const granuleResultsBody = enzymeWrapper.find(GranuleResultsBody)
-
-    granuleResultsBody.prop('waypointEnter')({ event: null })
-
-    expect(props.onChangeGranulePageNum.mock.calls.length).toBe(0)
-  })
 })

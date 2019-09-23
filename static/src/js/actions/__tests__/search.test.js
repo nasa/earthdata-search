@@ -271,6 +271,12 @@ describe('changeGranulePageNum', () => {
       query: {
         collection: {},
         granule: { pageNum: 1 }
+      },
+      searchResults: {
+        granules: {
+          allIds: ['123', '456'],
+          hits: 100
+        }
       }
     })
 
@@ -288,6 +294,37 @@ describe('changeGranulePageNum', () => {
 
     // was getCollections called
     expect(getGranulesMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('should not update the collection query and call getCollections if there are no more granules', () => {
+    const pageNum = 2
+
+    // mock getGranules
+    const getGranulesMock = jest.spyOn(actions, 'getGranules')
+    getGranulesMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const store = mockStore({
+      query: {
+        collection: {},
+        granule: { pageNum: 1 }
+      },
+      searchResults: {
+        granules: {
+          allIds: ['123', '456'],
+          hits: 2
+        }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeGranulePageNum(pageNum))
+
+    // Is updateGranuleQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions.length).toBe(0)
+
+    expect(getGranulesMock).toHaveBeenCalledTimes(0)
   })
 })
 
