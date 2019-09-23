@@ -197,7 +197,7 @@ export class OrderStatus extends Component {
               </li>
               <li className="order-status__footer-link-item">
                 <i className="fa fa-chevron-circle-right order-status__footer-link-icon" />
-                <a className="order-status__footer-link" href={`${portalPath(portal)}/data/status`}>View Your Download Status & History</a>
+                <a className="order-status__footer-link" href={`${portalPath(portal)}/downloads`}>View Your Download Status & History</a>
               </li>
             </ul>
           </Well.Footer>
