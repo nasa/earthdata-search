@@ -11,6 +11,7 @@ function setup() {
     authToken: '',
     keywordSearch: 'Test value',
     onChangeQuery: jest.fn(),
+    onChangeFocusedCollection: jest.fn(),
     onClearFilters: jest.fn()
   }
 
@@ -54,6 +55,8 @@ describe('SearchForm component', () => {
         keyword: 'new value'
       }
     }])
+    expect(props.onChangeFocusedCollection.mock.calls.length).toBe(1)
+    expect(props.onChangeFocusedCollection.mock.calls[0]).toEqual([''])
   })
 
   test('should call onClearFilters when the Clear Button is clicked', () => {

@@ -10,7 +10,8 @@ function setup() {
   const props = {
     keywordSearch: 'Test value',
     onClearFilters: jest.fn(),
-    onChangeQuery: jest.fn()
+    onChangeQuery: jest.fn(),
+    onChangeFocusedCollection: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SearchFormContainer {...props} />)
