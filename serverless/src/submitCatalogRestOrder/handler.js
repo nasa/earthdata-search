@@ -70,7 +70,7 @@ const submitCatalogRestOrder = async (event, context) => {
       access_method: accessMethod,
       granule_params: granuleParams
     } = retrievalRecord
-    const { portalId, shapefileId } = jsondata
+    const { portalId, shapefile_id: shapefileId } = jsondata
 
     const granuleResponse = await request.get({
       uri: cmrUrl('search/granules.json', granuleParams),
