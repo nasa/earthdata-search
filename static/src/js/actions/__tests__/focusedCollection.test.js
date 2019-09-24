@@ -12,10 +12,12 @@ import {
   UPDATE_COLLECTION_METADATA,
   COPY_GRANULE_RESULTS_TO_COLLECTION,
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
-  UPDATE_AUTH
+  UPDATE_AUTH,
+  UPDATE_FOCUSED_GRANULE
 } from '../../constants/actionTypes'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
+import * as EventEmitter from '../../events/events'
 
 const mockStore = configureMockStore([thunk])
 
@@ -152,6 +154,9 @@ describe('changeFocusedCollection', () => {
     getFocusedCollectionMock.mockImplementation(() => jest.fn())
     const getTimelineMock = jest.spyOn(actions, 'getTimeline')
     getTimelineMock.mockImplementation(() => jest.fn())
+    const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule')
+    getFocusedGranuleMock.mockImplementation(() => jest.fn())
+    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
     // mockStore with initialState
     const granules = {
@@ -166,6 +171,10 @@ describe('changeFocusedCollection', () => {
       focusedCollection: '',
       metadata: {
         collections: {
+          allIds: [],
+          byId: {}
+        },
+        granules: {
           allIds: [],
           byId: {}
         }
@@ -197,10 +206,26 @@ describe('changeFocusedCollection', () => {
         granules
       }
     })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_FOCUSED_GRANULE,
+      payload: ''
+    })
+    expect(storeActions[2]).toEqual({
+      type: '@@router/CALL_HISTORY_METHOD',
+      payload: {
+        args: [{
+          pathname: '/search',
+          search: undefined
+        }],
+        method: 'push'
+      }
+    })
 
     // were the mocks called
     expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
     expect(getTimelineMock).toHaveBeenCalledTimes(1)
+    expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
   })
 })
 

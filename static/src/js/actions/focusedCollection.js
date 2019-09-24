@@ -10,6 +10,7 @@ import { updateGranuleResults, addGranulesFromCollection } from './granules'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
+import { eventEmitter } from '../events/events'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -154,8 +155,21 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
  * Change the focusedCollection, copy granules, and get the focusedCollection metadata.
  * @param {string} collectionId
  */
-export const changeFocusedCollection = collectionId => (dispatch) => {
-  if (collectionId === '') dispatch(copyGranulesToCollection())
+export const changeFocusedCollection = collectionId => (dispatch, getState) => {
+  if (collectionId === '') {
+    dispatch(copyGranulesToCollection())
+    dispatch(actions.changeFocusedGranule(''))
+    eventEmitter.emit('map.stickygranule', { granule: null })
+
+    const { router } = getState()
+    const { location } = router
+    const { search } = location
+
+    dispatch(actions.changeUrl({
+      pathname: `${portalPathFromState(getState())}/search`,
+      search
+    }))
+  }
 
   if (collectionId !== '') dispatch(copyGranulesFromCollection(collectionId))
 

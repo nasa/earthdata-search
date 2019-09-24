@@ -53,7 +53,7 @@ class SearchForm extends Component {
   }
 
   onKeywordBlur() {
-    const { onChangeQuery } = this.props
+    const { onChangeQuery, onChangeFocusedCollection } = this.props
     const { keywordSearch } = this.state
 
     onChangeQuery({
@@ -61,6 +61,7 @@ class SearchForm extends Component {
         keyword: keywordSearch
       }
     })
+    onChangeFocusedCollection('')
   }
 
   onSearchClear() {
@@ -136,6 +137,7 @@ class SearchForm extends Component {
 SearchForm.propTypes = {
   keywordSearch: PropTypes.string.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
+  onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired
 }
 

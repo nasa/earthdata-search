@@ -7,6 +7,8 @@ import SearchForm from '../../components/SearchForm/SearchForm'
 
 const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
+  onChangeFocusedCollection:
+    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
   onClearFilters: () => dispatch(actions.clearFilters())
 })
 
@@ -20,12 +22,14 @@ export const SearchFormContainer = (props) => {
   const {
     keywordSearch,
     onChangeQuery,
-    onClearFilters
+    onClearFilters,
+    onChangeFocusedCollection
   } = props
 
   return (
     <SearchForm
       onChangeQuery={onChangeQuery}
+      onChangeFocusedCollection={onChangeFocusedCollection}
       onClearFilters={onClearFilters}
       keywordSearch={keywordSearch}
     />
@@ -39,6 +43,7 @@ SearchFormContainer.defaultProps = {
 SearchFormContainer.propTypes = {
   keywordSearch: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
+  onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired
 }
 
