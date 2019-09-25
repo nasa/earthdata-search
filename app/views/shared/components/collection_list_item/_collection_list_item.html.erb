@@ -77,6 +77,18 @@
       <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Collections" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">
         <i class="fa fa-info-circle"></i>
       </a>
+      <% if Rails.configuration.disable_download %>
+        <div style="float: right;" tabindex="0" data-tooltip="true" data-placement="left" title="<%= Rails.configuration.migration_shutdown_text %>">
+          <a href="#" class="button icon-button add-to-project primary" data-pulse="#project-count" title="Add collection to the current project"
+            data-bind="visible: !$root.project.hasCollection($data) && has_granules">
+            <i class="fa fa-plus"></i>
+          </a>
+          <a href="#" class="button icon-button remove-from-project button-active" data-pulse="#project-count" title="Remove collection from the current project"
+            data-bind="visible: $root.project.hasCollection($data)">
+            <i class="fa fa-minus"></i>
+          </a>
+        </div>
+      <% else %>
       <a href="#" class="button icon-button add-to-project primary" data-pulse="#project-count" title="Add collection to the current project"
          data-bind="visible: !$root.project.hasCollection($data) && has_granules, click: $root.ui.projectList.toggleCollection">
         <i class="fa fa-plus"></i>
@@ -85,6 +97,7 @@
          data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
         <i class="fa fa-minus"></i>
       </a>
+      <% end %>
     </div>
   </div>
 </script>

@@ -71,6 +71,20 @@
         <div class="master-overlay-info-panel master-overlay-global-actions actions">
             <strong data-bind="numberWithSeparator: granules().hits() == 1 ? '1' : granules().hits()"></strong> <span data-bind="text: granules().hits() == 1 ? ' Granule' : ' Granules'"></span>
           <!-- ko with: collection -->
+          <% if Rails.configuration.disable_download %>
+            <div style="float: right;" tabindex="0" data-tooltip="true" title="<%= Rails.configuration.migration_shutdown_text %>">
+              <!-- ko if: !isMaxOrderSizeReached() -->
+              <a href="#" class="add-to-project" data-pulse="#project-count" title="Add collection to the current project"
+                data-bind="visible: !$root.project.hasCollection($data)">
+                <i class="fa fa-plus-circle"></i> Add to project
+              </a>
+              <!-- /ko -->
+              <a href="#" class="remove-from-project" data-pulse="#project-count" title="Remove collection from the current project"
+                data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
+                <i class="fa fa-times-circle"></i> Remove from project
+              </a>
+            </div>
+          <% else %>
             <!-- ko if: !isMaxOrderSizeReached() -->
             <a href="#" class="add-to-project" data-pulse="#project-count" title="Add collection to the current project"
                data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
@@ -81,10 +95,19 @@
                data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
               <i class="fa fa-times-circle"></i> Remove from project
             </a>
+          <% end %>
           <p>
+          <% if Rails.configuration.disable_download %>
+            <div tabindex="0" data-tooltip="true" title="<%= Rails.configuration.migration_shutdown_text %>">
+              <button class="button retrieve master-overlay-info-tooltip-big button-disabled" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom'}" disabled style="pointer-events: none;">
+                <i class="fa fa-download"></i> Download All <span class="pill" data-bind="numberWithSeparator: $parent.granules().hits() == 1 ? '1 Granule' : $parent.granules().hits() + ' Granules'"></span>
+              </button>
+            </div>
+          <% else %>
             <button class="button retrieve master-overlay-info-tooltip-big" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to ' + tags()['edsc.limited_collections']['data']['limit'] + ' granules. Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download granule results'}">
               <i class="fa fa-download"></i> Download All <span class="pill" data-bind="numberWithSeparator: $parent.granules().hits() == 1 ? '1 Granule' : $parent.granules().hits() + ' Granules'"></span>
             </button>
+          <% end %>
           </p>
           <!-- /ko -->
         </div>

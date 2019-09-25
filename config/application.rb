@@ -133,5 +133,8 @@ module EarthdataSearchClient
     config.umm_var_version = '1.2'
 
     config.ous_version = 'v2.1'
+
+    config.disable_download = ENV['disable_download'] || false
+    config.migration_shutdown_text = 'Downloads are temporarily disabled as we migrate to a new platform.'
   end
 end
