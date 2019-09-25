@@ -303,8 +303,6 @@ export class OrderStatusItemBody extends Component {
             detailsOpen && (
               <>
                 <OrderProgressList
-                  totalNumber={totalNumber}
-                  totalProcessed={totalProcessed}
                   orders={orders}
                 />
                 {
