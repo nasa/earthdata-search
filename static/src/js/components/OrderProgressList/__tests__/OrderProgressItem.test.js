@@ -17,9 +17,7 @@ function setup() {
   const order = retrievalStatusPropsEsi.retrieval.collections.esi[1].orders[0]
 
   const props = {
-    order,
-    totalNumber: 81,
-    totalProcessed: 81
+    order
   }
 
   const enzymeWrapper = shallow(<OrderProgressItem {...props} />)
