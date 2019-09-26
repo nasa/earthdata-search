@@ -62,14 +62,14 @@ Once npm is installed locally, you need to download the dependencies by executin
 
 ###### Secrets
 
-For local development Earthata Search uses a json configuration file to store secure files, an example is provided and should be copied and completed before attempting to go any further.
+For local development Earthdata Search uses a json configuration file to store secure files, an example is provided and should be copied and completed before attempting to go any further.
 
 	cp secret.config.json.example secret.config.json
 
-In order to operate against a local databse this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally)
+In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally)
 
 ###### Public (Non Secure)
-Non secure values are stored in `static.config.json`. It's best to keep these values as they are set and use the values in your local environment to prevent conflicts amongst developers.
+Non-secure values are stored in `static.config.json`. It's best to keep these values as they are set and use the values in your local environment to prevent conflicts amongst developers.
 
 ##### Database Migration
 
@@ -77,7 +77,7 @@ Ensure that you have a database created:
 
 	createdb edsc_dev
 
-Our database migrations run within Lambda due to the fact that in non-develoment environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
+Our database migrations run within Lambda due to the fact that in non-development environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
 
 	serverless invoke local --function migrateDatabase
 
@@ -132,13 +132,13 @@ When the time comes to deploy the application, first ensure that you have the re
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
 
-This application runs in a VPC for NASA security purposes, therefor the following values are expected when a deployment ocurrs.
+This application runs in a VPC for NASA security purposes, therefore the following values are expected when a deployment occurs:
 
 - VPC_ID
 - SUBNET_ID_A
 - SUBNET_ID_B
 
-For production use this application uses Scatter Swap to obfuscate some IDs -- the library does not require a value be provided but if you'd like to control it you can set the following ENV vars:
+For production use, this application uses Scatter Swap to obfuscate some IDs -- the library does not require a value be provided but if you'd like to control it you can set the following ENV vars:
 
 - OBFUSCATION_SPIN
 - OBFUSCATION_SPIN_SHAPEFILES
