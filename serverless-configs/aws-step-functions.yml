@@ -1,0 +1,80 @@
+stateMachines:
+  UpdateOrderStatusWorkflow:
+    name: UpdateOrderStatusWorkflow-${self:provider.stage}
+    role: 
+      Fn::ImportValue: ${self:provider.stage}-ApplicationRole
+    definition:
+      StartAt: InitialWait
+      States:
+        InitialWait:
+          Type: Wait
+          Seconds: 10
+          Next: DetermineOrderType
+        DetermineOrderType:
+          Type: Choice
+          Choices:
+            - Variable: '$.orderType'
+              StringEquals: 'ESI'
+              Next: FetchCatalogRestOrderStatus
+            - Variable: '$.orderType'
+              StringEquals: 'ECHO ORDERS'
+              Next: FetchLegacyServicesOrderStatus
+        FetchCatalogRestOrderStatus:
+          Type: Task
+          Resource:
+            Fn::GetAtt:
+              - FetchCatalogRestOrderLambdaFunction
+              - Arn
+          Next: CheckOrderStatus
+        FetchLegacyServicesOrderStatus:
+          Type: Task
+          Resource:
+            Fn::GetAtt:
+              - FetchLegacyServicesOrderLambdaFunction
+              - Arn
+          Next: CheckOrderStatus
+        CheckOrderStatus:
+          Type: Choice
+          Choices:
+            - Variable: '$.orderStatus'
+              StringEquals: complete
+              Next: OrderComplete
+            - Variable: '$.orderStatus'
+              StringEquals: failed
+              Next: OrderFailed
+            - Variable: '$.orderStatus'
+              StringEquals: in_progress
+              Next: WaitForRetry
+        WaitForRetry:
+          Type: Wait
+          Seconds: 60
+          Next: DetermineOrderType
+        OrderComplete:
+          Type: Succeed
+        OrderFailed:
+          Type: Fail
+
+  GenerateCollectionCapabilityTagsWorkflow:
+    name: GenerateCollectionCapabilityTags-${self:provider.stage}
+    role:
+      Fn::ImportValue: ${self:provider.stage}-ApplicationRole
+    definition:
+      StartAt: ProcessCollectionPage
+      States:
+        ProcessCollectionPage:
+          Type: Task
+          Resource:
+            Fn::GetAtt:
+              - GenerateCollectionCapabilityTagsLambdaFunction
+              - Arn
+          Next: CheckMoreCollections
+        CheckMoreCollections:
+          Type: Choice
+          Choices:
+            - Variable: '$.hasMoreCollections'
+              BooleanEquals: true
+              Next: ProcessCollectionPage
+          Default:
+            TaggingComplete
+        TaggingComplete:
+          Type: Succeed

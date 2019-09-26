@@ -1,0 +1,43 @@
+.spatial-selection-dropdown {
+  display: flex;
+
+  &__menu {
+    margin-top: -0.5rem;
+    border: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: $shadow__panel;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    padding-left: 0.625rem;
+
+    .button__icon {
+      margin-right: .35rem;
+      width: 1rem;
+      text-align: center;
+    }
+
+    .button__contents {
+      line-height: 1.25rem;
+    }
+  }
+
+  &__icon {
+    margin-right: .35rem;
+    width: 1rem;
+    text-align: center;
+  }
+
+  &__small {
+    margin-left: $spacer/4;
+    font-size: 0.75rem;
+    color: $color__black--500;
+
+    .dropdown-item:hover & {
+      color: inherit;
+    }
+  }
+}

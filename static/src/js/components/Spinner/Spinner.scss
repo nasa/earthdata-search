@@ -1,0 +1,54 @@
+.spinner {
+  &__inner {
+    .spinner--dots & {
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+      background-color: $color__black--400;
+      animation: fade--dots 0.8s ease-in-out alternate infinite;
+
+      &:nth-of-type(1) {
+        animation-delay: -0.4s;
+      }
+
+      &:nth-of-type(2) {
+        animation-delay: -0.2s;
+      }
+    }
+
+    .spinner--white & {
+      background-color: $color__white;
+    }
+
+    .spinner--small & {
+      width: 0.65rem;
+      height: 0.65rem;
+    }
+  }
+
+  &--dots {
+    width: 3.5rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &--inline {
+    display: inline-flex;
+    line-height: 1;
+  }
+
+  &--small {
+    width: 2.8rem;
+  }
+}
+
+@keyframes fade--dots {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

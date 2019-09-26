@@ -1,0 +1,24 @@
+.collection-results-header {
+  &__form-group {
+    align-items: center;
+    margin: 0;
+    margin-right: $spacer/2;
+  }
+
+  &__label-dropdown {
+    padding-right: 0;
+  }
+
+  &__tip {
+    color: $color__black--300;
+  }
+
+  &__tip-label {
+    margin-right: $spacer/4;
+  }
+
+  &__tip-icon {
+    margin: 0 $spacer/4;
+    color: $color__green;
+  }
+}

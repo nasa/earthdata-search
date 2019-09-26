@@ -1,0 +1,35 @@
+.order-dropdown-item {
+  &:not(:last-child) {
+    margin-bottom: $spacer/2;
+  }
+
+  &__title {
+    margin-bottom: $spacer/4;
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    span {
+      font-weight: 400;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__list-item {
+    margin: 0;
+    line-height: 1.15em;
+
+    &:not(:last-child) {
+      margin-bottom: $spacer/4;
+    }
+  }
+
+  &__link {
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+}

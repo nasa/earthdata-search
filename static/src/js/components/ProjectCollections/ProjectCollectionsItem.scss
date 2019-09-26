@@ -1,0 +1,127 @@
+.project-collections-item {
+  position: relative;
+  padding: $spacer/2;
+  border-bottom: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+  border-left: 5px solid transparent;
+  overflow: visible;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -24px;
+    display: block;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    border: 1px solid $border-color;
+    box-shadow: 0 0 10px 3px rgba(0,0,0,0.04);
+    color: black;
+    transform: rotate(45deg) translate(-50%);
+    transition: right 0.2s ease-in-out;
+    will-change: right;
+  }
+
+  &--is-active {
+    &:after {
+      right: -14px;
+    }
+  }
+
+  &__header {
+    display: flex;
+  }
+
+  &__title-button {
+    flex-grow: 1;
+    display: block;
+    text-align: left;
+    color: $color__black--900;
+
+    &:hover,
+    &:active {
+      color: $color__black--400;
+    }
+  }
+
+  &__title {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1;
+    margin-bottom: $spacer/4;
+    font-size: 0.85rem;
+    line-height: 1.35em;
+    font-weight: 700;
+  }
+
+  &__stats-list {
+    display: flex;
+    margin: 0;
+    margin-bottom: $spacer/4;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__stats-item {
+    margin-right: $spacer/2;
+    color: $color__black--500;
+    font-size: 0.85rem;
+
+    &:last-child {
+      margin-left: 0;
+    }
+  }
+
+  &__more-actions {
+    top: -$spacer/4;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  &__more-actions-toggle {
+    font-size: 1.125rem;
+    color: $color__black--400;
+  }
+
+  &__more-actions-item {
+    padding: $spacer/4 $spacer/2;
+  }
+
+  &__more-actions-icon {
+    width: 1rem;
+    margin-right: $spacer/4;
+    text-align: center;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__status {
+    margin-right: $spacer/4;
+    font-size: 0.85rem;
+
+    .fa {
+      vertical-align: middle;
+    }
+
+    &--invalid {
+      color: $color__red;
+    }
+  }
+
+  &__more-options-button {
+    padding: 0;
+    font-size: 0.85rem;
+    color: $color__black--500;
+
+    &:hover,
+    &:active {
+      color: $color__black--600;
+    }
+  }
+}

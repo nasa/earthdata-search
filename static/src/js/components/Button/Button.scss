@@ -1,0 +1,57 @@
+.button {
+  vertical-align: middle;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &--naked {
+    padding: 0;
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  &--link {
+    padding: 0;
+    vertical-align: baseline;
+    border: 0;
+
+    .button__icon {
+      line-height: 1.5;
+      margin-right: $spacer/4;
+    }
+
+    .button__contents {
+      vertical-align: baseline;
+    }
+  }
+
+  &__contents {
+    vertical-align: initial;
+    line-height: 1em;
+  }
+
+  &__icon {
+    display: inline-block;
+    vertical-align: initial;
+    line-height: 1rem;
+
+    .button--naked & {
+      vertical-align: middle;
+    }
+
+    &--push {
+      margin-right: $spacer/2;
+    }
+  }
+
+  &__badge {
+    margin-left: $spacer/2;
+    font-weight: 300;
+    background-color: rgba($color__black, 0.5);
+    border-radius: 1em;
+    vertical-align: middle;
+  }
+}

@@ -1,0 +1,9 @@
+#ornl-daac-logo {
+  height: 50px;
+  width: 66px;
+  background-image: url('./images/ornl-daac-logo-mono.png');
+
+  &:hover {
+    background-image: url('./images/ornl-daac-logo-color.png');
+  }
+}

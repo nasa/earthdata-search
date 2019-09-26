@@ -1,0 +1,20 @@
+.collection-details-header {
+  &__title-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__title {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-right: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1875rem;
+  }
+
+  &__version-id {
+    margin-left: $spacer/2;
+    background-color: $color__purple;
+  }
+}

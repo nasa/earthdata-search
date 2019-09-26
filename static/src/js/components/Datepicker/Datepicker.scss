@@ -1,0 +1,57 @@
+.datetime {
+  &__buttons {
+    order: 1;
+  }
+
+  &__button {
+    width: 100%;
+    padding: 0.3125rem;
+    border-radius: $border-radius-sm;
+    font-weight: 700;
+
+    &:hover {
+      background-color: $color__black--200;
+    }
+  }
+
+  .form-control {
+    font-size: 0.85rem;
+
+    @include media-breakpoint-up(xl) {
+      font-size: 1rem;
+    }
+  }
+
+  &.rdtOpen .rdtPicker {
+    display: flex;
+  }
+
+  .rdtPicker {
+    flex-direction: column;
+    width: 13.4375rem;
+    margin-top: 0.1875em;
+    font-size: 0.8125rem;
+    border: 1px solid $color__black--200;
+    border-radius: $border-radius;
+    color: $color__black--700;
+    @include carat('topleft');
+
+    .rdtYears,
+    .rdtMonths,
+    .rdtDays {
+      order: 0;
+    }
+
+    table {
+      border: 0;
+    }
+
+    thead tr:first-child th {
+      border-radius: $border-radius-sm;
+    }
+
+    td {
+      border-radius: $border-radius-sm;
+    }
+  }
+}

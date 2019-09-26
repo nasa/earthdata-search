@@ -1,0 +1,7 @@
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<%= gtmPropertyId %>" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<div id="earthdata-tophat2" class="th-wrapper" style="height: 34px; background: #000;"></div>
+<div id="root" class="root"></div>
+<script src="https://cdn.earthdata.nasa.gov/tophat2/tophat2.js" id="earthdata-tophat-script" data-show-fbm="true" data-show-status="true" data-status-api-url="https://status.earthdata.nasa.gov/api/v1/notifications" async="async" defer="defer"></script>
+<script src="https://fbm.earthdata.nasa.gov/for/<%= feedbackApp %>/feedback.js" type="text/javascript"></script>
+<script type="text/javascript">feedback.init({showIcon: false});</script>

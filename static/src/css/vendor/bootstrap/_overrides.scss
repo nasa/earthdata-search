@@ -1,0 +1,52 @@
+/*
+* Custom Colors
+*/
+
+// Body
+$body-bg: #000;
+$body-color: #333;
+
+// Theme Colors
+$theme-colors: (
+  "primary": $color__theme--blue,
+  "light": $color__theme--light,
+  "success": $color__theme--green,
+  "yellow": $color__theme--yellow
+);
+
+$border-color: $color__black--200;
+
+// Buttons
+$btn-border-radius: 0.125rem;
+
+// Links
+$link-color: $color__brand--blue;
+$link-hover-color: $color__brand--blue;
+$link-decoration: none;
+$link-hover-decoration: none;
+
+// Badges
+$badge-padding-y: 0.3125rem;
+$badge-padding-x: 0.5rem;
+$badge-font-size: 0.6875rem;
+$badge-border-radius: 0.125rem;
+
+// Custom Breakpoints
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 567px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1900px
+);
+
+$container-max-widths: (
+  sm: 567px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1900px
+);
+

@@ -1,0 +1,86 @@
+.geojson-formats {
+  font-size: .8em;
+}
+
+.geojson-svg {
+  stroke-width: 1;
+  stroke: #f80;
+  fill-opacity: 0;
+
+  &:hover {
+    fill: #00C322;
+    stroke: #00C322;
+    fill-opacity: .5;
+  }
+}
+
+.geojson-icon {
+  opacity: .3;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.geojson-help {
+  display: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 160;
+  background-color: rgba(0,0,0, 0.8);
+}
+
+.geojson-help-dropzone {
+  display: none;
+  border: 3px dashed #ccc;
+  background: #fff;
+  width: 30em;
+  border-radius: 10px;
+  margin: 200px auto 0;
+  padding: 25px;
+  font-size: 1.2em;
+
+  p {
+    margin: 1em 0;
+  }
+
+  ul {
+    list-style: disc inside;
+  }
+}
+
+.is-geojson-help-visible {
+  .geojson-help, .geojson-help-dropzone {
+    display: block;
+  }
+}
+
+.dz-drag-hover {
+  .geojson-help {
+    background-color: rgba(200, 255, 200, 0.75);
+  }
+
+  .geojson-help-dropzone {
+    border: 5px dashed #afa;
+    background: #efe;
+  }
+}
+
+.dropzone {
+  border: none;
+  border-radius: 0;
+
+  .dz-preview {
+    position: absolute;
+    left: 1000px;
+    top: 50px;
+    z-index: 500;
+  }
+}
+
+.edsc-dz-error {
+  color: #800;
+}

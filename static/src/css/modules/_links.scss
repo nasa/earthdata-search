@@ -1,0 +1,31 @@
+.link {
+  color: $color__brand--blue-dark;
+  text-decoration: underline;
+
+  &--separated {
+    &:after {
+      display: inline-block;
+      margin-left: $spacer/2;
+      content: '|';
+      color: transparent;
+      border-left: 1px solid $color__black--300;
+    }
+  }
+
+  &--external {
+    &:after {
+      display: inline-block;
+      padding-left: 0.3rem;
+      content: "\f111";
+      font-size: 0.6rem;
+      font-family: "EUI-Icon-Library";
+      color: $color__black--300;
+    }
+
+    &:hover {
+      &:after {
+        color: $color__black--400;
+      }
+    }
+  }
+}

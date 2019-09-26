@@ -1,0 +1,94 @@
+.sidebar-header {
+  color: $color__white;
+  padding: 1.5rem 0 0.5rem 0.75rem;
+
+  &__site-logo {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-top: -$spacer/2;
+
+    & > * {
+      margin-top: $spacer/2;
+    }
+  }
+
+  &__site-meatball {
+    display: flex;
+    align-items: flex-end;
+    background-image: url('~Images/app-logo.png');
+    background-size: 3.125rem 2.5rem;
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    margin-right: 0.25rem;
+    transition: background 0.2s ease-in-out;
+    cursor: pointer;
+    width: 3.125rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+
+    &:hover {
+      background-image: url('~Images/app-logo_hover.png');
+    }
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      background-image: url('~Images/app-logo_2x.png');
+
+      &:hover {
+        background-image: url('~Images/app-logo_hover_2x.png');
+      }
+    }
+  }
+
+  &__site-name {
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: $color__white;
+
+    &:hover {
+      text-decoration: none;
+      color: $color__white;
+    }
+  }
+
+  &__site-name-ent {
+    display: block;
+  }
+
+  &__site-name-ent--e {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+  }
+
+  &__site-name-ent--s {
+    font-size: 1.7rem;
+    font-weight: 100;
+    letter-spacing: 0.02rem;
+    line-height: 1.8rem;
+  }
+
+  &__site-env {
+    padding: 0.3rem 0.4rem;
+    font-size: 0.725rem;
+    background: $color__brand--blue;
+    border-radius: 0.125rem;
+  }
+
+  &__portal-logo {
+    display: block;
+    background-repeat: no-repeat;
+    background-size: auto 50px;
+    height: 50px;
+    text-indent: inherit;
+    margin: 0;
+    margin-right: $spacer/4;
+    transition: background 0.2s ease-in-out;
+    flex-shrink: 0;
+
+    img {
+      display: block;
+      height: 50px;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+.facets-modal-nav {
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: $spacer;
+  border-bottom: 1px solid #dee2e6;
+
+  &__heading {
+    margin-right: $spacer/2;
+    color: $color__black--400;
+  }
+
+  &__list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__entry {
+    padding: 0 0.125rem;
+    font-weight: 700;
+
+    &:active {
+      color: #14669c;
+    }
+
+    &--inactive {
+      color: $color__black--400;
+    }
+  }
+}

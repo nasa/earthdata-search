@@ -1,0 +1,113 @@
+service: earthdata-search
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  versionFunctions: false
+  stage: ${opt:stage, 'lab'}
+  region: us-east-1
+  endpointType: PRIVATE
+  memorySize: 256
+  environment:
+    dbEndpoint:
+      Fn::ImportValue: ${self:provider.stage}-DatabaseEndpoint
+    dbPort:
+      Fn::ImportValue: ${self:provider.stage}-DatabasePort
+    dbUsername: edsc
+    dbName: edsc_${self:provider.stage}
+
+    colorMapQueueUrl:
+      Ref: ColorMapsProcessingQueue
+    tagQueueUrl:
+      Ref: TagProcessingQueue
+    legacyServicesQueueUrl:
+      Ref: LegacyServicesOrderQueue
+    catalogRestQueueUrl:
+      Ref: CatalogRestOrderQueue
+    optionDefinitionQueueUrl:
+      Ref: OptionDefinitionsQueue
+
+    obfuscationSpin: ${env:OBFUSCATION_SPIN}
+    obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES}
+
+    configSecretId:
+      Fn::ImportValue: ${self:provider.stage}-DbPasswordSecret
+
+    storeUserLambda: ${self:custom.siteName}-storeUserData
+    collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
+
+  vpc:
+    securityGroupIds:
+      - Fn::ImportValue: ${self:provider.stage}-LambdaSecurityGroup
+    subnetIds:
+      - ${env:SUBNET_ID_A}
+      - ${env:SUBNET_ID_B}
+
+  role:
+    Fn::ImportValue: ${self:provider.stage}-ApplicationRole
+
+plugins:
+  - serverless-finch
+  - serverless-plugin-warmup
+  - serverless-offline
+  - serverless-webpack
+  - serverless-step-functions
+  - serverless-plugin-split-stacks
+
+#
+# Lambda Functions
+#
+functions: ${file(./serverless-configs/${self:provider.name}-functions.yml)}
+
+#
+# Additional AWS Resources
+#
+resources: ${file(./serverless-configs/${self:provider.name}-resources.yml)}
+
+#
+# Step functions to manage order status jobs
+#
+stepFunctions: ${file(./serverless-configs/${self:provider.name}-step-functions.yml)}
+
+# Package each lambda into individual zip files. This reduces the size of
+# each lambda but increases the complexity of the compilation process slightly
+package:
+  individually: false
+
+custom:
+  siteName: earthdata-search-${self:provider.stage}
+
+  infrastructureStackName: earthdata-search-infrastructure-${self:provider.stage}
+
+  # Finch (S3 sync plugin)
+  client:
+    bucketName: ${self:custom.siteName}
+    distributionFolder: static/dist
+
+    # Prevent the plugin from attempting to change the bucket policy
+    manageResources: false
+
+  # Default is 3000 so to avoid conflicts with rails applications we'll define a new port
+  serverless-offline:
+    port: 3001
+    useSeparateProcesses: true
+
+  # Serverless Webpack configurations
+  webpack:
+    webpackConfig: 'serverless.webpack.config.js'
+    includeModules: true
+    packager: 'npm'
+    excludeFiles: src/**/*.test.js
+
+  warmup:
+    enabled: true
+    role:
+      Fn::ImportValue: ${self:provider.stage}-ApplicationRole
+    prewarm: true
+    timeout: 30
+    events:
+      - schedule: 'cron(0/20 8-22 ? * MON-FRI *)'
+
+  # Manage resource count (Maximum of 200) by splitting up the cloudformation templates
+  splitStacks:
+    perFunction: true

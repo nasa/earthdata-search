@@ -1,0 +1,70 @@
+.facets-group {
+  display: block;
+  color: $color__white;
+
+  &__heading {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: space-between;
+    padding: .6rem 1.1rem;
+    color: $color__white;
+    border-radius: 0;
+
+    &:hover {
+      color: $color__white;
+    }
+
+    &:focus {
+      outline: 0;
+      border-color: transparent;
+    }
+  }
+
+  &__action {
+    align-self: flex-end;
+  }
+
+  &__header {
+    display: flex;
+    padding: 0.2rem 0.4rem 0.2rem 1.1rem;
+  }
+
+  &__meta {
+    font-size: 0.8rem;
+    color: $color__black--400;
+  }
+
+  &__view-all {
+    margin-left: auto;
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $color__black--400;
+    background: none;
+    outline: none;
+    border: 0;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  &__body {
+    height: 0;
+    overflow: hidden;
+    background: $color__black--900;
+
+    &:first-child {
+      padding-top: 0.6rem;
+    }
+
+    &--is-open {
+      height: auto;
+    }
+  }
+}
+

@@ -1,0 +1,40 @@
+.dropdown-menu {
+  padding: .25rem 0;
+
+  .dropdown--carat-right & {
+    @include carat('topright');
+    left: 0.5rem!important;
+  }
+}
+
+.dropdown-header {
+  font-weight: 700;
+  color: $color__black--500;
+
+  .dropdown--condensed & {
+    padding: .25rem .75rem;
+    padding-bottom: 0;
+    font-size: 0.625rem;
+  }
+}
+
+.dropdown-item {
+  color: $color__black--800;
+  font-size: 0.875rem;
+
+  &:hover {
+    background-color: lighten($color__black--200, 5%);
+    color: $color__black--700;
+  }
+
+  .dropdown--condensed & {
+    padding: .25rem .75rem;
+    font-size: 0.75rem;
+  }
+}
+
+.dropdown-toggle {
+  &:after {
+    vertical-align: middle;
+  }
+}

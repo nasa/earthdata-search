@@ -1,0 +1,11 @@
+{
+  "hasStyles": true,
+  "hasScripts": false,
+  "logo": {
+    "id": "idn-logo",
+    "link": "https://idn.ceos.org/",
+    "title": "CEOS IDN Search"
+  },
+  "org": "IDN",
+  "title": "Search"
+}

@@ -1,0 +1,43 @@
+.panel-item {
+  position: relative;
+  display: none;
+  width: 100%;
+  flex-grow: 1;
+  flex-direction: column;
+  overflow: hidden;
+
+  &--is-active {
+    display: flex;
+  }
+
+  &__content {
+    min-height: 0;
+    height: 100%;
+    width: 100%;
+    padding-top: 3rem;
+  }
+
+  &__header {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__header-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(0%);
+    transition: all 0.2s ease;
+
+    .panel-item--has-scrolled & {
+      transform: translateY(-100%)
+    }
+  }
+
+  &__back-button {
+    top: $spacer;
+    margin-top: 0.5rem;
+    color: $color__black--500;
+  }
+}

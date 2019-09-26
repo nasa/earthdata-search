@@ -1,0 +1,16 @@
+.granule-details-header {
+    &__title-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
+  &__title {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-right: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1875rem;
+  }
+}

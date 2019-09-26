@@ -1,0 +1,136 @@
+.project-header {
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: $spacer*2 $spacer*0.75 $spacer;
+  border-right: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+
+  &__name {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacer/4;
+    font-size: 1.125rem;
+    font-weight: 300;
+  }
+
+  &__name-wrap {
+    flex-grow: 0;
+    overflow: hidden;
+  }
+
+  &__name-editing {
+    visibility: hidden;
+    height: 0;
+    opacity: 0;
+    z-index: 1;
+    border: 0;
+    overflow: hidden;
+    z-index: 1;
+
+    .project-header__name--is-editing & {
+      position: relative;
+      height: auto;
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &__name-saved {
+    position: relative;
+    flex-grow: 0;
+    height: auto;
+    padding: 0.1rem 0;
+    visibility: visible;
+    opacity: 1;
+    overflow: hidden;
+
+    .project-header__name--is-editing & {
+      position: absolute;
+      opacity: 0;
+      height: 0;
+    }
+  }
+
+  &__text-wrap {
+    white-space: pre;
+    border-bottom: 2px solid transparent;
+    top: -0.05rem;
+    position: relative;
+
+    .project-header__name--is-editing & {
+      position: relative;
+      height: auto;
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &__button {
+    position: relative;
+    top: -0.05rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+    height: 1.75rem;
+    width: 1.75rem;
+    margin-left: $spacer/4;
+    padding: 0;
+    font-size: 0.925rem;
+    border: 0;
+    color: $color__black--300;
+    border-radius: 50%;
+    z-index: 1;
+    background: none;
+
+    &:focus,
+    &:hover {
+      color: $color__black--400;
+      background-color: $color__black--200;
+    }
+  }
+
+  &__title {
+    min-width: $spacer/2;
+    margin: 0;
+    padding: 0;
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    border: 0;
+    outline: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+
+    .project-header__name--is-editing & {
+      margin-bottom: 0.1rem;
+      border-bottom: 2px solid $color__brand--blue-dark;
+    }
+  }
+
+  &__stats-list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__stats-item {
+    margin-right: $spacer/2;
+    display: inline-block;
+    font-size: 0.775rem;
+    line-height: 1.25rem;
+    color: $color__black--500;
+  }
+
+  &__stats-val {
+    font-weight: 700;
+  }
+
+  &__stats-icon {
+    margin-left: $spacer/4;
+    color: $color__black--400;
+  }
+}

@@ -1,0 +1,57 @@
+.spatial-display {
+  color: white;
+  padding: 10px 15px;
+  background: rgb(17, 17, 17);
+  font-size: 1em;
+
+  &__form-column {
+    padding: 0
+  }
+
+  &__form-row {
+    align-items: center;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &__form-group {
+    flex-grow: 1;
+    align-items: center;
+    margin: 0;
+    margin-right: $spacer/2;
+  }
+
+  &__form-label {
+    flex-grow: 0;
+    padding: 0 $spacer/4;
+  }
+
+  &__text-input {
+    background-color: $color__black--700;
+    color: $color__white;
+    border: $color__black--700;
+
+    &:placeholder-shown {
+      color: $color__black--300;
+    }
+
+    &:focus {
+      color: $color__white;
+      background-color: $color__black--600;
+    }
+  }
+
+  &__text-primary {
+    max-width: 19rem;
+    margin-left: $spacer/4;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-style: italic;
+  }
+
+  &__text-secondary {
+    margin-left: $spacer/2;
+    color: $color__black--400;
+    font-size: 0.75rem;
+  }
+}

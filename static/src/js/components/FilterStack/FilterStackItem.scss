@@ -1,0 +1,79 @@
+.filter-stack-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: $spacer/2 $spacer;
+  color: $color__white;
+  border-bottom: 1px solid rgba($color__black--700, 0.5);
+
+  &:last-child {
+    border-bottom: transparent;
+  }
+
+  &__header {
+    display: flex;
+    flex-grow: 0;
+    align-items: center;
+    justify-content: flex-start;
+    width: 1.5rem;
+  }
+
+  &__icon {
+    text-align: center;
+    color: $color__black--400;
+    font-size: 1.25rem;
+
+    &--small {
+      font-size: 1rem;
+    }
+  }
+
+  &__title {
+    display: block;
+    height: 0;
+    width: 0;
+    font-size: 1rem;
+    visibility: hidden;
+  }
+
+  &__content {
+    width: 100%;
+  }
+
+  &__body {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__body-contents {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  &__body-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color__black--400;
+  }
+
+  &__action-button {
+    padding: 0;
+  }
+
+  &__hint {
+    margin-top: $spacer/4;
+    font-size: 0.8rem;
+    color: $color__black--400;
+  }
+
+  &__error {
+    margin-top: $spacer/4;
+    font-size: 0.8rem;
+    color: $color__red;
+  }
+}
+

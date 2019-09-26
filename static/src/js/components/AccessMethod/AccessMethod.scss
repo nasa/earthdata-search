@@ -1,0 +1,22 @@
+.access-method {
+  &__radio-list {
+    width: 300px;
+  }
+
+  &__radio-tooltip.fa {
+    margin-left: $spacer/4;
+    font-size: 0.875rem;
+    color: $color__black--400;
+  }
+
+  &__section-intro,
+  p.access-method__section-intro {
+    margin-bottom: $spacer/2
+  }
+
+  &__section-status {
+    font-weight: 700;
+    font-style: italic;
+    color: $color__black--400;
+  }
+}

@@ -1,0 +1,39 @@
+.order-progress-item {
+  margin-top: $spacer;
+
+  &__processed {
+    margin-right: $spacer/4;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    margin-bottom: 0;
+    font-size: 0.825rem;
+    color: $color__black--400;
+  }
+
+  &__bar {
+    margin-top: $spacer/2;
+
+    .progress-bar {
+      background-color: $color__indigo;
+    }
+  }
+
+  &__badge {
+    color: $color__white;
+    background-color: $color__indigo;
+
+    &--complete {
+      background-color: $color__green;
+    }
+
+    &--failed {
+      background-color: $color__red;
+    }
+  }
+}

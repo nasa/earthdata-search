@@ -1,0 +1,28 @@
+.collection-download-display {
+  &__header {
+    margin: $spacer;
+  }
+
+  &__intro {
+    align-items: center;
+  }
+
+  &__button {
+    margin-left: $spacer/2;
+  }
+
+  &__body {
+    margin: $spacer;
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: $spacer;
+  }
+
+  pre {
+    font-size: .7em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+}

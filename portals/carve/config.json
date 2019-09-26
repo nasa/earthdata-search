@@ -1,0 +1,16 @@
+{
+  "hasStyles": true,
+  "hasScripts": true,
+  "hideCollectionFilters": true,
+  "logo": {
+    "id": "ornl-daac-logo",
+    "link": "https://carve.ornl.gov",
+    "title": "ORNL DAAC CARVE Home"
+  },
+  "org": "ORNL DAAC",
+  "query": {
+    "project": "CARVE",
+    "hasGranulesOrCwic": null
+  },
+  "title": "CARVE"
+}

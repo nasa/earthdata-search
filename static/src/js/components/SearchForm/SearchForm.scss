@@ -1,0 +1,85 @@
+.search-form {
+  position: relative;
+  display: flex;
+  margin-right: $spacer/2;
+  flex-direction: column;
+  width: auto;
+  z-index: 2;
+  background-color: $color__black--900;
+  box-shadow: 0 0 1rem rgba($color__black--900, 0.35);
+
+  &__primary {
+    display: flex;
+    align-items: stretch;
+  }
+
+  &__secondary {
+    display: flex;
+  }
+
+  &__form {
+    flex-grow: 1;
+    display: inline;
+    vertical-align: middle;
+    background-color: $color__white;
+  }
+
+  &__button {
+    border: 0;
+    border-radius: 0;
+    background-color: $color__white;
+    vertical-align: middle;
+
+    &:focus {
+      box-shadow: none;
+      outline: 0;
+    }
+
+    .fa {
+      margin-top: 0.3em;
+    }
+
+    &--dark {
+      color: $color__white;
+      background-color: $color__black--900;
+
+      &:hover {
+        color: $color__white;
+      }
+    }
+
+    &--clear {
+      border-left: 1px solid $color__black--200;
+    }
+  }
+
+  &__label {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  &__input {
+    display: inline;
+    width: 10em;
+    padding: 0.825rem 0.925rem;
+    border: none;
+
+    @include media-breakpoint-up(xl) {
+      width: 21em;
+    }
+
+    &:focus {
+      box-shadow: none;
+      outline: 0;
+    }
+  }
+
+  &__filter-stack {
+    display: none;
+  }
+
+  &__filter-stack--visible {
+    display: block;
+  }
+
+}

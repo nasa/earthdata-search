@@ -1,0 +1,13 @@
+.facets-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &--light {
+    .facets-item__label {
+      &:hover {
+        background-color: lighten($color__black--200, 5);
+      }
+    }
+  }
+}

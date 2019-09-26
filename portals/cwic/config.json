@@ -1,0 +1,16 @@
+{
+  "hasStyles": true,
+  "hasScripts": false,
+  "hideCollectionFilters": true,
+  "logo": {
+    "id": "ceos-logo",
+    "link": "https://podaac.jpl.nasa.gov",
+    "title": "CEOS Home"
+  },
+  "org": "CWIC",
+  "query": {
+    "tagKey": "edsc.portal.cwic.collections",
+    "hasGranulesOrCwic": null
+  },
+  "title": "Search"
+}

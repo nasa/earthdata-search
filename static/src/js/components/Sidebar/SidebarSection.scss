@@ -1,0 +1,22 @@
+.sidebar-section {
+  width: 100%;
+  min-height: 0;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem 1rem 1.125rem;
+    color: $color__white;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  &__icon {
+    color: rgba(255,255,255,0.3)
+  }
+
+}

@@ -1,0 +1,16 @@
+/*
+ * Vendor styles
+*/
+@import 'vendor/bootstrap/bootstrap';
+@import 'vendor/datepicker';
+@import 'vendor/leaflet';
+@import 'vendor/simplebar';
+
+/*
+ * Application styles
+*/
+@import 'utils/utils';
+@import 'base';
+@import 'helpers';
+@import 'layout';
+@import 'modules/modules';

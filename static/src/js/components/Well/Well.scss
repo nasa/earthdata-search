@@ -1,0 +1,33 @@
+.well {
+  width: 100%;
+  background-color: $color__white;
+  border-radius: $border-radius;
+  overflow: hidden;
+  color: $color__black--800;
+
+  &__main {
+    padding: $spacer*1.5;
+  }
+
+  &__heading {
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  &__introduction {
+    margin-bottom: 1.5rem;
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+
+  &__section {
+    margin-bottom: $spacer*1.5;
+  }
+
+  &__footer {
+    padding: $spacer*1.5;
+  }
+}

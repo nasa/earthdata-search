@@ -1,0 +1,27 @@
+.granule-details-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: $color__black--100;
+
+  .nav-tabs {
+    background-color: $color__black--100;
+
+    .nav-link:not(.active):hover {
+      border: 1px solid transparent;
+    }
+
+    .nav-link.active {
+      color: $color__black--700;
+      background-color: $color__white;
+      border-bottom-color: transparent;
+    }
+  }
+
+  .tab-content {
+    flex-grow: 1;
+    padding: $spacer;
+    background-color: $color__white;
+    overflow-y: scroll;
+  }
+}

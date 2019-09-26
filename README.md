@@ -1,9 +1,7 @@
 # [Earthdata Search](https://search.earthdata.nasa.gov)
 
-Visit Earthdata Search at
-[https://search.earthdata.nasa.gov](https://search.earthdata.nasa.gov)
-
-[![Build Status](https://travis-ci.org/nasa/earthdata-search.svg?branch=master)](https://travis-ci.org/nasa/earthdata-search)
+[![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
+[![Build Status](https://travis-ci.org/nasa/earthdata-search.svg?branch=EDSC-2133)](https://travis-ci.org/nasa/earthdata-search)
 
 ## About
 Earthdata Search is a web application developed by [NASA](http://nasa.gov) [EOSDIS](https://earthdata.nasa.gov)
@@ -14,17 +12,9 @@ EOSDIS [User Registration System (URS)](https://urs.earthdata.nasa.gov) authenti
 the [Global Imagery Browse Services (GIBS)](https://earthdata.nasa.gov/gibs) for visualization,
 and a number of OPeNDAP services hosted by data providers.
 
-## Components
-
-In addition to the main project, we have open sourced stand-alone components built for
-Earthdata Search as separate projects with the "edsc-" (Earthdata Search components) prefix.
-
- * Our timeline: https://github.com/nasa/edsc-timeline
- * Our ECHO forms implementation: https://github.com/nasa/edsc-echoforms
-
 ## License
 
-> Copyright © 2007-2014 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
+> Copyright © 2007-2019 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
 >
 > Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 > You may obtain a copy of the License at
@@ -34,68 +24,127 @@ Earthdata Search as separate projects with the "edsc-" (Earthdata Search compone
 >Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
 >WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-## Third-Party Licenses
+## Application Installation and Usage
 
-See public/licenses.txt
-
-## Installation
+The Earthdata Search application uses Node v10.15.1 and Webpack 4.24.0 to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
+- S3
+  - We highly recommend using CloudFront in front of S3.
+- SQS
+- API Gateway
+- Lambda
+- Cloudwatch (Events)
 
 ### Prerequisites
-* [Ruby](https://www.ruby-lang.org)
-* [Docker](https://docs.docker.com/install/)
-* [Docker Compose](https://docs.docker.com/compose/install/)
-* (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
-* (Optional) For automatic spatial and temporal extraction from the search text, clone and set up an [EDSC-NLP](https://git.earthdata.nasa.gov/projects/EDSC/repos/edsc-nlp/browse) server
 
-### Initial setup
+##### Node
+Earthdata Search runs on Node.js, in order to run the application you'll need to [install it](https://nodejs.org/en/download/).
 
-Run
+##### NPM
+In order to run the application for development, you need a local install of [npm](https://www.npmjs.com/get-npm).
 
-    bin/setup
+##### Serverless Framework
+Earthdata Search utilizes the [Serverless Framework](https://serverless.com/) for managing AWS resources. In order to fully run and manage the application you'll need to install it:
 
-Note: This command will take a long time to run
+    npm install -g serverless
 
-### Application configuration
+##### PostgreSQL
+Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already have it installed, [download](https://www.postgresql.org/download/) and install it to your development environment.
 
-Review `config/application.yml` and update values as necessary
+### Initial Setup
 
-#### (Optional) Earthdata Login (URS) Configuration
+##### Package Installation
 
-Without the Earthdata Login Configuration, Earthdata Search's functionality will be limited. If you would like to set up Earthdata Login login, you will need to perform the following steps:
+Once npm is installed locally, you need to download the dependencies by executing the command below in the project root directory:
 
-Register an account on [the Earthdata Login home page](https://urs.earthdata.nasa.gov/home).
+    npm install
 
-Create an application in the Earthdata Login console.  Its callback URL should be `http://<domain>/urs_callback`.  Standard Rails development would be `http://localhost:3000/urs_callback`.
+##### Configuration
 
-Click the "Feedback" icon on the Earthdata Login page and request that your new application be placed in the ECHO application group
-(required for ECHO/CMR to recognize your tokens).
+###### Secrets
 
-Your Earthdata Login application's client ID will need to be saved in `config/application.yml`.
+For local development Earthata Search uses a json configuration file to store secure files, an example is provided and should be copied and completed before attempting to go any further.
 
-```### Running
+	cp secret.config.json.example secret.config.json
 
-Run
+In order to operate against a local databse this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally)
 
-    docker-compose up
+###### Public (Non Secure)
+Non secure values are stored in `static.config.json`. It's best to keep these values as they are set and use the values in your local environment to prevent conflicts amongst developers.
 
-### Stopping
+##### Database Migration
 
-To stop docker but keep the containers
+Ensure that you have a database created:
 
-    docker-compose stop
+	createdb edsc_dev
 
-To stop and remove all containers
+Our database migrations run within Lambda due to the fact that in non-develoment environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
 
-    docker-compose down
+	serverless invoke local --function migrateDatabase
 
-Then visit http://localhost:3000/
 
-### Running tests
+### Building the Application
 
-    docker-compose run web bundle exec rspec
+The production build of the application will be output in the `/static/dist/` directory:
 
-### Terminal Access
+    npm run build
 
-If you want terminal access to inside the container, run
 
-    docker-compose run web bash```
+### Run the Application Locally
+
+The local development environment for the static assets can be started by executing the command below in the project root directory:
+
+    npm run start
+
+This will run the React application at [http://localhost:8080](http://localhost:8080) -- please see `Serverless Framework` below for enabling the 'server' side functionality.
+
+
+### Serverless Framework
+
+The [serverless framework](https://serverless.com/framework/docs/providers/aws/) offers many plugins which allow for local development utilizing many of the services AWS offers. For the most part we only need API Gateway and Lambda for this application but there are plugins for many more services (a list of known exceptions will be maintained below).
+
+##### Exceptions
+- SQS
+
+	While there is an sqs-offline plugin for servless it still requires an actual queue be running, we may investigate this in the future but for now sqs functionality isn't available while developing locally which means the following pieces of functionality will not operate locally:
+	- Generating Colormaps
+
+#### Running API Gateway and Lambda Locally
+
+Running the following command will spin up API Gateway and Lambda locally which will open up a vast majority of the functionality the backend offers.
+
+	serverless offline
+
+This will provide access to API Gateway at [http://localhost:3001](http://localhost:3001)
+
+Additionally, this ties in with the `serverless webpack` plugin which will ensure that your lambdas are re-built when changes are detected.
+
+
+### Run the Automated [Jest](https://jestjs.io/) tests
+
+Once the project is built, you must ensure that the automated tests pass:
+
+    npm run test
+
+### Deployment
+
+When the time comes to deploy the application, first ensure that you have the required ENV vars set:
+
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+
+This application runs in a VPC for NASA security purposes, therefor the following values are expected when a deployment ocurrs.
+
+- VPC_ID
+- SUBNET_ID_A
+- SUBNET_ID_B
+
+For production use this application uses Scatter Swap to obfuscate some IDs -- the library does not require a value be provided but if you'd like to control it you can set the following ENV vars:
+
+- OBFUSCATION_SPIN
+- OBFUSCATION_SPIN_SHAPEFILES
+
+To deploy the full application use the following:
+
+	NODE_ENV=production serverless deploy --stage UNIQUE_STAGE
+
+We specify `NODE_ENV` here because we are using `dotenv` which breaks our environment variables out into logical files that contain environment specific values. `UNIQUE_STAGE` defaults to `dev` but customizing it here allows you to deploy multiple stacks within the same account.

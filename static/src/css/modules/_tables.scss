@@ -1,0 +1,20 @@
+.table {
+  thead th {
+    border-top: none;
+    border-bottom: 1px solid $color__black--700;
+  }
+
+  td {
+    border-top: 1px solid $color__black--700;
+  }
+
+  td,
+  th {
+    padding: .5rem .75em;
+  }
+}
+
+.table-dark {
+  background-color: transparent;
+  color: inherit;
+}

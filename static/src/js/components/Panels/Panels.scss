@@ -1,0 +1,14 @@
+.panels {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 600px;
+  height: 100%;
+  z-index: -1;
+  transform: translateX(-100%);
+  transition: all 0.2s ease-in-out;
+
+  &--is-active {
+    transform: translateX(0%);
+  }
+}

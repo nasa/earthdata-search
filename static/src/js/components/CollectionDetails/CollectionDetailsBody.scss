@@ -1,0 +1,137 @@
+.collection-details-body {
+  display: flex;
+  flex-direction: column;
+
+  &__content {
+    flex-shrink: 0;
+    flex-grow: 1;
+    padding: $spacer;
+  }
+
+  &__row {
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__group {
+    &--primary {
+      width: 360px;
+    }
+  }
+
+  &__spatial-bounding {
+    width: 360px;
+    padding: 0.625rem;
+    font-size: 0.8rem;
+    font-weight: 300;
+    background: #3B4856;
+    color: $color__white;
+  }
+
+  &__info {
+    dt {
+      font-size: 0.75rem;
+      font-weight: 400;
+    }
+
+    dd {
+      font-size: 0.925rem;
+      font-weight: 700;
+      word-wrap: break-word;
+    }
+  }
+
+  &__doi {
+    display: inline-block;
+    margin-bottom: $spacer;
+    vertical-align: top;
+
+    .badge {
+      vertical-align: bottom;
+    }
+  }
+
+  &__related-link {
+    padding: 0;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: .925rem;
+    line-height: 1.5rem;
+    vertical-align: baseline;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:last-child {
+      padding-top: $spacer/8;
+    }
+
+    .button {
+      display: inline-block;
+
+      &__contents {
+        vertical-align: baseline;
+      }
+    }
+  }
+
+  &__keywords {
+    margin: $spacer/4 0 $spacer/4;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+  }
+
+  &__summary {
+    font-size: 0.75rem;
+    white-space: pre-wrap;
+  }
+
+  &__provider-list {
+    display: flex;
+  }
+
+  &__for-devs {
+    .collapse-panel__button {
+      width: 100%;
+      padding: $spacer;
+      border: 0;
+      border-top: 1px solid $color__black--200;
+      background: none;
+      outline: none;
+      color: $color__black--500;
+      text-align: left;
+
+      &:hover {
+        color: $color__black--600;
+      }
+    }
+
+    .collapse-panel__panel {
+      padding: $spacer;
+      border-top: 1px solid $color__black--200;
+      background-color: $color__black--100;
+    }
+  }
+
+  &__dev-cat {
+    font-size: 1rem;
+  }
+
+  &__dev-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .simplebar-content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    height: 100%;
+  }
+}

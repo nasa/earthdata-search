@@ -1,0 +1,30 @@
+.project-collections {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  background-color: $color__white;
+
+  &__footer {
+    flex-shrink: 0;
+    padding: $spacer/2;
+    border-top: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+  }
+
+  &__footer-message {
+    margin-bottom: $spacer/2;
+    font-size: 0.825rem;
+    color: $color__black--400;
+  }
+
+  .simplebar-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,11 @@
+.custom-toggle {
+  &:after {
+    display: none;
+  }
+
+  &--icon {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+  }
+}
