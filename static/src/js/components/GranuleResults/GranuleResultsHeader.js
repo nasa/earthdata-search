@@ -15,7 +15,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 /**
  * Renders GranuleResultsHeader.
  * @param {object} props - The props passed into the component.
- * @param {object} props.focusedCollectionMetadata - Focused collection passed from redux store.
+ * @param {object} props.focusedCollectionObject - Focused collection passed from redux store.
  * @param {function} props.onApplyGranuleFilters - Function to apply sort and granule id filters.
  * @param {function} props.onToggleSecondaryOverlayPanel - Function to open the secondary overlay panel.
  * @param {object} props.secondaryOverlayPanel - The current state of the secondaryOverlayPanel.
@@ -24,9 +24,8 @@ class GranuleResultsHeader extends Component {
   constructor(props) {
     super(props)
 
-    const { focusedCollectionMetadata } = props
-    const [collectionId] = Object.keys(focusedCollectionMetadata)
-    const { granuleFilters } = focusedCollectionMetadata[collectionId]
+    const { focusedCollectionObject } = props
+    const { granuleFilters } = focusedCollectionObject
 
     this.state = {
       sortOrder: granuleFilters.sortKey,
@@ -42,15 +41,16 @@ class GranuleResultsHeader extends Component {
   }
 
   handleUpdateSortOrder(e) {
-    const { focusedCollectionMetadata, onApplyGranuleFilters } = this.props
-    const [collectionId] = Object.keys(focusedCollectionMetadata)
+    const { focusedCollectionObject, onApplyGranuleFilters } = this.props
+    const { metadata } = focusedCollectionObject
+    const { id } = metadata
 
     const { value } = e.target
     this.setState({
       sortOrder: value
     })
 
-    onApplyGranuleFilters(collectionId, { sortKey: value })
+    onApplyGranuleFilters(id, { sortKey: value })
   }
 
   handleUpdateSearchValue(e) {
@@ -62,8 +62,9 @@ class GranuleResultsHeader extends Component {
   }
 
   handleSearch() {
-    const { focusedCollectionMetadata, onApplyGranuleFilters } = this.props
-    const [collectionId] = Object.keys(focusedCollectionMetadata)
+    const { focusedCollectionObject, onApplyGranuleFilters } = this.props
+    const { metadata } = focusedCollectionObject
+    const { id } = metadata
 
     const { searchValue, prevSearchValue } = this.state
 
@@ -74,7 +75,7 @@ class GranuleResultsHeader extends Component {
         readableGranuleName = searchValue.split(',')
       }
 
-      onApplyGranuleFilters(collectionId, { readableGranuleName })
+      onApplyGranuleFilters(id, { readableGranuleName })
 
       this.setState({
         prevSearchValue: searchValue
@@ -93,17 +94,18 @@ class GranuleResultsHeader extends Component {
   }
 
   handleUndoExcludeGranule() {
-    const { focusedCollectionMetadata, onUndoExcludeGranule } = this.props
-    const [collectionId] = Object.keys(focusedCollectionMetadata)
+    const { focusedCollectionObject, onUndoExcludeGranule } = this.props
+    const { metadata } = focusedCollectionObject
+    const { id } = metadata
 
-    onUndoExcludeGranule(collectionId)
+    onUndoExcludeGranule(id)
   }
 
   render() {
     const { sortOrder, searchValue } = this.state
 
     const {
-      focusedCollectionMetadata,
+      focusedCollectionObject,
       location,
       onToggleSecondaryOverlayPanel,
       secondaryOverlayPanel,
@@ -111,8 +113,7 @@ class GranuleResultsHeader extends Component {
     } = this.props
 
     const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
-    const [collectionId] = Object.keys(focusedCollectionMetadata)
-    const { metadata, excludedGranuleIds } = focusedCollectionMetadata[collectionId]
+    const { metadata, excludedGranuleIds } = focusedCollectionObject
     const { dataset_id: title } = metadata
 
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
@@ -323,7 +324,7 @@ class GranuleResultsHeader extends Component {
 }
 
 GranuleResultsHeader.propTypes = {
-  focusedCollectionMetadata: PropTypes.shape({}).isRequired,
+  focusedCollectionObject: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,

@@ -46,11 +46,9 @@ describe('GranuleResultsHeaderContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsHeader).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsHeader).props().focusedCollectionMetadata).toEqual({
-      collectionId: {
-        excludedGranuleIds: [],
-        metadata: { mock: 'here' }
-      }
+    expect(enzymeWrapper.find(GranuleResultsHeader).props().focusedCollectionObject).toEqual({
+      excludedGranuleIds: [],
+      metadata: { mock: 'here' }
     })
     expect(enzymeWrapper.find(GranuleResultsHeader).props().location).toEqual({ value: 'location' })
     expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onApplyGranuleFilters).toEqual('function')

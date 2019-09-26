@@ -24,10 +24,9 @@ export const GranuleFiltersHeaderContainer = ({
 }) => {
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
-  if (Object.keys(focusedCollectionMetadata).length === 0) return null
+  if (!focusedCollectionMetadata) return null
 
-  const { metadata = {} } = focusedCollectionMetadata[focusedCollection]
-  const { dataset_id: datasetId } = metadata
+  const { dataset_id: datasetId } = focusedCollectionMetadata
 
   return (
     <GranuleFiltersHeader

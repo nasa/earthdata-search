@@ -257,6 +257,14 @@
           cors: true
           path: error_logger
 
+  relevancyLogger:
+    handler: serverless/src/relevancyLogger/handler.default
+    events:
+      - http:
+          method: post
+          cors: true
+          path: relevancy_logger
+
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer/handler.default
     warmer:

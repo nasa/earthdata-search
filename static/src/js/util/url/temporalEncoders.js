@@ -4,7 +4,7 @@
  * @return {string} A `,` delimited string of the temporal values
  */
 export const encodeTemporal = (temporal) => {
-  if (!temporal) return ''
+  if (!temporal) return undefined
 
   const {
     endDate,
@@ -16,7 +16,7 @@ export const encodeTemporal = (temporal) => {
     endDate
   ].join(',')
 
-  if (encodedString === ',') return ''
+  if (encodedString === ',') return undefined
 
   return encodedString
 }

@@ -47,7 +47,9 @@ describe('TimelineContainer component', () => {
         allIds: ['collectionId'],
         byId: {
           collectionId: {
-            mock: 'data'
+            metadata: {
+              mock: 'data'
+            }
           }
         }
       },

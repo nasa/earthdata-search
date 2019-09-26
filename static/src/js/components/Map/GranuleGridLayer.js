@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import L from 'leaflet'
-import { capitalize, difference } from 'lodash'
+import { capitalize, difference, isEqual } from 'lodash'
 import $ from 'jquery'
 
 import {
@@ -807,7 +807,7 @@ export class GranuleGridLayer extends MapLayer {
       project
     } = props
 
-    const layers = []
+    const layers = {}
     const color = '#2ECC71'
 
     if (isProjectPage) {
@@ -822,13 +822,13 @@ export class GranuleGridLayer extends MapLayer {
 
         if (!collectionGranules) return
 
-        layers.push({
+        layers[collectionId] = {
           collectionId,
           color: getColorByIndex(index),
           metadata,
           isVisible,
           granules: collectionGranules
-        })
+        }
       })
     } else if (focusedCollection && focusedCollection !== '') {
       // If we aren't on the project page, return data for focusedCollection if it exists
@@ -836,13 +836,13 @@ export class GranuleGridLayer extends MapLayer {
       const collection = byId[focusedCollection] || {}
       const { metadata = {} } = collection
 
-      layers.push({
+      layers[focusedCollection] = {
         collectionId: focusedCollection,
         color,
         isVisible: true,
         metadata,
         granules
-      })
+      }
     }
 
     return layers
@@ -865,13 +865,13 @@ export class GranuleGridLayer extends MapLayer {
 
     // Create a GranuleGridLayerExtended layer from each data object in getLayerData
     const layerData = this.getLayerData(props)
-    layerData.forEach((data, index) => {
+    Object.keys(layerData).forEach((id, index) => {
       const {
         collectionId,
         color,
         metadata,
         granules
-      } = data
+      } = layerData[id]
 
       const { byId = {} } = granules
       const granuleData = Object.values(byId)
@@ -919,13 +919,13 @@ export class GranuleGridLayer extends MapLayer {
     const layerData = this.getLayerData(toProps)
 
     // Nothing should be drawn, remove any existing layers
-    if (layerData.length === 0) {
+    if (Object.keys(layerData).length === 0) {
       Object.values(layers).forEach(layer => this.leafletElement.removeLayer(layer))
-    } else if (layerData.length < oldLayerData.length) {
+    } else if (Object.keys(layerData).length < Object.keys(oldLayerData).length) {
       // If there is less data than before, figure out which collection was removed and remove the layer
 
-      const oldIds = oldLayerData.map(data => data.collectionId)
-      const newIds = layerData.map(data => data.collectionId)
+      const oldIds = Object.keys(oldLayerData)
+      const newIds = Object.keys(layerData)
 
       const diffIds = difference(oldIds, newIds)
 
@@ -939,17 +939,23 @@ export class GranuleGridLayer extends MapLayer {
     }
 
     // Loop through each layer data object to update the layer
-    layerData.forEach((data, index) => {
+    Object.keys(layerData).forEach((id) => {
       const {
         collectionId,
         color,
         metadata,
         isVisible,
         granules
-      } = data
+      } = layerData[id]
 
       // if there are no granules, bail out
       if (Object.keys(granules.byId).length === 0) return
+
+      // If no granules were changed, bail out
+      const oldCollection = oldLayerData[collectionId]
+      const { granules: oldGranules = {} } = oldCollection || {}
+      if (oldCollection
+        && isEqual(Object.keys(granules.byId), Object.keys(oldGranules.byId))) return
 
       // If the collecton is not visible, set the granuleData to an empty array
       const granuleData = isVisible ? Object.values(granules.byId) : []
@@ -957,14 +963,9 @@ export class GranuleGridLayer extends MapLayer {
       // Find the layer for this collection
       const [layer] = Object.values(layers).filter(l => l.collectionId === collectionId)
       if (layer) {
-        // if there isn't an 'fromProps' layer, bail out because we need to compare props
-        const oldLayer = oldLayerData[index]
-        if (!oldLayer) return
-
         const {
-          isVisible: oldIsVisible,
-          granules: oldGranules
-        } = oldLayer
+          isVisible: oldIsVisible
+        } = oldCollection
 
         // If the granules and the visibility haven't changed, bail out
         if (oldGranules === granules && oldIsVisible === isVisible) return

@@ -1,4 +1,4 @@
-import { getFocusedCollectionMetadata } from './focusedCollection'
+import { getFocusedCollectionObject } from './focusedCollection'
 import { encodeTemporal } from './url/temporalEncoders'
 import { encodeGridCoords } from './url/gridEncoders'
 
@@ -47,11 +47,14 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     return null
   }
 
-  // TODO: Use `collections.byId[collectionId]` as it appears to do the same thing
-  const focusedCollectionMetadata = getFocusedCollectionMetadata(collectionId, collections)
-  if (Object.keys(focusedCollectionMetadata).length === 0) return null
+  const focusedCollectionObject = getFocusedCollectionObject(collectionId, collections)
+  if (!focusedCollectionObject) return null
 
-  const { excludedGranuleIds = [] } = focusedCollectionMetadata
+  const {
+    excludedGranuleIds = [],
+    granuleFilters = {},
+    metadata: collectionMetadata = {}
+  } = focusedCollectionObject
   const exclude = {}
   if (excludedGranuleIds.length > 0) {
     exclude.concept_id = []
@@ -80,11 +83,6 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     point,
     polygon
   } = spatial
-
-  const {
-    granuleFilters = {},
-    metadata: collectionMetadata = {}
-  } = focusedCollectionMetadata[collectionId]
 
   const { tags = {} } = collectionMetadata
   const {

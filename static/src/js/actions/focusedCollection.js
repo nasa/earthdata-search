@@ -91,6 +91,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     return null
   }
 
+  dispatch(actions.collectionRelevancyMetrics())
+
   const { collections } = metadata
   const { allIds: fetchedCollectionIds, byId: fetchedCollections } = collections
   // If we already have the metadata for this focusedCollection, don't fetch it again

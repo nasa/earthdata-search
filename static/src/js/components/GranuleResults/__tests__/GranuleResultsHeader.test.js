@@ -8,16 +8,15 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    focusedCollectionMetadata: {
-      collectionId: {
-        excludedGranuleIds: [],
-        granuleFilters: {
-          readableGranuleName: 'searchValue',
-          sortKey: '-start_date'
-        },
-        metadata: {
-          dataset_id: 'Title'
-        }
+    focusedCollectionObject: {
+      excludedGranuleIds: [],
+      granuleFilters: {
+        readableGranuleName: 'searchValue',
+        sortKey: '-start_date'
+      },
+      metadata: {
+        dataset_id: 'Title',
+        id: 'collectionId'
       }
     },
     location: {
@@ -166,12 +165,11 @@ describe('handleUndoExcludeGranule', () => {
 
     // Exclude a granule to test undo button
     enzymeWrapper.setProps({
-      focusedCollectionMetadata: {
-        collectionId: {
-          excludedGranuleIds: ['granuleId1', 'granuleId2'],
-          metadata: {
-            title: 'Title'
-          }
+      focusedCollectionObject: {
+        excludedGranuleIds: ['granuleId1', 'granuleId2'],
+        metadata: {
+          title: 'Title',
+          id: 'collectionId'
         }
       }
     })

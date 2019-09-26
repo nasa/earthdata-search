@@ -20,7 +20,8 @@ describe('LoggerRequest#permittedCmrKeys', () => {
     const request = new LoggerRequest()
 
     expect(request.permittedCmrKeys()).toEqual([
-      'error'
+      'error',
+      'data'
     ])
   })
 })
@@ -36,5 +37,19 @@ describe('LoggerRequest#log', () => {
 
     expect(postMock).toBeCalledTimes(1)
     expect(postMock).toBeCalledWith('error_logger', params)
+  })
+})
+
+describe('LoggerRequest#logRelevancy', () => {
+  test('calls Request#post', () => {
+    const request = new LoggerRequest()
+
+    const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
+
+    const params = { data: { mock: 'data' } }
+    request.logRelevancy(params)
+
+    expect(postMock).toBeCalledTimes(1)
+    expect(postMock).toBeCalledWith('relevancy_logger', params)
   })
 })

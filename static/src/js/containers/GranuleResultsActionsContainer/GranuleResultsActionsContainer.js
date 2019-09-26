@@ -39,11 +39,10 @@ export const GranuleResultsActionsContainer = (props) => {
 
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
-  if (Object.keys(focusedCollectionMetadata).length === 0) return null
+  if (!focusedCollectionMetadata) return null
 
-  const [collectionId] = Object.keys(focusedCollectionMetadata)
   const { collectionIds: projectIds } = project
-  const isCollectionInProject = projectIds.indexOf(collectionId) !== -1
+  const isCollectionInProject = projectIds.indexOf(focusedCollection) !== -1
 
   // Determine the correct granule count based on granules that have been removed
   const { excludedGranuleIds = [] } = collections.byId[focusedCollection]
@@ -52,7 +51,7 @@ export const GranuleResultsActionsContainer = (props) => {
   return (
     <>
       <GranuleResultsActions
-        collectionId={collectionId}
+        collectionId={focusedCollection}
         granuleCount={granuleCount}
         isCollectionInProject={isCollectionInProject}
         location={location}

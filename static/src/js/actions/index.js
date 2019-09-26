@@ -106,6 +106,7 @@ import { deleteSavedProject, updateProjectName, updateSavedProject } from './sav
 import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 import { handleError, removeError } from './errors'
 import { updateBrowserVersion } from './browser'
+import { collectionRelevancyMetrics } from './relevancy'
 
 const actions = {
   addAccessMethods,
@@ -129,6 +130,7 @@ const actions = {
   changeViewAllFacet,
   clearCollectionGranules,
   clearFilters,
+  collectionRelevancyMetrics,
   deleteRetrieval,
   deleteSavedProject,
   excludeGranule,

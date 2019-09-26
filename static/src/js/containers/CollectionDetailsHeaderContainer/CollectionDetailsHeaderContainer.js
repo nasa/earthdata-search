@@ -22,7 +22,7 @@ export const CollectionDetailsHeaderContainer = ({
 }) => {
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
-  if (Object.keys(focusedCollectionMetadata).length === 0) return null
+  if (!focusedCollectionMetadata) return null
 
   return (
     <CollectionDetailsHeader

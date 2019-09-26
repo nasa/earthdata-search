@@ -274,6 +274,8 @@ describe('getFocusedCollection', () => {
     // mock getGranules
     const getGranulesMock = jest.spyOn(actions, 'getGranules')
     getGranulesMock.mockImplementation(() => jest.fn())
+    const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+    relevancyMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const store = mockStore({
@@ -309,6 +311,7 @@ describe('getFocusedCollection', () => {
 
     // was getGranules called
     expect(getGranulesMock).toHaveBeenCalledTimes(1)
+    expect(relevancyMock).toHaveBeenCalledTimes(1)
   })
 
   test('should update the authenticated focusedCollection and call getGranules', async () => {
@@ -361,6 +364,8 @@ describe('getFocusedCollection', () => {
     // mock getGranules
     const getGranulesMock = jest.spyOn(actions, 'getGranules')
     getGranulesMock.mockImplementation(() => jest.fn())
+    const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+    relevancyMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const store = mockStore({
@@ -396,9 +401,10 @@ describe('getFocusedCollection', () => {
 
     // was getGranules called
     expect(getGranulesMock).toHaveBeenCalledTimes(1)
+    expect(relevancyMock).toHaveBeenCalledTimes(1)
   })
 
-  test('should not call getGranules is previous granules are used', async () => {
+  test('should not call getGranules if previous granules are used', async () => {
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
     nock(/cmr/)
@@ -442,6 +448,8 @@ describe('getFocusedCollection', () => {
     // mock getGranules
     const getGranulesMock = jest.spyOn(actions, 'getGranules')
     getGranulesMock.mockImplementation(() => jest.fn())
+    const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+    relevancyMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const granules = {
@@ -485,6 +493,7 @@ describe('getFocusedCollection', () => {
 
     // was getGranules called
     expect(getGranulesMock).toHaveBeenCalledTimes(0)
+    expect(relevancyMock).toHaveBeenCalledTimes(1)
   })
 
   test('returns no result if there is no focusedCollection', () => {
@@ -531,9 +540,12 @@ describe('getFocusedCollection', () => {
     })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+    relevancyMock.mockImplementation(() => jest.fn())
 
     await store.dispatch(actions.getFocusedCollection('')).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(relevancyMock).toHaveBeenCalledTimes(1)
     })
   })
 })

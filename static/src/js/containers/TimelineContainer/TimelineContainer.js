@@ -62,7 +62,7 @@ export const TimelineContainer = (props) => {
     changeQueryMethod = onChangeProjectQuery
   } else if (isGranulesPage && focusedCollection !== '') {
     const metadata = getFocusedCollectionMetadata(focusedCollection, collections)
-    collectionMetadata[focusedCollection] = metadata[focusedCollection]
+    collectionMetadata[focusedCollection] = metadata
   }
 
   if (!isEmpty(collectionMetadata[focusedCollection])) {

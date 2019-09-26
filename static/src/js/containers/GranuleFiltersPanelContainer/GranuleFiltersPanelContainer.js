@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
 
-import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
+import { getFocusedCollectionMetadata, getFocusedCollectionObject } from '../../util/focusedCollection'
 import {
   dateOutsideRange,
   nullableValue,
@@ -91,9 +91,7 @@ export class GranuleFiltersPanelContainer extends Component {
 
     const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
-    if (Object.keys(focusedCollectionMetadata).length === 0) return null
-
-    const { metadata } = focusedCollectionMetadata[focusedCollection]
+    if (!focusedCollectionMetadata) return null
 
     return (
       <SecondaryOverlayPanelContainer
@@ -102,7 +100,7 @@ export class GranuleFiltersPanelContainer extends Component {
           <GranuleFiltersBody
             granuleFiltersForm={(
               <GranuleFiltersForm
-                metadata={metadata}
+                metadata={focusedCollectionMetadata}
                 values={values}
                 touched={touched}
                 errors={errors}
@@ -198,11 +196,11 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
       collections,
       focusedCollection
     } = props
-    const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
+    const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
 
-    if (Object.keys(focusedCollectionMetadata).length === 0) return {}
+    if (!focusedCollectionObject) return {}
 
-    const { granuleFilters } = focusedCollectionMetadata[focusedCollection]
+    const { granuleFilters = {} } = focusedCollectionObject
 
     const {
       dayNightFlag = '',

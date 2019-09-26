@@ -38,14 +38,7 @@ describe('CollectionDetailsHeaderContainer component', () => {
     expect(enzymeWrapper.find(CollectionDetailsHeader).length).toBe(1)
     expect(enzymeWrapper.find(CollectionDetailsHeader).props('focusedCollectionMetadata')).toEqual({
       collectionSearch: {},
-      focusedCollectionMetadata: {
-        focusedCollection: {
-          excludedGranuleIds: [],
-          metadata: {
-            some: 'metadata'
-          }
-        }
-      }
+      focusedCollectionMetadata: { some: 'metadata' }
     })
   })
 })
