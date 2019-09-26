@@ -21,12 +21,11 @@ export class RelatedUrlsModal extends Component {
 
   render() {
     const {
-      focusedCollectionMetadata,
+      focusedCollectionObject,
       isOpen
     } = this.props
 
-    const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
-    const { formattedMetadata = {} } = focusedCollectionMetadata[collectionId]
+    const { formattedMetadata = {} } = focusedCollectionObject
     const { relatedUrls = [] } = formattedMetadata
 
     return (
@@ -93,7 +92,7 @@ export class RelatedUrlsModal extends Component {
 }
 
 RelatedUrlsModal.propTypes = {
-  focusedCollectionMetadata: PropTypes.shape({}).isRequired,
+  focusedCollectionObject: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

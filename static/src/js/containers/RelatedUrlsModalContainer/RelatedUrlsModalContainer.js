@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
 
 import actions from '../../actions'
-import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
+import { getFocusedCollectionObject } from '../../util/focusedCollection'
 
 import RelatedUrlsModal from '../../components/CollectionDetails/RelatedUrlsModal'
 
@@ -24,13 +25,13 @@ export const RelatedUrlsModalContainer = ({
   isOpen,
   onToggleRelatedUrlsModal
 }) => {
-  const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
+  const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
 
-  if (Object.keys(focusedCollectionMetadata).length === 0) return null
+  if (isEmpty(focusedCollectionObject)) return null
 
   return (
     <RelatedUrlsModal
-      focusedCollectionMetadata={focusedCollectionMetadata}
+      focusedCollectionObject={focusedCollectionObject}
       isOpen={isOpen}
       onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
     />

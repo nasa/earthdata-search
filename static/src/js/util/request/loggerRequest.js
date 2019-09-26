@@ -11,10 +11,17 @@ export default class LoggerRequest extends Request {
   }
 
   permittedCmrKeys() {
-    return ['error']
+    return [
+      'error',
+      'data'
+    ]
   }
 
   log(params) {
     return this.post('error_logger', params)
+  }
+
+  logRelevancy(params) {
+    return this.post('relevancy_logger', params)
   }
 }

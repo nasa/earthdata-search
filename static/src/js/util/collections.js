@@ -120,7 +120,7 @@ export const buildCollectionSearchParams = (params) => {
     facetsToSend = { ...viewAllFacets }
   }
 
-  let twoDCoordinateSystem = ''
+  let twoDCoordinateSystem
 
   if (gridName) {
     twoDCoordinateSystem = {

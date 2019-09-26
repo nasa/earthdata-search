@@ -36,14 +36,7 @@ describe('CollectionDetailsBodyContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(CollectionDetailsBody).length).toBe(1)
-    expect(enzymeWrapper.find(CollectionDetailsBody).props().focusedCollectionMetadata).toEqual({
-      focusedCollection: {
-        excludedGranuleIds: [],
-        metadata: {
-          some: 'metadata'
-        }
-      }
-    })
+    expect(enzymeWrapper.find(CollectionDetailsBody).props().focusedCollectionMetadata).toEqual({ some: 'metadata' })
     expect(typeof enzymeWrapper.find(CollectionDetailsBody).props().onToggleRelatedUrlsModal).toEqual('function')
   })
 })

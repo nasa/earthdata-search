@@ -37,12 +37,10 @@ describe('RelatedUrlsModalContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(RelatedUrlsModal).length).toBe(1)
-    expect(enzymeWrapper.find(RelatedUrlsModal).props().focusedCollectionMetadata).toEqual({
-      focusedCollection: {
-        excludedGranuleIds: [],
-        metadata: {
-          some: 'metadata'
-        }
+    expect(enzymeWrapper.find(RelatedUrlsModal).props().focusedCollectionObject).toEqual({
+      excludedGranuleIds: [],
+      metadata: {
+        some: 'metadata'
       }
     })
     expect(enzymeWrapper.find(RelatedUrlsModal).props().isOpen).toEqual(true)

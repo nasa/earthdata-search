@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash'
+
 import { buildDataCenters } from './collectionMetadata/dataCenters'
 import { buildDoi } from './collectionMetadata/doi'
 import { buildGibsLayers } from './collectionMetadata/gibsLayers'
@@ -8,18 +10,30 @@ import { buildTemporal } from './collectionMetadata/temporal'
 import { buildUrls } from './collectionMetadata/buildUrls'
 import CollectionRequest from './request/collectionRequest'
 
+
+/**
+ * Returns the collection object from the metadata store for the provided collectionId
+ * @param {String} collectionId Focused collection id
+ * @param {Object} collections collections from the metadata store
+ */
+export const getFocusedCollectionObject = (collectionId, collections) => {
+  if (!collections) return undefined
+
+  return collections.byId[collectionId] || {}
+}
+
+/**
+ * Returns the json metadata from the store for the provided collectionId
+ * @param {String} collectionId Focused collection id
+ * @param {Object} collections collections from the metadata store
+ */
 export const getFocusedCollectionMetadata = (collectionId, collections) => {
-  if (!collections) return {}
+  const collection = getFocusedCollectionObject(collectionId, collections)
 
-  const collection = collections.byId[collectionId]
+  if (isEmpty(collection)) return undefined
 
-  if (!collection) return {}
-
-  return {
-    [collectionId]: {
-      ...collection
-    }
-  }
+  const { metadata } = collection
+  return metadata
 }
 
 export const createFocusedCollectionMetadata = (json, ummJson, authToken) => {
