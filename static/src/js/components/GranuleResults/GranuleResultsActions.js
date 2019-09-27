@@ -4,11 +4,11 @@ import qs from 'qs'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
-
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
+import { stringify } from '../../util/url/url'
 
 import './GranuleResultsActions.scss'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 const GranuleResultsActions = ({
   collectionId,
@@ -46,9 +46,9 @@ const GranuleResultsActions = ({
   )
 
   const downloadAllButton = () => {
-    const params = qs.parse(location.search)
+    const params = qs.parse(location.search, { ignoreQueryPrefix: true })
     let { p = '' } = params
-    if (p.split('!').indexOf(collectionId) < 1) p = `${p}!${collectionId}`
+    if (!isCollectionInProject) p = `${p}!${collectionId}`
 
     return (
       <PortalLinkContainer
@@ -56,7 +56,10 @@ const GranuleResultsActions = ({
         onClick={() => onAddProjectCollection(collectionId)}
         to={{
           pathname: '/projects',
-          search: location.search
+          search: stringify({
+            ...params,
+            p
+          })
         }}
       >
         <Button

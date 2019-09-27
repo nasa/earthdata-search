@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Col, Dropdown, Form } from 'react-bootstrap'
+import qs from 'qs'
 
 import { isPath } from '../../util/isPath'
 import { pathStartsWith } from '../../util/pathStartsWith'
@@ -11,6 +12,7 @@ import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 import './SecondaryToolbar.scss'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
+import { stringify } from '../../util/url/url'
 
 class SecondaryToolbar extends Component {
   constructor(props) {
@@ -98,12 +100,20 @@ class SecondaryToolbar extends Component {
     const { apiHost } = getEnvironmentConfig()
     const cmrEnvironment = cmrEnv()
 
+    // remove focused collection from back button params
+    const params = qs.parse(location.search, { ignoreQueryPrefix: true })
+    let { p = '' } = params
+    p = p.replace(/^[^!]*/, '')
+
     const backLink = (
       <PortalLinkContainer
         className="collection-results__item-title-link"
         to={{
           pathname: '/search',
-          search: window.location.search
+          search: stringify({
+            ...params,
+            p
+          })
         }}
       >
         <Button
@@ -136,7 +146,7 @@ class SecondaryToolbar extends Component {
           className="collection-results__item-title-link"
           to={{
             pathname: '/projects',
-            search: window.location.search
+            search: location.search
           }}
         >
           <Button
