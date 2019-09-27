@@ -53,15 +53,21 @@ class SearchForm extends Component {
   }
 
   onKeywordBlur() {
-    const { onChangeQuery, onChangeFocusedCollection } = this.props
+    const {
+      keywordSearch: propsKeyword,
+      onChangeQuery,
+      onChangeFocusedCollection
+    } = this.props
     const { keywordSearch } = this.state
 
-    onChangeQuery({
-      collection: {
-        keyword: keywordSearch
-      }
-    })
-    onChangeFocusedCollection('')
+    if (propsKeyword !== keywordSearch) {
+      onChangeFocusedCollection('')
+      onChangeQuery({
+        collection: {
+          keyword: keywordSearch
+        }
+      })
+    }
   }
 
   onSearchClear() {
