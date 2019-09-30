@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Downloads from '../Downloads'
+import Header from '../../../components/Sidebar/SidebarHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -18,7 +19,8 @@ function setup() {
         id: 1
       },
       path: '/downloads/1'
-    }
+    },
+    portal: {}
   }
 
   const enzymeWrapper = shallow(<Downloads.WrappedComponent {...props} />)
@@ -34,5 +36,11 @@ describe('Downloads component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.exists()).toBeTruthy()
+  })
+
+  test('displays a header', () => {
+    const { enzymeWrapper } = setup()
+
+    expect(enzymeWrapper.find(Header).length).toBe(1)
   })
 })
