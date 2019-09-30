@@ -77,6 +77,9 @@ class MasterOverlayPanel extends PureComponent {
       onMasterOverlayPanelDragStart
     } = this.props
 
+    e.stopPropagation()
+    e.preventDefault()
+
     if (e.button !== 0) return
 
     document.addEventListener('mousemove', this.onMouseMove)
@@ -86,20 +89,18 @@ class MasterOverlayPanel extends PureComponent {
       clickStartY: e.pageY,
       clickStartHeight: masterOverlayPanel.height
     })
-
-    e.stopPropagation()
-    e.preventDefault()
   }
 
   onMouseUp(e) {
+    e.stopPropagation()
+    e.preventDefault()
+
     const { onMasterOverlayPanelDragEnd } = this.props
 
     document.removeEventListener('mousemove', this.onMouseMove)
     document.removeEventListener('mouseup', this.onMouseUp)
 
     onMasterOverlayPanelDragEnd()
-    e.stopPropagation()
-    e.preventDefault()
   }
 
   onMouseMove(e) {
@@ -107,6 +108,9 @@ class MasterOverlayPanel extends PureComponent {
       masterOverlayPanel,
       onMasterOverlayHeightChange
     } = this.props
+
+    e.stopPropagation()
+    e.preventDefault()
 
     requestAnimationFrame(() => {
       if (!masterOverlayPanel.dragging) return
@@ -126,9 +130,6 @@ class MasterOverlayPanel extends PureComponent {
 
       onMasterOverlayHeightChange(newHeight)
     })
-
-    e.stopPropagation()
-    e.preventDefault()
   }
 
   calculateMaxHeight() {

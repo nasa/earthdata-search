@@ -43,11 +43,9 @@ export const GranuleResultsBodyContainer = (props) => {
     onMetricsDataAccess
   } = props
 
-  const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
+  const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
-  if (!focusedCollectionMetadata) return null
-
-  const { isCwic = false } = focusedCollectionMetadata
+  const { isCwic = false } = collectionMetadata
 
   const { pageNum } = granuleQuery
 
@@ -55,7 +53,13 @@ export const GranuleResultsBodyContainer = (props) => {
     onChangeGranulePageNum(pageNum + 1)
   }
 
-  const { excludedGranuleIds } = collections.byId[focusedCollection]
+  let collection = {}
+
+  if (collections.byId[focusedCollection]) {
+    collection = collections.byId[focusedCollection]
+  }
+
+  const { excludedGranuleIds = [] } = collection
 
   return (
     <GranuleResultsBody

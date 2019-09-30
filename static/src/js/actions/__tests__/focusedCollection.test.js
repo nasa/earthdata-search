@@ -6,14 +6,14 @@ import actions from '../index'
 import { updateFocusedCollection, getFocusedCollection } from '../focusedCollection'
 import { getCollectionsResponseUnauth, getCollectionsResponseAuth } from './mocks'
 import {
-  UPDATE_FOCUSED_COLLECTION,
-  UPDATE_GRANULE_RESULTS,
-  UPDATE_GRANULE_QUERY,
-  UPDATE_COLLECTION_METADATA,
-  COPY_GRANULE_RESULTS_TO_COLLECTION,
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
+  COPY_GRANULE_RESULTS_TO_COLLECTION,
+  RESET_GRANULE_RESULTS,
   UPDATE_AUTH,
-  UPDATE_FOCUSED_GRANULE
+  UPDATE_COLLECTION_METADATA,
+  UPDATE_FOCUSED_COLLECTION,
+  UPDATE_FOCUSED_GRANULE,
+  UPDATE_GRANULE_QUERY
 } from '../../constants/actionTypes'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
@@ -299,11 +299,22 @@ describe('getFocusedCollection', () => {
         payload: { pageNum: 1 }
       })
       expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTION_METADATA,
+        payload: [
+          {
+            collectionId: {
+              isCwic: false,
+              metadata: {}
+            }
+          }
+        ]
+      })
+      expect(storeActions[2]).toEqual({
         type: UPDATE_AUTH,
         payload: ''
       })
       // updateCollectionMetadata
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: getCollectionsResponseUnauth
       })
@@ -389,11 +400,22 @@ describe('getFocusedCollection', () => {
         payload: { pageNum: 1 }
       })
       expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTION_METADATA,
+        payload: [
+          {
+            collectionId: {
+              isCwic: false,
+              metadata: {}
+            }
+          }
+        ]
+      })
+      expect(storeActions[2]).toEqual({
         type: UPDATE_AUTH,
         payload: 'token'
       })
       // updateCollectionMetadata
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: getCollectionsResponseAuth
       })
@@ -481,11 +503,22 @@ describe('getFocusedCollection', () => {
         payload: { pageNum: 1 }
       })
       expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTION_METADATA,
+        payload: [
+          {
+            collectionId: {
+              isCwic: false,
+              metadata: {}
+            }
+          }
+        ]
+      })
+      expect(storeActions[2]).toEqual({
         type: UPDATE_AUTH,
         payload: ''
       })
       // updateCollectionMetadata
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: getCollectionsResponseUnauth
       })
@@ -501,7 +534,8 @@ describe('getFocusedCollection', () => {
       focusedCollection: '',
       searchResults: {
         granules: {}
-      }
+      },
+      metadata: {}
     })
 
     store.dispatch(actions.getFocusedCollection())
@@ -512,12 +546,15 @@ describe('getFocusedCollection', () => {
       payload: { pageNum: 1 }
     })
     expect(storeActions[1]).toEqual({
-      type: UPDATE_GRANULE_RESULTS,
-      payload: { results: [] }
+      type: UPDATE_COLLECTION_METADATA,
+      payload: []
+    })
+    expect(storeActions[2]).toEqual({
+      type: RESET_GRANULE_RESULTS
     })
   })
 
-  test('does not call updateFocusedCollection on error', async () => {
+  test('does not call updateFocusedCopllection on error', async () => {
     nock(/localhost/)
       .post(/collections/)
       .reply(500)

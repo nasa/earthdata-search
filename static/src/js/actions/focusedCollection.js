@@ -6,7 +6,7 @@ import {
   UPDATE_FOCUSED_COLLECTION
 } from '../constants/actionTypes'
 import { updateCollectionMetadata } from './collections'
-import { updateGranuleResults, addGranulesFromCollection } from './granules'
+import { resetGranuleResults, addGranulesFromCollection } from './granules'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
@@ -37,7 +37,8 @@ export const copyGranulesToCollection = () => (dispatch, getState) => {
     allIds,
     byId,
     isCwic,
-    hits
+    hits,
+    loadTime
   } = granules
 
   dispatch(addCollectionGranules({
@@ -46,7 +47,8 @@ export const copyGranulesToCollection = () => (dispatch, getState) => {
       allIds,
       byId,
       isCwic,
-      hits
+      hits,
+      loadTime
     }
   }))
 }
@@ -80,18 +82,33 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     searchResults
   } = getState()
 
-  const { granules } = searchResults
+  const { granules, collections: collectionResults = {} } = searchResults
   const { allIds = [] } = granules
+
+  const { byId: searchResultsById = {} } = collectionResults
+  const focusedCollectionMetadata = searchResultsById[focusedCollection]
+
+  const { is_cwic: isCwic = false } = metadata
+  const payload = [{
+    [focusedCollection]: {
+      isCwic,
+      metadata: {
+        ...focusedCollectionMetadata
+      }
+    }
+  }]
 
   // Reset granule pageNum to 1 when focusedCollection is changing
   dispatch(updateGranuleQuery({ pageNum: 1 }))
 
   if (focusedCollection === '') {
-    dispatch(updateGranuleResults({ results: [] }))
+    dispatch(updateCollectionMetadata([]))
+    dispatch(resetGranuleResults())
     return null
   }
 
   dispatch(actions.collectionRelevancyMetrics())
+  dispatch(updateCollectionMetadata(payload))
 
   const { collections } = metadata
   const { allIds: fetchedCollectionIds, byId: fetchedCollections } = collections

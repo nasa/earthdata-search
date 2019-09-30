@@ -20,6 +20,9 @@ function setup() {
     },
     focusedCollection: 'focusedCollection',
     granules: { hits: 100 },
+    granuleQuery: {
+      pageNum: 1
+    },
     project: {
       collectionIds: ['focusedCollection']
     },

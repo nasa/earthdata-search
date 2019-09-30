@@ -5,7 +5,18 @@ export const collectionTitle = [
     y: 0,
     height: 22,
     width: 280,
-    radius: 3
+    radius: 2
+  }
+]
+
+export const granuleTotalCount = [
+  {
+    shape: 'rectangle',
+    x: 0,
+    y: 3,
+    height: 18,
+    width: 126,
+    radius: 2
   }
 ]
 
@@ -16,7 +27,7 @@ export const granuleListTotal = [
     y: 3,
     height: 12,
     width: 213,
-    radius: 3
+    radius: 2
   }
 ]
 
@@ -27,7 +38,7 @@ export const granuleTimeTotal = [
     y: 3,
     height: 12,
     width: 110,
-    radius: 3
+    radius: 2
   }
 ]
 
@@ -38,7 +49,7 @@ export const granuleListItem = [
     y: 12,
     height: 12,
     width: 200,
-    radius: 3
+    radius: 2
   },
   {
     shape: 'rectangle',
@@ -46,7 +57,7 @@ export const granuleListItem = [
     y: 31,
     height: 12,
     width: 100,
-    radius: 3
+    radius: 2
   },
   {
     shape: 'rectangle',
@@ -62,15 +73,15 @@ export const granuleListItem = [
     y: 65,
     height: 12,
     width: 35,
-    radius: 3
+    radius: 2
   },
   {
     shape: 'rectangle',
     x: 160,
     y: 65,
     height: 12,
-    width: 105,
-    radius: 3
+    width: 95,
+    radius: 2
   },
   {
     shape: 'rectangle',
@@ -78,14 +89,14 @@ export const granuleListItem = [
     y: 85,
     height: 12,
     width: 25,
-    radius: 3
+    radius: 2
   },
   {
     shape: 'rectangle',
     x: 160,
     y: 85,
     height: 12,
-    width: 105,
-    radius: 3
+    width: 95,
+    radius: 2
   }
 ]

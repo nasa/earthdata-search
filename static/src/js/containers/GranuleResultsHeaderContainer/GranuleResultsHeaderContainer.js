@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { isEmpty } from 'lodash'
 
 import actions from '../../actions'
 import { getFocusedCollectionObject } from '../../util/focusedCollection'
@@ -42,13 +41,12 @@ export const GranuleResultsHeaderContainer = (props) => {
 
   const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
 
-  if (isEmpty(focusedCollectionObject)) return null
-
   return (
     <>
       <GranuleResultsHeader
         location={location}
         focusedCollectionObject={focusedCollectionObject}
+        focusedCollectionId={focusedCollection}
         onApplyGranuleFilters={onApplyGranuleFilters}
         onToggleSecondaryOverlayPanel={onToggleSecondaryOverlayPanel}
         onUndoExcludeGranule={onUndoExcludeGranule}

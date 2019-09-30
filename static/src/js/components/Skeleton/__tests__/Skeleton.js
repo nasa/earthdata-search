@@ -88,31 +88,29 @@ describe('Skeleton component', () => {
 
     expect(innerDiv.length).toBe(1)
     expect(innerDiv.hasClass('skeleton__inner')).toBe(true)
-    expect(innerDiv.prop('style')).toEqual({ clipPath: 'url(#skeleton_clipping_path_3)' })
   })
 
   describe('when passed an unknown shape', () => {
     test('renders no shapes', () => {
       const { enzymeWrapper } = setup({ unknownShape: true })
-      const clipPaths = enzymeWrapper.find('clipPath')
+      const items = enzymeWrapper.find('.skeleton__item')
 
-      expect(clipPaths.children().length).toEqual(0)
+      expect(items.children().length).toEqual(0)
     })
   })
 
   describe('when passed a single shape', () => {
     test('renders a single shape', () => {
       const { enzymeWrapper } = setup()
-      const clipPaths = enzymeWrapper.find('clipPath')
+      const items = enzymeWrapper.find('.skeleton__item')
 
-      expect(clipPaths.children().length).toEqual(1)
-      expect(clipPaths.children().at(0).props()).toEqual({
-        height: '12',
-        rx: '3',
-        ry: '3',
-        width: '200',
-        x: '10',
-        y: '12'
+      expect(items.length).toEqual(1)
+      expect(items.at(0).prop('style')).toEqual({
+        borderRadius: '0.1875rem',
+        height: '0.75rem',
+        left: '0.625rem',
+        top: '0.75rem',
+        width: '12.5rem'
       })
     })
   })
@@ -120,24 +118,22 @@ describe('Skeleton component', () => {
   describe('when passed a multiple shapes', () => {
     test('renders a multiple shapes', () => {
       const { enzymeWrapper } = setup({ multiShape: true })
-      const clipPaths = enzymeWrapper.find('clipPath')
+      const items = enzymeWrapper.find('.skeleton__item')
 
-      expect(clipPaths.children().length).toEqual(2)
-      expect(clipPaths.children().at(0).props()).toEqual({
-        height: '12',
-        rx: '3',
-        ry: '3',
-        width: '200',
-        x: '10',
-        y: '12'
+      expect(items.length).toEqual(2)
+      expect(items.at(0).prop('style')).toEqual({
+        borderRadius: '0.1875rem',
+        height: '0.75rem',
+        left: '0.625rem',
+        top: '0.75rem',
+        width: '12.5rem'
       })
-      expect(clipPaths.children().at(1).props()).toEqual({
-        height: '12',
-        rx: '3',
-        ry: '3',
-        width: '100',
-        x: '30',
-        y: '12'
+      expect(items.at(1).prop('style')).toEqual({
+        borderRadius: '0.1875rem',
+        height: '0.75rem',
+        left: '1.875rem',
+        top: '0.75rem',
+        width: '6.25rem' 
       })
     })
   })

@@ -1,8 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { uniqueId } from 'lodash'
+import {
+  uniqueId,
+  mapValues,
+  isString,
+  isNumber
+} from 'lodash'
 
 import './Skeleton.scss'
+
+const normalizeSizeValues = obj => mapValues(obj, (value) => {
+  if (isNumber(value)) return `${value / 16}rem`
+  if (isString(value) && value.indexOf('px') > -1) return `${parseInt(value, 0) / 16}rem`
+  return value
+})
 
 /**
  * Renders loading placeholder.
@@ -15,47 +26,43 @@ export const Skeleton = ({
   containerStyle,
   shapes
 }) => {
-  const clippingPathId = uniqueId('skeleton_clipping_path_')
-
-  const shapeElements = shapes.map((shape) => {
+  const shapeElements = shapes.map((shape, i) => {
     let item = null
     const key = uniqueId('skeleton_key_')
-    if (shape.shape === 'rectangle') {
+    const styles = normalizeSizeValues(shape)
+
+    if (styles.shape === 'rectangle') {
       item = (
-        <rect
+        <div
           key={key}
-          x={`${shape.x}`}
-          y={`${shape.y}`}
-          height={`${shape.height}`}
-          width={`${shape.width}`}
-          rx={`${shape.radius}`}
-          ry={`${shape.radius}`}
-        />
+          className={`skeleton__item skeleton__item-${i}`}
+          style={{
+            top: styles.y,
+            left: styles.x,
+            width: styles.width,
+            height: styles.height,
+            borderRadius: styles.radius
+          }}
+        >
+          <span className="skeleton__item-inner" />
+        </div>
       )
     }
     return item
   })
 
+  const normalizedStyles = normalizeSizeValues(containerStyle)
+
   return (
     <div
       className={`skeleton ${className}`}
-      style={{ ...containerStyle }}
+      style={{ ...normalizedStyles }}
     >
       <div
         className="skeleton__inner"
-        style={
-        {
-          clipPath: `url(#${clippingPathId})`
-        }
-      }
-      />
-      <svg width="0" height="0">
-        <defs>
-          <clipPath id={clippingPathId}>
-            {shapeElements}
-          </clipPath>
-        </defs>
-      </svg>
+      >
+        {shapeElements}
+      </div>
     </div>
   )
 }

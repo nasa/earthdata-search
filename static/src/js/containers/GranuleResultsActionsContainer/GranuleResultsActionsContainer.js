@@ -21,6 +21,7 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   granules: state.searchResults.granules,
+  granuleQuery: state.query.granule,
   project: state.project,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
   searchValue: state.ui.granuleResultsPanel.searchValue
@@ -31,28 +32,43 @@ export const GranuleResultsActionsContainer = (props) => {
     collections,
     focusedCollection,
     granules,
+    granuleQuery,
     location,
     project,
     onAddProjectCollection,
     onRemoveCollectionFromProject
   } = props
-
-  const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
-
-  if (!focusedCollectionMetadata) return null
+  const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
   const { collectionIds: projectIds } = project
   const isCollectionInProject = projectIds.indexOf(focusedCollection) !== -1
 
   // Determine the correct granule count based on granules that have been removed
-  const { excludedGranuleIds = [] } = collections.byId[focusedCollection]
-  const granuleCount = (granules.hits - excludedGranuleIds.length)
+  const { excludedGranuleIds = [] } = collectionMetadata
+
+  const { pageNum } = granuleQuery
+  const {
+    hits,
+    isLoading,
+    isLoaded
+  } = granules
+  const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
+  let granuleCount
+
+  if (hits > 0) {
+    if (excludedGranuleIds.length > 0) {
+      granuleCount = hits - excludedGranuleIds.length
+    } else {
+      granuleCount = hits
+    }
+  }
 
   return (
     <>
       <GranuleResultsActions
         collectionId={focusedCollection}
         granuleCount={granuleCount}
+        initialLoading={initialLoading}
         isCollectionInProject={isCollectionInProject}
         location={location}
         onAddProjectCollection={onAddProjectCollection}
@@ -67,6 +83,7 @@ GranuleResultsActionsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
+  granuleQuery: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired

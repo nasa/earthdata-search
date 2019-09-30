@@ -21,7 +21,8 @@ import {
   UPDATE_AUTH,
   EXCLUDE_GRANULE_ID,
   UNDO_EXCLUDE_GRANULE_ID,
-  UPDATE_GRANULE_LINKS
+  UPDATE_GRANULE_LINKS,
+  RESET_GRANULE_RESULTS
 } from '../../constants/actionTypes'
 // import actions from '../index'
 
@@ -131,8 +132,8 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       // Is updateGranuleResults called with the right payload
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: LOADING_GRANULES })
-      expect(storeActions[1]).toEqual({ type: STARTED_GRANULES_TIMER })
+      expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
+      expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
       expect(storeActions[2]).toEqual({ type: FINISHED_GRANULES_TIMER })
       expect(storeActions[3]).toEqual({
         type: UPDATE_AUTH,
@@ -211,8 +212,8 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       // Is updateGranules called with the right payload
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: LOADING_GRANULES })
-      expect(storeActions[1]).toEqual({ type: STARTED_GRANULES_TIMER })
+      expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
+      expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
       expect(storeActions[2]).toEqual({ type: FINISHED_GRANULES_TIMER })
       expect(storeActions[3]).toEqual({
         type: UPDATE_AUTH,
@@ -257,12 +258,9 @@ describe('getGranules', () => {
 
     store.dispatch(getGranules())
     const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_GRANULE_RESULTS,
-      payload: {
-        results: []
-      }
-    })
+    expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
+    expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
+    expect(storeActions[2]).toEqual({ type: RESET_GRANULE_RESULTS })
   })
 
   test('does not call updateGranuleResults on error', async () => {
