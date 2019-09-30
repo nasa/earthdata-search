@@ -918,16 +918,16 @@ export class GranuleGridLayer extends MapLayer {
     const oldLayerData = this.getLayerData(fromProps)
     const layerData = this.getLayerData(toProps)
 
+    const layerDataCollectionIds = Object.keys(layerData)
+
     // Nothing should be drawn, remove any existing layers
-    if (Object.keys(layerData).length === 0) {
+    if (layerDataCollectionIds.length === 0) {
       Object.values(layers).forEach(layer => this.leafletElement.removeLayer(layer))
-    } else if (Object.keys(layerData).length < Object.keys(oldLayerData).length) {
+    } else if (layerDataCollectionIds.length < Object.keys(oldLayerData).length) {
       // If there is less data than before, figure out which collection was removed and remove the layer
 
       const oldIds = Object.keys(oldLayerData)
-      const newIds = Object.keys(layerData)
-
-      const diffIds = difference(oldIds, newIds)
+      const diffIds = difference(oldIds, layerDataCollectionIds)
 
       diffIds.forEach((collectionId) => {
         Object.values(layers).forEach((layer) => {
@@ -939,7 +939,7 @@ export class GranuleGridLayer extends MapLayer {
     }
 
     // Loop through each layer data object to update the layer
-    Object.keys(layerData).forEach((id) => {
+    layerDataCollectionIds.forEach((id) => {
       const {
         collectionId,
         color,
