@@ -6,7 +6,6 @@ import { decodeFacets, encodeFacets } from './facetEncoders'
 import { decodeMap, encodeMap } from './mapEncoders'
 import { decodeScienceKeywords, encodeScienceKeywords } from './scienceKeywordEncoders'
 import { decodeString, encodeString } from './stringEncoders'
-import { decodeInteger, encodeInteger } from './integerEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
 import { decodeCollections, encodeCollections } from './collectionsEncoders'
@@ -52,7 +51,7 @@ const urlDefs = {
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
   gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
   gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords },
-  shapefileId: { shortKey: 'sf', encode: encodeInteger, decode: decodeInteger },
+  shapefileId: { shortKey: 'sf', encode: encodeString, decode: encodeString },
   tagKey: { shortKey: 'tag_key', encode: encodeString, decode: decodeString },
   hasGranulesOrCwic: { shortKey: 'ac', encode: encodeHasGranulesOrCwic, decode: decodeHasGranulesOrCwic }
 }
