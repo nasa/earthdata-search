@@ -4,15 +4,19 @@ import qs from 'qs'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
+import { stringify } from '../../util/url/url'
+import { granuleTotalCount } from './skeleton'
+
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
-import { stringify } from '../../util/url/url'
+import Skeleton from '../Skeleton/Skeleton'
 
 import './GranuleResultsActions.scss'
 
 const GranuleResultsActions = ({
   collectionId,
   granuleCount,
+  initialLoading,
   isCollectionInProject,
   location,
   onAddProjectCollection,
@@ -31,6 +35,7 @@ const GranuleResultsActions = ({
       Add to project
     </Button>
   )
+
   const removeFromProjectButton = (
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--remove"
@@ -69,6 +74,7 @@ const GranuleResultsActions = ({
           icon="download"
           variant="full"
           label="Download All"
+          disabled={granuleCount === 0 || initialLoading}
         >
           Download All
         </Button>
@@ -83,12 +89,26 @@ const GranuleResultsActions = ({
   return (
     <div className="granule-results-actions">
       <div className="granule-results-actions__info">
-        <span className="granule-results-actions__granule-count">
-          <span className="granule-results-actions__granule-num">
-            {`${commafy(granuleCount)} `}
-          </span>
-          {`${pluralize('Granule', granuleCount)}`}
-        </span>
+        {
+          initialLoading
+            ? (
+              <Skeleton
+                className="granule-results-actions__granule-count"
+                shapes={granuleTotalCount}
+                containerStyle={{
+                  height: 21,
+                  width: 126
+                }}
+              />
+            ) : (
+              <span className="granule-results-actions__granule-count">
+                <span className="granule-results-actions__granule-num">
+                  {`${commafy(granuleCount)} `}
+                </span>
+                {`${pluralize('Granule', granuleCount)}`}
+              </span>
+            )
+        }
         {
           isCollectionInProject && removeFromProjectButton
         }
@@ -108,6 +128,7 @@ GranuleResultsActions.defaultProps = {
 GranuleResultsActions.propTypes = {
   collectionId: PropTypes.string.isRequired,
   granuleCount: PropTypes.number,
+  initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,

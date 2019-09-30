@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
+const WebpackBar = require('webpackbar')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
@@ -29,6 +30,7 @@ const Config = merge.smartStrategy(
     ]
   },
   plugins: [
+    new WebpackBar(),
     new webpack.HotModuleReplacementPlugin()
   ]
 })

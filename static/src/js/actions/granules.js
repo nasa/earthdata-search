@@ -9,19 +9,20 @@ import GranuleRequest from '../util/request/granuleRequest'
 import OusGranuleRequest from '../util/request/ousGranuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
+  ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   ADD_MORE_GRANULE_RESULTS,
+  CLEAR_EXCLUDE_GRANULE_ID,
   ERRORED_GRANULES,
   EXCLUDE_GRANULE_ID,
   FINISHED_GRANULES_TIMER,
   LOADED_GRANULES,
   LOADING_GRANULES,
+  RESET_GRANULE_RESULTS,
   STARTED_GRANULES_TIMER,
-  UPDATE_GRANULE_RESULTS,
-  ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
-  CLEAR_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
-  UPDATE_GRANULE_METADATA
+  UPDATE_GRANULE_METADATA,
+  UPDATE_GRANULE_RESULTS
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
 
@@ -39,6 +40,11 @@ export const addMoreGranuleResults = payload => ({
 export const updateGranuleResults = payload => ({
   type: UPDATE_GRANULE_RESULTS,
   payload
+})
+
+
+export const resetGranuleResults = () => ({
+  type: RESET_GRANULE_RESULTS
 })
 
 export const updateGranuleMetadata = payload => ({
@@ -236,11 +242,11 @@ export const clearExcludedGranules = collectionId => (dispatch) => {
 
 export const getGranules = () => (dispatch, getState) => {
   const granuleParams = prepareGranuleParams(getState())
+  dispatch(startGranulesTimer())
+  dispatch(onGranulesLoading())
 
   if (!granuleParams) {
-    dispatch(updateGranuleResults({
-      results: []
-    }))
+    dispatch(resetGranuleResults())
     return null
   }
 
@@ -250,9 +256,6 @@ export const getGranules = () => (dispatch, getState) => {
     isCwicCollection,
     pageNum
   } = granuleParams
-
-  dispatch(onGranulesLoading())
-  dispatch(startGranulesTimer())
 
   let requestObject = null
   if (isCwicCollection) {

@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    focusedCollectionId: 'collectionId',
     focusedCollectionObject: {
       excludedGranuleIds: [],
       granuleFilters: {

@@ -186,7 +186,8 @@ describe('ADD_GRANULE_RESULTS_FROM_COLLECTIONS', () => {
         granule1: { mock: 'data' }
       },
       isCwic: false,
-      hits: 1
+      hits: 1,
+      loadTime: 14
     }
     const action = {
       type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,

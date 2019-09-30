@@ -41,16 +41,17 @@ class GranuleResultsHeader extends Component {
   }
 
   handleUpdateSortOrder(e) {
-    const { focusedCollectionObject, onApplyGranuleFilters } = this.props
-    const { metadata } = focusedCollectionObject
-    const { id } = metadata
+    const {
+      focusedCollectionId,
+      onApplyGranuleFilters
+    } = this.props
 
     const { value } = e.target
     this.setState({
       sortOrder: value
     })
 
-    onApplyGranuleFilters(id, { sortKey: value })
+    onApplyGranuleFilters(focusedCollectionId, { sortKey: value })
   }
 
   handleUpdateSearchValue(e) {
@@ -62,9 +63,10 @@ class GranuleResultsHeader extends Component {
   }
 
   handleSearch() {
-    const { focusedCollectionObject, onApplyGranuleFilters } = this.props
-    const { metadata } = focusedCollectionObject
-    const { id } = metadata
+    const {
+      focusedCollectionId,
+      onApplyGranuleFilters
+    } = this.props
 
     const { searchValue, prevSearchValue } = this.state
 
@@ -75,7 +77,7 @@ class GranuleResultsHeader extends Component {
         readableGranuleName = searchValue.split(',')
       }
 
-      onApplyGranuleFilters(id, { readableGranuleName })
+      onApplyGranuleFilters(focusedCollectionId, { readableGranuleName })
 
       this.setState({
         prevSearchValue: searchValue
@@ -94,11 +96,12 @@ class GranuleResultsHeader extends Component {
   }
 
   handleUndoExcludeGranule() {
-    const { focusedCollectionObject, onUndoExcludeGranule } = this.props
-    const { metadata } = focusedCollectionObject
-    const { id } = metadata
+    const {
+      focusedCollectionId,
+      onUndoExcludeGranule
+    } = this.props
 
-    onUndoExcludeGranule(id)
+    onUndoExcludeGranule(focusedCollectionId)
   }
 
   render() {
@@ -113,7 +116,9 @@ class GranuleResultsHeader extends Component {
     } = this.props
 
     const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
-    const { metadata, excludedGranuleIds } = focusedCollectionObject
+
+    const { metadata = {}, excludedGranuleIds = {} } = focusedCollectionObject
+
     const { dataset_id: title } = metadata
 
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
@@ -130,7 +135,7 @@ class GranuleResultsHeader extends Component {
                 !title && (
                   <Skeleton
                     className="granule-results-header__title"
-                    containerStyle={{ display: 'inline-block', height: '22px', width: '280px' }}
+                    containerStyle={{ display: 'inline-block', height: '1.375rem', width: '17.5rem' }}
                     shapes={collectionTitle}
                   />
                 )
@@ -324,6 +329,7 @@ class GranuleResultsHeader extends Component {
 }
 
 GranuleResultsHeader.propTypes = {
+  focusedCollectionId: PropTypes.string.isRequired,
   focusedCollectionObject: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,

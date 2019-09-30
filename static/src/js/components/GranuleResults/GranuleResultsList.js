@@ -89,7 +89,7 @@ export class GranuleResultsList extends PureComponent {
     // Determine the correct granule count based on granules that have been removed
     const granuleCount = (hits - excludedGranuleIds.length)
 
-    const initialLoading = (pageNum === 1 && !isLoaded)
+    const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
 
     const granulesList = granuleIds.map((granuleId, index) => {
       const isLast = granuleIds.length > 0 && index === granuleIds.length - 1

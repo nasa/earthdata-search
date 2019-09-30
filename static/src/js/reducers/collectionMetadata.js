@@ -173,7 +173,8 @@ const collectionMetadataReducer = (state = initialState, action) => {
         byId,
         hits,
         isCwic,
-        totalSize
+        totalSize,
+        loadTime
       } = granules
 
       return {
@@ -187,7 +188,8 @@ const collectionMetadataReducer = (state = initialState, action) => {
               byId,
               hits,
               isCwic,
-              totalSize
+              totalSize,
+              loadTime
             }
           }
         }

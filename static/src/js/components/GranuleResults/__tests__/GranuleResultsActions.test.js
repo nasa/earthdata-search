@@ -10,6 +10,7 @@ function setup() {
   const props = {
     collectionId: 'collectionId',
     granuleCount: 5000,
+    initialLoading: false,
     isCollectionInProject: false,
     location: {
       search: '?p=collectionId'

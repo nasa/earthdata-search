@@ -1,11 +1,12 @@
 import {
+  ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   ADD_MORE_GRANULE_RESULTS,
   FINISHED_GRANULES_TIMER,
   LOADED_GRANULES,
   LOADING_GRANULES,
+  RESET_GRANULE_RESULTS,
   STARTED_GRANULES_TIMER,
-  UPDATE_GRANULE_RESULTS,
-  ADD_GRANULE_RESULTS_FROM_COLLECTIONS
+  UPDATE_GRANULE_RESULTS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -61,9 +62,14 @@ const granuleResultsReducer = (state = initialState, action) => {
         loadTime: Date.now() - timerStart
       }
     }
+    case RESET_GRANULE_RESULTS: {
+      return {
+        ...initialState
+      }
+    }
     case UPDATE_GRANULE_RESULTS: {
-      const { hits, isCwic } = action.payload
-      const { byId, allIds } = processResults(action.payload.results)
+      const { hits, isCwic, results } = action.payload
+      const { byId, allIds } = processResults(results)
 
       return {
         ...state,
@@ -93,7 +99,8 @@ const granuleResultsReducer = (state = initialState, action) => {
         allIds,
         byId,
         isCwic,
-        hits
+        hits,
+        loadTime
       } = action.payload
 
       return {
@@ -102,6 +109,7 @@ const granuleResultsReducer = (state = initialState, action) => {
         byId,
         hits,
         isCwic,
+        loadTime,
         isLoaded: true
       }
     }
