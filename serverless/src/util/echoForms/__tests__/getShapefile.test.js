@@ -7,11 +7,11 @@ import { getShapefile } from '../getShapefile'
 
 describe('util#getShapefile', () => {
   test('correctly sets the shapefileParam', () => {
-    const file = 'mock shapefile'
+    const file = { mock: 'shapefile' }
     const shapefileParam = getShapefile(echoFormXmlWithShapefile, file)
 
     expect(shapefileParam).toEqual({
-      BoundingShape: file
+      BoundingShape: '{"mock":"shapefile"}'
     })
   })
 

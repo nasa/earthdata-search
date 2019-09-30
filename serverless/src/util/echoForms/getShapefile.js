@@ -20,7 +20,7 @@ export const getShapefile = (xmlDocument, shapefile) => {
 
   if (useShapefile) {
     return {
-      BoundingShape: shapefile
+      BoundingShape: JSON.stringify(shapefile)
     }
   }
 
