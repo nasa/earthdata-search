@@ -6,12 +6,14 @@ import SavedProjectsContainer
   from '../../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import ProjectCollectionsContainer
   from '../../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
+import Header from '../../../components/Sidebar/SidebarHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
     location: {},
+    portal: {},
     onMasterOverlayHeightChange: jest.fn(),
     onSubmitRetrieval: jest.fn(),
     ...overrideProps
@@ -50,6 +52,16 @@ describe('Project component', () => {
       })
 
       expect(enzymeWrapper.find(SavedProjectsContainer).length).toBe(1)
+    })
+
+    test('displays a header', () => {
+      const { enzymeWrapper } = setup({
+        location: {
+          search: ''
+        }
+      })
+
+      expect(enzymeWrapper.find(Header).length).toBe(1)
     })
   })
 
