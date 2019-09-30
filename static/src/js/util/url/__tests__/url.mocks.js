@@ -37,7 +37,7 @@ export const emptyDecodedResult = {
     }
   },
   shapefile: {
-    shapefileId: undefined
+    shapefileId: ''
   },
   timeline: undefined
 }

@@ -109,7 +109,9 @@ describe('changePath', () => {
           },
           granule: { pageNum: 1 }
         },
-        shapefile: {}
+        shapefile: {
+          shapefileId: ''
+        }
       })
     })
   })
@@ -145,7 +147,9 @@ describe('changePath', () => {
         },
         granule: { pageNum: 1 }
       },
-      shapefile: {}
+      shapefile: {
+        shapefileId: ''
+      }
     })
   })
 })
