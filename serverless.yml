@@ -53,6 +53,7 @@ plugins:
   - serverless-webpack
   - serverless-step-functions
   - serverless-plugin-split-stacks
+  - serverless-plugin-log-subscription
 
 #
 # Lambda Functions
@@ -111,3 +112,7 @@ custom:
   # Manage resource count (Maximum of 200) by splitting up the cloudformation templates
   splitStacks:
     perFunction: true
+
+  logSubscription:
+    enabled: true
+    destinationArn: ${env:LOG_DESTINATION_ARN}
