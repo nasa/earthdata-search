@@ -62,6 +62,7 @@ dockerRun() {
         -e "DB_INSTANCE_CLASS=$bamboo_DB_INSTANCE_CLASS" \
         -e "OBFUSCATION_SPIN=$bamboo_OBFUSCATION_SPIN" \
         -e "OBFUSCATION_SPIN_SHAPEFILES=$bamboo_OBFUSCATION_SPIN_SHAPEFILES" \
+        -e "LOG_DESTINATION_ARN=$bamboo_LOG_DESTINATION_ARN" \
         -e "VPC_ID=$bamboo_VPC_ID" \
         -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
         -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
