@@ -104,15 +104,90 @@ export const gibsResponse = {
       type: 'wmts',
       id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
       tags: 'top of atmosphere, cloud radiative effect'
+    },
+    ExcludedProjection_Value: {
+      startDate: '2002-07-01T00:00:00Z',
+      palette: {
+        id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly'
+      },
+      group: 'overlays',
+      endDate: '2018-04-01T00:00:00Z',
+      description: 'ceres/CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
+      format: 'image/png',
+      title: 'TOA Window-Region Flux (Monthly, All-Sky)',
+      period: 'monthly',
+      layergroup: [
+        'ceres'
+      ],
+      wrapadjacentdays: true,
+      dateRanges: [
+        {
+          startDate: '2002-07-01T00:00:00Z',
+          dateInterval: '1',
+          endDate: '2018-03-01T00:00:00Z'
+        }
+      ],
+      inactive: true,
+      projections: {
+        edsc: {
+          source: 'ESDC:projection',
+          matrixSet: '2km'
+        }
+      },
+      subtitle: 'Terra and Aqua/CERES',
+      product: 'ExcludedProjection_Value',
+      type: 'wmts',
+      id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
+      tags: 'top of atmosphere, cloud radiative effect'
+    },
+    MissingProjection_Value: {
+      startDate: '2002-07-01T00:00:00Z',
+      palette: {
+        id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly'
+      },
+      group: 'overlays',
+      endDate: '2018-04-01T00:00:00Z',
+      description: 'ceres/CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
+      format: 'image/png',
+      title: 'TOA Window-Region Flux (Monthly, All-Sky)',
+      period: 'monthly',
+      layergroup: [
+        'ceres'
+      ],
+      wrapadjacentdays: true,
+      dateRanges: [
+        {
+          startDate: '2002-07-01T00:00:00Z',
+          dateInterval: '1',
+          endDate: '2018-03-01T00:00:00Z'
+        }
+      ],
+      inactive: true,
+      subtitle: 'Terra and Aqua/CERES',
+      product: 'MissingProjection_Value',
+      type: 'wmts',
+      id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
+      tags: 'top of atmosphere, cloud radiative effect'
     }
   },
   products: {
     'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0': {
       query: {
-        shortName: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
+        shortName: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0',
+        dayNightFlag: 'NIGHT'
       },
       handler: 'List',
       name: 'PODAAC-MODAM-1D4N4'
+    },
+    ExcludedProjection_Value: {
+      query: {
+        shortName: 'SOME_VALID_SHORTNAME'
+      }
+    },
+    MissingProjection_Value: {
+      query: {
+        shortName: 'SOME_VALID_SHORTNAME.1'
+      }
     }
   }
 }
