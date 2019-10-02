@@ -190,10 +190,9 @@ export const getProjectCollections = collectionId => (dispatch, getState) => {
 
       // The process of fetching access methods requires that we have providers retrieved
       // in order to look up provider guids
-      dispatch(actions.fetchProviders())
-    })
-    .then(() => {
-      dispatch(actions.fetchAccessMethods(filteredIds))
+      dispatch(actions.fetchProviders()).then(() => {
+        dispatch(actions.fetchAccessMethods(filteredIds))
+      })
     })
     .catch((error) => {
       dispatch(actions.handleError({
