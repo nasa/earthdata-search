@@ -1,103 +1,17 @@
 import 'array-foreach-async'
-import request from 'request-promise'
 import AWS from 'aws-sdk'
-import customGibsProducts from '../static/gibs'
-import { getClientId } from '../../../sharedUtils/config'
+import { groupBy, omit } from 'lodash'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
+import { getSupportedGibsLayers } from './getSupportedGibsLayers'
 
 // AWS SQS adapter
 let sqs
 
 /*
- * Retrieve the worldview configuration file and pull out products that Earthdata Search supports
- */
-export const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
-  const worldviewConfig = 'https://worldview.earthdata.nasa.gov/config/wv.json'
-  const worldviewResponse = await request.get({
-    uri: worldviewConfig,
-    json: true,
-    resolveWithFullResponse: true,
-    headers: {
-      'Client-Id': getClientId().background
-    }
-  })
-
-  const supportedProjections = [
-    'GIBS:antarctic',
-    'GIBS:arctic',
-    'GIBS:geographic'
-  ]
-
-  const { body: worldviewProducts } = worldviewResponse
-
-  // Merge the EDSC custom products into the GIBS products before processing
-  if (mergeCustomProducts) {
-    Object.keys(customGibsProducts).forEach((key) => {
-      console.log(`Merged ${Object.keys(customGibsProducts[key]).length} objects into '${key}'`)
-
-      worldviewProducts[key] = {
-        ...worldviewProducts[key],
-        ...customGibsProducts[key]
-      }
-    })
-  }
-
-  const { layers, products } = worldviewProducts
-
-  const evaluatedLayers = {}
-  await Object.keys(layers).forEachAsync(async (key) => {
-    // Prevent `eslint(no-param-reassign)` errors
-    const currentLayer = layers[key]
-
-    // Ignore non Web Map Tile Service layers
-    if (currentLayer.type !== 'wmts') {
-      return
-    }
-
-    const { product } = currentLayer
-
-    if (!product) {
-      return
-    }
-
-    const productObject = products[product]
-
-    // Ensure that we have a product that matches this layer
-    if (!productObject) {
-      return
-    }
-
-    // Overwrites the product (currently just the ID) with the full object
-    currentLayer.product = productObject
-
-    const { projections = {} } = currentLayer
-
-    Object.keys(projections).forEach((key) => {
-      const projection = projections[key]
-
-      if (!supportedProjections.includes(projection.source)) {
-        delete projections[key]
-      }
-    })
-
-    // Ensure the layer has projections that we support
-    if (!projections) {
-      return
-    }
-
-    evaluatedLayers[key] = currentLayer
-  })
-
-  console.log(`Found ${Object.keys(evaluatedLayers).length} supported layer(s) from the ${Object.keys(layers).length} provided by Worldview.`)
-
-  return evaluatedLayers
-}
-
-/*
  * Convert a world view configuration object to a CMR search query object
  */
-const configToCmrQuery = async (config) => {
+const configToCmrQuery = (config) => {
   const topLevelConfigs = []
 
   const supportedCmrQueryKeys = {
@@ -105,6 +19,7 @@ const configToCmrQuery = async (config) => {
     dataCenterId: 'provider',
     shortName: 'short_name'
   }
+
   Object.keys(config).forEach((configKey) => {
     const query = config[configKey]
 
@@ -163,8 +78,11 @@ const constructLayerTagData = async (layer) => {
   if (layer.endDate) {
     match.time_end = `<=${layer.endDate}`
   }
+
+  const { query } = product
+
   if (layer.dayNightFlag) {
-    match.day_night_flag = layer.dayNightFlag
+    match.day_night_flag = query.dayNightFlag
   }
 
   const tagData = {
@@ -178,7 +96,7 @@ const constructLayerTagData = async (layer) => {
   }
 
   const supportedProjections = ['antarctic', 'arctic', 'geographic']
-  await supportedProjections.forEachAsync((projection) => {
+  supportedProjections.forEach((projection) => {
     const layerProjection = projections[projection]
     if (layerProjection) {
       const resolution = layerProjection.matrixSet.split('_').pop()
@@ -191,14 +109,13 @@ const constructLayerTagData = async (layer) => {
     }
   })
 
-  const { query } = product
   const {
     nrt,
     science
   } = query
 
   if (nrt || science) {
-    await Object.keys(query).forEachAsync((queryKey) => {
+    Object.keys(query).forEach((queryKey) => {
       layerTagData.push({
         collection: configToCmrQuery(query[queryKey]),
         data: tagData
@@ -244,34 +161,89 @@ const generateGibsTags = async (event, context) => {
     layerTagData.push(...layerConfigs)
   })
 
+  // Given concept ids we can make tags directly without using cmr search
+  const conceptIdLayers = groupBy(layerTagData, layer => layer.collection.condition.concept_id)
+
   // As we iterate through all the layerTagDatas we'll keep track of
   // each individual configuration; we'll then tell CMR to delete tags on
   // any collection that does match the compiled configurations
   const allTagConditions = []
 
-  await layerTagData.forEachAsync(async (configuration) => {
-    const { collection: searchCriteria, data: tagData } = configuration
+  // conceptIdLayers are layers that apply to specific concept ids. When we already have a
+  // concept id we dont need to provide searchCriteria to `addTag` but we need to modify
+  // the payload a bit to include it
+  await Object.keys(omit(conceptIdLayers, undefined)).forEachAsync(async (collectionId) => {
+    const { [collectionId]: configurations } = conceptIdLayers
 
-    try {
+    const tagData = configurations.map((configuration) => {
+      const { data } = configuration
+
       const { collection = {} } = configuration
       const { condition = {} } = collection
 
-      await sqs.sendMessage({
-        QueueUrl: process.env.tagQueueUrl,
-        MessageBody: JSON.stringify({
-          tagName: tagName('gibs'),
-          action: 'ADD',
-          append: true,
-          requireGranules: false,
-          searchCriteria,
-          tagData
-        })
-      }).promise()
+      allTagConditions.push(condition)
+
+      return data
+    })
+
+    const [firstConfiguration] = configurations
+
+    const { collection: searchCriteria } = firstConfiguration
+    const { condition } = searchCriteria
+    const { concept_id: conceptId } = condition
+
+    await sqs.sendMessage({
+      QueueUrl: process.env.tagQueueUrl,
+      MessageBody: JSON.stringify({
+        tagName: tagName('gibs'),
+        action: 'ADD',
+        append: true,
+        requireGranules: false,
+        tagData: {
+          'concept-id': conceptId,
+          data: tagData
+        }
+      })
+    }).promise()
+  })
+
+  // Shortname and provider require using the search endpoint to create tags as their concept ids are not yet known
+  const shortNameLayers = groupBy(layerTagData, layer => layer.collection.condition.short_name)
+  const providerLayers = groupBy(layerTagData, layer => layer.collection.condition.provider)
+
+  const searchableLayers = {
+    ...omit(shortNameLayers, undefined),
+    ...omit(providerLayers, undefined)
+  }
+  await Object.keys(searchableLayers).forEachAsync(async (collectionId) => {
+    const { [collectionId]: configurations } = searchableLayers
+
+    const tagData = configurations.map((configuration) => {
+      const { data } = configuration
+
+      const { collection = {} } = configuration
+      const { condition = {} } = collection
 
       allTagConditions.push(condition)
-    } catch (e) {
-      console.log(e)
-    }
+
+      return data
+    })
+
+    const [firstConfiguration] = configurations
+
+    const { collection: searchCriteria } = firstConfiguration
+
+    await sqs.sendMessage({
+      QueueUrl: process.env.tagQueueUrl,
+      MessageBody: JSON.stringify({
+        tagName: tagName('gibs'),
+        action: 'ADD',
+        append: true,
+        requireGranules: false,
+        searchCriteria,
+        tagData
+      })
+    }).promise()
   })
 
   try {
