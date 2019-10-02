@@ -9,26 +9,40 @@ import { generateFormDigest } from '../util/generateFormDigest'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 
-export const getServiceOptionDefinitions = async (serviceOptionDefinitions, jwtToken) => {
+export const getServiceOptionDefinitions = async (
+  collectionProvider,
+  serviceOptionDefinitions,
+  jwtToken
+) => {
   const forms = []
 
-  await serviceOptionDefinitions.forEachAsync(async (serviceOptionDefinition, index) => {
-    const { id: guid } = serviceOptionDefinition
+  const { provider } = collectionProvider
+  const { id: providerId } = provider
 
-    const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/service_option_definitions/${guid}.json`
+  await serviceOptionDefinitions.forEachAsync(async (serviceOptionDefinition, index) => {
+    const { name } = serviceOptionDefinition
+
+    const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/service_option_definitions.json`
 
     try {
       const response = await request.get({
         uri: url,
-        resolveWithFullResponse: true,
+        qs: {
+          name,
+          provider_guid: providerId
+        },
         headers: {
           'Client-Id': getClientId().lambda,
           'Echo-Token': await getEchoToken(jwtToken)
-        }
+        },
+        resolveWithFullResponse: true
       })
 
       const { body } = response
-      const { service_option_definition: responseServiceOptionDefinition } = JSON.parse(body)
+      const [firstServiceOptionDefinition] = JSON.parse(body)
+      const {
+        service_option_definition: responseServiceOptionDefinition
+      } = firstServiceOptionDefinition
       const { form } = responseServiceOptionDefinition
 
       forms.push({

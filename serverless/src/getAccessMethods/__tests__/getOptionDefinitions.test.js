@@ -12,14 +12,22 @@ describe('getOptionDefinitions', () => {
   test('fetches option definitions from CMR', async () => {
     nock(/cmr/)
       .get(/option_definitions/)
-      .reply(200, {
+      .reply(200, [{
         option_definition: {
           form: 'mock echo form'
         }
-      })
+      }])
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
     jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
+
+    const collectionProvider = {
+      provider: {
+        id: 'abcd-1234-efgh-5678',
+        organization_name: 'EDSC-TEST',
+        provider_id: 'EDSC-TEST'
+      }
+    }
 
     const optionDefinitions = [
       {
@@ -28,7 +36,7 @@ describe('getOptionDefinitions', () => {
       }
     ]
 
-    const forms = await getOptionDefinitions(optionDefinitions, 'mockJwt')
+    const forms = await getOptionDefinitions(collectionProvider, optionDefinitions, 'mockJwt')
 
     expect(forms).toEqual([
       {
@@ -48,21 +56,29 @@ describe('getOptionDefinitions', () => {
   test('fetches multiple option definitions from CMR', async () => {
     nock(/cmr/)
       .get(/option_definitions/)
-      .reply(200, {
+      .reply(200, [{
         option_definition: {
           form: 'mock echo form 1'
         }
-      })
+      }])
     nock(/cmr/)
       .get(/option_definitions/)
-      .reply(200, {
+      .reply(200, [{
         option_definition: {
           form: 'mock echo form 2'
         }
-      })
+      }])
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
     jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
+
+    const collectionProvider = {
+      provider: {
+        id: 'abcd-1234-efgh-5678',
+        organization_name: 'EDSC-TEST',
+        provider_id: 'EDSC-TEST'
+      }
+    }
 
     const optionDefinitions = [
       {
@@ -75,7 +91,7 @@ describe('getOptionDefinitions', () => {
       }
     ]
 
-    const forms = await getOptionDefinitions(optionDefinitions, 'mockJwt')
+    const forms = await getOptionDefinitions(collectionProvider, optionDefinitions, 'mockJwt')
 
     expect(forms).toEqual([
       {

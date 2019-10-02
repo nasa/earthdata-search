@@ -11,7 +11,7 @@ export const timelineIntervals = {
 
 /**
  * Prepare parameters used in getTimeline() based on current Redux State
- * @param {object} state Current Redux State
+ * @param {Object} state Current Redux State
  * @returns Parameters used in Timeline request
  */
 export const prepareTimelineParams = (state) => {

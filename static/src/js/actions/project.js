@@ -187,6 +187,12 @@ export const getProjectCollections = collectionId => (dispatch, getState) => {
       dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
       dispatch(updateCollectionMetadata(payload))
       dispatch(actions.getProjectGranules(filteredIds))
+
+      // The process of fetching access methods requires that we have providers retrieved
+      // in order to look up provider guids
+      dispatch(actions.fetchProviders())
+    })
+    .then(() => {
       dispatch(actions.fetchAccessMethods(filteredIds))
     })
     .catch((error) => {

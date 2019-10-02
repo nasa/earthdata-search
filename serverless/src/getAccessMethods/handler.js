@@ -25,13 +25,14 @@ const getAccessMethods = async (event, context) => {
 
   const { body } = event
   const { params = {} } = JSON.parse(body)
-
   const {
     associations,
     collection_id: collectionId,
+    collection_provider: collectionProvider,
     tags
   } = params
 
+  console.log(JSON.stringify(params, null, 4))
   const jwtToken = getJwtToken(event)
 
   const { id: userId } = getVerifiedJwtToken(jwtToken)
@@ -55,7 +56,11 @@ const getAccessMethods = async (event, context) => {
     const { option_definitions: optionDefinitions } = echoOrderData
 
     if (optionDefinitions) {
-      const forms = await getOptionDefinitions(optionDefinitions, jwtToken)
+      const forms = await getOptionDefinitions(
+        collectionProvider,
+        optionDefinitions,
+        jwtToken
+      )
 
       forms.forEach((form) => {
         const [key] = Object.keys(form)
@@ -72,7 +77,11 @@ const getAccessMethods = async (event, context) => {
     const { service_option_definitions: serviceOptionDefinitions } = esiData
 
     if (serviceOptionDefinitions) {
-      const forms = await getServiceOptionDefinitions(serviceOptionDefinitions, jwtToken)
+      const forms = await getServiceOptionDefinitions(
+        collectionProvider,
+        serviceOptionDefinitions,
+        jwtToken
+      )
 
       forms.forEach((form) => {
         const [key] = Object.keys(form)
