@@ -32,6 +32,7 @@ const getAccessMethods = async (event, context) => {
     tags
   } = params
 
+  console.log(JSON.stringify(params, null, 4))
   const jwtToken = getJwtToken(event)
 
   const { id: userId } = getVerifiedJwtToken(jwtToken)
