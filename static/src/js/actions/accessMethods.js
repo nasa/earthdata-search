@@ -1,8 +1,8 @@
 
 import actions from './index'
+import { findProvider } from '../util/findProvider'
 import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
-import findProvider from '../util/findProvider'
 
 /**
  * Fetch available access methods from the API
