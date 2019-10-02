@@ -86,6 +86,9 @@ import {
   updateAccessMethod
 } from './project'
 import {
+  fetchProviders
+} from './providers'
+import {
   fetchRetrieval,
   submitRetrieval,
   deleteRetrieval
@@ -136,6 +139,7 @@ const actions = {
   excludeGranule,
   fetchAccessMethods,
   fetchDataQualitySummaries,
+  fetchProviders,
   fetchRetrieval,
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleLinks,

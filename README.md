@@ -39,16 +39,30 @@ The Earthdata Search application uses Node v10.15.1 and Webpack 4.24.0 to genera
 ##### Node
 Earthdata Search runs on Node.js, in order to run the application you'll need to [install it](https://nodejs.org/en/download/).
 
+**Recommended:** Use Homebrew
+
+	brew install node
+
 ##### NPM
-In order to run the application for development, you need a local install of [npm](https://www.npmjs.com/get-npm).
+npm is a separate project from Node.js, and tends to update more frequently. As a result, even if you’ve just downloaded Node.js (and therefore npm), you’ll probably need to update your npm. Luckily, npm knows how to update itself! To update your npm, type this into your terminal:
+
+    npm install -g npm@latest
 
 ##### Serverless Framework
 Earthdata Search utilizes the [Serverless Framework](https://serverless.com/) for managing AWS resources. In order to fully run and manage the application you'll need to install it:
 
-    npm install -g serverless
+    npm install -g serverless@latest
 
 ##### PostgreSQL
 Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already have it installed, [download](https://www.postgresql.org/download/) and install it to your development environment.
+
+**Recommended:** Use Homebrew
+
+    brew install postgresql
+    
+If you decide to install via Homebrew you'll need to create the default user.
+
+    /usr/local/opt/postgres/bin/createuser -s postgres
 
 ### Initial Setup
 

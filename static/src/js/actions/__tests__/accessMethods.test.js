@@ -45,7 +45,8 @@ describe('fetchAccessMethods', () => {
       },
       project: {
         collectionIds: [collectionId]
-      }
+      },
+      providers: []
     })
 
     // call the dispatch
@@ -124,7 +125,8 @@ describe('fetchAccessMethods', () => {
       },
       project: {
         collectionIds: [collectionId]
-      }
+      },
+      providers: []
     })
 
     // call the dispatch

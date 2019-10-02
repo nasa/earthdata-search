@@ -11,7 +11,6 @@ let dbConnectionConfig = null
 const migrateDatabase = async (event) => {
   try {
     dbConnectionConfig = await getDbConnectionConfig(dbConnectionConfig)
-    dbConnectionConfig.database = 'uat-import-test'
 
     const dbClient = new Client(dbConnectionConfig)
 

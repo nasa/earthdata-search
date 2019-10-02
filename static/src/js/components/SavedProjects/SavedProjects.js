@@ -63,8 +63,6 @@ export class SavedProjects extends Component {
     return (
       <div className="saved-projects">
         <h2 className="route-wrapper__page-heading">
-          <i className="fa fa-folder-o" />
-          {' '}
           Saved Projects
         </h2>
         {

@@ -9,26 +9,40 @@ import { generateFormDigest } from '../util/generateFormDigest'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 
-export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
+export const getOptionDefinitions = async (
+  collectionProvider,
+  optionDefinitions,
+  jwtToken
+) => {
   const forms = []
 
-  await optionDefinitions.forEachAsync(async (optionDefinition, index) => {
-    const { id: guid } = optionDefinition
+  const { provider } = collectionProvider
+  const { id: providerId } = provider
 
-    const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/option_definitions/${guid}.json`
+  await optionDefinitions.forEachAsync(async (optionDefinition, index) => {
+    const { name } = optionDefinition
+
+    const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/option_definitions.json`
 
     try {
       const response = await request.get({
         uri: url,
-        resolveWithFullResponse: true,
+        qs: {
+          name,
+          provider: providerId
+        },
         headers: {
           'Client-Id': getClientId().lambda,
           'Echo-Token': await getEchoToken(jwtToken)
-        }
+        },
+        resolveWithFullResponse: true
       })
 
       const { body } = response
-      const { option_definition: responseOptionDefinition } = JSON.parse(body)
+      const [firstOptionDefinition] = JSON.parse(body)
+      const {
+        option_definition: responseOptionDefinition
+      } = firstOptionDefinition
       const { form } = responseOptionDefinition
 
       forms.push({
@@ -45,5 +59,6 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
       console.log('error', e)
     }
   })
+
   return forms
 }

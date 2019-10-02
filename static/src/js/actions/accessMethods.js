@@ -2,6 +2,7 @@
 import actions from './index'
 import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
+import findProvider from '../util/findProvider'
 
 /**
  * Fetch available access methods from the API
@@ -22,7 +23,9 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
     const { byId } = collections
     const collection = byId[collectionId]
     const { metadata: collectionMetadata } = collection
-    const { associations, tags } = collectionMetadata
+    const { associations, data_center: dataCenter, tags } = collectionMetadata
+
+    const collectionProvider = findProvider(getState(), dataCenter)
 
     // if the collection has tag data, retrieve the access methods from lambda
     const hasEchoOrders = hasTag(collectionMetadata, 'subset_service.echo_orders')
@@ -34,7 +37,12 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
     if (hasEchoOrders || hasEsi || hasOpendap) {
       const requestObject = new AccessMethodsRequest(authToken)
 
-      const response = requestObject.search({ associations, collectionId, tags })
+      const response = requestObject.search({
+        associations,
+        collectionId,
+        collectionProvider,
+        tags
+      })
         .then((response) => {
           const { data } = response
           const { accessMethods, selectedAccessMethod } = data

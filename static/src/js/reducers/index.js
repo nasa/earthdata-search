@@ -31,6 +31,7 @@ import savedProjectReducer from './savedProject'
 import savedProjectsReducer from './savedProjects'
 import errorsReducer from './errors'
 import browserReducer from './browser'
+import providersReducer from './providers'
 
 export default history => combineReducers({
   authToken: authTokenReducer,
@@ -53,6 +54,7 @@ export default history => combineReducers({
   portal: portalsReducer,
   project: projectReducer,
   projectPanels: projectPanelsReducer,
+  providers: providersReducer,
   query: queryReducer,
   retrieval: retrievalReducer,
   retrievalHistory: retrievalHistoryReducer,

@@ -425,8 +425,44 @@ describe('getProjectCollections', () => {
         'jwt-token': 'token'
       })
 
+    nock(/localhost/)
+      .get(/providers/)
+      .reply(200, [
+        {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'EDSC-TEST',
+            provider_id: 'EDSC-TEST'
+          }
+        }, {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'NON-EDSC-TEST',
+            provider_id: 'NON-EDSC-TEST'
+          }
+        }
+      ])
+
     const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
     getProjectGranulesMock.mockImplementation(() => jest.fn())
+
+    const fetchProvidersMock = jest.spyOn(actions, 'fetchProviders')
+    fetchProvidersMock.mockImplementation(() => jest.fn(() => [
+      {
+        provider: {
+          id: 'abcd-1234-efgh-5678',
+          organization_name: 'EDSC-TEST',
+          provider_id: 'EDSC-TEST'
+        }
+      }, {
+        provider: {
+          id: 'abcd-1234-efgh-5678',
+          organization_name: 'NON-EDSC-TEST',
+          provider_id: 'NON-EDSC-TEST'
+        }
+      }
+    ]))
+
     const fetchAccessMethodsMock = jest.spyOn(actions, 'fetchAccessMethods')
     fetchAccessMethodsMock.mockImplementation(() => jest.fn())
 
@@ -443,6 +479,7 @@ describe('getProjectCollections', () => {
       project: {
         collectionIds: ['collectionId1', 'collectionId2']
       },
+      providers: [],
       query: {
         collection: {}
       }
@@ -461,6 +498,7 @@ describe('getProjectCollections', () => {
       })
 
       expect(getProjectGranulesMock).toHaveBeenCalledTimes(1)
+      expect(fetchProvidersMock).toHaveBeenCalledTimes(1)
       expect(fetchAccessMethodsMock).toHaveBeenCalledTimes(1)
     })
   })
