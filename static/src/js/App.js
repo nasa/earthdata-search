@@ -13,7 +13,6 @@ import Project from './routes/Project/Project'
 import Downloads from './routes/Downloads/Downloads'
 import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
-import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import ConnectedEdscMapContainer
   from './containers/MapContainer/MapContainer'
 import ConnectedAuthCallbackContainer
@@ -62,47 +61,45 @@ class App extends Component {
             </Switch>
             <ErrorBannerContainer />
             <ConnectedAuthTokenContainer>
-              <Switch>
-                <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
-                <Redirect exact from="/data/status" to="/downloads" />
-                <Route
-                  path={this.portalPaths('/downloads')}
-                  render={() => (
-                    <AuthRequiredContainer>
+              <ConnectedUrlQueryContainer>
+                <Switch>
+                  <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
+                  <Redirect exact from="/data/status" to="/downloads" />
+                  <Route
+                    path={this.portalPaths('/downloads')}
+                    render={() => (
                       <Downloads />
-                    </AuthRequiredContainer>
-                  )}
-                />
-                <Route path={this.portalPaths('/projects')} component={Project} />
-                <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
-                <Redirect exact from="/" to="/search" />
-                <Route
-                  path={this.portalPaths('/search')}
-                  render={() => (
-                    <ConnectedUrlQueryContainer>
-                      <Search />
-                      <ConnectedEdscMapContainer />
-                    </ConnectedUrlQueryContainer>
-                  )}
-                />
-                <Route
-                  exact
-                  path="/auth_callback"
-                  render={() => (
-                    <ConnectedUrlQueryContainer>
+                    )}
+                  />
+                  <Route path={this.portalPaths('/projects')} component={Project} />
+                  <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
+                  <Redirect exact from="/" to="/search" />
+                  <Route
+                    path={this.portalPaths('/search')}
+                    render={() => (
+                      <>
+                        <Search />
+                        <ConnectedEdscMapContainer />
+                      </>
+                    )}
+                  />
+                  <Route
+                    exact
+                    path="/auth_callback"
+                    render={() => (
                       <ConnectedAuthCallbackContainer />
-                    </ConnectedUrlQueryContainer>
-                  )}
-                />
-                <Route component={NotFound} />
-              </Switch>
-              <FooterContainer />
-              <Switch>
-                <Route path={this.portalPaths('/')}>
-                  <ShapefileUploadModalContainer />
-                  <ShapefileDropzoneContainer />
-                </Route>
-              </Switch>
+                    )}
+                  />
+                  <Route component={NotFound} />
+                </Switch>
+                <FooterContainer />
+                <Switch>
+                  <Route path={this.portalPaths('/')}>
+                    <ShapefileUploadModalContainer />
+                    <ShapefileDropzoneContainer />
+                  </Route>
+                </Switch>
+              </ConnectedUrlQueryContainer>
             </ConnectedAuthTokenContainer>
           </ConnectedRouter>
         </Provider>
