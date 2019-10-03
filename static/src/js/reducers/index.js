@@ -32,10 +32,12 @@ import savedProjectsReducer from './savedProjects'
 import errorsReducer from './errors'
 import browserReducer from './browser'
 import providersReducer from './providers'
+import contactInfoReducer from './contactInfo'
 
 export default history => combineReducers({
   authToken: authTokenReducer,
   browser: browserReducer,
+  contactInfo: contactInfoReducer,
   dataQualitySummaries: dataQualitySummariesReducer,
   errors: errorsReducer,
   facetsParams: combineReducers({

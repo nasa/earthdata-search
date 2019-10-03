@@ -26,6 +26,7 @@ export const Button = ({
   onClick,
   overlayClass,
   spinner,
+  target,
   title,
   tooltip,
   tooltipPlacement,
@@ -82,6 +83,7 @@ export const Button = ({
       aria-label={label}
       type={type}
       disabled={disabled || spinner}
+      target={target}
     >
       {(!spinner && icon) && <i className={iconClasses} /> }
       <span className="button__contents">
@@ -160,6 +162,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   overlayClass: PropTypes.string,
   spinner: PropTypes.bool,
+  target: PropTypes.string,
   title: PropTypes.string,
   tooltip: PropTypes.oneOfType([
     PropTypes.string,

@@ -130,7 +130,7 @@ class SecondaryToolbar extends Component {
 
     const buildProjectLink = (loggedIn) => {
       if (!loggedIn) {
-        const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
+        const projectPath = `${window.location.protocol}//${window.location.host}${portalPath(portal)}/projects${window.location.search}`
         return (
           <Button
             className="secondary-toolbar__project"
@@ -183,6 +183,16 @@ class SecondaryToolbar extends Component {
           <i className="fa fa-user" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
+          <LinkContainer
+            to={`${portalPath(portal)}/contact_info`}
+          >
+            <Dropdown.Item
+              className="secondary-toolbar__contact-info"
+              active={false}
+            >
+              Contact Information
+            </Dropdown.Item>
+          </LinkContainer>
           <LinkContainer
             to={`${portalPath(portal)}/downloads`}
           >
