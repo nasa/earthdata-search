@@ -236,22 +236,38 @@ class SpatialSelection extends Component {
       case 'polygon':
         originalLatLngs = Array.from(layer.getLatLngs())
         latLngs = makeCounterClockwise(originalLatLngs).map(p => `${p.lng},${p.lat}`)
-        // Close the polygon by duplicating the first point as the last point
-        latLngs.push(latLngs[0])
         break
       default:
         return
     }
 
+    // If the shape crosses the anti-meridian, adjust the points to fit in the globe
+    const latLngsAntiMeridian = []
+    latLngs.forEach((coord) => {
+      let [lon, lat] = Array.from(coord.split(','))
+      lon = parseFloat(lon)
+      while (lon < -180) { lon += 360 }
+      while (lon > 180) { lon -= 360 }
+      lat = parseFloat(lat)
+      lat = Math.min(90, lat)
+      lat = Math.max(-90, lat)
+      latLngsAntiMeridian.push(`${lon},${lat}`)
+    })
+
+    if (type === 'polygon') {
+      // Close the polygon by duplicating the first point as the last point
+      latLngsAntiMeridian.push(latLngsAntiMeridian[0])
+    }
+
     this.setState({
       drawnLayer: layer,
       drawnLayerType: type,
-      drawnPoints: latLngs.join()
+      drawnPoints: latLngsAntiMeridian.join()
     })
     onChangeQuery({
       collection: {
         spatial: {
-          [type]: latLngs.join()
+          [type]: latLngsAntiMeridian.join()
         }
       }
     })
