@@ -78,22 +78,21 @@ class ShapefileLayerExtended extends L.Layer {
   // This method takes all the MultiPolygon geometries and separates them
   // into individual polygons, to mimick the 0.7 functionality.
   separateMultiPolygons(geojson) {
-    let index
     const featureIndexesToRemove = []
-    for (let featureIndex = 0; featureIndex < geojson.features.length; featureIndex += 1) {
-      let geometry
-      const feature = geojson.features[featureIndex]
-      const { type } = feature.geometry
+    const { features } = geojson
+
+    features.forEach((feature, featureIndex) => {
+      const { geometry } = feature
+      const { type } = geometry
 
       // KML type file
       if (type === 'GeometryCollection') {
-        const { geometries } = feature.geometry
+        const { geometries } = geometry
 
-        for (index = 0; index < geometries.length; index += 1) {
-          geometry = geometries[index]
-          if (geometry.type === 'MultiPolygon') {
+        geometries.forEach((nestedGeometry, index) => {
+          if (nestedGeometry.type === 'MultiPolygon') {
             // If we see a MultiPolygon, separate into Polygons
-            geometry.coordinates.forEach((polygon) => {
+            nestedGeometry.coordinates.forEach((polygon) => {
               const newPolygon = { type: 'Polygon', coordinates: polygon }
               geometries.push(newPolygon)
             })
@@ -101,13 +100,13 @@ class ShapefileLayerExtended extends L.Layer {
             // remove the MultiPolygon from the list of geometries
             geometries.splice(index, 1)
           }
-        }
+        })
       }
 
       // geojson type file
       if (type === 'MultiPolygon') {
         featureIndexesToRemove.push(featureIndex)
-        feature.geometry.coordinates.forEach((coordinate) => {
+        geometry.coordinates.forEach((coordinate) => {
           const newFeature = {
             type: 'Feature',
             geometry: {
@@ -118,7 +117,7 @@ class ShapefileLayerExtended extends L.Layer {
           geojson.features.push(newFeature)
         })
       }
-    }
+    })
 
     // remove MultiPolygon features from geojson files
     return (() => {
@@ -144,22 +143,17 @@ class ShapefileLayerExtended extends L.Layer {
       className: 'geojson-svg',
       onEachFeature(feature, featureLayer) {
         const addIconClasses = function nameHere(layer) {
-          if ((layer.options != null ? layer.options.icon : undefined) != null) {
-            // eslint-disable-next-line no-param-reassign
-            if (layer.options != null) layer.options.icon = icon
-          }
+          const { options = {} } = layer
+          const { icon = null } = options
+          // eslint-disable-next-line no-param-reassign
+          if (icon !== null) layer.options.icon = icon
         }
 
         addIconClasses(featureLayer)
         if (featureLayer.getLayers != null) {
-          (() => {
-            const result = []
-            featureLayer.getLayers().forEach((layer) => {
-              result.push(addIconClasses(layer))
-            })
-
-            return result
-          })()
+          featureLayer.getLayers().forEach((layer) => {
+            addIconClasses(layer)
+          })
         }
       }
     })
