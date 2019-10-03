@@ -1,6 +1,7 @@
 import { replace, push } from 'connected-react-router'
 import { parse } from 'qs'
 
+import { isPath } from '../util/isPath'
 import { decodeUrlParams } from '../util/url/url'
 import actions from './index'
 import ProjectRequest from '../util/request/projectRequest'
@@ -22,25 +23,38 @@ export const updateStore = ({
   query,
   shapefile,
   timeline
-}) => (dispatch) => {
-  dispatch(restoreFromUrl({
-    collections,
-    cmrFacets,
-    featureFacets,
-    focusedCollection,
-    focusedGranule,
-    map,
-    project,
-    query,
-    shapefile,
-    timeline
-  }))
+}) => (dispatch, getState) => {
+  const { router } = getState()
+  const { location } = router
+  const { pathname, search } = location
 
-  dispatch(actions.getCollections())
-  dispatch(actions.getFocusedCollection())
-  dispatch(actions.getProjectCollections())
-  dispatch(actions.getGranules())
-  dispatch(actions.getTimeline())
+  // Prevent loading from the url on these paths. The saved projects page needs to be handled
+  // a little differently because it shares the base url with the projects page.
+  const pathsToSkip = ['/downloads']
+  const isSavedProjectsPage = isPath(pathname, '/projects') && search === ''
+
+  const loadFromUrl = (!isPath(pathname, pathsToSkip) && !isSavedProjectsPage)
+
+  if (loadFromUrl) {
+    dispatch(restoreFromUrl({
+      collections,
+      cmrFacets,
+      featureFacets,
+      focusedCollection,
+      focusedGranule,
+      map,
+      project,
+      query,
+      shapefile,
+      timeline
+    }))
+
+    dispatch(actions.getCollections())
+    dispatch(actions.getFocusedCollection())
+    dispatch(actions.getProjectCollections())
+    dispatch(actions.getGranules())
+    dispatch(actions.getTimeline())
+  }
 }
 
 export const changePath = (path = '') => (dispatch) => {
