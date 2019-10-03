@@ -15,7 +15,11 @@ import CollapsePanel from '../../CollapsePanel/CollapsePanel'
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-  const props = collectionDetailsBodyProps
+  const props = {
+    collectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata['C179003620-ORNL_DAAC'].metadata,
+    formattedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata['C179003620-ORNL_DAAC'].formattedMetadata,
+    onToggleRelatedUrlsModal: jest.fn()
+  }
 
   const enzymeWrapper = shallow(<CollectionDetailsBody {...props} />)
 

@@ -4,12 +4,12 @@ import { withRouter } from 'react-router-dom'
 
 import SimpleBar from 'simplebar-react'
 
-import ProjectCollectionItem from './ProjectCollectionsItem'
 import { getColorByIndex } from '../../util/colors'
+
+import ProjectCollectionItem from './ProjectCollectionsItem'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ProjectCollectionsList.scss'
-
 
 /**
  * Renders ProjectCollectionsList.
@@ -53,6 +53,7 @@ export const ProjectCollectionsList = (props) => {
         onToggleCollectionVisibility={onToggleCollectionVisibility}
         onSetActivePanel={onSetActivePanel}
         collectionSearch={collectionSearch}
+        loading={loading}
       />
     )
   })
@@ -72,10 +73,7 @@ export const ProjectCollectionsList = (props) => {
       )}
       {!projectIsEmpty && (
         <ul className="project-collections-list__list">
-          {loading && (
-            <></>
-          )}
-          {!loading && collectionsList}
+          {collectionsList}
         </ul>
       )}
       <div className="project-collections-list__filler" />

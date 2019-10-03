@@ -36,6 +36,20 @@ export const getFocusedCollectionMetadata = (collectionId, collections) => {
   return metadata
 }
 
+/**
+ * Returns the formattedjson metadata from the store for the provided collectionId
+ * @param {String} collectionId Focused collection id
+ * @param {Object} collections collections from the metadata store
+ */
+export const getFocusedCollectionFormattedMetadata = (collectionId, collections) => {
+  const collection = getFocusedCollectionObject(collectionId, collections)
+
+  if (isEmpty(collection)) return undefined
+
+  const { formattedMetadata } = collection
+  return formattedMetadata
+}
+
 export const createFocusedCollectionMetadata = (json, ummJson, authToken) => {
   // Metadata from the CMR .json response
   const jsonMetadata = {

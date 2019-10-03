@@ -89,12 +89,15 @@ const buildForDeveloperLink = (linkData, token) => {
 /**
  * Renders CollectionDetailsBody.
  * @param {object} props - The props passed into the component.
- * @param {object} props.focusedCollectionObject - Focused collection passed from redux store.
+ * @param {object} props  collectionMetadata - Focused collection passed from redux store.
  * @param {function} props.onToggleRelatedUrlsModal - Toggles the state of the Related URLs modal
  */
-export const CollectionDetailsBody = ({ focusedCollectionObject, onToggleRelatedUrlsModal }) => {
-  const { metadata, formattedMetadata } = focusedCollectionObject
-  const { summary } = metadata
+export const CollectionDetailsBody = ({
+  collectionMetadata,
+  formattedCollectionMetadata,
+  onToggleRelatedUrlsModal
+}) => {
+  const { summary } = collectionMetadata
   const {
     dataCenters,
     doi,
@@ -104,9 +107,9 @@ export const CollectionDetailsBody = ({ focusedCollectionObject, onToggleRelated
     spatial,
     temporal,
     urls
-  } = formattedMetadata
+  } = formattedCollectionMetadata
 
-  if (!Object.keys(metadata).length || !Object.keys(formattedMetadata).length) {
+  if (!Object.keys(collectionMetadata).length || !Object.keys(formattedCollectionMetadata).length) {
     return (
       <div className="collection-details-body">
         <div className="collection-details-body__content">
@@ -121,7 +124,7 @@ export const CollectionDetailsBody = ({ focusedCollectionObject, onToggleRelated
       <div className="collection-details-body__content">
         <div className="row collection-details-body__row">
           <div className="col col-auto">
-            <CollectionDetailsMinimap metadata={metadata} />
+            <CollectionDetailsMinimap metadata={collectionMetadata} />
             {
               spatial && (
                 <div className="collection-details-body__spatial-bounding">
@@ -258,8 +261,14 @@ export const CollectionDetailsBody = ({ focusedCollectionObject, onToggleRelated
   )
 }
 
+CollectionDetailsBody.defaultProps = {
+  collectionMetadata: {},
+  formattedCollectionMetadata: {}
+}
+
 CollectionDetailsBody.propTypes = {
-  focusedCollectionObject: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({}),
+  formattedCollectionMetadata: PropTypes.shape({}),
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 

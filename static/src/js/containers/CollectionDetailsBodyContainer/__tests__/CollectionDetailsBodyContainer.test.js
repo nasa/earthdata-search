@@ -14,7 +14,10 @@ function setup() {
         focusedCollection: {
           excludedGranuleIds: [],
           metadata: {
-            some: 'metadata'
+            test: 'metadata'
+          },
+          formattedMetadata: {
+            test: 'formattedMetadata'
           }
         }
       }
@@ -36,12 +39,8 @@ describe('CollectionDetailsBodyContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(CollectionDetailsBody).length).toBe(1)
-    expect(enzymeWrapper.find(CollectionDetailsBody).props().focusedCollectionObject).toEqual({
-      excludedGranuleIds: [],
-      metadata: {
-        some: 'metadata'
-      }
-    })
+    expect(enzymeWrapper.find(CollectionDetailsBody).props().collectionMetadata).toEqual({ test: 'metadata' })
+    expect(enzymeWrapper.find(CollectionDetailsBody).props().formattedCollectionMetadata).toEqual({ test: 'formattedMetadata' })
     expect(typeof enzymeWrapper.find(CollectionDetailsBody).props().onToggleRelatedUrlsModal).toEqual('function')
   })
 })

@@ -40,6 +40,8 @@ export const GranuleResultsActionsContainer = (props) => {
   } = props
   const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
+  if (!collectionMetadata) return null
+
   const { collectionIds: projectIds } = project
   const isCollectionInProject = projectIds.indexOf(focusedCollection) !== -1
 

@@ -37,8 +37,9 @@ export const Skeleton = ({
           key={key}
           className={`skeleton__item skeleton__item-${i}`}
           style={{
-            top: styles.y,
-            left: styles.x,
+            top: styles.top,
+            left: styles.left,
+            right: styles.right,
             width: styles.width,
             height: styles.height,
             borderRadius: styles.radius

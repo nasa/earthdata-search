@@ -25,7 +25,7 @@ class GranuleResultsHeader extends Component {
     super(props)
 
     const { focusedCollectionObject } = props
-    const { granuleFilters } = focusedCollectionObject
+    const { granuleFilters = {} } = focusedCollectionObject
 
     this.state = {
       sortOrder: granuleFilters.sortKey,

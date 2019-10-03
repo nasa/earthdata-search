@@ -13,7 +13,6 @@ import ProjectPanelsContainer
   from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
 import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
-import ConnectedUrlQueryContainer from '../../containers/UrlQueryContainer/UrlQueryContainer'
 import ConnectedEdscMapContainer
   from '../../containers/MapContainer/MapContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
@@ -66,31 +65,29 @@ export class Project extends Component {
 
     // Show the project page
     return (
-      <ConnectedUrlQueryContainer>
-        <AuthRequiredContainer>
-          <form
-            id="form__project"
-            onSubmit={this.handleSubmit}
-            method="post"
-            className="route-wrapper route-wrapper--project"
+      <AuthRequiredContainer>
+        <form
+          id="form__project"
+          onSubmit={this.handleSubmit}
+          method="post"
+          className="route-wrapper route-wrapper--project"
+        >
+          <SidebarContainer
+            panels={<ProjectPanelsContainer />}
           >
-            <SidebarContainer
-              panels={<ProjectPanelsContainer />}
-            >
-              <ProjectCollectionsContainer />
-            </SidebarContainer>
-            <div className="route-wrapper__content">
-              <header className="route-wrapper__header">
-                <div className="route-wrapper__header-primary">
-                  <SecondaryToolbarContainer />
-                </div>
-              </header>
-            </div>
-            <OverrideTemporalModalContainer />
-          </form>
-          <ConnectedEdscMapContainer />
-        </AuthRequiredContainer>
-      </ConnectedUrlQueryContainer>
+            <ProjectCollectionsContainer />
+          </SidebarContainer>
+          <div className="route-wrapper__content">
+            <header className="route-wrapper__header">
+              <div className="route-wrapper__header-primary">
+                <SecondaryToolbarContainer />
+              </div>
+            </header>
+          </div>
+          <OverrideTemporalModalContainer />
+        </form>
+        <ConnectedEdscMapContainer />
+      </AuthRequiredContainer>
     )
   }
 }

@@ -6,7 +6,10 @@ import {
 } from 'react-router-dom'
 
 import actions from '../../actions/index'
-import { getFocusedCollectionObject } from '../../util/focusedCollection'
+import {
+  getFocusedCollectionMetadata,
+  getFocusedCollectionFormattedMetadata
+} from '../../util/focusedCollection'
 
 import CollectionDetailsBody from '../../components/CollectionDetails/CollectionDetailsBody'
 
@@ -25,13 +28,13 @@ export const CollectionDetailsBodyContainer = ({
   focusedCollection,
   onToggleRelatedUrlsModal
 }) => {
-  const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
-
-  if (Object.keys(focusedCollectionObject).length === 0) return null
+  const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
+  const formattedCollectionMetadata = getFocusedCollectionFormattedMetadata(focusedCollection, collections)
 
   return (
     <CollectionDetailsBody
-      focusedCollectionObject={focusedCollectionObject}
+      collectionMetadata={collectionMetadata}
+      formattedCollectionMetadata={formattedCollectionMetadata}
       onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
     />
   )

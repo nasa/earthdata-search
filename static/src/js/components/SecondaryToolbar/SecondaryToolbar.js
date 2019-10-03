@@ -143,7 +143,6 @@ class SecondaryToolbar extends Component {
       }
       return (
         <PortalLinkContainer
-          className="collection-results__item-title-link"
           to={{
             pathname: '/projects',
             search: location.search
