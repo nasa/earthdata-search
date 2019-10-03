@@ -26,6 +26,11 @@ describe('Spinner component', () => {
       const enzymeWrapper = shallow(<Spinner type="dots" color="white" />)
       expect(enzymeWrapper.find(Dots).prop('color')).toEqual('white')
     })
+
+    test('sets the className', () => {
+    const enzymeWrapper = shallow(<Dots type="dots" className="test-class" />)
+    expect(enzymeWrapper.hasClass('test-class')).toBe(true)
+  })
   })
 })
 

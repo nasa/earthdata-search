@@ -7,7 +7,9 @@ import actions from '../../actions'
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 
 const mapStateToProps = state => ({
-  retrievalHistory: state.retrievalHistory
+  retrievalHistory: state.retrievalHistory.history,
+  retrievalHistoryLoading: state.retrievalHistory.isLoading,
+  retrievalHistoryLoaded: state.retrievalHistory.isLoaded
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -25,11 +27,18 @@ export class DownloadHistoryContainer extends Component {
   }
 
   render() {
-    const { retrievalHistory, onDeleteRetrieval } = this.props
+    const {
+      retrievalHistory,
+      onDeleteRetrieval,
+      retrievalHistoryLoading,
+      retrievalHistoryLoaded
+    } = this.props
 
     return (
       <DownloadHistory
         retrievalHistory={retrievalHistory}
+        retrievalHistoryLoading={retrievalHistoryLoading}
+        retrievalHistoryLoaded={retrievalHistoryLoaded}
         onDeleteRetrieval={onDeleteRetrieval}
       />
     )
@@ -44,6 +53,8 @@ DownloadHistoryContainer.propTypes = {
   retrievalHistory: PropTypes.arrayOf(
     PropTypes.shape({})
   ),
+  retrievalHistoryLoading: PropTypes.bool.isRequired,
+  retrievalHistoryLoaded: PropTypes.bool.isRequired,
   onFetchRetrievalHistory: PropTypes.func.isRequired,
   onDeleteRetrieval: PropTypes.func.isRequired
 }

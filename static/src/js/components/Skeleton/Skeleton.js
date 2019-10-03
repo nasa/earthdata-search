@@ -6,6 +6,7 @@ import {
   isString,
   isNumber
 } from 'lodash'
+import classNames from 'classnames'
 
 import './Skeleton.scss'
 
@@ -24,7 +25,8 @@ const normalizeSizeValues = obj => mapValues(obj, (value) => {
 export const Skeleton = ({
   className,
   containerStyle,
-  shapes
+  shapes,
+  variant
 }) => {
   const shapeElements = shapes.map((shape, i) => {
     let item = null
@@ -54,9 +56,17 @@ export const Skeleton = ({
 
   const normalizedStyles = normalizeSizeValues(containerStyle)
 
+  const classes = classNames([
+    'skeleton',
+    {
+      [`skeleton--${variant}`]: variant,
+      [className]: className
+    }
+  ])
+
   return (
     <div
-      className={`skeleton ${className}`}
+      className={classes}
       style={{ ...normalizedStyles }}
     >
       <div
@@ -69,13 +79,15 @@ export const Skeleton = ({
 }
 
 Skeleton.defaultProps = {
-  className: ''
+  className: '',
+  variant: null
 }
 
 Skeleton.propTypes = {
   className: PropTypes.string,
   containerStyle: PropTypes.shape({}).isRequired,
-  shapes: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  shapes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  variant: PropTypes.string
 }
 
 export default Skeleton

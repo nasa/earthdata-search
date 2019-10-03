@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
-import Button from '../Button/Button'
 
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import pluralize from '../../util/pluralize'
+
+import Button from '../Button/Button'
+import Spinner from '../Spinner/Spinner'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './DownloadHistory.scss'
 
@@ -53,64 +55,80 @@ export class DownloadHistory extends Component {
   }
 
   render() {
-    const { retrievalHistory } = this.props
+    const {
+      retrievalHistory,
+      retrievalHistoryLoading,
+      retrievalHistoryLoaded
+    } = this.props
 
     return (
       <>
         <h2 className="route-wrapper__page-heading">Download Status & History</h2>
         {
-          retrievalHistory.length > 0 ? (
-            <Table className="order-status-table" striped variant="dark">
-              <thead>
-                <tr>
-                  <th />
-                  <th>Contents</th>
-                  <th>Created</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  retrievalHistory.map((retrieval) => {
-                    const {
-                      id,
-                      created_at: createdAt,
-                      jsondata,
-                      collections
-                    } = retrieval
+          retrievalHistoryLoading && (
+            <Spinner
+              className="download-history__spinner"
+              type="dots"
+              color="white"
+              size="small"
+            />
+          )
+        }
+        {
+          retrievalHistoryLoaded && (
+            retrievalHistory.length > 0 ? (
+              <Table className="order-status-table" striped variant="dark">
+                <thead>
+                  <tr>
+                    <th />
+                    <th>Contents</th>
+                    <th>Created</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    retrievalHistory.map((retrieval) => {
+                      const {
+                        id,
+                        created_at: createdAt,
+                        jsondata,
+                        collections
+                      } = retrieval
 
-                    const { portal_id: portalId } = jsondata
+                      const { portal_id: portalId } = jsondata
 
-                    return (
-                      <tr key={id}>
-                        <td>
-                          <Button
-                            className="order-status-table__remove"
-                            onClick={() => this.onHandleRemove(id)}
-                            variant="link"
-                            bootstrapVariant="link"
-                            icon="times-circle"
-                            label="Delete Download"
-                          />
-                        </td>
-                        <td>
-                          <PortalLinkContainer
-                            portalId={portalId}
-                            to={`/downloads/${id}`}
-                          >
-                            {this.retrievalDescription(collections)}
-                          </PortalLinkContainer>
-                        </td>
-                        <td className="order-status-table__ago">
-                          <TimeAgo date={createdAt} />
-                        </td>
-                      </tr>
-                    )
-                  })
-                }
-              </tbody>
-            </Table>
-          ) : (
-            <p>No download history to display.</p>
+                      return (
+                        <tr key={id}>
+                          <td>
+                            <Button
+                              className="order-status-table__remove"
+                              onClick={() => this.onHandleRemove(id)}
+                              variant="link"
+                              bootstrapVariant="link"
+                              icon="times-circle"
+                              label="Delete Download"
+                            />
+                          </td>
+                          <td>
+                            <PortalLinkContainer
+                              portalId={portalId}
+                              to={`/downloads/${id}`}
+                            >
+                              {this.retrievalDescription(collections)}
+                            </PortalLinkContainer>
+                          </td>
+                          <td className="order-status-table__ago">
+                            <TimeAgo date={createdAt} />
+                          </td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </Table>
+            ) : (
+              <p>No download history to display.</p>
+            )
           )
         }
       </>
@@ -126,6 +144,8 @@ DownloadHistory.propTypes = {
   retrievalHistory: PropTypes.arrayOf(
     PropTypes.shape({})
   ),
+  retrievalHistoryLoading: PropTypes.bool.isRequired,
+  retrievalHistoryLoaded: PropTypes.bool.isRequired,
   onDeleteRetrieval: PropTypes.func.isRequired
 }
 

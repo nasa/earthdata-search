@@ -1,5 +1,7 @@
-$color_loading_light: rgba($color__black--800, 0.0625);
-$color_loading_dark: rgba($color__black--300, 0.45);
+$color-loading-light__dark: rgba($color__black--800, 0.0625);
+$color-loading-dark__dark: rgba($color__black--300, 0.45);
+$color-loading-light__light: rgba($color__black--200, 0.0625);
+$color-loading-dark__light: rgba($color__black--900, 0.45);
 
 .skeleton {
   position: relative;
@@ -30,7 +32,7 @@ $color_loading_dark: rgba($color__black--300, 0.45);
       position: absolute;
       height: 100%;
       width: 100%;
-      background: linear-gradient(90deg, $color_loading_dark 30%, $color_loading_light 50%, $color_loading_dark 70%);
+      background: linear-gradient(90deg, $color-loading-dark__dark 30%, $color-loading-light__dark 50%, $color-loading-dark__dark 70%);
       background-size: 400% 400%;
       animation: pulse 4s ease-in-out infinite;
       will-change: background-position;
@@ -42,6 +44,10 @@ $color_loading_dark: rgba($color__black--300, 0.45);
         100% {
           background-position:0% 50%
         }
+      }
+
+      .skeleton--light {
+        background: linear-gradient(90deg, $color-loading-dark__light 30%, $color-loading-light__light 50%, $color-loading-dark__light 70%);
       }
     }
   }

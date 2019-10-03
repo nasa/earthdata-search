@@ -2,6 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Table } from 'react-bootstrap'
+
+import Spinner from '../../Spinner/Spinner'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { DownloadHistory } from '../DownloadHistory'
 
@@ -18,14 +20,29 @@ function setup(props) {
 
 describe('DownloadHistory component', () => {
   describe('when passed the correct props', () => {
+    test('renders a spinner when retrievals are loading', () => {
+      const { enzymeWrapper } = setup({
+        authToken: 'testToken',
+        retrievalHistory: [],
+        retrievalHistoryLoading: true,
+        retrievalHistoryLoaded: false,
+        onDeleteRetrieval: jest.fn()
+      })
+
+      expect(enzymeWrapper.find(Spinner).length).toBe(1)
+    })
+
     test('renders a message when no retrievals exist', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
         retrievalHistory: [],
+        retrievalHistoryLoading: false,
+        retrievalHistoryLoaded: true,
         onDeleteRetrieval: jest.fn()
       })
 
       expect(enzymeWrapper.find(Table).length).toBe(0)
+      expect(enzymeWrapper.find(Spinner).length).toBe(0)
       expect(enzymeWrapper.find('p').text()).toBe('No download history to display.')
     })
 
@@ -38,6 +55,8 @@ describe('DownloadHistory component', () => {
           created_at: '2019-08-25T11:58:14.390Z',
           collections: [{}]
         }],
+        retrievalHistoryLoading: false,
+        retrievalHistoryLoaded: true,
         onDeleteRetrieval: jest.fn()
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
@@ -57,6 +76,8 @@ describe('DownloadHistory component', () => {
             title: 'Collection Title'
           }]
         }],
+        retrievalHistoryLoading: false,
+        retrievalHistoryLoaded: true,
         onDeleteRetrieval: jest.fn()
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
@@ -78,6 +99,8 @@ describe('DownloadHistory component', () => {
             title: 'Collection Title Two'
           }]
         }],
+        retrievalHistoryLoading: false,
+        retrievalHistoryLoaded: true,
         onDeleteRetrieval: jest.fn()
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
@@ -99,6 +122,8 @@ describe('DownloadHistory component', () => {
             title: 'Collection Title'
           }]
         }],
+        retrievalHistoryLoading: false,
+        retrievalHistoryLoaded: true,
         onDeleteRetrieval: jest.fn()
       })
 

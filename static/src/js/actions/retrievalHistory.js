@@ -1,11 +1,19 @@
 import RetrievalRequest from '../util/request/retrievalRequest'
 
-import { SET_RETRIEVAL_HISTORY, REMOVE_RETRIEVAL_HISTORY } from '../constants/actionTypes'
+import {
+  SET_RETRIEVAL_HISTORY,
+  SET_RETRIEVAL_HISTORY_LOADING,
+  REMOVE_RETRIEVAL_HISTORY
+} from '../constants/actionTypes'
 import { handleError } from './errors'
 
 export const setRetrievalHistory = retrievalHistoryData => ({
   type: SET_RETRIEVAL_HISTORY,
   payload: retrievalHistoryData
+})
+
+export const setRetrievalHistoryLoading = () => ({
+  type: SET_RETRIEVAL_HISTORY_LOADING
 })
 
 export const removeRetrievalHistory = retrievalId => ({
@@ -18,6 +26,9 @@ export const removeRetrievalHistory = retrievalId => ({
  */
 export const fetchRetrievalHistory = () => (dispatch, getState) => {
   const { authToken } = getState()
+
+  dispatch(setRetrievalHistoryLoading())
+
   const requestObject = new RetrievalRequest(authToken)
   const response = requestObject.all()
     .then((response) => {

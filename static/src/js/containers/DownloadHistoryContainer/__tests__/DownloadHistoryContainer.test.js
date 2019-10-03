@@ -26,6 +26,8 @@ describe('DownloadHistoryContainer component', () => {
           created_at: '2019-08-25T11:58:14.390Z',
           collections: [{}]
         }],
+        retrievalHistoryLoading: false,
+        retrievalHistoryLoaded: false,
         onFetchRetrievalHistory: jest.fn(),
         onDeleteRetrieval: jest.fn()
       })
