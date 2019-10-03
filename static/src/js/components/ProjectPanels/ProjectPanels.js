@@ -193,7 +193,7 @@ class ProjectPanels extends PureComponent {
       variables
     } = this.state
 
-    const { byId } = collections
+    const { byId = {} } = collections
     const { collectionIds: projectIds, byId: projectById } = project
 
     const { activePanel, isOpen } = projectPanels
@@ -201,6 +201,11 @@ class ProjectPanels extends PureComponent {
     const panelSectionCollectionDetails = []
 
     let loaded = false
+
+    let collectionMetadataLoaded = Object.values(byId).some((collection) => {
+      const { metadata = {} } = collection
+      return Object.prototype.hasOwnProperty.call(metadata, 'dataset_id')
+    })
 
     projectIds.forEach((collectionId, index) => {
       loaded = true
@@ -210,7 +215,10 @@ class ProjectPanels extends PureComponent {
       const projectCollection = projectById[collectionId]
       const { metadata } = collection
 
-      if (metadata && Object.keys(metadata).length === 0) return
+      if (!collectionMetadataLoaded) return
+
+      collectionMetadataLoaded = true
+
       const {
         dataset_id: title = '',
         id,
@@ -407,8 +415,8 @@ class ProjectPanels extends PureComponent {
 
     return (
       <Panels
-        show={loaded && isOpen}
-        activePanel={activePanel}
+        show={collectionMetadataLoaded && isOpen}
+        activePanel={loaded ? activePanel : ''}
         onPanelClose={this.onPanelClose}
         onChangePanel={this.onChangePanel}
       >

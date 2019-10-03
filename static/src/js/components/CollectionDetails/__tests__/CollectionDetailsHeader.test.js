@@ -6,14 +6,12 @@ import { collectionDetailsBodyProps } from './mocks'
 import CollectionDetailsHeader from '../CollectionDetailsHeader'
 import { MoreActionsDropdown } from '../../MoreActionsDropdown/MoreActionsDropdown'
 
-// TODO: Write more tests
-
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
-    focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionObject.metadata,
-    collectionSearch: {}
+    collectionSearch: {},
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsHeader {...props} />)
@@ -25,8 +23,15 @@ function setup() {
 }
 
 describe('CollectionDetails component', () => {
-  test('renders itself correctly', () => {
+  test('renders itself as null with no focused collection metadata', () => {
     const { enzymeWrapper } = setup()
+    expect(enzymeWrapper.type()).toEqual(null)
+  })
+
+  test('renders itself correctly with focused collection metadata', () => {
+    const { enzymeWrapper } = setup({
+      focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata['C179003620-ORNL_DAAC'].metadata,
+    })
     expect(enzymeWrapper.type()).toEqual('div')
     expect(enzymeWrapper.props().className).toEqual('collection-details-header')
     expect(enzymeWrapper.find('.collection-details-header').length).toEqual(1)

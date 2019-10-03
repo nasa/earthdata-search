@@ -5,9 +5,12 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import abbreviate from 'number-abbreviate'
 import classNames from 'classnames'
 
+import { projectHeader } from './skeleton'
 import { convertSizeToMB, convertSize } from '../../util/project'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
+
+import Skeleton from '../Skeleton/Skeleton'
 
 import './ProjectHeader.scss'
 
@@ -140,6 +143,7 @@ export class ProjectHeader extends Component {
     })
 
     const totalSize = convertSize(size)
+
     const {
       size: totalProjectSize,
       unit: totalUnit
@@ -207,53 +211,64 @@ export class ProjectHeader extends Component {
             )
           }
         </div>
-        <ul className="project-header__stats-list">
-          {!Number.isNaN(totalGranules) && (
-            <>
-              <li
-                className="project-header__stats-item project-header__stats-item--granules"
-              >
-                <span className="project-header__stats-val">
-                  {`${abbreviate(totalGranules, 1)} `}
-                </span>
-                {pluralize('Granule', totalGranules)}
-              </li>
-              <li
-                className="project-header__stats-item project-header__stats-item--collections"
-              >
-                <span className="project-header__stats-val">
-                  {`${commafy(projectIds.length)} `}
-                </span>
-                {pluralize('Collection', projectIds.length)}
-              </li>
-              <li
-                className="project-header__stats-item project-header__stats-item--size"
-              >
-                <span className="project-header__stats-val">
-                  {`${totalProjectSize} `}
-                </span>
-                {totalUnit}
-
-                <OverlayTrigger
-                  container={this.component}
-                  placement="right"
-                  overlay={(
-                    <Tooltip
-                      className="tooltip--large tooltip--ta-left tooltip--wide"
-                    >
-                      This is the estimated overall size of your project. If no size
-                      information exists in a granule&apos;s metadata, it will not be
-                      included in this number. The size is estimated based upon the
-                      first 20 granules added to your project from each collection.
-                    </Tooltip>
-                  )}
+        {
+          !Number.isNaN(totalGranules) ? (
+            <ul className="project-header__stats-list">
+              <>
+                <li
+                  className="project-header__stats-item project-header__stats-item--granules"
                 >
-                  <i className="fa fa-info-circle project-header__stats-icon" />
-                </OverlayTrigger>
-              </li>
-            </>
-          )}
-        </ul>
+                  <span className="project-header__stats-val">
+                    {`${abbreviate(totalGranules, 1)} `}
+                  </span>
+                  {pluralize('Granule', totalGranules)}
+                </li>
+                <li
+                  className="project-header__stats-item project-header__stats-item--collections"
+                >
+                  <span className="project-header__stats-val">
+                    {`${commafy(projectIds.length)} `}
+                  </span>
+                  {pluralize('Collection', projectIds.length)}
+                </li>
+                <li
+                  className="project-header__stats-item project-header__stats-item--size"
+                >
+                  <span className="project-header__stats-val">
+                    {`${totalProjectSize} `}
+                  </span>
+                  {totalUnit}
+
+                  <OverlayTrigger
+                    container={this.component}
+                    placement="right"
+                    overlay={(
+                      <Tooltip
+                        className="tooltip--large tooltip--ta-left tooltip--wide"
+                      >
+                        This is the estimated overall size of your project. If no size
+                        information exists in a granule&apos;s metadata, it will not be
+                        included in this number. The size is estimated based upon the
+                        first 20 granules added to your project from each collection.
+                      </Tooltip>
+                    )}
+                  >
+                    <i className="fa fa-info-circle project-header__stats-icon" />
+                  </OverlayTrigger>
+                </li>
+              </>
+            </ul>
+          ) : (
+            <Skeleton
+              containerStyle={{
+                height: '21px',
+                width: '100%'
+              }}
+              shapes={projectHeader}
+            />
+          )
+        }
+
       </header>
     )
   }

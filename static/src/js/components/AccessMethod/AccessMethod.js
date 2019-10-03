@@ -260,7 +260,11 @@ export class AccessMethod extends Component {
       return (
         <Skeleton
           key={key}
-          containerStyle={{ height: '2.9375rem', width: '18.75rem' }}
+          containerStyle={{
+            height: '40px',
+            width: '300px',
+            marginBottom: '8px'
+          }}
           shapes={[{
             shape: 'rectangle',
             x: 0,

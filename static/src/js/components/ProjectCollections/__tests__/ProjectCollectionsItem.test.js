@@ -2,12 +2,12 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+import Skeleton from '../../Skeleton/Skeleton'
 import ProjectCollectionsItem from '../ProjectCollectionsItem'
-
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     collectionId: 'collectionId',
     collection: {
@@ -32,7 +32,8 @@ function setup() {
     projectCollection: {
       accessMethods: {}
     },
-    collectionSearch: {}
+    collectionSearch: {},
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsItem {...props} />)
@@ -44,12 +45,45 @@ function setup() {
 }
 
 describe('ProjectCollectionItem component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+  describe('renders itself correctly', () => {
+    test('when the title and metadata are loading', () => {
+      const { enzymeWrapper, props } = setup({
+        collection: {
+          excludedGranuleIds: [],
+          granules: {},
+          metadata: {}
+        }
+      })
 
-    expect(enzymeWrapper.find('h3').text()).toEqual('Collection Title')
-    expect(enzymeWrapper.find('.project-collections-item__stats-item--granule-count').text()).toEqual('3 Granules')
-    expect(enzymeWrapper.find('.project-collections-item__stats-item--total-size').text()).toEqual('Est. Size 4.0 MB')
+      expect(enzymeWrapper.find(Skeleton).length).toEqual(2)
+      expect(enzymeWrapper.find('.project-collections-item__more-options-button').length).toEqual(0)
+    })
+
+    test('when the metadata is loading', () => {
+      const { enzymeWrapper, props } = setup({
+        collection: {
+          excludedGranuleIds: [],
+          granules: {},
+          metadata: {
+            dataset_id: 'Collection Title',
+            granule_count: 4
+          }
+        }
+      })
+
+      expect(enzymeWrapper.find('h3').text()).toEqual('Collection Title')
+      expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
+      expect(enzymeWrapper.find('.project-collections-item__more-options-button').length).toEqual(0)
+    })
+
+    test('when fully loaded', () => {
+      const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find('h3').text()).toEqual('Collection Title')
+      expect(enzymeWrapper.find('.project-collections-item__stats-item--granule-count').text()).toEqual('3 Granules')
+      expect(enzymeWrapper.find('.project-collections-item__stats-item--total-size').text()).toEqual('Est. Size 4.0 MB')
+      expect(enzymeWrapper.find('.project-collections-item__more-options-button').length).toEqual(1)
+    })
   })
 
   test('Remove from project button calls onRemoveCollectionFromProject', () => {

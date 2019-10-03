@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+import Skeleton from '../../Skeleton/Skeleton'
 import ProjectHeader from '../ProjectHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -45,6 +46,26 @@ describe('ProjectHeader component', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find('header').length).toBe(1)
     expect(enzymeWrapper.find('.project-header__title').find('input').props().value).toEqual('test project')
+  })
+
+  describe('when the collections are loading', () => {
+    test('renders project metadata loading state', () => {
+      const { enzymeWrapper } = setup({
+        collections: {
+          allIds: ['collectionId1'],
+          byId: {
+            'collectionId1': {
+              granules: {}
+            }
+          }
+        },
+        project: {
+          collectionIds: ['collectionId1']
+        }
+      })
+      expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
+      expect(enzymeWrapper.find(Skeleton).prop('shapes').length).toEqual(3)
+    })
   })
 
   describe('with one collection', () => {

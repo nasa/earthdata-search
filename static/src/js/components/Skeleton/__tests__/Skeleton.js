@@ -14,8 +14,8 @@ function setup(options) {
     testSkeleton = [
       {
         shape: 'rectangle',
-        x: 10,
-        y: 12,
+        left: 10,
+        top: 12,
         height: 12,
         width: 200,
         radius: 3
@@ -25,16 +25,16 @@ function setup(options) {
     testSkeleton = [
       {
         shape: 'rectangle',
-        x: 10,
-        y: 12,
+        left: 10,
+        top: 12,
         height: 12,
         width: 200,
         radius: 3
       },
       {
         shape: 'rectangle',
-        x: 30,
-        y: 12,
+        left: 30,
+        top: 12,
         height: 12,
         width: 100,
         radius: 3
@@ -44,8 +44,8 @@ function setup(options) {
     testSkeleton = [
       {
         shape: 'unknown',
-        x: 10,
-        y: 12,
+        left: 10,
+        top: 12,
         height: 12,
         width: 200,
         radius: 3
