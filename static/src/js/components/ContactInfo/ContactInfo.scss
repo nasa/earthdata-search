@@ -1,0 +1,25 @@
+fieldset.account-form {
+  background-color: white;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3f3f3));
+  background-image: linear-gradient(#fff, #f3f3f3);
+  border-radius: 5px;
+  padding: 30px;
+  border-color: #e3e3e3;
+  color: #333333;
+
+  > ul {
+    list-style: none;
+    padding: 0;
+
+    > li {
+      margin: 10px, 0;
+      display: list-item;
+    }
+  }
+}
+
+span.urs-profile-label {
+  display: inline-block;
+  min-width: 200px;
+  font-weight: bold;
+}

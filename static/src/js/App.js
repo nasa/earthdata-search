@@ -9,6 +9,7 @@ import history from './util/history'
 import FooterContainer from './containers/FooterContainer/FooterContainer'
 
 import Search from './routes/Search/Search'
+import ContactInfo from './routes/ContactInfo/ContactInfo'
 import Project from './routes/Project/Project'
 import Downloads from './routes/Downloads/Downloads'
 import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
@@ -63,6 +64,14 @@ class App extends Component {
             <ConnectedAuthTokenContainer>
               <ConnectedUrlQueryContainer>
                 <Switch>
+                  <Route
+                    path={this.portalPaths('/contact_info')}
+                    render={() => (
+                      // <AuthRequiredContainer>
+                      <ContactInfo />
+                      // </AuthRequiredContainer>
+                    )}
+                  />
                   <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
                   <Redirect exact from="/data/status" to="/downloads" />
                   <Route
