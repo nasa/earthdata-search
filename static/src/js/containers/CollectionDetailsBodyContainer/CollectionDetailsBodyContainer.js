@@ -27,11 +27,11 @@ export const CollectionDetailsBodyContainer = ({
 }) => {
   const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
 
-  if (!focusedCollectionObject) return null
+  if (Object.keys(focusedCollectionObject).length === 0) return null
 
   return (
     <CollectionDetailsBody
-      focusedCollectionMetadata={focusedCollectionObject}
+      focusedCollectionObject={focusedCollectionObject}
       onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
     />
   )

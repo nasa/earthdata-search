@@ -140,7 +140,7 @@ class Timeline extends Component {
 
       Object.keys(nextCollectionMetadata).forEach((collectionId) => {
         if (!nextCollectionMetadata[collectionId]) return
-        const { metadata } = nextCollectionMetadata[collectionId]
+        const { metadata = {} } = nextCollectionMetadata[collectionId]
         if (Object.keys(metadata).length === 0) return
 
         const {
@@ -178,7 +178,7 @@ class Timeline extends Component {
     Object.keys(nextTimeline.intervals).forEach((collectionId) => {
       const intervals = nextTimeline.intervals[collectionId]
       if (!nextCollectionMetadata[collectionId]) return
-      const { metadata } = nextCollectionMetadata[collectionId]
+      const { metadata = {} } = nextCollectionMetadata[collectionId]
       if (Object.keys(metadata).length === 0) return
 
       // if the collection already exists in the state, compare the new values

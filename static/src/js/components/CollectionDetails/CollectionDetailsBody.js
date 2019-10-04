@@ -89,11 +89,11 @@ const buildForDeveloperLink = (linkData, token) => {
 /**
  * Renders CollectionDetailsBody.
  * @param {object} props - The props passed into the component.
- * @param {object} props.focusedCollectionMetadata - Focused collection passed from redux store.
+ * @param {object} props.focusedCollectionObject - Focused collection passed from redux store.
  * @param {function} props.onToggleRelatedUrlsModal - Toggles the state of the Related URLs modal
  */
-export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelatedUrlsModal }) => {
-  const { metadata, formattedMetadata } = focusedCollectionMetadata
+export const CollectionDetailsBody = ({ focusedCollectionObject, onToggleRelatedUrlsModal }) => {
+  const { metadata, formattedMetadata } = focusedCollectionObject
   const { summary } = metadata
   const {
     dataCenters,
@@ -259,7 +259,7 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
 }
 
 CollectionDetailsBody.propTypes = {
-  focusedCollectionMetadata: PropTypes.shape({}).isRequired,
+  focusedCollectionObject: PropTypes.shape({}).isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 
