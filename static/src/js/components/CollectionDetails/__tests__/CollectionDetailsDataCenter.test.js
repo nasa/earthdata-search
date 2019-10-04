@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    dataCenter: collectionDetailsBodyProps.focusedCollectionObject.formattedMetadata.dataCenters[0],
+    dataCenter: collectionDetailsBodyProps.focusedCollectionMetadata.formattedMetadata.dataCenters[0],
     item: 0
   }
 

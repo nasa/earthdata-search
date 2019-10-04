@@ -22,8 +22,6 @@ export const CollectionDetailsHeaderContainer = ({
 }) => {
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
-  if (!focusedCollectionMetadata) return null
-
   return (
     <CollectionDetailsHeader
       focusedCollectionMetadata={focusedCollectionMetadata}

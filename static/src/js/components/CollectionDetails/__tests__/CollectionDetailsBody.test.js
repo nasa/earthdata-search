@@ -16,8 +16,8 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata['C179003620-ORNL_DAAC'].metadata,
-    formattedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata['C179003620-ORNL_DAAC'].formattedMetadata,
+    collectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata,
+    formattedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.formattedMetadata,
     onToggleRelatedUrlsModal: jest.fn()
   }
 
