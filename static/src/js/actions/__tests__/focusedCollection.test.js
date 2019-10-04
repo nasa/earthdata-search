@@ -554,7 +554,7 @@ describe('getFocusedCollection', () => {
     })
   })
 
-  test('does not call updateFocusedCopllection on error', async () => {
+  test('does not call updateFocusedCollection on error', async () => {
     nock(/localhost/)
       .post(/collections/)
       .reply(500)
