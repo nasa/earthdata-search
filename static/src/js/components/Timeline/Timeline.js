@@ -79,7 +79,6 @@ class Timeline extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      granuleFilterTemporal: oldGranuleFilterTemporal,
       pathname: oldPathname,
       temporalSearch: oldTemporalSearch,
       timeline: oldTimeline
@@ -87,8 +86,6 @@ class Timeline extends Component {
 
     const {
       collectionMetadata: nextCollectionMetadata,
-      focusedCollection: nextFocusedCollection,
-      granuleFilterTemporal: nextGranuleFilterTemporal,
       pathname: nextPathname,
       showOverrideModal,
       temporalSearch: nextTemporalSearch,
@@ -138,11 +135,12 @@ class Timeline extends Component {
 
     const newRows = {}
     // Setup a row for each collection in collectionMetadata if the rows have changed
-    if (Object.keys(nextCollectionMetadata) !== Object.keys(this.rows)) {
+    if (!isEqual(Object.keys(nextCollectionMetadata), Object.keys(this.rows))) {
       const timelineRows = []
+
       Object.keys(nextCollectionMetadata).forEach((collectionId) => {
         if (!nextCollectionMetadata[collectionId]) return
-        const metadata = nextCollectionMetadata[collectionId]
+        const { metadata } = nextCollectionMetadata[collectionId]
         if (Object.keys(metadata).length === 0) return
 
         const {
@@ -166,6 +164,7 @@ class Timeline extends Component {
           ...this.rows,
           ...newRows
         }
+
         this.$el.timeline('rows', timelineRows)
       }
     }
@@ -179,7 +178,7 @@ class Timeline extends Component {
     Object.keys(nextTimeline.intervals).forEach((collectionId) => {
       const intervals = nextTimeline.intervals[collectionId]
       if (!nextCollectionMetadata[collectionId]) return
-      const metadata = nextCollectionMetadata[collectionId]
+      const { metadata } = nextCollectionMetadata[collectionId]
       if (Object.keys(metadata).length === 0) return
 
       // if the collection already exists in the state, compare the new values
@@ -204,11 +203,19 @@ class Timeline extends Component {
       }
     })
 
-    // If there is a granule filter temporal set, add the data for the focused collection
-    if (!isEqual(oldGranuleFilterTemporal, nextGranuleFilterTemporal)) {
-      const { startDate = '', endDate = '' } = nextGranuleFilterTemporal
-      this.setTimelineRowTemporal(nextFocusedCollection, { startDate, endDate })
-    }
+    Object.keys(nextCollectionMetadata).forEach((collectionId) => {
+      // If there is a granule filter temporal set, and it doesn't exist on the timeline, add the data for the focused collection
+      const { granuleFilters = {} } = nextCollectionMetadata[collectionId]
+      const { temporal: granuleFilterTemporal = {} } = granuleFilters
+
+      if (
+        this.$el.timeline('getRowTemporal', collectionId).length === 0
+        && Object.keys(granuleFilterTemporal).length > 0
+      ) {
+        const { startDate = '', endDate = '' } = granuleFilterTemporal
+        this.setTimelineRowTemporal(collectionId, { startDate, endDate })
+      }
+    })
 
     // If the pathname changed and we should show the override modal, show it
     if (
@@ -546,14 +553,11 @@ class Timeline extends Component {
 }
 
 Timeline.defaultProps = {
-  collectionMetadata: {},
-  granuleFilterTemporal: {}
+  collectionMetadata: {}
 }
 
 Timeline.propTypes = {
   collectionMetadata: PropTypes.shape({}),
-  focusedCollection: PropTypes.string.isRequired,
-  granuleFilterTemporal: PropTypes.shape({}),
   pathname: PropTypes.string.isRequired,
   showOverrideModal: PropTypes.bool.isRequired,
   temporalSearch: PropTypes.shape({}).isRequired,
