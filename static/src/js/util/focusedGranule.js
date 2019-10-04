@@ -1,12 +1,15 @@
+import { isEmpty } from 'lodash'
+
 /**
  * Returns the collection object from the metadata store for the provided granuleId
  * @param {String} granuleId Focused collection id
  * @param {Object} granules granules from the metadata store
  */
 export const getFocusedGranuleObject = (granuleId, granules) => {
-  if (!granules) return undefined
+  if (isEmpty(granules)) return undefined
+  const { byId = {} } = granules
 
-  return granules.byId[granuleId] || {}
+  return byId[granuleId] || {}
 }
 
 export default getFocusedGranuleObject

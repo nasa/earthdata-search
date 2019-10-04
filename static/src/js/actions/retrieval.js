@@ -125,6 +125,7 @@ export const fetchRetrieval = id => (dispatch, getState) => {
 
         updatedCollections.byId[collectionId] = {
           ...currentCollection,
+          isLoading: false,
           // Downloadable orders do not need to be loaded, default them to true
           isLoaded: ['download', 'OPeNDAP'].includes(type)
         }

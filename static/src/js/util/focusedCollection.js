@@ -17,9 +17,10 @@ import CollectionRequest from './request/collectionRequest'
  * @param {Object} collections collections from the metadata store
  */
 export const getFocusedCollectionObject = (collectionId, collections) => {
-  if (!collections) return undefined
+  if (isEmpty(collections)) return undefined
+  const { byId = {} } = collections
 
-  return collections.byId[collectionId] || {}
+  return byId[collectionId] || {}
 }
 
 /**
@@ -29,10 +30,9 @@ export const getFocusedCollectionObject = (collectionId, collections) => {
  */
 export const getFocusedCollectionMetadata = (collectionId, collections) => {
   const collection = getFocusedCollectionObject(collectionId, collections)
-
   if (isEmpty(collection)) return undefined
+  const { metadata = {} } = collection
 
-  const { metadata } = collection
   return metadata
 }
 
