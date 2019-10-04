@@ -4,10 +4,13 @@ import PropTypes from 'prop-types'
 import OrderStatusList from './OrderStatusList'
 import Well from '../Well/Well'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import Skeleton from '../Skeleton/Skeleton'
 
-import './OrderStatus.scss'
+import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+
+import './OrderStatus.scss'
 
 export class OrderStatus extends Component {
   componentDidMount() {
@@ -40,7 +43,12 @@ export class OrderStatus extends Component {
     const { jsondata = {}, links = [] } = retrieval
     const { source } = jsondata
 
-    const { id, collections } = retrieval
+    const {
+      id,
+      collections,
+      isLoading,
+      isLoaded
+    } = retrieval
     const { byId = {} } = collections
 
     let {
@@ -83,54 +91,76 @@ export class OrderStatus extends Component {
           <Well.Main>
             <Well.Heading>Download Status</Well.Heading>
             <Well.Introduction>{introduction}</Well.Introduction>
+            {
+              (isLoading && !isLoaded) && (
+                <Skeleton
+                  className="order-status__item-skeleton"
+                  containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
+                  shapes={orderStatusSkeleton}
+                />
+              )
+            }
+            {
+              isLoaded && (
+                <Well.Section>
+                  {
+                    downloadableOrders.length > 0 && (
+                      <OrderStatusList
+                        heading="Direct Download"
+                        introduction={'Click the "View/Download Data Links" button to view or download a file containing links to your data.'}
+                        collections={downloadableOrders}
+                        type="download"
+                        match={match}
+                        onChangePath={onChangePath}
+                        onFetchRetrievalCollection={onFetchRetrievalCollection}
+                      />
+                    )
+                  }
+                  {
+                    echoOrders.length > 0 && (
+                      <OrderStatusList
+                        heading="Stage For Delivery"
+                        introduction={"When the data for the following orders becomes available, an email containing download links will be sent to the address you've provided."}
+                        collections={echoOrders}
+                        type="echo_orders"
+                        match={match}
+                        onChangePath={onChangePath}
+                        onFetchRetrievalCollection={onFetchRetrievalCollection}
+                      />
+                    )
+                  }
+                  {
+                    esiOrders.length > 0 && (
+                      <OrderStatusList
+                        heading="Customize Product"
+                        introduction={"When the data for the following orders become available, links will be displayed below and sent to the email address you've provided."}
+                        collections={esiOrders}
+                        type="esi"
+                        match={match}
+                        onChangePath={onChangePath}
+                        onFetchRetrievalCollection={onFetchRetrievalCollection}
+                      />
+                    )
+                  }
+                </Well.Section>
+              )
+            }
+            <Well.Heading>Additional Resources and Documentation</Well.Heading>
             <Well.Section>
               {
-                downloadableOrders.length > 0 && (
-                  <OrderStatusList
-                    heading="Direct Download"
-                    introduction={'Click the "View/Download Data Links" button to view or download a file containing links to your data.'}
-                    collections={downloadableOrders}
-                    type="download"
-                    match={match}
-                    onChangePath={onChangePath}
-                    onFetchRetrievalCollection={onFetchRetrievalCollection}
+                isLoading && (
+                  <Skeleton
+                    className="order-status__item-skeleton"
+                    containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
+                    shapes={orderStatusLinksSkeleton}
                   />
                 )
               }
               {
-                echoOrders.length > 0 && (
-                  <OrderStatusList
-                    heading="Stage For Delivery"
-                    introduction={"When the data for the following orders becomes available, an email containing download links will be sent to the address you've provided."}
-                    collections={echoOrders}
-                    type="echo_orders"
-                    match={match}
-                    onChangePath={onChangePath}
-                    onFetchRetrievalCollection={onFetchRetrievalCollection}
-                  />
-                )
-              }
-              {
-                esiOrders.length > 0 && (
-                  <OrderStatusList
-                    heading="Customize Product"
-                    introduction={"When the data for the following orders become available, links will be displayed below and sent to the email address you've provided."}
-                    collections={esiOrders}
-                    type="esi"
-                    match={match}
-                    onChangePath={onChangePath}
-                    onFetchRetrievalCollection={onFetchRetrievalCollection}
-                  />
-                )
-              }
-            </Well.Section>
-            {
-              (links && links.length > 0) && (
-                <>
-                  <Well.Heading>Additional Resources and Documentation</Well.Heading>
-                  <Well.Section>
-                    <ul className="order-status__links">
-                      {
+                isLoaded && (
+                  <ul className="order-status__links">
+                    {
+                      (links && links.length > 0) && (
                         links.map((link, i) => {
                           const { dataset_id: datasetId, links } = link
                           return (
@@ -163,12 +193,19 @@ export class OrderStatus extends Component {
                             </li>
                           )
                         })
-                      }
-                    </ul>
-                  </Well.Section>
-                </>
-              )
-            }
+                      )
+                    }
+                    {
+                      (links && links.length === 0) && (
+                        <li className="order-status__links-item">
+                          No additional resources provided
+                        </li>
+                      )
+                    }
+                  </ul>
+                )
+              }
+            </Well.Section>
           </Well.Main>
           <Well.Footer>
             <Well.Heading>Next Steps</Well.Heading>

@@ -3,6 +3,7 @@ import prepareRetrievalParams from '../util/retrievals'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import {
+  SET_RETRIEVAL_LOADING,
   UPDATE_RETRIEVAL
 } from '../constants/actionTypes'
 import { metricsDataAccess } from '../middleware/metrics/actions'
@@ -10,6 +11,10 @@ import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { removeRetrievalHistory } from './retrievalHistory'
 import { submittingProject, submittedProject } from './project'
 import { handleError } from './errors'
+
+export const setRetrievalLoading = () => ({
+  type: SET_RETRIEVAL_LOADING
+})
 
 export const updateRetrieval = retrievalData => ({
   type: UPDATE_RETRIEVAL,
@@ -99,6 +104,8 @@ export const submitRetrieval = () => (dispatch, getState) => {
  */
 export const fetchRetrieval = id => (dispatch, getState) => {
   const { authToken } = getState()
+
+  dispatch(setRetrievalLoading())
 
   const requestObject = new RetrievalRequest(authToken)
   const response = requestObject.fetch(id)

@@ -5,7 +5,9 @@ import {
 
 const initialState = {
   id: null,
-  collections: {}
+  collections: {},
+  isLoading: false,
+  isLoaded: false
 }
 
 describe('INITIAL_STATE', () => {
@@ -40,7 +42,9 @@ describe('UPDATE_RETRIEVAL', () => {
             collection_id: '12345-TEST'
           }
         ]
-      }
+      },
+      isLoaded: true,
+      isLoading: false
     }
 
     expect(orderReducer(undefined, action)).toEqual(expectedState)

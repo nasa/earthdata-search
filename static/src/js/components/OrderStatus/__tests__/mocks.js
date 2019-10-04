@@ -14,6 +14,8 @@ export const retrievalStatusProps = {
   portal: {},
   retrieval: {
     id: 7,
+    isLoading: false,
+    isLoaded: true,
     collections: {
       download: {
         1: {

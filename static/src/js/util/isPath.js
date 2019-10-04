@@ -8,8 +8,12 @@ import { castArray } from 'lodash'
  */
 export const isPath = (pathname, paths) => castArray(paths).some((path = '') => {
   const pathnameWithoutTrailingSlash = pathname.replace(/\/+$/, '')
-  const pathWithoutTrailingSlash = path.replace(/\/+$/, '')
 
+  if (path && typeof path.test === 'function') {
+    return path.test(pathnameWithoutTrailingSlash)
+  }
+
+  const pathWithoutTrailingSlash = path.replace(/\/+$/, '')
   const pathnameWithoutPortal = pathnameWithoutTrailingSlash.replace(/portal\/[^/]*\//, '')
 
   return pathnameWithoutTrailingSlash === pathWithoutTrailingSlash
