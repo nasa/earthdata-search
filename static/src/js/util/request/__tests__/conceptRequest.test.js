@@ -37,9 +37,12 @@ describe('ConceptRequest#search', () => {
 
     const conceptId = 'collectionId'
     const format = 'json'
-    request.search(conceptId, format)
+    const params = {
+      pretty: true
+    }
+    request.search(conceptId, format, params)
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('search/concepts/collectionId.json')
+    expect(getMock).toBeCalledWith('search/concepts/collectionId.json', { pretty: true })
   })
 })

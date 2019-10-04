@@ -27,7 +27,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   if (allIds.indexOf(focusedGranule) !== -1) return null
 
   const requestObject = new ConceptRequest(authToken)
-  const response = requestObject.search(focusedGranule, 'echo10')
+  const response = requestObject.search(focusedGranule, 'echo10', { pretty: true })
     .then((response) => {
       const { data } = response
 

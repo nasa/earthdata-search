@@ -22,7 +22,11 @@ export default class ConceptRequest extends Request {
     }
   }
 
-  search(conceptId, format) {
-    return this.get(`${this.searchPath}/${conceptId}.${format}`)
+  permittedCmrKeys() {
+    return ['pretty']
+  }
+
+  search(conceptId, format, params) {
+    return this.get(`${this.searchPath}/${conceptId}.${format}`, params)
   }
 }

@@ -19,9 +19,16 @@
   }
 
   .tab-content {
+    min-height: 100%;
     flex-grow: 1;
     padding: $spacer;
     background-color: $color__white;
-    overflow-y: scroll;
+  }
+
+  .simplebar-content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    min-height: 100%;
   }
 }

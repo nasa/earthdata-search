@@ -127,9 +127,10 @@ export default class Request {
   /**
    * Makes a GET request to the provided URL
    * @param {String} url URL to send the request to
+   * @param {Object} params URL parameters
    * @return {Promise} A Promise object representing the request that was made
    */
-  get(url) {
+  get(url, params) {
     this.startTimer()
     this.setFullUrl(url)
 
@@ -137,6 +138,7 @@ export default class Request {
       method: 'get',
       baseURL: this.baseUrl,
       url,
+      params,
       transformRequest: [
         (data, headers) => this.transformRequest(data, headers)
       ],

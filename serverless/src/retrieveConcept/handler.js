@@ -2,7 +2,9 @@ import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { cmrStringify } from '../util/cmr/cmrStringify'
 import { isWarmUp } from '../util/isWarmup'
+import { pick } from '../util/pick'
 
 /**
  * Perform an authenticated CMR concept search
@@ -13,8 +15,15 @@ const retrieveConcept = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 
+  const { queryStringParameters } = event
+
+  const permittedCmrKeys = ['pretty']
+
+  const obj = pick(queryStringParameters, permittedCmrKeys)
+  const queryParams = cmrStringify(obj)
+
   const conceptUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}`
-    + `/search/concepts/${event.pathParameters.id}?pretty=true`
+    + `/search/concepts/${event.pathParameters.id}?${queryParams}`
 
   return doSearchRequest(getJwtToken(event), conceptUrl)
 }
