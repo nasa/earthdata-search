@@ -5,7 +5,7 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import getFocusedGranuleMetadata from '../../util/focusedGranule'
+import getFocusedGranuleObject from '../../util/focusedGranule'
 
 import GranuleDetailsHeader from '../../components/GranuleDetails/GranuleDetailsHeader'
 
@@ -18,11 +18,8 @@ export const GranuleDetailsHeaderContainer = ({
   focusedGranule,
   granules
 }) => {
-  const focusedGranuleMetadata = getFocusedGranuleMetadata(focusedGranule, granules)
-
-  if (Object.keys(focusedGranuleMetadata).length === 0) return null
-
-  const { json } = granules.byId[focusedGranule]
+  const focusedGranuleMetadata = getFocusedGranuleObject(focusedGranule, granules)
+  const { json = {} } = focusedGranuleMetadata
 
   return (
     <GranuleDetailsHeader json={json} />

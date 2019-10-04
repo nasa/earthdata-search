@@ -1,15 +1,12 @@
-const getFocusedGranuleMetadata = (granuleId, granules) => {
-  if (!granules) return {}
+/**
+ * Returns the collection object from the metadata store for the provided granuleId
+ * @param {String} granuleId Focused collection id
+ * @param {Object} granules granules from the metadata store
+ */
+export const getFocusedGranuleObject = (granuleId, granules) => {
+  if (!granules) return undefined
 
-  const granule = granules.byId[granuleId]
-
-  if (!granule) return {}
-
-  return {
-    [granuleId]: {
-      ...granule
-    }
-  }
+  return granules.byId[granuleId] || {}
 }
 
-export default getFocusedGranuleMetadata
+export default getFocusedGranuleObject

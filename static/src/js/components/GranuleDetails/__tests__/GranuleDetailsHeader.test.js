@@ -1,14 +1,18 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { granuleResultsBodyProps } from './mocks'
+
 import GranuleDetailsHeader from '../GranuleDetailsHeader'
+import Skeleton from '../../Skeleton/Skeleton'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
-    json: granuleResultsBodyProps.json
+    json: {},
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<GranuleDetailsHeader {...props} />)
@@ -27,10 +31,22 @@ describe('GranuleDetailsHeader component', () => {
     expect(enzymeWrapper.props().className).toEqual('row granule-details-header')
   })
 
-  test('renders a title', () => {
-    const { enzymeWrapper } = setup()
-    const title = enzymeWrapper.find('.granule-details-header__title')
+  describe('when the metadata is not provided', () => {
+    test('renders a loading state', () => {
+      const { enzymeWrapper } = setup()
 
-    expect(title.text()).toEqual('1860_1993_2050_NITROGEN.N-deposition1860.tfw')
+      expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
+    })
+  })
+
+  describe('when the metadata has been provided', () => {
+    test('renders a title', () => {
+      const { enzymeWrapper } = setup({
+        json: granuleResultsBodyProps.json
+      })
+      const title = enzymeWrapper.find('.granule-details-header__title')
+
+      expect(title.text()).toEqual('1860_1993_2050_NITROGEN.N-deposition1860.tfw')
+    })
   })
 })

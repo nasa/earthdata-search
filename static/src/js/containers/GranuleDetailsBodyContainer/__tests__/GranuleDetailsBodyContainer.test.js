@@ -16,20 +16,6 @@ function setup(props) {
 }
 
 describe('GranuleResultsBodyContainer component', () => {
-  describe('with no granule metadata', () => {
-    test('returns null', () => {
-      const { enzymeWrapper } = setup({
-        authToken: '',
-        granules: {
-          allIds: [],
-          byId: {}
-        },
-        focusedGranule: ''
-      })
-      expect(enzymeWrapper.type()).toEqual(null)
-    })
-  })
-
   describe('when passed granule metadata', () => {
     test('passes its props and renders a single GranuleResultsBody component', () => {
       const { enzymeWrapper } = setup({

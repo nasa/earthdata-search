@@ -20,9 +20,16 @@
 
   .tab-content {
     min-height: 100%;
+    display: flex;
     flex-grow: 1;
     padding: $spacer;
     background-color: $color__white;
+  }
+
+  .tab-content > .active {
+    position: relative;
+    display: flex;
+    width: 100%;
   }
 
   .simplebar-content {

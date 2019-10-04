@@ -49,6 +49,9 @@
     # Allow named default exports
     "import/no-named-as-default": "off",
 
+    # Allow files with no default export
+    "import/prefer-default-export": "off",
+
     # Disable the depricated label-has-for rule
     "jsx-a11y/label-has-for": "off",
 

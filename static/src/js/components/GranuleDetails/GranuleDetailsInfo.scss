@@ -3,4 +3,11 @@
     white-space: pre-wrap;
     font-family: monospace;
   }
+
+  &__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
