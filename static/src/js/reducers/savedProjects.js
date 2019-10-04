@@ -36,8 +36,6 @@ const savedProjectsReducer = (state = initialState, action) => {
 
       const index = findIndex(projects, project => project.id === action.payload)
 
-      console.warn('index', index)
-
       return {
         ...state,
         projects: [

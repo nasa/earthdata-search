@@ -16,6 +16,41 @@ export default class RetrievalRequest extends Request {
     ]
   }
 
+  /**
+   * Transform the response before completing the Promise.
+   * @param {Object} data - Response object from the object.
+   * @return {Object} The object provided
+   */
+  transformResponse(data) {
+    super.transformResponse(data)
+
+    // If the response status code is not 200, return unaltered data
+    // If the status code is 200, it doesn't exist in the response
+    const { statusCode = 200 } = data
+    if (statusCode !== 200) return data
+
+    if (!data || Object.keys(data).length === 0) return data
+
+    const transformedResponse = data
+
+    const { collections = {} } = data
+    const { byId = {} } = collections
+
+    const collectionIds = Object.keys(byId)
+
+    if (collectionIds.length > 0) {
+      collectionIds.forEach((id) => {
+        transformedResponse.collections.byId[id] = {
+          ...transformedResponse.collections.byId[id],
+          isLoading: false,
+          isLoaded: true
+        }
+      })
+    }
+
+    return transformedResponse
+  }
+
   all() {
     return this.get('retrievals')
   }

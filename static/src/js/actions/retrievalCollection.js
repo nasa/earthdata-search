@@ -1,7 +1,14 @@
 import RetrievalCollectionRequest from '../util/request/retrievalCollectionRequest'
 
-import { UPDATE_RETRIEVAL_COLLECTION } from '../constants/actionTypes'
+import {
+  UPDATE_RETRIEVAL_COLLECTION,
+  SET_RETRIEVAL_COLLECTION_LOADING
+} from '../constants/actionTypes'
 import { handleError } from './errors'
+
+export const setRetrievalCollectionLoading = () => ({
+  type: SET_RETRIEVAL_COLLECTION_LOADING
+})
 
 export const updateRetrievalCollection = (id, retrievalCollectionData) => ({
   type: UPDATE_RETRIEVAL_COLLECTION,
@@ -13,6 +20,8 @@ export const updateRetrievalCollection = (id, retrievalCollectionData) => ({
  */
 export const fetchRetrievalCollection = id => (dispatch, getState) => {
   const { authToken } = getState()
+
+  dispatch(setRetrievalCollectionLoading())
 
   const requestObject = new RetrievalCollectionRequest(authToken)
 
