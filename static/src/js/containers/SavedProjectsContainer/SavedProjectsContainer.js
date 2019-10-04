@@ -7,7 +7,9 @@ import actions from '../../actions'
 import { SavedProjects } from '../../components/SavedProjects/SavedProjects'
 
 const mapStateToProps = state => ({
-  savedProjects: state.savedProjects
+  savedProjects: state.savedProjects.projects,
+  savedProjectsIsLoading: state.savedProjects.isLoading,
+  savedProjectsIsLoaded: state.savedProjects.isLoaded
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -25,11 +27,18 @@ export class SavedProjectsContainer extends Component {
   }
 
   render() {
-    const { savedProjects, onDeleteSavedProject } = this.props
+    const {
+      savedProjects,
+      savedProjectsIsLoading,
+      savedProjectsIsLoaded,
+      onDeleteSavedProject
+    } = this.props
 
     return (
       <SavedProjects
         savedProjects={savedProjects}
+        savedProjectsIsLoading={savedProjectsIsLoading}
+        savedProjectsIsLoaded={savedProjectsIsLoaded}
         onDeleteSavedProject={onDeleteSavedProject}
       />
     )
@@ -44,6 +53,8 @@ SavedProjectsContainer.propTypes = {
   savedProjects: PropTypes.arrayOf(
     PropTypes.shape({})
   ),
+  savedProjectsIsLoading: PropTypes.bool.isRequired,
+  savedProjectsIsLoaded: PropTypes.bool.isRequired,
   onDeleteSavedProject: PropTypes.func.isRequired,
   onFetchSavedProjects: PropTypes.func.isRequired
 }

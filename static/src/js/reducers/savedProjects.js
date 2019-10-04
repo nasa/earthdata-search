@@ -1,23 +1,50 @@
 import { findIndex } from 'lodash'
 
-import { SET_SAVED_PROJECTS, REMOVE_SAVED_PROJECT } from '../constants/actionTypes'
+import {
+  SET_SAVED_PROJECTS,
+  SET_SAVED_PROJECTS_LOADING,
+  REMOVE_SAVED_PROJECT
+} from '../constants/actionTypes'
 
-const initialState = []
+const initialState = {
+  projects: [],
+  isLoading: false,
+  isLoaded: false
+}
 
 const savedProjectsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_SAVED_PROJECTS_LOADING: {
+      return {
+        ...state,
+        isLoaded: false,
+        isLoading: true
+      }
+    }
     case SET_SAVED_PROJECTS: {
-      return [
-        ...action.payload
-      ]
+      return {
+        ...state,
+        projects: [
+          ...action.payload
+        ],
+        isLoaded: true,
+        isLoading: false
+      }
     }
     case REMOVE_SAVED_PROJECT: {
-      const index = findIndex(state, project => project.id === action.payload)
+      const { projects } = state
 
-      return [
-        ...state.slice(0, index),
-        ...state.slice(index + 1)
-      ]
+      const index = findIndex(projects, project => project.id === action.payload)
+
+      console.warn('index', index)
+
+      return {
+        ...state,
+        projects: [
+          ...projects.slice(0, index),
+          ...projects.slice(index + 1)
+        ]
+      }
     }
     default:
       return state

@@ -9,10 +9,12 @@ import {
 import TimeAgo from 'react-timeago'
 import { parse } from 'qs'
 
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import pluralize from '../../util/pluralize'
-import Button from '../Button/Button'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import pluralize from '../../util/pluralize'
+
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import Button from '../Button/Button'
+import Spinner from '../Spinner/Spinner'
 
 import './SavedProjects.scss'
 
@@ -56,7 +58,11 @@ export class SavedProjects extends Component {
   }
 
   render() {
-    const { savedProjects } = this.props
+    const {
+      savedProjects,
+      savedProjectsIsLoading,
+      savedProjectsIsLoaded
+    } = this.props
 
     const { edscHost } = getEnvironmentConfig()
 
@@ -66,103 +72,115 @@ export class SavedProjects extends Component {
           Saved Projects
         </h2>
         {
-          savedProjects.length > 0 ? (
-            <Table className="saved-projects-table" striped variant="dark">
-              <thead>
-                <tr>
-                  <th>Project Name</th>
-                  <th>Contents</th>
-                  <th>Created</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  savedProjects.map((project) => {
-                    const {
-                      created_at: createdAt,
-                      id,
-                      name,
-                      path
-                    } = project
+          savedProjectsIsLoading && (
+            <Spinner
+              className="saved-projects__spinner"
+              type="dots"
+              color="white"
+              size="small"
+            />
+          )
+        }
+        {
+          savedProjectsIsLoaded && (
+            savedProjects.length > 0 ? (
+              <Table className="saved-projects-table" striped variant="dark">
+                <thead>
+                  <tr>
+                    <th>Project Name</th>
+                    <th>Contents</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    savedProjects.map((project) => {
+                      const {
+                        created_at: createdAt,
+                        id,
+                        name,
+                        path
+                      } = project
 
-                    const projectName = !name ? 'Untitled Project' : name
+                      const projectName = !name ? 'Untitled Project' : name
 
-                    const [pathname] = path.split('?')
-                    const sharePath = `${edscHost}${pathname}?projectId=${id}`
+                      const [pathname] = path.split('?')
+                      const sharePath = `${edscHost}${pathname}?projectId=${id}`
 
-                    return (
-                      <tr key={id}>
-                        <td>
-                          <PortalLinkContainer
-                            to={this.projectTo(path, id)}
-                          >
-                            {projectName}
-                          </PortalLinkContainer>
-                        </td>
-                        <td>
-                          {this.projectContents(path)}
-                        </td>
-                        <td className="saved-projects-table__ago">
-                          <TimeAgo date={createdAt} />
-                        </td>
-                        <td>
-                          <div>
-                            <OverlayTrigger
-                              trigger="click"
-                              placement="top"
-                              overlay={(
-                                <Popover
-                                  id={`popover-basic-${id}`}
-                                  className="saved-projects__share-popover"
-                                >
-                                  <Popover.Title>
-                                    Share Project
-                                  </Popover.Title>
-                                  <Popover.Content>
-                                    <p>
-                                      Share your project by copying the URL
-                                      below and sending it to others.
-                                    </p>
-                                    <Form>
-                                      <Form.Group className="mb-0">
-                                        <Form.Control
-                                          className="saved-projects__share-input"
-                                          readOnly
-                                          value={sharePath}
-                                        />
-                                      </Form.Group>
-                                    </Form>
-                                  </Popover.Content>
-                                </Popover>
-                              )}
+                      return (
+                        <tr key={id}>
+                          <td>
+                            <PortalLinkContainer
+                              to={this.projectTo(path, id)}
                             >
+                              {projectName}
+                            </PortalLinkContainer>
+                          </td>
+                          <td>
+                            {this.projectContents(path)}
+                          </td>
+                          <td className="saved-projects-table__ago">
+                            <TimeAgo date={createdAt} />
+                          </td>
+                          <td>
+                            <div>
+                              <OverlayTrigger
+                                trigger="click"
+                                placement="top"
+                                overlay={(
+                                  <Popover
+                                    id={`popover-basic-${id}`}
+                                    className="saved-projects__share-popover"
+                                  >
+                                    <Popover.Title>
+                                      Share Project
+                                    </Popover.Title>
+                                    <Popover.Content>
+                                      <p>
+                                        Share your project by copying the URL
+                                        below and sending it to others.
+                                      </p>
+                                      <Form>
+                                        <Form.Group className="mb-0">
+                                          <Form.Control
+                                            className="saved-projects__share-input"
+                                            readOnly
+                                            value={sharePath}
+                                          />
+                                        </Form.Group>
+                                      </Form>
+                                    </Popover.Content>
+                                  </Popover>
+                                )}
+                              >
+                                <Button
+                                  className="saved-projects__button saved-projects__button--share"
+                                  type="button"
+                                  label="Share project"
+                                  variant="naked"
+                                  icon="share-square-o"
+                                />
+                              </OverlayTrigger>
                               <Button
-                                className="saved-projects__button saved-projects__button--share"
                                 type="button"
-                                label="Share project"
+                                className="saved-projects__button saved-projects__button--remove"
+                                label="Remove project"
                                 variant="naked"
-                                icon="share-square-o"
+                                icon="times-circle"
+                                onClick={() => this.handleDeleteSavedProject(id)}
                               />
-                            </OverlayTrigger>
-                            <Button
-                              type="button"
-                              className="saved-projects__button saved-projects__button--remove"
-                              label="Remove project"
-                              variant="naked"
-                              icon="times-circle"
-                              onClick={() => this.handleDeleteSavedProject(id)}
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  })
-                }
-              </tbody>
-            </Table>
-          ) : (
-            <p>No saved projects to display.</p>
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </Table>
+            ) : (
+              <p>No saved projects to display.</p>
+            )
           )
         }
       </div>
@@ -178,6 +196,8 @@ SavedProjects.propTypes = {
   savedProjects: PropTypes.arrayOf(
     PropTypes.shape({})
   ),
+  savedProjectsIsLoading: PropTypes.bool.isRequired,
+  savedProjectsIsLoaded: PropTypes.bool.isRequired,
   onDeleteSavedProject: PropTypes.func.isRequired
 }
 
