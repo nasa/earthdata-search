@@ -15,7 +15,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    metadata: collectionDetailsBodyProps.focusedCollectionObject
+    metadata: collectionDetailsBodyProps.focusedCollectionMetadata
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsMinimap {...props} />)
@@ -61,7 +61,7 @@ describe('CollectionDetails component', () => {
   test('passes correct props to CollectionDetailsFeatureGroup', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find(CollectionDetailsFeatureGroup).prop('metadata')).toEqual(
-      collectionDetailsBodyProps.focusedCollectionObject
+      collectionDetailsBodyProps.focusedCollectionMetadata
     )
   })
 })
