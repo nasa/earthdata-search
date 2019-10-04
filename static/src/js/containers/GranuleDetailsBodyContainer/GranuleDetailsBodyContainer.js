@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
-import getFocusedGranuleMetadata from '../../util/focusedGranule'
+import getFocusedGranuleObject from '../../util/focusedGranule'
 
 import GranuleDetailsBody from '../../components/GranuleDetails/GranuleDetailsBody'
 
@@ -18,11 +18,13 @@ export const GranuleDetailsBodyContainer = ({
   focusedGranule,
   granules
 }) => {
-  const focusedGranuleMetadata = getFocusedGranuleMetadata(focusedGranule, granules)
+  const focusedGranuleMetadata = getFocusedGranuleObject(focusedGranule, granules)
 
-  if (Object.keys(focusedGranuleMetadata).length === 0) return null
-
-  const { json, metadataUrls, xml } = granules.byId[focusedGranule]
+  const {
+    json,
+    metadataUrls,
+    xml
+  } = focusedGranuleMetadata
 
   return (
     <GranuleDetailsBody

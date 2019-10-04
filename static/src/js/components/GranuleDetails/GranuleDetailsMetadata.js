@@ -1,10 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
 
-import './GranuleDetailsMetadata.scss'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
-export const GranuleDetailsMetadata = ({ authToken, metadataUrls }) => {
+import Spinner from '../Spinner/Spinner'
+
+import './GranuleDetailsMetadata.scss'
+
+export const GranuleDetailsMetadata = ({
+  authToken,
+  metadataUrls
+}) => {
   const metdataUrlKeys = [
     'native',
     'umm_json',
@@ -18,36 +25,56 @@ export const GranuleDetailsMetadata = ({ authToken, metadataUrls }) => {
   return (
     <div className="granule-details-metadata">
       <div className="granule-details-metadata__content">
-        <h4 className="granule-details-metadata__heading">Download Metadata:</h4>
-        <ul className="granule-details-metadata__list">
-          {
-            metdataUrlKeys.length && metdataUrlKeys.map((key) => {
-              const metadataUrl = metadataUrls[key]
+        {
+          !isEmpty(metadataUrls)
+            ? (
+              <>
+                <h4 className="granule-details-metadata__heading">Download Metadata:</h4>
+                <ul className="granule-details-metadata__list">
+                  {
+                    metdataUrlKeys.length && metdataUrlKeys.map((key) => {
+                      const metadataUrl = metadataUrls[key]
+                      const { title, href } = metadataUrl
 
-              let url = metadataUrl.href
-              if (authToken !== '') url = `${apiHost}/concepts/metadata?url=${encodeURIComponent(metadataUrl.href)}&token=${authToken}`
+                      let url = href
+                      if (authToken !== '') url = `${apiHost}/concepts/metadata?url=${encodeURIComponent(href)}&token=${authToken}`
 
-              return (
-                <li
-                  key={`metadata_url_${metadataUrl.title}`}
-                  className="granule-details-metadata__list"
-                >
-                  <a href={url}>
-                    {metadataUrl.title}
-                  </a>
-                </li>
-              )
-            })
-          }
-        </ul>
+                      return (
+                        <li
+                          key={`metadata_url_${title}`}
+                          className="granule-details-metadata__list"
+                        >
+                          <a href={url}>
+                            {title}
+                          </a>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              </>
+            )
+            : (
+              <Spinner
+                className="granule-details-info__spinner"
+                type="dots"
+                size="small"
+              />
+            )
+        }
       </div>
     </div>
   )
 }
 
+GranuleDetailsMetadata.defaultProps = {
+  authToken: PropTypes.string,
+  metadataUrls: null
+}
+
 GranuleDetailsMetadata.propTypes = {
-  authToken: PropTypes.string.isRequired,
-  metadataUrls: PropTypes.shape({}).isRequired
+  authToken: PropTypes.string,
+  metadataUrls: PropTypes.shape({})
 }
 
 export default GranuleDetailsMetadata

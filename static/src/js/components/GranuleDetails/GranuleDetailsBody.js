@@ -35,10 +35,16 @@ const GranuleDetailsBody = ({
   </SimpleBar>
 )
 
+GranuleDetailsBody.defaultProps = {
+  authToken: null,
+  metadataUrls: null,
+  xml: null
+}
+
 GranuleDetailsBody.propTypes = {
-  authToken: PropTypes.string.isRequired,
-  metadataUrls: PropTypes.shape({}).isRequired,
-  xml: PropTypes.string.isRequired
+  authToken: PropTypes.string,
+  metadataUrls: PropTypes.shape({}),
+  xml: PropTypes.string
 }
 
 export default GranuleDetailsBody
