@@ -72,7 +72,7 @@ export class SavedProjects extends Component {
           Saved Projects
         </h2>
         {
-          savedProjectsIsLoading && (
+          (savedProjectsIsLoading && !savedProjectsIsLoaded) && (
             <Spinner
               className="saved-projects__spinner"
               type="dots"

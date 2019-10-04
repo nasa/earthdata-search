@@ -65,7 +65,7 @@ export class DownloadHistory extends Component {
       <>
         <h2 className="route-wrapper__page-heading">Download Status & History</h2>
         {
-          retrievalHistoryLoading && (
+          (retrievalHistoryLoading && !retrievalHistoryLoaded) && (
             <Spinner
               className="download-history__spinner"
               type="dots"
