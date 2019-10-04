@@ -93,9 +93,7 @@ const buildForDeveloperLink = (linkData, token) => {
  * @param {function} props.onToggleRelatedUrlsModal - Toggles the state of the Related URLs modal
  */
 export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelatedUrlsModal }) => {
-  const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
-
-  const { metadata, formattedMetadata } = focusedCollectionMetadata[collectionId]
+  const { metadata, formattedMetadata } = focusedCollectionMetadata
   const { summary } = metadata
   const {
     dataCenters,
