@@ -39,7 +39,7 @@ describe('setProviders', () => {
 })
 
 describe('fetchProviders', () => {
-  test('should load 66', async () => {
+  test('should load providers', async () => {
     nock(/localhost/)
       .get(/providers/)
       .reply(200, [
@@ -88,6 +88,21 @@ describe('fetchProviders', () => {
     expect(storeActions[0]).toEqual({
       type: SET_PROVIDERS,
       payload
+    })
+  })
+
+  test('should not fetch providers if user is not logged in', async () => {
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: '',
+      providers: []
+    })
+
+    // call the dispatch
+    await store.dispatch(fetchProviders()).then(() => {
+      // Is setProviders called with the right payload
+      const storeActions = store.getActions()
+      expect(storeActions.length).toBe(0)
     })
   })
 })

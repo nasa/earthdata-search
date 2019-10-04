@@ -14,7 +14,7 @@ export const setProviders = providerData => ({
 export const fetchProviders = () => (dispatch, getState) => {
   const { authToken, providers } = getState()
 
-  if (providers.length > 0) {
+  if (authToken === '' || providers.length > 0) {
     return new Promise(resolve => resolve(null))
   }
 
