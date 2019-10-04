@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import SimpleBar from 'simplebar-react'
 import { Tabs, Tab } from 'react-bootstrap'
 
 import GranuleDetailsInfo from './GranuleDetailsInfo'
@@ -18,7 +20,7 @@ const GranuleDetailsBody = ({
   metadataUrls,
   xml
 }) => (
-  <div className="granule-details-body">
+  <SimpleBar className="granule-details-body">
     <Tabs defaultActiveKey="information">
       <Tab eventKey="information" title="Information">
         <GranuleDetailsInfo xml={xml} />
@@ -30,7 +32,7 @@ const GranuleDetailsBody = ({
         />
       </Tab>
     </Tabs>
-  </div>
+  </SimpleBar>
 )
 
 GranuleDetailsBody.propTypes = {
