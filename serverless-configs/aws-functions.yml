@@ -355,6 +355,7 @@
 
   getAccessMethods:
     handler: serverless/src/getAccessMethods/handler.default
+    timeout: 60
     events:
       - http:
           method: post
