@@ -13,17 +13,15 @@ import generateHandoffs from '../../util/handoffs/generateHandoffs'
  * @param {object} props.focusedCollectionMetadata - Focused collection passed from redux store.
  */
 export const CollectionDetailsHeader = ({ focusedCollectionMetadata, collectionSearch = {} }) => {
-  const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
-  const { metadata } = focusedCollectionMetadata[collectionId]
+  if (!Object.keys(focusedCollectionMetadata).length) return null
+
   const {
     short_name: shortName,
     title,
     version_id: versionId
-  } = metadata
+  } = focusedCollectionMetadata
 
-  if (!Object.keys(metadata).length) return null
-
-  const handoffLinks = generateHandoffs(metadata, collectionSearch)
+  const handoffLinks = generateHandoffs(focusedCollectionMetadata, collectionSearch)
 
   return (
     <div className="collection-details-header">

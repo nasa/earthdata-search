@@ -8,7 +8,6 @@ import {
 import { collectionDetailsBodyProps } from './mocks'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 import CollectionDetailsFeatureGroup from '../CollectionDetailsFeatureGroup'
-import crsProjections from '../../../util/map/crs'
 
 // TODO: Write more tests
 
@@ -16,7 +15,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    metadata: collectionDetailsBodyProps.focusedCollectionMetadata['C179003620-ORNL_DAAC']
+    metadata: collectionDetailsBodyProps.focusedCollectionMetadata
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsMinimap {...props} />)
@@ -62,7 +61,7 @@ describe('CollectionDetails component', () => {
   test('passes correct props to CollectionDetailsFeatureGroup', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find(CollectionDetailsFeatureGroup).prop('metadata')).toEqual(
-      collectionDetailsBodyProps.focusedCollectionMetadata['C179003620-ORNL_DAAC']
+      collectionDetailsBodyProps.focusedCollectionMetadata
     )
   })
 })

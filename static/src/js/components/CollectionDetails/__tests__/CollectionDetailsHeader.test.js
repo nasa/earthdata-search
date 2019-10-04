@@ -12,7 +12,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata,
+    focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata,
     collectionSearch: {}
   }
 
