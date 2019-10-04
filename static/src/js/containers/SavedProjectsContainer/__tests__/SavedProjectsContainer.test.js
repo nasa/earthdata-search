@@ -33,6 +33,8 @@ describe('SavedProjectsContainer component', () => {
             created_at: '2019-09-05 00:00:00.000'
           }
         ],
+        savedProjectsIsLoading: false,
+        savedProjectsIsLoaded: true,
         onDeleteSavedProject: jest.fn(),
         onFetchSavedProjects: jest.fn()
       })

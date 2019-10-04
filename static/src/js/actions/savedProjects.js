@@ -1,11 +1,19 @@
 import ProjectRequest from '../util/request/projectRequest'
 
-import { SET_SAVED_PROJECTS, REMOVE_SAVED_PROJECT } from '../constants/actionTypes'
+import {
+  SET_SAVED_PROJECTS,
+  SET_SAVED_PROJECTS_LOADING,
+  REMOVE_SAVED_PROJECT
+} from '../constants/actionTypes'
 import { handleError } from './errors'
 
 export const setSavedProjects = payload => ({
   type: SET_SAVED_PROJECTS,
   payload
+})
+
+export const setSavedProjectsLoading = () => ({
+  type: SET_SAVED_PROJECTS_LOADING
 })
 
 export const removeSavedProject = payload => ({
@@ -18,6 +26,8 @@ export const removeSavedProject = payload => ({
  */
 export const fetchSavedProjects = () => (dispatch, getState) => {
   const { authToken } = getState()
+
+  dispatch(setSavedProjectsLoading())
 
   const requestObject = new ProjectRequest(authToken)
 

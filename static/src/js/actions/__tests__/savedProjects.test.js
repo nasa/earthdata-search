@@ -2,14 +2,31 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { SET_SAVED_PROJECTS } from '../../constants/actionTypes'
-import { fetchSavedProjects, setSavedProjects } from '../savedProjects'
+import {
+  SET_SAVED_PROJECTS,
+  SET_SAVED_PROJECTS_LOADING
+} from '../../constants/actionTypes'
+import {
+  fetchSavedProjects,
+  setSavedProjects,
+  setSavedProjectsLoading
+} from '../savedProjects'
 
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
+})
+
+describe('setSavedProjectsLoading', () => {
+  test('should create an action to set the loading state', () => {
+    const expectedAction = {
+      type: SET_SAVED_PROJECTS_LOADING
+    }
+
+    expect(setSavedProjectsLoading()).toEqual(expectedAction)
+  })
 })
 
 describe('setSavedProjects', () => {
@@ -55,6 +72,9 @@ describe('fetchSavedProjects', () => {
     await store.dispatch(fetchSavedProjects(name)).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
+        type: SET_SAVED_PROJECTS_LOADING
+      })
+      expect(storeActions[1]).toEqual({
         payload: [{
           name,
           id: 1
