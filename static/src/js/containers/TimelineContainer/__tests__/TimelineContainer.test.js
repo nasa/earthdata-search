@@ -60,15 +60,16 @@ describe('TimelineContainer component', () => {
     expect(enzymeWrapper.find(Timeline).length).toBe(1)
     expect(enzymeWrapper.find(Timeline).props()).toEqual({
       ...props,
+      focusedCollection: undefined,
       onChangeProjectQuery: undefined,
       collections: undefined,
-      focusedCollection: 'collectionId',
-      granuleFilterTemporal: {},
       pathname: '/search/granules',
       project: undefined,
       collectionMetadata: {
         collectionId: {
-          mock: 'data'
+          metadata: {
+            mock: 'data'
+          }
         }
       },
       showOverrideModal: false
@@ -97,11 +98,10 @@ describe('TimelineContainer component', () => {
     expect(enzymeWrapper.find(Timeline).length).toBe(1)
     expect(enzymeWrapper.find(Timeline).props()).toEqual({
       ...props,
+      focusedCollection: undefined,
       onChangeProjectQuery: undefined,
       onChangeQuery: props.onChangeProjectQuery,
       collections: undefined,
-      focusedCollection: 'collectionId',
-      granuleFilterTemporal: {},
       pathname: '/projects',
       project: undefined,
       collectionMetadata: {

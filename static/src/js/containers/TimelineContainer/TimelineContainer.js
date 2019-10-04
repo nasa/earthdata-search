@@ -1,13 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { isEmpty } from 'lodash'
 
 import actions from '../../actions/index'
 import { metricsTimeline } from '../../middleware/metrics/actions'
 
 import Timeline from '../../components/Timeline/Timeline'
-import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
+import { getFocusedCollectionObject } from '../../util/focusedCollection'
 import isPath from '../../util/isPath'
 
 const mapDispatchToProps = dispatch => ({
@@ -49,7 +48,6 @@ export const TimelineContainer = (props) => {
   const isProjectPage = isPath(pathname, ['/projects'])
   const isGranulesPage = isPath(pathname, ['/search/granules'])
   const collectionMetadata = {}
-  let granuleFilterTemporal
 
   if (isProjectPage) {
     const { byId } = collections
@@ -61,17 +59,8 @@ export const TimelineContainer = (props) => {
 
     changeQueryMethod = onChangeProjectQuery
   } else if (isGranulesPage && focusedCollection !== '') {
-    const metadata = getFocusedCollectionMetadata(focusedCollection, collections)
+    const metadata = getFocusedCollectionObject(focusedCollection, collections)
     collectionMetadata[focusedCollection] = metadata
-  }
-
-  if (!isEmpty(collectionMetadata[focusedCollection])) {
-    const { granuleFilters = {} } = collectionMetadata[focusedCollection]
-    if (!isEmpty(granuleFilters)) {
-      ({
-        temporal: granuleFilterTemporal
-      } = granuleFilters)
-    }
   }
 
   if (Object.keys(collectionMetadata).length === 0) return null
@@ -79,8 +68,6 @@ export const TimelineContainer = (props) => {
   return (
     <Timeline
       collectionMetadata={collectionMetadata}
-      focusedCollection={focusedCollection}
-      granuleFilterTemporal={granuleFilterTemporal}
       pathname={pathname}
       showOverrideModal={isProjectPage}
       temporalSearch={temporalSearch}

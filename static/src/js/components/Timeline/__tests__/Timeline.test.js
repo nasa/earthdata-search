@@ -11,7 +11,6 @@ function setup(overrideProps) {
     temporalSearch: {},
     timeline: { intervals: {}, query: {} },
     showOverrideModal: false,
-    focusedCollection: '',
     pathname: '/search/granules',
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
@@ -115,7 +114,7 @@ describe('Timeline component', () => {
   describe('componentWillReceiveProps', () => {
     test('when the timeline center is new', () => {
       const { enzymeWrapper } = setup()
-      enzymeWrapper.instance().$el.timeline = jest.fn()
+      enzymeWrapper.instance().$el.timeline = jest.fn(() => [])
       enzymeWrapper.setProps({
         collectionMetadata: {
           collectionId: {
@@ -326,7 +325,7 @@ describe('Timeline component', () => {
       enzymeWrapper.setProps({
         collectionMetadata: {
           [metadata.id]: {
-            ...metadata
+            metadata
           }
         },
         timeline: {
@@ -381,7 +380,7 @@ describe('Timeline component', () => {
       enzymeWrapper.setProps({
         collectionMetadata: {
           [metadata.id]: {
-            ...metadata
+            metadata
           }
         },
         timeline: {

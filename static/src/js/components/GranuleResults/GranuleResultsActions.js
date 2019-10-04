@@ -46,7 +46,7 @@ const GranuleResultsActions = ({
   )
 
   const downloadAllButton = () => {
-    const params = qs.parse(location.search, { ignoreQueryPrefix: true })
+    const params = qs.parse(location.search, { ignoreQueryPrefix: true, parseArrays: false })
     let { p = '' } = params
     if (!isCollectionInProject) p = `${p}!${collectionId}`
 
