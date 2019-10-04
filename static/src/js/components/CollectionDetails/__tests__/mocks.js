@@ -1,6 +1,6 @@
 export const collectionDetailsBodyProps = {
   onToggleRelatedUrlsModal: jest.fn(),
-  focusedCollectionMetadata: {
+  focusedCollectionObject: {
     excludedGranuleIds: [],
     granules: {},
     isCwic: false,
