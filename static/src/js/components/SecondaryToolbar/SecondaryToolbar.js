@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Col, Dropdown, Form } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import qs from 'qs'
 
 import { isPath } from '../../util/isPath'
@@ -182,18 +183,26 @@ class SecondaryToolbar extends Component {
           <i className="fa fa-user" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item
-            className="secondary-toolbar__downloads"
-            href={`${portalPath(portal)}/downloads`}
+          <LinkContainer
+            to={`${portalPath(portal)}/downloads`}
           >
-            Download Status &amp; History
-          </Dropdown.Item>
-          <Dropdown.Item
-            className="secondary-toolbar__saved-projects"
-            href={`${portalPath(portal)}/projects`}
+            <Dropdown.Item
+              className="secondary-toolbar__downloads"
+              active={false}
+            >
+              Download Status &amp; History
+            </Dropdown.Item>
+          </LinkContainer>
+          <LinkContainer
+            to={`${portalPath(portal)}/projects`}
           >
-            Saved Projects
-          </Dropdown.Item>
+            <Dropdown.Item
+              className="secondary-toolbar__saved-projects"
+              active={false}
+            >
+              Saved Projects
+            </Dropdown.Item>
+          </LinkContainer>
           <Dropdown.Item
             className="secondary-toolbar__logout"
             onClick={this.handleLogout}
@@ -249,7 +258,7 @@ class SecondaryToolbar extends Component {
           isPath(location.pathname, ['/projects']) && backLink
         }
         {
-          (!isPath(location.pathname, ['/projects']) && projectIds.length > 0) && projectLink
+          (!isPath(location.pathname, ['/projects', '/downloads']) && projectIds.length > 0) && projectLink
         }
         {
           pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
