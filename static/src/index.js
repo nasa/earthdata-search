@@ -1,19 +1,40 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { detect } from 'detect-browser'
 
 import './css/main.scss'
 
 import App from './js/App'
 import './js/util/polyfill'
 
-const wrapper = document.getElementById('root')
+const {
+  name = '',
+  version = ''
+} = detect()
 
+if (!(name === 'ie' && version <= 10)) {
+  if (process.env.NODE_ENV === 'development' && module.hot) module.hot.accept()
 
-if (process.env.NODE_ENV === 'development' && module.hot) module.hot.accept()
+  const rootElement = document.getElementById('root')
+  const appElement = document.getElementById('app')
 
-if (wrapper) {
-  ReactDOM.render(
-    <App />,
-    wrapper
-  )
+  if (rootElement) {
+    ReactDOM.render(
+      <App />,
+      appElement,
+      () => {
+        window.requestAnimationFrame(() => {
+          // Start to fade the loading screen
+          rootElement.classList.add('root--loading-fade')
+
+          // Remove the loading classes after the animation completes
+          setTimeout(() => {
+            rootElement.classList.remove('root--loading')
+            rootElement.classList.remove('root--loading-fade')
+          }, 150)
+        })
+      }
+    )
+  }
 }
