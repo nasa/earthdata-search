@@ -133,11 +133,7 @@ const StaticCommonConfig = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      favicon: path.join(__dirname, './static/src/public/favicon.ico'),
-      title: 'Earthdata Search',
-      meta: {
-        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
-      }
+      template: path.join(__dirname, './static/src/partials/wrapper.html')
     }),
     new HtmlWebpackPartialsPlugin([
       {
