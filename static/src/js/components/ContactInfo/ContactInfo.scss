@@ -7,11 +7,11 @@
   border-color: #e3e3e3;
   color: #333333;
 
-  > ul {
+  &__list {
     list-style: none;
     padding: 0;
 
-    > li {
+    &__item {
       margin: 10px, 0;
       display: list-item;
     }

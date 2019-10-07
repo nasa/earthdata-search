@@ -6,6 +6,9 @@ export const updateContactInfo = data => ({
   payload: data
 })
 
+/**
+ * Fetch the user's ECHO preferences and URS profile from lambda
+ */
 export const fetchContactInfo = () => (dispatch, getState) => {
   const { authToken } = getState()
 
@@ -28,6 +31,10 @@ export const fetchContactInfo = () => (dispatch, getState) => {
   return response
 }
 
+/**
+ * Calls lambda to update Legacy Services with new ECHO preferences
+ * @param {String} level New order notification level
+ */
 export const updateNotificationLevel = level => (dispatch, getState) => {
   const { authToken, contactInfo } = getState()
   const { ursProfile = {} } = contactInfo
@@ -39,6 +46,8 @@ export const updateNotificationLevel = level => (dispatch, getState) => {
     organization
   } = ursProfile
 
+  // Build the ECHO preferences object
+  // default values that are required in legacy services (role, phones)
   const preferences = {
     general_contact: {
       first_name: firstName,
