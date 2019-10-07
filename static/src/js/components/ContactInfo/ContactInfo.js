@@ -59,36 +59,36 @@ class ContactInfo extends Component {
     return (
       <fieldset className="contact-info-form">
         <h3>View Contact Information</h3>
-        <ul>
-          <li>
+        <ul className="contact-info-form__list">
+          <li className="contact-info-form__item">
             <span className="contact-info-form__label">First Name</span>
             <span>{firstName}</span>
           </li>
-          <li>
+          <li className="contact-info-form__item">
             <span className="contact-info-form__label">Last Name</span>
             <span>{lastName}</span>
           </li>
-          <li>
+          <li className="contact-info-form__item">
             <span className="contact-info-form__label">Email</span>
             <span>{email}</span>
           </li>
-          <li>
+          <li className="contact-info-form__item">
             <span className="contact-info-form__label">Organization Name</span>
             <span>{organization}</span>
           </li>
-          <li>
+          <li className="contact-info-form__item">
             <span className="contact-info-form__label">Country</span>
             <span>{country}</span>
           </li>
-          <li>
+          <li className="contact-info-form__item">
             <span className="contact-info-form__label">Affiliation</span>
             <span>{affiliation}</span>
           </li>
-          <li>
+          <li className="contact-info-form__item">
             <span className="contact-info-form__label">Study Area</span>
             <span>{studyArea}</span>
           </li>
-          <li>
+          <li className="contact-info-form__item">
             <span className="contact-info-form__label">User Type</span>
             <span>{userType}</span>
           </li>
