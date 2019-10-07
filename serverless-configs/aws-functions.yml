@@ -419,6 +419,7 @@
           method: get
           cors: true
           path: providers
+          authorizer: edlAuthorizer
 
   getContactInfo:
     handler: serverless/src/getContactInfo/handler.default
