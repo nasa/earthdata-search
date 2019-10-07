@@ -21,6 +21,7 @@ class ShapefileLayerExtended extends L.Layer {
     this.clickLayer = this.clickLayer.bind(this)
     this.authToken = props.authToken
     this.onMetricsMap = props.onMetricsMap
+    this.onToggleTooManyPointsModal = props.onToggleTooManyPointsModal
 
     this.options = {
       selection: L.extend({}, defaultOptions.selection)
@@ -186,8 +187,7 @@ class ShapefileLayerExtended extends L.Layer {
 
       if ((originalLatLngs[0].length > MAX_POLYGON_SIZE)
         && (latlngs.length !== originalLatLngs.length)) {
-        // TODO: Add notification about shapefile reduction @critical
-        // help.add('shapefile_reduction', { element: '.leaflet-draw-edit-edit' })
+        this.onToggleTooManyPointsModal(true)
       }
 
       layer = L.sphericalPolygon(latlngs, this.options.selection)

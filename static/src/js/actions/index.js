@@ -62,7 +62,8 @@ import {
   toggleRelatedUrlsModal,
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
-  toggleShapefileUploadModal
+  toggleShapefileUploadModal,
+  toggleTooManyPointsModal
 } from './ui'
 import {
   applyViewAllFacets,
@@ -182,6 +183,7 @@ const actions = {
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
+  toggleTooManyPointsModal,
   triggerViewAllFacets,
   undoExcludeGranule,
   updateAccessMethod,

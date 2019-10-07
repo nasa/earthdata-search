@@ -20,6 +20,7 @@ import ConnectedAuthCallbackContainer
   from './containers/AuthCallbackContainer/AuthCallbackContainer'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
+import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import ConnectedPortalContainer from './containers/PortalContainer/PortalContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
@@ -109,6 +110,7 @@ class App extends Component {
                   <Route path={this.portalPaths('/')}>
                     <ShapefileUploadModalContainer />
                     <ShapefileDropzoneContainer />
+                    <TooManyPointsModalContainer />
                   </Route>
                 </Switch>
               </ConnectedUrlQueryContainer>

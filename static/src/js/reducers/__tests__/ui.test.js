@@ -8,7 +8,8 @@ import {
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
-  TOGGLE_SECONDARY_OVERLAY_PANEL
+  TOGGLE_SECONDARY_OVERLAY_PANEL,
+  TOGGLE_TOO_MANY_POINTS_MODAL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -43,6 +44,9 @@ const initialState = {
     isOpen: false
   },
   shapefileUploadModal: {
+    isOpen: false
+  },
+  tooManyPointsModal: {
     isOpen: false
   }
 }
@@ -257,6 +261,22 @@ describe('TOGGLE_SECONDARY_OVERLAY_PANEL', () => {
     const expectedState = {
       ...initialState,
       secondaryOverlayPanel: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_TOO_MANY_POINTS_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_TOO_MANY_POINTS_MODAL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      tooManyPointsModal: { isOpen: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
