@@ -39,7 +39,7 @@ export const getServiceOptionDefinitions = async (
         resolveWithFullResponse: true
       })
 
-      console.log(`Took ${response.elapsedTime / 1000}s to retrieve '${name}' for ${organizationName}`)
+      console.log(`Took ${response.elapsedTime / 1000}s to retrieve service option '${name}' for ${organizationName}`)
 
       const { body } = response
       const [firstServiceOptionDefinition] = JSON.parse(body)

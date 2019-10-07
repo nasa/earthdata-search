@@ -39,7 +39,7 @@ export const getOptionDefinitions = async (
         resolveWithFullResponse: true
       })
 
-      console.log(`Took ${response.elapsedTime / 1000}s to retrieve '${name}' for ${organizationName}`)
+      console.log(`Took ${response.elapsedTime / 1000}s to retrieve option definition '${name}' for ${organizationName}`)
 
       const { body } = response
       const [firstOptionDefinition] = JSON.parse(body)
