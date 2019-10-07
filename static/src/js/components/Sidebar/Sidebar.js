@@ -1,18 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-
 import SimpleBar from 'simplebar-react'
 
-import Header from './SidebarHeader'
+import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
 
 import './Sidebar.scss'
 
 const Sidebar = ({
   children,
-  edscEnv,
   panels,
-  portal,
   visible
 }) => {
   const className = classNames({
@@ -23,10 +20,7 @@ const Sidebar = ({
   return (
     <section className={className}>
       <div className="sidebar__inner">
-        <Header
-          edscEnv={edscEnv}
-          portal={portal}
-        />
+        <AppLogoContainer />
         <SimpleBar className="sidebar__content" style={{ height: '100%', overflowX: 'hidden' }}>
           {children}
         </SimpleBar>
@@ -42,9 +36,7 @@ Sidebar.defaultProps = {
 
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
-  edscEnv: PropTypes.string.isRequired,
   panels: PropTypes.node,
-  portal: PropTypes.shape({}).isRequired,
   visible: PropTypes.bool.isRequired
 }
 
