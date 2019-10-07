@@ -20,16 +20,11 @@ import SavedProjectsContainer from '../../containers/SavedProjectsContainer/Save
 
 import actions from '../../actions'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
-import Header from '../../components/Sidebar/SidebarHeader'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
 
 const mapDispatchToProps = dispatch => ({
   onSubmitRetrieval:
     () => dispatch(actions.submitRetrieval())
-})
-
-const mapStateToProps = state => ({
-  portal: state.portal
 })
 
 export class Project extends Component {
@@ -48,12 +43,9 @@ export class Project extends Component {
 
   render() {
     const {
-      portal,
       location
     } = this.props
     const { search } = location
-
-    const edscEnv = getApplicationConfig().env
 
     // If there are no params in the URL, show the saved projects page
     if (search === '') {
@@ -63,10 +55,7 @@ export class Project extends Component {
             <div className="route-wrapper__content">
               <header className="route-wrapper__header">
                 <div className="route-wrapper__header-primary">
-                  <Header
-                    edscEnv={edscEnv}
-                    portal={portal}
-                  />
+                  <AppLogoContainer />
                   <SecondaryToolbarContainer />
                 </div>
               </header>
@@ -111,11 +100,10 @@ export class Project extends Component {
 }
 
 Project.propTypes = {
-  portal: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Project)
+  connect(null, mapDispatchToProps)(Project)
 )

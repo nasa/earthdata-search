@@ -15,12 +15,10 @@ import OrderStatusContainer from '../../containers/OrderStatusContainer/OrderSta
 import CollectionContainer from '../../containers/CollectionContainer/CollectionContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import DownloadHistoryContainer from '../../containers/DownloadHistoryContainer/DownloadHistoryContainer'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import Header from '../../components/Sidebar/SidebarHeader'
+import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
 
 
 const mapStateToProps = state => ({
-  portal: state.portal,
   retrieval: state.retrieval
 })
 
@@ -31,7 +29,6 @@ const mapDispatchToProps = dispatch => ({
 
 export const Downloads = ({
   match,
-  portal,
   retrieval = {},
   onChangePath
 }) => {
@@ -39,8 +36,6 @@ export const Downloads = ({
   const { source } = jsondata
 
   const { path } = match
-
-  const edscEnv = getApplicationConfig().env
 
   return (
     <Switch>
@@ -57,10 +52,7 @@ export const Downloads = ({
           <div className="route-wrapper__content">
             <header className="route-wrapper__header">
               <div className="route-wrapper__header-primary">
-                <Header
-                  edscEnv={edscEnv}
-                  portal={portal}
-                />
+                <AppLogoContainer />
                 <SecondaryToolbarContainer />
               </div>
               <div className="route-wrapper__header-secondary">
@@ -98,7 +90,6 @@ export const Downloads = ({
 
 Downloads.propTypes = {
   match: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   retrieval: PropTypes.shape({}).isRequired
 }

@@ -6,7 +6,7 @@ import SavedProjectsContainer
   from '../../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import ProjectCollectionsContainer
   from '../../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
-import Header from '../../../components/Sidebar/SidebarHeader'
+import AppLogoContainer from '../../../containers/AppLogoContainer/AppLogoContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -61,7 +61,7 @@ describe('Project component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Header).length).toBe(1)
+      expect(enzymeWrapper.find(AppLogoContainer).length).toBe(1)
     })
   })
 

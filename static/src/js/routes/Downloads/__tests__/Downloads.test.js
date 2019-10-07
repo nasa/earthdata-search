@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Downloads from '../Downloads'
-import Header from '../../../components/Sidebar/SidebarHeader'
+import AppLogoContainer from '../../../containers/AppLogoContainer/AppLogoContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -41,6 +41,6 @@ describe('Downloads component', () => {
   test('displays a header', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(Header).length).toBe(1)
+    expect(enzymeWrapper.find(AppLogoContainer).length).toBe(1)
   })
 })
