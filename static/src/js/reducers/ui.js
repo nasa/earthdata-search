@@ -9,7 +9,8 @@ import {
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_TOO_MANY_POINTS_MODAL
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -44,6 +45,9 @@ const initialState = {
     isOpen: false
   },
   shapefileUploadModal: {
+    isOpen: false
+  },
+  tooManyPointsModal: {
     isOpen: false
   }
 }
@@ -149,6 +153,14 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         shapefileUploadModal: {
+          isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_TOO_MANY_POINTS_MODAL: {
+      return {
+        ...state,
+        tooManyPointsModal: {
           isOpen: action.payload
         }
       }

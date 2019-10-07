@@ -49,7 +49,9 @@ const mapDispatchToProps = dispatch => ({
     data => dispatch(actions.excludeGranule(data)),
   onSaveShapefile: data => dispatch(actions.saveShapefile(data)),
   onShapefileErrored: data => dispatch(actions.shapefileErrored(data)),
-  onMetricsMap: type => dispatch(metricsMap(type))
+  onMetricsMap: type => dispatch(metricsMap(type)),
+  onToggleTooManyPointsModal:
+    state => dispatch(actions.toggleTooManyPointsModal(state))
 })
 
 const mapStateToProps = state => ({
@@ -208,7 +210,8 @@ export class MapContainer extends Component {
       onExcludeGranule,
       onSaveShapefile,
       onShapefileErrored,
-      onMetricsMap
+      onMetricsMap,
+      onToggleTooManyPointsModal
     } = this.props
 
     const {
@@ -368,6 +371,7 @@ export class MapContainer extends Component {
             onSaveShapefile={onSaveShapefile}
             onShapefileErrored={onShapefileErrored}
             onMetricsMap={onMetricsMap}
+            onToggleTooManyPointsModal={onToggleTooManyPointsModal}
           />
           )
         }
@@ -396,7 +400,8 @@ MapContainer.propTypes = {
   onExcludeGranule: PropTypes.func.isRequired,
   onSaveShapefile: PropTypes.func.isRequired,
   onShapefileErrored: PropTypes.func.isRequired,
-  onMetricsMap: PropTypes.func.isRequired
+  onMetricsMap: PropTypes.func.isRequired,
+  onToggleTooManyPointsModal: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)
