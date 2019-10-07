@@ -77,13 +77,16 @@
     right: 0;
     height: 100%;
     width: 100%;
-    padding-top: 200px;
+    padding: 0px;
     background-color: #191a1b;
   }
 
   .fallback-page__content {
-    margin: 150px auto 0;
+    position: relative;
+    top: 150px;
+    margin: 0 auto;
     max-width: 700px;
+    _width:expression(this.scrollWidth > 700 ? "700px" : "auto"); /* sets max-width for IE6 */ 
     padding: 1rem;
     text-align: center;
     color: white;
@@ -94,6 +97,11 @@
 
   .fallback-page__wrapper--unsupported-browser .fallback-page__content {
     max-width: 850px;
+    _width:expression(this.scrollWidth > 850 ? "850px" : "auto"); /* sets max-width for IE6 */ 
+  }
+
+  .lt-ie8 .fallback-page__heading {
+    margin-top: 16px;
   }
 
   .fallback-page__note--last {
@@ -104,6 +112,16 @@
     position: absolute;
     bottom: 0;
     width: 100%;
+  }
+
+  .lt-ie8 .footer__info--right {
+    float: right;
+    margin: 10px;
+  }
+
+  .lt-ie8 .footer__info--left {
+    float: left;
+    margin: 10px;
   }
 
   .no-js .fallback-page,
@@ -134,10 +152,13 @@
     margin-top: 2em;
     margin-top: 2rem;
     padding: 0;
+    list-style-type: none;
   }
 
   .browser-icons__item {
     display: inline-block;
+    *display: inline;
+    *zoom: 1;
     cursor: pointer;
     width: 120px;
     height: 122px;

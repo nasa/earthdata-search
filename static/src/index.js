@@ -1,40 +1,32 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { detect } from 'detect-browser'
 
 import './css/main.scss'
 
 import App from './js/App'
 import './js/util/polyfill'
 
-const {
-  name = '',
-  version = ''
-} = detect()
+if (process.env.NODE_ENV === 'development' && module.hot) module.hot.accept()
 
-if (!(name === 'ie' && version <= 10)) {
-  if (process.env.NODE_ENV === 'development' && module.hot) module.hot.accept()
+const rootElement = document.getElementById('root')
+const appElement = document.getElementById('app')
 
-  const rootElement = document.getElementById('root')
-  const appElement = document.getElementById('app')
+if (rootElement) {
+  ReactDOM.render(
+    <App />,
+    appElement,
+    () => {
+      window.requestAnimationFrame(() => {
+        // Start to fade the loading screen
+        rootElement.classList.add('root--loading-fade')
 
-  if (rootElement) {
-    ReactDOM.render(
-      <App />,
-      appElement,
-      () => {
-        window.requestAnimationFrame(() => {
-          // Start to fade the loading screen
-          rootElement.classList.add('root--loading-fade')
-
-          // Remove the loading classes after the animation completes
-          setTimeout(() => {
-            rootElement.classList.remove('root--loading')
-            rootElement.classList.remove('root--loading-fade')
-          }, 150)
-        })
-      }
-    )
-  }
+        // Remove the loading classes after the animation completes
+        setTimeout(() => {
+          rootElement.classList.remove('root--loading')
+          rootElement.classList.remove('root--loading-fade')
+        }, 150)
+      })
+    }
+  )
 }
