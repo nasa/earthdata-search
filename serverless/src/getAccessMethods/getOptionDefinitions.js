@@ -17,7 +17,7 @@ export const getOptionDefinitions = async (
   const forms = []
 
   const { provider } = collectionProvider
-  const { id: providerId } = provider
+  const { id: providerId, organization_name: organizationName } = provider
 
   await optionDefinitions.forEachAsync(async (optionDefinition, index) => {
     const { name } = optionDefinition
@@ -26,6 +26,7 @@ export const getOptionDefinitions = async (
 
     try {
       const response = await request.get({
+        time: true,
         uri: url,
         qs: {
           name,
@@ -37,6 +38,8 @@ export const getOptionDefinitions = async (
         },
         resolveWithFullResponse: true
       })
+
+      console.log(`Took ${response.elapsedTime / 1000}s to retrieve '${name}' for ${organizationName}`)
 
       const { body } = response
       const [firstOptionDefinition] = JSON.parse(body)

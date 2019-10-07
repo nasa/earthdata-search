@@ -6,8 +6,9 @@ import {
 } from '../constants/actionTypes'
 import { handleError } from './errors'
 
-export const setRetrievalCollectionLoading = () => ({
-  type: SET_RETRIEVAL_COLLECTION_LOADING
+export const setRetrievalCollectionLoading = retrievalCollection => ({
+  type: SET_RETRIEVAL_COLLECTION_LOADING,
+  payload: retrievalCollection
 })
 
 export const updateRetrievalCollection = (id, retrievalCollectionData) => ({
@@ -21,7 +22,7 @@ export const updateRetrievalCollection = (id, retrievalCollectionData) => ({
 export const fetchRetrievalCollection = id => (dispatch, getState) => {
   const { authToken } = getState()
 
-  dispatch(setRetrievalCollectionLoading())
+  dispatch(setRetrievalCollectionLoading({ id }))
 
   const requestObject = new RetrievalCollectionRequest(authToken)
 
