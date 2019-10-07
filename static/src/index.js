@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import './js/util/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
