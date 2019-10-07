@@ -47,18 +47,17 @@ export class TooManyPointsModal extends Component {
             Your original shapefile will be used for spatial subsetting if you
             choose to enable that setting during download.
           </p>
-          <div className="too-many-points-modal__actions">
-            <Button
-              className="too-many-points-modal__action too-many-points-modal__action--secondary"
-              bootstrapVariant="primary"
-              label="Close"
-              onClick={this.onModalClose}
-            >
-              Close
-            </Button>
-            {/* TODO add "Do not show again" */}
-          </div>
         </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="too-many-points-modal__action too-many-points-modal__action--secondary"
+            bootstrapVariant="primary"
+            label="Close"
+            onClick={this.onModalClose}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
       </Modal>
     )
   }
