@@ -79,13 +79,17 @@ class SpatialSelection extends Component {
     }
 
     this.onCreated = this.onCreated.bind(this)
+    this.onDeleted = this.onDeleted.bind(this)
     this.onDrawStart = this.onDrawStart.bind(this)
     this.onDrawStop = this.onDrawStop.bind(this)
     this.onEdited = this.onEdited.bind(this)
-    this.onDeleted = this.onDeleted.bind(this)
     this.onEditStart = this.onEditStart.bind(this)
     this.onEditStop = this.onEditStop.bind(this)
+    this.onMounted = this.onMounted.bind(this)
+    this.onSpatialDropdownClick = this.onSpatialDropdownClick.bind(this)
     this.updateStateAndQuery = this.updateStateAndQuery.bind(this)
+
+    this.drawControl = null
   }
 
   componentDidMount() {
@@ -123,6 +127,10 @@ class SpatialSelection extends Component {
     }
   }
 
+  componentWillUnmount() {
+    eventEmitter.off('map.drawStart', this.onSpatialDropdownClick)
+  }
+
   // Callback from EditControl, called when clicking the draw shape button
   onDrawStart(e) {
     const { drawnLayer } = this.state
@@ -156,10 +164,16 @@ class SpatialSelection extends Component {
 
   // Callback from EditControl, called when the controls are mounted
   onMounted(drawControl) {
-    eventEmitter.on('map.drawStart', (e) => {
-      const { type } = e
-      drawControl._toolbars.draw._modes[type].handler.enable()
-    })
+    this.drawControl = drawControl
+
+    eventEmitter.on('map.drawStart', this.onSpatialDropdownClick)
+  }
+
+  onSpatialDropdownClick(event) {
+    const { type } = event
+    if (this.drawControl) {
+      this.drawControl._toolbars.draw._modes[type].handler.enable()
+    }
   }
 
   onEditStart() {
