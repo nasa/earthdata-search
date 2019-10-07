@@ -25,6 +25,7 @@ import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerC
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
+import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -67,9 +68,9 @@ class App extends Component {
                   <Route
                     path={this.portalPaths('/contact_info')}
                     render={() => (
-                      // <AuthRequiredContainer>
-                      <ContactInfo />
-                      // </AuthRequiredContainer>
+                      <AuthRequiredContainer>
+                        <ContactInfo />
+                      </AuthRequiredContainer>
                     )}
                   />
                   <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
@@ -77,7 +78,9 @@ class App extends Component {
                   <Route
                     path={this.portalPaths('/downloads')}
                     render={() => (
-                      <Downloads />
+                      <AuthRequiredContainer>
+                        <Downloads />
+                      </AuthRequiredContainer>
                     )}
                   />
                   <Route path={this.portalPaths('/projects')} component={Project} />

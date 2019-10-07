@@ -57,39 +57,39 @@ class ContactInfo extends Component {
     const { edlHost } = getEarthdataConfig(cmrEnv())
 
     return (
-      <fieldset className="account-form">
+      <fieldset className="contact-info-form">
         <h3>View Contact Information</h3>
         <ul>
           <li>
-            <span className="urs-profile-label">First Name</span>
+            <span className="contact-info-form__label">First Name</span>
             <span>{firstName}</span>
           </li>
           <li>
-            <span className="urs-profile-label">Last Name</span>
+            <span className="contact-info-form__label">Last Name</span>
             <span>{lastName}</span>
           </li>
           <li>
-            <span className="urs-profile-label">Email</span>
+            <span className="contact-info-form__label">Email</span>
             <span>{email}</span>
           </li>
           <li>
-            <span className="urs-profile-label">Organization Name</span>
+            <span className="contact-info-form__label">Organization Name</span>
             <span>{organization}</span>
           </li>
           <li>
-            <span className="urs-profile-label">Country</span>
+            <span className="contact-info-form__label">Country</span>
             <span>{country}</span>
           </li>
           <li>
-            <span className="urs-profile-label">Affiliation</span>
+            <span className="contact-info-form__label">Affiliation</span>
             <span>{affiliation}</span>
           </li>
           <li>
-            <span className="urs-profile-label">Study Area</span>
+            <span className="contact-info-form__label">Study Area</span>
             <span>{studyArea}</span>
           </li>
           <li>
-            <span className="urs-profile-label">User Type</span>
+            <span className="contact-info-form__label">User Type</span>
             <span>{userType}</span>
           </li>
         </ul>
@@ -111,8 +111,10 @@ class ContactInfo extends Component {
         <h3>Update Notification Preference Level</h3>
 
         <p>
-          <label htmlFor="notificationLevel">Receive delayed access notifications</label>
-
+          <label htmlFor="notificationLevel">
+            Receive delayed access notifications
+          </label>
+          {' '}
           <select
             id="notificationLevel"
             onChange={this.handleNotificationLevelChange}
@@ -127,7 +129,7 @@ class ContactInfo extends Component {
         </p>
 
         <Button
-          className="contact-info__update"
+          className="contact-info-form__update-notification-level"
           type="button"
           bootstrapVariant="primary"
           label="Update Notification Preference"

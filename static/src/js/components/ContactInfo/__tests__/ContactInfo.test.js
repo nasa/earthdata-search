@@ -45,7 +45,7 @@ describe('ContactInfo component', () => {
   test('clicking the Update Notification Preference button should call onUpdateNotificationLevel', () => {
     const { enzymeWrapper, props } = setup()
 
-    const button = enzymeWrapper.find('.contact-info__update')
+    const button = enzymeWrapper.find('.contact-info-form__update-notification-level')
     button.simulate('click')
 
     expect(props.onUpdateNotificationLevel).toBeCalledTimes(1)
