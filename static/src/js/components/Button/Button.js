@@ -70,6 +70,11 @@ export const Button = ({
     )
   }
 
+  let rel
+  if (target && target === '_blank') {
+    rel = 'noopener nofollow'
+  }
+
   const button = (
     <Btn
       className={buttonClasses}
@@ -84,6 +89,7 @@ export const Button = ({
       type={type}
       disabled={disabled || spinner}
       target={target}
+      rel={rel}
     >
       {(!spinner && icon) && <i className={iconClasses} /> }
       <span className="button__contents">

@@ -1,4 +1,4 @@
-fieldset.account-form {
+.contact-info-form {
   background-color: white;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3f3f3));
   background-image: linear-gradient(#fff, #f3f3f3);
@@ -16,10 +16,10 @@ fieldset.account-form {
       display: list-item;
     }
   }
-}
 
-span.urs-profile-label {
-  display: inline-block;
-  min-width: 200px;
-  font-weight: bold;
+  &__label {
+    display: inline-block;
+    min-width: 200px;
+    font-weight: bold;
+  }
 }
