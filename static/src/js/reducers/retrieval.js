@@ -40,7 +40,7 @@ const retrievalReducer = (state = initialState, action) => {
           byId: {
             ...state.collections.byId,
             [id]: {
-              ...action.payload,
+              ...state.collections.byId[id],
               isLoading: true
             }
           }
