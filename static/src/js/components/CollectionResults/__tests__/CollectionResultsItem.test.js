@@ -3,7 +3,6 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
-import * as detectBrowser from 'detect-browser'
 
 import CollectionResultsItem from '../CollectionResultsItem'
 import SplitBadge from '../../SplitBadge/SplitBadge'

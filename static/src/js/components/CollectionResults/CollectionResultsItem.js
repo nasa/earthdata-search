@@ -74,6 +74,7 @@ export const CollectionResultsItem = ({
   }
 
   let description = summary
+
   if (browserName === 'ie') description = `${description.substring(0, 280)}...`
 
   const thumbnailHeight = getApplicationConfig().thumbnailSize.height

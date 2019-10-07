@@ -81,12 +81,15 @@
     background-color: #191a1b;
   }
 
+  .fallback-page__wrapper {
+    height: 100%;
+  }
+
   .fallback-page__content {
     position: relative;
     top: 150px;
     margin: 0 auto;
     max-width: 700px;
-    _width:expression(this.scrollWidth > 700 ? "700px" : "auto"); /* sets max-width for IE6 */ 
     padding: 1rem;
     text-align: center;
     color: white;
@@ -97,7 +100,6 @@
 
   .fallback-page__wrapper--unsupported-browser .fallback-page__content {
     max-width: 850px;
-    _width:expression(this.scrollWidth > 850 ? "850px" : "auto"); /* sets max-width for IE6 */ 
   }
 
   .lt-ie8 .fallback-page__heading {
