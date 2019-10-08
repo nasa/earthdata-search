@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEqual } from 'lodash'
