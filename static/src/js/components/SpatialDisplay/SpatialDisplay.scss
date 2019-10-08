@@ -54,4 +54,15 @@
     color: $color__black--400;
     font-size: 0.75rem;
   }
+
+  &__loading {
+    margin-left: 0.75*$spacer;
+    color: $color__black--400;
+    font-size: 0.75rem;
+  }
+
+  &__loading-icon {
+    margin-right: $spacer/4;
+    opacity: 0.7;
+  }
 }

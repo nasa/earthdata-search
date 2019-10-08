@@ -101,6 +101,7 @@ import {
 import {
   saveShapefile,
   shapefileErrored,
+  shapefileLoading,
   updateShapefile
 } from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
@@ -174,6 +175,7 @@ const actions = {
   selectAccessMethod,
   setSavedProjects,
   shapefileErrored,
+  shapefileLoading,
   submitRetrieval,
   toggleCollectionVisibility,
   toggleDrawingNewLayer,

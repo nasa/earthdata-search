@@ -1,9 +1,18 @@
 import ShapefileRequest from '../util/request/shapefileRequest'
-import { ERRORED_SHAPEFILE, UPDATE_SHAPEFILE } from '../constants/actionTypes'
+import {
+  ERRORED_SHAPEFILE,
+  LOADING_SHAPEFILE,
+  UPDATE_SHAPEFILE
+} from '../constants/actionTypes'
 import { handleError } from './errors'
 
 export const updateShapefile = payload => ({
   type: UPDATE_SHAPEFILE,
+  payload
+})
+
+export const shapefileLoading = payload => ({
+  type: LOADING_SHAPEFILE,
   payload
 })
 

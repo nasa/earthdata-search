@@ -21,6 +21,7 @@ export const withDropzone = (WrappedComponent) => {
       this.onDragEnter = this.onDragEnter.bind(this)
       this.onDragLeave = this.onDragLeave.bind(this)
       this.onDrop = this.onDrop.bind(this)
+      this.onSending = this.onSending.bind(this)
       this.onDropzoneOpen = this.onDropzoneOpen.bind(this)
     }
 
@@ -43,6 +44,7 @@ export const withDropzone = (WrappedComponent) => {
       this.dropzone = new Dz(dzEl, dropzoneOptions)
       this.dropzone.on('dragleave', this.onDragLeave)
       this.dropzone.on('drop', this.onDrop)
+      this.dropzone.on('sending', this.onSending)
       this.dropzone.on('success', (file, response) => {
         this.onSuccess(file, response, this.dropzone)
       })
@@ -65,6 +67,7 @@ export const withDropzone = (WrappedComponent) => {
 
       this.dropzone.off('dragleave', this.onDragLeave)
       this.dropzone.off('drop', this.onDrop)
+      this.dropzone.off('sending', this.onSending)
       this.dropzone.off('success', this.onSuccess)
       if (onRemovedFile) this.dropzone.off('removedfile', this.onRemovedFile)
       if (onError) this.dropzone.off('error', this.onError)
@@ -107,6 +110,11 @@ export const withDropzone = (WrappedComponent) => {
       if (onDrop) onDrop()
     }
 
+    onSending(file, response, dropzone) {
+      const { onSending } = this.props
+      onSending(file, response, dropzone)
+    }
+
     onSuccess(file, response, dropzone) {
       const { onSuccess } = this.props
       onSuccess(file, response, dropzone)
@@ -146,9 +154,10 @@ export const withDropzone = (WrappedComponent) => {
     className: null,
     onError: null,
     onRemovedFile: null,
+    onDrop: null,
     onDragEnter: null,
     onDragLeave: null,
-    onDrop: null
+    onSending: null
   }
 
   WithDropzone.propTypes = {
@@ -160,6 +169,7 @@ export const withDropzone = (WrappedComponent) => {
     onDragEnter: PropTypes.func,
     onDragLeave: PropTypes.func,
     onDrop: PropTypes.func,
+    onSending: PropTypes.func,
     dropzoneOptions: PropTypes.shape({}).isRequired
   }
 
