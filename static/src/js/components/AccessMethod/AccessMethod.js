@@ -99,7 +99,7 @@ const opendapButton = (collectionId, methodKey) => (
     key={`${collectionId}_access-method__opendap_${methodKey}`}
     value={methodKey}
   >
-    Customize (OPeNDAP)
+    Customize (Subset)
     <OverlayTrigger
       placement="right"
       overlay={(
