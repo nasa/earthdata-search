@@ -107,7 +107,6 @@ describe('generateGibsTags', () => {
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.gibs',
         action: 'ADD',
-        append: true,
         requireGranules: false,
         tagData: {
           'concept-id': 'C84942916-LARC',
@@ -135,7 +134,6 @@ describe('generateGibsTags', () => {
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.gibs',
         action: 'ADD',
-        append: true,
         requireGranules: false,
         searchCriteria: {
           condition: {

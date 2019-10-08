@@ -197,7 +197,6 @@ const generateGibsTags = async (event, context) => {
       MessageBody: JSON.stringify({
         tagName: tagName('gibs'),
         action: 'ADD',
-        append: true,
         requireGranules: false,
         tagData: {
           'concept-id': conceptId,
@@ -238,7 +237,6 @@ const generateGibsTags = async (event, context) => {
       MessageBody: JSON.stringify({
         tagName: tagName('gibs'),
         action: 'ADD',
-        append: true,
         requireGranules: false,
         searchCriteria,
         tagData
