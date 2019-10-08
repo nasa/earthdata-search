@@ -103,7 +103,7 @@ class SearchForm extends Component {
                 labelSpan: 'search-form__assistive',
                 input: 'search-form__input'
               }}
-              placeholder="Type any topic, collection, or place name"
+              placeholder="Search for collections or topics"
               value={keywordSearch}
               onChange={this.onInputChange}
               onBlur={this.onKeywordBlur}
