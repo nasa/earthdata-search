@@ -204,6 +204,8 @@ class Timeline extends Component {
     })
 
     Object.keys(nextCollectionMetadata).forEach((collectionId) => {
+      if (!nextCollectionMetadata[collectionId]) return
+
       // If there is a granule filter temporal set, and it doesn't exist on the timeline, add the data for the focused collection
       const { granuleFilters = {} } = nextCollectionMetadata[collectionId]
       const { temporal: granuleFilterTemporal = {} } = granuleFilters
