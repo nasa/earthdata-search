@@ -5,6 +5,7 @@ import {
 } from 'react-leaflet'
 
 import { eventEmitter } from '../../events/events'
+import { colorOptions } from '../SpatialSelection/SpatialSelection'
 
 import './ShapefileLayer.scss'
 
@@ -24,7 +25,7 @@ class ShapefileLayerExtended extends L.Layer {
     this.onToggleTooManyPointsModal = props.onToggleTooManyPointsModal
 
     this.options = {
-      selection: L.extend({}, defaultOptions.selection)
+      selection: L.extend({}, defaultOptions.selection, colorOptions)
     }
 
     eventEmitter.on('shapefile.success', (file, resp) => {
@@ -38,37 +39,15 @@ class ShapefileLayerExtended extends L.Layer {
 
   onAdd(map) {
     this.map = map
-    this.isAdded = true
   }
 
   onRemove() {
     this.map = null
     this.jsonLayer = null
-    this.isAdded = false
   }
 
   onRemovedFile() {
     if (this.jsonLayer != null) { this.map.removeLayer(this.jsonLayer) }
-  }
-
-  show() {
-    if ((this.jsonLayer != null) && !this.isAdded) {
-      this.map.addLayer(this.jsonLayer)
-    }
-
-    if (this.jsonLayer != null) {
-      this.isAdded = true
-    }
-  }
-
-  activate() {
-    this.isActive = true
-    this.show()
-  }
-
-  deactivate() {
-    this.isActive = false
-    this.hide()
   }
 
   // Leaflet 1.0+ changed the way that MultiPolygons are handled.
@@ -121,24 +100,17 @@ class ShapefileLayerExtended extends L.Layer {
     })
 
     // remove MultiPolygon features from geojson files
-    return (() => {
-      const result = []
-      featureIndexesToRemove.reverse().forEach((index) => {
-        result.push(geojson.features.splice(index, 1))
-      })
-
-      return result
-    })()
+    featureIndexesToRemove.reverse().forEach((index) => {
+      geojson.features.splice(index, 1)
+    })
   }
 
   onSuccess(file, response) {
-    if (!this.isActive) { this.activate() }
-
     // look through response and separate all MultiPolygon types into their own polygon
     this.separateMultiPolygons(response)
 
-    const icon = new L.Icon.Default()
-    icon.options.className = 'geojson-icon'
+    const newIcon = new L.Icon.Default()
+    newIcon.options.className = 'geojson-icon'
     // eslint-disable-next-line new-cap
     const jsonLayer = new L.geoJson(response, {
       className: 'geojson-svg',
@@ -147,7 +119,7 @@ class ShapefileLayerExtended extends L.Layer {
           const { options = {} } = layer
           const { icon = null } = options
           // eslint-disable-next-line no-param-reassign
-          if (icon !== null) layer.options.icon = icon
+          if (icon !== null) layer.options.icon = newIcon
         }
 
         addIconClasses(featureLayer)
@@ -161,8 +133,8 @@ class ShapefileLayerExtended extends L.Layer {
 
     jsonLayer.on('click', this.clickLayer)
     this.jsonLayer = jsonLayer
-    this.map.addLayer(jsonLayer)
-    this.map.fitBounds(jsonLayer.getBounds())
+    this.jsonLayer.addTo(this.map)
+    this.map.flyToBounds(jsonLayer.getBounds())
     this.onMetricsMap('Added Shapefile')
 
     const children = jsonLayer.getLayers()
