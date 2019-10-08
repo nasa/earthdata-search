@@ -73,7 +73,7 @@ const distance = (lng0, min, max) => {
   newMin += 720
   while (newMax < newMin) { newMax += 360 }
   const mid = newMin + ((newMax - newMin) / 2)
-  while (lng0 < (mid - 180)) { newLng0 += 360 }
+  while (newLng0 < (mid - 180)) { newLng0 += 360 }
 
   if (newLng0 < newMin) {
     return newMin - newLng0
