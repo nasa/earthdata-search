@@ -8,6 +8,7 @@ import { eventEmitter } from '../../events/events'
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
 const mapDispatchToProps = dispatch => ({
+  onShapefileLoading: file => dispatch(actions.shapefileLoading(file)),
   onShapefileErrored: options => dispatch(actions.shapefileErrored(options)),
   onSaveShapefile: options => dispatch(actions.saveShapefile(options)),
   onUpdateShapefile: options => dispatch(actions.updateShapefile(options)),
@@ -40,12 +41,16 @@ const dropzoneOptions = {
 export const ShapefileDropzoneContainer = ({
   authToken,
   onShapefileErrored,
+  onShapefileLoading,
   onSaveShapefile,
   onToggleShapefileUploadModal
 }) => (
   <ShapefileDropzone
     dropzoneOptions={dropzoneOptions}
     eventScope="shapefile"
+    onSending={(file) => {
+      onShapefileLoading(file)
+    }}
     onSuccess={(file, resp, dropzoneEl) => {
       const { name, size } = file
       const fileSize = dropzoneEl.filesize(size).replace(/<{1}[^<>]{1,}>{1}/g, '')
@@ -81,6 +86,7 @@ export const ShapefileDropzoneContainer = ({
 ShapefileDropzoneContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   onShapefileErrored: PropTypes.func.isRequired,
+  onShapefileLoading: PropTypes.func.isRequired,
   onSaveShapefile: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }

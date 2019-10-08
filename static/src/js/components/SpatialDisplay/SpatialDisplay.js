@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Col, Form, Row } from 'react-bootstrap'
 import { isEqual } from 'lodash'
+
+import {
+  Col,
+  Form,
+  Row,
+  Spinner
+} from 'react-bootstrap'
 
 import { availableSystems, findGridByName } from '../../util/grid'
 
@@ -148,6 +154,15 @@ class SpatialDisplay extends Component {
     const items = []
     let entry
     let spatialError
+
+    const {
+      isErrored: shapefileError,
+      isLoading: shapefileLoading,
+      isLoaded: shapefileLoaded,
+      shapefileName,
+      shapefileId,
+      shapefileSize
+    } = shapefile
 
     if (selectingNewGrid || gridName) {
       const entry = (
@@ -322,17 +337,11 @@ class SpatialDisplay extends Component {
           title="Rectangle"
         />
       ))
-    } else if (((shapefile.shapefileName || shapefile.shapefileId || shapefile.shapefileError)
+    } else if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
       && !drawingNewLayer)
       || drawingNewLayer === 'shapefile') {
       // if (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
       // render the shapefile display
-      const {
-        shapefileName,
-        shapefileError,
-        shapefileSize
-      } = shapefile
-
       entry = (
         <SpatialDisplayEntry>
           <Row className="spatial-display__form-row">
@@ -343,6 +352,19 @@ class SpatialDisplay extends Component {
                   {
                     shapefileSize && (
                       <span className="spatial-display__text-secondary">{`(${shapefileSize})`}</span>
+                    )
+                  }
+                  {
+                    shapefileLoading && (
+                      <span className="spatial-display__loading">
+                        <Spinner
+                          className="spatial-display__loading-icon"
+                          animation="border"
+                          variant="light"
+                          size="sm"
+                        />
+                        Loading...
+                      </span>
                     )
                   }
                 </>
