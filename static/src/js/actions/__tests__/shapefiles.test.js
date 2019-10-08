@@ -2,14 +2,64 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import saveShapefile from '../shapefiles'
-import { UPDATE_SHAPEFILE } from '../../constants/actionTypes'
+import {
+  saveShapefile,
+  shapefileLoading,
+  shapefileErrored,
+  updateShapefile
+} from '../shapefiles'
+
+import {
+  ERRORED_SHAPEFILE,
+  LOADING_SHAPEFILE,
+  UPDATE_SHAPEFILE
+} from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
+
+describe('updateShapefile', () => {
+  test('should create an action to set the update state', () => {
+    const payload = {
+      test: 'test'
+    }
+    const expectedAction = {
+      type: UPDATE_SHAPEFILE,
+      payload
+    }
+    expect(updateShapefile(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('shapefileLoading', () => {
+  test('should create an action to set the loading state', () => {
+    const payload = {
+      test: 'test'
+    }
+    const expectedAction = {
+      type: LOADING_SHAPEFILE,
+      payload
+    }
+    expect(shapefileLoading(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('shapefileLoading', () => {
+  test('should create an action to set the errored state', () => {
+    const payload = {
+      test: 'test'
+    }
+    const expectedAction = {
+      type: ERRORED_SHAPEFILE,
+      payload
+    }
+    expect(shapefileErrored(payload)).toEqual(expectedAction)
+  })
+})
+
 
 describe('saveShapefile', () => {
   test('calls the API to get collections', async () => {

@@ -13,7 +13,8 @@ function setup() {
     onRemoveTimelineFilter: jest.fn(),
     onShapefileErrored: jest.fn(),
     onSaveShapefile: jest.fn(),
-    onToggleShapefileUploadModal: jest.fn()
+    onToggleShapefileUploadModal: jest.fn(),
+    onShapefileLoading: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ShapefileDropzoneContainer {...props} />)
@@ -43,6 +44,27 @@ describe('ShapefileDropzoneContainer component', () => {
       previewTemplate: '<div>',
       uploadMultiple: false,
       url: 'https://ogre.adc4gis.com/convert'
+    })
+  })
+
+  describe('onSending callback', () => {
+    test('fires the correct callbacks', () => {
+      const { enzymeWrapper, props } = setup()
+      enzymeWrapper.find('WithDropzone').props().onSending({
+        name: 'test-file-name.zip',
+        size: '<span>200KB</span>'
+      }, {
+        test: 'test-response'
+      }, {
+        filesize: '400KB',
+        removeFile: jest.fn()
+      })
+
+      expect(props.onShapefileLoading).toHaveBeenCalledTimes(1)
+      expect(props.onShapefileLoading).toHaveBeenCalledWith({
+        name: 'test-file-name.zip',
+        size: '<span>200KB</span>'
+      })
     })
   })
 
