@@ -8,7 +8,7 @@ export const collectionDetailsBodyProps = {
     metadata: {
       processing_level_id: '3',
       tags: {
-        'edsc.extra.serverless.handoff.giovanni': {}
+        'edsc.extra.handoff.giovanni': {}
       },
       boxes: [
         '-90 -180 90 180'
@@ -294,7 +294,7 @@ export const collectionDetailsBodyProps = {
       shortName: '1860_1993_2050_NITROGEN_830',
       summary: 'This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.',
       tags: {
-        'edsc.extra.serverless.handoff.giovanni': {}
+        'edsc.extra.handoff.giovanni': {}
       },
       timeStart: '1860-01-01T00:00:00.000Z',
       timeEnd: '2050-12-31T23:59:59.000Z',
@@ -491,7 +491,7 @@ export const collectionDetailsBodyProps = {
 export const metadata = {
   processing_level_id: '3',
   tags: {
-    'edsc.extra.serverless.handoff.giovanni': {}
+    'edsc.extra.handoff.giovanni': {}
   },
   boxes: [
     '-90 -180 90 180'
