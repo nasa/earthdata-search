@@ -403,7 +403,6 @@
     timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
-    timeout: 60
     events:
       - http:
           method: post
