@@ -1,10 +1,11 @@
 # Project build files
-dist
-node_modules
 .DS_Store
 .serverless
 coverage
+dist
+node_modules
 secret.config.json
+tmp
 
 # VSCode Settings
 .vscode
