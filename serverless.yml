@@ -107,7 +107,7 @@ custom:
     prewarm: true
     timeout: 30
     events:
-      - schedule: 'cron(0/20 8-22 ? * MON-FRI *)'
+      - schedule: 'rate(15 minutes)'
 
   # Manage resource count (Maximum of 200) by splitting up the cloudformation templates
   splitStacks:

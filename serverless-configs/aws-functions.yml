@@ -18,7 +18,7 @@
     timeout: 300
     handler: serverless/src/storeUserData/handler.default
     warmup:
-      concurrency: 3
+      concurrency: 30
 
   generateCollectionCapabilityTags:
     handler: serverless/src/generateCollectionCapabilityTags/handler.default
@@ -165,7 +165,7 @@
   getColorMap:
     handler: serverless/src/getColorMap/handler.default
     warmup:
-      enabled: false
+      concurrency: 30
     events:
       - http:
           method: get
@@ -175,7 +175,7 @@
   cwicGranuleSearch:
     handler: serverless/src/cwicGranuleSearch/handler.default
     warmer:
-      concurrency: 3
+      concurrency: 30
     events:
       - http:
           method: post
@@ -184,6 +184,8 @@
 
   conceptMetadata:
     handler: serverless/src/conceptMetadata/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: get
@@ -192,6 +194,8 @@
 
   saveShapefile:
     handler: serverless/src/saveShapefile/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: post
@@ -201,7 +205,7 @@
   saveProject:
     handler: serverless/src/saveProject/handler.default
     warmup:
-      concurrency: 3
+      concurrency: 30
     events:
       - http:
           method: post
@@ -211,7 +215,7 @@
   getProject:
     handler: serverless/src/getProject/handler.default
     warmup:
-      concurrency: 3
+      concurrency: 30
     events:
       - http:
           method: get
@@ -221,7 +225,7 @@
   edlLogin:
     handler: serverless/src/edlLogin/handler.default
     warmup:
-      concurrency: 3
+      concurrency: 30
     events:
       - http:
           method: get
@@ -231,7 +235,7 @@
   edlCallback:
     handler: serverless/src/edlCallback/handler.default
     warmup:
-      concurrency: 3
+      concurrency: 30
     events:
       - http:
           method: get
@@ -240,6 +244,8 @@
 
   errorLogger:
     handler: serverless/src/errorLogger/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: post
@@ -248,6 +254,8 @@
 
   relevancyLogger:
     handler: serverless/src/relevancyLogger/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: post
@@ -257,7 +265,7 @@
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer/handler.default
     warmer:
-      concurrency: 3
+      concurrency: 30
     cors: true
 
   #
@@ -266,6 +274,8 @@
 
   retrieveConcept:
     handler: serverless/src/retrieveConcept/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: get
@@ -279,6 +289,8 @@
 
   collectionSearch:
     handler: serverless/src/collectionSearch/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: post
@@ -292,6 +304,8 @@
 
   cmrGranuleSearch:
     handler: serverless/src/cmrGranuleSearch/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: post
@@ -301,6 +315,8 @@
 
   timelineSearch:
     handler: serverless/src/timelineSearch/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: post
@@ -310,6 +326,8 @@
 
   submitRetrieval:
     handler: serverless/src/submitRetrieval/handler.default
+    warmup:
+      concurrency: 30
     timeout: 30
     events:
       - http:
@@ -320,6 +338,8 @@
 
   getRetrieval:
     handler: serverless/src/getRetrieval/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: get
@@ -329,6 +349,8 @@
 
   deleteRetrieval:
     handler: serverless/src/deleteRetrieval/handler.default
+    warmup:
+      concurrency: 10
     events:
       - http:
           method: delete
@@ -338,6 +360,8 @@
 
   getRetrievals:
     handler: serverless/src/getRetrievals/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: get
@@ -347,6 +371,8 @@
 
   getRetrievalCollection:
     handler: serverless/src/getRetrievalCollection/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: get
@@ -356,6 +382,8 @@
 
   getAccessMethods:
     handler: serverless/src/getAccessMethods/handler.default
+    warmup:
+      concurrency: 30
     timeout: 60
     events:
       - http:
@@ -366,6 +394,8 @@
 
   ousGranuleSearch:
     handler: serverless/src/ousGranuleSearch/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: post
@@ -375,6 +405,8 @@
 
   getProjects:
     handler: serverless/src/getProjects/handler.default
+    warmup:
+      concurrency: 30
     events:
       - http:
           method: get
@@ -393,6 +425,8 @@
 
   logout:
     handler: serverless/src/logout/handler.default
+    warmup:
+      concurrency: 10
     events:
       - http:
           method: delete
@@ -403,7 +437,7 @@
   getDataQualitySummaries:
     handler: serverless/src/getDataQualitySummaries/handler.default
     warmup:
-      concurrency: 3
+      concurrency: 30
     events:
       - http:
           method: post
@@ -414,7 +448,7 @@
   getProviders:
     handler: serverless/src/getProviders/handler.default
     warmup:
-      concurrency: 3
+      concurrency: 30
     events:
       - http:
           method: get
@@ -424,6 +458,8 @@
 
   getContactInfo:
     handler: serverless/src/getContactInfo/handler.default
+    warmup:
+      concurrency: 10
     events:
       - http:
           method: get
@@ -433,6 +469,8 @@
 
   saveContactInfo:
     handler: serverless/src/saveContactInfo/handler.default
+    warmup:
+      concurrency: 10
     events:
       - http:
           method: post
