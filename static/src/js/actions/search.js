@@ -112,12 +112,7 @@ export const removeSpatialFilter = () => (dispatch) => {
     }
   }))
   dispatch(actions.toggleDrawingNewLayer(false))
-  dispatch(actions.updateShapefile({
-    shapefileName: undefined,
-    shapefileId: undefined,
-    shapefileSize: undefined,
-    shapefileError: false
-  }))
+  dispatch(actions.clearShapefile())
 }
 
 export const removeTemporalFilter = () => (dispatch) => {
@@ -143,9 +138,5 @@ export const clearFilters = () => (dispatch) => {
 
   // Update Store
   dispatch(changeQuery(query))
-  dispatch(actions.updateShapefile({
-    shapefileName: undefined,
-    shapefileId: undefined,
-    shapefileSize: undefined
-  }))
+  dispatch(actions.clearShapefile())
 }

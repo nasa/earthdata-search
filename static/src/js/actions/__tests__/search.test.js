@@ -7,6 +7,7 @@ import {
   CLEAR_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_QUERY,
   UPDATE_GRANULE_QUERY,
+  CLEAR_SHAPEFILE,
   UPDATE_SHAPEFILE,
   CLEAR_COLLECTION_GRANULES,
   UPDATE_TIMELINE_INTERVALS,
@@ -467,13 +468,7 @@ describe('removeSpatialFilter', () => {
       payload: false
     })
     expect(storeActions[6]).toEqual({
-      type: UPDATE_SHAPEFILE,
-      payload: {
-        shapefileError: false,
-        shapefileName: undefined,
-        shapefileId: undefined,
-        shapefileSize: undefined
-      }
+      type: CLEAR_SHAPEFILE
     })
   })
 })
@@ -585,12 +580,7 @@ describe('clearFilters', () => {
       }
     })
     expect(storeActions[5]).toEqual({
-      type: UPDATE_SHAPEFILE,
-      payload: {
-        shapefileName: undefined,
-        shapefileId: undefined,
-        shapefileSize: undefined
-      }
+      type: CLEAR_SHAPEFILE
     })
 
     // was getCollections called

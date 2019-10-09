@@ -1,10 +1,15 @@
 import ShapefileRequest from '../util/request/shapefileRequest'
 import {
+  CLEAR_SHAPEFILE,
   ERRORED_SHAPEFILE,
   LOADING_SHAPEFILE,
   UPDATE_SHAPEFILE
 } from '../constants/actionTypes'
 import { handleError } from './errors'
+
+export const clearShapefile = () => ({
+  type: CLEAR_SHAPEFILE
+})
 
 export const updateShapefile = payload => ({
   type: UPDATE_SHAPEFILE,
