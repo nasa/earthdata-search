@@ -67,9 +67,13 @@ const AppLogo = ({
         <span className="app-logo__site-name-ent app-logo__site-name-ent--e">{org}</span>
         <span className="app-logo__site-name-ent app-logo__site-name-ent--s">{title}</span>
       </a>
-      <span className="app-logo__site-env">
-        {edscEnv.toUpperCase()}
-      </span>
+      {
+        edscEnv !== 'prod' && (
+          <span className="app-logo__site-env">
+            {edscEnv.toUpperCase()}
+          </span>
+        )
+      }
     </h1>
   )
 }

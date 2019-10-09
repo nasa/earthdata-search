@@ -310,6 +310,7 @@
 
   submitRetrieval:
     handler: serverless/src/submitRetrieval/handler.default
+    timeout: 30
     events:
       - http:
           method: post
