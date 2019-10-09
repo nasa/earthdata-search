@@ -107,7 +107,7 @@ custom:
     prewarm: true
     timeout: 30
     events:
-      - schedule: 'rate(15 minutes)'
+      - schedule: ${env:WARM_LAMBDA_SCHEDULE}
 
   # Manage resource count (Maximum of 200) by splitting up the cloudformation templates
   splitStacks:
