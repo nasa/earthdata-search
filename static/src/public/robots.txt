@@ -5,4 +5,4 @@ User-Agent: *
 Disallow: /downloads
 Disallow: /projects
 Disallow: /search/granules
-
+Disallow: /contact_info
