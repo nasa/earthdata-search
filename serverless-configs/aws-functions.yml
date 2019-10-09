@@ -164,6 +164,7 @@
   #
   getColorMap:
     handler: serverless/src/getColorMap/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -174,6 +175,7 @@
 
   cwicGranuleSearch:
     handler: serverless/src/cwicGranuleSearch/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmer:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -184,6 +186,7 @@
 
   conceptMetadata:
     handler: serverless/src/conceptMetadata/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -194,6 +197,7 @@
 
   saveShapefile:
     handler: serverless/src/saveShapefile/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -204,6 +208,7 @@
 
   saveProject:
     handler: serverless/src/saveProject/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -214,6 +219,7 @@
 
   getProject:
     handler: serverless/src/getProject/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -224,6 +230,7 @@
 
   edlLogin:
     handler: serverless/src/edlLogin/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -234,6 +241,7 @@
 
   edlCallback:
     handler: serverless/src/edlCallback/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -244,6 +252,7 @@
 
   errorLogger:
     handler: serverless/src/errorLogger/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -254,6 +263,7 @@
 
   relevancyLogger:
     handler: serverless/src/relevancyLogger/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -264,6 +274,7 @@
 
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmer:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     cors: true
@@ -273,6 +284,7 @@
   #
   retrieveConcept:
     handler: serverless/src/retrieveConcept/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -288,6 +300,7 @@
 
   collectionSearch:
     handler: serverless/src/collectionSearch/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -303,6 +316,7 @@
 
   cmrGranuleSearch:
     handler: serverless/src/cmrGranuleSearch/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -314,6 +328,7 @@
 
   timelineSearch:
     handler: serverless/src/timelineSearch/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -325,9 +340,10 @@
 
   submitRetrieval:
     handler: serverless/src/submitRetrieval/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
-    timeout: 30
+    timeout: ${env:LAMBDA_TIMEOUT}
     events:
       - http:
           method: post
@@ -337,6 +353,7 @@
 
   getRetrieval:
     handler: serverless/src/getRetrieval/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -348,6 +365,7 @@
 
   deleteRetrieval:
     handler: serverless/src/deleteRetrieval/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -359,6 +377,7 @@
 
   getRetrievals:
     handler: serverless/src/getRetrievals/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -370,6 +389,7 @@
 
   getRetrievalCollection:
     handler: serverless/src/getRetrievalCollection/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -381,6 +401,7 @@
 
   getAccessMethods:
     handler: serverless/src/getAccessMethods/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     timeout: 60
@@ -393,6 +414,7 @@
 
   ousGranuleSearch:
     handler: serverless/src/ousGranuleSearch/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -404,6 +426,7 @@
 
   getProjects:
     handler: serverless/src/getProjects/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -415,6 +438,7 @@
 
   deleteProject:
     handler: serverless/src/deleteProject/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     events:
       - http:
           method: delete
@@ -424,6 +448,7 @@
 
   logout:
     handler: serverless/src/logout/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -435,6 +460,7 @@
 
   getDataQualitySummaries:
     handler: serverless/src/getDataQualitySummaries/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -446,6 +472,7 @@
 
   getProviders:
     handler: serverless/src/getProviders/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -457,6 +484,7 @@
 
   getContactInfo:
     handler: serverless/src/getContactInfo/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -468,6 +496,7 @@
 
   saveContactInfo:
     handler: serverless/src/saveContactInfo/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
