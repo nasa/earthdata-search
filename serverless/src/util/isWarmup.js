@@ -2,9 +2,11 @@
  * Determine whether or not the event provided is
  * @param {Object} event Details about the HTTP request that it received
  */
-export const isWarmUp = async (event) => {
+export const isWarmUp = async (event, context) => {
   if (event.source === 'serverless-plugin-warmup') {
-    console.log('[WarmUp] Lambda is warm!')
+    const { functionName = 'Unknown Function' } = context
+
+    console.log(`[WarmUp] Lambda (${functionName}) is warm!`)
 
     // Introduce a slight timeout to ensure all requested
     // lambdas are started when concurrency is used

@@ -6,9 +6,9 @@ import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtTok
  * Perform an authenticated CMR Concept Metadata search
  * @param {Object} event Details about the HTTP request that it received
  */
-const conceptMetadata = async (event) => {
+const conceptMetadata = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   const { url, token: jwtToken } = event.queryStringParameters
 

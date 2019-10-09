@@ -7,9 +7,9 @@ import { isWarmUp } from '../util/isWarmup'
  * Perform an authenticated OUS Granule search
  * @param {Object} event Details about the HTTP request that it received
  */
-const ousGranuleSearch = async (event) => {
+const ousGranuleSearch = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [

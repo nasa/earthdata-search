@@ -13,9 +13,9 @@ import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtTok
 /**
  * Handler for saving a users contact info
  */
-const saveContactInfo = async (event) => {
+const saveContactInfo = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   const jwtToken = getJwtToken(event)
   const { id } = getVerifiedJwtToken(jwtToken)

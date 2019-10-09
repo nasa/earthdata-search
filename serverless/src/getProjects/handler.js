@@ -7,9 +7,9 @@ import { obfuscateId } from '../util/obfuscation/obfuscateId'
 /**
  * Handler for retreiving a users projects
  */
-const getProjects = async (event) => {
+const getProjects = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   const jwtToken = getJwtToken(event)
   const { username } = getVerifiedJwtToken(jwtToken)

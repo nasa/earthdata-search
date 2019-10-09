@@ -9,9 +9,9 @@ import { getJwtToken } from '../util/getJwtToken'
  * Perform an authenticated CMR Concept Metadata search
  * @param {Object} event Details about the HTTP request that it received
  */
-const getProviders = async (event) => {
+const getProviders = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   const jwtToken = getJwtToken(event)
 

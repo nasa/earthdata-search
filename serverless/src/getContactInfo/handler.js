@@ -6,9 +6,9 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 /**
  * Handler for retreiving a users contact information
  */
-const getContactInfo = async (event) => {
+const getContactInfo = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   const jwtToken = getJwtToken(event)
   const { id } = getVerifiedJwtToken(jwtToken)

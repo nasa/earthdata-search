@@ -19,7 +19,7 @@ const edlCallback = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()

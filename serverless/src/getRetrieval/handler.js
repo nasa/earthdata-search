@@ -17,7 +17,7 @@ export default async function getRetrieval(event, context) {
   context.callbackWaitsForEmptyEventLoop = false
 
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   try {
     const { id: providedRetrieval } = event.pathParameters
