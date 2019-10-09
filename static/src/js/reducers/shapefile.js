@@ -1,4 +1,5 @@
 import {
+  CLEAR_SHAPEFILE,
   UPDATE_SHAPEFILE,
   ERRORED_SHAPEFILE,
   RESTORE_FROM_URL,
@@ -16,6 +17,11 @@ const initialState = {
 
 const shapefileReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CLEAR_SHAPEFILE: {
+      return {
+        ...initialState
+      }
+    }
     case UPDATE_SHAPEFILE: {
       return {
         ...state,

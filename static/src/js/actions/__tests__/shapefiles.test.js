@@ -3,6 +3,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
+  clearShapefile,
   saveShapefile,
   shapefileLoading,
   shapefileErrored,
@@ -10,6 +11,7 @@ import {
 } from '../shapefiles'
 
 import {
+  CLEAR_SHAPEFILE,
   ERRORED_SHAPEFILE,
   LOADING_SHAPEFILE,
   UPDATE_SHAPEFILE
@@ -19,6 +21,15 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
+})
+
+describe('clearShapefile', () => {
+  test('should create an action to set the delete the shapefile', () => {
+    const expectedAction = {
+      type: CLEAR_SHAPEFILE
+    }
+    expect(clearShapefile()).toEqual(expectedAction)
+  })
 })
 
 describe('updateShapefile', () => {

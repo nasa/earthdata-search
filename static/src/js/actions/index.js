@@ -99,6 +99,7 @@ import {
   fetchAccessMethods
 } from './accessMethods'
 import {
+  clearShapefile,
   saveShapefile,
   shapefileErrored,
   shapefileLoading,
@@ -136,6 +137,7 @@ const actions = {
   changeViewAllFacet,
   clearCollectionGranules,
   clearFilters,
+  clearShapefile,
   collectionRelevancyMetrics,
   deleteRetrieval,
   deleteSavedProject,

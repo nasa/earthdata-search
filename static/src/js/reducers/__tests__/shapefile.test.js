@@ -1,5 +1,6 @@
 import shapefileReducer from '../shapefile'
 import {
+  CLEAR_SHAPEFILE,
   UPDATE_SHAPEFILE,
   LOADING_SHAPEFILE,
   ERRORED_SHAPEFILE,
@@ -20,6 +21,29 @@ describe('INITIAL_STATE', () => {
     const action = { type: 'dummy_action' }
 
     expect(shapefileReducer(undefined, action)).toEqual(initialState)
+  })
+})
+
+describe('CLEAR_SHAPEFILE', () => {
+  test('returns the correct state', () => {
+    const state = {
+      isLoading: false,
+      isLoaded: true,
+      isErrored: false,
+      shapefileId: 'some-id',
+      shapefileName: 'some-name',
+      shapefileSize: 'some-size'
+    }
+
+    const action = {
+      type: CLEAR_SHAPEFILE
+    }
+
+    const expectedState = {
+      ...initialState
+    }
+
+    expect(shapefileReducer(state, action)).toEqual(expectedState)
   })
 })
 
