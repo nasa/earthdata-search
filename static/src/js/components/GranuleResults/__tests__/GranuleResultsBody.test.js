@@ -1,5 +1,5 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import SimpleBar from 'simplebar-react'
@@ -9,7 +9,32 @@ import GranuleResultsList from '../GranuleResultsList'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+const mockSimpleBarWrapper = (() => {
+  const el = document.createElement('div')
+  el.classList.add('simplebar-content-wrapper')
+  return el
+})()
+
+const mockRefElement = (() => {
+  const el = document.createElement('div')
+  el.classList.add('granule-results-body')
+  el.appendChild(mockSimpleBarWrapper)
+  return el
+})()
+
+jest.spyOn(GranuleResultsBody.prototype, 'getRef').mockImplementation(function mockRef() {
+  this.wrapper = {
+    current: mockRefElement
+  }
+})
+
+function setup(options = {
+  mount: false
+}) {
   const props = {
     collectionId: 'collectionId',
     excludedGranuleIds: [],
@@ -27,7 +52,13 @@ function setup() {
     onMetricsDataAccess: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<GranuleResultsBody {...props} />)
+  let enzymeWrapper
+
+  if (options.mount) {
+    enzymeWrapper = mount(<GranuleResultsBody {...props} />)
+  } else {
+    enzymeWrapper = shallow(<GranuleResultsBody {...props} />)
+  }
 
   return {
     enzymeWrapper,
@@ -39,8 +70,15 @@ describe('GranuleResultsBody component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.type()).toBe(SimpleBar)
+    expect(enzymeWrapper.type()).toBe('div')
     expect(enzymeWrapper.prop('className')).toBe('granule-results-body')
+  })
+
+  test('renders the SimpleBar correctly', () => {
+    const { enzymeWrapper } = setup()
+
+    expect(enzymeWrapper.children().at(0).type()).toBe(SimpleBar)
+    expect(enzymeWrapper.children().at(0).prop('className')).toBe('granule-results-body__scroll-container')
   })
 
   test('passes the granules to a single GranuleResultsList component', () => {
@@ -61,5 +99,14 @@ describe('GranuleResultsBody component', () => {
     expect(enzymeWrapper.find(GranuleResultsList).length).toEqual(1)
     expect(enzymeWrapper.find(GranuleResultsList).props().onMetricsDataAccess)
       .toEqual(props.onMetricsDataAccess)
+  })
+
+  test('should create a ref', () => {
+    setup({
+      mount: true
+    })
+
+    const prevGetRef = GranuleResultsBody.prototype.getRef
+    expect(GranuleResultsBody.prototype.getRef).toHaveBeenCalledTimes(1)
   })
 })

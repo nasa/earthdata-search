@@ -21,7 +21,8 @@ export const CollectionResultsItem = ({
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
   onViewCollectionGranules,
-  waypointEnter
+  waypointEnter,
+  scrollContainer
 }) => {
   const {
     dataset_id: datasetId = null,
@@ -374,12 +375,17 @@ export const CollectionResultsItem = ({
             <Waypoint
               bottomOffset="-200px"
               onEnter={waypointEnter}
+              scrollableAncestor={scrollContainer || window}
             />
           )
         }
       </div>
     </li>
   )
+}
+
+CollectionResultsItem.defaultProps = {
+  scrollContainer: null
 }
 
 CollectionResultsItem.propTypes = {
@@ -391,7 +397,8 @@ CollectionResultsItem.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
-  waypointEnter: PropTypes.func.isRequired
+  waypointEnter: PropTypes.func.isRequired,
+  scrollContainer: PropTypes.instanceOf(Element)
 }
 
 export default CollectionResultsItem

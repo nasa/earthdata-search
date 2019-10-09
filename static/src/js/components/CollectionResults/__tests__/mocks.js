@@ -25,6 +25,11 @@ export const collectionListItemProps = {
   onRemoveCollectionFromProject: jest.fn(),
   onViewCollectionGranules: jest.fn(),
   onViewCollectionDetails: jest.fn(),
+  scrollContainer: (() => {
+    const el = document.createElement('div')
+    el.classList.add('simplebar-content-wrapper')
+    return el
+  })(),
   waypointEnter: jest.fn()
 }
 

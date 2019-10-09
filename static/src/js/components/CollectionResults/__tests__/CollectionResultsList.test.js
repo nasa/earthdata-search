@@ -41,6 +41,11 @@ function setup(propsOverride = {}) {
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn(),
     waypointEnter: jest.fn(),
+    scrollContainer: (() => {
+      const el = document.createElement('div')
+      el.classList.add('simplebar-content-wrapper')
+      return el
+    })(),
     ...propsOverride
   }
 
@@ -67,6 +72,15 @@ describe('CollectionResultsList component', () => {
   test('sets the is last prop on the last list item', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find(CollectionResultsItem).at(1).props().isLast).toEqual(true)
+  })
+
+  test('should pass the scrollContainer to the items', () => {
+    const { enzymeWrapper, props } = setup({
+      isLast: true
+    })
+
+    expect(enzymeWrapper.find(CollectionResultsItem).at(1).prop('scrollContainer'))
+      .toEqual(props.scrollContainer)
   })
 
   describe('loading list item', () => {

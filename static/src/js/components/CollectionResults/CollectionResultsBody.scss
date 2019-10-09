@@ -1,5 +1,10 @@
 .collection-results-body {
-  margin: 0;
-  padding: 0;
-  background-color: $color__black--100;
+  height: 100%;
+
+  &__scroll-container {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: $color__black--100;
+  }
 }

@@ -14,6 +14,11 @@ function setup(type) {
     isLast: false,
     location: { search: 'location' },
     waypointEnter: jest.fn(),
+    scrollContainer: (() => {
+      const el = document.createElement('div')
+      el.classList.add('simplebar-content-wrapper')
+      return el
+    })(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn()
@@ -109,6 +114,31 @@ function setup(type) {
           }
         ]
       }
+    }
+  }
+
+  if (type === 'is-last') {
+    props = {
+      ...defaultProps,
+      granule: {
+        id: 'granuleId',
+        browse_flag: true,
+        online_access_flag: true,
+        formatted_temporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        thumbnail: '/fake/path/image.jpg',
+        title: 'Granule title',
+        links: [
+          {
+            rel: 'http://linkrel/data#',
+            title: 'linktitle',
+            href: 'http://linkhref'
+          }
+        ]
+      },
+      isLast: true
     }
   }
 
@@ -262,6 +292,15 @@ describe('GranuleResultsItem component', () => {
 
       expect(eventEmitterEmitMock).toBeCalledTimes(1)
       expect(eventEmitterEmitMock).toBeCalledWith('map.stickygranule', { granule: null })
+    })
+  })
+
+  describe('when the last item in the list', () => {
+    test('should pass the scrollContainer to the Waypoint', () => {
+      const { enzymeWrapper, props } = setup('is-last')
+
+      expect(enzymeWrapper.find('Waypoint').prop('scrollableAncestor'))
+        .toEqual(props.scrollContainer)
     })
   })
 })

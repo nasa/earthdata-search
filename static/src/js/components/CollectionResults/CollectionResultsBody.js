@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import SimpleBar from 'simplebar-react'
@@ -14,7 +14,30 @@ import './CollectionResultsBody.scss'
  * @param {object} props.location - Locations passed from react router.
  * @param {function} props.onFocusedCollectionChange - Fired when a new collection is focused.
  */
-class CollectionResultsBody extends PureComponent {
+class CollectionResultsBody extends Component {
+  constructor() {
+    super()
+    this.getRef = this.getRef.bind(this)
+    this.wrapper = React.createRef()
+    this.scrollContainer = null
+  }
+
+  componentDidMount() {
+    const {
+      current
+    } = this.wrapper
+
+    if (current) {
+      this.scrollContainer = current.querySelector('.simplebar-content-wrapper')
+    }
+  }
+
+  getRef(wrapper) {
+    this.wrapper = {
+      current: wrapper
+    }
+  }
+
   render() {
     const {
       browser,
@@ -29,19 +52,22 @@ class CollectionResultsBody extends PureComponent {
     } = this.props
 
     return (
-      <SimpleBar className="collection-results-body">
-        <CollectionResultsList
-          browser={browser}
-          collections={collections}
-          portal={portal}
-          projectIds={projectIds}
-          onAddProjectCollection={onAddProjectCollection}
-          onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-          onViewCollectionGranules={onViewCollectionGranules}
-          onViewCollectionDetails={onViewCollectionDetails}
-          waypointEnter={waypointEnter}
-        />
-      </SimpleBar>
+      <div className="collection-results-body" ref={el => this.getRef(el)}>
+        <SimpleBar className="collection-results-body__scroll-container">
+          <CollectionResultsList
+            browser={browser}
+            collections={collections}
+            portal={portal}
+            projectIds={projectIds}
+            onAddProjectCollection={onAddProjectCollection}
+            onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+            onViewCollectionGranules={onViewCollectionGranules}
+            onViewCollectionDetails={onViewCollectionDetails}
+            waypointEnter={waypointEnter}
+            scrollContainer={this.scrollContainer}
+          />
+        </SimpleBar>
+      </div>
     )
   }
 }

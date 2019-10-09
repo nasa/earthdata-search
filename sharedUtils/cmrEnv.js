@@ -6,7 +6,7 @@ import { getApplicationConfig } from './config'
 export const cmrEnv = () => {
   const { env } = getApplicationConfig()
 
-  if (env === 'dev') return 'prod'
+  if (env === 'dev') return 'uat'
 
   return env
 }

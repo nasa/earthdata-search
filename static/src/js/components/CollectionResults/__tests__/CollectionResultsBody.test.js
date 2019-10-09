@@ -1,5 +1,5 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import SimpleBar from 'simplebar-react'
@@ -7,11 +7,36 @@ import SimpleBar from 'simplebar-react'
 import CollectionResultsBody from '../CollectionResultsBody'
 import CollectionResultsList from '../CollectionResultsList'
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+const mockSimpleBarWrapper = (() => {
+  const el = document.createElement('div')
+  el.classList.add('simplebar-content-wrapper')
+  return el
+})()
+
+const mockRefElement = (() => {
+  const el = document.createElement('div')
+  el.classList.add('granule-results-body')
+  el.appendChild(mockSimpleBarWrapper)
+  return el
+})()
+
+jest.spyOn(CollectionResultsBody.prototype, 'getRef').mockImplementation(function mockRef() {
+  this.wrapper = {
+    current: mockRefElement
+  }
+})
+
 // TODO: Write more tests
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(options = {
+  mount: false
+}) {
   const props = {
     browser: {
       name: 'browser name'
@@ -32,7 +57,9 @@ function setup() {
       loadTime: 1150,
       timerStart: null
     },
-    portal: {},
+    portal: {
+      portalId: []
+    },
     projectIds: [],
     location: {
       pathname: '/test'
@@ -44,7 +71,14 @@ function setup() {
     waypointEnter: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<CollectionResultsBody {...props} />)
+  let enzymeWrapper
+
+  if (options.mount) {
+    enzymeWrapper = mount(<CollectionResultsBody {...props} />)
+  } else {
+    enzymeWrapper = shallow(<CollectionResultsBody {...props} />)
+  }
+
 
   return {
     enzymeWrapper,
@@ -55,9 +89,16 @@ function setup() {
 describe('CollectionResultsBody component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.type()).toEqual(SimpleBar)
-    expect(enzymeWrapper.props().className).toEqual('collection-results-body')
-    expect(enzymeWrapper.find(CollectionResultsList).length).toEqual(1)
+
+    expect(enzymeWrapper.type()).toBe('div')
+    expect(enzymeWrapper.prop('className')).toBe('collection-results-body')
+  })
+
+  test('renders the SimpleBar correctly', () => {
+    const { enzymeWrapper } = setup()
+
+    expect(enzymeWrapper.children().at(0).type()).toBe(SimpleBar)
+    expect(enzymeWrapper.children().at(0).prop('className')).toBe('collection-results-body__scroll-container')
   })
 
   test('passes the correct props to CollectionResultsList', () => {
@@ -71,5 +112,14 @@ describe('CollectionResultsBody component', () => {
       .toEqual(props.onViewCollectionDetails)
     expect(collectionResultsList.props().waypointEnter)
       .toEqual(props.waypointEnter)
+  })
+
+  test('should create a ref', () => {
+    setup({
+      mount: true
+    })
+
+    const prevGetRef = CollectionResultsBody.prototype.getRef
+    expect(CollectionResultsBody.prototype.getRef).toHaveBeenCalledTimes(1)
   })
 })

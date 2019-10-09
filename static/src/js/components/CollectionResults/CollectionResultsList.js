@@ -15,7 +15,8 @@ export const CollectionResultsList = ({
   onRemoveCollectionFromProject,
   onViewCollectionGranules,
   onViewCollectionDetails,
-  waypointEnter
+  waypointEnter,
+  scrollContainer
 }) => {
   const collectionIds = collections.allIds
 
@@ -37,6 +38,7 @@ export const CollectionResultsList = ({
         onViewCollectionGranules={onViewCollectionGranules}
         onViewCollectionDetails={onViewCollectionDetails}
         waypointEnter={waypointEnter}
+        scrollContainer={scrollContainer}
       />
     )
   })
@@ -77,6 +79,10 @@ export const CollectionResultsList = ({
   )
 }
 
+CollectionResultsList.defaultProps = {
+  scrollContainer: null
+}
+
 CollectionResultsList.propTypes = {
   browser: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
@@ -86,7 +92,8 @@ CollectionResultsList.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  waypointEnter: PropTypes.func.isRequired
+  waypointEnter: PropTypes.func.isRequired,
+  scrollContainer: PropTypes.instanceOf(Element)
 }
 
 export default CollectionResultsList

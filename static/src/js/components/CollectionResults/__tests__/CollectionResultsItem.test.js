@@ -450,12 +450,23 @@ describe('CollectionResultsList component', () => {
         .toEqual(0)
     })
 
-    test('does not render by default', () => {
-      const { enzymeWrapper } = setup({
-        isLast: true
+    describe('when the last item in the list', () => {
+      test('renders the waypoint', () => {
+        const { enzymeWrapper } = setup({
+          isLast: true
+        })
+        expect(enzymeWrapper.find(Waypoint).length)
+          .toEqual(1)
       })
-      expect(enzymeWrapper.find(Waypoint).length)
-        .toEqual(1)
+
+      test('should pass the scrollContainer to the Waypoint', () => {
+        const { enzymeWrapper, props } = setup({
+          isLast: true
+        })
+
+        expect(enzymeWrapper.find('Waypoint').prop('scrollableAncestor'))
+          .toEqual(props.scrollContainer)
+      })
     })
   })
 
