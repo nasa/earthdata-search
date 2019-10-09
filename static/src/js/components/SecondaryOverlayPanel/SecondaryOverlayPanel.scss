@@ -12,7 +12,6 @@
   z-index: 2;
   transform: translateX(100%);
   transition: all 0.2s ease-in-out;
-  will-change: transform;
 
   @include media-breakpoint-up(sm) {
     width: 30rem;

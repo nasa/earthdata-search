@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import SimpleBar from 'simplebar-react'
@@ -12,35 +12,67 @@ import './GranuleResultsBody.scss'
  * @param {object} props - The props passed into the component.
  * @param {object} props.granules - Granules passed from redux store.
  */
-const GranuleResultsBody = ({
-  collectionId,
-  excludedGranuleIds,
-  focusedGranule,
-  granules,
-  isCwic,
-  pageNum,
-  location,
-  waypointEnter,
-  onExcludeGranule,
-  onFocusedGranuleChange,
-  onMetricsDataAccess
-}) => (
-  <SimpleBar className="granule-results-body">
-    <GranuleResultsList
-      collectionId={collectionId}
-      excludedGranuleIds={excludedGranuleIds}
-      focusedGranule={focusedGranule}
-      granules={granules}
-      isCwic={isCwic}
-      pageNum={pageNum}
-      location={location}
-      waypointEnter={waypointEnter}
-      onExcludeGranule={onExcludeGranule}
-      onFocusedGranuleChange={onFocusedGranuleChange}
-      onMetricsDataAccess={onMetricsDataAccess}
-    />
-  </SimpleBar>
-)
+class GranuleResultsBody extends Component {
+  constructor() {
+    super()
+    this.getRef = this.getRef.bind(this)
+    this.wrapper = React.createRef()
+    this.scrollContainer = null
+  }
+
+  componentDidMount() {
+    const {
+      current
+    } = this.wrapper
+
+    if (current) {
+      this.scrollContainer = current.querySelector('.simplebar-content-wrapper')
+    }
+  }
+
+  getRef(wrapper) {
+    this.wrapper = {
+      current: wrapper
+    }
+  }
+
+  render() {
+    const {
+      collectionId,
+      excludedGranuleIds,
+      focusedGranule,
+      granules,
+      isCwic,
+      pageNum,
+      location,
+      waypointEnter,
+      onExcludeGranule,
+      onFocusedGranuleChange,
+      onMetricsDataAccess
+    } = this.props
+
+    return (
+      <div className="granule-results-body" ref={el => this.getRef(el)}>
+        <SimpleBar className="granule-results-body__scroll-container">
+          <GranuleResultsList
+            collectionId={collectionId}
+            excludedGranuleIds={excludedGranuleIds}
+            focusedGranule={focusedGranule}
+            granules={granules}
+            isCwic={isCwic}
+            pageNum={pageNum}
+            location={location}
+            waypointEnter={waypointEnter}
+            scrollContainer={this.scrollContainer}
+            onExcludeGranule={onExcludeGranule}
+            onFocusedGranuleChange={onFocusedGranuleChange}
+            onMetricsDataAccess={onMetricsDataAccess}
+          />
+        </SimpleBar>
+      </div>
+    )
+  }
+}
 
 GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,

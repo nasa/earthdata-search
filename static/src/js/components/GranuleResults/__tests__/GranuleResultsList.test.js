@@ -29,6 +29,11 @@ function setup(type) {
       pageNum: 1,
       location: { search: 'value' },
       waypointEnter: jest.fn(),
+      scrollContainer: (() => {
+        const el = document.createElement('div')
+        el.classList.add('simplebar-content-wrapper')
+        return el
+      })(),
       onExcludeGranule: jest.fn(),
       onFocusedGranuleChange: jest.fn(),
       onMetricsDataAccess: jest.fn()
@@ -52,6 +57,11 @@ function setup(type) {
       pageNum: 2,
       location: { search: 'value' },
       waypointEnter: jest.fn(),
+      scrollContainer: (() => {
+        const el = document.createElement('div')
+        el.classList.add('simplebar-content-wrapper')
+        return el
+      })(),
       onExcludeGranule: jest.fn(),
       onFocusedGranuleChange: jest.fn(),
       onMetricsDataAccess: jest.fn()
@@ -85,6 +95,11 @@ function setup(type) {
       pageNum: 1,
       location: { search: 'value' },
       waypointEnter: jest.fn(),
+      scrollContainer: (() => {
+        const el = document.createElement('div')
+        el.classList.add('simplebar-content-wrapper')
+        return el
+      })(),
       onExcludeGranule: jest.fn(),
       onFocusedGranuleChange: jest.fn(),
       onMetricsDataAccess: jest.fn()
@@ -115,6 +130,11 @@ function setup(type) {
       pageNum: 1,
       location: { search: 'value' },
       waypointEnter: jest.fn(),
+      scrollContainer: (() => {
+        const el = document.createElement('div')
+        el.classList.add('simplebar-content-wrapper')
+        return el
+      })(),
       onExcludeGranule: jest.fn(),
       onFocusedGranuleChange: jest.fn(),
       onMetricsDataAccess: jest.fn()
@@ -145,6 +165,11 @@ function setup(type) {
       pageNum: 1,
       location: { search: 'value' },
       waypointEnter: jest.fn(),
+      scrollContainer: (() => {
+        const el = document.createElement('div')
+        el.classList.add('simplebar-content-wrapper')
+        return el
+      })(),
       onExcludeGranule: jest.fn(),
       onFocusedGranuleChange: jest.fn(),
       onMetricsDataAccess: jest.fn()
@@ -165,6 +190,13 @@ describe('GranuleResultsList component', () => {
 
     expect(enzymeWrapper.type()).toBe('div')
     expect(enzymeWrapper.prop('className')).toBe('granule-results-list')
+  })
+
+  test('should pass the scrollContainer to the items', () => {
+    const { enzymeWrapper, props } = setup('loaded')
+
+    expect(enzymeWrapper.find(GranuleResultsItem).at(1).prop('scrollContainer'))
+      .toEqual(props.scrollContainer)
   })
 
   describe('while loading', () => {

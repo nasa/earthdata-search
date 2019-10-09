@@ -114,6 +114,7 @@ const GranuleResultsItem = ({
   isLast,
   location,
   waypointEnter,
+  scrollContainer,
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess
@@ -243,9 +244,18 @@ const GranuleResultsItem = ({
           </div>
         </div>
       </div>
-      { isLast && <Waypoint onEnter={waypointEnter} /> }
+      { isLast && (
+        <Waypoint
+          onEnter={waypointEnter}
+          scrollableAncestor={scrollContainer}
+        />
+      ) }
     </li>
   )
+}
+
+GranuleResultsItem.defaultProps = {
+  scrollContainer: null
 }
 
 GranuleResultsItem.propTypes = {
@@ -256,6 +266,7 @@ GranuleResultsItem.propTypes = {
   isLast: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
+  scrollContainer: PropTypes.instanceOf(Element),
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired

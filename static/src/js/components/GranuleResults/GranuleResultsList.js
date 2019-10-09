@@ -64,6 +64,7 @@ export class GranuleResultsList extends PureComponent {
       pageNum,
       location,
       waypointEnter,
+      scrollContainer,
       onExcludeGranule,
       onFocusedGranuleChange,
       onMetricsDataAccess
@@ -108,6 +109,7 @@ export class GranuleResultsList extends PureComponent {
           key={granuleKey}
           location={location}
           waypointEnter={waypointEnter}
+          scrollContainer={scrollContainer}
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
@@ -172,6 +174,10 @@ export class GranuleResultsList extends PureComponent {
   }
 }
 
+GranuleResultsList.defaultProps = {
+  scrollContainer: null
+}
+
 GranuleResultsList.propTypes = {
   collectionId: PropTypes.string.isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -181,6 +187,7 @@ GranuleResultsList.propTypes = {
   isCwic: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
+  scrollContainer: PropTypes.instanceOf(Element),
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired

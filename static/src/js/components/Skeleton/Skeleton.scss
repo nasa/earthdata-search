@@ -35,7 +35,6 @@ $color-loading-dark__light: rgba($color__black--900, 0.45);
       background: linear-gradient(90deg, $color-loading-dark__dark 30%, $color-loading-light__dark 50%, $color-loading-dark__dark 70%);
       background-size: 400% 400%;
       animation: pulse 4s ease-in-out infinite;
-      will-change: background-position;
 
       @keyframes pulse {
         0% {
