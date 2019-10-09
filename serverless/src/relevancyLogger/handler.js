@@ -16,7 +16,10 @@ const relevancyLogger = async (event) => {
   console.log(`[metrics] ${JSON.stringify(eventData)}`)
 
   return {
-    statusCode: 200
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
   }
 }
 

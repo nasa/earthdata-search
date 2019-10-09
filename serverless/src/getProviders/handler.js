@@ -50,7 +50,6 @@ const getProviders = async (event, context) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
-
       },
       body: JSON.stringify({ errors: [e] })
     }

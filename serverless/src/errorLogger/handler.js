@@ -22,7 +22,10 @@ const errorLogger = async (event, context) => {
   console.error('Error reported', `[${guid}] - Message: ${message} - Stack: ${JSON.stringify(stack)} - Error: ${JSON.stringify(providedError)} - Location: ${JSON.stringify(location)}`)
 
   return {
-    statusCode: 200
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
   }
 }
 
