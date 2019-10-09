@@ -10,7 +10,7 @@ export const generateHandoffs = (collectionMetadata, collectionSearch) => {
   const handoffLinks = []
 
   // Giovanni Handoff
-  if (hasTag(collectionMetadata, 'handoff.giovanni')) {
+  if (hasTag(collectionMetadata, 'handoff.giovanni', 'edsc.extra')) {
     handoffLinks.push(fetchGiovanniHandoffUrl(collectionMetadata, collectionSearch))
   }
 

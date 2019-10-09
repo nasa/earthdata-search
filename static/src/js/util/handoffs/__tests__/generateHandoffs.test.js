@@ -18,7 +18,7 @@ describe('handoffs#giovanni', () => {
     const collectionMetadata = {
       short_name: 'earthdata_search',
       tags: {
-        'edsc.extra.serverless.handoff.giovanni': {}
+        'edsc.extra.handoff.giovanni': {}
       }
     }
 
