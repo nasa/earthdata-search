@@ -30,6 +30,16 @@ describe('AppLogo component', () => {
     expect(enzymeWrapper.find('.app-logo__site-name').props().href).toEqual('/')
   })
 
+  describe('when in production', () => {
+    test('should hide the environment badge', () => {
+      const { enzymeWrapper } = setup({
+        edscEnv: 'prod'
+      })
+
+      expect(enzymeWrapper.find('.app-logo__site-env').length).toEqual(0)
+    })
+  })
+
   describe('with portal information', () => {
     test('should render the portal AppLogo', () => {
       const { enzymeWrapper } = setup({
