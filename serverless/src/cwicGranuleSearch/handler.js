@@ -106,9 +106,9 @@ const renderOpenSearchTemplate = (template, params) => {
  * Retrieve granules from CWIC
  * @param {Object} event Details about the HTTP request that it received
  */
-const cwicGranuleSearch = async (event) => {
+const cwicGranuleSearch = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   // The headers we'll send back regardless of our response
   const responseHeaders = {

@@ -8,9 +8,9 @@ import { isWarmUp } from '../util/isWarmup'
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-const edlLogin = async (event) => {
+const edlLogin = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   const params = event.queryStringParameters
 

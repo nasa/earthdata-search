@@ -7,9 +7,9 @@ import { isWarmUp } from '../util/isWarmup'
  * Perform an authenticated CMR Granule search
  * @param {Object} event Details about the HTTP request that it received
  */
-const cmrGranuleSearch = async (event) => {
+const cmrGranuleSearch = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   const { body } = event
 

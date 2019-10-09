@@ -53,9 +53,9 @@ function getPermittedCmrKeys(format) {
  * Perform an authenticated CMR Collection search
  * @param {Object} event Details about the HTTP request that it received
  */
-const collectionSearch = async (event) => {
+const collectionSearch = async (event, context) => {
   // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event)) return false
+  if (await isWarmUp(event, context)) return false
 
   const { body, pathParameters } = event
   const { format } = pathParameters
