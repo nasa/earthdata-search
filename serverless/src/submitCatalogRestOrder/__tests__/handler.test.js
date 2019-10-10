@@ -62,7 +62,7 @@ describe('submitCatalogRestOrder', () => {
       .post('/egi/request', stringify({
         FILE_IDS: 'GRANULE_SHORT_NAME',
         CLIENT_STRING:
-          'To view the status of your request, please see: http://localhost:8080/downloads/1',
+          'To view the status of your request, please see: http://localhost:8080/downloads/4517239960',
         CLIENT: 'ESI',
         FORMAT: 'HDF-EOS',
         INCLUDE_META: 'Y',
@@ -74,7 +74,7 @@ describe('submitCatalogRestOrder', () => {
         RESAMPLE: 'PERCENT:100',
         SUBSET_DATA_LAYERS:
           '/MI1B2E/BlueBand,/MI1B2E/BRF Conversion Factors,/MI1B2E/GeometricParameters,/MI1B2E/NIRBand,/MI1B2E/RedBand',
-        BBOX: ['-180,-90,180,90']
+        BBOX: '-180,-90,180,90'
       }))
       .reply(201, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><eesi:agentResponse><order><orderId>9876978</orderId><Instructions>To view the status of your request, please see: http://localhost:8080/downloads/C10000005-EDSC</Instructions></order></eesi:agentResponse>')
 

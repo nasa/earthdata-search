@@ -6,7 +6,7 @@ describe('util#getBoundingBox', () => {
     const boundingBox = getBoundingBox(echoFormXml)
 
     expect(boundingBox).toEqual({
-      BBOX: ['-180,-90,180,90']
+      BBOX: '-180,-90,180,90'
     })
   })
 })
