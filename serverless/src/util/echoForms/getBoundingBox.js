@@ -33,6 +33,6 @@ export const getBoundingBox = (xmlDocument) => {
   })
 
   return {
-    BBOX: boundingBoxes
+    BBOX: boundingBoxes[0]
   }
 }

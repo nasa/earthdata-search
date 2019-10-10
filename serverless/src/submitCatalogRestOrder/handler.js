@@ -17,6 +17,7 @@ import { getEdlConfig } from '../util/configUtil'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 import { portalPath } from '../../../sharedUtils/portalPath'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 /**
  * Submits an order to Catalog Rest (ESI)
@@ -86,8 +87,10 @@ const submitCatalogRestOrder = async (event, context) => {
 
     const { edscHost } = getEnvironmentConfig()
 
+    const obfuscatedRetrievalId = obfuscateId(retrievalId)
+
     // URL used when submitting the order to inform the user where they can retrieve their order status
-    const edscStatusUrl = `${edscHost}${portalPath({ portalId })}/downloads/${retrievalId}`
+    const edscStatusUrl = `${edscHost}${portalPath({ portalId })}/downloads/${obfuscatedRetrievalId}`
 
     const { model, url, type } = accessMethod
 
