@@ -133,7 +133,7 @@ function projectLatlngs(latlngs, result, projectedBounds) {
 }
 
 // Override methods
-L.Polyline.prototype._projectLatlngs = projectLatlngs
+L.Polygon.prototype._projectLatlngs = projectLatlngs
 
 // Give shapes an appropriate interpolation function.  Polygons use geodetic, rectangles cartesian
 L.Polyline.prototype._interpolationFn = interpolateGeodetic

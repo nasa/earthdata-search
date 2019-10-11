@@ -32,6 +32,7 @@ export const prepareCollectionParams = (state) => {
 
   const {
     boundingBox,
+    line,
     point,
     polygon
   } = spatial
@@ -72,6 +73,7 @@ export const prepareCollectionParams = (state) => {
     gridName,
     hasGranulesOrCwic,
     keyword,
+    line,
     pageNum,
     point,
     polygon,
@@ -101,6 +103,7 @@ export const buildCollectionSearchParams = (params) => {
     gridName,
     hasGranulesOrCwic,
     keyword,
+    line,
     pageNum,
     point,
     polygon,
@@ -160,6 +163,7 @@ export const buildCollectionSearchParams = (params) => {
     hasGranulesOrCwic,
     instrumentH: facetsToSend.instrument_h,
     keyword: keywordWithWildcard,
+    line,
     pageNum,
     platformH: facetsToSend.platform_h,
     point,

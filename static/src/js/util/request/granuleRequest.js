@@ -33,6 +33,7 @@ export default class GranuleRequest extends Request {
       'day_night_flag',
       'echo_collection_id',
       'exclude',
+      'line',
       'online_only',
       'options',
       'page_num',

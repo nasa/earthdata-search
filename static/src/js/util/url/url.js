@@ -40,6 +40,7 @@ const urlDefs = {
   pointSearch: { shortKey: 'sp', encode: encodeString, decode: decodeString },
   boundingBoxSearch: { shortKey: 'sb', encode: encodeString, decode: decodeString },
   polygonSearch: { shortKey: 'polygon', encode: encodeString, decode: decodeString },
+  lineSearch: { shortKey: 'line', encode: encodeString, decode: decodeString },
   map: { shortKey: 'm', encode: encodeMap, decode: decodeMap },
   temporalSearch: { shortKey: 'qt', encode: encodeTemporal, decode: decodeTemporal },
   overrideTemporalSearch: { shortKey: 'ot', encode: encodeTemporal, decode: decodeTemporal },
@@ -85,6 +86,7 @@ export const decodeUrlParams = (paramString) => {
   spatial.point = decodeHelp(params, 'pointSearch')
   spatial.boundingBox = decodeHelp(params, 'boundingBoxSearch')
   spatial.polygon = decodeHelp(params, 'polygonSearch')
+  spatial.line = decodeHelp(params, 'lineSearch')
 
   const collectionQuery = { pageNum: 1 }
   const granuleQuery = { pageNum: 1 }

@@ -114,6 +114,7 @@ class SpatialSelection extends Component {
     const newDrawing = nextProps.pointSearch
       || nextProps.boundingBoxSearch
       || nextProps.polygonSearch
+      || nextProps.lineSearch
 
     if ((drawnLayer && drawnLayer._map === null) || newDrawing !== drawnPoints) {
       // If the new drawing is different than the current drawing,
@@ -213,6 +214,8 @@ class SpatialSelection extends Component {
       type = 'point'
     } else if (layerType === 'rectangle') {
       type = 'boundingBox'
+    } else if (layerType === 'polyline') {
+      type = 'line'
     } else {
       type = layerType
     }
@@ -227,6 +230,12 @@ class SpatialSelection extends Component {
       collection: {
         spatial: {}
       }
+    })
+
+    this.setState({
+      drawnLayer: null,
+      drawnLayerType: null,
+      drawnPoints: null
     })
   }
 
@@ -250,6 +259,9 @@ class SpatialSelection extends Component {
       case 'polygon':
         originalLatLngs = Array.from(layer.getLatLngs())
         latLngs = makeCounterClockwise(originalLatLngs).map(p => `${p.lng},${p.lat}`)
+        break
+      case 'line':
+        latLngs = Array.from(layer.getLatLngs()).map(p => `${p.lng},${p.lat}`)
         break
       default:
         return
@@ -310,6 +322,7 @@ class SpatialSelection extends Component {
     const {
       pointSearch,
       boundingBoxSearch,
+      lineSearch,
       polygonSearch
     } = props
 
@@ -324,6 +337,10 @@ class SpatialSelection extends Component {
       this.setState({ drawnPoints: polygonSearch })
       const points = splitListOfPoints(polygonSearch)
       this.renderPolygon(getShape(points), featureGroup)
+    } else if (lineSearch) {
+      this.setState({ drawnPoints: lineSearch })
+      const points = splitListOfPoints(lineSearch)
+      this.renderLine(points, featureGroup)
     }
   }
 
@@ -394,12 +411,37 @@ class SpatialSelection extends Component {
     }
   }
 
+  renderLine(points, featureGroup) {
+    if (featureGroup) {
+      const options = L.extend(
+        {},
+        L.Draw.Polygon.prototype.options.shapeOptions,
+        colorOptions
+      )
+      const latLngs = points.map((point) => {
+        const [lng, lat] = point.split(',')
+        return new L.LatLng(lat, lng)
+      })
+      const line = new L.Polyline(latLngs, options)
+
+      line.type = 'line'
+      line.addTo(featureGroup)
+
+      this.setState({
+        drawnLayer: line,
+        drawnLayerType: 'line'
+      })
+      this.setLayer(line)
+    }
+  }
+
   render() {
     const { isProjectPage } = this.props
 
     const controls = (
       <EditControl
         position="bottomright"
+        onDeleted={this.onDeleted}
         onDrawStart={this.onDrawStart}
         onDrawStop={this.onDrawStop}
         onCreated={this.onCreated}
@@ -438,6 +480,7 @@ class SpatialSelection extends Component {
 
 SpatialSelection.defaultProps = {
   boundingBoxSearch: '',
+  lineSearch: '',
   mapRef: {},
   pointSearch: '',
   polygonSearch: ''
@@ -450,6 +493,7 @@ SpatialSelection.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.string,
   polygonSearch: PropTypes.string,
+  lineSearch: PropTypes.string,
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onMetricsSpatialEdit: PropTypes.func.isRequired

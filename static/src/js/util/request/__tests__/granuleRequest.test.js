@@ -39,6 +39,7 @@ describe('GranuleRequest#permittedCmrKeys', () => {
       'day_night_flag',
       'echo_collection_id',
       'exclude',
+      'line',
       'online_only',
       'options',
       'page_num',
