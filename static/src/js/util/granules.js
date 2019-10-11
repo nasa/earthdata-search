@@ -81,7 +81,8 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
   const {
     boundingBox,
     point,
-    polygon
+    polygon,
+    line
   } = spatial
 
   const { tags = {} } = collectionMetadata
@@ -141,6 +142,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     // exclude,
     gridName,
     gridCoords: encodeGridCoords(gridCoords),
+    line,
     onlineOnly,
     options,
     isCwicCollection,
@@ -169,6 +171,7 @@ export const buildGranuleSearchParams = (params) => {
     exclude,
     gridName,
     gridCoords,
+    line,
     onlineOnly,
     options,
     pageNum,
@@ -195,6 +198,7 @@ export const buildGranuleSearchParams = (params) => {
     dayNightFlag,
     exclude,
     echoCollectionId: collectionId,
+    line,
     onlineOnly,
     options,
     pageNum,

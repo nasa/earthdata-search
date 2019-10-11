@@ -18,6 +18,7 @@ const mapStateToProps = state => ({
   drawingNewLayer: state.ui.map.drawingNewLayer,
   gridName: state.query.collection.gridName,
   gridCoords: state.query.granule.gridCoords,
+  lineSearch: state.query.collection.spatial.line,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
   selectingNewGrid: state.ui.grid.selectingNewGrid,
@@ -30,6 +31,7 @@ export const SpatialDisplayContainer = (props) => {
     drawingNewLayer,
     gridName,
     gridCoords,
+    lineSearch,
     onChangeQuery,
     onGranuleGridCoords,
     onRemoveGridFilter,
@@ -46,6 +48,7 @@ export const SpatialDisplayContainer = (props) => {
       drawingNewLayer={drawingNewLayer}
       gridName={gridName}
       gridCoords={gridCoords}
+      lineSearch={lineSearch}
       onChangeQuery={onChangeQuery}
       onGranuleGridCoords={onGranuleGridCoords}
       onRemoveGridFilter={onRemoveGridFilter}
@@ -62,6 +65,7 @@ SpatialDisplayContainer.defaultProps = {
   boundingBoxSearch: '',
   gridName: '',
   gridCoords: '',
+  lineSearch: '',
   pointSearch: '',
   polygonSearch: '',
   shapefile: {}
@@ -75,6 +79,7 @@ SpatialDisplayContainer.propTypes = {
   ]).isRequired,
   gridName: PropTypes.string,
   gridCoords: PropTypes.string,
+  lineSearch: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
   onGranuleGridCoords: PropTypes.func.isRequired,
   onRemoveGridFilter: PropTypes.func.isRequired,

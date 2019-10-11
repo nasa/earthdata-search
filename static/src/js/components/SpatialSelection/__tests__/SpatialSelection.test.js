@@ -21,6 +21,7 @@ function setup(props) {
 const defaultProps = {
   boundingBoxSearch: '',
   isProjectPage: false,
+  lineSearch: '',
   mapRef: {
     leafletElement: jest.fn()
   },
@@ -281,6 +282,33 @@ describe('SpatialSelection component', () => {
       }])
     })
 
+    test('with line spatial sets the state and calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+
+      const editControl = enzymeWrapper.find(EditControl)
+      const latLngResponse = [
+        { lng: 10, lat: 20 },
+        { lng: 30, lat: 40 }
+      ]
+      editControl.prop('onCreated')({
+        layerType: 'polyline',
+        layer: {
+          getLatLngs: jest.fn(() => latLngResponse),
+          remove: jest.fn()
+        }
+      })
+
+      expect(enzymeWrapper.state().drawnPoints).toEqual('10,20,30,40')
+      expect(props.onChangeQuery.mock.calls.length).toBe(1)
+      expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+        collection: {
+          spatial: {
+            line: '10,20,30,40'
+          }
+        }
+      }])
+    })
+
     test('with invalid shape does not setState or call onChangeQuery', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
@@ -327,7 +355,7 @@ describe('SpatialSelection component', () => {
         .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
     })
 
-    test('with rectangle spatial it calls renderPolygon', () => {
+    test('with polygon spatial it calls renderPolygon', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
       enzymeWrapper.instance().renderPolygon = jest.fn()
       enzymeWrapper.instance().featureGroupRef = { leafletElement: jest.fn() }
@@ -343,6 +371,41 @@ describe('SpatialSelection component', () => {
       ])
       expect(enzymeWrapper.instance().renderPolygon.mock.calls[0][1])
         .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
+    })
+
+    test('with line spatial it calls renderLine', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+      enzymeWrapper.instance().renderLine = jest.fn()
+      enzymeWrapper.instance().featureGroupRef = { leafletElement: jest.fn() }
+
+      enzymeWrapper.instance().renderShape({ ...props, lineSearch: '10,0,20,10,5,15,10,0' })
+
+      expect(enzymeWrapper.instance().renderLine.mock.calls.length).toBe(1)
+      expect(enzymeWrapper.instance().renderLine.mock.calls[0][0]).toEqual([
+        '10,0',
+        '20,10',
+        '5,15',
+        '10,0'
+      ])
+      expect(enzymeWrapper.instance().renderLine.mock.calls[0][1])
+        .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
+    })
+  })
+
+  describe('onDeleted', () => {
+    test('sets the State and calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+
+      const editControl = enzymeWrapper.find(EditControl)
+      editControl.prop('onDeleted')()
+
+      expect(enzymeWrapper.state().drawnLayer).toEqual(null)
+      expect(props.onChangeQuery.mock.calls.length).toBe(1)
+      expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+        collection: {
+          spatial: {}
+        }
+      }])
     })
   })
 })

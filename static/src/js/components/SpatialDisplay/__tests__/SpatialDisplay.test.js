@@ -12,6 +12,7 @@ function setup() {
   const props = {
     boundingBoxSearch: '',
     drawingNewLayer: false,
+    lineSearch: '',
     pointSearch: '',
     polygonSearch: '',
     gridName: '',
@@ -102,6 +103,25 @@ describe('SpatialDisplay component', () => {
       expect(filterStackItem.props().title).toEqual('Spatial')
       expect(filterStackItem.props().icon).toEqual('crop')
       expect(filterStackContents.props().title).toEqual('Polygon')
+      expect(filterStackContents.props().body.props.children).toEqual(null)
+    })
+  })
+
+  describe('with lineSearch', () => {
+    test('should render without spatial info', () => {
+      const { enzymeWrapper } = setup()
+      const line = '-77.04444122314453,38.99228142151045,'
+        + '-77.01992797851562,38.79166886339155,'
+        + '-76.89415168762207,38.902629947921575'
+
+      enzymeWrapper.setProps({ lineSearch: line })
+
+      const filterStackItem = enzymeWrapper.find(FilterStackItem)
+      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+
+      expect(filterStackItem.props().title).toEqual('Spatial')
+      expect(filterStackItem.props().icon).toEqual('crop')
+      expect(filterStackContents.props().title).toEqual('Line')
       expect(filterStackContents.props().body.props.children).toEqual(null)
     })
   })
@@ -266,6 +286,7 @@ describe('SpatialDisplay component', () => {
         boundingBoxSearch: '',
         gridCoords: 'test coords',
         gridName: '',
+        lineSearch: '',
         pointSearch: '',
         polygonSearch: '',
         shapefile: {}

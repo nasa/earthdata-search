@@ -30,6 +30,7 @@ class SpatialDisplay extends Component {
 
     this.state = {
       boundingBoxSearch: '',
+      lineSearch: '',
       gridName: '',
       gridCoords: '',
       pointSearch: '',
@@ -67,6 +68,7 @@ class SpatialDisplay extends Component {
   componentWillReceiveProps(nextProps) {
     const {
       boundingBoxSearch,
+      lineSearch,
       gridName,
       gridCoords,
       pointSearch,
@@ -82,6 +84,9 @@ class SpatialDisplay extends Component {
     }
     if (polygonSearch !== nextProps.polygonSearch) {
       this.setState({ polygonSearch: nextProps.polygonSearch })
+    }
+    if (lineSearch !== nextProps.lineSearch) {
+      this.setState({ lineSearch: nextProps.lineSearch })
     }
     if (gridName !== nextProps.gridName) {
       this.setState({ gridName: nextProps.gridName })
@@ -143,6 +148,7 @@ class SpatialDisplay extends Component {
 
     const {
       boundingBoxSearch,
+      lineSearch,
       gridName,
       gridCoords,
       pointSearch,
@@ -399,6 +405,16 @@ class SpatialDisplay extends Component {
           title="Polygon"
         />
       ))
+    } else if ((lineSearch && !drawingNewLayer) || drawingNewLayer === 'polyline') {
+      entry = <SpatialDisplayEntry />
+
+      contents.push((
+        <FilterStackContents
+          key="filter__polygon"
+          body={entry}
+          title="Line"
+        />
+      ))
     }
 
     if (contents.length) {
@@ -435,6 +451,7 @@ SpatialDisplay.propTypes = {
   ]).isRequired,
   gridName: PropTypes.string.isRequired,
   gridCoords: PropTypes.string.isRequired,
+  lineSearch: PropTypes.string.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onGranuleGridCoords: PropTypes.func.isRequired,
   onRemoveGridFilter: PropTypes.func.isRequired,

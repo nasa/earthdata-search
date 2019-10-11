@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   hasGranulesOrCwic: state.query.collection.hasGranulesOrCwic,
   instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.collection.keyword,
+  lineSearch: state.query.collection.spatial.line,
   map: state.map,
   organizationFacets: state.facetsParams.cmr.data_center_h,
   overrideTemporalSearch: state.query.collection.overrideTemporal,
