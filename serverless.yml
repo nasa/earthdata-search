@@ -84,6 +84,19 @@ custom:
   client:
     bucketName: ${self:custom.siteName}
     distributionFolder: static/dist
+    objectHeaders:
+      index.html:
+        - name: Cache-Control
+          value: no-store
+      '*.css':
+        - name: Cache-Control
+          value: 'max-age=31536000'
+      '*.js':
+        - name: Cache-Control
+          value: 'max-age=31536000'
+      assets/:
+        - name: Cache-Control
+          value: 'max-age=31536000'
 
     # Prevent the plugin from attempting to change the bucket policy
     manageResources: false
