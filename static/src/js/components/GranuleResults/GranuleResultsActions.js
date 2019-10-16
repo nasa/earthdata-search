@@ -52,8 +52,28 @@ const GranuleResultsActions = ({
 
   const downloadAllButton = () => {
     const params = qs.parse(location.search, { ignoreQueryPrefix: true, parseArrays: false })
-    let { p = '' } = params
-    if (!isCollectionInProject) p = `${p}!${collectionId}`
+    let { p = '', pg = {} } = params
+
+    // If the collection is not already in the project we need to add it to the project and update the url to represent that
+    if (!isCollectionInProject) {
+      // Append the p parameter that stores the collections in the project
+      p = `${p}!${collectionId}`
+
+      // While it won't yet be in the project, it will be the focused collection so we will grab that object
+      const focusedCollection = pg[0]
+
+      // We need to place the collection as the last collection in the project, get the number of collections in the project
+      // so that we know what index to use
+      const projectCollectionCount = Object.keys(pg).length
+
+      // Move the object at the 0 index (focused collection) into the project by adding it to the end of the pg array (resulting
+      // in a non 0 index)
+      pg = {
+        ...pg,
+        0: {},
+        [projectCollectionCount]: focusedCollection
+      }
+    }
 
     return (
       <PortalLinkContainer
@@ -63,7 +83,8 @@ const GranuleResultsActions = ({
           pathname: '/projects',
           search: stringify({
             ...params,
-            p
+            p,
+            pg
           })
         }}
       >

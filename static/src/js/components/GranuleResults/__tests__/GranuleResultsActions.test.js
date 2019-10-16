@@ -3,10 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import GranuleResultsActions from '../GranuleResultsActions'
+import { PortalLinkContainer } from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     collectionId: 'collectionId',
     granuleCount: 5000,
@@ -16,7 +17,8 @@ function setup() {
       search: '?p=collectionId'
     },
     onAddProjectCollection: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn()
+    onRemoveCollectionFromProject: jest.fn(),
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<GranuleResultsActions {...props} />)
@@ -93,6 +95,34 @@ describe('GranuleResultsActions component', () => {
       button.simulate('click')
       expect(props.onAddProjectCollection).toHaveBeenCalledTimes(1)
       expect(props.onAddProjectCollection).toHaveBeenCalledWith('collectionId')
+    })
+
+    test('correctly adjusts pg parameter when collection isn\'t in the project with one collection', () => {
+      const { enzymeWrapper } = setup({
+        location: {
+          search: 'p=C1443528505-LAADS&pg[0][id]=MYD04_3K.A2019284.2350.061.2019285153056.hdf&ff=Customizable&tl=1555429846!4!!'
+        }
+      })
+
+      expect(enzymeWrapper.find('.granule-results-actions__download-all').props().to).toEqual({
+        pathname: '/projects',
+        search:
+          '?p=C1443528505-LAADS!collectionId&pg[1][id]=MYD04_3K.A2019284.2350.061.2019285153056.hdf&ff=Customizable&tl=1555429846!4!!'
+      })
+    })
+
+    test('correctly adjusts pg parameter when collection isn\'t in the project multiple collections', () => {
+      const { enzymeWrapper } = setup({
+        location: {
+          search: 'p=C1443528505-LAADS!C197265171-LPDAAC_ECS!C107705237-LPDAAC_ECS&pg[0][id]=MYD04_3K.A2019284.2350.061.2019285153056.hdf&pg[2][v]=t&g=G1645942017-LAADS&ff=Customizable&tl=1555434821!4!!'
+        }
+      })
+
+      expect(enzymeWrapper.find('.granule-results-actions__download-all').props().to).toEqual({
+        pathname: '/projects',
+        search:
+          '?p=C1443528505-LAADS!C197265171-LPDAAC_ECS!C107705237-LPDAAC_ECS!collectionId&pg[2][id]=MYD04_3K.A2019284.2350.061.2019285153056.hdf&g=G1645942017-LAADS&ff=Customizable&tl=1555434821!4!!'
+      })
     })
   })
 })

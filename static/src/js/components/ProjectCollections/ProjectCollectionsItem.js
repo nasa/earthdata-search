@@ -17,6 +17,7 @@ import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
 
 import './ProjectCollectionsItem.scss'
+import pluralize from '../../util/pluralize'
 
 /**
  * Renders ProjectCollectionItem.
@@ -143,7 +144,7 @@ const ProjectCollectionItem = ({
                     <li
                       className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
                     >
-                      {`${abbreviate(granuleCount, 1)} Granules`}
+                      {`${abbreviate(granuleCount, 1)} ${pluralize('Granule', granuleCount)}`}
                     </li>
                     <li
                       className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
