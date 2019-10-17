@@ -1,11 +1,8 @@
 import 'array-foreach-async'
-import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
-
-// Maxium number of granules any order can request from cmr or legacy services
-const DEFAULT_MAX_ORDER_SIZE = 1000000
-
-// Default number of granules for chunked orders, overwritten only by limited collections
-const DEFAULT_GRANULES_PER_ORDER = 2000
+import { hasTag } from '../../../sharedUtils/tags'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { limitedCollectionSize } from '../../../sharedUtils/limitedCollectionSize'
+import { getGranuleLimit } from '../../../static/src/js/util/collectionMetadata/granuleLimit'
 
 /**
  * Determine if the provided collection is limited by the provider
@@ -17,27 +14,18 @@ const isLimitedCollection = (collectionMetadata) => {
 }
 
 /**
- * Retrieve the value stored within the limited collection tag for a provided collection
- * @param {Object} collectionMetadata CMR Collection metadata
- */
-const limitedCollectionSize = (collectionMetadata) => {
-  const { tags } = collectionMetadata
-
-  const { limit } = getValueForTag(tags, 'limited_collections', 'edsc')
-
-  return limit
-}
-
-/**
  * Determine the maximum number of granules a user can request per order
  * @param {Object} collectionMetadata CMR Collection metadata
  */
-const maxOrderSize = (collectionMetadata) => {
+const maxGranulesPerOrder = (collectionMetadata) => {
+  const { defaultGranulesPerOrder } = getApplicationConfig()
+
   if (isLimitedCollection(collectionMetadata)) {
-    return limitedCollectionSize(collectionMetadata)
+    // Return the mininum between the default order size and the collection granuleLimit
+    return Math.min(defaultGranulesPerOrder, getGranuleLimit(collectionMetadata))
   }
 
-  return DEFAULT_GRANULES_PER_ORDER
+  return defaultGranulesPerOrder
 }
 
 /**
@@ -46,7 +34,7 @@ const maxOrderSize = (collectionMetadata) => {
  * @param {Integer} granuleCount The number of granules requested by the user
  */
 const adjustedGranuleCount = (collectionMetadata, granuleCount) => {
-  const consideredSizes = [DEFAULT_MAX_ORDER_SIZE, granuleCount]
+  const consideredSizes = [getApplicationConfig().defaultMaxOrderSize, granuleCount]
 
   if (isLimitedCollection(collectionMetadata)) {
     consideredSizes.push(limitedCollectionSize(collectionMetadata))
@@ -66,7 +54,7 @@ export async function generateRetrievalPayloads(retrievalCollection) {
   const orderGranuleCount = adjustedGranuleCount(collectionMetadata, granuleCount)
 
   // Determine the size of each chunked order adjusting for provider limitations
-  const pageSize = maxOrderSize(collectionMetadata)
+  const pageSize = maxGranulesPerOrder(collectionMetadata)
 
   // Determine how many orders we'll need to create given how many
   // granules the user requested

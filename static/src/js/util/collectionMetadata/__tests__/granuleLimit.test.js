@@ -14,14 +14,14 @@ describe('granuleLimit', () => {
     expect(getGranuleLimit(metadata)).toEqual(100)
   })
 
-  test('returns undefined if the tag does not exist', () => {
+  test('returns the app default if the tag does not exist', () => {
     const metadata = {
       tags: {}
     }
-    expect(getGranuleLimit(metadata)).toEqual(undefined)
+    expect(getGranuleLimit(metadata)).toEqual(1000000)
   })
 
-  test('returns undefined if the metadata is empty', () => {
-    expect(getGranuleLimit(undefined)).toEqual(undefined)
+  test('returns the app default if the metadata is empty', () => {
+    expect(getGranuleLimit(undefined)).toEqual(1000000)
   })
 })

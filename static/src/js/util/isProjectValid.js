@@ -1,8 +1,9 @@
 import { isAccessMethodValid } from './accessMethods'
 
 /**
- * Returns true if every collection passed in contains has {isValid: true}
- * @param {Array} collections - An array of collections to check for isValid.
+ * Returns true if every project collection can be downloaded
+ * @param {Object} project - Project object from the redux store
+ * @param {Object} collections - Collections object from the redux store
  * @return {Object}
  */
 export const isProjectValid = (project, collections) => {

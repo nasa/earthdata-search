@@ -3,7 +3,7 @@
  * @param {Object} granules Granules object from the redux store
  * @param {Object} collection Collection object from the redux store
  */
-export const getGranuleCount = (granules, collection) => {
+export const getGranuleCount = (granules = {}, collection = {}) => {
   const { hits } = granules
   const { excludedGranuleIds = [] } = collection
 

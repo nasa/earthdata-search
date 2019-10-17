@@ -8,7 +8,9 @@
       "width": 85
     },
     "orderStatusRefreshTime": 60000,
-    "eosdisTagKey": "gov.nasa.eosdis"
+    "eosdisTagKey": "gov.nasa.eosdis",
+    "defaultMaxOrderSize": 1000000,
+    "defaultGranulesPerOrder": 2000
   },
   "environment": {
     "test": {

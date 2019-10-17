@@ -55,7 +55,6 @@ const GranuleResultsActions = ({
   const tooManyGranules = granuleLimit && granuleCount > granuleLimit
   const downloadAllButton = () => {
     if (tooManyGranules) {
-      console.log('can\'t download that')
       return (
         <OverlayTrigger
           placement="bottom"
