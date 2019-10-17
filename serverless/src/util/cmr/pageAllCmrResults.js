@@ -10,7 +10,13 @@ import { getClientId, getEarthdataConfig } from '../../../../sharedUtils/config'
  * @param {Object} queryParams An object that will represent the query parameters in the url
  * @return {Array} An array representing all results from CMR
  */
-export const pageAllCmrResults = async (cmrToken, cmrEnvironment, path, queryParams = {}) => {
+export const pageAllCmrResults = async ({
+  cmrToken,
+  cmrEnvironment,
+  path,
+  queryParams = {},
+  additionalHeaders = {}
+}) => {
   const pageSize = 500
 
   try {
@@ -31,7 +37,8 @@ export const pageAllCmrResults = async (cmrToken, cmrEnvironment, path, queryPar
       headers: {
         'Client-Id': getClientId().background,
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Echo-Token': cmrToken
+        'Echo-Token': cmrToken,
+        ...additionalHeaders
       },
       json: true,
       resolveWithFullResponse: true
@@ -61,7 +68,8 @@ export const pageAllCmrResults = async (cmrToken, cmrEnvironment, path, queryPar
           headers: {
             'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Echo-Token': cmrToken
+            'Echo-Token': cmrToken,
+            ...additionalHeaders
           },
           json: true,
           resolveWithFullResponse: true

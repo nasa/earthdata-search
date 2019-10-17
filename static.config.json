@@ -8,7 +8,11 @@
       "width": 85
     },
     "orderStatusRefreshTime": 60000,
-    "eosdisTagKey": "gov.nasa.eosdis"
+    "eosdisTagKey": "gov.nasa.eosdis",
+    "ummCollectionVersion": "1.13",
+    "ummGranuleVersion": "1.5",
+    "ummServiceVersion": "1.2",
+    "ummVariableVersion": "1.5"
   },
   "environment": {
     "test": {

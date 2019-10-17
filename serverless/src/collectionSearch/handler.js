@@ -1,3 +1,4 @@
+import { pick } from 'lodash'
 import { buildURL } from '../util/cmr/buildUrl'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
@@ -57,8 +58,11 @@ const collectionSearch = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
 
-  const { body, pathParameters } = event
+  const { body, headers, pathParameters } = event
   const { format } = pathParameters
+
+  // The 'Accept' header contains the UMM version
+  const providedHeaders = pick(headers, ['Accept'])
 
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = getPermittedCmrKeys(format)
@@ -80,7 +84,7 @@ const collectionSearch = async (event, context) => {
     nonIndexedKeys,
     path: `/search/collections.${format}`,
     permittedCmrKeys
-  }))
+  }), providedHeaders)
 }
 
 export default collectionSearch

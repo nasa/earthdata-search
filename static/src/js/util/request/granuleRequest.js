@@ -52,6 +52,19 @@ export default class GranuleRequest extends Request {
     ]
   }
 
+  /**
+   * Modifies the payload just before the request is sent.
+   * @param {Object} data - An object containing any keys.
+   * @param {Object} headers - An object containing headers that will be sent with the request.
+   * @return {Object} A modified object.
+   */
+  transformRequest(data, headers) {
+    // eslint-disable-next-line no-param-reassign
+    headers.Accept = `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummGranuleVersion}`
+
+    return super.transformRequest(data, headers)
+  }
+
   transformResponse(data) {
     super.transformResponse(data)
 

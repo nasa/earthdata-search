@@ -1,7 +1,7 @@
 import request from 'promise-request-retry'
 import { stringify } from 'qs'
 import { readCmrResults } from './readCmrResults'
-import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
@@ -28,7 +28,8 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Echo-Token': cmrToken
+      'Echo-Token': cmrToken,
+      Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummGranuleVersion}`
     },
     json: true,
     resolveWithFullResponse: true,

@@ -98,6 +98,19 @@ export default class CollectionRequest extends Request {
   }
 
   /**
+   * Modifies the payload just before the request is sent.
+   * @param {Object} data - An object containing any keys.
+   * @param {Object} headers - An object containing headers that will be sent with the request.
+   * @return {Object} A modified object.
+   */
+  transformRequest(data, headers) {
+    // eslint-disable-next-line no-param-reassign
+    headers.Accept = `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummCollectionVersion}`
+
+    return super.transformRequest(data, headers)
+  }
+
+  /**
    * Transform the response before completing the Promise.
    * @param {Object} data - Response object from the object.
    * @return {Object} The object provided

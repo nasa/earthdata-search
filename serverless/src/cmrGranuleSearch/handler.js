@@ -1,3 +1,4 @@
+import { pick } from 'lodash'
 import { buildURL } from '../util/cmr/buildUrl'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
@@ -11,7 +12,10 @@ const cmrGranuleSearch = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
 
-  const { body } = event
+  const { body, headers } = event
+
+  // The 'Accept' header contains the UMM version
+  const providedHeaders = pick(headers, ['Accept'])
 
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
@@ -44,7 +48,7 @@ const cmrGranuleSearch = async (event, context) => {
     path: '/search/granules.json',
     permittedCmrKeys,
     nonIndexedKeys
-  }))
+  }), providedHeaders)
 }
 
 export default cmrGranuleSearch

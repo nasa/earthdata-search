@@ -2,7 +2,7 @@ import { parse as parseXml } from 'fast-xml-parser'
 
 import actions from './index'
 import { UPDATE_FOCUSED_GRANULE } from '../constants/actionTypes'
-import ConceptRequest from '../util/request/conceptRequest'
+import GranuleConceptRequest from '../util/request/granuleConceptRequest'
 import { createEcho10MetadataUrls } from '../util/granules'
 import { updateAuthTokenFromHeaders } from './authToken'
 
@@ -26,7 +26,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   const { allIds } = granules
   if (allIds.indexOf(focusedGranule) !== -1) return null
 
-  const requestObject = new ConceptRequest(authToken)
+  const requestObject = new GranuleConceptRequest(authToken)
   const response = requestObject.search(focusedGranule, 'echo10', { pretty: true })
     .then((response) => {
       const { data } = response

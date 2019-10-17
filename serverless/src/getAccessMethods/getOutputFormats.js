@@ -1,6 +1,6 @@
 import request from 'request-promise'
 
-import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import cmrEnv from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 
@@ -17,7 +17,8 @@ export const getOutputFormats = async (serviceId, jwtToken) => {
       uri: url,
       headers: {
         'Client-Id': getClientId().lambda,
-        'Echo-Token': await getEchoToken(jwtToken)
+        'Echo-Token': await getEchoToken(jwtToken),
+        Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummServiceVersion}`
       },
       resolveWithFullResponse: true
     })
