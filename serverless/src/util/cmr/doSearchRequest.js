@@ -1,17 +1,19 @@
 import request from 'request-promise'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
-import { getClientId } from '../../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig } from '../../../../sharedUtils/config'
 import { getEchoToken } from '../urs/getEchoToken'
+import cmrEnv from '../../../../sharedUtils/cmrEnv'
 
 /**
  * Performs a search request and returns the result body and the JWT
  * @param {string} jwtToken JWT returned from edlAuthorizer
  * @param {string} url URL for to perform search
  */
-export const doSearchRequest = async (jwtToken, url, providedHeaders) => {
+export const doSearchRequest = async (jwtToken, path, params, providedHeaders = {}) => {
   try {
-    const response = await request.get({
-      uri: url,
+    const response = await request.post({
+      uri: `${getEarthdataConfig(cmrEnv()).cmrHost}${path}`,
+      form: params,
       json: true,
       resolveWithFullResponse: true,
       headers: {

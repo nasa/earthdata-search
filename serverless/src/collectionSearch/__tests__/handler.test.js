@@ -20,6 +20,6 @@ describe('collectionSearch', () => {
     await collectionSearch(event, {})
 
     expect(mock).toBeCalledTimes(1)
-    expect(mock).toBeCalledWith('mockJwt', 'https://cmr.earthdata.nasa.gov/search/collections.json?')
+    expect(mock).toBeCalledWith('mockJwt', '/search/collections.json', '')
   })
 })

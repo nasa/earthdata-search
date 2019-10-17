@@ -1,5 +1,5 @@
 import { pick } from 'lodash'
-import { buildURL } from '../util/cmr/buildUrl'
+import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
 import { isWarmUp } from '../util/isWarmup'
@@ -79,12 +79,16 @@ const collectionSearch = async (event, context) => {
     'tag_key'
   ]
 
-  return doSearchRequest(getJwtToken(event), buildURL({
-    body,
-    nonIndexedKeys,
-    path: `/search/collections.${format}`,
-    permittedCmrKeys
-  }), providedHeaders)
+  return doSearchRequest(
+    getJwtToken(event),
+    `/search/collections.${format}`,
+    buildParams({
+      body,
+      nonIndexedKeys,
+      permittedCmrKeys
+    }),
+    providedHeaders
+  )
 }
 
 export default collectionSearch

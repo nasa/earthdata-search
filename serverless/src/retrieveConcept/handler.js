@@ -1,10 +1,12 @@
-import { doSearchRequest } from '../util/cmr/doSearchRequest'
+import request from 'request-promise'
 import { getJwtToken } from '../util/getJwtToken'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { cmrStringify } from '../util/cmr/cmrStringify'
 import { isWarmUp } from '../util/isWarmup'
 import { pick } from '../util/pick'
+import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import cmrEnv from '../../../sharedUtils/cmrEnv'
+import { getEchoToken } from '../util/urs/getEchoToken'
+import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
 /**
  * Perform an authenticated CMR concept search
@@ -25,10 +27,50 @@ const retrieveConcept = async (event, context) => {
   const obj = pick(queryStringParameters, permittedCmrKeys)
   const queryParams = cmrStringify(obj)
 
-  const conceptUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}`
-    + `/search/concepts/${event.pathParameters.id}?${queryParams}`
+  const jwtToken = getJwtToken(event)
+  const path = `/search/concepts/${event.pathParameters.id}?${queryParams}`
 
-  return doSearchRequest(getJwtToken(event), conceptUrl, providedHeaders)
+  try {
+    const response = await request.get({
+      uri: `${getEarthdataConfig(cmrEnv()).cmrHost}${path}`,
+      json: true,
+      resolveWithFullResponse: true,
+      headers: {
+        'Client-Id': getClientId().lambda,
+        'Echo-Token': await getEchoToken(jwtToken),
+        ...providedHeaders
+      }
+    })
+
+    const { body, headers } = response
+
+    return {
+      statusCode: response.statusCode,
+      headers: {
+        'cmr-hits': headers['cmr-hits'],
+        'cmr-took': headers['cmr-took'],
+        'cmr-request-id': headers['cmr-request-id'],
+        'access-control-allow-origin': headers['access-control-allow-origin'],
+        'access-control-expose-headers': prepareExposeHeaders(headers),
+        'jwt-token': jwtToken
+      },
+      body: JSON.stringify(body)
+    }
+  } catch (e) {
+    console.log('error', e)
+
+    if (e.response) {
+      return {
+        statusCode: e.statusCode,
+        body: JSON.stringify({ errors: [e.response.body], statusCode: e.statusCode })
+      }
+    }
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ errors: ['Unexpected error encountered!', e] })
+    }
+  }
 }
 
 export default retrieveConcept

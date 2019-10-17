@@ -18,6 +18,6 @@ describe('cmrGranuleSearch', () => {
     await cmrGranuleSearch(event, {})
 
     expect(mock).toBeCalledTimes(1)
-    expect(mock).toBeCalledWith('mockJwt', 'https://cmr.earthdata.nasa.gov/search/granules.json?')
+    expect(mock).toBeCalledWith('mockJwt', '/search/granules.json', '')
   })
 })

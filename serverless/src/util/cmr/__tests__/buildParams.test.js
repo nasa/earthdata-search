@@ -1,8 +1,8 @@
-import { buildURL } from '../buildUrl'
+import { buildParams } from '../buildParams'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 
-describe('util#buildURL', () => {
+describe('util#buildParams', () => {
   test('correctly builds a search URL', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
 
@@ -22,6 +22,6 @@ describe('util#buildURL', () => {
       path: '/search/path',
       permittedCmrKeys
     }
-    expect(buildURL(params)).toEqual('http://example.com/search/path?param1=123&param2=abc&param3%5B%5D=987')
+    expect(buildParams(params)).toEqual('param1=123&param2=abc&param3%5B%5D=987')
   })
 })

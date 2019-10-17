@@ -1,5 +1,5 @@
 import { pick } from 'lodash'
-import { buildURL } from '../util/cmr/buildUrl'
+import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
 import { isWarmUp } from '../util/isWarmup'
@@ -44,12 +44,16 @@ const cmrGranuleSearch = async (event, context) => {
     'sort_key'
   ]
 
-  return doSearchRequest(getJwtToken(event), buildURL({
-    body,
-    path: '/search/granules.json',
-    permittedCmrKeys,
-    nonIndexedKeys
-  }), providedHeaders)
+  return doSearchRequest(
+    getJwtToken(event),
+    '/search/granules.json',
+    buildParams({
+      body,
+      permittedCmrKeys,
+      nonIndexedKeys
+    }),
+    providedHeaders
+  )
 }
 
 export default cmrGranuleSearch
