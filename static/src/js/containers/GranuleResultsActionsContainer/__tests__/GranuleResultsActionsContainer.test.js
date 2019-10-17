@@ -14,7 +14,9 @@ function setup() {
       byId: {
         focusedCollection: {
           excludedGranuleIds: [],
-          metadata: {}
+          metadata: {
+            mock: 'data'
+          }
         }
       }
     },

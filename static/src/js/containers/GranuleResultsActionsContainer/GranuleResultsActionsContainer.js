@@ -4,11 +4,14 @@ import PropTypes from 'prop-types'
 import {
   withRouter
 } from 'react-router-dom'
+import { isEmpty } from 'lodash'
 
 import actions from '../../actions'
-import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
+import { getFocusedCollectionObject } from '../../util/focusedCollection'
 
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
+import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
+import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 
 const mapDispatchToProps = dispatch => ({
   onAddProjectCollection:
@@ -38,38 +41,29 @@ export const GranuleResultsActionsContainer = (props) => {
     onAddProjectCollection,
     onRemoveCollectionFromProject
   } = props
-  const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
+  const collection = getFocusedCollectionObject(focusedCollection, collections)
+  const { metadata } = collection
 
-  if (!collectionMetadata) return null
+  if (isEmpty(metadata)) return null
 
   const { collectionIds: projectIds } = project
   const isCollectionInProject = projectIds.indexOf(focusedCollection) !== -1
 
   // Determine the correct granule count based on granules that have been removed
-  const { excludedGranuleIds = [] } = collectionMetadata
-
   const { pageNum } = granuleQuery
-  const {
-    hits,
-    isLoading,
-    isLoaded
-  } = granules
+  const { isLoading, isLoaded } = granules
   const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
-  let granuleCount
 
-  if (hits > 0) {
-    if (excludedGranuleIds.length > 0) {
-      granuleCount = hits - excludedGranuleIds.length
-    } else {
-      granuleCount = hits
-    }
-  }
+  const granuleCount = getGranuleCount(granules, collection)
+
+  const granuleLimit = getGranuleLimit(metadata)
 
   return (
     <>
       <GranuleResultsActions
         collectionId={focusedCollection}
         granuleCount={granuleCount}
+        granuleLimit={granuleLimit}
         initialLoading={initialLoading}
         isCollectionInProject={isCollectionInProject}
         location={location}

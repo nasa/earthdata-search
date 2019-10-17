@@ -1,79 +1,150 @@
 import { isProjectValid } from '../isProjectValid'
-import { selectedAccessMethod } from '../../actions/project';
 
 describe('isProjectValid', () => {
   describe('when all collections are invalid', () => {
     test('returns false', () => {
-      const collections = [
-        {
-          accessMethods: {}
+      const project = {
+        byId: {
+          collection1: {
+            accessMethods: {}
+          },
+          collection2: {
+            accessMethods: {}
+          },
+          collection3: {
+            accessMethods: {}
+          }
         },
-        {
-          accessMethods: {}
-        },
-        {
-          accessMethods: {}
+        collectionIds: ['collection1', 'collection2', 'collection3']
+      }
+
+      const collections = {
+        byId: {
+          collection1: {
+            metadata: {
+              tags: {}
+            }
+          },
+          collection2: {
+            metadata: {
+              tags: {}
+            }
+          },
+          collection3: {
+            metadata: {
+              tags: {}
+            }
+          }
         }
-      ]
-      expect(isProjectValid(collections)).toEqual(false)
+      }
+
+      expect(isProjectValid(project, collections)).toEqual({ valid: false })
     })
   })
 
   describe('when some collections are invalid', () => {
     test('returns false', () => {
-      const collections = [
-        {
-          accessMethods: {
-            download: {
-              isValid: true,
-              type: 'download'
+      const project = {
+        byId: {
+          collection1: {
+            accessMethods: {
+              download: {
+                isValid: true,
+                type: 'download'
+              }
+            },
+            selectedAccessMethod: 'download'
+          },
+          collection2: {
+            accessMethods: {}
+          },
+          collection3: {
+            accessMethods: {}
+          }
+        },
+        collectionIds: ['collection1', 'collection2', 'collection3']
+      }
+
+      const collections = {
+        byId: {
+          collection1: {
+            metadata: {
+              tags: {}
             }
           },
-          selectedAccessMethod: 'download'
-        },
-        {
-          accessMethods: {}
-        },
-        {
-          accessMethods: {}
+          collection2: {
+            metadata: {
+              tags: {}
+            }
+          },
+          collection3: {
+            metadata: {
+              tags: {}
+            }
+          }
         }
-      ]
-      expect(isProjectValid(collections)).toEqual(false)
+      }
+
+      expect(isProjectValid(project, collections)).toEqual({ valid: false })
     })
   })
 
   describe('when all collections are valid', () => {
     test('returns true', () => {
-      const collections = [
-        {
-          accessMethods: {
-            download: {
-              isValid: true,
-              type: 'download'
-            }
+      const project = {
+        byId: {
+          collection1: {
+            accessMethods: {
+              download: {
+                isValid: true,
+                type: 'download'
+              }
+            },
+            selectedAccessMethod: 'download'
           },
-          selectedAccessMethod: 'download'
+          collection2: {
+            accessMethods: {
+              download: {
+                isValid: true,
+                type: 'download'
+              }
+            },
+            selectedAccessMethod: 'download'
+          },
+          collection3: {
+            accessMethods: {
+              download: {
+                isValid: true,
+                type: 'download'
+              }
+            },
+            selectedAccessMethod: 'download'
+          }
         },
-        {
-          accessMethods: {
-            download: {
-              isValid: true,
-              type: 'download'
+        collectionIds: ['collection1', 'collection2', 'collection3']
+      }
+
+      const collections = {
+        byId: {
+          collection1: {
+            metadata: {
+              tags: {}
             }
           },
-          selectedAccessMethod: 'download'
-        },
-        {
-          accessMethods: {
-            download: {
-              isValid: true,
-              type: 'download'
+          collection2: {
+            metadata: {
+              tags: {}
             }
           },
-          selectedAccessMethod: 'download'
+          collection3: {
+            metadata: {
+              tags: {}
+            }
+          }
         }
-      ]
-      expect(isProjectValid(collections)).toEqual(true)
+      }
+
+      expect(isProjectValid(project, collections)).toEqual({ valid: true })
     })
   })
 })
