@@ -1,5 +1,5 @@
 import Request from './request'
-import { getEarthdataConfig, getEnvironmentConfig, getApplicationConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import { getUmmGranuleVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
