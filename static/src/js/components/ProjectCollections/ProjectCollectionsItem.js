@@ -45,6 +45,11 @@ const ProjectCollectionItem = ({
   onToggleCollectionVisibility,
   projectCollection
 }) => {
+  const handleToggleCollectionVisibility = (event) => {
+    onToggleCollectionVisibility(collectionId)
+    event.preventDefault()
+  }
+
   if (!collection) return null
 
   const {
@@ -116,7 +121,7 @@ const ProjectCollectionItem = ({
                 <Dropdown.Item
                   as="button"
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
-                  onClick={() => onToggleCollectionVisibility(collectionId)}
+                  onClick={handleToggleCollectionVisibility}
                 >
                   <i className={`project-collections-item__more-actions-icon fa fa-${isVisible ? 'eye-slash' : 'eye'}`} />
                   Toggle Visibility
