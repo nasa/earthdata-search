@@ -47,7 +47,7 @@ function setup(overrideProps) {
 describe('ProjectCollectionItem component', () => {
   describe('renders itself correctly', () => {
     test('when the title and metadata are loading', () => {
-      const { enzymeWrapper, props } = setup({
+      const { enzymeWrapper } = setup({
         collection: {
           excludedGranuleIds: [],
           granules: {},
@@ -60,7 +60,7 @@ describe('ProjectCollectionItem component', () => {
     })
 
     test('when the metadata is loading', () => {
-      const { enzymeWrapper, props } = setup({
+      const { enzymeWrapper } = setup({
         collection: {
           excludedGranuleIds: [],
           granules: {},
@@ -101,7 +101,7 @@ describe('ProjectCollectionItem component', () => {
 
     const button = enzymeWrapper.find('.project-collections-item__more-actions-vis')
 
-    button.simulate('click')
+    button.simulate('click', { preventDefault: jest.fn() })
     expect(props.onToggleCollectionVisibility).toHaveBeenCalledTimes(1)
     expect(props.onToggleCollectionVisibility).toHaveBeenCalledWith('collectionId')
   })
