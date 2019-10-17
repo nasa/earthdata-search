@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import { stringify } from 'qs'
-import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 /**
@@ -20,7 +20,8 @@ export async function getCollectionsByJson(queryParams, searchCriteria, cmrToken
       uri: collectionUrl,
       headers: {
         'Client-Id': getClientId().background,
-        'Echo-Token': cmrToken
+        'Echo-Token': cmrToken,
+        Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummCollectionVersion}`
       },
       body: searchCriteria,
       followAllRedirects: true,

@@ -4,7 +4,7 @@ import request from 'request-promise'
 import { stringify } from 'qs'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { readCmrResults } from '../util/cmr/readCmrResults'
-import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
@@ -72,7 +72,8 @@ const generateCollectionCapabilityTags = async (input) => {
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Echo-Token': cmrToken
+      'Echo-Token': cmrToken,
+      Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummCollectionVersion}`
     },
     json: true,
     resolveWithFullResponse: true

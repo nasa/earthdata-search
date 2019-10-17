@@ -1,6 +1,6 @@
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { cmrStringify } from '../util/cmr/cmrStringify'
 import { isWarmUp } from '../util/isWarmup'
@@ -25,7 +25,9 @@ const retrieveConcept = async (event, context) => {
   const conceptUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}`
     + `/search/concepts/${event.pathParameters.id}?${queryParams}`
 
-  return doSearchRequest(getJwtToken(event), conceptUrl)
+  return doSearchRequest(getJwtToken(event), conceptUrl, {
+    Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummCollectionVersion}`
+  })
 }
 
 export default retrieveConcept

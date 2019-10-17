@@ -1,6 +1,7 @@
 import 'array-foreach-async'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 /**
  * Retrieve CMR service records that have a type that edsc supports for subsetting
@@ -10,7 +11,14 @@ export const getRelevantServices = async (cmrToken) => {
   // Retrieve all of the services CMR has so that we can sift through and
   // find the relevant objects (we only need certain types and CMR does
   // not offer the ability to serach by type)
-  const allCmrServices = await pageAllCmrResults(cmrToken, cmrEnv(), 'search/services.umm_json')
+  const allCmrServices = await pageAllCmrResults({
+    cmrToken,
+    cmrEnvironment: cmrEnv(),
+    path: 'search/services.umm_json',
+    additionalHeaders: {
+      Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummServiceVersion}`
+    }
+  })
 
   const serviceObjects = {}
 
