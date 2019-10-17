@@ -3,7 +3,8 @@ import { upperFirst } from 'lodash'
 export const orderStates = {
   complete: [
     'closed',
-    'complete'
+    'complete',
+    'complete_with_errors'
   ],
   failed: [
     'failed',
@@ -20,7 +21,6 @@ export const orderStates = {
   ],
   in_progress: [
     'initialized', // Custom EDSC status for orders that have been submitted but we dont have a status for yet
-    'complete_with_errors',
     'in progress',
     'pending',
     'processing',
