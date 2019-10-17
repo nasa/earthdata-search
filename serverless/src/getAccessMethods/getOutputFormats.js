@@ -1,8 +1,9 @@
 import request from 'request-promise'
 
-import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import cmrEnv from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
+import { getUmmServiceVersionHeader } from '../../../sharedUtils/ummVersionHeader'
 
 /**
  * Returns the SupportedOutputFormats field from a UMM-S record
@@ -10,7 +11,7 @@ import { getEchoToken } from '../util/urs/getEchoToken'
  * @param {String} jwtToken
  */
 export const getOutputFormats = async (serviceId, jwtToken) => {
-  const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/concepts/${serviceId}`
+  const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/concepts/${serviceId}.umm_json`
 
   try {
     const response = await request.get({
@@ -18,7 +19,7 @@ export const getOutputFormats = async (serviceId, jwtToken) => {
       headers: {
         'Client-Id': getClientId().lambda,
         'Echo-Token': await getEchoToken(jwtToken),
-        Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummServiceVersion}`
+        Accept: getUmmServiceVersionHeader()
       },
       resolveWithFullResponse: true
     })

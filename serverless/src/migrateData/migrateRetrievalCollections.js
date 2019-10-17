@@ -4,7 +4,7 @@ import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { migrateAccesMethod } from './migrateAccessMethod'
 import { determineCollectionEnvironment } from './determineCollectionEnvironment'
 import { tagName } from '../../../sharedUtils/tags'
-import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getUmmCollectionVersionHeader } from '../../../sharedUtils/ummVersionHeader'
 
 export const migrateRetrievalCollections = async (oldDbConnection, newDbConnection, cmrTokens) => {
   const oldRetrievalCollections = await oldDbConnection('retrieval_collections')
@@ -39,7 +39,7 @@ export const migrateRetrievalCollections = async (oldDbConnection, newDbConnecti
         include_tags: tagName('*')
       },
       additionalHeaders: {
-        Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummCollectionVersion}`
+        Accept: getUmmCollectionVersionHeader()
       }
     })
 
