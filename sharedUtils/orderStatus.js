@@ -9,28 +9,28 @@ export const orderStates = {
     'failed',
     'cancelled',
     'cancelling',
-    'submit_rejected',
-    'submit_failed',
-    'quote_rejected',
-    'quote_failed',
-    'not_validated',
-    'complete_with_errors',
     'closed_with_exceptions',
     'create_failed', // Custom EDSC status for orders that failed to create
-    'not_found' // Custom EDSC status for orders that aren't found in the DB
+    'not_validated',
+    'not_found', // Custom EDSC status for orders that aren't found in the DB
+    'quote_rejected',
+    'quote_failed',
+    'submit_rejected',
+    'submit_failed'
   ],
   in_progress: [
     'initialized', // Custom EDSC status for orders that have been submitted but we dont have a status for yet
+    'complete_with_errors',
     'in progress',
-    'processing',
     'pending',
+    'processing',
+    'processing_with_exceptions',
     'validated',
     'quoting',
     'quoted',
     'quoted_with_exceptions',
     'submitting',
-    'submitted_with_exceptions',
-    'processing_with_exceptions'
+    'submitted_with_exceptions'
   ],
   creating: [
     'creating' // Custom EDSC status pertaining to orders before they are submitted
