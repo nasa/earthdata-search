@@ -1,17 +1,14 @@
 import { pick } from '../pick'
-import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { cmrStringify } from './cmrStringify'
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
  * Builds a URL used to perform a search request
  * @param {object} paramObj Parameters needed to build a search request URL
  */
-export const buildURL = (paramObj) => {
+export const buildParams = (paramObj) => {
   const {
     body,
     nonIndexedKeys,
-    path,
     permittedCmrKeys
   } = paramObj
 
@@ -26,9 +23,7 @@ export const buildURL = (paramObj) => {
   // Transform the query string hash to an encoded url string
   const queryParams = cmrStringify(obj, nonIndexedKeys)
 
-  const url = `${getEarthdataConfig(cmrEnv()).cmrHost}${path}?${queryParams}`
+  console.log('CMR Query', queryParams)
 
-  console.log(`CMR Query: ${url}`)
-
-  return url
+  return queryParams
 }

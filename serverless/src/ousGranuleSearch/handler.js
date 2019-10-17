@@ -1,4 +1,4 @@
-import { buildURL } from '../util/cmr/buildUrl'
+import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
 import { isWarmUp } from '../util/isWarmup'
@@ -32,12 +32,15 @@ const ousGranuleSearch = async (event, context) => {
   const { params = {} } = JSON.parse(body)
   const { echo_collection_id: echoCollectionId } = params
 
-  return doSearchRequest(getJwtToken(event), buildURL({
-    body,
-    path: `/service-bridge/ous/collection/${echoCollectionId}`,
-    permittedCmrKeys,
-    nonIndexedKeys
-  }))
+  return doSearchRequest(
+    getJwtToken(event),
+    `/service-bridge/ous/collection/${echoCollectionId}`,
+    buildParams({
+      body,
+      permittedCmrKeys,
+      nonIndexedKeys
+    })
+  )
 }
 
 export default ousGranuleSearch

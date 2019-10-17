@@ -1,4 +1,4 @@
-import { buildURL } from '../util/cmr/buildUrl'
+import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
 import { isWarmUp } from '../util/isWarmup'
@@ -25,12 +25,15 @@ const timelineSearch = async (event, context) => {
 
   const { body } = event
 
-  return doSearchRequest(getJwtToken(event), buildURL({
-    body,
-    nonIndexedKeys,
-    path: '/search/granules/timeline',
-    permittedCmrKeys
-  }))
+  return doSearchRequest(
+    getJwtToken(event),
+    '/search/granules/timeline',
+    buildParams({
+      body,
+      nonIndexedKeys,
+      permittedCmrKeys
+    })
+  )
 }
 
 export default timelineSearch

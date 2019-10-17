@@ -21,7 +21,7 @@ describe('util#doSearchRequest', () => {
       statusCode
     }
 
-    jest.spyOn(request, 'get').mockImplementation(() => ({
+    jest.spyOn(request, 'post').mockImplementation(() => ({
       body,
       headers: {
         'cmr-hits': 1,
