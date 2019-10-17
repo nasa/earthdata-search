@@ -3,6 +3,7 @@ import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '
 import { hasTag } from '../../../../../sharedUtils/tags'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+import { getUmmCollectionVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
 /**
  * Base Request object for collection specific requests
@@ -105,7 +106,7 @@ export default class CollectionRequest extends Request {
    */
   transformRequest(data, headers) {
     // eslint-disable-next-line no-param-reassign
-    headers.Accept = `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummCollectionVersion}`
+    headers.Accept = getUmmCollectionVersionHeader()
 
     return super.transformRequest(data, headers)
   }

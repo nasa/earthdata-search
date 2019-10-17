@@ -55,7 +55,6 @@ describe('getCollectionsByJson', () => {
     expect(requestMock).toBeCalledWith({
       uri: 'http://example.com/search/collections.json?include_tags=edsc.extra.test',
       headers: {
-        Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.13',
         'Client-Id': 'eed-edsc-test-serverless-background',
         'Echo-Token': 'mocked-system-token'
       },

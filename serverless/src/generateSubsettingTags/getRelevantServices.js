@@ -1,7 +1,7 @@
 import 'array-foreach-async'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getUmmServiceVersionHeader } from '../../../sharedUtils/ummVersionHeader'
 
 /**
  * Retrieve CMR service records that have a type that edsc supports for subsetting
@@ -16,7 +16,7 @@ export const getRelevantServices = async (cmrToken) => {
     cmrEnvironment: cmrEnv(),
     path: 'search/services.umm_json',
     additionalHeaders: {
-      Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummServiceVersion}`
+      Accept: getUmmServiceVersionHeader()
     }
   })
 

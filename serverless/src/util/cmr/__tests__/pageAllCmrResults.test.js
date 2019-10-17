@@ -18,7 +18,10 @@ describe('pageAllCmrResults', () => {
     await pageAllCmrResults({
       cmrToken: 'test-token',
       cmrEnvironment: 'sit',
-      path: 'search/services'
+      path: 'search/services',
+      additionalHeaders: {
+        Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.2'
+      }
     })
 
     expect(cmrMock).toBeCalledTimes(1)
@@ -41,7 +44,10 @@ describe('pageAllCmrResults', () => {
     await pageAllCmrResults({
       cmrToken: 'test-token',
       cmrEnvironment: 'sit',
-      path: 'search/services'
+      path: 'search/services',
+      additionalHeaders: {
+        Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.2'
+      }
     })
 
     expect(cmrMock).toBeCalledTimes(4)

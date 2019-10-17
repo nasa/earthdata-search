@@ -3,7 +3,7 @@ import AWS from 'aws-sdk'
 import request from 'request-promise'
 import { stringify } from 'qs'
 import { chunkArray } from '../util/chunkArray'
-import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getRelevantServices } from './getRelevantServices'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { getSystemToken } from '../util/urs/getSystemToken'
@@ -141,9 +141,6 @@ const generateSubsettingTags = async (event, context) => {
       queryParams: {
         service_concept_id: chunk,
         has_granules: true
-      },
-      additionalHeaders: {
-        Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummCollectionVersion}`
       }
     })
 

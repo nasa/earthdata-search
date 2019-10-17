@@ -1,6 +1,6 @@
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
-import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { cmrStringify } from '../util/cmr/cmrStringify'
 import { isWarmUp } from '../util/isWarmup'
@@ -15,7 +15,10 @@ const retrieveConcept = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
 
-  const { queryStringParameters } = event
+  const { headers, queryStringParameters } = event
+
+  // The 'Accept' header contains the UMM version
+  const providedHeaders = pick(headers, ['Accept'])
 
   const permittedCmrKeys = ['pretty']
 
@@ -25,9 +28,7 @@ const retrieveConcept = async (event, context) => {
   const conceptUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}`
     + `/search/concepts/${event.pathParameters.id}?${queryParams}`
 
-  return doSearchRequest(getJwtToken(event), conceptUrl, {
-    Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummCollectionVersion}`
-  })
+  return doSearchRequest(getJwtToken(event), conceptUrl, providedHeaders)
 }
 
 export default retrieveConcept

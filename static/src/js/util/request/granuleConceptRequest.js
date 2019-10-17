@@ -1,6 +1,7 @@
 import Request from './request'
 import { getEarthdataConfig, getEnvironmentConfig, getApplicationConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+import { getUmmGranuleVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
 /**
  * Request object for concept specific requests
@@ -38,7 +39,7 @@ export default class GranuleConceptRequest extends Request {
  */
   transformRequest(data, headers) {
     // eslint-disable-next-line no-param-reassign
-    headers.Accept = `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummGranuleVersion}`
+    headers.Accept = getUmmGranuleVersionHeader()
 
     return super.transformRequest(data, headers)
   }
