@@ -147,4 +147,19 @@ describe('isProjectValid', () => {
       expect(isProjectValid(project, collections)).toEqual({ valid: true })
     })
   })
+
+  describe('when there are no collections in the project', () => {
+    test('returns false', () => {
+      const project = {
+        byId: {},
+        collectionIds: []
+      }
+
+      const collections = {
+        byId: {}
+      }
+
+      expect(isProjectValid(project, collections)).toEqual({ valid: false })
+    })
+  })
 })
