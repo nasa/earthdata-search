@@ -231,7 +231,7 @@ class ProjectPanels extends PureComponent {
         accessMethods,
         selectedAccessMethod
       } = projectCollection
-      const isValid = isAccessMethodValid(projectCollection)
+      const { valid: isValid } = isAccessMethodValid(projectCollection, collection)
 
       const backButtonOptions = {
         text: 'Edit Options',
