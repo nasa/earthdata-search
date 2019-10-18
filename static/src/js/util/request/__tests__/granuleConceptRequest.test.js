@@ -1,4 +1,4 @@
-import ConceptRequest from '../conceptRequest'
+import GranuleConceptRequest from '../granuleConceptRequest'
 import Request from '../request'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
@@ -7,10 +7,10 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('ConceptRequest#constructor', () => {
+describe('GranuleConceptRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
     const token = '123'
-    const request = new ConceptRequest(token)
+    const request = new GranuleConceptRequest(token)
 
     expect(request.authenticated).toBeTruthy()
     expect(request.authToken).toEqual(token)
@@ -21,7 +21,7 @@ describe('ConceptRequest#constructor', () => {
   test('sets the default values when unauthenticated', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-    const request = new ConceptRequest()
+    const request = new GranuleConceptRequest()
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
@@ -29,9 +29,9 @@ describe('ConceptRequest#constructor', () => {
   })
 })
 
-describe('ConceptRequest#search', () => {
+describe('GranuleConceptRequest#search', () => {
   test('calls Request#get', () => {
-    const request = new ConceptRequest()
+    const request = new GranuleConceptRequest()
 
     const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
 
@@ -44,5 +44,21 @@ describe('ConceptRequest#search', () => {
 
     expect(getMock).toBeCalledTimes(1)
     expect(getMock).toBeCalledWith('search/concepts/collectionId.json', { pretty: true })
+  })
+})
+
+describe('GranuleConceptRequest#transformRequest', () => {
+  test('adds umm version header', () => {
+    const request = new GranuleConceptRequest()
+
+    const data = { param1: 123 }
+    const headers = {}
+
+    request.transformRequest(data, headers)
+
+    expect(headers).toEqual({
+      Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.5',
+      'Client-Id': 'eed-edsc-test-serverless-client'
+    })
   })
 })

@@ -15,7 +15,10 @@ const retrieveConcept = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
 
-  const { queryStringParameters } = event
+  const { headers, queryStringParameters } = event
+
+  // The 'Accept' header contains the UMM version
+  const providedHeaders = pick(headers, ['Accept'])
 
   const permittedCmrKeys = ['pretty']
 
@@ -25,7 +28,7 @@ const retrieveConcept = async (event, context) => {
   const conceptUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}`
     + `/search/concepts/${event.pathParameters.id}?${queryParams}`
 
-  return doSearchRequest(getJwtToken(event), conceptUrl)
+  return doSearchRequest(getJwtToken(event), conceptUrl, providedHeaders)
 }
 
 export default retrieveConcept

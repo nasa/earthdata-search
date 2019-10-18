@@ -1,11 +1,12 @@
 import Request from './request'
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+import { getUmmGranuleVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
 /**
  * Request object for concept specific requests
  */
-export default class ConceptRequest extends Request {
+export default class GranuleConceptRequest extends Request {
   constructor(authToken) {
     const cmrEnvironment = cmrEnv()
 
@@ -28,5 +29,18 @@ export default class ConceptRequest extends Request {
 
   search(conceptId, format, params) {
     return this.get(`${this.searchPath}/${conceptId}.${format}`, params)
+  }
+
+  /**
+ * Modifies the payload just before the request is sent.
+ * @param {Object} data - An object containing any keys.
+ * @param {Object} headers - An object containing headers that will be sent with the request.
+ * @return {Object} A modified object.
+ */
+  transformRequest(data, headers) {
+    // eslint-disable-next-line no-param-reassign
+    headers.Accept = getUmmGranuleVersionHeader()
+
+    return super.transformRequest(data, headers)
   }
 }

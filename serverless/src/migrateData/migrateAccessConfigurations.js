@@ -5,6 +5,7 @@ import { migrateAccesMethod } from './migrateAccessMethod'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { determineCollectionEnvironment } from './determineCollectionEnvironment'
 import { tagName } from '../../../sharedUtils/tags'
+import { getUmmCollectionVersionHeader } from '../../../sharedUtils/ummVersionHeader'
 
 export const migrateAccessConfigurations = async (oldDbConnection, newDbConnection, cmrTokens) => {
   const oldAccessConfigurations = await oldDbConnection('access_configurations')
@@ -26,9 +27,17 @@ export const migrateAccessConfigurations = async (oldDbConnection, newDbConnecti
   await ['sit', 'uat', 'prod'].forEachAsync(async (env) => {
     console.log(`Getting collections from ${env}...`)
 
-    const collections = await pageAllCmrResults(cmrTokens[env], env, 'search/collections.json', {
-      concept_id: collectionIds.map(id => id.dataset_id),
-      include_tags: tagName('*')
+    const collections = await pageAllCmrResults({
+      cmrToken: cmrTokens[env],
+      cmrEnvironment: env,
+      path: 'search/collections.json',
+      queryParams: {
+        concept_id: collectionIds.map(id => id.dataset_id),
+        include_tags: tagName('*')
+      },
+      additionalHeaders: {
+        Accept: getUmmCollectionVersionHeader()
+      }
     })
 
     collectionsByEnv[env] = keyBy(collections, collection => collection.id)

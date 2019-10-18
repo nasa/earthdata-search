@@ -10,7 +10,11 @@
     "orderStatusRefreshTime": 60000,
     "eosdisTagKey": "gov.nasa.eosdis",
     "defaultMaxOrderSize": 1000000,
-    "defaultGranulesPerOrder": 2000
+    "defaultGranulesPerOrder": 2000,
+    "ummCollectionVersion": "1.13",
+    "ummGranuleVersion": "1.5",
+    "ummServiceVersion": "1.2",
+    "ummVariableVersion": "1.5"
   },
   "environment": {
     "test": {

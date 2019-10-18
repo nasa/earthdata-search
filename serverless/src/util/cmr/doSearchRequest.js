@@ -8,7 +8,7 @@ import { getEchoToken } from '../urs/getEchoToken'
  * @param {string} jwtToken JWT returned from edlAuthorizer
  * @param {string} url URL for to perform search
  */
-export const doSearchRequest = async (jwtToken, url) => {
+export const doSearchRequest = async (jwtToken, url, providedHeaders) => {
   try {
     const response = await request.get({
       uri: url,
@@ -16,7 +16,8 @@ export const doSearchRequest = async (jwtToken, url) => {
       resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().lambda,
-        'Echo-Token': await getEchoToken(jwtToken)
+        'Echo-Token': await getEchoToken(jwtToken),
+        ...providedHeaders
       }
     })
 

@@ -134,9 +134,14 @@ const generateSubsettingTags = async (event, context) => {
   const chunkedServices = chunkArray(Object.keys(serviceObjects), 100)
 
   await chunkedServices.forEachAsync(async (chunk) => {
-    const allCmrCollections = await pageAllCmrResults(cmrToken, cmrEnv(), 'search/collections.json', {
-      service_concept_id: chunk,
-      has_granules: true
+    const allCmrCollections = await pageAllCmrResults({
+      cmrToken,
+      cmrEnvironment: cmrEnv(),
+      path: 'search/collections.json',
+      queryParams: {
+        service_concept_id: chunk,
+        has_granules: true
+      }
     })
 
     allCollectionsWithServices.push(...allCmrCollections)
