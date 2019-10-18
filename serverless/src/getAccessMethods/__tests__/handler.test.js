@@ -81,8 +81,16 @@ describe('getAccessMethods', () => {
   })
 
   test('populates a echoOrder method', async () => {
-    dbTracker.on('query', (query) => {
-      query.response([])
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response(undefined)
+      } else if (step === 2) {
+        query.response({
+          urs_profile: {
+            email_address: 'test@edsc.com'
+          }
+        })
+      }
     })
 
     jest.spyOn(getOptionDefinitions, 'getOptionDefinitions').mockImplementation(() => [
@@ -144,8 +152,16 @@ describe('getAccessMethods', () => {
   })
 
   test('populates a esi method', async () => {
-    dbTracker.on('query', (query) => {
-      query.response([])
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response(undefined)
+      } else if (step === 2) {
+        query.response({
+          urs_profile: {
+            email_address: 'test@edsc.com'
+          }
+        })
+      }
     })
 
     jest.spyOn(getServiceOptionDefinitions, 'getServiceOptionDefinitions').mockImplementation(() => [
@@ -206,9 +222,88 @@ describe('getAccessMethods', () => {
     })
   })
 
+  test('populates a esi form with the authenticated users email address', async () => {
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response(undefined)
+      } else if (step === 2) {
+        query.response({
+          urs_profile: {
+            email_address: 'test@edsc.com'
+          }
+        })
+      }
+    })
+
+    jest.spyOn(getServiceOptionDefinitions, 'getServiceOptionDefinitions').mockImplementation(() => [
+      {
+        esi0: {
+          form: '<?xml version="1.0" encoding="UTF-8"?><form xmlns="http://echo.nasa.gov/v9/echoforms" xmlns:forms="http://echo.nasa.gov/v9/echoforms" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://ecs.nasa.gov/options" xsi:schemaLocation="http://echo.nasa.gov/v9/echoforms http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd"><!-- ECHO Service/Order form for DataSet "MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V006" (MOD13Q1.6): --><model><instance><ecs:request xmlns:ecs="http://ecs.nasa.gov/options"><!--NOTE: elements in caps losely match the ESI API, those in lowercase are helper elements --><ecs:requestInfo><ecs:email/></ecs:requestInfo><!--Dataset ID will be injected by Reverb--><ecs:CLIENT>ESI</ecs:CLIENT><!--First SubsetAgent in the input capabilities XML is used as the default.--><ecs:SUBAGENT_ID><ecs:value>HEG</ecs:value></ecs:SUBAGENT_ID></ecs:request></instance></model></form>',
+          service_option_definition: {
+            id: 'service_option_def_guid',
+            name: 'Service Option Definition'
+          },
+          service_option_definitions: undefined
+        }
+      }
+    ])
+
+    const event = {
+      body: JSON.stringify({
+        params: {
+          collection_id: 'collectionId',
+          tags: {
+            'edsc.extra.serverless.subset_service.esi': {
+              data: {
+                service_option_definitions: [{
+                  id: 'service_option_def_guid',
+                  name: 'Option Option'
+                }],
+                type: 'ESI'
+              }
+            }
+          }
+        }
+      })
+    }
+
+    const result = await getAccessMethods(event, {})
+
+    expect(result).toEqual({
+      body: JSON.stringify({
+        accessMethods: {
+          esi0: {
+            type: 'ESI',
+            form: '<?xml version="1.0" encoding="UTF-8"?><form xmlns="http://echo.nasa.gov/v9/echoforms" xmlns:forms="http://echo.nasa.gov/v9/echoforms" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://ecs.nasa.gov/options" xsi:schemaLocation="http://echo.nasa.gov/v9/echoforms http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd"><!-- ECHO Service/Order form for DataSet "MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V006" (MOD13Q1.6): --><model><instance><ecs:request xmlns:ecs="http://ecs.nasa.gov/options"><!--NOTE: elements in caps losely match the ESI API, those in lowercase are helper elements --><ecs:requestInfo><ecs:email>test@edsc.com</ecs:email></ecs:requestInfo><!--Dataset ID will be injected by Reverb--><ecs:CLIENT>ESI</ecs:CLIENT><!--First SubsetAgent in the input capabilities XML is used as the default.--><ecs:SUBAGENT_ID><ecs:value>HEG</ecs:value></ecs:SUBAGENT_ID></ecs:request></instance></model></form>',
+            service_option_definition: {
+              id: 'service_option_def_guid',
+              name: 'Service Option Definition'
+            },
+            service_option_definitions: undefined
+          }
+        },
+        selectedAccessMethod: 'esi0'
+      }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      isBase64Encoded: false,
+      statusCode: 200
+    })
+  })
+
   test('populates a opendap method', async () => {
-    dbTracker.on('query', (query) => {
-      query.response([])
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response(undefined)
+      } else if (step === 2) {
+        query.response({
+          urs_profile: {
+            email_address: 'test@edsc.com'
+          }
+        })
+      }
     })
 
     const keywordMappings = {
@@ -280,8 +375,16 @@ describe('getAccessMethods', () => {
 
   describe('saved access configurations', () => {
     test('does not populate selectedAccessMethod if no saved configuration exists', async () => {
-      dbTracker.on('query', (query) => {
-        query.response([])
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response(undefined)
+        } else if (step === 2) {
+          query.response({
+            urs_profile: {
+              email_address: 'test@edsc.com'
+            }
+          })
+        }
       })
 
       jest.spyOn(getOptionDefinitions, 'getOptionDefinitions').mockImplementation(() => [
@@ -366,8 +469,12 @@ describe('getAccessMethods', () => {
               form_digest: '948c584e60f9791b4d7b0e84ff538cd58ac8c0e4'
             }
           })
-        } else {
-          query.response([])
+        } else if (step === 2) {
+          query.response({
+            urs_profile: {
+              email_address: 'test@edsc.com'
+            }
+          })
         }
       })
 
