@@ -72,9 +72,7 @@ export class ProjectCollections extends Component {
     } = this.props
 
     const collectionsLoading = collectionsSearchResults.isLoading
-    const projectCollections = project.collectionIds.map(collectionId => project.byId[collectionId])
-    const isValid = isProjectValid(projectCollections)
-
+    const { valid: isValid, tooManyGranules } = isProjectValid(project, collections)
     const { isSubmitting } = project
 
     return (
@@ -99,7 +97,7 @@ export class ProjectCollections extends Component {
         <div className="project-collections__footer">
           <p className="project-collections__footer-message">
             {
-              !isValid && (
+              !isValid && !tooManyGranules && (
                 <>
                   {'Select a data access method for each collection in your project before downloading.'}
                 </>
@@ -109,6 +107,13 @@ export class ProjectCollections extends Component {
               isValid && (
                 <>
                   {`Click ${String.fromCharCode(8220)}Edit Options${String.fromCharCode(8221)} above to customize the output for each project.`}
+                </>
+              )
+            }
+            {
+              !isValid && tooManyGranules && (
+                <>
+                  {'One or more collections in your project contains too many granules. Adjust temporal constraints or remove the collections before downloading.'}
                 </>
               )
             }

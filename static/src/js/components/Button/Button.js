@@ -26,6 +26,7 @@ export const Button = ({
   onClick,
   overlayClass,
   spinner,
+  style,
   target,
   title,
   tooltip,
@@ -90,6 +91,7 @@ export const Button = ({
       disabled={disabled || spinner}
       target={target}
       rel={rel}
+      style={style}
     >
       {(!spinner && icon) && <i className={iconClasses} /> }
       <span className="button__contents">
@@ -146,6 +148,7 @@ Button.defaultProps = {
   popover: null,
   popoverId: null,
   spinner: false,
+  style: null,
   title: null,
   tooltip: null,
   tooltipId: null,
@@ -168,6 +171,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   overlayClass: PropTypes.string,
   spinner: PropTypes.bool,
+  style: PropTypes.shape({}),
   target: PropTypes.string,
   title: PropTypes.string,
   tooltip: PropTypes.oneOfType([

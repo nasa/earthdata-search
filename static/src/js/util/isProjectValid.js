@@ -1,16 +1,29 @@
 import { isAccessMethodValid } from './accessMethods'
 
 /**
- * Returns true if every collection passed in contains has {isValid: true}
- * @param {array} collections - An array of collections to check for isValid.
- * @return {boolean} // TODO: We may want to return an object here to be able to provide more information as
- * to why a project is invalid
+ * Returns true if every project collection can be downloaded
+ * @param {Object} project - Project object from the redux store
+ * @param {Object} collections - Collections object from the redux store
+ * @return {Object}
  */
-// eslint-disable-next-line arrow-body-style
-export const isProjectValid = (collections) => {
-  // TODO: Return more specific information as to why the project is invalid. This will likely require
-  // a similar change to the individual collection validation
-  return collections.every(collection => isAccessMethodValid(collection))
+export const isProjectValid = (project, collections) => {
+  const { byId: projectById, collectionIds } = project
+  const { byId: collectionById } = collections
+
+  let valid = { valid: true }
+  // loop through each collection, if one is invalid, skip the rest
+  collectionIds.forEach((collectionId) => {
+    const { valid: isValid } = valid
+
+    if (!isValid) return
+
+    const projectCollection = projectById[collectionId]
+    const collection = collectionById[collectionId]
+
+    valid = isAccessMethodValid(projectCollection, collection)
+  })
+
+  return valid
 }
 
 export default isProjectValid

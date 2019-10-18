@@ -80,7 +80,7 @@ const ProjectCollectionItem = ({
 
   const { size = '', unit = '' } = totalSize
 
-  const isValid = isAccessMethodValid(projectCollection)
+  const { valid: isValid } = isAccessMethodValid(projectCollection, collection)
 
   const className = classNames([
     'project-collections-item',

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import qs from 'qs'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
@@ -16,6 +17,7 @@ import './GranuleResultsActions.scss'
 const GranuleResultsActions = ({
   collectionId,
   granuleCount,
+  granuleLimit,
   initialLoading,
   isCollectionInProject,
   location,
@@ -50,7 +52,45 @@ const GranuleResultsActions = ({
     </Button>
   )
 
+  const tooManyGranules = granuleLimit && granuleCount > granuleLimit
   const downloadAllButton = () => {
+    if (tooManyGranules) {
+      return (
+        <OverlayTrigger
+          placement="bottom"
+          overlay={(
+            <Tooltip
+              id="tooltip__granule-results-actions__download-all-button"
+              className="tooltip--large tooltip--ta-left tooltip--wide"
+            >
+              Due to significant processing times, orders for this collection are limited to
+              {' '}
+              {commafy(granuleLimit)}
+              {' '}
+              granules. Please narrow your search before downloading.
+              Contact the data provider with questions.
+              You can find contact information by clicking on the information icon.
+            </Tooltip>
+          )}
+        >
+          <div>
+            <Button
+              className="granule-results-actions__download-all-button"
+              badge={`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
+              bootstrapVariant="secondary"
+              icon="download"
+              variant="full"
+              label="Download All"
+              disabled
+              style={{ pointerEvents: 'none' }}
+            >
+              Download All
+            </Button>
+          </div>
+        </OverlayTrigger>
+      )
+    }
+
     const params = qs.parse(location.search, { ignoreQueryPrefix: true, parseArrays: false })
     let { p = '', pg = {} } = params
 
@@ -131,10 +171,10 @@ const GranuleResultsActions = ({
             )
         }
         {
-          isCollectionInProject && removeFromProjectButton
+          isCollectionInProject && !tooManyGranules && removeFromProjectButton
         }
         {
-          !isCollectionInProject && addToProjectButton
+          !isCollectionInProject && !tooManyGranules && addToProjectButton
         }
       </div>
       {downloadButton}
@@ -143,12 +183,14 @@ const GranuleResultsActions = ({
 }
 
 GranuleResultsActions.defaultProps = {
-  granuleCount: 0
+  granuleCount: 0,
+  granuleLimit: undefined
 }
 
 GranuleResultsActions.propTypes = {
   collectionId: PropTypes.string.isRequired,
   granuleCount: PropTypes.number,
+  granuleLimit: PropTypes.number,
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
