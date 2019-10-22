@@ -42,7 +42,7 @@ CustomDataLinksToggle.propTypes = {
   onClick: PropTypes.func.isRequired
 }
 
-const DataLinksButton = ({
+export const DataLinksButton = ({
   collectionId,
   dataLinks,
   onMetricsDataAccess
@@ -80,10 +80,9 @@ const DataLinksButton = ({
       className="button granule-results-item__button"
       href={dataLinks[0].href}
       onClick={() => onMetricsDataAccess({
-        accessMethods: [{
-          collectionId,
-          method: 'single_granule',
-          type: 'Single Granule'
+        type: 'single_granule_download',
+        collections: [{
+          collectionId
         }]
       })}
       rel="noopener noreferrer"
