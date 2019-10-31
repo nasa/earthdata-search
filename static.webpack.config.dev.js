@@ -13,7 +13,7 @@ const Config = merge.smartStrategy(
   mode: 'development',
   devtool: 'source-map',
   devServer: {
-    hot: true,
+    hot: false,
     historyApiFallback: true
   },
   module: {
