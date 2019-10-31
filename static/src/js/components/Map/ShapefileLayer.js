@@ -115,7 +115,7 @@ class ShapefileLayerExtended extends L.Layer {
     const jsonLayer = new L.geoJson(response, {
       className: 'geojson-svg',
       onEachFeature(feature, featureLayer) {
-        const addIconClasses = function nameHere(layer) {
+        const addIconClasses = (layer) => {
           const { options = {} } = layer
           const { icon = null } = options
           // eslint-disable-next-line no-param-reassign
@@ -149,10 +149,20 @@ class ShapefileLayerExtended extends L.Layer {
   }
 
   setConstraint(sourceLayer) {
+    const { feature = {} } = sourceLayer
+    const { geometry = {} } = feature
+    const { type = '' } = geometry
+
     let layer
     let layerType
 
-    if (sourceLayer.getLatLngs != null) {
+    if (type === 'LineString') {
+      // Line
+      const latlngs = sourceLayer.getLatLngs()
+
+      layer = new L.Polyline(latlngs, this.options.selection)
+      layerType = 'line'
+    } else if (sourceLayer.getLatLngs != null) {
       // Polygon
       const originalLatLngs = sourceLayer.getLatLngs()
       const latlngs = this.simplifyPoints(originalLatLngs)
