@@ -1,4 +1,4 @@
-import isAccessMethodValid from '../accessMethods'
+import { isAccessMethodValid, validAccessMethod } from '../accessMethods'
 
 describe('isAccessMethodValid', () => {
   const collection = {
@@ -21,7 +21,10 @@ describe('isAccessMethodValid', () => {
       selectedAccessMethod: 'download'
     }
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({ valid: true })
+    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      ...validAccessMethod,
+      valid: true
+    })
   })
 
   test('returns false if the selected method is not valid', () => {
@@ -35,7 +38,10 @@ describe('isAccessMethodValid', () => {
       selectedAccessMethod: 'download'
     }
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({ valid: false })
+    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      ...validAccessMethod,
+      valid: false
+    })
   })
 
   test('returns false if the selected method does not have isValid', () => {
@@ -48,7 +54,10 @@ describe('isAccessMethodValid', () => {
       selectedAccessMethod: 'download'
     }
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({ valid: false })
+    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      ...validAccessMethod,
+      valid: false
+    })
   })
 
   test('returns false if no access method is selected', () => {
@@ -61,13 +70,19 @@ describe('isAccessMethodValid', () => {
       }
     }
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({ valid: false })
+    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      ...validAccessMethod,
+      valid: false
+    })
   })
 
   test('returns false if no project collection config exists', () => {
     const projectCollection = undefined
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({ valid: false })
+    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      ...validAccessMethod,
+      valid: false
+    })
   })
 
   test('returns true if the granule count is under the limit', () => {
@@ -82,7 +97,9 @@ describe('isAccessMethodValid', () => {
     }
 
     const collection = {
-      granules: {},
+      granules: {
+        hits: 1
+      },
       metadata: {
         tags: {
           'edsc.limited_collections': {
@@ -94,7 +111,10 @@ describe('isAccessMethodValid', () => {
       }
     }
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({ valid: true })
+    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      ...validAccessMethod,
+      valid: true
+    })
   })
 
   test('returns true if there is no granule limit', () => {
@@ -108,7 +128,10 @@ describe('isAccessMethodValid', () => {
       selectedAccessMethod: 'download'
     }
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({ valid: true })
+    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      ...validAccessMethod,
+      valid: true
+    })
   })
 
   test('returns false if the granule count is over the limit', () => {
@@ -138,8 +161,40 @@ describe('isAccessMethodValid', () => {
     }
 
     expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      ...validAccessMethod,
       valid: false,
       tooManyGranules: true
+    })
+  })
+
+  test('returns false if the granule count is zero', () => {
+    const projectCollection = {
+      accessMethods: {
+        download: {
+          isValid: true,
+          type: 'download'
+        }
+      },
+      selectedAccessMethod: 'download'
+    }
+
+    const collection = {
+      granules: {},
+      metadata: {
+        tags: {
+          'edsc.limited_collections': {
+            data: {
+              limit: 100
+            }
+          }
+        }
+      }
+    }
+
+    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      ...validAccessMethod,
+      valid: false,
+      zeroGranules: true
     })
   })
 })

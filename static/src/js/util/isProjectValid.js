@@ -1,4 +1,4 @@
-import { isAccessMethodValid } from './accessMethods'
+import { isAccessMethodValid, validAccessMethod } from './accessMethods'
 
 /**
  * Returns true if every project collection can be downloaded
@@ -12,17 +12,22 @@ export const isProjectValid = (project, collections) => {
 
   if (collectionIds.length === 0) return { valid: false }
 
-  let valid = { valid: true }
-  // loop through each collection, if one is invalid, skip the rest
+  const valid = { ...validAccessMethod }
   collectionIds.forEach((collectionId) => {
-    const { valid: isValid } = valid
-
-    if (!isValid) return
-
     const projectCollection = projectById[collectionId]
     const collection = collectionById[collectionId]
 
-    valid = isAccessMethodValid(projectCollection, collection)
+    const newValid = isAccessMethodValid(projectCollection, collection)
+
+    Object.keys(validAccessMethod).forEach((key) => {
+      if (key === 'valid') {
+        // if the valid key goes false, remember it is false
+        valid[key] = !valid[key] ? valid[key] : newValid[key]
+      } else {
+        // if the other keys go true, remember they are true
+        valid[key] = valid[key] || newValid[key]
+      }
+    })
   })
 
   return valid

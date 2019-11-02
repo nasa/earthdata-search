@@ -21,18 +21,6 @@ function setup() {
         }
       }
     },
-    collectionsSearchResults: {
-      allIds: ['collectionId1', 'collectionId2'],
-      byId: {
-        collectionId1: {
-          mock: 'data 1'
-        },
-        collectionId2: {
-          mock: 'data 2'
-        }
-      },
-      isLoading: false
-    },
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
     onSetActivePanel: jest.fn(),

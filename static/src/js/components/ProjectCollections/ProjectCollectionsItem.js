@@ -18,6 +18,7 @@ import Skeleton from '../Skeleton/Skeleton'
 
 import './ProjectCollectionsItem.scss'
 import pluralize from '../../util/pluralize'
+import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 
 /**
  * Renders ProjectCollectionItem.
@@ -26,7 +27,6 @@ import pluralize from '../../util/pluralize'
  * @param {Object} props.color - Color assigned to the collection based on its location in the project list.
  * @param {Object} props.index - Position of the collection in the project list.
  * @param {Object} props.isPanelActive - Whether or not the panel for the collection is active.
- * @param {Boolean} props.loading - Whether or not the project collections are loading.
  * @param {Function} props.onRemoveCollectionFromProject - Function called when a collection is removed from the project.
  * @param {Function} props.onToggleCollectionVisibility - Function called when visibility of the collection is toggled.
  * @param {Function} props.onSetActivePanel - Function called when an active panel is set.
@@ -53,7 +53,6 @@ const ProjectCollectionItem = ({
   if (!collection) return null
 
   const {
-    excludedGranuleIds,
     granules,
     isVisible,
     metadata
@@ -63,20 +62,9 @@ const ProjectCollectionItem = ({
     dataset_id: title
   } = metadata
 
-  const {
-    hits,
-    totalSize = {}
-  } = granules
+  const { totalSize = {} } = granules
 
-  let granuleCount
-
-  if (hits > 0) {
-    if (excludedGranuleIds.length > 0) {
-      granuleCount = hits - excludedGranuleIds.length
-    } else {
-      granuleCount = hits
-    }
-  }
+  const granuleCount = getGranuleCount(granules, collection)
 
   const { size = '', unit = '' } = totalSize
 
@@ -151,11 +139,16 @@ const ProjectCollectionItem = ({
                     >
                       {`${abbreviate(granuleCount, 1)} ${pluralize('Granule', granuleCount)}`}
                     </li>
-                    <li
-                      className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
-                    >
-                      {`Est. Size ${size} ${unit}`}
-                    </li>
+                    {
+                      granuleCount > 0 && size && unit && (
+                        <li
+                          className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
+                        >
+                          {`Est. Size ${size} ${unit}`}
+                        </li>
+                      )
+                    }
+
                   </>
                 )
               }

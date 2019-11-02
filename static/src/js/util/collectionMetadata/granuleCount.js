@@ -4,16 +4,14 @@
  * @param {Object} collection Collection object from the redux store
  */
 export const getGranuleCount = (granules = {}, collection = {}) => {
-  const { hits } = granules
+  const { hits = 0 } = granules
   const { excludedGranuleIds = [] } = collection
 
-  let granuleCount
+  let granuleCount = hits
 
   if (hits > 0) {
     if (excludedGranuleIds.length > 0) {
       granuleCount = hits - excludedGranuleIds.length
-    } else {
-      granuleCount = hits
     }
   }
 

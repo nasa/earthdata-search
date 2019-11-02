@@ -10,13 +10,13 @@ describe('getGranuleCount', () => {
     expect(getGranuleCount(granules, collection)).toEqual(10)
   })
 
-  test('returns undefined if there are no granules', () => {
+  test('returns 0 if there are no granules', () => {
     const granules = {
       hits: 0
     }
     const collection = {}
 
-    expect(getGranuleCount(granules, collection)).toEqual(undefined)
+    expect(getGranuleCount(granules, collection)).toEqual(0)
   })
 
   test('returns granule count minus the excluded granules', () => {
