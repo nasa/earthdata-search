@@ -1,4 +1,5 @@
 import { isProjectValid } from '../isProjectValid'
+import { validAccessMethod } from '../accessMethods'
 
 describe('isProjectValid', () => {
   describe('when all collections are invalid', () => {
@@ -21,16 +22,25 @@ describe('isProjectValid', () => {
       const collections = {
         byId: {
           collection1: {
+            granules: {
+              hits: 1
+            },
             metadata: {
               tags: {}
             }
           },
           collection2: {
+            granules: {
+              hits: 1
+            },
             metadata: {
               tags: {}
             }
           },
           collection3: {
+            granules: {
+              hits: 1
+            },
             metadata: {
               tags: {}
             }
@@ -38,7 +48,10 @@ describe('isProjectValid', () => {
         }
       }
 
-      expect(isProjectValid(project, collections)).toEqual({ valid: false })
+      expect(isProjectValid(project, collections)).toEqual({
+        ...validAccessMethod,
+        valid: false
+      })
     })
   })
 
@@ -68,11 +81,17 @@ describe('isProjectValid', () => {
       const collections = {
         byId: {
           collection1: {
+            granules: {
+              hits: 1
+            },
             metadata: {
               tags: {}
             }
           },
           collection2: {
+            granules: {
+              hits: 1
+            },
             metadata: {
               tags: {}
             }
@@ -85,7 +104,11 @@ describe('isProjectValid', () => {
         }
       }
 
-      expect(isProjectValid(project, collections)).toEqual({ valid: false })
+      expect(isProjectValid(project, collections)).toEqual({
+        ...validAccessMethod,
+        valid: false,
+        zeroGranules: true
+      })
     })
   })
 
@@ -127,16 +150,25 @@ describe('isProjectValid', () => {
       const collections = {
         byId: {
           collection1: {
+            granules: {
+              hits: 1
+            },
             metadata: {
               tags: {}
             }
           },
           collection2: {
+            granules: {
+              hits: 1
+            },
             metadata: {
               tags: {}
             }
           },
           collection3: {
+            granules: {
+              hits: 1
+            },
             metadata: {
               tags: {}
             }
@@ -144,7 +176,10 @@ describe('isProjectValid', () => {
         }
       }
 
-      expect(isProjectValid(project, collections)).toEqual({ valid: true })
+      expect(isProjectValid(project, collections)).toEqual({
+        ...validAccessMethod,
+        valid: true
+      })
     })
   })
 

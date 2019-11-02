@@ -20,7 +20,6 @@ import './ProjectCollectionsList.scss'
 export const ProjectCollectionsList = (props) => {
   const {
     collections,
-    loading,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
     location,
@@ -53,7 +52,6 @@ export const ProjectCollectionsList = (props) => {
         onToggleCollectionVisibility={onToggleCollectionVisibility}
         onSetActivePanel={onSetActivePanel}
         collectionSearch={collectionSearch}
-        loading={loading}
       />
     )
   })
@@ -83,7 +81,6 @@ export const ProjectCollectionsList = (props) => {
 
 ProjectCollectionsList.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  loading: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,

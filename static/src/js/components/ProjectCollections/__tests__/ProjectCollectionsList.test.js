@@ -20,7 +20,6 @@ function setup() {
         }
       }
     },
-    loading: false,
     location: {},
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),

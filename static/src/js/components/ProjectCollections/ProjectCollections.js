@@ -60,7 +60,6 @@ export class ProjectCollections extends Component {
     const {
       collectionSearch,
       collections,
-      collectionsSearchResults,
       onMetricsDataAccess,
       onRemoveCollectionFromProject,
       onSetActivePanel,
@@ -71,9 +70,20 @@ export class ProjectCollections extends Component {
       savedProject
     } = this.props
 
-    const collectionsLoading = collectionsSearchResults.isLoading
-    const { valid: isValid, tooManyGranules } = isProjectValid(project, collections)
+    const {
+      valid: isValid,
+      tooManyGranules,
+      zeroGranules
+    } = isProjectValid(project, collections)
     const { isSubmitting } = project
+
+    const isLoading = collections.allIds.every((collectionId) => {
+      const { byId } = collections
+      const collection = byId[collectionId]
+      const { granules = {} } = collection
+
+      return Object.keys(granules).length === 0
+    })
 
     return (
       <section className="project-collections">
@@ -85,7 +95,6 @@ export class ProjectCollections extends Component {
         />
         <ProjectCollectionsList
           collections={collections}
-          loading={collectionsLoading}
           onMetricsDataAccess={onMetricsDataAccess}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onToggleCollectionVisibility={onToggleCollectionVisibility}
@@ -95,29 +104,41 @@ export class ProjectCollections extends Component {
           collectionSearch={collectionSearch}
         />
         <div className="project-collections__footer">
-          <p className="project-collections__footer-message">
-            {
-              !isValid && !tooManyGranules && (
-                <>
-                  {'Select a data access method for each collection in your project before downloading.'}
-                </>
-              )
-            }
-            {
-              isValid && (
-                <>
-                  {`Click ${String.fromCharCode(8220)}Edit Options${String.fromCharCode(8221)} above to customize the output for each project.`}
-                </>
-              )
-            }
-            {
-              !isValid && tooManyGranules && (
-                <>
-                  {'One or more collections in your project contains too many granules. Adjust temporal constraints or remove the collections before downloading.'}
-                </>
-              )
-            }
-          </p>
+          {
+            !isLoading && (
+              <p className="project-collections__footer-message">
+                {
+                  !isValid && !tooManyGranules && !zeroGranules && (
+                    <>
+                      {'Select a data access method for each collection in your project before downloading.'}
+                    </>
+                  )
+                }
+                {
+                  isValid && (
+                    <>
+                      {`Click ${String.fromCharCode(8220)}Edit Options${String.fromCharCode(8221)} above to customize the output for each project.`}
+                    </>
+                  )
+                }
+                {
+                  !isValid && tooManyGranules && (
+                    <>
+                      {'One or more collections in your project contains too many granules. Adjust temporal constraints or remove the collections before downloading.'}
+                    </>
+                  )
+                }
+                {
+                  !isValid && zeroGranules && (
+                    <>
+                      {'One or more collections in your project contains zero granules. Adjust temporal constraints or remove the collections before downloading.'}
+                    </>
+                  )
+                }
+              </p>
+            )
+          }
+
           <Button
             type="submit"
             variant="full"
@@ -138,7 +159,6 @@ export class ProjectCollections extends Component {
 ProjectCollections.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
-  collectionsSearchResults: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,

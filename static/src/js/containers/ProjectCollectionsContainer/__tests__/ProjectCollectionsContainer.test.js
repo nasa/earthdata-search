@@ -16,16 +16,6 @@ function setup() {
         }
       }
     },
-    collectionsSearchResults: {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
-        }
-      },
-      isLoading: false,
-      isLoaded: true
-    },
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
     onSetActivePanel: jest.fn(),
@@ -65,16 +55,6 @@ describe('ProjectCollectionsContainer component', () => {
     })
     expect(enzymeWrapper.find(ProjectCollections).props().project).toEqual({
       collectionIds: ['collectionId']
-    })
-    expect(enzymeWrapper.find(ProjectCollections).props().collectionsSearchResults).toEqual({
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
-        }
-      },
-      isLoading: false,
-      isLoaded: true
     })
     expect(typeof enzymeWrapper.find(ProjectCollections).props().onRemoveCollectionFromProject).toEqual('function')
   })
