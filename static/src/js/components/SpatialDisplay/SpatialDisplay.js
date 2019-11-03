@@ -14,15 +14,9 @@ import { availableSystems, findGridByName } from '../../util/grid'
 import FilterStackItem from '../FilterStack/FilterStackItem'
 import FilterStackContents from '../FilterStack/FilterStackContents'
 import SpatialDisplayEntry from './SpatialDisplayEntry'
+import { eventEmitter } from '../../events/events'
 
 import './SpatialDisplay.scss'
-
-const trimSpatial = (values, decimalPlaces = 4) => {
-  if (!values || values[0] === '') {
-    return values
-  }
-  return values.map(value => parseFloat(value).toFixed(decimalPlaces))
-}
 
 class SpatialDisplay extends Component {
   constructor(props) {
@@ -43,6 +37,10 @@ class SpatialDisplay extends Component {
     this.onGridRemove = this.onGridRemove.bind(this)
     this.onSpatialRemove = this.onSpatialRemove.bind(this)
     this.onSubmitGridCoords = this.onSubmitGridCoords.bind(this)
+    this.onChangePointSearch = this.onChangePointSearch.bind(this)
+    this.onBlurPointSearch = this.onBlurPointSearch.bind(this)
+    this.onChangeBoundingBoxSearch = this.onChangeBoundingBoxSearch.bind(this)
+    this.onBlurBoundingBoxSearch = this.onBlurBoundingBoxSearch.bind(this)
   }
 
   componentDidMount() {
@@ -56,7 +54,11 @@ class SpatialDisplay extends Component {
     } = this.props
 
     this.setState({
-      boundingBoxSearch,
+      boundingBoxSearch: boundingBoxSearch
+        ? boundingBoxSearch
+          .match(/[^,]+,[^,]+/g)
+          .map(pointStr => pointStr.split(',').reverse().join(','))
+        : [undefined, undefined],
       gridName,
       gridCoords,
       pointSearch,
@@ -80,7 +82,12 @@ class SpatialDisplay extends Component {
       this.setState({ pointSearch: nextProps.pointSearch })
     }
     if (boundingBoxSearch !== nextProps.boundingBoxSearch) {
-      this.setState({ boundingBoxSearch: nextProps.boundingBoxSearch })
+      const points = nextProps.boundingBoxSearch
+        ? nextProps.boundingBoxSearch
+          .match(/[^,]+,[^,]+/g)
+          .map(pointStr => pointStr.split(',').reverse().join(','))
+        : [undefined, undefined]
+      this.setState({ boundingBoxSearch: points })
     }
     if (polygonSearch !== nextProps.polygonSearch) {
       this.setState({ polygonSearch: nextProps.polygonSearch })
@@ -138,6 +145,69 @@ class SpatialDisplay extends Component {
       onGranuleGridCoords(e.target.value)
     }
     e.preventDefault()
+  }
+
+  onChangePointSearch(e) {
+    const { value = '' } = e.target
+    this.setState({
+      pointSearch: value.split(',').reverse().join(',').replace(/\s/g, '')
+    })
+  }
+
+  onBlurPointSearch() {
+    eventEmitter.emit('map.drawCancel')
+
+    const { pointSearch } = this.state
+    const { onChangeQuery } = this.props
+
+    onChangeQuery({
+      collection: {
+        spatial: {
+          point: pointSearch.replace(/\s/g, '')
+        }
+      }
+    })
+  }
+
+  onChangeBoundingBoxSearch(e) {
+    const { boundingBoxSearch } = this.state
+    const [swPoint, nePoint] = boundingBoxSearch
+
+    const {
+      name,
+      value = ''
+    } = e.target
+
+    let newSearch
+
+    if (name === 'swPoint') {
+      newSearch = [value, nePoint]
+    }
+
+    if (name === 'nePoint') {
+      newSearch = [swPoint, value]
+    }
+
+    this.setState({
+      boundingBoxSearch: newSearch
+    })
+  }
+
+  onBlurBoundingBoxSearch() {
+    eventEmitter.emit('map.drawCancel')
+
+    const { boundingBoxSearch } = this.state
+    const { onChangeQuery } = this.props
+
+    if (boundingBoxSearch[0] && boundingBoxSearch[1]) {
+      onChangeQuery({
+        collection: {
+          spatial: {
+            boundingBox: boundingBoxSearch.map(point => point.split(',').reverse()).join(',').replace(/\s/g, '')
+          }
+        }
+      })
+    }
   }
 
   render() {
@@ -265,8 +335,9 @@ class SpatialDisplay extends Component {
                   placeholder="lat, lon (e.g. 44.2, 130)"
                   sm="auto"
                   size="sm"
-                  value={pointSearch.split(',').reverse().join(', ')}
-                  onChange={e => console.warn(e.target.value)}
+                  value={pointSearch.split(',').reverse().join(',')}
+                  onChange={this.onChangePointSearch}
+                  onBlur={this.onBlurPointSearch}
                 />
               </Col>
             </Form.Group>
@@ -281,14 +352,7 @@ class SpatialDisplay extends Component {
           title="Point"
         />
       ))
-    } else if ((boundingBoxSearch && !drawingNewLayer) || drawingNewLayer === 'rectangle') {
-      // Arrange the points in the right order
-      const points = boundingBoxSearch
-        ? boundingBoxSearch
-          .match(/[^,]+,[^,]+/g)
-          .map(pointStr => trimSpatial(pointStr.split(','), 5).reverse().join(', '))
-        : [undefined, undefined]
-
+    } else if ((boundingBoxSearch && (boundingBoxSearch[0] || boundingBoxSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'rectangle') {
       entry = (
         <SpatialDisplayEntry>
           <Form.Row className="spatial-display__form-row">
@@ -307,8 +371,10 @@ class SpatialDisplay extends Component {
                   type="text"
                   placeholder="lat, lon (e.g. 44.2, 130)"
                   size="sm"
-                  value={points[0]}
-                  onChange={e => console.warn(e.target.value)}
+                  name="swPoint"
+                  value={boundingBoxSearch[0]}
+                  onChange={this.onChangeBoundingBoxSearch}
+                  onBlur={this.onBlurBoundingBoxSearch}
                 />
               </Col>
             </Form.Group>
@@ -327,8 +393,10 @@ class SpatialDisplay extends Component {
                   type="text"
                   placeholder="lat, lon (e.g. 50, 133.24)"
                   size="sm"
-                  value={points[1]}
-                  onChange={e => console.warn(e.target.value)}
+                  name="nePoint"
+                  value={boundingBoxSearch[1]}
+                  onChange={this.onChangeBoundingBoxSearch}
+                  onBlur={this.onBlurBoundingBoxSearch}
                 />
               </Col>
             </Form.Group>

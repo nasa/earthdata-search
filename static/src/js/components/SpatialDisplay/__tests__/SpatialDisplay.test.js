@@ -56,7 +56,7 @@ describe('SpatialDisplay component', () => {
       const label = filterStackContents.props().body.props.children.props.children.props.children[0]
       const input = filterStackContents.props().body.props.children.props.children.props.children[1]
       expect(label.props.children).toContain('Coordinates:') // Lat,Lon
-      expect(input.props.children.props.value).toEqual('38.805869, -77.0418825') // Lat,Lon
+      expect(input.props.children.props.value).toEqual('38.805869,-77.0418825') // Lat,Lon
     })
   })
 
@@ -77,13 +77,13 @@ describe('SpatialDisplay component', () => {
       const swLabel = sw.props.children[0]
       const swInput = sw.props.children[1]
       expect(swLabel.props.children).toEqual('SW:')
-      expect(swInput.props.children.props.value).toEqual('38.79165, -77.11976')
+      expect(swInput.props.children.props.value).toEqual('38.791645,-77.119759')
 
       const ne = filterStackContents.props().body.props.children.props.children[1]
       const neLabel = ne.props.children[0]
       const neInput = ne.props.children[1]
       expect(neLabel.props.children).toEqual('NE:')
-      expect(neInput.props.children.props.value).toEqual('38.99585, -76.90939')
+      expect(neInput.props.children.props.value).toEqual('38.995845,-76.909393')
     })
   })
 
@@ -283,7 +283,7 @@ describe('SpatialDisplay component', () => {
       })
 
       expect(enzymeWrapper.state()).toEqual({
-        boundingBoxSearch: '',
+        boundingBoxSearch: [undefined, undefined],
         gridCoords: 'test coords',
         gridName: '',
         lineSearch: '',
