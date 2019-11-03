@@ -87,6 +87,7 @@ class SpatialSelection extends Component {
     this.onEditStop = this.onEditStop.bind(this)
     this.onMounted = this.onMounted.bind(this)
     this.onSpatialDropdownClick = this.onSpatialDropdownClick.bind(this)
+    this.onDrawCancel = this.onDrawCancel.bind(this)
     this.updateStateAndQuery = this.updateStateAndQuery.bind(this)
 
     this.drawControl = null
@@ -130,6 +131,7 @@ class SpatialSelection extends Component {
 
   componentWillUnmount() {
     eventEmitter.off('map.drawStart', this.onSpatialDropdownClick)
+    eventEmitter.off('map.drawCancel', this.onDrawCancel)
   }
 
   // Callback from EditControl, called when clicking the draw shape button
@@ -163,11 +165,21 @@ class SpatialSelection extends Component {
     onToggleDrawingNewLayer(false)
   }
 
+  // Triggered from eventEmitter.emit('map.drawCancel')
+  // Cancels Leaflet Draw
+  onDrawCancel() {
+    if (this.drawControl) {
+      this.drawControl._toolbars.draw._modes.marker.handler.disable()
+      this.drawControl._toolbars.draw._modes.rectangle.handler.disable()
+    }
+  }
+
   // Callback from EditControl, called when the controls are mounted
   onMounted(drawControl) {
     this.drawControl = drawControl
 
     eventEmitter.on('map.drawStart', this.onSpatialDropdownClick)
+    eventEmitter.on('map.drawCancel', this.onDrawCancel)
   }
 
   onSpatialDropdownClick(event) {
