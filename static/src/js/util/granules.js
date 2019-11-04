@@ -109,7 +109,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
 
   const encodeCloudCover = (val = {}) => {
     if (val.min || val.max) {
-      return val
+      return `${val.min || ''},${val.max || ''}`
     }
     return ''
   }
@@ -136,7 +136,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     authToken,
     browseOnly,
     boundingBox,
-    cloudCoverString,
+    cloudCover: cloudCoverString,
     collectionId,
     dayNightFlag,
     // exclude,
