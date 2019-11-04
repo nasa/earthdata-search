@@ -16,7 +16,6 @@ import './Datepicker.scss'
 class Datepicker extends PureComponent {
   constructor(props) {
     super(props)
-    this.format = 'YYYY-MM-DD HH:mm:ss'
     this.isValidDate = this.isValidDate.bind(this)
     this.onBlur = this.onBlur.bind(this)
     this.onClearClick = this.onClearClick.bind(this)
@@ -67,11 +66,13 @@ class Datepicker extends PureComponent {
   }
 
   /**
-  * Set view back to 'years' when a user closes the datepicker
+  * Set view back to the default when a user closes the datepicker
   */
   onBlur() {
+    const { viewMode } = this.props
+
     this.picker.setState({
-      currentView: 'years'
+      currentView: viewMode
     })
   }
 
@@ -105,6 +106,7 @@ class Datepicker extends PureComponent {
   */
   onChange(value) {
     const {
+      format,
       onSubmit,
       type
     } = this.props
@@ -124,7 +126,7 @@ class Datepicker extends PureComponent {
         valueToSet = value.endOf('day')
       }
     } else {
-      valueToSet = moment.utc(value, this.format, true)
+      valueToSet = moment.utc(value, format, true)
     }
 
     onSubmit(valueToSet)
@@ -134,11 +136,22 @@ class Datepicker extends PureComponent {
   * Check to see if a date should be clickable in the picker
   */
   isValidDate(date) {
-    // Is the date before 1960?
-    if (date.isBefore('1960-01-01', 'year')) return false
+    const {
+      minDate,
+      maxDate,
+      isValidDate,
+      shouldValidate
+    } = this.props
 
-    // Is the date after today?
-    if (date.isAfter(this.today, 'day')) return false
+    // If validation is set to false, avoid checking validations
+    if (!shouldValidate) return true
+
+    // If a validation callback was provided, execute it
+    if (typeof isValidDate === 'function') return isValidDate(date)
+
+    if (minDate && date.isBefore(minDate, 'day')) return false
+
+    if (maxDate && date.isAfter(maxDate, 'day')) return false
 
     // Show the date
     return true
@@ -146,14 +159,13 @@ class Datepicker extends PureComponent {
 
   render() {
     const {
-      format,
       isValidDate,
       onBlur,
       onChange,
       setRef
     } = this
 
-    const { id } = this.props
+    const { format, id, viewMode } = this.props
     let { value } = this.state
 
     // A valid date will come be passed as an ISO string. Check to see if the date is a valid ISO string,
@@ -181,22 +193,34 @@ class Datepicker extends PureComponent {
         timeFormat={false}
         utc
         value={value}
-        viewMode="years"
+        viewMode={viewMode}
       />
     )
   }
 }
 
 Datepicker.defaultProps = {
+  format: 'YYYY-MM-DD HH:mm:ss',
+  minDate: '',
+  maxDate: '',
+  isValidDate: null,
+  shouldValidate: true,
   type: '',
-  value: ''
+  value: '',
+  viewMode: 'years'
 }
 
 Datepicker.propTypes = {
   id: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  format: PropTypes.string,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
+  isValidDate: PropTypes.func,
+  shouldValidate: PropTypes.bool,
   type: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  viewMode: PropTypes.string
 }
 
 export default Datepicker

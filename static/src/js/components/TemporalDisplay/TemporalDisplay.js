@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 
 import TemporalDisplayEntry from './TemporalDisplayEntry'
 import FilterStackItem from '../FilterStack/FilterStackItem'
@@ -13,7 +14,8 @@ class TemporalDisplay extends PureComponent {
 
     this.state = {
       endDate: '',
-      startDate: ''
+      startDate: '',
+      isRecurring: false
     }
     this.onTimelineRemove = this.onTimelineRemove.bind(this)
   }
@@ -23,11 +25,12 @@ class TemporalDisplay extends PureComponent {
       temporalSearch
     } = this.props
 
-    const { endDate, startDate } = temporalSearch
+    const { endDate, startDate, isRecurring } = temporalSearch
 
     this.setState({
       endDate,
-      startDate
+      startDate,
+      isRecurring
     })
   }
 
@@ -37,11 +40,12 @@ class TemporalDisplay extends PureComponent {
     } = this.props
 
     if (temporalSearch !== nextProps.temporalSearch) {
-      const { endDate, startDate } = nextProps.temporalSearch
+      const { endDate, startDate, isRecurring } = nextProps.temporalSearch
 
       this.setState({
         endDate,
-        startDate
+        startDate,
+        isRecurring
       })
     }
   }
@@ -54,18 +58,26 @@ class TemporalDisplay extends PureComponent {
   render() {
     const {
       endDate,
-      startDate
+      startDate,
+      isRecurring
     } = this.state
 
     if (!startDate && !endDate) {
       return null
     }
 
+    const format = 'YYYY-MM-DDTHH:m:s.SSSZ'
+    const startDateObject = moment.utc(startDate, format, true)
+    const endDateObject = moment.utc(endDate, format, true)
+
     const temporalStartDisplay = startDate
-      ? <TemporalDisplayEntry type="start" value={startDate} />
+      ? <TemporalDisplayEntry type="start" startDate={startDateObject} isRecurring={isRecurring} />
       : null
     const temporalEndDisplay = endDate
-      ? <TemporalDisplayEntry type="end" value={endDate} />
+      ? <TemporalDisplayEntry type="end" endDate={endDateObject} isRecurring={isRecurring} />
+      : null
+    const temporalRangeDisplay = isRecurring
+      ? <TemporalDisplayEntry type="range" startDate={startDateObject} endDate={endDateObject} isRecurring={isRecurring} shouldFormat={false} />
       : null
 
     return (
@@ -81,6 +93,10 @@ class TemporalDisplay extends PureComponent {
         <FilterStackContents
           body={temporalEndDisplay}
           title="Stop"
+        />
+        <FilterStackContents
+          body={temporalRangeDisplay}
+          title="Range"
         />
       </FilterStackItem>
     )

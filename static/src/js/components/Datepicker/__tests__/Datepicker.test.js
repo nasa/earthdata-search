@@ -31,6 +31,8 @@ function setupShallow() {
     id: 'test-id',
     onSubmit: jest.fn(),
     type: 'start',
+    minDate: '1960-01-01 00:00:00',
+    maxDate: '1984-07-02T16:00:00',
     value: ''
   }
 
@@ -256,6 +258,14 @@ describe('Datepicker component', () => {
   })
 
   describe('isValidDate', () => {
+    beforeEach(() => {
+      MockDate.set('07/02/1984')
+    })
+
+    afterEach(() => {
+      MockDate.reset()
+    })
+
     test('when passed a date thats too early, returns false', () => {
       const { enzymeWrapper } = setupShallow()
       const { isValidDate } = enzymeWrapper.instance()

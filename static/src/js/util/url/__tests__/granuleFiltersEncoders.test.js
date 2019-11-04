@@ -5,7 +5,10 @@ describe('url#decodeGranuleFilters', () => {
     const expectedResult = {
       temporal: {
         endDate: '2016-07-09T00:00.000Z',
-        startDate: '2015-07-09T00:00.000Z'
+        startDate: '2015-07-09T00:00.000Z',
+        recurringDayEnd: '',
+        recurringDayStart: '',
+        isRecurring: false
       },
       dayNightFlag: 'NIGHT',
       browseOnly: true,

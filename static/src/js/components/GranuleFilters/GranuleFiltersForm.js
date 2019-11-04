@@ -2,12 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form as FormikForm } from 'formik'
 import { Col, Form, Row } from 'react-bootstrap'
+import moment from 'moment'
 
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import GranuleFiltersList from './GranuleFiltersList'
 import GranuleFiltersItem from './GranuleFiltersItem'
 import TemporalSelection from '../TemporalSelection/TemporalSelection'
+import { getTemporalDateFormat } from '../../util/edscDate'
 
 /**
  * Renders GranuleFiltersForm.
@@ -40,6 +42,11 @@ export const GranuleFiltersForm = (props) => {
     dayNightFlag = '',
     cloudCover = {}
   } = values
+
+  const { isRecurring } = temporal
+
+  // For recurring dates we don't show the year, it's displayed on the slider
+  const temporalDateFormat = getTemporalDateFormat(isRecurring)
 
   const {
     min: cloudCoverMin = '',
@@ -92,17 +99,62 @@ export const GranuleFiltersForm = (props) => {
                     controlId="granule-filters__temporal-selection"
                     temporal={temporal}
                     validate={false}
+                    format={temporalDateFormat}
+                    onRecurringToggle={(e) => {
+                      const isChecked = e.target.checked
+
+                      setFieldValue('temporal.isRecurring', isChecked)
+                      setFieldTouched('temporal.isRecurring', isChecked)
+                    }}
+                    onChangeRecurring={(value) => {
+                      const { temporal } = values
+
+                      const newStartDate = moment(temporal.startDate || undefined).utc()
+                      newStartDate.set({
+                        year: value.min,
+                        hour: '00',
+                        minute: '00',
+                        second: '00'
+                      })
+
+                      const newEndDate = moment(temporal.endDate || undefined).utc()
+                      newEndDate.set({
+                        year: value.max,
+                        hour: '23',
+                        minute: '59',
+                        second: '59'
+                      })
+
+                      setFieldValue('temporal.startDate', newStartDate.toISOString())
+                      setFieldTouched('temporal.startDate')
+
+                      setFieldValue('temporal.endDate', newEndDate.toISOString())
+                      setFieldTouched('temporal.endDate')
+
+                      setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
+                      setFieldValue('temporal.recurringDayEnd', newEndDate.dayOfYear())
+                    }}
                     onSubmitStart={(startDate) => {
                       // eslint-disable-next-line no-underscore-dangle
                       const value = startDate.isValid() ? startDate.toISOString() : startDate._i
                       setFieldValue('temporal.startDate', value)
                       setFieldTouched('temporal.startDate')
+
+                      const { temporal } = values
+                      if (temporal.isRecurring) {
+                        setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
+                      }
                     }}
                     onSubmitEnd={(endDate) => {
                       // eslint-disable-next-line no-underscore-dangle
                       const value = endDate.isValid() ? endDate.toISOString() : endDate._i
                       setFieldValue('temporal.endDate', value)
                       setFieldTouched('temporal.endDate')
+
+                      const { temporal } = values
+                      if (temporal.isRecurring) {
+                        setFieldValue('temporal.recurringDayEnd', endDate.dayOfYear())
+                      }
                     }}
                   />
                 </Form.Control>

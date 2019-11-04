@@ -5,7 +5,7 @@ import moment from 'moment'
 
 import Alert from 'react-bootstrap/Alert'
 
-import TemporalSelection from '../../TemporalSelection/TemporalSelection'
+import TemporalSelection from '../TemporalSelection'
 import Datepicker from '../../Datepicker/Datepicker'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -14,6 +14,8 @@ function setup() {
   const props = {
     temporal: {},
     controlId: 'test-id',
+    onRecurringToggle: jest.fn(),
+    onChangeRecurring: jest.fn(),
     onSubmitStart: jest.fn(),
     onSubmitEnd: jest.fn(),
     onInvalid: jest.fn(),

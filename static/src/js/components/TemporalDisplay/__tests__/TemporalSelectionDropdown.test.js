@@ -3,11 +3,8 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import moment from 'moment'
 
-import Alert from 'react-bootstrap/Alert'
 import Dropdown from 'react-bootstrap/Dropdown'
 
-import TemporalSelection from '../../TemporalSelection/TemporalSelection'
-import Datepicker from '../../Datepicker/Datepicker'
 import TemporalSelectionDropdown from '../TemporalSelectionDropdown'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -104,7 +101,10 @@ describe('TemporalSelectionDropdown component', () => {
       open: false,
       temporal: {
         startDate: '',
-        endDate: ''
+        endDate: '',
+        recurringDayEnd: '',
+        recurringDayStart: '',
+        isRecurring: false
       }
     })
   })

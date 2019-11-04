@@ -217,7 +217,10 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
 
     const {
       startDate: temporalStartDate,
-      endDate: temporalEndDate
+      endDate: temporalEndDate,
+      recurringDayStart: temporalRecurringDayStart = '',
+      recurringDayEnd: temporalRecurringDayEnd = '',
+      isRecurring: temporalIsRecurring = false
     } = temporal
 
     return {
@@ -230,7 +233,10 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
       },
       temporal: {
         startDate: temporalStartDate || '',
-        endDate: temporalEndDate || ''
+        endDate: temporalEndDate || '',
+        recurringDayStart: temporalRecurringDayStart || '',
+        recurringDayEnd: temporalRecurringDayEnd || '',
+        isRecurring: temporalIsRecurring || false
       }
     }
   },

@@ -3,12 +3,12 @@ import 'array-foreach-async'
 
 import {
   getEarthdataConfig,
-  getClientId,
-  getApplicationConfig
+  getClientId
 } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { cmrStringify } from '../util/cmr/cmrStringify'
 import { getEchoToken } from '../util/urs/getEchoToken'
+import { getUmmVariableVersionHeader } from '../../../sharedUtils/ummVersionHeader'
 
 /**
  * Returns variable ids grouped by their scienceKeywords
@@ -80,7 +80,7 @@ export const getVariables = async (variableIds, jwtToken) => {
       headers: {
         'Client-Id': getClientId().lambda,
         'Echo-Token': await getEchoToken(jwtToken),
-        Accept: `application/vnd.nasa.cmr.umm_results+json; version=${getApplicationConfig().ummVariableVersion}`
+        Accept: getUmmVariableVersionHeader()
       },
       json: true,
       resolveWithFullResponse: true
