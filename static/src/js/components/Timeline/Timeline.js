@@ -9,6 +9,7 @@ import getObjectKeyByValue from '../../util/object'
 import { getColorByIndex } from '../../util/colors'
 
 import './Timeline.scss'
+import { getTemporalRange } from '../../util/edscDate'
 
 const earliestStart = '1960-01-01'
 
@@ -252,13 +253,17 @@ class Timeline extends Component {
    * @param {Object} temporalSearch - An object containing dates with the shape { startDate, endDate }
    */
   setTimelineTemporal(temporalSearch) {
-    const { endDate, startDate } = temporalSearch
+    const { endDate, startDate, isRecurring } = temporalSearch
 
     if (startDate || endDate) {
       const rangeStart = startDate ? new Date(startDate) : new Date(earliestStart)
       const rangeEnd = endDate ? new Date(endDate) : new Date()
 
-      this.$el.timeline('setTemporal', [[rangeStart, rangeEnd]])
+      if (isRecurring) {
+        this.$el.timeline('setTemporal', getTemporalRange(startDate, endDate))
+      } else {
+        this.$el.timeline('setTemporal', [[rangeStart, rangeEnd]])
+      }
     } else {
       this.$el.timeline('setTemporal', [])
     }

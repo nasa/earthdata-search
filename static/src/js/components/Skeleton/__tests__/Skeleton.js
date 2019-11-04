@@ -2,12 +2,10 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Skeleton from '../Skeleton'
-import { url } from 'inspector';
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(options) {
-
   let testSkeleton
 
   if (!options || options.singleShape) {
@@ -133,7 +131,7 @@ describe('Skeleton component', () => {
         height: '0.75rem',
         left: '1.875rem',
         top: '0.75rem',
-        width: '6.25rem' 
+        width: '6.25rem'
       })
     })
   })

@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import moment from 'moment'
+import InputRange from 'react-input-range'
+import 'react-input-range/lib/css/index.css'
+
 
 import {
   Alert,
@@ -13,6 +16,7 @@ import {
 import Datepicker from '../Datepicker/Datepicker'
 
 import './TemporalSelection.scss'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 export class TemporalSelection extends Component {
   constructor(props) {
@@ -30,11 +34,12 @@ export class TemporalSelection extends Component {
       onValid,
       onInvalid
     } = this.props
+
     const {
-      temporal
+      temporal: nextTemporal
     } = nextProps
 
-    const validation = this.checkTemporal(temporal)
+    const validation = this.checkTemporal(nextTemporal)
 
     this.setState({
       validation
@@ -52,8 +57,9 @@ export class TemporalSelection extends Component {
    * @param {object} temporal - An object containing temporal values
    */
   checkTemporal(temporal) {
-    const { format } = this.props
+    const format = 'YYYY-MM-DDTHH:m:s.SSSZ'
     const start = moment.utc(temporal.startDate, format, true)
+
     const end = moment.utc(temporal.endDate, format, true)
     const value = {
       invalidEndDate: false,
@@ -74,23 +80,77 @@ export class TemporalSelection extends Component {
     if (temporal && temporal.endDate) {
       value.invalidEndDate = !end.isValid()
     }
+
     return value
+  }
+
+  recurringSliderValues() {
+    const { temporal } = this.props
+
+    const {
+      startDate,
+      endDate
+    } = temporal
+
+    const { minimumTemporalDate } = getApplicationConfig()
+
+    try {
+      return {
+        min: startDate.getFullYear(),
+        max: endDate.getFullYear()
+      }
+    } catch (e) {
+      console.log(e)
+
+      return {
+        min: moment(minimumTemporalDate).year(),
+        max: new Date().getFullYear()
+      }
+    }
   }
 
   render() {
     const {
       controlId,
+      format,
       temporal,
+      onChangeRecurring,
+      onRecurringToggle,
       onSubmitStart,
       onSubmitEnd,
       validate
     } = this.props
 
+    let { isRecurring } = temporal
+
     const {
       validation
     } = this.state
 
+    const allowRecurring = Object.values(validation).some(isInvalid => isInvalid === true)
+    if (allowRecurring) {
+      isRecurring = false
+    }
+
+    const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
+    const minimumTemporalDate = moment(minimumTemporalDateString, temporalDateFormatFull)
+
+    let sliderStartDate = moment(temporal.startDate)
+    if (!sliderStartDate.isValid()) {
+      sliderStartDate = moment()
+      sliderStartDate.set({
+        year: minimumTemporalDate.year(),
+        hour: 0,
+        minute: 0,
+        second: 0
+      })
+    }
+
     const classes = {
+      temporalSelection: classNames({
+        'temporal-selection': true,
+        'temporal-selection--is-recurring': isRecurring
+      }),
       inputStart: classNames(
         'temporal-selection__input-group',
         'temporal-selection__input-group--start'
@@ -102,7 +162,7 @@ export class TemporalSelection extends Component {
     }
 
     return (
-      <div className="temporal-selection">
+      <div className={classes.temporalSelection}>
         <div className="temporal-selection__inputs">
           <Row>
             <Col sm={12} md={6}>
@@ -114,7 +174,12 @@ export class TemporalSelection extends Component {
                   id="temporal-form__start-date"
                   onSubmit={value => onSubmitStart(value)}
                   type="start"
+                  format={format}
                   value={temporal.startDate}
+                  minDate={minimumTemporalDateString}
+                  maxDate={moment().utc().toISOString()}
+                  shouldValidate={!isRecurring}
+                  viewMode={isRecurring ? 'months' : 'years'}
                 />
               </Form.Group>
             </Col>
@@ -127,7 +192,12 @@ export class TemporalSelection extends Component {
                   id="temporal-form__end-date"
                   onSubmit={value => onSubmitEnd(value)}
                   type="end"
+                  format={format}
                   value={temporal.endDate}
+                  minDate={minimumTemporalDateString}
+                  maxDate={moment().utc().toISOString()}
+                  shouldValidate={!isRecurring}
+                  viewMode={isRecurring ? 'months' : 'years'}
                 />
               </Form.Group>
             </Col>
@@ -161,19 +231,46 @@ export class TemporalSelection extends Component {
           controlId={`${controlId}__recurring`}
         >
           <Form.Check>
-            <Form.Check.Input type="checkbox" />
+            <Form.Check.Input disabled={allowRecurring} type="checkbox" onChange={onRecurringToggle} checked={isRecurring} />
             <Form.Check.Label className="temporal-selection__label">
               Recurring?
             </Form.Check.Label>
           </Form.Check>
         </Form.Group>
+
+        {
+          isRecurring && (
+            <Form.Group className="mb-1">
+              <Form.Label className="temporal-selection__label">
+                Year Range:
+              </Form.Label>
+
+              <span className="temporal-selection__range-label">
+                {sliderStartDate.year()}
+                {' - '}
+                {moment(temporal.endDate || undefined).year()}
+              </span>
+
+              <InputRange
+                minValue={minimumTemporalDate.year()}
+                maxValue={parseInt(new Date().getFullYear(), 10)}
+                formatLabel={() => null}
+                value={{
+                  min: sliderStartDate.year(),
+                  max: moment(temporal.endDate || undefined).year()
+                }}
+                onChange={value => onChangeRecurring(value)}
+              />
+            </Form.Group>
+          )
+        }
       </div>
     )
   }
 }
 
 TemporalSelection.defaultProps = {
-  format: 'YYYY-MM-DDTHH:m:s.SSSZ',
+  format: 'YYYY-MM-DD HH:mm:ss',
   onValid: null,
   onInvalid: null,
   validate: true
@@ -182,6 +279,8 @@ TemporalSelection.defaultProps = {
 TemporalSelection.propTypes = {
   controlId: PropTypes.string.isRequired,
   format: PropTypes.string,
+  onChangeRecurring: PropTypes.func.isRequired,
+  onRecurringToggle: PropTypes.func.isRequired,
   onSubmitStart: PropTypes.func.isRequired,
   onSubmitEnd: PropTypes.func.isRequired,
   temporal: PropTypes.shape({}).isRequired,

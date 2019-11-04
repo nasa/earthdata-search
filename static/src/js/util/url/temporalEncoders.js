@@ -8,19 +8,28 @@ export const encodeTemporal = (temporal) => {
 
   const {
     endDate,
-    startDate
+    startDate,
+    recurringDayStart,
+    recurringDayEnd,
+    isRecurring
   } = temporal
 
-  const encodedString = [
+  const valuesToEncode = [
     startDate,
     endDate
-  ].join(',')
+  ]
 
-  if (encodedString === ',') return undefined
+  if (isRecurring) {
+    valuesToEncode.push(...[recurringDayStart, recurringDayEnd])
+  }
+
+  const encodedString = valuesToEncode.filter(Boolean).join(',')
+
+  // TODO: Strip empty elements then join
+  if (encodedString === '') return undefined
 
   return encodedString
 }
-
 
 /**
  * Decodes a Temporal parameter string into an object
@@ -32,11 +41,21 @@ export const decodeTemporal = (string) => {
     return {}
   }
 
-  const [startDate, endDate] = string.split(',')
+  const [
+    startDate,
+    endDate,
+    recurringDayStart = '',
+    recurringDayEnd = ''
+  ] = string.split(',')
+
+  const isRecurring = !!(recurringDayStart && recurringDayEnd)
 
   const temporal = {
     endDate,
-    startDate
+    startDate,
+    recurringDayStart,
+    recurringDayEnd,
+    isRecurring
   }
 
   return {

@@ -12,7 +12,10 @@ describe('url#decodeUrlParams', () => {
           ...emptyDecodedResult.query.collection,
           temporal: {
             endDate: '2019-02-01T00:00:00.000Z',
-            startDate: '2019-01-01T00:00:00.000Z'
+            startDate: '2019-01-01T00:00:00.000Z',
+            recurringDayEnd: '',
+            recurringDayStart: '',
+            isRecurring: false
           }
         }
       }
@@ -32,5 +35,20 @@ describe('url#encodeUrlQuery', () => {
       }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?qt=2019-01-01T00%3A00%3A00.000Z%2C2019-02-01T00%3A00%3A00.000Z')
+  })
+
+  test('encodes temporalSearch correctly when isRecurring is provided', () => {
+    const props = {
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      temporalSearch: {
+        endDate: '2019-02-01T00:00:00.000Z',
+        startDate: '2019-01-01T00:00:00.000Z',
+        recurringDayStart: '199',
+        recurringDayEnd: '302',
+        isRecurring: true
+      }
+    }
+    expect(encodeUrlQuery(props)).toEqual('/path/here?qt=2019-01-01T00%3A00%3A00.000Z%2C2019-02-01T00%3A00%3A00.000Z%2C199%2C302')
   })
 })

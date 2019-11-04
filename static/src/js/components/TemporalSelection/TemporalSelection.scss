@@ -1,4 +1,12 @@
 .temporal-selection {
+  &--is-recurring {
+    .rdtMonths {
+      table:first-child {
+        display: none;
+      }
+    }
+  }
+
   &__input-group {
     margin-bottom: 0.5rem;
   }
@@ -8,4 +16,23 @@
     font-size: 0.825em;
     font-weight: 700;
   }
+
+  &__range-label {
+    padding-left: 5px;
+    font-size: 0.825em;
+  }
+}
+
+.input-range__track,
+.input-range__slider-container {
+  transition: none;
+}
+
+.input-range__track--active {
+  background: $color__theme--blue;
+}
+
+.input-range__slider {
+  background: $color__theme--blue;
+  border-color: $color__theme--blue;
 }

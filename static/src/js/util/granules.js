@@ -139,7 +139,6 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     cloudCover: cloudCoverString,
     collectionId,
     dayNightFlag,
-    // exclude,
     gridName,
     gridCoords: encodeGridCoords(gridCoords),
     line,
