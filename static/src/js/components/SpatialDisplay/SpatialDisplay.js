@@ -383,8 +383,8 @@ class SpatialDisplay extends Component {
       if (shapefileError) {
         const { type } = shapefileError
 
-        if (type === 'upload_esri') {
-          spatialError = 'To use an ESRI Shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+        if (type === 'upload_shape') {
+          spatialError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
         }
       }
 

@@ -55,7 +55,7 @@ export class ShapefileUploadModal extends Component {
             Valid formats include:
           </p>
           <ul>
-            <li>ESRI Shapefile (.zip including .shp, .dbf, and .shx file)</li>
+            <li>Shapefile (.zip including .shp, .dbf, and .shx file)</li>
             <li>Keyhole Markup Language (.kml or .kmz)</li>
             <li>GeoJSON (.json or .geojson)</li>
             <li>GeoRSS (.rss, .georss, or .xml)</li>

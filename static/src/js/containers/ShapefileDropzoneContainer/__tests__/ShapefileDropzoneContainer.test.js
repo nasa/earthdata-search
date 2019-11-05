@@ -127,7 +127,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_esri'
+          type: 'upload_shape'
         })
       })
     })
