@@ -96,7 +96,7 @@ export class OrderStatusItemBody extends Component {
                 bootstrapVariant="primary"
                 bootstrapSize="sm"
                 label="Download Access Script"
-                tooltip="Download executable shell script (requires UNIX enviornment)"
+                tooltip="Download executable shell script (requires UNIX environment)"
                 tooltipPlacement="bottom"
                 tooltipId="tooltip__download-access-script"
               >
