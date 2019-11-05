@@ -44,7 +44,7 @@ describe('ShapefileUploadModal component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(Modal.Body).find('p').at(1).text()).toEqual('Valid formats include:')
-    expect(enzymeWrapper.find(Modal.Body).find('li').at(0).text()).toEqual('ESRI Shapefile (.zip including .shp, .dbf, and .shx file)')
+    expect(enzymeWrapper.find(Modal.Body).find('li').at(0).text()).toEqual('Shapefile (.zip including .shp, .dbf, and .shx file)')
     expect(enzymeWrapper.find(Modal.Body).find('li').at(1).text()).toEqual('Keyhole Markup Language (.kml or .kmz)')
     expect(enzymeWrapper.find(Modal.Body).find('li').at(2).text()).toEqual('GeoJSON (.json or .geojson)')
     expect(enzymeWrapper.find(Modal.Body).find('li').at(3).text()).toEqual('GeoRSS (.rss, .georss, or .xml)')

@@ -73,7 +73,7 @@ export const ShapefileDropzoneContainer = ({
 
       if (file.name.match('.*shp')) {
         onShapefileErrored({
-          type: 'upload_esri'
+          type: 'upload_shape'
         })
       }
     }}
