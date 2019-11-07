@@ -1,7 +1,7 @@
 # [Earthdata Search](https://search.earthdata.nasa.gov)
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
-[![Build Status](https://travis-ci.org/nasa/earthdata-search.svg?branch=EDSC-2133)](https://travis-ci.org/nasa/earthdata-search)
+[![Build Status](https://travis-ci.org/nasa/earthdata-search.svg?branch=master)](https://travis-ci.org/nasa/earthdata-search)
 
 ## About
 Earthdata Search is a web application developed by [NASA](http://nasa.gov) [EOSDIS](https://earthdata.nasa.gov)
