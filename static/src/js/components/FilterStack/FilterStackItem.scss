@@ -72,9 +72,10 @@
   }
 
   &__error {
-    margin-top: $spacer/4;
+    margin-top: $spacer/2;
     font-size: 0.8rem;
     color: $color__red;
+    font-weight: bold;
   }
 }
 

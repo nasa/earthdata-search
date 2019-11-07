@@ -15,6 +15,7 @@ import FilterStackItem from '../FilterStack/FilterStackItem'
 import FilterStackContents from '../FilterStack/FilterStackContents'
 import SpatialDisplayEntry from './SpatialDisplayEntry'
 import { eventEmitter } from '../../events/events'
+import pluralize from '../../util/pluralize'
 
 import './SpatialDisplay.scss'
 
@@ -23,6 +24,7 @@ class SpatialDisplay extends Component {
     super(props)
 
     this.state = {
+      error: '',
       boundingBoxSearch: '',
       lineSearch: '',
       gridName: '',
@@ -54,11 +56,7 @@ class SpatialDisplay extends Component {
     } = this.props
 
     this.setState({
-      boundingBoxSearch: boundingBoxSearch
-        ? boundingBoxSearch
-          .match(/[^,]+,[^,]+/g)
-          .map(pointStr => pointStr.split(',').reverse().join(','))
-        : [undefined, undefined],
+      boundingBoxSearch: this.transformBoundingBoxCoordinates(boundingBoxSearch),
       gridName,
       gridCoords,
       pointSearch,
@@ -78,16 +76,21 @@ class SpatialDisplay extends Component {
       shapefile
     } = this.props
 
+    this.setState({ error: '' })
+
     if (pointSearch !== nextProps.pointSearch) {
       this.setState({ pointSearch: nextProps.pointSearch })
+
+      this.validateCoordinate(nextProps.pointSearch)
     }
     if (boundingBoxSearch !== nextProps.boundingBoxSearch) {
-      const points = nextProps.boundingBoxSearch
-        ? nextProps.boundingBoxSearch
-          .match(/[^,]+,[^,]+/g)
-          .map(pointStr => pointStr.split(',').reverse().join(','))
-        : [undefined, undefined]
+      const points = this.transformBoundingBoxCoordinates(nextProps.boundingBoxSearch)
+
       this.setState({ boundingBoxSearch: points })
+
+      if (points.filter(Boolean).length > 0) {
+        points.forEach(point => this.validateCoordinate(point))
+      }
     }
     if (polygonSearch !== nextProps.polygonSearch) {
       this.setState({ polygonSearch: nextProps.polygonSearch })
@@ -149,6 +152,9 @@ class SpatialDisplay extends Component {
 
   onChangePointSearch(e) {
     const { value = '' } = e.target
+
+    this.validateCoordinate(value)
+
     this.setState({
       pointSearch: value.split(',').reverse().join(',').replace(/\s/g, '')
     })
@@ -157,16 +163,18 @@ class SpatialDisplay extends Component {
   onBlurPointSearch() {
     eventEmitter.emit('map.drawCancel')
 
-    const { pointSearch } = this.state
+    const { pointSearch, error } = this.state
     const { onChangeQuery } = this.props
 
-    onChangeQuery({
-      collection: {
-        spatial: {
-          point: pointSearch.replace(/\s/g, '')
+    if (error.length === '') {
+      onChangeQuery({
+        collection: {
+          spatial: {
+            point: pointSearch.replace(/\s/g, '')
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   onChangeBoundingBoxSearch(e) {
@@ -188,26 +196,80 @@ class SpatialDisplay extends Component {
       newSearch = [swPoint, value]
     }
 
+    this.validateCoordinate(value)
+
     this.setState({
       boundingBoxSearch: newSearch
     })
   }
 
   onBlurBoundingBoxSearch() {
-    eventEmitter.emit('map.drawCancel')
-
-    const { boundingBoxSearch } = this.state
+    const { boundingBoxSearch, error } = this.state
     const { onChangeQuery } = this.props
 
     if (boundingBoxSearch[0] && boundingBoxSearch[1]) {
-      onChangeQuery({
-        collection: {
-          spatial: {
-            boundingBox: boundingBoxSearch.map(point => point.split(',').reverse()).join(',').replace(/\s/g, '')
+      eventEmitter.emit('map.drawCancel')
+
+      if (error.length === '') {
+        onChangeQuery({
+          collection: {
+            spatial: {
+              boundingBox: boundingBoxSearch.map(point => point.split(',').reverse()).join(',').replace(/\s/g, '')
+            }
           }
-        }
+        })
+      }
+    }
+  }
+
+  /**
+   * Validate the provided point setting any errors to the component state
+   * @param {String} coordinates Value provided by an input field containing a single point of 'lat,lon'
+   */
+  validateCoordinate(coordinates) {
+    let errorMessage
+
+    const validCoordinates = coordinates.trim().match(/^(-?\d+\.?\d+)?,\s*(-?\d+\.?\d+)?$/)
+    if (validCoordinates == null) {
+      errorMessage = `Coordinates (${coordinates}) must use 'lat,lon' format.`
+    }
+
+    if (validCoordinates) {
+      // Ignores the first match which will be the entire result, the second two values are
+      // the groups we're looking for
+      const [, lat, lon] = validCoordinates
+
+      if (lat < -90 || lat > 90) {
+        errorMessage = `Lattitude (${lat}) must be between -90 and 90.`
+      }
+
+      if (lon < -180 || lon > 180) {
+        errorMessage = `Longitude (${lon}) must be between -90 and 90.`
+      }
+    }
+
+    if (errorMessage != null) {
+      this.setState({
+        error: errorMessage
+      })
+    } else {
+      this.setState({
+        error: ''
       })
     }
+  }
+
+  /**
+   * Turns '1,2,3,4' into ['2,1', '4,3'] for leaflet
+   * @param {String} boundingBoxCoordinates A set of two points representing a bounding box
+   */
+  transformBoundingBoxCoordinates(boundingBoxCoordinates) {
+    // Returns empty strings by default as input fields cannot be set to undefined
+    return boundingBoxCoordinates
+      ? boundingBoxCoordinates
+        .match(/[^,]+,[^,]+/g)
+        .map(pointStr => pointStr.split(',').reverse().join(','))
+      : ['', '']
   }
 
   render() {
@@ -217,6 +279,7 @@ class SpatialDisplay extends Component {
     } = this.props
 
     const {
+      error,
       boundingBoxSearch,
       lineSearch,
       gridName,
@@ -229,7 +292,8 @@ class SpatialDisplay extends Component {
     const contents = []
     const items = []
     let entry
-    let spatialError
+
+    let spatialError = error
 
     const {
       isErrored: shapefileError,
@@ -464,7 +528,16 @@ class SpatialDisplay extends Component {
         />
       ))
     } else if ((polygonSearch && !drawingNewLayer) || drawingNewLayer === 'polygon') {
-      entry = <SpatialDisplayEntry />
+      const pointArray = polygonSearch.split(',')
+      const pointCount = (pointArray.length / 2) - 1
+
+      entry = (
+        <SpatialDisplayEntry>
+          <Row className="spatial-display__form-row">
+            <span className="spatial-display__text-primary">{`${pointCount} ${pluralize('Point', pointCount)}`}</span>
+          </Row>
+        </SpatialDisplayEntry>
+      )
 
       contents.push((
         <FilterStackContents
@@ -491,7 +564,7 @@ class SpatialDisplay extends Component {
           key="item__spatial"
           icon="crop"
           title="Spatial"
-          error={spatialError}
+          error={drawingNewLayer ? '' : spatialError}
           onRemove={this.onSpatialRemove}
         >
           {contents}

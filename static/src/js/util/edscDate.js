@@ -28,6 +28,11 @@ export const getTemporalDateFormat = (isRecurring) => {
   return isRecurring ? temporalDateFormatRange : temporalDateFormatFull
 }
 
+/**
+ * Uses the Year component of each date as the bounds to create a range using day and month of each date provided
+ * @param {String} startDate Date to start the range on
+ * @param {String} endDate Date to end the range on
+ */
 export const getTemporalRange = (startDate, endDate) => {
   const rangeArray = []
 
