@@ -103,7 +103,10 @@ describe('SpatialDisplay component', () => {
       expect(filterStackItem.props().title).toEqual('Spatial')
       expect(filterStackItem.props().icon).toEqual('crop')
       expect(filterStackContents.props().title).toEqual('Polygon')
-      expect(filterStackContents.props().body.props.children).toEqual(null)
+
+      const pointCount = filterStackContents.props()
+        .body.props.children.props.children.props.children
+      expect(pointCount).toEqual('3 Points')
     })
   })
 
@@ -147,7 +150,8 @@ describe('SpatialDisplay component', () => {
         expect(filterStackItem.props().icon).toEqual('crop')
         expect(filterStackContents.props().title).toEqual('Shape File')
 
-        const fileWrapper = filterStackContents.props().body.props.children.props.children.props.children
+        const fileWrapper = filterStackContents.props()
+          .body.props.children.props.children.props.children
         const loadingIcon = fileWrapper[2].props.children[0]
         const loadingText = fileWrapper[2].props.children[1]
 
@@ -184,7 +188,8 @@ describe('SpatialDisplay component', () => {
       expect(filterStackItem.props().icon).toEqual('crop')
       expect(filterStackContents.props().title).toEqual('Shape File')
 
-      const fileWrapper = filterStackContents.props().body.props.children.props.children.props.children
+      const fileWrapper = filterStackContents.props()
+        .body.props.children.props.children.props.children
       const fileName = fileWrapper[0].props.children
       const fileSize = fileWrapper[1].props.children
       const loadingElement = fileWrapper[2]
@@ -198,7 +203,6 @@ describe('SpatialDisplay component', () => {
         expect(fileSize).toEqual('(42 KB)')
       })
     })
-
   })
 
   describe('with grid', () => {
@@ -283,7 +287,8 @@ describe('SpatialDisplay component', () => {
       })
 
       expect(enzymeWrapper.state()).toEqual({
-        boundingBoxSearch: [undefined, undefined],
+        error: '',
+        boundingBoxSearch: ['', ''],
         gridCoords: 'test coords',
         gridName: '',
         lineSearch: '',
