@@ -166,7 +166,7 @@ class SpatialDisplay extends Component {
     const { pointSearch, error } = this.state
     const { onChangeQuery } = this.props
 
-    if (error.length === '') {
+    if (error === '') {
       onChangeQuery({
         collection: {
           spatial: {
@@ -210,7 +210,7 @@ class SpatialDisplay extends Component {
     if (boundingBoxSearch[0] && boundingBoxSearch[1]) {
       eventEmitter.emit('map.drawCancel')
 
-      if (error.length === '') {
+      if (error === '') {
         onChangeQuery({
           collection: {
             spatial: {
@@ -533,9 +533,13 @@ class SpatialDisplay extends Component {
 
       entry = (
         <SpatialDisplayEntry>
-          <Row className="spatial-display__form-row">
-            <span className="spatial-display__text-primary">{`${pointCount} ${pluralize('Point', pointCount)}`}</span>
-          </Row>
+          {
+            pointCount > 2 && (
+              <Row className="spatial-display__form-row">
+                <span className="spatial-display__text-primary">{`${pointCount} ${pluralize('Point', pointCount)}`}</span>
+              </Row>
+            )
+          }
         </SpatialDisplayEntry>
       )
 
