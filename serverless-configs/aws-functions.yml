@@ -13,7 +13,13 @@
     timeout: 300
     handler: serverless/src/storeUserData/handler.default
     warmup:
-      concurrency: ${env:WARM_LAMBDA_COUNT}
+      enabled: false
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - StoreUserDataQueue
+              - Arn
 
   generateCollectionCapabilityTags:
     handler: serverless/src/generateCollectionCapabilityTags/handler.default

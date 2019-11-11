@@ -2,8 +2,20 @@ import { getUrsUserData } from './getUrsUserData'
 import { getEchoProfileData } from './getEchoProfileData'
 import { getEchoPreferencesData } from './getEchoPreferencesData'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { isWarmUp } from '../util/isWarmup'
+
+/**
+ * Log an error from the lambda specific to the calling method
+ * @param {Object} errorObj Error object thrown
+ * @param {String} endpointName An identifier for the log message to indicate the calling method
+ */
+const logResponseError = (errorObj, endpointName) => {
+  const { errors = [] } = errorObj.error
+
+  errors.forEach((errorMessage) => {
+    console.log(`[StoreUserData Error] (${endpointName}) ${errorMessage}`)
+  })
+}
 
 /**
  * Accepts a username and token to fetch profile information from URS and ECHO
@@ -18,40 +30,70 @@ const storeUserData = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
 
-  const { username, token } = event
+  const { environment, userId, username } = event
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
 
-  const ursUserData = await getUrsUserData(username, token)
-  const echoProfileData = await getEchoProfileData(token)
+  // Retrieve the authenticated users' access tokens from the database
+  const existingUserTokens = await dbConnection('user_tokens')
+    .select([
+      'id',
+      'access_token',
+      'refresh_token',
+      'expires_at'
+    ])
+    .where({ user_id: userId, environment })
+    .orderBy('created_at', 'DESC')
 
-  const { user } = echoProfileData
-  const { id } = user
+  let id // ECHO guid
+  let user // ECHO User Profile
+  let echoPreferencesData // ECHO Preferences Data
+  let ursUserData // URS user Profile
 
-  // Retrieving the ECHO Profile determines the user based on the token but
-  // the preferences endpoint requires the user id (guid)
-  const echoPreferencesData = await getEchoPreferencesData(id, token)
-  const { preferences } = echoPreferencesData
+  if (existingUserTokens.length > 0) {
+    const [tokenRow] = existingUserTokens
+    const { access_token: token } = tokenRow
+
+    try {
+      ursUserData = await getUrsUserData(username, token, environment)
+    } catch (e) {
+      logResponseError(e, 'URS Profile')
+    }
+
+    let echoProfileData
+    try {
+      echoProfileData = await getEchoProfileData(token, environment)
+    } catch (e) {
+      logResponseError(e, 'Echo Profile')
+    }
+
+    // Update the previously defined value for this variable
+    const { user: echoProfileUser } = echoProfileData
+    user = echoProfileUser
+
+    // The user GUID will be used to get the preference data as well as stored separately in the database
+    const { id } = user
+
+    try {
+      echoPreferencesData = await getEchoPreferencesData(id, token, environment)
+    } catch (e) {
+      logResponseError(e, 'Echo Preferences')
+    }
+  }
 
   const userPayload = {
     echo_id: id,
     echo_profile: user,
-    echo_preferences: preferences,
-    environment: cmrEnv(),
+    echo_preferences: echoPreferencesData,
+    environment,
     urs_id: username,
     urs_profile: ursUserData
   }
 
-  const existingUser = await dbConnection('users').select('id').where({ urs_id: username })
+  const updateResponse = await dbConnection('users').update({ ...userPayload }).where({ urs_id: username, environment })
 
-  if (existingUser.length) {
-    await dbConnection('users').update({ ...userPayload }).where({ urs_id: username })
-  } else {
-    await dbConnection('users').insert({ ...userPayload })
-  }
-
-  return true
+  return updateResponse
 }
 
 export default storeUserData
