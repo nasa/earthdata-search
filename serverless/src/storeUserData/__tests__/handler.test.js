@@ -60,28 +60,6 @@ afterEach(() => {
 })
 
 describe('storeUserData', () => {
-  test('correctly inserts a user that does not exist', async () => {
-    dbTracker.on('query', (query) => {
-      query.response([])
-    })
-
-    await storeUserData({ username: 'urs_user', token: 'fake.access.token' }, {})
-
-    expect(ursUserDataMock).toBeCalledTimes(1)
-    expect(ursUserDataMock).toBeCalledWith('urs_user', 'fake.access.token')
-
-    expect(echoProfileDataMock).toBeCalledTimes(1)
-    expect(echoProfileDataMock).toBeCalledWith('fake.access.token')
-
-    expect(echoPreferencesDataMock).toBeCalledTimes(1)
-    expect(echoPreferencesDataMock).toBeCalledWith('guid', 'fake.access.token')
-
-    const { queries } = dbTracker.queries
-
-    expect(queries[0].method).toEqual('select')
-    expect(queries[1].method).toEqual('insert')
-  })
-
   test('correctly updates a user that already exists', async () => {
     dbTracker.on('query', (query, step) => {
       // Default response from queries
@@ -89,21 +67,21 @@ describe('storeUserData', () => {
 
       if (step === 1) {
         query.response([{
-          id: 1
+          access_token: 'fake.access.token'
         }])
       }
     })
 
-    await storeUserData({ username: 'urs_user', token: 'fake.access.token' }, {})
+    await storeUserData({ environment: 'test', userId: 1, username: 'urs_user' }, {})
 
     expect(ursUserDataMock).toBeCalledTimes(1)
-    expect(ursUserDataMock).toBeCalledWith('urs_user', 'fake.access.token')
+    expect(ursUserDataMock).toBeCalledWith('urs_user', 'fake.access.token', 'test')
 
     expect(echoProfileDataMock).toBeCalledTimes(1)
-    expect(echoProfileDataMock).toBeCalledWith('fake.access.token')
+    expect(echoProfileDataMock).toBeCalledWith('fake.access.token', 'test')
 
     expect(echoPreferencesDataMock).toBeCalledTimes(1)
-    expect(echoPreferencesDataMock).toBeCalledWith('guid', 'fake.access.token')
+    expect(echoPreferencesDataMock).toBeCalledWith('guid', 'fake.access.token', 'test')
 
     const { queries } = dbTracker.queries
 

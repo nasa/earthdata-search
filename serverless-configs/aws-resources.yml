@@ -67,6 +67,11 @@ Resources:
       QueueName: ${self:custom.siteName}-OptionDefinitionDeadLetterQueue
       MessageRetentionPeriod: 1209600
 
+  UserDataQueue:
+    Type: 'AWS::SQS::Queue'
+    Properties:
+      VisibilityTimeout: 300
+
   GatewayResponseDefault4XX:
     Type: AWS::ApiGateway::GatewayResponse
     Properties:

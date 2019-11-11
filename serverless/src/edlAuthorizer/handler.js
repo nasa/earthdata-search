@@ -64,6 +64,8 @@ const edlAuthorizer = async (event, context) => {
     // Pull the secret used to encrypt our jwtTokens
     const { secret } = getSecretEarthdataConfig(cmrEnv())
 
+    const cmrEnvironment = cmrEnv()
+
     return jwt.verify(jwtToken, secret, async (verifyError, decodedJwtToken) => {
       if (verifyError) {
         // This suggests that the token has been tampered with
@@ -85,7 +87,7 @@ const edlAuthorizer = async (event, context) => {
           'refresh_token',
           'expires_at'
         ])
-        .where({ user_id: userId })
+        .where({ user_id: userId, environment: cmrEnvironment })
         .orderBy('created_at', 'DESC')
 
       if (existingUserTokens.length === 0) {
@@ -113,7 +115,7 @@ const edlAuthorizer = async (event, context) => {
         try {
           // Remove the expired token
           await dbConnection('user_tokens')
-            .where({ id: tokenId })
+            .where({ id: tokenId, environment: cmrEnvironment })
             .del()
 
           const refreshedToken = await oauthToken.refresh()
@@ -131,7 +133,7 @@ const edlAuthorizer = async (event, context) => {
             access_token: accessToken,
             refresh_token: refreshToken,
             expires_at: expiresAt,
-            environment: cmrEnv()
+            environment: cmrEnvironment
           })
         } catch (error) {
           console.log('Error refreshing access token: ', error.message)

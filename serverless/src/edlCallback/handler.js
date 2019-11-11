@@ -1,12 +1,16 @@
+import AWS from 'aws-sdk'
 import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
 import { getEarthdataConfig, getEnvironmentConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/configUtil'
-import { invokeLambda } from '../util/aws/invokeLambda'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { isWarmUp } from '../util/isWarmup'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
+
+// AWS SQS adapter
+let sqs
 
 /**
  * Fetches an EDL token based on the 'code' param supplied by EDL. Sets a cookie containing a JWT containing the EDL token
@@ -23,6 +27,10 @@ const edlCallback = async (event, context) => {
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
+
+  if (sqs == null) {
+    sqs = new AWS.SQS(getSqsConfig())
+  }
 
   const edlConfig = await getEdlConfig()
 
@@ -85,11 +93,14 @@ const edlCallback = async (event, context) => {
       username
     }, secret)
 
-    // Invoke the Lambda to store the authenticated users' data in our database
-    await invokeLambda(process.env.storeUserLambda, {
-      username,
-      token: accessToken
-    })
+    await sqs.sendMessage({
+      QueueUrl: process.env.userDataQueueUrl,
+      MessageBody: JSON.stringify({
+        environment: cmrEnv(),
+        userId: userRow.id,
+        username
+      })
+    }).promise()
   } catch (e) {
     console.log(e)
   }

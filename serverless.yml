@@ -26,6 +26,8 @@ provider:
       Ref: CatalogRestOrderQueue
     optionDefinitionQueueUrl:
       Ref: OptionDefinitionsQueue
+    userDataQueueUrl:
+      Ref: UserDataQueue
 
     obfuscationSpin: ${env:OBFUSCATION_SPIN}
     obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES}
