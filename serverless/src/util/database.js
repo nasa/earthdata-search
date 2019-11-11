@@ -5,11 +5,14 @@ import { getSecretsManagerConfig } from './aws/getSecretsManagerConfig'
 
 const secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
 
+let dbCredentials
+let connectionConfig
+
 /**
  * Returns the decrypted database credentials from Secrets Manager
  */
-export const getDbCredentials = async (dbCredentials) => {
-  if (dbCredentials === null) {
+export const getDbCredentials = async () => {
+  if (dbCredentials == null) {
     if (process.env.NODE_ENV === 'development') {
       const { dbUsername, dbPassword } = getSecretEarthdataConfig(cmrEnv())
 
@@ -26,7 +29,7 @@ export const getDbCredentials = async (dbCredentials) => {
 
     const secretValue = await secretsmanager.getSecretValue(params).promise()
 
-    return JSON.parse(secretValue.SecretString)
+    dbCredentials = JSON.parse(secretValue.SecretString)
   }
 
   return dbCredentials
@@ -35,32 +38,32 @@ export const getDbCredentials = async (dbCredentials) => {
 /**
  * Returns an object representing a database configuration
  */
-export const getDbConnectionConfig = async (connectionConfig) => {
-  if (connectionConfig) {
-    return connectionConfig
-  }
+export const getDbConnectionConfig = async () => {
+  if (connectionConfig == null) {
+    const dbCredentials = await getDbCredentials()
 
-  const dbCredentials = await getDbCredentials(null)
+    const configObject = {
+      user: dbCredentials.username,
+      password: dbCredentials.password
+    }
 
-  const configObject = {
-    user: dbCredentials.username,
-    password: dbCredentials.password
-  }
+    if (process.env.NODE_ENV === 'development') {
+      const { dbHost, dbName, dbPort } = getEnvironmentConfig()
+      return {
+        ...configObject,
+        host: dbHost,
+        database: dbName,
+        port: dbPort
+      }
+    }
 
-  if (process.env.NODE_ENV === 'development') {
-    const { dbHost, dbName, dbPort } = getEnvironmentConfig()
-    return {
+    connectionConfig = {
       ...configObject,
-      host: dbHost,
-      database: dbName,
-      port: dbPort
+      host: process.env.dbEndpoint,
+      database: process.env.dbName,
+      port: process.env.dbPort
     }
   }
 
-  return {
-    ...configObject,
-    host: process.env.dbEndpoint,
-    database: process.env.dbName,
-    port: process.env.dbPort
-  }
+  return connectionConfig
 }
