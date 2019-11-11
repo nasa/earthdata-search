@@ -9,11 +9,6 @@
     warmup:
       enabled: false
 
-  migrateData:
-    handler: serverless/src/migrateData/handler.default
-    warmup:
-      enabled: false
-
   storeUserData:
     timeout: 300
     handler: serverless/src/storeUserData/handler.default
@@ -158,7 +153,6 @@
     events:
       - schedule:
           rate: cron(0 0/4 * * ? *)
-
   #
   # API Gateway Endpoints
   #
