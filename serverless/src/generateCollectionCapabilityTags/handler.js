@@ -13,7 +13,7 @@ import { tagName } from '../../../sharedUtils/tags'
 // AWS SQS Adapter
 let sqs
 
-const pageSize = 100
+const pageSize = 300
 
 /**
  * Returns tags for a collection based on a single granule sample
