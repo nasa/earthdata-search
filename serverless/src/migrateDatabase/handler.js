@@ -2,15 +2,13 @@ import pgMigrate from 'node-pg-migrate'
 import { Client } from 'pg'
 import { getDbConnectionConfig } from '../util/database'
 
-let dbConnectionConfig = null
-
 /**
  * Runs migrations using node-pg-migrate
  * @param {Object} event Details about the HTTP request that it received
  */
 const migrateDatabase = async (event) => {
   try {
-    dbConnectionConfig = await getDbConnectionConfig(dbConnectionConfig)
+    const dbConnectionConfig = await getDbConnectionConfig()
 
     const dbClient = new Client(dbConnectionConfig)
 

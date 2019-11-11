@@ -10,7 +10,7 @@ let dbConnection
  */
 export const getDbConnection = async () => {
   if (dbConnection == null) {
-    const dbConnectionConfig = await getDbConnectionConfig(null)
+    const dbConnectionConfig = await getDbConnectionConfig()
 
     dbConnection = knex({
       client: 'pg',
