@@ -4,7 +4,7 @@ stateMachines:
     role: 
       Fn::ImportValue: ${self:provider.stage}-ApplicationRole
     events:
-          rate: cron(0 5 ? * MON-FRI *)
+          rate: cron(0 12,18 ? * MON-FRI *)
     definition:
       StartAt: InitialWait
       States:
