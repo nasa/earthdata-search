@@ -292,6 +292,7 @@ describe('SpatialDisplay component', () => {
         gridCoords: 'test coords',
         gridName: '',
         lineSearch: '',
+        manuallyEntering: false,
         pointSearch: '',
         polygonSearch: '',
         shapefile: {}
