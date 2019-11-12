@@ -147,6 +147,10 @@ class SpatialDisplay extends Component {
       onRemoveSpatialFilter
     } = this.props
 
+    this.setState({
+      manuallyEntering: false
+    })
+
     onRemoveSpatialFilter()
   }
 
@@ -228,7 +232,7 @@ class SpatialDisplay extends Component {
         onChangeQuery({
           collection: {
             spatial: {
-              boundingBox: boundingBoxSearch.map(point => point.split(',').reverse()).join(',').replace(/\s/g, '')
+              boundingBox: this.transformBoundingBoxCoordinates(boundingBoxSearch.join(','))
             }
           }
         })
