@@ -1,5 +1,5 @@
+import AWS from 'aws-sdk'
 import request from 'request-promise'
-
 import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
@@ -7,8 +7,10 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import cmrEnv from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
-import { invokeLambda } from '../util/aws/invokeLambda'
-import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
+
+// AWS SQS adapter
+let sqs
 
 /**
  * Handler for saving a users contact info
@@ -19,7 +21,6 @@ const saveContactInfo = async (event, context) => {
 
   const jwtToken = getJwtToken(event)
   const { id } = getVerifiedJwtToken(jwtToken)
-  const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
 
   const { body } = event
   const { params } = JSON.parse(body)
@@ -27,7 +28,13 @@ const saveContactInfo = async (event, context) => {
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()
 
+  if (sqs == null) {
+    sqs = new AWS.SQS(getSqsConfig())
+  }
+
   try {
+    const cmrEnvironment = cmrEnv()
+
     const userRecord = await dbConnection('users')
       .first(
         'echo_id',
@@ -42,7 +49,7 @@ const saveContactInfo = async (event, context) => {
       urs_id: userId
     } = userRecord
 
-    const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
+    const url = `${getEarthdataConfig(cmrEnvironment).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
 
     const response = await request.put({
       uri: url,
@@ -55,11 +62,14 @@ const saveContactInfo = async (event, context) => {
       resolveWithFullResponse: true
     })
 
-    // Invoke the Lambda to update the authenticated users' data in our database
-    await invokeLambda(process.env.storeUserLambda, {
-      username: userId,
-      token: accessToken
-    })
+    await sqs.sendMessage({
+      QueueUrl: process.env.userDataQueueUrl,
+      MessageBody: JSON.stringify({
+        environment: cmrEnvironment,
+        userId: id,
+        username: userId
+      })
+    }).promise()
 
     return {
       isBase64Encoded: false,

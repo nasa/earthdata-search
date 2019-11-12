@@ -35,7 +35,6 @@ provider:
     configSecretId:
       Fn::ImportValue: ${self:provider.stage}-DbPasswordSecret
 
-    storeUserLambda: ${self:custom.siteName}-storeUserData
     collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
 
   vpc:

@@ -1,5 +1,7 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
+import AWS from 'aws-sdk'
+
 import nock from 'nock'
 
 import saveContactInfo from '../handler'
@@ -62,6 +64,15 @@ describe('saveContactInfo', () => {
         query.response(undefined)
       }
     })
+
+    const sqsSendMessagePromise = jest.fn().mockReturnValue({
+      promise: jest.fn().mockResolvedValue()
+    })
+
+    AWS.SQS = jest.fn()
+      .mockImplementationOnce(() => ({
+        sendMessage: sqsSendMessagePromise
+      }))
 
     const event = {
       body: JSON.stringify({
