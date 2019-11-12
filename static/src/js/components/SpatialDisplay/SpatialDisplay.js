@@ -29,6 +29,7 @@ class SpatialDisplay extends Component {
       lineSearch: '',
       gridName: '',
       gridCoords: '',
+      manuallyEntering: false,
       pointSearch: '',
       polygonSearch: '',
       shapefile: {}
@@ -43,6 +44,7 @@ class SpatialDisplay extends Component {
     this.onBlurPointSearch = this.onBlurPointSearch.bind(this)
     this.onChangeBoundingBoxSearch = this.onChangeBoundingBoxSearch.bind(this)
     this.onBlurBoundingBoxSearch = this.onBlurBoundingBoxSearch.bind(this)
+    this.onFocusSpatialSearch = this.onFocusSpatialSearch.bind(this)
   }
 
   componentDidMount() {
@@ -80,9 +82,11 @@ class SpatialDisplay extends Component {
 
     if (pointSearch !== nextProps.pointSearch) {
       this.setState({ pointSearch: nextProps.pointSearch })
-
-      this.validateCoordinate(nextProps.pointSearch)
+      this.validateCoordinate(
+        this.transformSingleCoordinate(nextProps.pointSearch)
+      )
     }
+
     if (boundingBoxSearch !== nextProps.boundingBoxSearch) {
       const points = this.transformBoundingBoxCoordinates(nextProps.boundingBoxSearch)
 
@@ -92,15 +96,19 @@ class SpatialDisplay extends Component {
         points.forEach(point => this.validateCoordinate(point))
       }
     }
+
     if (polygonSearch !== nextProps.polygonSearch) {
       this.setState({ polygonSearch: nextProps.polygonSearch })
     }
+
     if (lineSearch !== nextProps.lineSearch) {
       this.setState({ lineSearch: nextProps.lineSearch })
     }
+
     if (gridName !== nextProps.gridName) {
       this.setState({ gridName: nextProps.gridName })
     }
+
     if (gridCoords !== nextProps.gridCoords) {
       this.setState({ gridCoords: nextProps.gridCoords })
     }
@@ -156,7 +164,7 @@ class SpatialDisplay extends Component {
     this.validateCoordinate(value)
 
     this.setState({
-      pointSearch: value.split(',').reverse().join(',').replace(/\s/g, '')
+      pointSearch: this.transformSingleCoordinate(value)
     })
   }
 
@@ -203,6 +211,12 @@ class SpatialDisplay extends Component {
     })
   }
 
+  onFocusSpatialSearch(spatialType) {
+    this.setState({
+      manuallyEntering: spatialType
+    })
+  }
+
   onBlurBoundingBoxSearch() {
     const { boundingBoxSearch, error } = this.state
     const { onChangeQuery } = this.props
@@ -227,6 +241,8 @@ class SpatialDisplay extends Component {
    * @param {String} coordinates Value provided by an input field containing a single point of 'lat,lon'
    */
   validateCoordinate(coordinates) {
+    if (coordinates === '') return
+
     let errorMessage
 
     const validCoordinates = coordinates.trim().match(/^(-?\d+\.?\d+)?,\s*(-?\d+\.?\d+)?$/)
@@ -244,7 +260,7 @@ class SpatialDisplay extends Component {
       }
 
       if (lon < -180 || lon > 180) {
-        errorMessage = `Longitude (${lon}) must be between -90 and 90.`
+        errorMessage = `Longitude (${lon}) must be between -180 and 180.`
       }
     }
 
@@ -260,6 +276,14 @@ class SpatialDisplay extends Component {
   }
 
   /**
+   * Turns '1,2' into '2,1' for leaflet
+   * @param {String} coordinateString A single coordinate representing a point on a map
+   */
+  transformSingleCoordinate(coordinateString) {
+    return coordinateString.split(',').reverse().join(',').replace(/\s/g, '')
+  }
+
+  /**
    * Turns '1,2,3,4' into ['2,1', '4,3'] for leaflet
    * @param {String} boundingBoxCoordinates A set of two points representing a bounding box
    */
@@ -268,7 +292,7 @@ class SpatialDisplay extends Component {
     return boundingBoxCoordinates
       ? boundingBoxCoordinates
         .match(/[^,]+,[^,]+/g)
-        .map(pointStr => pointStr.split(',').reverse().join(','))
+        .map(pointStr => this.transformSingleCoordinate(pointStr))
       : ['', '']
   }
 
@@ -284,6 +308,7 @@ class SpatialDisplay extends Component {
       lineSearch,
       gridName,
       gridCoords,
+      manuallyEntering,
       pointSearch,
       polygonSearch,
       shapefile
@@ -382,7 +407,7 @@ class SpatialDisplay extends Component {
       ))
     }
 
-    if ((pointSearch && !drawingNewLayer) || drawingNewLayer === 'marker') {
+    if ((pointSearch && !drawingNewLayer) || drawingNewLayer === 'marker' || manuallyEntering === 'marker') {
       entry = (
         <SpatialDisplayEntry>
           <Form.Row className="spatial-display__form-row">
@@ -399,9 +424,10 @@ class SpatialDisplay extends Component {
                   placeholder="lat, lon (e.g. 44.2, 130)"
                   sm="auto"
                   size="sm"
-                  value={pointSearch.split(',').reverse().join(',')}
+                  value={this.transformSingleCoordinate(pointSearch)}
                   onChange={this.onChangePointSearch}
                   onBlur={this.onBlurPointSearch}
+                  onFocus={() => this.onFocusSpatialSearch('marker')}
                 />
               </Col>
             </Form.Group>
@@ -416,7 +442,7 @@ class SpatialDisplay extends Component {
           title="Point"
         />
       ))
-    } else if ((boundingBoxSearch && (boundingBoxSearch[0] || boundingBoxSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'rectangle') {
+    } else if ((boundingBoxSearch && (boundingBoxSearch[0] || boundingBoxSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'rectangle' || manuallyEntering) {
       entry = (
         <SpatialDisplayEntry>
           <Form.Row className="spatial-display__form-row">
@@ -439,6 +465,7 @@ class SpatialDisplay extends Component {
                   value={boundingBoxSearch[0]}
                   onChange={this.onChangeBoundingBoxSearch}
                   onBlur={this.onBlurBoundingBoxSearch}
+                  onFocus={() => this.onFocusSpatialSearch('rectangle')}
                 />
               </Col>
             </Form.Group>
@@ -461,6 +488,7 @@ class SpatialDisplay extends Component {
                   value={boundingBoxSearch[1]}
                   onChange={this.onChangeBoundingBoxSearch}
                   onBlur={this.onBlurBoundingBoxSearch}
+                  onFocus={() => this.onFocusSpatialSearch('rectangle')}
                 />
               </Col>
             </Form.Group>
