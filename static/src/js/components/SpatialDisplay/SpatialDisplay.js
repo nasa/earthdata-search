@@ -41,9 +41,9 @@ class SpatialDisplay extends Component {
     this.onSpatialRemove = this.onSpatialRemove.bind(this)
     this.onSubmitGridCoords = this.onSubmitGridCoords.bind(this)
     this.onChangePointSearch = this.onChangePointSearch.bind(this)
-    this.onBlurPointSearch = this.onBlurPointSearch.bind(this)
+    this.onSubmitPointSearch = this.onSubmitPointSearch.bind(this)
     this.onChangeBoundingBoxSearch = this.onChangeBoundingBoxSearch.bind(this)
-    this.onBlurBoundingBoxSearch = this.onBlurBoundingBoxSearch.bind(this)
+    this.onSubmitBoundingBoxSearch = this.onSubmitBoundingBoxSearch.bind(this)
     this.onFocusSpatialSearch = this.onFocusSpatialSearch.bind(this)
   }
 
@@ -58,6 +58,7 @@ class SpatialDisplay extends Component {
     } = this.props
 
     this.setState({
+      error: '',
       boundingBoxSearch: this.transformBoundingBoxCoordinates(boundingBoxSearch),
       gridName,
       gridCoords,
@@ -182,34 +183,38 @@ class SpatialDisplay extends Component {
     if (e.type === 'blur' || e.key === 'Enter') {
       onGranuleGridCoords(e.target.value)
     }
+
     e.preventDefault()
   }
 
   onChangePointSearch(e) {
     const { value = '' } = e.target
 
-    this.validateCoordinate(value)
-
     this.setState({
-      pointSearch: this.transformSingleCoordinate(value)
+      pointSearch: this.transformSingleCoordinate(value),
+      error: this.validateCoordinate(value)
     })
   }
 
-  onBlurPointSearch() {
-    eventEmitter.emit('map.drawCancel')
+  onSubmitPointSearch(e) {
+    if (e.type === 'blur' || e.key === 'Enter') {
+      eventEmitter.emit('map.drawCancel')
 
-    const { pointSearch, error } = this.state
-    const { onChangeQuery } = this.props
+      const { pointSearch, error } = this.state
+      const { onChangeQuery } = this.props
 
-    if (error === '') {
-      onChangeQuery({
-        collection: {
-          spatial: {
-            point: pointSearch.replace(/\s/g, '')
+      if (error === '') {
+        onChangeQuery({
+          collection: {
+            spatial: {
+              point: pointSearch.replace(/\s/g, '')
+            }
           }
-        }
-      })
+        })
+      }
     }
+
+    e.preventDefault()
   }
 
   onChangeBoundingBoxSearch(e) {
@@ -231,10 +236,9 @@ class SpatialDisplay extends Component {
       newSearch = [swPoint, value]
     }
 
-    this.validateCoordinate(value)
-
     this.setState({
-      boundingBoxSearch: newSearch
+      boundingBoxSearch: newSearch,
+      error: this.validateCoordinate(value)
     })
   }
 
@@ -244,23 +248,27 @@ class SpatialDisplay extends Component {
     })
   }
 
-  onBlurBoundingBoxSearch() {
-    const { boundingBoxSearch, error } = this.state
-    const { onChangeQuery } = this.props
+  onSubmitBoundingBoxSearch(e) {
+    if (e.type === 'blur' || e.key === 'Enter') {
+      const { boundingBoxSearch, error } = this.state
+      const { onChangeQuery } = this.props
 
-    if (boundingBoxSearch[0] && boundingBoxSearch[1]) {
-      eventEmitter.emit('map.drawCancel')
+      if (boundingBoxSearch[0] && boundingBoxSearch[1]) {
+        eventEmitter.emit('map.drawCancel')
 
-      if (error === '') {
-        onChangeQuery({
-          collection: {
-            spatial: {
-              boundingBox: this.transformBoundingBoxCoordinates(boundingBoxSearch.join(','))
+        if (error === '') {
+          onChangeQuery({
+            collection: {
+              spatial: {
+                boundingBox: this.transformBoundingBoxCoordinates(boundingBoxSearch.join(',')).join(',')
+              }
             }
-          }
-        })
+          })
+        }
       }
     }
+
+    e.preventDefault()
   }
 
   /**
@@ -268,9 +276,9 @@ class SpatialDisplay extends Component {
    * @param {String} coordinates Value provided by an input field containing a single point of 'lat,lon'
    */
   validateCoordinate(coordinates) {
-    if (coordinates === '') return
+    if (coordinates === '') return ''
 
-    let errorMessage
+    let errorMessage = ''
 
     const validCoordinates = coordinates.trim().match(/^(-?\d+\.?\d+)?,\s*(-?\d+\.?\d+)?$/)
     if (validCoordinates == null) {
@@ -291,15 +299,7 @@ class SpatialDisplay extends Component {
       }
     }
 
-    if (errorMessage != null) {
-      this.setState({
-        error: errorMessage
-      })
-    } else {
-      this.setState({
-        error: ''
-      })
-    }
+    return errorMessage
   }
 
   /**
@@ -453,7 +453,8 @@ class SpatialDisplay extends Component {
                   size="sm"
                   value={this.transformSingleCoordinate(pointSearch)}
                   onChange={this.onChangePointSearch}
-                  onBlur={this.onBlurPointSearch}
+                  onBlur={this.onSubmitPointSearch}
+                  onKeyUp={this.onSubmitPointSearch}
                   onFocus={() => this.onFocusSpatialSearch('marker')}
                 />
               </Col>
@@ -491,7 +492,8 @@ class SpatialDisplay extends Component {
                   name="swPoint"
                   value={boundingBoxSearch[0]}
                   onChange={this.onChangeBoundingBoxSearch}
-                  onBlur={this.onBlurBoundingBoxSearch}
+                  onBlur={this.onSubmitBoundingBoxSearch}
+                  onKeyUp={this.onSubmitBoundingBoxSearch}
                   onFocus={() => this.onFocusSpatialSearch('rectangle')}
                 />
               </Col>
@@ -514,7 +516,8 @@ class SpatialDisplay extends Component {
                   name="nePoint"
                   value={boundingBoxSearch[1]}
                   onChange={this.onChangeBoundingBoxSearch}
-                  onBlur={this.onBlurBoundingBoxSearch}
+                  onBlur={this.onSubmitBoundingBoxSearch}
+                  onKeyUp={this.onSubmitBoundingBoxSearch}
                   onFocus={() => this.onFocusSpatialSearch('rectangle')}
                 />
               </Col>
