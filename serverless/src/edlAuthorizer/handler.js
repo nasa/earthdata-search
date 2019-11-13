@@ -122,11 +122,12 @@ const edlAuthorizer = async (event, context) => {
 
           console.log(`Access token refreshed successfully for ${username}`)
 
+          const { token } = refreshedToken
           const {
             access_token: accessToken,
             refresh_token: refreshToken,
             expires_at: expiresAt
-          } = refreshedToken
+          } = token
 
           await dbConnection('user_tokens').insert({
             user_id: userId,
