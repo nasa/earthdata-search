@@ -204,6 +204,10 @@ class SpatialDisplay extends Component {
       const { onChangeQuery } = this.props
 
       if (error === '') {
+        this.setState({
+          manuallyEntering: false
+        })
+
         onChangeQuery({
           collection: {
             spatial: {
@@ -257,6 +261,10 @@ class SpatialDisplay extends Component {
         eventEmitter.emit('map.drawCancel')
 
         if (error === '') {
+          this.setState({
+            manuallyEntering: false
+          })
+
           onChangeQuery({
             collection: {
               spatial: {
