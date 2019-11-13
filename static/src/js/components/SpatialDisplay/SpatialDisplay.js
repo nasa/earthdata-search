@@ -78,44 +78,67 @@ class SpatialDisplay extends Component {
       shapefile
     } = this.props
 
-    this.setState({ error: '' })
+    let shouldUpdateState = false
+
+    const state = {
+      error: ''
+    }
 
     if (pointSearch !== nextProps.pointSearch) {
-      this.setState({ pointSearch: nextProps.pointSearch })
-      this.validateCoordinate(
+      shouldUpdateState = true
+
+      state.pointSearch = nextProps.pointSearch
+      state.error = this.validateCoordinate(
         this.transformSingleCoordinate(nextProps.pointSearch)
       )
     }
 
     if (boundingBoxSearch !== nextProps.boundingBoxSearch) {
+      shouldUpdateState = true
+
       const points = this.transformBoundingBoxCoordinates(nextProps.boundingBoxSearch)
 
-      this.setState({ boundingBoxSearch: points })
+      state.boundingBoxSearch = points
 
       if (points.filter(Boolean).length > 0) {
-        points.forEach(point => this.validateCoordinate(point))
+        points.forEach((point) => {
+          state.error = this.validateCoordinate(point)
+        })
       }
     }
 
     if (polygonSearch !== nextProps.polygonSearch) {
-      this.setState({ polygonSearch: nextProps.polygonSearch })
+      shouldUpdateState = true
+
+      state.polygonSearch = nextProps.polygonSearch
     }
 
     if (lineSearch !== nextProps.lineSearch) {
-      this.setState({ lineSearch: nextProps.lineSearch })
+      shouldUpdateState = true
+
+      state.lineSearch = nextProps.lineSearch
     }
 
     if (gridName !== nextProps.gridName) {
-      this.setState({ gridName: nextProps.gridName })
+      shouldUpdateState = true
+
+      state.gridName = nextProps.gridName
     }
 
     if (gridCoords !== nextProps.gridCoords) {
-      this.setState({ gridCoords: nextProps.gridCoords })
+      shouldUpdateState = true
+
+      state.gridCoords = nextProps.gridCoords
     }
 
     if (!isEqual(shapefile, nextProps.shapefile)) {
-      this.setState({ shapefile: nextProps.shapefile })
+      shouldUpdateState = true
+
+      state.shapefile = nextProps.shapefile
     }
+
+    // Only update the state if a prop we care about was provided and updated
+    if (shouldUpdateState) this.setState(state)
   }
 
   onChangeGridType(e) {
