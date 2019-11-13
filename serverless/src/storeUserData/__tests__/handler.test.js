@@ -72,7 +72,15 @@ describe('storeUserData', () => {
       }
     })
 
-    await storeUserData({ environment: 'test', userId: 1, username: 'urs_user' }, {})
+    await storeUserData({
+      Records: [{
+        body: JSON.stringify({
+          environment: 'test',
+          userId: 1,
+          username: 'urs_user'
+        })
+      }]
+    }, {})
 
     expect(ursUserDataMock).toBeCalledTimes(1)
     expect(ursUserDataMock).toBeCalledWith('urs_user', 'fake.access.token', 'test')

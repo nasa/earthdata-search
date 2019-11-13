@@ -44,6 +44,7 @@ describe('submitCatalogRestOrder', () => {
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
+
     const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
       .mockImplementation(() => (jest.fn()))
 
