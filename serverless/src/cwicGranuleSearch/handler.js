@@ -1,8 +1,11 @@
 import request from 'request-promise'
+import { parse as parseQueryString } from 'qs'
 import { parse as parseXml } from 'fast-xml-parser'
 import { pick } from '../util/pick'
 import { getClientId } from '../../../sharedUtils/config'
 import { isWarmUp } from '../util/isWarmup'
+import { getJwtToken } from '../util/getJwtToken'
+import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
@@ -117,6 +120,22 @@ const cwicGranuleSearch = async (event, context) => {
     'Content-Type': 'application/xml'
   }
 
+  let params
+  try {
+    const jwtToken = getJwtToken(event)
+    if (jwtToken) {
+      responseHeaders['jwt-token'] = jwtToken
+    }
+
+    // If a jwt token is found the payload provided is slightly different
+    const responseBody = JSON.parse(event.body)
+
+    // eslint-disable-next-line prefer-destructuring
+    params = responseBody.params
+  } catch (e) {
+    params = parseQueryString(event.body)
+  }
+
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
     'bounding_box',
@@ -126,8 +145,6 @@ const cwicGranuleSearch = async (event, context) => {
     'point',
     'temporal'
   ]
-
-  const { params = {} } = JSON.parse(event.body)
 
   console.log(`Parameters received: ${Object.keys(params)}`)
 
@@ -164,19 +181,24 @@ const cwicGranuleSearch = async (event, context) => {
       }
     })
 
+    const { headers } = granuleResponse
+
     console.log(`CWIC Granule Request took ${granuleResponse.elapsedTime}ms`)
 
     return {
       isBase64Encoded: false,
       statusCode: granuleResponse.statusCode,
-      headers: responseHeaders,
+      headers: {
+        ...responseHeaders,
+        'access-control-expose-headers': prepareExposeHeaders(headers)
+      },
       body: granuleResponse.body
     }
   } catch (e) {
     return {
       isBase64Encoded: false,
       statusCode: e.statusCode,
-      headers: responseHeaders,
+      headers: { responseHeaders },
       body: JSON.stringify({ errors: [e.error] })
     }
   }

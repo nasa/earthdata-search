@@ -88,7 +88,7 @@ export const getProjectGranules = collectionIds => (dispatch, getState) => (
 
     let requestObject = null
     if (isCwicCollection) {
-      requestObject = new CwicGranuleRequest()
+      requestObject = new CwicGranuleRequest(authToken)
     } else {
       requestObject = new GranuleRequest(authToken)
     }

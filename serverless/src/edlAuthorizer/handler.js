@@ -16,7 +16,10 @@ import { getDbConnection } from '../util/database/getDbConnection'
 const generatePolicy = (username, jwtToken, effect, resource) => {
   const authResponse = {}
   authResponse.principalId = username
-  authResponse.context = { jwtToken }
+
+  if (jwtToken) {
+    authResponse.context = { jwtToken }
+  }
 
   if (effect && resource) {
     const policyDocument = {}
@@ -49,7 +52,19 @@ const edlAuthorizer = async (event, context) => {
 
   const edlConfig = await getEdlConfig()
 
+  const { methodArn, requestContext } = event
+  const { resourcePath } = requestContext
+
   if (!event.authorizationToken) {
+    const authOptionalPaths = [
+      '/cwic/granules'
+    ]
+
+    // Allow for optional authentication
+    if (authOptionalPaths.includes(resourcePath)) {
+      return generatePolicy('anonymous', undefined, 'Allow', methodArn)
+    }
+
     throw new Error('Unauthorized')
   }
 
