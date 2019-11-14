@@ -183,6 +183,7 @@
           method: post
           cors: true
           path: cwic/granules
+          authorizer: edlAuthorizer
 
   conceptMetadata:
     handler: serverless/src/conceptMetadata/handler.default

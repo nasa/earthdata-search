@@ -4,9 +4,14 @@ import { getTemporal } from '../edscDate'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export default class CwicGranuleRequest extends Request {
-  constructor() {
+  constructor(authToken) {
     super(getEnvironmentConfig().apiHost)
-    this.lambda = true
+
+    if (authToken && authToken !== '') {
+      this.authenticated = true
+      this.authToken = authToken
+    }
+
     this.searchPath = 'cwic/granules'
   }
 

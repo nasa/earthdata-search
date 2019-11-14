@@ -69,8 +69,7 @@ export default class Request {
       // Prevent keys that our external services don't support from being sent
       const filteredData = pick(snakeKeyData, this.permittedCmrKeys(ext))
 
-      // CWIC does not support CORS so all of our requests will need to go through
-      // Lambda. POST requests to Lambda use a JSON string
+      // POST requests to Lambda use a JSON string
       if (this.authenticated || this.lambda) return JSON.stringify({ params: filteredData, ext })
 
       // Add the Client-Id header for requests directly to CMR
