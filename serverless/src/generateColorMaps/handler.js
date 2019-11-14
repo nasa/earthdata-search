@@ -29,7 +29,7 @@ const getProjectionCapabilities = async (projection) => {
     // Delete colormaps that havent been updated in the last 5 days
     await dbConnection(colorMapsTableName).whereRaw("updated_at <= now() - INTERVAL '5 DAYS'").del()
 
-    const colormapUrls = []
+    const colormapProducts = []
 
     const gibsResponse = await request.get({
       uri: capabilitiesUrl,
@@ -48,6 +48,8 @@ const getProjectionCapabilities = async (projection) => {
     const { Contents: contents = {} } = capabilities
     const { Layer: capabilityLayers = [] } = contents
 
+    console.log(`Found ${capabilityLayers.filter(Boolean).length} layers within GIBS`)
+
     await capabilityLayers.filter(Boolean).forEachAsync(async (layer) => {
       let knownColorMap = await dbConnection(colorMapsTableName)
         .first('id', 'product', 'url')
@@ -59,7 +61,7 @@ const getProjectionCapabilities = async (projection) => {
         if (link['xlink:role'].includes('1.3')) {
           // If there is no previous record of this product, insert a new row into the database
           if (knownColorMap === undefined) {
-            knownColorMap = await dbConnection(colorMapsTableName)
+            [knownColorMap] = await dbConnection(colorMapsTableName)
               .returning(['id', 'product', 'url'])
               .insert({
                 product: layer['ows:Identifier'],
@@ -68,7 +70,7 @@ const getProjectionCapabilities = async (projection) => {
           }
 
           try {
-            sqs.sendMessage({
+            await sqs.sendMessage({
               QueueUrl: process.env.colorMapQueueUrl,
               MessageBody: JSON.stringify(knownColorMap)
             }).promise()
@@ -77,11 +79,18 @@ const getProjectionCapabilities = async (projection) => {
           }
         }
       })
+
+      if (knownColorMap) {
+        const { product } = knownColorMap
+        colormapProducts.push(product)
+      }
     })
+
+    console.log(`Successfully processed ${colormapProducts.length} colormaps`)
 
     return {
       statusCode: gibsResponse.statusCode,
-      body: colormapUrls
+      body: colormapProducts
     }
   } catch (e) {
     console.log(e)
@@ -89,13 +98,13 @@ const getProjectionCapabilities = async (projection) => {
     if (e.response) {
       return {
         statusCode: e.statusCode,
-        body: JSON.stringify({ errors: [e.response.body] })
+        body: { errors: [e.response.body] }
       }
     }
 
     return {
       statusCode: 500,
-      body: JSON.stringify({ errors: [e] })
+      body: { errors: [e] }
     }
   }
 }
@@ -103,7 +112,7 @@ const getProjectionCapabilities = async (projection) => {
 /**
  * Handler to process colormap records from GIBS
  */
-export default async function generateColorMaps(event, context) {
+const generateColorMaps = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
@@ -123,7 +132,7 @@ export default async function generateColorMaps(event, context) {
       isBase64Encoded: false,
       statusCode: projectionCapabilities.statusCode,
       headers: responseHeaders,
-      body: projectionCapabilities.body
+      body: JSON.stringify(projectionCapabilities.body)
     }
   }
 
@@ -134,3 +143,5 @@ export default async function generateColorMaps(event, context) {
     body: JSON.stringify(projectionCapabilities.body)
   }
 }
+
+export default generateColorMaps
