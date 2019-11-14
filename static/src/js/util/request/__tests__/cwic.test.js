@@ -1,4 +1,4 @@
-import nock from 'nock'
+// import nock from 'nock'
 import CwicRequest from '../cwic'
 import { singleCwicGranuleResponse, multipleCwicGranulesResponse } from './mocks'
 
@@ -8,25 +8,50 @@ beforeEach(() => {
 })
 
 describe('CwicRequest#transformRequest', () => {
-  test('returns a basic example result correctly transformed', () => {
-    const cwicRequest = new CwicRequest()
+  describe('when logged out', () => {
+    test('returns a basic example result correctly transformed', () => {
+      const cwicRequest = new CwicRequest()
 
-    const transformedData = cwicRequest.transformRequest({
-      echoCollectionId: 'TEST_COLLECTION_ID'
-    }, {})
+      const transformedData = cwicRequest.transformRequest({
+        echoCollectionId: 'TEST_COLLECTION_ID'
+      }, {})
 
-    expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
+      expect(transformedData).toEqual('echo_collection_id=TEST_COLLECTION_ID')
+    })
+
+    test('returns only permitted keys correctly transformed', () => {
+      const cwicRequest = new CwicRequest()
+
+      const transformedData = cwicRequest.transformRequest({
+        echoCollectionId: 'TEST_COLLECTION_ID',
+        nonPermittedKey: 'NOPE'
+      }, {})
+
+      expect(transformedData).toEqual('echo_collection_id=TEST_COLLECTION_ID')
+    })
   })
 
-  test('returns only permitted keys correctly transformed', () => {
-    const cwicRequest = new CwicRequest()
+  describe('when logged in', () => {
+    test('returns a basic example result correctly transformed', () => {
+      const cwicRequest = new CwicRequest('authToken')
 
-    const transformedData = cwicRequest.transformRequest({
-      echoCollectionId: 'TEST_COLLECTION_ID',
-      nonPermittedKey: 'NOPE'
-    }, {})
+      const transformedData = cwicRequest.transformRequest({
+        echoCollectionId: 'TEST_COLLECTION_ID'
+      }, {})
 
-    expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
+      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
+    })
+
+    test('returns only permitted keys correctly transformed', () => {
+      const cwicRequest = new CwicRequest('authToken')
+
+      const transformedData = cwicRequest.transformRequest({
+        echoCollectionId: 'TEST_COLLECTION_ID',
+        nonPermittedKey: 'NOPE'
+      }, {})
+
+      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
+    })
   })
 })
 
