@@ -30,7 +30,7 @@ export const updateStore = ({
 
   // Prevent loading from the url on these paths. The saved projects page needs to be handled
   // a little differently because it shares the base url with the projects page.
-  const pathsToSkip = [/^\/downloads/]
+  const pathsToSkip = [/^\/downloads/, /^\/auth_callback/]
   const isSavedProjectsPage = isPath(pathname, '/projects') && search === ''
 
   const loadFromUrl = (!isPath(pathname, pathsToSkip) && !isSavedProjectsPage)
