@@ -52,7 +52,7 @@ const edlAuthorizer = async (event, context) => {
 
   const edlConfig = await getEdlConfig()
 
-  const { methodArn, requestContext } = event
+  const { methodArn, requestContext = {} } = event
   const { resourcePath } = requestContext
 
   if (!event.authorizationToken) {
