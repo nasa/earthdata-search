@@ -1,7 +1,7 @@
 {
   "application": {
     "version": "dev",
-    "env": "sit",
+    "env": "dev",
     "cmrTagNamespace": "edsc.extra.serverless",
     "thumbnailSize": {
       "height": 85,
@@ -40,8 +40,8 @@
       "includeNtPageTag": false
     },
     "production": {
-      "apiHost": "https://d30czzksj9a4kf.cloudfront.net",
-      "edscHost": "https://search.sit.earthdata.nasa.gov",
+      "apiHost": "http://localhost:3001",
+      "edscHost": "http://localhost:8080",
       "includeGoogleTagManager": true,
       "gtmPropertyId": "GTM-WNP7MLF",
       "includeNtPageTag": true
