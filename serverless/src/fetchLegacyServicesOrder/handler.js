@@ -4,6 +4,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { logHttpError } from '../util/logging/logHttpError'
 
 const fetchLegacyServicesOrder = async (input) => {
   const dbConnection = await getDbConnection()
@@ -42,20 +43,28 @@ const fetchLegacyServicesOrder = async (input) => {
   console.log(`Requesting order data from Legacy Services at ${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders.json`)
 
   // Retrieve the order from Legacy Services
-  const orderResponse = await request.get({
-    uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders.json`,
-    headers: {
-      'Echo-Token': accessToken,
-      'Client-Id': getClientId(cmrEnv()).background
-    },
-    qs: { id: orderNumber },
-    qsStringifyOptions: {
-      indices: false,
-      arrayFormat: 'brackets'
-    },
-    json: true,
-    resolveWithFullResponse: true
-  })
+  let orderResponse
+  try {
+    orderResponse = await request.get({
+      uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders.json`,
+      headers: {
+        'Echo-Token': accessToken,
+        'Client-Id': getClientId(cmrEnv()).background
+      },
+      qs: { id: orderNumber },
+      qsStringifyOptions: {
+        indices: false,
+        arrayFormat: 'brackets'
+      },
+      json: true,
+      resolveWithFullResponse: true
+    })
+  } catch (e) {
+    logHttpError(e)
+
+    // Re-throw the error so the state machine handles the error correctly
+    throw e
+  }
 
   console.log('Order Response Body', JSON.stringify(orderResponse.body, null, 4))
 

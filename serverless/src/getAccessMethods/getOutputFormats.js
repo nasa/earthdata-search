@@ -1,7 +1,7 @@
 import request from 'request-promise'
 
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
-import cmrEnv from '../../../sharedUtils/cmrEnv'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getUmmServiceVersionHeader } from '../../../sharedUtils/ummVersionHeader'
 

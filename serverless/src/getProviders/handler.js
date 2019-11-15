@@ -4,6 +4,7 @@ import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
+import { logHttpError } from '../util/logging/logHttpError'
 
 /**
  * Perform an authenticated CMR Concept Metadata search
@@ -42,7 +43,7 @@ const getProviders = async (event, context) => {
       body: JSON.stringify(body)
     }
   } catch (e) {
-    console.log('error', e)
+    const errors = logHttpError(e)
 
     return {
       isBase64Encoded: false,
@@ -51,7 +52,7 @@ const getProviders = async (event, context) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
       },
-      body: JSON.stringify({ errors: [e] })
+      body: JSON.stringify({ errors })
     }
   }
 }

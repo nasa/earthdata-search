@@ -5,9 +5,10 @@ import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
-import cmrEnv from '../../../sharedUtils/cmrEnv'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { logHttpError } from '../util/logging/logHttpError'
 
 // AWS SQS adapter
 let sqs
@@ -51,16 +52,31 @@ const saveContactInfo = async (event, context) => {
 
     const url = `${getEarthdataConfig(cmrEnvironment).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
 
-    const response = await request.put({
-      uri: url,
-      headers: {
-        'Client-Id': getClientId().lambda,
-        'Echo-Token': await getEchoToken(jwtToken)
-      },
-      body: params,
-      json: true,
-      resolveWithFullResponse: true
-    })
+    let response
+    try {
+      response = await request.put({
+        uri: url,
+        headers: {
+          'Client-Id': getClientId().lambda,
+          'Echo-Token': await getEchoToken(jwtToken)
+        },
+        body: params,
+        json: true,
+        resolveWithFullResponse: true
+      })
+    } catch (e) {
+      const errors = logHttpError(e)
+
+      return {
+        isBase64Encoded: false,
+        statusCode: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true
+        },
+        body: JSON.stringify({ errors })
+      }
+    }
 
     await sqs.sendMessage({
       QueueUrl: process.env.userDataQueueUrl,
@@ -77,14 +93,14 @@ const saveContactInfo = async (event, context) => {
       headers: { 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify(response.body)
     }
-  } catch (error) {
-    console.log('saveContactInfo error', error)
+  } catch (e) {
+    console.log(e)
 
     return {
       isBase64Encoded: false,
       statusCode: 500,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [error] })
+      body: JSON.stringify({ errors: [e] })
     }
   }
 }

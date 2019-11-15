@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import './ContactInfo.scss'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import cmrEnv from '../../../../../sharedUtils/cmrEnv'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import Button from '../Button/Button'
 
 /**
