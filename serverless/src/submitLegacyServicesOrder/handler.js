@@ -7,6 +7,7 @@ import { constructUserInformationPayload } from './constructUserInformationPaylo
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
+import { logHttpError } from '../util/logging/logHttpError'
 
 /**
  * Submits an order to Legacy Services (CMR)
@@ -131,7 +132,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
     } catch (e) {
-      console.log(e)
+      logHttpError(e)
 
       await dbConnection('retrieval_orders').update({
         state: 'create_failed'

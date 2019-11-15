@@ -65,7 +65,7 @@ const saveProject = async (event, context) => {
 
         newProjectId = existingProjectRecord.id
       } else {
-        // ExistingProjectRecord doesn't exist, probably because the userId doesn't match
+        // An existingProjectRecord doesn't exist, probably because the userId doesn't match
         // Create a new record
         const newProjectRecord = await dbConnection('projects')
           .returning(['id'])
@@ -89,14 +89,14 @@ const saveProject = async (event, context) => {
 
       newProjectId = newProjectRecord[0].id
     }
-  } catch (error) {
-    console.log(error)
+  } catch (e) {
+    console.log(e)
 
     return {
       isBase64Encoded: false,
       statusCode: 500,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [error] })
+      body: JSON.stringify({ errors: [e] })
     }
   }
 

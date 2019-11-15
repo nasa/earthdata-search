@@ -2,7 +2,8 @@ import request from 'request-promise'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { getClientId, getEarthdataConfig } from '../../../../sharedUtils/config'
 import { getEchoToken } from '../urs/getEchoToken'
-import cmrEnv from '../../../../sharedUtils/cmrEnv'
+import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { logHttpError } from '../logging/logHttpError'
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -38,18 +39,16 @@ export const doSearchRequest = async (jwtToken, path, params, providedHeaders = 
       body: JSON.stringify(body)
     }
   } catch (e) {
-    console.log('error', e)
-
-    if (e.response) {
-      return {
-        statusCode: e.statusCode,
-        body: JSON.stringify({ errors: [e.response.body], statusCode: e.statusCode })
-      }
-    }
+    const errors = logHttpError(e)
 
     return {
+      isBase64Encoded: false,
       statusCode: 500,
-      body: JSON.stringify({ errors: ['Unexpected error encountered!', e] })
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify({ errors })
     }
   }
 }
