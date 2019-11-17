@@ -119,7 +119,7 @@ The [serverless framework](https://serverless.com/framework/docs/providers/aws/)
 ##### Exceptions
 - SQS
 
-	While there is an sqs-offline plugin for servless it still requires an actual queue be running, we may investigate this in the future but for now sqs functionality isn't available while developing locally which means the following pieces of functionality will not operate locally:
+	While there is an sqs-offline plugin for serverless it still requires an actual queue be running, we may investigate this in the future but for now sqs functionality isn't available while developing locally which means the following pieces of functionality will not operate locally:
 	- Generating Colormaps
 
 #### Running API Gateway and Lambda Locally
