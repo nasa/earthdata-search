@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Col, Dropdown, Form } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import qs from 'qs'
+import { parse } from 'qs'
 
 import { isPath } from '../../util/isPath'
 import { pathStartsWith } from '../../util/pathStartsWith'
@@ -102,7 +102,7 @@ class SecondaryToolbar extends Component {
     const cmrEnvironment = cmrEnv()
 
     // remove focused collection from back button params
-    const params = qs.parse(location.search, { ignoreQueryPrefix: true })
+    const params = parse(location.search, { ignoreQueryPrefix: true })
     let { p = '' } = params
     p = p.replace(/^[^!]*/, '')
 

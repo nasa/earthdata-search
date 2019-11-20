@@ -14,8 +14,12 @@ function setup(overrideProps) {
   const props = {
     location: {},
     portal: {},
+    project: {
+      collectionsRequiringChunking: []
+    },
     onMasterOverlayHeightChange: jest.fn(),
     onSubmitRetrieval: jest.fn(),
+    onToggleChunkedOrderModal: jest.fn(),
     ...overrideProps
   }
 

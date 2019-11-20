@@ -4,6 +4,7 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   MASTER_OVERLAY_PANEL_TOGGLE,
+  TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
@@ -47,6 +48,9 @@ const initialState = {
     isOpen: false
   },
   tooManyPointsModal: {
+    isOpen: false
+  },
+  chunkedOrderModal: {
     isOpen: false
   }
 }
@@ -277,6 +281,22 @@ describe('TOGGLE_TOO_MANY_POINTS_MODAL', () => {
     const expectedState = {
       ...initialState,
       tooManyPointsModal: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_CHUNKED_ORDER_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_CHUNKED_ORDER_MODAL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      chunkedOrderModal: { isOpen: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
