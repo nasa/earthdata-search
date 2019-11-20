@@ -23,7 +23,13 @@ import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer
 
 const mapDispatchToProps = dispatch => ({
   onSubmitRetrieval:
-    () => dispatch(actions.submitRetrieval())
+    () => dispatch(actions.submitRetrieval()),
+  onToggleChunkedOrderModal:
+    isOpen => dispatch(actions.toggleChunkedOrderModal(isOpen))
+})
+
+const mapStateToProps = state => ({
+  project: state.project
 })
 
 export class Project extends Component {
@@ -33,11 +39,18 @@ export class Project extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+
   handleSubmit(event) {
     event.preventDefault()
 
-    const { onSubmitRetrieval } = this.props
-    onSubmitRetrieval()
+    const { onSubmitRetrieval, onToggleChunkedOrderModal, project } = this.props
+    const { collectionsRequiringChunking } = project
+
+    if (collectionsRequiringChunking.length > 0) {
+      onToggleChunkedOrderModal(true)
+    } else {
+      onSubmitRetrieval()
+    }
   }
 
   render() {
@@ -98,9 +111,11 @@ export class Project extends Component {
 
 Project.propTypes = {
   location: PropTypes.shape({}).isRequired,
+  onToggleChunkedOrderModal: PropTypes.func.isRequired,
+  project: PropTypes.shape({}).isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }
 
 export default withRouter(
-  connect(null, mapDispatchToProps)(Project)
+  connect(mapStateToProps, mapDispatchToProps)(Project)
 )

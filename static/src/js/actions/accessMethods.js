@@ -3,6 +3,7 @@ import actions from './index'
 import { findProvider } from '../util/findProvider'
 import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 /**
  * Fetch available access methods from the API
@@ -27,7 +28,7 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
 
     const collectionProvider = findProvider(getState(), dataCenter)
 
-    // if the collection has tag data, retrieve the access methods from lambda
+    // If the collection has tag data, retrieve the access methods from lambda
     const hasEchoOrders = hasTag(collectionMetadata, 'subset_service.echo_orders')
     const hasEsi = hasTag(collectionMetadata, 'subset_service.esi')
     const hasOpendap = hasTag(collectionMetadata, 'subset_service.opendap')
@@ -47,11 +48,27 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
           const { data } = response
           const { accessMethods, selectedAccessMethod } = data
 
+          let orderCount = 0
+
+          Object.keys(accessMethods).forEach((methodName) => {
+            if (selectedAccessMethod === methodName) {
+              const { granule_count: granuleCount } = collectionMetadata
+              const { defaultGranulesPerOrder } = getApplicationConfig()
+
+              orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
+            }
+          })
+
           dispatch(actions.addAccessMethods({
             collectionId,
             methods: accessMethods,
-            selectedAccessMethod
+            selectedAccessMethod,
+            orderCount
           }))
+
+          if (orderCount > 1) {
+            dispatch(actions.addChunkedCollectionToProject(collectionId))
+          }
         })
         .catch((error) => {
           dispatch(actions.handleError({
@@ -64,7 +81,7 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
       return response
     }
 
-    // if the collection is online downloadable, add the download method
+    // If the collection is online downloadable, add the download method
     if (downloadable) {
       dispatch(actions.addAccessMethods({
         collectionId,

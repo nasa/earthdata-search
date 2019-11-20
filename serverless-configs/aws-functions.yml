@@ -78,6 +78,7 @@
   submitCatalogRestOrder:
     handler: serverless/src/submitCatalogRestOrder/handler.default
     timeout: 600
+    memorySize: 192
     warmup:
       enabled: false
     events:
@@ -154,6 +155,7 @@
     handler: serverless/src/generateSubsettingTags/handler.default
     description: Tag CMR collections with umm service subsetting information
     timeout: 600
+    memorySize: 192
     warmup:
       enabled: false
     events:
@@ -162,6 +164,17 @@
   #
   # API Gateway Endpoints
   #
+  decodeId:
+    handler: serverless/src/decodeId/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    warmup:
+      enabled: false
+    events:
+      - http:
+          method: get
+          cors: true
+          path: decode
+
   getColorMap:
     handler: serverless/src/getColorMap/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
@@ -302,6 +315,7 @@
   collectionSearch:
     handler: serverless/src/collectionSearch/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
+    memorySize: 192
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:
@@ -318,6 +332,7 @@
   cmrGranuleSearch:
     handler: serverless/src/cmrGranuleSearch/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
+    memorySize: 192
     warmup:
       concurrency: ${env:WARM_LAMBDA_COUNT}
     events:

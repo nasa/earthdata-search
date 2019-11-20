@@ -139,7 +139,9 @@ describe('fetchAccessMethods', () => {
           methods: {
             download,
             echoOrder0
-          }
+          },
+          orderCount: 0,
+          selectedAccessMethod: undefined
         }
       })
     })

@@ -13,6 +13,7 @@ function setup(overrideProps) {
     className: 'test-class',
     dispatch: jest.fn(),
     match: {},
+    label: '',
     location: {},
     history: {},
     onClick: jest.fn(),
@@ -81,7 +82,7 @@ describe('PortalLinkContainer component', () => {
       }
     })
 
-    const button = enzymeWrapper.find('button')
+    const button = enzymeWrapper.find('Button')
     expect(button.props().className).toEqual('test-class')
     expect(button.props().type).toEqual('button')
     expect(button.props().children).toEqual('Click Here')

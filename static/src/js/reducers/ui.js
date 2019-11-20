@@ -10,7 +10,8 @@ import {
   TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
-  TOGGLE_TOO_MANY_POINTS_MODAL
+  TOGGLE_TOO_MANY_POINTS_MODAL,
+  TOGGLE_CHUNKED_ORDER_MODAL
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -48,6 +49,9 @@ const initialState = {
     isOpen: false
   },
   tooManyPointsModal: {
+    isOpen: false
+  },
+  chunkedOrderModal: {
     isOpen: false
   }
 }
@@ -161,6 +165,14 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         tooManyPointsModal: {
+          isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_CHUNKED_ORDER_MODAL: {
+      return {
+        ...state,
+        chunkedOrderModal: {
           isOpen: action.payload
         }
       }

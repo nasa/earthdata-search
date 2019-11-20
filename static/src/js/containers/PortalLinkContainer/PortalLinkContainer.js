@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
+import Button from '../../components/Button/Button'
 
 const mapStateToProps = state => ({
   portalId: state.portal.portalId
@@ -53,7 +54,7 @@ export const PortalLinkContainer = (props) => {
     } = props
 
     return (
-      <button
+      <Button
         type="button"
         {...rest}
         onClick={(event) => {

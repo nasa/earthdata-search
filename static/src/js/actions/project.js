@@ -1,5 +1,6 @@
 import actions from './index'
 import {
+  ADD_CHUNKED_COLLECTION_TO_PROJECT,
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
   RESTORE_PROJECT,
@@ -28,6 +29,11 @@ export const submittingProject = () => ({
 
 export const submittedProject = () => ({
   type: SUBMITTED_PROJECT
+})
+
+export const addChunkedCollectionToProject = payload => ({
+  type: ADD_CHUNKED_COLLECTION_TO_PROJECT,
+  payload
 })
 
 export const addCollectionToProject = payload => ({

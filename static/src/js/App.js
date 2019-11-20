@@ -27,6 +27,7 @@ import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsE
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
+import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -111,6 +112,7 @@ class App extends Component {
                     <ShapefileUploadModalContainer />
                     <ShapefileDropzoneContainer />
                     <TooManyPointsModalContainer />
+                    <ChunkedOrderModalContainer />
                   </Route>
                 </Switch>
               </ConnectedUrlQueryContainer>

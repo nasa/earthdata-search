@@ -7,7 +7,7 @@ provider:
   stage: ${opt:stage, 'lab'}
   region: us-east-1
   endpointType: PRIVATE
-  memorySize: 256
+  memorySize: 128
   environment:
     dbEndpoint:
       Fn::ImportValue: ${self:provider.stage}-DatabaseEndpoint

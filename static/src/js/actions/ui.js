@@ -3,6 +3,7 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_TOGGLE,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
+  TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
@@ -76,5 +77,10 @@ export const toggleShapefileUploadModal = state => ({
 
 export const toggleTooManyPointsModal = state => ({
   type: TOGGLE_TOO_MANY_POINTS_MODAL,
+  payload: state
+})
+
+export const toggleChunkedOrderModal = state => ({
+  type: TOGGLE_CHUNKED_ORDER_MODAL,
   payload: state
 })

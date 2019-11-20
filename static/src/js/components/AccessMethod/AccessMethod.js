@@ -13,6 +13,7 @@ import EchoForm from './EchoForm'
 import Button from '../Button/Button'
 
 import './AccessMethod.scss'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 const downloadButton = collectionId => (
   <Radio
@@ -189,11 +190,16 @@ export class AccessMethod extends Component {
 
   handleAccessMethodSelection(method) {
     const { metadata, onSelectAccessMethod } = this.props
-    const { id: collectionId } = metadata
+    const { granule_count: granuleCount, id: collectionId } = metadata
+
+    const { defaultGranulesPerOrder } = getApplicationConfig()
+
+    const orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
 
     onSelectAccessMethod({
       collectionId,
-      selectedAccessMethod: method
+      selectedAccessMethod: method,
+      orderCount: ['download', 'opendap'].includes(method) ? 0 : orderCount
     })
   }
 

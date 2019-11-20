@@ -13,6 +13,7 @@ import {
 const initialState = {
   byId: {},
   collectionIds: [],
+  collectionsRequiringChunking: [],
   isSubmitted: false,
   isSubmitting: false
 }
@@ -116,7 +117,8 @@ describe('RESTORE_FROM_URL', () => {
       byId: {
         collectionId: {}
       },
-      collectionIds: ['collectionId']
+      collectionIds: ['collectionId'],
+      collectionsRequiringChunking: []
     }
 
     expect(projectReducer(undefined, action)).toEqual(expectedState)
@@ -141,7 +143,8 @@ describe('SELECT_ACCESS_METHOD', () => {
         collectionId: {
           selectedAccessMethod: 'download'
         }
-      }
+      },
+      collectionsRequiringChunking: []
     }
 
     expect(projectReducer(undefined, action)).toEqual(expectedState)
@@ -174,7 +177,8 @@ describe('ADD_ACCESS_METHODS', () => {
             }
           }
         }
-      }
+      },
+      collectionsRequiringChunking: []
     }
 
     expect(projectReducer(undefined, action)).toEqual(expectedState)
@@ -208,6 +212,7 @@ describe('UPDATE_ACCESS_METHOD', () => {
         }
       },
       collectionIds: [collectionId],
+      collectionsRequiringChunking: [],
       isSubmitted: false,
       isSubmitting: false
     }
@@ -225,6 +230,7 @@ describe('UPDATE_ACCESS_METHOD', () => {
         }
       },
       collectionIds: [collectionId],
+      collectionsRequiringChunking: []
     }
 
     expect(projectReducer(initial, action)).toEqual(expectedState)
@@ -232,14 +238,13 @@ describe('UPDATE_ACCESS_METHOD', () => {
 
   describe('SUBMITTING_PROJECT', () => {
     test('returns the correct state', () => {
-      const collectionId = 'collectionId'
-
       const action = {
         type: SUBMITTING_PROJECT
       }
 
       const expectedState = {
         ...initialState,
+        collectionsRequiringChunking: [],
         isSubmitted: false,
         isSubmitting: true
       }
@@ -250,14 +255,13 @@ describe('UPDATE_ACCESS_METHOD', () => {
 
   describe('SUBMITTED_PROJECT', () => {
     test('returns the correct state', () => {
-      const collectionId = 'collectionId'
-
       const action = {
         type: SUBMITTED_PROJECT
       }
 
       const expectedState = {
         ...initialState,
+        collectionsRequiringChunking: [],
         isSubmitted: true,
         isSubmitting: false
       }

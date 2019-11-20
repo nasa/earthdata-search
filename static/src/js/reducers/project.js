@@ -1,4 +1,5 @@
 import {
+  ADD_CHUNKED_COLLECTION_TO_PROJECT,
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
   SELECT_ACCESS_METHOD,
@@ -12,6 +13,7 @@ import {
 const initialState = {
   byId: {},
   collectionIds: [],
+  collectionsRequiringChunking: [],
   isSubmitted: false,
   isSubmitting: false
 }
@@ -61,7 +63,7 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case SELECT_ACCESS_METHOD: {
-      const { collectionId, selectedAccessMethod } = action.payload
+      const { collectionId, selectedAccessMethod, orderCount } = action.payload
 
       const byId = {
         ...state.byId
@@ -69,11 +71,16 @@ const projectReducer = (state = initialState, action) => {
 
       byId[collectionId] = {
         ...byId[collectionId],
-        selectedAccessMethod
+        selectedAccessMethod,
+        orderCount
       }
+
+      const collectionsRequiringChunking = Object.keys(byId)
+        .filter(collection => byId[collection].orderCount > 1)
 
       return {
         ...state,
+        collectionsRequiringChunking,
         byId: {
           ...state.byId,
           ...byId
@@ -81,7 +88,12 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case ADD_ACCESS_METHODS: {
-      const { collectionId, methods, selectedAccessMethod } = action.payload
+      const {
+        collectionId,
+        methods,
+        orderCount,
+        selectedAccessMethod
+      } = action.payload
 
       const byId = {
         ...state.byId
@@ -102,7 +114,8 @@ const projectReducer = (state = initialState, action) => {
         accessMethods: {
           ...existingMethods
         },
-        selectedAccessMethod
+        selectedAccessMethod,
+        orderCount: ['download', 'opendap'].includes(selectedAccessMethod) ? 0 : orderCount
       }
 
       return {
@@ -141,6 +154,15 @@ const projectReducer = (state = initialState, action) => {
           ...state.byId,
           ...byId
         }
+      }
+    }
+    case ADD_CHUNKED_COLLECTION_TO_PROJECT: {
+      return {
+        ...state,
+        collectionsRequiringChunking: [
+          ...state.collectionsRequiringChunking,
+          action.payload
+        ]
       }
     }
     case SUBMITTING_PROJECT: {
