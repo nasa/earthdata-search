@@ -1,6 +1,8 @@
 import { getFocusedCollectionObject } from './focusedCollection'
 import { encodeTemporal } from './url/temporalEncoders'
 import { encodeGridCoords } from './url/gridEncoders'
+import { getEarthdataConfig } from '../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
  * Populate granule payload used to update the store
@@ -225,14 +227,17 @@ export const createEcho10MetadataUrls = (granuleId) => {
     { ext: 'native', title: 'Native' },
     { ext: 'umm_json', title: 'UMM-G' }
   ]
+
   const metadataUrls = {}
+
+  const { cmrHost } = getEarthdataConfig(cmrEnv())
 
   // Set a key for each URL type and append the display title and href. 'native' does not
   // use an extension on the href so we omit it.
   metadataUrlTypes.forEach((type) => {
     metadataUrls[type.ext] = {
       title: type.title,
-      href: `https://cmr.earthdata.nasa.gov/search/concepts/${granuleId}${type.ext !== 'native' ? `.${type.ext}` : ''}`
+      href: `${cmrHost}/search/concepts/${granuleId}${type.ext !== 'native' ? `.${type.ext}` : ''}`
     }
   })
 
