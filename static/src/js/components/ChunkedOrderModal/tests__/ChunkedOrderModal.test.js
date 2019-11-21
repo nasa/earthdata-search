@@ -49,13 +49,13 @@ describe('ChunkedOrderModal component', () => {
   test('should render a title', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(Modal.Title).text()).toEqual('Maximum Granules Exceeded')
+    expect(enzymeWrapper.find(Modal.Title).text()).toEqual('Per-order Granule Limit Exceeded')
   })
 
   test('should render instructions', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(Modal.Body).find('p').at(0).text()).toEqual('Your order for collection title will be automatically split up into 4 orders. You will receive a set of emails for each order placed.')
+    expect(enzymeWrapper.find(Modal.Body).find('p').at(0).text()).toEqual('Orders for data containing more than 2,000 granules will be split into multiple orders. You will receive a set of emails for each order placed.')
   })
 
   describe('modal actions', () => {
@@ -84,8 +84,8 @@ describe('ChunkedOrderModal component', () => {
 
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
+
       expect(props.onSubmitRetrieval).toHaveBeenCalledTimes(1)
-      // expect(props.onSubmitRetrieval).toHaveBeenCalledWith(false)
     })
   })
 })
