@@ -14,6 +14,7 @@ export const GranuleDetailsTab = ({ location, onFocusedGranuleChange }) => (
     <PortalLinkContainer
       className="granule-results-tab__button"
       type="button"
+      label="Back to Granules"
       to={{
         pathname: '/search/granules',
         search: location.search

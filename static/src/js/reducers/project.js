@@ -1,5 +1,4 @@
 import {
-  ADD_CHUNKED_COLLECTION_TO_PROJECT,
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
   SELECT_ACCESS_METHOD,
@@ -109,13 +108,28 @@ const projectReducer = (state = initialState, action) => {
         }
       })
 
+      const newOrderCount = ['download', 'opendap'].includes(selectedAccessMethod) ? 0 : orderCount
+
       byId[collectionId] = {
         ...byId[collectionId],
         accessMethods: {
           ...existingMethods
         },
         selectedAccessMethod,
-        orderCount: ['download', 'opendap'].includes(selectedAccessMethod) ? 0 : orderCount
+        orderCount: newOrderCount
+      }
+
+      const { collectionsRequiringChunking } = state
+      const collectionIndex = collectionsRequiringChunking.indexOf(collectionId)
+
+      // If the collection exists in the collectionsRequiringChunking array remove
+      if (collectionIndex > -1) {
+        collectionsRequiringChunking.splice(collectionIndex, 1)
+      }
+
+      // If it requires chunking, re add it
+      if (newOrderCount > 1) {
+        collectionsRequiringChunking.push(collectionId)
       }
 
       return {
@@ -123,7 +137,8 @@ const projectReducer = (state = initialState, action) => {
         byId: {
           ...state.byId,
           ...byId
-        }
+        },
+        collectionsRequiringChunking
       }
     }
     case UPDATE_ACCESS_METHOD: {
@@ -154,15 +169,6 @@ const projectReducer = (state = initialState, action) => {
           ...state.byId,
           ...byId
         }
-      }
-    }
-    case ADD_CHUNKED_COLLECTION_TO_PROJECT: {
-      return {
-        ...state,
-        collectionsRequiringChunking: [
-          ...state.collectionsRequiringChunking,
-          action.payload
-        ]
       }
     }
     case SUBMITTING_PROJECT: {

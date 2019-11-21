@@ -65,10 +65,6 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
             selectedAccessMethod,
             orderCount
           }))
-
-          if (orderCount > 1) {
-            dispatch(actions.addChunkedCollectionToProject(collectionId))
-          }
         })
         .catch((error) => {
           dispatch(actions.handleError({

@@ -20,6 +20,7 @@ export class GranuleResultsTab extends PureComponent {
         <PortalLinkContainer
           className="granule-results-tab__button"
           type="button"
+          label="Back to Collections"
           to={{
             pathname: '/search',
             search: location.search

@@ -77,7 +77,6 @@ import {
   getFocusedGranule
 } from './focusedGranule'
 import {
-  addChunkedCollectionToProject,
   addProjectCollection,
   getProjectCollections,
   getProjectGranules,
@@ -119,7 +118,6 @@ import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
 
 const actions = {
   addAccessMethods,
-  addChunkedCollectionToProject,
   addGranulesFromCollection,
   addProjectCollection,
   applyGranuleFilters,

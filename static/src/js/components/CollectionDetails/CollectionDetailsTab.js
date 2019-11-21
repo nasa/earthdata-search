@@ -15,6 +15,7 @@ export const CollectionDetailsTab = ({ location }) => (
     <PortalLinkContainer
       className="collection-details-tab__button"
       type="button"
+      label="Back to Granules"
       to={{
         pathname: '/search/granules',
         search: location.search
