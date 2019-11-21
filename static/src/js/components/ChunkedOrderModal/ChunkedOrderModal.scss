@@ -8,4 +8,12 @@
   &__action {
     margin-right: $spacer/2;
   }
+
+  &__body-emphasis {
+    font-style: italic;
+  }
+
+  &__body-strong {
+    font-weight: 500;
+  }
 }

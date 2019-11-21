@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 import { Modal } from 'react-bootstrap'
 import { parse } from 'qs'
 
-import Button from '../Button/Button'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { stringify } from '../../util/url/url'
+import { commafy } from '../../util/commafy'
+
+import Button from '../Button/Button'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ChunkedOrderModal.scss'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 export class ChunkedOrderModal extends Component {
   constructor(props) {
@@ -42,6 +45,8 @@ export class ChunkedOrderModal extends Component {
       byId,
       collectionsRequiringChunking
     } = project
+
+    const { defaultGranulesPerOrder } = getApplicationConfig()
 
     const { byId: metadataById } = collectionMetdata
 
@@ -86,10 +91,16 @@ export class ChunkedOrderModal extends Component {
           <Modal.Title
             className="chunked-order-modal__title"
           >
-            Maximum Granules Exceeded
+            Per-order Granule Limit Exceeded
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="chunked-order-modal__body">
+          <p>
+            Orders for data containing more than
+            {` ${commafy(defaultGranulesPerOrder)} `}
+            granules will be split into multiple orders.
+            You will receive a set of emails for each order placed.
+          </p>
           {
             collectionsRequiringChunking.length > 0 && (
               collectionsRequiringChunking.map((collection, i) => {
@@ -106,13 +117,12 @@ export class ChunkedOrderModal extends Component {
                   <p key={key}>
                     Your order for
                     {' '}
-                    {title}
+                    <span className="chunked-order-modal__body-emphasis">{title}</span>
                     {' '}
                     will be automatically split up into
                     {' '}
-                    {orderCount}
-                    {' '}
-                    orders. You will receive a set of emails for each order placed.
+                    <span className="chunked-order-modal__body-strong">{`${orderCount} orders`}</span>
+                    .
                   </p>
                 )
               })
