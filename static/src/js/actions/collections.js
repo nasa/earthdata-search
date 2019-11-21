@@ -94,19 +94,30 @@ export const restoreCollections = payload => (dispatch) => {
  * @param {String} id - The id for the collection to update.
  * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
  */
-export const updateCollectionGranuleFilters = (id, granuleFilters) => (dispatch) => {
-  const prunedFilters = Object.keys(granuleFilters).reduce((obj, key) => {
+export const updateCollectionGranuleFilters = (id, granuleFilters) => (dispatch, getState) => {
+  const { metadata = {} } = getState()
+  const { collections = {} } = metadata
+  const { byId = {} } = collections
+  const { [id]: collectionMetadata = {} } = byId
+  const { granuleFilters: existingGranuleFilters = {} } = collectionMetadata
+
+  const allGranuleFilters = {
+    ...existingGranuleFilters,
+    ...granuleFilters
+  }
+
+  const prunedFilters = Object.keys(allGranuleFilters).reduce((obj, key) => {
     const newObj = obj
 
     // If the value is not an object, only add the key if the value is truthy. This removes
     // any unset values
-    if (!isPlainObject(granuleFilters[key])) {
-      if (granuleFilters[key]) {
-        newObj[key] = granuleFilters[key]
+    if (!isPlainObject(allGranuleFilters[key])) {
+      if (allGranuleFilters[key]) {
+        newObj[key] = allGranuleFilters[key]
       }
-    } else if (Object.values(granuleFilters[key]).some(key => !!key)) {
+    } else if (Object.values(allGranuleFilters[key]).some(key => !!key)) {
       // Otherwise, only add an object if it contains at least one truthy value
-      newObj[key] = granuleFilters[key]
+      newObj[key] = allGranuleFilters[key]
     }
 
     return newObj
