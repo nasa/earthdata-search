@@ -122,7 +122,19 @@ describe('updateCollectionGranuleFilters', () => {
   })
 
   test('should create an action to update the search query', async () => {
-    const store = mockStore({})
+    const store = mockStore({
+      metadata: {
+        collections: {
+          byId: {
+            collectionId: {
+              granuleFilters: {
+                sortKey: '-start_date'
+              }
+            }
+          }
+        }
+      }
+    })
 
     store.dispatch(updateCollectionGranuleFilters('collectionId', { cloudCover: true }))
 
@@ -132,7 +144,8 @@ describe('updateCollectionGranuleFilters', () => {
       type: UPDATE_COLLECTION_GRANULE_FILTERS,
       payload: {
         granuleFilters: {
-          cloudCover: true
+          cloudCover: true,
+          sortKey: '-start_date'
         },
         id: 'collectionId'
       }

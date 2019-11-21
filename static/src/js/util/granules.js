@@ -183,7 +183,7 @@ export const buildGranuleSearchParams = (params) => {
     temporalString
   } = params
 
-  let twoDCoordinateSystem = ''
+  let twoDCoordinateSystem = {}
 
   if (gridName) {
     twoDCoordinateSystem = {}
