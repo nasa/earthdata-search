@@ -213,6 +213,7 @@ const GranuleResultsItem = ({
               <PortalLinkContainer
                 className="button granule-results-item__button"
                 type="button"
+                label="View granule details"
                 title="View granule details"
                 onClick={() => handleClickGranuleDetails(id)}
                 to={{
