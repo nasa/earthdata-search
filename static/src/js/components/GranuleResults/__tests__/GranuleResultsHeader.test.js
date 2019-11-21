@@ -103,7 +103,7 @@ describe('GranuleResultsHeader component', () => {
       enzymeWrapper.find('#input__sort-granules').simulate('change', mockEvent)
 
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
-      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', { sortKey: 'start_date_oldest_first' })
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', { readableGranuleName: 'searchValue', sortKey: 'start_date_oldest_first' })
     })
   })
 
@@ -139,7 +139,7 @@ describe('GranuleResultsHeader component', () => {
       enzymeWrapper.find('#input__granule-search').simulate('blur')
 
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
-      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', { readableGranuleName: ['Some-new-value'] })
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', { readableGranuleName: ['Some-new-value'], sortKey: '-start_date' })
     })
 
     test('removes the parameter if the input is empty', () => {
@@ -154,7 +154,8 @@ describe('GranuleResultsHeader component', () => {
 
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
       expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', {
-        readableGranuleName: null
+        readableGranuleName: null,
+        sortKey: '-start_date'
       })
     })
   })
