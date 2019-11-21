@@ -43,15 +43,18 @@ class GranuleResultsHeader extends Component {
   handleUpdateSortOrder(e) {
     const {
       focusedCollectionId,
+      focusedCollectionObject,
       onApplyGranuleFilters
     } = this.props
+
+    const { granuleFilters = {} } = focusedCollectionObject
 
     const { value } = e.target
     this.setState({
       sortOrder: value
     })
 
-    onApplyGranuleFilters(focusedCollectionId, { sortKey: value })
+    onApplyGranuleFilters(focusedCollectionId, { ...granuleFilters, sortKey: value })
   }
 
   handleUpdateSearchValue(e) {
@@ -65,8 +68,11 @@ class GranuleResultsHeader extends Component {
   handleSearch() {
     const {
       focusedCollectionId,
+      focusedCollectionObject,
       onApplyGranuleFilters
     } = this.props
+
+    const { granuleFilters = {} } = focusedCollectionObject
 
     const { searchValue, prevSearchValue } = this.state
 
@@ -77,7 +83,7 @@ class GranuleResultsHeader extends Component {
         readableGranuleName = searchValue.split(',')
       }
 
-      onApplyGranuleFilters(focusedCollectionId, { readableGranuleName })
+      onApplyGranuleFilters(focusedCollectionId, { ...granuleFilters, readableGranuleName })
 
       this.setState({
         prevSearchValue: searchValue

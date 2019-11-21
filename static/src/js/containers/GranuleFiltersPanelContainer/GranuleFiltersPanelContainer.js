@@ -207,7 +207,9 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
       browseOnly = false,
       onlineOnly = false,
       cloudCover = {},
-      temporal = {}
+      temporal = {},
+      readableGranuleName,
+      sortKey
     } = granuleFilters
 
     const {
@@ -237,7 +239,9 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
         recurringDayStart: temporalRecurringDayStart || '',
         recurringDayEnd: temporalRecurringDayEnd || '',
         isRecurring: temporalIsRecurring || false
-      }
+      },
+      readableGranuleName,
+      sortKey
     }
   },
   handleSubmit: (values, { props, setSubmitting }) => {
