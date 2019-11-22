@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
 import { metricsDataAccess } from '../../middleware/metrics/actions'
-import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
+import { getFocusedCollectionObject } from '../../util/focusedCollection'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
@@ -43,7 +43,12 @@ export const GranuleResultsBodyContainer = (props) => {
     onMetricsDataAccess
   } = props
 
-  const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
+  const collectionObject = getFocusedCollectionObject(focusedCollection, collections)
+
+  const {
+    excludedGranuleIds = [],
+    metadata: collectionMetadata
+  } = collectionObject
 
   if (!collectionMetadata) return null
 
@@ -54,8 +59,6 @@ export const GranuleResultsBodyContainer = (props) => {
   const onWaypointEnter = () => {
     onChangeGranulePageNum(pageNum + 1)
   }
-
-  const { excludedGranuleIds = [] } = collectionMetadata
 
   return (
     <GranuleResultsBody

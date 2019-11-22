@@ -12,7 +12,7 @@ function setup() {
       allIds: ['focusedCollection'],
       byId: {
         focusedCollection: {
-          excludedGranuleIds: [],
+          excludedGranuleIds: ['id1'],
           metadata: {}
         }
       }
@@ -44,6 +44,9 @@ describe('GranuleResultsBodyContainer component', () => {
     expect(enzymeWrapper.find(GranuleResultsBody).props().collectionId).toEqual('focusedCollection')
     expect(enzymeWrapper.find(GranuleResultsBody).props().granules).toEqual({ value: 'granules' })
     expect(enzymeWrapper.find(GranuleResultsBody).props().pageNum).toEqual(1)
+    expect(enzymeWrapper.find(GranuleResultsBody).props().excludedGranuleIds).toEqual(['id1'])
+    expect(enzymeWrapper.find(GranuleResultsBody).props().isCwic).toEqual(false)
+    expect(enzymeWrapper.find(GranuleResultsBody).props().focusedGranule).toEqual('')
     expect(typeof enzymeWrapper.find(GranuleResultsBody).props().waypointEnter).toEqual('function')
   })
 
