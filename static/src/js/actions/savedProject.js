@@ -1,13 +1,9 @@
 import { replace } from 'connected-react-router'
 
-import { UPDATE_SAVED_PROJECT, CLEAR_SAVED_PROJECT } from '../constants/actionTypes'
+import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
 import ProjectRequest from '../util/request/projectRequest'
 import { removeSavedProject } from './savedProjects'
 import { handleError } from './errors'
-
-export const clearSavedProject = () => ({
-  type: CLEAR_SAVED_PROJECT
-})
 
 export const updateSavedProject = payload => ({
   type: UPDATE_SAVED_PROJECT,
