@@ -8,8 +8,7 @@ import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar
 
 const mapDispatchToProps = dispatch => ({
   onLogout: () => dispatch(actions.logout()),
-  onUpdateProjectName: name => dispatch(actions.updateProjectName(name)),
-  onClearSavedProject: params => dispatch(actions.clearSavedProject(params))
+  onUpdateProjectName: name => dispatch(actions.updateProjectName(name))
 })
 
 const mapStateToProps = state => ({
@@ -27,7 +26,6 @@ export const SecondaryToolbarContainer = (props) => {
     location,
     savedProject,
     onLogout,
-    onClearSavedProject,
     onUpdateProjectName
   } = props
 
@@ -39,7 +37,6 @@ export const SecondaryToolbarContainer = (props) => {
       location={location}
       savedProject={savedProject}
       onLogout={onLogout}
-      onClearSavedProject={onClearSavedProject}
       onUpdateProjectName={onUpdateProjectName}
     />
   )
@@ -52,7 +49,6 @@ SecondaryToolbarContainer.propTypes = {
   location: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   onLogout: PropTypes.func.isRequired,
-  onClearSavedProject: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired
 }
 

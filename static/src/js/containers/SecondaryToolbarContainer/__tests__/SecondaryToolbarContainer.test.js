@@ -16,7 +16,6 @@ function setup() {
     projectIds: [],
     savedProject: {},
     onLogout: jest.fn(),
-    onClearSavedProject: jest.fn(),
     onUpdateProjectName: jest.fn()
   }
 
