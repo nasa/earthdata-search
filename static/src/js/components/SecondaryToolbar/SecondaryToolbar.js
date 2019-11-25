@@ -32,6 +32,7 @@ class SecondaryToolbar extends Component {
     this.onInputChange = this.onInputChange.bind(this)
     this.handleNameSubmit = this.handleNameSubmit.bind(this)
     this.handleKeypress = this.handleKeypress.bind(this)
+    this.handleClearSavedProject = this.handleClearSavedProject.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,6 +85,11 @@ class SecondaryToolbar extends Component {
       event.stopPropagation()
       event.preventDefault()
     }
+  }
+
+  handleClearSavedProject() {
+    const { onClearSavedProject } = this.props
+    onClearSavedProject({})
   }
 
   render() {
@@ -189,6 +195,7 @@ class SecondaryToolbar extends Component {
             <Dropdown.Item
               className="secondary-toolbar__contact-info"
               active={false}
+              onClick={this.handleClearSavedProject}
             >
               Contact Information
             </Dropdown.Item>
@@ -199,6 +206,7 @@ class SecondaryToolbar extends Component {
             <Dropdown.Item
               className="secondary-toolbar__downloads"
               active={false}
+              onClick={this.handleClearSavedProject}
             >
               Download Status &amp; History
             </Dropdown.Item>
@@ -209,6 +217,7 @@ class SecondaryToolbar extends Component {
             <Dropdown.Item
               className="secondary-toolbar__saved-projects"
               active={false}
+              onClick={this.handleClearSavedProject}
             >
               Saved Projects
             </Dropdown.Item>
@@ -288,6 +297,7 @@ SecondaryToolbar.propTypes = {
   portal: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   onLogout: PropTypes.func.isRequired,
+  onClearSavedProject: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired
 }
 

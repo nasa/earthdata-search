@@ -17,6 +17,7 @@ function setup(state, overrideProps) {
     projectIds: [],
     savedProject: {},
     onLogout: jest.fn(),
+    onClearSavedProject: jest.fn(),
     onUpdateProjectName: jest.fn(),
     ...overrideProps
   }
@@ -84,6 +85,51 @@ describe('SecondaryToolbar component', () => {
       logoutButton.simulate('click')
 
       expect(instance.handleLogout).toBeCalledTimes(1)
+    })
+
+    test('clicking the Contact Info button should call handleClearSavedProject', () => {
+      const { enzymeWrapper } = setup('loggedIn')
+
+      // Mock the handleClearSavedProject method
+      const instance = enzymeWrapper.instance()
+      jest.spyOn(instance, 'handleClearSavedProject').mockImplementation()
+      enzymeWrapper.instance().forceUpdate()
+
+      // Click the Contact Info button
+      const button = enzymeWrapper.find('.secondary-toolbar__contact-info')
+      button.simulate('click')
+
+      expect(instance.handleClearSavedProject).toBeCalledTimes(1)
+    })
+
+    test('clicking the Downloads button should call handleClearSavedProject', () => {
+      const { enzymeWrapper } = setup('loggedIn')
+
+      // Mock the handleClearSavedProject method
+      const instance = enzymeWrapper.instance()
+      jest.spyOn(instance, 'handleClearSavedProject').mockImplementation()
+      enzymeWrapper.instance().forceUpdate()
+
+      // Click the Downloads button
+      const button = enzymeWrapper.find('.secondary-toolbar__downloads')
+      button.simulate('click')
+
+      expect(instance.handleClearSavedProject).toBeCalledTimes(1)
+    })
+
+    test('clicking the Saved Projects button should call handleClearSavedProject', () => {
+      const { enzymeWrapper } = setup('loggedIn')
+
+      // Mock the handleClearSavedProject method
+      const instance = enzymeWrapper.instance()
+      jest.spyOn(instance, 'handleClearSavedProject').mockImplementation()
+      enzymeWrapper.instance().forceUpdate()
+
+      // Click the Saved Projects button
+      const button = enzymeWrapper.find('.secondary-toolbar__saved-projects')
+      button.simulate('click')
+
+      expect(instance.handleClearSavedProject).toBeCalledTimes(1)
     })
   })
 

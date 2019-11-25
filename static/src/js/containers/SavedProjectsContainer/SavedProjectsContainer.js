@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onDeleteSavedProject: projectId => dispatch(actions.deleteSavedProject(projectId)),
-  onFetchSavedProjects: () => dispatch(actions.fetchSavedProjects())
+  onFetchSavedProjects: () => dispatch(actions.fetchSavedProjects()),
+  onChangePath: path => dispatch(actions.changePath(path))
 })
 
 export class SavedProjectsContainer extends Component {
@@ -31,6 +32,7 @@ export class SavedProjectsContainer extends Component {
       savedProjects,
       savedProjectsIsLoading,
       savedProjectsIsLoaded,
+      onChangePath,
       onDeleteSavedProject
     } = this.props
 
@@ -39,6 +41,7 @@ export class SavedProjectsContainer extends Component {
         savedProjects={savedProjects}
         savedProjectsIsLoading={savedProjectsIsLoading}
         savedProjectsIsLoaded={savedProjectsIsLoaded}
+        onChangePath={onChangePath}
         onDeleteSavedProject={onDeleteSavedProject}
       />
     )
@@ -55,6 +58,7 @@ SavedProjectsContainer.propTypes = {
   ),
   savedProjectsIsLoading: PropTypes.bool.isRequired,
   savedProjectsIsLoaded: PropTypes.bool.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onDeleteSavedProject: PropTypes.func.isRequired,
   onFetchSavedProjects: PropTypes.func.isRequired
 }

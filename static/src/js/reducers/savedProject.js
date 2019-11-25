@@ -1,4 +1,5 @@
 import {
+  CLEAR_SAVED_PROJECT,
   UPDATE_SAVED_PROJECT
 } from '../constants/actionTypes'
 
@@ -23,6 +24,9 @@ const savedProjectReducer = (state = initialState, action) => {
         name,
         path
       }
+    }
+    case CLEAR_SAVED_PROJECT: {
+      return initialState
     }
     default:
       return state
