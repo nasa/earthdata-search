@@ -2,14 +2,29 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { UPDATE_SAVED_PROJECT, REMOVE_SAVED_PROJECT } from '../../constants/actionTypes'
-import { updateSavedProject, updateProjectName, deleteSavedProject } from '../savedProject'
+import { UPDATE_SAVED_PROJECT, REMOVE_SAVED_PROJECT, CLEAR_SAVED_PROJECT } from '../../constants/actionTypes'
+import {
+  clearSavedProject,
+  updateSavedProject,
+  updateProjectName,
+  deleteSavedProject
+} from '../savedProject'
 
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
+})
+
+describe('clearSavedProject', () => {
+  test('should create an action to update the savedProject', () => {
+    const expectedAction = {
+      type: CLEAR_SAVED_PROJECT
+    }
+
+    expect(clearSavedProject()).toEqual(expectedAction)
+  })
 })
 
 describe('updateSavedProject', () => {

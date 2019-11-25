@@ -23,7 +23,7 @@ export const updateStore = ({
   query,
   shapefile,
   timeline
-}) => (dispatch, getState) => {
+}, newPathname) => (dispatch, getState) => {
   const { router } = getState()
   const { location } = router
   const { pathname, search } = location
@@ -35,7 +35,7 @@ export const updateStore = ({
 
   const loadFromUrl = (!isPath(pathname, pathsToSkip) && !isSavedProjectsPage)
 
-  if (loadFromUrl) {
+  if (loadFromUrl || (newPathname && newPathname !== pathname)) {
     dispatch(restoreFromUrl({
       collections,
       cmrFacets,
@@ -58,7 +58,7 @@ export const updateStore = ({
 }
 
 export const changePath = (path = '') => (dispatch) => {
-  const queryString = path.split('?')[1]
+  const [pathname, queryString] = path.split('?')
 
   // if query string is a projectId, call getProject
   if (queryString && queryString.indexOf('projectId=') === 0) {
@@ -94,7 +94,7 @@ export const changePath = (path = '') => (dispatch) => {
     return projectResponse
   }
 
-  dispatch(actions.updateStore(decodeUrlParams(queryString)))
+  dispatch(actions.updateStore(decodeUrlParams(queryString), pathname))
   return null
 }
 

@@ -61,7 +61,8 @@ export class SavedProjects extends Component {
     const {
       savedProjects,
       savedProjectsIsLoading,
-      savedProjectsIsLoaded
+      savedProjectsIsLoaded,
+      onChangePath
     } = this.props
 
     const { edscHost } = getEnvironmentConfig()
@@ -107,12 +108,14 @@ export class SavedProjects extends Component {
 
                       const [pathname] = path.split('?')
                       const sharePath = `${edscHost}${pathname}?projectId=${id}`
+                      const projectPath = this.projectTo(path, id)
 
                       return (
                         <tr key={id}>
                           <td>
                             <PortalLinkContainer
-                              to={this.projectTo(path, id)}
+                              to={projectPath}
+                              onClick={() => { onChangePath(projectPath) }}
                             >
                               {projectName}
                             </PortalLinkContainer>
@@ -198,6 +201,7 @@ SavedProjects.propTypes = {
   ),
   savedProjectsIsLoading: PropTypes.bool.isRequired,
   savedProjectsIsLoaded: PropTypes.bool.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onDeleteSavedProject: PropTypes.func.isRequired
 }
 

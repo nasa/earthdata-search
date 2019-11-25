@@ -35,6 +35,7 @@ describe('SavedProjectsContainer component', () => {
         ],
         savedProjectsIsLoading: false,
         savedProjectsIsLoaded: true,
+        onChangePath: jest.fn(),
         onDeleteSavedProject: jest.fn(),
         onFetchSavedProjects: jest.fn()
       })
