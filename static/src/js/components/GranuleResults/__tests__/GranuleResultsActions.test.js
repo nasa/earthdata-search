@@ -3,7 +3,6 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import GranuleResultsActions from '../GranuleResultsActions'
-import { PortalLinkContainer } from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -123,6 +122,14 @@ describe('GranuleResultsActions component', () => {
         search:
           '?p=C1443528505-LAADS!C197265171-LPDAAC_ECS!C107705237-LPDAAC_ECS!collectionId&pg[2][id]=MYD04_3K.A2019284.2350.061.2019285153056.hdf&g=G1645942017-LAADS&ff=Customizable&tl=1555434821!4!!'
       })
+    })
+
+    test('hides the granule count badge when loading', () => {
+      const { enzymeWrapper } = setup({ granuleCount: null })
+
+      const button = enzymeWrapper.find('.granule-results-actions__download-all-button')
+
+      expect(button.props().badge).toBeNull()
     })
   })
 })
