@@ -54,6 +54,8 @@ const GranuleResultsActions = ({
 
   const tooManyGranules = granuleLimit && granuleCount > granuleLimit
   const downloadAllButton = () => {
+    const badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
+
     if (tooManyGranules) {
       return (
         <OverlayTrigger
@@ -76,7 +78,7 @@ const GranuleResultsActions = ({
           <div>
             <Button
               className="granule-results-actions__download-all-button"
-              badge={`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
+              badge={badge}
               bootstrapVariant="secondary"
               icon="download"
               variant="full"
@@ -130,7 +132,7 @@ const GranuleResultsActions = ({
       >
         <Button
           className="granule-results-actions__download-all-button"
-          badge={`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
+          badge={badge}
           bootstrapVariant="success"
           icon="download"
           variant="full"
