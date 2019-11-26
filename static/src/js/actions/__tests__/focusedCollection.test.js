@@ -74,6 +74,9 @@ describe('changeFocusedCollection', () => {
     // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
+      type: RESET_GRANULE_RESULTS
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_FOCUSED_COLLECTION,
       payload: collectionId
     })
