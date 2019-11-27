@@ -11,7 +11,7 @@ import { decodeTimeline, encodeTimeline } from './timelineEncoders'
 import { decodeCollections, encodeCollections } from './collectionsEncoders'
 import { decodeGridCoords, encodeGridCoords } from './gridEncoders'
 import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesOrCwicEncoders'
-import isPath from '../isPath'
+import { isPath } from '../isPath'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
