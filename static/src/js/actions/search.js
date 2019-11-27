@@ -109,6 +109,9 @@ export const removeSpatialFilter = () => (dispatch) => {
   dispatch(changeQuery({
     collection: {
       spatial: {}
+    },
+    region: {
+      exact: false
     }
   }))
   dispatch(actions.toggleDrawingNewLayer(false))
@@ -133,6 +136,9 @@ export const clearFilters = () => (dispatch) => {
     },
     granule: {
       gridCoords: ''
+    },
+    region: {
+      exact: false
     }
   }
 

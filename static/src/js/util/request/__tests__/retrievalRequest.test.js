@@ -42,7 +42,7 @@ describe('RetrievalRequest#transformResponse', () => {
     jest.spyOn(RetrievalRequest.prototype, 'handleUnauthorized').mockImplementation()
   })
 
-  test('returns data if response is not success', () => {
+  test('returns data if response is not successful', () => {
     const request = new RetrievalRequest()
 
     const data = {

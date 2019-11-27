@@ -11,6 +11,9 @@ const initialState = {
   granule: {
     pageNum: 1,
     gridCoords: ''
+  },
+  region: {
+    exact: false
   }
 }
 

@@ -22,6 +22,7 @@ import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 import focusedGranuleReducer from './focusedGranule'
 import retrievalReducer from './retrieval'
+import regionResultsReducer from './regionResults'
 import retrievalHistoryReducer from './retrievalHistory'
 import portalsReducer from './portals'
 import projectPanelsReducer from './projectPanels'
@@ -66,6 +67,7 @@ export default history => combineReducers({
   searchResults: combineReducers({
     collections: collectionsResultsReducer,
     facets: facetsReducer,
+    regions: regionResultsReducer,
     granules: granuleResultsReducer,
     viewAllFacets: viewAllFacetsRequestReducer
   }),
