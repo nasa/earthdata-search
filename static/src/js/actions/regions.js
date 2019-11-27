@@ -28,8 +28,9 @@ export const onRegionsLoaded = payload => ({
   payload
 })
 
-export const onRegionsErrored = () => ({
-  type: ERRORED_REGIONS
+export const onRegionsErrored = payload => ({
+  type: ERRORED_REGIONS,
+  payload
 })
 
 export const startRegionsTimer = () => ({
@@ -81,7 +82,10 @@ export const getRegions = () => (dispatch, getState) => {
     })
     .catch((error) => {
       dispatch(finishRegionsTimer())
-      dispatch(onRegionsErrored())
+
+      const { response } = error
+      const { data } = response
+      dispatch(onRegionsErrored(data))
       dispatch(onRegionsLoaded({
         loaded: false
       }))

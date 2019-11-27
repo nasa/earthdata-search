@@ -1,4 +1,5 @@
 import {
+  ERRORED_REGIONS,
   UPDATE_REGION_RESULTS,
   LOADING_REGIONS,
   LOADED_REGIONS,
@@ -13,6 +14,7 @@ const initialState = {
   allIds: [],
   isLoading: false,
   isLoaded: false,
+  error: null,
   timerStart: null,
   loadTime: 0
 }
@@ -68,6 +70,17 @@ const regionResultsReducer = (state = initialState, action) => {
         hits: action.payload.hits,
         byId,
         allIds
+      }
+    }
+    case ERRORED_REGIONS: {
+      const [message] = action.payload
+
+      return {
+        ...state,
+        error: message,
+        hits: 0,
+        byId: {},
+        allIds: []
       }
     }
     default:

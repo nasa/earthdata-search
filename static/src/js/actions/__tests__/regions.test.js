@@ -122,9 +122,13 @@ describe('getRegions', () => {
   })
 
   test('does not call updateRegionResults on error', async () => {
+    const errorPayload = {
+      errors: ['Your query has returned 16575 results (> 100). If you\'re searching a specific HUC, use the parameter \'exact=True\'.Otherwise, refine your search to return less results, or head here: https://water.usgs.gov/GIS/huc.html to download mass HUC data.']
+    }
+
     nock(/localhost/)
-      .post(/regions/)
-      .reply(500)
+      .get(/regions/)
+      .reply(413, errorPayload)
 
     nock(/localhost/)
       .post(/error_logger/)
@@ -141,9 +145,9 @@ describe('getRegions', () => {
       },
       query: {
         region: {
-          endpoint: 'region',
-          keyword: 'California',
-          exact: true
+          endpoint: 'huc',
+          keyword: '10',
+          exact: false
         }
       },
       cmr: {},
@@ -163,7 +167,7 @@ describe('getRegions', () => {
       expect(storeActions[0]).toEqual({ type: LOADING_REGIONS })
       expect(storeActions[1]).toEqual({ type: STARTED_REGIONS_TIMER })
       expect(storeActions[2]).toEqual({ type: FINISHED_REGIONS_TIMER })
-      expect(storeActions[3]).toEqual({ type: ERRORED_REGIONS })
+      expect(storeActions[3]).toEqual({ type: ERRORED_REGIONS, payload: errorPayload })
       expect(storeActions[4]).toEqual({
         type: LOADED_REGIONS,
         payload: { loaded: false }

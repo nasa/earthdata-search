@@ -247,7 +247,7 @@ describe('CollectionRequest#transformResponse', () => {
     })
   })
 
-  test('returns data if response is not successfulful', () => {
+  test('returns data if response is not successful', () => {
     const request = new CollectionRequest()
 
     const data = {
