@@ -164,6 +164,17 @@
   #
   # API Gateway Endpoints
   #
+  regionSearch:
+    handler: serverless/src/regionSearch/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    warmup:
+      concurrency: ${env:WARM_LAMBDA_COUNT}
+    events:
+      - http:
+          method: get
+          cors: true
+          path: regions
+
   decodeId:
     handler: serverless/src/decodeId/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}

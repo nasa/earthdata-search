@@ -138,15 +138,14 @@ export default class Request {
       baseURL: this.baseUrl,
       url,
       params,
-      transformRequest: [
-        (data, headers) => this.transformRequest(data, headers)
-      ],
       transformResponse: axios.defaults.transformResponse.concat(
         (data, headers) => this.transformResponse(data, headers)
       )
     }
 
-    if (this.authenticated || this.lambda) {
+    // transformRequest which adds authentication headers is only
+    // applicable for request methods 'PUT', 'POST', and 'PATCH'
+    if (this.authenticated) {
       requestOptions = {
         ...requestOptions,
         headers: {
@@ -175,7 +174,9 @@ export default class Request {
       )
     }
 
-    if (this.authenticated || this.lambda) {
+    // transformRequest which adds authentication headers is only
+    // applicable for request methods 'PUT', 'POST', and 'PATCH'
+    if (this.authenticated) {
       requestOptions = {
         ...requestOptions,
         headers: {

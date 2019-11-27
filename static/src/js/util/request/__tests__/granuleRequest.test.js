@@ -108,7 +108,7 @@ describe('GranuleRequest#transformResponse', () => {
     expect(result).toEqual(expectedResult)
   })
 
-  test('returns data if response is not success', () => {
+  test('returns data if response is not successful', () => {
     const request = new GranuleRequest()
 
     const data = {
