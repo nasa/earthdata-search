@@ -11,6 +11,7 @@ import { decodeTimeline, encodeTimeline } from './timelineEncoders'
 import { decodeCollections, encodeCollections } from './collectionsEncoders'
 import { decodeGridCoords, encodeGridCoords } from './gridEncoders'
 import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesOrCwicEncoders'
+import isPath from '../isPath'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -200,4 +201,24 @@ export const prepKeysForCmr = (queryParams, nonIndexedKeys = []) => {
     qs.stringify(indexedAttrs),
     qs.stringify(nonIndexedAttrs, { indices: false, arrayFormat: 'brackets' })
   ].filter(Boolean).join('&')
+}
+
+/**
+ * URLs that don't use URL params
+ * The saved projects page needs to be handled a little differently
+ * because it shares the base url with the projects page.
+ */
+export const urlPathsWithoutUrlParams = [
+  /^\/downloads/,
+  /^\/contact_info/,
+  /^\/auth_callback/
+]
+
+/**
+ * Is the given location the Saved Projects page
+ * @param {Object} location Redux store location
+ */
+export const isSavedProjectsPage = (location) => {
+  const { pathname, search } = location
+  return isPath(pathname, '/projects') && search === ''
 }
