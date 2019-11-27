@@ -1,5 +1,6 @@
 import { UPDATE_SAVED_PROJECT, LOCATION_CHANGE } from '../constants/actionTypes'
 import isPath from '../util/isPath'
+import { urlPathsWithoutUrlParams, isSavedProjectsPage } from '../util/url/url'
 
 const initialState = {
   projectId: null,
@@ -30,11 +31,10 @@ const savedProjectReducer = (state = initialState, action) => {
       const { isFirstRendering, location } = payload
       if (isFirstRendering) return state
 
-      const { pathname, search } = location
-      const pathsToSkip = [/^\/downloads/, /^\/contact_info/]
-      const isSavedProjectsPage = isPath(pathname, '/projects') && search === ''
-
-      if (isPath(pathname, pathsToSkip) || isSavedProjectsPage) return initialState
+      const { pathname } = location
+      if (isPath(pathname, urlPathsWithoutUrlParams) || isSavedProjectsPage(location)) {
+        return initialState
+      }
 
       return state
     }

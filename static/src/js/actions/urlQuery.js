@@ -2,7 +2,7 @@ import { replace, push } from 'connected-react-router'
 import { parse } from 'qs'
 
 import { isPath } from '../util/isPath'
-import { decodeUrlParams } from '../util/url/url'
+import { decodeUrlParams, isSavedProjectsPage, urlPathsWithoutUrlParams } from '../util/url/url'
 import actions from './index'
 import ProjectRequest from '../util/request/projectRequest'
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
@@ -26,15 +26,15 @@ export const updateStore = ({
 }, newPathname) => (dispatch, getState) => {
   const { router } = getState()
   const { location } = router
-  const { pathname, search } = location
+  const { pathname } = location
 
-  // Prevent loading from the url on these paths. The saved projects page needs to be handled
-  // a little differently because it shares the base url with the projects page.
-  const pathsToSkip = [/^\/downloads/, /^\/auth_callback/]
-  const isSavedProjectsPage = isPath(pathname, '/projects') && search === ''
+  // Prevent loading from the urls that don't use URL params.
+  const loadFromUrl = (
+    !isPath(pathname, urlPathsWithoutUrlParams)
+    && !isSavedProjectsPage(location)
+  )
 
-  const loadFromUrl = (!isPath(pathname, pathsToSkip) && !isSavedProjectsPage)
-
+  // If the newPathname is not equal to the current pathname, restore the data from the url
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
     dispatch(restoreFromUrl({
       collections,
