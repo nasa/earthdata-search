@@ -3,7 +3,11 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import { UPDATE_SAVED_PROJECT, REMOVE_SAVED_PROJECT } from '../../constants/actionTypes'
-import { updateSavedProject, updateProjectName, deleteSavedProject } from '../savedProject'
+import {
+  updateSavedProject,
+  updateProjectName,
+  deleteSavedProject
+} from '../savedProject'
 
 const mockStore = configureMockStore([thunk])
 

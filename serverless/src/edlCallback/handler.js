@@ -93,14 +93,16 @@ const edlCallback = async (event, context) => {
       username
     }, secret)
 
-    await sqs.sendMessage({
-      QueueUrl: process.env.userDataQueueUrl,
-      MessageBody: JSON.stringify({
-        environment: cmrEnv(),
-        userId: userRow.id,
-        username
-      })
-    }).promise()
+    if (!process.env.IS_OFFLINE) {
+      await sqs.sendMessage({
+        QueueUrl: process.env.userDataQueueUrl,
+        MessageBody: JSON.stringify({
+          environment: cmrEnv(),
+          userId: userRow.id,
+          username
+        })
+      }).promise()
+    }
   } catch (e) {
     console.log(e)
   }

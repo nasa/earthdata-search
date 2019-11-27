@@ -2,7 +2,7 @@ import { replace, push } from 'connected-react-router'
 import { parse } from 'qs'
 
 import { isPath } from '../util/isPath'
-import { decodeUrlParams } from '../util/url/url'
+import { decodeUrlParams, isSavedProjectsPage, urlPathsWithoutUrlParams } from '../util/url/url'
 import actions from './index'
 import ProjectRequest from '../util/request/projectRequest'
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
@@ -23,19 +23,19 @@ export const updateStore = ({
   query,
   shapefile,
   timeline
-}) => (dispatch, getState) => {
+}, newPathname) => (dispatch, getState) => {
   const { router } = getState()
   const { location } = router
-  const { pathname, search } = location
+  const { pathname } = location
 
-  // Prevent loading from the url on these paths. The saved projects page needs to be handled
-  // a little differently because it shares the base url with the projects page.
-  const pathsToSkip = [/^\/downloads/, /^\/auth_callback/]
-  const isSavedProjectsPage = isPath(pathname, '/projects') && search === ''
+  // Prevent loading from the urls that don't use URL params.
+  const loadFromUrl = (
+    !isPath(pathname, urlPathsWithoutUrlParams)
+    && !isSavedProjectsPage(location)
+  )
 
-  const loadFromUrl = (!isPath(pathname, pathsToSkip) && !isSavedProjectsPage)
-
-  if (loadFromUrl) {
+  // If the newPathname is not equal to the current pathname, restore the data from the url
+  if (loadFromUrl || (newPathname && newPathname !== pathname)) {
     dispatch(restoreFromUrl({
       collections,
       cmrFacets,
@@ -58,7 +58,7 @@ export const updateStore = ({
 }
 
 export const changePath = (path = '') => (dispatch) => {
-  const queryString = path.split('?')[1]
+  const [pathname, queryString] = path.split('?')
 
   // if query string is a projectId, call getProject
   if (queryString && queryString.indexOf('projectId=') === 0) {
@@ -94,7 +94,7 @@ export const changePath = (path = '') => (dispatch) => {
     return projectResponse
   }
 
-  dispatch(actions.updateStore(decodeUrlParams(queryString)))
+  dispatch(actions.updateStore(decodeUrlParams(queryString), pathname))
   return null
 }
 

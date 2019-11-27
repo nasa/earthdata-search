@@ -14,6 +14,7 @@ function setup(overrideProps) {
     savedProjects: [],
     savedProjectsIsLoading: false,
     savedProjectsIsLoaded: false,
+    onChangePath: jest.fn(),
     onDeleteSavedProject: jest.fn(),
     ...overrideProps
   }

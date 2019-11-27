@@ -150,7 +150,7 @@ describe('changePath', () => {
       shapefile: {
         shapefileId: ''
       }
-    })
+    }, '/search')
   })
 })
 

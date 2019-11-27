@@ -62,11 +62,11 @@ export const copyGranulesFromCollection = collectionId => (dispatch, getState) =
   const { collections } = metadata
   const collection = collections.byId[collectionId]
 
-  if (!collection) return null
+  if (!collection) return dispatch(resetGranuleResults())
 
   const { granules } = collection
   const { allIds } = granules
-  if (!allIds) return null
+  if (!allIds) return dispatch(resetGranuleResults())
 
   return dispatch(addGranulesFromCollection(granules))
 }
