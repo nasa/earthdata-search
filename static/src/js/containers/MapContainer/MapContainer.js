@@ -27,6 +27,8 @@ import ZoomHome
   from '../../components/Map/ZoomHome'
 import ProjectionSwitcher
   from '../../components/Map/ProjectionSwitcher'
+import GranuleImageContainer
+  from '../GranuleImageContainer/GranuleImageContainer'
 
 import crsProjections from '../../util/map/crs'
 import projections from '../../util/map/projections'
@@ -268,6 +270,7 @@ export class MapContainer extends Component {
         zoomAnimation={false}
         whenReady={this.onMapReady}
       >
+        <GranuleImageContainer />
         <LayersControl
           position="bottomright"
           ref={(r) => {
