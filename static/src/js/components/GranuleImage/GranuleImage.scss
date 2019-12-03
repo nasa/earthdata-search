@@ -1,0 +1,76 @@
+.granule-image {
+  position: absolute;
+  top: 100px;
+  right: $spacer;
+  width: 16rem;
+  height: auto;
+  z-index: 401; // Sits above .leaflet-map-pane at index 400
+  color: $color__white;
+
+  &__image {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 0 1rem rgba($color__black--900, 0.35);
+    transform-origin: top right;
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+    opacity: 0;
+
+    .granule-image--is-open & {
+      transform: scale(1);
+    }
+
+    &--is-loaded {
+      opacity: 1;
+    }
+  }
+
+  &__button {
+    position: absolute;
+    top: -.5rem;
+    right: -.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    line-height: 1.75rem;
+    color: $color__white;
+    box-shadow: 0 0 1rem rgba($color__black--900, 0.35);
+    z-index: 1;
+
+    &:hover,
+    &:active {
+      color: $color__white;
+    }
+
+    &--close {
+      background-color: $color__red;
+    }
+
+    &--open {
+      background-color: $color__green;
+
+      .button__icon {
+        top: 0.05rem;
+        position: relative;
+      }
+    }
+  }
+
+  &__placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color__black--700;
+    width: 16rem;
+    min-height: 16rem;
+  }
+}
