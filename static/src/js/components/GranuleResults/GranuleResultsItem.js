@@ -135,6 +135,7 @@ const GranuleResultsItem = ({
 
   const {
     browse_flag: browseFlag,
+    browse_url: browseUrl,
     formatted_temporal: formattedTemporal,
     id,
     links,
@@ -149,6 +150,7 @@ const GranuleResultsItem = ({
   const timeStart = temporal[0]
   const timeEnd = temporal[1]
   const thumbnail = browseFlag ? granuleThumbnail : false
+
   const thumbnailHeight = getApplicationConfig().thumbnailSize.height
   const thumbnailWidth = getApplicationConfig().thumbnailSize.width
 
@@ -170,6 +172,43 @@ const GranuleResultsItem = ({
     eventEmitter.emit('map.focusgranule', { granule: null })
   }
 
+  const buildThumbnail = () => {
+    let element = null
+
+    if (thumbnail) {
+      element = (
+        <img
+          className="granule-results-item__thumb-image"
+          src={thumbnail}
+          height={thumbnailHeight}
+          width={thumbnailWidth}
+          alt={`Browse Image for ${title}`}
+        />
+      )
+
+      if (browseUrl) {
+        element = (
+          <a
+            className="granule-results-item__thumb"
+            href={browseUrl}
+            title="Browse image"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {element}
+          </a>
+        )
+      } else {
+        element = (
+          <div className="granule-results-item__thumb">
+            {element}
+          </div>
+        )
+      }
+    }
+    return element
+  }
+
   return (
     <li
       className={`granule-results-item ${isFocusedGranule ? 'granule-results-item--selected' : ''}`}
@@ -186,19 +225,7 @@ const GranuleResultsItem = ({
         <h3 className="granule-results-item__title">{title}</h3>
       </div>
       <div className="granule-results-item__body">
-        {
-          thumbnail && (
-            <div className="granule-results-item__thumb">
-              <img
-                className="granule-results-item__thumb-image"
-                src={thumbnail}
-                height={thumbnailHeight}
-                width={thumbnailWidth}
-                alt={`Browse Image for ${title}`}
-              />
-            </div>
-          )
-        }
+        {buildThumbnail()}
         <div className="granule-results-item__meta">
           <div className="granule-results-item__temporal granule-results-item__temporal--start">
             <h5>Start</h5>

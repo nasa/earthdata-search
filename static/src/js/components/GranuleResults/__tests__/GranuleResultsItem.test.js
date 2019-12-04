@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(type) {
   const defaultProps = {
+    browse_url: undefined,
     collectionId: 'collectionId',
     focusedGranule: '',
     isFocused: false,
@@ -82,6 +83,29 @@ function setup(type) {
           '2019-04-29 23:59:59'
         ],
         title: 'Granule title',
+        links: [
+          {
+            rel: 'http://linkrel',
+            title: 'linktitle',
+            href: 'htt[://linkhref'
+          }
+        ]
+      }
+    }
+  }
+
+  if (type === 'with-browse') {
+    props = {
+      ...defaultProps,
+      granule: {
+        browse_flag: true,
+        browse_url: 'https://test.com/browse_image',
+        formatted_temporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        title: 'Granule title',
+        thumbnail: '/fake/path/image.jpg',
         links: [
           {
             rel: 'http://linkrel',
@@ -181,14 +205,6 @@ describe('GranuleResultsItem component', () => {
       expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('p').text()).toEqual('2019-04-28 00:00:00')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('h5').text()).toEqual('End')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('p').text()).toEqual('2019-04-29 23:59:59')
-    })
-
-    describe('without an thumbnail', () => {
-      test('does not render an thumbnail', () => {
-        const { enzymeWrapper } = setup('no-thumb')
-
-        expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(0)
-      })
     })
   })
 
@@ -301,6 +317,29 @@ describe('GranuleResultsItem component', () => {
 
       expect(enzymeWrapper.find('Waypoint').prop('scrollableAncestor'))
         .toEqual(props.scrollContainer)
+    })
+  })
+
+  describe('without an thumbnail', () => {
+    test('does not render an thumbnail', () => {
+      const { enzymeWrapper } = setup('no-thumb')
+
+      expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(0)
+    })
+  })
+
+  describe('with a thumbnail', () => {
+    test('without a full size browse', () => {
+      const { enzymeWrapper } = setup('cmr')
+
+      expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(1)
+      expect(enzymeWrapper.find('.granule-results-item__thumb').type()).toEqual('div')
+    })
+
+    test('with a full size browse', () => {
+      const { enzymeWrapper } = setup('with-browse')
+      expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(1)
+      expect(enzymeWrapper.find('.granule-results-item__thumb').type()).toEqual('a')
     })
   })
 })
