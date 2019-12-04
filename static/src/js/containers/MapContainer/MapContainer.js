@@ -270,7 +270,6 @@ export class MapContainer extends Component {
         zoomAnimation={false}
         whenReady={this.onMapReady}
       >
-        <GranuleImageContainer />
         <LayersControl
           position="bottomright"
           ref={(r) => {
@@ -378,6 +377,7 @@ export class MapContainer extends Component {
           />
           )
         }
+        <GranuleImageContainer />
       </Map>
     )
   }
