@@ -655,18 +655,21 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
   _onClick(e) {
     if (this._map) {
-      const aTag = $(e.originalEvent.target).closest('a')
+      const tag = $(e.originalEvent.target).closest('a, button')
 
-      if (aTag.hasClass('panel-list-remove')) {
-        const granuleId = aTag.data('granuleId')
+      if (tag.hasClass('panel-list-remove')) {
+        const granuleId = tag.data('granuleId')
         eventEmitter.emit('map.excludestickygranule', granuleId)
         return
       }
 
-      if (aTag.length !== 0) { return }
+      // If the element that triggered the event is an `a` or `button` and is also inside
+      // the leaflet map, prevent the clearing of the focused granule.
+      if (tag.length !== 0 && tag.parents('.map.leaflet-container').length > 0) return
 
       let granule = this.granuleAt(e.layerPoint)
-      if (this._stickied === granule) { granule = null }
+
+      if (this._stickied === granule) granule = null
 
       eventEmitter.emit('map.focusgranule', { granule })
       eventEmitter.emit('map.stickygranule', { granule })

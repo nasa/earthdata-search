@@ -107,28 +107,30 @@ class GranuleImage extends Component {
             />
           )
         }
-        {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-        <img
-          className={imageClassName}
-          src={imageSrc}
-          alt="Browse Image"
-          onLoad={this.handleImageLoaded}
-          onError={this.handleImageErrored}
-        />
-        {
-          isLoading && (
-            <div className="granule-image__placeholder">
-              <Spinner type="dots" color="white" size="small" />
-            </div>
-          )
-        }
-        {
-          isErrored && (
-            <div className="granule-image__placeholder">
-              <span>Error loading granule image</span>
-            </div>
-          )
-        }
+        <div className="granule-image__container">
+          {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+          <img
+            className={imageClassName}
+            src={imageSrc}
+            alt="Browse Image"
+            onLoad={this.handleImageLoaded}
+            onError={this.handleImageErrored}
+          />
+          {
+            isLoading && (
+              <div className="granule-image__placeholder">
+                <Spinner type="dots" color="white" size="small" />
+              </div>
+            )
+          }
+          {
+            isErrored && (
+              <div className="granule-image__placeholder">
+                <span>Error loading granule image</span>
+              </div>
+            )
+          }
+        </div>
       </div>
     )
   }
