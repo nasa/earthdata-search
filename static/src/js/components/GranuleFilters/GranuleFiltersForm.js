@@ -40,7 +40,10 @@ export const GranuleFiltersForm = (props) => {
     browseOnly = false,
     onlineOnly = false,
     dayNightFlag = '',
-    cloudCover = {}
+    cloudCover = {},
+    orbitNumber = {},
+    equatorCrossingLongitude = {},
+    equatorCrossingDate = {}
   } = values
 
   const { isRecurring } = temporal
@@ -54,6 +57,16 @@ export const GranuleFiltersForm = (props) => {
   } = cloudCover
 
   const {
+    min: orbitNumberMin = '',
+    max: orbintNumberMax = ''
+  } = orbitNumber
+
+  const {
+    min: equatorCrossingLongitudeMin = '',
+    max: equatorCrossingLongitudeMax = ''
+  } = equatorCrossingLongitude
+
+  const {
     is_cwic: isCwic,
     tags
   } = metadata
@@ -62,19 +75,27 @@ export const GranuleFiltersForm = (props) => {
 
   let dayNightCapable
   let cloudCoverCapable
+  let orbitCalculatedSpatialDomainsCapable
 
   if (capabilities) {
     dayNightCapable = capabilities.day_night_flag
     cloudCoverCapable = capabilities.cloud_cover
+    orbitCalculatedSpatialDomainsCapable = capabilities.orbit_calculated_spatial_domains
   }
 
   const {
     cloudCover: cloudCoverError = {},
+    orbitNumber: orbitNumberError = {},
+    equatorCrossingLongitude: equatorCrossingLongitudeError = {},
+    equatorCrossingDate: equatorCrossingDateError = {},
     temporal: temporalError = {}
   } = errors
 
   const {
     cloudCover: cloudCoverTouched = {},
+    orbitNumber: orbitNumberTouched = {},
+    equatorCrossingLongitude: equatorCrossingLongitudeTouched = {},
+    equatorCrossingDate: equatorCrossingDateTouched = {},
     temporal: temporalTouched = {}
   } = touched
 
@@ -282,6 +303,175 @@ export const GranuleFiltersForm = (props) => {
                           </Col>
                         </Form.Group>
                       </GranuleFiltersItem>
+                    )
+                  }
+                  {
+                    (!isCwic && orbitCalculatedSpatialDomainsCapable) && (
+                      <>
+                        <GranuleFiltersItem
+                          heading="Orbit Number"
+                        >
+                          <Form.Group as={Row} controlId="granule-filters__orbit-number-min">
+                            <Form.Label column sm={3}>
+                              Minimum
+                            </Form.Label>
+                            <Col sm={9}>
+                              <Form.Control
+                                name="orbitNumber.min"
+                                type="text"
+                                placeholder="Example: 30000"
+                                value={orbitNumberMin}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                isInvalid={orbitNumberTouched.min && !!orbitNumberError.min}
+
+                              />
+                              {
+                                orbitNumberTouched.min && (
+                                  <Form.Control.Feedback type="invalid">
+                                    {orbitNumberError.min}
+                                  </Form.Control.Feedback>
+                                )
+                              }
+                            </Col>
+                          </Form.Group>
+                          <Form.Group as={Row} controlId="granule-filters__orbit-number-max">
+                            <Form.Label column sm={3}>
+                              Maximum
+                            </Form.Label>
+                            <Col sm={9}>
+                              <Form.Control
+                                name="orbitNumber.max"
+                                type="text"
+                                placeholder="Example: 30009"
+                                value={orbintNumberMax}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                isInvalid={orbitNumberTouched.max && !!orbitNumberError.max}
+                              />
+                              {
+                                orbitNumberTouched.min && (
+                                  <Form.Control.Feedback type="invalid">
+                                    {orbitNumberError.max}
+                                  </Form.Control.Feedback>
+                                )
+                              }
+                            </Col>
+                          </Form.Group>
+                        </GranuleFiltersItem>
+
+                        <GranuleFiltersItem
+                          heading="Equatorial Crossing Longitude"
+                        >
+                          <Form.Group as={Row} controlId="granule-filters__equatorial-crossing-longitude-min">
+                            <Form.Label column sm={3}>
+                               Minimum
+                            </Form.Label>
+                            <Col sm={9}>
+                              <Form.Control
+                                name="equatorCrossingLongitude.min"
+                                type="text"
+                                placeholder="Example: -45"
+                                value={equatorCrossingLongitudeMin}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                isInvalid={equatorCrossingLongitudeTouched.min
+                                  && !!equatorCrossingLongitudeError.min}
+                              />
+                              {
+                                equatorCrossingLongitudeTouched.min && (
+                                  <Form.Control.Feedback type="invalid">
+                                    {equatorCrossingLongitudeError.min}
+                                  </Form.Control.Feedback>
+                                )
+                              }
+                            </Col>
+                          </Form.Group>
+                          <Form.Group as={Row} controlId="granule-filters__equatorial-crossing-longitude-max">
+                            <Form.Label column sm={3}>
+                              Maximum
+                            </Form.Label>
+                            <Col sm={9}>
+                              <Form.Control
+                                name="equatorCrossingLongitude.max"
+                                type="text"
+                                placeholder="Example: 45"
+                                value={equatorCrossingLongitudeMax}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                isInvalid={equatorCrossingLongitudeTouched.max
+                                  && !!equatorCrossingLongitudeError.max}
+                              />
+                              {
+                                equatorCrossingLongitudeTouched.max && (
+                                  <Form.Control.Feedback type="invalid">
+                                    {equatorCrossingLongitudeError.max}
+                                  </Form.Control.Feedback>
+                                )
+                              }
+                            </Col>
+                          </Form.Group>
+                        </GranuleFiltersItem>
+
+                        <GranuleFiltersItem
+                          heading="Equatorial Crossing Date"
+                        >
+                          <Form.Group controlId="granule-filters__equatorial-crossing-date">
+                            <Form.Control
+                              as="div"
+                              className="form-control-basic"
+                              isInvalid={
+                                (equatorCrossingDateTouched.startDate
+                                  && !!equatorCrossingDateError.startDate)
+                                || (equatorCrossingDateTouched.endDate
+                                  && !!equatorCrossingDateError.endDate)
+                              }
+                            >
+                              <TemporalSelection
+                                controlId="granule-filters__equatorial-crossing-date-selection"
+                                temporal={equatorCrossingDate}
+                                validate={false}
+                                format={temporalDateFormat}
+                                allowRecurring={false}
+                                onRecurringToggle={() => {}}
+                                onChangeRecurring={() => {}}
+                                onSubmitStart={(startDate) => {
+                                  const value = startDate.isValid()
+                                    // eslint-disable-next-line no-underscore-dangle
+                                    ? startDate.toISOString() : startDate._i
+                                  setFieldValue('equatorCrossingDate.startDate', value)
+                                  setFieldTouched('equatorCrossingDate.startDate')
+                                }}
+                                onSubmitEnd={(endDate) => {
+                                  const value = endDate.isValid()
+                                  // eslint-disable-next-line no-underscore-dangle
+                                    ? endDate.toISOString() : endDate._i
+                                  setFieldValue('equatorCrossingDate.endDate', value)
+                                  setFieldTouched('equatorCrossingDate.endDate')
+                                }}
+                              />
+                            </Form.Control>
+                            {
+                              equatorCrossingDateTouched.startDate && (
+                                <>
+                                  <Form.Control.Feedback type="invalid">
+                                    {equatorCrossingDateError.startDate}
+                                  </Form.Control.Feedback>
+                                </>
+                              )
+                            }
+                            {
+                              equatorCrossingDateTouched.endDate && (
+                                <>
+                                  <Form.Control.Feedback type="invalid">
+                                    {equatorCrossingDateError.endDate}
+                                  </Form.Control.Feedback>
+                                </>
+                              )
+                            }
+                          </Form.Group>
+                        </GranuleFiltersItem>
+                      </>
                     )
                   }
                 </>

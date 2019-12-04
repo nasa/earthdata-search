@@ -111,6 +111,7 @@ export class TemporalSelection extends Component {
 
   render() {
     const {
+      allowRecurring,
       controlId,
       format,
       temporal,
@@ -127,8 +128,8 @@ export class TemporalSelection extends Component {
       validation
     } = this.state
 
-    const allowRecurring = Object.values(validation).some(isInvalid => isInvalid === true)
-    if (allowRecurring) {
+    const enableRecurring = Object.values(validation).some(isInvalid => isInvalid === true)
+    if (enableRecurring) {
       isRecurring = false
     }
 
@@ -226,20 +227,23 @@ export class TemporalSelection extends Component {
             </>
           )
         }
-        <Form.Group
-          className="mb-0"
-          controlId={`${controlId}__recurring`}
-        >
-          <Form.Check>
-            <Form.Check.Input disabled={allowRecurring} type="checkbox" onChange={onRecurringToggle} checked={isRecurring} />
-            <Form.Check.Label className="temporal-selection__label">
-              Recurring?
-            </Form.Check.Label>
-          </Form.Check>
-        </Form.Group>
-
         {
-          isRecurring && (
+          allowRecurring && (
+          <Form.Group
+            className="mb-0"
+            controlId={`${controlId}__recurring`}
+          >
+            <Form.Check>
+              <Form.Check.Input disabled={enableRecurring} type="checkbox" onChange={onRecurringToggle} checked={isRecurring} />
+              <Form.Check.Label className="temporal-selection__label">
+                Recurring?
+              </Form.Check.Label>
+            </Form.Check>
+          </Form.Group>
+          )
+        }
+        {
+          (allowRecurring && isRecurring) && (
             <Form.Group className="mb-1">
               <Form.Label className="temporal-selection__label">
                 Year Range:
@@ -270,6 +274,7 @@ export class TemporalSelection extends Component {
 }
 
 TemporalSelection.defaultProps = {
+  allowRecurring: true,
   format: 'YYYY-MM-DD HH:mm:ss',
   onValid: null,
   onInvalid: null,
@@ -277,6 +282,7 @@ TemporalSelection.defaultProps = {
 }
 
 TemporalSelection.propTypes = {
+  allowRecurring: PropTypes.bool,
   controlId: PropTypes.string.isRequired,
   format: PropTypes.string,
   onChangeRecurring: PropTypes.func.isRequired,
