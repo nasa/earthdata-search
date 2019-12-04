@@ -263,7 +263,7 @@ class GranuleResultsHeader extends Component {
                             id="input__granule-search"
                             className="form-control form-control-sm granule-results-header__granule-search-input"
                             type="text"
-                            placeholder="Search Single of Multiple Granule IDs..."
+                            placeholder="Search Single or Multiple Granule IDs..."
                             onBlur={this.handleBlurSearchValue}
                             onChange={this.handleUpdateSearchValue}
                             onKeyUp={this.handleSearchKeyUp}
