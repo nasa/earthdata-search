@@ -10,7 +10,7 @@ import './GranuleImage.scss'
 /**
  * Renders GranuleImage.
  * @param {Object} props - The props passed into the component.
- * @param {String} props - The image source.
+ * @param {String} imageSrc - The image source.
  */
 class GranuleImage extends Component {
   constructor(props) {
