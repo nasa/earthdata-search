@@ -78,6 +78,8 @@ export default class CwicGranuleRequest extends Request {
 
       const granuleLinks = [].concat(granule.link)
 
+      let browseUrl
+
       granuleLinks.forEach((link) => {
         if (link.rel === 'icon') {
           updatedGranule.thumbnail = link.href
@@ -85,6 +87,17 @@ export default class CwicGranuleRequest extends Request {
           // We found a suitable image, flip the flag to true
           updatedGranule.browse_flag = true
         }
+
+        // CWIC does not have a standard link relation for large-sized browse,
+        // so we look for URLs with extensions of jpg, jpeg, gif, and png, and
+        // return the first one which is not marked as the icon. If there's
+        // no such relation, we return nothing, which results in there being
+        // no link to the full size image.
+        if (!browseUrl && link.rel !== 'icon' && link.href.match(/\.(?:gif|jpg|jpeg|png)(?:\?|#|$)/)) {
+          browseUrl = link.href
+        }
+
+        updatedGranule.browse_url = browseUrl
       })
 
       return updatedGranule

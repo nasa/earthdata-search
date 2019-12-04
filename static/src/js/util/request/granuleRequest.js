@@ -93,6 +93,16 @@ export default class GranuleRequest extends Request {
         updatedGranule.thumbnail = `${getEarthdataConfig(cmrEnv()).cmrHost}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
       }
 
+      if (granule.links && granule.links.length > 0) {
+        let browseUrl
+        granule.links.forEach((link) => {
+          if (link.rel.indexOf('browse') > -1) {
+            browseUrl = link.href
+          }
+        })
+        updatedGranule.browse_url = browseUrl
+      }
+
       return updatedGranule
     })
 

@@ -1,6 +1,10 @@
 // import nock from 'nock'
 import CwicRequest from '../cwic'
-import { singleCwicGranuleResponse, multipleCwicGranulesResponse } from './mocks'
+import {
+  singleCwicGranuleResponse,
+  singleCwicGranuleResponseWithImage,
+  multipleCwicGranulesResponse
+} from './mocks'
 
 
 beforeEach(() => {
@@ -92,6 +96,32 @@ describe('CwicRequest#transformResponse', () => {
     const { entry } = feed
     expect(entry).toBeInstanceOf(Array)
     expect(entry.length).toEqual(2)
+  })
+
+  describe('sets the full browse image correctly', () => {
+    test('when the granule has no link', () => {
+      const cwicRequest = new CwicRequest()
+
+      const transformedResponse = cwicRequest
+        .transformResponse(singleCwicGranuleResponse)
+
+      const { feed } = transformedResponse
+      const { entry } = feed
+      expect(entry[0].browse_url)
+        .toEqual(undefined)
+    })
+
+    test('when the granule has a link', () => {
+      const cwicRequest = new CwicRequest()
+
+      const transformedResponse = cwicRequest
+        .transformResponse(singleCwicGranuleResponseWithImage)
+
+      const { feed } = transformedResponse
+      const { entry } = feed
+      expect(entry[0].browse_url)
+        .toEqual('https://uops.nrsc.gov.in//imgarchive/IRS1C/LISS/1996/NOV/14/083042LG.319.jpeg')
+    })
   })
 })
 
