@@ -16,6 +16,21 @@ describe('url#decodeGranuleFilters', () => {
       cloudCover: {
         max: 2,
         min: 1
+      },
+      orbitNumber: {
+        min: 3000,
+        max: 3009
+      },
+      equatorCrossingLongitude: {
+        min: -45,
+        max: 45
+      },
+      equatorCrossingDate: {
+        endDate: '2016-05-09T00:00.000Z',
+        startDate: '2015-06-09T00:00.000Z',
+        recurringDayEnd: '',
+        recurringDayStart: '',
+        isRecurring: false
       }
     }
     expect(decodeGranuleFilters({
@@ -26,7 +41,16 @@ describe('url#decodeGranuleFilters', () => {
       cc: {
         max: 2,
         min: 1
-      }
+      },
+      on: {
+        max: 3009,
+        min: 3000
+      },
+      ecl: {
+        min: -45,
+        max: 45
+      },
+      ecd: '2015-06-09T00:00.000Z,2016-05-09T00:00.000Z'
     })).toEqual(expectedResult)
   })
 })
@@ -45,6 +69,18 @@ describe('url#encodeGranuleFilters', () => {
       cloudCover: {
         max: 2,
         min: 1
+      },
+      orbitNumber: {
+        min: 3000,
+        max: 3009
+      },
+      equatorCrossingLongitude: {
+        min: -45,
+        max: 45
+      },
+      equatorCrossingDate: {
+        endDate: '2016-05-09T00:00.000Z',
+        startDate: '2015-06-09T00:00.000Z'
       }
     }
     expect(encodeGranuleFilters(props)).toEqual({
@@ -55,7 +91,16 @@ describe('url#encodeGranuleFilters', () => {
       cc: {
         max: 2,
         min: 1
-      }
+      },
+      on: {
+        max: 3009,
+        min: 3000
+      },
+      ecl: {
+        min: -45,
+        max: 45
+      },
+      ecd: '2015-06-09T00:00.000Z,2016-05-09T00:00.000Z'
     })
   })
 })

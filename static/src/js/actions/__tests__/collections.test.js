@@ -183,6 +183,10 @@ describe('updateCollectionGranuleFilters', () => {
       cloudCover: {
         max: 0,
         min: 1
+      },
+      equatorCrossingLongitude: {
+        min: -45,
+        max: 45
       }
     }))
 
@@ -195,6 +199,10 @@ describe('updateCollectionGranuleFilters', () => {
           cloudCover: {
             max: 0,
             min: 1
+          },
+          equatorCrossingLongitude: {
+            min: -45,
+            max: 45
           }
         },
         id: 'collectionId'

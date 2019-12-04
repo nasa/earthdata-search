@@ -30,14 +30,14 @@ const collectionTags = async (cmrToken, collection) => {
     cloud_cover: cloudCover = false,
     day_night_flag: dayNightFlag,
     online_access_flag: onlineAccessFlag = false,
-    orbit_calculated_spatial_domains: orbitCalculatedSpatialDomains = []
+    orbit_calculated_spatial_domains: orbitCalculatedSpatialDomains = {}
   } = singleGranule
 
   return {
     cloud_cover: cloudCover !== undefined,
     day_night_flag: dayNightFlag && ['DAY', 'NIGHT', 'BOTH'].includes(dayNightFlag.toUpperCase()),
     granule_online_access_flag: onlineAccessFlag,
-    orbit_calculated_spatial_domains: orbitCalculatedSpatialDomains.length > 0
+    orbit_calculated_spatial_domains: Object.keys(orbitCalculatedSpatialDomains).length > 0
   }
 }
 

@@ -67,11 +67,19 @@ export class GranuleFiltersPanelContainer extends Component {
     const {
       onApplyGranuleFilters,
       focusedCollection,
-      handleReset
+      handleReset,
+      values
     } = this.props
 
     handleReset()
-    onApplyGranuleFilters(focusedCollection, {})
+
+    // Set each of the values to an empty string to avoid wiping
+    // out ALL granule filters (e.g. sort key)
+    const emptyObject = {}
+    Object.keys(values).forEach((key) => {
+      emptyObject[key] = ''
+    })
+    onApplyGranuleFilters(focusedCollection, emptyObject)
   }
 
   render() {
@@ -137,6 +145,30 @@ const ValidationSchema = (props) => {
       // eslint-disable-next-line no-template-curly-in-string
       maxGreaterThanMin: '${path} should be greater Minimum'
     },
+    orbitNumber: {
+      invalidNumber: 'Enter a valid number',
+      minMax: 'Value must greater than 0.0',
+      // eslint-disable-next-line no-template-curly-in-string
+      minLessThanMax: '${path} should be less than Maximum',
+      // eslint-disable-next-line no-template-curly-in-string
+      maxGreaterThanMin: '${path} should be greater Minimum'
+    },
+    equatorCrossingLongitude: {
+      invalidNumber: 'Enter a valid number',
+      minMax: 'Value must be between -180.0 and 180.0',
+      // eslint-disable-next-line no-template-curly-in-string
+      minLessThanMax: '${path} should be less than Maximum',
+      // eslint-disable-next-line no-template-curly-in-string
+      maxGreaterThanMin: '${path} should be greater Minimum'
+    },
+    equatorCrossingDate: {
+      invalidStartDate: 'Enter a valid start date',
+      invalidEndDate: 'Enter a valid end date',
+      // eslint-disable-next-line no-template-curly-in-string
+      outsideRange: '${path} is outside current temporal range',
+      // eslint-disable-next-line no-template-curly-in-string
+      startBeforeEnd: '${path} should be before End'
+    },
     temporal: {
       invalidStartDate: 'Enter a valid start date',
       invalidEndDate: 'Enter a valid end date',
@@ -166,6 +198,60 @@ const ValidationSchema = (props) => {
         .max(100, errors.cloudCover.minMax)
         .transform(nullableValue)
         .nullable()
+    }),
+    orbitNumber: Yup.object().shape({
+      min: Yup.number()
+        .label('Minimum')
+        .typeError(errors.orbitNumber.invalidNumber)
+        .test('min-less-than-max', errors.orbitNumber.minLessThanMax, minLessThanMax)
+        .min(0, errors.orbitNumber.minMax)
+        .transform(nullableValue)
+        .nullable(),
+      max: Yup.number()
+        .label('Maximum')
+        .typeError(errors.orbitNumber.invalidNumber)
+        // eslint-disable-next-line no-template-curly-in-string
+        .test('max-less-than-min', errors.orbitNumber.maxGreaterThanMin, maxLessThanMin)
+        .min(0, errors.orbitNumber.minMax)
+        .transform(nullableValue)
+        .nullable()
+    }),
+    equatorCrossingLongitude: Yup.object().shape({
+      min: Yup.number()
+        .label('Minimum')
+        .typeError(errors.equatorCrossingLongitude.invalidNumber)
+        .test('min-less-than-max', errors.equatorCrossingLongitude.minLessThanMax, minLessThanMax)
+        .min(-180, errors.equatorCrossingLongitude.minMax)
+        .max(180, errors.equatorCrossingLongitude.minMax)
+        .transform(nullableValue)
+        .nullable(),
+      max: Yup.number()
+        .label('Maximum')
+        .typeError(errors.equatorCrossingLongitude.invalidNumber)
+        // eslint-disable-next-line no-template-curly-in-string
+        .test('max-less-than-min', errors.equatorCrossingLongitude.maxGreaterThanMin, maxLessThanMin)
+        .min(-180, errors.equatorCrossingLongitude.minMax)
+        .max(180, errors.equatorCrossingLongitude.minMax)
+        .transform(nullableValue)
+        .nullable()
+    }),
+    equatorCrossingDate: Yup.object().shape({
+      startDate: Yup.date()
+        .label('Start')
+        .typeError(errors.equatorCrossingDate.invalidStartDate)
+        .transform(nullableValue)
+        .nullable()
+        // eslint-disable-next-line no-template-curly-in-string
+        .test('start-before-end', errors.equatorCrossingDate.startBeforeEnd, startBeforeEnd)
+
+        .test('inside-global-equatorial-crossing-date', errors.equatorCrossingDate.outsideRange, value => dateOutsideRange(value, startDate, endDate)),
+      endDate: Yup.date()
+        .label('End')
+        .typeError(errors.equatorCrossingDate.invalidEndDate)
+        .transform(nullableValue)
+        .nullable()
+        // eslint-disable-next-line no-template-curly-in-string
+        .test('inside-global-equatorial-crossing-date', errors.equatorCrossingDate.outsideRange, value => dateOutsideRange(value, startDate, endDate))
     }),
     temporal: Yup.object().shape({
       startDate: Yup.date()
@@ -207,13 +293,31 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
       browseOnly = false,
       onlineOnly = false,
       cloudCover = {},
-      temporal = {}
+      temporal = {},
+      orbitNumber = {},
+      equatorCrossingLongitude = {},
+      equatorCrossingDate = {}
     } = granuleFilters
 
     const {
       min: cloudCoverMin,
       max: cloudCoverMax
     } = cloudCover
+
+    const {
+      min: orbitNumberMin = '',
+      max: orbitNumberMax = ''
+    } = orbitNumber
+
+    const {
+      min: equatorCrossingLongitudeMin = '',
+      max: equatorCrossingLongitudeMax = ''
+    } = equatorCrossingLongitude
+
+    const {
+      startDate: equatorCrossingDateStart = '',
+      endDate: equatorCrossingDateEnd = ''
+    } = equatorCrossingDate
 
     const {
       startDate: temporalStartDate,
@@ -230,6 +334,18 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
       cloudCover: {
         min: cloudCoverMin || '',
         max: cloudCoverMax || ''
+      },
+      orbitNumber: {
+        min: orbitNumberMin || '',
+        max: orbitNumberMax || ''
+      },
+      equatorCrossingLongitude: {
+        min: equatorCrossingLongitudeMin || '',
+        max: equatorCrossingLongitudeMax || ''
+      },
+      equatorCrossingDate: {
+        startDate: equatorCrossingDateStart || '',
+        endDate: equatorCrossingDateEnd || ''
       },
       temporal: {
         startDate: temporalStartDate || '',

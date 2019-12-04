@@ -335,5 +335,275 @@ describe('GranuleFiltersForm component', () => {
         })
       })
     })
+
+    describe('Orbit number section', () => {
+      describe('Min', () => {
+        test('defaults to an empty value', () => {
+          const { enzymeWrapper } = setup({
+            metadata: {
+              is_cwic: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const orbitNumberSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          expect(orbitNumberSection.find(Form.Control).at(0).prop('value')).toEqual('')
+        })
+
+        test('calls handleChange on change', () => {
+          const { enzymeWrapper, props } = setup({
+            metadata: {
+              is_cwic: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const orbitNumberSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          orbitNumberSection.find(Form.Control).at(0).prop('onChange')({ event: 'test' })
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+        })
+      })
+
+      describe('Max', () => {
+        test('defaults to an empty value', () => {
+          const { enzymeWrapper } = setup({
+            metadata: {
+              is_cwic: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const orbitNumberSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          expect(orbitNumberSection.find(Form.Control).at(1).prop('value')).toEqual('')
+        })
+
+        test('calls handleChange on change', () => {
+          const { enzymeWrapper, props } = setup({
+            metadata: {
+              is_cwic: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const orbitNumberSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          orbitNumberSection.find(Form.Control).at(1).prop('onChange')({ event: 'test' })
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+        })
+      })
+    })
+
+    describe('Equator Crossing Longitude section', () => {
+      describe('Min', () => {
+        test('defaults to an empty value', () => {
+          const { enzymeWrapper } = setup({
+            metadata: {
+              is_cwic: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const equatorCrossingLongitudeSection = enzymeWrapper.find(GranuleFiltersItem).at(3)
+          expect(equatorCrossingLongitudeSection.find(Form.Control).at(0).prop('value')).toEqual('')
+        })
+
+        test('calls handleChange on change', () => {
+          const { enzymeWrapper, props } = setup({
+            metadata: {
+              is_cwic: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const equatorCrossingLongitudeSection = enzymeWrapper.find(GranuleFiltersItem).at(3)
+          equatorCrossingLongitudeSection.find(Form.Control).at(0).prop('onChange')({ event: 'test' })
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+        })
+      })
+
+      describe('Max', () => {
+        test('defaults to an empty value', () => {
+          const { enzymeWrapper } = setup({
+            metadata: {
+              is_cwic: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const equatorCrossingLongitudeSection = enzymeWrapper.find(GranuleFiltersItem).at(3)
+          expect(equatorCrossingLongitudeSection.find(Form.Control).at(1).prop('value')).toEqual('')
+        })
+
+        test('calls handleChange on change', () => {
+          const { enzymeWrapper, props } = setup({
+            metadata: {
+              is_cwic: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const equatorCrossingLongitudeSection = enzymeWrapper.find(GranuleFiltersItem).at(3)
+          equatorCrossingLongitudeSection.find(Form.Control).at(1).prop('onChange')({ event: 'test' })
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+        })
+      })
+    })
+  })
+
+  describe('Equator Crossing Date section', () => {
+    describe('displays equator crossing date', () => {
+      test('displays correctly when only start date is set', () => {
+        const { enzymeWrapper } = setup({
+          metadata: {
+            is_cwic: false,
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: { orbit_calculated_spatial_domains: true }
+              }
+            }
+          },
+          values: {
+            equatorCrossingDate: {
+              startDate: '2019-08-14T00:00:00:000Z'
+            }
+          }
+        })
+        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-14T00:00:00:000Z')
+        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').endDate).toEqual(undefined)
+      })
+
+      test('displays correctly when only end date is set', () => {
+        const { enzymeWrapper } = setup({
+          metadata: {
+            is_cwic: false,
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: { orbit_calculated_spatial_domains: true }
+              }
+            }
+          },
+          values: {
+            equatorCrossingDate: {
+              endDate: '2019-08-14T00:00:00:000Z'
+            }
+          }
+        })
+
+        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T00:00:00:000Z')
+        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').startDate).toEqual(undefined)
+      })
+
+      test('displays correctly when both dates are set', () => {
+        const { enzymeWrapper } = setup({
+          metadata: {
+            is_cwic: false,
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: { orbit_calculated_spatial_domains: true }
+              }
+            }
+          },
+          values: {
+            equatorCrossingDate: {
+              startDate: '2019-08-13T00:00:00:000Z',
+              endDate: '2019-08-14T23:59:59:999Z'
+            }
+          }
+        })
+
+        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T23:59:59:999Z')
+        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-13T00:00:00:000Z')
+      })
+
+      test('calls the correct callbacks on startDate submit', () => {
+        const { enzymeWrapper, props } = setup({
+          metadata: {
+            is_cwic: false,
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: { orbit_calculated_spatial_domains: true }
+              }
+            }
+          },
+          values: {
+            equatorCrossingDate: {
+              startDate: '2019-08-13T00:00:00:000Z',
+              endDate: '2019-08-14T23:59:59:999Z'
+            }
+          }
+        })
+        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        equatorCrossingDateSection.find(TemporalSelection).prop('onSubmitStart')(moment('2019-08-13T00:00:00:000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
+
+        expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
+        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
+        expect(props.setFieldValue).toHaveBeenCalledTimes(1)
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2019-08-13T00:00:00:000Z')
+      })
+
+      test('calls the correct callbacks on endDate submit', () => {
+        const { enzymeWrapper, props } = setup({
+          metadata: {
+            is_cwic: false,
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: { orbit_calculated_spatial_domains: true }
+              }
+            }
+          },
+          values: {
+            equatorCrossingDate: {
+              startDate: '2019-08-13T00:00:00:000Z',
+              endDate: '2019-08-14T23:59:59:999Z'
+            }
+          }
+        })
+        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        equatorCrossingDateSection.find(TemporalSelection).prop('onSubmitEnd')(moment('2019-08-14T23:59:59:999Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
+
+        expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
+        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
+        expect(props.setFieldValue).toHaveBeenCalledTimes(1)
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2019-08-14T23:59:59:999Z')
+      })
+    })
   })
 })
