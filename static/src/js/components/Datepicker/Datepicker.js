@@ -184,7 +184,8 @@ class Datepicker extends PureComponent {
         dateFormat={format}
         inputProps={{
           id,
-          placeholder: format
+          placeholder: format,
+          autoComplete: 'off'
         }}
         isValidDate={isValidDate}
         onBlur={onBlur}

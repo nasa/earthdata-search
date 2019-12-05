@@ -414,7 +414,7 @@ export const GranuleFiltersForm = (props) => {
                         </GranuleFiltersItem>
 
                         <GranuleFiltersItem
-                          heading="Equatorial Crossing Date"
+                          heading="Equator Crossing Date"
                         >
                           <Form.Group controlId="granule-filters__equatorial-crossing-date">
                             <Form.Control
@@ -433,8 +433,6 @@ export const GranuleFiltersForm = (props) => {
                                 validate={false}
                                 format={temporalDateFormat}
                                 allowRecurring={false}
-                                onRecurringToggle={() => {}}
-                                onChangeRecurring={() => {}}
                                 onSubmitStart={(startDate) => {
                                   const value = startDate.isValid()
                                     // eslint-disable-next-line no-underscore-dangle

@@ -228,22 +228,22 @@ export class TemporalSelection extends Component {
           )
         }
         {
-          allowRecurring && (
-          <Form.Group
-            className="mb-0"
-            controlId={`${controlId}__recurring`}
-          >
-            <Form.Check>
-              <Form.Check.Input disabled={enableRecurring} type="checkbox" onChange={onRecurringToggle} checked={isRecurring} />
-              <Form.Check.Label className="temporal-selection__label">
-                Recurring?
-              </Form.Check.Label>
-            </Form.Check>
-          </Form.Group>
+          (allowRecurring && onRecurringToggle) && (
+            <Form.Group
+              className="mb-0"
+              controlId={`${controlId}__recurring`}
+            >
+              <Form.Check>
+                <Form.Check.Input disabled={enableRecurring} type="checkbox" onChange={onRecurringToggle} checked={isRecurring} />
+                <Form.Check.Label className="temporal-selection__label">
+                  Recurring?
+                </Form.Check.Label>
+              </Form.Check>
+            </Form.Group>
           )
         }
         {
-          (allowRecurring && isRecurring) && (
+          (allowRecurring && onChangeRecurring && isRecurring) && (
             <Form.Group className="mb-1">
               <Form.Label className="temporal-selection__label">
                 Year Range:
@@ -278,15 +278,17 @@ TemporalSelection.defaultProps = {
   format: 'YYYY-MM-DD HH:mm:ss',
   onValid: null,
   onInvalid: null,
-  validate: true
+  validate: true,
+  onChangeRecurring: null,
+  onRecurringToggle: null
 }
 
 TemporalSelection.propTypes = {
   allowRecurring: PropTypes.bool,
   controlId: PropTypes.string.isRequired,
   format: PropTypes.string,
-  onChangeRecurring: PropTypes.func.isRequired,
-  onRecurringToggle: PropTypes.func.isRequired,
+  onChangeRecurring: PropTypes.func,
+  onRecurringToggle: PropTypes.func,
   onSubmitStart: PropTypes.func.isRequired,
   onSubmitEnd: PropTypes.func.isRequired,
   temporal: PropTypes.shape({}).isRequired,
