@@ -414,7 +414,7 @@ export const GranuleFiltersForm = (props) => {
                         </GranuleFiltersItem>
 
                         <GranuleFiltersItem
-                          heading="Equator Crossing Date"
+                          heading="Equatorial Crossing Date"
                         >
                           <Form.Group controlId="granule-filters__equatorial-crossing-date">
                             <Form.Control
