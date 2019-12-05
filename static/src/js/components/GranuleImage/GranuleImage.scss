@@ -6,7 +6,6 @@
   height: auto;
   z-index: 401; // Sits above .leaflet-map-pane at index 400
   color: $color__white;
-  border: 2px solid rgba(0,0,0,.2);
 
   &__container {
     width: 100%;
@@ -15,6 +14,7 @@
     transform-origin: top right;
     transform: scale(0);
     transition: transform 0.2s ease-in-out;
+    border: 2px solid rgba(0,0,0,.2);
 
     .granule-image--is-open & {
       transform: scale(1);
