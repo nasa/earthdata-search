@@ -3,7 +3,10 @@ import {
   UPDATE_GRANULE_LINKS
 } from '../../constants/actionTypes'
 
-const initialState = {}
+const initialState = {
+  isLoaded: false,
+  isLoading: false
+}
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
@@ -24,7 +27,9 @@ describe('UPDATE_GRANULE_LINKS', () => {
     }
 
     const expectedState = {
-      1: ['http://google.jp']
+      1: ['http://google.jp'],
+      isLoaded: false,
+      isLoading: false
     }
 
     expect(updateGranuleDownloadParamsReducer(undefined, action)).toEqual(expectedState)

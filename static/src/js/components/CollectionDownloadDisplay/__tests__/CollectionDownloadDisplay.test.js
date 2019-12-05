@@ -58,7 +58,9 @@ describe('CollectionDownloadDisplay component', () => {
           granuleDownload: {
             1: [
               'http://google.com'
-            ]
+            ],
+            isLoaded: false,
+            isLoading: true
           }
         })
 
@@ -76,7 +78,9 @@ describe('CollectionDownloadDisplay component', () => {
             1: [
               'http://google.com',
               'http://google.jp'
-            ]
+            ],
+            isLoaded: true,
+            isLoading: false
           }
         })
 
@@ -104,7 +108,9 @@ describe('CollectionDownloadDisplay component', () => {
           granuleDownload: {
             1: [
               'http://google.com'
-            ]
+            ],
+            isLoaded: false,
+            isLoading: true
           }
         })
 
@@ -131,7 +137,9 @@ describe('CollectionDownloadDisplay component', () => {
             1: [
               'http://google.com',
               'http://google.jp'
-            ]
+            ],
+            isLoaded: true,
+            isLoading: false
           }
         })
 
@@ -158,7 +166,9 @@ describe('CollectionDownloadDisplay component', () => {
           granuleDownload: {
             1: [
               'http://google.com'
-            ]
+            ],
+            isLoaded: false,
+            isLoading: true
           },
           retrievalCollection: {
             id: 1,
@@ -183,7 +193,9 @@ describe('CollectionDownloadDisplay component', () => {
             1: [
               'http://google.com',
               'http://google.jp'
-            ]
+            ],
+            isLoaded: true,
+            isLoading: false
           },
           retrievalCollection: {
             id: 1,
@@ -219,7 +231,9 @@ describe('CollectionDownloadDisplay component', () => {
           granuleDownload: {
             1: [
               'http://google.com'
-            ]
+            ],
+            isLoaded: false,
+            isLoading: true
           },
           retrievalCollection: {
             id: 1,
@@ -254,7 +268,9 @@ describe('CollectionDownloadDisplay component', () => {
             1: [
               'http://google.com',
               'http://google.jp'
-            ]
+            ],
+            isLoaded: true,
+            isLoading: false
           },
           retrievalCollection: {
             id: 1,
