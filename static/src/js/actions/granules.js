@@ -18,6 +18,8 @@ import {
   LOADED_GRANULES,
   LOADING_GRANULES,
   RESET_GRANULE_RESULTS,
+  SET_GRANULE_LINKS_LOADED,
+  SET_GRANULE_LINKS_LOADING,
   STARTED_GRANULES_TIMER,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
@@ -90,6 +92,14 @@ export const onClearExcludedGranules = () => ({
 export const updateGranuleLinks = payload => ({
   type: UPDATE_GRANULE_LINKS,
   payload
+})
+
+export const setGranuleLinksLoading = () => ({
+  type: SET_GRANULE_LINKS_LOADING
+})
+
+export const setGranuleLinksLoaded = () => ({
+  type: SET_GRANULE_LINKS_LOADED
 })
 
 export const excludeGranule = data => (dispatch) => {
@@ -226,9 +236,15 @@ export const fetchRetrievalCollectionGranuleLinks = data => (dispatch) => {
 
   // Determine which action to take based on the access method type
   if (type === 'download') {
-    dispatch(fetchLinks(data))
+    dispatch(setGranuleLinksLoading())
+    dispatch(fetchLinks(data)).then(() => {
+      dispatch(setGranuleLinksLoaded())
+    })
   } else if (type === 'OPeNDAP') {
-    dispatch(fetchOpendapLinks(data))
+    dispatch(setGranuleLinksLoading())
+    dispatch(fetchOpendapLinks(data)).then(() => {
+      dispatch(setGranuleLinksLoaded())
+    })
   }
 }
 

@@ -73,7 +73,7 @@ export class CollectionDownloadDisplay extends Component {
     // User the retrieval id and access method type to construct a relevant file name
     const { type } = accessMethod
 
-    const { [id]: granuleLinks = [] } = granuleDownload
+    const { [id]: granuleLinks = [], isLoaded, isLoading } = granuleDownload
 
     let downloadButtonLabel
     let downloadButtonMessage
@@ -92,8 +92,6 @@ export class CollectionDownloadDisplay extends Component {
       downloadFileExtension = 'sh'
     }
     const downloadFileName = `${retrievalId}-${type}.${downloadFileExtension}`
-
-    const isLoading = totalGranules > granuleLinks.length
 
     return (
       <section className="collection-download-display">
@@ -128,7 +126,7 @@ export class CollectionDownloadDisplay extends Component {
             )
           }
           {
-            (!isLoading && granuleLinks.length > 0) && (
+            (isLoaded && granuleLinks.length > 0) && (
               <>
                 <h4>Collection granule links have been retrieved</h4>
                 <p className="collection-download-display__state">
@@ -152,7 +150,7 @@ export class CollectionDownloadDisplay extends Component {
         </header>
         <div className="collection-download-display__body">
           {
-            !isLoading && (
+            isLoaded && (
               <Card
                 bg="light"
               >
