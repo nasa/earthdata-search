@@ -12,7 +12,8 @@ function setup() {
     keywordSearch: 'Test value',
     onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
-    onClearFilters: jest.fn()
+    onClearFilters: jest.fn(),
+    onToggleAdvancedSearchModal: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SearchForm {...props} />)
@@ -75,5 +76,16 @@ describe('SearchForm component', () => {
     const newSearch = 'new seach'
     enzymeWrapper.setProps({ keywordSearch: newSearch })
     expect(enzymeWrapper.state().keywordSearch).toEqual(newSearch)
+  })
+
+  describe('advanced search button', () => {
+    test('fires the action to open the advanced search modal', () => {
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.find('.search-form__button--advanced-search').simulate('click')
+
+      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)
+    })
   })
 })

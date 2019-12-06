@@ -13,7 +13,8 @@ function setup() {
       portalId: ''
     },
     onChangeQuery: jest.fn(),
-    onMetricsCollectionSortChange: jest.fn()
+    onMetricsCollectionSortChange: jest.fn(),
+    onToggleAdvancedSearchModal: jest.fn()
   }
 
   const enzymeWrapper = shallow(<CollectionResultsHeaderContainer {...props} />)
@@ -26,8 +27,10 @@ function setup() {
 
 describe('CollectionResultsHeaderContainer component', () => {
   test('passes its props and renders a single CollectionResultsHeader component', () => {
-    const { enzymeWrapper } = setup()
+    const { enzymeWrapper, props } = setup()
     expect(enzymeWrapper.find(CollectionResultsHeader).length).toBe(1)
     expect(enzymeWrapper.find(CollectionResultsHeader).props().portal).toEqual({ portalId: '' })
+    expect(enzymeWrapper.find(CollectionResultsHeader).props().onToggleAdvancedSearchModal)
+      .toEqual(props.onToggleAdvancedSearchModal)
   })
 })

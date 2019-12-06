@@ -1,0 +1,26 @@
+.edsc-modal {
+  &__footer {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__footer-meta {
+    order: 1;
+  }
+
+  &__footer-actions {
+    order: 0;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &__action {
+    margin-right: $spacer/2;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

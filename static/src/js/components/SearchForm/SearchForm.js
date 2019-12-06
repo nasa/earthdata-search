@@ -31,6 +31,7 @@ class SearchForm extends Component {
     this.onInputChange = this.onInputChange.bind(this)
     this.onKeywordBlur = this.onKeywordBlur.bind(this)
     this.onSearchClear = this.onSearchClear.bind(this)
+    this.onToggleAdvancedSearch = this.onToggleAdvancedSearch.bind(this)
     this.onToggleFilterStack = this.onToggleFilterStack.bind(this)
   }
 
@@ -86,6 +87,14 @@ class SearchForm extends Component {
     })
   }
 
+  onToggleAdvancedSearch() {
+    const {
+      onToggleAdvancedSearchModal
+    } = this.props
+
+    onToggleAdvancedSearchModal(true)
+  }
+
   render() {
     const {
       keywordSearch,
@@ -109,6 +118,13 @@ class SearchForm extends Component {
               onBlur={this.onKeywordBlur}
             />
           </form>
+          <Button
+            bootstrapVariant="inline-block"
+            className="search-form__button search-form__button--advanced-search"
+            label="Advanced search"
+            onClick={this.onToggleAdvancedSearch}
+            icon="sliders"
+          />
           <TemporalSelectionDropdownContainer />
           <SpatialSelectionDropdownContainer />
           <Button
@@ -116,18 +132,16 @@ class SearchForm extends Component {
             className="search-form__button search-form__button--clear"
             label="Clear search"
             onClick={this.onSearchClear}
-          >
-            <i className="fa fa-eraser" />
-          </Button>
+            icon="eraser"
+          />
           <Button
             bootstrapVariant="inline-block"
             className="search-form__button search-form__button--dark search-form__button--toggle"
             onClick={this.onToggleFilterStack}
             title="Toggle Filter Stack"
             label="Toggle Filter Stack"
-          >
-            <i className="fa fa-bars" />
-          </Button>
+            icon="bars"
+          />
         </div>
         <div className="search-form__secondary">
           <FilterStack isOpen={showFilterStack}>
@@ -144,7 +158,8 @@ SearchForm.propTypes = {
   keywordSearch: PropTypes.string.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
-  onClearFilters: PropTypes.func.isRequired
+  onClearFilters: PropTypes.func.isRequired,
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
 export default SearchForm

@@ -7,8 +7,12 @@ import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions'
 
 const mapDispatchToProps = dispatch => ({
-  onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onMetricsCollectionSortChange: data => dispatch(metricsCollectionSortChange(data))
+  onChangeQuery:
+    query => dispatch(actions.changeQuery(query)),
+  onMetricsCollectionSortChange:
+    data => dispatch(metricsCollectionSortChange(data)),
+  onToggleAdvancedSearchModal:
+    state => dispatch(actions.toggleAdvancedSearchModal(state))
 })
 
 const mapStateToProps = state => ({
@@ -20,12 +24,14 @@ export const CollectionResultsHeaderContainer = ({
   collectionQuery,
   portal,
   onChangeQuery,
-  onMetricsCollectionSortChange
+  onMetricsCollectionSortChange,
+  onToggleAdvancedSearchModal
 }) => (
   <CollectionResultsHeader
     collectionQuery={collectionQuery}
     portal={portal}
     onChangeQuery={onChangeQuery}
+    onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
     onMetricsCollectionSortChange={onMetricsCollectionSortChange}
   />
 )
@@ -34,7 +40,8 @@ CollectionResultsHeaderContainer.propTypes = {
   collectionQuery: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
-  onMetricsCollectionSortChange: PropTypes.func.isRequired
+  onMetricsCollectionSortChange: PropTypes.func.isRequired,
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CollectionResultsHeaderContainer)

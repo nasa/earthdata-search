@@ -39,6 +39,8 @@ import GranuleDetailsHeaderContainer
   from '../../containers/GranuleDetailsHeaderContainer/GranuleDetailsHeaderContainer'
 import GranuleFiltersPanelContainer
   from '../../containers/GranuleFiltersPanelContainer/GranuleFiltersPanelContainer'
+import AdvancedSearchModalContainer
+  from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SidebarContainer
@@ -51,6 +53,7 @@ import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 
 import actions from '../../actions'
+
 
 const mapDispatchToProps = dispatch => ({
   onMasterOverlayHeightChange:
@@ -118,6 +121,7 @@ export class Search extends Component {
           </Switch>
           <RelatedUrlsModalContainer />
           <FacetsModalContainer />
+          <AdvancedSearchModalContainer />
         </div>
       </div>
     )

@@ -4,13 +4,16 @@ import { Col, Form, Row } from 'react-bootstrap'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
+import Button from '../Button/Button'
+
 import './CollectionResultsHeader.scss'
 
 const CollectionResultsHeader = ({
   collectionQuery,
   portal,
   onChangeQuery,
-  onMetricsCollectionSortChange
+  onMetricsCollectionSortChange,
+  onToggleAdvancedSearchModal
 }) => {
   const { hideCollectionFilters } = portal
 
@@ -110,6 +113,18 @@ const CollectionResultsHeader = ({
               </>
             )
           }
+          <Col sm="auto">
+            <Button
+              className="collection-results-header__adv-search-btn"
+              bootstrapVariant="link"
+              variant="link"
+              icon="sliders"
+              label="Advanced search"
+              onClick={() => onToggleAdvancedSearchModal(true)}
+            >
+              Advanced Search
+            </Button>
+          </Col>
         </Form.Group>
       </Row>
       <div className="row">
@@ -130,7 +145,8 @@ CollectionResultsHeader.propTypes = {
   collectionQuery: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
-  onMetricsCollectionSortChange: PropTypes.func.isRequired
+  onMetricsCollectionSortChange: PropTypes.func.isRequired,
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
 export default CollectionResultsHeader

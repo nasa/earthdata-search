@@ -8,6 +8,7 @@ import {
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SELECTING_NEW_GRID,
+  TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_TOO_MANY_POINTS_MODAL,
@@ -44,6 +45,9 @@ const initialState = {
   },
   secondaryOverlayPanel: {
     isOpen: false
+  },
+  advancedSearchModal: {
+    isOpen: true
   },
   shapefileUploadModal: {
     isOpen: false
@@ -150,6 +154,14 @@ const uiReducer = (state = initialState, action) => {
         grid: {
           ...grid,
           selectingNewGrid: action.payload
+        }
+      }
+    }
+    case TOGGLE_ADVANCED_SEARCH_MODAL: {
+      return {
+        ...state,
+        advancedSearchModal: {
+          isOpen: action.payload
         }
       }
     }
