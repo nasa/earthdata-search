@@ -47,7 +47,7 @@ const initialState = {
     isOpen: false
   },
   advancedSearchModal: {
-    isOpen: true
+    isOpen: false
   },
   shapefileUploadModal: {
     isOpen: false

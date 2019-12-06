@@ -44,7 +44,7 @@ const FilterStackItem = (props) => {
               onRemove && (
                 <Button
                   className="filter-stack-item__action-button"
-                  label={`Remove ${title.toLowerCase()}`}
+                  label={`Remove ${title.toLowerCase()} filter`}
                   icon="times-circle"
                   onClick={() => { onRemove() }}
                 />

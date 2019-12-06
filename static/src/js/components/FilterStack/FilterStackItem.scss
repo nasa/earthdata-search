@@ -3,7 +3,7 @@
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  padding: $spacer/2 $spacer;
+  padding: $spacer/2 $spacer*0.78 $spacer/2 $spacer;
   color: $color__white;
   border-bottom: 1px solid rgba($color__black--700, 0.5);
 
@@ -58,7 +58,7 @@
     align-items: center;
     justify-content: center;
     margin-left: $spacer/2;
-    color: $color__black--400;
+    color: $color__black--300;
   }
 
   &__action-button {
