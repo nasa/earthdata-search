@@ -8,7 +8,18 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    drawingNewLayer: false,
+    boundingBoxSearch: '',
+    gridName: '',
+    gridCoords: '',
     keywordSearch: 'Test value',
+    lineSearch: '',
+    pointSearch: '',
+    polygonSearch: '',
+    selectingNewGrid: false,
+    shapefile: {},
+    temporalSearch: {},
+    temporalSearchordSearch: 'Test value',
     onClearFilters: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
@@ -27,14 +38,19 @@ describe('SearchFormContainer component', () => {
   test('passes its props and renders a single SearchForm component', () => {
     const { enzymeWrapper, props } = setup()
 
-    expect(enzymeWrapper.find(SearchForm).length).toBe(1)
-    expect(enzymeWrapper.find(SearchForm).props().keywordSearch)
+    const searchForm = enzymeWrapper.find(SearchForm)
+    const searchFormProps = searchForm.props()
+
+    expect(searchForm.length).toBe(1)
+    expect(searchFormProps.keywordSearch)
       .toEqual('Test value')
-    expect(enzymeWrapper.find(SearchForm).props().onClearFilters)
+    expect(searchFormProps.onClearFilters)
       .toEqual(props.onClearFilters)
-    expect(enzymeWrapper.find(SearchForm).props().onChangeQuery)
+    expect(searchFormProps.onChangeQuery)
       .toEqual(props.onChangeQuery)
-    expect(enzymeWrapper.find(SearchForm).props().onToggleAdvancedSearchModal)
+    expect(searchFormProps.onToggleAdvancedSearchModal)
       .toEqual(props.onToggleAdvancedSearchModal)
+    expect(searchFormProps.showFilterStackToggle)
+      .toEqual(true)
   })
 })

@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Button from '../Button/Button'
-import ConnectedSpatialDisplayContainer
+import SpatialDisplayContainer
   from '../../containers/SpatialDisplayContainer/SpatialDisplayContainer'
-import ConnectedTemporalDisplayContainer
+import TemporalDisplayContainer
   from '../../containers/TemporalDisplayContainer/TemporalDisplayContainer'
 import SpatialSelectionDropdownContainer
   from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
@@ -97,6 +97,10 @@ class SearchForm extends Component {
 
   render() {
     const {
+      showFilterStackToggle
+    } = this.props
+
+    const {
       keywordSearch,
       showFilterStack
     } = this.state
@@ -134,19 +138,40 @@ class SearchForm extends Component {
             onClick={this.onSearchClear}
             icon="eraser"
           />
-          <Button
-            bootstrapVariant="inline-block"
-            className="search-form__button search-form__button--dark search-form__button--toggle"
-            onClick={this.onToggleFilterStack}
-            title="Toggle Filter Stack"
-            label="Toggle Filter Stack"
-            icon="bars"
-          />
+          {
+            showFilterStackToggle && (
+              <>
+                {
+                  showFilterStack
+                    ? (
+                      <Button
+                        bootstrapVariant="inline-block"
+                        className="search-form__button search-form__button--dark search-form__button--toggle"
+                        onClick={this.onToggleFilterStack}
+                        title="Close filter stack"
+                        label="Close filter stack"
+                        icon="chevron-up"
+                      />
+                    )
+                    : (
+                      <Button
+                        bootstrapVariant="inline-block"
+                        className="search-form__button search-form__button--dark search-form__button--toggle"
+                        onClick={this.onToggleFilterStack}
+                        title="Open filter stack"
+                        label="Open filter stack"
+                        icon="bars"
+                      />
+                    )
+                }
+              </>
+            )
+          }
         </div>
         <div className="search-form__secondary">
           <FilterStack isOpen={showFilterStack}>
-            <ConnectedSpatialDisplayContainer />
-            <ConnectedTemporalDisplayContainer />
+            <SpatialDisplayContainer />
+            <TemporalDisplayContainer />
           </FilterStack>
         </div>
       </section>
@@ -159,7 +184,8 @@ SearchForm.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  showFilterStackToggle: PropTypes.bool.isRequired
 }
 
 export default SearchForm

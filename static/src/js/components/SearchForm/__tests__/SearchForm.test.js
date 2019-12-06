@@ -10,6 +10,7 @@ function setup() {
   const props = {
     authToken: '',
     keywordSearch: 'Test value',
+    showFilterStackToggle: false,
     onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
     onClearFilters: jest.fn(),

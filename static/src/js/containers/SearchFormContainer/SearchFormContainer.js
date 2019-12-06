@@ -16,19 +16,69 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  keywordSearch: state.query.collection.keyword
+  boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  drawingNewLayer: state.ui.map.drawingNewLayer,
+  gridCoords: state.query.granule.gridCoords,
+  gridName: state.query.collection.gridName,
+  keywordSearch: state.query.collection.keyword,
+  lineSearch: state.query.collection.spatial.line,
+  pointSearch: state.query.collection.spatial.point,
+  polygonSearch: state.query.collection.spatial.polygon,
+  selectingNewGrid: state.ui.grid.selectingNewGrid,
+  shapefile: state.shapefile,
+  temporalSearch: state.query.collection.temporal
 })
 
 // Export non-redux-connected component for use in tests
 // Import this class as `import { SearchFormContainer } from '../SearchFormContainer'`
 export const SearchFormContainer = (props) => {
   const {
+    boundingBoxSearch,
+    drawingNewLayer,
+    gridName,
+    gridCoords,
+    lineSearch,
+    pointSearch,
     keywordSearch,
+    polygonSearch,
+    selectingNewGrid,
+    shapefile,
+    temporalSearch,
     onChangeQuery,
     onClearFilters,
     onChangeFocusedCollection,
     onToggleAdvancedSearchModal
   } = props
+
+  const {
+    endDate: temporalEnd,
+    startDate: temporalStart
+  } = temporalSearch
+
+  const {
+    shapefileError,
+    shapefileLoading,
+    shapefileLoaded,
+    shapefileId
+  } = shapefile
+
+  const showFilterStackToggle = [
+    boundingBoxSearch,
+    drawingNewLayer,
+    gridName,
+    gridCoords,
+    lineSearch,
+    pointSearch,
+    keywordSearch,
+    polygonSearch,
+    selectingNewGrid,
+    shapefileError,
+    shapefileLoading,
+    shapefileLoaded,
+    shapefileId,
+    temporalEnd,
+    temporalStart
+  ].some(filter => !!filter)
 
   return (
     <SearchForm
@@ -37,20 +87,42 @@ export const SearchFormContainer = (props) => {
       onClearFilters={onClearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
       keywordSearch={keywordSearch}
+      showFilterStackToggle={showFilterStackToggle}
     />
   )
 }
 
 SearchFormContainer.defaultProps = {
-  keywordSearch: ''
+  keywordSearch: '',
+  boundingBoxSearch: '',
+  gridName: '',
+  gridCoords: '',
+  lineSearch: '',
+  pointSearch: '',
+  polygonSearch: '',
+  shapefile: {},
+  temporalSearch: {}
 }
 
 SearchFormContainer.propTypes = {
+  boundingBoxSearch: PropTypes.string,
+  drawingNewLayer: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]).isRequired,
+  gridName: PropTypes.string,
+  gridCoords: PropTypes.string,
+  lineSearch: PropTypes.string,
   keywordSearch: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  pointSearch: PropTypes.string,
+  polygonSearch: PropTypes.string,
+  selectingNewGrid: PropTypes.bool.isRequired,
+  shapefile: PropTypes.shape({}),
+  temporalSearch: PropTypes.shape({})
 }
 
 // Export redux-connected component for use in application
