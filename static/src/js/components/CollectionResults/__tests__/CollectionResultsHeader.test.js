@@ -13,6 +13,7 @@ function setup(propsOverride) {
     portal: {},
     onChangeQuery: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
+    onToggleAdvancedSearchModal: jest.fn(),
     ...propsOverride
   }
 
@@ -29,6 +30,17 @@ describe('CollectionResultsHeader component', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.type()).toEqual('div')
     expect(enzymeWrapper.props().className).toEqual('collection-results-header')
+  })
+
+  describe('advanced search button', () => {
+    test('fires the action to open the advanced search modal', () => {
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.find('.collection-results-header__adv-search-btn').simulate('click')
+
+      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)
+    })
   })
 
   describe('portal config', () => {

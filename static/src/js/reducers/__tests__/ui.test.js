@@ -7,6 +7,7 @@ import {
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
+  TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
@@ -43,6 +44,9 @@ const initialState = {
   },
   secondaryOverlayPanel: {
     isOpen: false
+  },
+  advancedSearchModal: {
+    isOpen: true
   },
   shapefileUploadModal: {
     isOpen: false
@@ -265,6 +269,22 @@ describe('TOGGLE_SECONDARY_OVERLAY_PANEL', () => {
     const expectedState = {
       ...initialState,
       secondaryOverlayPanel: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_ADVANCED_SEARCH_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_ADVANCED_SEARCH_MODAL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      advancedSearchModal: { isOpen: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)

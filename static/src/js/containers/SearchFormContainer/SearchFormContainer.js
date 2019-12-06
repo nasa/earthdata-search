@@ -9,7 +9,10 @@ const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
   onChangeFocusedCollection:
     collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
-  onClearFilters: () => dispatch(actions.clearFilters())
+  onClearFilters:
+    () => dispatch(actions.clearFilters()),
+  onToggleAdvancedSearchModal:
+    state => dispatch(actions.toggleAdvancedSearchModal(state))
 })
 
 const mapStateToProps = state => ({
@@ -23,7 +26,8 @@ export const SearchFormContainer = (props) => {
     keywordSearch,
     onChangeQuery,
     onClearFilters,
-    onChangeFocusedCollection
+    onChangeFocusedCollection,
+    onToggleAdvancedSearchModal
   } = props
 
   return (
@@ -31,6 +35,7 @@ export const SearchFormContainer = (props) => {
       onChangeQuery={onChangeQuery}
       onChangeFocusedCollection={onChangeFocusedCollection}
       onClearFilters={onClearFilters}
+      onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
       keywordSearch={keywordSearch}
     />
   )
@@ -44,7 +49,8 @@ SearchFormContainer.propTypes = {
   keywordSearch: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
-  onClearFilters: PropTypes.func.isRequired
+  onClearFilters: PropTypes.func.isRequired,
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
 // Export redux-connected component for use in application

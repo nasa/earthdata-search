@@ -21,4 +21,10 @@
     margin: 0 $spacer/4;
     color: $color__green;
   }
+
+  &__adv-search-btn {
+    .button__icon {
+      margin-right: $spacer/2;
+    }
+  }
 }

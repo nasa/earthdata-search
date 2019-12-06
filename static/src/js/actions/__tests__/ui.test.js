@@ -2,9 +2,10 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-  masterOverlayPanelDragStart,
   masterOverlayPanelDragEnd,
+  masterOverlayPanelDragStart,
   masterOverlayPanelResize,
+  toggleAdvancedSearchModal,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
@@ -15,10 +16,11 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
-  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
-  TOGGLE_SHAPEFILE_UPLOAD_MODAL
+  TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+  TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -107,6 +109,27 @@ describe('toggleFacetsModal', () => {
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: TOGGLE_VIEW_ALL_FACETS_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('toggleAdvancedSearchModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        advancedSearch: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleAdvancedSearchModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_ADVANCED_SEARCH_MODAL,
       payload: true
     })
   })
