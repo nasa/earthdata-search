@@ -9,6 +9,16 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     isOpen: true,
+    isValid: true,
+    errors: {},
+    fields: [],
+    handleBlur: jest.fn(),
+    handleChange: jest.fn(),
+    handleSubmit: jest.fn(),
+    setFieldValue: jest.fn(),
+    setFieldTouched: jest.fn(),
+    touched: {},
+    values: {},
     onToggleAdvancedSearchModal: jest.fn()
   }
 

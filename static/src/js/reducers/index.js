@@ -5,6 +5,7 @@ import collectionMetadataReducer from './collectionMetadata'
 import dataQualitySummariesReducer from './dataQualitySummaries'
 import granuleMetadataReducer from './granuleMetadata'
 import collectionsResultsReducer from './collectionsResults'
+import advancedSearchReducer from './advancedSearch'
 import authTokenReducer from './authToken'
 import facetsReducer from './facets'
 import {
@@ -36,6 +37,7 @@ import providersReducer from './providers'
 import contactInfoReducer from './contactInfo'
 
 export default history => combineReducers({
+  advancedSearch: advancedSearchReducer,
   authToken: authTokenReducer,
   browser: browserReducer,
   contactInfo: contactInfoReducer,

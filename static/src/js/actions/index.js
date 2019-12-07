@@ -1,5 +1,7 @@
 /* eslint-disable import/no-cycle */
-
+import {
+  updateAdvancedSearch
+} from './advancedSearch'
 import {
   getCollections,
   restoreCollections,
@@ -194,6 +196,7 @@ const actions = {
   toggleTooManyPointsModal,
   triggerViewAllFacets,
   undoExcludeGranule,
+  updateAdvancedSearch,
   updateAccessMethod,
   updateAuthToken,
   updateBrowserVersion,

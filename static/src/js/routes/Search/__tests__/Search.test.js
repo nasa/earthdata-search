@@ -8,6 +8,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     match: {},
+    advancedSearch: {},
+    onUpdateAdvancedSearch: jest.fn(),
     onMasterOverlayHeightChange: jest.fn()
   }
 
