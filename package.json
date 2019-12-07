@@ -116,7 +116,7 @@
     "edsc-timeline": "git+https://github.com/nasa/edsc-timeline.git",
     "events": "^3.0.0",
     "fast-xml-parser": "^3.12.16",
-    "formik": "^1.5.8",
+    "formik": "^2.0.6",
     "history": "^4.7.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.19.3",

@@ -9,7 +9,17 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     isOpen: false,
+    fields: [],
+    errors: {},
+    handleBlur: jest.fn(),
+    handleChange: jest.fn(),
+    handleSubmit: jest.fn(),
+    isValid: true,
     onToggleAdvancedSearchModal: jest.fn(),
+    setFieldValue: jest.fn(),
+    setFieldTouched: jest.fn(),
+    touched: {},
+    values: {},
     ...overrideProps
   }
 

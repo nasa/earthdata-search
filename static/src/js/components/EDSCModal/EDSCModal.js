@@ -31,6 +31,7 @@ export class EDSCModal extends Component {
       isOpen,
       title,
       primaryAction,
+      primaryActionDisabled,
       secondaryAction,
       onPrimaryAction,
       onSecondaryAction
@@ -102,6 +103,7 @@ export class EDSCModal extends Component {
                               bootstrapVariant="primary"
                               onClick={onPrimaryAction}
                               label={primaryAction}
+                              disabled={primaryActionDisabled}
                             >
                               {primaryAction}
                             </Button>
@@ -127,6 +129,7 @@ EDSCModal.defaultProps = {
   title: null,
   size: 'sm',
   primaryAction: null,
+  primaryActionDisabled: false,
   secondaryAction: null,
   onPrimaryAction: null,
   onSecondaryAction: null
@@ -143,6 +146,7 @@ EDSCModal.propTypes = {
   title: PropTypes.string,
   size: PropTypes.string,
   primaryAction: PropTypes.string,
+  primaryActionDisabled: PropTypes.bool,
   secondaryAction: PropTypes.string,
   onPrimaryAction: PropTypes.func,
   onSecondaryAction: PropTypes.func

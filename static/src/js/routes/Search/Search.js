@@ -53,11 +53,17 @@ import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 
 import actions from '../../actions'
+import advancedSearchFields from '../../data/advancedSearchFields'
 
+const mapStateToProps = state => ({
+  advancedSearch: state.advancedSearch
+})
 
 const mapDispatchToProps = dispatch => ({
   onMasterOverlayHeightChange:
-    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight))
+    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
+  onUpdateAdvancedSearch:
+    values => dispatch(actions.updateAdvancedSearch(values))
 })
 
 export class Search extends Component {
@@ -70,7 +76,11 @@ export class Search extends Component {
   }
 
   render() {
-    const { match } = this.props
+    const {
+      advancedSearch,
+      match,
+      onUpdateAdvancedSearch
+    } = this.props
     const { path } = match
 
     return (
@@ -121,7 +131,11 @@ export class Search extends Component {
           </Switch>
           <RelatedUrlsModalContainer />
           <FacetsModalContainer />
-          <AdvancedSearchModalContainer />
+          <AdvancedSearchModalContainer
+            advancedSearch={advancedSearch}
+            fields={advancedSearchFields}
+            onUpdateAdvancedSearch={onUpdateAdvancedSearch}
+          />
         </div>
       </div>
     )
@@ -129,10 +143,12 @@ export class Search extends Component {
 }
 
 Search.propTypes = {
+  advancedSearch: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
-  onMasterOverlayHeightChange: PropTypes.func.isRequired
+  onMasterOverlayHeightChange: PropTypes.func.isRequired,
+  onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 
 export default withRouter(
-  connect(null, mapDispatchToProps)(Search)
+  connect(mapStateToProps, mapDispatchToProps)(Search)
 )
