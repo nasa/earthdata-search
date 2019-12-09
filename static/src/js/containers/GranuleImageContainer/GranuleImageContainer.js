@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import getFocusedGranuleObject from '../../util/focusedGranule'
 
 import GranuleImage from '../../components/GranuleImage/GranuleImage'
@@ -20,7 +22,7 @@ export const GranuleImageContainer = ({
   let imageSrc = ''
 
   if (focusedGranuleResult && focusedGranuleResult.browse_flag) {
-    imageSrc = `https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/${focusedGranule}?h=512&w=512`
+    imageSrc = `${getEarthdataConfig(cmrEnv()).cmrHost}/browse-scaler/browse_images/granules/${focusedGranule}?h=512&w=512`
   }
 
   return (
