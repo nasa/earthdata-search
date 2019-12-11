@@ -1,8 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import GranuleResultsItem from '../GranuleResultsItem'
+import GranuleResultsItem, { DataLinksButton } from '../GranuleResultsItem'
 import * as EventEmitter from '../../../events/events'
+import Button from '../../Button/Button'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -49,6 +50,31 @@ function setup(type) {
       }
     }
   }
+
+  if (type === 'cmr-no-download') {
+    props = {
+      ...defaultProps,
+      granule: {
+        id: 'granuleId',
+        browse_flag: true,
+        online_access_flag: true,
+        formatted_temporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        thumbnail: '/fake/path/image.jpg',
+        title: 'Granule title',
+        links: [
+          {
+            rel: 'http://linkrel/data#',
+            title: 'linktitle',
+            href: 's3://bucket/filename'
+          }
+        ]
+      }
+    }
+  }
+
   if (type === 'focusedGranule') {
     props = {
       ...defaultProps,
@@ -85,9 +111,9 @@ function setup(type) {
         title: 'Granule title',
         links: [
           {
-            rel: 'http://linkrel',
+            rel: 'http://linkrel/data#',
             title: 'linktitle',
-            href: 'htt[://linkhref'
+            href: 'http://linkhref'
           }
         ]
       }
@@ -108,9 +134,9 @@ function setup(type) {
         thumbnail: '/fake/path/image.jpg',
         links: [
           {
-            rel: 'http://linkrel',
+            rel: 'http://linkrel/data#',
             title: 'linktitle',
-            href: 'htt[://linkhref'
+            href: 'http://linkhref'
           }
         ]
       }
@@ -132,9 +158,9 @@ function setup(type) {
         thumbnail: '/fake/path/image.jpg',
         links: [
           {
-            rel: 'http://linkrel',
+            rel: 'http://linkrel/data#',
             title: 'linktitle',
-            href: 'htt[://linkhref'
+            href: 'http://linkhref'
           }
         ]
       }
@@ -235,22 +261,26 @@ describe('GranuleResultsItem component', () => {
     describe('with CMR granules', () => {
       test('it excludes the granule from results', () => {
         const { enzymeWrapper, props } = setup('cmr')
-        const removeButton = enzymeWrapper.find('button[title="Remove granule"]')
+        const removeButton = enzymeWrapper.find(Button)
 
         removeButton.simulate('click')
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
+
+        expect(removeButton.props().label).toEqual('Remove granule')
       })
     })
 
     describe('with CWIC granules', () => {
       test('it excludes the granule from results with a hashed granule id', () => {
         const { enzymeWrapper, props } = setup('cwic')
-        const removeButton = enzymeWrapper.find('button[title="Remove granule"]')
+        const removeButton = enzymeWrapper.find(Button)
 
         removeButton.simulate('click')
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: '170417722' }])
+
+        expect(removeButton.props().label).toEqual('Remove granule')
       })
     })
   })
@@ -261,6 +291,16 @@ describe('GranuleResultsItem component', () => {
       const dataLinksButton = enzymeWrapper.find('DataLinksButton')
 
       expect(dataLinksButton.props().onMetricsDataAccess).toEqual(props.onMetricsDataAccess)
+    })
+  })
+
+  describe('download button with no link', () => {
+    test('disables the buttom', () => {
+      const { enzymeWrapper } = setup('cmr-no-download')
+
+      const downloadButton = enzymeWrapper.find(DataLinksButton)
+
+      expect(downloadButton.props().dataLinks).toEqual([])
     })
   })
 

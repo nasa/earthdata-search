@@ -11,6 +11,7 @@ import { eventEmitter } from '../../events/events'
 
 import './GranuleResultsItem.scss'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import Button from '../Button/Button'
 
 class CustomDataLinksToggle extends Component {
   constructor(props, context) {
@@ -26,14 +27,14 @@ class CustomDataLinksToggle extends Component {
 
   render() {
     return (
-      <button
+      <Button
         className="button granule-results-item__button"
         type="button"
-        title="Download single granule data"
+        label="Download single granule data"
         onClick={this.handleClick}
       >
         <i className="fa fa-download" />
-      </button>
+      </Button>
     )
   }
 }
@@ -75,22 +76,37 @@ export const DataLinksButton = ({
       </Dropdown>
     )
   }
+
+  if (dataLinks.length === 1) {
+    return (
+      <Button
+        className="button granule-results-item__button"
+        href={dataLinks[0].href}
+        onClick={() => onMetricsDataAccess({
+          type: 'single_granule_download',
+          collections: [{
+            collectionId
+          }]
+        })}
+        rel="noopener noreferrer"
+        label="Download single granule data"
+        target="_blank"
+      >
+        <i className="fa fa-download" />
+      </Button>
+    )
+  }
+
   return (
-    <a
+    <Button
       className="button granule-results-item__button"
-      href={dataLinks[0].href}
-      onClick={() => onMetricsDataAccess({
-        type: 'single_granule_download',
-        collections: [{
-          collectionId
-        }]
-      })}
-      rel="noopener noreferrer"
-      title="Download single granule data"
-      target="_blank"
+      type="button"
+      label="No download link available"
+      disabled
+      onClick={e => e.preventDefault()}
     >
       <i className="fa fa-download" />
-    </a>
+    </Button>
   )
 }
 
@@ -259,14 +275,14 @@ const GranuleResultsItem = ({
                   />
                 )
               }
-              <button
+              <Button
                 className="button granule-results-item__button"
                 type="button"
-                title="Remove granule"
+                label="Remove granule"
                 onClick={handleRemoveClick}
               >
                 <i className="fa fa-close" />
-              </button>
+              </Button>
             </div>
           </div>
         </div>
