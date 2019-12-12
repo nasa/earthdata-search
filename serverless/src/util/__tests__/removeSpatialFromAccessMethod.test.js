@@ -1,7 +1,6 @@
 import { removeSpatialFromAccessMethod } from '../removeSpatialFromAccessMethod'
 import { accessMethod, accessMethodResetSpatial } from './mocks'
 
-
 describe('util#removeSpatialFromAccessMethod', () => {
   test('removes the bounding box from the model and rawModel', () => {
     const result = removeSpatialFromAccessMethod(accessMethod)

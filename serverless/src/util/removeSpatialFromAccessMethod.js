@@ -45,7 +45,7 @@ const updateModel = (parsedXml) => {
 
 /**
  * Resets the spatial values in the echoforms model and rawModel in an access method
- * @param {Object} accessMethod
+ * @param {Object} accessMethod A retrieval access method
  */
 export const removeSpatialFromAccessMethod = (accessMethod) => {
   const { model, rawModel } = accessMethod
