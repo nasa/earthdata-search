@@ -8,8 +8,24 @@ import EDSCModalOverlay from './EDSCModalOverlay'
 
 import './EDSCModal.scss'
 
-// id should be a string ex 'advanced-search'. This will be used to populate the aria-label and classnames
-
+/**
+ * Renders EDSCModal.
+ * @param {Element} body The modal body content.
+ * @param {String} className An optional classname for the modal.
+ * @param {Boolean} fixedHeight Sets the modal to fixed height.
+ * @param {Element} footer The footer content.
+ * @param {Element} footerMeta The footer meta content.
+ * @param {String} id A unique id for the modal.
+ * @param {Boolean} isOpen A flag that designates the modal open or closed.
+ * @param {Function} onClose A callback to be fired when the modal close is triggered.
+ * @param {String} title The modal title.
+ * @param {String} size The size to be passed to the Bootstrap modal.
+ * @param {String} primaryAction The text content for the primary action.
+ * @param {Boolean} primaryActionDisabled Disables the primary action.
+ * @param {String} secondaryAction The text content for the secondary action.
+ * @param {Function} onPrimaryAction A callback function for the primary action.
+ * @param {Function} onSecondaryAction A callback function for the secondary action.
+ */
 export class EDSCModal extends Component {
   constructor(props) {
     super(props)
