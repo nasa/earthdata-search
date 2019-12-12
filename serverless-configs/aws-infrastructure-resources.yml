@@ -133,7 +133,7 @@ Resources:
                 Resource: '*'
               - Effect: Allow
                 Action:
-                  - states:StartExecution
+                  - states:*
                 Resource: '*'
 
 # Output the following resources so that other stacks can access the values
