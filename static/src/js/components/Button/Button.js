@@ -13,6 +13,7 @@ import Spinner from '../Spinner/Spinner'
 import './Button.scss'
 
 export const Button = ({
+  as,
   badge,
   badgeVariant,
   bootstrapVariant,
@@ -78,6 +79,7 @@ export const Button = ({
 
   const button = (
     <Btn
+      as={as}
       className={buttonClasses}
       variant={bootstrapVariant}
       size={bootstrapSize}
@@ -134,6 +136,7 @@ export const Button = ({
 }
 
 Button.defaultProps = {
+  as: 'button',
   badge: null,
   badgeVariant: null,
   bootstrapSize: null,
@@ -158,6 +161,7 @@ Button.defaultProps = {
 }
 
 Button.propTypes = {
+  as: PropTypes.string,
   badge: PropTypes.string,
   badgeVariant: PropTypes.string,
   bootstrapSize: PropTypes.string,

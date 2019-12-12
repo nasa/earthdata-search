@@ -1,0 +1,7 @@
+.alert {
+  border: 0;
+
+  &-light {
+    background-color: $color__theme--light;
+  }
+}

@@ -1,0 +1,15 @@
+.edsc-alert {
+  &--small {
+    font-size: 0.75rem;
+  }
+
+  &--icon {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    font-size: 0.825rem;
+    margin-right: 0.75rem;
+  }
+}

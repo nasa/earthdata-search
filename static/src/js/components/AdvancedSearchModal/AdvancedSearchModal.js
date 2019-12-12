@@ -6,6 +6,24 @@ import EDSCModal from '../EDSCModal/EDSCModal'
 
 import './AdvancedSearchModal.scss'
 
+/**
+ * Renders AdvancedSearchModal.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.advancedSearch - The collections.
+ * @param {Boolean} props.isOpen - The modal state.
+ * @param {Object} props.fields - The advanced search fields.
+ * @param {Object} props.errors - Form errors provided by Formik.
+ * @param {Function} props.handleBlur - Callback function provided by Formik.
+ * @param {Function} props.handleChange - Callback function provided by Formik.
+ * @param {Function} props.handleSubmit - Callback function provided by Formik.
+ * @param {Boolean} props.isValid - Flag provided from Formik.
+ * @param {Function} props.onToggleAdvancedSearchModal - Callback function close the modal.
+ * @param {Function} props.resetForm - Callback function provided by Formik.
+ * @param {Function} props.setFieldValue - Callback function provided by Formik.
+ * @param {Function} props.setFieldTouched - Callback function provided by Formik.
+ * @param {Object} props.touched - Form state provided by Formik.
+ * @param {Object} props.values - Form values provided by Formik.
+ */
 export class AdvancedSearchModal extends Component {
   constructor(props) {
     super(props)
@@ -26,17 +44,26 @@ export class AdvancedSearchModal extends Component {
   }
 
   onCancelClick() {
-    const { onToggleAdvancedSearchModal } = this.props
-    onToggleAdvancedSearchModal(false)
+    this.resetAndClose()
   }
 
   onModalClose() {
-    const { onToggleAdvancedSearchModal } = this.props
+    this.resetAndClose()
+  }
+
+  resetAndClose() {
+    const {
+      onToggleAdvancedSearchModal,
+      resetForm
+    } = this.props
+
+    resetForm()
     onToggleAdvancedSearchModal(false)
   }
 
   render() {
     const {
+      advancedSearch,
       fields,
       isOpen,
       errors,
@@ -51,6 +78,7 @@ export class AdvancedSearchModal extends Component {
 
     const body = (
       <AdvancedSearchForm
+        advancedSearch={advancedSearch}
         fields={fields}
         errors={errors}
         handleBlur={handleBlur}
@@ -70,6 +98,7 @@ export class AdvancedSearchModal extends Component {
         isOpen={isOpen}
         id="advanced-search"
         size="lg"
+        fixedHeight
         onClose={this.onModalClose}
         body={body}
         primaryAction="Apply"
@@ -83,6 +112,7 @@ export class AdvancedSearchModal extends Component {
 }
 
 AdvancedSearchModal.propTypes = {
+  advancedSearch: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   fields: PropTypes.arrayOf(
     PropTypes.shape({})
@@ -92,6 +122,7 @@ AdvancedSearchModal.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isValid: PropTypes.bool.isRequired,
+  resetForm: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,
