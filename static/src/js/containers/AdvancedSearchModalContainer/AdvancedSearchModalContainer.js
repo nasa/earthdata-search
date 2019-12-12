@@ -5,8 +5,7 @@ import { withFormik } from 'formik'
 
 import actions from '../../actions'
 import {
-  getValidationSchema,
-  getIntitalValues
+  getValidationSchema
 } from '../../util/forms'
 
 import AdvancedSearchModal from '../../components/AdvancedSearchModal/AdvancedSearchModal'
@@ -81,15 +80,17 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
   },
   mapPropsToValues: (props) => {
     const {
-      advancedSearch,
-      fields
+      advancedSearch
     } = props
-    return getIntitalValues(fields, advancedSearch)
+
+    return advancedSearch
   },
   handleSubmit: (values, { props }) => {
     const {
       onUpdateAdvancedSearch
     } = props
+
+    console.warn('props', props)
 
     // Update the state with the current state of the form
     onUpdateAdvancedSearch(values)
