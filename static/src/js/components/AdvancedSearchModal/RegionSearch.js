@@ -15,13 +15,13 @@ import './RegionSearch.scss'
 const SEARCH_RESULTS = [{
   type: 'huc',
   id: '12341231235',
-  name: 'Upper Cayote Creek',
+  name: 'Upper Coyote Creek',
   polygon: '30.57275390625,61.4593006372525,24.90106201171875,56.06661507755054,36.52569580078125,51.63698756452315,30.57275390625,61.4593006372525'
 },
 {
   type: 'huc',
   id: '12341231236',
-  name: 'Lower Cayote Creek',
+  name: 'Lower Coyote Creek',
   polygon: '30.57275390625,61.4593006372525,24.90106201171875,56.06661507755054,36.52569580078125,51.63698756452315,30.57275390625,61.4593006372525'
 }]
 
@@ -243,134 +243,134 @@ export class RegionSearch extends Component {
       <Row className="region-search">
         <Col>
           {
-              (!hasSearched && !hasSelected) && (
-                <Row>
-                  <Col sm="6">
-                    <Form.Group
-                      as={Row}
-                      controlId={`${fieldName}.regionType`}
-                    >
-                      <Col>
-                        <Form.Control
-                          name={`${fieldName}.regionType`}
-                          as="select"
-                          onChange={handleChange}
-                          value={regionType}
-                        >
-                          {
-                            regionTypes.map(({
-                              label,
-                              value
-                            }) => (
-                              <option
-                                key={value}
-                                value={value}
-                              >
-                                {label}
-                              </option>
-                            ))
-                          }
-                        </Form.Control>
-                      </Col>
-                    </Form.Group>
-                    <Form.Group
-                      as={Row}
-                      controlId={`${fieldName}.searchValue`}
-                    >
-                      <Col>
-                        <Form.Control
-                          name={`${fieldName}.searchValue`}
-                          as="input"
-                          placeholder={this.getSelectedRegionType().placeholder}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={searchValue}
-                          isInvalid={searchValueErrors}
-                        />
-                        {
-                          searchValueErrors && (
-                            <Form.Control.Feedback type="invalid">
-                              {searchValueErrors}
-                            </Form.Control.Feedback>
-                          )
-                        }
-                      </Col>
-                    </Form.Group>
-                    <Row>
-                      <Col>
-                        <Row className="align-items-center">
-                          <Col>
-                            <Form.Group controlId={`${fieldName}.exactMatch`} className="mb-0">
-                              <Form.Check
-                                name={`${fieldName}.exactMatch`}
-                                type="checkbox"
-                                label="Exact match"
-                                onChange={handleChange}
-                                value={exactMatch}
-                              />
-                            </Form.Group>
-                          </Col>
-                          <Col sm="auto">
-                            <Button
-                              label="Search"
-                              variant="full"
-                              bootstrapVariant="light"
-                              disabled={searchValueErrors}
-                              onClick={() => {
-                                this.onSetResults()
-                              }}
-                            >
-                              Search
-                            </Button>
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col>
-                    {
-                      (selectedRegionType === 'huc' || selectedRegionType === 'region') && (
-                        <EDSCAlert
-                          variant="small"
-                          bootstrapVariant="light"
-                          icon="question-circle"
-                        >
-                          Find more information about Hydrological Units at
-                          {' '}
-                          <a
-                            className="link--external"
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            href="https://water.usgs.gov/GIS/huc.html"
-                          >
-                            https://water.usgs.gov/GIS/huc.html
-                          </a>
-                        </EDSCAlert>
-                      )
-                    }
-                  </Col>
-                </Row>
-              )
-            }
-          {
-              (hasSearched && hasSelected) && (
-                <p className="region-search__selected-region">
-                  <span className="region-search__selected-region-id">{`${selectedRegion.type.toUpperCase()} ${selectedRegion.id}`}</span>
-                  <span className="region-search__selected-region-name">
-                  (
-                    {selectedRegion.name}
-                  )
-                  </span>
-                  <Button
-                    bootstrapVariant="light"
-                    bootstrapSize="sm"
-                    label="Remove"
-                    onClick={() => this.onRemoveSelected()}
+            (!hasSearched && !hasSelected) && (
+              <Row>
+                <Col sm="6">
+                  <Form.Group
+                    as={Row}
+                    controlId={`${fieldName}.regionType`}
                   >
+                    <Col>
+                      <Form.Control
+                        name={`${fieldName}.regionType`}
+                        as="select"
+                        onChange={handleChange}
+                        value={regionType}
+                      >
+                        {
+                          regionTypes.map(({
+                            label,
+                            value
+                          }) => (
+                            <option
+                              key={value}
+                              value={value}
+                            >
+                              {label}
+                            </option>
+                          ))
+                        }
+                      </Form.Control>
+                    </Col>
+                  </Form.Group>
+                  <Form.Group
+                    as={Row}
+                    controlId={`${fieldName}.searchValue`}
+                  >
+                    <Col>
+                      <Form.Control
+                        name={`${fieldName}.searchValue`}
+                        as="input"
+                        placeholder={this.getSelectedRegionType().placeholder}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        value={searchValue}
+                        isInvalid={searchValueErrors}
+                      />
+                      {
+                        searchValueErrors && (
+                          <Form.Control.Feedback type="invalid">
+                            {searchValueErrors}
+                          </Form.Control.Feedback>
+                        )
+                      }
+                    </Col>
+                  </Form.Group>
+                  <Row>
+                    <Col>
+                      <Row className="align-items-center">
+                        <Col>
+                          <Form.Group controlId={`${fieldName}.exactMatch`} className="mb-0">
+                            <Form.Check
+                              name={`${fieldName}.exactMatch`}
+                              type="checkbox"
+                              label="Exact match"
+                              onChange={handleChange}
+                              value={exactMatch}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col sm="auto">
+                          <Button
+                            label="Search"
+                            variant="full"
+                            bootstrapVariant="light"
+                            disabled={searchValueErrors}
+                            onClick={() => {
+                              this.onSetResults()
+                            }}
+                          >
+                            Search
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col>
+                  {
+                    (selectedRegionType === 'huc' || selectedRegionType === 'region') && (
+                      <EDSCAlert
+                        variant="small"
+                        bootstrapVariant="light"
+                        icon="question-circle"
+                      >
+                        Find more information about Hydrological Units at
+                        {' '}
+                        <a
+                          className="link--external"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          href="https://water.usgs.gov/GIS/huc.html"
+                        >
+                          https://water.usgs.gov/GIS/huc.html
+                        </a>
+                      </EDSCAlert>
+                    )
+                  }
+                </Col>
+              </Row>
+            )
+          }
+          {
+            (Object.keys(selectedRegion).length > 0) && (
+              <p className="region-search__selected-region">
+                <span className="region-search__selected-region-id">{`${selectedRegion.type.toUpperCase()} ${selectedRegion.id}`}</span>
+                <span className="region-search__selected-region-name">
+                  (
+                  {selectedRegion.name}
+                  )
+                </span>
+                <Button
+                  bootstrapVariant="light"
+                  bootstrapSize="sm"
+                  label="Remove"
+                  onClick={() => this.onRemoveSelected()}
+                >
                     Remove
-                  </Button>
-                </p>
-              )
+                </Button>
+              </p>
+            )
             }
         </Col>
       </Row>
