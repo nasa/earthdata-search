@@ -48,9 +48,9 @@ const updateModel = (parsedXml) => {
  * @param {Object} accessMethod
  */
 export const removeSpatialFromAccessMethod = (accessMethod) => {
-  const { model, rawModel, type } = accessMethod
+  const { model, rawModel } = accessMethod
 
-  if (type !== 'ESI' || !model || !rawModel) return accessMethod
+  if (!model || !rawModel) return accessMethod
 
   const modelDoc = new DOMParser().parseFromString(model)
   const rawModelDoc = new DOMParser().parseFromString(rawModel)
