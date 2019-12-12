@@ -57,7 +57,7 @@ export const buildUrls = (json, authToken) => {
   }
 
   if (isCwic) {
-    // TODO: Replace the `href` here with teh value stored in the tag created in EDSC-2265
+    // TODO: Replace the `href` here with the value stored in the tag created in EDSC-2265
     // urls.granuleDatasource = {
     //   title: 'CWIC',
     //   href: 'example.com'
