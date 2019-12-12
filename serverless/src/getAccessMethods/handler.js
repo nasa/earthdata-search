@@ -129,21 +129,6 @@ const getAccessMethods = async (event, context) => {
     Object.keys(accessMethods).forEach((methodName) => {
       const method = accessMethods[methodName]
 
-      // Add the users email address to all forms that appear within the
-      // access methods (savedAccessConfigs will overwrite these with saved values)
-      if (['ESI', 'ECHO ORDERS'].includes(method.type)) {
-        // Retrieve the email address of the currently authenticated user to prepopulate the form
-        const { urs_profile: ursProfile } = authenticatedUser
-        const { email_address: emailAddress = '' } = ursProfile
-
-        const { form } = method
-
-        // Only attempt to update teh form if an email address exists and there is a valid form
-        if (emailAddress.length > 0 && form.length > 0) {
-          method.form = form.replace('<ecs:email/>', `<ecs:email>${emailAddress}</ecs:email>`)
-        }
-      }
-
       // Update the accessMethod that matches the savedAccessConfig
       if (accessConfigRecord) {
         const { access_method: savedAccessConfig } = accessConfigRecord
@@ -178,6 +163,21 @@ const getAccessMethods = async (event, context) => {
               form_digest: formDigest
             }
           }
+        }
+      }
+
+      // Add the users email address to all forms that appear within the
+      // access methods (savedAccessConfigs will overwrite these with saved values)
+      if (['ESI', 'ECHO ORDERS'].includes(method.type)) {
+        // Retrieve the email address of the currently authenticated user to prepopulate the form
+        const { urs_profile: ursProfile } = authenticatedUser
+        const { email_address: emailAddress = '' } = ursProfile
+
+        const { form } = method
+
+        // Only attempt to update the form if an email address exists and there is a valid form
+        if (emailAddress.length > 0 && form.length > 0) {
+          method.form = form.replace('<ecs:email/>', `<ecs:email>${emailAddress}</ecs:email>`)
         }
       }
     })

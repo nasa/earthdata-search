@@ -7,6 +7,7 @@ import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { removeSpatialFromAccessMethod } from '../util/removeSpatialFromAccessMethod'
 
 // AWS SQS adapter
 let sqs
@@ -89,10 +90,12 @@ const submitRetrieval = async (event, context) => {
         .select('id')
         .where({ user_id: userId, collection_id: id })
 
+      const accessMethodWithoutSpatial = removeSpatialFromAccessMethod(accessMethod)
+
       if (existingAccessConfig.length) {
         await retrievalDbTransaction('access_configurations')
           .update({
-            access_method: accessMethod
+            access_method: accessMethodWithoutSpatial
           })
           .where({ user_id: userId, collection_id: id })
       } else {
@@ -100,7 +103,7 @@ const submitRetrieval = async (event, context) => {
           .insert({
             user_id: userId,
             collection_id: id,
-            access_method: accessMethod
+            access_method: accessMethodWithoutSpatial
           })
       }
 
