@@ -1,4 +1,26 @@
 .edsc-modal {
+  &--fixed-height {
+    .modal-content {
+      height: 25rem;
+      max-height: 80vh;
+      overflow: hidden;
+    }
+
+    .modal-body {
+      overflow: scroll;
+    }
+  }
+
+  &__header {
+    background-color: $color__theme--light;
+    border-bottom: 0;
+  }
+
+  &__title {
+    font-weight: 700;
+    color: $color__black--600;
+  }
+
   &__footer {
     display: flex;
     flex-direction: row-reverse;

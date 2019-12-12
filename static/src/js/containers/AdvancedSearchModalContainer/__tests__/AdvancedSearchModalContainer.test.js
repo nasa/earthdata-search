@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    advancedSearch: {},
     isOpen: true,
     isValid: true,
     errors: {},
@@ -15,6 +16,7 @@ function setup() {
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
     handleSubmit: jest.fn(),
+    resetForm: jest.fn(),
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
     touched: {},
@@ -40,5 +42,9 @@ describe('AdvancedSearchModalContainer component', () => {
       .toEqual(true)
     expect(enzymeWrapper.find(AdvancedSearchModal).props().onToggleAdvancedSearchModal)
       .toEqual(props.onToggleAdvancedSearchModal)
+    expect(enzymeWrapper.find(AdvancedSearchModal).props().advancedSearch)
+      .toEqual(props.advancedSearch)
+    expect(enzymeWrapper.find(AdvancedSearchModal).props().resetForm)
+      .toEqual(props.resetForm)
   })
 })
