@@ -77,9 +77,14 @@ export const Button = ({
     rel = 'noopener nofollow'
   }
 
+  let asEl
+  if (as === 'button' && href) {
+    asEl = undefined
+  }
+
   const button = (
     <Btn
-      as={as}
+      as={asEl}
       className={buttonClasses}
       variant={bootstrapVariant}
       size={bootstrapSize}

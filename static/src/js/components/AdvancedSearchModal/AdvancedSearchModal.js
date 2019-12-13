@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import AdvancedSearchForm from './AdvancedSearchForm'
 import EDSCModal from '../EDSCModal/EDSCModal'
+import RegionSearchResults from './RegionSearchResults'
 
 import './AdvancedSearchModal.scss'
 
@@ -16,8 +17,10 @@ import './AdvancedSearchModal.scss'
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
  * @param {Function} props.handleSubmit - Callback function provided by Formik.
- * @param {Boolean} props.isValid - Flag provided from Formik.
+ * @param {Boolean} props.isValid - Flag provided from Formik
  * @param {Function} props.onToggleAdvancedSearchModal - Callback function close the modal.
+ * @param {Function} props.onChangeRegionQuery - Callback function to update the region search results.
+ * @param {Object} props.regionSearchResults - The current region search results.
  * @param {Function} props.resetForm - Callback function provided by Formik.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
@@ -70,11 +73,21 @@ export class AdvancedSearchModal extends Component {
       handleBlur,
       handleChange,
       isValid,
+      regionSearchResults,
       setFieldValue,
       setFieldTouched,
       touched,
-      values
+      values,
+      onChangeRegionQuery
     } = this.props
+
+    const regionSearchResultsOverlay = (
+      <RegionSearchResults regionSearchResults={regionSearchResults} setFieldValue={setFieldValue} />
+    )
+
+    const modalOverlays = {
+      regionSearchResults: regionSearchResultsOverlay
+    }
 
     const body = (
       <AdvancedSearchForm
@@ -84,10 +97,12 @@ export class AdvancedSearchModal extends Component {
         handleBlur={handleBlur}
         handleChange={handleChange}
         isValid={isValid}
+        regionSearchResults={regionSearchResults}
         setFieldValue={setFieldValue}
         setFieldTouched={setFieldTouched}
         touched={touched}
         values={values}
+        onChangeRegionQuery={onChangeRegionQuery}
       />
     )
 
@@ -101,6 +116,7 @@ export class AdvancedSearchModal extends Component {
         fixedHeight
         onClose={this.onModalClose}
         body={body}
+        modalOverlays={modalOverlays}
         primaryAction="Apply"
         primaryActionDisabled={!isValid}
         onPrimaryAction={this.onApplyClick}
@@ -122,12 +138,14 @@ AdvancedSearchModal.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isValid: PropTypes.bool.isRequired,
+  regionSearchResults: PropTypes.shape({}).isRequired,
   resetForm: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  onChangeRegionQuery: PropTypes.func.isRequired
 }
 
 export default AdvancedSearchModal

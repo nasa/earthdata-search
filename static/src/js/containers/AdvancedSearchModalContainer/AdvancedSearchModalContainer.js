@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withFormik } from 'formik'
+import { isEmpty } from 'lodash'
 
 import actions from '../../actions'
 import {
@@ -12,12 +13,17 @@ import AdvancedSearchModal from '../../components/AdvancedSearchModal/AdvancedSe
 
 const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
-  isOpen: state.ui.advancedSearchModal.isOpen
+  isOpen: state.ui.advancedSearchModal.isOpen,
+  regionSearchResults: state.searchResults.regions
 })
 
 const mapDispatchToProps = dispatch => ({
   onToggleAdvancedSearchModal:
-    state => dispatch(actions.toggleAdvancedSearchModal(state))
+    state => dispatch(actions.toggleAdvancedSearchModal(state)),
+  onChangeRegionQuery:
+    query => dispatch(actions.changeRegionQuery(query)),
+  onChangeQuery:
+    query => dispatch(actions.changeQuery(query))
 })
 
 /**
@@ -32,7 +38,10 @@ const mapDispatchToProps = dispatch => ({
  * @param {Function} props.handleSubmit - Callback function provided by Formik.
  * @param {Boolean} props.isValid - Flag provided from Formik.
  * @param {Function} props.onToggleAdvancedSearchModal - Callback function close the modal.
+ * @param {Function} props.onChangeRegionQuery - Callback function to update the region search results.
+ * @param {Function} props.onChangeQuery - Callback function to update the search results.
  * @param {Function} props.resetForm - Callback function provided by Formik.
+ * @param {Object} props.regionSearchResults - The current region search results.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
@@ -47,8 +56,11 @@ export const AdvancedSearchModalContainer = ({
   handleChange,
   handleSubmit,
   isValid,
+  onChangeRegionQuery,
+  onChangeQuery,
   onToggleAdvancedSearchModal,
   resetForm,
+  regionSearchResults,
   setFieldValue,
   setFieldTouched,
   touched,
@@ -58,6 +70,8 @@ export const AdvancedSearchModalContainer = ({
     advancedSearch={advancedSearch}
     isOpen={isOpen}
     fields={fields}
+    onChangeRegionQuery={onChangeRegionQuery}
+    onChangeQuery={onChangeQuery}
     onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
     errors={errors}
     handleBlur={handleBlur}
@@ -65,6 +79,7 @@ export const AdvancedSearchModalContainer = ({
     handleSubmit={handleSubmit}
     isValid={isValid}
     resetForm={resetForm}
+    regionSearchResults={regionSearchResults}
     setFieldValue={setFieldValue}
     setFieldTouched={setFieldTouched}
     touched={touched}
@@ -87,13 +102,37 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
   },
   handleSubmit: (values, { props }) => {
     const {
-      onUpdateAdvancedSearch
+      onUpdateAdvancedSearch,
+      onChangeQuery
     } = props
 
-    console.warn('props', props)
+    const {
+      regionSearch: regionSearchValues = {}
+    } = values
+
+    const {
+      selectedRegion
+    } = regionSearchValues
 
     // Update the state with the current state of the form
     onUpdateAdvancedSearch(values)
+
+    const newQuery = {
+      collection: {}
+    }
+
+    if (!isEmpty(regionSearchValues)) {
+      if (selectedRegion) {
+        newQuery.collection = {
+          ...newQuery.collection,
+          spatial: {
+            polygon: selectedRegion.spatial
+          }
+        }
+      }
+    }
+
+    onChangeQuery(newQuery)
   }
 })(AdvancedSearchModalContainer)
 
@@ -109,10 +148,13 @@ AdvancedSearchModalContainer.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isValid: PropTypes.bool.isRequired,
   resetForm: PropTypes.func.isRequired,
+  regionSearchResults: PropTypes.shape({}).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
+  onChangeRegionQuery: PropTypes.func.isRequired,
+  onChangeQuery: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
