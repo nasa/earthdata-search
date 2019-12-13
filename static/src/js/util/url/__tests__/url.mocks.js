@@ -1,5 +1,5 @@
 export const emptyDecodedResult = {
-  collections: undefined,
+  advancedSearch: {},
   cmrFacets: {
     data_center_h: undefined,
     instrument_h: undefined,
@@ -8,6 +8,7 @@ export const emptyDecodedResult = {
     project_h: undefined,
     science_keywords_h: undefined
   },
+  collections: undefined,
   featureFacets: {
     customizable: false,
     mapImagery: false,
@@ -41,5 +42,3 @@ export const emptyDecodedResult = {
   },
   timeline: undefined
 }
-
-export default emptyDecodedResult

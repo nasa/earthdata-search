@@ -13,8 +13,9 @@ const restoreFromUrl = payload => ({
 })
 
 export const updateStore = ({
-  collections,
+  advancedSearch,
   cmrFacets,
+  collections,
   featureFacets,
   focusedCollection,
   focusedGranule,
@@ -37,8 +38,9 @@ export const updateStore = ({
   // If the newPathname is not equal to the current pathname, restore the data from the url
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
     dispatch(restoreFromUrl({
-      collections,
+      advancedSearch,
       cmrFacets,
+      collections,
       featureFacets,
       focusedCollection,
       focusedGranule,
