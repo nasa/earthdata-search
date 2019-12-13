@@ -1,4 +1,4 @@
-import { UPDATE_ADVANCED_SEARCH } from '../constants/actionTypes'
+import { UPDATE_ADVANCED_SEARCH, RESTORE_FROM_URL } from '../constants/actionTypes'
 
 const initialState = {}
 
@@ -8,6 +8,11 @@ const advancedSearchReducer = (state = initialState, action) => {
       return {
         ...action.payload
       }
+    }
+    case RESTORE_FROM_URL: {
+      const { advancedSearch = initialState } = action.payload
+
+      return advancedSearch
     }
     default:
       return state

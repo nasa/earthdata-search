@@ -13,6 +13,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   collections: state.metadata.collections,
   gridName: state.query.collection.gridName,

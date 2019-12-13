@@ -12,6 +12,7 @@ import { decodeCollections, encodeCollections } from './collectionsEncoders'
 import { decodeGridCoords, encodeGridCoords } from './gridEncoders'
 import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesOrCwicEncoders'
 import { isPath } from '../isPath'
+import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -134,7 +135,10 @@ export const decodeUrlParams = (paramString) => {
     shapefileId: decodeHelp(params, 'shapefileId')
   }
 
+  const advancedSearch = decodeAdvancedSearch(params)
+
   return {
+    advancedSearch,
     cmrFacets,
     collections,
     featureFacets,
@@ -166,12 +170,14 @@ export const encodeUrlQuery = (props) => {
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
   const collectionsQuery = encodeCollections(props)
   const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
+  const advancedQuery = encodeAdvancedSearch(props.advancedSearch)
 
   const encodedQuery = {
     ...collectionsQuery,
     ...query,
     ...timelineQuery,
-    ...scienceKeywordQuery
+    ...scienceKeywordQuery,
+    ...advancedQuery
   }
 
   const paramString = stringify(encodedQuery)
