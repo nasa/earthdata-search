@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    advancedSearch: {},
     authToken: '',
     keywordSearch: 'Test value',
     showFilterStackToggle: false,

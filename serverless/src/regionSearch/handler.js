@@ -55,10 +55,19 @@ const regionSearch = async (event, context) => {
       ...responseObject
     }
 
-    if (endpoint === 'region' || endpoint === 'huc') {
+    if (endpoint === 'region') {
       formattedResponseObject = {
         id: formattedResponseObject.HUC,
         name: id,
+        spatial: formattedResponseObject['Visvalingam Polygon'],
+        type: 'huc'
+      }
+    }
+
+    if (endpoint === 'huc') {
+      formattedResponseObject = {
+        id,
+        name: formattedResponseObject['Region Name'],
         spatial: formattedResponseObject['Visvalingam Polygon'],
         type: 'huc'
       }
