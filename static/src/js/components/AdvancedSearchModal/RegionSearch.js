@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import * as Yup from 'yup'
 import { Formik } from 'formik'
 import {
   Col,
@@ -57,23 +58,20 @@ export class RegionSearch extends Component {
       selectedRegion: selectedRegionValues
     } = regionSearchValues
 
-    this.state = {
-      selectedRegionType: 'huc',
-      regionTypes: [
-        {
-          type: 'huc',
-          label: 'HUC ID',
-          value: 'huc',
-          placeholder: 'ex. 14010003'
-        },
-        {
-          type: 'region',
-          label: 'HUC Region',
-          value: 'region',
-          placeholder: 'ex. Colorado Mine'
-        }
-      ]
-    }
+    this.endpoints = [
+      {
+        type: 'huc',
+        label: 'HUC ID',
+        value: 'huc',
+        placeholder: 'ex. 14010003'
+      },
+      {
+        type: 'region',
+        label: 'HUC Region',
+        value: 'region',
+        placeholder: 'ex. Colorado Mine'
+      }
+    ]
   }
 
   onSearchSubmit(values) {
@@ -104,15 +102,10 @@ export class RegionSearch extends Component {
     setModalOverlay(null)
   }
 
-  getSelectedRegionType() {
-    const {
-      selectedRegionType,
-      regionTypes
-    } = this.state
-
-    return regionTypes.find(({
+  getEndpointData(endpoint) {
+    return this.endpoints.find(({
       value
-    }) => value === selectedRegionType)
+    }) => value === endpoint)
   }
 
   renderSearchResults() {
@@ -139,31 +132,35 @@ export class RegionSearch extends Component {
     } = regionSearchValues
 
     const {
-      regionTypes,
-      selectedRegionType
-    } = this.state
-
-    const {
       name: fieldName,
       fields
     } = field
 
     const initialValues = {}
+    const validation = {}
 
     fields.forEach((field) => {
+      // Grab the initial values from the config
       if (field && field.value) {
         initialValues[field.name] = field.value
       }
 
+      // Overrite with the values from Redux
       if (regionSearchValues && regionSearchValues[field.name]) {
         initialValues[field.name] = regionSearchValues[field.name]
+      }
+
+      // Grab the validation rules
+      if (field && field.validation) {
+        validation[field.name] = field.validation
       }
     })
 
     return (
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, props) => this.onSearchSubmit(values, props)}
+        validationSchema={() => Yup.object().shape(validation)}
+        onSubmit={values => this.onSearchSubmit(values)}
       >
         {
           // eslint-disable-next-line arrow-body-style
@@ -174,12 +171,18 @@ export class RegionSearch extends Component {
               handleBlur,
               handleChange,
               handleSubmit,
-              values
+              touched,
+              values,
+              isValid
             } = regionSearchForm
 
             const {
-              searchValue: searchValueErrors
+              keyword: keywordErrors
             } = errors
+
+            const {
+              keyword: keywordTouched
+            } = touched
 
             const {
               endpoint,
@@ -206,7 +209,7 @@ export class RegionSearch extends Component {
                                 value={endpoint}
                               >
                                 {
-                                  regionTypes.map(({
+                                  this.endpoints.map(({
                                     label,
                                     value
                                   }) => (
@@ -229,16 +232,16 @@ export class RegionSearch extends Component {
                               <Form.Control
                                 name="keyword"
                                 as="input"
-                                placeholder={this.getSelectedRegionType().placeholder}
+                                placeholder={this.getEndpointData(endpoint).placeholder}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 value={keyword}
-                                isInvalid={searchValueErrors}
+                                isInvalid={keywordErrors && keywordTouched}
                               />
                               {
-                                searchValueErrors && (
+                                (keywordErrors && keywordTouched) && (
                                   <Form.Control.Feedback type="invalid">
-                                    {searchValueErrors}
+                                    {keywordErrors}
                                   </Form.Control.Feedback>
                                 )
                               }
@@ -263,7 +266,7 @@ export class RegionSearch extends Component {
                                     label="Search"
                                     variant="full"
                                     bootstrapVariant="light"
-                                    disabled={searchValueErrors}
+                                    disabled={!isValid}
                                     onClick={handleSubmit}
                                     type="button"
                                   >
@@ -276,7 +279,7 @@ export class RegionSearch extends Component {
                         </Col>
                         <Col>
                           {
-                            (selectedRegionType === 'huc' || selectedRegionType === 'region') && (
+                            (endpoint === 'huc' || endpoint === 'region') && (
                               <EDSCAlert
                                 variant="small"
                                 bootstrapVariant="light"

@@ -1,3 +1,5 @@
+import * as Yup from 'yup'
+
 export const advancedSearchFields = [
   {
     name: 'regionSearch',
@@ -9,10 +11,19 @@ export const advancedSearchFields = [
         value: 'huc'
       },
       {
-        name: 'keyword'
+        name: 'keyword',
+        validation: Yup.mixed().when('endpoint', {
+          is: 'huc',
+          then: Yup.number()
+            .typeError('A valid HUC is required')
+            .required('A value is required'),
+          otherwise: Yup.string('A valid HUC region is required')
+            .required('Region is required')
+        })
       },
       {
-        name: 'exact'
+        name: 'exact',
+        value: false
       }
     ]
   }
