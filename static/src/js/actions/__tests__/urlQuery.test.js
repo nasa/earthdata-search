@@ -16,6 +16,7 @@ beforeEach(() => {
 describe('updateStore', () => {
   test('calls restoreFromUrl and gets new search results', () => {
     const params = {
+      advancedSearch: {},
       cmrFacets: {},
       featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
       focusedCollection: 'C00001-EDSC',
@@ -95,6 +96,7 @@ describe('changePath', () => {
 
       expect(updateStoreMock).toBeCalledTimes(1)
       expect(updateStoreMock).toBeCalledWith({
+        advancedSearch: {},
         cmrFacets: {},
         featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
         focusedCollection: 'C00001-EDSC',
@@ -133,6 +135,7 @@ describe('changePath', () => {
 
     expect(updateStoreMock).toBeCalledTimes(1)
     expect(updateStoreMock).toBeCalledWith({
+      advancedSearch: {},
       cmrFacets: {},
       featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
       focusedCollection: 'C00001-EDSC',
