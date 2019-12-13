@@ -34,12 +34,14 @@ import {
   changeGranuleGridCoords,
   changeGranulePageNum,
   changeProjectQuery,
+  changeRegionQuery,
   changeQuery,
   clearFilters,
   removeGridFilter,
   removeSpatialFilter,
   removeTemporalFilter,
-  updateGranuleQuery
+  updateGranuleQuery,
+  updateRegionQuery
 } from './search'
 import { changeMap } from './map'
 import {
@@ -94,6 +96,9 @@ import {
   fetchProviders
 } from './providers'
 import {
+  getRegions
+} from './regions'
+import {
   fetchRetrieval,
   submitRetrieval,
   deleteRetrieval
@@ -136,6 +141,7 @@ const actions = {
   changePath,
   changeProjectQuery,
   changeQuery,
+  changeRegionQuery,
   changeTimelineQuery,
   changeUrl,
   changeViewAllFacet,
@@ -162,6 +168,7 @@ const actions = {
   getGranules,
   getProjectCollections,
   getProjectGranules,
+  getRegions,
   getTimeline,
   getViewAllFacets,
   loadPortalConfig,
@@ -208,6 +215,7 @@ const actions = {
   updateGranuleResults,
   updateNotificationLevel,
   updateProjectName,
+  updateRegionQuery,
   updateSavedProject,
   updateShapefile,
   updateStore,

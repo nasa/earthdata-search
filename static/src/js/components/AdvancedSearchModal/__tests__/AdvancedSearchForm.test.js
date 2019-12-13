@@ -15,6 +15,8 @@ function setup(overrideProps) {
     errors: {},
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
+    onChangeRegionQuery: jest.fn(),
+    regionSearchResults: {},
     setFieldValue: jest.fn(),
     setModalOverlay: jest.fn(),
     touched: {},

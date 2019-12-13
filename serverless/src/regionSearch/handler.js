@@ -50,9 +50,25 @@ const regionSearch = async (event, context) => {
 
   Object.keys(results).forEach((id) => {
     const { [id]: responseObject } = results
+
+    let formattedResponseObject = {
+      ...responseObject
+    }
+
+    if (endpoint === 'region' || endpoint === 'huc') {
+      formattedResponseObject = {
+        id: formattedResponseObject.HUC,
+        name: id,
+        spatial: formattedResponseObject['Visvalingam Polygon'],
+        type: 'huc'
+      }
+    }
+
+    // TODO: Handle reformatting SWOT features
+
     filteredResponse.push({
       id,
-      ...responseObject
+      ...formattedResponseObject
     })
   })
 
