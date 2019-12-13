@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
 
 import Button from '../Button/Button'
+import AdvancedSearchDisplayContainer
+  from '../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
 import SpatialDisplayContainer
   from '../../containers/SpatialDisplayContainer/SpatialDisplayContainer'
 import TemporalDisplayContainer
@@ -16,7 +19,6 @@ import FilterStack
 import TextField from '../FormFields/TextField/TextField'
 
 import './SearchForm.scss'
-
 
 class SearchForm extends Component {
   constructor(props) {
@@ -97,6 +99,7 @@ class SearchForm extends Component {
 
   render() {
     const {
+      advancedSearch,
       showFilterStackToggle
     } = this.props
 
@@ -104,6 +107,16 @@ class SearchForm extends Component {
       keywordSearch,
       showFilterStack
     } = this.state
+
+    let spatialDisplayIsVisible = true
+
+    if (!isEmpty(advancedSearch)) {
+      const { regionSearch = {} } = advancedSearch
+      if (!isEmpty(regionSearch)) {
+        const { selectedRegion = {} } = regionSearch
+        if (!isEmpty(selectedRegion)) spatialDisplayIsVisible = false
+      }
+    }
 
     return (
       <section className="search-form">
@@ -170,7 +183,12 @@ class SearchForm extends Component {
         </div>
         <div className="search-form__secondary">
           <FilterStack isOpen={showFilterStack}>
-            <SpatialDisplayContainer />
+            <AdvancedSearchDisplayContainer />
+            {
+              spatialDisplayIsVisible && (
+                <SpatialDisplayContainer />
+              )
+            }
             <TemporalDisplayContainer />
           </FilterStack>
         </div>
@@ -180,6 +198,7 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
+  advancedSearch: PropTypes.shape({}).isRequired,
   keywordSearch: PropTypes.string.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,

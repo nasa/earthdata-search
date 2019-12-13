@@ -5,17 +5,14 @@ export const advancedSearchFields = [
     label: 'Search by region',
     fields: [
       {
-        name: 'regionType',
+        name: 'endpoint',
         value: 'huc'
       },
       {
-        name: 'searchValue'
+        name: 'keyword'
       },
       {
-        name: 'exactMatch'
-      },
-      {
-        name: 'searchSubmit'
+        name: 'exact'
       }
     ]
   }

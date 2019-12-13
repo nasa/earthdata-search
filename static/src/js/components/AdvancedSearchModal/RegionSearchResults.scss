@@ -16,13 +16,13 @@
     color: $color__black--500;
   }
 
-  &__results-list-meta {
+  &__list-meta {
     color: $color__black--500;
     font-size: 0.925rem;
     font-weight: 700;
   }
 
-  &__results-list {
+  &__list {
     list-style: none;
     margin: 0;
     margin-left: -15px;
@@ -30,7 +30,7 @@
     padding: 0;
   }
 
-  &__results-item {
+  &__item {
     display: block;
     width: 100%;
     padding: $spacer/4 $spacer;

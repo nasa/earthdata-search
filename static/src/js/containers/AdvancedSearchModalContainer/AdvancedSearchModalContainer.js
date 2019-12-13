@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withFormik } from 'formik'
-import { isEmpty } from 'lodash'
 
 import actions from '../../actions'
 import {
@@ -106,33 +105,8 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
       onChangeQuery
     } = props
 
-    const {
-      regionSearch: regionSearchValues = {}
-    } = values
-
-    const {
-      selectedRegion
-    } = regionSearchValues
-
-    // Update the state with the current state of the form
     onUpdateAdvancedSearch(values)
-
-    const newQuery = {
-      collection: {}
-    }
-
-    if (!isEmpty(regionSearchValues)) {
-      if (selectedRegion) {
-        newQuery.collection = {
-          ...newQuery.collection,
-          spatial: {
-            polygon: selectedRegion.spatial
-          }
-        }
-      }
-    }
-
-    onChangeQuery(newQuery)
+    onChangeQuery()
   }
 })(AdvancedSearchModalContainer)
 

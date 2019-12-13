@@ -144,12 +144,25 @@ export class RegionSearch extends Component {
     } = this.state
 
     const {
-      name: fieldName
+      name: fieldName,
+      fields
     } = field
+
+    const initialValues = {}
+
+    fields.forEach((field) => {
+      if (field && field.value) {
+        initialValues[field.name] = field.value
+      }
+
+      if (regionSearchValues && regionSearchValues[field.name]) {
+        initialValues[field.name] = regionSearchValues[field.name]
+      }
+    })
 
     return (
       <Formik
-        initialValues={regionSearchValues}
+        initialValues={initialValues}
         onSubmit={(values, props) => this.onSearchSubmit(values, props)}
       >
         {

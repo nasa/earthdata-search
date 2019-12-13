@@ -76,17 +76,19 @@ export class RegionSearch extends Component {
                   {
                     regionResultIds.map((resId) => {
                       const result = regionResultsById[resId]
-                      const { name, id } = result
+                      const { name, id, type } = result
                       return (
                         <Button
                           key={id}
-                          className="region-search-results__results-item"
+                          className="region-search-results__item"
                           variant="naked"
                           onClick={() => this.onSetSelected(result)}
                           as="li"
                           label={id}
                         >
-                          <span className="region-search-results__selected-region-id">{id}</span>
+                          <span className="region-search-results__selected-region-id">
+                            {`${type.toUpperCase()} ${id}`}
+                          </span>
                           <span className="region-search-results__selected-region-name">
                             (
                             {name}

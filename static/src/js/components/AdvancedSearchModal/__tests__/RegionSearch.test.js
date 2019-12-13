@@ -12,7 +12,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     field: {
-      name: 'regionSearch'
+      name: 'regionSearch',
+      fields: []
     },
     errors: {},
     handleBlur: jest.fn(),
