@@ -51,7 +51,10 @@ describe('RegionSearch component', () => {
 
     const formikWrapper = enzymeWrapper.find(Formik).renderProp('children')({
       errors: {},
-      values: {}
+      values: {
+        endpoint: 'huc'
+      },
+      touched: {}
     })
 
     test('renders the regionType select', () => {
@@ -76,7 +79,12 @@ describe('RegionSearch component', () => {
         const handleSubmitMock = jest.fn()
         const formikWrapper = enzymeWrapper.find(Formik).renderProp('children')({
           errors: {},
-          values: {},
+          values: {
+            endpoint: 'huc'
+          },
+          touched: {
+            keyword: {}
+          },
           handleSubmit: handleSubmitMock
         })
 
@@ -96,7 +104,12 @@ describe('RegionSearch component', () => {
 
       enzymeWrapper.find(Formik).renderProp('children')({
         errors: {},
-        values: {}
+        values: {
+          endpoint: 'huc'
+        },
+        touched: {
+          keyword: {}
+        }
       })
 
       const values = {
@@ -119,7 +132,12 @@ describe('RegionSearch component', () => {
       const { enzymeWrapper } = setup()
       enzymeWrapper.find(Formik).renderProp('children')({
         errors: {},
-        values: {}
+        values: {
+          endpoint: 'huc'
+        },
+        touched: {
+          keyword: {}
+        }
       })
 
       const renderSearchResultsMock = jest.fn()
@@ -172,10 +190,7 @@ describe('RegionSearch component', () => {
 
   describe('when searched but not selected', () => {
     test('sets the modal overlay', () => {
-      let passedComponent
-      const setResultsMock = jest.fn((component) => {
-        passedComponent = component
-      })
+      const setResultsMock = jest.fn()
 
       const { enzymeWrapper, props } = setup({
         setModalOverlay: setResultsMock
@@ -183,7 +198,12 @@ describe('RegionSearch component', () => {
 
       enzymeWrapper.find(Formik).renderProp('children')({
         errors: {},
-        values: {}
+        values: {
+          endpoint: 'huc'
+        },
+        touched: {
+          keyword: {}
+        }
       })
 
       const values = {
@@ -216,7 +236,12 @@ describe('RegionSearch component', () => {
 
       const wrapper = enzymeWrapper.find(Formik).renderProp('children')({
         errors: {},
-        values: {}
+        values: {
+          endpoint: 'huc'
+        },
+        touched: {
+          keyword: {}
+        }
       })
 
       expect(wrapper.find('.region-search__selected-region')
@@ -243,7 +268,12 @@ describe('RegionSearch component', () => {
 
       const wrapper = enzymeWrapper.find(Formik).renderProp('children')({
         errors: {},
-        values: {}
+        values: {
+          endpoint: 'huc'
+        },
+        touched: {
+          keyword: {}
+        }
       })
 
       const button = wrapper.find(Button)
