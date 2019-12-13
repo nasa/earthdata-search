@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { isPlainObject, isEmpty } from 'lodash'
+
 import actions from '../../actions/index'
 
 import SearchForm from '../../components/SearchForm/SearchForm'
@@ -16,6 +18,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   drawingNewLayer: state.ui.map.drawingNewLayer,
   gridCoords: state.query.granule.gridCoords,
@@ -33,6 +36,7 @@ const mapStateToProps = state => ({
 // Import this class as `import { SearchFormContainer } from '../SearchFormContainer'`
 export const SearchFormContainer = (props) => {
   const {
+    advancedSearch,
     boundingBoxSearch,
     drawingNewLayer,
     gridName,
@@ -63,6 +67,7 @@ export const SearchFormContainer = (props) => {
   } = shapefile
 
   const showFilterStackToggle = [
+    advancedSearch,
     boundingBoxSearch,
     drawingNewLayer,
     gridName,
@@ -78,7 +83,12 @@ export const SearchFormContainer = (props) => {
     shapefileId,
     temporalEnd,
     temporalStart
-  ].some(filter => !!filter)
+  ].some((filter) => {
+    if (isPlainObject(filter)) {
+      return !isEmpty(filter)
+    }
+    return !!filter
+  })
 
   return (
     <SearchForm
@@ -86,6 +96,7 @@ export const SearchFormContainer = (props) => {
       onChangeFocusedCollection={onChangeFocusedCollection}
       onClearFilters={onClearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
+      advancedSearch={advancedSearch}
       keywordSearch={keywordSearch}
       showFilterStackToggle={showFilterStackToggle}
     />
@@ -93,6 +104,7 @@ export const SearchFormContainer = (props) => {
 }
 
 SearchFormContainer.defaultProps = {
+  advancedSearch: {},
   keywordSearch: '',
   boundingBoxSearch: '',
   gridName: '',
@@ -105,6 +117,7 @@ SearchFormContainer.defaultProps = {
 }
 
 SearchFormContainer.propTypes = {
+  advancedSearch: PropTypes.shape({}),
   boundingBoxSearch: PropTypes.string,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
