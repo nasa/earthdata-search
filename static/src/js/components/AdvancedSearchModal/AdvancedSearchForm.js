@@ -13,10 +13,12 @@ import './AdvancedSearchForm.scss'
  * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
+ * @param {Object} props.regionSearchResults - The current region search results.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Function} props.setModalOverlay - Sets the modal overlay content
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
+ * @param {Function} props.onChangeRegionQuery - Callback function to update the region search results.
  */
 // eslint-disable-next-line react/prefer-stateless-function
 export class AdvancedSearchForm extends Component {
@@ -26,10 +28,12 @@ export class AdvancedSearchForm extends Component {
       errors,
       handleBlur,
       handleChange,
+      regionSearchResults,
       setFieldValue,
       setModalOverlay,
       touched,
-      values
+      values,
+      onChangeRegionQuery
     } = this.props
 
     return (
@@ -98,9 +102,11 @@ export class AdvancedSearchForm extends Component {
                             values={values}
                             handleBlur={handleBlur}
                             handleChange={handleChange}
+                            regionSearchResults={regionSearchResults}
                             setFieldValue={setFieldValue}
                             setModalOverlay={setModalOverlay}
                             touched={touched}
+                            onChangeRegionQuery={onChangeRegionQuery}
                           />
                         )
                       }
@@ -127,10 +133,12 @@ AdvancedSearchForm.propTypes = {
   errors: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  regionSearchResults: PropTypes.shape({}).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setModalOverlay: PropTypes.func,
   touched: PropTypes.shape({}).isRequired,
-  values: PropTypes.shape({}).isRequired
+  values: PropTypes.shape({}).isRequired,
+  onChangeRegionQuery: PropTypes.func.isRequired
 }
 
 export default AdvancedSearchForm

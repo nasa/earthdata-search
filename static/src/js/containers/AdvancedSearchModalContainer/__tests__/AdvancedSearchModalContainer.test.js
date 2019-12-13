@@ -16,6 +16,12 @@ function setup() {
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
     handleSubmit: jest.fn(),
+    onChangeRegionQuery: jest.fn(),
+    onChangeQuery: jest.fn(),
+    regionSearchResults: {
+      byId: {},
+      allIds: []
+    },
     resetForm: jest.fn(),
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
@@ -46,5 +52,9 @@ describe('AdvancedSearchModalContainer component', () => {
       .toEqual(props.advancedSearch)
     expect(enzymeWrapper.find(AdvancedSearchModal).props().resetForm)
       .toEqual(props.resetForm)
+    expect(enzymeWrapper.find(AdvancedSearchModal).props().onChangeRegionQuery)
+      .toEqual(props.onChangeRegionQuery)
+    expect(enzymeWrapper.find(AdvancedSearchModal).props().onChangeQuery)
+      .toEqual(props.onChangeQuery)
   })
 })

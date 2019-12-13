@@ -1,6 +1,10 @@
 import { isEqual } from 'lodash'
 import actions from './index'
-import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../constants/actionTypes'
+import {
+  UPDATE_COLLECTION_QUERY,
+  UPDATE_GRANULE_QUERY,
+  UPDATE_REGION_QUERY
+} from '../constants/actionTypes'
 import { clearExcludedGranules } from './granules'
 
 export const updateCollectionQuery = payload => ({
@@ -10,6 +14,11 @@ export const updateCollectionQuery = payload => ({
 
 export const updateGranuleQuery = payload => ({
   type: UPDATE_GRANULE_QUERY,
+  payload
+})
+
+export const updateRegionQuery = payload => ({
+  type: UPDATE_REGION_QUERY,
   payload
 })
 
@@ -68,6 +77,11 @@ export const changeQuery = newQuery => (dispatch, getState) => {
 export const changeProjectQuery = query => (dispatch) => {
   dispatch(updateCollectionQuery(query.collection))
   dispatch(actions.getProjectCollections())
+}
+
+export const changeRegionQuery = query => (dispatch) => {
+  dispatch(updateRegionQuery(query))
+  dispatch(actions.getRegions())
 }
 
 export const changeCollectionPageNum = pageNum => (dispatch) => {

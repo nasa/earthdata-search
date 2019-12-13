@@ -34,13 +34,13 @@ export class EDSCModal extends Component {
     this.onModalExit = this.onModalExit.bind(this)
     this.onModalHide = this.onModalHide.bind(this)
     this.state = {
-      modalOverlayContent: null
+      modalOverlay: null
     }
   }
 
-  onSetOverlayModalContent(content) {
+  onSetOverlayModalContent(overlay) {
     this.setState({
-      modalOverlayContent: content || null
+      modalOverlay: overlay || null
     })
   }
 
@@ -51,7 +51,7 @@ export class EDSCModal extends Component {
 
   onModalExit() {
     this.setState({
-      modalOverlayContent: null
+      modalOverlay: null
     })
   }
 
@@ -70,17 +70,12 @@ export class EDSCModal extends Component {
       primaryActionDisabled,
       secondaryAction,
       onPrimaryAction,
-      onSecondaryAction
+      onSecondaryAction,
+      modalOverlays
     } = this.props
 
-    const bodyEl = cloneElement(body, {
-      setModalOverlay: (overlay) => {
-        this.onSetOverlayModalContent(overlay)
-      }
-    })
-
     const {
-      modalOverlayContent
+      modalOverlay
     } = this.state
 
     const identifier = `edsc-modal__${id}-modal`
@@ -92,6 +87,25 @@ export class EDSCModal extends Component {
         'edsc-modal--fixed-height': fixedHeight
       }
     ])
+
+    let activeModalOverlay = null
+
+    if (modalOverlay && modalOverlays[modalOverlay]) {
+      activeModalOverlay = modalOverlays[modalOverlay]
+    }
+
+    const addSetModalOverlay = (el) => {
+      if (el) {
+        return cloneElement(el, {
+          setModalOverlay: (overlay) => {
+            this.onSetOverlayModalContent(overlay)
+          }
+        })
+      }
+      return null
+    }
+
+    const [bodyEl, modalOverlayEl] = [body, activeModalOverlay].map(addSetModalOverlay)
 
     return (
       <Modal
@@ -116,15 +130,15 @@ export class EDSCModal extends Component {
         <Modal.Body className="edsc-modal__body">
           {bodyEl}
           {
-            modalOverlayContent && (
+            modalOverlayEl && (
               <EDSCModalOverlay>
-                {modalOverlayContent}
+                {modalOverlayEl}
               </EDSCModalOverlay>
             )
           }
         </Modal.Body>
         {
-          ((footer || primaryAction || footerMeta) && !modalOverlayContent) && (
+          ((footer || primaryAction || footerMeta) && !activeModalOverlay) && (
             <Modal.Footer className="edsc-modal__footer">
               {
                 footer
@@ -184,6 +198,7 @@ EDSCModal.defaultProps = {
   onClose: null,
   title: null,
   size: 'sm',
+  modalOverlays: {},
   primaryAction: null,
   primaryActionDisabled: false,
   secondaryAction: null,
@@ -199,6 +214,7 @@ EDSCModal.propTypes = {
   footerMeta: PropTypes.node,
   id: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  modalOverlays: PropTypes.shape({}),
   onClose: PropTypes.func,
   title: PropTypes.string,
   size: PropTypes.string,

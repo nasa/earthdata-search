@@ -68,8 +68,9 @@ export const getRegions = () => (dispatch, getState) => {
   const response = requestObject.search(regionParams)
     .then((response) => {
       const payload = {}
+      const { data } = response
+      const { hits, results } = data
 
-      const { hits, results } = response
       payload.hits = hits
       payload.keyword = query
       payload.results = results

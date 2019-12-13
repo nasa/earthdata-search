@@ -1,4 +1,9 @@
-import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY, RESTORE_FROM_URL } from '../constants/actionTypes'
+import {
+  UPDATE_COLLECTION_QUERY,
+  UPDATE_GRANULE_QUERY,
+  UPDATE_REGION_QUERY,
+  RESTORE_FROM_URL
+} from '../constants/actionTypes'
 
 const initialState = {
   collection: {
@@ -33,6 +38,15 @@ const queryReducer = (state = initialState, action) => {
         ...state,
         granule: {
           ...state.granule,
+          ...action.payload
+        }
+      }
+    }
+    case UPDATE_REGION_QUERY: {
+      return {
+        ...state,
+        region: {
+          ...state.region,
           ...action.payload
         }
       }
