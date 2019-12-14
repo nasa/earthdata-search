@@ -17,7 +17,8 @@ const regionSearch = async (event, context) => {
       exact
     },
     json: true,
-    resolveWithFullResponse: true
+    resolveWithFullResponse: true,
+    timeout: 25000
   })
 
   const { body } = regionResponse

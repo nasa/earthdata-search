@@ -167,7 +167,7 @@ describe('getRegions', () => {
       expect(storeActions[0]).toEqual({ type: LOADING_REGIONS })
       expect(storeActions[1]).toEqual({ type: STARTED_REGIONS_TIMER })
       expect(storeActions[2]).toEqual({ type: FINISHED_REGIONS_TIMER })
-      expect(storeActions[3]).toEqual({ type: ERRORED_REGIONS, payload: errorPayload })
+      expect(storeActions[3]).toEqual({ type: ERRORED_REGIONS, payload: errorPayload.errors })
       expect(storeActions[4]).toEqual({
         type: LOADED_REGIONS,
         payload: { loaded: false }

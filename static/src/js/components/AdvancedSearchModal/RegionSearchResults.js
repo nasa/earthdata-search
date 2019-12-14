@@ -4,8 +4,10 @@ import {
   Col,
   Row
 } from 'react-bootstrap'
+import classNames from 'classnames'
 
 import Button from '../Button/Button'
+import Spinner from '../Spinner/Spinner'
 
 import './RegionSearchResults.scss'
 
@@ -43,11 +45,21 @@ export class RegionSearch extends Component {
     const {
       keyword: regionResultsKeyword,
       allIds: regionResultIds,
-      byId: regionResultsById
+      error: regionResultsError,
+      byId: regionResultsById,
+      isLoading: regionSearchIsLoading,
+      isLoaded: regionSearchIsLoaded
     } = regionSearchResults
 
+    const containerClasses = classNames([
+      'region-search-results',
+      {
+        'region-search-results--is-loading': regionSearchIsLoading
+      }
+    ])
+
     return (
-      <div className="region-search-results">
+      <div className={containerClasses}>
         <Row>
           <Col>
             <Button
@@ -59,50 +71,104 @@ export class RegionSearch extends Component {
                 setModalOverlay(null)
               }}
             >
-                Back to Region Search
+              Back to Region Search
             </Button>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <h2 className="region-search-results__list-meta">{`${regionResultIds.length} results for "${regionResultsKeyword}"`}</h2>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {
-              regionResultIds.length > 0 && (
-                <ul className="region-search-results__list">
-                  {
-                    regionResultIds.map((resId) => {
-                      const result = regionResultsById[resId]
-                      const { name, id, type } = result
-                      return (
-                        <Button
-                          key={id}
-                          className="region-search-results__item"
-                          variant="naked"
-                          onClick={() => this.onSetSelected(result)}
-                          as="li"
-                          label={id}
-                        >
-                          <span className="region-search-results__selected-region-id">
-                            {`${type.toUpperCase()} ${id}`}
-                          </span>
-                          <span className="region-search-results__selected-region-name">
-                            (
-                            {name}
-                            )
-                          </span>
-                        </Button>
-                      )
-                    })
-                  }
-                </ul>
-              )
-            }
-          </Col>
-        </Row>
+        {
+          regionSearchIsLoading && (
+            <div className="region-search-results__full">
+              <Spinner className="region-search-results__spinner" type="dots" />
+            </div>
+          )
+        }
+        {
+          (!regionSearchIsLoading && !regionResultsError
+          && regionSearchIsLoaded && regionResultIds.length === 0) && (
+            <div className="region-search-results__full">
+              <span className="region-search-results__status">
+                Your search returned no results.
+                {' '}
+                <Button
+                  className="region-search-results__status-link"
+                  variant="link"
+                  bootstrapVariant="link"
+                  label="Try again"
+                  onClick={() => {
+                    setModalOverlay(null)
+                  }}
+                >
+                  Try again
+                </Button>
+                .
+              </span>
+            </div>
+          )
+        }
+        {
+          (!regionSearchIsLoading && regionResultsError) && (
+            <div className="region-search-results__full">
+              <span className="region-search-results__status region-search-results__status--error">
+                {regionResultsError}
+                {' '}
+                <Button
+                  className="region-search-results__status-link"
+                  variant="link"
+                  bootstrapVariant="link"
+                  label="Try again"
+                  onClick={() => {
+                    setModalOverlay(null)
+                  }}
+                >
+                  Try again
+                </Button>
+                .
+              </span>
+            </div>
+          )
+        }
+        {
+          (!regionSearchIsLoading && regionSearchIsLoaded && regionResultIds.length > 0) && (
+            <>
+              <Row>
+                <Col>
+                  <h2 className="region-search-results__list-meta">{`${regionResultIds.length} results for "${regionResultsKeyword}"`}</h2>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <ul className="region-search-results__list">
+                    {
+                      regionResultIds.map((resId) => {
+                        const result = regionResultsById[resId]
+                        const { name, id, type } = result
+                        return (
+                          <Button
+                            key={id}
+                            className="region-search-results__item"
+                            variant="naked"
+                            onClick={() => this.onSetSelected(result)}
+                            as="li"
+                            label={id}
+                          >
+                            <span className="region-search-results__selected-region-id">
+                              {`${type.toUpperCase()} ${id}`}
+                            </span>
+                            <span className="region-search-results__selected-region-name">
+                              (
+                              {name}
+                              )
+                            </span>
+                          </Button>
+                        )
+                      })
+                    }
+                  </ul>
+                </Col>
+              </Row>
+            </>
+          )
+        }
       </div>
     )
   }
