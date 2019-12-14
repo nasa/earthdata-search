@@ -2,6 +2,7 @@ import request from 'request-promise'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { isWarmUp } from '../util/isWarmup'
+import { requestTimeout } from '../util/requestTimeout'
 
 const regionSearch = async (event, context) => {
   // Prevent execution if the event source is the warmer
@@ -11,30 +12,60 @@ const regionSearch = async (event, context) => {
 
   const { regionHost } = getEarthdataConfig(cmrEnv())
 
-  const regionResponse = await request.get({
-    uri: `${regionHost}/${endpoint}/${query}`,
-    qs: {
-      exact
-    },
-    json: true,
-    resolveWithFullResponse: true,
-    timeout: 25000
-  })
+  let regionResponse
+  try {
+    regionResponse = await request.get({
+      uri: `${regionHost}/${endpoint}/${query}`,
+      qs: {
+        exact
+      },
+      json: true,
+      resolveWithFullResponse: true,
+      timeout: requestTimeout(),
+      time: true
+    })
+  } catch (e) {
+    const {
+      error,
+      message,
+      response,
+      statusCode: errorStatusCode
+    } = e
 
-  const { body } = regionResponse
-  const {
-    error,
-    hits,
-    time,
-    results
-  } = body
+    // Default error messaging
+    let statusCode = 500
+    let errorMessage = 'An unknown error has occurred'
 
-  if (error) {
-    const [, errorCode, errorMessage] = error.match(/(\d{3}): (.+)/)
+    if (!regionResponse) {
+      if (errorStatusCode) {
+        const { message } = error
+
+        errorMessage = message
+        statusCode = errorStatusCode
+
+        const { elapsedTime } = response
+
+        console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${elapsedTime} ms`)
+      } else if (message.includes('ESOCKETTIMEDOUT') || message.includes('ETIMEDOUT')) {
+        // If no valid error response was provided construct an error from the exception object
+        statusCode = 504
+        errorMessage = `Request to external service timed out after ${requestTimeout()} ms`
+
+        console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${requestTimeout()} ms`)
+      } else {
+        errorMessage = message
+      }
+    } else {
+      const { statusCode: responseStatusCode, error: responseError = {} } = regionResponse
+      const { message: responseErrorMessage } = responseError
+
+      statusCode = responseStatusCode
+      errorMessage = responseErrorMessage
+    }
 
     return {
       isBase64Encoded: false,
-      statusCode: parseInt(errorCode, 10),
+      statusCode,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
@@ -45,7 +76,52 @@ const regionSearch = async (event, context) => {
     }
   }
 
-  console.log(`Request to ${endpoint} (exact: ${exact}) took ${time}`)
+  const { body, elapsedTime } = regionResponse
+  const {
+    error,
+    errorMessage,
+    hits,
+    time,
+    results
+  } = body
+
+  // Handles a 200 with body.error (which includes the actual statusCode)
+  if (error) {
+    console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${elapsedTime} ms`)
+
+    const [, errorCode, parsedErrorMessage] = error.match(/(\d{3}): (.+)/)
+
+    return {
+      isBase64Encoded: false,
+      statusCode: parseInt(errorCode, 10),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify({
+        errors: [parsedErrorMessage]
+      })
+    }
+  }
+
+  // Handles a 200 with body.errorMessage
+  if (errorMessage) {
+    console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${elapsedTime} ms`)
+
+    return {
+      isBase64Encoded: false,
+      statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify({
+        errors: [errorMessage]
+      })
+    }
+  }
+
+  console.log(`Request for '${endpoint}' (exact: ${exact}) successfully completed in [reported: ${time}, observed: ${elapsedTime} ms]`)
 
   const filteredResponse = []
 
