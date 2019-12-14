@@ -17,7 +17,8 @@ export const handleError = ({
   error,
   action,
   resource,
-  verb = 'retrieving'
+  verb = 'retrieving',
+  displayBanner = true
 }) => (dispatch, getState) => {
   const { router = {} } = getState()
   const { location } = router
@@ -28,12 +29,14 @@ export const handleError = ({
 
   const id = uuidv4()
 
-  dispatch(addError({
-    id,
-    title: `Error ${verb} ${resource}`,
-    message,
-    details: error
-  }))
+  if (displayBanner) {
+    dispatch(addError({
+      id,
+      title: `Error ${verb} ${resource}`,
+      message,
+      details: error
+    }))
+  }
 
   console.error(`Action [${action}] failed:`, error)
 

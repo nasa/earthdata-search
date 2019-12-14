@@ -22,6 +22,16 @@ import './AdvancedSearchForm.scss'
  */
 // eslint-disable-next-line react/prefer-stateless-function
 export class AdvancedSearchForm extends Component {
+  componentDidMount() {
+    const {
+      values,
+      // eslint-disable-next-line react/prop-types
+      validateForm
+    } = this.props
+
+    validateForm(values)
+  }
+
   render() {
     const {
       fields,

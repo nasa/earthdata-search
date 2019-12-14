@@ -12,6 +12,7 @@ export const advancedSearchFields = [
       },
       {
         name: 'keyword',
+        validateFor: 'regionSearch',
         validation: Yup.mixed().when('endpoint', {
           is: 'huc',
           then: Yup.number()
@@ -24,6 +25,9 @@ export const advancedSearchFields = [
       {
         name: 'exact',
         value: false
+      },
+      {
+        name: 'selectedRegion'
       }
     ]
   }

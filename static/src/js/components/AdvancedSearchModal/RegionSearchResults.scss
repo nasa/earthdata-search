@@ -1,4 +1,39 @@
 .region-search-results {
+  position: relative;
+  flex-grow: 1;
+
+  &__full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+  }
+
+  &__status {
+    text-align: center;
+    font-size: 0.925rem;
+    max-width: 38rem;
+    font-weight: 400;
+
+    &--error {
+      color: $color__red;
+
+      .region-search-results__status-link {
+        color: $color__red--dark;
+      }
+    }
+  }
+
+  &__status-link {
+    font-weight: 500;
+    text-decoration: underline;
+  }
+
   &__selected-region-id {
     margin-right: $spacer/2;
     font-weight: 700;

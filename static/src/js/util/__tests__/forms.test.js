@@ -1,8 +1,7 @@
 import * as Yup from 'yup'
 
 import {
-  getValidationSchema,
-  buildInitialValues
+  getValidationSchema
 } from '../forms'
 
 jest.mock('yup', () => {

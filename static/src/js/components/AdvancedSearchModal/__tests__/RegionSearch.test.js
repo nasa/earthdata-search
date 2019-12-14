@@ -1,10 +1,10 @@
+import * as Yup from 'yup'
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Formik } from 'formik'
-import { Form } from 'react-bootstrap'
 
-import Button from '../../Button/Button'
+import RegionSearchForm from '../RegionSearchForm'
 import RegionSearch from '../RegionSearch'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -24,6 +24,7 @@ function setup(overrideProps) {
     setModalOverlay: jest.fn(),
     touched: {},
     values: {},
+    validateForm: jest.fn(),
     ...overrideProps
   }
 
@@ -42,58 +43,35 @@ beforeEach(() => {
 describe('RegionSearch component', () => {
   test('should render the region search form', () => {
     const { enzymeWrapper } = setup()
-
     expect(enzymeWrapper.find(Formik).length).toEqual(1)
   })
 
-  describe('when not searched or selected', () => {
+  test('should render the RegionSearchForm', () => {
     const { enzymeWrapper } = setup()
 
-    const formikWrapper = enzymeWrapper.find(Formik).renderProp('children')({
-      errors: {},
-      values: {
-        endpoint: 'huc'
-      },
-      touched: {}
+    const wrapper = enzymeWrapper.renderProp('children')({
+      regionSearchForm: {
+        test: 'test'
+      }
     })
 
-    test('renders the regionType select', () => {
-      expect(formikWrapper.find(Form.Control).at(0).prop('name')).toEqual('endpoint')
-    })
+    expect(wrapper.find(RegionSearchForm).length).toEqual(1)
+  })
 
-    test('renders the searchValue input', () => {
-      expect(formikWrapper.find(Form.Control).at(1).prop('name')).toEqual('keyword')
-    })
+  describe('the form', () => {
+    test('onSumbit should call onSearchSubmit', () => {
+      const onSubmitMock = jest.fn()
 
-    test('renders the exactMatch input', () => {
-      expect(formikWrapper.find(Form.Check).at(0).prop('name')).toEqual('exact')
-    })
+      const { enzymeWrapper } = setup()
 
-    test('renders the submit', () => {
-      expect(formikWrapper.find(Button).at(0).prop('label')).toEqual('Search')
-    })
+      enzymeWrapper.instance().onSearchSubmit = onSubmitMock
+      enzymeWrapper.find(Formik).prop('onSubmit')({
+        test: 'test'
+      })
 
-    describe('when clicking the submit button', () => {
-      test('calls onSetResults', () => {
-        const { enzymeWrapper } = setup()
-        const handleSubmitMock = jest.fn()
-        const formikWrapper = enzymeWrapper.find(Formik).renderProp('children')({
-          errors: {},
-          values: {
-            endpoint: 'huc'
-          },
-          touched: {
-            keyword: {}
-          },
-          handleSubmit: handleSubmitMock
-        })
-
-        const searchButton = formikWrapper.find(Button).at(0)
-
-        searchButton.simulate('click')
-
-        expect(handleSubmitMock).toHaveBeenCalledTimes(1)
-        expect(handleSubmitMock).toHaveBeenCalledWith()
+      expect(onSubmitMock).toHaveBeenCalledTimes(1)
+      expect(onSubmitMock).toHaveBeenCalledWith({
+        test: 'test'
       })
     })
   })
@@ -157,37 +135,6 @@ describe('RegionSearch component', () => {
     })
   })
 
-  describe('onRemoveSelected', () => {
-    test('sets the field value', () => {
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.instance().onRemoveSelected()
-
-      expect(props.setFieldValue).toHaveBeenCalledTimes(1)
-      expect(props.setFieldValue).toHaveBeenCalledWith('regionSearch.selectedRegion')
-    })
-
-    test('sets the state correctly', () => {
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.instance().onRemoveSelected()
-
-      expect(props.setFieldValue).toHaveBeenCalledTimes(1)
-      expect(props.setFieldValue).toHaveBeenCalledWith('regionSearch.selectedRegion')
-      expect(props.setModalOverlay).toHaveBeenCalledTimes(1)
-      expect(props.setModalOverlay).toHaveBeenCalledWith(null)
-    })
-
-    test('resets the modal overlay', () => {
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.instance().onRemoveSelected()
-
-      expect(props.setModalOverlay).toHaveBeenCalledTimes(1)
-      expect(props.setModalOverlay).toHaveBeenCalledWith(null)
-    })
-  })
-
   describe('when searched but not selected', () => {
     test('sets the modal overlay', () => {
       const setResultsMock = jest.fn()
@@ -219,71 +166,32 @@ describe('RegionSearch component', () => {
     })
   })
 
-  describe('when searched and selected', () => {
-    test('renders the selected result', () => {
-      const { enzymeWrapper } = setup({
-        values: {
-          regionSearch: {
-            selectedRegion: {
-              type: 'huc',
-              id: '12341231235',
-              name: 'Upper Cayote Creek',
-              polygon: '30.57275390625,61.4593006372525,24.90106201171875,56.06661507755054,36.52569580078125,51.63698756452315,30.57275390625,61.4593006372525'
-            }
-          }
-        }
-      })
+  describe('onRemoveSelected', () => {
+    test('sets the field value', () => {
+      const { enzymeWrapper, props } = setup()
 
-      const wrapper = enzymeWrapper.find(Formik).renderProp('children')({
-        errors: {},
-        values: {
-          endpoint: 'huc'
-        },
-        touched: {
-          keyword: {}
-        }
-      })
-
-      expect(wrapper.find('.region-search__selected-region')
-        .length).toEqual(1)
-      expect(wrapper.find('.region-search__selected-region-id')
-        .text()).toEqual('HUC 12341231235')
-      expect(wrapper.find('.region-search__selected-region-name')
-        .text()).toEqual('(Upper Cayote Creek)')
-    })
-
-    describe('when clicking the remove button', () => {
-      const { enzymeWrapper, props } = setup({
-        values: {
-          regionSearch: {
-            selectedRegion: {
-              type: 'huc',
-              id: '12341231235',
-              name: 'Upper Cayote Creek',
-              polygon: '30.57275390625,61.4593006372525,24.90106201171875,56.06661507755054,36.52569580078125,51.63698756452315,30.57275390625,61.4593006372525'
-            }
-          }
-        }
-      })
-
-      const wrapper = enzymeWrapper.find(Formik).renderProp('children')({
-        errors: {},
-        values: {
-          endpoint: 'huc'
-        },
-        touched: {
-          keyword: {}
-        }
-      })
-
-      const button = wrapper.find(Button)
-
-      expect(button.prop('label')).toEqual('Remove')
-
-      button.simulate('click')
+      enzymeWrapper.instance().onRemoveSelected()
 
       expect(props.setFieldValue).toHaveBeenCalledTimes(1)
       expect(props.setFieldValue).toHaveBeenCalledWith('regionSearch.selectedRegion')
+    })
+
+    test('sets the state correctly', () => {
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.instance().onRemoveSelected()
+
+      expect(props.setFieldValue).toHaveBeenCalledTimes(1)
+      expect(props.setFieldValue).toHaveBeenCalledWith('regionSearch.selectedRegion')
+      expect(props.setModalOverlay).toHaveBeenCalledTimes(1)
+      expect(props.setModalOverlay).toHaveBeenCalledWith(null)
+    })
+
+    test('resets the modal overlay', () => {
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.instance().onRemoveSelected()
+
       expect(props.setModalOverlay).toHaveBeenCalledTimes(1)
       expect(props.setModalOverlay).toHaveBeenCalledWith(null)
     })

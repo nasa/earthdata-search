@@ -24,6 +24,7 @@ function setup(overrideProps) {
     setFieldTouched: jest.fn(),
     touched: {},
     values: {},
+    validateForm: jest.fn(),
     ...overrideProps
   }
 

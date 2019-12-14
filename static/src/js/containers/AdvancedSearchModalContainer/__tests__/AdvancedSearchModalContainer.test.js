@@ -27,6 +27,7 @@ function setup() {
     setFieldTouched: jest.fn(),
     touched: {},
     values: {},
+    validateForm: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn()
   }
 
@@ -56,5 +57,7 @@ describe('AdvancedSearchModalContainer component', () => {
       .toEqual(props.onChangeRegionQuery)
     expect(enzymeWrapper.find(AdvancedSearchModal).props().onChangeQuery)
       .toEqual(props.onChangeQuery)
+    expect(enzymeWrapper.find(AdvancedSearchModal).props().validateForm)
+      .toEqual(props.validateForm)
   })
 })
