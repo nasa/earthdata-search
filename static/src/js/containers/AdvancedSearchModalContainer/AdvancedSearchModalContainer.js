@@ -63,7 +63,8 @@ export const AdvancedSearchModalContainer = ({
   setFieldValue,
   setFieldTouched,
   touched,
-  values
+  values,
+  validateForm
 }) => (
   <AdvancedSearchModal
     advancedSearch={advancedSearch}
@@ -83,6 +84,7 @@ export const AdvancedSearchModalContainer = ({
     setFieldTouched={setFieldTouched}
     touched={touched}
     values={values}
+    validateForm={validateForm}
   />
 )
 
@@ -90,7 +92,7 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
   enableReinitialize: true,
   validationSchema: (props) => {
     const { fields } = props
-    return getValidationSchema(fields)
+    return getValidationSchema(fields, 'advancedSearch')
   },
   mapPropsToValues: (props) => {
     const {
@@ -127,6 +129,7 @@ AdvancedSearchModalContainer.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
+  validateForm: PropTypes.func.isRequired,
   onChangeRegionQuery: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired

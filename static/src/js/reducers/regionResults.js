@@ -66,6 +66,7 @@ const regionResultsReducer = (state = initialState, action) => {
 
       return {
         ...state,
+        error: null,
         keyword: action.payload.keyword,
         hits: action.payload.hits,
         byId,

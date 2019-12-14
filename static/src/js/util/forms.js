@@ -6,15 +6,19 @@ import * as Yup from 'yup'
  * @param {Array} fields The field config
  * @param {Object} schema The previous definitions
  */
-export const buildValidationSchema = (fields, schema = {}) => {
+export const buildValidationSchema = (fields, fieldName = '', schema = {}) => {
   const validation = schema
 
   fields.forEach((field) => {
-    if (!validation[field.validation]) {
+    if (
+      (!validation[field.validation])
+      && (!field.validateFor || (field.validateFor && field.validateFor === fieldName)
+      )
+    ) {
       if (field.validation) validation[field.name] = field.validation
 
       if (field.fields && field.fields.length > 0) {
-        validation[field.name] = Yup.object().shape(buildValidationSchema(field.fields))
+        validation[field.name] = Yup.object().shape(buildValidationSchema(field.fields, fieldName))
       }
     }
   })
@@ -28,4 +32,5 @@ export const buildValidationSchema = (fields, schema = {}) => {
  * @param {Array} fields The field config
  * @param {Object} initalState Current state values
  */
-export const getValidationSchema = fields => Yup.object().shape(buildValidationSchema(fields))
+// eslint-disable-next-line max-len
+export const getValidationSchema = (fields, fieldName) => Yup.object().shape(buildValidationSchema(fields, fieldName))

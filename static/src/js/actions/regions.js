@@ -86,14 +86,17 @@ export const getRegions = () => (dispatch, getState) => {
 
       const { response } = error
       const { data } = response
-      dispatch(onRegionsErrored(data))
+      const { errors } = data
+
+      dispatch(onRegionsErrored(errors))
       dispatch(onRegionsLoaded({
         loaded: false
       }))
       dispatch(handleError({
         error,
         action: 'getRegions',
-        resource: 'regions'
+        resource: 'regions',
+        displayBanner: false
       }))
     })
 

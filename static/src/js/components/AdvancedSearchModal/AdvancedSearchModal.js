@@ -78,11 +78,15 @@ export class AdvancedSearchModal extends Component {
       setFieldTouched,
       touched,
       values,
+      validateForm,
       onChangeRegionQuery
     } = this.props
 
     const regionSearchResultsOverlay = (
-      <RegionSearchResults regionSearchResults={regionSearchResults} setFieldValue={setFieldValue} />
+      <RegionSearchResults
+        regionSearchResults={regionSearchResults}
+        setFieldValue={setFieldValue}
+      />
     )
 
     const modalOverlays = {
@@ -102,6 +106,7 @@ export class AdvancedSearchModal extends Component {
         setFieldTouched={setFieldTouched}
         touched={touched}
         values={values}
+        validateForm={validateForm}
         onChangeRegionQuery={onChangeRegionQuery}
       />
     )
@@ -144,6 +149,7 @@ AdvancedSearchModal.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
+  validateForm: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired,
   onChangeRegionQuery: PropTypes.func.isRequired
 }

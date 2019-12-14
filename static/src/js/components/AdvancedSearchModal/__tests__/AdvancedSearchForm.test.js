@@ -21,6 +21,7 @@ function setup(overrideProps) {
     setModalOverlay: jest.fn(),
     touched: {},
     values: {},
+    validateForm: jest.fn(),
     ...overrideProps
   }
 
