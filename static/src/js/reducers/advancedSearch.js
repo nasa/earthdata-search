@@ -1,12 +1,27 @@
-import { UPDATE_ADVANCED_SEARCH, RESTORE_FROM_URL } from '../constants/actionTypes'
+import {
+  UPDATE_ADVANCED_SEARCH,
+  RESTORE_FROM_URL,
+  TOGGLE_DRAWING_NEW_LAYER
+} from '../constants/actionTypes'
 
 const initialState = {}
 
 const advancedSearchReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const {
+    payload,
+    type
+  } = action
+
+  switch (type) {
     case UPDATE_ADVANCED_SEARCH: {
       return {
-        ...action.payload
+        ...payload
+      }
+    }
+    case TOGGLE_DRAWING_NEW_LAYER: {
+      return {
+        ...state,
+        regionSearch: {}
       }
     }
     case RESTORE_FROM_URL: {

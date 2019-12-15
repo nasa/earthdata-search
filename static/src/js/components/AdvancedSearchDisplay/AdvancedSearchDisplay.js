@@ -33,7 +33,11 @@ class AdvancedSearchDisplay extends PureComponent {
         title="Advanced Search"
         onRemove={() => {
           onUpdateAdvancedSearch({})
-          onChangeQuery()
+          onChangeQuery({
+            collection: {
+              spatial: {}
+            }
+          })
         }}
       >
         <FilterStackContents
