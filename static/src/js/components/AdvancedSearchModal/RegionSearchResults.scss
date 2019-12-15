@@ -2,6 +2,11 @@
   position: relative;
   flex-grow: 1;
 
+  &__back {
+    position: relative;
+    z-index: 1;
+  }
+
   &__full {
     position: absolute;
     top: 0;

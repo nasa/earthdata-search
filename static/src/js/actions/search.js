@@ -1,4 +1,4 @@
-import { isEqual, isEmpty } from 'lodash'
+import { isEqual } from 'lodash'
 import actions from './index'
 import {
   UPDATE_COLLECTION_QUERY,
@@ -22,32 +22,19 @@ export const updateRegionQuery = payload => ({
   payload
 })
 
-export const changeQuery = (options = {}) => (dispatch, getState) => {
-  const { advancedSearch, query } = getState()
-  const newQuery = options
+export const changeQuery = (queryOptions = {}) => (dispatch, getState) => {
+  const { query } = getState()
+  const newQuery = queryOptions
 
   // Pull out the values from the query being changed
   const { collection = {} } = newQuery
+
   const {
     gridName,
     spatial,
     temporal,
     overideTemporal
   } = collection
-
-  // Overwrite spatial values if they exist in the advancedSearch store
-  if (!isEmpty(advancedSearch)) {
-    const { regionSearch = {} } = advancedSearch
-    if (!isEmpty(regionSearch)) {
-      const { selectedRegion = {} } = regionSearch
-      if (!isEmpty(selectedRegion)) {
-        newQuery.collection = {}
-        newQuery.collection.spatial = {
-          polygon: selectedRegion.spatial
-        }
-      }
-    }
-  }
 
   // Pull out data from the store to compare to, if there are changes we should clear the excluded granules
   const { collection: collectionQuery = {} } = query

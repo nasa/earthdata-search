@@ -60,7 +60,7 @@ export class RegionSearch extends Component {
 
     return (
       <div className={containerClasses}>
-        <Row>
+        <Row className="region-search-results__back">
           <Col>
             <Button
               className="region-search-results__back-button"

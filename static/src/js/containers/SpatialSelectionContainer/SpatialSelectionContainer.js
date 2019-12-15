@@ -17,6 +17,7 @@ const mapDispathToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   lineSearch: state.query.collection.spatial.line,
   pathname: state.router.location.pathname,
@@ -26,6 +27,7 @@ const mapStateToProps = state => ({
 
 export const SpatialSelectionContainer = (props) => {
   const {
+    advancedSearch,
     boundingBoxSearch,
     lineSearch,
     mapRef,
@@ -42,6 +44,7 @@ export const SpatialSelectionContainer = (props) => {
 
   return (
     <SpatialSelection
+      advancedSearch={advancedSearch}
       boundingBoxSearch={boundingBoxSearch}
       isProjectPage={isProjectPage}
       lineSearch={lineSearch}
@@ -65,6 +68,7 @@ SpatialSelectionContainer.defaultProps = {
 }
 
 SpatialSelectionContainer.propTypes = {
+  advancedSearch: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.string,
   lineSearch: PropTypes.string,
   mapRef: PropTypes.shape({}),

@@ -10,7 +10,7 @@ const mapDispatchToProps = dispatch => ({
   onUpdateAdvancedSearch:
     state => dispatch(actions.updateAdvancedSearch(state)),
   onChangeQuery:
-    state => dispatch(actions.changeQuery(state))
+    (state, options) => dispatch(actions.changeQuery(state, options))
 })
 
 const mapStateToProps = state => ({
