@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
   onChangeRegionQuery:
     query => dispatch(actions.changeRegionQuery(query)),
   onChangeQuery:
-    query => dispatch(actions.changeQuery(query))
+    (query, options) => dispatch(actions.changeQuery(query, options))
 })
 
 /**
@@ -108,7 +108,11 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
     } = props
 
     onUpdateAdvancedSearch(values)
-    onChangeQuery()
+    onChangeQuery({
+      collection: {
+        spatial: {}
+      }
+    })
   }
 })(AdvancedSearchModalContainer)
 

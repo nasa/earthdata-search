@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash'
+
 import { encodeTemporal } from './url/temporalEncoders'
 import { categoryNameToCMRParam } from './facets'
 import { tagName } from '../../../../sharedUtils/tags'
@@ -9,6 +11,7 @@ import { tagName } from '../../../../sharedUtils/tags'
  */
 export const prepareCollectionParams = (state) => {
   const {
+    advancedSearch,
     authToken,
     facetsParams = {},
     portal = {},
@@ -65,7 +68,7 @@ export const prepareCollectionParams = (state) => {
 
   const { query: portalQuery = {} } = portal
 
-  return {
+  const collectionParams = {
     authToken,
     boundingBox,
     cmrFacets,
@@ -84,6 +87,31 @@ export const prepareCollectionParams = (state) => {
     viewAllFacets,
     ...portalQuery
   }
+
+  const mergeWithAdvancedSearch = (collectionParams, advancedSearch) => {
+    const mergedParams = {
+      ...collectionParams
+    }
+
+    const {
+      regionSearch = {}
+    } = advancedSearch
+
+    const {
+      selectedRegion = {}
+    } = regionSearch
+
+    // If we have a spatial value for the selectedRegion, use that for the spatial
+    if (!isEmpty(selectedRegion) && selectedRegion.spatial) {
+      mergedParams.polygon = selectedRegion.spatial
+    }
+
+    return mergedParams
+  }
+
+  const paramsMergedWithAdvacedSearch = mergeWithAdvancedSearch(collectionParams, advancedSearch)
+
+  return paramsMergedWithAdvacedSearch
 }
 
 /**
