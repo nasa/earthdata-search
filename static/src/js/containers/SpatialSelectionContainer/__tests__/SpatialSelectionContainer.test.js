@@ -9,6 +9,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    advancedSearch: {
+      regionSearch: {}
+    },
     boundingBoxSearch: 'Test value',
     onChangeQuery: jest.fn(),
     onToggleDrawingNewLayer: jest.fn(),
@@ -37,6 +40,7 @@ describe('SpatialSelectionContainer component', () => {
     expect(enzymeWrapper.find(SpatialSelection).props().pointSearch).toEqual('Test value')
     expect(enzymeWrapper.find(SpatialSelection).props().polygonSearch).toEqual('Test value')
     expect(enzymeWrapper.find(SpatialSelection).props().onChangeQuery).toEqual(props.onChangeQuery)
-    expect(enzymeWrapper.find(SpatialSelection).props().onToggleDrawingNewLayer).toEqual(props.onToggleDrawingNewLayer)
+    expect(enzymeWrapper.find(SpatialSelection).props().onToggleDrawingNewLayer)
+      .toEqual(props.onToggleDrawingNewLayer)
   })
 })

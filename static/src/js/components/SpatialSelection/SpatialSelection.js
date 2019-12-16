@@ -332,7 +332,7 @@ class SpatialSelection extends Component {
     const { leafletElement: featureGroup = null } = featureGroupRef
 
     const {
-      advancedSearch,
+      advancedSearch = {},
       pointSearch,
       boundingBoxSearch,
       lineSearch,
