@@ -133,6 +133,7 @@ export class RegionSearch extends Component {
               <Row>
                 <Col>
                   <h2 className="region-search-results__list-meta">{`${regionResultIds.length} results for "${regionResultsKeyword}"`}</h2>
+                  <p className="region-search-results__list-intro">Select a region from the list below to filter your search results.</p>
                 </Col>
               </Row>
               <Row>
@@ -155,9 +156,7 @@ export class RegionSearch extends Component {
                               {`${type.toUpperCase()} ${id}`}
                             </span>
                             <span className="region-search-results__selected-region-name">
-                              (
                               {name}
-                              )
                             </span>
                           </Button>
                         )

@@ -332,26 +332,14 @@ class SpatialSelection extends Component {
     const { leafletElement: featureGroup = null } = featureGroupRef
 
     const {
-      advancedSearch = {},
+      // advancedSearch = {},
       pointSearch,
       boundingBoxSearch,
       lineSearch,
       polygonSearch
     } = props
 
-    const {
-      regionSearch = {}
-    } = advancedSearch
-
-    const {
-      selectedRegion = {}
-    } = regionSearch
-
-    if (selectedRegion && selectedRegion.spatial) {
-      this.setState({ drawnPoints: selectedRegion.spatial })
-      const points = splitListOfPoints(selectedRegion.spatial)
-      this.renderPolygon(getShape(points), featureGroup)
-    } else if (pointSearch) {
+    if (pointSearch) {
       this.setState({ drawnPoints: pointSearch })
       this.renderPoint(getShape([pointSearch]), featureGroup)
     } else if (boundingBoxSearch) {
