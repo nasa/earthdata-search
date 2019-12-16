@@ -1,10 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Formik } from 'formik'
-import { Form } from 'react-bootstrap'
-
-import Button from '../../Button/Button'
 import RegionSearchResults from '../RegionSearchResults'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -37,6 +33,26 @@ describe('RegionSearchResults component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toEqual('div')
+  })
+
+  test('should render a note to select a region', () => {
+    const { enzymeWrapper } = setup({
+      regionSearchResults: {
+        isLoading: false,
+        isLoaded: true,
+        byId: {
+          1234: {
+            name: 'Upper Creek',
+            id: '1234',
+            type: 'huc'
+          }
+        },
+        allIds: ['1234']
+      }
+    })
+
+    expect(enzymeWrapper.find('.region-search-results__list-intro').text())
+      .toContain('Select a region from the list below to filter your search results')
   })
 
   describe('onSetSelected', () => {
