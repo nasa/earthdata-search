@@ -4,7 +4,9 @@ import { UPDATE_ADVANCED_SEARCH, TOGGLE_DRAWING_NEW_LAYER } from '../../constant
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
     const action = { type: 'dummy_action' }
-    const initialState = {}
+    const initialState = {
+      regionSearch: {}
+    }
 
     expect(advancedSearchReducer(undefined, action)).toEqual(initialState)
   })
