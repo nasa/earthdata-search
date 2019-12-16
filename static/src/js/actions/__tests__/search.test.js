@@ -8,10 +8,10 @@ import {
   UPDATE_COLLECTION_QUERY,
   UPDATE_GRANULE_QUERY,
   CLEAR_SHAPEFILE,
-  UPDATE_SHAPEFILE,
   CLEAR_COLLECTION_GRANULES,
   UPDATE_TIMELINE_INTERVALS,
-  TOGGLE_DRAWING_NEW_LAYER
+  TOGGLE_DRAWING_NEW_LAYER,
+  UPDATE_ADVANCED_SEARCH
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -557,29 +557,33 @@ describe('clearFilters', () => {
 
     // Is updateCollectionQuery called with the right payload
     expect(storeActions[0]).toEqual({
-      type: CLEAR_EXCLUDE_GRANULE_ID
+      type: UPDATE_ADVANCED_SEARCH,
+      payload: {}
     })
     expect(storeActions[1]).toEqual({
+      type: CLEAR_EXCLUDE_GRANULE_ID
+    })
+    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: emptyQuery
     })
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[3]).toEqual({
       type: UPDATE_GRANULE_QUERY,
       payload: {
         gridCoords: '',
         pageNum: 1
       }
     })
-    expect(storeActions[3]).toEqual({
+    expect(storeActions[4]).toEqual({
       type: CLEAR_COLLECTION_GRANULES
     })
-    expect(storeActions[4]).toEqual({
+    expect(storeActions[5]).toEqual({
       type: UPDATE_TIMELINE_INTERVALS,
       payload: {
         results: []
       }
     })
-    expect(storeActions[5]).toEqual({
+    expect(storeActions[6]).toEqual({
       type: CLEAR_SHAPEFILE
     })
 
