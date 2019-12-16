@@ -27,6 +27,8 @@ export class RegionSearchForm extends Component {
         placeholder: 'ex. Colorado Mine'
       }
     ]
+
+    this.handleKeypress = this.handleKeypress.bind(this)
   }
 
   componentDidMount() {
@@ -45,6 +47,23 @@ export class RegionSearchForm extends Component {
     return this.endpoints.find(({
       value
     }) => value === endpoint)
+  }
+
+  handleKeypress(event) {
+    const {
+      regionSearchForm
+    } = this.props
+
+    const {
+      handleSubmit
+    } = regionSearchForm
+
+    if (event.key === 'Enter') {
+      handleSubmit()
+
+      event.stopPropagation()
+      event.preventDefault()
+    }
   }
 
   render() {
@@ -118,12 +137,14 @@ export class RegionSearchForm extends Component {
                 >
                   <Col>
                     <Form.Control
+                      autoComplete="off"
                       name="keyword"
                       as="input"
                       placeholder={this.getEndpointData(endpoint).placeholder}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={keyword}
+                      onKeyPress={this.handleKeypress}
                       isInvalid={keywordErrors && keywordTouched}
                     />
                     {
