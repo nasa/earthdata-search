@@ -48,6 +48,7 @@
     margin-right: $spacer/2;
     font-style: italic;
     color: $color__black--400;
+    font-size: 0.875rem;
   }
 
   &__back-button {
@@ -57,9 +58,14 @@
   }
 
   &__list-meta {
-    color: $color__black--500;
+    color: $color__black--800;
     font-size: 0.925rem;
     font-weight: 700;
+  }
+
+  &__list-intro {
+    color: $color__black--500;
+    font-size: 0.925rem;
   }
 
   &__list {
