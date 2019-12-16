@@ -4,7 +4,9 @@ import {
   TOGGLE_DRAWING_NEW_LAYER
 } from '../constants/actionTypes'
 
-const initialState = {}
+const initialState = {
+  regionSearch: {}
+}
 
 const advancedSearchReducer = (state = initialState, action) => {
   const {
@@ -19,10 +21,7 @@ const advancedSearchReducer = (state = initialState, action) => {
       }
     }
     case TOGGLE_DRAWING_NEW_LAYER: {
-      return {
-        ...state,
-        regionSearch: {}
-      }
+      return initialState
     }
     case RESTORE_FROM_URL: {
       const { advancedSearch = initialState } = action.payload

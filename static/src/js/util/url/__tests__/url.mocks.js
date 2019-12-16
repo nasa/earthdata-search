@@ -1,5 +1,5 @@
 export const emptyDecodedResult = {
-  advancedSearch: {},
+  advancedSearch: undefined,
   cmrFacets: {
     data_center_h: undefined,
     instrument_h: undefined,

@@ -25,10 +25,10 @@ export const encodeAdvancedSearch = (advancedSearch) => {
  * @param {Object} params URL parameter object from parsing the URL parameter string
  */
 export const decodeAdvancedSearch = (params) => {
-  if (Object.keys(params).length === 0) return {}
+  if (Object.keys(params).length === 0) return undefined
 
   const { sr } = params
-  if (!sr) return {}
+  if (!sr) return undefined
 
   const advancedSearch = {
     regionSearch: {
