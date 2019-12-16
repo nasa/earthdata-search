@@ -11,7 +11,7 @@ import { tagName } from '../../../../sharedUtils/tags'
  */
 export const prepareCollectionParams = (state) => {
   const {
-    advancedSearch,
+    advancedSearch = {},
     authToken,
     facetsParams = {},
     portal = {},

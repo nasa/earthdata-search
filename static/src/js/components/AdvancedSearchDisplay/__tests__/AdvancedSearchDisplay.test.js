@@ -77,7 +77,11 @@ describe('AdvancedSearchDisplay component', () => {
         expect(props.onUpdateAdvancedSearch).toHaveBeenCalledTimes(1)
         expect(props.onUpdateAdvancedSearch).toHaveBeenCalledWith({})
         expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-        expect(props.onChangeQuery).toHaveBeenCalledWith()
+        expect(props.onChangeQuery).toHaveBeenCalledWith({
+          collection: {
+            spatial: {}
+          }
+        })
       })
     })
   })

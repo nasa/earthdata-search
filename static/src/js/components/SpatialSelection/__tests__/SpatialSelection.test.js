@@ -19,6 +19,9 @@ function setup(props) {
 }
 
 const defaultProps = {
+  advancedSearch: {
+    regionSearch: {}
+  },
   boundingBoxSearch: '',
   isProjectPage: false,
   lineSearch: '',
