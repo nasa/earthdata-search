@@ -22,7 +22,7 @@ export const encodeAdvancedSearch = (advancedSearch) => {
 
 /**
  * Decodes a parameter object into an advancedSearch object
- * @param {*} params URL parameter object from parsing the URL parameter string
+ * @param {Object} params URL parameter object from parsing the URL parameter string
  */
 export const decodeAdvancedSearch = (params) => {
   if (Object.keys(params).length === 0) return {}
