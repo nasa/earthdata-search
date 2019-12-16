@@ -22,6 +22,12 @@ import './AdvancedSearchForm.scss'
  */
 // eslint-disable-next-line react/prefer-stateless-function
 export class AdvancedSearchForm extends Component {
+  constructor(props) {
+    super(props)
+
+    this.handleKeypress = this.handleKeypress.bind(this)
+  }
+
   componentDidMount() {
     const {
       values,
@@ -30,6 +36,13 @@ export class AdvancedSearchForm extends Component {
     } = this.props
 
     validateForm(values)
+  }
+
+  handleKeypress(event) {
+    if (event.key === 'Enter') {
+      event.stopPropagation()
+      event.preventDefault()
+    }
   }
 
   render() {
@@ -47,7 +60,7 @@ export class AdvancedSearchForm extends Component {
     } = this.props
 
     return (
-      <FormikForm className="advanced-search-form">
+      <FormikForm onKeyPress={this.handleKeypress} className="advanced-search-form">
         {
           fields.map((field) => {
             const {
