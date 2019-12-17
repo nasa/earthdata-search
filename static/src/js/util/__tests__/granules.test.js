@@ -2,10 +2,52 @@ import {
   createEcho10MetadataUrls,
   isDataLink,
   createDataLinks,
-  getDownloadUrls
+  getDownloadUrls,
+  withAdvancedSearch
 } from '../granules'
 
-describe('createEcho10MetadataUrls', () => {
+describe('#withAdvancedSearch', () => {
+  describe('when no advanced search parameters are passed', () => {
+    test('should return the collection params', () => {
+      const collectionParams = {
+        test: 'test'
+      }
+      const advancedSearch = {}
+      const result = withAdvancedSearch(collectionParams, advancedSearch)
+
+      expect(result).toEqual({
+        test: 'test'
+      })
+    })
+  })
+
+  describe('when advanced search parameters are passed', () => {
+    describe('when a region search is set', () => {
+      test('should return the collection params with a modified polygon', () => {
+        const originalPolygon = '1,2,3,4,1,2,3,4'
+        const advSearchPolygon = '5,6,7,8,5,6,7,8'
+        const collectionParams = {
+          polygon: originalPolygon
+        }
+        const advancedSearch = {
+          regionSearch: {
+            selectedRegion: {
+              spatial: advSearchPolygon
+            }
+          }
+        }
+        const result = withAdvancedSearch(collectionParams, advancedSearch)
+
+        expect(result).toEqual({
+          polygon: advSearchPolygon
+        })
+      })
+    })
+  })
+})
+
+
+describe('#createEcho10MetadataUrls', () => {
   describe('when provided a granule id', () => {
     test('returns the an object of metadata urls', () => {
       const data = createEcho10MetadataUrls('G1613627299-LANCEMODIS')
@@ -37,7 +79,7 @@ describe('createEcho10MetadataUrls', () => {
   })
 })
 
-describe('isDataLink', () => {
+describe('#isDataLink', () => {
   test('returns true http data links', () => {
     const link = {
       rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
@@ -84,7 +126,7 @@ describe('isDataLink', () => {
   })
 })
 
-describe('createDataLinks', () => {
+describe('#createDataLinks', () => {
   test('returns only data links, prefering http over ftp for matching filenames', () => {
     const links = [
       {
@@ -126,7 +168,7 @@ describe('createDataLinks', () => {
   })
 })
 
-describe('getDownloadUrls', () => {
+describe('#getDownloadUrls', () => {
   test('returns an empty array when no links are found', () => {
     const cmrGranuleResponse = [{
       id: 'C10000005-EDSC'

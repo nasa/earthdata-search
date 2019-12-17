@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash'
+
 import { getFocusedCollectionObject } from './focusedCollection'
 import { encodeTemporal } from './url/temporalEncoders'
 import { encodeGridCoords } from './url/gridEncoders'
@@ -5,11 +7,39 @@ import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
+ * Takes the current CMR granule params and applies any changes needed to
+ * account for the current advanced search state.
+ * @param {Object} granuleParams The current collection search params.
+ * @param {Object} advancedSearch The current advanced search state params.
+ * @returns {Object} Parameters used in prepareGranuleParams.
+ */
+export const withAdvancedSearch = (granuleParams, advancedSearch) => {
+  const mergedParams = {
+    ...granuleParams
+  }
+
+  const {
+    regionSearch = {}
+  } = advancedSearch
+
+  const {
+    selectedRegion = {}
+  } = regionSearch
+
+  // If we have a spatial value for the selectedRegion, use that for the spatial
+  if (!isEmpty(selectedRegion) && selectedRegion.spatial) {
+    mergedParams.polygon = selectedRegion.spatial
+  }
+
+  return mergedParams
+}
+
+/**
  * Populate granule payload used to update the store
- * @param {string} collectionId
- * @param {boolean} isCwic
- * @param {object} response
- * @returns Granule payload
+ * @param {String} collectionId
+ * @param {Boolean} isCwic
+ * @param {Object} response
+ * @returns {Object} Granule payload
  */
 export const populateGranuleResults = (collectionId, isCwic, response) => {
   const payload = {}
@@ -28,13 +58,15 @@ export const populateGranuleResults = (collectionId, isCwic, response) => {
 }
 
 /**
- * Prepare parameters used in getGranules() based on current Redux State, or provided project collection
- * @param {object} state Current Redux State
- * @param {string} projectCollectionId Optional: CollectionId of a Project collection
- * @returns Parameters used in Granules request
+ * Prepare parameters used in getGranules() based on current Redux State,
+ * or provided project collection
+ * @param {Object} state Current Redux State
+ * @param {String} projectCollectionId Optional: CollectionId of a Project collection
+ * @returns {Object} Parameters used in Granules request
  */
 export const prepareGranuleParams = (state, projectCollectionId) => {
   const {
+    advancedSearch = {},
     authToken,
     metadata = {},
     focusedCollection: focusedCollectionId,
@@ -137,7 +169,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     options.readableGranuleName = { pattern: true }
   }
 
-  return {
+  const granuleParams = {
     authToken,
     browseOnly,
     boundingBox,
@@ -160,13 +192,18 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     sortKey,
     temporalString
   }
+
+  // Apply any overrides for advanced search
+  const paramsWithAdvancedSearch = withAdvancedSearch(granuleParams, advancedSearch)
+
+  return paramsWithAdvancedSearch
 }
 
 /**
  * Translates the values returned from prepareGranuleParams to the camelCased keys that are expected in
  * the granules.search() function
  * @param {Object} params - Params to be passed to the granules.search() function.
- * @returns Parameters to be provided to the Granules request with camel cased keys
+ * @returns {Object} Parameters to be provided to the Granules request with camel cased keys
  */
 export const buildGranuleSearchParams = (params) => {
   const {
@@ -227,8 +264,8 @@ export const buildGranuleSearchParams = (params) => {
 
 /**
  * Create the ECHO10 Metadata URLs using the granule concept ID
- * @param {string} granuleId - The granule ID
- * @returns {object} - An object containing the various URLs
+ * @param {String} granuleId The granule ID
+ * @returns {Object} An object containing the various URLs
  */
 export const createEcho10MetadataUrls = (granuleId) => {
   // TODO: This should eventually support authentication by appending the token information @high
@@ -259,9 +296,9 @@ export const createEcho10MetadataUrls = (granuleId) => {
 /**
  * Determines if a given link is a data link.
  * A link is a data link if it has data in the rel property and it is not inherited.
- * @param {object} link An individual link object from granule metadata
- * @param {string} type 'http' or 'ftp'
- * @returns {boolean}
+ * @param {Object} link An individual link object from granule metadata
+ * @param {String} type 'http' or 'ftp'
+ * @returns {Boolean}
  */
 export const isDataLink = (link, type) => {
   const {
@@ -278,8 +315,8 @@ export const isDataLink = (link, type) => {
 /**
  * Given a list of granule metadata links, filters out those links that are not data links
  * prefering http over ftp for duplicate filenames
- * @param {array} links List of links from granule metadata
- * @returns {array} List of data links filters from input links
+ * @param {Array} links List of links from granule metadata
+ * @returns {Array} List of data links filters from input links
  */
 export const createDataLinks = (links = []) => {
   // All 'http' data links
