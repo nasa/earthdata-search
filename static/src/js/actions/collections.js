@@ -1,3 +1,4 @@
+import { isCancel } from 'axios'
 import { isPlainObject } from 'lodash'
 
 import CollectionRequest from '../util/request/collectionRequest'
@@ -186,6 +187,10 @@ export const getCollections = () => (dispatch, getState) => {
       dispatch(updateFacets(payload))
     })
     .catch((error) => {
+      if (isCancel(error)) {
+        console.warn('request cancelled')
+        return
+      }
       dispatch(finishCollectionsTimer())
       dispatch(onCollectionsErrored())
       dispatch(onFacetsErrored())
@@ -201,6 +206,8 @@ export const getCollections = () => (dispatch, getState) => {
         resource: 'collections'
       }))
     })
+
+  requestObject.cancel()
 
   return response
 }
