@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { CancelToken } from 'axios'
 import pick from 'lodash/pick'
 import snakeCaseKeys from 'snakecase-keys'
 
@@ -24,6 +24,16 @@ export default class Request {
     this.lambda = false
     this.searchPath = ''
     this.startTime = null
+    this.source = CancelToken.source()
+  }
+
+  /**
+   * Defines the default keys that our API endpoints allow.
+   * @return {Array} An empty array
+   */
+  cancel() {
+    console.warn('cancelling the request')
+    this.source.cancel()
   }
 
   /**
@@ -119,7 +129,8 @@ export default class Request {
       ],
       transformResponse: axios.defaults.transformResponse.concat(
         (data, headers) => this.transformResponse(data, headers)
-      )
+      ),
+      cancelToken: this.source.token
     })
   }
 
@@ -140,7 +151,8 @@ export default class Request {
       params,
       transformResponse: axios.defaults.transformResponse.concat(
         (data, headers) => this.transformResponse(data, headers)
-      )
+      ),
+      cancelToken: this.source.token
     }
 
     // transformRequest which adds authentication headers is only
