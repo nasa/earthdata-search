@@ -5,9 +5,37 @@ import { categoryNameToCMRParam } from './facets'
 import { tagName } from '../../../../sharedUtils/tags'
 
 /**
+ * Takes the current CMR collection params and applies any changes needed to account
+ * for the current advanced search state.
+ * @param {Object} collectionParams The current collection search params.
+ * @param {Object} advancedSearch The current advanced search state params.
+ * @returns {Object} Parameters used in prepareCollectionParams.
+ */
+export const withAdvancedSearch = (collectionParams, advancedSearch) => {
+  const mergedParams = {
+    ...collectionParams
+  }
+
+  const {
+    regionSearch = {}
+  } = advancedSearch
+
+  const {
+    selectedRegion = {}
+  } = regionSearch
+
+  // If we have a spatial value for the selectedRegion, use that for the spatial
+  if (!isEmpty(selectedRegion) && selectedRegion.spatial) {
+    mergedParams.polygon = selectedRegion.spatial
+  }
+
+  return mergedParams
+}
+
+/**
  * Prepare parameters used in getCollections() based on current Redux State
- * @param {object} state Current Redux State
- * @returns Parameters used in buildCollectionSearchParams
+ * @param {Object} state Current Redux State
+ * @returns {Object} Parameters used in buildCollectionSearchParams
  */
 export const prepareCollectionParams = (state) => {
   const {
@@ -88,37 +116,17 @@ export const prepareCollectionParams = (state) => {
     ...portalQuery
   }
 
-  const mergeWithAdvancedSearch = (collectionParams, advancedSearch) => {
-    const mergedParams = {
-      ...collectionParams
-    }
+  // Apply any overrides for advanced search
+  const paramsWithAdvancedSearch = withAdvancedSearch(collectionParams, advancedSearch)
 
-    const {
-      regionSearch = {}
-    } = advancedSearch
-
-    const {
-      selectedRegion = {}
-    } = regionSearch
-
-    // If we have a spatial value for the selectedRegion, use that for the spatial
-    if (!isEmpty(selectedRegion) && selectedRegion.spatial) {
-      mergedParams.polygon = selectedRegion.spatial
-    }
-
-    return mergedParams
-  }
-
-  const paramsMergedWithAdvacedSearch = mergeWithAdvancedSearch(collectionParams, advancedSearch)
-
-  return paramsMergedWithAdvacedSearch
+  return paramsWithAdvancedSearch
 }
 
 /**
  * Translates the values returned from prepareCollectionParams to the camelCased keys that are expected in
  * the collections.search() function
- * @param {object} params - Params to be passed to the collections.search() function.
- * @returns Parameters to be provided to the Collections request with camel cased keys
+ * @param {Object} params - Params to be passed to the collections.search() function.
+ * @returns {Object} Parameters to be provided to the Collections request with camel cased keys
  */
 export const buildCollectionSearchParams = (params) => {
   const {
