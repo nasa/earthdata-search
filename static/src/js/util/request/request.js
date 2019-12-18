@@ -37,6 +37,13 @@ export default class Request {
   }
 
   /**
+   * Return the cancel token so actions can cancel pending requests
+   */
+  cancelToken() {
+    return this.source
+  }
+
+  /**
    * Defines the default keys that our API endpoints allow.
    * @return {Array} An empty array
    */
