@@ -56,7 +56,7 @@ export const getTimeline = () => (dispatch, getState) => {
   } = timelineParams
 
   const requestObject = new TimelineRequest(authToken)
-  cancelToken = requestObject.cancelToken()
+  cancelToken = requestObject.getCancelToken()
 
   const response = requestObject.search({
     boundingBox,

@@ -167,7 +167,7 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(startCollectionsTimer())
 
   const requestObject = new CollectionRequest(authToken)
-  cancelToken = requestObject.cancelToken()
+  cancelToken = requestObject.getCancelToken()
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
     .then((response) => {

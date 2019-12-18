@@ -295,7 +295,7 @@ export const getGranules = () => (dispatch, getState) => {
     requestObject = new GranuleRequest(authToken)
   }
 
-  cancelToken = requestObject.cancelToken()
+  cancelToken = requestObject.getCancelToken()
 
   const response = requestObject.search(buildGranuleSearchParams(granuleParams))
     .then((response) => {
