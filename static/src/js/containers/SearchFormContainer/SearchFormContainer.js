@@ -66,8 +66,10 @@ export const SearchFormContainer = (props) => {
     shapefileId
   } = shapefile
 
+  const { regionSearch } = advancedSearch
+
   const showFilterStackToggle = [
-    advancedSearch,
+    regionSearch,
     boundingBoxSearch,
     drawingNewLayer,
     gridName,
