@@ -1,3 +1,5 @@
+import { isCancel } from 'axios'
+
 import actions from './index'
 
 import TimelineRequest from '../util/request/timelineRequest'
@@ -19,7 +21,20 @@ export const updateTimelineQuery = payload => ({
   payload
 })
 
+// Cancel token to cancel pending requests
+let cancelToken
+
+/**
+ * Perform a timeline request based on the current redux state.
+ * @param {function} dispatch - A dispatch function provided by redux.
+ * @param {function} getState - A function that returns the current state provided by redux.
+ */
 export const getTimeline = () => (dispatch, getState) => {
+  // If cancel token is set, cancel the previous request(s)
+  if (cancelToken) {
+    cancelToken.cancel()
+  }
+
   const timelineParams = prepareTimelineParams(getState())
 
   if (!timelineParams) {
@@ -41,6 +56,7 @@ export const getTimeline = () => (dispatch, getState) => {
   } = timelineParams
 
   const requestObject = new TimelineRequest(authToken)
+  cancelToken = requestObject.cancelToken()
 
   const response = requestObject.search({
     boundingBox,
@@ -60,6 +76,8 @@ export const getTimeline = () => (dispatch, getState) => {
       dispatch(updateTimelineIntervals(payload))
     })
     .catch((error) => {
+      if (isCancel(error)) return
+
       dispatch(handleError({
         error,
         action: 'getTimeline',

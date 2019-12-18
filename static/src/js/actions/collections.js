@@ -133,6 +133,8 @@ export const updateCollectionGranuleFilters = (id, granuleFilters) => (dispatch,
   })
 }
 
+// Cancel token to cancel pending requests
+let cancelToken
 
 /**
  * Perform a collections request based on the current redux state.
@@ -140,6 +142,11 @@ export const updateCollectionGranuleFilters = (id, granuleFilters) => (dispatch,
  * @param {function} getState - A function that returns the current state provided by redux.
  */
 export const getCollections = () => (dispatch, getState) => {
+  // If cancel token is set, cancel the previous request(s)
+  if (cancelToken) {
+    cancelToken.cancel()
+  }
+
   const collectionParams = prepareCollectionParams(getState())
 
   const {
@@ -160,6 +167,7 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(startCollectionsTimer())
 
   const requestObject = new CollectionRequest(authToken)
+  cancelToken = requestObject.cancelToken()
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
     .then((response) => {
@@ -187,10 +195,8 @@ export const getCollections = () => (dispatch, getState) => {
       dispatch(updateFacets(payload))
     })
     .catch((error) => {
-      if (isCancel(error)) {
-        console.warn('request cancelled')
-        return
-      }
+      if (isCancel(error)) return
+
       dispatch(finishCollectionsTimer())
       dispatch(onCollectionsErrored())
       dispatch(onFacetsErrored())
@@ -206,8 +212,6 @@ export const getCollections = () => (dispatch, getState) => {
         resource: 'collections'
       }))
     })
-
-  requestObject.cancel()
 
   return response
 }

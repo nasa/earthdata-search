@@ -1,3 +1,5 @@
+import { isCancel } from 'axios'
+
 import actions from './index'
 import {
   populateGranuleResults,
@@ -256,7 +258,20 @@ export const clearExcludedGranules = collectionId => (dispatch) => {
   dispatch(onClearExcludedGranules(collectionId))
 }
 
+// Cancel token to cancel pending requests
+let cancelToken
+
+/**
+ * Perform a granules request based on the current redux state.
+ * @param {function} dispatch - A dispatch function provided by redux.
+ * @param {function} getState - A function that returns the current state provided by redux.
+ */
 export const getGranules = () => (dispatch, getState) => {
+  // If cancel token is set, cancel the previous request(s)
+  if (cancelToken) {
+    cancelToken.cancel()
+  }
+
   const granuleParams = prepareGranuleParams(getState())
   dispatch(startGranulesTimer())
   dispatch(onGranulesLoading())
@@ -280,6 +295,8 @@ export const getGranules = () => (dispatch, getState) => {
     requestObject = new GranuleRequest(authToken)
   }
 
+  cancelToken = requestObject.cancelToken()
+
   const response = requestObject.search(buildGranuleSearchParams(granuleParams))
     .then((response) => {
       const payload = populateGranuleResults(collectionId, isCwicCollection, response)
@@ -297,6 +314,8 @@ export const getGranules = () => (dispatch, getState) => {
       }
     })
     .catch((error) => {
+      if (isCancel(error)) return
+
       dispatch(onGranulesErrored())
       dispatch(finishGranulesTimer())
       dispatch(onGranulesLoaded({
