@@ -1,14 +1,4 @@
 .chunked-order-modal {
-  &__actions {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: $spacer*2;
-  }
-
-  &__action {
-    margin-right: $spacer/2;
-  }
-
   &__body-emphasis {
     font-style: italic;
   }
