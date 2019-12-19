@@ -56,7 +56,7 @@ describe('FacetsModal component', () => {
           selectedCategory: 'Test Category'
         }
       })
-      expect(enzymeWrapper.prop('show')).toEqual(false)
+      expect(enzymeWrapper.prop('isOpen')).toEqual(false)
     })
   })
 
@@ -76,12 +76,13 @@ describe('FacetsModal component', () => {
         },
         isOpen: true
       })
-      expect(enzymeWrapper.prop('show')).toEqual(true)
-      expect(enzymeWrapper.find('.facets-modal__title').text()).toEqual('Filter collections by Test Category')
-      expect(enzymeWrapper.find(Spinner).length).toEqual(1)
-      expect(enzymeWrapper.find('.facets-modal__hits').length).toEqual(0)
-      expect(enzymeWrapper.find('.facets-modal__action--cancel').length).toEqual(1)
-      expect(enzymeWrapper.find('.facets-modal__action--apply').length).toEqual(1)
+
+      expect(enzymeWrapper.prop('isOpen')).toEqual(true)
+      expect(enzymeWrapper.prop('title')).toEqual('Filter collections by Test Category')
+      expect(enzymeWrapper.prop('spinner')).toEqual(true)
+      expect(enzymeWrapper.prop('innerHeader').type).toEqual(FacetsModalNav)
+      expect(enzymeWrapper.prop('body').type).toEqual(FacetsList)
+      expect(enzymeWrapper.prop('footerMeta').type).toEqual(React.Fragment)
     })
   })
 
@@ -113,14 +114,13 @@ describe('FacetsModal component', () => {
         },
         isOpen: true
       })
-      expect(enzymeWrapper.prop('show')).toEqual(true)
-      expect(enzymeWrapper.find('.facets-modal__title').text()).toEqual('Filter collections by Test Category')
-      expect(enzymeWrapper.find(Spinner).length).toEqual(0)
-      expect(enzymeWrapper.find(FacetsList).length).toEqual(1)
-      expect(enzymeWrapper.find(FacetsModalNav).prop('activeLetters')).toEqual(['#', 'A', 'B'])
-      expect(enzymeWrapper.find('.facets-modal__hits').text()).toEqual('100 Matching Collections')
-      expect(enzymeWrapper.find('.facets-modal__action--cancel').length).toEqual(1)
-      expect(enzymeWrapper.find('.facets-modal__action--apply').length).toEqual(1)
+
+      expect(enzymeWrapper.prop('isOpen')).toEqual(true)
+      expect(enzymeWrapper.prop('title')).toEqual('Filter collections by Test Category')
+      expect(enzymeWrapper.prop('spinner')).toEqual(false)
+      expect(enzymeWrapper.prop('innerHeader').type).toEqual(FacetsModalNav)
+      expect(enzymeWrapper.prop('body').type).toEqual(FacetsList)
+      expect(enzymeWrapper.prop('footerMeta').type).toEqual(React.Fragment)
     })
   })
 
@@ -219,7 +219,7 @@ describe('FacetsModal component', () => {
         },
         isOpen: true
       })
-      const changeHandler = enzymeWrapper.find(FacetsList).prop('changeHandler')
+      const { changeHandler } = enzymeWrapper.prop('body').props
       changeHandler({}, { destination: '' })
       expect(props.onChangeViewAllFacet).toHaveBeenCalledTimes(1)
     })

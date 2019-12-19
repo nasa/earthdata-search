@@ -1,26 +1,5 @@
 .facets-modal {
-  &__body {
-    padding: 0;
-  }
-
-  &__inner-body {
-    &--loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  &__footer {
-    display: flex;
-    justify-content: space-between;
-  }
-
   &__hits {
     font-weight: 700;
-  }
-
-  &__action {
-    margin-left: $spacer/2;
   }
 }

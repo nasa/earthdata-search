@@ -1,13 +1,74 @@
 .edsc-modal {
   &--fixed-height {
     .modal-content {
-      height: 25rem;
       max-height: 80vh;
       overflow: hidden;
     }
 
     .modal-body {
       overflow: scroll;
+      padding: 0;
+    }
+
+    .modal-header {
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+
+    .modal-footer {
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+  }
+
+  &--fixed-height-sm {
+    .modal-content {
+      height: 25rem;
+    }
+  }
+
+  &--fixed-height-md {
+    .modal-content {
+      height: 60rem;
+    }
+  }
+
+  &--fixed-height-lg {
+    .modal-content {
+      height: 80rem;
+    }
+  }
+
+  &--inner-header {
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__inner-header {
+    flex-grow: 0;
+  }
+
+  &__inner-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    background-color: $color__white;
+  }
+
+  &__inner-body {
+    flex-grow: 1;
+    overflow-y: scroll;
+
+    .edsc-modal--body-padding & {
+      padding: $spacer;
     }
   }
 

@@ -58,6 +58,22 @@ describe('EDSCModal component', () => {
     expect(enzymeWrapper.find(Modal.Footer).length).toEqual(0)
   })
 
+  describe('spinner', () => {
+    test('should not render spinner by default', () => {
+      const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find('.edsc-modal__inner-loading').length).toEqual(0)
+    })
+
+    test('should render innerHeader', () => {
+      const { enzymeWrapper } = setup({
+        spinner: true
+      })
+
+      expect(enzymeWrapper.find('.edsc-modal__inner-loading').length).toEqual(1)
+    })
+  })
+
   describe('footerMeta', () => {
     test('should not render footerMeta by default', () => {
       const { enzymeWrapper } = setup()
@@ -72,6 +88,23 @@ describe('EDSCModal component', () => {
 
       expect(enzymeWrapper.find('.edsc-modal__footer-meta').length).toEqual(1)
       expect(enzymeWrapper.find('.edsc-modal__footer-meta').text()).toEqual('Footer Meta')
+    })
+  })
+
+  describe('innerHeader', () => {
+    test('should not render innerHeader by default', () => {
+      const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find('.edsc-modal__inner-header').length).toEqual(0)
+    })
+
+    test('should render innerHeader', () => {
+      const { enzymeWrapper } = setup({
+        innerHeader: <>Inner Header</>
+      })
+
+      expect(enzymeWrapper.find('.edsc-modal__inner-header').length).toEqual(1)
+      expect(enzymeWrapper.find('.edsc-modal__inner-header').text()).toEqual('Inner Header')
     })
   })
 
@@ -191,6 +224,24 @@ describe('EDSCModal component', () => {
         enzymeWrapper.find(Modal).props().onHide()
 
         expect(onCloseMock).toHaveBeenCalledTimes(0)
+      })
+    })
+  })
+
+  describe('bodyPadding', () => {
+    describe('when set to its default', () => {
+      test('should add the class', () => {
+        const { enzymeWrapper } = setup()
+        expect(enzymeWrapper.find(Modal).prop('dialogClassName')).toContain('edsc-modal--body-padding')
+      })
+    })
+
+    describe('when set to false', () => {
+      test('should not add the class', () => {
+        const { enzymeWrapper } = setup({
+          bodyPadding: false
+        })
+        expect(enzymeWrapper.find(Modal).prop('dialogClassName')).not.toContain('edsc-modal--body-padding')
       })
     })
   })
