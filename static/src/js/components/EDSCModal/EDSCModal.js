@@ -119,7 +119,16 @@ export class EDSCModal extends Component {
       return null
     }
 
-    const [innerHeaderEl, bodyEl, modalOverlayEl] = [innerHeader, body, activeModalOverlay].map(addPropsToChildren)
+    // Loop through the custom elements and attach the extra props we want to pass
+    const [
+      innerHeaderEl,
+      bodyEl,
+      modalOverlayEl
+    ] = [
+      innerHeader,
+      body,
+      activeModalOverlay
+    ].map(addPropsToChildren)
 
     return (
       <Modal
