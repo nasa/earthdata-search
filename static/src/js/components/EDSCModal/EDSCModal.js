@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { Modal } from 'react-bootstrap'
 import classNames from 'classnames'
 
-import { Button } from '../Button/Button'
+import Button from '../Button/Button'
+import Spinner from '../Spinner/Spinner'
 import EDSCModalOverlay from './EDSCModalOverlay'
 
 import './EDSCModal.scss'
@@ -11,15 +12,18 @@ import './EDSCModal.scss'
 /**
  * Renders EDSCModal.
  * @param {Element} body The modal body content.
+ * @param {Boolean} bodyPadding Sets the padding on the inner body.
  * @param {String} className An optional classname for the modal.
  * @param {Boolean} fixedHeight Sets the modal to fixed height.
  * @param {Element} footer The footer content.
  * @param {Element} footerMeta The footer meta content.
  * @param {String} id A unique id for the modal.
  * @param {Boolean} isOpen A flag that designates the modal open or closed.
+ * @param {Element} innerHeader An element for the innerHeader.
  * @param {Function} onClose A callback to be fired when the modal close is triggered.
  * @param {String} title The modal title.
  * @param {String} size The size to be passed to the Bootstrap modal.
+ * @param {Boolean} spinner Shows a loading spinner.
  * @param {String} primaryAction The text content for the primary action.
  * @param {Boolean} primaryActionDisabled Disables the primary action.
  * @param {String} secondaryAction The text content for the secondary action.
@@ -29,6 +33,8 @@ import './EDSCModal.scss'
 export class EDSCModal extends Component {
   constructor(props) {
     super(props)
+
+    this.modalInner = React.createRef()
 
     this.onSetOverlayModalContent = this.onSetOverlayModalContent.bind(this)
     this.onModalExit = this.onModalExit.bind(this)
@@ -58,17 +64,20 @@ export class EDSCModal extends Component {
   render() {
     const {
       body,
+      bodyPadding,
       className,
       size,
       fixedHeight,
       footer,
       footerMeta,
       id,
+      innerHeader,
       isOpen,
       title,
       primaryAction,
       primaryActionDisabled,
       secondaryAction,
+      spinner,
       onPrimaryAction,
       onSecondaryAction,
       modalOverlays
@@ -84,7 +93,10 @@ export class EDSCModal extends Component {
       identifier,
       {
         [`${className}`]: className,
-        'edsc-modal--fixed-height': fixedHeight
+        [`edsc-modal--fixed-height-${fixedHeight}`]: fixedHeight,
+        'edsc-modal--fixed-height': fixedHeight,
+        'edsc-modal--inner-header': innerHeader,
+        'edsc-modal--body-padding': bodyPadding
       }
     ])
 
@@ -94,18 +106,19 @@ export class EDSCModal extends Component {
       activeModalOverlay = modalOverlays[modalOverlay]
     }
 
-    const addSetModalOverlay = (el) => {
+    const addPropsToChildren = (el) => {
       if (el) {
         return cloneElement(el, {
           setModalOverlay: (overlay) => {
             this.onSetOverlayModalContent(overlay)
-          }
+          },
+          modalInnerRef: this.modalInner
         })
       }
       return null
     }
 
-    const [bodyEl, modalOverlayEl] = [body, activeModalOverlay].map(addSetModalOverlay)
+    const [innerHeaderEl, bodyEl, modalOverlayEl] = [innerHeader, body, activeModalOverlay].map(addPropsToChildren)
 
     return (
       <Modal
@@ -128,7 +141,23 @@ export class EDSCModal extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="edsc-modal__body">
-          {bodyEl}
+          {
+            spinner && (
+              <div className="edsc-modal__inner-loading">
+                <Spinner type="dots" />
+              </div>
+            )
+          }
+          {
+            innerHeaderEl && (
+              <div className="edsc-modal__inner-header">
+                {innerHeaderEl}
+              </div>
+            )
+          }
+          <div className="edsc-modal__inner-body" ref={this.modalInner}>
+            {bodyEl}
+          </div>
           {
             modalOverlayEl && (
               <EDSCModalOverlay>
@@ -191,13 +220,16 @@ export class EDSCModal extends Component {
 }
 
 EDSCModal.defaultProps = {
+  bodyPadding: true,
   className: '',
-  fixedHeight: false,
+  fixedHeight: 'sm',
   footer: null,
   footerMeta: null,
+  innerHeader: null,
   onClose: null,
   title: null,
   size: 'sm',
+  spinner: false,
   modalOverlays: {},
   primaryAction: null,
   primaryActionDisabled: false,
@@ -208,16 +240,19 @@ EDSCModal.defaultProps = {
 
 EDSCModal.propTypes = {
   body: PropTypes.node.isRequired,
+  bodyPadding: PropTypes.bool,
   className: PropTypes.string,
-  fixedHeight: PropTypes.bool,
+  fixedHeight: PropTypes.string,
   footer: PropTypes.node,
   footerMeta: PropTypes.node,
   id: PropTypes.string.isRequired,
+  innerHeader: PropTypes.node,
   isOpen: PropTypes.bool.isRequired,
   modalOverlays: PropTypes.shape({}),
   onClose: PropTypes.func,
   title: PropTypes.string,
   size: PropTypes.string,
+  spinner: PropTypes.bool,
   primaryAction: PropTypes.string,
   primaryActionDisabled: PropTypes.bool,
   secondaryAction: PropTypes.string,

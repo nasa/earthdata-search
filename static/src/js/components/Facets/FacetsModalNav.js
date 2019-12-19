@@ -26,7 +26,7 @@ export class FacetsModalNav extends Component {
   render() {
     const { activeLetters } = this.props
     return (
-      <nav className="facets-modal-nav modal__inner-header">
+      <nav className="facets-modal-nav">
         <span className="facets-modal-nav__heading">Jump:</span>
         {
           activeLetters.length > 0 && (
@@ -64,12 +64,13 @@ export class FacetsModalNav extends Component {
 }
 
 FacetsModalNav.defaultProps = {
-  activeLetters: []
+  activeLetters: [],
+  modalInnerRef: null
 }
 
 FacetsModalNav.propTypes = {
   activeLetters: PropTypes.arrayOf(PropTypes.string),
-  modalInnerRef: PropTypes.shape({}).isRequired
+  modalInnerRef: PropTypes.shape({})
 }
 
 export default FacetsModalNav

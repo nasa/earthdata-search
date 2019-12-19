@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Modal } from 'react-bootstrap'
-import classNames from 'classnames'
 
 import { changeViewAllFacet } from '../../util/facets'
 
-import Button from '../Button/Button'
+import EDSCModal from '../EDSCModal/EDSCModal'
 import FacetsList from './FacetsList'
 import FacetsModalNav from './FacetsModalNav'
 import Spinner from '../Spinner/Spinner'
@@ -51,86 +49,54 @@ export class FacetsModal extends Component {
       changeViewAllFacet(e, facetLinkInfo, onChangeViewAllFacet)
     }
 
-    const modalInnerClassNames = classNames({
-      'modal__inner-body': true,
-      'facets-modal__inner-body': true,
-      'facets-modal__inner-body--loading': isFirstLoad
-    })
-
     if (!selectedCategory) return null
 
+    const innerHeader = (
+      <FacetsModalNav
+        activeLetters={selectedFacet.startingLetters}
+      />
+    )
+
+    const body = (
+      <FacetsList
+        sortBy="alpha"
+        facetCategory={selectedCategory}
+        facets={selectedFacet.children}
+        liftSelectedFacets={false}
+        changeHandler={viewAllFacetHandler}
+        variation="light"
+      />
+    )
+
+    const footerMeta = (
+      <>
+        {
+          !isFirstLoad && (
+            <span className="facets-modal__hits">{`${collectionHits} Matching Collections`}</span>
+          )
+        }
+      </>
+    )
+
     return (
-      <Modal
-        dialogClassName="facets-modal modal--full modal--has-inner-header"
-        show={isOpen}
-        onHide={this.onModalClose}
-        centered
+      <EDSCModal
+        className="facets-modal"
+        title={`Filter collections by ${selectedCategory}`}
+        isOpen={isOpen}
+        id="facets"
         size="lg"
-        aria-labelledby="modal__facets-modal"
-      >
-        <Modal.Header
-          className="facets-modal__header"
-          closeButton
-        >
-          <Modal.Title
-            id="modal__facets-modal"
-            className="facets-modal__title"
-          >
-            {`Filter collections by ${selectedCategory}`}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="facets-modal__body">
-          <FacetsModalNav
-            activeLetters={selectedFacet.startingLetters}
-            modalInnerRef={this.modalInner}
-          />
-          <div className={modalInnerClassNames} ref={this.modalInner}>
-            {
-              isFirstLoad
-                ? (
-                  <Spinner type="dots" color="white" />
-                )
-                : (
-                  <FacetsList
-                    sortBy="alpha"
-                    facetCategory={selectedCategory}
-                    facets={selectedFacet.children}
-                    liftSelectedFacets={false}
-                    changeHandler={viewAllFacetHandler}
-                    variation="light"
-                  />
-                )
-            }
-          </div>
-        </Modal.Body>
-        <Modal.Footer className="facets-modal__footer">
-          <div>
-            {
-              !isLoading && (
-                <span className="facets-modal__hits">{`${collectionHits} Matching Collections`}</span>
-              )
-            }
-          </div>
-          <div>
-            <Button
-              className="facets-modal__action facets-modal__action--cancel"
-              bootstrapVariant="light"
-              label="Cancel"
-              onClick={this.onModalClose}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="facets-modal__action facets-modal__action--apply"
-              bootstrapVariant="primary"
-              label="Apply"
-              onClick={this.onApplyClick}
-            >
-              Apply
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+        fixedHeight="lg"
+        spinner={isFirstLoad}
+        bodyPadding={false}
+        onClose={this.onModalClose}
+        innerHeader={innerHeader}
+        footerMeta={footerMeta}
+        body={body}
+        primaryAction="Apply"
+        onPrimaryAction={this.onApplyClick}
+        secondaryAction="Cancel"
+        onSecondaryAction={this.onModalClose}
+      />
     )
   }
 }
