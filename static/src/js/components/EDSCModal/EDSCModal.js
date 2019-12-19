@@ -90,6 +90,7 @@ export class EDSCModal extends Component {
     const identifier = `edsc-modal__${id}-modal`
 
     const modalClassNames = classNames([
+      'edsc-modal',
       identifier,
       {
         [`${className}`]: className,
@@ -222,7 +223,7 @@ export class EDSCModal extends Component {
 EDSCModal.defaultProps = {
   bodyPadding: true,
   className: '',
-  fixedHeight: 'sm',
+  fixedHeight: false,
   footer: null,
   footerMeta: null,
   innerHeader: null,
@@ -242,7 +243,10 @@ EDSCModal.propTypes = {
   body: PropTypes.node.isRequired,
   bodyPadding: PropTypes.bool,
   className: PropTypes.string,
-  fixedHeight: PropTypes.string,
+  fixedHeight: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]),
   footer: PropTypes.node,
   footerMeta: PropTypes.node,
   id: PropTypes.string.isRequired,

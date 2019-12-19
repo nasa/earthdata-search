@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Modal } from 'react-bootstrap'
 import { parse } from 'qs'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { stringify } from '../../util/url/url'
 import { commafy } from '../../util/commafy'
 
-import Button from '../Button/Button'
+import EDSCModal from '../EDSCModal/EDSCModal'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ChunkedOrderModal.scss'
@@ -75,80 +74,59 @@ export class ChunkedOrderModal extends Component {
       </PortalLinkContainer>
     )
 
+    const body = (
+      <>
+        <p>
+          Orders for data containing more than
+          {` ${commafy(defaultGranulesPerOrder)} `}
+          granules will be split into multiple orders.
+          You will receive a set of emails for each order placed.
+        </p>
+        {
+          collectionsRequiringChunking.length > 0 && (
+            collectionsRequiringChunking.map((collection, i) => {
+              const key = `chunked_order_message-${i}`
+
+              const { [collection]: chunkedCollection } = byId
+              const { orderCount } = chunkedCollection
+
+              const { [collection]: allMetadata } = metadataById
+              const { metadata: jsonMetadata } = allMetadata
+              const { title } = jsonMetadata
+
+              return (
+                <p key={key}>
+                  Your order for
+                  {' '}
+                  <span className="chunked-order-modal__body-emphasis">{title}</span>
+                  {' '}
+                  will be automatically split up into
+                  {' '}
+                  <span className="chunked-order-modal__body-strong">{`${orderCount} orders`}</span>
+                  .
+                </p>
+              )
+            })
+          )
+        }
+      </>
+    )
+
     return (
-      <Modal
-        dialogClassName="chunked-order-modal"
-        show={isOpen}
-        onHide={this.onModalClose}
-        centered
+      <EDSCModal
+        className="chunked-order"
+        id="chunked-order"
+        isOpen={isOpen}
+        onClose={this.onModalClose}
         size="lg"
-        aria-labelledby="modal__chunked-order-modal"
-      >
-        <Modal.Header
-          className="chunked-order-modal__header"
-          closeButton
-        >
-          <Modal.Title
-            className="chunked-order-modal__title"
-          >
-            Per-order Granule Limit Exceeded
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="chunked-order-modal__body">
-          <p>
-            Orders for data containing more than
-            {` ${commafy(defaultGranulesPerOrder)} `}
-            granules will be split into multiple orders.
-            You will receive a set of emails for each order placed.
-          </p>
-          {
-            collectionsRequiringChunking.length > 0 && (
-              collectionsRequiringChunking.map((collection, i) => {
-                const key = `chunked_order_message-${i}`
-
-                const { [collection]: chunkedCollection } = byId
-                const { orderCount } = chunkedCollection
-
-                const { [collection]: allMetadata } = metadataById
-                const { metadata: jsonMetadata } = allMetadata
-                const { title } = jsonMetadata
-
-                return (
-                  <p key={key}>
-                    Your order for
-                    {' '}
-                    <span className="chunked-order-modal__body-emphasis">{title}</span>
-                    {' '}
-                    will be automatically split up into
-                    {' '}
-                    <span className="chunked-order-modal__body-strong">{`${orderCount} orders`}</span>
-                    .
-                  </p>
-                )
-              })
-            )
-          }
-        </Modal.Body>
-        <Modal.Footer>
-          { backLink}
-          <Button
-            className="chunked-order-modal__action chunked-order-modal__action--secondary"
-            bootstrapVariant="primary"
-            label="Close"
-            onClick={this.onModalClose}
-          >
-            Change access methods
-          </Button>
-          <Button
-            className="chunked-order-modal__action chunked-order-modal__action--secondary"
-            bootstrapVariant="primary"
-            label="Continue"
-            onClick={this.onClickContinue}
-          >
-            Continue
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        title="Per-order Granule Limit Exceeded"
+        body={body}
+        footerMeta={backLink}
+        primaryAction="Continue"
+        onPrimaryAction={this.onClickContinue}
+        secondaryAction="Change access methods"
+        onSecondaryAction={this.onModalClose}
+      />
     )
   }
 }

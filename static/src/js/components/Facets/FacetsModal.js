@@ -6,7 +6,6 @@ import { changeViewAllFacet } from '../../util/facets'
 import EDSCModal from '../EDSCModal/EDSCModal'
 import FacetsList from './FacetsList'
 import FacetsModalNav from './FacetsModalNav'
-import Spinner from '../Spinner/Spinner'
 
 import './FacetsModal.scss'
 
