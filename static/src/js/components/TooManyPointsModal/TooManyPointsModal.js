@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Modal } from 'react-bootstrap'
 
-import Button from '../Button/Button'
+import EDSCModal from '../EDSCModal/EDSCModal'
 
 import './TooManyPointsModal.scss'
 
@@ -22,43 +21,24 @@ export class TooManyPointsModal extends Component {
       isOpen
     } = this.props
 
+    const body = (
+      <p>
+        To improve search performance, your shapefile has been simplified.
+        Your original shapefile will be used for spatial subsetting if you
+        choose to enable that setting during download.
+      </p>
+    )
+
     return (
-      <Modal
-        dialogClassName="too-many-points-modal"
-        show={isOpen}
-        onHide={this.onModalClose}
-        centered
+      <EDSCModal
+        className="too-many-points"
+        title="Shape file has too many points"
+        isOpen={isOpen}
+        id="too-many-points"
         size="md"
-        aria-labelledby="modal__too-many-points-modal"
-      >
-        <Modal.Header
-          className="too-many-points-modal__header"
-          closeButton
-        >
-          <Modal.Title
-            className="too-many-points-modal__title"
-          >
-            Shape file has too many points
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="too-many-points-modal__body">
-          <p>
-            To improve search performance, your shapefile has been simplified.
-            Your original shapefile will be used for spatial subsetting if you
-            choose to enable that setting during download.
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            className="too-many-points-modal__action too-many-points-modal__action--secondary"
-            bootstrapVariant="primary"
-            label="Close"
-            onClick={this.onModalClose}
-          >
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        onClose={this.onModalClose}
+        body={body}
+      />
     )
   }
 }
