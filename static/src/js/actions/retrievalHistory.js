@@ -40,7 +40,8 @@ export const fetchRetrievalHistory = () => (dispatch, getState) => {
       dispatch(handleError({
         error,
         action: 'fetchRetrievalHistory',
-        resource: 'retrieval history'
+        resource: 'retrieval history',
+        requestObject
       }))
     })
 

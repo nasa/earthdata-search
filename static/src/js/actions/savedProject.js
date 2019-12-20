@@ -62,7 +62,8 @@ export const updateProjectName = name => (dispatch, getState) => {
         error,
         action: 'updateProjectName',
         resource: 'project name',
-        verb: 'updating'
+        verb: 'updating',
+        requestObject
       }))
     })
 
@@ -88,7 +89,8 @@ export const deleteSavedProject = projectId => (dispatch, getState) => {
           error,
           action: 'deleteSavedProject',
           resource: 'saved project',
-          verb: 'deleting'
+          verb: 'deleting',
+          requestObject
         }))
       })
 

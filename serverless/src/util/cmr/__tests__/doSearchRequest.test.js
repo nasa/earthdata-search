@@ -44,6 +44,9 @@ describe('util#doSearchRequest', () => {
     const jwtToken = '123.456.789'
     const url = 'http://example.com/search/path?param1=123&param2=abc&param3%5B%5D=987'
 
-    await expect(doSearchRequest(jwtToken, url)).resolves.toEqual(expectedResponse)
+    await expect(doSearchRequest({
+      jwtToken,
+      path: url
+    })).resolves.toEqual(expectedResponse)
   })
 })

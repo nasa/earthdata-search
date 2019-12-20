@@ -3,6 +3,7 @@ import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
 import { isWarmUp } from '../util/isWarmup'
+import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
 
 /**
  * Perform an authenticated CMR Granule search
@@ -13,6 +14,10 @@ const cmrGranuleSearch = async (event, context) => {
   if (await isWarmUp(event, context)) return false
 
   const { body, headers } = event
+
+  const { invocationTime, requestId } = JSON.parse(body)
+
+  logLambdaEntryTime(requestId, invocationTime, context)
 
   // The 'Accept' header contains the UMM version
   const providedHeaders = pick(headers, ['Accept'])
@@ -47,16 +52,18 @@ const cmrGranuleSearch = async (event, context) => {
     'sort_key'
   ]
 
-  return doSearchRequest(
-    getJwtToken(event),
-    '/search/granules.json',
-    buildParams({
+  return doSearchRequest({
+    jwtToken: getJwtToken(event),
+    path: '/search/granules.json',
+    params: buildParams({
       body,
       permittedCmrKeys,
       nonIndexedKeys
     }),
-    providedHeaders
-  )
+    invocationTime,
+    providedHeaders,
+    requestId
+  })
 }
 
 export default cmrGranuleSearch

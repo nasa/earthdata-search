@@ -89,6 +89,7 @@ describe('Request#transformRequest', () => {
   test('correctly transforms data for Lambda requests', () => {
     const request = new Request(baseUrl)
     request.lambda = true
+    request.startTime = 1576855756
 
     const data = { ParamName: 123 }
 
@@ -96,7 +97,7 @@ describe('Request#transformRequest', () => {
 
     const transformedData = request.transformRequest(data, {})
 
-    expect(transformedData).toEqual('{"params":{"param_name":123}}')
+    expect(transformedData).toEqual('{"invocationTime":1576855756,"params":{"param_name":123}}')
   })
 })
 

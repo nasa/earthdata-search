@@ -10,6 +10,7 @@ describe('cmrGranuleSearch', () => {
 
     const event = {
       body: JSON.stringify({
+        requestId: 'asdf-1234-qwer-5678',
         params: {}
       })
     }
@@ -18,6 +19,12 @@ describe('cmrGranuleSearch', () => {
     await cmrGranuleSearch(event, {})
 
     expect(mock).toBeCalledTimes(1)
-    expect(mock).toBeCalledWith('mockJwt', '/search/granules.json', '', {})
+    expect(mock).toBeCalledWith({
+      jwtToken: 'mockJwt',
+      path: '/search/granules.json',
+      params: '',
+      providedHeaders: {},
+      requestId: 'asdf-1234-qwer-5678'
+    })
   })
 })

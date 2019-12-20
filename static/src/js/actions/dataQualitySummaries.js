@@ -32,7 +32,8 @@ export const fetchDataQualitySummaries = catalogItemId => (dispatch, getState) =
       dispatch(handleError({
         error,
         action: 'fetchDataQualitySummaries',
-        resource: 'data quality summaries'
+        resource: 'data quality summaries',
+        requestObject
       }))
     })
 

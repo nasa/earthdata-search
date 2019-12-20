@@ -96,7 +96,8 @@ export const getRegions = () => (dispatch, getState) => {
         error,
         action: 'getRegions',
         resource: 'regions',
-        displayBanner: false
+        displayBanner: false,
+        requestObject
       }))
     })
 

@@ -20,6 +20,11 @@ describe('collectionSearch', () => {
     await collectionSearch(event, {})
 
     expect(mock).toBeCalledTimes(1)
-    expect(mock).toBeCalledWith('mockJwt', '/search/collections.json', '', {})
+    expect(mock).toBeCalledWith({
+      jwtToken: 'mockJwt',
+      path: '/search/collections.json',
+      params: '',
+      providedHeaders: {}
+    })
   })
 })

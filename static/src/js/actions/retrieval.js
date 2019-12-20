@@ -91,7 +91,8 @@ export const submitRetrieval = () => (dispatch, getState) => {
         error,
         action: 'submitRetrieval',
         resource: 'retrieval',
-        verb: 'submitting'
+        verb: 'submitting',
+        requestObject
       }))
     })
 
@@ -140,7 +141,8 @@ export const fetchRetrieval = id => (dispatch, getState) => {
       dispatch(handleError({
         error,
         action: 'fetchRetrieval',
-        resource: 'retrieval'
+        resource: 'retrieval',
+        requestObject
       }))
     })
 
@@ -165,7 +167,8 @@ export const deleteRetrieval = id => (dispatch, getState) => {
           error,
           action: 'deleteRetrieval',
           resource: 'retrieval',
-          verb: 'deleting'
+          verb: 'deleting',
+          requestObject
         }))
       })
 

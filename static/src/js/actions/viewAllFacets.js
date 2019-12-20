@@ -94,7 +94,8 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
       dispatch(handleError({
         error,
         action: 'getViewAllFacets',
-        resource: 'facets'
+        resource: 'facets',
+        requestObject
       }))
     })
 

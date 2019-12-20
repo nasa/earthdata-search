@@ -3,6 +3,7 @@ import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
 import { isWarmUp } from '../util/isWarmup'
+import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
 
 /**
  * Returns the keys permitted by cmr based on the request format
@@ -61,6 +62,10 @@ const collectionSearch = async (event, context) => {
   const { body, headers, pathParameters } = event
   const { format } = pathParameters
 
+  const { invocationTime, requestId } = JSON.parse(body)
+
+  logLambdaEntryTime(requestId, invocationTime, context)
+
   // The 'Accept' header contains the UMM version
   const providedHeaders = pick(headers, ['Accept'])
 
@@ -79,16 +84,17 @@ const collectionSearch = async (event, context) => {
     'tag_key'
   ]
 
-  return doSearchRequest(
-    getJwtToken(event),
-    `/search/collections.${format}`,
-    buildParams({
+  return doSearchRequest({
+    jwtToken: getJwtToken(event),
+    path: `/search/collections.${format}`,
+    params: buildParams({
       body,
       nonIndexedKeys,
       permittedCmrKeys
     }),
-    providedHeaders
-  )
+    providedHeaders,
+    requestId
+  })
 }
 
 export default collectionSearch

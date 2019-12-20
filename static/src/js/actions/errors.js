@@ -18,20 +18,26 @@ export const handleError = ({
   action,
   resource,
   verb = 'retrieving',
-  displayBanner = true
+  displayBanner = true,
+  requestObject
 }) => (dispatch, getState) => {
   const { router = {} } = getState()
   const { location } = router
+
+  let requestId = uuidv4()
+  if (requestObject) {
+    const { requestId: existingRequestId } = requestObject
+
+    requestId = existingRequestId
+  }
 
   const {
     error: message = 'There was a problem completing the request'
   } = error
 
-  const id = uuidv4()
-
   if (displayBanner) {
     dispatch(addError({
-      id,
+      id: requestId,
       title: `Error ${verb} ${resource}`,
       message,
       details: error
@@ -41,10 +47,10 @@ export const handleError = ({
   console.error(`Action [${action}] failed:`, error)
 
   // Send the error to be logged in lambda
-  const requestObject = new LoggerRequest()
-  requestObject.log({
+  const loggerRequest = new LoggerRequest()
+  loggerRequest.log({
     error: {
-      guid: id,
+      guid: requestId,
       location,
       message,
       error
