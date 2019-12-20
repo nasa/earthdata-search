@@ -41,7 +41,8 @@ export const fetchSavedProjects = () => (dispatch, getState) => {
       dispatch(handleError({
         error,
         action: 'fetchSavedProjects',
-        resource: 'saved projects'
+        resource: 'saved projects',
+        requestObject
       }))
     })
 

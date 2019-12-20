@@ -81,7 +81,8 @@ export const getTimeline = () => (dispatch, getState) => {
       dispatch(handleError({
         error,
         action: 'getTimeline',
-        resource: 'timeline'
+        resource: 'timeline',
+        requestObject
       }))
     })
 

@@ -1,6 +1,7 @@
 import axios, { CancelToken } from 'axios'
 import pick from 'lodash/pick'
 import snakeCaseKeys from 'snakecase-keys'
+import uuidv4 from 'uuid/v4'
 
 import configureStore from '../../store/configureStore'
 import { metricsTiming } from '../../middleware/metrics/actions'
@@ -79,7 +80,19 @@ export default class Request {
       const filteredData = pick(snakeKeyData, this.permittedCmrKeys(ext))
 
       // POST requests to Lambda use a JSON string
-      if (this.authenticated || this.lambda) return JSON.stringify({ params: filteredData, ext })
+      if (this.authenticated || this.lambda) {
+        return JSON.stringify({
+          requestId: this.requestId,
+          invocationTime: this.startTime,
+          params: filteredData,
+          ext
+        })
+      }
+
+      // Lambda will set this for us, if we're not using lambda
+      // we'll set it to ensure its provided to CMR
+      // eslint-disable-next-line no-param-reassign
+      headers['CMR-Request-Id'] = this.requestId
 
       // Add the Client-Id header for requests directly to CMR
       // eslint-disable-next-line no-param-reassign
@@ -117,6 +130,7 @@ export default class Request {
   post(url, data) {
     this.startTimer()
     this.setFullUrl(url)
+    this.generateRequestId()
 
     return axios({
       method: 'post',
@@ -142,6 +156,7 @@ export default class Request {
   get(url, params) {
     this.startTimer()
     this.setFullUrl(url)
+    this.generateRequestId()
 
     let requestOptions = {
       method: 'get',
@@ -175,6 +190,7 @@ export default class Request {
   delete(url) {
     this.startTimer()
     this.setFullUrl(url)
+    this.generateRequestId()
 
     let requestOptions = {
       method: 'delete',
@@ -220,6 +236,10 @@ export default class Request {
 
       window.location.href = redirectPath
     }
+  }
+
+  generateRequestId() {
+    this.requestId = uuidv4()
   }
 
   startTimer() {

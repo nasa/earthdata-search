@@ -39,7 +39,8 @@ export const fetchRetrievalCollection = id => (dispatch, getState) => {
       dispatch(handleError({
         error,
         action: 'fetchRetrievalCollection',
-        resource: 'collection'
+        resource: 'collection',
+        requestObject
       }))
     })
 

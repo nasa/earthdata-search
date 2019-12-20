@@ -89,7 +89,8 @@ export const changePath = (path = '') => (dispatch) => {
           error,
           action: 'changePath',
           resource: 'project',
-          verb: 'updating'
+          verb: 'updating',
+          requestObject
         }))
       })
 
@@ -174,7 +175,8 @@ export const changeUrl = options => (dispatch, getState) => {
               error,
               action: 'changeUrl',
               resource: 'project',
-              verb: 'updating'
+              verb: 'updating',
+              requestObject
             }))
           })
 

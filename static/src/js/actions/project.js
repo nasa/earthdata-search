@@ -112,7 +112,8 @@ export const getProjectGranules = collectionIds => (dispatch, getState) => (
         dispatch(actions.handleError({
           error,
           action: 'getProjectGranules',
-          resource: 'granules'
+          resource: 'granules',
+          requestObject
         }))
       })
 

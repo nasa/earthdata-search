@@ -38,23 +38,27 @@ describe('CwicRequest#transformRequest', () => {
   describe('when logged in', () => {
     test('returns a basic example result correctly transformed', () => {
       const cwicRequest = new CwicRequest('authToken')
+      cwicRequest.startTime = 1576855756
+
 
       const transformedData = cwicRequest.transformRequest({
         echoCollectionId: 'TEST_COLLECTION_ID'
       }, {})
 
-      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
+      expect(transformedData).toEqual('{"invocationTime":1576855756,"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
     })
 
     test('returns only permitted keys correctly transformed', () => {
       const cwicRequest = new CwicRequest('authToken')
+      cwicRequest.startTime = 1576855756
+
 
       const transformedData = cwicRequest.transformRequest({
         echoCollectionId: 'TEST_COLLECTION_ID',
         nonPermittedKey: 'NOPE'
       }, {})
 
-      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
+      expect(transformedData).toEqual('{"invocationTime":1576855756,"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
     })
   })
 })

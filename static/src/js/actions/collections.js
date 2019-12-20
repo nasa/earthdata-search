@@ -209,7 +209,8 @@ export const getCollections = () => (dispatch, getState) => {
       dispatch(handleError({
         error,
         action: 'getCollections',
-        resource: 'collections'
+        resource: 'collections',
+        requestObject
       }))
     })
 

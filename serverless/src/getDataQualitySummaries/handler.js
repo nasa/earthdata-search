@@ -1,17 +1,20 @@
 import 'array-foreach-async'
 import request from 'request-promise'
+import uuidv4 from 'uuid/v4'
+
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEchoToken } from '../util/urs/getEchoToken'
+import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
 
 /**
  * Retrieve data quality summaries for a given CMR Collection
  * @param {Object} event Details about the HTTP request that it received
  */
-const getDataQualitySummaries = async (event) => {
+const getDataQualitySummaries = async (event, context) => {
   const { body } = event
-  const { params = {} } = JSON.parse(body)
+  const { invocationTime, params = {}, requestId } = JSON.parse(body)
 
   const jwtToken = getJwtToken(event)
 
@@ -25,6 +28,8 @@ const getDataQualitySummaries = async (event) => {
     const dataQualitySummaries = []
     const errors = []
 
+    logLambdaEntryTime(requestId, invocationTime, context)
+
     const dqsAssociationResponse = await request.get({
       uri: `${echoRestRoot}/data_quality_summary_definitions.json`,
       qs: {
@@ -32,11 +37,15 @@ const getDataQualitySummaries = async (event) => {
       },
       headers: {
         'Echo-Token': echoToken,
-        'Client-Id': getClientId().background
+        'Client-Id': getClientId().background,
+        'CMR-Request-Id': requestId
       },
       json: true,
+      time: true,
       resolveWithFullResponse: true
     })
+
+    console.log(`Request ${requestId} completed external request after ${dqsAssociationResponse.elapsedTime} ms`)
 
     const { body } = dqsAssociationResponse
 
@@ -54,19 +63,26 @@ const getDataQualitySummaries = async (event) => {
     }
 
     await body.forEachAsync(async (dqsAssociation) => {
+      const dataQualitySummaryRequestId = uuidv4()
+
       const { reference = {} } = dqsAssociation
       const { id: dqsId } = reference
 
+      let dqsResponse
       try {
-        const dqsResponse = await request.get({
+        dqsResponse = await request.get({
           uri: `${echoRestRoot}/data_quality_summary_definitions/${dqsId}.json`,
           headers: {
             'Echo-Token': echoToken,
-            'Client-Id': getClientId().background
+            'Client-Id': getClientId().background,
+            'CMR-Request-Id': dataQualitySummaryRequestId
           },
           json: true,
+          time: true,
           resolveWithFullResponse: true
         })
+
+        console.log(`Request ${dataQualitySummaryRequestId} for data quality summary ${catalogItemId} completed after ${dqsResponse.elapsedTime} ms`)
 
         const { body = {} } = dqsResponse
         const { data_quality_summary_definition: dataQualitySummary = {} } = body
@@ -79,11 +95,9 @@ const getDataQualitySummaries = async (event) => {
 
         errors.push(errorMessage)
 
-        console.log(`Data Quality Summary retrieval error for ${catalogItemId}: ${errorMessage}`)
+        console.log(`Request ${dataQualitySummaryRequestId} for data quality summary ${catalogItemId} failed after ${errorMessage}`)
       }
     })
-
-    console.log(`Data Quality Summaries found for ${catalogItemId}: ${JSON.stringify(dataQualitySummaries, null, 4)}`)
 
     if (dataQualitySummaries.length > 0) {
       return {

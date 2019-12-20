@@ -161,7 +161,8 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
         dispatch(actions.handleError({
           error,
           action: 'fetchLinks',
-          resource: 'granule links'
+          resource: 'granule links',
+          requestObject
         }))
       })
 
@@ -225,7 +226,8 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
       dispatch(actions.handleError({
         error,
         action: 'fetchOpendapLinks',
-        resource: 'OPeNDAP links'
+        resource: 'OPeNDAP links',
+        requestObject
       }))
     })
 
@@ -324,7 +326,8 @@ export const getGranules = () => (dispatch, getState) => {
       dispatch(actions.handleError({
         error,
         action: 'getGranules',
-        resource: 'granules'
+        resource: 'granules',
+        requestObject
       }))
     })
 

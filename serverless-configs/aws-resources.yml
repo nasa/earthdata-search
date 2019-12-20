@@ -71,6 +71,18 @@ Resources:
     Type: 'AWS::SQS::Queue'
     Properties:
       VisibilityTimeout: 300
+      RedrivePolicy:
+        deadLetterTargetArn:
+          Fn::GetAtt:
+            - UserDataQueueDeadLetterQueue
+            - Arn
+        maxReceiveCount: 2 # Number of times a message will be tried before being dumped to the DLQ
+
+  UserDataQueueDeadLetterQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: ${self:custom.siteName}-UserDataQueueDeadLetterQueue
+      MessageRetentionPeriod: 1209600
 
   GatewayResponseDefault4XX:
     Type: AWS::ApiGateway::GatewayResponse

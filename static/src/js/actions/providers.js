@@ -26,7 +26,8 @@ export const fetchProviders = () => (dispatch, getState) => {
     error => dispatch(handleError({
       error,
       action: 'fetchProviders',
-      resource: 'providers'
+      resource: 'providers',
+      requestObject
     }))
   )
 }

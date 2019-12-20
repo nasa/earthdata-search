@@ -48,7 +48,8 @@ export const getFocusedGranule = () => (dispatch, getState) => {
       dispatch(actions.handleError({
         error,
         action: 'getFocusedGranule',
-        resource: 'granule'
+        resource: 'granule',
+        requestObject
       }))
     })
 

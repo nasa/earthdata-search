@@ -56,7 +56,8 @@ export const saveShapefile = data => (dispatch) => {
       dispatch(handleError({
         error,
         action: 'saveShapefile',
-        resource: 'shapefile'
+        resource: 'shapefile',
+        requestObject
       }))
     })
 

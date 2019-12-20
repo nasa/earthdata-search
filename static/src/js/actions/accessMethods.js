@@ -70,7 +70,8 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
           dispatch(actions.handleError({
             error,
             action: 'fetchAccessMethods',
-            resource: 'access methods'
+            resource: 'access methods',
+            requestObject
           }))
         })
 

@@ -10,21 +10,32 @@ import { logHttpError } from '../logging/logHttpError'
  * @param {string} jwtToken JWT returned from edlAuthorizer
  * @param {string} url URL for to perform search
  */
-export const doSearchRequest = async (jwtToken, path, params, providedHeaders = {}) => {
+export const doSearchRequest = async ({
+  jwtToken,
+  path,
+  params,
+  requestId,
+  providedHeaders = {}
+}) => {
   try {
     const response = await request.post({
       uri: `${getEarthdataConfig(cmrEnv()).cmrHost}${path}`,
       form: params,
       json: true,
       resolveWithFullResponse: true,
+      time: true,
       headers: {
         'Client-Id': getClientId().lambda,
         'Echo-Token': await getEchoToken(jwtToken),
+        'CMR-Request-Id': requestId,
         ...providedHeaders
       }
     })
 
     const { body, headers } = response
+    const { 'cmr-took': cmrTook } = headers
+
+    console.log(`Request ${requestId} completed external request in [reported: ${cmrTook} ms, observed: ${response.elapsedTime} ms]`)
 
     return {
       statusCode: response.statusCode,

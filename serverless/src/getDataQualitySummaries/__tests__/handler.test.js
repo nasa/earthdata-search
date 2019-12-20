@@ -45,7 +45,7 @@ describe('getDataQualitySummaries', () => {
           catalog_item_id: 'C10000001-EDSC'
         }
       })
-    })
+    }, { functionName: 'getDataQualitySummaries' })
 
     const {
       body,
@@ -73,7 +73,7 @@ describe('getDataQualitySummaries', () => {
           catalog_item_id: 'C10000001-EDSC'
         }
       })
-    })
+    }, { functionName: 'getDataQualitySummaries' })
 
     const {
       body,
@@ -111,7 +111,7 @@ describe('getDataQualitySummaries', () => {
           catalog_item_id: 'C10000001-EDSC'
         }
       })
-    })
+    }, { functionName: 'getDataQualitySummaries' })
 
     const {
       body,
