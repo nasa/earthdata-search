@@ -34,6 +34,12 @@ export class OrderStatusItem extends PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId)
+    }
+  }
+
   shouldRefresh() {
     const {
       collection,
