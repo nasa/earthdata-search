@@ -164,20 +164,22 @@ const submitRetrieval = async (event, context) => {
             console.log(e)
           }
 
-          // MessageBatch only accepts batch sizes of 10 messages, so we'll
-          // chunk potentially larger request into acceptable chunks
-          if (pageNum % 10 === 0 || pageNum === orderPayloads.length) {
-            // Send all of the order messages to sqs as a single batch
-            try {
-              await sqs.sendMessageBatch({
-                QueueUrl: queueUrl,
-                Entries: sqsEntries
-              }).promise()
-            } catch (e) {
-              console.log(e)
-            }
+          if (!process.env.IS_OFFLINE) {
+            // MessageBatch only accepts batch sizes of 10 messages, so we'll
+            // chunk potentially larger request into acceptable chunks
+            if (pageNum % 10 === 0 || pageNum === orderPayloads.length) {
+              // Send all of the order messages to sqs as a single batch
+              try {
+                await sqs.sendMessageBatch({
+                  QueueUrl: queueUrl,
+                  Entries: sqsEntries
+                }).promise()
+              } catch (e) {
+                console.log(e)
+              }
 
-            sqsEntries = []
+              sqsEntries = []
+            }
           }
         })
       }
