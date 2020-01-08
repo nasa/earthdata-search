@@ -28,7 +28,7 @@
     "silent-test": "NODE_OPTIONS=--max_old_space_size=4096 jest --silent",
     "test:watch": "jest --watchAll",
     "start:ci": "NODE_ENV=development webpack-dev-server --config static.webpack.config.dev.js",
-    "cypress:ci": "cypress run -c video=false"
+    "cypress:ci": "start-server-and-test start:ci http-get://localhost:8080 cypress run -c video=false"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -95,10 +95,10 @@
     "serverless-plugin-warmup": "^4.7.0-rc.1",
     "serverless-step-functions": "^2.1.0",
     "serverless-webpack": "^5.3.1",
+    "start-server-and-test": "^1.10.6",
     "style-loader": "^1.0.0",
     "terser-webpack-plugin": "^2.3.1",
     "three": "~0.86.0",
-    "wait-on": "^3.3.0",
     "webpack": "^4.39.3",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.8",
