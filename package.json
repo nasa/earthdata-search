@@ -26,7 +26,9 @@
     "start-hot": "NODE_ENV=development webpack-dev-server --open --hot --config static.webpack.config.dev.js",
     "test": "NODE_OPTIONS=--max_old_space_size=4096 jest",
     "silent-test": "NODE_OPTIONS=--max_old_space_size=4096 jest --silent",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "start:ci": "NODE_ENV=development webpack-dev-server --config static.webpack.config.dev.js",
+    "cypress:ci": "cypress run -c video=false"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -51,11 +53,13 @@
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.10",
+    "cypress": "^3.8.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.8.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.1",
+    "eslint-plugin-cypress": "^2.8.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.12.4",

@@ -3,7 +3,8 @@
   "env": {
     "browser": true,
     "node": true,
-    "jest": true
+    "jest": true,
+    "cypress/globals": true
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -12,7 +13,8 @@
     }
   },
   "plugins": [
-    "react"
+    "react",
+    "cypress"
   ],
   "rules": {
     # Setting a max line-length
@@ -97,7 +99,8 @@
   # Use AirBnb settings as a base
   "extends": [
     "airbnb",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:cypress/recommended"
   ],
 
   # Define version settings

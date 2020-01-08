@@ -124,6 +124,7 @@ class SearchForm extends Component {
           <form className="search-form__form" onSubmit={this.onFormSubmit}>
             <TextField
               name="keywordSearch"
+              dataTestId="keywordSearchInput"
               classNames={{
                 label: 'search-form__label',
                 labelSpan: 'search-form__assistive',

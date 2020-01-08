@@ -9,3 +9,6 @@ tmp
 
 # VSCode Settings
 .vscode
+
+cypress/screenshots
+cypress/videos
