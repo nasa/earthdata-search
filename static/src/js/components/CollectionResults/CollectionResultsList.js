@@ -50,7 +50,7 @@ export const CollectionResultsList = ({
   } = portal
 
   return (
-    <ul className="collection-results-list">
+    <ul className="collection-results-list" data-test-id="collection-results-list">
       {collectionResults}
       {collections.isLoading && (
         <li className="collection-results-list__loading">

@@ -24,6 +24,7 @@ class TextField extends Component {
   render() {
     const {
       classNames,
+      dataTestId,
       name,
       value,
       placeholder
@@ -34,6 +35,7 @@ class TextField extends Component {
         <span className={`visually-hidden ${classNames.labelSpan}`}>{placeholder}</span>
         <input
           id="input__search-bar"
+          data-test-id={dataTestId}
           name={name}
           type="text"
           placeholder={placeholder}
@@ -54,12 +56,14 @@ TextField.defaultProps = {
     label: null,
     labelSpan: null
   },
+  dataTestId: null,
   placeholder: '',
   value: ''
 }
 
 TextField.propTypes = {
   classNames: PropTypes.shape({}),
+  dataTestId: PropTypes.string,
   name: PropTypes.string.isRequired,
   onBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,

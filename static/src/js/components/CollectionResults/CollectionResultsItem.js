@@ -223,6 +223,7 @@ export const CollectionResultsItem = ({
           onViewCollectionGranules(collection.id)
           e.stopPropagation()
         }}
+        data-test-id="collection-result-item"
       >
         <div className="collection-results-item__thumb">
           {
