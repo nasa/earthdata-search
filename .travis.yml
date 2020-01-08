@@ -15,7 +15,6 @@ script:
   - npm install
   - npm run copy-secrets
   - npm run silent-test
-  - npm run start:ci & wait-on http://localhost:8080
   - npm run cypress:ci
 branches:
   only: # Only build master. All pull requests also get built
