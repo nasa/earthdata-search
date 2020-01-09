@@ -16,7 +16,6 @@ import { eventEmitter } from '../../events/events'
 import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
 import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
 
-
 const normalColor = '#00ffff'
 const errorColor = '#990000'
 export const colorOptions = {
