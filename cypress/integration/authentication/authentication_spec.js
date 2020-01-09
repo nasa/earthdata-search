@@ -30,13 +30,10 @@ describe('Authentication', () => {
       headers: collectionFixture.headers
     })
 
-    const jwtToken = getJwtToken()
-
     cy.getCookies().should('be.empty')
-    // cy.setCookie('authToken', jwtToken)
     // See cypress/support/commands.js for cy.login command
     cy.login()
-    cy.getCookie('authToken').should('have.property', 'value', jwtToken)
+    cy.getCookie('authToken').should('exist')
 
     cy.visit('/')
 
