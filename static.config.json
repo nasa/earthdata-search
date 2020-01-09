@@ -2,6 +2,7 @@
   "application": {
     "version": "dev",
     "env": "dev",
+    "ciMode": false,
     "cmrTagNamespace": "edsc.extra.serverless",
     "thumbnailSize": {
       "height": 85,
@@ -61,7 +62,14 @@
         "background": "eed-edsc-test-serverless-background",
         "client": "eed-edsc-test-serverless-client",
         "lambda": "eed-edsc-test-serverless-lambda"
-      }
+      },
+      "cmrHost": "https://cmr.earthdata.nasa.gov",
+      "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
+      "edlHost": "https://urs.earthdata.nasa.gov",
+      "feedbackApp": "EdSearch",
+      "regionHost": "https://g6zl7z2x7j.execute-api.us-west-2.amazonaws.com/prod",
+      "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
+      "redirectUriPath": "/urs_callback"
     },
     "sit": {
       "clientId": {

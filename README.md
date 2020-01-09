@@ -59,7 +59,7 @@ Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already 
 **Recommended:** Use Homebrew
 
     brew install postgresql
-    
+
 If you decide to install via Homebrew you'll need to create the default user.
 
     /usr/local/opt/postgres/bin/createuser -s postgres
@@ -135,9 +135,33 @@ Additionally, this ties in with the `serverless webpack` plugin which will ensur
 
 ### Run the Automated [Jest](https://jestjs.io/) tests
 
-Once the project is built, you must ensure that the automated tests pass:
+Once the project is built, you must ensure that the automated unit tests pass:
 
     npm run test
+
+### Run the Automated [Cypress](https://www.cypress.io/) tests
+
+You must also ensure that the automated integration tests pass:
+
+    npm run cypress:run
+
+You can also use the Cypress GUI with:
+
+    npm run cypress:open
+
+
+##### Configuration
+
+###### Cypress Secrets
+
+When adding new Cypress tests, you will need to modify the secrets.config.json file. You will need to edit the "cypress" object to include data from your local database:
+
+    "cypress": {
+        "user": {
+        "id": 1, // This should match the ID of your user in the 'users' database table
+        "username": "your username here" // Replace with the urs_id field of your user in the 'users' database table
+        }
+    }
 
 ### Deployment
 

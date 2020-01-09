@@ -11,7 +11,10 @@ export const getSecretEnvironmentConfig = () => secretConfig.environment[process
 export const getSecretCypressConfig = () => secretConfig.cypress
 
 export const getClientId = () => {
-  if (process.env.NODE_ENV === 'test') return getEarthdataConfig('test').clientId
+  // Check the static config file to determine if we are running in CI
+  const { ciMode } = getApplicationConfig()
+
+  if (process.env.NODE_ENV === 'test' || ciMode === 'true') return getEarthdataConfig('test').clientId
   if (process.env.NODE_ENV === 'development') return getEarthdataConfig('dev').clientId
 
   return getEarthdataConfig(cmrEnv()).clientId
