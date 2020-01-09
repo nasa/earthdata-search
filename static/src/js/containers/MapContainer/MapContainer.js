@@ -111,6 +111,7 @@ export class MapContainer extends Component {
 
   onMasterOverlayPanelResize(newHeight) {
     const routeWrapperHeight = $('.route-wrapper').height()
+
     this.controlContainer.style.width = '100%'
     this.controlContainer.style.height = `${routeWrapperHeight - newHeight}px`
   }

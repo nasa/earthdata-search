@@ -76,7 +76,6 @@ export const SearchFormContainer = (props) => {
     gridCoords,
     lineSearch,
     pointSearch,
-    keywordSearch,
     polygonSearch,
     selectingNewGrid,
     shapefileError,

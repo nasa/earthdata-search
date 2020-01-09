@@ -26,7 +26,7 @@ const defaultProps = {
   isProjectPage: false,
   lineSearch: '',
   mapRef: {
-    leafletElement: jest.fn()
+    leafletElement: {}
   },
   pointSearch: '',
   polygonSearch: '',
@@ -78,8 +78,15 @@ describe('SpatialSelection component', () => {
 
   describe('componentWillReceiveProps', () => {
     test('removes the drawnLayer and calls renderShape', () => {
+      const mockRemoveLayer = jest.fn()
       const { enzymeWrapper } = setup(defaultProps)
+
       enzymeWrapper.instance().renderShape = jest.fn()
+      enzymeWrapper.instance().featureGroupRef = {
+        leafletElement: {
+          removeLayer: mockRemoveLayer
+        }
+      }
       const drawnLayer = { remove: jest.fn() }
 
       enzymeWrapper.setState({
@@ -88,7 +95,7 @@ describe('SpatialSelection component', () => {
       })
       enzymeWrapper.setProps({ pointSearch: '0,0' })
 
-      expect(drawnLayer.remove.mock.calls.length).toBe(1)
+      expect(mockRemoveLayer).toHaveBeenCalledTimes(1)
       expect(enzymeWrapper.instance().renderShape.mock.calls.length).toBe(1)
     })
 

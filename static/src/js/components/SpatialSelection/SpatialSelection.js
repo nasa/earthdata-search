@@ -14,6 +14,8 @@ import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 
 import { eventEmitter } from '../../events/events'
 import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
+import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
+
 
 const normalColor = '#00ffff'
 const errorColor = '#990000'
@@ -101,6 +103,14 @@ class SpatialSelection extends Component {
     }
 
     this.renderShape(this.props)
+
+    const { featureGroupRef = {} } = this
+    const { leafletElement: featureGroup = null } = featureGroupRef
+
+    if (featureGroup && featureGroup.getBounds) {
+      const bounds = featureGroup.getBounds() || false
+      panFeatureGroupToCenter(map, bounds)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -118,10 +128,13 @@ class SpatialSelection extends Component {
       || nextProps.lineSearch
 
     if ((drawnLayer && drawnLayer._map === null) || newDrawing !== drawnPoints) {
-      // If the new drawing is different than the current drawing,
-      // remove the current drawing
       if (drawnLayer) {
-        drawnLayer.remove()
+        const { featureGroupRef = {} } = this
+        const { leafletElement = {} } = featureGroupRef
+
+        if (leafletElement.removeLayer) {
+          leafletElement.removeLayer(drawnLayer)
+        }
       }
 
       // Draw the new shape
@@ -253,6 +266,16 @@ class SpatialSelection extends Component {
 
   setLayer(layer) {
     this.layer = layer
+
+    const { mapRef } = this.props
+    const map = mapRef.leafletElement
+
+    const { featureGroupRef = {} } = this
+    const { leafletElement: featureGroup = null } = featureGroupRef
+
+    if (featureGroup) {
+      panFeatureGroupToCenter(map, featureGroup)
+    }
   }
 
   // Determine the latLngs from the layer and type, then update the component state and the query
