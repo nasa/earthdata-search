@@ -20,7 +20,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack --config static.webpack.config.prod.js",
     "build-sit": "NODE_ENV=production webpack --mode production",
-    "copy-secrets": "bin/travis-copy-secrets",
+    "copy-secrets": "cp secret.config.json.example secret.config.json",
     "migrate": "node-pg-migrate",
     "start": "NODE_ENV=development webpack-dev-server --open --config static.webpack.config.dev.js",
     "start-hot": "NODE_ENV=development webpack-dev-server --open --hot --config static.webpack.config.dev.js",
@@ -30,7 +30,8 @@
     "start:ci": "NODE_ENV=development webpack-dev-server --config static.webpack.config.dev.js",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run -c video=false",
-    "cypress:ci": "start-server-and-test start:ci http-get://localhost:8080 cypress:run"
+    "cypress:ci": "start-server-and-test start:ci http-get://localhost:8080 cypress:run",
+    "cypress:prepare-travis": "bin/cypress-prepare-travis"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
