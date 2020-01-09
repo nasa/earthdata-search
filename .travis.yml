@@ -15,6 +15,7 @@ script:
   - npm install
   - npm run copy-secrets
   - npm run silent-test
+  - npm run cypress:prepare-travis
   - npm run cypress:ci
 branches:
   only: # Only build master. All pull requests also get built

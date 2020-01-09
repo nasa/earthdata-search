@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# read in static.config.json
+config="`cat static.config.json`"
+
+# update keys for test Travis CI
+config="`jq '.application.ciMode = $newValue' --arg newValue true <<< $config`"
+
+# overwrite static.config.json with new values
+echo $config > tmp.$$.json && mv tmp.$$.json static.config.json
