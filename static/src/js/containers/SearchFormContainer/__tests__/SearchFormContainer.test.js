@@ -51,6 +51,6 @@ describe('SearchFormContainer component', () => {
     expect(searchFormProps.onToggleAdvancedSearchModal)
       .toEqual(props.onToggleAdvancedSearchModal)
     expect(searchFormProps.showFilterStackToggle)
-      .toEqual(true)
+      .toEqual(false)
   })
 })

@@ -21,6 +21,7 @@ import buildLayer, {
   getPoints,
   getRectangles
 } from '../../util/map/layers'
+import { panBoundsToCenter } from '../../util/map/actions/panBoundsToCenter'
 import { dividePolygon } from '../../util/map/geo'
 import projectPath from '../../util/map/interpolation'
 import { getColorByIndex } from '../../util/colors'
@@ -710,14 +711,14 @@ class GranuleGridLayerExtended extends L.GridLayer {
         this.onMetricsMap('Selected Granule')
         this._granuleStickyLayer.onAdd(this._map)
 
-        if ((this._map.projection === 'geo') && (this._granuleFocusLayer != null)) {
+        if ((this.projection === projections.geographic) && (this._granuleFocusLayer != null)) {
           const bounds = this._granuleFocusLayer.getBounds()
           // Avoid zooming and panning tiny amounts
           if (
             (bounds != null ? bounds.isValid() : undefined)
             && !this._map.getBounds().contains(bounds)
           ) {
-            this._map.fitBounds(bounds.pad(0.2)).panTo(bounds.getCenter())
+            panBoundsToCenter(this._map, bounds)
           }
         }
       }
