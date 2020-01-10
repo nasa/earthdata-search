@@ -38,16 +38,31 @@
         background-image: url('~Images/app-logo_hover_2x.png');
       }
     }
+
+    .route-wrapper--light & {
+      background-image: url('~Images/app-logo_hover.png');
+
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        background-image: url('~Images/app-logo_hover_2x.png');
+      }
+    }
   }
 
   &__site-name {
     display: inline-block;
-    margin-right: 0.5rem;
     color: $color__white;
 
     &:hover {
       text-decoration: none;
       color: $color__white;
+    }
+
+    .route-wrapper--light & {
+      color: $color__black--800;
+
+      &:hover {
+        color: $color__black--800;
+      }
     }
   }
 
@@ -69,6 +84,7 @@
   }
 
   &__site-env {
+    margin-left: 0.5rem;
     padding: 0.3rem 0.4rem;
     font-size: 0.725rem;
     background: $color__brand--blue;

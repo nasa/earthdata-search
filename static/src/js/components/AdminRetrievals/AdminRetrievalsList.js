@@ -8,7 +8,7 @@ export const AdminRetrievalsList = ({
 }) => (
   <>
     <h2>Retrievals</h2>
-    <Table className="admin-retrieval-table" striped variant="dark">
+    <Table className="admin-retrieval-list__table" striped bordered>
       <thead>
         <tr>
           <th>ID</th>

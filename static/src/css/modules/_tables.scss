@@ -1,4 +1,7 @@
-.table {
+.table-dark {
+  background-color: transparent;
+  color: inherit;
+
   thead th {
     border-top: none;
     border-bottom: 1px solid $color__black--700;
@@ -12,9 +15,4 @@
   th {
     padding: .5rem .75em;
   }
-}
-
-.table-dark {
-  background-color: transparent;
-  color: inherit;
 }
