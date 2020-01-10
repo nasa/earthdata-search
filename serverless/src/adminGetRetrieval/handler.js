@@ -1,4 +1,3 @@
-import { groupBy } from 'lodash'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
 
@@ -24,8 +23,8 @@ export default async function adminGetRetrievals(event, context) {
     const retrievalResponse = await dbConnection('retrievals')
       .select('jsondata',
         'retrievals.id',
-        'users.id',
-        'users.urs_id',
+        'users.id as user_id',
+        'users.urs_id as username',
         'retrieval_collections.id as cid',
         'retrieval_collections.access_method',
         'retrieval_collections.collection_id',
@@ -45,50 +44,51 @@ export default async function adminGetRetrievals(event, context) {
     // Pull out the retrieval data from the first row (they will all be the same due to the join)
     const [retrievalObject] = retrievalResponse
 
-    const groupedRetrievals = groupBy(retrievalResponse, row => row.cid)
-
-    console.log(groupedRetrievals)
+    const {
+      id,
+      user_id: userId,
+      username
+    } = retrievalObject
 
     const formattedResponse = {
-      id: retrievalObject.id,
-      collections: groupedRetrievals
+      id,
+      user_id: userId,
+      username,
+      collections: []
     }
 
-    // const retrievalsResponse = groupBy(retrievalResponse.map(retrieval => ({
-    //   ...retrieval,
-    //   id: retrieval.id,
-    //   obfuscated_id: obfuscateId(retrieval.id)
-    // })), row => row.cid)
+    const retrievalCollections = {}
 
-    // Object.values(groupedRetrievals).forEach((retrievalRecord) => {
-    //   const [firstRow] = retrievalRecord
+    retrievalResponse.forEach((row) => {
+      const {
+        cid,
+        oid,
+        access_method: accessMethod,
+        collection_id: collectionId,
+        granule_count: granuleCount,
+        state,
+        order_number: orderNumber,
+        order_information: orderInformation
+      } = row
 
-    //   const {
-    //     id,
-    //     obfuscated_id: obfuscatedId,
-    //     created_at: createdAt,
-    //     jsondata,
-    //     environment,
-    //     user_id: userId,
-    //     urs_id: username
-    //   } = firstRow
+      if (!Object.keys(retrievalCollections).includes(cid.toString())) {
+        retrievalCollections[cid] = {
+          id: cid,
+          access_method: accessMethod,
+          collection_id: collectionId,
+          granule_count: granuleCount,
+          orders: []
+        }
+      }
+      retrievalCollections[cid].orders.push({
+        id: oid,
+        state,
+        order_number: orderNumber,
+        order_information: orderInformation
+      })
+    })
 
-    //   retrievalsResponse.push({
-    //     id,
-    //     obfuscated_id: obfuscatedId,
-    //     created_at: createdAt,
-    //     user_id: userId,
-    //     username,
-    //     jsondata,
-    //     environment,
-    //     collections: retrievalRecord.map(record => ({
-    //       collection_id: record.collection_id,
-    //       granule_count: record.granule_count,
-    //       id: record.retrieval_collection_id,
-    //       obfuscated_id: obfuscateId(record.obfuscated_id)
-    //     }))
-    //   })
-    // })
+    formattedResponse.collections = Object.values(retrievalCollections)
 
     return {
       isBase64Encoded: false,
