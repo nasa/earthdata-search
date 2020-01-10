@@ -34,29 +34,28 @@ export class Admin extends Component {
 
     return (
       <Route path="admin">
-        <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
+        <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
           <div className="route-wrapper__content">
             <header className="route-wrapper__header">
               <div className="route-wrapper__header-primary">
                 <AppLogoContainer />
-                <h2 className="route-wrapper__header-site-area">Admin</h2>
+                <PortalLinkContainer
+                  className="route-wrapper__header-site-area-link"
+                  to="/admin"
+                >
+                  <h2 className="route-wrapper__header-site-area-title">Admin</h2>
+                </PortalLinkContainer>
                 <SecondaryToolbarContainer />
               </div>
             </header>
             <div className="route-wrapper__content-inner">
               <Switch>
                 <Route exact path={`${path}`}>
-                  <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
-                    <div className="route-wrapper__content">
-                      <div className="route-wrapper__header-primary">
-                        <PortalLinkContainer
-                          to="/admin/retrievals"
-                        >
-                          View Retrievals
-                        </PortalLinkContainer>
-                      </div>
-                    </div>
-                  </div>
+                  <PortalLinkContainer
+                    to="/admin/retrievals"
+                  >
+                    View Retrievals
+                  </PortalLinkContainer>
                 </Route>
                 <Route exact path={`${path}/retrievals`} component={AdminRetrievalsContainer} />
                 <Route exact path={`${path}/retrievals/:id`} component={AdminRetrievalContainer} />
