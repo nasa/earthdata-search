@@ -39,11 +39,11 @@ export class Admin extends Component {
             <header className="route-wrapper__header">
               <div className="route-wrapper__header-primary">
                 <AppLogoContainer />
+                <h2 className="route-wrapper__header-site-area">Admin</h2>
                 <SecondaryToolbarContainer />
               </div>
             </header>
             <div className="route-wrapper__content-inner">
-              <h1>Admin</h1>
               <Switch>
                 <Route exact path={`${path}`}>
                   <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">

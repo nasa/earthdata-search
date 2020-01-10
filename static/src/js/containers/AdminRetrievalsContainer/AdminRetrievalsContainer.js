@@ -4,8 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
-import { AdminRetrievalsList } from '../../components/AdminRetrievalsList/AdminRetrievalsList'
-import { AdminRetrievalsForm } from '../../components/AdminRetrievalsForm/AdminRetrievalsForm'
+import AdminRetrievals from '../../components/AdminRetrievals/AdminRetrievals'
 
 const mapStateToProps = state => ({
   retrievals: state.admin.retrievals.data,
@@ -35,15 +34,11 @@ export class AdminRetrievalsContainer extends Component {
     } = this.props
 
     return (
-      <>
-        <AdminRetrievalsForm
-          onAdminViewRetrieval={onAdminViewRetrieval}
-        />
-        <AdminRetrievalsList
-          onFetchAdminRetrievals={onFetchAdminRetrievals}
-          retrievals={retrievals}
-        />
-      </>
+      <AdminRetrievals
+        onAdminViewRetrieval={onAdminViewRetrieval}
+        onFetchAdminRetrievals={onFetchAdminRetrievals}
+        retrievals={retrievals}
+      />
     )
   }
 }

@@ -20,6 +20,7 @@
   &__form {
     flex-grow: 1;
     display: inline;
+    margin-block-end: 0;
     vertical-align: middle;
     background-color: $color__white;
   }

@@ -16,6 +16,10 @@
 
   &__header {
     border-bottom: 1px solid $color__black--700;
+
+    .route-wrapper--light & {
+      border-bottom: 1px solid $color__black--200;
+    }
   }
 
   &__header-primary {
@@ -30,9 +34,26 @@
       flex-wrap: nowrap;
       justify-content: space-between;
     }
+  }
 
-    .route-wrapper--light & {
+  &__header-site-area {
+    position: relative;
+    align-self: flex-end;
+    margin-left: 2rem;
+    margin-bottom: 0.75rem;
+    font-weight: 300;
+    font-size: 1.75rem;
+    color: $color__brand--blue-dark;
+
+    &:before {
+      content: "";
       display: block;
+      position: absolute;
+      left: -1.0625rem;
+      bottom: 0;
+      height: 3.25rem;
+      width: 1px;
+      background-color: $color__black--300;
     }
   }
 
