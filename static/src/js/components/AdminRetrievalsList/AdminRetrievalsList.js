@@ -1,12 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-
-const mapStateToProps = state => ({
-  admin: state.admin
-})
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 export const AdminRetrievalsList = ({
   retrievals
@@ -34,7 +29,13 @@ export const AdminRetrievalsList = ({
 
             return (
               <tr key={id}>
-                <td>{id}</td>
+                <td>
+                  <PortalLinkContainer
+                    to={`/admin/retrievals/${obfuscatedId}`}
+                  >
+                    {id}
+                  </PortalLinkContainer>
+                </td>
                 <td>
                   {obfuscatedId}
                 </td>
@@ -61,6 +62,4 @@ AdminRetrievalsList.propTypes = {
   // retrievalsLoaded: PropTypes.bool.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, null)(AdminRetrievalsList)
-)
+export default AdminRetrievalsList
