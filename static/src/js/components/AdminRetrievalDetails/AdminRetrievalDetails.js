@@ -1,10 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-
-const mapStateToProps = state => ({
-  admin: state.admin
-})
 
 export const AdminRetrievalsList = () => (
   <>
@@ -16,6 +10,4 @@ AdminRetrievalsList.defaultProps = {
   retrieval: {}
 }
 
-export default withRouter(
-  connect(mapStateToProps, null)(AdminRetrievalsList)
-)
+export default AdminRetrievalsList

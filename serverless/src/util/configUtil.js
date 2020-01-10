@@ -1,12 +1,17 @@
 import AWS from 'aws-sdk'
 
-import { getEarthdataConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import {
+  getEarthdataConfig,
+  getSecretEarthdataConfig,
+  getSecretAdminUsers
+} from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSecretsManagerConfig } from './aws/getSecretsManagerConfig'
 
 const secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
 
 let clientConfig
+let adminUsers
 
 /**
  * Builds a configuration object used by the simple-oauth2 plugin
@@ -53,4 +58,25 @@ export const getEdlConfig = async (providedCmrEnv) => {
   }
 
   return buildOauthConfig(clientConfig)
+}
+
+export const getAdminUsers = async () => {
+  if (adminUsers == null) {
+    if (['development', 'test'].includes(process.env.NODE_ENV)) {
+      adminUsers = getSecretAdminUsers()
+
+      return adminUsers
+    }
+
+    const params = {
+      SecretId: 'EDSC_Admins'
+    }
+
+    const secretValue = await secretsmanager.getSecretValue(params).promise()
+    adminUsers = JSON.parse(secretValue.SecretString)
+
+    return adminUsers
+  }
+
+  return adminUsers
 }

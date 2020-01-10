@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import {
+  adminIsAuthorized,
   adminViewRetrieval,
   fetchAdminRetrievals as adminFetchAdminRetrievals
 } from './admin/retrievals'
@@ -129,6 +130,7 @@ import { collectionRelevancyMetrics } from './relevancy'
 import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
 
 const actions = {
+  adminIsAuthorized,
   adminViewRetrieval,
   adminFetchAdminRetrievals,
   addAccessMethods,

@@ -217,7 +217,8 @@ export const prepKeysForCmr = (queryParams, nonIndexedKeys = []) => {
 export const urlPathsWithoutUrlParams = [
   /^\/downloads/,
   /^\/contact_info/,
-  /^\/auth_callback/
+  /^\/auth_callback/,
+  /^\/admin/
 ]
 
 /**

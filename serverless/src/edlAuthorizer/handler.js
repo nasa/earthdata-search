@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
-import { getEdlConfig } from '../util/configUtil'
+
+import { getAdminUsers, getEdlConfig } from '../util/configUtil'
 import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { isWarmUp } from '../util/isWarmup'
@@ -158,6 +159,18 @@ const edlAuthorizer = async (event, context) => {
         }
       }
 
+      // If the user is authenticated, and this is an admin route, check that they are an admin user
+      if (resourcePath.startsWith('/admin/')) {
+        const adminUsers = await getAdminUsers()
+
+        if (adminUsers.includes(username)) {
+          return generatePolicy(username, jwtToken, 'Allow', event.methodArn)
+        }
+
+        throw new Error('Unauthorized')
+      }
+
+      // If the user is authenticated, allow them to continue
       return generatePolicy(username, jwtToken, 'Allow', event.methodArn)
     })
   } catch (err) {

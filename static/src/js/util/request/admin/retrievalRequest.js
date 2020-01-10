@@ -15,4 +15,8 @@ export default class RetrievalRequest extends Request {
   fetch(id) {
     return this.get(`admin/retrievals/${id}`)
   }
+
+  isAuthorized() {
+    return this.get('/admin/is_authorized')
+  }
 }
