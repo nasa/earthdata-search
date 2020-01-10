@@ -532,6 +532,18 @@
           authorizer: edlAuthorizer
 
   # Admin
+  adminIsAuthorized:
+    handler: serverless/src/adminIsAuthorized/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    warmup:
+      concurrency: ${env:WARM_LAMBDA_COUNT}
+    events:
+      - http:
+          method: get
+          cors: true
+          path: admin/is_authorized
+          authorizer: edlAuthorizer
+
   adminGetRetrievals:
     handler: serverless/src/adminGetRetrievals/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
@@ -542,7 +554,7 @@
           method: get
           cors: true
           path: admin/retrievals
-          # authorizer: edlAuthorizer
+          authorizer: edlAuthorizer
 
   adminGetRetrieval:
     handler: serverless/src/adminGetRetrieval/handler.default
@@ -554,4 +566,4 @@
           method: get
           cors: true
           path: admin/retrievals/{id}
-          # authorizer: edlAuthorizer
+          authorizer: edlAuthorizer

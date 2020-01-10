@@ -230,8 +230,15 @@ export default class Request {
   handleUnauthorized(data) {
     const cmrEnvironment = cmrEnv()
     if (data.statusCode === 401 || data.message === 'Unauthorized') {
+      const { href, pathname } = window.location
       // Determine the path to redirect to for logging in
-      const returnPath = window.location.href
+      const returnPath = href
+
+      if (pathname.startsWith('/admin')) {
+        window.location.href = getEnvironmentConfig().edscHost
+        return
+      }
+
       const redirectPath = `${getEnvironmentConfig().apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
 
       window.location.href = redirectPath

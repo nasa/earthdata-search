@@ -9,6 +9,7 @@ export const getEnvironmentConfig = () => config.environment[process.env.NODE_EN
 export const getSecretEarthdataConfig = env => secretConfig.earthdata[env]
 export const getSecretEnvironmentConfig = () => secretConfig.environment[process.env.NODE_ENV]
 export const getSecretCypressConfig = () => secretConfig.cypress
+export const getSecretAdminUsers = () => secretConfig.admins
 
 export const getClientId = () => {
   // Check the static config file to determine if we are running in CI
