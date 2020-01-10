@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 import { AdminRetrievalsList } from '../../components/AdminRetrievalsList/AdminRetrievalsList'
+import { AdminRetrievalsForm } from '../../components/AdminRetrievalsForm/AdminRetrievalsForm'
 
 const mapStateToProps = state => ({
   retrievals: state.admin.retrievals.data,
@@ -13,6 +14,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  onAdminViewRetrieval: retrievalId => dispatch(actions.adminViewRetrieval(retrievalId)),
   onFetchAdminRetrievals: () => dispatch(actions.adminFetchAdminRetrievals())
 })
 
@@ -27,15 +29,21 @@ export class AdminRetrievalsContainer extends Component {
 
   render() {
     const {
+      onAdminViewRetrieval,
       onFetchAdminRetrievals,
       retrievals
     } = this.props
 
     return (
-      <AdminRetrievalsList
-        onFetchAdminRetrievals={onFetchAdminRetrievals}
-        retrievals={retrievals}
-      />
+      <>
+        <AdminRetrievalsForm
+          onAdminViewRetrieval={onAdminViewRetrieval}
+        />
+        <AdminRetrievalsList
+          onFetchAdminRetrievals={onFetchAdminRetrievals}
+          retrievals={retrievals}
+        />
+      </>
     )
   }
 }
@@ -45,6 +53,7 @@ AdminRetrievalsContainer.defaultProps = {
 }
 
 AdminRetrievalsContainer.propTypes = {
+  onAdminViewRetrieval: PropTypes.func.isRequired,
   onFetchAdminRetrievals: PropTypes.func.isRequired,
   retrievals: PropTypes.arrayOf(
     PropTypes.shape({})

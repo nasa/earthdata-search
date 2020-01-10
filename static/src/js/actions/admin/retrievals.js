@@ -6,6 +6,7 @@ import {
   SET_ADMIN_RETRIEVALS_LOADING
 } from '../../constants/actionTypes'
 import { handleError } from '../errors'
+import actions from '../index'
 
 export const setAdminRetrievals = retrievals => ({
   type: SET_ADMIN_RETRIEVALS,
@@ -45,4 +46,10 @@ export const fetchAdminRetrievals = () => (dispatch, getState) => {
     })
 
   return response
+}
+
+export const adminViewRetrieval = retrievalId => (dispatch) => {
+  dispatch(actions.changeUrl({
+    pathname: `/admin/retrievals/${retrievalId}`
+  }))
 }
