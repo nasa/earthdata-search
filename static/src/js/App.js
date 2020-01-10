@@ -28,6 +28,7 @@ import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
+import Admin from './routes/Admin/Admin'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -67,6 +68,14 @@ class App extends Component {
             <ConnectedAuthTokenContainer>
               <ConnectedUrlQueryContainer>
                 <Switch>
+                  <Route
+                    path="/admin"
+                    render={() => (
+                      <AuthRequiredContainer>
+                        <Admin />
+                      </AuthRequiredContainer>
+                    )}
+                  />
                   <Route
                     path={this.portalPaths('/contact_info')}
                     render={() => (

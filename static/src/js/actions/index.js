@@ -1,5 +1,8 @@
 /* eslint-disable import/no-cycle */
 import {
+  fetchAdminRetrievals as adminFetchAdminRetrievals
+} from './admin/retrievals'
+import {
   updateAdvancedSearch
 } from './advancedSearch'
 import {
@@ -125,6 +128,7 @@ import { collectionRelevancyMetrics } from './relevancy'
 import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
 
 const actions = {
+  adminFetchAdminRetrievals,
   addAccessMethods,
   addGranulesFromCollection,
   addProjectCollection,
