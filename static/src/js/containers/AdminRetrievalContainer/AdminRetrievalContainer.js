@@ -7,39 +7,53 @@ import actions from '../../actions'
 import AdminRetrieval from '../../components/AdminRetrieval/AdminRetrieval'
 
 const mapStateToProps = state => ({
-  retrievals: state.admin.retrievals.data,
-  retrievalsLoading: state.admin.retrievals.isLoading,
-  retrievalsLoaded: state.admin.retrievals.isLoaded
+  retrievals: state.admin.retrievals.byId
 })
 
 const mapDispatchToProps = dispatch => ({
-  onFetchAdminRetrieval: () => dispatch(actions.adminFetchAdminRetrievals())
+  onFetchAdminRetrieval: id => dispatch(actions.fetchAdminRetrieval(id))
 })
 
 export class AdminRetrievalContainer extends Component {
   componentDidMount() {
     const {
+      match,
       onFetchAdminRetrieval
     } = this.props
 
-    onFetchAdminRetrieval()
+    const { params } = match
+    const { id } = params
+
+    onFetchAdminRetrieval(id)
   }
 
   render() {
     const {
-      onFetchAdminRetrieval
+      match,
+      retrievals
     } = this.props
+
+    const { params } = match
+    const { id } = params
+
+    const { [id]: selectedRetrieval } = retrievals
 
     return (
       <AdminRetrieval
-        onFetchAdminRetrieval={onFetchAdminRetrieval}
+        retrieval={selectedRetrieval}
       />
     )
   }
 }
 
+AdminRetrievalContainer.defaultProps = {
+  retrievals: {}
+}
+
 AdminRetrievalContainer.propTypes = {
-  onFetchAdminRetrieval: PropTypes.func.isRequired
+  match: PropTypes.shape({}).isRequired,
+  onFetchAdminRetrieval: PropTypes.func.isRequired,
+  retrievals: PropTypes.shape({})
 }
 
 export default withRouter(

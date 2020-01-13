@@ -14,14 +14,14 @@ export const AdminRetrievalsList = ({
           <th>ID</th>
           <th>Obfuscated ID</th>
           <th>User</th>
-          <th>Collections</th>
+          <th>Created</th>
         </tr>
       </thead>
       <tbody>
         {
-          retrievals.length > 0 && retrievals.map((retrieval) => {
+          Object.values(retrievals).length > 0 && Object.values(retrievals).map((retrieval) => {
             const {
-              collections,
+              created_at: createdAt,
               id,
               obfuscated_id: obfuscatedId,
               username
@@ -40,7 +40,7 @@ export const AdminRetrievalsList = ({
                   {obfuscatedId}
                 </td>
                 <td>{username}</td>
-                <td>{collections.length}</td>
+                <td>{createdAt}</td>
               </tr>
             )
           })
@@ -51,13 +51,11 @@ export const AdminRetrievalsList = ({
 )
 
 AdminRetrievalsList.defaultProps = {
-  retrievals: []
+  retrievals: {}
 }
 
 AdminRetrievalsList.propTypes = {
-  retrievals: PropTypes.arrayOf(
-    PropTypes.shape({})
-  )
+  retrievals: PropTypes.shape({})
   // retrievalsLoading: PropTypes.bool.isRequired,
   // retrievalsLoaded: PropTypes.bool.isRequired
 }

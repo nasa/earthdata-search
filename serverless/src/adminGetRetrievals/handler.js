@@ -1,4 +1,4 @@
-import { groupBy, sortBy } from 'lodash'
+import { keyBy } from 'lodash'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
@@ -17,6 +17,11 @@ export default async function adminGetRetrievals(event, context) {
   if (await isWarmUp(event, context)) return false
 
   try {
+    const {
+      page_num: pageNum = 1,
+      page_size: pageSize = 50
+    } = event.queryStringParameters || {}
+
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 
@@ -25,58 +30,23 @@ export default async function adminGetRetrievals(event, context) {
         'retrievals.id',
         'retrievals.environment',
         'retrievals.created_at',
-        'retrieval_collections.id as retrieval_collection_id',
-        'retrieval_collections.collection_id',
-        'retrieval_collections.collection_metadata',
-        'retrieval_collections.granule_count',
         'users.id as user_id',
-        'users.urs_id')
-      .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
+        'users.urs_id as username')
       .join('users', { 'retrievals.user_id': 'users.id' })
+      // .orderBy('retrievals.created_at', 'DESC')
+      .limit(pageSize)
+      .offset(pageNum * pageSize)
 
-    const groupedRetrievals = groupBy(retrievalResponse.map(retrieval => ({
+    const groupedRetrievals = keyBy(retrievalResponse.map(retrieval => ({
       ...retrieval,
-      id: retrieval.id,
       obfuscated_id: obfuscateId(retrieval.id)
-    })), row => row.id)
-
-    const retrievalsResponse = []
-    Object.values(groupedRetrievals).forEach((retrievalRecord) => {
-      const [firstRow] = retrievalRecord
-
-      const {
-        id,
-        obfuscated_id: obfuscatedId,
-        created_at: createdAt,
-        jsondata,
-        environment,
-        user_id: userId,
-        urs_id: username
-      } = firstRow
-
-      retrievalsResponse.push({
-        id,
-        obfuscated_id: obfuscatedId,
-        created_at: createdAt,
-        user_id: userId,
-        username,
-        jsondata,
-        environment,
-        collections: retrievalRecord.map(record => ({
-          collection_id: record.collection_id,
-          collection_title: record.collection_metadata.title,
-          granule_count: record.granule_count,
-          id: record.retrieval_collection_id,
-          obfuscated_id: obfuscateId(record.obfuscated_id)
-        }))
-      })
-    })
+    })), 'obfuscated_id')
 
     return {
       isBase64Encoded: false,
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify(Object.values(sortBy(retrievalsResponse, 'created_at')).reverse())
+      body: JSON.stringify(groupedRetrievals, 'created_at')
     }
   } catch (e) {
     console.log(e)

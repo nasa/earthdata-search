@@ -1,14 +1,19 @@
 import {
+  SET_ADMIN_RETRIEVAL,
   SET_ADMIN_RETRIEVALS,
+  SET_ADMIN_RETRIEVAL_LOADED,
+  SET_ADMIN_RETRIEVAL_LOADING,
   SET_ADMIN_RETRIEVALS_LOADED,
   SET_ADMIN_RETRIEVALS_LOADING
 } from '../constants/actionTypes'
 
 const initialState = {
   retrievals: {
-    data: [],
+    byId: {},
     isLoading: false,
-    isLoaded: false
+    isLoaded: false,
+    pageSize: 20,
+    pageNum: 1
   }
 }
 
@@ -39,7 +44,56 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         retrievals: {
           ...state.retrievals,
-          data: action.payload
+          byId: {
+            ...state.retrievals.byId,
+            ...action.payload
+          }
+        }
+      }
+    }
+    case SET_ADMIN_RETRIEVAL_LOADED: {
+      return {
+        ...state,
+        retrievals: {
+          ...state.retrievals,
+          [action.payload]: {
+            ...state.retrievals.byId,
+            isLoading: false,
+            isLoaded: true
+          }
+        }
+      }
+    }
+    case SET_ADMIN_RETRIEVAL_LOADING: {
+      return {
+        ...state,
+        retrievals: {
+          ...state.retrievals,
+          [action.payload]: {
+            ...state.retrievals.byId,
+            isLoading: true,
+            isLoaded: false
+          }
+        }
+      }
+    }
+    case SET_ADMIN_RETRIEVAL: {
+      const {
+        obfuscated_id: id
+      } = action.payload
+
+      return {
+        ...state,
+        retrievals: {
+          ...state.retrievals,
+          byId: {
+            ...state.retrievals.byId,
+            [id]: {
+              ...action.payload,
+              isLoading: false,
+              isLoaded: true
+            }
+          }
         }
       }
     }
