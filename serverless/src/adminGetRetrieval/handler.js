@@ -1,5 +1,7 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
+import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 /**
  * Retrieve all the retrievals for the authenticated user
@@ -33,12 +35,13 @@ export default async function adminGetRetrievals(event, context) {
         'retrieval_orders.state',
         'retrieval_orders.order_number',
         'retrieval_orders.order_information',
+        'retrieval_orders.type',
         'users.urs_id')
-      .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
-      .join('retrieval_orders', { 'retrieval_collections.id': 'retrieval_orders.retrieval_collection_id' })
+      .leftOuterJoin('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
+      .leftOuterJoin('retrieval_orders', { 'retrieval_collections.id': 'retrieval_orders.retrieval_collection_id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
-        'retrievals.id': providedRetrieval
+        'retrievals.id': deobfuscateId(providedRetrieval)
       })
 
     // Pull out the retrieval data from the first row (they will all be the same due to the join)
@@ -52,6 +55,7 @@ export default async function adminGetRetrievals(event, context) {
 
     const formattedResponse = {
       id,
+      obfuscated_id: obfuscateId(id),
       user_id: userId,
       username,
       collections: []
@@ -68,24 +72,31 @@ export default async function adminGetRetrievals(event, context) {
         granule_count: granuleCount,
         state,
         order_number: orderNumber,
-        order_information: orderInformation
+        order_information: orderInformation,
+        type
       } = row
 
-      if (!Object.keys(retrievalCollections).includes(cid.toString())) {
-        retrievalCollections[cid] = {
-          id: cid,
-          access_method: accessMethod,
-          collection_id: collectionId,
-          granule_count: granuleCount,
-          orders: []
+      if (cid) {
+        if (!Object.keys(retrievalCollections).includes(cid.toString())) {
+          retrievalCollections[cid] = {
+            id: cid,
+            access_method: accessMethod,
+            collection_id: collectionId,
+            granule_count: granuleCount,
+            orders: []
+          }
+        }
+
+        if (oid) {
+          retrievalCollections[cid].orders.push({
+            id: oid,
+            state,
+            order_number: orderNumber,
+            order_information: orderInformation,
+            type
+          })
         }
       }
-      retrievalCollections[cid].orders.push({
-        id: oid,
-        state,
-        order_number: orderNumber,
-        order_information: orderInformation
-      })
     })
 
     formattedResponse.collections = Object.values(retrievalCollections)

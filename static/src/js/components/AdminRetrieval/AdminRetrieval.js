@@ -2,25 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Col, Container, Row } from 'react-bootstrap'
+import { AdminRetrievalDetails } from '../AdminRetrievalDetails/AdminRetrievalDetails'
 
-import AdminRetrievalDetails from './AdminRetrievalDetails'
 
 export const AdminRetrieval = ({
-  onFetchAdminRetrieval
+  retrieval
 }) => (
   <Container>
     <Row>
       <Col>
         <AdminRetrievalDetails
-          onFetchAdminRetrieval={onFetchAdminRetrieval}
+          retrieval={retrieval}
         />
       </Col>
     </Row>
   </Container>
 )
 
+AdminRetrieval.defaultProps = {
+  retrieval: {}
+}
+
 AdminRetrieval.propTypes = {
-  onFetchAdminRetrieval: PropTypes.func.isRequired
+  retrieval: PropTypes.shape({})
 }
 
 export default AdminRetrieval

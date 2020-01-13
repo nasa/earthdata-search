@@ -7,14 +7,14 @@ import actions from '../../actions'
 import AdminRetrievals from '../../components/AdminRetrievals/AdminRetrievals'
 
 const mapStateToProps = state => ({
-  retrievals: state.admin.retrievals.data,
+  retrievals: state.admin.retrievals.byId,
   retrievalsLoading: state.admin.retrievals.isLoading,
   retrievalsLoaded: state.admin.retrievals.isLoaded
 })
 
 const mapDispatchToProps = dispatch => ({
   onAdminViewRetrieval: retrievalId => dispatch(actions.adminViewRetrieval(retrievalId)),
-  onFetchAdminRetrievals: () => dispatch(actions.adminFetchAdminRetrievals())
+  onFetchAdminRetrievals: () => dispatch(actions.fetchAdminRetrievals())
 })
 
 export class AdminRetrievalsContainer extends Component {
@@ -44,15 +44,13 @@ export class AdminRetrievalsContainer extends Component {
 }
 
 AdminRetrievalsContainer.defaultProps = {
-  retrievals: []
+  retrievals: {}
 }
 
 AdminRetrievalsContainer.propTypes = {
   onAdminViewRetrieval: PropTypes.func.isRequired,
   onFetchAdminRetrievals: PropTypes.func.isRequired,
-  retrievals: PropTypes.arrayOf(
-    PropTypes.shape({})
-  )
+  retrievals: PropTypes.shape({})
 }
 
 export default withRouter(

@@ -2,7 +2,8 @@
 import {
   adminIsAuthorized,
   adminViewRetrieval,
-  fetchAdminRetrievals as adminFetchAdminRetrievals
+  fetchAdminRetrievals,
+  fetchAdminRetrieval
 } from './admin/retrievals'
 import {
   updateAdvancedSearch
@@ -132,7 +133,8 @@ import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
 const actions = {
   adminIsAuthorized,
   adminViewRetrieval,
-  adminFetchAdminRetrievals,
+  fetchAdminRetrieval,
+  fetchAdminRetrievals,
   addAccessMethods,
   addGranulesFromCollection,
   addProjectCollection,
