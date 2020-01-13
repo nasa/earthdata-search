@@ -6,6 +6,7 @@ import { Dropdown } from 'react-bootstrap'
 
 import murmurhash3 from '../../util/murmurhash3'
 import { createDataLinks } from '../../util/granules'
+import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { eventEmitter } from '../../events/events'
 
@@ -56,6 +57,10 @@ export const DataLinksButton = ({
           {
             dataLinks.map((dataLink, i) => {
               const key = `data_link_${i}`
+              let dataLinkTitle = dataLink.title
+
+              if (!dataLinkTitle) dataLinkTitle = getFilenameFromPath(dataLink.href)
+
               return (
                 <Dropdown.Item
                   key={key}
@@ -67,7 +72,7 @@ export const DataLinksButton = ({
                     }]
                   })}
                 >
-                  {dataLink.title}
+                  {dataLinkTitle}
                 </Dropdown.Item>
               )
             })
