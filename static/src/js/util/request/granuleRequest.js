@@ -98,11 +98,16 @@ export default class GranuleRequest extends Request {
 
       if (granule.links && granule.links.length > 0) {
         let browseUrl
-        granule.links.forEach((link) => {
+
+        // Pick the first 'browse' link to use as the browseUrl
+        granule.links.some((link) => {
           if (link.rel.indexOf('browse') > -1) {
             browseUrl = link.href
+            return true
           }
+          return false
         })
+
         updatedGranule.browse_url = browseUrl
       }
 
