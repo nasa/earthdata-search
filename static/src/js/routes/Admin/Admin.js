@@ -19,6 +19,10 @@ const mapDispatchToProps = dispatch => ({
   onAdminIsAuthorized: () => dispatch(actions.adminIsAuthorized())
 })
 
+const mapStateToProps = state => ({
+  isAuthorized: state.admin.isAuthorized
+})
+
 export class Admin extends Component {
   componentDidMount() {
     const { onAdminIsAuthorized } = this.props
@@ -26,14 +30,14 @@ export class Admin extends Component {
   }
 
   render() {
-    // TODO adminIsAuthorized needs to update the store when it is successful, then we need to conditionally render this route based on the state
+    const { isAuthorized, match } = this.props
 
-    const { match } = this.props
+    if (!isAuthorized) return null
 
     const { path } = match
 
     return (
-      <Route path="admin">
+      <Route path={`${path}`}>
         <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
           <div className="route-wrapper__content">
             <header className="route-wrapper__header">
@@ -69,10 +73,11 @@ export class Admin extends Component {
 }
 
 Admin.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
   match: PropTypes.shape({}).isRequired,
   onAdminIsAuthorized: PropTypes.func.isRequired
 }
 
 export default withRouter(
-  connect(null, mapDispatchToProps)(Admin)
+  connect(mapStateToProps, mapDispatchToProps)(Admin)
 )

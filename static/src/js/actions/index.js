@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
+import { adminIsAuthorized } from './admin/isAuthorized'
 import {
-  adminIsAuthorized,
   adminViewRetrieval,
   fetchAdminRetrievals,
   fetchAdminRetrieval

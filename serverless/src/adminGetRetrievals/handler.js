@@ -17,10 +17,11 @@ export default async function adminGetRetrievals(event, context) {
   if (await isWarmUp(event, context)) return false
 
   try {
+    const { queryStringParameters = {} } = event
     const {
-      page_num: pageNum = 1,
+      page_num: pageNum = 0,
       page_size: pageSize = 50
-    } = event.queryStringParameters || {}
+    } = queryStringParameters || {}
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
@@ -33,7 +34,7 @@ export default async function adminGetRetrievals(event, context) {
         'users.id as user_id',
         'users.urs_id as username')
       .join('users', { 'retrievals.user_id': 'users.id' })
-      // .orderBy('retrievals.created_at', 'DESC')
+      .orderBy('retrievals.created_at', 'DESC')
       .limit(pageSize)
       .offset(pageNum * pageSize)
 
