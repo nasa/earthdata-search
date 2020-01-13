@@ -98,11 +98,3 @@ export const adminViewRetrieval = retrievalId => (dispatch) => {
     pathname: `/admin/retrievals/${retrievalId}`
   }))
 }
-
-export const adminIsAuthorized = () => (dispatch, getState) => {
-  const { authToken } = getState()
-
-  const requestObject = new RetrievalRequest(authToken)
-  const response = requestObject.isAuthorized()
-  return response
-}

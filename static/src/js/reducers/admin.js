@@ -4,10 +4,12 @@ import {
   SET_ADMIN_RETRIEVAL_LOADED,
   SET_ADMIN_RETRIEVAL_LOADING,
   SET_ADMIN_RETRIEVALS_LOADED,
-  SET_ADMIN_RETRIEVALS_LOADING
+  SET_ADMIN_RETRIEVALS_LOADING,
+  SET_ADMIN_IS_AUTHORIZED
 } from '../constants/actionTypes'
 
 const initialState = {
+  isAuthorized: false,
   retrievals: {
     byId: {},
     isLoading: false,
@@ -19,6 +21,12 @@ const initialState = {
 
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_ADMIN_IS_AUTHORIZED: {
+      return {
+        ...state,
+        isAuthorized: action.payload
+      }
+    }
     case SET_ADMIN_RETRIEVALS_LOADED: {
       return {
         ...state,

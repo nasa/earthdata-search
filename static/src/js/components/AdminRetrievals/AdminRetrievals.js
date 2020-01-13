@@ -37,9 +37,7 @@ AdminRetrevals.defaultProps = {
 AdminRetrevals.propTypes = {
   onAdminViewRetrieval: PropTypes.func.isRequired,
   onFetchAdminRetrievals: PropTypes.func.isRequired,
-  retrievals: PropTypes.arrayOf(
-    PropTypes.shape({})
-  )
+  retrievals: PropTypes.shape({})
 }
 
 export default AdminRetrevals
