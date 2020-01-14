@@ -6,9 +6,9 @@ import { Col, Container, Row } from 'react-bootstrap'
 import { AdminRetrievalsList } from './AdminRetrievalsList'
 import { AdminRetrievalsForm } from './AdminRetrievalsForm'
 
-export const AdminRetrevals = ({
+export const AdminRetrievals = ({
   onAdminViewRetrieval,
-  onFetchAdminRetrievals,
+  onUpdateAdminRetrievalsSortKey,
   retrievals
 }) => (
   <Container>
@@ -22,7 +22,7 @@ export const AdminRetrevals = ({
     <Row>
       <Col>
         <AdminRetrievalsList
-          onFetchAdminRetrievals={onFetchAdminRetrievals}
+          onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
           retrievals={retrievals}
         />
       </Col>
@@ -30,14 +30,14 @@ export const AdminRetrevals = ({
   </Container>
 )
 
-AdminRetrevals.defaultProps = {
+AdminRetrievals.defaultProps = {
   retrievals: []
 }
 
-AdminRetrevals.propTypes = {
+AdminRetrievals.propTypes = {
   onAdminViewRetrieval: PropTypes.func.isRequired,
-  onFetchAdminRetrievals: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({})
 }
 
-export default AdminRetrevals
+export default AdminRetrievals

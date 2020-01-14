@@ -3,7 +3,9 @@ import { adminIsAuthorized } from './admin/isAuthorized'
 import {
   adminViewRetrieval,
   fetchAdminRetrievals,
-  fetchAdminRetrieval
+  fetchAdminRetrieval,
+  updateAdminRetrievalsSortKey,
+  updateAdminRetrievalsPagination
 } from './admin/retrievals'
 import {
   updateAdvancedSearch
@@ -213,6 +215,8 @@ const actions = {
   toggleTooManyPointsModal,
   triggerViewAllFacets,
   undoExcludeGranule,
+  updateAdminRetrievalsSortKey,
+  updateAdminRetrievalsPagination,
   updateAdvancedSearch,
   updateAccessMethod,
   updateAuthToken,
