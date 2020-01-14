@@ -8,8 +8,8 @@ export default class RetrievalRequest extends Request {
     this.authToken = authToken
   }
 
-  all() {
-    return this.get('admin/retrievals')
+  all(params) {
+    return this.get('admin/retrievals', params)
   }
 
   fetch(id) {

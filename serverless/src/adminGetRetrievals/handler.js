@@ -1,7 +1,13 @@
-import { keyBy } from 'lodash'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+
+const sortKeyMap = {
+  '-created_at': ['retrievals.created_at', 'desc'],
+  '+created_at': ['retrievals.created_at', 'asc'],
+  '-username': ['users.urs_id', 'desc'],
+  '+username': ['users.urs_id', 'asc']
+}
 
 /**
  * Retrieve all the retrievals for the authenticated user
@@ -19,35 +25,51 @@ export default async function adminGetRetrievals(event, context) {
   try {
     const { queryStringParameters = {} } = event
     const {
-      page_num: pageNum = 0,
-      page_size: pageSize = 50
+      page_num: pageNum = 1,
+      page_size: pageSize = 20,
+      sort_key: sortKey = '-created_at'
     } = queryStringParameters || {}
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 
     const retrievalResponse = await dbConnection('retrievals')
-      .select('jsondata',
-        'retrievals.id',
+      .select('retrievals.id',
+        'retrievals.jsondata',
         'retrievals.environment',
         'retrievals.created_at',
         'users.id as user_id',
         'users.urs_id as username')
+      .select(dbConnection.raw('count(*) OVER() as total'))
       .join('users', { 'retrievals.user_id': 'users.id' })
-      .orderBy('retrievals.created_at', 'DESC')
+      .orderBy(...sortKeyMap[sortKey])
       .limit(pageSize)
-      .offset(pageNum * pageSize)
+      .offset((pageNum - 1) * pageSize)
 
-    const groupedRetrievals = keyBy(retrievalResponse.map(retrieval => ({
+    const [firstResponseRow] = retrievalResponse
+
+    const { total } = firstResponseRow
+
+    const pagination = {
+      page_num: parseInt(pageNum, 10),
+      page_size: parseInt(pageSize, 10),
+      page_count: Math.ceil(total / pageSize),
+      total_results: parseInt(total, 10)
+    }
+
+    const results = retrievalResponse.map(retrieval => ({
       ...retrieval,
       obfuscated_id: obfuscateId(retrieval.id)
-    })), 'obfuscated_id')
+    }))
 
     return {
       isBase64Encoded: false,
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify(groupedRetrievals, 'created_at')
+      body: JSON.stringify({
+        pagination,
+        results
+      })
     }
   } catch (e) {
     console.log(e)

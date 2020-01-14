@@ -6,7 +6,10 @@ import {
   SET_ADMIN_RETRIEVAL_LOADED,
   SET_ADMIN_RETRIEVAL_LOADING,
   SET_ADMIN_RETRIEVALS_LOADED,
-  SET_ADMIN_RETRIEVALS_LOADING
+  SET_ADMIN_RETRIEVALS_LOADING,
+  SET_ADMIN_RETRIEVALS_PAGINATION,
+  UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
+  UPDATE_ADMIN_RETRIEVALS_PAGE_NUM
 } from '../../constants/actionTypes'
 import { handleError } from '../errors'
 import actions from '../index'
@@ -37,6 +40,11 @@ export const setAdminRetrievalsLoading = id => ({
 export const setAdminRetrievalsLoaded = id => ({
   type: SET_ADMIN_RETRIEVALS_LOADED,
   payload: id
+})
+
+export const setAdminRetrievalsPagination = data => ({
+  type: SET_ADMIN_RETRIEVALS_PAGINATION,
+  payload: data
 })
 
 /**
@@ -70,16 +78,28 @@ export const fetchAdminRetrieval = id => (dispatch, getState) => {
  * Fetch a group of retrievals from the database
  */
 export const fetchAdminRetrievals = () => (dispatch, getState) => {
-  const { authToken } = getState()
+  const { admin, authToken } = getState()
+  const { retrievals } = admin
+  const {
+    pageSize,
+    pageNum,
+    sortKey
+  } = retrievals
 
   dispatch(setAdminRetrievalsLoading())
 
   const requestObject = new RetrievalRequest(authToken)
-  const response = requestObject.all()
+  const response = requestObject.all({
+    page_size: pageSize,
+    page_num: pageNum,
+    sort_key: sortKey
+  })
     .then((response) => {
       const { data } = response
+      const { pagination, results } = data
 
-      dispatch(setAdminRetrievals(data))
+      dispatch(setAdminRetrievalsPagination(pagination))
+      dispatch(setAdminRetrievals(results))
     })
     .catch((error) => {
       dispatch(handleError({
@@ -97,4 +117,22 @@ export const adminViewRetrieval = retrievalId => (dispatch) => {
   dispatch(actions.changeUrl({
     pathname: `/admin/retrievals/${retrievalId}`
   }))
+}
+
+export const updateAdminRetrievalsSortKey = sortKey => (dispatch) => {
+  dispatch({
+    type: UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
+    payload: sortKey
+  })
+
+  dispatch(fetchAdminRetrievals())
+}
+
+export const updateAdminRetrievalsPageNum = sortKey => (dispatch) => {
+  dispatch({
+    type: UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
+    payload: sortKey
+  })
+
+  dispatch(fetchAdminRetrievals())
 }

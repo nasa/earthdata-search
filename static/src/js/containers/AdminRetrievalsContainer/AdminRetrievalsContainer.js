@@ -7,14 +7,15 @@ import actions from '../../actions'
 import AdminRetrievals from '../../components/AdminRetrievals/AdminRetrievals'
 
 const mapStateToProps = state => ({
-  retrievals: state.admin.retrievals.byId,
+  retrievals: state.admin.retrievals,
   retrievalsLoading: state.admin.retrievals.isLoading,
   retrievalsLoaded: state.admin.retrievals.isLoaded
 })
 
 const mapDispatchToProps = dispatch => ({
   onAdminViewRetrieval: retrievalId => dispatch(actions.adminViewRetrieval(retrievalId)),
-  onFetchAdminRetrievals: () => dispatch(actions.fetchAdminRetrievals())
+  onFetchAdminRetrievals: () => dispatch(actions.fetchAdminRetrievals()),
+  onUpdateAdminRetrievalsSortKey: sortKey => dispatch(actions.updateAdminRetrievalsSortKey(sortKey))
 })
 
 export class AdminRetrievalsContainer extends Component {
@@ -30,6 +31,7 @@ export class AdminRetrievalsContainer extends Component {
     const {
       onAdminViewRetrieval,
       onFetchAdminRetrievals,
+      onUpdateAdminRetrievalsSortKey,
       retrievals
     } = this.props
 
@@ -37,6 +39,7 @@ export class AdminRetrievalsContainer extends Component {
       <AdminRetrievals
         onAdminViewRetrieval={onAdminViewRetrieval}
         onFetchAdminRetrievals={onFetchAdminRetrievals}
+        onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
         retrievals={retrievals}
       />
     )
@@ -50,6 +53,7 @@ AdminRetrievalsContainer.defaultProps = {
 AdminRetrievalsContainer.propTypes = {
   onAdminViewRetrieval: PropTypes.func.isRequired,
   onFetchAdminRetrievals: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({})
 }
 
