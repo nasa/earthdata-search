@@ -1,8 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ReactPaginate from 'react-paginate'
+import Pagination from 'rc-pagination'
+import localeInfo from 'rc-pagination/lib/locale/en_US'
 import { Table } from 'react-bootstrap'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+
+import 'rc-pagination/assets/index.css'
+// import 'rc-select/assets/index.css'
 
 export const AdminRetrievalsList = ({
   retrievals,
@@ -12,7 +16,9 @@ export const AdminRetrievalsList = ({
   const { allIds, byId, pagination } = retrievals
 
   const {
-    pageCount
+    pageNum,
+    pageSize,
+    totalResults
   } = pagination
 
   const handleSort = (e) => {
@@ -20,10 +26,8 @@ export const AdminRetrievalsList = ({
     onUpdateAdminRetrievalsSortKey('+created_at')
   }
 
-  const handlePageChange = (data) => {
-    const { selected } = data
-
-    onUpdateAdminRetrievalsPagination((selected + 1))
+  const handlePageChange = (pageNum) => {
+    onUpdateAdminRetrievalsPagination(pageNum)
   }
 
   return (
@@ -78,12 +82,12 @@ export const AdminRetrievalsList = ({
         </tbody>
       </Table>
 
-      <ReactPaginate
-        initialPage={1}
-        pageCount={pageCount}
-        pageRangeDisplayed={2}
-        marginPagesDisplayed={5}
-        onPageChange={handlePageChange}
+      <Pagination
+        current={pageNum}
+        total={totalResults}
+        pageSize={pageSize}
+        onChange={handlePageChange}
+        local={localeInfo}
       />
     </>
   )
