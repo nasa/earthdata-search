@@ -5,7 +5,7 @@ import {
   fetchAdminRetrievals,
   fetchAdminRetrieval,
   updateAdminRetrievalsSortKey,
-  updateAdminRetrievalsPagination
+  updateAdminRetrievalsPageNum
 } from './admin/retrievals'
 import {
   updateAdvancedSearch
@@ -216,7 +216,7 @@ const actions = {
   triggerViewAllFacets,
   undoExcludeGranule,
   updateAdminRetrievalsSortKey,
-  updateAdminRetrievalsPagination,
+  updateAdminRetrievalsPageNum,
   updateAdvancedSearch,
   updateAccessMethod,
   updateAuthToken,
