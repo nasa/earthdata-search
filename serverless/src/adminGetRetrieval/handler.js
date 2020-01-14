@@ -23,8 +23,8 @@ export default async function adminGetRetrievals(event, context) {
     const dbConnection = await getDbConnection()
 
     const retrievalResponse = await dbConnection('retrievals')
-      .select('jsondata',
-        'retrievals.id',
+      .select('retrievals.id',
+        'retrievals.jsondata',
         'users.id as user_id',
         'users.urs_id as username',
         'retrieval_collections.id as cid',
@@ -37,6 +37,8 @@ export default async function adminGetRetrievals(event, context) {
         'retrieval_orders.order_information',
         'retrieval_orders.type',
         'users.urs_id')
+      .select(dbConnection.raw("retrieval_collections.collection_metadata -> 'title' as title"))
+      .select(dbConnection.raw("retrieval_collections.collection_metadata -> 'data_center' as data_center"))
       .leftOuterJoin('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
       .leftOuterJoin('retrieval_orders', { 'retrieval_collections.id': 'retrieval_orders.retrieval_collection_id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
@@ -70,6 +72,8 @@ export default async function adminGetRetrievals(event, context) {
         access_method: accessMethod,
         collection_id: collectionId,
         granule_count: granuleCount,
+        data_center: dataCenter,
+        title,
         state,
         order_number: orderNumber,
         order_information: orderInformation,
@@ -83,6 +87,8 @@ export default async function adminGetRetrievals(event, context) {
             access_method: accessMethod,
             collection_id: collectionId,
             granule_count: granuleCount,
+            data_center: dataCenter,
+            title,
             orders: []
           }
         }
