@@ -1,17 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ReactPaginate from 'react-paginate'
 import { Table } from 'react-bootstrap'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 export const AdminRetrievalsList = ({
   retrievals,
-  onUpdateAdminRetrievalsSortKey
+  onUpdateAdminRetrievalsSortKey,
+  onUpdateAdminRetrievalsPagination
 }) => {
-  const { allIds, byId } = retrievals
+  const { allIds, byId, pagination } = retrievals
+
+  const {
+    pageCount
+  } = pagination
 
   const handleSort = (e) => {
     console.log(e.target)
     onUpdateAdminRetrievalsSortKey('+created_at')
+  }
+
+  const handlePageChange = (data) => {
+    const { selected } = data
+
+    onUpdateAdminRetrievalsPagination((selected + 1))
   }
 
   return (
@@ -65,6 +77,14 @@ export const AdminRetrievalsList = ({
           }
         </tbody>
       </Table>
+
+      <ReactPaginate
+        initialPage={1}
+        pageCount={pageCount}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={5}
+        onPageChange={handlePageChange}
+      />
     </>
   )
 }
@@ -75,9 +95,8 @@ AdminRetrievalsList.defaultProps = {
 
 AdminRetrievalsList.propTypes = {
   retrievals: PropTypes.shape({}),
-  onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired
-  // retrievalsLoading: PropTypes.bool.isRequired,
-  // retrievalsLoaded: PropTypes.bool.isRequired
+  onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsPagination: PropTypes.func.isRequired
 }
 
 export default AdminRetrievalsList

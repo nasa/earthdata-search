@@ -133,6 +133,7 @@ const adminReducer = (state = initialState, action) => {
         page_count: pageCount,
         total_results: totalResults
       } = action.payload
+
       return {
         ...state,
         retrievals: {
