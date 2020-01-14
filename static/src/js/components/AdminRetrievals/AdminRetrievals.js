@@ -9,7 +9,7 @@ import { AdminRetrievalsForm } from './AdminRetrievalsForm'
 export const AdminRetrievals = ({
   onAdminViewRetrieval,
   onUpdateAdminRetrievalsSortKey,
-  onUpdateAdminRetrievalsPagination,
+  onUpdateAdminRetrievalsPageNum,
   retrievals
 }) => (
   <Container>
@@ -24,7 +24,7 @@ export const AdminRetrievals = ({
       <Col>
         <AdminRetrievalsList
           onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
-          onUpdateAdminRetrievalsPagination={onUpdateAdminRetrievalsPagination}
+          onUpdateAdminRetrievalsPageNum={onUpdateAdminRetrievalsPageNum}
           retrievals={retrievals}
         />
       </Col>
@@ -39,7 +39,7 @@ AdminRetrievals.defaultProps = {
 AdminRetrievals.propTypes = {
   onAdminViewRetrieval: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsPagination: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({})
 }
 

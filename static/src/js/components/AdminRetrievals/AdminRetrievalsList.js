@@ -4,6 +4,7 @@ import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
 import { Table } from 'react-bootstrap'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import Button from '../Button/Button'
 
 import 'rc-pagination/assets/index.css'
 // import 'rc-select/assets/index.css'
@@ -11,7 +12,7 @@ import 'rc-pagination/assets/index.css'
 export const AdminRetrievalsList = ({
   retrievals,
   onUpdateAdminRetrievalsSortKey,
-  onUpdateAdminRetrievalsPagination
+  onUpdateAdminRetrievalsPageNum
 }) => {
   const { allIds, byId, pagination } = retrievals
 
@@ -21,13 +22,12 @@ export const AdminRetrievalsList = ({
     totalResults
   } = pagination
 
-  const handleSort = (e) => {
-    console.log(e.target)
-    onUpdateAdminRetrievalsSortKey('+created_at')
+  const handleSort = (value) => {
+    onUpdateAdminRetrievalsSortKey(value)
   }
 
   const handlePageChange = (pageNum) => {
-    onUpdateAdminRetrievalsPagination(pageNum)
+    onUpdateAdminRetrievalsPageNum(pageNum)
   }
 
   return (
@@ -38,15 +38,35 @@ export const AdminRetrievalsList = ({
           <tr>
             <th>ID</th>
             <th>Obfuscated ID</th>
-            <th
-              onClick={handleSort}
-            >
+            <th>
               User
+              <Button
+                onClick={() => handleSort('+username')}
+                label="Sort Ascending User"
+                icon="sort-up"
+                bootstrapSize="sm"
+              />
+              <Button
+                onClick={() => handleSort('-username')}
+                label="Sort Descending User"
+                icon="sort-down"
+                bootstrapSize="sm"
+              />
             </th>
-            <th
-              onClick={handleSort}
-            >
+            <th>
               Created
+              <Button
+                onClick={() => handleSort('+created_at')}
+                label="Sort Ascending Created"
+                icon="sort-up"
+                bootstrapSize="sm"
+              />
+              <Button
+                onClick={() => handleSort('-created_at')}
+                label="Sort Descending Created"
+                icon="sort-down"
+                bootstrapSize="sm"
+              />
             </th>
           </tr>
         </thead>
@@ -100,7 +120,7 @@ AdminRetrievalsList.defaultProps = {
 AdminRetrievalsList.propTypes = {
   retrievals: PropTypes.shape({}),
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsPagination: PropTypes.func.isRequired
+  onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired
 }
 
 export default AdminRetrievalsList

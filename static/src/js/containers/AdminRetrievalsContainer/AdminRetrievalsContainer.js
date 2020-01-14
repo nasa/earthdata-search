@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
   onUpdateAdminRetrievalsSortKey: sortKey => dispatch(
     actions.updateAdminRetrievalsSortKey(sortKey)
   ),
-  onUpdateAdminRetrievalsPagination: pageNum => dispatch(
+  onUpdateAdminRetrievalsPageNum: pageNum => dispatch(
     actions.updateAdminRetrievalsPageNum(pageNum)
   )
 })
@@ -37,7 +37,7 @@ export class AdminRetrievalsContainer extends Component {
       onAdminViewRetrieval,
       onFetchAdminRetrievals,
       onUpdateAdminRetrievalsSortKey,
-      onUpdateAdminRetrievalsPagination,
+      onUpdateAdminRetrievalsPageNum,
       retrievals
     } = this.props
 
@@ -46,7 +46,7 @@ export class AdminRetrievalsContainer extends Component {
         onAdminViewRetrieval={onAdminViewRetrieval}
         onFetchAdminRetrievals={onFetchAdminRetrievals}
         onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
-        onUpdateAdminRetrievalsPagination={onUpdateAdminRetrievalsPagination}
+        onUpdateAdminRetrievalsPageNum={onUpdateAdminRetrievalsPageNum}
         retrievals={retrievals}
       />
     )
@@ -61,7 +61,7 @@ AdminRetrievalsContainer.propTypes = {
   onAdminViewRetrieval: PropTypes.func.isRequired,
   onFetchAdminRetrievals: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsPagination: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({})
 }
 
