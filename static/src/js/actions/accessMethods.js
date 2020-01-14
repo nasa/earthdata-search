@@ -23,7 +23,7 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
     const { collections } = metadata
     const { byId } = collections
     const collection = byId[collectionId]
-    const { metadata: collectionMetadata } = collection
+    const { granules, metadata: collectionMetadata } = collection
     const { associations, data_center: dataCenter, tags } = collectionMetadata
 
     const collectionProvider = findProvider(getState(), dataCenter)
@@ -52,7 +52,7 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
 
           Object.keys(accessMethods).forEach((methodName) => {
             if (selectedAccessMethod === methodName) {
-              const { granule_count: granuleCount } = collectionMetadata
+              const { hits: granuleCount } = granules
               const { defaultGranulesPerOrder } = getApplicationConfig()
 
               orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
