@@ -15,7 +15,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onAdminViewRetrieval: retrievalId => dispatch(actions.adminViewRetrieval(retrievalId)),
   onFetchAdminRetrievals: () => dispatch(actions.fetchAdminRetrievals()),
-  onUpdateAdminRetrievalsSortKey: sortKey => dispatch(actions.updateAdminRetrievalsSortKey(sortKey))
+  onUpdateAdminRetrievalsSortKey: sortKey => dispatch(
+    actions.updateAdminRetrievalsSortKey(sortKey)
+  ),
+  onUpdateAdminRetrievalsPagination: pageNum => dispatch(
+    actions.updateAdminRetrievalsPageNum(pageNum)
+  )
 })
 
 export class AdminRetrievalsContainer extends Component {
@@ -32,6 +37,7 @@ export class AdminRetrievalsContainer extends Component {
       onAdminViewRetrieval,
       onFetchAdminRetrievals,
       onUpdateAdminRetrievalsSortKey,
+      onUpdateAdminRetrievalsPagination,
       retrievals
     } = this.props
 
@@ -40,6 +46,7 @@ export class AdminRetrievalsContainer extends Component {
         onAdminViewRetrieval={onAdminViewRetrieval}
         onFetchAdminRetrievals={onFetchAdminRetrievals}
         onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
+        onUpdateAdminRetrievalsPagination={onUpdateAdminRetrievalsPagination}
         retrievals={retrievals}
       />
     )
@@ -54,6 +61,7 @@ AdminRetrievalsContainer.propTypes = {
   onAdminViewRetrieval: PropTypes.func.isRequired,
   onFetchAdminRetrievals: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsPagination: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({})
 }
 

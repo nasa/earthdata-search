@@ -80,11 +80,12 @@ export const fetchAdminRetrieval = id => (dispatch, getState) => {
 export const fetchAdminRetrievals = () => (dispatch, getState) => {
   const { admin, authToken } = getState()
   const { retrievals } = admin
+  const { pagination } = retrievals
   const {
     pageSize,
     pageNum,
     sortKey
-  } = retrievals
+  } = pagination
 
   dispatch(setAdminRetrievalsLoading())
 
@@ -128,10 +129,10 @@ export const updateAdminRetrievalsSortKey = sortKey => (dispatch) => {
   dispatch(fetchAdminRetrievals())
 }
 
-export const updateAdminRetrievalsPageNum = sortKey => (dispatch) => {
+export const updateAdminRetrievalsPageNum = pageNum => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
-    payload: sortKey
+    payload: pageNum
   })
 
   dispatch(fetchAdminRetrievals())
