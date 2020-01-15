@@ -21,7 +21,7 @@ export const AdminRetrievals = ({
         href: '/admin'
       },
       {
-        name: 'Admin Retrievals',
+        name: 'Retrievals',
         active: true
       }
     ]}
