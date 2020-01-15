@@ -90,11 +90,14 @@ export const fetchAdminRetrievals = () => (dispatch, getState) => {
   dispatch(setAdminRetrievalsLoading())
 
   const requestObject = new RetrievalRequest(authToken)
-  const response = requestObject.all({
+  const requestOpts = {
     page_size: pageSize,
-    page_num: pageNum,
-    sort_key: sortKey
-  })
+    page_num: pageNum
+  }
+
+  if (sortKey) requestOpts.sort_key = sortKey
+
+  const response = requestObject.all(requestOpts)
     .then((response) => {
       const { data } = response
       const { pagination, results } = data

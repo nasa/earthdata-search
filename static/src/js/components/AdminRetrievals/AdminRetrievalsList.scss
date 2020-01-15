@@ -1,10 +1,21 @@
 .admin-retrievals-list {
-  &__row {
+  &__interactive {
     cursor: pointer;
 
     &:hover {
       background-color: $color__black--200 !important;
     }
+  }
+
+  &__table-head-cell--sortable {
+    position: relative;
+  }
+
+  &__sortable-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   &__pagination-wrapper {
