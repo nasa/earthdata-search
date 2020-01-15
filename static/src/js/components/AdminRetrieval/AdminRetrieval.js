@@ -16,7 +16,7 @@ export const AdminRetrieval = ({
         href: '/admin'
       },
       {
-        name: 'Admin Retrievals',
+        name: 'Retrievals',
         href: '/admin/retrievals'
       },
       {
