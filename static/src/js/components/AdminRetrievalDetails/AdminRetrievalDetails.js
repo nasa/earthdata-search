@@ -2,7 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { Table } from 'react-bootstrap'
+import {
+  Table,
+  Row,
+  Col
+} from 'react-bootstrap'
+
+import './AdminRetrievalDetails.scss'
 
 const mapStateToProps = state => ({
   admin: state.admin
@@ -13,96 +19,117 @@ export const AdminRetrievalDetails = ({
 }) => {
   const {
     username,
-    collections = []
+    collections = [],
+    obfuscated_id: obfuscatedId
   } = retrieval
 
   return (
-    <>
-      <h2>Retrieval Details</h2>
+    <div className="admin-retrieval-details">
+      <Row>
+        <Col sm="auto">
+          <div className="admin-retrieval-details__metadata-display">
+            <p className="admin-retrieval-details__metadata-display-item">
+              <span className="admin-retrieval-details__metadata-display-heading">Owner</span>
+              <span className="admin-retrieval-details__metadata-display-content">{username}</span>
+            </p>
+            <p className="admin-retrieval-details__metadata-display-item">
+              <span className="admin-retrieval-details__metadata-display-heading">Obfuscated ID</span>
+              <span className="admin-retrieval-details__metadata-display-content">{obfuscatedId}</span>
+            </p>
+          </div>
+        </Col>
+        <Col sm="auto">
+          {
+            collections.length > 0 && (
+              <section className="admin-retrieval-details__collections">
+                {
+                  collections.map((collection) => {
+                    const {
+                      id: collectionId,
+                      collection_id: collectionConceptId,
+                      data_center: collectionDataCenter,
+                      granule_count: collectionGranuleCount,
+                      orders
+                    } = collection
 
-      <p>
-        <strong>Owner:</strong>
-        {username}
-      </p>
+                    return (
+                      <article className="admin-retrieval-details__collection" key={collectionId}>
+                        <header className="admin-retrieval-details__collection-header">
+                          <span className="admin-retrieval-details__metadata-display-header">Concept ID</span>
+                          <h3 className="admin-retrieval-details__collection-heading">{collectionConceptId}</h3>
+                          <div className="admin-retrieval-details__collection-heading-details">
+                            <div className="admin-retrieval-details__metadata-display">
+                              <p className="admin-retrieval-details__metadata-display-item">
+                                <span className="admin-retrieval-details__metadata-display-heading">Retrieval Collection ID</span>
+                                <span className="admin-retrieval-details__metadata-display-content">{collectionId}</span>
+                              </p>
+                              <p className="admin-retrieval-details__metadata-display-item">
+                                <span className="admin-retrieval-details__metadata-display-heading">Data Provider</span>
+                                <span className="admin-retrieval-details__metadata-display-content">{collectionDataCenter}</span>
+                              </p>
+                              <p className="admin-retrieval-details__metadata-display-item">
+                                <span className="admin-retrieval-details__metadata-display-heading">Order Count</span>
+                                <span className="admin-retrieval-details__metadata-display-content">{orders.length}</span>
+                              </p>
+                              <p className="admin-retrieval-details__metadata-display-item">
+                                <span className="admin-retrieval-details__metadata-display-heading">Granule Count</span>
+                                <span className="admin-retrieval-details__metadata-display-content">{collectionGranuleCount}</span>
+                              </p>
+                            </div>
+                          </div>
+                        </header>
+                        {
+                          orders.length > 0 && (
+                            <Table className="admin-retrieval-details__orders-table" striped variant="light">
+                              <thead>
+                                <tr>
+                                  <th width="7%">ID</th>
+                                  <th width="23%">Order Number</th>
+                                  <th width="20%">Type</th>
+                                  <th width="10%">State</th>
+                                  <th width="50%">Details</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {
+                                  orders.map((order) => {
+                                    const {
+                                      id: orderId,
+                                      order_information: orderInformation,
+                                      order_number: orderNumber,
+                                      state,
+                                      type
+                                    } = order
 
-      {
-        collections.length > 0 && (
-          <Table className="admin-retrieval-table" striped variant="light">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Concept ID</th>
-                <th>Order Count</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                collections.map((collection) => {
-                  const {
-                    id: collectionId,
-                    collection_id: collectionConceptId,
-                    orders
-                  } = collection
-
-                  return (
-                    <>
-                      <tr key={collectionId}>
-                        <td>{collectionId}</td>
-                        <td>{collectionConceptId}</td>
-                        <td>{orders.length}</td>
-                      </tr>
-
-                      {
-                        orders.length > 0 && (
-                          <tr>
-                            <td colSpan={3}>
-                              <Table className="admin-retrieval-table" striped variant="light">
-                                <thead>
-                                  <tr>
-                                    <th>ID</th>
-                                    <th>Order Number</th>
-                                    <th>Type</th>
-                                    <th>State</th>
-                                    <th>Details</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {
-                                    orders.map((order) => {
-                                      const {
-                                        id: orderId,
-                                        order_information: orderInformation,
-                                        order_number: orderNumber,
-                                        state,
-                                        type
-                                      } = order
-
-                                      return (
-                                        <tr key={`${collectionId}-${orderId}`}>
-                                          <td>{orderId}</td>
-                                          <td>{orderNumber}</td>
-                                          <td>{type}</td>
-                                          <td>{state}</td>
-                                          <td>{JSON.stringify(orderInformation)}</td>
-                                        </tr>
-                                      )
-                                    })
-                                  }
-                                </tbody>
-                              </Table>
-                            </td>
-                          </tr>
-                        )
-                      }
-                    </>
-                  )
-                })
-              }
-            </tbody>
-          </Table>
-        )
-      }
-    </>
+                                    return (
+                                      <tr className="admin-retrieval-details__order-row" key={`${collectionId}-${orderId}`}>
+                                        <td>{orderId}</td>
+                                        <td>{orderNumber}</td>
+                                        <td>{type}</td>
+                                        <td>{state}</td>
+                                        <td className="admin-retrieval-details__order-details">
+                                          <pre className="admin-retrieval-details__order-details-pre pre-scrollable">
+                                            {JSON.stringify(orderInformation)}
+                                          </pre>
+                                        </td>
+                                      </tr>
+                                    )
+                                  })
+                                }
+                              </tbody>
+                            </Table>
+                          )
+                        }
+                      </article>
+                    )
+                  })
+                }
+              </section>
+            )
+          }
+        </Col>
+      </Row>
+    </div>
   )
 }
 

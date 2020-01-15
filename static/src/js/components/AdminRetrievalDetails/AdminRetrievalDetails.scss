@@ -1,0 +1,75 @@
+.admin-retrieval-details {
+  &__collection {
+    margin-top: 2rem;
+    border: 1px solid $color__black--200;
+    border-radius: 0.25rem;
+    overflow: hidden;
+  }
+
+  &__collection-header {
+    display: flex;
+    flex-direction: column;
+    padding: $spacer;
+    border-bottom: 1px solid $color__black--200;
+  }
+
+  &__collection-heading {
+    font-weight: 700;
+    font-size: 1.125em;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $color__black--200;
+  }
+
+  &__collection-heading-details {
+    display: flex;
+
+    .admin-retrieval-details__metadata-display-item {
+     width: 25rem;
+    }
+  }
+
+  &__orders-table {
+    table-layout: fixed;
+    margin-bottom: 0;
+  }
+
+  &__order-row {
+    vertical-align: middle !important;
+  }
+
+  &__order-details {
+    vertical-align: middle !important;
+  }
+
+  &__order-details-pre {
+    font-size: 0.825em;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+
+  &__metadata-display {
+    width: 100%;
+    display: flex;
+
+    &--width-auto {
+      justify-content: space-between;
+    }
+  }
+
+  &__metadata-display-item {
+    margin-bottom: 0;
+    margin-right: 2rem;
+  }
+
+  &__metadata-display-heading {
+    display: block;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: $color__black--500;
+  }
+
+  &__metadata-display-content {
+    font-size: 1rem;
+    color: $color__black--700;
+  }
+}

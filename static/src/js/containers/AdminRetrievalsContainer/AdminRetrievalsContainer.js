@@ -34,6 +34,7 @@ export class AdminRetrievalsContainer extends Component {
 
   render() {
     const {
+      history,
       onAdminViewRetrieval,
       onFetchAdminRetrievals,
       onUpdateAdminRetrievalsSortKey,
@@ -41,8 +42,13 @@ export class AdminRetrievalsContainer extends Component {
       retrievals
     } = this.props
 
+    const {
+      push: historyPush
+    } = history
+
     return (
       <AdminRetrievals
+        historyPush={historyPush}
         onAdminViewRetrieval={onAdminViewRetrieval}
         onFetchAdminRetrievals={onFetchAdminRetrievals}
         onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
@@ -58,6 +64,7 @@ AdminRetrievalsContainer.defaultProps = {
 }
 
 AdminRetrievalsContainer.propTypes = {
+  history: PropTypes.shape({}).isRequired,
   onAdminViewRetrieval: PropTypes.func.isRequired,
   onFetchAdminRetrievals: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
