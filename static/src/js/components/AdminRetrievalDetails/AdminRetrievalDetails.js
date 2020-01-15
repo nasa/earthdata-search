@@ -8,6 +8,8 @@ import {
   Col
 } from 'react-bootstrap'
 
+import { commafy } from '../../util/commafy'
+
 import './AdminRetrievalDetails.scss'
 
 const mapStateToProps = state => ({
@@ -73,7 +75,7 @@ export const AdminRetrievalDetails = ({
                               </p>
                               <p className="admin-retrieval-details__metadata-display-item">
                                 <span className="admin-retrieval-details__metadata-display-heading">Granule Count</span>
-                                <span className="admin-retrieval-details__metadata-display-content">{collectionGranuleCount}</span>
+                                <span className="admin-retrieval-details__metadata-display-content">{commafy(collectionGranuleCount)}</span>
                               </p>
                             </div>
                           </div>
