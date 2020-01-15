@@ -1,22 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Col, Container, Row } from 'react-bootstrap'
 import { AdminRetrievalDetails } from '../AdminRetrievalDetails/AdminRetrievalDetails'
+import { AdminPage } from '../AdminPage/AdminPage'
 
 
 export const AdminRetrieval = ({
   retrieval
 }) => (
-  <Container>
-    <Row>
-      <Col>
-        <AdminRetrievalDetails
-          retrieval={retrieval}
-        />
-      </Col>
-    </Row>
-  </Container>
+  <AdminPage
+    pageTitle="Retrieval Details"
+    breadcrumbs={[
+      {
+        name: 'Admin',
+        href: '/admin'
+      },
+      {
+        name: 'Admin Retrievals',
+        href: '/admin/retrievals'
+      },
+      {
+        name: 'Retrieval Details',
+        active: true
+      }
+    ]}
+  >
+    <AdminRetrievalDetails
+      retrieval={retrieval}
+    />
+  </AdminPage>
 )
 
 AdminRetrieval.defaultProps = {

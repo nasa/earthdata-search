@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
 import { Table } from 'react-bootstrap'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+
 import Button from '../Button/Button'
 
 import 'rc-pagination/assets/index.css'
-// import 'rc-select/assets/index.css'
+import './AdminRetrievalsList.scss'
 
 export const AdminRetrievalsList = ({
+  historyPush,
   retrievals,
   onUpdateAdminRetrievalsSortKey,
   onUpdateAdminRetrievalsPageNum
@@ -32,8 +33,7 @@ export const AdminRetrievalsList = ({
 
   return (
     <>
-      <h2>Retrievals</h2>
-      <Table className="admin-retrieval-list__table" striped bordered>
+      <Table className="admin-retrievals-list__table" striped bordered>
         <thead>
           <tr>
             <th>ID</th>
@@ -82,13 +82,16 @@ export const AdminRetrievalsList = ({
               } = retrieval
 
               return (
-                <tr key={obfuscatedId}>
+                <tr
+                  className="admin-retrievals-list__row"
+                  key={obfuscatedId}
+                  onClick={() => {
+                    historyPush(`/admin/retrievals/${obfuscatedId}`)
+                  }}
+                  role="button"
+                >
                   <td>
-                    <PortalLinkContainer
-                      to={`/admin/retrievals/${obfuscatedId}`}
-                    >
-                      {id}
-                    </PortalLinkContainer>
+                    {id}
                   </td>
                   <td>
                     {obfuscatedId}
@@ -101,14 +104,16 @@ export const AdminRetrievalsList = ({
           }
         </tbody>
       </Table>
-
-      <Pagination
-        current={pageNum}
-        total={totalResults}
-        pageSize={pageSize}
-        onChange={handlePageChange}
-        local={localeInfo}
-      />
+      <div className="admin-retrievals-list__pagination-wrapper">
+        <Pagination
+          className="admin-retrievals-list__pagination"
+          current={pageNum}
+          total={totalResults}
+          pageSize={pageSize}
+          onChange={handlePageChange}
+          locale={localeInfo}
+        />
+      </div>
     </>
   )
 }
@@ -118,6 +123,7 @@ AdminRetrievalsList.defaultProps = {
 }
 
 AdminRetrievalsList.propTypes = {
+  historyPush: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({}),
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired
