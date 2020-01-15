@@ -41,7 +41,7 @@ export class AdminRetrievalsForm extends Component {
       <Form onSubmit={this.onFormSubmit}>
         <InputGroup>
           <Form.Label column sm="auto">
-            Find retrieval
+            Find Retrieval
           </Form.Label>
           <InputGroup.Prepend>
             <Form.Control
