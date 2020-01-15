@@ -5,26 +5,22 @@ import {
   SET_ADMIN_RETRIEVAL_LOADING,
   SET_ADMIN_RETRIEVALS_LOADED,
   SET_ADMIN_RETRIEVALS_LOADING,
-  SET_ADMIN_IS_AUTHORIZED,
   UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
   UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
   SET_ADMIN_RETRIEVALS_PAGINATION
-} from '../constants/actionTypes'
+} from '../../constants/actionTypes'
 
 const initialState = {
-  isAuthorized: false,
-  retrievals: {
-    allIds: [],
-    byId: {},
-    isLoading: false,
-    isLoaded: false,
-    sortKey: '-created_at',
-    pagination: {
-      pageSize: 20,
-      pageNum: 1,
-      pageCount: null,
-      totalResults: null
-    }
+  allIds: [],
+  byId: {},
+  isLoading: false,
+  isLoaded: false,
+  sortKey: '-created_at',
+  pagination: {
+    pageSize: 20,
+    pageNum: 1,
+    pageCount: null,
+    totalResults: null
   }
 }
 
@@ -40,32 +36,20 @@ const processResults = (results) => {
   return { byId, allIds }
 }
 
-const adminReducer = (state = initialState, action) => {
+const adminRetrievalsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_ADMIN_IS_AUTHORIZED: {
-      return {
-        ...state,
-        isAuthorized: action.payload
-      }
-    }
     case SET_ADMIN_RETRIEVALS_LOADED: {
       return {
         ...state,
-        retrievals: {
-          ...state.retrievals,
-          isLoaded: true,
-          isLoading: false
-        }
+        isLoaded: true,
+        isLoading: false
       }
     }
     case SET_ADMIN_RETRIEVALS_LOADING: {
       return {
         ...state,
-        retrievals: {
-          ...state.retrievals,
-          isLoaded: false,
-          isLoading: true
-        }
+        isLoaded: false,
+        isLoading: true
       }
     }
     case SET_ADMIN_RETRIEVALS: {
@@ -73,20 +57,19 @@ const adminReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        retrievals: {
-          ...state.retrievals,
-          byId,
-          allIds
-        }
+        byId,
+        allIds
       }
     }
     case SET_ADMIN_RETRIEVAL_LOADED: {
+      const id = action.payload
+
       return {
         ...state,
-        retrievals: {
-          ...state.retrievals,
-          [action.payload]: {
-            ...state.retrievals.byId,
+        byId: {
+          ...state.byId,
+          [id]: {
+            ...state.byId[id],
             isLoading: false,
             isLoaded: true
           }
@@ -94,12 +77,14 @@ const adminReducer = (state = initialState, action) => {
       }
     }
     case SET_ADMIN_RETRIEVAL_LOADING: {
+      const id = action.payload
+
       return {
         ...state,
-        retrievals: {
-          ...state.retrievals,
-          [action.payload]: {
-            ...state.retrievals.byId,
+        byId: {
+          ...state.byId,
+          [id]: {
+            ...state.byId[id],
             isLoading: true,
             isLoaded: false
           }
@@ -113,15 +98,13 @@ const adminReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        retrievals: {
-          ...state.retrievals,
-          byId: {
-            ...state.retrievals.byId,
-            [id]: {
-              ...action.payload,
-              isLoading: false,
-              isLoaded: true
-            }
+        byId: {
+          ...state.byId,
+          [id]: {
+            ...state.byId[id],
+            ...action.payload,
+            isLoading: false,
+            isLoaded: true
           }
         }
       }
@@ -136,36 +119,27 @@ const adminReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        retrievals: {
-          ...state.retrievals,
-          pagination: {
-            ...state.retrievals.pagination,
-            pageNum,
-            pageSize,
-            pageCount,
-            totalResults
-          }
+        pagination: {
+          ...state.pagination,
+          pageNum,
+          pageSize,
+          pageCount,
+          totalResults
         }
       }
     }
     case UPDATE_ADMIN_RETRIEVALS_SORT_KEY: {
       return {
         ...state,
-        retrievals: {
-          ...state.retrievals,
-          sortKey: action.payload
-        }
+        sortKey: action.payload
       }
     }
     case UPDATE_ADMIN_RETRIEVALS_PAGE_NUM: {
       return {
         ...state,
-        retrievals: {
-          ...state.retrievals,
-          pagination: {
-            ...state.retrievals.pagination,
-            pageNum: action.payload
-          }
+        pagination: {
+          ...state.pagination,
+          pageNum: action.payload
         }
       }
     }
@@ -174,4 +148,4 @@ const adminReducer = (state = initialState, action) => {
   }
 }
 
-export default adminReducer
+export default adminRetrievalsReducer

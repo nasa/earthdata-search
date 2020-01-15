@@ -149,7 +149,7 @@ describe('Request#handleUnauthorized', () => {
     const returnPath = 'http://example.com/test/path'
 
     delete window.location
-    window.location = { href: returnPath }
+    window.location = { href: returnPath, pathname: '' }
 
     request.handleUnauthorized(data)
     expect(window.location.href).toEqual(`http://localhost:3000/login?cmr_env=prod&state=${encodeURIComponent(returnPath)}`)

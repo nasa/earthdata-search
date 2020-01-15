@@ -14,7 +14,7 @@ import {
 import { handleError } from '../errors'
 import actions from '../index'
 
-export const setAdminRetrieval = (id, payload) => ({
+export const setAdminRetrieval = payload => ({
   type: SET_ADMIN_RETRIEVAL,
   payload
 })
@@ -24,21 +24,21 @@ export const setAdminRetrievals = retrievals => ({
   payload: retrievals
 })
 
-export const setAdminRetrievalLoading = () => ({
-  type: SET_ADMIN_RETRIEVAL_LOADING
+export const setAdminRetrievalsLoading = () => ({
+  type: SET_ADMIN_RETRIEVALS_LOADING
 })
 
-export const setAdminRetrievalLoaded = () => ({
-  type: SET_ADMIN_RETRIEVAL_LOADED
+export const setAdminRetrievalsLoaded = () => ({
+  type: SET_ADMIN_RETRIEVALS_LOADED
 })
 
-export const setAdminRetrievalsLoading = id => ({
-  type: SET_ADMIN_RETRIEVALS_LOADING,
+export const setAdminRetrievalLoading = id => ({
+  type: SET_ADMIN_RETRIEVAL_LOADING,
   payload: id
 })
 
-export const setAdminRetrievalsLoaded = id => ({
-  type: SET_ADMIN_RETRIEVALS_LOADED,
+export const setAdminRetrievalLoaded = id => ({
+  type: SET_ADMIN_RETRIEVAL_LOADED,
   payload: id
 })
 
@@ -60,7 +60,8 @@ export const fetchAdminRetrieval = id => (dispatch, getState) => {
     .then((response) => {
       const { data } = response
 
-      dispatch(setAdminRetrieval(id, data))
+      dispatch(setAdminRetrievalLoaded(id))
+      dispatch(setAdminRetrieval(data))
     })
     .catch((error) => {
       dispatch(handleError({
@@ -98,6 +99,7 @@ export const fetchAdminRetrievals = () => (dispatch, getState) => {
       const { data } = response
       const { pagination, results } = data
 
+      dispatch(setAdminRetrievalsLoaded())
       dispatch(setAdminRetrievalsPagination(pagination))
       dispatch(setAdminRetrievals(results))
     })
@@ -125,7 +127,7 @@ export const updateAdminRetrievalsSortKey = sortKey => (dispatch) => {
     payload: sortKey
   })
 
-  dispatch(fetchAdminRetrievals())
+  dispatch(actions.fetchAdminRetrievals())
 }
 
 export const updateAdminRetrievalsPageNum = pageNum => (dispatch) => {
@@ -134,5 +136,5 @@ export const updateAdminRetrievalsPageNum = pageNum => (dispatch) => {
     payload: pageNum
   })
 
-  dispatch(fetchAdminRetrievals())
+  dispatch(actions.fetchAdminRetrievals())
 }

@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
-import adminReducer from './admin'
 import collectionMetadataReducer from './collectionMetadata'
 import dataQualitySummariesReducer from './dataQualitySummaries'
 import granuleMetadataReducer from './granuleMetadata'
@@ -36,9 +35,14 @@ import errorsReducer from './errors'
 import browserReducer from './browser'
 import providersReducer from './providers'
 import contactInfoReducer from './contactInfo'
+import adminIsAuthorizedReducer from './admin/isAuthorized'
+import adminRetrievalsReducer from './admin/retrievals'
 
 export default history => combineReducers({
-  admin: adminReducer,
+  admin: combineReducers({
+    isAuthorized: adminIsAuthorizedReducer,
+    retrievals: adminRetrievalsReducer
+  }),
   advancedSearch: advancedSearchReducer,
   authToken: authTokenReducer,
   browser: browserReducer,
