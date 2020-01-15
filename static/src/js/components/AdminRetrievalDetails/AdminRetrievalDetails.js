@@ -55,7 +55,7 @@ export const AdminRetrievalDetails = ({
                     return (
                       <article className="admin-retrieval-details__collection" key={collectionId}>
                         <header className="admin-retrieval-details__collection-header">
-                          <span className="admin-retrieval-details__metadata-display-header">Concept ID</span>
+                          <span className="admin-retrieval-details__metadata-display-heading">Concept ID</span>
                           <h3 className="admin-retrieval-details__collection-heading">{collectionConceptId}</h3>
                           <div className="admin-retrieval-details__collection-heading-details">
                             <div className="admin-retrieval-details__metadata-display">
