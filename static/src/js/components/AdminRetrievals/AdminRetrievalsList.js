@@ -4,8 +4,6 @@ import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
 import { Table } from 'react-bootstrap'
 
-import Button from '../Button/Button'
-
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsList.scss'
 
@@ -15,7 +13,12 @@ export const AdminRetrievalsList = ({
   onUpdateAdminRetrievalsSortKey,
   onUpdateAdminRetrievalsPageNum
 }) => {
-  const { allIds, byId, pagination } = retrievals
+  const {
+    allIds,
+    byId,
+    pagination,
+    sortKey
+  } = retrievals
 
   const {
     pageNum,
@@ -31,6 +34,30 @@ export const AdminRetrievalsList = ({
     onUpdateAdminRetrievalsPageNum(pageNum)
   }
 
+  const onSetUsernameSort = () => {
+    if (sortKey.indexOf('username') < 0) {
+      handleSort('-username')
+    }
+    if (sortKey === '+username') {
+      handleSort('')
+    }
+    if (sortKey === '-username') {
+      handleSort('+username')
+    }
+  }
+
+  const onSetCreatedSort = () => {
+    if (sortKey.indexOf('created_at') < 0) {
+      handleSort('-created_at')
+    }
+    if (sortKey === '+created_at') {
+      handleSort('')
+    }
+    if (sortKey === '-created_at') {
+      handleSort('+created_at')
+    }
+  }
+
   return (
     <>
       <Table className="admin-retrievals-list__table" striped bordered>
@@ -38,35 +65,39 @@ export const AdminRetrievalsList = ({
           <tr>
             <th>ID</th>
             <th>Obfuscated ID</th>
-            <th>
+            <th
+              className="admin-retrievals-list__interactive  admin-retrievals-list__table-head-cell--sortable"
+              onClick={() => onSetUsernameSort()}
+              role="button"
+            >
               User
-              <Button
-                onClick={() => handleSort('+username')}
-                label="Sort Ascending User"
-                icon="sort-up"
-                bootstrapSize="sm"
-              />
-              <Button
-                onClick={() => handleSort('-username')}
-                label="Sort Descending User"
-                icon="sort-down"
-                bootstrapSize="sm"
-              />
+              {
+                sortKey === '+username' && (
+                  <i className="fa fa-caret-up admin-retrievals-list__sortable-icon" />
+                )
+              }
+              {
+                sortKey === '-username' && (
+                  <i className="fa fa-caret-down admin-retrievals-list__sortable-icon" />
+                )
+              }
             </th>
-            <th>
+            <th
+              className="admin-retrievals-list__interactive admin-retrievals-list__table-head-cell--sortable"
+              onClick={() => onSetCreatedSort()}
+              role="button"
+            >
               Created
-              <Button
-                onClick={() => handleSort('+created_at')}
-                label="Sort Ascending Created"
-                icon="sort-up"
-                bootstrapSize="sm"
-              />
-              <Button
-                onClick={() => handleSort('-created_at')}
-                label="Sort Descending Created"
-                icon="sort-down"
-                bootstrapSize="sm"
-              />
+              {
+                sortKey === '+created_at' && (
+                  <i className="fa fa-caret-up admin-retrievals-list__sortable-icon" />
+                )
+              }
+              {
+                sortKey === '-created_at' && (
+                  <i className="fa fa-caret-down admin-retrievals-list__sortable-icon" />
+                )
+              }
             </th>
           </tr>
         </thead>
@@ -83,7 +114,7 @@ export const AdminRetrievalsList = ({
 
               return (
                 <tr
-                  className="admin-retrievals-list__row"
+                  className="admin-retrievals-list__interactive"
                   key={obfuscatedId}
                   onClick={() => {
                     historyPush(`/admin/retrievals/${obfuscatedId}`)
