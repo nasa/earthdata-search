@@ -12,6 +12,7 @@ export const PortalLinkContainer = (props) => {
   const {
     children,
     className,
+    dataTestId,
     onClick,
     portalId,
     to,
@@ -68,6 +69,7 @@ export const PortalLinkContainer = (props) => {
   return (
     <Link
       className={className}
+      data-test-id={dataTestId}
       type={type}
       to={newTo}
       onClick={onClick}
@@ -81,6 +83,7 @@ export const PortalLinkContainer = (props) => {
 PortalLinkContainer.defaultProps = {
   children: null,
   className: '',
+  dataTestId: null,
   onClick: null,
   portalId: '',
   staticContext: null,
@@ -104,7 +107,8 @@ PortalLinkContainer.propTypes = {
     PropTypes.shape({})
   ]),
   type: PropTypes.string,
-  target: PropTypes.string
+  target: PropTypes.string,
+  dataTestId: PropTypes.string
 }
 
 export default withRouter(

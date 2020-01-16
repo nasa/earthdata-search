@@ -73,6 +73,7 @@ export class OrderStatusItemBody extends Component {
                 pathname: `/downloads/${retrievalId}/collections/${id}/links`
               }}
               target="_blank"
+              dataTestId="download-data-links"
             >
               <Button
                 bootstrapVariant="primary"

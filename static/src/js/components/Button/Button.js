@@ -20,6 +20,7 @@ export const Button = ({
   bootstrapSize,
   className,
   children,
+  dataTestId,
   disabled,
   href,
   icon,
@@ -99,6 +100,7 @@ export const Button = ({
       target={target}
       rel={rel}
       style={style}
+      data-test-id={dataTestId}
     >
       {(!spinner && icon) && <i className={iconClasses} /> }
       <span className="button__contents">
@@ -146,6 +148,7 @@ Button.defaultProps = {
   badgeVariant: null,
   bootstrapSize: null,
   bootstrapVariant: null,
+  dataTestId: null,
   disabled: false,
   children: null,
   className: null,
@@ -171,6 +174,7 @@ Button.propTypes = {
   badgeVariant: PropTypes.string,
   bootstrapSize: PropTypes.string,
   bootstrapVariant: PropTypes.string,
+  dataTestId: PropTypes.string,
   disabled: PropTypes.bool,
   className: PropTypes.string,
   children: PropTypes.node,

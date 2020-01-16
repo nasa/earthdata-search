@@ -18,6 +18,7 @@ function setup(state, overrideProps) {
     savedProject: {},
     onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),
+    onChangePath: jest.fn(),
     ...overrideProps
   }
 

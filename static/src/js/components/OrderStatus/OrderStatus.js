@@ -218,7 +218,7 @@ export class OrderStatus extends Component {
                     pathname: '/search',
                     search: source
                   }}
-                  onClick={() => { onChangePath(`/search/${source}`) }}
+                  onClick={() => { onChangePath(`/search${source}`) }}
                 >
                   Back to Earthdata Search Results
                 </PortalLinkContainer>
@@ -227,7 +227,10 @@ export class OrderStatus extends Component {
                 <i className="fa fa-chevron-circle-right order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
-                  to="/search"
+                  to={{
+                    pathname: '/search'
+                  }}
+                  onClick={() => { onChangePath('/search') }}
                 >
                   Start a New Earthdata Search Session
                 </PortalLinkContainer>
