@@ -51,8 +51,14 @@ export const updateStore = ({
       timeline
     }))
 
-    dispatch(actions.getCollections())
-    dispatch(actions.getFocusedCollection())
+    // Unless we are moving to the search page, don't fetch collection results, this saves an extra request on the projects page
+    if (
+      (pathname.includes('/search') && !newPathname)
+      || newPathname.includes('/search')
+    ) {
+      dispatch(actions.getCollections())
+      dispatch(actions.getFocusedCollection())
+    }
     dispatch(actions.getProjectCollections())
     dispatch(actions.getGranules())
     dispatch(actions.getTimeline())

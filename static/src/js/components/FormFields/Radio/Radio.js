@@ -6,6 +6,7 @@ import './Radio.scss'
 
 export const Radio = ({
   id,
+  dataTestId,
   name,
   value,
   children,
@@ -27,6 +28,7 @@ export const Radio = ({
       <input
         className="radio__input"
         id={id}
+        data-test-id={dataTestId}
         type="radio"
         name={name}
         value={value}
@@ -40,6 +42,7 @@ export const Radio = ({
 }
 
 Radio.defaultProps = {
+  dataTestId: null,
   checked: null,
   onChange: null,
   onClick: null
@@ -49,6 +52,7 @@ Radio.propTypes = {
   checked: PropTypes.bool,
   children: PropTypes.node.isRequired,
   id: PropTypes.string.isRequired,
+  dataTestId: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func,

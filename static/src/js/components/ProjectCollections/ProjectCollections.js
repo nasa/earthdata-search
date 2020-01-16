@@ -147,6 +147,7 @@ export class ProjectCollections extends Component {
             label="Download project data"
             disabled={!isValid}
             spinner={isSubmitting}
+            dataTestId="project-download-data"
           >
             Download Data
           </Button>

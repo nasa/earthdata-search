@@ -92,7 +92,8 @@ class SecondaryToolbar extends Component {
       authToken,
       projectIds,
       location,
-      portal
+      portal,
+      onChangePath
     } = this.props
 
     const loggedIn = authToken !== ''
@@ -106,16 +107,18 @@ class SecondaryToolbar extends Component {
     let { p = '' } = params
     p = p.replace(/^[^!]*/, '')
 
+    const newSearch = stringify({
+      ...params,
+      p
+    })
     const backLink = (
       <PortalLinkContainer
         className="collection-results__item-title-link"
         to={{
           pathname: '/search',
-          search: stringify({
-            ...params,
-            p
-          })
+          search: newSearch
         }}
+        onClick={() => { onChangePath(`/search/${newSearch}`) }}
       >
         <Button
           className="secondary-toolbar__back"
@@ -288,7 +291,8 @@ SecondaryToolbar.propTypes = {
   portal: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   onLogout: PropTypes.func.isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired
+  onUpdateProjectName: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired
 }
 
 export default SecondaryToolbar

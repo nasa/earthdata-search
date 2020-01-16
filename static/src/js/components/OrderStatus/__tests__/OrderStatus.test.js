@@ -95,7 +95,7 @@ describe('OrderStatus component', () => {
       const backToSearchLink = orderStatus.find('.order-status__footer-link-list').find(PortalLinkContainer).at(0)
       backToSearchLink.simulate('click')
       expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      expect(props.onChangePath).toHaveBeenCalledWith('/search/?test=source_link')
+      expect(props.onChangePath).toHaveBeenCalledWith('/search?test=source_link')
     })
   })
 })

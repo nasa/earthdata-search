@@ -18,6 +18,7 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 const downloadButton = collectionId => (
   <Radio
     id={`${collectionId}_access-method__direct-download`}
+    dataTestId={`${collectionId}_access-method__direct-download`}
     name={`${collectionId}_access-method__direct-download`}
     key={`${collectionId}_access-method__direct-download`}
     value="download"
@@ -44,6 +45,7 @@ const downloadButton = collectionId => (
 const echoOrderButton = (collectionId, methodKey) => (
   <Radio
     id={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
+    dataTestId={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
     name={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
     key={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
     value={methodKey}
@@ -69,6 +71,7 @@ const echoOrderButton = (collectionId, methodKey) => (
 const esiButton = (collectionId, methodKey) => (
   <Radio
     id={`${collectionId}_access-method__customize_${methodKey}`}
+    dataTestId={`${collectionId}_access-method__customize_${methodKey}`}
     name={`${collectionId}_access-method__customize_${methodKey}`}
     key={`${collectionId}_access-method__customize_${methodKey}`}
     value={methodKey}
@@ -96,6 +99,7 @@ const esiButton = (collectionId, methodKey) => (
 const opendapButton = (collectionId, methodKey) => (
   <Radio
     id={`${collectionId}_access-method__opendap_${methodKey}`}
+    dataTestId={`${collectionId}_access-method__opendap_${methodKey}`}
     name={`${collectionId}_access-method__opendap_${methodKey}`}
     key={`${collectionId}_access-method__opendap_${methodKey}`}
     value={methodKey}

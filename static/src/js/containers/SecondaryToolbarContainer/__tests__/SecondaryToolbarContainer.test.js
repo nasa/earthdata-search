@@ -16,7 +16,8 @@ function setup() {
     projectIds: [],
     savedProject: {},
     onLogout: jest.fn(),
-    onUpdateProjectName: jest.fn()
+    onUpdateProjectName: jest.fn(),
+    onChangePath: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SecondaryToolbarContainer {...props} />)
