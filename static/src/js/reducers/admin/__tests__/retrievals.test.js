@@ -17,7 +17,7 @@ const initialState = {
   byId: {},
   isLoading: false,
   isLoaded: false,
-  sortKey: '-created_at',
+  sortKey: '',
   pagination: {
     pageSize: 20,
     pageNum: 1,
