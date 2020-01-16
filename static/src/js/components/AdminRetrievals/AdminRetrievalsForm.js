@@ -30,7 +30,7 @@ export class AdminRetrievalsForm extends Component {
 
     const { retrievalId } = this.state
     const { onAdminViewRetrieval } = this.props
-    console.log('onFormSubmit', retrievalId)
+
     onAdminViewRetrieval(retrievalId)
   }
 
