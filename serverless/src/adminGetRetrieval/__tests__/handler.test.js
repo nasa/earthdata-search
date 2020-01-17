@@ -146,6 +146,171 @@ describe('adminGetRetrievals', () => {
     expect(statusCode).toEqual(200)
   })
 
+  test('correctly retrieves retrievals with no collections', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([{
+        id: 1,
+        jsondata: {},
+        user_id: 1,
+        username: 'edsc-test',
+        cid: null,
+        access_method: {},
+        collection_id: null,
+        granule_count: null,
+        oid: null,
+        state: null,
+        order_number: null,
+        order_information: {},
+        title: null,
+        data_center: null
+      }, {
+        id: 2,
+        jsondata: {},
+        user_id: 1,
+        username: 'edsc-test',
+        cid: null,
+        access_method: {},
+        collection_id: null,
+        granule_count: null,
+        oid: null,
+        state: null,
+        order_number: null,
+        order_information: {},
+        title: null,
+        data_center: null
+      }, {
+        id: 3,
+        jsondata: {},
+        user_id: 1,
+        username: 'edsc-test',
+        cid: null,
+        access_method: {},
+        collection_id: null,
+        granule_count: null,
+        oid: null,
+        state: null,
+        order_number: null,
+        order_information: {},
+        title: null,
+        data_center: null
+      }])
+    })
+
+    const retrievalResponse = await adminGetRetrievals({
+      pathParameters: {
+        id: 1
+      }
+    }, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('select')
+
+    const { body, statusCode } = retrievalResponse
+
+    const responseObj = {
+      id: 1,
+      obfuscated_id: '4517239960',
+      user_id: 1,
+      username: 'edsc-test',
+      collections: []
+    }
+    expect(body).toEqual(JSON.stringify(responseObj))
+    expect(statusCode).toEqual(200)
+  })
+
+  test('correctly retrieves retrievals with no orders', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([{
+        id: 1,
+        jsondata: {},
+        user_id: 1,
+        username: 'edsc-test',
+        cid: 1,
+        access_method: {},
+        collection_id: 'C10000005-EDSC',
+        granule_count: 25,
+        oid: null,
+        state: null,
+        order_number: null,
+        order_information: {},
+        title: 'CMR Collection Title Five',
+        data_center: 'EDSC'
+      }, {
+        id: 2,
+        jsondata: {},
+        user_id: 1,
+        username: 'edsc-test',
+        cid: 1,
+        access_method: {},
+        collection_id: 'C10000005-EDSC',
+        granule_count: 25,
+        oid: null,
+        state: null,
+        order_number: null,
+        order_information: {},
+        title: 'CMR Collection Title Five',
+        data_center: 'EDSC'
+      }, {
+        id: 3,
+        jsondata: {},
+        user_id: 1,
+        username: 'edsc-test',
+        cid: 2,
+        access_method: {},
+        collection_id: 'C10000010-EDSC',
+        granule_count: 50,
+        oid: null,
+        state: null,
+        order_number: null,
+        order_information: {},
+        title: 'CMR Collection Title Ten',
+        data_center: 'EDSC'
+      }])
+    })
+
+    const retrievalResponse = await adminGetRetrievals({
+      pathParameters: {
+        id: 1
+      }
+    }, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('select')
+
+    const { body, statusCode } = retrievalResponse
+
+    const responseObj = {
+      id: 1,
+      obfuscated_id: '4517239960',
+      user_id: 1,
+      username: 'edsc-test',
+      collections: [
+        {
+          id: 1,
+          access_method: {},
+          collection_id: 'C10000005-EDSC',
+          granule_count: 25,
+          data_center: 'EDSC',
+          title: 'CMR Collection Title Five',
+          orders: []
+        },
+        {
+          id: 2,
+          access_method: {},
+          collection_id: 'C10000010-EDSC',
+          granule_count: 50,
+          data_center: 'EDSC',
+          title: 'CMR Collection Title Ten',
+          orders: []
+        }
+      ]
+    }
+    expect(body).toEqual(JSON.stringify(responseObj))
+    expect(statusCode).toEqual(200)
+  })
+
   test('correctly returns an error', async () => {
     dbTracker.on('query', (query) => {
       query.reject('Unknown Error')

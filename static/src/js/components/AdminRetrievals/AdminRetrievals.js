@@ -47,7 +47,7 @@ export const AdminRetrievals = ({
 )
 
 AdminRetrievals.defaultProps = {
-  retrievals: []
+  retrievals: {}
 }
 
 AdminRetrievals.propTypes = {
