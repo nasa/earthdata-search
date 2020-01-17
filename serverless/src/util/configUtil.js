@@ -60,6 +60,9 @@ export const getEdlConfig = async (providedCmrEnv) => {
   return buildOauthConfig(clientConfig)
 }
 
+/**
+ * Retrieve a list of users authorized to access the admin dashboard
+ */
 export const getAdminUsers = async () => {
   if (adminUsers == null) {
     if (['development', 'test'].includes(process.env.NODE_ENV)) {
@@ -73,9 +76,8 @@ export const getAdminUsers = async () => {
     }
 
     const secretValue = await secretsmanager.getSecretValue(params).promise()
-    adminUsers = JSON.parse(secretValue.SecretString)
 
-    return adminUsers
+    adminUsers = JSON.parse(secretValue.SecretString)
   }
 
   return adminUsers
