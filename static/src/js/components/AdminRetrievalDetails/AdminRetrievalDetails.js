@@ -7,14 +7,9 @@ import {
   Row,
   Col
 } from 'react-bootstrap'
-
 import { commafy } from '../../util/commafy'
 
 import './AdminRetrievalDetails.scss'
-
-const mapStateToProps = state => ({
-  admin: state.admin
-})
 
 export const AdminRetrievalDetails = ({
   retrieval
@@ -144,5 +139,5 @@ AdminRetrievalDetails.propTypes = {
 }
 
 export default withRouter(
-  connect(mapStateToProps, null)(AdminRetrievalDetails)
+  connect(null, null)(AdminRetrievalDetails)
 )
