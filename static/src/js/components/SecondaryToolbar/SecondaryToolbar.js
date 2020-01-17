@@ -118,7 +118,7 @@ class SecondaryToolbar extends Component {
           pathname: '/search',
           search: newSearch
         }}
-        onClick={() => { onChangePath(`/search/${newSearch}`) }}
+        onClick={() => { onChangePath(`/search${newSearch}`) }}
       >
         <Button
           className="secondary-toolbar__back"

@@ -22,7 +22,6 @@ describe('Download project spec', () => {
       response: collectionsJson.body,
       headers: authHeader
     })
-
     cy.route({
       method: 'POST',
       url: '**/collections/umm_json',
