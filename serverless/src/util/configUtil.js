@@ -77,7 +77,10 @@ export const getAdminUsers = async () => {
 
     const secretValue = await secretsmanager.getSecretValue(params).promise()
 
-    adminUsers = JSON.parse(secretValue.SecretString)
+    // Secrets Manager requires key/value pairs, so AWS converts an array to an indexed object
+    adminUsers = Object.values(
+      JSON.parse(secretValue.SecretString)
+    )
   }
 
   return adminUsers
