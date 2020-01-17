@@ -160,12 +160,19 @@ const edlAuthorizer = async (event, context) => {
       }
 
       // If the user is authenticated, and this is an admin route, check that they are an admin user
-      if (resourcePath.startsWith('/admin/')) {
-        const adminUsers = await getAdminUsers()
+      if (resourcePath && resourcePath.startsWith('/admin')) {
+        let adminUsers
+        try {
+          adminUsers = await getAdminUsers()
+        } catch (e) {
+          adminUsers = []
+        }
 
         if (adminUsers.includes(username)) {
           return generatePolicy(username, jwtToken, 'Allow', event.methodArn)
         }
+
+        console.log(`${username} is not authorized to access the site admin.`)
 
         throw new Error('Unauthorized')
       }
