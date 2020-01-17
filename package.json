@@ -78,7 +78,7 @@
     "mock-knex": "^0.4.6",
     "mockdate": "^2.0.2",
     "nock": "^11.3.4",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "parse-multipart": "^1.0.4",
     "postcss-import": "^12.0.1",
