@@ -19,8 +19,9 @@ const edlAuthorizer = async (event, context) => {
   const {
     authorizationToken,
     methodArn,
-    path = ''
+    requestContext = {}
   } = event
+  const { resourcePath } = requestContext
 
   if (!authorizationToken) {
     const authOptionalPaths = [
@@ -28,7 +29,7 @@ const edlAuthorizer = async (event, context) => {
     ]
 
     // Allow for optional authentication
-    if (authOptionalPaths.includes(path)) {
+    if (authOptionalPaths.includes(resourcePath)) {
       return generatePolicy('anonymous', undefined, 'Allow', methodArn)
     }
 
