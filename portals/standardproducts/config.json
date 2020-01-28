@@ -2,7 +2,7 @@
   "hasStyles": false,
   "hasScripts": false,
   "hideCollectionFilters": true,
-  "org": "Earthdata Standard Products",
+  "org": "Standard Products",
   "query": {
     "tagKey": "gov.nasa.eosdis.standardproduct",
     "hasGranulesOrCwic": null
