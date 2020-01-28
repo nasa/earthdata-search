@@ -1,0 +1,11 @@
+{
+  "hasStyles": false,
+  "hasScripts": false,
+  "hideCollectionFilters": true,
+  "org": "Earthdata Standard Products",
+  "query": {
+    "tagKey": "gov.nasa.eosdis.standardproduct",
+    "hasGranulesOrCwic": null
+  },
+  "title": "Search"
+}
