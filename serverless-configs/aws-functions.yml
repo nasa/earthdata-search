@@ -304,6 +304,13 @@
       concurrency: ${env:WARM_LAMBDA_COUNT}
     cors: true
 
+  edlAdminAuthorizer:
+    handler: serverless/src/edlAdminAuthorizer/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    warmer:
+      concurrency: ${env:WARM_LAMBDA_COUNT}
+    cors: true
+
   #
   # EDL Authenticated API Gateway Endpoints
   #
@@ -542,7 +549,9 @@
           method: get
           cors: true
           path: admin/is_authorized
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAdminAuthorizer
+            resultTtlInSeconds: 0
 
   adminGetRetrievals:
     handler: serverless/src/adminGetRetrievals/handler.default
@@ -554,7 +563,9 @@
           method: get
           cors: true
           path: admin/retrievals
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAdminAuthorizer
+            resultTtlInSeconds: 0
 
   adminGetRetrieval:
     handler: serverless/src/adminGetRetrieval/handler.default
@@ -566,4 +577,6 @@
           method: get
           cors: true
           path: admin/retrievals/{id}
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAdminAuthorizer
+            resultTtlInSeconds: 0
