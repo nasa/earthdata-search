@@ -1,5 +1,5 @@
 import request from 'request-promise'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { isWarmUp } from '../util/isWarmup'
 import { requestTimeout } from '../util/requestTimeout'
@@ -7,6 +7,8 @@ import { requestTimeout } from '../util/requestTimeout'
 const regionSearch = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { endpoint, exact, query } = event.queryStringParameters
 
@@ -66,10 +68,7 @@ const regionSearch = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({
         errors: [errorMessage]
       })
@@ -94,10 +93,7 @@ const regionSearch = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: parseInt(errorCode, 10),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({
         errors: [parsedErrorMessage]
       })
@@ -111,10 +107,7 @@ const regionSearch = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({
         errors: [errorMessage]
       })
@@ -164,10 +157,7 @@ const regionSearch = async (event, context) => {
   return {
     isBase64Encoded: false,
     statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true
-    },
+    headers: defaultResponseHeaders,
     body: JSON.stringify({
       hits,
       time: parseFloat(responseTime),

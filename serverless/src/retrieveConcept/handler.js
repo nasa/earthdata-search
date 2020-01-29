@@ -3,7 +3,7 @@ import { getJwtToken } from '../util/getJwtToken'
 import { cmrStringify } from '../util/cmr/cmrStringify'
 import { isWarmUp } from '../util/isWarmup'
 import { pick } from '../util/pick'
-import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
@@ -17,6 +17,8 @@ import { logHttpError } from '../util/logging/logHttpError'
 const retrieveConcept = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { headers, queryStringParameters } = event
 
@@ -63,10 +65,7 @@ const retrieveConcept = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors })
     }
   }

@@ -4,6 +4,7 @@ import { groupBy, omit } from 'lodash'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
 import { getSupportedGibsLayers } from './getSupportedGibsLayers'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 // AWS SQS adapter
 let sqs
@@ -144,10 +145,7 @@ const generateGibsTags = async (event, context) => {
   }
 
   // The headers we'll send back regardless of our response
-  const responseHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': true
-  }
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const supportedGibsLayers = await getSupportedGibsLayers()
 
@@ -276,7 +274,7 @@ const generateGibsTags = async (event, context) => {
   return {
     isBase64Encoded: false,
     statusCode: 200,
-    headers: responseHeaders,
+    headers: defaultResponseHeaders,
     body: JSON.stringify(allTagConditions)
   }
 }

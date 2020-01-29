@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
-import { getClientId, getEarthdataConfig } from '../../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { getEchoToken } from '../urs/getEchoToken'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import { logHttpError } from '../logging/logHttpError'
@@ -17,6 +17,8 @@ export const doSearchRequest = async ({
   requestId,
   providedHeaders = {}
 }) => {
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   try {
     const response = await request.post({
       uri: `${getEarthdataConfig(cmrEnv()).cmrHost}${path}`,
@@ -55,10 +57,7 @@ export const doSearchRequest = async ({
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors })
     }
   }

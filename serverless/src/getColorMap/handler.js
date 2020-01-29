@@ -1,4 +1,5 @@
 import { getDbConnection } from '../util/database/getDbConnection'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 /**
  * Retrieve single colormap record from the database
@@ -6,6 +7,8 @@ import { getDbConnection } from '../util/database/getDbConnection'
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 export default async function getColorMap(event, context) {
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   try {
     // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
     // eslint-disable-next-line no-param-reassign
@@ -24,10 +27,7 @@ export default async function getColorMap(event, context) {
       return {
         isBase64Encoded: false,
         statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
+        headers: defaultResponseHeaders,
         body: JSON.stringify(colorMapResponse.jsondata)
       }
     }
@@ -35,10 +35,7 @@ export default async function getColorMap(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 404,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [`ColorMap '${providedProduct}' not found.`] })
     }
   } catch (e) {
@@ -47,11 +44,7 @@ export default async function getColorMap(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [e] })
     }
   }

@@ -2,7 +2,7 @@ import request from 'request-promise'
 import { parse as parseQueryString } from 'qs'
 import { parse as parseXml } from 'fast-xml-parser'
 import { pick } from '../util/pick'
-import { getClientId } from '../../../sharedUtils/config'
+import { getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
@@ -114,9 +114,9 @@ const cwicGranuleSearch = async (event, context) => {
   if (await isWarmUp(event, context)) return false
 
   // The headers we'll send back regardless of our response
+  const { defaultResponseHeaders } = getApplicationConfig()
   const responseHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': true,
+    ...defaultResponseHeaders,
     'Content-Type': 'application/xml'
   }
 

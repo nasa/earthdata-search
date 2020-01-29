@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import request from 'request-promise'
 import uuidv4 from 'uuid/v4'
 
-import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEchoToken } from '../util/urs/getEchoToken'
@@ -23,6 +23,8 @@ const getDataQualitySummaries = async (event, context) => {
   const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
   const { catalog_item_id: catalogItemId } = params
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
     const dataQualitySummaries = []
@@ -54,10 +56,7 @@ const getDataQualitySummaries = async (event, context) => {
       return {
         isBase64Encoded: false,
         statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
+        headers: defaultResponseHeaders,
         body: JSON.stringify([])
       }
     }
@@ -103,10 +102,7 @@ const getDataQualitySummaries = async (event, context) => {
       return {
         isBase64Encoded: false,
         statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
+        headers: defaultResponseHeaders,
         body: JSON.stringify(dataQualitySummaries)
       }
     }
@@ -116,10 +112,7 @@ const getDataQualitySummaries = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 404,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors })
     }
   } catch (e) {
@@ -128,7 +121,7 @@ const getDataQualitySummaries = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [e] })
     }
   }
