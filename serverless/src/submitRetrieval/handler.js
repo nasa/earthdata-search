@@ -8,6 +8,7 @@ import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { removeSpatialFromAccessMethod } from '../util/removeSpatialFromAccessMethod'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 // AWS SQS adapter
 let sqs
@@ -24,6 +25,8 @@ const submitRetrieval = async (event, context) => {
 
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { body } = event
   const { params = {} } = JSON.parse(body)
@@ -200,10 +203,7 @@ const submitRetrieval = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify(response)
     }
   } catch (e) {
@@ -215,10 +215,7 @@ const submitRetrieval = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [e] })
     }
   }

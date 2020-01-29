@@ -18,7 +18,12 @@
     "ummVariableVersion": "1.5",
     "temporalDateFormatFull": "YYYY-MM-DD HH:mm:ss",
     "temporalDateFormatRange": "MM-DD HH:mm:ss",
-    "minimumTemporalDateString": "1960-01-01 00:00:00"
+    "minimumTemporalDateString": "1960-01-01 00:00:00",
+    "defaultResponseHeaders": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Credentials": true
+    }
   },
   "environment": {
     "test": {

@@ -3,7 +3,7 @@ import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getClientId } from '../../../sharedUtils/config'
+import { getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 
 // Name of the db table that this lambda operates on
@@ -118,10 +118,7 @@ const generateColorMaps = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   // The headers we'll send back regardless of our response
-  const responseHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': true
-  }
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const projectionCapabilities = await getProjectionCapabilities(event.projection)
 
@@ -131,7 +128,7 @@ const generateColorMaps = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: projectionCapabilities.statusCode,
-      headers: responseHeaders,
+      headers: defaultResponseHeaders,
       body: JSON.stringify(projectionCapabilities.body)
     }
   }
@@ -139,7 +136,7 @@ const generateColorMaps = async (event, context) => {
   return {
     isBase64Encoded: false,
     statusCode: 200,
-    headers: responseHeaders,
+    headers: defaultResponseHeaders,
     body: JSON.stringify(projectionCapabilities.body)
   }
 }

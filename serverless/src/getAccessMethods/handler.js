@@ -9,6 +9,7 @@ import { isWarmUp } from '../util/isWarmup'
 import { getVariables } from './getVariables'
 import { getOutputFormats } from './getOutputFormats'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 
 /**
@@ -23,6 +24,8 @@ const getAccessMethods = async (event, context) => {
 
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
     const { body } = event
@@ -45,6 +48,7 @@ const getAccessMethods = async (event, context) => {
     const { granule_online_access_flag: downloadable } = capabilitiesData || {}
 
     const accessMethods = {}
+
     if (downloadable) {
       accessMethods.download = {
         isValid: true,
@@ -110,6 +114,7 @@ const getAccessMethods = async (event, context) => {
         supportedOutputFormats
       }
     }
+
     // Retrive a connection to the database
     const dbConnection = await getDbConnection()
 
@@ -190,10 +195,7 @@ const getAccessMethods = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ accessMethods, selectedAccessMethod })
     }
   } catch (e) {
@@ -202,10 +204,7 @@ const getAccessMethods = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [e] })
     }
   }

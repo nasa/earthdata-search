@@ -3,7 +3,7 @@ import AWS from 'aws-sdk'
 import request from 'request-promise'
 import { stringify } from 'qs'
 import { chunkArray } from '../util/chunkArray'
-import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getRelevantServices } from './getRelevantServices'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { getSystemToken } from '../util/urs/getSystemToken'
@@ -82,10 +82,7 @@ const generateSubsettingTags = async (event, context) => {
   }
 
   // The headers we'll send back regardless of our response
-  const responseHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': true
-  }
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
@@ -284,7 +281,7 @@ const generateSubsettingTags = async (event, context) => {
   return {
     isBase64Encoded: false,
     statusCode: 200,
-    headers: responseHeaders,
+    headers: defaultResponseHeaders,
     body: JSON.stringify({})
   }
 }

@@ -73,6 +73,7 @@ describe('getAccessMethods', () => {
       }),
       headers: {
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Credentials': true
       },
       isBase64Encoded: false,
@@ -144,6 +145,7 @@ describe('getAccessMethods', () => {
       }),
       headers: {
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Credentials': true
       },
       isBase64Encoded: false,
@@ -215,6 +217,7 @@ describe('getAccessMethods', () => {
       }),
       headers: {
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Credentials': true
       },
       isBase64Encoded: false,
@@ -286,6 +289,7 @@ describe('getAccessMethods', () => {
       }),
       headers: {
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Credentials': true
       },
       isBase64Encoded: false,
@@ -366,6 +370,7 @@ describe('getAccessMethods', () => {
       }),
       headers: {
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Credentials': true
       },
       isBase64Encoded: false,
@@ -446,6 +451,7 @@ describe('getAccessMethods', () => {
         }),
         headers: {
           'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
           'Access-Control-Allow-Credentials': true
         },
         isBase64Encoded: false,
@@ -541,6 +547,7 @@ describe('getAccessMethods', () => {
         }),
         headers: {
           'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
           'Access-Control-Allow-Credentials': true
         },
         isBase64Encoded: false,

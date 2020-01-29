@@ -4,7 +4,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
@@ -19,6 +19,8 @@ let sqs
 const saveContactInfo = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const jwtToken = getJwtToken(event)
   const { id } = getVerifiedJwtToken(jwtToken)
@@ -70,10 +72,7 @@ const saveContactInfo = async (event, context) => {
       return {
         isBase64Encoded: false,
         statusCode: 500,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
+        headers: defaultResponseHeaders,
         body: JSON.stringify({ errors })
       }
     }
@@ -90,7 +89,7 @@ const saveContactInfo = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: response.statusCode,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify(response.body)
     }
   } catch (e) {
@@ -99,7 +98,7 @@ const saveContactInfo = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [e] })
     }
   }

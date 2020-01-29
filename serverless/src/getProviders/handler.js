@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import { isWarmUp } from '../util/isWarmup'
-import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
@@ -13,6 +13,8 @@ import { logHttpError } from '../util/logging/logHttpError'
 const getProviders = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event, context)) return false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const jwtToken = getJwtToken(event)
 
@@ -36,10 +38,7 @@ const getProviders = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify(body)
     }
   } catch (e) {
@@ -48,10 +47,7 @@ const getProviders = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors })
     }
   }
