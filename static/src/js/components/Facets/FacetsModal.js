@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { changeViewAllFacet } from '../../util/facets'
 
-import EDSCModal from '../EDSCModal/EDSCModal'
+import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import FacetsList from './FacetsList'
 import FacetsModalNav from './FacetsModalNav'
 
@@ -78,7 +78,7 @@ export class FacetsModal extends Component {
     )
 
     return (
-      <EDSCModal
+      <EDSCModalContainer
         className="facets-modal"
         title={`Filter collections by ${selectedCategory}`}
         isOpen={isOpen}

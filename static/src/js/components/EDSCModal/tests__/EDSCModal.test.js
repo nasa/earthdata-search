@@ -10,11 +10,12 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    body: <div className="test-body">Test body content</div>,
-    className: 'test-modal',
+    bodyEl: <div className="test-body">Test body content</div>,
+    modalClassNames: 'test-modal',
     size: 'lg',
-    id: 'test-identifier',
+    identifier: 'test-identifier',
     isOpen: false,
+    modalInner: <></>,
     ...overrideProps
   }
 
@@ -100,7 +101,7 @@ describe('EDSCModal component', () => {
 
     test('should render innerHeader', () => {
       const { enzymeWrapper } = setup({
-        innerHeader: <>Inner Header</>
+        innerHeaderEl: <>Inner Header</>
       })
 
       expect(enzymeWrapper.find('.edsc-modal__inner-header').length).toEqual(1)
@@ -147,7 +148,7 @@ describe('EDSCModal component', () => {
       expect(enzymeWrapper.find(Button).length).toEqual(0)
     })
 
-    test('should not render a without a secondary action', () => {
+    test('should not render a secondary action without a primary action', () => {
       const onSecondaryActionMock = jest.fn()
       const { enzymeWrapper } = setup({
         secondaryAction: 'Test',
@@ -199,49 +200,17 @@ describe('EDSCModal component', () => {
   })
 
   describe('when the modal his hidden', () => {
-    describe('when provided an onClose callback', () => {
-      test('should call onClose', () => {
-        const onCloseMock = jest.fn()
+    describe('when provided an onModalExit callback', () => {
+      test('should call onModalExit', () => {
+        const onModalHideMock = jest.fn()
         const { enzymeWrapper } = setup({
           isOpen: true,
-          onClose: onCloseMock
+          onModalHide: onModalHideMock
         })
 
         enzymeWrapper.find(Modal).props().onHide()
 
-        expect(onCloseMock).toHaveBeenCalledTimes(1)
-        expect(onCloseMock).toHaveBeenCalledWith(false)
-      })
-    })
-
-    describe('when not provided an onClose callback', () => {
-      test('should not call onClose', () => {
-        const onCloseMock = jest.fn()
-        const { enzymeWrapper } = setup({
-          isOpen: true
-        })
-
-        enzymeWrapper.find(Modal).props().onHide()
-
-        expect(onCloseMock).toHaveBeenCalledTimes(0)
-      })
-    })
-  })
-
-  describe('bodyPadding', () => {
-    describe('when set to its default', () => {
-      test('should add the class', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find(Modal).prop('dialogClassName')).toContain('edsc-modal--body-padding')
-      })
-    })
-
-    describe('when set to false', () => {
-      test('should not add the class', () => {
-        const { enzymeWrapper } = setup({
-          bodyPadding: false
-        })
-        expect(enzymeWrapper.find(Modal).prop('dialogClassName')).not.toContain('edsc-modal--body-padding')
+        expect(onModalHideMock).toHaveBeenCalledTimes(1)
       })
     })
   })

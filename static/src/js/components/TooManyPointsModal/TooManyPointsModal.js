@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import EDSCModal from '../EDSCModal/EDSCModal'
+import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 
 import './TooManyPointsModal.scss'
 
@@ -30,7 +30,7 @@ export class TooManyPointsModal extends Component {
     )
 
     return (
-      <EDSCModal
+      <EDSCModalContainer
         className="too-many-points"
         title="Shape file has too many points"
         isOpen={isOpen}
