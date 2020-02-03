@@ -199,7 +199,7 @@ describe('EDSCModal component', () => {
     expect(enzymeWrapper.find(Modal.Footer).props().children.footer.props.children).toEqual('Test Footer')
   })
 
-  describe('when the modal his hidden', () => {
+  describe('when the modal is hidden', () => {
     describe('when provided an onModalExit callback', () => {
       test('should call onModalExit', () => {
         const onModalHideMock = jest.fn()
