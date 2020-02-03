@@ -6,7 +6,7 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { stringify } from '../../util/url/url'
 import { commafy } from '../../util/commafy'
 
-import EDSCModal from '../EDSCModal/EDSCModal'
+import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ChunkedOrderModal.scss'
@@ -113,7 +113,7 @@ export class ChunkedOrderModal extends Component {
     )
 
     return (
-      <EDSCModal
+      <EDSCModalContainer
         className="chunked-order"
         id="chunked-order"
         isOpen={isOpen}

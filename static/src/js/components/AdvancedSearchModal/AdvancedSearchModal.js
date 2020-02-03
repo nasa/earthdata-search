@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import AdvancedSearchForm from './AdvancedSearchForm'
-import EDSCModal from '../EDSCModal/EDSCModal'
+import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
+// import EDSCModal from '../EDSCModal/EDSCModal'
 import RegionSearchResults from './RegionSearchResults'
 
 import './AdvancedSearchModal.scss'
@@ -112,7 +113,7 @@ export class AdvancedSearchModal extends Component {
     )
 
     return (
-      <EDSCModal
+      <EDSCModalContainer
         className="advanced-search-modal"
         title="Advanced Search"
         isOpen={isOpen}
