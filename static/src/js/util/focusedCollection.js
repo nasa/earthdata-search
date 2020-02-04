@@ -9,6 +9,7 @@ import { buildSpatial } from './collectionMetadata/spatial'
 import { buildTemporal } from './collectionMetadata/temporal'
 import { buildUrls } from './collectionMetadata/buildUrls'
 import CollectionRequest from './request/collectionRequest'
+import { buildNativeFormat } from './collectionMetadata/nativeFormat'
 
 
 /**
@@ -61,6 +62,7 @@ export const createFocusedCollectionMetadata = (json, ummJson, authToken) => {
   const ummJsonMetadata = {
     dataCenters: buildDataCenters(ummJson),
     doi: buildDoi(ummJson),
+    nativeFormats: buildNativeFormat(ummJson),
     relatedUrls: buildRelatedUrls(ummJson),
     scienceKeywords: buildScienceKeywords(ummJson),
     temporal: buildTemporal(ummJson),

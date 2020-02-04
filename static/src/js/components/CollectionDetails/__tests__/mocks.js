@@ -369,6 +369,7 @@ export const collectionDetailsBodyProps = {
         doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/830',
         doiText: '10.3334/ORNLDAAC/830'
       },
+      nativeFormats: ['Not provided'],
       relatedUrls: [
         {
           contentType: 'CollectionURL',

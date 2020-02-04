@@ -8,6 +8,7 @@ export const getProjectCollectionsResponse = [
         gibsLayers: [
           'None'
         ],
+        nativeFormats: [],
         relatedUrls: [],
         scienceKeywords: [],
         spatial: undefined,
@@ -64,6 +65,7 @@ export const getProjectCollectionsResponse = [
         gibsLayers: [
           'None'
         ],
+        nativeFormats: [],
         relatedUrls: [],
         scienceKeywords: [],
         spatial: undefined,
@@ -123,6 +125,7 @@ export const getCollectionsResponseUnauth = [
         gibsLayers: [
           'None'
         ],
+        nativeFormats: [],
         relatedUrls: [],
         scienceKeywords: [],
         spatial: undefined,
@@ -183,6 +186,7 @@ export const getCollectionsResponseAuth = [
         gibsLayers: [
           'None'
         ],
+        nativeFormats: [],
         relatedUrls: [],
         scienceKeywords: [],
         spatial: undefined,
