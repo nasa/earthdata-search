@@ -12,9 +12,11 @@ function setupMounted() {
   const props = {
     id: 'test-id',
     isValidDate: jest.fn(),
+    onBlur: jest.fn(),
     onChange: jest.fn(),
     onClearClick: jest.fn(),
     onTodayClick: jest.fn(),
+    picker: React.createRef(),
     type: 'start',
     value: '',
     viewMode: 'years'
@@ -33,9 +35,11 @@ function setupShallow() {
     id: 'test-id',
     format: '',
     isValidDate: jest.fn(),
+    onBlur: jest.fn(),
     onChange: jest.fn(),
     onClearClick: jest.fn(),
     onTodayClick: jest.fn(),
+    picker: React.createRef(),
     value: '',
     viewMode: 'years'
   }
@@ -49,20 +53,6 @@ function setupShallow() {
 }
 
 describe('Datepicker component', () => {
-  describe('onBlur', () => {
-    test('sets the picker state', () => {
-      const { enzymeWrapper } = setupMounted()
-      enzymeWrapper.instance().picker = jest.fn()
-      enzymeWrapper.instance().picker.setState = jest.fn()
-
-      enzymeWrapper.instance().onBlur()
-
-      expect(enzymeWrapper.instance().picker.setState).toHaveBeenCalledTimes(1)
-      expect(enzymeWrapper.instance().picker.setState)
-        .toHaveBeenCalledWith({ currentView: 'years' })
-    })
-  })
-
   describe('on render', () => {
     test('creates the custom buttons', () => {
       const { enzymeWrapper } = setupMounted()
