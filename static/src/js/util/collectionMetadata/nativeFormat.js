@@ -12,7 +12,7 @@ export const buildNativeFormat = (ummJson) => {
 
   FileDistributionInformation.forEach((info) => {
     const { Format, FormatType } = info
-    if (FormatType.toLowerCase() === 'native') formats.push(Format)
+    if (FormatType.toLowerCase() === 'native' && Format.toLowerCase() !== 'not provided') formats.push(Format)
   })
 
   return uniq(formats)

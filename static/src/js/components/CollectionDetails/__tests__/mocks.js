@@ -195,7 +195,7 @@ export const collectionDetailsBodyProps = {
           {
             FormatType: 'Native',
             Fees: '0',
-            Format: 'Not provided'
+            Format: 'PDF'
           }
         ]
       },
@@ -369,7 +369,7 @@ export const collectionDetailsBodyProps = {
         doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/830',
         doiText: '10.3334/ORNLDAAC/830'
       },
-      nativeFormats: ['Not provided'],
+      nativeFormats: ['PDF'],
       relatedUrls: [
         {
           contentType: 'CollectionURL',
