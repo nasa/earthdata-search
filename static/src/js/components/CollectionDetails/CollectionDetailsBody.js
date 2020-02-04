@@ -11,6 +11,7 @@ import CollectionDetailsMinimap from './CollectionDetailsMinimap'
 import SplitBadge from '../SplitBadge/SplitBadge'
 
 import './CollectionDetailsBody.scss'
+import pluralize from '../../util/pluralize'
 
 const buildRelatedUrlsList = (relatedUrls) => {
   if (!relatedUrls.length) return []
@@ -55,6 +56,16 @@ const buildScienceKeywordList = (scienceKeywords) => {
   )
 
   return scienceKeywordList
+}
+
+const buildNativeFormatList = (nativeFormats) => {
+  if (!nativeFormats.length) return []
+
+  return (
+    <strong className="collection-details-body__native-formats">
+      {nativeFormats.join(', ')}
+    </strong>
+  )
 }
 
 const buildDoiLink = (doi) => {
@@ -102,6 +113,7 @@ export const CollectionDetailsBody = ({
     dataCenters,
     doi,
     gibsLayers,
+    nativeFormats,
     relatedUrls,
     scienceKeywords,
     spatial,
@@ -201,6 +213,18 @@ export const CollectionDetailsBody = ({
                 }
               </dd>
             </dl>
+            {
+              nativeFormats.length > 0 && (
+                <dl className="collection-details-body__info">
+                  <dt>{`Native ${pluralize('Format', nativeFormats.length)}:`}</dt>
+                  <dd>
+                    {
+                      nativeFormats.length > 0 && buildNativeFormatList(nativeFormats)
+                    }
+                  </dd>
+                </dl>
+              )
+            }
           </div>
         </div>
         <div className="row collection-details-body__row">
