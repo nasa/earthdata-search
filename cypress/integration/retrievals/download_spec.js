@@ -1,5 +1,4 @@
 import { getByTestId } from '../../support/getByTestId'
-import authHeader from '../mocks/mocked_auth_header'
 import collectionsJson from './download_mocks/collections_json'
 import collectionsUmmJson from './download_mocks/collections_umm_json'
 import timeline from './download_mocks/timeline'
@@ -8,6 +7,7 @@ import providers from './download_mocks/providers'
 import accessMethods from './download_mocks/access_methods'
 import retrievals from './download_mocks/retrievals'
 import retrieval from './download_mocks/retrieval'
+import { getAuthHeaders } from '../utils/getAuthHeader'
 
 
 describe('Download project spec', () => {
@@ -16,23 +16,25 @@ describe('Download project spec', () => {
 
     cy.login()
 
+    const authHeaders = getAuthHeaders()
+
     cy.route({
       method: 'POST',
       url: '**/collections/json',
       response: collectionsJson.body,
-      headers: authHeader
+      headers: authHeaders
     })
     cy.route({
       method: 'POST',
       url: '**/collections/umm_json',
       response: collectionsUmmJson.body,
-      headers: authHeader
+      headers: authHeaders
     })
     cy.route({
       method: 'POST',
       url: '**/granules/timeline',
       response: timeline.body,
-      headers: authHeader
+      headers: authHeaders
     })
     cy.route({
       method: 'POST',
@@ -43,7 +45,7 @@ describe('Download project spec', () => {
       method: 'POST',
       url: '**/granules',
       response: granules.body,
-      headers: authHeader
+      headers: authHeaders
     })
     cy.route({
       method: 'GET',
