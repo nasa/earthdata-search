@@ -2,11 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 
-import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-
 import Spinner from '../Spinner/Spinner'
 
 import './GranuleDetailsMetadata.scss'
+import { buildAuthenticatedRedirectUrl } from '../../util/url/buildAuthenticatedRedirectUrl'
 
 export const GranuleDetailsMetadata = ({
   authToken,
@@ -19,8 +18,6 @@ export const GranuleDetailsMetadata = ({
     'echo10',
     'iso19115'
   ]
-
-  const { apiHost } = getEnvironmentConfig()
 
   return (
     <div className="granule-details-metadata">
@@ -36,15 +33,21 @@ export const GranuleDetailsMetadata = ({
                       const metadataUrl = metadataUrls[key]
                       const { title, href } = metadataUrl
 
-                      let url = href
-                      if (authToken !== '') url = `${apiHost}/concepts/metadata?url=${encodeURIComponent(href)}&token=${authToken}`
+                      let cmrGranulesUrl = href
+                      if (authToken !== '') {
+                        // If an auth token is provided route the request through Lambda
+                        cmrGranulesUrl = buildAuthenticatedRedirectUrl(
+                          encodeURIComponent(href),
+                          authToken
+                        )
+                      }
 
                       return (
                         <li
                           key={`metadata_url_${title}`}
                           className="granule-details-metadata__list"
                         >
-                          <a href={url}>
+                          <a href={cmrGranulesUrl}>
                             {title}
                           </a>
                         </li>
