@@ -7,8 +7,7 @@ import providers from './download_mocks/providers'
 import accessMethods from './download_mocks/access_methods'
 import retrievals from './download_mocks/retrievals'
 import retrieval from './download_mocks/retrieval'
-import { getAuthHeaders } from '../utils/getAuthHeader'
-
+import { getAuthHeaders } from '../utils/getAuthHeaders'
 
 describe('Download project spec', () => {
   it('downloading a collection sends gives the user download links', () => {

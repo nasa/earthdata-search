@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 import { getSecretEarthdataConfig, getSecretCypressConfig } from '../../sharedUtils/config'
-import cmrEnv from '../../sharedUtils/cmrEnv'
+import { cmrEnv } from '../../sharedUtils/cmrEnv'
 
 /**
  * Creates a jwtToken based on the Cypress user config in secret.config.json
