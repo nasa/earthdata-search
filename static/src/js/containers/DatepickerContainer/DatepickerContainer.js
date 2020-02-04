@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
@@ -11,30 +9,26 @@ class DatepickerContainer extends Component {
   constructor(props) {
     super(props)
 
-    this.isValidDate = this.isValidDate.bind(this)
+    this.onBlur = this.onBlur.bind(this)
     this.onChange = this.onChange.bind(this)
     this.onClearClick = this.onClearClick.bind(this)
     this.onTodayClick = this.onTodayClick.bind(this)
+    this.isValidDate = this.isValidDate.bind(this)
 
     this.today = moment()
+
+    this.picker = React.createRef()
   }
 
   /**
-   * Set the date to today using the beginning of the day for "Start" and the end of the day for "End"
+   * Set view back to the default when a user closes the datepicker
    */
-  onTodayClick() {
-    const { type } = this.props
+  onBlur() {
+    const { viewMode } = this.props
 
-    const today = moment().utc()
-    let valueToSet = null
-
-    if (type === 'start') {
-      valueToSet = today.startOf('day')
-    } else if (type === 'end') {
-      valueToSet = today.endOf('day')
-    }
-
-    this.onChange(valueToSet)
+    this.picker.current.setState({
+      currentView: viewMode
+    })
   }
 
   /**
@@ -77,13 +71,31 @@ class DatepickerContainer extends Component {
   }
 
   /**
+   * Set the date to today using the beginning of the day for "Start" and the end of the day for "End"
+   */
+  onTodayClick() {
+    const { type } = this.props
+
+    const today = moment().utc()
+    let valueToSet = null
+
+    if (type === 'start') {
+      valueToSet = today.startOf('day')
+    } else if (type === 'end') {
+      valueToSet = today.endOf('day')
+    }
+
+    this.onChange(valueToSet)
+  }
+
+  /**
   * Check to see if a date should be clickable in the picker
   */
   isValidDate(date) {
+    // TODO: This method is SUPER slow because it gets called for every single date.
     const {
       minDate,
       maxDate,
-      isValidDate,
       shouldValidate
     } = this.props
 
@@ -91,11 +103,10 @@ class DatepickerContainer extends Component {
     if (!shouldValidate) return true
 
     // If a validation callback was provided, execute it
-    if (typeof isValidDate === 'function') return isValidDate(date)
+    if (typeof isValidDate === 'function') return this.isValidDate(date)
 
-    if (minDate && date.isBefore(minDate, 'day')) return false
-
-    if (maxDate && date.isAfter(maxDate, 'day')) return false
+    // Handle disabled dates
+    if (!date.isBetween(minDate, maxDate)) return false
 
     // Show the date
     return true
@@ -123,9 +134,11 @@ class DatepickerContainer extends Component {
         id={id}
         format={format}
         isValidDate={this.isValidDate}
+        onBlur={this.onBlur}
         onChange={this.onChange}
         onClearClick={this.onClearClick}
         onTodayClick={this.onTodayClick}
+        picker={this.picker}
         value={value}
         viewMode={viewMode}
       />
@@ -137,7 +150,6 @@ DatepickerContainer.defaultProps = {
   format: 'YYYY-MM-DD HH:mm:ss',
   minDate: '',
   maxDate: '',
-  isValidDate: null,
   shouldValidate: true,
   type: '',
   value: '',
@@ -150,13 +162,10 @@ DatepickerContainer.propTypes = {
   format: PropTypes.string,
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
-  isValidDate: PropTypes.func,
   shouldValidate: PropTypes.bool,
   value: PropTypes.string,
   type: PropTypes.string,
   viewMode: PropTypes.string
 }
 
-export default withRouter(
-  connect(null, null)(DatepickerContainer)
-)
+export default DatepickerContainer

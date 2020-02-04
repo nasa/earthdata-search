@@ -11,31 +11,6 @@ import './Datepicker.scss'
  * @extends PureComponent
  */
 class Datepicker extends PureComponent {
-  constructor(props) {
-    super(props)
-
-    this.onBlur = this.onBlur.bind(this)
-
-    this.setRef = (element) => {
-      this.picker = element
-    }
-
-    this.state = {
-      value: ''
-    }
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    // Clear out the value in the input if the component is updated with empty value. This occurs
-    // when the props are updated outside of the component (i.e. when the "clear" button) is clicked
-
-    if (nextProps.value !== prevState.value) {
-      return { value: nextProps.value }
-    }
-
-    return null
-  }
-
   componentDidMount() {
     const {
       onTodayClick,
@@ -44,45 +19,38 @@ class Datepicker extends PureComponent {
 
     // Add a custom set of "Today" and "Clear" buttons and insert them into the picker
     const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker') // eslint-disable-line
-    const buttonToday = document.createElement('button')
-    const buttonClear = document.createElement('button')
+
+    // Container to hold custom buttons
     const buttonContainer = document.createElement('div')
-
     buttonContainer.classList.add('datetime__buttons')
     container.appendChild(buttonContainer)
+
+    // Today Button
+    const buttonToday = document.createElement('button')
     buttonToday.innerHTML = 'Today'
-    buttonClear.innerHTML = 'Clear'
     buttonToday.type = 'button'
-    buttonClear.type = 'button'
     buttonToday.classList.add('datetime__button', 'datetime__button--today')
-    buttonClear.classList.add('datetime__button', 'datetime__button--clear')
-    buttonContainer.classList.add('datetime__buttons')
     buttonToday.addEventListener('click', onTodayClick)
-    buttonClear.addEventListener('click', onClearClick)
     buttonContainer.appendChild(buttonToday)
+
+    // Clear Button
+    const buttonClear = document.createElement('button')
+    buttonClear.innerHTML = 'Clear'
+    buttonClear.type = 'button'
+    buttonClear.classList.add('datetime__button', 'datetime__button--clear')
+    buttonClear.addEventListener('click', onClearClick)
     buttonContainer.appendChild(buttonClear)
+
+    // Adds the new button container to the DOM
     container.appendChild(buttonContainer)
-  }
-
-  /**
-   * Set view back to the default when a user closes the datepicker
-   */
-  onBlur() {
-    const { viewMode } = this.props
-
-    this.picker.setState({
-      currentView: viewMode
-    })
   }
 
   render() {
     const {
-      setRef
-    } = this
-
-    const {
       isValidDate,
+      onBlur,
       onChange,
+      picker,
       value
     } = this.props
 
@@ -99,9 +67,9 @@ class Datepicker extends PureComponent {
           autoComplete: 'off'
         }}
         isValidDate={isValidDate}
-        onBlur={this.onBlur}
+        onBlur={onBlur}
         onChange={onChange}
-        ref={setRef}
+        ref={picker}
         timeFormat={false}
         utc
         value={value}
@@ -121,9 +89,16 @@ Datepicker.propTypes = {
   id: PropTypes.string.isRequired,
   format: PropTypes.string,
   isValidDate: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
   onTodayClick: PropTypes.func.isRequired,
+  picker: PropTypes.oneOfType([
+    // Either a function
+    PropTypes.func,
+    // Or the instance of a DOM native element (see the note about SSR)
+    PropTypes.shape({ currentView: PropTypes.instanceOf(Element) })
+  ]).isRequired,
   value: PropTypes.string,
   viewMode: PropTypes.string
 }

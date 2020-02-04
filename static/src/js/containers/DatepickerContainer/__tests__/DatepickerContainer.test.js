@@ -4,12 +4,20 @@ import Adapter from 'enzyme-adapter-react-16'
 import MockDate from 'mockdate'
 import moment from 'moment'
 import DatepickerContainer from '../DatepickerContainer'
+import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
+  const {
+    minimumTemporalDateString,
+    temporalDateFormatFull
+  } = getApplicationConfig()
+
   const props = {
     id: 'test-id',
+    minDate: minimumTemporalDateString,
+    maxDate: moment.utc().format(temporalDateFormatFull),
     onSubmit: jest.fn(),
     ...overrideProps
   }
@@ -23,6 +31,23 @@ function setup(overrideProps) {
 }
 
 describe('DatepickerContainer component', () => {
+  describe('onBlur', () => {
+    test('sets the picker state', () => {
+      const { enzymeWrapper } = setup()
+
+      // Because this is a shallow render the Datepicker component doesn't render so we have
+      // to manually create a 'current' instance of the component
+      enzymeWrapper.instance().picker.current = {}
+      enzymeWrapper.instance().picker.current.setState = jest.fn()
+
+      enzymeWrapper.instance().onBlur()
+
+      expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledTimes(1)
+      expect(enzymeWrapper.instance().picker.current.setState)
+        .toHaveBeenCalledWith({ currentView: 'years' })
+    })
+  })
+
   describe('onTodayClick', () => {
     test('without "start" or "end", returns null', () => {
       const { enzymeWrapper } = setup()
