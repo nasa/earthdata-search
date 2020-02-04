@@ -14,13 +14,13 @@ describe('nativeFormat', () => {
           {
             FormatType: 'Native',
             Fees: '0',
-            Format: 'Not provided'
+            Format: 'PDF'
           }
         ]
       }
     }
 
-    expect(buildNativeFormat(ummJson)).toEqual(['Not provided'])
+    expect(buildNativeFormat(ummJson)).toEqual(['PDF'])
   })
 
   test('removes duplicate formats', () => {
@@ -47,5 +47,21 @@ describe('nativeFormat', () => {
     }
 
     expect(buildNativeFormat(ummJson)).toEqual(['PDF', 'Powerpoint'])
+  })
+
+  test('removes "Not Provided" formats', () => {
+    const ummJson = {
+      ArchiveAndDistributionInformation: {
+        FileDistributionInformation: [
+          {
+            FormatType: 'Native',
+            Fees: '0',
+            Format: 'Not provided'
+          }
+        ]
+      }
+    }
+
+    expect(buildNativeFormat(ummJson)).toEqual([])
   })
 })
