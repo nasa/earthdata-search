@@ -1,5 +1,6 @@
-import { getEarthdataConfig, getClientId, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+import { buildAuthenticatedRedirectUrl } from '../url/buildAuthenticatedRedirectUrl'
 
 export const buildUrls = (json, authToken) => {
   const {
@@ -25,7 +26,6 @@ export const buildUrls = (json, authToken) => {
     cmrHost,
     opensearchRoot
   } = eartdataConfig
-  const { apiHost } = getEnvironmentConfig()
   const cmrClientId = getClientId().client
 
   const urls = {}
@@ -36,7 +36,7 @@ export const buildUrls = (json, authToken) => {
 
     if (authToken !== '') {
       // If an auth token is provided route the request through Lambda
-      url = `${apiHost}/concepts/metadata?url=${encodeURIComponent(url)}&token=${authToken}`
+      url = buildAuthenticatedRedirectUrl(encodeURIComponent(url), authToken)
     }
 
     urls[type.ext] = {
@@ -64,9 +64,10 @@ export const buildUrls = (json, authToken) => {
     // }
   } else if (json.has_granules) {
     let cmrGranulesUrl = `${cmrHost}/search/granules.json?echo_collection_id=${collectionId}`
+
     if (authToken !== '') {
       // If an auth token is provided route the request through Lambda
-      cmrGranulesUrl = `${apiHost}/granules?url=${encodeURIComponent(cmrGranulesUrl)}&token=${authToken}`
+      cmrGranulesUrl = buildAuthenticatedRedirectUrl(encodeURIComponent(cmrGranulesUrl), authToken)
     }
 
     urls.granuleDatasource = {
