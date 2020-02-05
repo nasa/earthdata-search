@@ -4,12 +4,12 @@
   "hideCollectionFilters": true,
   "logo": {
     "id": "ceos-logo",
-    "link": "https://podaac.jpl.nasa.gov",
+    "link": "http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/",
     "title": "CEOS Home"
   },
   "org": "CWIC",
   "query": {
-    "tagKey": "edsc.portal.cwic.collections",
+    "tagKey": "org.ceos.wgiss.cwic.granules.prod",
     "hasGranulesOrCwic": null
   },
   "title": "Search"
