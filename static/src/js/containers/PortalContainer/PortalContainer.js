@@ -28,10 +28,10 @@ export class PortalContainer extends Component {
 
   render() {
     const { portal } = this.props
-    const { portalId, title } = portal
+    const { portalId, pageTitle } = portal
 
     let portalTitle = ''
-    if (portalId.length > 0) portalTitle = ` :: ${title || startCase(portalId)} Portal`
+    if (portalId.length > 0) portalTitle = ` :: ${pageTitle || startCase(portalId)} Portal`
 
     const { env } = getApplicationConfig()
     const titleEnv = env.toUpperCase() === 'PROD' ? '' : `[${env.toUpperCase()}] `

@@ -8,6 +8,7 @@
     "title": "ORNL DAAC AirMOSS Home"
   },
   "org": "ORNL DAAC",
+  "pageTitle": "AirMOSS",
   "query": {
     "project": "AirMOSS",
     "hasGranulesOrCwic": null

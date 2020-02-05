@@ -8,6 +8,7 @@
     "title": "ORNL DAAC Home"
   },
   "org": "ORNL DAAC",
+  "pageTitle": "ORNL DAAC",
   "query": {
     "dataCenter": "ORNL_DAAC",
     "hasGranulesOrCwic": null
