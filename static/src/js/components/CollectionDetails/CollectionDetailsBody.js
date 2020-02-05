@@ -9,12 +9,12 @@ import CollapsePanel from '../CollapsePanel/CollapsePanel'
 import CollectionDetailsDataCenter from './CollectionDetailsDataCenter'
 import CollectionDetailsMinimap from './CollectionDetailsMinimap'
 import SplitBadge from '../SplitBadge/SplitBadge'
+import { pluralize } from '../../util/pluralize'
 
 import './CollectionDetailsBody.scss'
-import pluralize from '../../util/pluralize'
 
 const buildRelatedUrlsList = (relatedUrls) => {
-  if (!relatedUrls.length) return []
+  if (!relatedUrls.length) return null
 
   const relatedUrlsList = []
   if (relatedUrls[4] && relatedUrls[4].urls.length) {
@@ -38,7 +38,7 @@ const buildRelatedUrlsList = (relatedUrls) => {
 }
 
 const buildScienceKeywordList = (scienceKeywords) => {
-  if (!scienceKeywords.length) return []
+  if (!scienceKeywords.length) return null
 
   const scienceKeywordList = (
     <ul className="collection-details-body__keywords">
@@ -59,7 +59,7 @@ const buildScienceKeywordList = (scienceKeywords) => {
 }
 
 const buildNativeFormatList = (nativeFormats) => {
-  if (!nativeFormats.length) return []
+  if (!nativeFormats.length) return null
 
   return (
     <strong className="collection-details-body__native-formats">

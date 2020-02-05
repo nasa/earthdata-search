@@ -5,14 +5,23 @@ import { uniq } from 'lodash'
  * @param {Object} ummJson UMM-C JSON metadata
  */
 export const buildNativeFormat = (ummJson) => {
-  const { ArchiveAndDistributionInformation = {} } = ummJson
-  const { FileDistributionInformation = [] } = ArchiveAndDistributionInformation
+  const {
+    ArchiveAndDistributionInformation: archiveAndDistributionInformation = {}
+  } = ummJson
+  const {
+    FileDistributionInformation: fileDistributionInformation = []
+  } = archiveAndDistributionInformation
 
   const formats = []
 
-  FileDistributionInformation.forEach((info) => {
-    const { Format, FormatType } = info
-    if (FormatType.toLowerCase() === 'native' && Format.toLowerCase() !== 'not provided') formats.push(Format)
+  fileDistributionInformation.forEach((info) => {
+    const {
+      Format: format,
+      FormatType: formatType
+    } = info
+    if (formatType.toLowerCase() === 'native' && format.toLowerCase() !== 'not provided') {
+      formats.push(format)
+    }
   })
 
   return uniq(formats)
