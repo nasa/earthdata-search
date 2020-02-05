@@ -8,6 +8,7 @@
     "title": "CEOS Home"
   },
   "org": "CWIC",
+  "pageTitle": "CWIC",
   "query": {
     "tagKey": "org.ceos.wgiss.cwic.granules.prod",
     "hasGranulesOrCwic": null

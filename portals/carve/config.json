@@ -8,6 +8,7 @@
     "title": "ORNL DAAC CARVE Home"
   },
   "org": "ORNL DAAC",
+  "pageTitle": "CARVE",
   "query": {
     "project": "CARVE",
     "hasGranulesOrCwic": null
