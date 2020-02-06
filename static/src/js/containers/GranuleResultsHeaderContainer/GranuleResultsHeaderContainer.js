@@ -9,6 +9,8 @@ import { getFocusedCollectionObject } from '../../util/focusedCollection'
 import GranuleResultsHeader from '../../components/GranuleResults/GranuleResultsHeader'
 
 const mapDispatchToProps = dispatch => ({
+  onToggleAboutCwicModal:
+    state => dispatch(actions.toggleAboutCwicModal(state)),
   onToggleSecondaryOverlayPanel:
     state => dispatch(actions.toggleSecondaryOverlayPanel(state)),
   onUndoExcludeGranule:
@@ -36,7 +38,8 @@ export const GranuleResultsHeaderContainer = (props) => {
     onToggleSecondaryOverlayPanel,
     onUndoExcludeGranule,
     collectionSearch,
-    secondaryOverlayPanel
+    secondaryOverlayPanel,
+    onToggleAboutCwicModal
   } = props
 
   const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
@@ -52,6 +55,7 @@ export const GranuleResultsHeaderContainer = (props) => {
         onUndoExcludeGranule={onUndoExcludeGranule}
         collectionSearch={collectionSearch}
         secondaryOverlayPanel={secondaryOverlayPanel}
+        onToggleAboutCwicModal={onToggleAboutCwicModal}
       />
     </>
   )
@@ -66,7 +70,8 @@ GranuleResultsHeaderContainer.propTypes = {
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
-  secondaryOverlayPanel: PropTypes.shape({}).isRequired
+  secondaryOverlayPanel: PropTypes.shape({}).isRequired,
+  onToggleAboutCwicModal: PropTypes.func.isRequired
 }
 
 export default withRouter(

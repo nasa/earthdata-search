@@ -3,6 +3,7 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_TOGGLE,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
+  TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
@@ -88,5 +89,10 @@ export const toggleTooManyPointsModal = state => ({
 
 export const toggleChunkedOrderModal = state => ({
   type: TOGGLE_CHUNKED_ORDER_MODAL,
+  payload: state
+})
+
+export const toggleAboutCwicModal = state => ({
+  type: TOGGLE_ABOUT_CWIC_MODAL,
   payload: state
 })

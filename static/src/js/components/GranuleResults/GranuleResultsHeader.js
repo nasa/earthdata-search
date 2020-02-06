@@ -110,6 +110,7 @@ class GranuleResultsHeader extends Component {
     const {
       focusedCollectionObject,
       location,
+      onToggleAboutCwicModal,
       onToggleSecondaryOverlayPanel,
       secondaryOverlayPanel,
       collectionSearch
@@ -168,13 +169,16 @@ class GranuleResultsHeader extends Component {
                     {'This is '}
                     <span className="granule-results-header__cwic-emph">Int&apos;l / Interagency Data</span>
                     {' data. Searches will be performed by external services which may vary in performance and available features. '}
-                    <a
-                      className="granule-results-header__link granule-results-header__link--cwic"
-                      href="/"
+                    <Button
+                      className="granule-results-header__link"
+                      onClick={() => onToggleAboutCwicModal(true)}
+                      variant="link"
+                      bootstrapVariant="link"
+                      icon="question-circle"
+                      label="More details"
                     >
-                      <i className="fa fa-question-circle" />
-                      {' More details'}
-                    </a>
+                      More Details
+                    </Button>
                   </span>
                 </div>
                 {
@@ -333,6 +337,7 @@ GranuleResultsHeader.propTypes = {
   focusedCollectionObject: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
+  onToggleAboutCwicModal: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,

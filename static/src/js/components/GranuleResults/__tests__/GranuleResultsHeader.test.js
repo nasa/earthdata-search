@@ -28,6 +28,7 @@ function setup(overrideProps) {
       isOpen: false
     },
     onApplyGranuleFilters: jest.fn(),
+    onToggleAboutCwicModal: jest.fn(),
     onToggleSecondaryOverlayPanel: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
     ...overrideProps

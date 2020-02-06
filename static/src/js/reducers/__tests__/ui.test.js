@@ -2,16 +2,17 @@ import uiReducer from '../ui'
 import {
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
-  MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   MASTER_OVERLAY_PANEL_TOGGLE,
-  TOGGLE_CHUNKED_ORDER_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL,
-  TOGGLE_RELATED_URLS_MODAL,
+  MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
+  TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
+  TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
-  TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+  TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
-  TOGGLE_TOO_MANY_POINTS_MODAL
+  TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+  TOGGLE_TOO_MANY_POINTS_MODAL,
+  TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -55,6 +56,9 @@ const initialState = {
     isOpen: false
   },
   chunkedOrderModal: {
+    isOpen: false
+  },
+  aboutCwicModal: {
     isOpen: false
   }
 }
@@ -317,6 +321,22 @@ describe('TOGGLE_CHUNKED_ORDER_MODAL', () => {
     const expectedState = {
       ...initialState,
       chunkedOrderModal: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_ABOUT_CWIC_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_ABOUT_CWIC_MODAL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      aboutCwicModal: { isOpen: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)

@@ -6,29 +6,31 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import configureStore from './store/configureStore'
 import history from './util/history'
 
-import FooterContainer from './containers/FooterContainer/FooterContainer'
-
-import Search from './routes/Search/Search'
+import Admin from './routes/Admin/Admin'
 import ContactInfo from './routes/ContactInfo/ContactInfo'
+import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Project from './routes/Project/Project'
+import Search from './routes/Search/Search'
 import Downloads from './routes/Downloads/Downloads'
-import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
-import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
+
+import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
+import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import ConnectedEdscMapContainer
   from './containers/MapContainer/MapContainer'
 import ConnectedAuthCallbackContainer
   from './containers/AuthCallbackContainer/AuthCallbackContainer'
+import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
+import ConnectedPortalContainer from './containers/PortalContainer/PortalContainer'
+import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
+import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
+import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
+import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
-import ConnectedPortalContainer from './containers/PortalContainer/PortalContainer'
-import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
-import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
+
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
-import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
-import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
-import Admin from './routes/Admin/Admin'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -122,6 +124,7 @@ class App extends Component {
                     <ShapefileDropzoneContainer />
                     <TooManyPointsModalContainer />
                     <ChunkedOrderModalContainer />
+                    <AboutCwicModalContainer />
                   </Route>
                 </Switch>
               </ConnectedUrlQueryContainer>
