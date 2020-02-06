@@ -29,6 +29,7 @@ function setup() {
     onRemoveCollectionFromProject: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
     collectionSearch: {},
+    onToggleAboutCwicModal: jest.fn(),
     onToggleSecondaryOverlayPanel: jest.fn(),
     secondaryOverlayPanel: {}
   }
