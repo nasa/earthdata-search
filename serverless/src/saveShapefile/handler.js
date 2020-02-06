@@ -3,7 +3,6 @@ import forge from 'node-forge'
 
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 /**
@@ -15,9 +14,6 @@ const saveShapefile = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
 
   const { body } = event
   const { params } = JSON.parse(body)

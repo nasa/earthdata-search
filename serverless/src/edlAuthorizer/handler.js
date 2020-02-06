@@ -1,4 +1,3 @@
-import { isWarmUp } from '../util/isWarmup'
 import { generatePolicy } from '../util/authorizer/generatePolicy'
 import { validateToken } from '../util/authorizer/validateToken'
 
@@ -12,9 +11,6 @@ const edlAuthorizer = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
 
   const {
     authorizationToken,

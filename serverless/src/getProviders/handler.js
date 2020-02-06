@@ -1,5 +1,4 @@
 import request from 'request-promise'
-import { isWarmUp } from '../util/isWarmup'
 import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
@@ -10,10 +9,7 @@ import { logHttpError } from '../util/logging/logHttpError'
  * Perform an authenticated CMR Concept Metadata search
  * @param {Object} event Details about the HTTP request that it received
  */
-const getProviders = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const getProviders = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const jwtToken = getJwtToken(event)

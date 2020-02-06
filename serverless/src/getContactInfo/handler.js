@@ -1,15 +1,11 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 
 /**
  * Handler for retreiving a users contact information
  */
-const getContactInfo = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const getContactInfo = async (event) => {
   const jwtToken = getJwtToken(event)
   const { id } = getVerifiedJwtToken(jwtToken)
 

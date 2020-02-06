@@ -5,7 +5,6 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { isWarmUp } from '../util/isWarmup'
 import { getVariables } from './getVariables'
 import { getOutputFormats } from './getOutputFormats'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
@@ -21,9 +20,6 @@ const getAccessMethods = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
 
   const { defaultResponseHeaders } = getApplicationConfig()
 

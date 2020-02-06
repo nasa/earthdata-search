@@ -3,7 +3,6 @@ import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { generateRetrievalPayloads } from './generateRetrievalPayloads'
-import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
@@ -22,9 +21,6 @@ const submitRetrieval = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
 
   const { defaultResponseHeaders } = getApplicationConfig()
 

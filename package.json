@@ -95,7 +95,6 @@
     "serverless-finch": "^2.4.3",
     "serverless-offline": "^5.10.1",
     "serverless-plugin-split-stacks": "^1.9.1",
-    "serverless-plugin-warmup": "^4.7.0-rc.1",
     "serverless-step-functions": "^2.1.0",
     "serverless-webpack": "^5.3.1",
     "start-server-and-test": "^1.10.6",

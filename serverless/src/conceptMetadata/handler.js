@@ -1,16 +1,12 @@
 import { parse, stringify } from 'qs'
 import { getEdlConfig } from '../util/configUtil'
-import { isWarmUp } from '../util/isWarmup'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 
 /**
  * Perform an authenticated CMR Concept Metadata search
  * @param {Object} event Details about the HTTP request that it received
  */
-const conceptMetadata = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const conceptMetadata = async (event) => {
   const { url, token: jwtToken } = event.queryStringParameters
 
   const [desiredPath, desiredQueryParams] = url.split('?')

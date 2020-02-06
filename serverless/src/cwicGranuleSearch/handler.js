@@ -3,7 +3,6 @@ import { parse as parseQueryString } from 'qs'
 import { parse as parseXml } from 'fast-xml-parser'
 import { pick } from '../util/pick'
 import { getClientId, getApplicationConfig } from '../../../sharedUtils/config'
-import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
@@ -109,10 +108,7 @@ const renderOpenSearchTemplate = (template, params) => {
  * Retrieve granules from CWIC
  * @param {Object} event Details about the HTTP request that it received
  */
-const cwicGranuleSearch = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const cwicGranuleSearch = async (event) => {
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
   const responseHeaders = {

@@ -4,7 +4,6 @@ import simpleOAuth2 from 'simple-oauth2'
 import { getEarthdataConfig, getEnvironmentConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { isWarmUp } from '../util/isWarmup'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
@@ -21,9 +20,6 @@ const edlCallback = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()

@@ -1,7 +1,6 @@
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
-import { isWarmUp } from '../util/isWarmup'
 import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
 
 /**
@@ -9,9 +8,6 @@ import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
  * @param {Object} event Details about the HTTP request that it received
  */
 const timelineSearch = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
     'concept_id',
