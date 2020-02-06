@@ -330,14 +330,4 @@ describe('adminGetRetrievals', () => {
 
     expect(statusCode).toEqual(500)
   })
-
-  test('correctly returns false when the warmUp payload is received', async () => {
-    const payload = {
-      source: 'serverless-plugin-warmup'
-    }
-
-    const retrievalResponse = await adminGetRetrievals(payload, {})
-
-    expect(retrievalResponse).toEqual(false)
-  })
 })

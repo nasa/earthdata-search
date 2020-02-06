@@ -1,7 +1,6 @@
 import AWS from 'aws-sdk'
 import request from 'request-promise'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
@@ -16,10 +15,7 @@ let sqs
 /**
  * Handler for saving a users contact info
  */
-const saveContactInfo = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const saveContactInfo = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const jwtToken = getJwtToken(event)

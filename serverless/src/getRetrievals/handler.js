@@ -2,7 +2,6 @@ import { groupBy, sortBy } from 'lodash'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 /**
@@ -14,9 +13,6 @@ export default async function getRetrievals(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
 
   try {
     const jwtToken = getJwtToken(event)

@@ -9,22 +9,19 @@ const ConditionalPlugin = (condition, plugin) => ({
   apply: (compiler) => {
     const name = Object.keys(compiler.options.entry)[0].split('/')
 
-    // The `serverless-plugin-warmup` plugin creates a lambda, we need to ignore it
-    if (name[0] !== '_warmup') {
-      // Pull the filename of the Lambda
-      let fileName = name.pop()
+    // Pull the filename of the Lambda
+    let fileName = name.pop()
 
-      // For lambdas that have been updated to the new `serverless/src/LAMBDA/handler.js`
-      if (fileName === 'handler') {
-        fileName = name.pop()
-      }
+    // For lambdas that have been updated to the new `serverless/src/LAMBDA/handler.js`
+    if (fileName === 'handler') {
+      fileName = name.pop()
+    }
 
-      const config = Object.assign({ webpack: {} },
-        slsw.lib.serverless.service.getFunction(fileName))
+    const config = Object.assign({ webpack: {} },
+      slsw.lib.serverless.service.getFunction(fileName))
 
-      if (condition(config)) {
-        plugin.apply(compiler)
-      }
+    if (condition(config)) {
+      plugin.apply(compiler)
     }
   }
 })

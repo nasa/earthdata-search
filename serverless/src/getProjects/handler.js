@@ -1,5 +1,4 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
@@ -7,10 +6,7 @@ import { obfuscateId } from '../util/obfuscation/obfuscateId'
 /**
  * Handler for retreiving a users projects
  */
-const getProjects = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const getProjects = async (event) => {
   const jwtToken = getJwtToken(event)
   const { username } = getVerifiedJwtToken(jwtToken)
 

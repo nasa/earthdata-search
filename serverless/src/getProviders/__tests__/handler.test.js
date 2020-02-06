@@ -43,14 +43,4 @@ describe('getProviders', () => {
 
     expect(result.statusCode).toBe(200)
   })
-
-  test('correctly returns false when the warmUp payload is received', async () => {
-    const payload = {
-      source: 'serverless-plugin-warmup'
-    }
-
-    const response = await getProviders(payload, {})
-
-    expect(response).toEqual(false)
-  })
 })

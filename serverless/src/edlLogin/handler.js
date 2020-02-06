@@ -1,17 +1,13 @@
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
-import { isWarmUp } from '../util/isWarmup'
 
 /**
  * Redirects the user to the correct EDL login URL
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-const edlLogin = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const edlLogin = async (event) => {
   const params = event.queryStringParameters
 
   const { state } = params

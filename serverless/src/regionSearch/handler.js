@@ -1,13 +1,9 @@
 import request from 'request-promise'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { isWarmUp } from '../util/isWarmup'
 import { requestTimeout } from '../util/requestTimeout'
 
-const regionSearch = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const regionSearch = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const { endpoint, exact, query } = event.queryStringParameters

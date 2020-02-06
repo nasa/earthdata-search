@@ -1,5 +1,4 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
@@ -13,9 +12,6 @@ const deleteProject = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
 
   const jwtToken = getJwtToken(event)
   const { id: userId } = getVerifiedJwtToken(jwtToken)

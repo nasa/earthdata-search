@@ -86,14 +86,4 @@ describe('deleteProject', () => {
     expect(result.body).toEqual(JSON.stringify({ errors: ['Project \'7023641925\' not found.'] }))
     expect(result.statusCode).toBe(404)
   })
-
-  test('correctly returns false when the warmUp payload is received', async () => {
-    const payload = {
-      source: 'serverless-plugin-warmup'
-    }
-
-    const response = await deleteProject(payload, {})
-
-    expect(response).toEqual(false)
-  })
 })
