@@ -37,11 +37,13 @@ export class AboutCwicModal extends Component {
           </em>
           .
         </p>
+
         <p>
           CWIC is short for CEOS WGISS Integrated Catalog. WGISS (The Working Group on Information Systems and Services) is a subsidiary body supporting the Committee on Earth Observing Satellites (CEOS). WGISS promotes collaboration in the development of systems and services that manage and supply these observatory data.
         </p>
-        <p>
-          <div>Here are some places where you can find more information about CWIC and OpenSearch:</div>
+
+        <div>
+          <p>Here are some places where you can find more information about CWIC and OpenSearch:</p>
           <ul>
             <li>
               <a href="http://ceos.org/wp-content/uploads/2014/12/CEOSOpenSearchBestPracticeDocument-PublicComment.pdf" target="_blank" rel="noopener noreferrer">
@@ -65,24 +67,20 @@ export class AboutCwicModal extends Component {
               </a>
             </li>
           </ul>
-        </p>
+        </div>
+
         <hr />
+
         <div>
           <h4>Performance and Availability</h4>
           <p>
-            CWIC searches federate with international and interagency partners to perform searches.
-            Whereas Earthdata Search&apos;s standard searches are performed against the Common Metadata Repository,
-            which has well-defined feature, performance, and availability requirements,
+            CWIC searches federate with international and interagency partners to perform searches, whereas Earthdata Search&apos;s standard searches are performed against the Common Metadata Repository, which has well-defined feature, performance, and availability requirements.
           </p>
           <p>
-            While this allows us to search far more data than we otherwise could, there are drawbacks to
-            CWIC&apos;s federated searching and its reliance on a number of external partners to provide its
-            capabilities.
+            While this allows us to search far more data than we otherwise could, there are drawbacks to WIC&apos;s federated searching and its reliance on a number of external partners to provide its capabilities.
           </p>
           <p>
-            Performance, accuracy, and available features may vary from one collection to the next. These
-            services may further become unavailable or experience degraded performance unexpectedly due
-            to their differing maintenance schedules.
+            Performance, accuracy, and available features may vary from one collection to the next. These ervices may further become unavailable or experience degraded performance unexpectedly due to their differing maintenance schedules.
           </p>
           <p>
             Earthdata Search makes known differences apparent through the interface.
@@ -107,8 +105,7 @@ export class AboutCwicModal extends Component {
             <li>Int&apos;l/Interagency granules cannot be excluded from the results list</li>
             <li>Int&apos;l/Interagency granule results cannot be sorted</li>
             <li>
-              Advanced granule filters differ from those available within the CMR and may
-              differ from one Int&apos;l / Interagency collection to the next.
+              Advanced granule filters differ from those available within the CMR and may differ from one Int&apos;l / Interagency collection to the next.
             </li>
           </ul>
         </div>
