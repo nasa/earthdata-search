@@ -19,12 +19,15 @@ const getCwicGranulesUrl = async (collectionId) => {
 
   try {
     const osddResponse = await request.get({
+      time: true,
       uri: collectionTemplate,
       resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().lambda
       }
     })
+
+    console.log(`Request for granules URL for CWIC collection '${collectionId}' successfully completed in ${osddResponse.elapsedTime} ms`)
 
     const osddBody = parseXml(osddResponse.body, {
       ignoreAttributes: false,
@@ -181,7 +184,7 @@ const cwicGranuleSearch = async (event, context) => {
       }
     })
 
-    const { headers } = granuleResponse
+    const { headers: responseHeaders } = granuleResponse
 
     console.log(`CWIC Granule Request took ${granuleResponse.elapsedTime} ms`)
 
@@ -190,7 +193,7 @@ const cwicGranuleSearch = async (event, context) => {
       statusCode: granuleResponse.statusCode,
       headers: {
         ...responseHeaders,
-        'access-control-expose-headers': prepareExposeHeaders(headers)
+        'access-control-expose-headers': prepareExposeHeaders(responseHeaders)
       },
       body: granuleResponse.body
     }
@@ -199,7 +202,7 @@ const cwicGranuleSearch = async (event, context) => {
       isBase64Encoded: false,
       statusCode: e.statusCode,
       headers: { responseHeaders },
-      body: JSON.stringify({ errors: [e.error] })
+      body: e.error
     }
   }
 }
