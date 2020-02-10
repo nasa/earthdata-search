@@ -7,7 +7,7 @@ describe('nativeFormat', () => {
     expect(buildNativeFormat(ummJson)).toEqual([])
   })
 
-  test('returns an array of the native formats', () => {
+  test('returns an array of the native data formats', () => {
     const ummJson = {
       ArchiveAndDistributionInformation: {
         FileDistributionInformation: [
