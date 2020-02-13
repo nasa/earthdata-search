@@ -52,6 +52,7 @@ const urlDefs = {
   organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
+  granuleDataFormatFacets: { shortKey: 'gdf', encode: encodeFacets, decode: decodeFacets },
   gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
   gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords },
   shapefileId: { shortKey: 'sf', encode: encodeString, decode: encodeString },
@@ -109,12 +110,13 @@ export const decodeUrlParams = (paramString) => {
   const timeline = decodeTimeline(params)
 
   const featureFacets = decodeHelp(params, 'featureFacets')
-  const scienceKeywords = decodeScienceKeywords(params)
-  const platforms = decodeHelp(params, 'platformFacets')
+  const granuleDataFormats = decodeHelp(params, 'granuleDataFormatFacets')
   const instruments = decodeHelp(params, 'instrumentFacets')
   const organizations = decodeHelp(params, 'organizationFacets')
-  const projects = decodeHelp(params, 'projectFacets')
+  const platforms = decodeHelp(params, 'platformFacets')
   const processingLevels = decodeHelp(params, 'processingLevelFacets')
+  const projects = decodeHelp(params, 'projectFacets')
+  const scienceKeywords = decodeScienceKeywords(params)
 
   const {
     collections,
@@ -125,6 +127,7 @@ export const decodeUrlParams = (paramString) => {
   const cmrFacets = {
     data_center_h: organizations,
     instrument_h: instruments,
+    granule_data_format_h: granuleDataFormats,
     platform_h: platforms,
     processing_level_id_h: processingLevels,
     project_h: projects,
