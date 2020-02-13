@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   collections: state.metadata.collections,
+  granuleDataFormatFacets: state.facetsParams.cmr.granule_data_format_h,
   gridName: state.query.collection.gridName,
   gridCoords: state.query.granule.gridCoords,
   featureFacets: state.facetsParams.feature,

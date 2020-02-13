@@ -196,6 +196,7 @@ export const buildCollectionSearchParams = (params) => {
     dataCenterH: facetsToSend.data_center_h,
     dataCenter,
     echoCollectionId,
+    granuleDataFormatH: facetsToSend.granule_data_format_h,
     hasGranulesOrCwic,
     instrumentH: facetsToSend.instrument_h,
     keyword: keywordWithWildcard,

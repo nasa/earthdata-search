@@ -17,6 +17,7 @@ function setup() {
     focusedCollection: '',
     focusedGranule: '',
     instrumentFacets: {},
+    granuleDataFormatFacets: {},
     keywordSearch: '',
     map: {},
     organizationFacets: {},

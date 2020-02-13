@@ -86,6 +86,7 @@ export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler) => {
   const paramsToSend = {
     data_center_h: newParams.data_center_h,
     instrument_h: newParams.instrument_h,
+    granule_data_format_h: newParams.granule_data_format_h,
     platform_h: newParams.platform_h,
     processing_level_id_h: newParams.processing_level_id_h,
     project_h: newParams.project_h,
@@ -144,6 +145,9 @@ export const prepareCMRFacetPayload = newParams => ({
     : undefined,
   instrument_h: newParams.instrument_h
     ? newParams.instrument_h
+    : undefined,
+  granule_data_format_h: newParams.granule_data_format_h
+    ? newParams.granule_data_format_h
     : undefined,
   platform_h: newParams.platform_h
     ? newParams.platform_h
