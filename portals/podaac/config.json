@@ -10,7 +10,7 @@
   "org": "PO.DAAC",
   "pageTitle": "PO.DAAC",
   "query": {
-    "dataCenter": "PO.DAAC",
+    "dataCenter": "NASA/JPL/PODAAC",
     "hasGranulesOrCwic": null
   },
   "title": "Search"
