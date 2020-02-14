@@ -561,7 +561,7 @@ describe('getAccessMethods', () => {
           query.response({
             access_method: {
               type: 'ECHO ORDERS',
-              form: '<form>echo form< /form>',
+              form: '<form a="a"b="b">echo form</form>',
               option_definition: {
                 id: 'option_def_guid',
                 name: 'Option Definition'
