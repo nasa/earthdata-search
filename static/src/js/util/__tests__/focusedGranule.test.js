@@ -19,7 +19,7 @@ describe('getFocusedGranuleObject', () => {
     test('returns an empty object', () => {
       const granules = {
         byId: {
-          'TEST2': {
+          TEST2: {
             test: 'test'
           }
         }
@@ -33,11 +33,10 @@ describe('getFocusedGranuleObject', () => {
       const obj = { test: 'test' }
       const granules = {
         byId: {
-          'TEST': obj
+          TEST: obj
         }
       }
       expect(getFocusedGranuleObject('TEST', granules)).toEqual(obj)
     })
   })
 })
-

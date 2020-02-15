@@ -106,7 +106,6 @@ describe('GranuleResultsBody component', () => {
       mount: true
     })
 
-    const prevGetRef = GranuleResultsBody.prototype.getRef
     expect(GranuleResultsBody.prototype.getRef).toHaveBeenCalledTimes(1)
   })
 })

@@ -78,7 +78,7 @@ const Config = merge.smartStrategy({
     new CleanWebpackPlugin([path.resolve(__dirname, 'static/dist')]),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].min.css',
-      chunkFilename: '[id].[contenthash].min.css',
+      chunkFilename: '[id].[contenthash].min.css'
     })
     // new BundleAnalyzerPlugin()
   ]

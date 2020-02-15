@@ -28,7 +28,6 @@ describe('GranuleFiltersBody component', () => {
 
   describe('Form', () => {
     test('is passed as a child', () => {
-
       const { enzymeWrapper } = setup()
 
       expect(enzymeWrapper.find('div.test').length).toEqual(1)

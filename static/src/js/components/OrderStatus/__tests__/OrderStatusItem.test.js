@@ -220,6 +220,7 @@ describe('OrderStatus component', () => {
 
   describe('when unmounting', () => {
     test('should clear the timeout if an interval exists', () => {
+      // eslint-disable-next-line no-unused-vars
       const { enzymeWrapper } = setup({
         type: 'echo_orders',
         collection: {
@@ -242,7 +243,6 @@ describe('OrderStatus component', () => {
           isLoaded: true
         }
       })
-
     })
   })
 

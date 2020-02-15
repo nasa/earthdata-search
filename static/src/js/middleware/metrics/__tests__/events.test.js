@@ -18,7 +18,7 @@ import {
   METRICS_MAP,
   METRICS_SPATIAL_EDIT,
   METRICS_TIMING,
-  METRICS_COLLECTION_SORT_CHANGE
+  METRICS_COLLECTION_SORT_CHANGE // eslint-disable-line no-unused-vars
 } from '../constants'
 
 const dataLayerMock = global.dataLayer.push

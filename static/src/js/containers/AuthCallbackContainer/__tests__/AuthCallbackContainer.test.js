@@ -7,6 +7,7 @@ import { AuthCallbackContainer } from '../AuthCallbackContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+// eslint-disable-next-line no-unused-vars
 function setup() {
   const props = {
     location: {

@@ -1,6 +1,6 @@
 import config from '../static.config.json'
 import { cmrEnv } from './cmrEnv'
-import secretConfig from '../secret.config.json'
+import secretConfig from '../secret.config.json' // eslint-disable-line import/no-unresolved
 
 export const getApplicationConfig = () => config.application
 export const getEarthdataConfig = env => config.earthdata[env]

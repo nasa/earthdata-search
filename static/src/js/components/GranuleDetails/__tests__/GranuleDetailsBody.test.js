@@ -2,9 +2,9 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Tabs, Tab } from 'react-bootstrap'
-import { granuleResultsBodyProps } from './mocks'
-
 import SimpleBar from 'simplebar-react'
+
+import { granuleResultsBodyProps } from './mocks'
 
 import GranuleDetailsBody from '../GranuleDetailsBody'
 import GranuleDetailsInfo from '../GranuleDetailsInfo'

@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import $ from 'jquery'
+import $ from 'jquery' // eslint-disable-line no-unused-vars
 import { MetricsEventsContainer } from '../MetricsEventsContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
