@@ -1,3 +1,5 @@
+import parser from 'fast-xml-parser'
+
 import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 import { getOptionDefinitions } from './getOptionDefinitions'
 import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
@@ -155,13 +157,22 @@ const getAccessMethods = async (event, context) => {
               form_digest: formDigest
             } = savedAccessConfig
 
-            // Only override values that the user configured
-            accessMethods[methodName] = {
-              ...accessMethods[methodName],
-              form,
-              model,
-              rawModel,
-              form_digest: formDigest
+            // Parse the savedAccessConfig values and if it is not valid XML, don't use it
+            if (parser.validate(form) === true
+              && parser.validate(model) === true
+              && parser.validate(rawModel) === true
+            ) {
+              // Only override values that the user configured
+              accessMethods[methodName] = {
+                ...accessMethods[methodName],
+                form,
+                model,
+                rawModel,
+                form_digest: formDigest
+              }
+            } else {
+              console.warn('There was a problem parsing the savedAccessConfig values, using the default form instead.')
+              return
             }
           }
         }
