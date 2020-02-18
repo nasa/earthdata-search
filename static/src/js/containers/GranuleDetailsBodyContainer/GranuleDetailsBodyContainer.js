@@ -21,17 +21,15 @@ export const GranuleDetailsBodyContainer = ({
   const focusedGranuleMetadata = getFocusedGranuleObject(focusedGranule, granules)
 
   const {
-    json,
-    metadataUrls,
-    xml
+    ummJson,
+    metadataUrls
   } = focusedGranuleMetadata
 
   return (
     <GranuleDetailsBody
       authToken={authToken}
-      json={json}
       metadataUrls={metadataUrls}
-      xml={xml}
+      ummJson={ummJson}
     />
   )
 }
