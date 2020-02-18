@@ -5,17 +5,30 @@
   flex-grow: 1;
   align-items: center;
 
-  &:not(:first-child) {
-    margin-left: 1rem;
-  }
-
   &__label {
     margin-right: $spacer/4;
     font-weight: 700;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+
+    &--visible {
+      height: auto;
+      width: auto;
+      visibility: visible;
+      margin-top: 0.25rem;
+    }
   }
 
   &__body {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
     flex-grow: 1;
-    font-size: 0.925rem;
+
+    .filter-stack-contents--label-visible & {
+      display: inline-block;
+      width: auto;
+    }
   }
 }

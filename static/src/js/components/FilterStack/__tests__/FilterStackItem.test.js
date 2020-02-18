@@ -5,11 +5,12 @@ import FilterStackItem from '../FilterStackItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     children: 'Hello!',
     icon: 'test',
-    title: 'Test'
+    title: 'Test',
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<FilterStackItem {...props} />)
@@ -34,10 +35,18 @@ describe('FilterStackItem component', () => {
     expect(enzymeWrapper.find('i').hasClass('fa fa-test filter-stack-item__icon')).toBe(true)
   })
 
-  test('renders a hidden title', () => {
+  test('renders a title', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('h3').hasClass('filter-stack-item__title visibility-hidden')).toBe(true)
+    expect(enzymeWrapper.find('h3').hasClass('filter-stack-item__title')).toBe(true)
+  })
+
+  test('renders a secondary title', () => {
+    const { enzymeWrapper } = setup({
+      secondaryTitle: 'Secondary Title'
+    })
+
+    expect(enzymeWrapper.find('.filter-stack-item__secondary-title').length).toBe(1)
   })
 
   test('renders its body contents correctly', () => {

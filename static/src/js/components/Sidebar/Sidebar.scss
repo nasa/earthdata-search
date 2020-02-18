@@ -10,7 +10,6 @@
 
   @include media-breakpoint-up(xl) {
     font-size: 0.925em;
-    width: 20rem;
   }
 
   &__inner {
@@ -34,5 +33,9 @@
   &__content {
     min-height: 0;
     flex: 0 1 100%;
+  }
+
+  .simplebar-scrollbar:before {
+    background-color: $color__black--300;
   }
 }

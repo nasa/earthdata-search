@@ -328,7 +328,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
     const temporalDateFormat = getTemporalDateFormat(isRecurring)
 
     return (
-      <Dropdown show={open} className="temporal-selection-dropdown" onToggle={this.onDropdownToggle}>
+      <Dropdown show={open} className="temporal-selection-dropdown dropdown-dark" onToggle={this.onDropdownToggle}>
         <Dropdown.Toggle
           variant="inline-block"
           id="temporal-selection-dropdown"
@@ -362,7 +362,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
             </Button>
             <Button
               className={classes.btnCancel}
-              bootstrapVariant="link"
+              bootstrapVariant="dark"
               label="Clear"
               onClick={this.onClearClick}
             >

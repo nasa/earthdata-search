@@ -49,7 +49,7 @@ export class SpatialSelectionDropdown extends PureComponent {
 
   render() {
     return (
-      <Dropdown className="spatial-selection-dropdown">
+      <Dropdown className="spatial-selection-dropdown dropdown-dark">
         <Dropdown.Toggle
           variant="inline-block"
           id="spatial-selection-dropdown"

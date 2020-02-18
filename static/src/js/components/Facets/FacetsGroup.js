@@ -86,11 +86,11 @@ class FacetsGroup extends Component {
               {
                 !isOpen
                   ? (
-                    <i className="fa fa-chevron-left">
+                    <i className="fa fa-chevron-down">
                       <span className="visually-hidden">Open</span>
                     </i>
                   ) : (
-                    <i className="fa fa-chevron-down">
+                    <i className="fa fa-chevron-up">
                       <span className="visually-hidden">Close</span>
                     </i>
                   )

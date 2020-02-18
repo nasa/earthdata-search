@@ -18,7 +18,10 @@
     flex-grow: 1;
     align-items: center;
     margin: 0;
-    margin-right: $spacer/2;
+
+    &:not(:last-child) {
+      margin-bottom: $spacer/2;
+    }
   }
 
   &__form-label {

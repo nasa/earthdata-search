@@ -22,7 +22,8 @@ export const colorOptions = {
   color: normalColor,
   dashArray: null,
   pointerEvents: 'stroke',
-  fillOpacity: 0
+  fillOpacity: 0,
+  weight: 3
 }
 export const errorOptions = {
   color: errorColor,
