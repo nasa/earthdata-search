@@ -33,22 +33,18 @@ const ousGranuleSearch = async (event, context) => {
   const { params = {} } = JSON.parse(body)
   const { echo_collection_id: echoCollectionId } = params
 
-  console.log(JSON.stringify(buildParams({
-    body,
-    permittedCmrKeys,
-    nonIndexedKeys
-  }), null, 4))
-
   return doSearchRequest({
     jwtToken: getJwtToken(event),
     path: `/service-bridge/ous/collection/${echoCollectionId}`,
     params: buildParams({
       body,
       permittedCmrKeys,
-      nonIndexedKeys
+      nonIndexedKeys,
+      stringifyResult: false
     }),
     invocationTime,
-    requestId
+    requestId,
+    bodyType: 'json'
   })
 }
 

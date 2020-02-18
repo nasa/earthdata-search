@@ -15,14 +15,14 @@ export const doSearchRequest = async ({
   path,
   params,
   requestId,
-  providedHeaders = {}
+  providedHeaders = {},
+  bodyType = 'form'
 }) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const response = await request.post({
+    const requestParams = {
       uri: `${getEarthdataConfig(cmrEnv()).cmrHost}${path}`,
-      form: params,
       json: true,
       resolveWithFullResponse: true,
       time: true,
@@ -32,7 +32,16 @@ export const doSearchRequest = async ({
         'CMR-Request-Id': requestId,
         ...providedHeaders
       }
-    })
+    }
+
+    // CMR requires form data for POST requests, while service bridge requires JSON
+    if (bodyType === 'form') {
+      requestParams.form = params
+    } else if (bodyType === 'json') {
+      requestParams.body = params
+    }
+
+    const response = await request.post(requestParams)
 
     const { body, headers } = response
     const { 'cmr-took': cmrTook } = headers
