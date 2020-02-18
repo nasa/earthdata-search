@@ -1,5 +1,3 @@
-// import { parse as parseXml } from 'fast-xml-parser'
-
 import actions from './index'
 import { UPDATE_FOCUSED_GRANULE } from '../constants/actionTypes'
 import GranuleConceptRequest from '../util/request/granuleConceptRequest'
@@ -34,7 +32,6 @@ export const getFocusedGranule = () => (dispatch, getState) => {
       const payload = {
         [focusedGranule]: {
           ummJson: data,
-          // json: parseXml(data),
           metadataUrls: createEcho10MetadataUrls(focusedGranule)
         }
       }
