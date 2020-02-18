@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    json: {},
+    ummJson: {},
     ...overrideProps
   }
 
@@ -42,7 +42,7 @@ describe('GranuleDetailsHeader component', () => {
   describe('when the metadata has been provided', () => {
     test('renders a title', () => {
       const { enzymeWrapper } = setup({
-        json: granuleResultsBodyProps.json
+        ummJson: granuleResultsBodyProps.ummJson
       })
       const title = enzymeWrapper.find('.granule-details-header__title')
 

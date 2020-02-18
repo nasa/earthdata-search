@@ -1,4 +1,4 @@
-import { parse as parseXml } from 'fast-xml-parser'
+// import { parse as parseXml } from 'fast-xml-parser'
 
 import actions from './index'
 import { UPDATE_FOCUSED_GRANULE } from '../constants/actionTypes'
@@ -27,14 +27,14 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   if (allIds.indexOf(focusedGranule) !== -1) return null
 
   const requestObject = new GranuleConceptRequest(authToken)
-  const response = requestObject.search(focusedGranule, 'echo10', { pretty: true })
+  const response = requestObject.search(focusedGranule, 'umm_json', { pretty: true })
     .then((response) => {
       const { data } = response
 
       const payload = {
         [focusedGranule]: {
-          xml: data,
-          json: parseXml(data),
+          ummJson: data,
+          // json: parseXml(data),
           metadataUrls: createEcho10MetadataUrls(focusedGranule)
         }
       }
