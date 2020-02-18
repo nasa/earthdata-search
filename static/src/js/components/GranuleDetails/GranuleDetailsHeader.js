@@ -9,8 +9,8 @@ import './GranuleDetailsHeader.scss'
 
 /**
  * Renders GranuleDetailsHeader.
- * @param {object} props - The props passed into the component.
- * @param {object} props.Granule - The focused granule information.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.ummJson - The focused granule metadata.
  */
 const GranuleDetailsHeader = ({ ummJson }) => {
   const { GranuleUR: granuleUr } = ummJson

@@ -11,9 +11,9 @@ import './GranuleDetailsBody.scss'
 
 /**
  * Renders GranuleDetailsBody.
- * @param {object} props - The props passed into the component.
- * @param {object} props.metadataUrls -
- * @param {object} props.ummJson - The raw UMM JSON for the selected granule.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.metadataUrls - Granule metadata links
+ * @param {Object} props.ummJson - The raw UMM JSON for the selected granule.
  */
 const GranuleDetailsBody = ({
   authToken,
