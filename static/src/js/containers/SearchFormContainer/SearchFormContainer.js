@@ -68,7 +68,7 @@ export const SearchFormContainer = (props) => {
 
   const { regionSearch } = advancedSearch
 
-  const showFilterStackToggle = [
+  let showFilterStackToggle = [
     regionSearch,
     boundingBoxSearch,
     drawingNewLayer,
@@ -90,6 +90,8 @@ export const SearchFormContainer = (props) => {
     }
     return !!filter
   })
+
+  showFilterStackToggle = false
 
   return (
     <SearchForm

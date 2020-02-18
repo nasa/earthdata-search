@@ -332,10 +332,10 @@ export default class TemporalSelectionDropdown extends PureComponent {
         <Dropdown.Toggle
           variant="inline-block"
           id="temporal-selection-dropdown"
-          className="search-form__button"
+          className="search-form__button search-form__button--dark"
           onClick={this.onToggleClick}
         >
-          <i className="fa fa-clock-o" />
+          <i className="fa fa-calendar" />
         </Dropdown.Toggle>
         <Dropdown.Menu className="temporal-selection-dropdown__menu">
           <TemporalSelection

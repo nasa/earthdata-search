@@ -1,7 +1,6 @@
 .search-form {
   position: relative;
   display: flex;
-  margin-right: $spacer/2;
   flex-direction: column;
   width: auto;
   z-index: 2;
@@ -11,10 +10,18 @@
   &__primary {
     display: flex;
     align-items: stretch;
+    width: 100%;
   }
 
   &__secondary {
     display: flex;
+    flex-direction: column;
+  }
+
+  &__secondary-actions {
+    display: flex;
+    flex-direction: row;
+    height: 3rem;
   }
 
   &__form {
@@ -41,7 +48,7 @@
     }
 
     &--dark {
-      color: $color__white;
+      color: $color__black--200;
       background-color: $color__black--900;
 
       &:hover {
@@ -65,13 +72,9 @@
 
   &__input {
     display: inline;
-    width: 10em;
+    width: 100%;
     padding: 0.825rem 0.925rem;
     border: none;
-
-    @include media-breakpoint-up(xl) {
-      width: 21em;
-    }
 
     &:focus {
       box-shadow: none;

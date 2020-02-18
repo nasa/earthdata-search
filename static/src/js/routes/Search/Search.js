@@ -9,8 +9,7 @@ import {
 
 import MasterOverlayPanelContainer
   from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
-import SearchFormContainer
-  from '../../containers/SearchFormContainer/SearchFormContainer'
+
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import CollectionResultsTabContainer
@@ -81,14 +80,14 @@ export class Search extends Component {
     return (
       <div className="route-wrapper route-wrapper--search search">
         <SidebarContainer>
-          <SidebarSection sectionTitle="Browse Collections">
+          <SidebarSection sectionTitle="Refine search...">
             <FacetsContainer />
           </SidebarSection>
         </SidebarContainer>
         <div className="route-wrapper__content">
           <header className="route-wrapper__header">
             <div className="route-wrapper__header-primary">
-              <SearchFormContainer />
+
               <SecondaryToolbarContainer />
             </div>
           </header>

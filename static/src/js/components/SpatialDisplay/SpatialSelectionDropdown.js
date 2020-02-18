@@ -53,7 +53,7 @@ export class SpatialSelectionDropdown extends PureComponent {
         <Dropdown.Toggle
           variant="inline-block"
           id="spatial-selection-dropdown"
-          className="search-form__button"
+          className="search-form__button search-form__button--dark"
         >
           <i className="fa fa-crop" />
         </Dropdown.Toggle>

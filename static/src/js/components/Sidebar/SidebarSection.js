@@ -13,7 +13,6 @@ const SidebarSection = (props) => {
     <section className="sidebar-section">
       <header className="sidebar-section__header">
         <h2 className="sidebar-section__title">{sectionTitle}</h2>
-        <i className="fa fa-times-circle sidebar-section__icon" />
       </header>
       {children}
     </section>

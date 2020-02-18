@@ -138,15 +138,6 @@ class SearchForm extends Component {
           </form>
           <Button
             bootstrapVariant="inline-block"
-            className="search-form__button search-form__button--advanced-search"
-            label="Advanced search"
-            onClick={this.onToggleAdvancedSearch}
-            icon="sliders"
-          />
-          <TemporalSelectionDropdownContainer />
-          <SpatialSelectionDropdownContainer />
-          <Button
-            bootstrapVariant="inline-block"
             className="search-form__button search-form__button--clear"
             label="Clear search"
             onClick={this.onSearchClear}
@@ -183,6 +174,17 @@ class SearchForm extends Component {
           }
         </div>
         <div className="search-form__secondary">
+          <div className="search-form__secondary-actions">
+            <TemporalSelectionDropdownContainer />
+            <SpatialSelectionDropdownContainer />
+            <Button
+              bootstrapVariant="inline-block"
+              className="search-form__button search-form__button--dark search-form__button--advanced-search"
+              label="Advanced search"
+              onClick={this.onToggleAdvancedSearch}
+              icon="sliders"
+            />
+          </div>
           <FilterStack isOpen={showFilterStack}>
             <AdvancedSearchDisplayContainer />
             {

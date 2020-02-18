@@ -4,6 +4,8 @@ import classNames from 'classnames'
 import SimpleBar from 'simplebar-react'
 
 import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
+import SearchFormContainer
+  from '../../containers/SearchFormContainer/SearchFormContainer'
 
 import './Sidebar.scss'
 
@@ -21,6 +23,7 @@ const Sidebar = ({
     <section className={className}>
       <div className="sidebar__inner">
         <AppLogoContainer />
+        <SearchFormContainer />
         <SimpleBar className="sidebar__content" style={{ height: '100%', overflowX: 'hidden' }}>
           {children}
         </SimpleBar>
