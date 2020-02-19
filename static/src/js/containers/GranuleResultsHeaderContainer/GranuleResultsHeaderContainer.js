@@ -23,23 +23,25 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
+  collectionSearch: state.query.collection,
   focusedCollection: state.focusedCollection,
   granules: state.searchResults.granules,
-  collectionSearch: state.query.collection,
+  mapProjection: state.map.projection,
   secondaryOverlayPanel: state.ui.secondaryOverlayPanel
 })
 
 export const GranuleResultsHeaderContainer = (props) => {
   const {
     collections,
+    collectionSearch,
     focusedCollection,
     location,
-    onApplyGranuleFilters,
-    onToggleSecondaryOverlayPanel,
-    onUndoExcludeGranule,
-    collectionSearch,
+    mapProjection,
     secondaryOverlayPanel,
-    onToggleAboutCwicModal
+    onApplyGranuleFilters,
+    onToggleAboutCwicModal,
+    onToggleSecondaryOverlayPanel,
+    onUndoExcludeGranule
   } = props
 
   const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
@@ -47,31 +49,33 @@ export const GranuleResultsHeaderContainer = (props) => {
   return (
     <>
       <GranuleResultsHeader
-        location={location}
-        focusedCollectionObject={focusedCollectionObject}
+        collectionSearch={collectionSearch}
         focusedCollectionId={focusedCollection}
+        focusedCollectionObject={focusedCollectionObject}
+        location={location}
+        mapProjection={mapProjection}
+        secondaryOverlayPanel={secondaryOverlayPanel}
         onApplyGranuleFilters={onApplyGranuleFilters}
+        onToggleAboutCwicModal={onToggleAboutCwicModal}
         onToggleSecondaryOverlayPanel={onToggleSecondaryOverlayPanel}
         onUndoExcludeGranule={onUndoExcludeGranule}
-        collectionSearch={collectionSearch}
-        secondaryOverlayPanel={secondaryOverlayPanel}
-        onToggleAboutCwicModal={onToggleAboutCwicModal}
       />
     </>
   )
 }
 
 GranuleResultsHeaderContainer.propTypes = {
-  location: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
-  onApplyGranuleFilters: PropTypes.func.isRequired,
-  onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
-  onUndoExcludeGranule: PropTypes.func.isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired,
   secondaryOverlayPanel: PropTypes.shape({}).isRequired,
-  onToggleAboutCwicModal: PropTypes.func.isRequired
+  onApplyGranuleFilters: PropTypes.func.isRequired,
+  onToggleAboutCwicModal: PropTypes.func.isRequired,
+  onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
+  onUndoExcludeGranule: PropTypes.func.isRequired
 }
 
 export default withRouter(

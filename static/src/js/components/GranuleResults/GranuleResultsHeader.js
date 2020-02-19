@@ -108,12 +108,13 @@ class GranuleResultsHeader extends Component {
     const { sortOrder, searchValue } = this.state
 
     const {
+      collectionSearch,
       focusedCollectionObject,
       location,
-      onToggleAboutCwicModal,
-      onToggleSecondaryOverlayPanel,
+      mapProjection,
       secondaryOverlayPanel,
-      collectionSearch
+      onToggleAboutCwicModal,
+      onToggleSecondaryOverlayPanel
     } = this.props
 
     const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
@@ -124,7 +125,7 @@ class GranuleResultsHeader extends Component {
 
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
 
-    const handoffLinks = generateHandoffs(metadata, collectionSearch)
+    const handoffLinks = generateHandoffs(metadata, collectionSearch, mapProjection)
 
     return (
       <div className="granule-results-header">
@@ -333,15 +334,16 @@ class GranuleResultsHeader extends Component {
 }
 
 GranuleResultsHeader.propTypes = {
+  collectionSearch: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedCollectionObject: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired,
+  secondaryOverlayPanel: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
-  onUndoExcludeGranule: PropTypes.func.isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired,
-  secondaryOverlayPanel: PropTypes.shape({}).isRequired
+  onUndoExcludeGranule: PropTypes.func.isRequired
 }
 
 export default GranuleResultsHeader

@@ -2,12 +2,15 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { OverlayTrigger } from 'react-bootstrap'
+
 import GranuleResultsHeader from '../GranuleResultsHeader'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    collectionSearch: {},
     focusedCollectionId: 'collectionId',
     focusedCollectionObject: {
       excludedGranuleIds: [],
@@ -23,7 +26,7 @@ function setup(overrideProps) {
     location: {
       search: '?test=search-value'
     },
-    collectionSearch: {},
+    mapProjection: projections.geographic,
     secondaryOverlayPanel: {
       isOpen: false
     },
