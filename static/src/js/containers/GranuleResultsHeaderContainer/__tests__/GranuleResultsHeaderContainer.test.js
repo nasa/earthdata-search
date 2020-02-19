@@ -1,8 +1,10 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { GranuleResultsHeaderContainer } from '../GranuleResultsHeaderContainer'
 import GranuleResultsHeader from '../../../components/GranuleResults/GranuleResultsHeader'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -20,18 +22,18 @@ function setup() {
       },
       projectIds: []
     },
+    collectionSearch: {},
     focusedCollection: 'collectionId',
     granules: {
       hits: 1
     },
     location: { value: 'location' },
+    mapProjection: projections.geographic,
+    secondaryOverlayPanel: {},
     onApplyGranuleFilters: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
-    collectionSearch: {},
     onToggleAboutCwicModal: jest.fn(),
-    onToggleSecondaryOverlayPanel: jest.fn(),
-    secondaryOverlayPanel: {}
+    onToggleSecondaryOverlayPanel: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsHeaderContainer {...props} />)
