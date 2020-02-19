@@ -31,4 +31,22 @@ describe('handoffs#giovanni', () => {
       }
     ])
   })
+
+  test('returns a open altimetry handoff object', () => {
+    const collectionMetadata = {
+      short_name: 'earthdata_search',
+      tags: {
+        'edsc.extra.handoff.open_altimetry': {}
+      }
+    }
+
+    const response = generateHandoffs(collectionMetadata)
+
+    expect(response).toEqual([
+      {
+        title: 'Open Altimetry',
+        href: 'https://openaltimetry.org/data/icesat2/?mapType=geographic'
+      }
+    ])
+  })
 })

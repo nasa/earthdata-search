@@ -3,6 +3,7 @@ import { stringify } from 'qs'
 
 /**
  * Generate and return a URL to handoff the EDSC context to Giovanni
+ * @param {Object} collectionMetadata Collection metadata from CMR
  * @param {Object} collectionSearch Collection Search data from Redux
  */
 export const fetchGiovanniHandoffUrl = (collectionMetadata, collectionSearch = {}) => {
@@ -48,5 +49,3 @@ export const fetchGiovanniHandoffUrl = (collectionMetadata, collectionSearch = {
     href: giovanniUrl
   }
 }
-
-export default fetchGiovanniHandoffUrl

@@ -40,10 +40,11 @@ const ProjectCollectionItem = ({
   color,
   index,
   isPanelActive,
+  mapProjection,
+  projectCollection,
   onRemoveCollectionFromProject,
   onSetActivePanel,
-  onToggleCollectionVisibility,
-  projectCollection
+  onToggleCollectionVisibility
 }) => {
   const handleToggleCollectionVisibility = (event) => {
     onToggleCollectionVisibility(collectionId)
@@ -78,7 +79,7 @@ const ProjectCollectionItem = ({
     }
   ])
 
-  const handoffLinks = generateHandoffs(metadata, collectionSearch)
+  const handoffLinks = generateHandoffs(metadata, collectionSearch, mapProjection)
 
   return (
     <li style={{ borderLeftColor: color }} className={className}>
@@ -197,6 +198,7 @@ ProjectCollectionItem.propTypes = {
   color: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,
+  mapProjection: PropTypes.string.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,

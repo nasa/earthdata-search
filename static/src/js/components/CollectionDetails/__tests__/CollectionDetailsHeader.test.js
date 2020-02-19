@@ -8,12 +8,14 @@ import { collectionDetailsBodyProps } from './mocks'
 import CollectionDetailsHeader from '../CollectionDetailsHeader'
 import Skeleton from '../../Skeleton/Skeleton'
 import { MoreActionsDropdown } from '../../MoreActionsDropdown/MoreActionsDropdown'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
     collectionSearch: {},
+    mapProjection: projections.geographic,
     ...overrideProps
   }
 
@@ -36,7 +38,7 @@ describe('CollectionDetails component', () => {
   describe('when metadata is provided', () => {
     test('renders itself correctly with focused collection metadata', () => {
       const { enzymeWrapper } = setup({
-        focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata,
+        focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata
       })
       expect(enzymeWrapper.type()).toEqual('div')
       expect(enzymeWrapper.props().className).toEqual('collection-details-header')

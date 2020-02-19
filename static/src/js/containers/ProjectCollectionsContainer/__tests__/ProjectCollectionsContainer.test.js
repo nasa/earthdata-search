@@ -1,8 +1,10 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { ProjectCollectionsContainer } from '../ProjectCollectionsContainer'
 import ProjectCollections from '../../../components/ProjectCollections/ProjectCollections'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -16,9 +18,8 @@ function setup() {
         }
       }
     },
-    onRemoveCollectionFromProject: jest.fn(),
-    onToggleCollectionVisibility: jest.fn(),
-    onSetActivePanel: jest.fn(),
+    collectionSearch: {},
+    mapProjection: projections.geographic,
     project: {
       collectionIds: ['collectionId']
     },
@@ -26,10 +27,12 @@ function setup() {
       activePanel: '0.0.0',
       isOpen: false
     },
-    collectionSearch: {},
     savedProject: {},
-    onUpdateProjectName: jest.fn(),
-    onMetricsDataAccess: jest.fn()
+    onMetricsDataAccess: jest.fn(),
+    onRemoveCollectionFromProject: jest.fn(),
+    onSetActivePanel: jest.fn(),
+    onToggleCollectionVisibility: jest.fn(),
+    onUpdateProjectName: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsContainer {...props} />)

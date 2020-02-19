@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import Skeleton from '../../Skeleton/Skeleton'
 import ProjectCollectionsItem from '../ProjectCollectionsItem'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -24,6 +25,7 @@ function setup(overrideProps) {
       }
     },
     color: 'color',
+    mapProjection: projections.geographic,
     index: 0,
     isPanelActive: false,
     onRemoveCollectionFromProject: jest.fn(),
