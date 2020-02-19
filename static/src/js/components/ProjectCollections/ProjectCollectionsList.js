@@ -26,7 +26,8 @@ export const ProjectCollectionsList = (props) => {
     onSetActivePanel,
     project,
     projectPanels,
-    collectionSearch
+    collectionSearch,
+    mapProjection
   } = props
 
   const { byId } = collections
@@ -47,6 +48,7 @@ export const ProjectCollectionsList = (props) => {
         color={color}
         index={index}
         isPanelActive={isPanelActive}
+        mapProjection={mapProjection}
         key={collectionId}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onToggleCollectionVisibility={onToggleCollectionVisibility}
@@ -87,7 +89,8 @@ ProjectCollectionsList.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired
+  collectionSearch: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired
 }
 
 export default withRouter(ProjectCollectionsList)

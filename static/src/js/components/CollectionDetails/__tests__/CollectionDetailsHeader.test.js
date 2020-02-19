@@ -8,12 +8,14 @@ import { collectionDetailsBodyProps } from './mocks'
 import CollectionDetailsHeader from '../CollectionDetailsHeader'
 import Skeleton from '../../Skeleton/Skeleton'
 import { MoreActionsDropdown } from '../../MoreActionsDropdown/MoreActionsDropdown'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
     collectionSearch: {},
+    mapProjection: projections.geographic,
     ...overrideProps
   }
 

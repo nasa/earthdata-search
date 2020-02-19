@@ -17,7 +17,8 @@ import './CollectionDetailsHeader.scss'
  */
 export const CollectionDetailsHeader = ({
   focusedCollectionMetadata,
-  collectionSearch
+  collectionSearch,
+  mapProjection
 }) => {
   const {
     short_name: shortName,
@@ -25,7 +26,7 @@ export const CollectionDetailsHeader = ({
     version_id: versionId
   } = focusedCollectionMetadata
 
-  const handoffLinks = generateHandoffs(focusedCollectionMetadata, collectionSearch)
+  const handoffLinks = generateHandoffs(focusedCollectionMetadata, collectionSearch, mapProjection)
 
   return (
     <div className="collection-details-header">
@@ -64,7 +65,8 @@ CollectionDetailsHeader.defaultProps = {
 
 CollectionDetailsHeader.propTypes = {
   focusedCollectionMetadata: PropTypes.shape({}),
-  collectionSearch: PropTypes.shape({}).isRequired
+  collectionSearch: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired
 }
 
 export default CollectionDetailsHeader
