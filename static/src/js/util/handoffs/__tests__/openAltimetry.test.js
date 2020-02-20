@@ -74,8 +74,6 @@ describe('handoffs#openAltimetry', () => {
 
   test('appends temporal values when start and end date are provided', () => {
     const collectionMetadata = {
-      time_start: '1984-07-02 05:23:00',
-      time_end: '1984-07-02 10:43:00',
       tags: {
         'edsc.extra.handoff.giovanni': {}
       }
@@ -83,7 +81,8 @@ describe('handoffs#openAltimetry', () => {
 
     const collectionSearch = {
       temporal: {
-
+        startDate: '1984-07-02 05:23:00',
+        endDate: '1984-07-02 10:43:00'
       }
     }
 
@@ -97,7 +96,6 @@ describe('handoffs#openAltimetry', () => {
 
   test('appends temporal values when only start date is provided', () => {
     const collectionMetadata = {
-      time_start: '1984-07-02 05:23:00',
       tags: {
         'edsc.extra.handoff.giovanni': {}
       }
@@ -105,7 +103,7 @@ describe('handoffs#openAltimetry', () => {
 
     const collectionSearch = {
       temporal: {
-
+        startDate: '1984-07-02 05:23:00'
       }
     }
 
@@ -113,13 +111,12 @@ describe('handoffs#openAltimetry', () => {
 
     expect(response).toEqual({
       title: 'Open Altimetry',
-      href: 'https://openaltimetry.org/data/icesat2/?start_date=1984-07-02&end_date=2020-02-19&mapType=geographic'
+      href: 'https://openaltimetry.org/data/icesat2/?start_date=1984-07-02&mapType=geographic'
     })
   })
 
   test('appends temporal values when only end date is provided', () => {
     const collectionMetadata = {
-      time_end: '2000-07-02 05:23:00',
       tags: {
         'edsc.extra.handoff.giovanni': {}
       }
@@ -127,7 +124,7 @@ describe('handoffs#openAltimetry', () => {
 
     const collectionSearch = {
       temporal: {
-
+        endDate: '2000-07-02 10:43:00'
       }
     }
 
@@ -135,7 +132,7 @@ describe('handoffs#openAltimetry', () => {
 
     expect(response).toEqual({
       title: 'Open Altimetry',
-      href: 'https://openaltimetry.org/data/icesat2/?start_date=2020-02-19&end_date=2000-07-02&mapType=geographic'
+      href: 'https://openaltimetry.org/data/icesat2/?end_date=2000-07-02&mapType=geographic'
     })
   })
 
@@ -183,8 +180,6 @@ describe('handoffs#openAltimetry', () => {
 
   test('appends temporal and spatial values when both are provided', () => {
     const collectionMetadata = {
-      time_start: '1984-07-02 05:23:00',
-      time_end: '1984-07-02 10:43:00',
       tags: {
         'edsc.extra.handoff.giovanni': {}
       }
@@ -193,6 +188,10 @@ describe('handoffs#openAltimetry', () => {
     const collectionSearch = {
       spatial: {
         boundingBox: '-90.32766723632812,41.63677044970652,-82.2337646484375,48.34205200181264'
+      },
+      temporal: {
+        startDate: '1984-07-02 05:23:00',
+        endDate: '1984-07-02 10:43:00'
       }
     }
 

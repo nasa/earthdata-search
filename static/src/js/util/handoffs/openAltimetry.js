@@ -15,18 +15,20 @@ export const fetchOpenAltimetryHandoffUrl = (
 ) => {
   const openAltimetryRoot = 'https://openaltimetry.org/data/icesat2/'
 
-  const {
-    time_end: endDate = null,
-    time_start: startDate = null
-  } = collectionMetadata
-
   const params = {}
 
-  const { spatial } = collectionSearch
+  const { spatial, temporal } = collectionSearch
 
-  if (endDate || startDate) {
-    params.start_date = moment.utc(startDate || Date.now()).format('YYYY-MM-DD')
-    params.end_date = moment.utc(endDate || Date.now()).format('YYYY-MM-DD')
+  if (temporal) {
+    const { endDate, startDate } = temporal
+
+    if (startDate) {
+      params.start_date = moment.utc(startDate).format('YYYY-MM-DD')
+    }
+
+    if (endDate) {
+      params.end_date = moment.utc(endDate).format('YYYY-MM-DD')
+    }
   }
 
   if (spatial) {
