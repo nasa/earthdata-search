@@ -7,11 +7,12 @@ import { AuthCallbackContainer } from '../AuthCallbackContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     location: {
       search: '?jwt=mockjwttoken&redirect=http%3A%2F%2Flocalhost%3A8080%2Fsearch'
-    }
+    },
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<AuthCallbackContainer {...props} />)
@@ -40,13 +41,7 @@ describe('AuthCallbackContainer component', () => {
     delete window.location
     window.location = { replace: jest.fn() }
 
-    const props = {
-      location: {
-        search: '?jwt=mockjwttoken&redirect=http%3A%2F%2Flocalhost%3A8080%2Fsearch'
-      }
-    }
-
-    shallow(<AuthCallbackContainer {...props} />)
+    setup()
 
     expect(setSpy).toBeCalledTimes(1)
     expect(setSpy).toBeCalledWith('authToken', 'mockjwttoken')
@@ -60,13 +55,11 @@ describe('AuthCallbackContainer component', () => {
     delete window.location
     window.location = { replace: jest.fn() }
 
-    const props = {
+    setup({
       location: {
         search: ''
       }
-    }
-
-    shallow(<AuthCallbackContainer {...props} />)
+    })
 
     expect(setSpy).toBeCalledTimes(1)
     expect(setSpy).toBeCalledWith('authToken', '')
