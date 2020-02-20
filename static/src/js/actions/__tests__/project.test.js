@@ -426,6 +426,23 @@ describe('getProjectCollections', () => {
       })
 
     nock(/localhost/)
+      .post(/granules/)
+      .reply(200, {
+        feed: {
+          updated: '2019-03-27T20:21:14.705Z',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          title: 'ECHO granule metadata',
+          entry: [{
+            id: 'G1000001-EDSC'
+          }, {
+            id: 'G1000002-EDSC'
+          }]
+        }
+      }, {
+        'cmr-hits': 1
+      })
+
+    nock(/localhost/)
       .get(/providers/)
       .reply(200, [
         {
@@ -444,7 +461,21 @@ describe('getProjectCollections', () => {
       ])
 
     const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
-    getProjectGranulesMock.mockImplementation(() => jest.fn())
+    getProjectGranulesMock.mockImplementation(() => jest.fn()
+      .mockImplementation(() => Promise.resolve([
+        {
+          feed: {
+            updated: '2019-03-27T20:21:14.705Z',
+            id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+            title: 'ECHO granule metadata',
+            entry: [{
+              id: 'G1000001-EDSC'
+            }, {
+              id: 'G1000002-EDSC'
+            }]
+          }
+        }
+      ])))
 
     const fetchProvidersMock = jest.spyOn(actions, 'fetchProviders')
     fetchProvidersMock.mockImplementation(() => jest.fn().mockImplementation(() => Promise.resolve([
