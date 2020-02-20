@@ -34,7 +34,7 @@ function setup() {
     project: {
       collectionIds: ['collectionId']
     },
-    projectPanels: {
+    panels: {
       activePanel: '0.0.0',
       isOpen: false
     },
@@ -77,7 +77,7 @@ describe('ProjectPanelsContainer component', () => {
     })
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onSetActivePanel).toEqual('function')
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onTogglePanels).toEqual('function')
-    expect(enzymeWrapper.find(ProjectPanels).props().projectPanels).toEqual({
+    expect(enzymeWrapper.find(ProjectPanels).props().panels).toEqual({
       activePanel: '0.0.0',
       isOpen: false
     })

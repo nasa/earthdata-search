@@ -30,6 +30,7 @@ export class PanelItem extends Component {
     }
 
     this.panelItemRef = null
+    this.scrollableNodeRef = React.createRef()
 
     this.handleScroll = this.handleScroll.bind(this)
   }
@@ -104,7 +105,8 @@ export class PanelItem extends Component {
       {
         'panel-item--is-active': isActive,
         'panel-item--has-back-button': backButton,
-        'panel-item--has-scrolled': hasScrolled
+        'panel-item--has-scrolled': hasScrolled,
+        'panel-item--has-header': header || backButton
       }
     ])
 
@@ -113,19 +115,27 @@ export class PanelItem extends Component {
         className={className}
         ref={(panelItem) => { this.panelItemRef = panelItem }}
       >
-        <header className="panel-item__header">
-          {
-            header && (
-              <div className="panel-item__header-body">
-                {header}
-              </div>
-            )
-          }
-          <div className="panel-item__header-nav">
-            {backButton}
-          </div>
-        </header>
-        <SimpleBar className="panel-item__content">
+        {
+          (header || backButton) && (
+            <header className="panel-item__header">
+              {
+                header && (
+                  <div className="panel-item__header-body">
+                    {header}
+                  </div>
+                )
+              }
+              {
+                backButton && (
+                  <div className="panel-item__header-nav">
+                    {backButton}
+                  </div>
+                )
+              }
+            </header>
+          )
+        }
+        <SimpleBar className="panel-item__content" scrollableNodeProps={{ ref: this.scrollableNodeRef }}>
           {
             typeof children === 'string' && (
               children
@@ -133,7 +143,10 @@ export class PanelItem extends Component {
           }
           {
             typeof children !== 'string' && (
-              React.cloneElement(children, { isActive })
+              React.cloneElement(children, {
+                isActive,
+                panelScrollableNodeRef: this.scrollableNodeRef
+              })
             )
           }
         </SimpleBar>

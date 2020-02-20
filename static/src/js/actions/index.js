@@ -90,6 +90,10 @@ import {
   getFocusedGranule
 } from './focusedGranule'
 import {
+  togglePanels,
+  setActivePanel
+} from './panels'
+import {
   addProjectCollection,
   getProjectCollections,
   getProjectGranules,
@@ -198,6 +202,7 @@ const actions = {
   restoreProject,
   saveShapefile,
   selectAccessMethod,
+  setActivePanel,
   setSavedProjects,
   shapefileErrored,
   shapefileLoading,
@@ -208,6 +213,7 @@ const actions = {
   toggleDrawingNewLayer,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
+  togglePanels,
   toggleRelatedUrlsModal,
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,

@@ -42,10 +42,13 @@ export const CollectionResultsBodyContainer = (props) => {
     onRemoveCollectionFromProject,
     onViewCollectionGranules,
     onViewCollectionDetails,
-    onChangeCollectionPageNum
+    onChangeCollectionPageNum,
+    panelScrollableNodeRef
   } = props
 
   const { collectionIds: projectIds } = project
+
+  const scrollContainer = panelScrollableNodeRef.current
 
   const onWaypointEnter = (params = {}) => {
     if (params.event !== null) {
@@ -66,6 +69,7 @@ export const CollectionResultsBodyContainer = (props) => {
       onViewCollectionGranules={onViewCollectionGranules}
       onViewCollectionDetails={onViewCollectionDetails}
       waypointEnter={onWaypointEnter}
+      scrollContainer={scrollContainer}
     />
   )
 }
@@ -81,7 +85,8 @@ CollectionResultsBodyContainer.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  onChangeCollectionPageNum: PropTypes.func.isRequired
+  onChangeCollectionPageNum: PropTypes.func.isRequired,
+  panelScrollableNodeRef: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

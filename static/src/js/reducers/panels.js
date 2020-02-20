@@ -1,19 +1,19 @@
-import { PROJECT_PANELS_TOGGLE, PROJECT_PANELS_SET_PANEL } from '../constants/actionTypes'
+import { PANELS_TOGGLE, PANELS_SET_PANEL } from '../constants/actionTypes'
 
 const initialState = {
   isOpen: true,
   activePanel: '0.0.0'
 }
 
-const projectPanelsReducer = (state = initialState, action) => {
+const panelsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case PROJECT_PANELS_TOGGLE: {
+    case PANELS_TOGGLE: {
       return {
         ...state,
         isOpen: action.payload
       }
     }
-    case PROJECT_PANELS_SET_PANEL: {
+    case PANELS_SET_PANEL: {
       return {
         ...state,
         activePanel: action.payload,
@@ -25,4 +25,4 @@ const projectPanelsReducer = (state = initialState, action) => {
   }
 }
 
-export default projectPanelsReducer
+export default panelsReducer

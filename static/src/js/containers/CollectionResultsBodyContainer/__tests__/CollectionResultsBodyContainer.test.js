@@ -22,7 +22,10 @@ function setup() {
     onRemoveCollectionFromProject: jest.fn(),
     onChangeCollectionPageNum: jest.fn(),
     onViewCollectionGranules: jest.fn(),
-    onViewCollectionDetails: jest.fn()
+    onViewCollectionDetails: jest.fn(),
+    panelScrollableNodeRef: {
+      current: null
+    }
   }
 
   const enzymeWrapper = shallow(<CollectionResultsBodyContainer {...props} />)

@@ -1,7 +1,7 @@
-import projectPanelsReducer from '../projectPanels'
+import panelsReducer from '../panels'
 import {
-  PROJECT_PANELS_TOGGLE,
-  PROJECT_PANELS_SET_PANEL
+  PANELS_TOGGLE,
+  PANELS_SET_PANEL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -13,14 +13,14 @@ describe('INITIAL_STATE', () => {
   test('is correct', () => {
     const action = { type: 'dummy_action' }
 
-    expect(projectPanelsReducer(undefined, action)).toEqual(initialState)
+    expect(panelsReducer(undefined, action)).toEqual(initialState)
   })
 })
 
-describe('PROJECT_PANELS_TOGGLE', () => {
+describe('PANELS_TOGGLE', () => {
   test('returns the correct state', () => {
     const action = {
-      type: PROJECT_PANELS_TOGGLE,
+      type: PANELS_TOGGLE,
       payload: false
     }
 
@@ -29,14 +29,14 @@ describe('PROJECT_PANELS_TOGGLE', () => {
       isOpen: false
     }
 
-    expect(projectPanelsReducer(undefined, action)).toEqual(expectedState)
+    expect(panelsReducer(undefined, action)).toEqual(expectedState)
   })
 })
 
-describe('PROJECT_PANELS_SET_PANEL', () => {
+describe('PANELS_SET_PANEL', () => {
   test('returns the correct state', () => {
     const action = {
-      type: PROJECT_PANELS_SET_PANEL,
+      type: PANELS_SET_PANEL,
       payload: '0.0.1'
     }
 
@@ -46,6 +46,6 @@ describe('PROJECT_PANELS_SET_PANEL', () => {
       activePanel: '0.0.1'
     }
 
-    expect(projectPanelsReducer(undefined, action)).toEqual(expectedState)
+    expect(panelsReducer(undefined, action)).toEqual(expectedState)
   })
 })

@@ -22,7 +22,7 @@ import './ProjectPanels.scss'
  * Renders ProjectPanels.
  * @param {object} props - The props passed into the component.
  * @param {object} props.collections - The current collections from the state.
- * @param {object} props.projectPanels - The current projectPanels state.
+ * @param {object} props.panels - The current panels state.
  * @param {function} props.onTogglePanels - Toggles the panels opened or closed.
  * @param {function} props.onSetActivePanel - Switches the currently active panel.
  */
@@ -177,7 +177,7 @@ class ProjectPanels extends PureComponent {
       collections,
       dataQualitySummaries,
       project,
-      projectPanels,
+      panels,
       shapefileId,
       spatial,
       onSelectAccessMethod,
@@ -196,7 +196,7 @@ class ProjectPanels extends PureComponent {
     const { byId = {} } = collections
     const { collectionIds: projectIds, byId: projectById } = project
 
-    const { activePanel, isOpen } = projectPanels
+    const { activePanel, isOpen } = panels
     const panelSectionEditOptions = []
     const panelSectionCollectionDetails = []
 
@@ -439,7 +439,7 @@ ProjectPanels.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   dataQualitySummaries: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
+  panels: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,

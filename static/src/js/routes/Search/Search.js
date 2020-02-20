@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -10,8 +11,6 @@ import {
 import MasterOverlayPanelContainer
   from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
 
-import CollectionResultsBodyContainer
-  from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import CollectionResultsTabContainer
   from '../../containers/CollectionResultsTabContainer/CollectionResultsTabContainer'
 import CollectionDetailsTabContainer
@@ -42,6 +41,10 @@ import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
+import SearchPanelsContainer
+  from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
+import SearchFormContainer
+  from '../../containers/SearchFormContainer/SearchFormContainer'
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SecondaryToolbarContainer
@@ -79,7 +82,10 @@ export class Search extends Component {
 
     return (
       <div className="route-wrapper route-wrapper--search search">
-        <SidebarContainer>
+        <SidebarContainer
+          panels={<SearchPanelsContainer />}
+        >
+          <SearchFormContainer />
           <SidebarSection sectionTitle="Refine search...">
             <FacetsContainer />
           </SidebarSection>
@@ -87,17 +93,16 @@ export class Search extends Component {
         <div className="route-wrapper__content">
           <header className="route-wrapper__header">
             <div className="route-wrapper__header-primary">
-
               <SecondaryToolbarContainer />
             </div>
           </header>
           <Switch>
             <Route exact path={`${path}`}>
-              <MasterOverlayPanelContainer
+              {/* <MasterOverlayPanelContainer
                 tabHandle={<CollectionResultsTabContainer />}
                 header={<CollectionResultsHeaderContainer />}
                 body={<CollectionResultsBodyContainer />}
-              />
+              /> */}
             </Route>
             <Route exact path={`${path}/granules`}>
               <MasterOverlayPanelContainer

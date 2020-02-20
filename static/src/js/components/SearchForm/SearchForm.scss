@@ -60,9 +60,11 @@
 
     &--clear {
       border-left: 1px solid $color__black--200;
+      border-right: 1px solid $color__black--200;
 
       &:focus {
         border-left: 1px solid $color__black--200;
+        border-right: 1px solid $color__black--200;
       }
     }
   }
