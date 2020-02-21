@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getClientId } from '../../../sharedUtils/config'
+import { getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 
 /**
  * Converts a single color component to hex
@@ -31,6 +31,8 @@ export default async function processColorMap(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { Records: sqsRecords = {} } = event
 
@@ -179,7 +181,7 @@ export default async function processColorMap(event, context) {
   return {
     isBase64Encoded: false,
     statusCode: 200,
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: defaultResponseHeaders,
     body: JSON.stringify(sqsRecords)
   }
 }

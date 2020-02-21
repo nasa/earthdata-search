@@ -50,7 +50,7 @@ describe('getContactInfo', () => {
       }
     })
 
-    const result = await getContactInfo({})
+    const result = await getContactInfo({}, {})
 
     const expectedBody = JSON.stringify({
       echo_preferences: { mock: 'echo' },

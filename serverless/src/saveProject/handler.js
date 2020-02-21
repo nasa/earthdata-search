@@ -2,6 +2,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 /**
  * Saves a project to the database
@@ -12,6 +13,8 @@ const saveProject = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { body } = event
   const { params } = JSON.parse(body)
@@ -91,16 +94,15 @@ const saveProject = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [e] })
     }
   }
 
-  // Return the projectId and path
   return {
     isBase64Encoded: false,
     statusCode: 200,
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: defaultResponseHeaders,
     body: JSON.stringify({
       name,
       path,

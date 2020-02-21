@@ -1,8 +1,11 @@
+import { getApplicationConfig } from '../../../sharedUtils/config'
 /**
  * Logs an error reported by a client
- * @param {Object} event
+ * @param {Object} event Details about the HTTP request that it received
  */
 const relevancyLogger = async (event) => {
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   const { body } = event
   const { params = {} } = JSON.parse(body)
   const { data = {} } = params
@@ -17,9 +20,7 @@ const relevancyLogger = async (event) => {
 
   return {
     statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    }
+    headers: defaultResponseHeaders
   }
 }
 
