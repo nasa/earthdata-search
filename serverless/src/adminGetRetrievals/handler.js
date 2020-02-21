@@ -1,5 +1,6 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 const sortKeyMap = {
   '-created_at': ['retrievals.created_at', 'desc'],
@@ -17,6 +18,8 @@ export default async function adminGetRetrievals(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
     const { queryStringParameters = {} } = event
@@ -61,7 +64,7 @@ export default async function adminGetRetrievals(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({
         pagination,
         results
@@ -73,7 +76,7 @@ export default async function adminGetRetrievals(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [e] })
     }
   }

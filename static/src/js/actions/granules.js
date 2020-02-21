@@ -9,7 +9,7 @@ import {
 } from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
 import OusGranuleRequest from '../util/request/ousGranuleRequest'
-import CwicGranuleRequest from '../util/request/cwic'
+import CwicGranuleRequest from '../util/request/cwicGranuleRequest'
 import {
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   ADD_MORE_GRANULE_RESULTS,

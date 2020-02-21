@@ -1,5 +1,6 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 /**
  * Retrieve a single project from the database
@@ -10,6 +11,8 @@ const getProject = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { pathParameters } = event
   const {
@@ -33,7 +36,7 @@ const getProject = async (event, context) => {
       return {
         isBase64Encoded: false,
         statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        headers: defaultResponseHeaders,
         body: JSON.stringify(existingProjectRecord)
       }
     }
@@ -41,7 +44,7 @@ const getProject = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 404,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
   } catch (error) {
@@ -50,7 +53,7 @@ const getProject = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [error] })
     }
   }

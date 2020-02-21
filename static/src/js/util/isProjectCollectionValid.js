@@ -17,5 +17,3 @@ export const isProjectCollectionValid = (method) => {
 
   return isValid
 }
-
-export default isProjectCollectionValid

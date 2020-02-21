@@ -58,7 +58,7 @@ describe('getProjects', () => {
       }
     })
 
-    const result = await getProjects({})
+    const result = await getProjects({}, {})
 
     const expectedBody = JSON.stringify([
       {

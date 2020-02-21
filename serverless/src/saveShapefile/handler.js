@@ -4,6 +4,7 @@ import forge from 'node-forge'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 /**
  * Saves a shapefile to the database
@@ -14,6 +15,8 @@ const saveShapefile = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { body } = event
   const { params } = JSON.parse(body)
@@ -54,7 +57,7 @@ const saveShapefile = async (event, context) => {
       return {
         isBase64Encoded: false,
         statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        headers: defaultResponseHeaders,
         body: JSON.stringify({
           shapefile_id: obfuscateId(
             existingShapefileRecord.id,
@@ -72,7 +75,7 @@ const saveShapefile = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({
         shapefile_id: obfuscateId(newShapefileRecord[0].id, process.env.obfuscationSpinShapefiles)
       })
@@ -83,7 +86,7 @@ const saveShapefile = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [e] })
     }
   }
