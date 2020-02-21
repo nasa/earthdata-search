@@ -1,5 +1,5 @@
 // import nock from 'nock'
-import CwicRequest from '../cwic'
+import CwicGranuleRequest from '../cwicGranuleRequest'
 import {
   singleCwicGranuleResponse,
   singleCwicGranuleResponseWithImage,
@@ -11,10 +11,10 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('CwicRequest#transformRequest', () => {
+describe('CwicGranuleRequest#transformRequest', () => {
   describe('when logged out', () => {
     test('returns a basic example result correctly transformed', () => {
-      const cwicRequest = new CwicRequest()
+      const cwicRequest = new CwicGranuleRequest()
 
       const transformedData = cwicRequest.transformRequest({
         echoCollectionId: 'TEST_COLLECTION_ID'
@@ -24,7 +24,7 @@ describe('CwicRequest#transformRequest', () => {
     })
 
     test('returns only permitted keys correctly transformed', () => {
-      const cwicRequest = new CwicRequest()
+      const cwicRequest = new CwicGranuleRequest()
 
       const transformedData = cwicRequest.transformRequest({
         echoCollectionId: 'TEST_COLLECTION_ID',
@@ -37,7 +37,7 @@ describe('CwicRequest#transformRequest', () => {
 
   describe('when logged in', () => {
     test('returns a basic example result correctly transformed', () => {
-      const cwicRequest = new CwicRequest('authToken')
+      const cwicRequest = new CwicGranuleRequest('authToken')
       cwicRequest.startTime = 1576855756
 
 
@@ -49,7 +49,7 @@ describe('CwicRequest#transformRequest', () => {
     })
 
     test('returns only permitted keys correctly transformed', () => {
-      const cwicRequest = new CwicRequest('authToken')
+      const cwicRequest = new CwicGranuleRequest('authToken')
       cwicRequest.startTime = 1576855756
 
 
@@ -63,9 +63,9 @@ describe('CwicRequest#transformRequest', () => {
   })
 })
 
-describe('CwicRequest#transformResponse', () => {
+describe('CwicGranuleRequest#transformResponse', () => {
   test('formats single granule results correctly', () => {
-    const cwicRequest = new CwicRequest()
+    const cwicRequest = new CwicGranuleRequest()
 
     const transformedResponse = cwicRequest.transformResponse(singleCwicGranuleResponse)
 
@@ -78,7 +78,7 @@ describe('CwicRequest#transformResponse', () => {
   })
 
   test('appends additional keys to each granule necessary to match CMR', () => {
-    const cwicRequest = new CwicRequest()
+    const cwicRequest = new CwicGranuleRequest()
 
     const transformedResponse = cwicRequest.transformResponse(singleCwicGranuleResponse)
 
@@ -90,7 +90,7 @@ describe('CwicRequest#transformResponse', () => {
   })
 
   test('formats multi-granule results correctly', () => {
-    const cwicRequest = new CwicRequest()
+    const cwicRequest = new CwicGranuleRequest()
 
     const transformedResponse = cwicRequest.transformResponse(multipleCwicGranulesResponse)
 
@@ -104,7 +104,7 @@ describe('CwicRequest#transformResponse', () => {
 
   describe('sets the full browse image correctly', () => {
     test('when the granule has no link', () => {
-      const cwicRequest = new CwicRequest()
+      const cwicRequest = new CwicGranuleRequest()
 
       const transformedResponse = cwicRequest
         .transformResponse(singleCwicGranuleResponse)
@@ -116,7 +116,7 @@ describe('CwicRequest#transformResponse', () => {
     })
 
     test('when the granule has a link', () => {
-      const cwicRequest = new CwicRequest()
+      const cwicRequest = new CwicGranuleRequest()
 
       const transformedResponse = cwicRequest
         .transformResponse(singleCwicGranuleResponseWithImage)
@@ -129,7 +129,7 @@ describe('CwicRequest#transformResponse', () => {
   })
 })
 
-describe('CwicRequest#search', () => {
+describe('CwicGranuleRequest#search', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
@@ -147,7 +147,7 @@ describe('CwicRequest#search', () => {
   //       }
   //     })
 
-  //   const cwicRequest = new CwicRequest()
+  //   const cwicRequest = new CwicGranuleRequest()
 
   //   const transformRequestMock = jest.spyOn(cwicRequest, 'transformRequest')
   //     .mockImplementation(() => jest.fn(() => '{}'))

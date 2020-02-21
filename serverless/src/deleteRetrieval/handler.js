@@ -2,6 +2,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 /**
  * Delete a retrieval from the database
@@ -12,6 +13,8 @@ export default async function deleteRetrieval(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
     const { id: providedRetrieval } = event.pathParameters
@@ -38,7 +41,7 @@ export default async function deleteRetrieval(event, context) {
         isBase64Encoded: false,
         statusCode: 204,
         headers: {
-          'Access-Control-Allow-Origin': '*',
+          ...defaultResponseHeaders,
           'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
         },
         body: null
@@ -50,7 +53,7 @@ export default async function deleteRetrieval(event, context) {
       isBase64Encoded: false,
       statusCode: 404,
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
       body: JSON.stringify({ errors: [`Retrieval '${providedRetrieval}' not found.`] })
@@ -62,7 +65,7 @@ export default async function deleteRetrieval(event, context) {
       isBase64Encoded: false,
       statusCode: 500,
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
       body: JSON.stringify({ errors: [e] })

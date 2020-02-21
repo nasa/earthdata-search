@@ -1,6 +1,7 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 /**
  * Retrieve all the retrievals for the authenticated user
@@ -11,6 +12,8 @@ export default async function adminGetRetrievals(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
     const { id: providedRetrieval } = event.pathParameters
@@ -106,7 +109,7 @@ export default async function adminGetRetrievals(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify(formattedResponse)
     }
   } catch (e) {
@@ -115,7 +118,7 @@ export default async function adminGetRetrievals(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [e] })
     }
   }
