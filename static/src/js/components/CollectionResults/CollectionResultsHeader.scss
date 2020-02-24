@@ -1,4 +1,9 @@
 .collection-results-header {
+  &__primary {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+
   &__form-group {
     align-items: center;
     margin: 0;
@@ -23,8 +28,17 @@
   }
 
   &__adv-search-btn {
+    font-size: 0.875rem;
+
     .button__icon {
       margin-right: $spacer/2;
     }
+  }
+
+  &__meta {
+    padding: 0.25rem 1rem;
+    border-top: 1px solid $color__black--200;
+    font-size: 0.75rem;
+    color: $color__black--600;
   }
 }

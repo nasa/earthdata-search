@@ -1,48 +1,51 @@
-.dropdown-dark {
-  .dropdown-menu {
+// #root is required here to allow for dropdowns rendered in a portal,
+// which would be done to overcome overflow issues.
+#root,
+.dropdown-menu {
+  .dropdown-menu-dark,
+  .dropdown-dark & {
     background-color: $color__black--800;
     color: $color__black--200;
-  }
 
-  .dropdown-item {
-    color: $color__black--100;
-
-    &:hover {
+    .dropdown-item {
       color: $color__black--100;
-      background-color: $color__black--900;
-    }
-  }
 
-  .button__icon {
-    color: $color__black--500;
-  }
-
-  .form-control {
-    background-color: $color__black--700;
-    color: $color__white;
-    border: $color__black--700;
-
-    &:placeholder-shown {
-      color: $color__black--300;
+      &:hover {
+        color: $color__black--100;
+        background-color: $color__black--900;
+      }
     }
 
-    &:focus {
+    .button__icon {
+      color: $color__black--500;
+    }
+
+    .form-control {
+      background-color: $color__black--700;
       color: $color__white;
-      background-color: $color__black--600;
+      border: $color__black--700;
+
+      &:placeholder-shown {
+        color: $color__black--300;
+      }
+
+      &:focus {
+        color: $color__white;
+        background-color: $color__black--600;
+      }
     }
-  }
 
-  input[type="checkbox"] {
-     margin-right: 0.7rem;
-    border-radius: 4px;
-    position: relative;
-    vertical-align: top;
-    opacity: 0.3;
-    flex: none;
-    transform: scale(1.2);
+    input[type="checkbox"] {
+      margin-right: 0.7rem;
+      border-radius: 4px;
+      position: relative;
+      vertical-align: top;
+      opacity: 0.3;
+      flex: none;
 
-    &:checked {
-      opacity: 1;
+      &:checked {
+        opacity: 1;
+      }
     }
   }
 }

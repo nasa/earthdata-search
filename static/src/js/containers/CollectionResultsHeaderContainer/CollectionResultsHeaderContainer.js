@@ -16,11 +16,13 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  collections: state.searchResults.collections,
   collectionQuery: state.query.collection,
   portal: state.portal
 })
 
 export const CollectionResultsHeaderContainer = ({
+  collections,
   collectionQuery,
   portal,
   onChangeQuery,
@@ -28,6 +30,7 @@ export const CollectionResultsHeaderContainer = ({
   onToggleAdvancedSearchModal
 }) => (
   <CollectionResultsHeader
+    collections={collections}
     collectionQuery={collectionQuery}
     portal={portal}
     onChangeQuery={onChangeQuery}
@@ -37,6 +40,7 @@ export const CollectionResultsHeaderContainer = ({
 )
 
 CollectionResultsHeaderContainer.propTypes = {
+  collections: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,

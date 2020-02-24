@@ -1,17 +1,16 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import { isEqual } from 'lodash'
 import moment from 'moment'
 
 import Dropdown from 'react-bootstrap/Dropdown'
 
-import Button from '../Button/Button'
-import TemporalSelection from '../TemporalSelection/TemporalSelection'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+import TemporalSelectionDropdownMenu from './TemporalSelectionDropdownMenu'
+import TemporalSelectionDropdownToggle from './TemporalSelectionDropdownToggle'
 
 import './TemporalSelectionDropdown.scss'
-import { getTemporalDateFormat } from '../../util/edscDate'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 /**
  * TODO:
@@ -306,70 +305,25 @@ export default class TemporalSelectionDropdown extends PureComponent {
     } = this.state
 
     const {
-      isRecurring = false
-    } = temporal
-
-    const {
       onChangeQuery
     } = this.props
 
-    const classes = {
-      btnApply: classNames(
-        'temporal-selection-dropdown__button',
-        'temporal-selection-dropdown__button--apply'
-      ),
-      btnCancel: classNames(
-        'temporal-selection-dropdown__button',
-        'temporal-selection-dropdown__button--cancel'
-      )
-    }
-
-    // For recurring dates we don't show the year, it's displayed on the slider
-    const temporalDateFormat = getTemporalDateFormat(isRecurring)
-
     return (
       <Dropdown show={open} className="temporal-selection-dropdown dropdown-dark" onToggle={this.onDropdownToggle}>
-        <Dropdown.Toggle
-          variant="inline-block"
-          id="temporal-selection-dropdown"
-          className="search-form__button search-form__button--dark"
-          onClick={this.onToggleClick}
-        >
-          <i className="fa fa-calendar" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu className="temporal-selection-dropdown__menu">
-          <TemporalSelection
-            controlId="temporal-selection-dropdown"
-            temporal={temporal}
-            format={temporalDateFormat}
-            onRecurringToggle={this.onRecurringToggle}
-            onChangeRecurring={this.onChangeRecurring}
-            onChangeQuery={onChangeQuery}
-            onSubmitStart={value => this.setStartDate(value)}
-            onSubmitEnd={value => this.setEndDate(value)}
-            onValid={this.onValid}
-            onInvalid={this.onInvalid}
-          />
-          <div>
-            <Button
-              className={classes.btnApply}
-              bootstrapVariant="primary"
-              label="Apply"
-              onClick={this.onApplyClick}
-              disabled={disabled}
-            >
-              Apply
-            </Button>
-            <Button
-              className={classes.btnCancel}
-              bootstrapVariant="dark"
-              label="Clear"
-              onClick={this.onClearClick}
-            >
-              Clear
-            </Button>
-          </div>
-        </Dropdown.Menu>
+        <TemporalSelectionDropdownToggle onToggleClick={this.onToggleClick} />
+        <TemporalSelectionDropdownMenu
+          temporal={temporal}
+          onApplyClick={this.onApplyClick}
+          onClearClick={this.onClearClick}
+          onRecurringToggle={this.onRecurringToggle}
+          onChangeRecurring={this.onChangeRecurring}
+          setStartDate={this.setStartDate}
+          setEndDate={this.setEndDate}
+          onValid={this.onValid}
+          onInvalid={this.onInvalid}
+          onChangeQuery={onChangeQuery}
+          disabled={disabled}
+        />
       </Dropdown>
     )
   }

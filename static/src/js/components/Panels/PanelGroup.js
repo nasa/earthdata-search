@@ -21,14 +21,15 @@ import './PanelGroup.scss'
 // eslint-disable-next-line react/prefer-stateless-function
 export const PanelGroup = ({
   activePanelId,
-  footer,
   children,
-  primaryHeading,
-  secondaryHeading,
-  isOpen,
+  footer,
+  header,
   isActive,
+  isOpen,
   onChangePanel,
-  onPanelsClose
+  onPanelsClose,
+  primaryHeading,
+  secondaryHeading
 }) => {
   const renderPanels = (child, index) => {
     if (!child) return null
@@ -49,7 +50,8 @@ export const PanelGroup = ({
     'panel-group',
     {
       'panel-group--is-open': isOpen,
-      'panel-group--is-active': isActive
+      'panel-group--is-active': isActive,
+      'panel-group--custom-header': header
     }
   ])
 
@@ -60,6 +62,7 @@ export const PanelGroup = ({
         primaryHeading={primaryHeading}
         secondaryHeading={secondaryHeading}
         onPanelsClose={onPanelsClose}
+        header={header}
       />
       {panels}
     </div>
@@ -70,7 +73,9 @@ PanelGroup.defaultProps = {
   activePanelId: '0',
   isActive: false,
   isOpen: false,
+  primaryHeading: null,
   secondaryHeading: null,
+  header: null,
   footer: null,
   onChangePanel: null,
   onPanelsClose: null
@@ -81,9 +86,10 @@ PanelGroup.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node)
   ]).isRequired,
+  header: PropTypes.node,
   isOpen: PropTypes.bool,
   isActive: PropTypes.bool,
-  primaryHeading: PropTypes.string.isRequired,
+  primaryHeading: PropTypes.string,
   activePanelId: PropTypes.string,
   secondaryHeading: PropTypes.string,
   onChangePanel: PropTypes.func,

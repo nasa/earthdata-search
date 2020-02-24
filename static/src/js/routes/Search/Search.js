@@ -97,13 +97,6 @@ export class Search extends Component {
             </div>
           </header>
           <Switch>
-            <Route exact path={`${path}`}>
-              {/* <MasterOverlayPanelContainer
-                tabHandle={<CollectionResultsTabContainer />}
-                header={<CollectionResultsHeaderContainer />}
-                body={<CollectionResultsBodyContainer />}
-              /> */}
-            </Route>
             <Route exact path={`${path}/granules`}>
               <MasterOverlayPanelContainer
                 tabHandle={<GranuleResultsTabContainer />}

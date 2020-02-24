@@ -32,7 +32,7 @@ describe('TemporalSelectionDropdown component', () => {
   test('when clicked toggles the state of show ', () => {
     const { enzymeWrapper } = setup()
 
-    enzymeWrapper.find(Dropdown.Toggle).simulate('click')
+    enzymeWrapper.instance().onToggleClick()
     expect(enzymeWrapper.find(Dropdown).prop('show')).toBe(true)
   })
 

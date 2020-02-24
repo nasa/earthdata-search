@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
+import CollectionResultsHeaderContainer
+  from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
 
 import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
@@ -43,8 +45,7 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="collection-results-panel"
-        primaryHeading="Heading"
-        secondaryHeading="Second Heading"
+        header={<CollectionResultsHeaderContainer onPanelClose={this.onPanelClose} />}
       >
         <PanelItem>
           <CollectionResultsBodyContainer />
