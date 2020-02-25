@@ -1,13 +1,12 @@
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
-import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
 
 /**
  * Perform an authenticated CMR Timeline search
  * @param {Object} event Details about the HTTP request that it received
  */
-const timelineSearch = async (event, context) => {
+const timelineSearch = async (event) => {
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
     'concept_id',
@@ -22,9 +21,7 @@ const timelineSearch = async (event, context) => {
 
   const { body } = event
 
-  const { invocationTime, requestId } = JSON.parse(body)
-
-  logLambdaEntryTime(requestId, invocationTime, context)
+  const { requestId } = JSON.parse(body)
 
   return doSearchRequest({
     jwtToken: getJwtToken(event),
@@ -34,7 +31,6 @@ const timelineSearch = async (event, context) => {
       nonIndexedKeys,
       permittedCmrKeys
     }),
-    invocationTime,
     requestId
   })
 }

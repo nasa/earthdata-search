@@ -2,18 +2,15 @@ import { pick } from 'lodash'
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
-import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
 
 /**
  * Perform an authenticated CMR Granule search
  * @param {Object} event Details about the HTTP request that it received
  */
-const cmrGranuleSearch = async (event, context) => {
+const cmrGranuleSearch = async (event) => {
   const { body, headers } = event
 
-  const { invocationTime, requestId } = JSON.parse(body)
-
-  logLambdaEntryTime(requestId, invocationTime, context)
+  const { requestId } = JSON.parse(body)
 
   // The 'Accept' header contains the UMM version
   const providedHeaders = pick(headers, ['Accept'])
@@ -56,7 +53,6 @@ const cmrGranuleSearch = async (event, context) => {
       permittedCmrKeys,
       nonIndexedKeys
     }),
-    invocationTime,
     providedHeaders,
     requestId
   })

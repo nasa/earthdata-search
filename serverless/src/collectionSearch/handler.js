@@ -2,7 +2,6 @@ import { pick } from 'lodash'
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
-import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
 
 /**
  * Returns the keys permitted by cmr based on the request format
@@ -55,13 +54,11 @@ function getPermittedCmrKeys(format) {
  * Perform an authenticated CMR Collection search
  * @param {Object} event Details about the HTTP request that it received
  */
-const collectionSearch = async (event, context) => {
+const collectionSearch = async (event) => {
   const { body, headers, pathParameters } = event
   const { format } = pathParameters
 
-  const { invocationTime, requestId } = JSON.parse(body)
-
-  logLambdaEntryTime(requestId, invocationTime, context)
+  const { requestId } = JSON.parse(body)
 
   // The 'Accept' header contains the UMM version
   const providedHeaders = pick(headers, ['Accept'])
