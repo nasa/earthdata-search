@@ -83,7 +83,6 @@ export default class Request {
       if (this.authenticated || this.lambda) {
         return JSON.stringify({
           requestId: this.requestId,
-          invocationTime: this.startTime,
           params: filteredData,
           ext
         })

@@ -97,7 +97,7 @@ describe('Request#transformRequest', () => {
 
     const transformedData = request.transformRequest(data, {})
 
-    expect(transformedData).toEqual('{"invocationTime":1576855756,"params":{"param_name":123}}')
+    expect(transformedData).toEqual('{"params":{"param_name":123}}')
   })
 })
 

@@ -6,15 +6,14 @@ import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEchoToken } from '../util/urs/getEchoToken'
-import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
 
 /**
  * Retrieve data quality summaries for a given CMR Collection
  * @param {Object} event Details about the HTTP request that it received
  */
-const getDataQualitySummaries = async (event, context) => {
+const getDataQualitySummaries = async (event) => {
   const { body } = event
-  const { invocationTime, params = {}, requestId } = JSON.parse(body)
+  const { params = {}, requestId } = JSON.parse(body)
 
   const jwtToken = getJwtToken(event)
 
@@ -29,8 +28,6 @@ const getDataQualitySummaries = async (event, context) => {
   try {
     const dataQualitySummaries = []
     const errors = []
-
-    logLambdaEntryTime(requestId, invocationTime, context)
 
     const dqsAssociationResponse = await request.get({
       uri: `${echoRestRoot}/data_quality_summary_definitions.json`,

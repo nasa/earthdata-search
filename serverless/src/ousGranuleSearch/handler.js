@@ -1,13 +1,12 @@
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
-import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
 
 /**
  * Perform an authenticated OUS Granule search
  * @param {Object} event Details about the HTTP request that it received
  */
-const ousGranuleSearch = async (event, context) => {
+const ousGranuleSearch = async (event) => {
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
     'bounding_box',
@@ -24,9 +23,7 @@ const ousGranuleSearch = async (event, context) => {
 
   const { body } = event
 
-  const { invocationTime, requestId } = JSON.parse(body)
-
-  logLambdaEntryTime(requestId, invocationTime, context)
+  const { requestId } = JSON.parse(body)
 
   // We need echo_collection_id to construct the URL but it is not listed
   // as a permitted key so it will be ignored when the request is made
@@ -42,7 +39,6 @@ const ousGranuleSearch = async (event, context) => {
       nonIndexedKeys,
       stringifyResult: false
     }),
-    invocationTime,
     requestId,
     bodyType: 'json'
   })
