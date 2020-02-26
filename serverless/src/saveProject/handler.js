@@ -3,6 +3,7 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Saves a project to the database
@@ -88,26 +89,23 @@ const saveProject = async (event, context) => {
 
       newProjectId = newProjectRecord[0].id
     }
-  } catch (e) {
-    console.log(e)
 
     return {
       isBase64Encoded: false,
-      statusCode: 500,
+      statusCode: 200,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      body: JSON.stringify({
+        name,
+        path,
+        project_id: obfuscateId(newProjectId)
+      })
     }
-  }
-
-  return {
-    isBase64Encoded: false,
-    statusCode: 200,
-    headers: defaultResponseHeaders,
-    body: JSON.stringify({
-      name,
-      path,
-      project_id: obfuscateId(newProjectId)
-    })
+  } catch (e) {
+    return {
+      isBase64Encoded: false,
+      headers: defaultResponseHeaders,
+      ...parseError(e)
+    }
   }
 }
 

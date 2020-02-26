@@ -5,6 +5,7 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { isLinkType } from '../../../static/src/js/util/isLinkType'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Retrieve a single retrieval record from the database
@@ -144,9 +145,8 @@ export default async function getRetrieval(event, context) {
   } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

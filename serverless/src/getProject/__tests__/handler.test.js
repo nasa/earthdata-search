@@ -86,4 +86,22 @@ describe('getProject', () => {
     expect(result.body).toEqual(expectedBody)
     expect(result.statusCode).toBe(404)
   })
+
+  test('responds correctly on error', async () => {
+    const projectId = 123
+
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+
+    const event = {
+      pathParameters: {
+        id: projectId
+      }
+    }
+
+    const response = await getProject(event, {})
+
+    expect(response.statusCode).toEqual(500)
+  })
 })

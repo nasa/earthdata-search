@@ -41,8 +41,6 @@ describe('deleteProject', () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response(1)
-      } else {
-        query.response(undefined)
       }
     })
 
@@ -67,8 +65,6 @@ describe('deleteProject', () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response(0)
-      } else {
-        query.response(undefined)
       }
     })
 
@@ -85,5 +81,23 @@ describe('deleteProject', () => {
 
     expect(result.body).toEqual(JSON.stringify({ errors: ['Project \'7023641925\' not found.'] }))
     expect(result.statusCode).toBe(404)
+  })
+
+  test('returns a 500 when an error occurs', async () => {
+    const retrievalId = '7023641925'
+
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+
+    const event = {
+      pathParameters: {
+        id: retrievalId
+      }
+    }
+
+    const response = await deleteProject(event, {})
+
+    expect(response.statusCode).toEqual(500)
   })
 })

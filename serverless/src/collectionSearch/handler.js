@@ -2,6 +2,8 @@ import { pick } from 'lodash'
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Returns the keys permitted by cmr based on the request format
@@ -58,6 +60,8 @@ const collectionSearch = async (event) => {
   const { body, headers, pathParameters } = event
   const { format } = pathParameters
 
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   const { requestId } = JSON.parse(body)
 
   // The 'Accept' header contains the UMM version
@@ -79,17 +83,25 @@ const collectionSearch = async (event) => {
     'tag_key'
   ]
 
-  return doSearchRequest({
-    jwtToken: getJwtToken(event),
-    path: `/search/collections.${format}`,
-    params: buildParams({
-      body,
-      nonIndexedKeys,
-      permittedCmrKeys
-    }),
-    providedHeaders,
-    requestId
-  })
+  try {
+    return doSearchRequest({
+      jwtToken: getJwtToken(event),
+      path: `/search/collections.${format}`,
+      params: buildParams({
+        body,
+        nonIndexedKeys,
+        permittedCmrKeys
+      }),
+      providedHeaders,
+      requestId
+    })
+  } catch (e) {
+    return {
+      isBase64Encoded: false,
+      headers: defaultResponseHeaders,
+      ...parseError(e)
+    }
+  }
 }
 
 export default collectionSearch

@@ -7,7 +7,7 @@ import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
-import { logHttpError } from '../util/logging/logHttpError'
+import { parseError } from '../util/parseError'
 
 // AWS SQS adapter
 let sqs
@@ -63,13 +63,10 @@ const saveContactInfo = async (event) => {
         resolveWithFullResponse: true
       })
     } catch (e) {
-      const errors = logHttpError(e)
-
       return {
         isBase64Encoded: false,
-        statusCode: 500,
         headers: defaultResponseHeaders,
-        body: JSON.stringify({ errors })
+        ...parseError(e)
       }
     }
 
@@ -89,13 +86,10 @@ const saveContactInfo = async (event) => {
       body: JSON.stringify(response.body)
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

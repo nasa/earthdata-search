@@ -7,8 +7,8 @@ const errorLogger = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const { body } = event
-  const { params = {} } = JSON.parse(body)
-  const { error = {} } = params
+  const { params } = JSON.parse(body)
+  const { error } = params
   const {
     error: providedError,
     guid,

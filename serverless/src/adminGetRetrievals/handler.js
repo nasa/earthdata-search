@@ -1,6 +1,7 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 const sortKeyMap = {
   '-created_at': ['retrievals.created_at', 'desc'],
@@ -71,13 +72,10 @@ export default async function adminGetRetrievals(event, context) {
       })
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

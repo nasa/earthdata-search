@@ -2,6 +2,8 @@ import { pick } from 'lodash'
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Perform an authenticated CMR Granule search
@@ -9,6 +11,8 @@ import { getJwtToken } from '../util/getJwtToken'
  */
 const cmrGranuleSearch = async (event) => {
   const { body, headers } = event
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { requestId } = JSON.parse(body)
 
@@ -45,17 +49,25 @@ const cmrGranuleSearch = async (event) => {
     'sort_key'
   ]
 
-  return doSearchRequest({
-    jwtToken: getJwtToken(event),
-    path: '/search/granules.json',
-    params: buildParams({
-      body,
-      permittedCmrKeys,
-      nonIndexedKeys
-    }),
-    providedHeaders,
-    requestId
-  })
+  try {
+    return doSearchRequest({
+      jwtToken: getJwtToken(event),
+      path: '/search/granules.json',
+      params: buildParams({
+        body,
+        permittedCmrKeys,
+        nonIndexedKeys
+      }),
+      providedHeaders,
+      requestId
+    })
+  } catch (e) {
+    return {
+      isBase64Encoded: false,
+      headers: defaultResponseHeaders,
+      ...parseError(e)
+    }
+  }
 }
 
 export default cmrGranuleSearch

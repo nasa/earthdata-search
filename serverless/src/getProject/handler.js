@@ -1,6 +1,7 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Retrieve a single project from the database
@@ -47,14 +48,11 @@ const getProject = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
-  } catch (error) {
-    console.log(error)
-
+  } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [error] })
+      ...parseError(e)
     }
   }
 }
