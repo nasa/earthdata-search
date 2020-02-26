@@ -6,7 +6,7 @@ import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
-import { logHttpError } from '../util/logging/logHttpError'
+import { parseError } from '../util/parseError'
 
 /**
  * Perform an authenticated CMR concept search
@@ -56,13 +56,11 @@ const retrieveConcept = async (event) => {
       body: JSON.stringify(body)
     }
   } catch (e) {
-    const errors = logHttpError(e)
-
     return {
       isBase64Encoded: false,
       statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors })
+      ...parseError(e)
     }
   }
 }

@@ -4,6 +4,7 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Retrieve all the retrievals for the authenticated user
@@ -69,13 +70,10 @@ export default async function getRetrievals(event, context) {
       body: JSON.stringify(Object.values(sortBy(retrievalsResponse, 'created_at')).reverse())
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

@@ -2,6 +2,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Handler for retreiving a users contact information
@@ -37,12 +38,11 @@ const getContactInfo = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify(userRecord[0])
     }
-  } catch (error) {
+  } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [error] })
+      ...parseError(e)
     }
   }
 }

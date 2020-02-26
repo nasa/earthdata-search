@@ -1,3 +1,4 @@
+import AWS from 'aws-sdk'
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 import simpleOAuth2 from 'simple-oauth2'
@@ -71,6 +72,15 @@ describe('edlCallback', () => {
     const code = '2057964173'
     const state = 'http://example.com'
 
+    const sqsUserData = jest.fn().mockReturnValue({
+      promise: jest.fn().mockResolvedValue()
+    })
+
+    AWS.SQS = jest.fn()
+      .mockImplementationOnce(() => ({
+        sendMessage: sqsUserData
+      }))
+
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({ id: 1 })
@@ -87,6 +97,15 @@ describe('edlCallback', () => {
     }
 
     const response = await edlCallback(event, {})
+
+    expect(sqsUserData).toBeCalledTimes(1)
+    expect(sqsUserData.mock.calls[0]).toEqual([expect.objectContaining({
+      MessageBody: JSON.stringify({
+        environment: 'prod',
+        userId: 1,
+        username: 'edsc'
+      })
+    })])
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')

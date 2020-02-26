@@ -6,6 +6,7 @@ import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEchoToken } from '../util/urs/getEchoToken'
+import { parseError } from '../util/parseError'
 
 /**
  * Retrieve data quality summaries for a given CMR Collection
@@ -13,7 +14,7 @@ import { getEchoToken } from '../util/urs/getEchoToken'
  */
 const getDataQualitySummaries = async (event) => {
   const { body } = event
-  const { params = {}, requestId } = JSON.parse(body)
+  const { params, requestId } = JSON.parse(body)
 
   const jwtToken = getJwtToken(event)
 
@@ -80,7 +81,7 @@ const getDataQualitySummaries = async (event) => {
 
         console.log(`Request ${dataQualitySummaryRequestId} for data quality summary ${catalogItemId} completed after ${dqsResponse.elapsedTime} ms`)
 
-        const { body = {} } = dqsResponse
+        const { body } = dqsResponse
         const { data_quality_summary_definition: dataQualitySummary = {} } = body
 
         dataQualitySummaries.push(dataQualitySummary)
@@ -113,13 +114,10 @@ const getDataQualitySummaries = async (event) => {
       body: JSON.stringify({ errors })
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

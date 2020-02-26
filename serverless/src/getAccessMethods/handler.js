@@ -11,7 +11,7 @@ import { getVariables } from './getVariables'
 import { getOutputFormats } from './getOutputFormats'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-
+import { parseError } from '../util/parseError'
 
 /**
  * Retrieve access methods for a provided collection
@@ -206,13 +206,10 @@ const getAccessMethods = async (event, context) => {
       body: JSON.stringify({ accessMethods, selectedAccessMethod })
     }
   } catch (e) {
-    console.log('error', e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }
