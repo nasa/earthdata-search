@@ -3,7 +3,7 @@ import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { getEchoToken } from '../urs/getEchoToken'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
-import { logHttpError } from '../logging/logHttpError'
+import { parseError } from '../parseError'
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -16,7 +16,8 @@ export const doSearchRequest = async ({
   params,
   requestId,
   providedHeaders = {},
-  bodyType = 'form'
+  bodyType = 'form',
+  method = 'post'
 }) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
@@ -34,14 +35,21 @@ export const doSearchRequest = async ({
       }
     }
 
-    // CMR requires form data for POST requests, while service bridge requires JSON
-    if (bodyType === 'form') {
-      requestParams.form = params
-    } else if (bodyType === 'json') {
-      requestParams.body = params
-    }
+    let response
+    if (method === 'post') {
+      // CMR requires form data for POST requests, while service bridge requires JSON
+      if (bodyType === 'form') {
+        requestParams.form = params
+      } else if (bodyType === 'json') {
+        requestParams.body = params
+      }
 
-    const response = await request.post(requestParams)
+      response = await request.post(requestParams)
+    } else {
+      requestParams.qs = params
+
+      response = await request.get(requestParams)
+    }
 
     const { body, headers } = response
     const { 'cmr-took': cmrTook } = headers
@@ -61,13 +69,10 @@ export const doSearchRequest = async ({
       body: JSON.stringify(body)
     }
   } catch (e) {
-    const errors = logHttpError(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors })
+      ...parseError(e)
     }
   }
 }

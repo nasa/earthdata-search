@@ -138,6 +138,15 @@
   #
   # API Gateway Endpoints
   #
+  autocomplete:
+    handler: serverless/src/autocomplete/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    events:
+      - http:
+          method: post
+          cors: true
+          path: autocomplete
+
   regionSearch:
     handler: serverless/src/regionSearch/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
