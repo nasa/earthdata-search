@@ -61,9 +61,6 @@ class SearchPanels extends PureComponent {
         <PanelSection>
           {panelSection}
         </PanelSection>
-        <PanelSection>
-          {panelSection}
-        </PanelSection>
       </Panels>
     )
   }
