@@ -15,6 +15,7 @@ export const removeError = payload => ({
 
 export const handleError = ({
   error,
+  message = 'There was a problem completing the request',
   action,
   resource,
   verb = 'retrieving',
@@ -30,10 +31,6 @@ export const handleError = ({
 
     requestId = existingRequestId
   }
-
-  const {
-    error: message = 'There was a problem completing the request'
-  } = error
 
   if (displayBanner) {
     dispatch(addError({
@@ -55,5 +52,5 @@ export const handleError = ({
       message,
       error
     }
-  }).then(() => {})
+  })
 }

@@ -3,6 +3,7 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Delete a retrieval from the database
@@ -59,16 +60,13 @@ export default async function deleteRetrieval(event, context) {
       body: JSON.stringify({ errors: [`Retrieval '${providedRetrieval}' not found.`] })
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: {
         ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

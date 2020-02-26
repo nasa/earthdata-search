@@ -125,4 +125,24 @@ describe('getDataQualitySummaries', () => {
       ]
     }))
   })
+
+  test('responds correctly on error', async () => {
+    nock(/echorest/)
+      .get(/data_quality_summary_definitions/)
+      .reply(500, {
+        errors: [
+          'Test error message'
+        ]
+      })
+
+    const dqsResponse = await getDataQualitySummaries({
+      body: JSON.stringify({
+        params: {
+          catalog_item_id: 'C10000001-EDSC'
+        }
+      })
+    }, { functionName: 'getDataQualitySummaries' })
+
+    expect(dqsResponse.statusCode).toEqual(500)
+  })
 })

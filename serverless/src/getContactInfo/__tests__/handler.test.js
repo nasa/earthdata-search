@@ -62,4 +62,14 @@ describe('getContactInfo', () => {
 
     expect(result.body).toEqual(expectedBody)
   })
+
+  test('responds correctly on error', async () => {
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+
+    const response = await getContactInfo({}, {})
+
+    expect(response.statusCode).toEqual(500)
+  })
 })

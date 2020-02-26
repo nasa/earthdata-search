@@ -8,6 +8,7 @@ import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtTok
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { removeSpatialFromAccessMethod } from '../util/removeSpatialFromAccessMethod'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 // AWS SQS adapter
 let sqs
@@ -203,16 +204,13 @@ const submitRetrieval = async (event, context) => {
       body: JSON.stringify(response)
     }
   } catch (e) {
-    console.log(e)
-
     // On error rollback our transaction
     retrievalDbTransaction.rollback()
 
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

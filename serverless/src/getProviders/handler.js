@@ -3,7 +3,7 @@ import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
-import { logHttpError } from '../util/logging/logHttpError'
+import { parseError } from '../util/parseError'
 
 /**
  * Perform an authenticated CMR Concept Metadata search
@@ -38,13 +38,10 @@ const getProviders = async (event) => {
       body: JSON.stringify(body)
     }
   } catch (e) {
-    const errors = logHttpError(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors })
+      ...parseError(e)
     }
   }
 }
