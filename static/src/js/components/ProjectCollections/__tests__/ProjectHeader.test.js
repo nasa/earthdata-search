@@ -54,7 +54,7 @@ describe('ProjectHeader component', () => {
         collections: {
           allIds: ['collectionId1'],
           byId: {
-            'collectionId1': {
+            collectionId1: {
               granules: {}
             }
           }

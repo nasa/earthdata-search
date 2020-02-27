@@ -63,7 +63,8 @@ describe('FINISHED_COLLECTIONS_TIMER', () => {
       loadTime: 5
     }
 
-    expect(collectionsResultsReducer({ ...initialState, timerStart: start }, action)).toEqual(expectedState)
+    expect(collectionsResultsReducer({ ...initialState, timerStart: start }, action))
+      .toEqual(expectedState)
   })
 })
 

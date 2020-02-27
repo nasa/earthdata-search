@@ -72,7 +72,7 @@ describe('AdvancedSearchForm component', () => {
             fields: [
               {
                 name: 'testInput',
-                type: 'input',
+                type: 'input'
               }
             ]
           })

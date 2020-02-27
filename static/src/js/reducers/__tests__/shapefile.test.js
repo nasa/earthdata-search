@@ -49,7 +49,6 @@ describe('CLEAR_SHAPEFILE', () => {
 
 describe('UPDATE_SHAPEFILE', () => {
   test('returns the correct state', () => {
-
     const payload = {
       shapefileName: 'test-name'
     }
@@ -74,7 +73,6 @@ describe('UPDATE_SHAPEFILE', () => {
 
 describe('LOADING_SHAPEFILE', () => {
   test('returns the correct state', () => {
-
     const payload = {
       name: 'test-name'
     }
@@ -98,7 +96,6 @@ describe('LOADING_SHAPEFILE', () => {
 
 describe('ERRORED_SHAPEFILE', () => {
   test('returns the correct state', () => {
-
     const payload = {
       type: 'test-error-type'
     }
@@ -123,7 +120,6 @@ describe('ERRORED_SHAPEFILE', () => {
 
 describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
-
     const payload = {
       shapefile: {
         shapefileId: 'test-id'

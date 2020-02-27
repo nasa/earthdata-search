@@ -82,7 +82,8 @@ describe('GranuleFiltersPanelContainer component', () => {
       expect(enzymeWrapper.find(SecondaryOverlayPanelContainer).prop('footer').type).toEqual(GranuleFiltersActions)
       expect(granuleFiltersActionsProps.isValid).toEqual(true)
       expect(granuleFiltersActionsProps.onApplyClick).toEqual(props.handleSubmit)
-      expect(granuleFiltersActionsProps.onClearClick).toEqual(enzymeWrapper.instance().onClearGranuleFilters)
+      expect(granuleFiltersActionsProps.onClearClick)
+        .toEqual(enzymeWrapper.instance().onClearGranuleFilters)
     })
   })
 
