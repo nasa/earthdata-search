@@ -11,6 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     boundingBoxSearch: '',
+    displaySpatialPolygonWarning: false,
     drawingNewLayer: false,
     lineSearch: '',
     pointSearch: '',
@@ -102,6 +103,33 @@ describe('SpatialDisplay component', () => {
 
       expect(filterStackItem.props().title).toEqual('Spatial')
       expect(filterStackItem.props().icon).toEqual('crop')
+      expect(filterStackContents.props().title).toEqual('Polygon')
+
+      const pointCount = filterStackContents.props()
+        .body.props.children.props.children.props.children
+      expect(pointCount).toEqual('3 Points')
+    })
+  })
+
+  describe('with polygonSearch and displaySpatialPolygonWarning', () => {
+    test('should render without spatial info and a warning', () => {
+      const { enzymeWrapper } = setup()
+      const newPolygon = '-77.04444122314453,38.99228142151045,'
+        + '-77.01992797851562,38.79166886339155,'
+        + '-76.89415168762207,38.902629947921575,'
+        + '-77.04444122314453,38.99228142151045'
+
+      enzymeWrapper.setProps({
+        displaySpatialPolygonWarning: true,
+        polygonSearch: newPolygon
+      })
+
+      const filterStackItem = enzymeWrapper.find(FilterStackItem)
+      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+
+      expect(filterStackItem.props().title).toEqual('Spatial')
+      expect(filterStackItem.props().icon).toEqual('crop')
+      expect(filterStackItem.props().error).toEqual('This collection does not support polygon search. Your polygon has been converted to a bounding box.')
       expect(filterStackContents.props().title).toEqual('Polygon')
 
       const pointCount = filterStackContents.props()
