@@ -119,7 +119,6 @@ describe('CollectionResultsBody component', () => {
       mount: true
     })
 
-    const prevGetRef = CollectionResultsBody.prototype.getRef
     expect(CollectionResultsBody.prototype.getRef).toHaveBeenCalledTimes(1)
   })
 })

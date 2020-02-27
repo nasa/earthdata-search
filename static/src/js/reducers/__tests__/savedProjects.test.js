@@ -8,7 +8,7 @@ import {
 const initialState = {
   projects: [],
   isLoading: false,
-  isLoaded: false,
+  isLoaded: false
 }
 
 describe('INITIAL_STATE', () => {
@@ -22,7 +22,7 @@ describe('INITIAL_STATE', () => {
 describe('SET_SAVED_PROJECTS_LOADING', () => {
   test('returns the correct state', () => {
     const action = {
-      type: SET_SAVED_PROJECTS_LOADING,
+      type: SET_SAVED_PROJECTS_LOADING
     }
 
     const expectedState = {
@@ -108,4 +108,3 @@ describe('REMOVE_SAVED_PROJECT', () => {
     expect(savedProjectsReducer(initial, action)).toEqual(expectedState)
   })
 })
-

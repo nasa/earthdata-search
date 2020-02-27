@@ -27,7 +27,6 @@ describe('GranuleFiltersHeader component', () => {
   })
 
   test('sets the dataset ID correctly', () => {
-
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find('.granule-filters-header__secondary').text()).toEqual('Collection ID')
