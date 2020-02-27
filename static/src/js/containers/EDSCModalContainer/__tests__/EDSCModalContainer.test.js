@@ -125,7 +125,8 @@ describe('EDSCModalContainer component', () => {
         innerHeader: <span>Inner Header</span>
       })
 
-      expect(enzymeWrapper.find(EDSCModal).props().innerHeaderEl).toMatchObject(<span>Inner Header</span>)
+      expect(enzymeWrapper.find(EDSCModal).props().innerHeaderEl)
+        .toMatchObject(<span>Inner Header</span>)
     })
   })
 

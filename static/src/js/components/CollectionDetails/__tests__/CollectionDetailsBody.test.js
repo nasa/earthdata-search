@@ -17,7 +17,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     collectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata,
-    formattedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.formattedMetadata,
+    formattedCollectionMetadata: collectionDetailsBodyProps
+      .focusedCollectionMetadata.formattedMetadata,
     onToggleRelatedUrlsModal: jest.fn()
   }
 
