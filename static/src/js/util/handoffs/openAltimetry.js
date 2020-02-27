@@ -15,7 +15,11 @@ export const fetchOpenAltimetryHandoffUrl = (
 ) => {
   const openAltimetryRoot = 'https://openaltimetry.org/data/icesat2/'
 
-  const params = {}
+  const { short_name: shortName } = collectionMetadata
+
+  const params = {
+    product: shortName
+  }
 
   const { spatial, temporal } = collectionSearch
 
