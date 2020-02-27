@@ -34,7 +34,7 @@ describe('handoffs#giovanni', () => {
 
   test('returns a open altimetry handoff object', () => {
     const collectionMetadata = {
-      short_name: 'earthdata_search',
+      short_name: 'ATL08',
       tags: {
         'edsc.extra.handoff.open_altimetry': {}
       }
@@ -45,7 +45,7 @@ describe('handoffs#giovanni', () => {
     expect(response).toEqual([
       {
         title: 'Open Altimetry',
-        href: 'https://openaltimetry.org/data/icesat2/?mapType=geographic'
+        href: 'https://openaltimetry.org/data/icesat2/?product=ATL08&mapType=geographic'
       }
     ])
   })
