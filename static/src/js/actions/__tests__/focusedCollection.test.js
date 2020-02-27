@@ -13,7 +13,8 @@ import {
   UPDATE_COLLECTION_METADATA,
   UPDATE_FOCUSED_COLLECTION,
   UPDATE_FOCUSED_GRANULE,
-  UPDATE_GRANULE_QUERY
+  UPDATE_GRANULE_QUERY,
+  TOGGLE_SPATIAL_POLYGON_WARNING
 } from '../../constants/actionTypes'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
@@ -289,6 +290,9 @@ describe('getFocusedCollection', () => {
           allIds: []
         }
       },
+      query: {
+        collection: {}
+      },
       searchResults: {
         granules: {}
       }
@@ -298,10 +302,14 @@ describe('getFocusedCollection', () => {
     await store.dispatch(getFocusedCollection()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_QUERY,
         payload: { pageNum: 1 }
       })
-      expect(storeActions[1]).toEqual({
+      expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [
           {
@@ -312,12 +320,12 @@ describe('getFocusedCollection', () => {
           }
         ]
       })
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_AUTH,
         payload: ''
       })
       // updateCollectionMetadata
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[4]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: getCollectionsResponseUnauth
       })
@@ -390,6 +398,9 @@ describe('getFocusedCollection', () => {
           allIds: []
         }
       },
+      query: {
+        collection: {}
+      },
       searchResults: {
         granules: {}
       }
@@ -399,10 +410,14 @@ describe('getFocusedCollection', () => {
     await store.dispatch(actions.getFocusedCollection()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_QUERY,
         payload: { pageNum: 1 }
       })
-      expect(storeActions[1]).toEqual({
+      expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [
           {
@@ -413,12 +428,12 @@ describe('getFocusedCollection', () => {
           }
         ]
       })
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_AUTH,
         payload: 'token'
       })
       // updateCollectionMetadata
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[4]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: getCollectionsResponseAuth
       })
@@ -493,6 +508,9 @@ describe('getFocusedCollection', () => {
           allIds: []
         }
       },
+      query: {
+        collection: {}
+      },
       searchResults: {
         granules
       }
@@ -502,10 +520,14 @@ describe('getFocusedCollection', () => {
     await store.dispatch(actions.getFocusedCollection()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_QUERY,
         payload: { pageNum: 1 }
       })
-      expect(storeActions[1]).toEqual({
+      expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [
           {
@@ -516,12 +538,12 @@ describe('getFocusedCollection', () => {
           }
         ]
       })
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_AUTH,
         payload: ''
       })
       // updateCollectionMetadata
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[4]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: getCollectionsResponseUnauth
       })
@@ -538,21 +560,28 @@ describe('getFocusedCollection', () => {
       searchResults: {
         granules: {}
       },
-      metadata: {}
+      metadata: {},
+      query: {
+        collection: {}
+      }
     })
 
     store.dispatch(actions.getFocusedCollection())
     const storeActions = store.getActions()
 
     expect(storeActions[0]).toEqual({
+      type: TOGGLE_SPATIAL_POLYGON_WARNING,
+      payload: false
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_GRANULE_QUERY,
       payload: { pageNum: 1 }
     })
-    expect(storeActions[1]).toEqual({
+    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: []
     })
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[3]).toEqual({
       type: RESET_GRANULE_RESULTS
     })
   })
@@ -573,6 +602,9 @@ describe('getFocusedCollection', () => {
         collections: {
           allIds: []
         }
+      },
+      query: {
+        collection: {}
       },
       searchResults: {
         granules: {}

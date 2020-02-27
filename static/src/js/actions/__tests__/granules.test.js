@@ -22,12 +22,17 @@ import {
   EXCLUDE_GRANULE_ID,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
-  RESET_GRANULE_RESULTS
+  RESET_GRANULE_RESULTS,
+  TOGGLE_SPATIAL_POLYGON_WARNING
 } from '../../constants/actionTypes'
-// import actions from '../index'
-
+import CwicGranuleRequest from '../../util/request/cwic'
 
 const mockStore = configureMockStore([thunk])
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 
 describe('updateGranuleResults', () => {
   test('should create an action to update the search query', () => {
@@ -134,18 +139,22 @@ describe('getGranules', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
       expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
-      expect(storeActions[2]).toEqual({ type: FINISHED_GRANULES_TIMER })
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[2]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[3]).toEqual({ type: FINISHED_GRANULES_TIMER })
+      expect(storeActions[4]).toEqual({
         type: UPDATE_AUTH,
         payload: ''
       })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[5]).toEqual({
         type: LOADED_GRANULES,
         payload: {
           loaded: true
         }
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
@@ -214,18 +223,22 @@ describe('getGranules', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
       expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
-      expect(storeActions[2]).toEqual({ type: FINISHED_GRANULES_TIMER })
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[2]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[3]).toEqual({ type: FINISHED_GRANULES_TIMER })
+      expect(storeActions[4]).toEqual({
         type: UPDATE_AUTH,
         payload: 'token'
       })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[5]).toEqual({
         type: LOADED_GRANULES,
         payload: {
           loaded: true
         }
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
@@ -241,6 +254,67 @@ describe('getGranules', () => {
           }]
         }
       })
+    })
+  })
+
+  test('substitutes MBR for polygon in cwic granule searches', async () => {
+    const cwicRequestMock = jest.spyOn(CwicGranuleRequest.prototype, 'search')
+
+    nock(/localhost/)
+      .post(/cwic\/granules/)
+      .reply(200, '<feed></feed>')
+
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: 'token',
+      metadata: {
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              isCwic: true,
+              mock: 'data',
+              metadata: {
+                tags: {
+                  'org.ceos.wgiss.cwic.granules.prod': {}
+                }
+              }
+            }
+          }
+        }
+      },
+      focusedCollection: 'collectionId',
+      query: {
+        collection: {
+          temporal: {},
+          spatial: {
+            polygon: '-77,38,-77,38,-76,38,-77,38'
+          }
+        },
+        granule: { pageNum: 1 }
+      },
+      timeline: {
+        query: {}
+      }
+    })
+
+    // call the dispatch
+    await store.dispatch(getGranules()).then(() => {
+      // Is updateGranules called with the right payload
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
+      expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
+      expect(storeActions[2]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[3]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: true
+      })
+
+      expect(cwicRequestMock).toHaveBeenCalledTimes(1)
+      expect(cwicRequestMock.mock.calls[0][0].boundingBox).toEqual('-77,37.99999999999998,-76,38.00105844675541')
     })
   })
 

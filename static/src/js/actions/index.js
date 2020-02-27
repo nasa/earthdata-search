@@ -78,6 +78,7 @@ import {
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
+  toggleSpatialPolygonWarning,
   toggleTooManyPointsModal
 } from './ui'
 import {
@@ -214,6 +215,7 @@ const actions = {
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
+  toggleSpatialPolygonWarning,
   toggleTooManyPointsModal,
   triggerViewAllFacets,
   undoExcludeGranule,
