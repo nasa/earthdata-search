@@ -30,7 +30,7 @@ describe('autocomplete', () => {
     expect(mock).toBeCalledWith({
       jwtToken: 'mockJwt',
       method: 'get',
-      path: '/search/collections/autocomplete',
+      path: '/search/autocomplete',
       params: 'q=ICE',
       requestId: 'asdf-1234-qwer-5678'
     })
