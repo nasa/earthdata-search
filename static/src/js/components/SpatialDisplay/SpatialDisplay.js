@@ -333,6 +333,7 @@ class SpatialDisplay extends Component {
 
   render() {
     const {
+      displaySpatialPolygonWarning,
       drawingNewLayer,
       selectingNewGrid
     } = this.props
@@ -609,6 +610,10 @@ class SpatialDisplay extends Component {
         </SpatialDisplayEntry>
       )
 
+      if (displaySpatialPolygonWarning) {
+        spatialError = 'This collection does not support polygon search. Your polygon has been converted to a bounding box.'
+      }
+
       contents.push((
         <FilterStackContents
           key="filter__polygon"
@@ -656,6 +661,7 @@ class SpatialDisplay extends Component {
 
 SpatialDisplay.propTypes = {
   boundingBoxSearch: PropTypes.string.isRequired,
+  displaySpatialPolygonWarning: PropTypes.bool.isRequired,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool

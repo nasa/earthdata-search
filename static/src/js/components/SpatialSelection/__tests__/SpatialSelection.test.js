@@ -23,6 +23,7 @@ const defaultProps = {
     regionSearch: {}
   },
   boundingBoxSearch: '',
+  isCwic: false,
   isProjectPage: false,
   lineSearch: '',
   mapRef: {
@@ -77,7 +78,7 @@ describe('SpatialSelection component', () => {
   })
 
   describe('componentWillReceiveProps', () => {
-    test('removes the drawnLayer and calls renderShape', () => {
+    test('removes the drawnLayers and drawnMbr and calls renderShape', () => {
       const mockRemoveLayer = jest.fn()
       const { enzymeWrapper } = setup(defaultProps)
 
@@ -95,7 +96,7 @@ describe('SpatialSelection component', () => {
       })
       enzymeWrapper.setProps({ pointSearch: '0,0' })
 
-      expect(mockRemoveLayer).toHaveBeenCalledTimes(1)
+      expect(mockRemoveLayer).toHaveBeenCalledTimes(2)
       expect(enzymeWrapper.instance().renderShape.mock.calls.length).toBe(1)
     })
 
@@ -150,7 +151,7 @@ describe('SpatialSelection component', () => {
       expect(props.onMetricsMap.mock.calls[0]).toEqual(['Spatial: Marker'])
     })
 
-    test('removes drawnLayers if they exist', () => {
+    test('removes drawnLayers and drawnMbr if they exist', () => {
       const { enzymeWrapper } = setup(defaultProps)
 
       enzymeWrapper.instance().featureGroupRef = {
@@ -165,7 +166,7 @@ describe('SpatialSelection component', () => {
       editControl.prop('onDrawStart')({ layerType: 'marker' })
 
       expect(enzymeWrapper.instance().featureGroupRef.leafletElement.removeLayer.mock.calls.length)
-        .toBe(1)
+        .toBe(2)
     })
   })
 

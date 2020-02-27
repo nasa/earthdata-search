@@ -13,7 +13,8 @@ import {
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_TOO_MANY_POINTS_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
-  TOGGLE_ABOUT_CWIC_MODAL
+  TOGGLE_ABOUT_CWIC_MODAL,
+  TOGGLE_SPATIAL_POLYGON_WARNING
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -61,6 +62,9 @@ const initialState = {
   },
   aboutCwicModal: {
     isOpen: false
+  },
+  spatialPolygonWarning: {
+    isDisplayed: false
   }
 }
 
@@ -198,6 +202,14 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         aboutCwicModal: {
           isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_SPATIAL_POLYGON_WARNING: {
+      return {
+        ...state,
+        spatialPolygonWarning: {
+          isDisplayed: action.payload
         }
       }
     }

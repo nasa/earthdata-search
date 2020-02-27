@@ -12,7 +12,8 @@ import {
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_TOO_MANY_POINTS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_SPATIAL_POLYGON_WARNING
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -60,6 +61,9 @@ const initialState = {
   },
   aboutCwicModal: {
     isOpen: false
+  },
+  spatialPolygonWarning: {
+    isDisplayed: false
   }
 }
 
@@ -337,6 +341,22 @@ describe('TOGGLE_ABOUT_CWIC_MODAL', () => {
     const expectedState = {
       ...initialState,
       aboutCwicModal: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_SPATIAL_POLYGON_WARNING', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_SPATIAL_POLYGON_WARNING,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      spatialPolygonWarning: { isDisplayed: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
