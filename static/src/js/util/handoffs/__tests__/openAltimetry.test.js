@@ -3,11 +3,7 @@ import projections from '../../map/projections'
 
 describe('handoffs#openAltimetry', () => {
   test('returns the default root and mapType when no subsetting is provided', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.open_altimetry': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const response = fetchOpenAltimetryHandoffUrl(collectionMetadata)
 
@@ -18,11 +14,7 @@ describe('handoffs#openAltimetry', () => {
   })
 
   test('returns the default root and mapType when no subsetting is active', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.giovanni': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const collectionSearch = {}
 
@@ -35,11 +27,7 @@ describe('handoffs#openAltimetry', () => {
   })
 
   test('sets mapType to arctic when the arctic projection is used', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.giovanni': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const collectionSearch = {}
 
@@ -54,11 +42,7 @@ describe('handoffs#openAltimetry', () => {
   })
 
   test('returns the default root and mapType when no subsetting is active', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.giovanni': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const collectionSearch = {}
 
@@ -73,11 +57,7 @@ describe('handoffs#openAltimetry', () => {
   })
 
   test('appends temporal values when start and end date are provided', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.giovanni': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const collectionSearch = {
       temporal: {
@@ -95,11 +75,7 @@ describe('handoffs#openAltimetry', () => {
   })
 
   test('appends temporal values when only start date is provided', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.giovanni': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const collectionSearch = {
       temporal: {
@@ -116,11 +92,7 @@ describe('handoffs#openAltimetry', () => {
   })
 
   test('appends temporal values when only end date is provided', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.giovanni': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const collectionSearch = {
       temporal: {
@@ -137,11 +109,7 @@ describe('handoffs#openAltimetry', () => {
   })
 
   test('appends spatial values when a bounding box is provided', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.giovanni': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const collectionSearch = {
       spatial: {
@@ -158,11 +126,7 @@ describe('handoffs#openAltimetry', () => {
   })
 
   test('appends spatial values when a polygon is provided', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.giovanni': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const collectionSearch = {
       spatial: {
@@ -179,11 +143,7 @@ describe('handoffs#openAltimetry', () => {
   })
 
   test('appends temporal and spatial values when both are provided', () => {
-    const collectionMetadata = {
-      tags: {
-        'edsc.extra.handoff.giovanni': {}
-      }
-    }
+    const collectionMetadata = {}
 
     const collectionSearch = {
       spatial: {
@@ -200,6 +160,21 @@ describe('handoffs#openAltimetry', () => {
     expect(response).toEqual({
       title: 'Open Altimetry',
       href: 'https://openaltimetry.org/data/icesat2/?start_date=1984-07-02&end_date=1984-07-02&minx=-90.32766723632812&miny=41.63677044970652&maxx=-82.2337646484375&maxy=48.34205200181264&mapType=geographic'
+    })
+  })
+
+  test('appends the product value', () => {
+    const collectionMetadata = {
+      short_name: 'atl08'
+    }
+
+    const collectionSearch = {}
+
+    const response = fetchOpenAltimetryHandoffUrl(collectionMetadata, collectionSearch)
+
+    expect(response).toEqual({
+      title: 'Open Altimetry',
+      href: 'https://openaltimetry.org/data/icesat2/?product=atl08&mapType=geographic'
     })
   })
 })
