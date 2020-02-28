@@ -50,7 +50,13 @@ describe('AccessMethod component', () => {
             type: 'download'
           }
         },
-        metadata: { id: collectionId }
+        metadata: {
+          id: collectionId,
+          granule_count: 10000
+        },
+        granuleMetadata: {
+          hits: 3800
+        }
       })
 
       const radioList = enzymeWrapper.find(RadioList)
@@ -61,6 +67,37 @@ describe('AccessMethod component', () => {
         collectionId,
         orderCount: 0,
         selectedAccessMethod: 'download'
+      }])
+    })
+
+    test('updates the selected access method when type is orderable', () => {
+      const { enzymeWrapper, props } = setup()
+
+      const collectionId = 'collectionId'
+      enzymeWrapper.setProps({
+        accessMethods: {
+          esi0: {
+            isValid: true,
+            type: 'ESI'
+          }
+        },
+        metadata: {
+          id: collectionId,
+          granule_count: 10000
+        },
+        granuleMetadata: {
+          hits: 3800
+        }
+      })
+
+      const radioList = enzymeWrapper.find(RadioList)
+      radioList.props().onChange('esi0')
+
+      expect(props.onSelectAccessMethod.mock.calls.length).toBe(1)
+      expect(props.onSelectAccessMethod.mock.calls[0]).toEqual([{
+        collectionId,
+        orderCount: 2,
+        selectedAccessMethod: 'esi0'
       }])
     })
   })
