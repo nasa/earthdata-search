@@ -195,11 +195,12 @@ export class AccessMethod extends Component {
 
   handleAccessMethodSelection(method) {
     const { granuleMetadata, metadata, onSelectAccessMethod } = this.props
-    const { hits: granuleCount } = granuleMetadata
+
     const { id: collectionId } = metadata
 
+    // Calculate the number of orders that will be created based on granule count
     const { defaultGranulesPerOrder } = getApplicationConfig()
-
+    const { hits: granuleCount } = granuleMetadata
     const orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
 
     onSelectAccessMethod({
