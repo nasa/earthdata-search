@@ -136,6 +136,7 @@ const formatMapping = {
  * @param {object} props.accessMethods - The accessMethods of the current collection.
  * @param {number} props.index - The index of the current collection.
  * @param {object} props.metadata - The metadata of the current collection.
+ * @param {object} props.granuleMetadata - The metadata of granules belonging to the current collection.
  * @param {string} props.selectedAccessMethod - The selected access method of the current collection.
  * @param {string} props.shapefileId - The shapefile id of the uploaded shapefile.
  * @param {function} props.onSelectAccessMethod - Selects an access method.
@@ -193,8 +194,9 @@ export class AccessMethod extends Component {
   }
 
   handleAccessMethodSelection(method) {
-    const { metadata, onSelectAccessMethod } = this.props
-    const { granule_count: granuleCount, id: collectionId } = metadata
+    const { granuleMetadata, metadata, onSelectAccessMethod } = this.props
+    const { hits: granuleCount } = granuleMetadata
+    const { id: collectionId } = metadata
 
     const { defaultGranulesPerOrder } = getApplicationConfig()
 
@@ -405,6 +407,7 @@ AccessMethod.defaultProps = {
   index: null,
   isActive: false,
   metadata: {},
+  granuleMetadata: {},
   shapefileId: null,
   spatial: {},
   onSetActivePanel: null,
@@ -416,6 +419,7 @@ AccessMethod.propTypes = {
   index: PropTypes.number,
   isActive: PropTypes.bool,
   metadata: PropTypes.shape({}),
+  granuleMetadata: PropTypes.shape({}),
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}),
   onSelectAccessMethod: PropTypes.func.isRequired,
