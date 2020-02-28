@@ -213,7 +213,7 @@ class ProjectPanels extends PureComponent {
       if (!collection || Object.keys(collection).length === 0) return
 
       const projectCollection = projectById[collectionId]
-      const { metadata } = collection
+      const { metadata, granules } = collection
 
       if (!collectionMetadataLoaded) return
 
@@ -221,9 +221,12 @@ class ProjectPanels extends PureComponent {
 
       const {
         dataset_id: title = '',
-        id,
-        granule_count: granuleCount
+        id
       } = metadata
+
+      // Granule count should come from the granules hits because the collection
+      // metadata granule count is only updated with temporal and spatial params
+      const { hits: granuleCount } = granules
 
       const { [id]: collectionDataQualitySummaries = [] } = dataQualitySummaries
 
@@ -355,6 +358,7 @@ class ProjectPanels extends PureComponent {
               accessMethods={accessMethods}
               index={index}
               metadata={metadata}
+              granuleMetadata={granules}
               shapefileId={shapefileId}
               spatial={spatial}
               onSelectAccessMethod={onSelectAccessMethod}
