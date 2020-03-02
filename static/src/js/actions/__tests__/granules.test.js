@@ -25,7 +25,7 @@ import {
   RESET_GRANULE_RESULTS,
   TOGGLE_SPATIAL_POLYGON_WARNING
 } from '../../constants/actionTypes'
-import CwicGranuleRequest from '../../util/request/cwic'
+import CwicGranuleRequest from '../../util/request/cwicGranuleRequest'
 
 const mockStore = configureMockStore([thunk])
 
