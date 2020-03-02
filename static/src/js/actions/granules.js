@@ -301,7 +301,7 @@ export const getGranules = () => (dispatch, getState) => {
 
     // CWIC does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
     if (polygon) {
-      dispatch(actions.toggleSpatialPolygonWarning(true)) // add MBR to map, display warning unless it has already been displayed?
+      dispatch(actions.toggleSpatialPolygonWarning(true))
       const [llLat, llLng, urLat, urLng] = mbr({ polygon })
       searchParams.boundingBox = [llLng, llLat, urLng, urLat].join(',')
       searchParams.polygon = undefined
@@ -312,7 +312,6 @@ export const getGranules = () => (dispatch, getState) => {
 
   cancelToken = requestObject.getCancelToken()
 
-  // const response = requestObject.search(buildGranuleSearchParams(granuleParams))
   const response = requestObject.search(searchParams)
     .then((response) => {
       const payload = populateGranuleResults(collectionId, isCwicCollection, response)
