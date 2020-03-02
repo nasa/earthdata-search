@@ -288,7 +288,7 @@ class SpatialDisplay extends Component {
 
     let errorMessage = ''
 
-    const validCoordinates = coordinates.trim().match(/^(-?\d+\.?\d+)?,\s*(-?\d+\.?\d+)?$/)
+    const validCoordinates = coordinates.trim().match(/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/)
     if (validCoordinates == null) {
       errorMessage = `Coordinates (${coordinates}) must use 'lat,lon' format.`
     }
