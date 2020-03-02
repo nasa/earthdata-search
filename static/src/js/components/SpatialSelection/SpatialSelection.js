@@ -115,7 +115,13 @@ class SpatialSelection extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mapRef } = this.props
+    const {
+      pointSearch,
+      boundingBoxSearch,
+      polygonSearch,
+      lineSearch,
+      mapRef
+    } = this.props
     const {
       drawnLayer,
       drawnMbr,
@@ -131,11 +137,15 @@ class SpatialSelection extends Component {
       || nextProps.boundingBoxSearch
       || nextProps.polygonSearch
       || nextProps.lineSearch
+    const oldDrawing = pointSearch
+    || boundingBoxSearch
+    || polygonSearch
+    || lineSearch
 
     const { featureGroupRef = {} } = this
     const { leafletElement = {} } = featureGroupRef
 
-    if ((drawnLayer && drawnLayer._map === null) || newDrawing !== drawnPoints) {
+    if (oldDrawing !== newDrawing && newDrawing !== drawnPoints) {
       if (drawnLayer) {
         if (leafletElement.removeLayer) {
           leafletElement.removeLayer(drawnLayer)
@@ -304,15 +314,15 @@ class SpatialSelection extends Component {
   setLayer(layer) {
     this.layer = layer
 
-    // const { mapRef } = this.props
-    // const map = mapRef.leafletElement
+    const { mapRef } = this.props
+    const map = mapRef.leafletElement
 
-    // const { featureGroupRef = {} } = this
-    // const { leafletElement: featureGroup = null } = featureGroupRef
+    const { featureGroupRef = {} } = this
+    const { leafletElement: featureGroup = null } = featureGroupRef
 
-    // if (featureGroup) {
-    //   panFeatureGroupToCenter(map, featureGroup)
-    // }
+    if (featureGroup) {
+      panFeatureGroupToCenter(map, featureGroup)
+    }
   }
 
   // Determine the latLngs from the layer and type, then update the component state and the query
