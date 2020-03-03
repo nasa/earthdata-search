@@ -98,12 +98,6 @@ export class Search extends Component {
           </header>
           <Switch>
             <Route exact path={`${path}/granules`}>
-              <MasterOverlayPanelContainer
-                tabHandle={<GranuleResultsTabContainer />}
-                header={<GranuleResultsHeaderContainer />}
-                actions={<GranuleResultsActionsContainer />}
-                body={<GranuleResultsBodyContainer />}
-              />
               <GranuleFiltersPanelContainer />
             </Route>
             <Route exact path={`${path}/granules/granule-details`}>

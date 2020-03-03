@@ -10,6 +10,8 @@
   background-color: $color__white;
 
   &--custom {
+    display: flex;
+    flex-direction: column;
     padding: 0;
   }
 

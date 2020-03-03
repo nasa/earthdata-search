@@ -13,25 +13,6 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-const mockSimpleBarWrapper = (() => {
-  const el = document.createElement('div')
-  el.classList.add('simplebar-content-wrapper')
-  return el
-})()
-
-const mockRefElement = (() => {
-  const el = document.createElement('div')
-  el.classList.add('granule-results-body')
-  el.appendChild(mockSimpleBarWrapper)
-  return el
-})()
-
-jest.spyOn(GranuleResultsBody.prototype, 'getRef').mockImplementation(function mockRef() {
-  this.wrapper = {
-    current: mockRefElement
-  }
-})
-
 function setup(options = {
   mount: false
 }) {
@@ -74,13 +55,6 @@ describe('GranuleResultsBody component', () => {
     expect(enzymeWrapper.prop('className')).toBe('granule-results-body')
   })
 
-  test('renders the SimpleBar correctly', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.children().at(0).type()).toBe(SimpleBar)
-    expect(enzymeWrapper.children().at(0).prop('className')).toBe('granule-results-body__scroll-container')
-  })
-
   test('passes the granules to a single GranuleResultsList component', () => {
     const { enzymeWrapper } = setup()
 
@@ -99,14 +73,5 @@ describe('GranuleResultsBody component', () => {
     expect(enzymeWrapper.find(GranuleResultsList).length).toEqual(1)
     expect(enzymeWrapper.find(GranuleResultsList).props().onMetricsDataAccess)
       .toEqual(props.onMetricsDataAccess)
-  })
-
-  test('should create a ref', () => {
-    setup({
-      mount: true
-    })
-
-    const prevGetRef = GranuleResultsBody.prototype.getRef
-    expect(GranuleResultsBody.prototype.getRef).toHaveBeenCalledTimes(1)
   })
 })

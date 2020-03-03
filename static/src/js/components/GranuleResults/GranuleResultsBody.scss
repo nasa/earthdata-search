@@ -1,9 +1,4 @@
 .granule-results-body {
   height: 100%;
-  
-  &__scroll-container {
-    height: 100%;
-    padding: 0 $spacer/2;
-    background-color: $color__black--100;
-  }
+  padding: 0 $spacer/2;
 }

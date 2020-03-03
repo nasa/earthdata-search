@@ -1,6 +1,6 @@
 .collection-results-header {
   &__primary {
-    padding: 1rem;
+    padding: $spacer/2 $spacer;
     font-size: 0.875rem;
   }
 
@@ -36,7 +36,7 @@
   }
 
   &__meta {
-    padding: 0.25rem 1rem;
+    padding: $spacer/4 $spacer;
     border-top: 1px solid $color__black--200;
     font-size: 0.75rem;
     color: $color__black--600;

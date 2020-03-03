@@ -4,6 +4,8 @@ import Adapter from 'enzyme-adapter-react-16'
 import { OverlayTrigger } from 'react-bootstrap'
 import GranuleResultsHeader from '../GranuleResultsHeader'
 
+import Skeleton from '../../Skeleton/Skeleton'
+
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
@@ -24,12 +26,22 @@ function setup(overrideProps) {
       search: '?test=search-value'
     },
     collectionSearch: {},
+    granuleSearch: {},
     secondaryOverlayPanel: {
       isOpen: false
     },
     onApplyGranuleFilters: jest.fn(),
     onToggleSecondaryOverlayPanel: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
+    granules: {
+      hits: null,
+      loadTime: null,
+      isLoading: true,
+      isLoaded: false,
+      allIds: [],
+      byId: {}
+    },
+    pageNum: 1,
     ...overrideProps
   }
 
@@ -46,6 +58,78 @@ describe('GranuleResultsHeader component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toBe('div')
+  })
+
+  describe('granule list header', () => {
+    describe('while loading', () => {
+      test('renders the correct Skeleton elements', () => {
+        const { enzymeWrapper } = setup({
+          granules: {
+            hits: null,
+            loadTime: null,
+            isLoading: true,
+            isLoaded: false,
+            allIds: [],
+            byId: {}
+          }
+        })
+
+        expect(enzymeWrapper.find('.granule-results-header__header-item').at(0).find(Skeleton).length).toEqual(1)
+        expect(enzymeWrapper.find('.granule-results-header__header-item').at(1).find(Skeleton).length).toEqual(1)
+      })
+    })
+
+    describe('when loaded', () => {
+      test('renders the correct visible granules and hits', () => {
+        const { enzymeWrapper } = setup({
+          granules: {
+            hits: 23,
+            loadTime: 1524,
+            isLoading: false,
+            isLoaded: true,
+            allIds: [
+              123,
+              456
+            ],
+            byId: {
+              123: {
+                title: '123'
+              },
+              456: {
+                title: '456'
+              }
+            }
+          }
+        })
+
+        expect(enzymeWrapper.find('.granule-results-header__header-item').at(0).text()).toEqual('Showing 2 of 23 matching granules')
+      })
+
+      test('renders the correct search time', () => {
+        const { enzymeWrapper } = setup({
+          granules: {
+            hits: 23,
+            loadTime: 1524,
+            isLoading: false,
+            isLoaded: true,
+            allIds: [
+              123,
+              456
+            ],
+            byId: {
+              123: {
+                title: '123'
+              },
+              456: {
+                title: '456'
+              }
+            }
+          }
+        })
+
+        expect(enzymeWrapper.find('.granule-results-header__header-item').at(1).text()).toEqual('Search Time: 1.5s')
+      })
+    })
   })
 
   test('renders a title', () => {
@@ -190,7 +274,7 @@ describe('granuleFilters link', () => {
           isOpen: false
         }
       })
-      expect(enzymeWrapper.find('.granule-results-header__link').at(1).prop('icon')).toEqual('filter')
+      expect(enzymeWrapper.find('.granule-results-header__link').prop('icon')).toEqual('filter')
     })
 
     test('fires the correct callback on click', () => {
@@ -199,7 +283,7 @@ describe('granuleFilters link', () => {
           isOpen: false
         }
       })
-      enzymeWrapper.find('.granule-results-header__link').at(1).simulate('click')
+      enzymeWrapper.find('.granule-results-header__link').simulate('click')
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(1)
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(true)
     })
@@ -212,7 +296,7 @@ describe('granuleFilters link', () => {
           isOpen: true
         }
       })
-      expect(enzymeWrapper.find('.granule-results-header__link').at(1).prop('icon')).toEqual('times')
+      expect(enzymeWrapper.find('.granule-results-header__link').prop('icon')).toEqual('times')
     })
 
     test('fires the correct callback on click', () => {
@@ -221,7 +305,7 @@ describe('granuleFilters link', () => {
           isOpen: true
         }
       })
-      enzymeWrapper.find('.granule-results-header__link').at(1).simulate('click')
+      enzymeWrapper.find('.granule-results-header__link').simulate('click')
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(1)
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(false)
     })

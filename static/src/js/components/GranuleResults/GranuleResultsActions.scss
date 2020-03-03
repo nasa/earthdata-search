@@ -1,10 +1,24 @@
 .granule-results-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: $spacer/4;
+  margin-bottom: $spacer/2;
+  margin-left: -$spacer;
+  margin-right: -$spacer;
+  padding: $spacer/2 $spacer;
+  border: 1px solid $color__black--200;
+  border-left: 0;
+  border-right: 0;
+
   &__info {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: $spacer/4;
+    flex-grow: 1;
+    margin-right: 1rem;
     vertical-align: middle;
+    font-size: 0.875rem;
   }
 
   &__granule-count {
@@ -12,12 +26,9 @@
     vertical-align: middle;
   }
 
-  &__granule-num {
-    font-weight: 700;
-  }
-
   &__proj-action {
     padding: 0;
+    font-size: 0.875rem;
 
     &--remove {
       color: $color__red;

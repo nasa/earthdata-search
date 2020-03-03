@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 
 import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
@@ -35,4 +36,6 @@ SearchPanelsContainer.propTypes = {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPanelsContainer)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SearchPanelsContainer)
+)

@@ -6,14 +6,10 @@ import GranuleResultsItem from './GranuleResultsItem'
 import Skeleton from '../Skeleton/Skeleton'
 
 import {
-  granuleListItem,
-  granuleListTotal,
-  granuleTimeTotal
+  granuleListItem
 } from './skeleton'
 
 import murmurhash3 from '../../util/murmurhash3'
-import { commafy } from '../../util/commafy'
-import { pluralize } from '../../util/pluralize'
 import { eventEmitter } from '../../events/events'
 
 import './GranuleResultsList.scss'
@@ -70,8 +66,6 @@ export class GranuleResultsList extends PureComponent {
       onMetricsDataAccess
     } = this.props
     const {
-      hits,
-      loadTime,
       isLoading,
       isLoaded
     } = granules
@@ -86,9 +80,6 @@ export class GranuleResultsList extends PureComponent {
     } else {
       granuleIds = difference(allGranuleIds, excludedGranuleIds)
     }
-
-    // Determine the correct granule count based on granules that have been removed
-    const granuleCount = (hits - excludedGranuleIds.length)
 
     const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
 
@@ -135,36 +126,8 @@ export class GranuleResultsList extends PureComponent {
       granulesList.push(granulesLoadingList[0])
     }
 
-    const visibleGranules = granulesList.length ? granulesList.length : 0
-
-    const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
-
     return (
       <div className="granule-results-list">
-        <div className="granule-results-list__header">
-          <span className="granule-results-list__header-item">
-            {
-              initialLoading && (
-                <Skeleton
-                  containerStyle={{ height: '18px', width: '213px' }}
-                  shapes={granuleListTotal}
-                />
-              )
-            }
-            {!initialLoading && `Showing ${commafy(visibleGranules)} of ${commafy(granuleCount)} matching ${pluralize('granule', granuleCount)}` }
-          </span>
-          <span className="granule-results-list__header-item">
-            {
-              initialLoading && (
-                <Skeleton
-                  containerStyle={{ height: '18px', width: '110px' }}
-                  shapes={granuleTimeTotal}
-                />
-              )
-            }
-            {!initialLoading && `Search Time: ${loadTimeInSeconds}s` }
-          </span>
-        </div>
         <ul className="granule-results-list__list">
           {initialLoading && granulesLoadingList}
           {!initialLoading && granulesList}

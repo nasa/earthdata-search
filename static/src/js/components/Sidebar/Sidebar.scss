@@ -8,10 +8,6 @@
   width: 17.5rem;
   z-index: 3;
 
-  @include media-breakpoint-up(xl) {
-    font-size: 0.925em;
-  }
-
   &__inner {
     position: relative;
     display: flex;
