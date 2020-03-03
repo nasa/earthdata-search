@@ -23,8 +23,12 @@ const SidebarSection = (props) => {
   )
 }
 
+SidebarSection.defaultProps = {
+  sectionTitle: null
+}
+
 SidebarSection.propTypes = {
-  sectionTitle: PropTypes.string.isRequired,
+  sectionTitle: PropTypes.string,
   children: PropTypes.node.isRequired
 }
 
