@@ -7,10 +7,20 @@ beforeEach(() => {
 })
 
 describe('AutocompleteRequest#constructor', () => {
+  test('sets the default values when authenticated', () => {
+    const token = '123'
+    const request = new AutocompleteRequest(token)
+
+    expect(request.authenticated).toBeTruthy()
+    expect(request.authToken).toEqual(token)
+    expect(request.baseUrl).toEqual('http://localhost:3000')
+    expect(request.searchPath).toEqual('autocomplete')
+  })
+
   test('sets the default values', () => {
     const request = new AutocompleteRequest()
 
-    expect(request.authenticated).toBeTruthy()
+    expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('http://localhost:3000')
   })
 })

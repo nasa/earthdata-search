@@ -146,6 +146,7 @@
           method: post
           cors: true
           path: autocomplete
+          authorizer: edlAuthorizer
 
   regionSearch:
     handler: serverless/src/regionSearch/handler.default

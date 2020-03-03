@@ -22,17 +22,28 @@ export const doSearchRequest = async ({
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
+    // Headers we'll send with every request
+    const requestHeaders = {
+      'Client-Id': getClientId().lambda,
+      ...providedHeaders
+    }
+
+    if (jwtToken) {
+      // Support endpoints that have optional authentication
+      requestHeaders['Echo-Token'] = await getEchoToken(jwtToken)
+    }
+
+    if (requestId) {
+      // If the request doesnt come from the application, this is unlikely to be provided
+      requestHeaders['CMR-Request-Id'] = requestId
+    }
+
     const requestParams = {
       uri: `${getEarthdataConfig(cmrEnv()).cmrHost}${path}`,
       json: true,
       resolveWithFullResponse: true,
       time: true,
-      headers: {
-        'Client-Id': getClientId().lambda,
-        'Echo-Token': await getEchoToken(jwtToken),
-        'CMR-Request-Id': requestId,
-        ...providedHeaders
-      }
+      headers: requestHeaders
     }
 
     let response
