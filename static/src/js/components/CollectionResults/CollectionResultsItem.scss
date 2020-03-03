@@ -4,7 +4,7 @@
 
   &__link {
     display: flex;
-    padding: $spacer;
+    padding: $spacer/2 $spacer;
     background-color: $color__white;
 
     &:hover,
@@ -111,6 +111,7 @@
 
   &__badge {
     margin-right: $spacer/4;
+    margin-bottom: $spacer/8;
     color: $color__white;
     text-transform: uppercase;
 

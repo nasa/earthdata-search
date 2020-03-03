@@ -15,6 +15,9 @@ import './PanelItem.scss'
  * Renders PanelItem.
  * @param {Object} props - The props passed into the component.
  * @param {Node} props.children - The panel item children.
+ * @param {Node} props.header - Replaces the header contents.
+ * @param {Node} props.secondaryHeader - Replaces the secondaryHeader contents.
+ * @param {Node} props.meta - The header meta children components.
  * @param {Node} props.footer - The element to be used as the footer.
  * @param {Boolean} props.hideFooter - Hides the PanelGroup footer if one is defined.
  * @param {Boolean} props.isActive -  A flag to desingate the PanelItem as active.
@@ -76,9 +79,9 @@ export class PanelItem extends Component {
       let backButtonText = 'Back'
 
       const {
-        text,
+        callback,
         location,
-        callback
+        text
       } = backButtonOptions
 
       if (text) {
@@ -103,60 +106,43 @@ export class PanelItem extends Component {
     const className = classNames([
       'panel-item',
       {
-        'panel-item--is-active': isActive,
         'panel-item--has-back-button': backButton,
+        'panel-item--has-header': header || backButton,
         'panel-item--has-scrolled': hasScrolled,
-        'panel-item--has-header': header || backButton
+        'panel-item--is-active': isActive
       }
     ])
 
     return (
       <div
         className={className}
-        ref={(panelItem) => { this.panelItemRef = panelItem }}
+        ref={(panelItem) => {
+          this.panelItemRef = panelItem
+        }}
       >
         {
           (header || backButton) && (
             <header className="panel-item__header">
-              {
-                header && (
-                  <div className="panel-item__header-body">
-                    {header}
-                  </div>
-                )
-              }
-              {
-                backButton && (
-                  <div className="panel-item__header-nav">
-                    {backButton}
-                  </div>
-                )
-              }
+              {header && <div className="panel-item__header-body">{header}</div>}
+              {backButton && (
+                <div className="panel-item__header-nav">{backButton}</div>
+              )}
             </header>
           )
         }
-        <SimpleBar className="panel-item__content" scrollableNodeProps={{ ref: this.scrollableNodeRef }}>
-          {
-            typeof children === 'string' && (
-              children
-            )
-          }
-          {
-            typeof children !== 'string' && (
-              React.cloneElement(children, {
-                isActive,
-                panelScrollableNodeRef: this.scrollableNodeRef
-              })
-            )
-          }
+        <SimpleBar
+          className="panel-item__content"
+          scrollableNodeProps={{ ref: this.scrollableNodeRef }}
+        >
+          {typeof children === 'string' && children}
+          {typeof children !== 'string'
+            && React.cloneElement(children, {
+              isActive,
+              panelScrollableNodeRef: this.scrollableNodeRef
+            })}
         </SimpleBar>
-        {
           (footer && !hideFooter) && (
-            <PanelGroupFooter
-              footer={footer}
-            />
-          )
-        }
+        {footer && !hideFooter && <PanelGroupFooter footer={footer} />}
       </div>
     )
   }

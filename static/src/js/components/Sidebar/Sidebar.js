@@ -21,7 +21,12 @@ const Sidebar = ({
     <section className={className}>
       <div className="sidebar__inner">
         <AppLogoContainer />
-        <SimpleBar className="sidebar__content" style={{ height: '100%', overflowX: 'visible', overflowY: 'scroll' }}>
+        <SimpleBar
+          className="sidebar__content"
+          style={{
+            height: '100%'
+          }}
+        >
           {children}
         </SimpleBar>
       </div>

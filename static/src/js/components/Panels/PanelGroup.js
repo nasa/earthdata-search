@@ -9,16 +9,17 @@ import './PanelGroup.scss'
 
 /**
  * Renders PanelGroup.
- * @param {object} props - The props passed into the component.
- * @param {node} props.children - The panel group children. Should consist only of PanelItem components.
- * @param {string} props.primaryHeading - The text to be used as the primary heading.
- * @param {string} props.secondaryHeading - The text to be used as the secondary heading.
- * @param {boolean} props.isOpen - A flag to desingate the PanelGroup as open.
- * @param {boolean} props.isActive -  A flag to desingate the PanelGroup as active. Active PanelGroups are lifted to the highest index.
- * @param {function} props.onChangePanel - The action to change the panel.
- * @param {function} props.onPanelsClose - The action to close the panels.
+ * @param {Object} props - The props passed into the component.
+ * @param {Boolean} props.isActive -  A flag to desingate the PanelGroup as active. Active PanelGroups are lifted to the highest index.
+ * @param {Boolean} props.isOpen - A flag to desingate the PanelGroup as open.
+ * @param {Function} props.onChangePanel - The action to change the panel.
+ * @param {Function} props.onPanelsClose - The action to close the panels.
+ * @param {Node} props.children - The panel group children. Should consist only of PanelItem components.
+ * @param {String} props.primaryHeading - The text to be used as the primary heading.
+ * @param {String} props.secondaryHeading - The text to be used as the secondary heading.
+ * @param {Node} props.header - The element to be used as the header.
+ * @param {Node} props.secondaryHeader - The element to be used as the secondaryHeader.
  */
-// eslint-disable-next-line react/prefer-stateless-function
 export const PanelGroup = ({
   activePanelId,
   children,
@@ -29,15 +30,14 @@ export const PanelGroup = ({
   onChangePanel,
   onPanelsClose,
   primaryHeading,
+  secondaryHeader,
   secondaryHeading
 }) => {
   const renderPanels = (child, index) => {
     if (!child) return null
     const childProps = { ...child.props }
     if (!childProps.panelId) childProps.panelId = `${index}`
-    const isPanelActive = !!(
-      isActive && childProps.panelId === activePanelId
-    )
+    const isPanelActive = !!(isActive && childProps.panelId === activePanelId)
     childProps.onChangePanel = onChangePanel
     childProps.isActive = isPanelActive
     childProps.footer = childProps.footer ? childProps.footer : footer
@@ -49,12 +49,11 @@ export const PanelGroup = ({
   const className = classNames([
     'panel-group',
     {
-      'panel-group--is-open': isOpen,
+      'panel-group--custom-header': header,
       'panel-group--is-active': isActive,
-      'panel-group--custom-header': header
+      'panel-group--is-open': isOpen
     }
   ])
-
 
   return (
     <div className={className}>
@@ -63,6 +62,7 @@ export const PanelGroup = ({
         secondaryHeading={secondaryHeading}
         onPanelsClose={onPanelsClose}
         header={header}
+        secondaryHeader={secondaryHeader}
       />
       {panels}
     </div>
@@ -71,30 +71,32 @@ export const PanelGroup = ({
 
 PanelGroup.defaultProps = {
   activePanelId: '0',
+  footer: null,
+  header: null,
   isActive: false,
   isOpen: false,
-  primaryHeading: null,
-  secondaryHeading: null,
-  header: null,
-  footer: null,
   onChangePanel: null,
-  onPanelsClose: null
+  onPanelsClose: null,
+  primaryHeading: null,
+  secondaryHeader: null,
+  secondaryHeading: null
 }
 
 PanelGroup.propTypes = {
+  activePanelId: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node)
   ]).isRequired,
+  footer: PropTypes.node,
   header: PropTypes.node,
-  isOpen: PropTypes.bool,
   isActive: PropTypes.bool,
-  primaryHeading: PropTypes.string,
-  activePanelId: PropTypes.string,
-  secondaryHeading: PropTypes.string,
+  isOpen: PropTypes.bool,
   onChangePanel: PropTypes.func,
   onPanelsClose: PropTypes.func,
-  footer: PropTypes.node
+  primaryHeading: PropTypes.string,
+  secondaryHeader: PropTypes.node,
+  secondaryHeading: PropTypes.string
 }
 
 export default PanelGroup

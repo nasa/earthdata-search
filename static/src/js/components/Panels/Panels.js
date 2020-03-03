@@ -92,7 +92,10 @@ Panels.defaultProps = {
 
 Panels.propTypes = {
   activePanel: PropTypes.string,
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
   show: PropTypes.bool,
   onPanelClose: PropTypes.func,
   onChangePanel: PropTypes.func

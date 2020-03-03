@@ -1,10 +1,19 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import {
+  Route,
+  Switch,
+  withRouter
+} from 'react-router-dom'
 
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import CollectionResultsHeaderContainer
   from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
+import GranuleResultsBodyContainer
+  from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
+import GranuleResultsHeaderContainer
+  from '../../containers/GranuleResultsHeaderContainer/GranuleResultsHeaderContainer'
 
 import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
@@ -40,6 +49,10 @@ class SearchPanels extends PureComponent {
   }
 
   render() {
+    const {
+      match
+    } = this.props
+
     const panelSection = []
 
     panelSection.push(
@@ -53,23 +66,62 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
-    return (
-      <Panels
-        show
-        activePanel="0.0.0"
+    panelSection.push(
+      <PanelGroup
+        key="granule-results-panel"
+        header={
+          <GranuleResultsHeaderContainer onPanelClose={this.onPanelClose} />
+        }
       >
-        <PanelSection>
-          {panelSection}
-        </PanelSection>
-      </Panels>
+        <PanelItem>
+          <GranuleResultsBodyContainer />
+        </PanelItem>
+      </PanelGroup>
+    )
+
+    return (
+      <Switch key="panel-children">
+        <Route
+          path={`${match.url}/:activePanel?`}
+          render={
+          (props) => {
+            const { match = {} } = props
+            const { params = {} } = match
+            const { activePanel: activePanelFromProps = '' } = params
+            let activePanel = '0.0.0'
+
+            switch (activePanelFromProps) {
+              case 'granules':
+                activePanel = '0.1.0'
+                break
+              default:
+                activePanel = '0.0.0'
+            }
+
+            return (
+              <Panels
+                show
+                activePanel={activePanel}
+              >
+                <PanelSection>
+                  {panelSection}
+                </PanelSection>
+              </Panels>
+            )
+          }
+        }
+        />
+      </Switch>
     )
   }
 }
 
 SearchPanels.propTypes = {
+  location: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired
 }
 
-export default SearchPanels
+export default withRouter(SearchPanels)

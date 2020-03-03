@@ -3,18 +3,6 @@
   flex-direction: column;
   height: 100%;
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__header-item {
-    padding: $spacer/1.5;
-    padding-bottom: 0;
-    font-size: 0.75rem;
-    color: $color__black--600;
-  }
-
   &__list {
     display: flex;
     flex-wrap: wrap;
