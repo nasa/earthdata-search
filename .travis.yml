@@ -20,6 +20,7 @@ script:
 branches:
   only: # Only build master. All pull requests also get built
     - master
+    - EDSC-2545
 deploy:
   provider: script
   script: bin/ecc-sync
