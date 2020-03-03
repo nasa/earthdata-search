@@ -134,12 +134,16 @@ export class PanelItem extends Component {
           className="panel-item__content"
           scrollableNodeProps={{ ref: this.scrollableNodeRef }}
         >
-          {typeof children === 'string' && children}
-          {typeof children !== 'string'
-            && React.cloneElement(children, {
-              isActive,
-              panelScrollableNodeRef: this.scrollableNodeRef
-            })}
+          {
+            typeof children === 'string' && children
+          }
+          {
+            typeof children !== 'string' && (
+              React.cloneElement(children, {
+                isActive,
+                panelScrollableNodeRef: this.scrollableNodeRef
+              })
+            )}
         </SimpleBar>
         {footer && !hideFooter && <PanelGroupFooter footer={footer} />}
       </div>
