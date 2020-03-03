@@ -141,7 +141,6 @@ export class PanelItem extends Component {
               panelScrollableNodeRef: this.scrollableNodeRef
             })}
         </SimpleBar>
-          (footer && !hideFooter) && (
         {footer && !hideFooter && <PanelGroupFooter footer={footer} />}
       </div>
     )

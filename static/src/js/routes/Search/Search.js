@@ -86,7 +86,7 @@ export class Search extends Component {
           panels={<SearchPanelsContainer />}
         >
           <SearchFormContainer />
-          <SidebarSection sectionTitle="Refine search...">
+          <SidebarSection>
             <FacetsContainer />
           </SidebarSection>
         </SidebarContainer>
