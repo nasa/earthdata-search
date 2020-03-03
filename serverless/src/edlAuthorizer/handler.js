@@ -21,7 +21,7 @@ const edlAuthorizer = async (event, context) => {
 
   if (!authorizationToken) {
     const authOptionalPaths = [
-      'autocomplete',
+      '/autocomplete',
       '/cwic/granules'
     ]
 
