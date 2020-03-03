@@ -11,8 +11,7 @@ import { parseError } from '../util/parseError'
 const autocomplete = async (event) => {
   const { body } = event
 
-  const { params, requestId } = JSON.parse(body)
-  const { q } = params
+  const { requestId } = JSON.parse(body)
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
@@ -25,17 +24,17 @@ const autocomplete = async (event) => {
     'type'
   ]
 
-  console.log(`Searching for ${q}`)
-
   try {
     return doSearchRequest({
       jwtToken: getJwtToken(event),
       method: 'get',
+      bodyType: 'json',
       path: '/search/autocomplete',
       params: buildParams({
         body,
         permittedCmrKeys,
-        nonIndexedKeys
+        nonIndexedKeys,
+        stringifyResult: false
       }),
       requestId
     })

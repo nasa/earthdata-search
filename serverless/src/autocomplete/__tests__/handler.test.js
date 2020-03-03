@@ -29,9 +29,12 @@ describe('autocomplete', () => {
     expect(mock).toBeCalledTimes(1)
     expect(mock).toBeCalledWith({
       jwtToken: 'mockJwt',
+      bodyType: 'json',
       method: 'get',
       path: '/search/autocomplete',
-      params: 'q=ICE',
+      params: {
+        q: 'ICE'
+      },
       requestId: 'asdf-1234-qwer-5678'
     })
   })

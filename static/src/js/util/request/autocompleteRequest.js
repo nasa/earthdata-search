@@ -7,8 +7,14 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 export default class AutocompleteRequest extends Request {
   constructor(authToken) {
     super(getEnvironmentConfig().apiHost)
-    this.authenticated = true
-    this.authToken = authToken
+
+    this.lambda = true
+
+    if (authToken && authToken !== '') {
+      this.authenticated = true
+      this.authToken = authToken
+    }
+
     this.searchPath = 'autocomplete'
   }
 
