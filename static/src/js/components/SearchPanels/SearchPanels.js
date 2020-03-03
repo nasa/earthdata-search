@@ -85,6 +85,12 @@ class SearchPanels extends PureComponent {
           path={`${match.url}/:activePanel?`}
           render={
           (props) => {
+            // React Router does not play nicely with our panel component due to the
+            // way the nested panels are implemented. Here we take the route information
+            // provided by React Router, and use that to determine which panel should
+            // be active at any given time. activePanel will be equal to whichever path
+            // is set after "/search"
+
             const { match = {} } = props
             const { params = {} } = match
             const { activePanel: activePanelFromProps = '' } = params
