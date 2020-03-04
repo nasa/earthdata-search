@@ -20,6 +20,7 @@ function setup() {
       }
     },
     focusedCollection: 'focusedCollection',
+    location: { search: '' },
     collectionSearch: {}
   }
 
@@ -38,7 +39,8 @@ describe('CollectionDetailsHeaderContainer component', () => {
     expect(enzymeWrapper.find(CollectionDetailsHeader).length).toBe(1)
     expect(enzymeWrapper.find(CollectionDetailsHeader).props('focusedCollectionMetadata')).toEqual({
       collectionSearch: {},
-      focusedCollectionMetadata: { some: 'metadata' }
+      focusedCollectionMetadata: { some: 'metadata' },
+      location: { search: '' }
     })
   })
 })

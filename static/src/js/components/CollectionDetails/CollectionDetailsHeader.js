@@ -9,6 +9,7 @@ import { collectionTitleSkeleton } from './skeleton'
 import generateHandoffs from '../../util/handoffs/generateHandoffs'
 
 import './CollectionDetailsHeader.scss'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 /**
  * Renders CollectionDetailsHeader.
@@ -16,8 +17,9 @@ import './CollectionDetailsHeader.scss'
  * @param {object} props.focusedCollectionMetadata - Focused collection passed from redux store.
  */
 export const CollectionDetailsHeader = ({
+  collectionSearch,
   focusedCollectionMetadata,
-  collectionSearch
+  location
 }) => {
   const {
     short_name: shortName,
@@ -47,6 +49,15 @@ export const CollectionDetailsHeader = ({
                   <h2 className="collection-details-header__title">{title}</h2>
                   <Badge className="collection-details-header__short-name" variant="light">{shortName}</Badge>
                   <Badge className="collection-details-header__version-id" variant="info">{`Version ${versionId}`}</Badge>
+                  <PortalLinkContainer
+                    className="granule-results-header__title-link"
+                    to={{
+                      pathname: '/search/granules',
+                      search: location.search
+                    }}
+                  >
+                    {' View Granules'}
+                  </PortalLinkContainer>
                 </>
               )
             }
@@ -63,8 +74,9 @@ CollectionDetailsHeader.defaultProps = {
 }
 
 CollectionDetailsHeader.propTypes = {
+  collectionSearch: PropTypes.shape({}).isRequired,
   focusedCollectionMetadata: PropTypes.shape({}),
-  collectionSearch: PropTypes.shape({}).isRequired
+  location: PropTypes.shape({}).isRequired
 }
 
 export default CollectionDetailsHeader

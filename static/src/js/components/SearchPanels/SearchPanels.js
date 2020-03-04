@@ -10,6 +10,10 @@ import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import CollectionResultsHeaderContainer
   from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
+import CollectionDetailsHeaderContainer
+  from '../../containers/CollectionDetailsHeaderContainer/CollectionDetailsHeaderContainer'
+import CollectionDetailsBodyContainer
+  from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
 import GranuleResultsBodyContainer
   from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
 import GranuleResultsHeaderContainer
@@ -58,7 +62,8 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="collection-results-panel"
-        header={<CollectionResultsHeaderContainer onPanelClose={this.onPanelClose} />}
+        header={<CollectionResultsHeaderContainer />}
+        onPanelClose={this.onPanelClose}
       >
         <PanelItem>
           <CollectionResultsBodyContainer />
@@ -70,8 +75,9 @@ class SearchPanels extends PureComponent {
       <PanelGroup
         key="granule-results-panel"
         header={
-          <GranuleResultsHeaderContainer onPanelClose={this.onPanelClose} />
+          <GranuleResultsHeaderContainer />
         }
+        onPanelClose={this.onPanelClose}
       >
         <PanelItem>
           <GranuleResultsBodyContainer />
@@ -79,10 +85,24 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    panelSection.push(
+      <PanelGroup
+        key="collection-details-panel"
+        header={
+          <CollectionDetailsHeaderContainer />
+        }
+        onPanelClose={this.onPanelClose}
+      >
+        <PanelItem>
+          <CollectionDetailsBodyContainer />
+        </PanelItem>
+      </PanelGroup>
+    )
+
     return (
       <Switch key="panel-children">
         <Route
-          path={`${match.url}/:activePanel?`}
+          path={`${match.url}/:activePanel*`}
           render={
           (props) => {
             // React Router does not play nicely with our panel component due to the
@@ -97,6 +117,9 @@ class SearchPanels extends PureComponent {
             let activePanel = '0.0.0'
 
             switch (activePanelFromProps) {
+              case 'granules/collection-details':
+                activePanel = '0.2.0'
+                break
               case 'granules':
                 activePanel = '0.1.0'
                 break

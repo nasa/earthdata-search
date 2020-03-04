@@ -36,6 +36,7 @@ export const GranuleResultsBodyContainer = (props) => {
     focusedGranule,
     granules,
     granuleQuery,
+    isActive,
     location,
     onChangeGranulePageNum,
     onExcludeGranule,
@@ -57,7 +58,7 @@ export const GranuleResultsBodyContainer = (props) => {
   const { pageNum } = granuleQuery
 
   const onWaypointEnter = () => {
-    onChangeGranulePageNum(pageNum + 1)
+    if (isActive) onChangeGranulePageNum(pageNum + 1)
   }
 
   return (
@@ -83,6 +84,7 @@ GranuleResultsBodyContainer.propTypes = {
   focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
+  isActive: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,

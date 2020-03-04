@@ -11,7 +11,12 @@ export const SidebarContainer = ({
   location,
   panels
 }) => {
-  const sidebarVisible = isPath(location.pathname, ['/search', '/search/granules', '/projects'])
+  const sidebarVisible = isPath(location.pathname, [
+    '/search',
+    '/search/granules',
+    '/projects',
+    '/search/granules/collection-details'
+  ])
 
   return (
     <Sidebar
