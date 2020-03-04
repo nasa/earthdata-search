@@ -1,16 +1,11 @@
 import React, { PureComponent } from 'react'
 import { PropTypes } from 'prop-types'
-import { difference } from 'lodash'
 
 import GranuleResultsItem from './GranuleResultsItem'
 import Skeleton from '../Skeleton/Skeleton'
-
-import {
-  granuleListItem
-} from './skeleton'
-
-import murmurhash3 from '../../util/murmurhash3'
+import { granuleListItem } from './skeleton'
 import { eventEmitter } from '../../events/events'
+import { getGranuleIds } from '../../util/getGranuleIds'
 
 import './GranuleResultsList.scss'
 
@@ -70,16 +65,12 @@ export class GranuleResultsList extends PureComponent {
       isLoaded
     } = granules
 
-    const allGranuleIds = granules.allIds
-    let granuleIds
-    if (isCwic) {
-      granuleIds = allGranuleIds.filter((id) => {
-        const hashedId = murmurhash3(id).toString()
-        return excludedGranuleIds.indexOf(hashedId) === -1
-      })
-    } else {
-      granuleIds = difference(allGranuleIds, excludedGranuleIds)
-    }
+    const granuleIds = getGranuleIds({
+      granules,
+      excludedGranuleIds,
+      isCwic,
+      limit: false
+    })
 
     const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
 

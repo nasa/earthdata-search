@@ -14,6 +14,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     collectionSearch: {},
+    location: { search: '' },
     ...overrideProps
   }
 
@@ -36,7 +37,7 @@ describe('CollectionDetails component', () => {
   describe('when metadata is provided', () => {
     test('renders itself correctly with focused collection metadata', () => {
       const { enzymeWrapper } = setup({
-        focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata,
+        focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata
       })
       expect(enzymeWrapper.type()).toEqual('div')
       expect(enzymeWrapper.props().className).toEqual('collection-details-header')

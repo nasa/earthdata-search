@@ -106,6 +106,7 @@ const buildForDeveloperLink = (linkData, token) => {
 export const CollectionDetailsBody = ({
   collectionMetadata,
   formattedCollectionMetadata,
+  isActive,
   onToggleRelatedUrlsModal
 }) => {
   const { summary } = collectionMetadata
@@ -136,7 +137,11 @@ export const CollectionDetailsBody = ({
       <div className="collection-details-body__content">
         <div className="row collection-details-body__row">
           <div className="col col-auto">
-            <CollectionDetailsMinimap metadata={collectionMetadata} />
+            {
+              isActive && (
+                <CollectionDetailsMinimap metadata={collectionMetadata} />
+              )
+            }
             {
               spatial && (
                 <div className="collection-details-body__spatial-bounding">
@@ -145,87 +150,92 @@ export const CollectionDetailsBody = ({
               )
             }
           </div>
-          <div className="col col-md-3">
+          <div className="col">
             {
               doi && buildDoiLink(doi)
             }
-            <dl className="collection-details-body__info">
-              {
-                <>
-                  <dt>Related URLs:</dt>
-                  <dd className="collection-details-body__related-links">
-                    {
-                      relatedUrls.length > 0 && (
-                        <>
-                          {buildRelatedUrlsList(relatedUrls)}
-                          <Button
-                            className="link link--separated collection-details-body__related-link"
-                            type="button"
-                            variant="link"
-                            bootstrapVariant="link"
-                            label="View All Related URLs"
-                            onClick={() => onToggleRelatedUrlsModal(true)}
-                          >
-                            View All Related URLs
-                          </Button>
-                        </>
-                      )
-                    }
-                    <a
-                      className="link link--external collection-details-body__related-link"
-                      href={urls.html.href}
-                      // eslint-disable-next-line react/jsx-no-target-blank
-                      target="_blank"
-                    >
-                      View More Info
-                    </a>
-                  </dd>
-                </>
-              }
-              {
-                temporal && (
-                <>
-                  <dt>Temporal Extent:</dt>
-                  <dd>
-                    {temporal.map((entry, i) => {
-                      const key = `temporal_entry_${i}`
-                      return <span key={key}>{entry}</span>
-                    })}
-                  </dd>
-                </>
-                )
-              }
-              <dt>GIBS Imagery Projection Availability:</dt>
-              <dd>
-                {gibsLayers && gibsLayers}
-              </dd>
-            </dl>
-          </div>
-          <div className="col collection-details-body__group--secondary">
-            <dl className="collection-details-body__info">
-              <dt>Science Keywords:</dt>
-              <dd>
-                {
-                  scienceKeywords.length === 0 && <span>Not Available</span>
-                }
-                {
-                  scienceKeywords.length > 0 && buildScienceKeywordList(scienceKeywords)
-                }
-              </dd>
-            </dl>
-            {
-              nativeFormats.length > 0 && (
+            <div className="row collection-details-body__row">
+              <div className="col col-md-6">
                 <dl className="collection-details-body__info">
-                  <dt>{`Native ${pluralize('Format', nativeFormats.length)}:`}</dt>
+                  {
+                    <>
+                      <dt>Related URLs:</dt>
+                      <dd className="collection-details-body__related-links">
+                        {
+                          relatedUrls.length > 0 && (
+                            <>
+                              {buildRelatedUrlsList(relatedUrls)}
+                              <Button
+                                className="link link--separated collection-details-body__related-link"
+                                type="button"
+                                variant="link"
+                                bootstrapVariant="link"
+                                label="View All Related URLs"
+                                onClick={() => onToggleRelatedUrlsModal(true)}
+                              >
+                                View All Related URLs
+                              </Button>
+                            </>
+                          )
+                        }
+                        <a
+                          className="link link--external collection-details-body__related-link"
+                          href={urls.html.href}
+                          // eslint-disable-next-line react/jsx-no-target-blank
+                          target="_blank"
+                        >
+                          View More Info
+                        </a>
+                      </dd>
+                    </>
+                  }
+                  {
+                    temporal && (
+                    <>
+                      <dt>Temporal Extent:</dt>
+                      <dd>
+                        {temporal.map((entry, i) => {
+                          const key = `temporal_entry_${i}`
+                          return <span key={key}>{entry}</span>
+                        })}
+                      </dd>
+                    </>
+                    )
+                  }
+                  <dt>GIBS Imagery Projection Availability:</dt>
+                  <dd>
+                    {gibsLayers && gibsLayers}
+                  </dd>
+                </dl>
+              </div>
+              <div className="col col-md-6 collection-details-body__group--secondary">
+                <dl className="collection-details-body__info">
+                  <dt>Science Keywords:</dt>
                   <dd>
                     {
-                      nativeFormats.length > 0 && buildNativeFormatList(nativeFormats)
+                      scienceKeywords.length === 0 && <span>Not Available</span>
+                    }
+                    {
+                      scienceKeywords.length > 0 && buildScienceKeywordList(scienceKeywords)
                     }
                   </dd>
                 </dl>
-              )
-            }
+                {
+                  nativeFormats.length > 0 && (
+                    <dl className="collection-details-body__info">
+                      <dt>{`Native ${pluralize('Format', nativeFormats.length)}:`}</dt>
+                      <dd>
+                        {
+                          nativeFormats.length > 0 && buildNativeFormatList(nativeFormats)
+                        }
+                      </dd>
+                    </dl>
+                  )
+                }
+              </div>
+            </div>
           </div>
+
         </div>
         <div className="row collection-details-body__row">
           {/* eslint-disable-next-line react/no-danger */}
@@ -293,6 +303,7 @@ CollectionDetailsBody.defaultProps = {
 CollectionDetailsBody.propTypes = {
   collectionMetadata: PropTypes.shape({}),
   formattedCollectionMetadata: PropTypes.shape({}),
+  isActive: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 

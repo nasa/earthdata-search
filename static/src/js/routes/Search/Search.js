@@ -56,6 +56,7 @@ import SidebarSection from '../../components/Sidebar/SidebarSection'
 
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
+import GranuleResultsHighlightsContainer from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
 
 const mapDispatchToProps = dispatch => ({
   onMasterOverlayHeightChange:
@@ -87,7 +88,14 @@ export class Search extends Component {
         >
           <SearchFormContainer />
           <SidebarSection>
-            <FacetsContainer />
+            <Switch>
+              <Route exact path={`${path}/granules/collection-details`}>
+                <GranuleResultsHighlightsContainer />
+              </Route>
+              <Route path={path}>
+                <FacetsContainer />
+              </Route>
+            </Switch>
           </SidebarSection>
         </SidebarContainer>
         <div className="route-wrapper__content">
@@ -105,13 +113,6 @@ export class Search extends Component {
                 tabHandle={<GranuleDetailsTabContainer />}
                 header={<GranuleDetailsHeaderContainer />}
                 body={<GranuleDetailsBodyContainer />}
-              />
-            </Route>
-            <Route exact path={`${path}/granules/collection-details`}>
-              <MasterOverlayPanelContainer
-                tabHandle={<CollectionDetailsTabContainer />}
-                header={<CollectionDetailsHeaderContainer />}
-                body={<CollectionDetailsBodyContainer />}
               />
             </Route>
           </Switch>

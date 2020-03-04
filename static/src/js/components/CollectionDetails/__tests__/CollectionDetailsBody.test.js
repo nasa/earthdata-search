@@ -14,11 +14,13 @@ import CollapsePanel from '../../CollapsePanel/CollapsePanel'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     collectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata,
     formattedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.formattedMetadata,
-    onToggleRelatedUrlsModal: jest.fn()
+    isActive: true,
+    onToggleRelatedUrlsModal: jest.fn(),
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsBody {...props} />)
@@ -40,6 +42,11 @@ describe('CollectionDetails component', () => {
     test('renders correctly', () => {
       const { enzymeWrapper } = setup()
       expect(enzymeWrapper.find(CollectionDetailsMinimap).length).toEqual(1)
+    })
+
+    test('does not render if the collectionDetailsBody is not active', () => {
+      const { enzymeWrapper } = setup({ isActive: false })
+      expect(enzymeWrapper.find(CollectionDetailsMinimap).length).toEqual(0)
     })
 
     test('has the correct props', () => {

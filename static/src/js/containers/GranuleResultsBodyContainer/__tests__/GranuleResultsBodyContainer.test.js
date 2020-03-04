@@ -6,7 +6,7 @@ import GranuleResultsBody from '../../../components/GranuleResults/GranuleResult
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     collections: {
       allIds: ['focusedCollection'],
@@ -21,11 +21,13 @@ function setup() {
     focusedGranule: '',
     granules: { value: 'granules' },
     granuleQuery: { pageNum: 1 },
+    isActive: true,
     location: { search: 'value' },
     onChangeGranulePageNum: jest.fn(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
-    onMetricsDataAccess: jest.fn()
+    onMetricsDataAccess: jest.fn(),
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<GranuleResultsBodyContainer {...props} />)
@@ -59,5 +61,15 @@ describe('GranuleResultsBodyContainer component', () => {
 
     expect(props.onChangeGranulePageNum.mock.calls.length).toBe(1)
     expect(props.onChangeGranulePageNum.mock.calls[0]).toEqual([2])
+  })
+
+  test('waypointEnter does not call onChangeGranulePageNum if not active', () => {
+    const { enzymeWrapper, props } = setup({ isActive: false })
+
+    const granuleResultsBody = enzymeWrapper.find(GranuleResultsBody)
+
+    granuleResultsBody.prop('waypointEnter')({ event: { type: 'scroll' } })
+
+    expect(props.onChangeGranulePageNum.mock.calls.length).toBe(0)
   })
 })
