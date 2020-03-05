@@ -10,9 +10,16 @@
   &__button {
     display: flex;
     justify-content: space-between;
-    padding: .6rem 1.1rem;
+    padding: 0.5rem 0.75rem;
     color: $color__white;
     border-radius: 0;
+    border-bottom: 1px solid $color__black--700;
+    font-size: 0.925rem;
+    font-weight: 300;
+
+    .facets-group:last-child & {
+      border: 0;
+    }
 
     &:hover {
       color: $color__white;
@@ -22,16 +29,18 @@
     &:focus {
       outline: 0;
       border-color: transparent;
+      border-bottom-color: $color__black--700;
     }
   }
 
   &__action {
     align-self: flex-end;
+    color: $color__black--300;
   }
 
   &__header {
     display: flex;
-    padding: 0.2rem 0.4rem 0.2rem 1.1rem;
+    padding: 0.2rem 0.4rem 0.2rem 0.75rem;
   }
 
   &__meta {
@@ -65,6 +74,7 @@
 
     &--is-open {
       height: auto;
+      border-bottom: 1px solid $color__black--700;
     }
   }
 }
