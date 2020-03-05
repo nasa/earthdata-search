@@ -43,4 +43,11 @@
     margin-top: 0.5rem;
     color: $color__black--500;
   }
+
+  &__simplebar-content > .simplebar-content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    height: 100%;
+  }
 }

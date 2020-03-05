@@ -1,10 +1,18 @@
 .collection-details-body {
   display: flex;
   flex-direction: column;
+  height: 100%;
+
+  &__simplebar {
+    min-height: 0;
+  }
+
+  &__simplebar-content > .simplebar-content {
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
 
   &__content {
-    flex-shrink: 0;
-    flex-grow: 1;
     padding: $spacer;
   }
 
@@ -87,15 +95,26 @@
   }
 
   &__summary {
+    margin-bottom: 1rem;
     font-size: 0.75rem;
     white-space: pre-wrap;
   }
 
+  &__minimap {
+    margin-bottom: 1rem;
+  }
+
   &__provider-list {
     display: flex;
+    flex-wrap: wrap;
   }
 
   &__for-devs {
+    flex-grow: 0;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+
     .collapse-panel__button {
       width: 100%;
       padding: $spacer;
@@ -126,12 +145,5 @@
     list-style: none;
     margin: 0;
     padding: 0;
-  }
-
-  .simplebar-content {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    height: 100%;
   }
 }

@@ -1,16 +1,21 @@
 .collection-details-header {
-  &__title-wrap {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+  &__primary {
+    padding: 0.5rem 1rem;
   }
 
   &__title {
-    display: inline-block;
-    margin-bottom: 0;
+    display: inline;
     margin-right: 0.75rem;
     font-weight: 700;
-    font-size: 1.1875rem;
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+
+  &__title-link {
+    position: relative;
+    display: inline;
+    white-space: nowrap;
+    font-size: 0.875rem;
   }
 
   &__version-id {

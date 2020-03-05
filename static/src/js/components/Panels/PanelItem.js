@@ -66,7 +66,8 @@ export class PanelItem extends Component {
       header,
       hideFooter,
       isActive,
-      onChangePanel
+      onChangePanel,
+      scrollable
     } = this.props
 
     const {
@@ -113,6 +114,43 @@ export class PanelItem extends Component {
       }
     ])
 
+    const renderChildren = () => {
+      const contents = (
+        <>
+          {
+            typeof children === 'string' && children
+          }
+          {
+            typeof children !== 'string' && (
+              React.cloneElement(children, {
+                isActive,
+                panelScrollableNodeRef: this.scrollableNodeRef
+              })
+            )}
+        </>
+      )
+
+      if (scrollable) {
+        return (
+          <SimpleBar
+            className="panel-item__content"
+            scrollableNodeProps={{
+              className: 'panel-item__simplebar-content',
+              ref: this.scrollableNodeRef
+            }}
+          >
+            {contents}
+          </SimpleBar>
+        )
+      }
+
+      return (
+        <div className="panel-item__content">
+          {contents}
+        </div>
+      )
+    }
+
     return (
       <div
         className={className}
@@ -130,21 +168,7 @@ export class PanelItem extends Component {
             </header>
           )
         }
-        <SimpleBar
-          className="panel-item__content"
-          scrollableNodeProps={{ ref: this.scrollableNodeRef }}
-        >
-          {
-            typeof children === 'string' && children
-          }
-          {
-            typeof children !== 'string' && (
-              React.cloneElement(children, {
-                isActive,
-                panelScrollableNodeRef: this.scrollableNodeRef
-              })
-            )}
-        </SimpleBar>
+        { renderChildren() }
         {footer && !hideFooter && <PanelGroupFooter footer={footer} />}
       </div>
     )
@@ -157,7 +181,8 @@ PanelItem.defaultProps = {
   header: null,
   hideFooter: false,
   isActive: false,
-  onChangePanel: null
+  onChangePanel: null,
+  scrollable: true
 }
 
 PanelItem.propTypes = {
@@ -171,7 +196,8 @@ PanelItem.propTypes = {
   header: PropTypes.node,
   hideFooter: PropTypes.bool,
   isActive: PropTypes.bool,
-  onChangePanel: PropTypes.func
+  onChangePanel: PropTypes.func,
+  scrollable: PropTypes.bool
 }
 
 export default PanelItem

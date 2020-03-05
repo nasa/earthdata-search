@@ -2,8 +2,6 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import SimpleBar from 'simplebar-react'
-
 import { collectionDetailsBodyProps, metadata } from './mocks'
 import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
@@ -34,7 +32,7 @@ function setup(overrideProps) {
 describe('CollectionDetails component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.type()).toBe(SimpleBar)
+    expect(enzymeWrapper.type()).toBe('div')
     expect(enzymeWrapper.prop('className')).toBe('collection-details-body')
   })
 
