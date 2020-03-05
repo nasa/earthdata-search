@@ -93,7 +93,7 @@ class SearchPanels extends PureComponent {
         }
         onPanelClose={this.onPanelClose}
       >
-        <PanelItem>
+        <PanelItem scrollable={false}>
           <CollectionDetailsBodyContainer />
         </PanelItem>
       </PanelGroup>
