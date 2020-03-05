@@ -169,6 +169,10 @@ describe('changeFocusedCollection', () => {
         granule1: {
           mock: 'data'
         }
+      },
+      totalSize: {
+        size: 'NaN',
+        unit: 'MB'
       }
     }
     const store = mockStore({

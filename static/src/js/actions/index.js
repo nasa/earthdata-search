@@ -18,6 +18,7 @@ import {
 import {
   changeFocusedCollection,
   clearCollectionGranules,
+  copyGranulesToCollection,
   getFocusedCollection,
   viewCollectionGranules,
   viewCollectionDetails
@@ -100,7 +101,8 @@ import {
   selectAccessMethod,
   toggleCollectionVisibility,
   addAccessMethods,
-  updateAccessMethod
+  updateAccessMethod,
+  visitMyProject
 } from './project'
 import {
   fetchProviders
@@ -161,6 +163,7 @@ const actions = {
   clearFilters,
   clearShapefile,
   collectionRelevancyMetrics,
+  copyGranulesToCollection,
   deleteRetrieval,
   deleteSavedProject,
   excludeGranule,
@@ -238,7 +241,8 @@ const actions = {
   updateShapefile,
   updateStore,
   viewCollectionDetails,
-  viewCollectionGranules
+  viewCollectionGranules,
+  visitMyProject
 }
 
 export default actions

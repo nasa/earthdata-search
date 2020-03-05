@@ -16,10 +16,10 @@ import CwicGranuleRequest from '../util/request/cwicGranuleRequest'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { updateCollectionMetadata } from './collections'
 import { prepareGranuleParams, populateGranuleResults, buildGranuleSearchParams } from '../util/granules'
-import { convertSize } from '../util/project'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
+import { calculateTotalSize } from '../util/calculateTotalSize'
 
 export const submittingProject = () => ({
   type: SUBMITTING_PROJECT
@@ -95,14 +95,8 @@ export const getProjectGranules = collectionIds => (dispatch, getState) => (
     const searchResponse = requestObject.search(buildGranuleSearchParams(granuleParams))
       .then((response) => {
         const payload = populateGranuleResults(collectionId, isCwicCollection, response)
-        let size = 0
-        payload.results.forEach((granule) => {
-          size += parseFloat(granule.granule_size || 0)
-        })
 
-        const totalSize = size / payload.results.length * payload.hits
-
-        payload.totalSize = convertSize(totalSize)
+        payload.totalSize = calculateTotalSize(payload.results, payload.hits)
 
         dispatch(updateAuthTokenFromHeaders(response.headers))
         dispatch(updateProjectGranules(payload))
@@ -208,4 +202,16 @@ export const getProjectCollections = collectionId => (dispatch, getState) => {
 export const addProjectCollection = collectionId => (dispatch) => {
   dispatch(addCollectionToProject(collectionId))
   dispatch(actions.getProjectCollections(collectionId))
+}
+
+/**
+ * If the user clicks My Project from a focused collection,
+ * copy the current granule results into the project collection
+ */
+export const visitMyProject = () => (dispatch, getState) => {
+  const { focusedCollection } = getState()
+
+  if (focusedCollection !== '') {
+    dispatch(actions.copyGranulesToCollection())
+  }
 }

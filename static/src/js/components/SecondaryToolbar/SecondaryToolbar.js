@@ -93,7 +93,8 @@ class SecondaryToolbar extends Component {
       projectIds,
       location,
       portal,
-      onChangePath
+      onChangePath,
+      onVisitMyProject
     } = this.props
 
     const loggedIn = authToken !== ''
@@ -103,7 +104,7 @@ class SecondaryToolbar extends Component {
     const cmrEnvironment = cmrEnv()
 
     // remove focused collection from back button params
-    const params = parse(location.search, { ignoreQueryPrefix: true })
+    const params = parse(location.search, { parseArrays: false, ignoreQueryPrefix: true })
     let { p = '' } = params
     p = p.replace(/^[^!]*/, '')
 
@@ -147,6 +148,7 @@ class SecondaryToolbar extends Component {
       }
       return (
         <PortalLinkContainer
+          onClick={onVisitMyProject}
           to={{
             pathname: '/projects',
             search: location.search
@@ -292,7 +294,8 @@ SecondaryToolbar.propTypes = {
   savedProject: PropTypes.shape({}).isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  onChangePath: PropTypes.func.isRequired
+  onChangePath: PropTypes.func.isRequired,
+  onVisitMyProject: PropTypes.func.isRequired
 }
 
 export default SecondaryToolbar

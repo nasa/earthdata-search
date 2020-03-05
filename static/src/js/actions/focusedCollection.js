@@ -11,6 +11,7 @@ import { updateAuthTokenFromHeaders } from './authToken'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { eventEmitter } from '../events/events'
+import { calculateTotalSize } from '../util/calculateTotalSize'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -41,6 +42,8 @@ export const copyGranulesToCollection = () => (dispatch, getState) => {
     loadTime
   } = granules
 
+  const totalSize = calculateTotalSize(Object.values(byId), hits)
+
   dispatch(addCollectionGranules({
     collectionId: focusedCollection,
     granules: {
@@ -48,7 +51,8 @@ export const copyGranulesToCollection = () => (dispatch, getState) => {
       byId,
       isCwic,
       hits,
-      loadTime
+      loadTime,
+      totalSize
     }
   }))
 }
