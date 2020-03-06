@@ -6,9 +6,20 @@
   height: 100%;
   z-index: -1;
   transform: translateX(-100%);
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 
   &--is-active {
     transform: translateX(0%);
+  }
+
+  &__handle {
+    position: absolute;
+    top: 1rem;
+    left: 100%;
+    width: 1rem;
+    height: 4rem;
+    background-color: $color__white;
+    border-left: 1px solid $color__black--200;
+    box-shadow: 0 0 10px rgba($color__black, 0.3);
   }
 }
