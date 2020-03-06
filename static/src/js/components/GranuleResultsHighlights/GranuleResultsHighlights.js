@@ -20,31 +20,47 @@ export const GranuleResultsHighlights = ({
         hits
       )} matching ${pluralize('granule', hits)}`}
     </p>
-    {
-      granules.map((granule) => {
-        const {
-          producer_granule_id: producerGranuleId,
-          formatted_temporal: formattedTemporal
-        } = granule
+    <ul className="granule-results-highlights__list">
+      {
+        granules.map((granule, i) => {
+          const {
+            id,
+            producer_granule_id: granuleId,
+            title: granuleTitle,
+            formatted_temporal: formattedTemporal
+          } = granule
 
-        const timeStart = formattedTemporal[0]
-        const timeEnd = formattedTemporal[1]
+          const timeStart = formattedTemporal[0]
+          const timeEnd = formattedTemporal[1]
 
-        return (
-          <div key={producerGranuleId}>
-            <p>{producerGranuleId}</p>
-            <p>
-              Start
-              <span>{timeStart}</span>
-            </p>
-            <p>
-              End
-              <span>{timeEnd}</span>
-            </p>
-          </div>
-        )
-      })
-    }
+          const title = granuleId || granuleTitle
+
+          const key = `${id}_${i}`
+
+          return (
+            <li key={key} className="granule-results-highlights__item-time">
+              <header className="granule-results-highlights__item-header">
+                <h4 className="granule-results-highlights__item-title">{title}</h4>
+              </header>
+              <div className="granule-results-highlights__item-body">
+                <div className="granule-results-highlights__temporal-row">
+                  <h5 className="granule-results-highlights__temporal-label">
+                    Start
+                  </h5>
+                  <p className="granule-results-highlights__temporal-value">{timeStart}</p>
+                </div>
+                <div className="granule-results-highlights__temporal-row">
+                  <h5 className="granule-results-highlights__temporal-label">
+                    End
+                  </h5>
+                  <p className="granule-results-highlights__temporal-value">{timeEnd}</p>
+                </div>
+              </div>
+            </li>
+          )
+        })
+      }
+    </ul>
     <PortalLinkContainer
       className="granule-results-header__title-link"
       to={{
