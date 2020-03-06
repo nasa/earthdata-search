@@ -25,7 +25,9 @@ function setup(overrideProps) {
           mock: 'data'
         }
       },
-      hits: 1
+      hits: 1,
+      isLoading: false,
+      isLoaded: true
     },
     location: { search: '' },
     ...overrideProps
@@ -47,8 +49,10 @@ describe('GranuleResultsHighlightsContainer component', () => {
     expect(enzymeWrapper.find(GranuleResultsHighlights).props().granules).toEqual([{
       mock: 'data'
     }])
-    expect(enzymeWrapper.find(GranuleResultsHighlights).props().hits).toEqual(1)
-    expect(enzymeWrapper.find(GranuleResultsHighlights).props().limit).toEqual(1)
+    expect(enzymeWrapper.find(GranuleResultsHighlights).props().granuleCount).toEqual(1)
+    expect(enzymeWrapper.find(GranuleResultsHighlights).props().visibleGranules).toEqual(1)
     expect(enzymeWrapper.find(GranuleResultsHighlights).props().location).toEqual({ search: '' })
+    expect(enzymeWrapper.find(GranuleResultsHighlights).props().isLoading).toEqual(false)
+    expect(enzymeWrapper.find(GranuleResultsHighlights).props().isLoaded).toEqual(true)
   })
 })

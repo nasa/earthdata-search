@@ -1,7 +1,9 @@
-$color-loading-light__dark: rgba($color__black--800, 0.0625);
-$color-loading-dark__dark: rgba($color__black--300, 0.45);
+$color-loading-default__light: rgba($color__black--800, 0.0625);
+$color-loading-default__dark: rgba($color__black--300, 0.45);
 $color-loading-light__light: rgba($color__black--200, 0.0625);
-$color-loading-dark__light: rgba($color__black--900, 0.45);
+$color-loading-light__dark: rgba($color__black--900, 0.45);
+$color-loading-dark__light: rgba($color__black--800, 0.0625);
+$color-loading-dark__dark: rgba($color__black--300, 0.15);
 
 .skeleton {
   position: relative;
@@ -32,23 +34,31 @@ $color-loading-dark__light: rgba($color__black--900, 0.45);
       position: absolute;
       height: 100%;
       width: 100%;
-      background: linear-gradient(90deg, $color-loading-dark__dark 30%, $color-loading-light__dark 50%, $color-loading-dark__dark 70%);
+      background: linear-gradient(90deg, $color-loading-default__dark 30%, $color-loading-default__light 50%, $color-loading-default__dark 70%);
       background-size: 400% 400%;
       animation: pulse 4s ease-in-out infinite;
 
-      @keyframes pulse {
-        0% {
-          background-position:100% 50%
-        }
-        100% {
-          background-position:0% 50%
-        }
+      .skeleton--light & {
+        background: linear-gradient(90deg, $color-loading-light__dark 30%, $color-loading-light__light 50%, $color-loading-light__dark 70%);
+        background-size: 400% 400%;
+        animation: pulse 4s ease-in-out infinite;
       }
 
-      .skeleton--light {
-        background: linear-gradient(90deg, $color-loading-dark__light 30%, $color-loading-light__light 50%, $color-loading-dark__light 70%);
+      .skeleton--dark & {
+        background: linear-gradient(90deg, $color-loading-dark__dark 30%, $color-loading-dark__light 50%, $color-loading-dark__dark 70%);
+        background-size: 400% 400%;
+        animation: pulse 4s ease-in-out infinite;
       }
     }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    background-position:100% 50%
+  }
+  100% {
+    background-position:0% 50%
   }
 }
 
