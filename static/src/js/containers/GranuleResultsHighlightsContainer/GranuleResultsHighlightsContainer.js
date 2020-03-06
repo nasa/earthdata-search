@@ -20,7 +20,12 @@ export const GranuleResultsHighlightsContainer = ({
   granules,
   location
 }) => {
-  const { byId, hits } = granules
+  const {
+    byId,
+    hits,
+    isLoading,
+    isLoaded
+  } = granules
 
   const collectionObject = getFocusedCollectionObject(focusedCollection, collections)
 
@@ -30,7 +35,7 @@ export const GranuleResultsHighlightsContainer = ({
   } = collectionObject
 
   // Limit the number of granules shown
-  const limit = min([4, hits])
+  const limit = min([5, hits])
 
   const granuleIds = getGranuleIds({
     granules,
@@ -39,18 +44,21 @@ export const GranuleResultsHighlightsContainer = ({
     limit
   })
 
-  if (granuleIds.length === 0) return null
-
   const granuleList = granuleIds.map(granuleId => (
     byId[granuleId]
   ))
 
+  const visibleGranules = granuleIds.length ? granuleIds.length : 0
+  const granuleCount = hits - excludedGranuleIds.length
+
   return (
     <GranuleResultsHighlights
       granules={granuleList}
-      hits={hits}
-      limit={limit}
+      granuleCount={granuleCount}
+      visibleGranules={visibleGranules}
       location={location}
+      isLoading={isLoading}
+      isLoaded={isLoaded}
     />
   )
 }
