@@ -68,6 +68,12 @@ const Config = merge.smartStrategy({
           },
           {
             loader: MiniCssExtractPlugin.loader
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: false
+            }
           }
         ]
       }
