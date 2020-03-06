@@ -153,6 +153,7 @@ class SearchPanels extends PureComponent {
               <Panels
                 show
                 activePanel={activePanel}
+                draggable
               >
                 <PanelSection>
                   {panelSection}

@@ -4,11 +4,12 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 600px;
+  width: 100%;
   background-color: $color__white;
   transform: translateX(-100%);
   z-index: 0;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-out;
+  transition-delay: 0.2s;
 
   &--is-open {
     transform: translateX(0%);
@@ -16,5 +17,17 @@
 
   &--is-active {
     z-index: 1;
+  }
+
+  > * {
+    will-change: opacity;
+    transition: opacity 0.1s ease-out;
+    opacity: 0;
+  }
+
+  .panels--is-active & {
+    > * {
+      opacity: 1;
+    }
   }
 }
