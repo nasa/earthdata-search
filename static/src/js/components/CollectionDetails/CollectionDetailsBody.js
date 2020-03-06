@@ -25,8 +25,8 @@ const buildRelatedUrlsList = (relatedUrls) => {
           key={key}
           className="link link--separated collection-details-body__related-link"
           href={url.URL}
-          // eslint-disable-next-line react/jsx-no-target-blank
           target="_blank"
+          rel="noopener noreferrer"
         >
           {url.HighlightedType}
         </a>
