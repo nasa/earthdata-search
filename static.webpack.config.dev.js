@@ -1,4 +1,3 @@
-const webpack = require('webpack')
 const merge = require('webpack-merge')
 const WebpackBar = require('webpackbar')
 
@@ -13,7 +12,6 @@ const Config = merge.smartStrategy(
   mode: 'development',
   devtool: 'source-map',
   devServer: {
-    hot: false,
     historyApiFallback: true
   },
   module: {
@@ -30,8 +28,7 @@ const Config = merge.smartStrategy(
     ]
   },
   plugins: [
-    new WebpackBar(),
-    new webpack.HotModuleReplacementPlugin()
+    new WebpackBar()
   ]
 })
 
