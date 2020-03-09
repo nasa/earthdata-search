@@ -146,7 +146,9 @@
           method: post
           cors: true
           path: autocomplete
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlOptionalAuthorizer
+            type: REQUEST
 
   regionSearch:
     handler: serverless/src/regionSearch/handler.default
@@ -183,7 +185,9 @@
           method: post
           cors: true
           path: cwic/granules
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlOptionalAuthorizer
+            type: REQUEST
 
   conceptMetadata:
     handler: serverless/src/conceptMetadata/handler.default
@@ -256,6 +260,11 @@
           method: post
           cors: true
           path: relevancy_logger
+
+  edlOptionalAuthorizer:
+    handler: serverless/src/edlOptionalAuthorizer/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    cors: true
 
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer/handler.default
