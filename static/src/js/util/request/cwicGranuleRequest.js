@@ -7,9 +7,13 @@ export default class CwicGranuleRequest extends Request {
   constructor(authToken) {
     super(getEnvironmentConfig().apiHost)
 
+    this.lambda = true
+
     if (authToken && authToken !== '') {
       this.authenticated = true
       this.authToken = authToken
+    } else {
+      this.optionallyAuthenticated = true
     }
 
     this.searchPath = 'cwic/granules'

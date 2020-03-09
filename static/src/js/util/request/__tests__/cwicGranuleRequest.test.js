@@ -20,7 +20,7 @@ describe('CwicGranuleRequest#transformRequest', () => {
         echoCollectionId: 'TEST_COLLECTION_ID'
       }, {})
 
-      expect(transformedData).toEqual('echo_collection_id=TEST_COLLECTION_ID')
+      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
     })
 
     test('returns only permitted keys correctly transformed', () => {
@@ -31,7 +31,7 @@ describe('CwicGranuleRequest#transformRequest', () => {
         nonPermittedKey: 'NOPE'
       }, {})
 
-      expect(transformedData).toEqual('echo_collection_id=TEST_COLLECTION_ID')
+      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
     })
   })
 

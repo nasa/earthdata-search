@@ -1,9 +1,7 @@
 import request from 'request-promise'
-import { parse as parseQueryString } from 'qs'
 import { parse as parseXml } from 'fast-xml-parser'
 import { pick } from '../util/pick'
 import { getClientId, getApplicationConfig } from '../../../sharedUtils/config'
-import { getJwtToken } from '../util/getJwtToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
 /**
@@ -119,21 +117,8 @@ const cwicGranuleSearch = async (event) => {
     'Content-Type': 'application/xml'
   }
 
-  let params
-  try {
-    const jwtToken = getJwtToken(event)
-    if (jwtToken) {
-      responseHeaders['jwt-token'] = jwtToken
-    }
-
-    // If a jwt token is found the payload provided is slightly different
-    const responseBody = JSON.parse(event.body)
-
-    // eslint-disable-next-line prefer-destructuring
-    params = responseBody.params
-  } catch (e) {
-    params = parseQueryString(event.body)
-  }
+  const { body } = event
+  const { params } = JSON.parse(body)
 
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
