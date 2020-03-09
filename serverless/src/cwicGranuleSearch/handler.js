@@ -197,7 +197,7 @@ const cwicGranuleSearch = async (event) => {
     return {
       isBase64Encoded: false,
       statusCode: e.statusCode,
-      headers: { responseHeaders },
+      headers: responseHeaders,
       body: e.error
     }
   }
