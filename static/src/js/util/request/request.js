@@ -21,11 +21,23 @@ export default class Request {
     }
 
     this.authenticated = false
+    this.optionallyAuthenticated = false
     this.baseUrl = baseUrl
     this.lambda = false
     this.searchPath = ''
     this.startTime = null
     this.cancelToken = CancelToken.source()
+  }
+
+  /**
+   * Getter for the authToken. Returns an empty string if the request is optionallyAuthenticated
+   */
+  getAuthToken() {
+    if (this.optionallyAuthenticated && !this.authToken) {
+      return ''
+    }
+
+    return this.authToken
   }
 
   /**
@@ -58,9 +70,9 @@ export default class Request {
    * @return {Object} A modified object.
    */
   transformRequest(data, headers) {
-    if (this.authenticated) {
+    if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
-      headers.Authorization = `Bearer: ${this.authToken}`
+      headers.Authorization = `Bearer: ${this.getAuthToken()}`
     }
 
     if (data) {
@@ -174,7 +186,7 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer: ${this.authToken}`
+          Authorization: `Bearer: ${this.getAuthToken()}`
         }
       }
     }
@@ -206,7 +218,7 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer: ${this.authToken}`
+          Authorization: `Bearer: ${this.getAuthToken()}`
         }
       }
     }

@@ -149,6 +149,7 @@
           authorizer:
             name: edlOptionalAuthorizer
             type: REQUEST
+            resultTtlInSeconds: 0
 
   regionSearch:
     handler: serverless/src/regionSearch/handler.default
@@ -188,6 +189,7 @@
           authorizer:
             name: edlOptionalAuthorizer
             type: REQUEST
+            resultTtlInSeconds: 0
 
   conceptMetadata:
     handler: serverless/src/conceptMetadata/handler.default

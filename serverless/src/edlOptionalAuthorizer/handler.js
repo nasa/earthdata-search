@@ -8,16 +8,20 @@ import { validateToken } from '../util/authorizer/validateToken'
  */
 const edlOptionalAuthorizer = async (event) => {
   const {
-    authorizationToken,
+    headers = {},
     methodArn,
     requestContext = {}
   } = event
   const { resourcePath } = requestContext
+  const { Authorization: authorizationToken } = headers
 
-  console.log('event', JSON.stringify(event, null, 4))
-  console.log('authorizationToken', authorizationToken)
+  // authorizationToken comes in as `Bearer: asdf.qwer.hjkl` but we only need the actual token
+  const tokenParts = authorizationToken.split(' ')
+  const jwtToken = tokenParts[1]
 
-  if (!authorizationToken) {
+  // Authorization header must exist for API Gateway to execute this authorizer, but if the user isn't logged in,
+  // the header will be `Bearer: `
+  if (!jwtToken || jwtToken === '') {
     const authOptionalPaths = [
       '/autocomplete',
       '/cwic/granules'
@@ -30,12 +34,8 @@ const edlOptionalAuthorizer = async (event) => {
 
     console.log(`${resourcePath} does not support optional authentication.`)
 
-    throw new Error('Route Requires Authorization')
+    throw new Error('Unauthorized')
   }
-
-  // authorizationToken comes in as `Bearer: asdf.qwer.hjkl` but we only need the actual token
-  const tokenParts = authorizationToken.split(' ')
-  const jwtToken = tokenParts[1]
 
   const username = await validateToken(jwtToken)
 

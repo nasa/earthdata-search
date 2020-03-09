@@ -9,7 +9,6 @@ import { parseError } from '../util/parseError'
  * @param {Object} event Details about the HTTP request that it received
  */
 const autocomplete = async (event) => {
-  console.log(event)
   const { body } = event
 
   const { requestId } = JSON.parse(body)
