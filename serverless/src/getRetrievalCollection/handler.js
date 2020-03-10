@@ -1,8 +1,9 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Retrieve a single retrieval collection from the database
@@ -14,8 +15,7 @@ const getRetrievalCollection = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
     const {
@@ -95,7 +95,7 @@ const getRetrievalCollection = async (event, context) => {
       return {
         isBase64Encoded: false,
         statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        headers: defaultResponseHeaders,
         body: JSON.stringify({
           id,
           retrieval_id: obfuscateId(retrievalId),
@@ -113,17 +113,14 @@ const getRetrievalCollection = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 404,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [`Retrieval Collection '${providedRetrievalCollectionId}' not found.`] })
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [e] })
+      headers: defaultResponseHeaders,
+      ...parseError(e)
     }
   }
 }

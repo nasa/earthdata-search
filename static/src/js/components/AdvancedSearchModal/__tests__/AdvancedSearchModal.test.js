@@ -1,8 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import EDSCModal from '../../EDSCModal/EDSCModal'
+
 import AdvancedSearchModal from '../AdvancedSearchModal'
+import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -45,7 +46,7 @@ describe('AdvancedSearchModal component', () => {
     test('should not render a modal', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find(EDSCModal).length).toEqual(1)
+      expect(enzymeWrapper.find(EDSCModalContainer).length).toEqual(1)
     })
   })
 
@@ -55,7 +56,7 @@ describe('AdvancedSearchModal component', () => {
         isOpen: true
       })
 
-      expect(enzymeWrapper.find(EDSCModal).length).toEqual(1)
+      expect(enzymeWrapper.find(EDSCModalContainer).length).toEqual(1)
     })
   })
 

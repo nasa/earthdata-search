@@ -3,6 +3,7 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_TOGGLE,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
+  TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
@@ -11,6 +12,7 @@ import {
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+  TOGGLE_SPATIAL_POLYGON_WARNING,
   TOGGLE_TOO_MANY_POINTS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../constants/actionTypes'
@@ -88,5 +90,15 @@ export const toggleTooManyPointsModal = state => ({
 
 export const toggleChunkedOrderModal = state => ({
   type: TOGGLE_CHUNKED_ORDER_MODAL,
+  payload: state
+})
+
+export const toggleAboutCwicModal = state => ({
+  type: TOGGLE_ABOUT_CWIC_MODAL,
+  payload: state
+})
+
+export const toggleSpatialPolygonWarning = state => ({
+  type: TOGGLE_SPATIAL_POLYGON_WARNING,
   payload: state
 })

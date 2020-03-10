@@ -19,10 +19,10 @@ export const GranuleDetailsHeaderContainer = ({
   granules
 }) => {
   const focusedGranuleMetadata = getFocusedGranuleObject(focusedGranule, granules)
-  const { json = {} } = focusedGranuleMetadata
+  const { ummJson = {} } = focusedGranuleMetadata
 
   return (
-    <GranuleDetailsHeader json={json} />
+    <GranuleDetailsHeader ummJson={ummJson} />
   )
 }
 

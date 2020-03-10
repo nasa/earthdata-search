@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { granuleResultsBodyProps, formattedGranuleInformation } from './mocks'
+import { granuleResultsBodyProps } from './mocks'
 
 import GranuleDetailsInfo from '../GranuleDetailsInfo'
 import Spinner from '../../Spinner/Spinner'
@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    xml: null,
+    ummJson: null,
     ...overrideProps
   }
 
@@ -35,7 +35,7 @@ describe('GranuleDetailsInfo component', () => {
   describe('when the metadata has been provided', () => {
     test('renders the info', () => {
       const { enzymeWrapper } = setup({
-        xml: granuleResultsBodyProps.xml
+        ummJson: granuleResultsBodyProps.ummJson
       })
 
       expect(enzymeWrapper.type()).toBe('div')
@@ -45,10 +45,11 @@ describe('GranuleDetailsInfo component', () => {
 
     test('renders formatted granule details correctly', () => {
       const { enzymeWrapper } = setup({
-        xml: granuleResultsBodyProps.xml
+        ummJson: granuleResultsBodyProps.ummJson
       })
 
-      expect(enzymeWrapper.find('.granule-details-info__content').text()).toEqual(formattedGranuleInformation)
+      expect(enzymeWrapper.find('.granule-details-info__content').text())
+        .toEqual(JSON.stringify(granuleResultsBodyProps.ummJson, null, 2))
     })
   })
 })

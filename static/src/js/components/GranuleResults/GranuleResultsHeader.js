@@ -118,9 +118,11 @@ class GranuleResultsHeader extends Component {
       focusedCollectionObject,
       granules,
       location,
+      mapProjection,
       onToggleSecondaryOverlayPanel,
       pageNum,
-      secondaryOverlayPanel
+      secondaryOverlayPanel,
+      onToggleAboutCwicModal
     } = this.props
 
     const {
@@ -138,7 +140,7 @@ class GranuleResultsHeader extends Component {
 
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
 
-    const handoffLinks = generateHandoffs(metadata, collectionSearch)
+    const handoffLinks = generateHandoffs(metadata, collectionSearch, mapProjection)
 
     const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
     const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
@@ -200,56 +202,59 @@ class GranuleResultsHeader extends Component {
               handoffLinks={handoffLinks}
             />
           </div>
+
           <GranuleResultsActionsContainer />
           <div className="row">
             <div className="col">
-              {metadata.is_cwic && (
-                <>
-                  <div>
-                    <span className="granule-results-header__cwic-note">
-                      {'This is '}
-                      <span className="granule-results-header__cwic-emph">
-                        Int&apos;l / Interagency Data
+              {
+                metadata.is_cwic && (
+                  <>
+                    <div>
+                      <span className="granule-results-header__cwic-note">
+                        {'This is '}
+                        <span className="granule-results-header__cwic-emph">Int&apos;l / Interagency Data</span>
+                        {' data. Searches will be performed by external services which may vary in performance and available features. '}
+                        <Button
+                          className="granule-results-header__link"
+                          onClick={() => onToggleAboutCwicModal(true)}
+                          variant="link"
+                          bootstrapVariant="link"
+                          icon="question-circle"
+                          label="More details"
+                        >
+                          More Details
+                        </Button>
                       </span>
-                      {
-                        ' data. Searches will be performed by external services which may vary in performance and available features. '
-                      }
-                      <a
-                        className="granule-results-header__link granule-results-header__link--cwic"
-                        href="/"
-                      >
-                        <i className="fa fa-question-circle" />
-                        {' More details'}
-                      </a>
-                    </span>
-                  </div>
-                  {
-                    granuleFiltersOpen ? (
-                      <Button
-                        className="granule-results-header__link"
-                        onClick={() => onToggleSecondaryOverlayPanel(false)}
-                        variant="link"
-                        bootstrapVariant="link"
-                        icon="times"
-                        label="Close Granule Filters"
-                      >
-                        Granule Filters
-                      </Button>
-                    ) : (
-                      <Button
-                        className="granule-results-header__link"
-                        onClick={() => onToggleSecondaryOverlayPanel(true)}
-                        variant="link"
-                        bootstrapVariant="link"
-                        icon="filter"
-                        label="Open Granule Filters"
-                      >
-                        Granule Filters
-                      </Button>
-                    )
-                  }
-                </>
-              )}
+                    </div>
+                    {
+                      granuleFiltersOpen
+                        ? (
+                          <Button
+                            className="granule-results-header__link"
+                            onClick={() => onToggleSecondaryOverlayPanel(false)}
+                            variant="link"
+                            bootstrapVariant="link"
+                            icon="times"
+                            label="Close Granule Filters"
+                          >
+                            Granule Filters
+                          </Button>
+                        ) : (
+                          <Button
+                            className="granule-results-header__link"
+                            onClick={() => onToggleSecondaryOverlayPanel(true)}
+                            variant="link"
+                            bootstrapVariant="link"
+                            icon="filter"
+                            label="Open Granule Filters"
+                          >
+                            Granule Filters
+                          </Button>
+                        )
+                    }
+                  </>
+                )
+              }
               {
                 !metadata.is_cwic && (
                   <div className="form-inline">
@@ -415,11 +420,13 @@ GranuleResultsHeader.propTypes = {
   focusedCollectionObject: PropTypes.shape({}).isRequired,
   granules: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired,
+  secondaryOverlayPanel: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
+  onToggleAboutCwicModal: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
-  pageNum: PropTypes.number.isRequired,
-  secondaryOverlayPanel: PropTypes.shape({}).isRequired
+  pageNum: PropTypes.number.isRequired
 }
 
 export default GranuleResultsHeader

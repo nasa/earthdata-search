@@ -1,16 +1,14 @@
-import { isWarmUp } from '../util/isWarmup'
-
+import { getApplicationConfig } from '../../../sharedUtils/config'
 /**
  * Logs an error reported by a client
- * @param {Object} event
+ * @param {Object} event Details about the HTTP request that it received
  */
-const errorLogger = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
+const errorLogger = async (event) => {
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { body } = event
-  const { params = {} } = JSON.parse(body)
-  const { error = {} } = params
+  const { params } = JSON.parse(body)
+  const { error } = params
   const {
     error: providedError,
     guid,
@@ -23,9 +21,7 @@ const errorLogger = async (event, context) => {
 
   return {
     statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    }
+    headers: defaultResponseHeaders
   }
 }
 

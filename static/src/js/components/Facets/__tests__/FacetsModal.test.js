@@ -5,7 +5,6 @@ import Adapter from 'enzyme-adapter-react-16'
 import FacetsModal from '../FacetsModal'
 import FacetsModalNav from '../FacetsModalNav'
 import FacetsList from '../FacetsList'
-import Spinner from '../../Spinner/Spinner'
 
 Enzyme.configure({ adapter: new Adapter() })
 

@@ -15,7 +15,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     collectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata,
-    formattedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.formattedMetadata,
+    formattedCollectionMetadata: collectionDetailsBodyProps
+      .focusedCollectionMetadata.formattedMetadata,
     isActive: true,
     onToggleRelatedUrlsModal: jest.fn(),
     ...overrideProps
@@ -135,7 +136,7 @@ describe('CollectionDetails component', () => {
     })
   })
 
-  describe('Native Formats', () => {
+  describe('Native Data Formats', () => {
     test('renders correctly', () => {
       const { enzymeWrapper } = setup()
       expect(enzymeWrapper.find('.collection-details-body__native-formats').text()).toEqual('PDF')

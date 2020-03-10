@@ -22,7 +22,6 @@ describe('INITIAL_STATE', () => {
 
 describe('UPDATE_FACETS', () => {
   test('returns the correct state', () => {
-
     const action = {
       type: UPDATE_FACETS,
       payload: {
@@ -57,7 +56,6 @@ describe('UPDATE_FACETS', () => {
 
 describe('LOADING_FACETS', () => {
   test('returns the correct state', () => {
-
     const action = {
       type: LOADING_FACETS
     }
@@ -74,7 +72,6 @@ describe('LOADING_FACETS', () => {
 
 describe('LOADED_FACETS', () => {
   test('returns the correct state', () => {
-
     const action = {
       type: LOADED_FACETS,
       payload: {

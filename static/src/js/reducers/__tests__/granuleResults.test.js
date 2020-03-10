@@ -174,7 +174,8 @@ describe('FINISHED_GRANULES_TIMER', () => {
       loadTime: 5
     }
 
-    expect(granuleResultsReducer({ ...initialState, timerStart: start }, action)).toEqual(expectedState)
+    expect(granuleResultsReducer({ ...initialState, timerStart: start }, action))
+      .toEqual(expectedState)
   })
 })
 

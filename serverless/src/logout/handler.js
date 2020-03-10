@@ -1,7 +1,8 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Logs a user out and removes their token from the database
@@ -13,8 +14,7 @@ const logout = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const jwtToken = getJwtToken(event)
   const { id: userId } = getVerifiedJwtToken(jwtToken)
@@ -32,7 +32,7 @@ const logout = async (event, context) => {
         isBase64Encoded: false,
         statusCode: 204,
         headers: {
-          'Access-Control-Allow-Origin': '*',
+          ...defaultResponseHeaders,
           'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
         },
         body: null
@@ -44,22 +44,19 @@ const logout = async (event, context) => {
       isBase64Encoded: false,
       statusCode: 404,
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
       body: JSON.stringify({ errors: [`User token for user '${userId}' not found.`] })
     }
-  } catch (error) {
-    console.log(error)
-
+  } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
-      body: JSON.stringify({ errors: [error] })
+      ...parseError(e)
     }
   }
 }

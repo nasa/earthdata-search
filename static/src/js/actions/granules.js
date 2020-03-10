@@ -9,7 +9,7 @@ import {
 } from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
 import OusGranuleRequest from '../util/request/ousGranuleRequest'
-import CwicGranuleRequest from '../util/request/cwic'
+import CwicGranuleRequest from '../util/request/cwicGranuleRequest'
 import {
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   ADD_MORE_GRANULE_RESULTS,
@@ -29,6 +29,7 @@ import {
   UPDATE_GRANULE_RESULTS
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
+import { mbr } from '../util/map/mbr'
 
 
 export const addGranulesFromCollection = payload => ({
@@ -290,16 +291,28 @@ export const getGranules = () => (dispatch, getState) => {
     pageNum
   } = granuleParams
 
+  dispatch(actions.toggleSpatialPolygonWarning(false))
+
+  const searchParams = buildGranuleSearchParams(granuleParams)
   let requestObject = null
   if (isCwicCollection) {
     requestObject = new CwicGranuleRequest(authToken)
+    const { polygon } = searchParams
+
+    // CWIC does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
+    if (polygon) {
+      dispatch(actions.toggleSpatialPolygonWarning(true))
+      const [llLat, llLng, urLat, urLng] = mbr({ polygon })
+      searchParams.boundingBox = [llLng, llLat, urLng, urLat].join(',')
+      searchParams.polygon = undefined
+    }
   } else {
     requestObject = new GranuleRequest(authToken)
   }
 
   cancelToken = requestObject.getCancelToken()
 
-  const response = requestObject.search(buildGranuleSearchParams(granuleParams))
+  const response = requestObject.search(searchParams)
     .then((response) => {
       const payload = populateGranuleResults(collectionId, isCwicCollection, response)
 

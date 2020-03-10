@@ -49,7 +49,6 @@ provider:
 
 plugins:
   - serverless-finch
-  - serverless-plugin-warmup
   - serverless-offline
   - serverless-webpack
   - serverless-step-functions
@@ -113,15 +112,6 @@ custom:
     includeModules: true
     packager: 'npm'
     excludeFiles: src/**/*.test.js
-
-  warmup:
-    enabled: true
-    role:
-      Fn::ImportValue: ${self:provider.stage}-ApplicationRole
-    prewarm: true
-    timeout: 30
-    events:
-      - schedule: ${env:WARM_LAMBDA_SCHEDULE}
 
   # Manage resource count (Maximum of 200) by splitting up the cloudformation templates
   splitStacks:

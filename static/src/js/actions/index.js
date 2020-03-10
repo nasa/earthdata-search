@@ -69,6 +69,7 @@ import {
   masterOverlayPanelResize,
   masterOverlayPanelToggle,
   toggleAdvancedSearchModal,
+  toggleAboutCwicModal,
   toggleChunkedOrderModal,
   toggleDrawingNewLayer,
   toggleFacetsModal,
@@ -77,6 +78,7 @@ import {
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
+  toggleSpatialPolygonWarning,
   toggleTooManyPointsModal
 } from './ui'
 import {
@@ -207,6 +209,7 @@ const actions = {
   shapefileErrored,
   shapefileLoading,
   submitRetrieval,
+  toggleAboutCwicModal,
   toggleAdvancedSearchModal,
   toggleChunkedOrderModal,
   toggleCollectionVisibility,
@@ -218,6 +221,7 @@ const actions = {
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
+  toggleSpatialPolygonWarning,
   toggleTooManyPointsModal,
   triggerViewAllFacets,
   undoExcludeGranule,

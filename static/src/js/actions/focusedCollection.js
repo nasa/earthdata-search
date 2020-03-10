@@ -79,6 +79,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     authToken,
     focusedCollection,
     metadata,
+    query,
     searchResults
   } = getState()
 
@@ -88,7 +89,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   const { byId: searchResultsById = {} } = collectionResults
   const focusedCollectionMetadata = searchResultsById[focusedCollection]
 
-  const { is_cwic: isCwic = false } = metadata
+  const { is_cwic: isCwic = false } = focusedCollectionMetadata || {}
   const payload = [{
     [focusedCollection]: {
       isCwic,
@@ -97,6 +98,15 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       }
     }
   }]
+
+  const { collection: collectionQuery } = query
+  const { spatial = {} } = collectionQuery
+  const { polygon } = spatial
+  if (isCwic && polygon) {
+    dispatch(actions.toggleSpatialPolygonWarning(true))
+  } else {
+    dispatch(actions.toggleSpatialPolygonWarning(false))
+  }
 
   // Reset granule pageNum to 1 when focusedCollection is changing
   dispatch(updateGranuleQuery({ pageNum: 1 }))

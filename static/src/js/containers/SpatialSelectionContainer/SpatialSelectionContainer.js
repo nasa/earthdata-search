@@ -8,6 +8,7 @@ import actions from '../../actions'
 import { metricsMap, metricsSpatialEdit } from '../../middleware/metrics/actions'
 
 import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
+import { getFocusedCollectionObject } from '../../util/focusedCollection'
 
 const mapDispathToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
@@ -19,6 +20,8 @@ const mapDispathToProps = dispatch => ({
 const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  collections: state.metadata.collections,
+  focusedCollection: state.focusedCollection,
   lineSearch: state.query.collection.spatial.line,
   pathname: state.router.location.pathname,
   pointSearch: state.query.collection.spatial.point,
@@ -29,6 +32,8 @@ export const SpatialSelectionContainer = (props) => {
   const {
     advancedSearch,
     boundingBoxSearch,
+    collections,
+    focusedCollection,
     lineSearch,
     mapRef,
     onChangeQuery,
@@ -42,10 +47,14 @@ export const SpatialSelectionContainer = (props) => {
 
   const isProjectPage = pathname.startsWith('/project')
 
+  const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
+  const { isCwic = false } = focusedCollectionObject
+
   return (
     <SpatialSelection
       advancedSearch={advancedSearch}
       boundingBoxSearch={boundingBoxSearch}
+      isCwic={isCwic}
       isProjectPage={isProjectPage}
       lineSearch={lineSearch}
       mapRef={mapRef}
@@ -69,6 +78,8 @@ SpatialSelectionContainer.defaultProps = {
 
 SpatialSelectionContainer.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
+  collections: PropTypes.shape({}).isRequired,
+  focusedCollection: PropTypes.string.isRequired,
   boundingBoxSearch: PropTypes.string,
   lineSearch: PropTypes.string,
   mapRef: PropTypes.shape({}),

@@ -5,7 +5,6 @@ import moment from 'moment'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 
-
 import {
   Alert,
   Col,
@@ -13,10 +12,9 @@ import {
   Row
 } from 'react-bootstrap'
 
-import Datepicker from '../Datepicker/Datepicker'
-
 import './TemporalSelection.scss'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import DatepickerContainer from '../../containers/DatepickerContainer/DatepickerContainer'
 
 export class TemporalSelection extends Component {
   constructor(props) {
@@ -171,7 +169,7 @@ export class TemporalSelection extends Component {
                 <Form.Label className="temporal-selection__label">
                   Start
                 </Form.Label>
-                <Datepicker
+                <DatepickerContainer
                   id="temporal-form__start-date"
                   onSubmit={value => onSubmitStart(value)}
                   type="start"
@@ -189,7 +187,7 @@ export class TemporalSelection extends Component {
                 <Form.Label className="temporal-selection__label">
                   End
                 </Form.Label>
-                <Datepicker
+                <DatepickerContainer
                   id="temporal-form__end-date"
                   onSubmit={value => onSubmitEnd(value)}
                   type="end"

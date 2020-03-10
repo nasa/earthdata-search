@@ -3,9 +3,6 @@
   "baseUrl": "http://localhost:8080",
   "viewportWidth": 1400,
   "viewportHeight": 900,
-  "ignoreTestFiles": [
-    "*.json,",
-    "**/__tests__/*.test.js"
-  ],
+  "testFiles": "**/*_spec.js",
   "fixturesFolder": "cypress/fixtures"
 }

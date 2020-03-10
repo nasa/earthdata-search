@@ -88,6 +88,11 @@ const Facets = (props) => {
     title: 'Processing levels'
   }
 
+  const formats = {
+    ...cmrFacetDefaults,
+    title: 'Granule Data Format'
+  }
+
   const facetsTemplate = [
     featuresFacet,
     keywordsFacet,
@@ -95,7 +100,8 @@ const Facets = (props) => {
     instrumentsFacet,
     organizationsFacet,
     projectsTemplate,
-    processingLevels
+    processingLevels,
+    formats
   ]
 
   const facetsGroups = facetsTemplate.map((group) => {

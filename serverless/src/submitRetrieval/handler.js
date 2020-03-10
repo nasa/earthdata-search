@@ -3,12 +3,12 @@ import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { generateRetrievalPayloads } from './generateRetrievalPayloads'
-import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { removeSpatialFromAccessMethod } from '../util/removeSpatialFromAccessMethod'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 // AWS SQS adapter
 let sqs
@@ -22,9 +22,6 @@ const submitRetrieval = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
@@ -207,16 +204,13 @@ const submitRetrieval = async (event, context) => {
       body: JSON.stringify(response)
     }
   } catch (e) {
-    console.log(e)
-
     // On error rollback our transaction
     retrievalDbTransaction.rollback()
 
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

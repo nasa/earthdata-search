@@ -122,14 +122,4 @@ describe('regionSearch', () => {
       errors: ['Your query has returned 16575 results (> 100). If you\'re searching a specific HUC, use the parameter \'exact=True\'.Otherwise, refine your search to return less results, or head here: https://water.usgs.gov/GIS/huc.html to download mass HUC data.']
     }))
   })
-
-  test('correctly returns false when the warmUp payload is received', async () => {
-    const payload = {
-      source: 'serverless-plugin-warmup'
-    }
-
-    const response = await regionSearch(payload, {})
-
-    expect(response).toEqual(false)
-  })
 })

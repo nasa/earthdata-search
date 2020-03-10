@@ -1,23 +1,19 @@
 import request from 'request-promise'
 import { getJwtToken } from '../util/getJwtToken'
 import { cmrStringify } from '../util/cmr/cmrStringify'
-import { isWarmUp } from '../util/isWarmup'
 import { pick } from '../util/pick'
 import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
-import { logHttpError } from '../util/logging/logHttpError'
+import { parseError } from '../util/parseError'
 
 /**
  * Perform an authenticated CMR concept search
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-const retrieveConcept = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const retrieveConcept = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const { headers, queryStringParameters } = event
@@ -60,13 +56,11 @@ const retrieveConcept = async (event, context) => {
       body: JSON.stringify(body)
     }
   } catch (e) {
-    const errors = logHttpError(e)
-
     return {
       isBase64Encoded: false,
       statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors })
+      ...parseError(e)
     }
   }
 }

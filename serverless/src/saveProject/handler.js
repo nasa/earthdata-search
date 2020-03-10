@@ -1,8 +1,9 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Saves a project to the database
@@ -14,8 +15,7 @@ const saveProject = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { body } = event
   const { params } = JSON.parse(body)
@@ -89,27 +89,23 @@ const saveProject = async (event, context) => {
 
       newProjectId = newProjectRecord[0].id
     }
-  } catch (e) {
-    console.log(e)
 
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [e] })
+      statusCode: 200,
+      headers: defaultResponseHeaders,
+      body: JSON.stringify({
+        name,
+        path,
+        project_id: obfuscateId(newProjectId)
+      })
     }
-  }
-
-  // Return the projectId and path
-  return {
-    isBase64Encoded: false,
-    statusCode: 200,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    body: JSON.stringify({
-      name,
-      path,
-      project_id: obfuscateId(newProjectId)
-    })
+  } catch (e) {
+    return {
+      isBase64Encoded: false,
+      headers: defaultResponseHeaders,
+      ...parseError(e)
+    }
   }
 }
 

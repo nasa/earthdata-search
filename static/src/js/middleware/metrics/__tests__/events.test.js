@@ -17,8 +17,7 @@ import {
   METRICS_TIMELINE,
   METRICS_MAP,
   METRICS_SPATIAL_EDIT,
-  METRICS_TIMING,
-  METRICS_COLLECTION_SORT_CHANGE
+  METRICS_TIMING
 } from '../constants'
 
 const dataLayerMock = global.dataLayer.push

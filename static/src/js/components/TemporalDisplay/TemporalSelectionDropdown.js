@@ -194,31 +194,34 @@ export default class TemporalSelectionDropdown extends PureComponent {
       temporal
     } = this.state
 
-    const { startDate, endDate } = temporal
+    try {
+      const { startDate, endDate } = temporal
+      const newStartDate = moment(startDate || undefined).utc()
+      newStartDate.set({
+        year: value.min,
+        hour: '00',
+        minute: '00',
+        second: '00'
+      })
 
-    const newStartDate = moment(startDate || undefined).utc()
-    newStartDate.set({
-      year: value.min,
-      hour: '00',
-      minute: '00',
-      second: '00'
-    })
+      const newEndDate = moment(endDate || undefined).utc()
+      newEndDate.set({
+        year: value.max,
+        hour: '23',
+        minute: '59',
+        second: '59'
+      })
 
-    const newEndDate = moment(endDate || undefined).utc()
-    newEndDate.set({
-      year: value.max,
-      hour: '23',
-      minute: '59',
-      second: '59'
-    })
-
-    this.setState({
-      temporal: {
-        ...temporal,
-        startDate: newStartDate.toISOString(),
-        endDate: newEndDate.toISOString()
-      }
-    })
+      this.setState({
+        temporal: {
+          ...temporal,
+          startDate: newStartDate.toISOString(),
+          endDate: newEndDate.toISOString()
+        }
+      })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   /**

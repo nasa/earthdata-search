@@ -3,7 +3,7 @@ import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { getEchoToken } from '../urs/getEchoToken'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
-import { logHttpError } from '../logging/logHttpError'
+import { parseError } from '../parseError'
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -15,24 +15,52 @@ export const doSearchRequest = async ({
   path,
   params,
   requestId,
-  providedHeaders = {}
+  providedHeaders = {},
+  bodyType = 'form',
+  method = 'post'
 }) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const response = await request.post({
+    // Headers we'll send with every request
+    const requestHeaders = {
+      'Client-Id': getClientId().lambda,
+      ...providedHeaders
+    }
+
+    if (jwtToken) {
+      // Support endpoints that have optional authentication
+      requestHeaders['Echo-Token'] = await getEchoToken(jwtToken)
+    }
+
+    if (requestId) {
+      // If the request doesnt come from the application, this is unlikely to be provided
+      requestHeaders['CMR-Request-Id'] = requestId
+    }
+
+    const requestParams = {
       uri: `${getEarthdataConfig(cmrEnv()).cmrHost}${path}`,
-      form: params,
       json: true,
       resolveWithFullResponse: true,
       time: true,
-      headers: {
-        'Client-Id': getClientId().lambda,
-        'Echo-Token': await getEchoToken(jwtToken),
-        'CMR-Request-Id': requestId,
-        ...providedHeaders
+      headers: requestHeaders
+    }
+
+    let response
+    if (method === 'post') {
+      // CMR requires form data for POST requests, while service bridge requires JSON
+      if (bodyType === 'form') {
+        requestParams.form = params
+      } else if (bodyType === 'json') {
+        requestParams.body = params
       }
-    })
+
+      response = await request.post(requestParams)
+    } else {
+      requestParams.qs = params
+
+      response = await request.get(requestParams)
+    }
 
     const { body, headers } = response
     const { 'cmr-took': cmrTook } = headers
@@ -52,13 +80,10 @@ export const doSearchRequest = async ({
       body: JSON.stringify(body)
     }
   } catch (e) {
-    const errors = logHttpError(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors })
+      ...parseError(e)
     }
   }
 }

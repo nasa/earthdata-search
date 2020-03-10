@@ -12,15 +12,14 @@ import {
   SUBMITTED_PROJECT
 } from '../constants/actionTypes'
 import GranuleRequest from '../util/request/granuleRequest'
-import CwicGranuleRequest from '../util/request/cwic'
+import CwicGranuleRequest from '../util/request/cwicGranuleRequest'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { updateCollectionMetadata } from './collections'
 import { prepareGranuleParams, populateGranuleResults, buildGranuleSearchParams } from '../util/granules'
 import { convertSize } from '../util/project'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
-import isProjectCollectionValid from '../util/isProjectCollectionValid'
+import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
-
 
 export const submittingProject = () => ({
   type: SUBMITTING_PROJECT
@@ -187,12 +186,12 @@ export const getProjectCollections = collectionId => (dispatch, getState) => {
 
       dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
       dispatch(updateCollectionMetadata(payload))
-      dispatch(actions.getProjectGranules(filteredIds))
-
-      // The process of fetching access methods requires that we have providers retrieved
-      // in order to look up provider guids
-      dispatch(actions.fetchProviders()).then(() => {
-        dispatch(actions.fetchAccessMethods(filteredIds))
+      dispatch(actions.getProjectGranules(filteredIds)).then(() => {
+        // The process of fetching access methods requires that we have providers retrieved
+        // in order to look up provider guids
+        dispatch(actions.fetchProviders()).then(() => {
+          dispatch(actions.fetchAccessMethods(filteredIds))
+        })
       })
     })
     .catch((error) => {

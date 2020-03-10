@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import EDSCModal from '../EDSCModal/EDSCModal'
+import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import ArrowTags from '../ArrowTags/ArrowTags'
 
 import { pluralize } from '../../util/pluralize'
@@ -59,7 +59,7 @@ export class RelatedUrlsModal extends Component {
     )
 
     return (
-      <EDSCModal
+      <EDSCModalContainer
         className="related-urls"
         title="Related URLs"
         isOpen={isOpen}

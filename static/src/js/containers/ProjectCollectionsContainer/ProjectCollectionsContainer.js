@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
   collectionSearch: state.query.collection,
+  mapProjection: state.map.projection,
   project: state.project,
   panels: state.panels,
   savedProject: state.savedProject
@@ -31,6 +32,7 @@ export const ProjectCollectionsContainer = (props) => {
   const {
     collections,
     collectionSearch,
+    mapProjection,
     project,
     panels,
     savedProject,
@@ -45,6 +47,7 @@ export const ProjectCollectionsContainer = (props) => {
     <ProjectCollections
       collections={collections}
       collectionSearch={collectionSearch}
+      mapProjection={mapProjection}
       project={project}
       panels={panels}
       savedProject={savedProject}
@@ -60,6 +63,7 @@ export const ProjectCollectionsContainer = (props) => {
 ProjectCollectionsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
   panels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,

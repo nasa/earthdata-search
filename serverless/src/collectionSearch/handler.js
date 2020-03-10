@@ -2,8 +2,8 @@ import { pick } from 'lodash'
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
-import { isWarmUp } from '../util/isWarmup'
-import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Returns the keys permitted by cmr based on the request format
@@ -25,6 +25,7 @@ function getPermittedCmrKeys(format) {
     'echo_collection_id',
     'facets_size',
     'format',
+    'granule_data_format_h',
     'has_granules_or_cwic',
     'has_granules',
     'include_facets',
@@ -55,16 +56,13 @@ function getPermittedCmrKeys(format) {
  * Perform an authenticated CMR Collection search
  * @param {Object} event Details about the HTTP request that it received
  */
-const collectionSearch = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const collectionSearch = async (event) => {
   const { body, headers, pathParameters } = event
   const { format } = pathParameters
 
-  const { invocationTime, requestId } = JSON.parse(body)
+  const { defaultResponseHeaders } = getApplicationConfig()
 
-  logLambdaEntryTime(requestId, invocationTime, context)
+  const { requestId } = JSON.parse(body)
 
   // The 'Accept' header contains the UMM version
   const providedHeaders = pick(headers, ['Accept'])
@@ -76,6 +74,7 @@ const collectionSearch = async (event, context) => {
     'collection_data_type',
     'concept_id',
     'data_center_h',
+    'granule_data_format_h',
     'instrument_h',
     'platform_h',
     'processing_level_id_h',
@@ -84,17 +83,25 @@ const collectionSearch = async (event, context) => {
     'tag_key'
   ]
 
-  return doSearchRequest({
-    jwtToken: getJwtToken(event),
-    path: `/search/collections.${format}`,
-    params: buildParams({
-      body,
-      nonIndexedKeys,
-      permittedCmrKeys
-    }),
-    providedHeaders,
-    requestId
-  })
+  try {
+    return doSearchRequest({
+      jwtToken: getJwtToken(event),
+      path: `/search/collections.${format}`,
+      params: buildParams({
+        body,
+        nonIndexedKeys,
+        permittedCmrKeys
+      }),
+      providedHeaders,
+      requestId
+    })
+  } catch (e) {
+    return {
+      isBase64Encoded: false,
+      headers: defaultResponseHeaders,
+      ...parseError(e)
+    }
+  }
 }
 
 export default collectionSearch

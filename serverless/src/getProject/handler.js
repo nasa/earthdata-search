@@ -1,6 +1,7 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-import { isWarmUp } from '../util/isWarmup'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Retrieve a single project from the database
@@ -12,8 +13,7 @@ const getProject = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const { pathParameters } = event
   const {
@@ -37,7 +37,7 @@ const getProject = async (event, context) => {
       return {
         isBase64Encoded: false,
         statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        headers: defaultResponseHeaders,
         body: JSON.stringify(existingProjectRecord)
       }
     }
@@ -45,17 +45,14 @@ const getProject = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 404,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
-  } catch (error) {
-    console.log(error)
-
+  } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [error] })
+      headers: defaultResponseHeaders,
+      ...parseError(e)
     }
   }
 }

@@ -1,7 +1,8 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-import { isWarmUp } from '../util/isWarmup'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Retrieve all the retrievals for the authenticated user
@@ -13,8 +14,7 @@ export default async function adminGetRetrievals(event, context) {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
     const { id: providedRetrieval } = event.pathParameters
@@ -110,17 +110,14 @@ export default async function adminGetRetrievals(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify(formattedResponse)
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [e] })
+      headers: defaultResponseHeaders,
+      ...parseError(e)
     }
   }
 }

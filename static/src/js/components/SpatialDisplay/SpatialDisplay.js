@@ -288,7 +288,7 @@ class SpatialDisplay extends Component {
 
     let errorMessage = ''
 
-    const validCoordinates = coordinates.trim().match(/^(-?\d+\.?\d+)?,\s*(-?\d+\.?\d+)?$/)
+    const validCoordinates = coordinates.trim().match(/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/)
     if (validCoordinates == null) {
       errorMessage = `Coordinates (${coordinates}) must use 'lat,lon' format.`
     }
@@ -333,6 +333,7 @@ class SpatialDisplay extends Component {
 
   render() {
     const {
+      displaySpatialPolygonWarning,
       drawingNewLayer,
       selectingNewGrid
     } = this.props
@@ -625,6 +626,10 @@ class SpatialDisplay extends Component {
 
       secondaryTitle = 'Polygon'
 
+      if (displaySpatialPolygonWarning) {
+        spatialError = 'This collection does not support polygon search. Your polygon has been converted to a bounding box.'
+      }
+
       contents.push((
         <FilterStackContents
           key="filter__polygon"
@@ -674,6 +679,7 @@ class SpatialDisplay extends Component {
 
 SpatialDisplay.propTypes = {
   boundingBoxSearch: PropTypes.string.isRequired,
+  displaySpatialPolygonWarning: PropTypes.bool.isRequired,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool

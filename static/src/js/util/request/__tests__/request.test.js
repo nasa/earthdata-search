@@ -25,6 +25,23 @@ describe('Request#constructor', () => {
   })
 })
 
+describe('Request#getAuthToken', () => {
+  test('returns the auth token', () => {
+    const request = new Request(baseUrl)
+    request.authToken = 'test auth token'
+
+    expect(request.getAuthToken()).toEqual('test auth token')
+  })
+
+  test('returns an empty string if optionallyAuthenticated', () => {
+    const request = new Request(baseUrl)
+
+    request.optionallyAuthenticated = true
+
+    expect(request.getAuthToken()).toEqual('')
+  })
+})
+
 describe('Request#permittedCmrKeys', () => {
   test('returns an empty array', () => {
     const request = new Request(baseUrl)
@@ -97,7 +114,7 @@ describe('Request#transformRequest', () => {
 
     const transformedData = request.transformRequest(data, {})
 
-    expect(transformedData).toEqual('{"invocationTime":1576855756,"params":{"param_name":123}}')
+    expect(transformedData).toEqual('{"params":{"param_name":123}}')
   })
 })
 

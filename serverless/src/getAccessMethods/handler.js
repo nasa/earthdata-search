@@ -1,3 +1,5 @@
+import parser from 'fast-xml-parser'
+
 import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 import { getOptionDefinitions } from './getOptionDefinitions'
 import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
@@ -5,12 +7,11 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { isWarmUp } from '../util/isWarmup'
 import { getVariables } from './getVariables'
 import { getOutputFormats } from './getOutputFormats'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-
+import { parseError } from '../util/parseError'
 
 /**
  * Retrieve access methods for a provided collection
@@ -21,9 +22,6 @@ const getAccessMethods = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
@@ -159,13 +157,22 @@ const getAccessMethods = async (event, context) => {
               form_digest: formDigest
             } = savedAccessConfig
 
-            // Only override values that the user configured
-            accessMethods[methodName] = {
-              ...accessMethods[methodName],
-              form,
-              model,
-              rawModel,
-              form_digest: formDigest
+            // Parse the savedAccessConfig values and if it is not valid XML, don't use it
+            if (parser.validate(form) === true
+              && parser.validate(model) === true
+              && parser.validate(rawModel) === true
+            ) {
+              // Only override values that the user configured
+              accessMethods[methodName] = {
+                ...accessMethods[methodName],
+                form,
+                model,
+                rawModel,
+                form_digest: formDigest
+              }
+            } else {
+              console.warn('There was a problem parsing the savedAccessConfig values, using the default form instead.')
+              return
             }
           }
         }
@@ -199,13 +206,10 @@ const getAccessMethods = async (event, context) => {
       body: JSON.stringify({ accessMethods, selectedAccessMethod })
     }
   } catch (e) {
-    console.log('error', e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

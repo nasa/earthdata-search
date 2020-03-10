@@ -9,21 +9,20 @@ import './GranuleDetailsHeader.scss'
 
 /**
  * Renders GranuleDetailsHeader.
- * @param {object} props - The props passed into the component.
- * @param {object} props.Granule - The focused granule information.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.ummJson - The focused granule metadata.
  */
-const GranuleDetailsHeader = ({ json }) => {
-  const { Granule: granule = {} } = json
-  const { GranuleUR } = granule
+const GranuleDetailsHeader = ({ ummJson }) => {
+  const { GranuleUR: granuleUr } = ummJson
 
   return (
     <div className="row granule-details-header">
       <div className="col-auto">
         <div className="granule-details-header__title-wrap">
           {
-            GranuleUR
+            granuleUr
               ? (
-                <h2 className="granule-details-header__title">{GranuleUR}</h2>
+                <h2 className="granule-details-header__title">{granuleUr}</h2>
               )
               : (
                 <Skeleton
@@ -40,7 +39,7 @@ const GranuleDetailsHeader = ({ json }) => {
 }
 
 GranuleDetailsHeader.propTypes = {
-  json: PropTypes.shape({}).isRequired
+  ummJson: PropTypes.shape({}).isRequired
 }
 
 export default GranuleDetailsHeader

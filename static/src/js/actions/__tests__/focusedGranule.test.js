@@ -59,7 +59,7 @@ describe('changeFocusedGranule', () => {
 describe('getFocusedGranule', () => {
   const granulePayload = {
     granuleId: {
-      json: {
+      ummJson: {
         MockGranule: 'Data'
       },
       metadataUrls: {
@@ -83,13 +83,12 @@ describe('getFocusedGranule', () => {
           href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.umm_json',
           title: 'UMM-G'
         }
-      },
-      xml: '<MockGranule>Data</MockGranule>'
+      }
     }
   }
 
   test('should update the granule metadata', async () => {
-    const metadata = '<MockGranule>Data</MockGranule>'
+    const metadata = { MockGranule: 'Data' }
 
     nock(/cmr/)
       .get(/concepts/)
@@ -126,7 +125,7 @@ describe('getFocusedGranule', () => {
   })
 
   test('should update the authenticated granule metadata', async () => {
-    const metadata = '<MockGranule>Data</MockGranule>'
+    const metadata = { MockGranule: 'Data' }
 
     nock(/localhost/)
       .get(/concepts/)

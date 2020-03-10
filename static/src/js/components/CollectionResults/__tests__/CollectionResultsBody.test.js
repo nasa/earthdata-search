@@ -2,8 +2,6 @@ import React from 'react'
 import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import SimpleBar from 'simplebar-react'
-
 import CollectionResultsBody from '../CollectionResultsBody'
 import CollectionResultsList from '../CollectionResultsList'
 

@@ -1,10 +1,7 @@
 import request from 'request-promise'
-import { parse as parseQueryString } from 'qs'
 import { parse as parseXml } from 'fast-xml-parser'
 import { pick } from '../util/pick'
 import { getClientId, getApplicationConfig } from '../../../sharedUtils/config'
-import { isWarmUp } from '../util/isWarmup'
-import { getJwtToken } from '../util/getJwtToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
 /**
@@ -19,12 +16,15 @@ const getCwicGranulesUrl = async (collectionId) => {
 
   try {
     const osddResponse = await request.get({
+      time: true,
       uri: collectionTemplate,
       resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().lambda
       }
     })
+
+    console.log(`Request for granules URL for CWIC collection '${collectionId}' successfully completed in ${osddResponse.elapsedTime} ms`)
 
     const osddBody = parseXml(osddResponse.body, {
       ignoreAttributes: false,
@@ -109,10 +109,7 @@ const renderOpenSearchTemplate = (template, params) => {
  * Retrieve granules from CWIC
  * @param {Object} event Details about the HTTP request that it received
  */
-const cwicGranuleSearch = async (event, context) => {
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
-
+const cwicGranuleSearch = async (event) => {
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
   const responseHeaders = {
@@ -120,21 +117,8 @@ const cwicGranuleSearch = async (event, context) => {
     'Content-Type': 'application/xml'
   }
 
-  let params
-  try {
-    const jwtToken = getJwtToken(event)
-    if (jwtToken) {
-      responseHeaders['jwt-token'] = jwtToken
-    }
-
-    // If a jwt token is found the payload provided is slightly different
-    const responseBody = JSON.parse(event.body)
-
-    // eslint-disable-next-line prefer-destructuring
-    params = responseBody.params
-  } catch (e) {
-    params = parseQueryString(event.body)
-  }
+  const { body } = event
+  const { params } = JSON.parse(body)
 
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
@@ -181,7 +165,7 @@ const cwicGranuleSearch = async (event, context) => {
       }
     })
 
-    const { headers } = granuleResponse
+    const { headers: responseHeaders } = granuleResponse
 
     console.log(`CWIC Granule Request took ${granuleResponse.elapsedTime} ms`)
 
@@ -190,7 +174,7 @@ const cwicGranuleSearch = async (event, context) => {
       statusCode: granuleResponse.statusCode,
       headers: {
         ...responseHeaders,
-        'access-control-expose-headers': prepareExposeHeaders(headers)
+        'access-control-expose-headers': prepareExposeHeaders(responseHeaders)
       },
       body: granuleResponse.body
     }
@@ -198,8 +182,8 @@ const cwicGranuleSearch = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: e.statusCode,
-      headers: { responseHeaders },
-      body: JSON.stringify({ errors: [e.error] })
+      headers: responseHeaders,
+      body: e.error
     }
   }
 }

@@ -67,7 +67,8 @@ export class ProjectCollections extends Component {
       onUpdateProjectName,
       project,
       panels,
-      savedProject
+      savedProject,
+      mapProjection
     } = this.props
 
     const {
@@ -102,6 +103,7 @@ export class ProjectCollections extends Component {
           project={project}
           panels={panels}
           collectionSearch={collectionSearch}
+          mapProjection={mapProjection}
         />
         <div className="project-collections__footer">
           {
@@ -160,6 +162,7 @@ export class ProjectCollections extends Component {
 ProjectCollections.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
   panels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,

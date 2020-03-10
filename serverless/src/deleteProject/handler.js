@@ -1,8 +1,9 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../util/parseError'
 
 /**
  * Delete a project from the database
@@ -14,8 +15,7 @@ const deleteProject = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  // Prevent execution if the event source is the warmer
-  if (await isWarmUp(event, context)) return false
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const jwtToken = getJwtToken(event)
   const { id: userId } = getVerifiedJwtToken(jwtToken)
@@ -43,7 +43,7 @@ const deleteProject = async (event, context) => {
         isBase64Encoded: false,
         statusCode: 204,
         headers: {
-          'Access-Control-Allow-Origin': '*',
+          ...defaultResponseHeaders,
           'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
         },
         body: null
@@ -55,22 +55,19 @@ const deleteProject = async (event, context) => {
       isBase64Encoded: false,
       statusCode: 404,
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
       body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
-  } catch (error) {
-    console.log(error)
-
+  } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
-      body: JSON.stringify({ errors: [error] })
+      ...parseError(e)
     }
   }
 }

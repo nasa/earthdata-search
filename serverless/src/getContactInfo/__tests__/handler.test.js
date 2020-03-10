@@ -50,7 +50,7 @@ describe('getContactInfo', () => {
       }
     })
 
-    const result = await getContactInfo({})
+    const result = await getContactInfo({}, {})
 
     const expectedBody = JSON.stringify({
       echo_preferences: { mock: 'echo' },
@@ -61,5 +61,15 @@ describe('getContactInfo', () => {
     expect(queries[0].method).toEqual('select')
 
     expect(result.body).toEqual(expectedBody)
+  })
+
+  test('responds correctly on error', async () => {
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+
+    const response = await getContactInfo({}, {})
+
+    expect(response.statusCode).toEqual(500)
   })
 })

@@ -15,6 +15,7 @@ import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 import { eventEmitter } from '../../events/events'
 import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
 import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
+import { mbr } from '../../util/map/mbr'
 
 const normalColor = '#00ffff'
 const errorColor = '#990000'
@@ -77,6 +78,7 @@ class SpatialSelection extends Component {
     this.state = {
       drawnLayer: null,
       drawnLayerType: null,
+      drawnMbr: null,
       drawnPoints: null
     }
 
@@ -114,8 +116,18 @@ class SpatialSelection extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mapRef } = this.props
-    const { drawnPoints, drawnLayer } = this.state
+    const {
+      pointSearch,
+      boundingBoxSearch,
+      polygonSearch,
+      lineSearch,
+      mapRef
+    } = this.props
+    const {
+      drawnLayer,
+      drawnMbr,
+      drawnPoints
+    } = this.state
 
     const map = mapRef.leafletElement
     if (!map) {
@@ -126,19 +138,53 @@ class SpatialSelection extends Component {
       || nextProps.boundingBoxSearch
       || nextProps.polygonSearch
       || nextProps.lineSearch
+    const oldDrawing = pointSearch
+    || boundingBoxSearch
+    || polygonSearch
+    || lineSearch
 
-    if ((drawnLayer && drawnLayer._map === null) || newDrawing !== drawnPoints) {
+    const { featureGroupRef = {} } = this
+    const { leafletElement = {} } = featureGroupRef
+
+    if (oldDrawing !== newDrawing && newDrawing !== drawnPoints) {
       if (drawnLayer) {
-        const { featureGroupRef = {} } = this
-        const { leafletElement = {} } = featureGroupRef
-
         if (leafletElement.removeLayer) {
           leafletElement.removeLayer(drawnLayer)
+          leafletElement.removeLayer(drawnMbr)
+          this.setState({
+            drawnMbr: null
+          })
         }
       }
 
       // Draw the new shape
       this.renderShape(nextProps)
+    }
+
+    // If a polygon is drawn for a CWIC collection, render the MBR to show the user what is being sent
+    // to CWIC as their spatial
+    if (!nextProps.isProjectPage) {
+      if (
+        (nextProps.polygonSearch !== '')
+        && drawnMbr === null
+        && nextProps.isCwic
+      ) {
+        this.renderMbr(nextProps.polygonSearch)
+      } else if (drawnMbr !== null && !nextProps.isCwic) {
+        if (leafletElement.removeLayer) {
+          leafletElement.removeLayer(drawnMbr)
+          this.setState({
+            drawnMbr: null
+          })
+        }
+      }
+    } else if (drawnMbr !== null) {
+      if (leafletElement.removeLayer) {
+        leafletElement.removeLayer(drawnMbr)
+        this.setState({
+          drawnMbr: null
+        })
+      }
     }
   }
 
@@ -149,16 +195,18 @@ class SpatialSelection extends Component {
 
   // Callback from EditControl, called when clicking the draw shape button
   onDrawStart(e) {
-    const { drawnLayer } = this.state
+    const { drawnLayer, drawnMbr } = this.state
 
     if (drawnLayer) {
       const { featureGroupRef } = this
       const { leafletElement } = featureGroupRef
       leafletElement.removeLayer(drawnLayer)
+      leafletElement.removeLayer(drawnMbr)
 
       this.setState({
         drawnLayer: null,
-        drawnLayerType: null
+        drawnLayerType: null,
+        drawnMbr: null
       })
     }
 
@@ -438,6 +486,34 @@ class SpatialSelection extends Component {
     }
   }
 
+  renderMbr(drawnPoints) {
+    const { featureGroupRef = {} } = this
+    if (featureGroupRef === null) return
+    const { leafletElement: featureGroup = null } = featureGroupRef
+
+    if (featureGroup) {
+      const latLngs = mbr({ polygon: drawnPoints })
+
+      const sw = new L.LatLng(latLngs[0], latLngs[1])
+      const ne = new L.LatLng(latLngs[2], latLngs[3])
+      const bounds = new L.LatLngBounds(sw, ne)
+
+      const options = {
+        color: '#c0392b',
+        weight: 3,
+        fill: false,
+        dashArray: '2, 10',
+        opacity: 0.8
+      }
+      const rect = new L.Rectangle([bounds], options)
+
+      rect.addTo(featureGroup)
+      this.setState({
+        drawnMbr: rect
+      })
+    }
+  }
+
   // Draws a leaflet Polygon
   renderPolygon(polygon, featureGroup) {
     if (featureGroup) {
@@ -537,6 +613,7 @@ SpatialSelection.defaultProps = {
 SpatialSelection.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.string,
+  isCwic: PropTypes.bool.isRequired,
   isProjectPage: PropTypes.bool.isRequired,
   mapRef: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired,
