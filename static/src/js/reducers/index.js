@@ -14,7 +14,6 @@ import {
   viewAllFacetsReducer
 } from './facetsParams'
 import focusedCollectionReducer from './focusedCollection'
-import granuleResultsReducer from './granuleResults'
 import granuleDownloadReducer from './granuleDownload'
 import mapReducer from './map'
 import queryReducer from './query'
@@ -76,7 +75,6 @@ export default history => combineReducers({
     collections: collectionsResultsReducer,
     facets: facetsReducer,
     regions: regionResultsReducer,
-    granules: granuleResultsReducer,
     viewAllFacets: viewAllFacetsRequestReducer
   }),
   shapefile: shapefileReducer,

@@ -2,11 +2,9 @@ import actions from './index'
 import { updateGranuleQuery } from './search'
 import {
   CLEAR_COLLECTION_GRANULES,
-  COPY_GRANULE_RESULTS_TO_COLLECTION,
   UPDATE_FOCUSED_COLLECTION
 } from '../constants/actionTypes'
 import { updateCollectionMetadata } from './collections'
-import { resetGranuleResults, addGranulesFromCollection } from './granules'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
@@ -17,59 +15,9 @@ export const updateFocusedCollection = payload => ({
   payload
 })
 
-export const addCollectionGranules = payload => ({
-  type: COPY_GRANULE_RESULTS_TO_COLLECTION,
-  payload
-})
-
 export const clearCollectionGranules = () => ({
   type: CLEAR_COLLECTION_GRANULES
 })
-
-/**
- * Copy granules from searchResults to collections
- */
-export const copyGranulesToCollection = () => (dispatch, getState) => {
-  const { focusedCollection, searchResults } = getState()
-  const { granules } = searchResults
-
-  const {
-    allIds,
-    byId,
-    isCwic,
-    hits,
-    loadTime
-  } = granules
-
-  dispatch(addCollectionGranules({
-    collectionId: focusedCollection,
-    granules: {
-      allIds,
-      byId,
-      isCwic,
-      hits,
-      loadTime
-    }
-  }))
-}
-
-/**
- * Copy granules from a given collection into searchResults
- * @param {string} collectionId
- */
-export const copyGranulesFromCollection = collectionId => (dispatch, getState) => {
-  const { metadata } = getState()
-  const { collections } = metadata
-  const collection = collections.byId[collectionId]
-
-  if (!collection) return dispatch(resetGranuleResults())
-
-  const { granules } = collection
-  const { allIds } = granules
-  if (!allIds) return dispatch(resetGranuleResults())
-
-  return dispatch(addGranulesFromCollection(granules))
-}
 
 /**
  * Perform a collection request based on the focusedCollection from the store.
@@ -83,8 +31,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     searchResults
   } = getState()
 
-  const { granules, collections: collectionResults = {} } = searchResults
-  const { allIds = [] } = granules
+  const { collections: collectionResults = {} } = searchResults
 
   const { byId: searchResultsById = {} } = collectionResults
   const focusedCollectionMetadata = searchResultsById[focusedCollection]
@@ -113,7 +60,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   if (focusedCollection === '') {
     dispatch(updateCollectionMetadata([]))
-    dispatch(resetGranuleResults())
     return null
   }
 
@@ -121,15 +67,15 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   dispatch(updateCollectionMetadata(payload))
 
   const { collections } = metadata
-  const { allIds: fetchedCollectionIds, byId: fetchedCollections } = collections
+  const { byId: fetchedCollections = {} } = collections
+  const fetchedCollection = fetchedCollections[focusedCollection]
+  const { granules = {}, metadata: fetchedCollectionMetadata = {} } = fetchedCollection || {}
+  const { allIds: allGranuleIds = [] } = granules
   // If we already have the metadata for this focusedCollection, don't fetch it again
-  if (fetchedCollectionIds.indexOf(focusedCollection) !== -1) {
-    // Check to see if we already have metadata for this collection
-    if (Object.keys(fetchedCollections[focusedCollection].metadata).length) {
-      // If granules were copied from collections, don't make a new getGranules request
-      if (allIds.length === 0) dispatch(actions.getGranules())
-      return null
-    }
+  if (Object.keys(fetchedCollectionMetadata).length) {
+    // If granules are already loaded, don't make a new getGranules request
+    if (allGranuleIds.length === 0) dispatch(actions.getGranules())
+    return null
   }
 
   const response = getCollectionMetadata({
@@ -164,9 +110,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       // rely on collectionJson to have the correct auth information in its headers.
       dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
       dispatch(updateCollectionMetadata(payload))
-
-      // If granules were copied from collections, don't make a new getGranules request.
-      if (allIds.length === 0) dispatch(actions.getGranules())
+      dispatch(actions.getGranules())
     })
     .catch((error) => {
       dispatch(updateFocusedCollection(''))
@@ -186,7 +130,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
  */
 export const changeFocusedCollection = collectionId => (dispatch, getState) => {
   if (collectionId === '') {
-    dispatch(copyGranulesToCollection())
     dispatch(actions.changeFocusedGranule(''))
     eventEmitter.emit('map.stickygranule', { granule: null })
 
@@ -199,8 +142,6 @@ export const changeFocusedCollection = collectionId => (dispatch, getState) => {
       search
     }))
   }
-
-  if (collectionId !== '') dispatch(copyGranulesFromCollection(collectionId))
 
   dispatch(updateFocusedCollection(collectionId))
   dispatch(actions.getTimeline())

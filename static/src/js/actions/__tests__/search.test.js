@@ -121,6 +121,7 @@ describe('changeQuery', () => {
     // mockStore with initialState
     const store = mockStore({
       focusedCollection: '',
+      metadata: {},
       query: {
         collection: {}
       },
@@ -152,6 +153,7 @@ describe('changeQuery', () => {
     // mockStore with initialState
     const store = mockStore({
       focusedCollection: '',
+      metadata: {},
       query: {
         collection: {}
       },
@@ -261,6 +263,7 @@ describe('changeCollectionPageNum', () => {
 
 describe('changeGranulePageNum', () => {
   test('should update the collection query and call getCollections', () => {
+    const collectionId = 'collectionId'
     const pageNum = 2
 
     // mock getGranules
@@ -269,20 +272,27 @@ describe('changeGranulePageNum', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      metadata: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            collectionId: {
+              granules: {
+                allIds: ['123', '456'],
+                hits: 100
+              }
+            }
+          }
+        }
+      },
       query: {
         collection: {},
         granule: { pageNum: 1 }
-      },
-      searchResults: {
-        granules: {
-          allIds: ['123', '456'],
-          hits: 100
-        }
       }
     })
 
     // call the dispatch
-    store.dispatch(actions.changeGranulePageNum(pageNum))
+    store.dispatch(actions.changeGranulePageNum({ collectionId, pageNum }))
 
     // Is updateGranuleQuery called with the right payload
     const storeActions = store.getActions()
@@ -298,6 +308,7 @@ describe('changeGranulePageNum', () => {
   })
 
   test('should not update the collection query and call getCollections if there are no more granules', () => {
+    const collectionId = 'collectionId'
     const pageNum = 2
 
     // mock getGranules
@@ -306,20 +317,27 @@ describe('changeGranulePageNum', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      metadata: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            collectionId: {
+              granules: {
+                allIds: ['123', '456'],
+                hits: 2
+              }
+            }
+          }
+        }
+      },
       query: {
         collection: {},
         granule: { pageNum: 1 }
-      },
-      searchResults: {
-        granules: {
-          allIds: ['123', '456'],
-          hits: 2
-        }
       }
     })
 
     // call the dispatch
-    store.dispatch(actions.changeGranulePageNum(pageNum))
+    store.dispatch(actions.changeGranulePageNum({ collectionId, pageNum }))
 
     // Is updateGranuleQuery called with the right payload
     const storeActions = store.getActions()

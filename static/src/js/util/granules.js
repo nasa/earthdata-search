@@ -5,6 +5,7 @@ import { encodeTemporal } from './url/temporalEncoders'
 import { encodeGridCoords } from './url/gridEncoders'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { convertSize } from './project'
 
 /**
  * Takes the current CMR granule params and applies any changes needed to
@@ -53,6 +54,14 @@ export const populateGranuleResults = (collectionId, isCwic, response) => {
   } else {
     payload.hits = parseInt(response.headers['cmr-hits'], 10)
   }
+
+  let size = 0
+  payload.results.forEach((granule) => {
+    size += parseFloat(granule.granule_size || 0)
+  })
+
+  const totalSize = size / payload.results.length * payload.hits
+  payload.totalSize = convertSize(totalSize)
 
   return payload
 }
