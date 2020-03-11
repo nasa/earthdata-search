@@ -90,7 +90,7 @@ const Facets = (props) => {
 
   const formats = {
     ...cmrFacetDefaults,
-    title: 'Granule Data Format'
+    title: 'Data Format'
   }
 
   const facetsTemplate = [
