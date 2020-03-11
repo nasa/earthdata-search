@@ -10,7 +10,7 @@ const Config = merge.smartStrategy(
   }
 )(StaticCommonConfig, {
   mode: 'development',
-  devtool: 'source-map',
+  devtool: 'inline-cheap-module-source-map',
   devServer: {
     historyApiFallback: true
   },
