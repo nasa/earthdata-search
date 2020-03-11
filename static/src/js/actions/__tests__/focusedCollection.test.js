@@ -75,72 +75,6 @@ describe('changeFocusedCollection', () => {
     // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: RESET_GRANULE_RESULTS
-    })
-    expect(storeActions[1]).toEqual({
-      type: UPDATE_FOCUSED_COLLECTION,
-      payload: collectionId
-    })
-
-    // were the mocks called
-    expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
-    expect(getTimelineMock).toHaveBeenCalledTimes(1)
-  })
-
-  test('with a previously visited collectionId it should update the focusedCollection and copy granules', () => {
-    const collectionId = 'collectionId'
-
-    // mocks
-    const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
-    getFocusedCollectionMock.mockImplementation(() => jest.fn())
-    const getTimelineMock = jest.spyOn(actions, 'getTimeline')
-    getTimelineMock.mockImplementation(() => jest.fn())
-
-    // mockStore with initialState
-    const granules = {
-      allIds: ['granule1'],
-      byId: {
-        granule1: {
-          mock: 'data'
-        }
-      }
-    }
-    const store = mockStore({
-      metadata: {
-        collections: {
-          allIds: [collectionId],
-          byId: {
-            [collectionId]: {
-              granules
-            }
-          }
-        }
-      },
-      focusedCollection: '',
-      query: {
-        collection: {
-          keyword: 'old stuff'
-        }
-      },
-      router: {
-        location: {
-          pathname: ''
-        }
-      }
-    })
-
-    // call the dispatch
-    store.dispatch(actions.changeFocusedCollection(collectionId))
-
-    // Is updateCollectionQuery called with the right payload
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
-      payload: {
-        ...granules
-      }
-    })
-    expect(storeActions[1]).toEqual({
       type: UPDATE_FOCUSED_COLLECTION,
       payload: collectionId
     })
@@ -204,17 +138,10 @@ describe('changeFocusedCollection', () => {
     // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: COPY_GRANULE_RESULTS_TO_COLLECTION,
-      payload: {
-        collectionId: '',
-        granules
-      }
-    })
-    expect(storeActions[1]).toEqual({
       type: UPDATE_FOCUSED_GRANULE,
       payload: ''
     })
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[1]).toEqual({
       type: '@@router/CALL_HISTORY_METHOD',
       payload: {
         args: [{
@@ -293,9 +220,7 @@ describe('getFocusedCollection', () => {
       query: {
         collection: {}
       },
-      searchResults: {
-        granules: {}
-      }
+      searchResults: {}
     })
 
     // call the dispatch
@@ -444,116 +369,6 @@ describe('getFocusedCollection', () => {
     expect(relevancyMock).toHaveBeenCalledTimes(1)
   })
 
-  test('should not call getGranules if previous granules are used', async () => {
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
-    nock(/cmr/)
-      .post(/collections\.json/)
-      .reply(200, {
-        feed: {
-          updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
-          title: 'ECHO dataset metadata',
-          entry: [{
-            id: 'collectionId1',
-            short_name: 'id_1',
-            version_id: 'VersionID'
-          }],
-          facets: {},
-          hits: 1
-        }
-      }, {
-        'cmr-hits': 1
-      })
-
-    nock(/cmr/)
-      .post(/collections\.umm_json/)
-      .reply(200, {
-        hits: 1,
-        took: 234,
-        items: [{
-          meta: {
-            'concept-id': 'collectionId1'
-          },
-          umm: {
-            data: 'collectionId1'
-          }
-        }]
-      }, {
-        'cmr-hits': 1
-      })
-
-    const collectionId = 'collectionId'
-
-    // mock getGranules
-    const getGranulesMock = jest.spyOn(actions, 'getGranules')
-    getGranulesMock.mockImplementation(() => jest.fn())
-    const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
-    relevancyMock.mockImplementation(() => jest.fn())
-
-    // mockStore with initialState
-    const granules = {
-      allIds: ['granule1'],
-      byId: {
-        granule1: {
-          mock: 'data'
-        }
-      }
-    }
-    const store = mockStore({
-      authToken: '',
-      focusedCollection: collectionId,
-      metadata: {
-        collections: {
-          allIds: []
-        }
-      },
-      query: {
-        collection: {}
-      },
-      searchResults: {
-        granules
-      }
-    })
-
-    // call the dispatch
-    await store.dispatch(actions.getFocusedCollection()).then(() => {
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: TOGGLE_SPATIAL_POLYGON_WARNING,
-        payload: false
-      })
-      expect(storeActions[1]).toEqual({
-        type: UPDATE_GRANULE_QUERY,
-        payload: { pageNum: 1 }
-      })
-      expect(storeActions[2]).toEqual({
-        type: UPDATE_COLLECTION_METADATA,
-        payload: [
-          {
-            collectionId: {
-              isCwic: false,
-              metadata: {}
-            }
-          }
-        ]
-      })
-      expect(storeActions[3]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
-      })
-      // updateCollectionMetadata
-      expect(storeActions[4]).toEqual({
-        type: UPDATE_COLLECTION_METADATA,
-        payload: getCollectionsResponseUnauth
-      })
-    })
-
-    // was getGranules called
-    expect(getGranulesMock).toHaveBeenCalledTimes(0)
-    expect(relevancyMock).toHaveBeenCalledTimes(1)
-  })
-
   test('returns no result if there is no focusedCollection', () => {
     const store = mockStore({
       focusedCollection: '',
@@ -580,9 +395,6 @@ describe('getFocusedCollection', () => {
     expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: []
-    })
-    expect(storeActions[3]).toEqual({
-      type: RESET_GRANULE_RESULTS
     })
   })
 

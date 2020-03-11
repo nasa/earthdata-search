@@ -25,7 +25,6 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   collectionSearch: state.query.collection,
   focusedCollection: state.focusedCollection,
-  granules: state.searchResults.granules,
   mapProjection: state.map.projection,
   secondaryOverlayPanel: state.ui.secondaryOverlayPanel
 })
@@ -68,7 +67,6 @@ GranuleResultsHeaderContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
   secondaryOverlayPanel: PropTypes.shape({}).isRequired,

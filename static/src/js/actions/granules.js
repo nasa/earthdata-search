@@ -1,4 +1,5 @@
 import { isCancel } from 'axios'
+import { isEqual } from 'lodash'
 
 import actions from './index'
 import {
@@ -11,7 +12,6 @@ import GranuleRequest from '../util/request/granuleRequest'
 import OusGranuleRequest from '../util/request/ousGranuleRequest'
 import CwicGranuleRequest from '../util/request/cwicGranuleRequest'
 import {
-  ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   ADD_MORE_GRANULE_RESULTS,
   CLEAR_EXCLUDE_GRANULE_ID,
   ERRORED_GRANULES,
@@ -26,16 +26,12 @@ import {
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_METADATA,
-  UPDATE_GRANULE_RESULTS
+  UPDATE_GRANULE_RESULTS,
+  UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { mbr } from '../util/map/mbr'
-
-
-export const addGranulesFromCollection = payload => ({
-  type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
-  payload
-})
+import { getFocusedCollectionObject } from '../util/focusedCollection'
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -48,8 +44,9 @@ export const updateGranuleResults = payload => ({
 })
 
 
-export const resetGranuleResults = () => ({
-  type: RESET_GRANULE_RESULTS
+export const resetGranuleResults = payload => ({
+  type: RESET_GRANULE_RESULTS,
+  payload
 })
 
 export const updateGranuleMetadata = payload => ({
@@ -57,8 +54,9 @@ export const updateGranuleMetadata = payload => ({
   payload
 })
 
-export const onGranulesLoading = () => ({
-  type: LOADING_GRANULES
+export const onGranulesLoading = payload => ({
+  type: LOADING_GRANULES,
+  payload
 })
 
 export const onGranulesLoaded = payload => ({
@@ -70,12 +68,14 @@ export const onGranulesErrored = () => ({
   type: ERRORED_GRANULES
 })
 
-export const startGranulesTimer = () => ({
-  type: STARTED_GRANULES_TIMER
+export const startGranulesTimer = payload => ({
+  type: STARTED_GRANULES_TIMER,
+  payload
 })
 
-export const finishGranulesTimer = () => ({
-  type: FINISHED_GRANULES_TIMER
+export const finishGranulesTimer = payload => ({
+  type: FINISHED_GRANULES_TIMER,
+  payload
 })
 
 export const onExcludeGranule = payload => ({
@@ -103,6 +103,11 @@ export const setGranuleLinksLoading = () => ({
 
 export const setGranuleLinksLoaded = () => ({
   type: SET_GRANULE_LINKS_LOADED
+})
+
+export const updateCurrentCollectionGranuleParams = payload => ({
+  type: UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS,
+  payload
 })
 
 export const excludeGranule = data => (dispatch) => {
@@ -262,89 +267,123 @@ export const clearExcludedGranules = collectionId => (dispatch) => {
 }
 
 // Cancel token to cancel pending requests
-let cancelToken
+const cancelTokens = {}
 
 /**
  * Perform a granules request based on the current redux state.
- * @param {function} dispatch - A dispatch function provided by redux.
- * @param {function} getState - A function that returns the current state provided by redux.
+ * @param {Array} collectionIds - Optional, collection IDs to get granules for. If not provided will return granules from focused collection
  */
-export const getGranules = () => (dispatch, getState) => {
-  // If cancel token is set, cancel the previous request(s)
-  if (cancelToken) {
-    cancelToken.cancel()
-  }
+export const getGranules = ids => (dispatch, getState) => {
+  const state = getState()
+  const { focusedCollection, metadata } = state
 
-  const granuleParams = prepareGranuleParams(getState())
-  dispatch(startGranulesTimer())
-  dispatch(onGranulesLoading())
-
-  if (!granuleParams) {
-    dispatch(resetGranuleResults())
-    return null
-  }
-
-  const {
-    authToken,
-    collectionId,
-    isCwicCollection,
-    pageNum
-  } = granuleParams
-
-  dispatch(actions.toggleSpatialPolygonWarning(false))
-
-  const searchParams = buildGranuleSearchParams(granuleParams)
-  let requestObject = null
-  if (isCwicCollection) {
-    requestObject = new CwicGranuleRequest(authToken)
-    const { polygon } = searchParams
-
-    // CWIC does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
-    if (polygon) {
-      dispatch(actions.toggleSpatialPolygonWarning(true))
-      const [llLat, llLng, urLat, urLng] = mbr({ polygon })
-      searchParams.boundingBox = [llLng, llLat, urLng, urLat].join(',')
-      searchParams.polygon = undefined
-    }
+  let isProject = true
+  let collectionIds
+  if (!ids) {
+    isProject = false
+    collectionIds = [focusedCollection]
   } else {
-    requestObject = new GranuleRequest(authToken)
+    collectionIds = ids
   }
 
-  cancelToken = requestObject.getCancelToken()
+  const { collections } = metadata
 
-  const response = requestObject.search(searchParams)
-    .then((response) => {
-      const payload = populateGranuleResults(collectionId, isCwicCollection, response)
+  return Promise.all(collectionIds.map((collectionId) => {
+    const granuleParams = prepareGranuleParams(state, collectionId)
 
-      dispatch(finishGranulesTimer())
-      dispatch(updateAuthTokenFromHeaders(response.headers))
-      dispatch(onGranulesLoaded({
-        loaded: true
-      }))
+    if (!granuleParams) {
+      return null
+    }
 
-      if (pageNum === 1) {
-        dispatch(updateGranuleResults(payload))
-      } else {
-        dispatch(addMoreGranuleResults(payload))
+    const collectionObject = getFocusedCollectionObject(collectionId, collections)
+    const { currentCollectionGranuleParams } = collectionObject || {}
+
+    // If granuleParams are equal to the last used granule params in the store, don't fetch new granules
+    if (isEqual(granuleParams, currentCollectionGranuleParams)) {
+      return null
+    }
+    // The params are different, save the new params and continue fetching granules
+    dispatch(updateCurrentCollectionGranuleParams({
+      collectionId,
+      granuleParams
+    }))
+
+    // If cancel token is set, cancel the previous request(s)
+    if (cancelTokens[collectionId]) {
+      cancelTokens[collectionId].cancel()
+      cancelTokens[collectionId] = undefined
+    }
+
+    const {
+      authToken,
+      isCwicCollection,
+      pageNum
+    } = granuleParams
+
+    if (!isProject && pageNum === 1) {
+      dispatch(resetGranuleResults(collectionId))
+    }
+
+    dispatch(startGranulesTimer(collectionId))
+    dispatch(onGranulesLoading(collectionId))
+
+    dispatch(actions.toggleSpatialPolygonWarning(false))
+
+    const searchParams = buildGranuleSearchParams(granuleParams)
+    let requestObject = null
+    if (isCwicCollection) {
+      requestObject = new CwicGranuleRequest(authToken)
+      const { polygon } = searchParams
+
+      // CWIC does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
+      if (polygon) {
+        dispatch(actions.toggleSpatialPolygonWarning(true))
+        const [llLat, llLng, urLat, urLng] = mbr({ polygon })
+        searchParams.boundingBox = [llLng, llLat, urLng, urLat].join(',')
+        searchParams.polygon = undefined
       }
-    })
-    .catch((error) => {
-      if (isCancel(error)) return
+    } else {
+      requestObject = new GranuleRequest(authToken)
+    }
 
-      dispatch(onGranulesErrored())
-      dispatch(finishGranulesTimer())
-      dispatch(onGranulesLoaded({
-        loaded: false
-      }))
-      dispatch(actions.handleError({
-        error,
-        action: 'getGranules',
-        resource: 'granules',
-        requestObject
-      }))
-    })
+    cancelTokens[collectionId] = requestObject.getCancelToken()
 
-  return response
+    const response = requestObject.search(searchParams)
+      .then((response) => {
+        const payload = populateGranuleResults(collectionId, isCwicCollection, response)
+
+        dispatch(finishGranulesTimer(collectionId))
+        dispatch(updateAuthTokenFromHeaders(response.headers))
+        dispatch(onGranulesLoaded({
+          collectionId,
+          loaded: true
+        }))
+
+        if (isProject || pageNum === 1) {
+          dispatch(updateGranuleResults(payload))
+        } else {
+          dispatch(addMoreGranuleResults(payload))
+        }
+      })
+      .catch((error) => {
+        if (isCancel(error)) return
+
+        dispatch(onGranulesErrored())
+        dispatch(finishGranulesTimer(collectionId))
+        dispatch(onGranulesLoaded({
+          collectionId,
+          loaded: false
+        }))
+        dispatch(actions.handleError({
+          error,
+          action: 'getGranules',
+          resource: 'granules',
+          requestObject
+        }))
+      })
+
+    return response
+  }))
 }
 
 /**

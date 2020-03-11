@@ -14,6 +14,7 @@ function setup() {
       byId: {
         focusedCollection: {
           excludedGranuleIds: [],
+          granules: { hits: 100 },
           metadata: {
             mock: 'data'
           }
@@ -21,7 +22,6 @@ function setup() {
       }
     },
     focusedCollection: 'focusedCollection',
-    granules: { hits: 100 },
     granuleQuery: {
       pageNum: 1
     },

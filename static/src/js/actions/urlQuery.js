@@ -60,7 +60,6 @@ export const updateStore = ({
       dispatch(actions.getFocusedCollection())
     }
     dispatch(actions.getProjectCollections())
-    dispatch(actions.getGranules())
     dispatch(actions.getTimeline())
   }
 }
