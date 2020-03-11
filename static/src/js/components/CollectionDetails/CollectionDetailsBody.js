@@ -216,7 +216,7 @@ export const CollectionDetailsBody = ({
             {
               nativeFormats.length > 0 && (
                 <dl className="collection-details-body__info">
-                  <dt>{`Native Data ${pluralize('Format', nativeFormats.length)}:`}</dt>
+                  <dt>{`Data ${pluralize('Format', nativeFormats.length)}:`}</dt>
                   <dd>
                     {
                       nativeFormats.length > 0 && buildNativeFormatList(nativeFormats)

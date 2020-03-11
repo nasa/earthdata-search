@@ -131,7 +131,7 @@ describe('CollectionDetails component', () => {
     })
   })
 
-  describe('Native Data Formats', () => {
+  describe('Data Formats', () => {
     test('renders correctly', () => {
       const { enzymeWrapper } = setup()
       expect(enzymeWrapper.find('.collection-details-body__native-formats').text()).toEqual('PDF')
