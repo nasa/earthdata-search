@@ -5,31 +5,32 @@ import classNames from 'classnames'
 import PanelSection from './PanelSection'
 import PanelGroup from './PanelGroup'
 
-import history from '../../util/history'
-
 import './Panels.scss'
 
 export class Panels extends PureComponent {
   constructor(props) {
     super(props)
 
+    const { show } = props
+
     this.panelWidth = 600
+    this.minimizedWidth = 20
+    this.minimizeThreshold = 200
+    this.unminimizeWidth = 200
 
-    this.maxWidth = undefined
-    this.minWidth = undefined
-    this.clickStartWidth = undefined
-    this.clickStartX = undefined
-    this.dragging = false
-    this.width = this.panelWidth
-    this.previousWidth = 0
-
+    this.state = {
+      maxWidth: undefined,
+      minWidth: 400,
+      clickStartWidth: undefined,
+      clickStartX: undefined,
+      dragging: false,
+      width: this.panelWidth,
+      show
+    }
 
     this.onChangePanel = this.onChangePanel.bind(this)
-    this.onPanelsClose = this.onPanelsClose.bind(this)
-    this.onPanelsWidthChange = this.onPanelsWidthChange.bind(this)
     this.onPanelDragStart = this.onPanelDragStart.bind(this)
     this.onPanelDragEnd = this.onPanelDragEnd.bind(this)
-    // this.onPanelToggle = this.onPanelToggle.bind(this)
     this.onMouseMove = this.onMouseMove.bind(this)
     this.onMouseUp = this.onMouseUp.bind(this)
     this.onMouseDown = this.onMouseDown.bind(this)
@@ -39,31 +40,45 @@ export class Panels extends PureComponent {
 
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize)
-    this.browserHistoryUnlisten = history.listen(this.onWindowResize)
 
     const maxWidth = this.calculateMaxWidth()
 
-    this.maxWidth = maxWidth
+    this.setState({
+      maxWidth
+    })
   }
 
   componentWillUnmount() {
-    this.onPanelToggle()
-    if (this.browserHistoryUnlisten) this.browserHistoryUnlisten()
-    window.addEventListener('resize', this.onWindowResize)
+    if (this.rafId) window.cancelAnimationFrame(this.rafId)
+    window.removeEventListener('resize', this.onWindowResize)
+    document.removeEventListener('mousemove', this.onMouseMove)
+    document.removeEventListener('mouseup', this.onMouseUp)
   }
 
   onWindowResize() {
-    setTimeout(() => {
-      const maxWidth = this.calculateMaxWidth()
-      this.maxWidth = maxWidth
+    const { width, minWidth } = this.state
+    const maxWidth = this.calculateMaxWidth()
 
-      if (this.width > maxWidth) this.onPanelsWidthChange(maxWidth)
-    }, 0)
-  }
+    // Set the new max width
+    this.setState({
+      maxWidth
+    })
 
-  onPanelsClose() {
-    const { onPanelClose } = this.props
-    onPanelClose()
+    // If the panels width is larger than the max and min,
+    // set the width to the new max
+    if (width > maxWidth && width > minWidth) {
+      this.setState({
+        width: maxWidth
+      })
+    }
+
+    // If the width is smaller than the min somehow, set the width
+    // to the min
+    if (width < minWidth) {
+      this.setState({
+        width: minWidth
+      })
+    }
   }
 
   onChangePanel(panelId) {
@@ -72,36 +87,44 @@ export class Panels extends PureComponent {
   }
 
   onMouseDown(e) {
-    e.stopPropagation()
-    e.preventDefault()
-
     if (e.button !== 0) return
+
+    const { width } = this.state
 
     document.addEventListener('mousemove', this.onMouseMove)
     document.addEventListener('mouseup', this.onMouseUp)
 
-    this.onPanelDragStart(this.width, e.pageX)
+    this.onPanelDragStart(width, e.pageX)
+
+    e.stopPropagation()
+    e.preventDefault()
   }
 
   onMouseUp(e) {
-    e.stopPropagation()
-    e.preventDefault()
-
-    document.removeEventListener('mousemove', this.throttledMove)
+    document.removeEventListener('mousemove', this.onMouseMove)
     document.removeEventListener('mouseup', this.onMouseUp)
 
     this.onPanelDragEnd()
-  }
-
-  onMouseMove(e) {
-    this.pageX = e.pageX
 
     e.stopPropagation()
     e.preventDefault()
+  }
 
-    if (!this.dragging) return
+  onMouseMove(e) {
+    const {
+      dragging
+    } = this.state
 
-    window.requestAnimationFrame(this.onUpdate)
+    this.setState({
+      pageX: e.pageX
+    })
+
+    if (!dragging) return
+
+    this.rafId = window.requestAnimationFrame(this.onUpdate)
+
+    e.stopPropagation()
+    e.preventDefault()
   }
 
   onUpdate() {
@@ -110,56 +133,127 @@ export class Panels extends PureComponent {
       clickStartX,
       maxWidth,
       minWidth,
-      clickStartWidth
-    } = this
+      clickStartWidth,
+      show
+    } = this.state
+
+    const distanceScrolled = pageX - clickStartX
+
+    if (!show) {
+      // If the panel is closed and a user drags the handle passed the threshold, reset the clickStartWidth
+      // to recalulate the width of the current cursor position. This accounts for the 300 px width of the
+      // closed panel position.
+      if (distanceScrolled > this.unminimizeWidth) {
+        console.log('firing')
+        this.setState({
+          width: distanceScrolled,
+          clickStartWidth: 0,
+          show: true,
+          willMinimize: false
+        })
+      }
+    } else {
+      const newWidth = distanceScrolled + clickStartWidth
+
+      // If the panel would minimize at the current scroll position, set the state accordingly.
+      if (newWidth < (minWidth - this.minimizeThreshold)) {
+        this.setState({
+          willMinimize: true
+        })
+      } else {
+        this.setState({
+          willMinimize: false
+        })
+      }
+
+      // Prevent the width from being set lower than minWidth.
+      if (newWidth < minWidth) {
+        this.setState({
+          width: minWidth,
+          show: true
+        })
+        return
+      }
+
+      // Prevent the width from being set greater than the maxWidth
+      if (newWidth > maxWidth) {
+        this.setState({
+          width: maxWidth,
+          show: true
+        })
+        return
+      }
+
+      // If the panel is show, set the new width.
+      this.setState({
+        width: newWidth,
+        show: true
+      })
+    }
+  }
+
+  onPanelDragStart(clickStartWidth, clickStartX) {
+    this.setState({
+      clickStartWidth,
+      clickStartX,
+      dragging: true
+    })
+
+    document.body.classList.add('is-panels-dragging')
+  }
+
+  onPanelDragEnd() {
+    const {
+      onPanelClose,
+      onPanelOpen
+    } = this.props
+    const {
+      pageX,
+      clickStartX,
+      clickStartWidth,
+      minWidth
+    } = this.state
+
+    const newState = {
+      dragging: false
+    }
 
     const distanceScrolled = pageX - clickStartX
     const newWidth = distanceScrolled + clickStartWidth
 
-    if (newWidth > maxWidth) {
-      this.onPanelsWidthChange(maxWidth)
-      return
+    if (newWidth < (minWidth - this.minimizeThreshold)) {
+      if (onPanelClose) onPanelClose()
+      newState.show = false
+      newState.willMinimize = true
+    } else {
+      if (onPanelOpen) onPanelOpen()
+      newState.show = true
+      newState.willMinimize = false
     }
-    if (newWidth < minWidth) {
-      this.onPanelsWidthChange(minWidth)
-      return
-    }
 
-    this.onPanelsWidthChange(newWidth)
-  }
+    this.setState(newState)
 
-  onPanelsWidthChange(newWidth) {
-    this.container.style.width = `${newWidth}px`
-
-    this.width = newWidth
-    this.previousWidth = newWidth
-  }
-
-  onPanelDragStart(clickStartWidth, clickStartX) {
-    this.container.classList.add('panels--is-dragging')
-    document.body.classList.add('is-panels-dragging')
-
-    this.clickStartWidth = clickStartWidth
-    this.clickStartX = clickStartX
-    this.dragging = true
-  }
-
-  onPanelDragEnd() {
-    this.container.classList.remove('panels--is-dragging')
     document.body.classList.remove('is-panels-dragging')
-
-    this.clickStartWidth = undefined
-    this.clickStartX = undefined
-    this.dragging = false
   }
 
   calculateMaxWidth() {
-    // const headerHeight = $('.route-wrapper__header').outerHeight()
-    // const tabHeight = $('.master-overlay-panel__tab').width()
-    // const routeWrapperHeight = $('.route-wrapper').width()
-    // const maxWidth = routeWrapperHeight - (headerHeight + tabHeight)
+    // Set the max width of the panel to the width of the login button
+    const routeWrapper = document.querySelector('.route-wrapper__content')
+    const loginButton = document.querySelector('.secondary-toolbar')
+
+    if (routeWrapper && loginButton) {
+      const routeWrapperWidth = routeWrapper.offsetWidth
+      const loginButtonWidth = loginButton.offsetWidth
+
+      let maxWidth = routeWrapperWidth - loginButtonWidth - 30
+
+      if (routeWrapperWidth < 1000) {
+        maxWidth = routeWrapperWidth - 55
+      }
+
+      return maxWidth
+    }
     return 1000
-    // return maxWidth
   }
 
   renderPanelGroup(child, index) {
@@ -202,9 +296,15 @@ export class Panels extends PureComponent {
   render() {
     const {
       children,
-      draggable,
-      show
+      draggable
     } = this.props
+
+    const {
+      dragging,
+      width,
+      show,
+      willMinimize
+    } = this.state
 
     const panelGroups = Children.map(children,
       (child, index) => this.renderPanelGroup(child, index))
@@ -212,13 +312,17 @@ export class Panels extends PureComponent {
     const className = classNames([
       'panels',
       {
-        'panels--is-active': show
+        'panels--is-open': show,
+        'panels--is-draggable': draggable,
+        'panels--is-dragging': dragging,
+        'panels--will-minimize': willMinimize
       }
     ])
+
     return (
       <section
         className={className}
-        style={{ width: '600px' }}
+        style={{ width: `${width}px` }}
         ref={(node) => {
           this.container = node
         }}
@@ -247,6 +351,7 @@ Panels.defaultProps = {
   draggable: false,
   show: false,
   onPanelClose: null,
+  onPanelOpen: null,
   onChangePanel: null
 }
 
@@ -259,6 +364,7 @@ Panels.propTypes = {
   draggable: PropTypes.bool,
   show: PropTypes.bool,
   onPanelClose: PropTypes.func,
+  onPanelOpen: PropTypes.func,
   onChangePanel: PropTypes.func
 }
 

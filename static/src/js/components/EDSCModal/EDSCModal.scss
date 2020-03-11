@@ -10,7 +10,7 @@
     }
 
     .modal-body {
-      overflow: scroll;
+      overflow: auto;
     }
 
     .modal-header {
@@ -68,7 +68,7 @@
 
   &__inner-body {
     flex-grow: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     .edsc-modal--body-padding & {
       padding: $spacer;

@@ -39,6 +39,7 @@ class ProjectPanels extends PureComponent {
     }
 
     this.onPanelClose = this.onPanelClose.bind(this)
+    this.onPanelOpen = this.onPanelOpen.bind(this)
     this.onChangePanel = this.onChangePanel.bind(this)
     this.selectKeyword = this.selectKeyword.bind(this)
     this.onSaveVariables = this.onSaveVariables.bind(this)
@@ -71,6 +72,11 @@ class ProjectPanels extends PureComponent {
     this.setState({
       selectedVariables
     })
+  }
+
+  onPanelOpen() {
+    const { onTogglePanels } = this.props
+    onTogglePanels(true)
   }
 
   onPanelClose() {
@@ -419,9 +425,11 @@ class ProjectPanels extends PureComponent {
 
     return (
       <Panels
+        draggable
         show={collectionMetadataLoaded && isOpen}
         activePanel={loaded ? activePanel : ''}
         onPanelClose={this.onPanelClose}
+        onPanelOpen={this.onPanelOpen}
         onChangePanel={this.onChangePanel}
       >
         <PanelSection>
