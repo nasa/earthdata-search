@@ -30,13 +30,19 @@ export const SecondaryOverlayPanelContainer = ({
   isOpen,
   onToggleSecondaryOverlayPanel
 }) => (
-  <SecondaryOverlayPanel
-    body={body}
-    header={header}
-    footer={footer}
-    isOpen={isOpen}
-    onToggleSecondaryOverlayPanel={onToggleSecondaryOverlayPanel}
-  />
+  <>
+    {
+      isOpen && (
+        <SecondaryOverlayPanel
+          body={body}
+          header={header}
+          footer={footer}
+          isOpen={isOpen}
+          onToggleSecondaryOverlayPanel={onToggleSecondaryOverlayPanel}
+        />
+      )
+     }
+  </>
 )
 
 SecondaryOverlayPanelContainer.defaultProps = {
