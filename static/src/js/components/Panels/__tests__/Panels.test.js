@@ -9,11 +9,33 @@ import PanelItem from '../PanelItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+const windowEventMap = {}
+const documentEventMap = {}
+
+beforeEach(() => {
+  jest.clearAllMocks()
+
+  window.addEventListener = jest.fn((event, cb) => {
+    windowEventMap[event] = cb
+  })
+
+  window.removeEventListener = jest.fn()
+
+  window.cancelAnimationFrame = jest.fn()
+
+  document.addEventListener = jest.fn((event, cb) => {
+    documentEventMap[event] = cb
+  })
+
+  document.removeEventListener = jest.fn()
+})
+
 function setup() {
   const props = {
     show: true,
     activePanel: '0.0.0',
     onPanelClose: jest.fn(),
+    onPanelOpen: jest.fn(),
     onChangePanel: jest.fn()
   }
 
@@ -288,16 +310,246 @@ describe('Panels component', () => {
     })
   })
 
-  test('calls props onPanelClose callback', () => {
-    const { enzymeWrapper, props } = setup()
-    enzymeWrapper.instance().onPanelsClose()
-    expect(props.onPanelClose).toHaveBeenCalledTimes(1)
+  describe('when mounting', () => {
+    test('assigns the resize event listener', () => {
+      const onWindowResizeMock = jest.fn()
+
+      jest.spyOn(Panels.prototype, 'onWindowResize').mockImplementationOnce(onWindowResizeMock)
+
+      setup()
+
+      windowEventMap.resize()
+
+      expect(onWindowResizeMock).toHaveBeenCalledTimes(1)
+    })
+
+    test('calculates the max width', () => {
+      const onCalculateMaxWidth = jest.fn()
+
+      jest.spyOn(Panels.prototype, 'calculateMaxWidth').mockImplementationOnce(onCalculateMaxWidth)
+
+      setup()
+
+      expect(onCalculateMaxWidth).toHaveBeenCalledTimes(1)
+    })
+
+    test('sets the maxWidth in the state', () => {
+      const onCalculateMaxWidth = jest.fn(() => 1234)
+
+      jest.spyOn(Panels.prototype, 'calculateMaxWidth').mockImplementationOnce(onCalculateMaxWidth)
+
+      const { enzymeWrapper } = setup()
+
+      expect(onCalculateMaxWidth).toHaveBeenCalledTimes(1)
+      expect(enzymeWrapper.state().maxWidth).toEqual(1234)
+    })
   })
 
-  test('calls props onChangePanel callback', () => {
-    const { enzymeWrapper, props } = setup()
-    enzymeWrapper.instance().onChangePanel('0.0.1')
-    expect(props.onChangePanel).toHaveBeenCalledTimes(1)
-    expect(props.onChangePanel).toHaveBeenCalledWith('0.0.1')
+  describe('when unmounting', () => {
+    test('cancels the animation frame', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().rafId = 12345
+
+      enzymeWrapper.unmount()
+
+      expect(window.cancelAnimationFrame).toHaveBeenCalledTimes(1)
+      expect(window.cancelAnimationFrame).toHaveBeenCalledWith(12345)
+    })
+
+    test('removes the resize event listener', () => {
+      const onWindowResizeMock = jest.fn(() => 'resize mock')
+
+      jest.spyOn(Panels.prototype, 'onWindowResize').mockImplementationOnce(onWindowResizeMock)
+
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.unmount()
+
+      // React appears to call removeEventListener a ton of times here, so the call
+      //  we want to check against will show up in an array of possibly unknown size.
+      // Here we filter out the event based on its name, and inspect the arguments
+      // that were passed.
+      const resizeEvent = window.removeEventListener.mock.calls.filter(evt => evt[0] === 'resize')[0]
+
+      expect(resizeEvent.length).toEqual(2)
+      expect(resizeEvent[0]).toEqual('resize')
+      expect(resizeEvent[1]()).toEqual('resize mock')
+    })
+
+    test('removes the document event listeners', () => {
+      const onMouseMoveMock = jest.fn()
+      const onMouseUpMock = jest.fn()
+
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().onMouseMove = onMouseMoveMock
+      enzymeWrapper.instance().onMouseUp = onMouseUpMock
+
+      enzymeWrapper.unmount()
+
+      expect(document.removeEventListener).toHaveBeenCalledTimes(2)
+      expect(document.removeEventListener.mock.calls[0]).toEqual([
+        'mousemove',
+        onMouseMoveMock
+      ])
+      expect(document.removeEventListener.mock.calls[1]).toEqual([
+        'mouseup',
+        onMouseUpMock
+      ])
+    })
+  })
+
+  describe('when dragging the panel', () => {
+    describe('if the panel is being closed', () => {
+      test('calls props onPanelClose callback', () => {
+        const { enzymeWrapper, props } = setup()
+        enzymeWrapper.setState({
+          clickStartWidth: 0,
+          pageX: 0,
+          clickStartX: 0
+        })
+        enzymeWrapper.instance().onPanelDragEnd()
+        expect(props.onPanelClose).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('if the panel is being opened', () => {
+      test('calls props onPanelOpen callback', () => {
+        const { enzymeWrapper, props } = setup()
+        enzymeWrapper.setState({
+          clickStartWidth: 600,
+          pageX: 500,
+          clickStartX: 600
+        })
+        enzymeWrapper.instance().onPanelDragEnd()
+        expect(props.onPanelOpen).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('onWindowResize', () => {
+      describe('if the current panel size is within the min and max', () => {
+        test('recalculates the maxWidth and leaves the width alone', () => {
+          const onCalculateMaxWidth = jest.fn(() => 1000)
+
+          const { enzymeWrapper } = setup()
+
+          enzymeWrapper.instance().calculateMaxWidth = onCalculateMaxWidth
+
+          enzymeWrapper.setState({
+            width: 600
+          })
+
+          enzymeWrapper.instance().onWindowResize()
+
+          expect(onCalculateMaxWidth).toHaveBeenCalledTimes(1)
+          expect(enzymeWrapper.state().maxWidth).toEqual(1000)
+          expect(enzymeWrapper.state().width).toEqual(600)
+        })
+      })
+
+      describe('if the current panel size is bigger than the max', () => {
+        test('recalculates the maxWidth and sets the width to the new max', () => {
+          const onCalculateMaxWidth = jest.fn(() => 550)
+
+          const { enzymeWrapper } = setup()
+
+          enzymeWrapper.instance().calculateMaxWidth = onCalculateMaxWidth
+
+          enzymeWrapper.setState({
+            width: 600
+          })
+
+          enzymeWrapper.instance().onWindowResize()
+
+          expect(onCalculateMaxWidth).toHaveBeenCalledTimes(1)
+          expect(enzymeWrapper.state().maxWidth).toEqual(550)
+          expect(enzymeWrapper.state().width).toEqual(550)
+        })
+      })
+
+      describe('if the current panel size is smaller than the min', () => {
+        test('sets the panel to the minimum width', () => {
+          const onCalculateMaxWidth = jest.fn(() => 550)
+
+          const { enzymeWrapper } = setup()
+
+          enzymeWrapper.instance().calculateMaxWidth = onCalculateMaxWidth
+
+          enzymeWrapper.setState({
+            width: 300
+          })
+
+          enzymeWrapper.instance().onWindowResize()
+
+          expect(onCalculateMaxWidth).toHaveBeenCalledTimes(1)
+          expect(enzymeWrapper.state().maxWidth).toEqual(550)
+          expect(enzymeWrapper.state().width).toEqual(400)
+        })
+      })
+    })
+
+    describe('onMouseDown', () => {
+      test('applies the event listeners', () => {
+        const { enzymeWrapper } = setup()
+        const eventData = {
+          button: 0,
+          stopPropagation: jest.fn(),
+          preventDefault: jest.fn()
+        }
+        enzymeWrapper.instance().onMouseDown(eventData)
+
+        expect(document.addEventListener).toHaveBeenCalledTimes(2)
+      })
+
+      test('calls onPanelDragStart', () => {
+        const onPanelDragStartMock = jest.fn()
+        const { enzymeWrapper } = setup()
+        enzymeWrapper.setState({
+          width: 550
+        })
+        const eventData = {
+          button: 0,
+          stopPropagation: jest.fn(),
+          preventDefault: jest.fn(),
+          pageX: 551
+        }
+        enzymeWrapper.instance().onPanelDragStart = onPanelDragStartMock
+        enzymeWrapper.instance().onMouseDown(eventData)
+
+        expect(onPanelDragStartMock).toHaveBeenCalledTimes(1)
+        expect(onPanelDragStartMock).toHaveBeenCalledWith(550, 551)
+      })
+
+      test('prevents default click behaviors', () => {
+        const { enzymeWrapper } = setup()
+        const eventData = {
+          button: 0,
+          stopPropagation: jest.fn(),
+          preventDefault: jest.fn(),
+        }
+
+        enzymeWrapper.instance().onMouseDown(eventData)
+
+        expect(eventData.stopPropagation).toHaveBeenCalledTimes(1)
+        expect(eventData.preventDefault).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    // TODO:
+    // describe('onMouseUp', () => {
+    // })
+
+    // describe('onMouseMove', () => {
+    // })
+
+    // describe('onUpdate', () => {
+    // })
+
+    // describe('onPanelDragStart', () => {
+    // })
+
+    // describe('calculateMaxWidth', () => {
+    // })
   })
 })

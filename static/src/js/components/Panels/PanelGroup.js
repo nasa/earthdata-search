@@ -13,7 +13,6 @@ import './PanelGroup.scss'
  * @param {Boolean} props.isActive -  A flag to desingate the PanelGroup as active. Active PanelGroups are lifted to the highest index.
  * @param {Boolean} props.isOpen - A flag to desingate the PanelGroup as open.
  * @param {Function} props.onChangePanel - The action to change the panel.
- * @param {Function} props.onPanelsClose - The action to close the panels.
  * @param {Node} props.children - The panel group children. Should consist only of PanelItem components.
  * @param {String} props.primaryHeading - The text to be used as the primary heading.
  * @param {String} props.secondaryHeading - The text to be used as the secondary heading.
@@ -28,7 +27,6 @@ export const PanelGroup = ({
   isActive,
   isOpen,
   onChangePanel,
-  onPanelsClose,
   primaryHeading,
   secondaryHeader,
   secondaryHeading
@@ -60,7 +58,6 @@ export const PanelGroup = ({
       <PanelGroupHeader
         primaryHeading={primaryHeading}
         secondaryHeading={secondaryHeading}
-        onPanelsClose={onPanelsClose}
         header={header}
         secondaryHeader={secondaryHeader}
       />
@@ -76,7 +73,6 @@ PanelGroup.defaultProps = {
   isActive: false,
   isOpen: false,
   onChangePanel: null,
-  onPanelsClose: null,
   primaryHeading: null,
   secondaryHeader: null,
   secondaryHeading: null
@@ -93,7 +89,6 @@ PanelGroup.propTypes = {
   isActive: PropTypes.bool,
   isOpen: PropTypes.bool,
   onChangePanel: PropTypes.func,
-  onPanelsClose: PropTypes.func,
   primaryHeading: PropTypes.string,
   secondaryHeader: PropTypes.node,
   secondaryHeading: PropTypes.string

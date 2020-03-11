@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import Button from '../Button/Button'
-
 import './PanelGroupHeader.scss'
 
 /**
@@ -17,7 +15,6 @@ import './PanelGroupHeader.scss'
  */
 export const PanelGroupHeader = ({
   header,
-  onPanelsClose,
   primaryHeading,
   secondaryHeading
 }) => {
@@ -42,13 +39,6 @@ export const PanelGroupHeader = ({
                 {primaryHeading}
               </span>
             </h2>
-            <Button
-              className="panel-group-header__close"
-              icon="times"
-              title="Close panel"
-              label="Close panel"
-              onClick={() => onPanelsClose()}
-            />
           </>
         )
       }
@@ -64,7 +54,6 @@ PanelGroupHeader.defaultProps = {
 
 PanelGroupHeader.propTypes = {
   header: PropTypes.node,
-  onPanelsClose: PropTypes.func.isRequired,
   primaryHeading: PropTypes.string,
   secondaryHeading: PropTypes.string
 }

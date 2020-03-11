@@ -5,7 +5,6 @@
   flex-wrap: nowrap;
   flex-shrink: 0;
   padding: $spacer/2;
-  padding-right: 0;
   border-bottom: 1px solid $color__black--200;
   background-color: $color__white;
 
@@ -31,9 +30,5 @@
     font-size: 1rem;
     font-weight: 700;
     color: $color__black--500;
-  }
-
-  &__close {
-    color: $color__black--400;
   }
 }

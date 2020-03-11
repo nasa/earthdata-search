@@ -91,7 +91,7 @@ export class MapContainer extends Component {
     }
 
     if (this.controlContainer) {
-      this.onMasterOverlayPanelResize(masterOverlayPanelHeight)
+      this.onWindowResize(masterOverlayPanelHeight)
     }
   }
 
@@ -106,14 +106,14 @@ export class MapContainer extends Component {
     attributionElement.innerHTML = '* © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     layersControl.appendChild(attributionElement)
 
-    this.onMasterOverlayPanelResize()
+    this.onWindowResize()
   }
 
-  onMasterOverlayPanelResize(newHeight) {
+  onWindowResize() {
     const routeWrapperHeight = $('.route-wrapper').height()
 
     this.controlContainer.style.width = '100%'
-    this.controlContainer.style.height = `${routeWrapperHeight - newHeight}px`
+    this.controlContainer.style.height = `${routeWrapperHeight}px`
   }
 
   handleMoveend(event) {

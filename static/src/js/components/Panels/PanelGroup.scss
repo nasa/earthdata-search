@@ -6,14 +6,18 @@
   height: 100%;
   width: 100%;
   background-color: $color__white;
-  transform: translateX(-100%);
   z-index: 0;
-
-  &--is-open {
-    transform: translateX(0%);
-  }
+  opacity: 0;
 
   &--is-active {
     z-index: 1;
+  }
+
+  &--is-open {
+    opacity: 1;
+
+    .panels--will-minimize & {
+      opacity: 0.25;
+    }
   }
 }

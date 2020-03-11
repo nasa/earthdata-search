@@ -110,6 +110,9 @@
   }
 
   &__badge {
+    word-break: break-all;
+    line-break: normal;
+    white-space: normal;
     margin-right: $spacer/4;
     margin-bottom: $spacer/8;
     color: $color__white;
