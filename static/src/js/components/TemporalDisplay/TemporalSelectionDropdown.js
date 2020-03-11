@@ -314,19 +314,23 @@ export default class TemporalSelectionDropdown extends PureComponent {
     return (
       <Dropdown show={open} className="temporal-selection-dropdown dropdown-dark" onToggle={this.onDropdownToggle}>
         <TemporalSelectionDropdownToggle onToggleClick={this.onToggleClick} />
-        <TemporalSelectionDropdownMenu
-          temporal={temporal}
-          onApplyClick={this.onApplyClick}
-          onClearClick={this.onClearClick}
-          onRecurringToggle={this.onRecurringToggle}
-          onChangeRecurring={this.onChangeRecurring}
-          setStartDate={this.setStartDate}
-          setEndDate={this.setEndDate}
-          onValid={this.onValid}
-          onInvalid={this.onInvalid}
-          onChangeQuery={onChangeQuery}
-          disabled={disabled}
-        />
+        {
+          open && (
+            <TemporalSelectionDropdownMenu
+              temporal={temporal}
+              onApplyClick={this.onApplyClick}
+              onClearClick={this.onClearClick}
+              onRecurringToggle={this.onRecurringToggle}
+              onChangeRecurring={this.onChangeRecurring}
+              setStartDate={this.setStartDate}
+              setEndDate={this.setEndDate}
+              onValid={this.onValid}
+              onInvalid={this.onInvalid}
+              onChangeQuery={onChangeQuery}
+              disabled={disabled}
+            />
+          )
+        }
       </Dropdown>
     )
   }
