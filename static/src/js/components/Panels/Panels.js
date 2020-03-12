@@ -464,7 +464,13 @@ export class Panels extends PureComponent {
         'panels--is-open': show,
         'panels--is-draggable': draggable,
         'panels--is-dragging': dragging,
-        'panels--will-minimize': willMinimize
+        'panels--is-minimized': willMinimize && !show,
+        'panels--will-minimize': willMinimize,
+        'panels--xs': true,
+        'panels--sm': width >= 500,
+        'panels--md': width >= 700,
+        'panels--lg': width >= 900,
+        'panels--xl': width >= 1100
       }
     ])
 

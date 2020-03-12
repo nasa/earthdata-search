@@ -19,5 +19,9 @@
     .panels--will-minimize & {
       opacity: 0.25;
     }
+
+    .panels--is-minimized & {
+      opacity: 0;
+    }
   }
 }

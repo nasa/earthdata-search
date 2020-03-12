@@ -286,7 +286,7 @@ class GranuleResultsHeader extends Component {
                           </select>
                         </div>
                       </div>
-                      <div className="col-auto">
+                      <div className="col-auto mb-1">
                         <div className="form-group">
                           <label
                             className="col-form-label col-form-label-sm mr-1"
@@ -333,7 +333,7 @@ class GranuleResultsHeader extends Component {
                           </OverlayTrigger>
                         </div>
                       </div>
-                      <div className="col-auto mt-1">
+                      <div className="col-auto">
                         {granuleFiltersOpen ? (
                           <Button
                             className="granule-results-header__link"
