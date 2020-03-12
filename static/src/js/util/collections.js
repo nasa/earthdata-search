@@ -43,7 +43,9 @@ export const prepareCollectionParams = (state) => {
     authToken,
     facetsParams = {},
     portal = {},
-    query,
+    query = {
+      collection: {}
+    },
     searchResults = {}
   } = state
 
@@ -91,7 +93,10 @@ export const prepareCollectionParams = (state) => {
 
   const tagKey = []
   if (selectedTag) tagKey.push(selectedTag)
-  if (featureFacets.customizable) tagKey.push(tagName('subset_service.*'))
+  if (featureFacets.customizable) {
+    tagKey.push(tagName('subset_service.esi'))
+    tagKey.push(tagName('subset_service.opendap'))
+  }
   if (featureFacets.mapImagery) tagKey.push(tagName('gibs'))
 
   const { query: portalQuery = {} } = portal
