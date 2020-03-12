@@ -30,8 +30,9 @@ export const CollectionDetailsBodyContainer = ({
   onToggleRelatedUrlsModal
 }) => {
   const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
-  // eslint-disable-next-line max-len
-  const formattedCollectionMetadata = getFocusedCollectionFormattedMetadata(focusedCollection, collections)
+  const formattedCollectionMetadata = getFocusedCollectionFormattedMetadata(
+    focusedCollection, collections
+  )
 
   return (
     <CollectionDetailsBody

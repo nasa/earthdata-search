@@ -1,0 +1,43 @@
+.collection-details-highlights {
+  &__header {
+    padding: 0.25rem 0.75rem;
+    color: $color__black--300;
+    font-size: 0.75rem;
+    border-bottom: 1px solid $color__black--700;
+  }
+
+  &__body {
+    border-bottom: 1px solid $color__black--700;
+    color: $color__black--200;
+  }
+
+  &__item-header {
+    padding: 0.25rem 0.75rem;
+  }
+
+  &__item-title {
+    margin: 0;
+    font-weight: 300;
+    font-size: 0.825rem;
+    word-break: break-all;
+  }
+
+  &__item-body {
+    padding-bottom: 0.5rem;
+  }
+
+  &__item-value {
+    padding: 0.125rem 0.75rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: $color__black--400;
+  }
+
+  &__footer {
+    padding: 0.325rem;
+    text-align: center;
+  }
+}
