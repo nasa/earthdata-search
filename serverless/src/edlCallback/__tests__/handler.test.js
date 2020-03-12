@@ -44,6 +44,7 @@ beforeEach(() => {
     },
     clientCredentials: { getToken: jest.fn() }
   }))
+
   jest.spyOn(getSecretEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'secret' }))
   jest.spyOn(invokeLambda, 'invokeLambda').mockImplementation(() => ({}))
   jest.spyOn(jwt, 'sign').mockImplementation(() => 'mockToken')
@@ -112,7 +113,7 @@ describe('edlCallback', () => {
     expect(queries[1].method).toEqual('insert')
 
     expect(response.statusCode).toEqual(307)
-    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?jwt=mockToken&redirect=http%3A%2F%2Fexample.com' })
+    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com&jwt=mockToken' })
   })
 
   test('creates a new user if one does not exist', async () => {
@@ -144,6 +145,33 @@ describe('edlCallback', () => {
     expect(queries[2].method).toEqual('insert')
 
     expect(response.statusCode).toEqual(307)
-    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?jwt=mockToken&redirect=http%3A%2F%2Fexample.com' })
+    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com&jwt=mockToken' })
+  })
+
+  test('catches and logs errors correctly', async () => {
+    const code = '2057964173'
+    const state = 'http://example.com'
+
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+
+    const event = {
+      queryStringParameters: {
+        code,
+        state
+      }
+    }
+
+    const response = await edlCallback(event, {})
+
+    // The first will output the number of records, the second will
+    // contain the message we're looking for
+    expect(consoleMock).toBeCalledTimes(1)
+
+    expect(response.statusCode).toEqual(307)
+    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com' })
   })
 })

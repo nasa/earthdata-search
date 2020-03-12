@@ -1,5 +1,5 @@
-import { cmrUrl } from '../../util/cmr/cmrUrl'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import { cmrUrl } from '../cmrUrl'
+import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 beforeEach(() => {
   jest.clearAllMocks()

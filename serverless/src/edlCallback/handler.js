@@ -1,12 +1,14 @@
 import AWS from 'aws-sdk'
 import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
+import { stringify } from 'qs'
 import { getEarthdataConfig, getEnvironmentConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { parseError } from '../util/parseError'
 
 // AWS SQS adapter
 let sqs
@@ -89,22 +91,28 @@ const edlCallback = async (event, context) => {
       username
     }, secret)
 
-    if (!process.env.IS_OFFLINE) {
-      await sqs.sendMessage({
-        QueueUrl: process.env.userDataQueueUrl,
-        MessageBody: JSON.stringify({
-          environment: cmrEnv(),
-          userId: userRow.id,
-          username
-        })
-      }).promise()
-    }
+    await sqs.sendMessage({
+      QueueUrl: process.env.userDataQueueUrl,
+      MessageBody: JSON.stringify({
+        environment: cmrEnv(),
+        userId: userRow.id,
+        username
+      })
+    }).promise()
   } catch (e) {
-    console.log(e)
+    parseError(e)
   }
 
-  // Set the JWT token to a cookie and redirect back to EDSC
-  const location = `${edscHost}/auth_callback?jwt=${jwtToken}&redirect=${encodeURIComponent(state)}`
+  const queryParams = {
+    redirect: state
+  }
+
+  if (jwtToken) {
+    // Set the JWT token to a cookie and redirect back to EDSC
+    queryParams.jwt = jwtToken
+  }
+
+  const location = `${edscHost}/auth_callback?${stringify(queryParams)}`
 
   return {
     statusCode: 307,

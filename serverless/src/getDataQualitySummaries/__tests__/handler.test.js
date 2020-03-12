@@ -135,7 +135,7 @@ describe('getDataQualitySummaries', () => {
         ]
       })
 
-    const dqsResponse = await getDataQualitySummaries({
+    const response = await getDataQualitySummaries({
       body: JSON.stringify({
         params: {
           catalog_item_id: 'C10000001-EDSC'
@@ -143,6 +143,6 @@ describe('getDataQualitySummaries', () => {
       })
     }, { functionName: 'getDataQualitySummaries' })
 
-    expect(dqsResponse.statusCode).toEqual(500)
+    expect(response.statusCode).toEqual(500)
   })
 })
