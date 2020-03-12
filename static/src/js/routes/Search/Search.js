@@ -29,12 +29,6 @@ import GranuleResultsHeaderContainer
   from '../../containers/GranuleResultsHeaderContainer/GranuleResultsHeaderContainer'
 import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
-import GranuleDetailsTabContainer
-  from '../../containers/GranuleDetailsTabContainer/GranuleDetailsTabContainer'
-import GranuleDetailsBodyContainer
-  from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
-import GranuleDetailsHeaderContainer
-  from '../../containers/GranuleDetailsHeaderContainer/GranuleDetailsHeaderContainer'
 import GranuleFiltersPanelContainer
   from '../../containers/GranuleFiltersPanelContainer/GranuleFiltersPanelContainer'
 import AdvancedSearchModalContainer
@@ -107,13 +101,6 @@ export class Search extends Component {
           <Switch>
             <Route exact path={`${path}/granules`}>
               <GranuleFiltersPanelContainer />
-            </Route>
-            <Route exact path={`${path}/granules/granule-details`}>
-              <MasterOverlayPanelContainer
-                tabHandle={<GranuleDetailsTabContainer />}
-                header={<GranuleDetailsHeaderContainer />}
-                body={<GranuleDetailsBodyContainer />}
-              />
             </Route>
           </Switch>
           <RelatedUrlsModalContainer />

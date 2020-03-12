@@ -36,8 +36,8 @@ export const GranuleDetailsBodyContainer = ({
 
 GranuleDetailsBodyContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
-  focusedGranule: PropTypes.string.isRequired
+  focusedGranule: PropTypes.string.isRequired,
+  granules: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

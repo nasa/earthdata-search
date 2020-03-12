@@ -9,7 +9,6 @@ import { getFocusedCollectionObject } from '../../util/focusedCollection'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
-
 const mapDispatchToProps = dispatch => ({
   onChangeGranulePageNum:
     data => dispatch(actions.changeGranulePageNum(data)),
