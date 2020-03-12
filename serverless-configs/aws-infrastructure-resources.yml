@@ -135,6 +135,73 @@ Resources:
                 Action:
                   - states:*
                 Resource: '*'
+  EDSCRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+      PermissionsBoundary:
+        Fn::Join: [
+          "", [
+            "arn:aws:iam::",
+            {
+              "Ref": "AWS::AccountId"
+            },
+            ":policy/NGAPShRoleBoundary"
+          ]
+        ]
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+                - states.${self:provider.region}.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: RDSIAMAuthentication
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - rds-db:connect
+                Resource:
+                  Fn::Join: [
+                    "", [
+                        "arn:aws:rds-db:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":",
+                        {
+                          "Ref": "AWS::AccountId"
+                        },
+                        ":dbuser",
+                        "/lambda"
+                    ]
+                  ]
+        - PolicyName: EDSCLambdaBase
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sqs:*
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - states:*
+                Resource: '*'
 
 # Output the following resources so that other stacks can access the values
 Outputs:
@@ -158,6 +225,15 @@ Outputs:
         - Arn
     Export:
       Name: ${self:provider.stage}-ApplicationRole
+
+  EDSCApplicationRole:
+    Description: Role used to execute commands across the application
+    Value:
+      Fn::GetAtt:
+        - EDSCRole
+        - Arn
+    Export:
+      Name: ${self:provider.stage}-EDSCApplicationRole
 
   DatabaseEndpoint:
     Value:

@@ -12,7 +12,7 @@ provider:
       - ${env:SUBNET_ID_A}
       - ${env:SUBNET_ID_B}
 
-  role: ApplicationRole
+  role: EDSCApplicationRole
 
 #
 # AWS Infrastructure Resources
