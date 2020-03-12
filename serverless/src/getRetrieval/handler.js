@@ -1,4 +1,4 @@
-import { flattenDeep, keyBy } from 'lodash'
+import { keyBy } from 'lodash'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
@@ -131,7 +131,7 @@ export default async function getRetrieval(event, context) {
           jsondata,
           created_at: createdAt,
           collections,
-          links: flattenDeep(links.map(l => l.links))
+          links
         })
       }
     }
