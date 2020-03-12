@@ -19,8 +19,21 @@
     vertical-align: middle;
   }
 
+  &__short-name {
+    font-size: 0.625rem;
+    margin-right: $spacer/2;
+
+    .panels--sm & {
+      font-size: 0.6875rem;
+    }
+  }
+
   &__version-id {
-    margin-left: $spacer/2;
+    font-size: 0.625rem;
     background-color: $color__purple;
+
+    .panels--sm & {
+      font-size: 0.6875rem;
+    }
   }
 }

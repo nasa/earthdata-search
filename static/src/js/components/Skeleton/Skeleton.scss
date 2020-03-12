@@ -14,6 +14,7 @@ $color-loading-dark__dark: rgba($color__black--300, 0.15);
     left: 0;
     right: 0;
     bottom: 0;
+    overflow: hidden;
   }
 
   &__item {
@@ -34,31 +35,16 @@ $color-loading-dark__dark: rgba($color__black--300, 0.15);
       position: absolute;
       height: 100%;
       width: 100%;
-      background: linear-gradient(90deg, $color-loading-default__dark 30%, $color-loading-default__light 50%, $color-loading-default__dark 70%);
-      background-size: 400% 400%;
-      animation: pulse 4s ease-in-out infinite;
+      background: $color-loading-default__dark;
 
       .skeleton--light & {
-        background: linear-gradient(90deg, $color-loading-light__dark 30%, $color-loading-light__light 50%, $color-loading-light__dark 70%);
-        background-size: 400% 400%;
-        animation: pulse 4s ease-in-out infinite;
+        background: $color-loading-light__dark;
       }
 
       .skeleton--dark & {
-        background: linear-gradient(90deg, $color-loading-dark__dark 30%, $color-loading-dark__light 50%, $color-loading-dark__dark 70%);
-        background-size: 400% 400%;
-        animation: pulse 4s ease-in-out infinite;
+        background: $color-loading-dark__dark;
       }
     }
-  }
-}
-
-@keyframes pulse {
-  0% {
-    background-position:100% 50%
-  }
-  100% {
-    background-position:0% 50%
   }
 }
 
