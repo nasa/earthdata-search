@@ -1,6 +1,9 @@
+/* eslint-disable react/no-unused-state */
 import React, { PureComponent, Children } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
+
+import { Overlay, Tooltip } from 'react-bootstrap'
 
 import PanelSection from './PanelSection'
 import PanelGroup from './PanelGroup'
@@ -10,13 +13,17 @@ import './Panels.scss'
 export class Panels extends PureComponent {
   constructor(props) {
     super(props)
-
-    const { show } = props
-
-    this.panelWidth = 600
-    this.minimizedWidth = 20
-    this.minimizeThreshold = 200
-    this.unminimizeWidth = 200
+    this.panelWidth = 600 // The default width the panel is displayed when open
+    this.minimizedWidth = 20 // The width the panel is displayed when closed
+    this.minimizeThreshold = 200 // The threshold which prevents a panel from being closed when dragged passed the min width
+    this.unminimizeWidth = 200 // Distance the user needs to drag to drag open the closed panel
+    this.handleClickIsValid = true // Flag to check if a click on the handle should be treated as a click
+    this.handleClickDelay = 500 // Time in ms to delay a click event on the handle
+    this.handleClickCancelTimeout = undefined // Tracks the click event setTimeout id
+    this.handleTooltipCancelTimeout = undefined // Tracks the tooltip hover event setTimeout id
+    this.keyboardShortcuts = {
+      togglePanel: ']'
+    }
 
     this.state = {
       maxWidth: undefined,
@@ -25,7 +32,9 @@ export class Panels extends PureComponent {
       clickStartX: undefined,
       dragging: false,
       width: this.panelWidth,
-      show
+      show: true,
+      handleToolipVisible: false,
+      handleTooltipState: 'Collapse'
     }
 
     this.onChangePanel = this.onChangePanel.bind(this)
@@ -35,11 +44,18 @@ export class Panels extends PureComponent {
     this.onMouseUp = this.onMouseUp.bind(this)
     this.onMouseDown = this.onMouseDown.bind(this)
     this.onWindowResize = this.onWindowResize.bind(this)
+    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
+    this.onPanelHandleClick = this.onPanelHandleClick.bind(this)
+    this.onPanelHandleMouseOver = this.onPanelHandleMouseOver.bind(this)
+    this.onPanelHandleMouseOut = this.onPanelHandleMouseOut.bind(this)
     this.onUpdate = this.onUpdate.bind(this)
+    this.disableHandleClickEvent = this.disableHandleClickEvent.bind(this)
+    this.enableHandleClickEvent = this.enableHandleClickEvent.bind(this)
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize)
+    window.addEventListener('keydown', this.onWindowKeyDown)
 
     const maxWidth = this.calculateMaxWidth()
 
@@ -48,9 +64,43 @@ export class Panels extends PureComponent {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      show: prevShow,
+      willMinimize: prevWillMinimize,
+      dragging: prevDragging
+    } = prevState
+
+    const {
+      show,
+      willMinimize,
+      dragging
+    } = this.state
+
+    // Apply or remove the body is-panels-will-minimize class
+    if ((show !== prevShow) || (prevWillMinimize !== willMinimize)) {
+      // Only add the class if willMinimize is set AND the panel is showing
+      if (show && willMinimize) {
+        document.body.classList.add('is-panels-will-minimize')
+      } else {
+        document.body.classList.remove('is-panels-will-minimize')
+      }
+    }
+
+    // Apply or remove the body is-panels-dragging class
+    if (prevDragging !== dragging) {
+      if (dragging) {
+        document.body.classList.add('is-panels-dragging')
+      } else {
+        document.body.classList.remove('is-panels-dragging')
+      }
+    }
+  }
+
   componentWillUnmount() {
     if (this.rafId) window.cancelAnimationFrame(this.rafId)
     window.removeEventListener('resize', this.onWindowResize)
+    window.removeEventListener('keydown', this.onWindowKeyDown)
     document.removeEventListener('mousemove', this.onMouseMove)
     document.removeEventListener('mouseup', this.onMouseUp)
   }
@@ -81,13 +131,94 @@ export class Panels extends PureComponent {
     }
   }
 
+  onWindowKeyDown(e) {
+    const { show } = this.state
+    const { key } = e
+    const { keyboardShortcuts } = this
+
+    // Toggle the panel when the closing bracket character is pressed
+    if (key === keyboardShortcuts.togglePanel) {
+      this.setState({
+        show: !show,
+        willMinimize: show
+      })
+
+      e.preventDefault()
+      e.stopPropagation()
+    }
+  }
+
   onChangePanel(panelId) {
     const { onChangePanel } = this.props
     onChangePanel(panelId)
   }
 
+  onPanelHandleMouseOver() {
+    const { show } = this.state
+
+    const nextHandleTooltipState = show ? 'Collapse' : 'Expand'
+
+    this.handleTooltipCancelTimeout = setTimeout(() => {
+      this.setState({
+        handleToolipVisible: true,
+        handleTooltipState: nextHandleTooltipState
+      })
+    }, 750)
+  }
+
+  onPanelHandleMouseOut() {
+    // Clear the timeout in case the tooltip state has not yet been updated.
+    clearTimeout(this.handleTooltipCancelTimeout)
+
+    this.setState({
+      handleToolipVisible: false
+    })
+  }
+
+  onPanelHandleClick(e) {
+    const { show } = this.state
+    const {
+      type,
+      key
+    } = e
+
+    // Any keypress other than the enter or spacebar keys is not considered a click.
+    if (type === 'keydown') {
+      if ((key !== 'Enter') && (key !== ' ')) {
+        return
+      }
+    }
+
+    // Make sure this is actually a click, and not a drag of the handle.
+    if (this.handleClickIsValid) {
+      this.setState({
+        show: !show,
+        willMinimize: show,
+        dragging: false,
+        transitioning: true,
+        handleToolipVisible: false
+      }, () => setTimeout(() => {
+        this.setState({
+          transitioning: false
+        })
+      }, 500))
+    } else {
+      this.setState({
+        handleToolipVisible: false
+      })
+    }
+
+    this.resetHandleMouseMovedDuringClick()
+    this.enableHandleClickEvent()
+
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
   onMouseDown(e) {
     if (e.button !== 0) return
+
+    this.handleClickCancelTimeout = setTimeout(this.disableHandleClickEvent, this.handleClickDelay)
 
     const { width } = this.state
 
@@ -95,19 +226,16 @@ export class Panels extends PureComponent {
     document.addEventListener('mouseup', this.onMouseUp)
 
     this.onPanelDragStart(width, e.pageX)
-
-    e.stopPropagation()
-    e.preventDefault()
   }
 
-  onMouseUp(e) {
+  onMouseUp() {
+    // Clear the timeout preventing the onUpdate funtion from running
+    clearTimeout(this.handleClickCancelTimeout)
+
     document.removeEventListener('mousemove', this.onMouseMove)
     document.removeEventListener('mouseup', this.onMouseUp)
 
     this.onPanelDragEnd()
-
-    e.stopPropagation()
-    e.preventDefault()
   }
 
   onMouseMove(e) {
@@ -116,15 +244,14 @@ export class Panels extends PureComponent {
     } = this.state
 
     this.setState({
-      pageX: e.pageX
+      pageX: e.pageX,
+      handleToolipVisible: false
     })
 
     if (!dragging) return
 
+    // If the user is dragging, fire the onUpdate function
     this.rafId = window.requestAnimationFrame(this.onUpdate)
-
-    e.stopPropagation()
-    e.preventDefault()
   }
 
   onUpdate() {
@@ -144,7 +271,6 @@ export class Panels extends PureComponent {
       // to recalulate the width of the current cursor position. This accounts for the 300 px width of the
       // closed panel position.
       if (distanceScrolled > this.unminimizeWidth) {
-        console.log('firing')
         this.setState({
           width: distanceScrolled,
           clickStartWidth: 0,
@@ -198,8 +324,6 @@ export class Panels extends PureComponent {
       clickStartX,
       dragging: true
     })
-
-    document.body.classList.add('is-panels-dragging')
   }
 
   onPanelDragEnd() {
@@ -215,13 +339,17 @@ export class Panels extends PureComponent {
     } = this.state
 
     const newState = {
-      dragging: false
+      dragging: false,
+      handleToolipVisible: false
     }
 
     const distanceScrolled = pageX - clickStartX
     const newWidth = distanceScrolled + clickStartWidth
 
-    if (newWidth < (minWidth - this.minimizeThreshold)) {
+    // Close the panel if its current with is smaller than the minWidth minus the threshold
+    const panelShouldClose = (newWidth < (minWidth - this.minimizeThreshold))
+
+    if (panelShouldClose) {
       if (onPanelClose) onPanelClose()
       newState.show = false
       newState.willMinimize = true
@@ -231,9 +359,25 @@ export class Panels extends PureComponent {
       newState.willMinimize = false
     }
 
-    this.setState(newState)
+    if (!this.handleClickIsValid) {
+      this.setState(newState)
+    }
+  }
 
-    document.body.classList.remove('is-panels-dragging')
+  setHandleMouseMovedDuringClick() {
+    this.handleClickMoved = true
+  }
+
+  resetHandleMouseMovedDuringClick() {
+    this.handleClickMoved = false
+  }
+
+  disableHandleClickEvent() {
+    this.handleClickIsValid = false
+  }
+
+  enableHandleClickEvent() {
+    this.handleClickIsValid = true
   }
 
   calculateMaxWidth() {
@@ -300,11 +444,16 @@ export class Panels extends PureComponent {
     } = this.props
 
     const {
+      // transitioning,
       dragging,
       width,
       show,
-      willMinimize
+      willMinimize,
+      handleToolipVisible,
+      handleTooltipState
     } = this.state
+
+    const { keyboardShortcuts } = this
 
     const panelGroups = Children.map(children,
       (child, index) => this.renderPanelGroup(child, index))
@@ -329,15 +478,44 @@ export class Panels extends PureComponent {
       >
         {
           draggable && (
-            <div
-              className="panels__handle"
-              role="button"
-              tabIndex="0"
-              ref={(node) => {
-                this.node = node
-              }}
-              onMouseDown={this.onMouseDown}
-            />
+            <>
+              <div
+                className="panels__handle"
+                role="button"
+                tabIndex="0"
+                ref={(node) => {
+                  this.node = node
+                }}
+                onMouseDown={this.onMouseDown}
+                onClick={this.onPanelHandleClick}
+                onKeyDown={this.onPanelHandleClick}
+                onMouseOver={this.onPanelHandleMouseOver}
+                onFocus={this.onPanelHandleMouseOver}
+                onMouseOut={this.onPanelHandleMouseOut}
+                onBlur={this.onPanelHandleMouseOut}
+              />
+              <Overlay
+                target={this.node}
+                show={handleToolipVisible}
+                placement="right"
+              >
+                {
+                  (props) => {
+                    const tooltipProps = props
+                    delete tooltipProps.show
+                    return (
+                      <Tooltip
+                        {...tooltipProps}
+                        id="panel-handle-tooltip"
+                        className="panels__handle-tooltip panels__handle-tooltip--collapse"
+                      >
+                        {`${handleTooltipState} panel (${keyboardShortcuts.togglePanel})`}
+                      </Tooltip>
+                    )
+                  }
+                }
+              </Overlay>
+            </>
           )
         }
         {panelGroups}

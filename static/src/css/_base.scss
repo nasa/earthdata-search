@@ -28,6 +28,10 @@ body.is-panels-dragging {
   cursor: col-resize;
 }
 
+body.is-panels-will-minimize {
+  cursor: w-resize;
+}
+
 @include media-breakpoint-up(lg) {
   html {
     font-size: 100%;

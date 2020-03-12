@@ -20,4 +20,9 @@
     transition: opacity 0.1s ease-out;
     opacity: 0;
   }
+
+  .is-panels-dragging & {
+    pointer-events: none;
+    user-select: none;
+  }
 }

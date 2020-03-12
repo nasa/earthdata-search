@@ -32,7 +32,11 @@
     &:hover,
     .is-panels-dragging & {
       background-color: $color__black--200;
-      cursor: col-resize;
+      cursor: e-resize;
+
+      .panels--is-open & {
+        cursor: col-resize;
+      }
     }
 
     &:after {
@@ -48,5 +52,10 @@
       border-bottom: none;
       transform: translate(-50%, -50%);
     }
+  }
+
+  &__handle-tooltip {
+    pointer-events: none;
+    left: 5px !important;
   }
 }
