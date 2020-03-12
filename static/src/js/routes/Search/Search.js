@@ -19,6 +19,10 @@ import CollectionDetailsBodyContainer
   from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
 import CollectionDetailsHeaderContainer
   from '../../containers/CollectionDetailsHeaderContainer/CollectionDetailsHeaderContainer'
+import CollectionDetailsHighlightsContainer
+  from '../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'
+import CollectionResultsHeaderContainer
+  from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
 import FacetsModalContainer
   from '../../containers/FacetsModalContainer/FacetsModalContainer'
 import GranuleResultsTabContainer
@@ -29,6 +33,8 @@ import GranuleResultsHeaderContainer
   from '../../containers/GranuleResultsHeaderContainer/GranuleResultsHeaderContainer'
 import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
+import GranuleResultsHighlightsContainer
+  from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
 import GranuleFiltersPanelContainer
   from '../../containers/GranuleFiltersPanelContainer/GranuleFiltersPanelContainer'
 import AdvancedSearchModalContainer
@@ -43,14 +49,12 @@ import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
-import CollectionResultsHeaderContainer
-  from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
+
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
-import GranuleResultsHighlightsContainer from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
 
 const mapDispatchToProps = dispatch => ({
   onMasterOverlayHeightChange:
@@ -85,6 +89,12 @@ export class Search extends Component {
             <Switch>
               <Route exact path={`${path}/granules/collection-details`}>
                 <GranuleResultsHighlightsContainer />
+              </Route>
+              <Route exact path={`${path}/granules`}>
+                <CollectionDetailsHighlightsContainer />
+              </Route>
+              <Route exact path={`${path}/granules/granule-details`}>
+                <CollectionDetailsHighlightsContainer />
               </Route>
               <Route path={path}>
                 <FacetsContainer />
