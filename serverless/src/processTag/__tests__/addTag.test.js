@@ -1,243 +1,201 @@
-import request from 'request-promise'
+import nock from 'nock'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
-import * as addTag from '../addTag'
-import * as getCollectionsByJson from '../getCollectionsByJson'
+import { addTag } from '../addTag'
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  jest.restoreAllMocks()
+
+  jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
 })
 
 describe('addTag', () => {
   test('correctly calls cmr endpoint when no tag data existed', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(200, {
+        entry: [{
+          id: 'C123456789-EDSC',
+          tags: {
+            'edsc.extra.gibs': {}
+          }
+        }]
+      })
 
-    const getCollectionsByJsonMock = jest.spyOn(getCollectionsByJson, 'getCollectionsByJson').mockImplementation(() => ({
-      entry: [{
-        id: 'C123456789-EDSC',
-        tags: {
-          'edsc.extra.gibs': {}
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
+        {
+          'concept-id': 'C123456789-EDSC',
+          data: [
+            {
+              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+            }
+          ]
         }
-      }]
-    }))
+      ]))
+      .reply(200)
 
-    const cmrPostMock = jest.spyOn(request, 'post')
-      .mockImplementationOnce(() => jest.fn())
-
-    await addTag.addTag({
+    await addTag({
       tagName: 'edsc.extra.gibs',
       tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
       searchCriteria: { short_name: 'MIL3MLS' },
       requireGranules: false,
       append: true,
       cmrToken: '1234-abcd-5678-efgh'
-    })
-
-    expect(getCollectionsByJsonMock).toBeCalledTimes(1)
-    expect(getCollectionsByJsonMock).toBeCalledWith(
-      { include_tags: 'edsc.extra.gibs', include_has_granules: true },
-      { short_name: 'MIL3MLS' },
-      '1234-abcd-5678-efgh'
-    )
-
-    expect(cmrPostMock).toBeCalledTimes(1)
-    expect(cmrPostMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: [
-        {
-          'concept-id': 'C123456789-EDSC',
-          data: [
-            { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' }
-          ]
-        }
-      ],
-      json: true,
-      resolveWithFullResponse: true
     })
   })
 
   test('correctly calls cmr endpoint when the tag is not already associated with the collection', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(200, {
+        entry: [{
+          id: 'C123456789-EDSC'
+        }]
+      })
 
-    const getCollectionsByJsonMock = jest.spyOn(getCollectionsByJson, 'getCollectionsByJson').mockImplementation(() => ({
-      entry: [{
-        id: 'C123456789-EDSC'
-      }]
-    }))
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
+        {
+          'concept-id': 'C123456789-EDSC',
+          data: [
+            {
+              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+            }
+          ]
+        }
+      ]))
+      .reply(200)
 
-    const cmrPostMock = jest.spyOn(request, 'post')
-      .mockImplementationOnce(() => jest.fn())
-
-    await addTag.addTag({
+    await addTag({
       tagName: 'edsc.extra.gibs',
       tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
       searchCriteria: { short_name: 'MIL3MLS' },
       requireGranules: false,
       append: true,
       cmrToken: '1234-abcd-5678-efgh'
-    })
-
-    expect(getCollectionsByJsonMock).toBeCalledTimes(1)
-    expect(getCollectionsByJsonMock).toBeCalledWith(
-      { include_tags: 'edsc.extra.gibs', include_has_granules: true },
-      { short_name: 'MIL3MLS' },
-      '1234-abcd-5678-efgh'
-    )
-
-    expect(cmrPostMock).toBeCalledTimes(1)
-    expect(cmrPostMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: [
-        {
-          'concept-id': 'C123456789-EDSC',
-          data: [
-            { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' }
-          ]
-        }
-      ],
-      json: true,
-      resolveWithFullResponse: true
     })
   })
 
   test('correctly calls cmr endpoint when the tag data already exists', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
-
-    const getCollectionsByJsonMock = jest.spyOn(getCollectionsByJson, 'getCollectionsByJson').mockImplementation(() => ({
-      entry: [{
-        id: 'C123456789-EDSC',
-        tags: {
-          'edsc.extra.gibs': {
-            data: [{
-              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-            }]
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(200, {
+        entry: [{
+          id: 'C123456789-EDSC',
+          tags: {
+            'edsc.extra.gibs': {
+              data: [{
+                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+              }]
+            }
           }
+        }]
+      })
+
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
+        {
+          'concept-id': 'C123456789-EDSC',
+          data: [
+            {
+              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+            }
+          ]
         }
-      }]
-    }))
+      ]))
+      .reply(200)
 
-    const cmrPostMock = jest.spyOn(request, 'post')
-      .mockImplementationOnce(() => jest.fn())
-
-    await addTag.addTag({
+    await addTag({
       tagName: 'edsc.extra.gibs',
       tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
       searchCriteria: { short_name: 'MIL3MLS' },
       requireGranules: false,
       append: true,
       cmrToken: '1234-abcd-5678-efgh'
-    })
-
-    expect(getCollectionsByJsonMock).toBeCalledTimes(1)
-    expect(getCollectionsByJsonMock).toBeCalledWith(
-      { include_tags: 'edsc.extra.gibs', include_has_granules: true },
-      { short_name: 'MIL3MLS' },
-      '1234-abcd-5678-efgh'
-    )
-
-    expect(cmrPostMock).toBeCalledTimes(1)
-    expect(cmrPostMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: [
-        {
-          'concept-id': 'C123456789-EDSC',
-          data: [
-            { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' }
-          ]
-        }
-      ],
-      json: true,
-      resolveWithFullResponse: true
     })
   })
 
   test('correctly calls cmr endpoint when new tag data is provided', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
-
-    const getCollectionsByJsonMock = jest.spyOn(getCollectionsByJson, 'getCollectionsByJson').mockImplementation(() => ({
-      entry: [{
-        id: 'C123456789-EDSC',
-        tags: {
-          'edsc.extra.gibs': {
-            data: [{
-              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-            }]
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(200, {
+        entry: [{
+          id: 'C123456789-EDSC',
+          tags: {
+            'edsc.extra.gibs': {
+              data: [{
+                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+              }]
+            }
           }
+        }]
+      })
+
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
+        {
+          'concept-id': 'C123456789-EDSC',
+          data: [
+            {
+              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+            }, {
+              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7'
+            }
+          ]
         }
-      }]
-    }))
+      ]))
+      .reply(200)
 
-    const cmrPostMock = jest.spyOn(request, 'post')
-      .mockImplementationOnce(() => jest.fn())
-
-    await addTag.addTag({
+    await addTag({
       tagName: 'edsc.extra.gibs',
       tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' },
       searchCriteria: { short_name: 'MIL3MLS' },
       requireGranules: false,
       append: true,
       cmrToken: '1234-abcd-5678-efgh'
-    })
-
-    expect(getCollectionsByJsonMock).toBeCalledTimes(1)
-    expect(getCollectionsByJsonMock).toBeCalledWith(
-      { include_tags: 'edsc.extra.gibs', include_has_granules: true },
-      { short_name: 'MIL3MLS' },
-      '1234-abcd-5678-efgh'
-    )
-
-    expect(cmrPostMock).toBeCalledTimes(1)
-    expect(cmrPostMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: [
-        {
-          'concept-id': 'C123456789-EDSC',
-          data: [
-            { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
-            { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' }
-          ]
-        }
-      ],
-      json: true,
-      resolveWithFullResponse: true
     })
   })
 
   test('correctly calls cmr endpoint when append is set to false', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
-
-    const getCollectionsByJsonMock = jest.spyOn(getCollectionsByJson, 'getCollectionsByJson').mockImplementation(() => ({
-      entry: [{
-        id: 'C123456789-EDSC',
-        tags: {
-          'edsc.extra.gibs': {
-            data: [{
-              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-            }]
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(200, {
+        entry: [{
+          id: 'C123456789-EDSC',
+          tags: {
+            'edsc.extra.gibs': {
+              data: [{
+                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+              }]
+            }
           }
+        }]
+      })
+
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
+        {
+          'concept-id': 'C123456789-EDSC',
+          data: [
+            {
+              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7'
+            }
+          ]
         }
-      }]
-    }))
+      ]))
+      .reply(200)
 
-    const cmrPostMock = jest.spyOn(request, 'post')
-      .mockImplementationOnce(() => jest.fn())
-
-    await addTag.addTag({
+    await addTag({
       tagName: 'edsc.extra.gibs',
       tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' },
       searchCriteria: { short_name: 'MIL3MLS' },
@@ -245,54 +203,42 @@ describe('addTag', () => {
       append: false,
       cmrToken: '1234-abcd-5678-efgh'
     })
-
-    expect(getCollectionsByJsonMock).toBeCalledTimes(1)
-    expect(getCollectionsByJsonMock).toBeCalledWith(
-      { include_tags: 'edsc.extra.gibs', include_has_granules: true },
-      { short_name: 'MIL3MLS' },
-      '1234-abcd-5678-efgh'
-    )
-
-    expect(cmrPostMock).toBeCalledTimes(1)
-    expect(cmrPostMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: [
-        {
-          'concept-id': 'C123456789-EDSC',
-          data: [
-            { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' }
-          ]
-        }
-      ],
-      json: true,
-      resolveWithFullResponse: true
-    })
   })
 
   test('correctly calls cmr endpoint when requireGranules is set to true (and append is set to true)', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
-
-    const getCollectionsByJsonMock = jest.spyOn(getCollectionsByJson, 'getCollectionsByJson').mockImplementation(() => ({
-      entry: [{
-        id: 'C123456789-EDSC',
-        tags: {
-          'edsc.extra.gibs': {
-            data: [{
-              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-            }]
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true&has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(200, {
+        entry: [{
+          id: 'C123456789-EDSC',
+          tags: {
+            'edsc.extra.gibs': {
+              data: [{
+                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+              }]
+            }
           }
+        }]
+      })
+
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
+        {
+          'concept-id': 'C123456789-EDSC',
+          data: [
+            {
+              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+            }, {
+              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7'
+            }
+          ]
         }
-      }]
-    }))
+      ]))
+      .reply(200)
 
-    const cmrPostMock = jest.spyOn(request, 'post')
-      .mockImplementationOnce(() => jest.fn())
-
-    await addTag.addTag({
+    await addTag({
       tagName: 'edsc.extra.gibs',
       tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' },
       searchCriteria: { short_name: 'MIL3MLS' },
@@ -300,54 +246,23 @@ describe('addTag', () => {
       append: true,
       cmrToken: '1234-abcd-5678-efgh'
     })
-
-    expect(getCollectionsByJsonMock).toBeCalledTimes(1)
-    expect(getCollectionsByJsonMock).toBeCalledWith(
-      { include_tags: 'edsc.extra.gibs', include_has_granules: true, has_granules: true },
-      { short_name: 'MIL3MLS' },
-      '1234-abcd-5678-efgh'
-    )
-
-    expect(cmrPostMock).toBeCalledTimes(1)
-    expect(cmrPostMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: [
-        {
-          'concept-id': 'C123456789-EDSC',
-          data: [
-            { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
-            { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' }
-          ]
-        }
-      ],
-      json: true,
-      resolveWithFullResponse: true
-    })
   })
 
   test('correctly calls cmr endpoint when no tag data is provided', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
-
-    const getCollectionsByJsonMock = jest.spyOn(getCollectionsByJson, 'getCollectionsByJson').mockImplementation(() => ({
-      entry: [{
-        id: 'C123456789-EDSC',
-        tags: {
-          'edsc.extra.gibs': {
-            data: [{
-              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-            }]
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations\/by_query/, JSON.stringify({
+        short_name: 'MIL3MLS'
+      }))
+      .reply(200, {
+        entry: [{
+          id: 'C1234-EDSC',
+          tags: {
+            'edsc.extra.gibs': {}
           }
-        }
-      }]
-    }))
+        }]
+      })
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementationOnce(() => jest.fn())
-
-    await addTag.addTag({
+    await addTag({
       tagName: 'edsc.extra.gibs',
       tagData: null,
       searchCriteria: { short_name: 'MIL3MLS' },
@@ -355,44 +270,35 @@ describe('addTag', () => {
       append: false,
       cmrToken: '1234-abcd-5678-efgh'
     })
-
-    expect(getCollectionsByJsonMock).toBeCalledTimes(0)
-
-    expect(cmrPostMock).toBeCalledTimes(1)
-    expect(cmrPostMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations/by_query',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: {
-        short_name: 'MIL3MLS'
-      },
-      json: true,
-      resolveWithFullResponse: true
-    })
   })
 
   test('correctly calls cmr endpoint when no tag data is provided but granules are required', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
-
-    const getCollectionsByJsonMock = jest.spyOn(getCollectionsByJson, 'getCollectionsByJson').mockImplementation(() => ({
-      entry: [{
-        id: 'C123456789-EDSC',
-        tags: {
-          'edsc.extra.gibs': {
-            data: [{
-              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-            }]
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true&has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(200, {
+        entry: [{
+          id: 'C123456789-EDSC',
+          tags: {
+            'edsc.extra.gibs': {
+              data: [{
+                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+              }]
+            }
           }
+        }]
+      })
+
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
+        {
+          'concept-id': 'C123456789-EDSC'
         }
-      }]
-    }))
+      ]))
+      .reply(200)
 
-    const cmrPostMock = jest.spyOn(request, 'post')
-      .mockImplementationOnce(() => jest.fn())
-
-    await addTag.addTag({
+    await addTag({
       tagName: 'edsc.extra.gibs',
       tagData: null,
       searchCriteria: { short_name: 'MIL3MLS' },
@@ -400,60 +306,92 @@ describe('addTag', () => {
       append: false,
       cmrToken: '1234-abcd-5678-efgh'
     })
-
-    expect(getCollectionsByJsonMock).toBeCalledTimes(1)
-    expect(getCollectionsByJsonMock).toBeCalledWith(
-      { include_tags: 'edsc.extra.gibs', include_has_granules: true, has_granules: true },
-      { short_name: 'MIL3MLS' },
-      '1234-abcd-5678-efgh'
-    )
-
-    expect(cmrPostMock).toBeCalledTimes(1)
-    expect(cmrPostMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: [
-        {
-          'concept-id': 'C123456789-EDSC'
-        }
-      ],
-      json: true,
-      resolveWithFullResponse: true
-    })
   })
 
-  test('does not call the cmr endpoint when tag data is provided but an error is returned from getCollectionsByJson', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+  test('does not call the cmr endpoint when tag data is provided but an error is returned from the collection search endpoint', async () => {
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(500, {
+        errors: [
+          'Test error message'
+        ]
+      })
 
-    const getCollectionsByJsonMock = jest.spyOn(getCollectionsByJson, 'getCollectionsByJson').mockImplementation(() => ({
-      errors: ['This is a fake CMR error']
-    }))
-
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementationOnce(() => jest.fn())
-
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
-
-    await addTag.addTag({
+    await expect(addTag({
       tagName: 'edsc.extra.gibs',
       tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
       searchCriteria: { short_name: 'MIL3MLS' },
       requireGranules: false,
       append: true,
       cmrToken: '1234-abcd-5678-efgh'
-    })
+    })).rejects.toThrow('Test error message')
+  })
 
-    expect(getCollectionsByJsonMock).toBeCalledTimes(1)
-    expect(getCollectionsByJsonMock).toBeCalledWith(
-      { include_tags: 'edsc.extra.gibs', include_has_granules: true },
-      { short_name: 'MIL3MLS' },
-      '1234-abcd-5678-efgh'
-    )
+  test('does not call the cmr endpoint when tag data is provided but an error is returned from the collection search endpoint', async () => {
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(200, {
+        entry: [{
+          id: 'C123456789-EDSC',
+          tags: {
+            'edsc.extra.gibs': {
+              data: [{
+                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+              }]
+            }
+          }
+        }]
+      })
 
-    expect(cmrPostMock).toBeCalledTimes(0)
-    expect(consoleMock).toBeCalledTimes(1)
-    expect(consoleMock).toBeCalledWith(['This is a fake CMR error'])
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
+        {
+          'concept-id': 'C123456789-EDSC',
+          data: [
+            {
+              product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+            }
+          ]
+        }
+      ]))
+      .reply(500, {
+        errors: [
+          'Test error message'
+        ]
+      })
+
+    await expect(addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: true,
+      cmrToken: '1234-abcd-5678-efgh'
+    })).rejects.toThrow('Test error message')
+  })
+
+  test('correctly calls cmr endpoint when no tag data is provided', async () => {
+    nock(/example/)
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations\/by_query/, JSON.stringify({
+        short_name: 'MIL3MLS'
+      }))
+      .reply(500, {
+        errors: [
+          'Test error message'
+        ]
+      })
+
+    await expect(addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: null,
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: false,
+      cmrToken: '1234-abcd-5678-efgh'
+    })).rejects.toThrow('Test error message')
   })
 })

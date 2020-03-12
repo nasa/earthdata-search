@@ -5,47 +5,17 @@ import {
   getEarthdataConfig,
   getClientId
 } from '../../../sharedUtils/config'
+import { computeKeywordMappings } from './computeKeywordMappings'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { cmrStringify } from '../util/cmr/cmrStringify'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getUmmVariableVersionHeader } from '../../../sharedUtils/ummVersionHeader'
-
-/**
- * Returns variable ids grouped by their scienceKeywords
- * @param {*} items items field from a CMR variable search result
- */
-const computeKeywordMappings = (items) => {
-  const calculatedMappings = {}
-
-  items.forEach((variable) => {
-    const { meta, umm } = variable
-    const { 'concept-id': variableId } = meta
-    const { ScienceKeywords: scienceKeywords = [] } = umm
-
-    scienceKeywords.forEach((scienceKeyword) => {
-      const values = Object.values(scienceKeyword)
-      const leafNode = values[values.length - 1]
-
-      if (!calculatedMappings[leafNode]) calculatedMappings[leafNode] = []
-
-      if (calculatedMappings[leafNode].indexOf(variableId) === -1) {
-        calculatedMappings[leafNode].push(variableId)
-      }
-    })
-  })
-
-  const orderedKeywords = {}
-  Object.keys(calculatedMappings).sort().forEach((key) => {
-    orderedKeywords[key] = calculatedMappings[key]
-  })
-
-  return orderedKeywords
-}
+import { parseError } from '../util/parseError'
 
 /**
  * Given the items result from a CMR variable search, returns the variables in an object with the key being the concept id
  * and the value being the variable metadata
- * @param {*} items items field from a CMR variable search result
+ * @param {Array} items Items key from a CMR variable search result
  */
 const computeVariables = (items) => {
   const variables = {}
@@ -62,8 +32,8 @@ const computeVariables = (items) => {
 
 /**
  * Fetches the variable metadata for the provided variableIds
- * @param {*} variableIds Variable Concept Ids
- * @param {*} jwtToken
+ * @param {Array} variableIds An array of variable Concept Ids
+ * @param {String} jwtToken JWT returned from edlAuthorizer
  */
 export const getVariables = async (variableIds, jwtToken) => {
   const variableParams = cmrStringify({
@@ -94,7 +64,8 @@ export const getVariables = async (variableIds, jwtToken) => {
 
     return { keywordMappings, variables }
   } catch (e) {
-    console.log('error', e)
+    parseError(e)
   }
+
   return null
 }

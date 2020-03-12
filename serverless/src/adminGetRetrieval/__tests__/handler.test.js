@@ -316,7 +316,7 @@ describe('adminGetRetrievals', () => {
       query.reject('Unknown Error')
     })
 
-    const retrievalResponse = await adminGetRetrievals({
+    const response = await adminGetRetrievals({
       pathParameters: {
         id: 1
       }
@@ -326,8 +326,6 @@ describe('adminGetRetrievals', () => {
 
     expect(queries[0].method).toEqual('select')
 
-    const { statusCode } = retrievalResponse
-
-    expect(statusCode).toEqual(500)
+    expect(response.statusCode).toEqual(500)
   })
 })

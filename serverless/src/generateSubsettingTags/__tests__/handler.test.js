@@ -1,6 +1,6 @@
+import nock from 'nock'
 import AWS from 'aws-sdk'
 import MockDate from 'mockdate'
-import request from 'request-promise'
 import { relevantServices, relevantServiceCollections } from './mocks'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 import * as pageAllCmrResults from '../../util/cmr/pageAllCmrResults'
@@ -31,9 +31,9 @@ describe('generateSubsettingTags', () => {
 
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
 
-    jest.spyOn(request, 'get').mockImplementationOnce(() => ({
-      statusCode: 200,
-      body: [
+    nock(/cmr/)
+      .get(/service_option_assignments/)
+      .reply(200, [
         {
           service_option_assignment: {
             applies_only_to_granules: true,
@@ -43,20 +43,18 @@ describe('generateSubsettingTags', () => {
             service_option_definition_id: '7914F90A-7A04-AD19-FAD7-A89F77949B25'
           }
         }
-      ]
-    }))
+      ])
 
-    jest.spyOn(request, 'get').mockImplementationOnce(() => ({
-      statusCode: 200,
-      body: [
+    nock(/cmr/)
+      .get(/service_option_definitions/)
+      .reply(200, [
         {
           service_option_definition: {
             id: '7914F90A-7A04-AD19-FAD7-A89F77949B25',
             name: 'EDSC ESI Service'
           }
         }
-      ]
-    }))
+      ])
 
     jest.spyOn(getRelevantServices, 'getRelevantServices').mockImplementationOnce(() => relevantServices)
     jest.spyOn(pageAllCmrResults, 'pageAllCmrResults').mockImplementation(() => relevantServiceCollections)
@@ -91,9 +89,7 @@ describe('generateSubsettingTags', () => {
     // We set 'updated_at' in the subsetting tags so we need to mock the date here
     MockDate.set('1984-07-02T16:00:00.000Z')
 
-    const event = {}
-    const context = {}
-    await generateSubsettingTags(event, context)
+    await generateSubsettingTags({}, {})
 
     MockDate.reset()
 
@@ -274,5 +270,26 @@ describe('generateSubsettingTags', () => {
       }),
       QueueUrl: 'http://example.com/tagQueue'
     }])
+  })
+
+  test('catches and logs errors from the service option assignments http request correctly', async () => {
+    nock(/cmr/)
+      .get(/service_option_assignments/)
+      .reply(500, {
+        errors: [
+          'Test error message'
+        ]
+      })
+
+    const response = await generateSubsettingTags({}, {})
+
+    expect(response.statusCode).toEqual(500)
+
+    const { body } = response
+    const parsedBody = JSON.parse(body)
+    const { errors } = parsedBody
+    const [errorMessage] = errors
+
+    expect(errorMessage).toEqual('Test error message')
   })
 })

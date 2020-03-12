@@ -138,6 +138,7 @@ const getAccessMethods = async (event, context) => {
 
         if (method.type === savedAccessConfig.type && ['download', 'OPeNDAP'].includes(method.type)) {
           selectedAccessMethod = methodName
+
           return
         }
 
@@ -171,7 +172,7 @@ const getAccessMethods = async (event, context) => {
                 form_digest: formDigest
               }
             } else {
-              console.warn('There was a problem parsing the savedAccessConfig values, using the default form instead.')
+              console.log('There was a problem parsing the savedAccessConfig values, using the default form instead.')
               return
             }
           }

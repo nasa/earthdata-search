@@ -4,6 +4,7 @@ import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getUmmServiceVersionHeader } from '../../../sharedUtils/ummVersionHeader'
+import { parseError } from '../util/parseError'
 
 /**
  * Returns the SupportedOutputFormats field from a UMM-S record
@@ -21,17 +22,18 @@ export const getOutputFormats = async (serviceId, jwtToken) => {
         'Echo-Token': await getEchoToken(jwtToken),
         Accept: getUmmServiceVersionHeader()
       },
+      json: true,
       resolveWithFullResponse: true
     })
 
     const { body } = response
 
-    const { ServiceOptions: serviceOptions } = JSON.parse(body)
+    const { ServiceOptions: serviceOptions } = body
     const { SupportedOutputFormats: supportedOutputFormats } = serviceOptions
 
     return { supportedOutputFormats }
-  } catch (error) {
-    console.log(error)
+  } catch (e) {
+    parseError(e)
   }
 
   return null

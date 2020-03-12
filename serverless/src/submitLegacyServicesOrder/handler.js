@@ -7,7 +7,7 @@ import { constructUserInformationPayload } from './constructUserInformationPaylo
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
-import { logHttpError } from '../util/logging/logHttpError'
+import { parseError } from '../util/parseError'
 
 /**
  * Submits an order to Legacy Services (CMR)
@@ -23,6 +23,8 @@ const submitLegacyServicesOrder = async (event, context) => {
   const dbConnection = await getDbConnection()
 
   const { Records: sqsRecords = [] } = event
+
+  if (sqsRecords.length === 0) return
 
   console.log(`Processing ${sqsRecords.length} order(s)`)
 
@@ -132,14 +134,16 @@ const submitLegacyServicesOrder = async (event, context) => {
       // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
     } catch (e) {
-      logHttpError(e)
+      const parsedErrorMessage = parseError(e, { asJSON: false })
+
+      const [errorMessage] = parsedErrorMessage
 
       await dbConnection('retrieval_orders').update({
         state: 'create_failed'
       }).where({ id })
 
-      // Re-throw the error to utilize the dead letter queue
-      throw e
+      // Re-throw the error so the state machine handles the error correctly
+      throw Error(errorMessage)
     }
   })
 }

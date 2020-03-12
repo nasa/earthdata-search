@@ -18,6 +18,7 @@ import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWo
 import { portalPath } from '../../../sharedUtils/portalPath'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { parseError } from '../util/parseError'
 
 /**
  * Submits an order to Catalog Rest (ESI)
@@ -33,6 +34,8 @@ const submitCatalogRestOrder = async (event, context) => {
   const dbConnection = await getDbConnection()
 
   const { Records: sqsRecords = [] } = event
+
+  if (sqsRecords.length === 0) return
 
   console.log(`Processing ${sqsRecords.length} order(s)`)
 
@@ -157,14 +160,16 @@ const submitCatalogRestOrder = async (event, context) => {
       // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
     } catch (e) {
-      console.log(e)
+      const parsedErrorMessage = parseError(e, { asJSON: false })
+
+      const [errorMessage] = parsedErrorMessage
 
       await dbConnection('retrieval_orders').update({
         state: 'create_failed'
       }).where({ id })
 
-      // Re-throw the error to utilize the dead letter queue
-      throw e
+      // Re-throw the error so the state machine handles the error correctly
+      throw Error(errorMessage)
     }
   })
 }

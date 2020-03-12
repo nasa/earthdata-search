@@ -107,14 +107,12 @@ describe('getRetrievals', () => {
       query.reject('Unknown Error')
     })
 
-    const retrievalResponse = await getRetrievals({}, {})
+    const response = await getRetrievals({}, {})
 
     const { queries } = dbTracker.queries
 
     expect(queries[0].method).toEqual('select')
 
-    const { statusCode } = retrievalResponse
-
-    expect(statusCode).toEqual(500)
+    expect(response.statusCode).toEqual(500)
   })
 })

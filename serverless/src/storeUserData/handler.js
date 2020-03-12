@@ -32,6 +32,8 @@ const storeUserData = async (event, context) => {
 
   const { Records: sqsRecords = [] } = event
 
+  if (sqsRecords.length === 0) return
+
   console.log(`Processing ${sqsRecords.length} user(s)`)
 
   await sqsRecords.forEachAsync(async (sqsRecord) => {

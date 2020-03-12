@@ -193,7 +193,7 @@ describe('submitRetrieval', () => {
       }
     })
 
-    const orderResponse = await submitRetrieval(badOrderPayload, {})
+    const response = await submitRetrieval(badOrderPayload, {})
 
     const { queries } = dbTracker.queries
 
@@ -201,8 +201,6 @@ describe('submitRetrieval', () => {
     expect(queries[1].method).toEqual('insert')
     expect(queries[2].sql).toContain('ROLLBACK')
 
-    const { statusCode } = orderResponse
-
-    expect(statusCode).toEqual(500)
+    expect(response.statusCode).toEqual(500)
   })
 })

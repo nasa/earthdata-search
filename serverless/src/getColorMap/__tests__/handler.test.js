@@ -78,7 +78,7 @@ describe('getColorMap', () => {
       query.reject('Unknown Error')
     })
 
-    const colorMapResponse = await getColorMap({
+    const response = await getColorMap({
       pathParameters: {
         product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily'
       }
@@ -88,8 +88,6 @@ describe('getColorMap', () => {
 
     expect(queries[0].method).toEqual('first')
 
-    const { statusCode } = colorMapResponse
-
-    expect(statusCode).toEqual(500)
+    expect(response.statusCode).toEqual(500)
   })
 })
