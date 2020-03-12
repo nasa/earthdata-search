@@ -14,6 +14,11 @@ import CollectionDetailsHeaderContainer
   from '../../containers/CollectionDetailsHeaderContainer/CollectionDetailsHeaderContainer'
 import CollectionDetailsBodyContainer
   from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
+import GranuleDetailsHeaderContainer
+  from '../../containers/GranuleDetailsHeaderContainer/GranuleDetailsHeaderContainer'
+import GranuleDetailsBodyContainer
+  from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
+
 import GranuleResultsBodyContainer
   from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
 import GranuleResultsHeaderContainer
@@ -99,6 +104,20 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    panelSection.push(
+      <PanelGroup
+        key="granule-details-panel"
+        header={
+          <GranuleDetailsHeaderContainer />
+        }
+        onPanelClose={this.onPanelClose}
+      >
+        <PanelItem>
+          <GranuleDetailsBodyContainer />
+        </PanelItem>
+      </PanelGroup>
+    )
+
     return (
       <Switch key="panel-children">
         <Route
@@ -117,6 +136,9 @@ class SearchPanels extends PureComponent {
             let activePanel = '0.0.0'
 
             switch (activePanelFromProps) {
+              case 'granules/granule-details':
+                activePanel = '0.3.0'
+                break
               case 'granules/collection-details':
                 activePanel = '0.2.0'
                 break

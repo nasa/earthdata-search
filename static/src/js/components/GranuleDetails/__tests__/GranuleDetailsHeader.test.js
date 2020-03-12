@@ -28,7 +28,7 @@ describe('GranuleDetailsHeader component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toBe('div')
-    expect(enzymeWrapper.props().className).toEqual('row granule-details-header')
+    expect(enzymeWrapper.props().className).toEqual('granule-details-header')
   })
 
   describe('when the metadata is not provided', () => {

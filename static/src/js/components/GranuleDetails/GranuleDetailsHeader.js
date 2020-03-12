@@ -16,22 +16,26 @@ const GranuleDetailsHeader = ({ ummJson }) => {
   const { GranuleUR: granuleUr } = ummJson
 
   return (
-    <div className="row granule-details-header">
-      <div className="col-auto">
-        <div className="granule-details-header__title-wrap">
-          {
-            granuleUr
-              ? (
-                <h2 className="granule-details-header__title">{granuleUr}</h2>
-              )
-              : (
-                <Skeleton
-                  className="granule-details-header__title"
-                  containerStyle={{ display: 'inline-block', height: '1.375rem', width: '17.5rem' }}
-                  shapes={granuleTitle}
-                />
-              )
-          }
+    <div className="granule-details-header">
+      <div className="granule-details-header__primary">
+        <div className="row">
+          <div className="col align-self-start">
+            <div className="granule-details-header__title-wrap">
+              {
+                granuleUr
+                  ? (
+                    <h2 className="granule-details-header__title">{granuleUr}</h2>
+                  )
+                  : (
+                    <Skeleton
+                      className="granule-details-header__title"
+                      containerStyle={{ display: 'inline-block', height: '1.375rem', width: '17.5rem' }}
+                      shapes={granuleTitle}
+                    />
+                  )
+              }
+            </div>
+          </div>
         </div>
       </div>
     </div>
