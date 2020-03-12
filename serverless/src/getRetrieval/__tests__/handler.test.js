@@ -137,6 +137,7 @@ describe('getRetrieval', () => {
           type: 'download'
         },
         collection_metadata: {
+          dataset_id: 'Testing a dataset id',
           links: [{
             rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
             href: 'https://search.earthdata.nasa.gov'
@@ -179,6 +180,7 @@ describe('getRetrieval', () => {
               type: 'download'
             },
             collection_metadata: {
+              dataset_id: 'Testing a dataset id',
               links: [{
                 rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
                 href: 'https://search.earthdata.nasa.gov'
@@ -203,10 +205,14 @@ describe('getRetrieval', () => {
         download: [22, 23]
       },
       links: [{
-        rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-        href: 'https://search.earthdata.nasa.gov'
+        dataset_id: 'Testing a dataset id',
+        links: [{
+          rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+          href: 'https://search.earthdata.nasa.gov'
+        }]
       }]
     }
+
     expect(body).toEqual(JSON.stringify(expectedResponse))
     expect(statusCode).toEqual(200)
   })
