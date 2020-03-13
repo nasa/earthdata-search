@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -34,82 +34,67 @@ import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 
 const mapDispatchToProps = dispatch => ({
-  onMasterOverlayHeightChange:
-    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
   onUpdateAdvancedSearch:
     values => dispatch(actions.updateAdvancedSearch(values)),
   onFocusedCollectionChange:
     collectionId => dispatch(actions.changeFocusedCollection(collectionId))
 })
 
-export class Search extends Component {
-  componentDidMount() {
-    const { onMasterOverlayHeightChange } = this.props
+export const Search = ({
+  match,
+  onUpdateAdvancedSearch
+}) => {
+  const { path } = match
 
-    // Set the height of the master overlay to 500px by default
-    const panelHeight = window.innerHeight ? window.innerHeight / 2 : 500
-    onMasterOverlayHeightChange(panelHeight)
-  }
-
-  render() {
-    const {
-      match,
-      onUpdateAdvancedSearch
-    } = this.props
-
-    const { path } = match
-
-    return (
-      <div className="route-wrapper route-wrapper--search search">
-        <SidebarContainer
-          headerChildren={(
-            <SearchSidebarHeaderContainer />
-          )}
-          panels={<SearchPanelsContainer />}
-        >
-          <SidebarSection>
-            <Switch>
-              <Route exact path={`${path}/granules/collection-details`}>
-                <GranuleResultsHighlightsContainer />
-              </Route>
-              <Route exact path={`${path}/granules`}>
-                <CollectionDetailsHighlightsContainer />
-              </Route>
-              <Route exact path={`${path}/granules/granule-details`}>
-                <CollectionDetailsHighlightsContainer />
-              </Route>
-              <Route path={path}>
-                <FacetsContainer />
-              </Route>
-            </Switch>
-          </SidebarSection>
-        </SidebarContainer>
-        <div className="route-wrapper__content">
-          <header className="route-wrapper__header">
-            <div className="route-wrapper__header-primary">
-              <SecondaryToolbarContainer />
-            </div>
-          </header>
+  return (
+    <div className="route-wrapper route-wrapper--search search">
+      <SidebarContainer
+        headerChildren={(
+          <SearchSidebarHeaderContainer />
+        )}
+        panels={<SearchPanelsContainer />}
+      >
+        <SidebarSection>
           <Switch>
+            <Route exact path={`${path}/granules/collection-details`}>
+              <GranuleResultsHighlightsContainer />
+            </Route>
             <Route exact path={`${path}/granules`}>
-              <GranuleFiltersPanelContainer />
+              <CollectionDetailsHighlightsContainer />
+            </Route>
+            <Route exact path={`${path}/granules/granule-details`}>
+              <CollectionDetailsHighlightsContainer />
+            </Route>
+            <Route path={path}>
+              <FacetsContainer />
             </Route>
           </Switch>
-          <RelatedUrlsModalContainer />
-          <FacetsModalContainer />
-          <AdvancedSearchModalContainer
-            fields={advancedSearchFields}
-            onUpdateAdvancedSearch={onUpdateAdvancedSearch}
-          />
-        </div>
+        </SidebarSection>
+      </SidebarContainer>
+      <div className="route-wrapper__content">
+        <header className="route-wrapper__header">
+          <div className="route-wrapper__header-primary">
+            <SecondaryToolbarContainer />
+          </div>
+        </header>
+        <Switch>
+          <Route exact path={`${path}/granules`}>
+            <GranuleFiltersPanelContainer />
+          </Route>
+        </Switch>
+        <RelatedUrlsModalContainer />
+        <FacetsModalContainer />
+        <AdvancedSearchModalContainer
+          fields={advancedSearchFields}
+          onUpdateAdvancedSearch={onUpdateAdvancedSearch}
+        />
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 Search.propTypes = {
   match: PropTypes.shape({}).isRequired,
-  onMasterOverlayHeightChange: PropTypes.func.isRequired,
   onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 
