@@ -8,6 +8,8 @@ import { Overlay, Tooltip } from 'react-bootstrap'
 import PanelSection from './PanelSection'
 import PanelGroup from './PanelGroup'
 
+import history from '../../util/history'
+
 import './Panels.scss'
 
 export class Panels extends PureComponent {
@@ -56,6 +58,8 @@ export class Panels extends PureComponent {
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize)
     window.addEventListener('keydown', this.onWindowKeyDown)
+    window.addEventListener('resize', this.onWindowResize)
+    this.browserHistoryUnlisten = history.listen(this.onWindowResize)
 
     const maxWidth = this.calculateMaxWidth()
 
@@ -103,9 +107,11 @@ export class Panels extends PureComponent {
     window.removeEventListener('keydown', this.onWindowKeyDown)
     document.removeEventListener('mousemove', this.onMouseMove)
     document.removeEventListener('mouseup', this.onMouseUp)
+    if (this.browserHistoryUnlisten) this.browserHistoryUnlisten()
   }
 
   onWindowResize() {
+    console.log('calling on resize')
     const { width, minWidth } = this.state
     const maxWidth = this.calculateMaxWidth()
 
@@ -129,6 +135,15 @@ export class Panels extends PureComponent {
         width: minWidth
       })
     }
+
+    setTimeout(() => {
+      const leafletControlContainer = document.querySelector('.leaflet-control-container')
+      const routeWrapper = document.querySelector('.route-wrapper')
+
+      if (leafletControlContainer) {
+        if (routeWrapper) leafletControlContainer.style.height = `${routeWrapper.clientHeight}px`
+      }
+    })
   }
 
   onWindowKeyDown(e) {

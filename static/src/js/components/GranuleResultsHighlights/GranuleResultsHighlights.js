@@ -29,7 +29,7 @@ export const GranuleResultsHighlights = ({
   <div className="granule-results-highlights">
     <div className="granule-results-highlights__count">
       {
-        (isLoading && !isLoaded) && (
+        (!isLoaded) && (
           <Skeleton
             shapes={granuleListTotal}
             containerStyle={granuleListTotalStyle}
@@ -38,7 +38,7 @@ export const GranuleResultsHighlights = ({
         )
       }
       {
-        (isLoaded) && (
+        (isLoaded && !isLoading) && (
           `Showing ${commafy(visibleGranules)} of ${commafy(
             granuleCount
           )} matching ${pluralize('granule', granuleCount)}`
@@ -47,7 +47,7 @@ export const GranuleResultsHighlights = ({
     </div>
     <ul className="granule-results-highlights__list">
       {
-        (isLoading && !isLoaded) && (
+        (!isLoaded) && (
           <>
             {
               [1, 2, 3].map((item, i) => {
@@ -67,7 +67,7 @@ export const GranuleResultsHighlights = ({
         )
       }
       {
-        (isLoaded) && (
+        (isLoaded && !isLoading) && (
           <>
             {
               granules.map((granule, i) => {
