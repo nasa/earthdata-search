@@ -148,7 +148,7 @@
           path: autocomplete
           authorizer:
             name: edlOptionalAuthorizer
-            type: REQUEST
+            type: request
             resultTtlInSeconds: 0
 
   regionSearch:
@@ -188,7 +188,7 @@
           path: cwic/granules
           authorizer:
             name: edlOptionalAuthorizer
-            type: REQUEST
+            type: request
             resultTtlInSeconds: 0
 
   conceptMetadata:
