@@ -64,10 +64,6 @@ import {
   updateFeatureFacet
 } from './facets'
 import {
-  masterOverlayPanelDragEnd,
-  masterOverlayPanelDragStart,
-  masterOverlayPanelResize,
-  masterOverlayPanelToggle,
   toggleAdvancedSearchModal,
   toggleAboutCwicModal,
   toggleChunkedOrderModal,
@@ -191,10 +187,6 @@ const actions = {
   handleError,
   loadPortalConfig,
   logout,
-  masterOverlayPanelDragEnd,
-  masterOverlayPanelDragStart,
-  masterOverlayPanelResize,
-  masterOverlayPanelToggle,
   removeCollectionFromProject,
   removeError,
   removeGridFilter,

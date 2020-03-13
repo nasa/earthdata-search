@@ -47,7 +47,6 @@ function setup() {
       projection: projections.geographic,
       zoom: 2
     },
-    masterOverlayPanelHeight: 500,
     shapefile: {},
     onChangeFocusedGranule: jest.fn(),
     onChangeMap: jest.fn(),

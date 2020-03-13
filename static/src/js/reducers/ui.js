@@ -1,8 +1,4 @@
 import {
-  MASTER_OVERLAY_PANEL_DRAG_END,
-  MASTER_OVERLAY_PANEL_DRAG_START,
-  MASTER_OVERLAY_PANEL_TOGGLE,
-  MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   TOGGLE_DRAWING_NEW_LAYER,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
@@ -18,14 +14,6 @@ import {
 } from '../constants/actionTypes'
 
 const initialState = {
-  masterOverlayPanel: {
-    clickStartHeight: undefined,
-    clickStartY: undefined,
-    dragging: false,
-    height: 0,
-    previousHeight: 0,
-    isOpen: true
-  },
   granuleResultsPanel: {
     sortOrder: '-start_date',
     searchValue: ''
@@ -70,49 +58,6 @@ const initialState = {
 
 const uiReducer = (state = initialState, action) => {
   switch (action.type) {
-    case MASTER_OVERLAY_PANEL_DRAG_START: {
-      return {
-        ...state,
-        masterOverlayPanel: {
-          ...state.masterOverlayPanel,
-          clickStartHeight: action.payload.clickStartHeight,
-          clickStartY: action.payload.clickStartY,
-          dragging: true
-        }
-      }
-    }
-    case MASTER_OVERLAY_PANEL_DRAG_END: {
-      return {
-        ...state,
-        masterOverlayPanel: {
-          ...state.masterOverlayPanel,
-          clickStartHeight: undefined,
-          clickStartY: undefined,
-          dragging: false
-        }
-      }
-    }
-    case MASTER_OVERLAY_PANEL_UPDATE_RESIZE: {
-      return {
-        ...state,
-        masterOverlayPanel: {
-          ...state.masterOverlayPanel,
-          height: action.payload,
-          previousHeight: action.payload
-        }
-      }
-    }
-    case MASTER_OVERLAY_PANEL_TOGGLE: {
-      const { isOpen, previousHeight } = state.masterOverlayPanel
-      return {
-        ...state,
-        masterOverlayPanel: {
-          ...state.masterOverlayPanel,
-          height: isOpen ? 0 : previousHeight,
-          isOpen: !isOpen
-        }
-      }
-    }
     case TOGGLE_VIEW_ALL_FACETS_MODAL: {
       return {
         ...state,

@@ -62,7 +62,6 @@ const mapStateToProps = state => ({
   focusedGranule: state.focusedGranule,
   granules: state.searchResults.granules,
   map: state.map,
-  // masterOverlayPanelHeight: state.ui.masterOverlayPanel.height,
   pathname: state.router.location.pathname,
   shapefile: state.shapefile,
   project: state.project
@@ -80,7 +79,6 @@ export class MapContainer extends Component {
   }
 
   componentDidUpdate() {
-    // const { masterOverlayPanelHeight } = this.props
     const {
       leafletElement: map = null
     } = this.mapRef
@@ -88,10 +86,6 @@ export class MapContainer extends Component {
     if (this.mapRef) {
       map.invalidateSize()
     }
-
-    // if (this.controlContainer) {
-    //   this.onWindowResize(masterOverlayPanelHeight)
-    // }
   }
 
   onMapReady(e) {
@@ -104,20 +98,7 @@ export class MapContainer extends Component {
     attributionElement.classList.add('leaflet-control-layers-attribution')
     attributionElement.innerHTML = '* © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     layersControl.appendChild(attributionElement)
-
-    // this.onWindowResize()
   }
-
-  // onWindowResize() {
-  //   const routeWrapper = document.querySelector('.route-wrapper')
-
-  //   let routeWrapperHeight = 0
-
-  //   if (routeWrapper) routeWrapperHeight = routeWrapper.offsetHeight
-
-  //   this.controlContainer.style.width = '100%'
-  //   this.controlContainer.style.height = `${routeWrapperHeight}px`
-  // }
 
   handleMoveend(event) {
     const map = event.target
@@ -398,7 +379,6 @@ MapContainer.propTypes = {
   focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}),
-  // masterOverlayPanelHeight: PropTypes.number.isRequired,
   pathname: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
   shapefile: PropTypes.shape({}).isRequired,
