@@ -10,7 +10,6 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-import $ from 'jquery'
 import { difference } from 'lodash'
 
 import '../../util/map/sphericalPolygon'
@@ -63,7 +62,7 @@ const mapStateToProps = state => ({
   focusedGranule: state.focusedGranule,
   granules: state.searchResults.granules,
   map: state.map,
-  masterOverlayPanelHeight: state.ui.masterOverlayPanel.height,
+  // masterOverlayPanelHeight: state.ui.masterOverlayPanel.height,
   pathname: state.router.location.pathname,
   shapefile: state.shapefile,
   project: state.project
@@ -81,7 +80,7 @@ export class MapContainer extends Component {
   }
 
   componentDidUpdate() {
-    const { masterOverlayPanelHeight } = this.props
+    // const { masterOverlayPanelHeight } = this.props
     const {
       leafletElement: map = null
     } = this.mapRef
@@ -90,9 +89,9 @@ export class MapContainer extends Component {
       map.invalidateSize()
     }
 
-    if (this.controlContainer) {
-      this.onWindowResize(masterOverlayPanelHeight)
-    }
+    // if (this.controlContainer) {
+    //   this.onWindowResize(masterOverlayPanelHeight)
+    // }
   }
 
   onMapReady(e) {
@@ -106,15 +105,19 @@ export class MapContainer extends Component {
     attributionElement.innerHTML = '* © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     layersControl.appendChild(attributionElement)
 
-    this.onWindowResize()
+    // this.onWindowResize()
   }
 
-  onWindowResize() {
-    const routeWrapperHeight = $('.route-wrapper').height()
+  // onWindowResize() {
+  //   const routeWrapper = document.querySelector('.route-wrapper')
 
-    this.controlContainer.style.width = '100%'
-    this.controlContainer.style.height = `${routeWrapperHeight}px`
-  }
+  //   let routeWrapperHeight = 0
+
+  //   if (routeWrapper) routeWrapperHeight = routeWrapper.offsetHeight
+
+  //   this.controlContainer.style.width = '100%'
+  //   this.controlContainer.style.height = `${routeWrapperHeight}px`
+  // }
 
   handleMoveend(event) {
     const map = event.target
@@ -395,7 +398,7 @@ MapContainer.propTypes = {
   focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}),
-  masterOverlayPanelHeight: PropTypes.number.isRequired,
+  // masterOverlayPanelHeight: PropTypes.number.isRequired,
   pathname: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
   shapefile: PropTypes.shape({}).isRequired,

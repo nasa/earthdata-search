@@ -1,0 +1,30 @@
+.search-sidebar-header {
+  &__link-wrapper {
+    position: relative;
+    height: 2rem;
+  }
+
+  &__button {
+    position: absolute;
+    margin: 0 1rem;
+    left: -0.125rem;
+    padding: 0.125rem 0 0;
+    border: 0;
+    outline: 0;
+    color: $color__black--400;
+    font-size: 0.825rem;
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.1s ease-out;
+
+    &:hover {
+      color: $color__black--200;
+    }
+
+    &--is-hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}

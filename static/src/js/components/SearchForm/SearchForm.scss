@@ -24,6 +24,11 @@
     height: 3rem;
   }
 
+  &__back-to-collections {
+    color: $color__white;
+    font-size: 0.875rem;
+  }
+
   &__form {
     flex-grow: 1;
     display: inline;

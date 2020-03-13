@@ -23,6 +23,10 @@
     }
   }
 
+  .leaflet-control-container {
+    width: 100%;
+  }
+
   .leaflet-bottom.leaflet-right {
     display: flex;
     flex-direction: column;

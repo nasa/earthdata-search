@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -8,49 +7,27 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import MasterOverlayPanelContainer
-  from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
-
-import CollectionResultsTabContainer
-  from '../../containers/CollectionResultsTabContainer/CollectionResultsTabContainer'
-import CollectionDetailsTabContainer
-  from '../../containers/CollectionDetailsTabContainer/CollectionDetailsTabContainer'
-import CollectionDetailsBodyContainer
-  from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
-import CollectionDetailsHeaderContainer
-  from '../../containers/CollectionDetailsHeaderContainer/CollectionDetailsHeaderContainer'
+import AdvancedSearchModalContainer
+  from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import CollectionDetailsHighlightsContainer
   from '../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'
-import CollectionResultsHeaderContainer
-  from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
+import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import FacetsModalContainer
   from '../../containers/FacetsModalContainer/FacetsModalContainer'
-import GranuleResultsTabContainer
-  from '../../containers/GranuleResultsTabContainer/GranuleResultsTabContainer'
-import GranuleResultsBodyContainer
-  from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
-import GranuleResultsHeaderContainer
-  from '../../containers/GranuleResultsHeaderContainer/GranuleResultsHeaderContainer'
-import GranuleResultsActionsContainer
-  from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 import GranuleResultsHighlightsContainer
   from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
 import GranuleFiltersPanelContainer
   from '../../containers/GranuleFiltersPanelContainer/GranuleFiltersPanelContainer'
-import AdvancedSearchModalContainer
-  from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SearchPanelsContainer
   from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
-import SearchFormContainer
-  from '../../containers/SearchFormContainer/SearchFormContainer'
-import SidebarContainer
-  from '../../containers/SidebarContainer/SidebarContainer'
+import SearchSidebarHeaderContainer
+  from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
-
-import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
+import SidebarContainer
+  from '../../containers/SidebarContainer/SidebarContainer'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 
 import actions from '../../actions'
@@ -60,7 +37,9 @@ const mapDispatchToProps = dispatch => ({
   onMasterOverlayHeightChange:
     newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
   onUpdateAdvancedSearch:
-    values => dispatch(actions.updateAdvancedSearch(values))
+    values => dispatch(actions.updateAdvancedSearch(values)),
+  onFocusedCollectionChange:
+    collectionId => dispatch(actions.changeFocusedCollection(collectionId))
 })
 
 export class Search extends Component {
@@ -77,14 +56,17 @@ export class Search extends Component {
       match,
       onUpdateAdvancedSearch
     } = this.props
+
     const { path } = match
 
     return (
       <div className="route-wrapper route-wrapper--search search">
         <SidebarContainer
+          headerChildren={(
+            <SearchSidebarHeaderContainer />
+          )}
           panels={<SearchPanelsContainer />}
         >
-          <SearchFormContainer />
           <SidebarSection>
             <Switch>
               <Route exact path={`${path}/granules/collection-details`}>

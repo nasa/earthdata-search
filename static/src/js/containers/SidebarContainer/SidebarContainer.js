@@ -9,7 +9,8 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 export const SidebarContainer = ({
   children,
   location,
-  panels
+  panels,
+  headerChildren
 }) => {
   const sidebarVisible = isPath(location.pathname, [
     '/search',
@@ -23,6 +24,7 @@ export const SidebarContainer = ({
     <Sidebar
       panels={panels}
       visible={sidebarVisible}
+      headerChildren={headerChildren}
     >
       {children}
     </Sidebar>
@@ -30,13 +32,15 @@ export const SidebarContainer = ({
 }
 
 SidebarContainer.defaultProps = {
-  panels: null
+  panels: null,
+  headerChildren: null
 }
 
 SidebarContainer.propTypes = {
   children: PropTypes.node.isRequired,
   location: PropTypes.shape({}).isRequired,
-  panels: PropTypes.node
+  panels: PropTypes.node,
+  headerChildren: PropTypes.node
 }
 
 export default withRouter(SidebarContainer)

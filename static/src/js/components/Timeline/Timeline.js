@@ -232,6 +232,10 @@ class Timeline extends Component {
     }
   }
 
+  componentDidUpdate() {
+    window.dispatchEvent(new Event('resize'))
+  }
+
   componentWillUnmount() {
     // Remove the timeline
     this.$el.off('temporalchange.timeline', this.handleTemporalSet)
