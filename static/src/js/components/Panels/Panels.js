@@ -111,7 +111,6 @@ export class Panels extends PureComponent {
   }
 
   onWindowResize() {
-    console.log('calling on resize')
     const { width, minWidth } = this.state
     const maxWidth = this.calculateMaxWidth()
 

@@ -12,7 +12,7 @@ const StaticCommonConfig = require('./static.webpack.config.common')
 
 const Config = merge.smartStrategy({
   devtool: 'replace',
-  'module.rules.use': 'prepend'
+  'module.rules.use': 'replace'
 })(StaticCommonConfig, {
   mode: 'production',
   devtool: 'cheap-module-source-map',
@@ -70,9 +70,35 @@ const Config = merge.smartStrategy({
             loader: MiniCssExtractPlugin.loader
           },
           {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              importLoaders: 1
+            }
+          },
+          {
+            loader: 'resolve-url-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
             loader: 'postcss-loader',
             options: {
-              sourceMap: false
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              // eslint-disable-next-line
+              resources: require(path.join(process.cwd(), "/static/src/css/globalUtils.js")),
             }
           }
         ]

@@ -520,20 +520,6 @@ describe('Panels component', () => {
         expect(onPanelDragStartMock).toHaveBeenCalledTimes(1)
         expect(onPanelDragStartMock).toHaveBeenCalledWith(550, 551)
       })
-
-      test('prevents default click behaviors', () => {
-        const { enzymeWrapper } = setup()
-        const eventData = {
-          button: 0,
-          stopPropagation: jest.fn(),
-          preventDefault: jest.fn(),
-        }
-
-        enzymeWrapper.instance().onMouseDown(eventData)
-
-        expect(eventData.stopPropagation).toHaveBeenCalledTimes(1)
-        expect(eventData.preventDefault).toHaveBeenCalledTimes(1)
-      })
     })
 
     // TODO:
