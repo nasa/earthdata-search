@@ -394,10 +394,17 @@ export const getGranules = ids => (dispatch, getState) => {
  * @param {Boolean} closePanel - If true, tells the overlay panel to close once the granules are recieved.
  */
 // eslint-disable-next-line max-len
-export const applyGranuleFilters = (collectionId, granuleFilters, closePanel = false) => (dispatch) => {
+export const applyGranuleFilters = (collectionId, granuleFilters, closePanel = false) => (dispatch, getState) => {
   dispatch(actions.updateGranuleQuery({ pageNum: 1 }))
   dispatch(actions.updateCollectionGranuleFilters(collectionId, granuleFilters))
   dispatch(getGranules()).then(() => {
     if (closePanel) dispatch(actions.toggleSecondaryOverlayPanel(false))
+
+    // If the collection is in the project, we need to update access methods after fetching new granules
+    const { project } = getState()
+    const { collectionIds } = project
+    if (collectionIds.includes(collectionId)) {
+      dispatch(actions.fetchAccessMethods([collectionId]))
+    }
   })
 }
