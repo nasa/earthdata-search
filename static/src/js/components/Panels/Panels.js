@@ -47,7 +47,7 @@ export class Panels extends PureComponent {
     this.onMouseDown = this.onMouseDown.bind(this)
     this.onWindowResize = this.onWindowResize.bind(this)
     this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
-    this.onPanelHandleClick = this.onPanelHandleClick.bind(this)
+    this.onPanelHandleClickOrKeypress = this.onPanelHandleClickOrKeypress.bind(this)
     this.onPanelHandleMouseOver = this.onPanelHandleMouseOver.bind(this)
     this.onPanelHandleMouseOut = this.onPanelHandleMouseOut.bind(this)
     this.onUpdate = this.onUpdate.bind(this)
@@ -172,6 +172,8 @@ export class Panels extends PureComponent {
 
     const nextHandleTooltipState = show ? 'Collapse' : 'Expand'
 
+    // Using a set titmeout to make sure the 'Expanded'/'Collapsed' content in the
+    // tooltip does not switch while the tooltip is fading out
     this.handleTooltipCancelTimeout = setTimeout(() => {
       this.setState({
         handleToolipVisible: true,
@@ -189,7 +191,7 @@ export class Panels extends PureComponent {
     })
   }
 
-  onPanelHandleClick(e) {
+  onPanelHandleClickOrKeypress(e) {
     const { show } = this.state
     const {
       type,
@@ -282,7 +284,7 @@ export class Panels extends PureComponent {
 
     if (!show) {
       // If the panel is closed and a user drags the handle passed the threshold, reset the clickStartWidth
-      // to recalulate the width of the current cursor position. This accounts for the 300 px width of the
+      // to recalulate the width of the current cursor position. This accounts for the minimum width of the
       // closed panel position.
       if (distanceScrolled > this.unminimizeWidth) {
         this.setState({
@@ -394,23 +396,36 @@ export class Panels extends PureComponent {
     this.handleClickIsValid = true
   }
 
+  /**
+   * Calculate the maxwidth for the current browser window size. The size is computed
+   * based on the available space for the panel. If there is more than 1000px available
+   * to display the panel, the max width is set so it does not cover any of the user/account
+   * navigation. If the available space is less than 1000px, we allow the user to cover the
+   * account information.
+   */
   calculateMaxWidth() {
-    // Set the max width of the panel to the width of the login button
     const routeWrapper = document.querySelector('.route-wrapper__content')
-    const loginButton = document.querySelector('.secondary-toolbar')
+    const secondaryToolbar = document.querySelector('.secondary-toolbar')
 
-    if (routeWrapper && loginButton) {
+    if (routeWrapper && secondaryToolbar) {
       const routeWrapperWidth = routeWrapper.offsetWidth
-      const loginButtonWidth = loginButton.offsetWidth
+      const secondaryToolbarWidth = secondaryToolbar.offsetWidth
 
-      let maxWidth = routeWrapperWidth - loginButtonWidth - 30
+      // Set the maxWidth to the available space minus the width of the
+      // secondary toolbar, with 30px of padding.
+      let maxWidth = routeWrapperWidth - secondaryToolbarWidth - 30
 
       if (routeWrapperWidth < 1000) {
+        // If the available space is less than 1000px, set the maxWidth to
+        // the width of the available space minus 55px of padding.
         maxWidth = routeWrapperWidth - 55
       }
 
       return maxWidth
     }
+
+    // If for some reason the elements are not available in the DOM, set
+    // the maxWidth to 1000px.
     return 1000
   }
 
@@ -507,8 +522,8 @@ export class Panels extends PureComponent {
                   this.node = node
                 }}
                 onMouseDown={this.onMouseDown}
-                onClick={this.onPanelHandleClick}
-                onKeyDown={this.onPanelHandleClick}
+                onClick={this.onPanelHandleClickOrKeypress}
+                onKeyDown={this.onPanelHandleClickOrKeypress}
                 onMouseOver={this.onPanelHandleMouseOver}
                 onFocus={this.onPanelHandleMouseOver}
                 onMouseOut={this.onPanelHandleMouseOut}
