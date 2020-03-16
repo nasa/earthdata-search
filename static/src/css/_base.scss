@@ -26,6 +26,7 @@ body {
 
 body.is-panels-dragging {
   cursor: col-resize;
+  user-select: none;
 }
 
 body.is-panels-will-minimize {
