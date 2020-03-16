@@ -13,6 +13,7 @@ const windowEventMap = {}
 const documentEventMap = {}
 
 beforeEach(() => {
+  jest.clearAllTimers()
   jest.clearAllMocks()
 
   window.addEventListener = jest.fn((event, cb) => {
@@ -20,6 +21,8 @@ beforeEach(() => {
   })
 
   window.removeEventListener = jest.fn()
+
+  window.requestAnimationFrame = jest.fn()
 
   window.cancelAnimationFrame = jest.fn()
 
@@ -310,7 +313,7 @@ describe('Panels component', () => {
     })
   })
 
-  describe('when mounting', () => {
+  describe('When mounting', () => {
     test('assigns the resize event listener', () => {
       const onWindowResizeMock = jest.fn()
 
@@ -345,7 +348,7 @@ describe('Panels component', () => {
     })
   })
 
-  describe('when unmounting', () => {
+  describe('When unmounting', () => {
     test('cancels the animation frame', () => {
       const { enzymeWrapper } = setup()
 
@@ -400,15 +403,15 @@ describe('Panels component', () => {
     })
   })
 
-  describe('when dragging the panel', () => {
+  describe('When dragging the panel', () => {
     describe('if the panel is being closed', () => {
       test('calls props onPanelClose callback', () => {
         const { enzymeWrapper, props } = setup()
-        enzymeWrapper.setState({
-          clickStartWidth: 0,
-          pageX: 0,
-          clickStartX: 0
-        })
+        enzymeWrapper.instance().clickStartWidth = 0
+        enzymeWrapper.instance().clickStartX = 0
+        enzymeWrapper.instance().pageX = 0
+        enzymeWrapper.instance().handleClickIsValid = false
+
         enzymeWrapper.instance().onPanelDragEnd()
         expect(props.onPanelClose).toHaveBeenCalledTimes(1)
       })
@@ -417,11 +420,12 @@ describe('Panels component', () => {
     describe('if the panel is being opened', () => {
       test('calls props onPanelOpen callback', () => {
         const { enzymeWrapper, props } = setup()
-        enzymeWrapper.setState({
-          clickStartWidth: 600,
-          pageX: 500,
-          clickStartX: 600
-        })
+
+        enzymeWrapper.instance().clickStartWidth = 600
+        enzymeWrapper.instance().clickStartX = 600
+        enzymeWrapper.instance().pageX = 500
+        enzymeWrapper.instance().handleClickIsValid = false
+
         enzymeWrapper.instance().onPanelDragEnd()
         expect(props.onPanelOpen).toHaveBeenCalledTimes(1)
       })
@@ -455,16 +459,13 @@ describe('Panels component', () => {
           const { enzymeWrapper } = setup()
 
           enzymeWrapper.instance().calculateMaxWidth = onCalculateMaxWidth
-
-          enzymeWrapper.setState({
-            width: 600
-          })
+          enzymeWrapper.instance().width = 600
 
           enzymeWrapper.instance().onWindowResize()
 
           expect(onCalculateMaxWidth).toHaveBeenCalledTimes(1)
           expect(enzymeWrapper.state().maxWidth).toEqual(550)
-          expect(enzymeWrapper.state().width).toEqual(550)
+          expect(enzymeWrapper.instance().width).toEqual(550)
         })
       })
 
@@ -475,67 +476,448 @@ describe('Panels component', () => {
           const { enzymeWrapper } = setup()
 
           enzymeWrapper.instance().calculateMaxWidth = onCalculateMaxWidth
-
-          enzymeWrapper.setState({
-            width: 300
-          })
+          enzymeWrapper.instance().width = 300
 
           enzymeWrapper.instance().onWindowResize()
 
           expect(onCalculateMaxWidth).toHaveBeenCalledTimes(1)
           expect(enzymeWrapper.state().maxWidth).toEqual(550)
-          expect(enzymeWrapper.state().width).toEqual(400)
+          expect(enzymeWrapper.instance().width).toEqual(400)
+        })
+      })
+    })
+  })
+
+  describe('onMouseDown', () => {
+    test('applies the event listeners', () => {
+      const { enzymeWrapper } = setup()
+      const eventData = {
+        button: 0,
+        stopPropagation: jest.fn(),
+        preventDefault: jest.fn()
+      }
+      enzymeWrapper.instance().onMouseDown(eventData)
+
+      expect(document.addEventListener).toHaveBeenCalledTimes(2)
+    })
+
+    test('calls onPanelDragStart', () => {
+      const onPanelDragStartMock = jest.fn()
+      const { enzymeWrapper } = setup()
+      enzymeWrapper.instance().width = 550
+
+      const eventData = {
+        button: 0,
+        stopPropagation: jest.fn(),
+        preventDefault: jest.fn(),
+        pageX: 551
+      }
+      enzymeWrapper.instance().onPanelDragStart = onPanelDragStartMock
+      enzymeWrapper.instance().onMouseDown(eventData)
+
+      expect(onPanelDragStartMock).toHaveBeenCalledTimes(1)
+      expect(onPanelDragStartMock).toHaveBeenCalledWith(550, 551)
+    })
+  })
+
+  describe('onMouseMove', () => {
+    test('clears the click timeout', () => {
+      jest.useFakeTimers()
+
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().handleClickCancelTimeout = '1234'
+      enzymeWrapper.instance().onMouseUp()
+
+      expect(clearTimeout).toHaveBeenCalledTimes(1)
+      expect(clearTimeout).toHaveBeenCalledWith('1234')
+    })
+
+    test('removes the event listeners', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().onMouseUp()
+
+      expect(document.removeEventListener).toHaveBeenCalledTimes(2)
+      expect(document.removeEventListener.mock.calls).toEqual([
+        ['mousemove', enzymeWrapper.instance().onMouseMove],
+        ['mouseup', enzymeWrapper.instance().onMouseUp]
+      ])
+    })
+
+    test('calls onPanelDragEnd', () => {
+      const onPanelDragEndMock = jest.fn()
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().onPanelDragEnd = onPanelDragEndMock
+      enzymeWrapper.instance().onMouseUp()
+
+      expect(onPanelDragEndMock).toHaveBeenCalledTimes(1)
+      expect(onPanelDragEndMock).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('onMouseMove', () => {
+    test('sets the pageX in the instance', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().onMouseMove({ pageX: 100 })
+
+      expect(enzymeWrapper.instance().pageX).toEqual(100)
+    })
+
+    describe('when dragging is false', () => {
+      test('does not run update', () => {
+        const { enzymeWrapper } = setup()
+
+        enzymeWrapper.setState({ dragging: false })
+
+        enzymeWrapper.instance().onMouseMove({ pageX: 100 })
+
+        expect(window.requestAnimationFrame).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    describe('when dragging is true', () => {
+      test('runs update is an requestAnimationFrame', () => {
+        const { enzymeWrapper } = setup()
+
+        enzymeWrapper.setState({ dragging: true })
+
+        enzymeWrapper.instance().onMouseMove({ pageX: 100 })
+
+        expect(window.requestAnimationFrame).toHaveBeenCalledTimes(1)
+      })
+    })
+  })
+
+  describe('onUpdate', () => {
+    describe('when the panel is closed', () => {
+      describe('when the handle is dragged less than the unminimize width', () => {
+        test('does not change the state and open the panel', () => {
+          const { enzymeWrapper } = setup()
+          enzymeWrapper.instance().width = 400
+          enzymeWrapper.instance().pageX = 450
+          enzymeWrapper.instance().clickStartX = 400
+
+          enzymeWrapper.setState({
+            show: false
+          })
+
+          enzymeWrapper.instance().onUpdate()
+
+          expect(enzymeWrapper.state().show).toEqual(false)
+          expect(enzymeWrapper.instance().width).toEqual(400)
+        })
+      })
+
+      describe('when the handle is dragged more than the unminimize width', () => {
+        test('changes the state and opens the panel to the min width', () => {
+          const { enzymeWrapper } = setup()
+
+          enzymeWrapper.instance().width = 400
+          enzymeWrapper.instance().pageX = 601
+          enzymeWrapper.instance().clickStartX = 400
+          enzymeWrapper.instance().clickStartWidth = 400
+
+          enzymeWrapper.setState({
+            show: false
+          })
+
+          enzymeWrapper.instance().onUpdate()
+
+          expect(enzymeWrapper.state().show).toEqual(true)
+          expect(enzymeWrapper.instance().width).toEqual(400)
+        })
+      })
+
+      describe('when the handle is dragged more than the minimum width', () => {
+        test('changes the state and opens the panel to the desired width', () => {
+          const { enzymeWrapper } = setup()
+
+          enzymeWrapper.instance().width = 400
+          enzymeWrapper.instance().pageX = 1000
+          enzymeWrapper.instance().clickStartX = 400
+          enzymeWrapper.instance().clickStartWidth = 400
+
+          enzymeWrapper.setState({
+            show: false
+          })
+
+          enzymeWrapper.instance().onUpdate()
+
+          expect(enzymeWrapper.state().show).toEqual(true)
+          expect(enzymeWrapper.instance().width).toEqual(600)
+        })
+      })
+
+      describe('when the handle is dragged more than the maximum width', () => {
+        test('changes the state and opens the panel to the desired width', () => {
+          const { enzymeWrapper } = setup()
+
+          enzymeWrapper.instance().width = 400
+          enzymeWrapper.instance().pageX = 1450
+          enzymeWrapper.instance().clickStartX = 400
+          enzymeWrapper.instance().clickStartWidth = 400
+
+          enzymeWrapper.setState({
+            maxWidth: 1000,
+            show: false
+          })
+
+          enzymeWrapper.instance().onUpdate()
+
+          expect(enzymeWrapper.state().show).toEqual(true)
+          expect(enzymeWrapper.instance().width).toEqual(1000)
         })
       })
     })
 
-    describe('onMouseDown', () => {
-      test('applies the event listeners', () => {
-        const { enzymeWrapper } = setup()
-        const eventData = {
-          button: 0,
-          stopPropagation: jest.fn(),
-          preventDefault: jest.fn()
-        }
-        enzymeWrapper.instance().onMouseDown(eventData)
+    describe('when the panel is open', () => {
+      describe('if the panel should minimize at its current width', () => {
+        test('sets willMinimize to true', () => {
+          const { enzymeWrapper } = setup()
 
-        expect(document.addEventListener).toHaveBeenCalledTimes(2)
+          enzymeWrapper.instance().width = 400
+          enzymeWrapper.instance().pageX = 100
+          enzymeWrapper.instance().clickStartX = 400
+          enzymeWrapper.instance().clickStartWidth = 400
+
+          enzymeWrapper.setState({
+            maxWidth: 1000,
+            show: true,
+            willMinimize: false
+          })
+
+          enzymeWrapper.instance().onUpdate()
+
+          expect(enzymeWrapper.state().show).toEqual(true)
+          expect(enzymeWrapper.state().willMinimize).toEqual(true)
+        })
       })
 
-      test('calls onPanelDragStart', () => {
-        const onPanelDragStartMock = jest.fn()
+      describe('if the panel should not minimize at its current width', () => {
+        test('sets willMinimize to false', () => {
+          const { enzymeWrapper } = setup()
+
+          enzymeWrapper.instance().width = 400
+          enzymeWrapper.instance().pageX = 600
+          enzymeWrapper.instance().clickStartX = 400
+          enzymeWrapper.instance().clickStartWidth = 400
+
+          enzymeWrapper.setState({
+            maxWidth: 1000,
+            show: true,
+            willMinimize: true
+          })
+
+          enzymeWrapper.instance().onUpdate()
+
+          expect(enzymeWrapper.state().show).toEqual(true)
+          expect(enzymeWrapper.state().willMinimize).toEqual(false)
+        })
+      })
+    })
+
+    describe('if the panel has been dragged less than the minimum width, but greater than the minimize width', () => {
+      test('sets the width to the min width', () => {
         const { enzymeWrapper } = setup()
+
+        enzymeWrapper.instance().width = 400
+        enzymeWrapper.instance().pageX = 300
+        enzymeWrapper.instance().clickStartX = 400
+        enzymeWrapper.instance().clickStartWidth = 400
+
         enzymeWrapper.setState({
-          width: 550
+          maxWidth: 1000,
+          show: true
         })
-        const eventData = {
-          button: 0,
-          stopPropagation: jest.fn(),
-          preventDefault: jest.fn(),
-          pageX: 551
-        }
-        enzymeWrapper.instance().onPanelDragStart = onPanelDragStartMock
-        enzymeWrapper.instance().onMouseDown(eventData)
 
-        expect(onPanelDragStartMock).toHaveBeenCalledTimes(1)
-        expect(onPanelDragStartMock).toHaveBeenCalledWith(550, 551)
+        enzymeWrapper.instance().onUpdate()
+
+        expect(enzymeWrapper.state().show).toEqual(true)
+        expect(enzymeWrapper.instance().width).toEqual(400)
       })
     })
 
-    // TODO:
-    // describe('onMouseUp', () => {
-    // })
+    describe('if the panel has been dragged greater than the max width', () => {
+      test('sets the width to the max width', () => {
+        const { enzymeWrapper } = setup()
 
-    // describe('onMouseMove', () => {
-    // })
+        enzymeWrapper.instance().width = 400
+        enzymeWrapper.instance().pageX = 1500
+        enzymeWrapper.instance().clickStartX = 400
+        enzymeWrapper.instance().clickStartWidth = 400
 
-    // describe('onUpdate', () => {
-    // })
+        enzymeWrapper.setState({
+          maxWidth: 1000,
+          show: true
+        })
 
-    // describe('onPanelDragStart', () => {
-    // })
+        enzymeWrapper.instance().onUpdate()
 
-    // describe('calculateMaxWidth', () => {
-    // })
+        expect(enzymeWrapper.state().show).toEqual(true)
+        expect(enzymeWrapper.instance().width).toEqual(1000)
+      })
+    })
+
+    describe('if the panel has been dragged to a valid width', () => {
+      test('sets the width', () => {
+        const { enzymeWrapper } = setup()
+
+        enzymeWrapper.instance().width = 400
+        enzymeWrapper.instance().pageX = 600
+        enzymeWrapper.instance().clickStartX = 400
+        enzymeWrapper.instance().clickStartWidth = 400
+
+        enzymeWrapper.setState({
+          maxWidth: 1000,
+          show: true
+        })
+
+        enzymeWrapper.instance().onUpdate()
+
+        expect(enzymeWrapper.state().show).toEqual(true)
+        expect(enzymeWrapper.instance().width).toEqual(600)
+      })
+    })
+  })
+
+  describe('onPanelDragStart', () => {
+    test('sets the state', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().clickStartX = 0
+      enzymeWrapper.instance().clickStartWidth = 0
+
+      enzymeWrapper.setState({
+        dragging: false
+      })
+
+      enzymeWrapper.instance().onPanelDragStart(400, 500)
+
+      expect(enzymeWrapper.instance().clickStartWidth).toEqual(400)
+      expect(enzymeWrapper.instance().clickStartX).toEqual(500)
+      expect(enzymeWrapper.state().dragging).toEqual(true)
+    })
+  })
+
+  describe('updatePanelWidth', () => {
+    test('sets the width', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().updatePanelWidth(567)
+
+      expect(enzymeWrapper.instance().width).toEqual(567)
+    })
+
+    test('sets the style on the container', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().updatePanelWidth(567)
+
+      expect(enzymeWrapper.instance().container.style.width).toEqual('567px')
+    })
+
+    test('calls updateResponsiveClassNames', () => {
+      const updateResponsiveClassNamesMock = jest.fn()
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().updateResponsiveClassNames = updateResponsiveClassNamesMock
+
+      enzymeWrapper.instance().updatePanelWidth(567)
+
+      expect(updateResponsiveClassNamesMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('updateResponsiveClassNames', () => {
+    test('adds and removes class names', () => {
+      const classListAddMock = jest.fn()
+      const classListRemoveMock = jest.fn()
+
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().responsiveContainer.classList.add = classListAddMock
+      enzymeWrapper.instance().responsiveContainer.classList.remove = classListRemoveMock
+      enzymeWrapper.instance().width = 400
+
+      enzymeWrapper.instance().updateResponsiveClassNames()
+
+      enzymeWrapper.instance().width = 700
+
+      enzymeWrapper.instance().updateResponsiveClassNames()
+
+      expect(classListAddMock).toHaveBeenCalledTimes(4)
+      expect(classListAddMock.mock.calls).toEqual([
+        ['panels--xs'],
+        ['panels--xs'],
+        ['panels--sm'],
+        ['panels--md']
+      ])
+      expect(classListRemoveMock).toHaveBeenCalledTimes(6)
+      expect(classListRemoveMock.mock.calls).toEqual([
+        ['panels--sm'],
+        ['panels--md'],
+        ['panels--lg'],
+        ['panels--xl'],
+        ['panels--lg'],
+        ['panels--xl']
+      ])
+    })
+  })
+
+  describe('calculateMaxWidth', () => {
+    describe('when the available space is greater that 1000px', () => {
+      test('calculates the correct width', () => {
+        const querySelectorMock = jest.fn((selector) => {
+          if (selector === '.route-wrapper__content') {
+            return {
+              offsetWidth: 1200
+            }
+          }
+          if (selector === '.secondary-toolbar') {
+            return {
+              offsetWidth: 150
+            }
+          }
+        })
+
+        document.querySelector = querySelectorMock
+
+        const { enzymeWrapper } = setup()
+
+        const maxWidth = enzymeWrapper.instance().calculateMaxWidth()
+
+        // 1020 = 1200 - 150 - 30
+        expect(maxWidth).toEqual(1020)
+      })
+    })
+
+    describe('when the available space is greater that 1000px', () => {
+      test('calculates the correct width', () => {
+        const querySelectorMock = jest.fn((selector) => {
+          if (selector === '.route-wrapper__content') {
+            return {
+              offsetWidth: 900
+            }
+          }
+          if (selector === '.secondary-toolbar') {
+            return {
+              offsetWidth: 150
+            }
+          }
+        })
+
+        document.querySelector = querySelectorMock
+
+        const { enzymeWrapper } = setup()
+
+        const maxWidth = enzymeWrapper.instance().calculateMaxWidth()
+
+        // 845 = 900 - 55
+        expect(maxWidth).toEqual(845)
+      })
+    })
   })
 })
