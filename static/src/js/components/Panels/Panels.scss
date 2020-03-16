@@ -6,8 +6,9 @@
   height: 100%;
   z-index: -1;
   transform: translateX(-100%);
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   box-shadow: 0 0 10px rgba($color__black, 0.3);
+  will-change: width;
 
   &--is-draggable {
     transform: translateX(-97%);
@@ -16,6 +17,10 @@
 
   &--is-open {
     transform: translateX(0%);
+  }
+
+  .is-panels-dragging & {
+    transition: none;
   }
 
   &__handle {

@@ -44,6 +44,10 @@
     object-fit: contain;
   }
 
+  &__info {
+    will-change: width;
+  }
+
   &__title {
     display: -webkit-box;
     -webkit-line-clamp: 3;
