@@ -7,6 +7,8 @@
   }
 
   &__body {
+    padding-top: 0.5rem;
+    padding-bottom: 0.25rem;
     border-bottom: 1px solid $color__black--700;
     color: $color__black--200;
   }
@@ -27,6 +29,7 @@
   }
 
   &__item-value {
+    margin-bottom: 0;
     padding: 0.125rem 0.75rem;
     display: flex;
     flex-direction: row;
@@ -34,6 +37,38 @@
     justify-content: space-between;
     font-size: 0.75rem;
     color: $color__black--400;
+
+    &--desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 6;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  &__related-link {
+    padding: 0;
+    display: inline-block;
+    white-space: nowrap;
+    font-size: .825rem;
+    line-height: 1;
+    vertical-align: baseline;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:last-child {
+      padding-top: $spacer/8;
+    }
+
+    .button {
+      display: inline-block;
+
+      &__contents {
+        vertical-align: baseline;
+      }
+    }
   }
 
   &__footer {

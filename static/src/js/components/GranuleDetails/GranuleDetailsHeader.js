@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { granuleTitle } from './skeleton'
 
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
 
 import './GranuleDetailsHeader.scss'
@@ -12,7 +13,7 @@ import './GranuleDetailsHeader.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.ummJson - The focused granule metadata.
  */
-const GranuleDetailsHeader = ({ ummJson }) => {
+const GranuleDetailsHeader = ({ ummJson, location }) => {
   const { GranuleUR: granuleUr } = ummJson
 
   return (
@@ -24,7 +25,19 @@ const GranuleDetailsHeader = ({ ummJson }) => {
               {
                 granuleUr
                   ? (
-                    <h2 className="granule-details-header__title">{granuleUr}</h2>
+                    <>
+                      <h2 className="granule-details-header__title">{granuleUr}</h2>
+                      <PortalLinkContainer
+                        className="collection-details-header__title-link"
+                        to={{
+                          pathname: '/search/granules',
+                          search: location.search
+                        }}
+                      >
+                        <i className="fa fa-map" />
+                        {' View Granules'}
+                      </PortalLinkContainer>
+                    </>
                   )
                   : (
                     <Skeleton
@@ -43,6 +56,7 @@ const GranuleDetailsHeader = ({ ummJson }) => {
 }
 
 GranuleDetailsHeader.propTypes = {
+  location: PropTypes.shape({}).isRequired,
   ummJson: PropTypes.shape({}).isRequired
 }
 
