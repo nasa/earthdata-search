@@ -137,4 +137,10 @@ class App extends Component {
   }
 }
 
-export default hot(App)
+// Conditionally export the app wrapped in the react-hot-loader HOC if in the development
+// environment and hot module reloading is enabled.
+const ExportedApp = process.env.NODE_ENV === 'development' && module.hot
+  ? hot(App)
+  : App
+
+export default ExportedApp
