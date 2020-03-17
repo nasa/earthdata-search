@@ -5,6 +5,7 @@ import { Client } from '@googlemaps/google-maps-services-js'
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
+import { getGoogleMapsApiKey } from '../util/google/maps'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../util/parseError'
 
@@ -15,11 +16,14 @@ import { parseError } from '../util/parseError'
 const googleGeocode = async (query) => {
   const client = new Client({})
 
+  // Retrieve the Google Maps API key
+  const apiKey = await getGoogleMapsApiKey()
+
   const geocodeResult = await client
     .geocode({
       params: {
         address: query,
-        key: process.env.GOOGLE_MAPS_API_KEY
+        key: apiKey
       }
     })
 
