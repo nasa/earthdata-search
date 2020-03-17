@@ -21,7 +21,8 @@ function setup() {
         }
       }
     },
-    focusedGranule: 'focusedGranule'
+    focusedGranule: 'focusedGranule',
+    location: { data: 'data' }
   }
 
   const enzymeWrapper = shallow(<GranuleDetailsHeaderContainer {...props} />)
@@ -40,5 +41,6 @@ describe('GranuleDetailsHeaderContainer component', () => {
     expect(enzymeWrapper.find(GranuleDetailsHeader).props().ummJson).toEqual({
       Granule: {}
     })
+    expect(enzymeWrapper.find(GranuleDetailsHeader).props().location).toEqual({ data: 'data' })
   })
 })

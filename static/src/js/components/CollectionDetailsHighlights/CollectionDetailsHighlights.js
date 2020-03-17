@@ -92,7 +92,7 @@ export const CollectionDetailsHighlights = ({
         <div className="collection-details-highlights__item-body">
           <div className="collection-details-highlights__item-value">
             <Button
-              className="link collection-details-body__related-link"
+              className="link collection-details-highlights__related-link"
               type="button"
               variant="link"
               bootstrapVariant="link"
@@ -137,12 +137,12 @@ export const CollectionDetailsHighlights = ({
                 </h4>
               </header>
               <div className="collection-details-highlights__item-body">
-                <div className="collection-details-highlights__item-value">
+                <div className="collection-details-highlights__item-value collection-details-highlights__item-value--desc">
                   {
                     (isLoading && !isLoaded) ? (
                       <Skeleton
                         shapes={collectionDetailsParagraph}
-                        containerStyle={granuleListTotalStyle}
+                        containerStyle={{ height: '4.125rem', width: '100%' }}
                         variant="dark"
                       />
                     ) : (
@@ -164,7 +164,7 @@ export const CollectionDetailsHighlights = ({
             search: location.search
           }}
         >
-          View All Collection Details
+          View More Collection Details
         </PortalLinkContainer>
       </div>
     </div>
