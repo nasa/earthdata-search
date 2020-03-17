@@ -208,13 +208,8 @@ export class Panels extends PureComponent {
         show: !show,
         willMinimize: show,
         dragging: false,
-        transitioning: true,
         handleToolipVisible: false
-      }, () => setTimeout(() => {
-        this.setState({
-          transitioning: false
-        })
-      }, 500))
+      })
     } else {
       this.setState({
         handleToolipVisible: false
