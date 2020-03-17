@@ -13,22 +13,22 @@ function setup(overrideProps) {
       byId: {
         focusedCollection: {
           excludedGranuleIds: [],
+          granules: {
+            allIds: ['id1'],
+            byId: {
+              id1: {
+                mock: 'data'
+              }
+            },
+            hits: 1,
+            isLoading: false,
+            isLoaded: true
+          },
           metadata: {}
         }
       }
     },
     focusedCollection: 'focusedCollection',
-    granules: {
-      allIds: ['id1'],
-      byId: {
-        id1: {
-          mock: 'data'
-        }
-      },
-      hits: 1,
-      isLoading: false,
-      isLoaded: true
-    },
     location: { search: '' },
     ...overrideProps
   }

@@ -15,7 +15,14 @@ function setup(overrideProps) {
     collectionSearch: {},
     focusedCollectionId: 'collectionId',
     focusedCollectionObject: {
-      excludedGranuleIds: [],
+      granules: {
+        hits: null,
+        loadTime: null,
+        isLoading: true,
+        isLoaded: false,
+        allIds: [],
+        byId: {}
+      },
       granuleFilters: {
         readableGranuleName: 'searchValue',
         sortKey: '-start_date'
@@ -37,14 +44,6 @@ function setup(overrideProps) {
     onToggleAboutCwicModal: jest.fn(),
     onToggleSecondaryOverlayPanel: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
-    granules: {
-      hits: null,
-      loadTime: null,
-      isLoading: true,
-      isLoaded: false,
-      allIds: [],
-      byId: {}
-    },
     pageNum: 1,
     ...overrideProps
   }
@@ -68,13 +67,16 @@ describe('GranuleResultsHeader component', () => {
     describe('while loading', () => {
       test('renders the correct Skeleton elements', () => {
         const { enzymeWrapper } = setup({
-          granules: {
-            hits: null,
-            loadTime: null,
-            isLoading: true,
-            isLoaded: false,
-            allIds: [],
-            byId: {}
+          focusedCollectionObject: {
+            excludedGranuleIds: [],
+            granules: {
+              hits: null,
+              loadTime: null,
+              isLoading: true,
+              isLoaded: false,
+              allIds: [],
+              byId: {}
+            }
           }
         })
 
@@ -86,21 +88,24 @@ describe('GranuleResultsHeader component', () => {
     describe('when loaded', () => {
       test('renders the correct visible granules and hits', () => {
         const { enzymeWrapper } = setup({
-          granules: {
-            hits: 23,
-            loadTime: 1524,
-            isLoading: false,
-            isLoaded: true,
-            allIds: [
-              123,
-              456
-            ],
-            byId: {
-              123: {
-                title: '123'
-              },
-              456: {
-                title: '456'
+          focusedCollectionObject: {
+            excludedGranuleIds: [],
+            granules: {
+              hits: 23,
+              loadTime: 1524,
+              isLoading: false,
+              isLoaded: true,
+              allIds: [
+                123,
+                456
+              ],
+              byId: {
+                123: {
+                  title: '123'
+                },
+                456: {
+                  title: '456'
+                }
               }
             }
           }
@@ -111,21 +116,23 @@ describe('GranuleResultsHeader component', () => {
 
       test('renders the correct search time', () => {
         const { enzymeWrapper } = setup({
-          granules: {
-            hits: 23,
-            loadTime: 1524,
-            isLoading: false,
-            isLoaded: true,
-            allIds: [
-              123,
-              456
-            ],
-            byId: {
-              123: {
-                title: '123'
-              },
-              456: {
-                title: '456'
+          focusedCollectionObject: {
+            granules: {
+              hits: 23,
+              loadTime: 1524,
+              isLoading: false,
+              isLoaded: true,
+              allIds: [
+                123,
+                456
+              ],
+              byId: {
+                123: {
+                  title: '123'
+                },
+                456: {
+                  title: '456'
+                }
               }
             }
           }

@@ -116,7 +116,6 @@ class GranuleResultsHeader extends Component {
     const {
       collectionSearch,
       focusedCollectionObject,
-      granules,
       location,
       mapProjection,
       onToggleSecondaryOverlayPanel,
@@ -125,16 +124,16 @@ class GranuleResultsHeader extends Component {
       onToggleAboutCwicModal
     } = this.props
 
+    const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
+
+    const { metadata = {}, excludedGranuleIds = [], granules = {} } = focusedCollectionObject
+
     const {
       hits,
       loadTime,
       isLoading,
       isLoaded
     } = granules
-
-    const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
-
-    const { metadata = {}, excludedGranuleIds = {} } = focusedCollectionObject
 
     const { dataset_id: title, isCwic } = metadata
 
@@ -418,7 +417,6 @@ GranuleResultsHeader.propTypes = {
   collectionSearch: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedCollectionObject: PropTypes.shape({}).isRequired,
-  granules: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
   secondaryOverlayPanel: PropTypes.shape({}).isRequired,
