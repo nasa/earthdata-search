@@ -3,8 +3,14 @@
  * @param {Object} errorObj The error object that was thrown
  * @param {Boolean} shouldLog Whether or not to log the exceptions found
  */
-export const parseError = (errorObj, shouldLog = true) => {
+export const parseError = (errorObj, {
+  shouldLog = true,
+  asJSON = true,
+  reThrowError = false
+} = {}) => {
   const { error, name = 'Error', statusCode = 500 } = errorObj
+
+  let errorArray = []
 
   if (error) {
     const { errors = [] } = error
@@ -16,20 +22,26 @@ export const parseError = (errorObj, shouldLog = true) => {
       })
     }
 
+    errorArray = errors
+  } else {
+    if (shouldLog) {
+      console.log(errorObj.toString())
+    }
+
+    errorArray = [errorObj.toString()]
+  }
+
+  // If the error needs to be thrown again, do so before returning
+  if (reThrowError) {
+    throw errorObj
+  }
+
+  if (asJSON) {
     return {
       statusCode,
-      body: JSON.stringify({ errors })
+      body: JSON.stringify({ errors: errorArray })
     }
   }
 
-  if (shouldLog) {
-    console.log(errorObj.toString())
-  }
-
-  return {
-    statusCode,
-    body: JSON.stringify({
-      errors: [errorObj.toString()]
-    })
-  }
+  return errorArray
 }

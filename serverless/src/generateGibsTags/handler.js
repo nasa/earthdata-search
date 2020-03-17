@@ -3,134 +3,12 @@ import AWS from 'aws-sdk'
 import { groupBy, omit } from 'lodash'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
+import { constructLayerTagData } from './constructLayerTagData'
 import { getSupportedGibsLayers } from './getSupportedGibsLayers'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 
 // AWS SQS adapter
 let sqs
-
-/*
- * Convert a world view configuration object to a CMR search query object
- */
-const configToCmrQuery = (config) => {
-  const topLevelConfigs = []
-
-  const supportedCmrQueryKeys = {
-    conceptId: 'concept_id',
-    dataCenterId: 'provider',
-    shortName: 'short_name'
-  }
-
-  Object.keys(config).forEach((configKey) => {
-    const query = config[configKey]
-
-    // Converts the key from worldview to a cmr search key
-    const translatedCmrKey = supportedCmrQueryKeys[configKey]
-
-    if (Object.keys(supportedCmrQueryKeys).includes(configKey)) {
-      const queryConditions = [].concat(query)
-
-      if (queryConditions.length > 1) {
-        const orCondition = []
-        queryConditions.forEach((queryCondition) => {
-          orCondition.push({ [translatedCmrKey]: queryCondition })
-        })
-
-        topLevelConfigs.push({ or: orCondition })
-      } else {
-        topLevelConfigs.push({ [translatedCmrKey]: queryConditions[0] })
-      }
-    }
-  })
-
-  if (topLevelConfigs.length > 1) {
-    return {
-      condition: {
-        and: topLevelConfigs
-      }
-    }
-  }
-
-  return {
-    condition: topLevelConfigs[0]
-  }
-}
-
-/*
- * Construct an object from product information provided world view that Earthdata Search can use to tag CMR collections
- */
-const constructLayerTagData = async (layer) => {
-  const layerTagData = []
-
-  const {
-    format,
-    group,
-    id,
-    product,
-    projections,
-    subtitle,
-    title
-  } = layer
-
-  const match = {}
-  if (layer.startDate) {
-    match.time_start = `>=${layer.startDate}`
-  }
-  if (layer.endDate) {
-    match.time_end = `<=${layer.endDate}`
-  }
-
-  const { query } = product
-
-  if (layer.dayNightFlag) {
-    match.day_night_flag = query.dayNightFlag
-  }
-
-  const tagData = {
-    match,
-    product: id,
-    group,
-    // maxNativeZoom: 5,
-    title,
-    source: subtitle,
-    format: format.split('/').pop()
-  }
-
-  const supportedProjections = ['antarctic', 'arctic', 'geographic']
-  supportedProjections.forEach((projection) => {
-    const layerProjection = projections[projection]
-    if (layerProjection) {
-      const resolution = layerProjection.matrixSet.split('_').pop()
-
-      tagData[projection] = true
-      tagData[`${projection}_resolution`] = resolution
-    } else {
-      tagData[projection] = false
-      tagData[`${projection}_resolution`] = null
-    }
-  })
-
-  const {
-    nrt,
-    science
-  } = query
-
-  if (nrt || science) {
-    Object.keys(query).forEach((queryKey) => {
-      layerTagData.push({
-        collection: configToCmrQuery(query[queryKey]),
-        data: tagData
-      })
-    })
-  } else {
-    layerTagData.push({
-      collection: configToCmrQuery(query),
-      data: tagData
-    })
-  }
-
-  return layerTagData
-}
 
 /**
  * Handler to process product information from world view and tag CMR collections
@@ -140,9 +18,7 @@ const generateGibsTags = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  if (sqs == null) {
-    sqs = new AWS.SQS(getSqsConfig())
-  }
+  sqs = new AWS.SQS(getSqsConfig())
 
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
@@ -151,10 +27,10 @@ const generateGibsTags = async (event, context) => {
 
   const layerTagData = []
 
-  await Object.keys(supportedGibsLayers).forEachAsync(async (key) => {
+  Object.keys(supportedGibsLayers).forEach(async (key) => {
     const gibsLayer = supportedGibsLayers[key]
 
-    const layerConfigs = await constructLayerTagData(gibsLayer)
+    const layerConfigs = constructLayerTagData(gibsLayer)
 
     layerTagData.push(...layerConfigs)
   })
@@ -176,8 +52,8 @@ const generateGibsTags = async (event, context) => {
     const tagData = configurations.map((configuration) => {
       const { data } = configuration
 
-      const { collection = {} } = configuration
-      const { condition = {} } = collection
+      const { collection } = configuration
+      const { condition } = collection
 
       allTagConditions.push(condition)
 
@@ -218,8 +94,8 @@ const generateGibsTags = async (event, context) => {
     const tagData = configurations.map((configuration) => {
       const { data } = configuration
 
-      const { collection = {} } = configuration
-      const { condition = {} } = collection
+      const { collection } = configuration
+      const { condition } = collection
 
       allTagConditions.push(condition)
 
@@ -242,34 +118,30 @@ const generateGibsTags = async (event, context) => {
     }).promise()
   })
 
-  try {
-    // Remove stale tags
-    await sqs.sendMessage({
-      QueueUrl: process.env.tagQueueUrl,
-      MessageBody: JSON.stringify({
-        tagName: tagName('gibs'),
-        action: 'REMOVE',
-        searchCriteria: {
-          condition: {
-            and: [
-              {
-                tag: {
-                  tag_key: tagName('gibs')
-                }
-              },
-              {
-                not: {
-                  or: allTagConditions
-                }
+  // Remove stale tags
+  await sqs.sendMessage({
+    QueueUrl: process.env.tagQueueUrl,
+    MessageBody: JSON.stringify({
+      tagName: tagName('gibs'),
+      action: 'REMOVE',
+      searchCriteria: {
+        condition: {
+          and: [
+            {
+              tag: {
+                tag_key: tagName('gibs')
               }
-            ]
-          }
+            },
+            {
+              not: {
+                or: allTagConditions
+              }
+            }
+          ]
         }
-      })
-    }).promise()
-  } catch (e) {
-    console.log(e)
-  }
+      }
+    })
+  }).promise()
 
   return {
     isBase64Encoded: false,

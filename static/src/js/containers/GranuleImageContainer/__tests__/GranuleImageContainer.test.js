@@ -8,14 +8,22 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    granulesResults: {
-      allIds: ['focusedGranule'],
+    collections: {
+      allIds: ['collectionId'],
       byId: {
-        focusedGranule: {
-          browse_flag: true
+        collectionId: {
+          granules: {
+            allIds: ['focusedGranule'],
+            byId: {
+              focusedGranule: {
+                browse_flag: true
+              }
+            }
+          }
         }
       }
     },
+    focusedCollection: 'collectionId',
     focusedGranule: 'focusedGranule'
   }
 

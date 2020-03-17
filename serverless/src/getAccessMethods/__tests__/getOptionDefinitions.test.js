@@ -1,11 +1,12 @@
 import nock from 'nock'
 
 import { getOptionDefinitions } from '../getOptionDefinitions'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
 })
 
 describe('getOptionDefinitions', () => {
@@ -17,9 +18,6 @@ describe('getOptionDefinitions', () => {
           form: 'mock echo form'
         }
       }])
-
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
-    jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
 
     const collectionProvider = {
       provider: {
@@ -61,6 +59,7 @@ describe('getOptionDefinitions', () => {
           form: 'mock echo form 1'
         }
       }])
+
     nock(/cmr/)
       .get(/option_definitions/)
       .reply(200, [{
@@ -69,8 +68,6 @@ describe('getOptionDefinitions', () => {
         }
       }])
 
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
-    jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
 
     const collectionProvider = {
       provider: {
@@ -117,5 +114,44 @@ describe('getOptionDefinitions', () => {
         }
       }
     ])
+  })
+
+  test('catches and logs errors correctly', async () => {
+    nock(/cmr/)
+      .get(/option_definitions/)
+      .reply(500, {
+        errors: [
+          'Test error message'
+        ]
+      })
+
+    const collectionProvider = {
+      provider: {
+        id: 'abcd-1234-efgh-5678',
+        organization_name: 'EDSC-TEST',
+        provider_id: 'EDSC-TEST'
+      }
+    }
+
+    const optionDefinitions = [
+      {
+        id: 'option_def_guid',
+        name: 'Option Definition'
+      }
+    ]
+
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+
+    const forms = await getOptionDefinitions(collectionProvider, optionDefinitions, 'mockJwt')
+
+    // The first will output the number of records, the second will
+    // contain the message we're looking for
+    expect(consoleMock).toBeCalledTimes(1)
+
+    expect(consoleMock.mock.calls[0]).toEqual([
+      'StatusCodeError (500): Test error message'
+    ])
+
+    expect(forms).toEqual([])
   })
 })

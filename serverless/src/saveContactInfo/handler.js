@@ -50,25 +50,16 @@ const saveContactInfo = async (event) => {
 
     const url = `${getEarthdataConfig(cmrEnvironment).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
 
-    let response
-    try {
-      response = await request.put({
-        uri: url,
-        headers: {
-          'Client-Id': getClientId().lambda,
-          'Echo-Token': await getEchoToken(jwtToken)
-        },
-        body: params,
-        json: true,
-        resolveWithFullResponse: true
-      })
-    } catch (e) {
-      return {
-        isBase64Encoded: false,
-        headers: defaultResponseHeaders,
-        ...parseError(e)
-      }
-    }
+    const response = await request.put({
+      uri: url,
+      headers: {
+        'Client-Id': getClientId().lambda,
+        'Echo-Token': await getEchoToken(jwtToken)
+      },
+      body: params,
+      json: true,
+      resolveWithFullResponse: true
+    })
 
     await sqs.sendMessage({
       QueueUrl: process.env.userDataQueueUrl,
@@ -79,11 +70,13 @@ const saveContactInfo = async (event) => {
       })
     }).promise()
 
+    const { body, statusCode } = response
+
     return {
       isBase64Encoded: false,
-      statusCode: response.statusCode,
+      statusCode,
       headers: defaultResponseHeaders,
-      body: JSON.stringify(response.body)
+      body: JSON.stringify(body)
     }
   } catch (e) {
     return {

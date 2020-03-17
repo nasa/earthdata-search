@@ -1,7 +1,8 @@
 import request from 'request-promise'
-import { getCollectionsByJson } from './getCollectionsByJson'
+import { stringify } from 'qs'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { parseError } from '../util/parseError'
 
 /**
  * Adds a tag association to any collections meeting the provided search criteria
@@ -10,7 +11,6 @@ import { cmrEnv } from '../../../sharedUtils/cmrEnv'
  * @param {Object} searchCriteria Criteria used to search for collections in JQL
  * @param {Boolean} requireGranules Whether or not to include collections without granules
  * @param {Boolean} append If tag data already exists, should the provided data be appended or not
- * @return {Object} An object representing the CMR tag association response
  */
 export async function addTag({
   tagName,
@@ -34,22 +34,33 @@ export async function addTag({
       cmrParams.has_granules = true
     }
 
-    const collectionsResponse = await getCollectionsByJson(cmrParams, searchCriteria, cmrToken)
+    let collections = []
 
-    const { entry: collections, errors } = collectionsResponse
+    try {
+      const collectionJsonResponse = await request.post({
+        uri: `${getEarthdataConfig(cmrEnv()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
+        headers: {
+          'Client-Id': getClientId().background,
+          'Echo-Token': cmrToken
+        },
+        body: searchCriteria,
+        json: true,
+        resolveWithFullResponse: true
+      })
 
-    if (errors) {
-      console.log(errors)
-
-      return collectionsResponse
+      const { body } = collectionJsonResponse
+      const { entry } = body
+      collections = entry
+    } catch (e) {
+      parseError(e, { reThrowError: true })
     }
 
-    if (!collections.length) {
-      return collectionsResponse
-    }
+    // If collections were returned from the search, examine their metadata and
+    // construct appropriate tag data to be assigned to them
+    if (!collections) return false
 
-    // GIBS specific functionality (at the moment) for appending data
-    // to an existing tag for colormaps
+    // If `append` is true, the tagData provided will be appended to previous tag data
+    // already assigned to the provided collections
     if (append) {
       associationData = collections.map((collection) => {
         const { tags = {} } = collection
@@ -59,7 +70,7 @@ export async function addTag({
         const collectionTagData = [].concat(data)
 
         // If the product already exists in the collections tag data
-        // overwrite it with the newer data
+        // overwrite it with the newer data otherwise append it
         const existingTagDataIndex = data.findIndex(data => data.product === tagData.product)
         if (existingTagDataIndex !== -1) {
           collectionTagData[existingTagDataIndex] = tagData
@@ -95,7 +106,7 @@ export async function addTag({
         resolveWithFullResponse: true
       })
     } catch (e) {
-      console.log(e)
+      parseError(e, { reThrowError: true })
     }
 
     return associationData
@@ -117,8 +128,8 @@ export async function addTag({
       resolveWithFullResponse: true
     })
   } catch (e) {
-    console.log(e)
+    parseError(e, { reThrowError: true })
   }
 
-  return searchCriteria
+  return true
 }

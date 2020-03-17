@@ -85,7 +85,7 @@ const Facets = (props) => {
 
   const processingLevels = {
     ...cmrFacetDefaults,
-    title: 'Processing levels'
+    title: 'Processing Levels'
   }
 
   const formats = {

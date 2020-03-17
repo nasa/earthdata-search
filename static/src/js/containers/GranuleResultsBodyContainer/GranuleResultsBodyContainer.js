@@ -24,7 +24,6 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
-  granules: state.searchResults.granules,
   granuleQuery: state.query.granule
 })
 
@@ -33,7 +32,6 @@ export const GranuleResultsBodyContainer = (props) => {
     collections,
     focusedCollection,
     focusedGranule,
-    granules,
     granuleQuery,
     isActive,
     location,
@@ -47,6 +45,7 @@ export const GranuleResultsBodyContainer = (props) => {
 
   const {
     excludedGranuleIds = [],
+    granules,
     metadata: collectionMetadata
   } = collectionObject
 
@@ -57,7 +56,12 @@ export const GranuleResultsBodyContainer = (props) => {
   const { pageNum } = granuleQuery
 
   const onWaypointEnter = () => {
-    if (isActive) onChangeGranulePageNum(pageNum + 1)
+    if (isActive) {
+      onChangeGranulePageNum({
+        collectionId: focusedCollection,
+        pageNum: pageNum + 1
+      })
+    }
   }
 
   return (
@@ -81,7 +85,6 @@ GranuleResultsBodyContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   isActive: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,

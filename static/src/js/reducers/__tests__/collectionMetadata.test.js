@@ -1,19 +1,35 @@
 import collectionMetadataReducer from '../collectionMetadata'
 import {
-  COPY_GRANULE_RESULTS_TO_COLLECTION,
   CLEAR_COLLECTION_GRANULES,
   CLEAR_EXCLUDE_GRANULE_ID,
   EXCLUDE_GRANULE_ID,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
-  UPDATE_PROJECT_GRANULES,
   TOGGLE_COLLECTION_VISIBILITY,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  STARTED_GRANULES_TIMER,
+  LOADED_GRANULES,
+  FINISHED_GRANULES_TIMER,
+  LOADING_GRANULES,
+  ADD_MORE_GRANULE_RESULTS,
+  UPDATE_GRANULE_RESULTS,
+  UPDATE_COLLECTION_GRANULE_FILTERS,
+  RESET_GRANULE_RESULTS,
+  UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS
 } from '../../constants/actionTypes'
 
 const initialState = {
   allIds: [],
   byId: {}
+}
+
+const initialStateWithCollection = {
+  allIds: ['collectionId'],
+  byId: {
+    collectionId: {
+      granules: {}
+    }
+  }
 }
 
 describe('INITIAL_STATE', () => {
@@ -111,14 +127,15 @@ describe('UPDATE_COLLECTION_METADATA', () => {
       allIds: ['collectionId'],
       byId: {
         collectionId: {
+          currentCollectionGranuleParams: {},
           excludedGranuleIds: [],
-          granules: {},
+          formattedMetadata: undefined,
           granuleFilters: { sortKey: '-start_date' },
-          isVisible: true,
+          granules: {},
           isCwic: undefined,
+          isVisible: true,
           metadata: undefined,
-          ummMetadata: undefined,
-          formattedMetadata: undefined
+          ummMetadata: undefined
         }
       }
     }
@@ -126,7 +143,7 @@ describe('UPDATE_COLLECTION_METADATA', () => {
     expect(collectionMetadataReducer(undefined, action)).toEqual(expectedState)
   })
 
-  test('returns the correct state when collection has been visited yet', () => {
+  test('returns the correct state when collection has been visited', () => {
     const action = {
       type: UPDATE_COLLECTION_METADATA,
       payload: [{
@@ -161,7 +178,14 @@ describe('UPDATE_COLLECTION_METADATA', () => {
       byId: {
         collectionId: {
           excludedGranuleIds: ['granuleId1'],
-          granules: {},
+          granules: {
+            allIds: ['granuleId1'],
+            byId: {
+              granuleId1: {
+                mock: 'data'
+              }
+            }
+          },
           isVisible: true,
           isCwic: undefined,
           metadata: undefined,
@@ -282,40 +306,6 @@ describe('UNDO_EXCLUDE_GRANULE_ID', () => {
   })
 })
 
-describe('COPY_GRANULE_RESULTS_TO_COLLECTION', () => {
-  test('returns the correct state', () => {
-    const granules = {
-      allIds: ['mockGranuleId1'],
-      byId: {
-        mockGranuleId1: {
-          id: 'mockGranuleId1',
-          mockGranuleData: 'goes here 1'
-        }
-      },
-      isCwic: false,
-      hits: 1
-    }
-    const action = {
-      type: COPY_GRANULE_RESULTS_TO_COLLECTION,
-      payload: {
-        collectionId: 'collectionId',
-        granules
-      }
-    }
-
-    const expectedState = {
-      ...initialState,
-      byId: {
-        collectionId: {
-          granules
-        }
-      }
-    }
-
-    expect(collectionMetadataReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
 describe('TOGGLE_COLLECTION_VISIBILITY', () => {
   test('returns the correct state', () => {
     const action = {
@@ -342,53 +332,6 @@ describe('TOGGLE_COLLECTION_VISIBILITY', () => {
     }
 
     expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
-  })
-})
-
-describe('UPDATE_PROJECT_GRANULES', () => {
-  test('returns the correct state', () => {
-    const granules = [{
-      id: 'mockGranuleId1',
-      mockGranuleData: 'goes here 1'
-    }]
-    const action = {
-      type: UPDATE_PROJECT_GRANULES,
-      payload: {
-        collectionId: 'collectionId',
-        results: granules,
-        isCwic: false,
-        hits: 1,
-        totalSize: {
-          size: 42,
-          unit: 'MB'
-        }
-      }
-    }
-
-    const expectedState = {
-      ...initialState,
-      byId: {
-        collectionId: {
-          granules: {
-            allIds: ['mockGranuleId1'],
-            byId: {
-              mockGranuleId1: {
-                id: 'mockGranuleId1',
-                mockGranuleData: 'goes here 1'
-              }
-            },
-            isCwic: false,
-            hits: 1,
-            totalSize: {
-              size: 42,
-              unit: 'MB'
-            }
-          }
-        }
-      }
-    }
-
-    expect(collectionMetadataReducer(undefined, action)).toEqual(expectedState)
   })
 })
 
@@ -494,5 +437,319 @@ describe('CLEAR_EXCLUDE_GRANULE_ID', () => {
     }
 
     expect(collectionMetadataReducer(initialState, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_COLLECTION_GRANULE_FILTERS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_COLLECTION_GRANULE_FILTERS,
+      payload: {
+        id: 'collectionId',
+        granuleFilters: {
+          mockFilter: true
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {},
+          granuleFilters: {
+            mockFilter: true
+          }
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initialStateWithCollection, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_GRANULE_RESULTS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_GRANULE_RESULTS,
+      payload: {
+        collectionId: 'collectionId',
+        results: [{
+          id: 'mockGranuleId',
+          mockGranuleData: 'goes here'
+        }],
+        hits: 1,
+        isCwic: true,
+        totalSize: {
+          size: '1.0',
+          unit: 'MB'
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {
+            allIds: ['mockGranuleId'],
+            byId: {
+              mockGranuleId: {
+                id: 'mockGranuleId',
+                mockGranuleData: 'goes here'
+              }
+            },
+            hits: 1,
+            isCwic: true,
+            totalSize: {
+              size: '1.0',
+              unit: 'MB'
+            }
+          }
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initialStateWithCollection, action)).toEqual(expectedState)
+  })
+})
+
+describe('ADD_MORE_GRANULE_RESULTS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: ADD_MORE_GRANULE_RESULTS,
+      payload: {
+        collectionId: 'collectionId',
+        results: [{
+          id: 'mockCollectionId2',
+          mockGranuleData: 'goes here 2'
+        }],
+        hits: 0,
+        keyword: 'search keyword'
+      }
+    }
+
+    const initial = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {
+            allIds: ['mockGranuleId1'],
+            byId: {
+              mockGranuleId1: {
+                id: 'mockGranuleId1',
+                mockGranuleData: 'goes here 1'
+              }
+            },
+            hits: 2,
+            isCwic: true,
+            totalSize: {
+              size: '2.0',
+              unit: 'MB'
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {
+            allIds: ['mockGranuleId1', 'mockCollectionId2'],
+            byId: {
+              mockGranuleId1: {
+                id: 'mockGranuleId1',
+                mockGranuleData: 'goes here 1'
+              },
+              mockCollectionId2: {
+                id: 'mockCollectionId2',
+                mockGranuleData: 'goes here 2'
+              }
+            },
+            hits: 2,
+            isCwic: true,
+            totalSize: {
+              size: '2.0',
+              unit: 'MB'
+            }
+          }
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('LOADING_GRANULES', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: LOADING_GRANULES,
+      payload: 'collectionId'
+    }
+
+    const expectedState = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {
+            isLoading: true,
+            isLoaded: false
+          }
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initialStateWithCollection, action)).toEqual(expectedState)
+  })
+})
+
+describe('LOADED_GRANULES', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: LOADED_GRANULES,
+      payload: {
+        collectionId: 'collectionId',
+        loaded: true
+      }
+    }
+
+    const expectedState = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {
+            isLoading: false,
+            isLoaded: true
+          }
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initialStateWithCollection, action)).toEqual(expectedState)
+  })
+})
+
+describe('STARTED_GRANULES_TIMER', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: STARTED_GRANULES_TIMER,
+      payload: 'collectionId'
+    }
+
+    // Mock current time to equal 5
+    jest.spyOn(Date, 'now').mockImplementation(() => 5)
+
+    const expectedState = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {
+            timerStart: 5
+          }
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initialStateWithCollection, action)).toEqual(expectedState)
+  })
+})
+
+describe('FINISHED_GRANULES_TIMER', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: FINISHED_GRANULES_TIMER,
+      payload: 'collectionId'
+    }
+
+    // Set current time to 10, and future time to 15
+    // Load time will equal 5
+    jest.spyOn(Date, 'now').mockImplementation(() => 15)
+
+    const start = 10
+
+    const initial = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {
+            timerStart: start
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {
+            timerStart: null,
+            loadTime: 5
+          }
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('RESET_GRANULE_RESULTS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: RESET_GRANULE_RESULTS,
+      payload: 'collectionId'
+    }
+
+    const expectedState = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          granules: {
+            allIds: [],
+            byId: {},
+            hits: null,
+            isCwic: null,
+            isLoaded: false,
+            isLoading: false,
+            loadTime: 0,
+            timerStart: null
+          }
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initialStateWithCollection, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS,
+      payload: {
+        collectionId: 'collectionId',
+        granuleParams: {
+          mock: 'params'
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialStateWithCollection,
+      byId: {
+        collectionId: {
+          currentCollectionGranuleParams: {
+            mock: 'params'
+          },
+          granules: {}
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initialStateWithCollection, action)).toEqual(expectedState)
   })
 })

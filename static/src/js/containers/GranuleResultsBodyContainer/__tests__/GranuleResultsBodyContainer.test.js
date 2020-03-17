@@ -13,13 +13,13 @@ function setup(overrideProps) {
       byId: {
         focusedCollection: {
           excludedGranuleIds: ['id1'],
+          granules: { value: 'granules' },
           metadata: {}
         }
       }
     },
     focusedCollection: 'focusedCollection',
     focusedGranule: '',
-    granules: { value: 'granules' },
     granuleQuery: { pageNum: 1 },
     isActive: true,
     location: { search: 'value' },
@@ -60,7 +60,10 @@ describe('GranuleResultsBodyContainer component', () => {
     granuleResultsBody.prop('waypointEnter')({ event: { type: 'scroll' } })
 
     expect(props.onChangeGranulePageNum.mock.calls.length).toBe(1)
-    expect(props.onChangeGranulePageNum.mock.calls[0]).toEqual([2])
+    expect(props.onChangeGranulePageNum.mock.calls[0]).toEqual([{
+      collectionId: 'focusedCollection',
+      pageNum: 2
+    }])
   })
 
   test('waypointEnter does not call onChangeGranulePageNum if not active', () => {

@@ -459,6 +459,94 @@ describe('getAccessMethods', () => {
       })
     })
 
+    test('does not populate selectedAccessMethod if method is download', async () => {
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response({
+            access_method: {
+              type: 'download',
+              isValid: true
+            }
+          })
+        } else if (step === 2) {
+          query.response({
+            urs_profile: {
+              email_address: 'test@edsc.com'
+            }
+          })
+        }
+      })
+
+      const event = {
+        body: JSON.stringify({
+          params: {
+            collection_id: 'collectionId',
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: {
+                  granule_online_access_flag: true
+                }
+              }
+            }
+          }
+        })
+      }
+
+      const result = await getAccessMethods(event, {})
+
+      expect(result).toEqual({
+        body: JSON.stringify({
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
+        }),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Credentials': true
+        },
+        isBase64Encoded: false,
+        statusCode: 200
+      })
+    })
+
+    test('does not populate selectedAccessMethod when an error occurrs', async () => {
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.reject('Unknown Error')
+        } else if (step === 2) {
+          query.response({
+            urs_profile: {
+              email_address: 'test@edsc.com'
+            }
+          })
+        }
+      })
+
+      const event = {
+        body: JSON.stringify({
+          params: {
+            collection_id: 'collectionId',
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: {
+                  granule_online_access_flag: true
+                }
+              }
+            }
+          }
+        })
+      }
+
+      const response = await getAccessMethods(event, {})
+
+      expect(response.statusCode).toEqual(500)
+    })
+
     test('populates the saved access configuration', async () => {
       dbTracker.on('query', (query, step) => {
         if (step === 1) {

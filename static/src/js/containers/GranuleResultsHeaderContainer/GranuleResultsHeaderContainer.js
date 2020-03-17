@@ -25,7 +25,6 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   collectionSearch: state.query.collection,
   focusedCollection: state.focusedCollection,
-  granules: state.searchResults.granules,
   granuleSearch: state.query.granule,
   mapProjection: state.map.projection,
   secondaryOverlayPanel: state.ui.secondaryOverlayPanel
@@ -36,7 +35,6 @@ export const GranuleResultsHeaderContainer = (props) => {
     collections,
     collectionSearch,
     focusedCollection,
-    granules,
     granuleSearch,
     location,
     mapProjection,
@@ -64,7 +62,6 @@ export const GranuleResultsHeaderContainer = (props) => {
         onToggleAboutCwicModal={onToggleAboutCwicModal}
         onToggleSecondaryOverlayPanel={onToggleSecondaryOverlayPanel}
         onUndoExcludeGranule={onUndoExcludeGranule}
-        granules={granules}
         pageNum={pageNum}
       />
     </>
@@ -75,7 +72,6 @@ GranuleResultsHeaderContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
   granuleSearch: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,

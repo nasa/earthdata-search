@@ -45,7 +45,7 @@ provider:
       - ${env:SUBNET_ID_B}
 
   role:
-    Fn::ImportValue: ${self:provider.stage}-ApplicationRole
+    Fn::ImportValue: ${self:provider.stage}-EDSCApplicationRole
 
 plugins:
   - serverless-finch

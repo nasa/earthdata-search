@@ -92,9 +92,11 @@ export const changeCollectionPageNum = pageNum => (dispatch) => {
   dispatch(actions.getCollections())
 }
 
-export const changeGranulePageNum = pageNum => (dispatch, getState) => {
-  const { searchResults } = getState()
-  const { granules } = searchResults
+export const changeGranulePageNum = ({ collectionId, pageNum }) => (dispatch, getState) => {
+  const { metadata } = getState()
+  const { collections } = metadata
+  const { byId } = collections
+  const { granules } = byId[collectionId]
   const { allIds, hits } = granules
 
   // Only load the next page of granules if there are granule results already loaded

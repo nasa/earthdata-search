@@ -23,7 +23,6 @@ import {
   viewCollectionDetails
 } from './focusedCollection'
 import {
-  addGranulesFromCollection,
   applyGranuleFilters,
   excludeGranule,
   getGranules,
@@ -94,7 +93,6 @@ import {
 import {
   addProjectCollection,
   getProjectCollections,
-  getProjectGranules,
   removeCollectionFromProject,
   restoreProject,
   selectAccessMethod,
@@ -136,7 +134,6 @@ import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
 
 const actions = {
   addAccessMethods,
-  addGranulesFromCollection,
   addProjectCollection,
   adminIsAuthorized,
   adminViewRetrieval,
@@ -180,7 +177,6 @@ const actions = {
   getFocusedGranule,
   getGranules,
   getProjectCollections,
-  getProjectGranules,
   getRegions,
   getTimeline,
   getViewAllFacets,

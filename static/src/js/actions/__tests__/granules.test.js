@@ -23,7 +23,8 @@ import {
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
   RESET_GRANULE_RESULTS,
-  TOGGLE_SPATIAL_POLYGON_WARNING
+  TOGGLE_SPATIAL_POLYGON_WARNING,
+  UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS
 } from '../../constants/actionTypes'
 import CwicGranuleRequest from '../../util/request/cwicGranuleRequest'
 
@@ -137,24 +138,39 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       // Is updateGranuleResults called with the right payload
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
-      expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
+      expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+      expect(storeActions[1]).toEqual({
+        type: RESET_GRANULE_RESULTS,
+        payload: 'collectionId'
+      })
       expect(storeActions[2]).toEqual({
+        type: STARTED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[3]).toEqual({
+        type: LOADING_GRANULES,
+        payload: 'collectionId'
+      })
+      expect(storeActions[4]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
-      expect(storeActions[3]).toEqual({ type: FINISHED_GRANULES_TIMER })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[5]).toEqual({
+        type: FINISHED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[6]).toEqual({
         type: UPDATE_AUTH,
         payload: ''
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: LOADED_GRANULES,
         payload: {
+          collectionId: 'collectionId',
           loaded: true
         }
       })
-      expect(storeActions[6]).toEqual({
+      expect(storeActions[8]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
@@ -167,7 +183,11 @@ describe('getGranules', () => {
               null
             ],
             is_cwic: false
-          }]
+          }],
+          totalSize: {
+            size: '0.0',
+            unit: 'MB'
+          }
         }
       })
     })
@@ -221,24 +241,39 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       // Is updateGranules called with the right payload
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
-      expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
+      expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+      expect(storeActions[1]).toEqual({
+        type: RESET_GRANULE_RESULTS,
+        payload: 'collectionId'
+      })
       expect(storeActions[2]).toEqual({
+        type: STARTED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[3]).toEqual({
+        type: LOADING_GRANULES,
+        payload: 'collectionId'
+      })
+      expect(storeActions[4]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
-      expect(storeActions[3]).toEqual({ type: FINISHED_GRANULES_TIMER })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[5]).toEqual({
+        type: FINISHED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[6]).toEqual({
         type: UPDATE_AUTH,
         payload: 'token'
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: LOADED_GRANULES,
         payload: {
+          collectionId: 'collectionId',
           loaded: true
         }
       })
-      expect(storeActions[6]).toEqual({
+      expect(storeActions[8]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
@@ -251,7 +286,11 @@ describe('getGranules', () => {
               null
             ],
             is_cwic: false
-          }]
+          }],
+          totalSize: {
+            size: '0.0',
+            unit: 'MB'
+          }
         }
       })
     })
@@ -302,13 +341,24 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       // Is updateGranules called with the right payload
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
-      expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
+      expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+      expect(storeActions[1]).toEqual({
+        type: RESET_GRANULE_RESULTS,
+        payload: 'collectionId'
+      })
       expect(storeActions[2]).toEqual({
+        type: STARTED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[3]).toEqual({
+        type: LOADING_GRANULES,
+        payload: 'collectionId'
+      })
+      expect(storeActions[4]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[5]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: true
       })
@@ -321,6 +371,7 @@ describe('getGranules', () => {
   test('returns no results if there is no focused collection', () => {
     // mockStore with initialState
     const store = mockStore({
+      metadata: {},
       query: {
         collection: {
           temporal: {},
@@ -332,9 +383,7 @@ describe('getGranules', () => {
 
     store.dispatch(getGranules())
     const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
-    expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
-    expect(storeActions[2]).toEqual({ type: RESET_GRANULE_RESULTS })
+    expect(storeActions.length).toEqual(0)
   })
 
   test('does not call updateGranuleResults on error', async () => {

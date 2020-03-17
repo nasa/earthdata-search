@@ -23,7 +23,6 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
-  granules: state.searchResults.granules,
   granuleQuery: state.query.granule,
   project: state.project,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
@@ -34,7 +33,6 @@ export const GranuleResultsActionsContainer = (props) => {
   const {
     collections,
     focusedCollection,
-    granules,
     granuleQuery,
     location,
     project,
@@ -42,7 +40,7 @@ export const GranuleResultsActionsContainer = (props) => {
     onRemoveCollectionFromProject
   } = props
   const collection = getFocusedCollectionObject(focusedCollection, collections)
-  const { metadata } = collection
+  const { granules, metadata } = collection
 
   if (isEmpty(metadata)) return null
 
@@ -78,7 +76,6 @@ GranuleResultsActionsContainer.propTypes = {
   location: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,

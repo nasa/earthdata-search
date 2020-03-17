@@ -60,7 +60,6 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
-  granules: state.searchResults.granules,
   map: state.map,
   pathname: state.router.location.pathname,
   shapefile: state.shapefile,
@@ -189,7 +188,6 @@ export class MapContainer extends Component {
       collections,
       focusedCollection,
       focusedGranule,
-      granules,
       pathname,
       project,
       shapefile,
@@ -216,11 +214,12 @@ export class MapContainer extends Component {
 
     const maxZoom = projection === projections.geographic ? 7 : 4
 
-    const { isCwic } = granules
-    let nonExcludedGranules = granules
+    let nonExcludedGranules
     if (focusedCollection && collections.byId[focusedCollection]) {
-      const { excludedGranuleIds = [] } = collections.byId[focusedCollection]
-      const allGranuleIds = granules.allIds
+      const { excludedGranuleIds = [], granules } = collections.byId[focusedCollection]
+      const { allIds, isCwic } = granules
+      const allGranuleIds = allIds
+      nonExcludedGranules = granules
       let granuleIds
       if (isCwic) {
         granuleIds = allGranuleIds.filter((id) => {
@@ -377,7 +376,6 @@ MapContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}),
   pathname: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,

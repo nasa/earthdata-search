@@ -7,8 +7,8 @@ import { parseError } from '../parseError'
 
 /**
  * Performs a search request and returns the result body and the JWT
- * @param {string} jwtToken JWT returned from edlAuthorizer
- * @param {string} url URL for to perform search
+ * @param {String} jwtToken JWT returned from edlAuthorizer
+ * @param {String} url URL for to perform search
  */
 export const doSearchRequest = async ({
   jwtToken,

@@ -7,25 +7,23 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 
 import {
+  ADD_ACCESS_METHODS,
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
-  UPDATE_AUTH,
-  UPDATE_COLLECTION_METADATA,
-  UPDATE_PROJECT_GRANULES,
-  TOGGLE_COLLECTION_VISIBILITY,
   RESTORE_PROJECT,
-  UPDATE_ACCESS_METHOD,
   SELECT_ACCESS_METHOD,
-  ADD_ACCESS_METHODS,
+  SUBMITTED_PROJECT,
   SUBMITTING_PROJECT,
-  SUBMITTED_PROJECT
+  TOGGLE_COLLECTION_VISIBILITY,
+  UPDATE_ACCESS_METHOD,
+  UPDATE_AUTH,
+  UPDATE_COLLECTION_METADATA
 } from '../../constants/actionTypes'
 
 import {
   addCollectionToProject,
   addProjectCollection,
   getProjectCollections,
-  getProjectGranules,
   removeCollectionFromProject,
   toggleCollectionVisibility,
   restoreProject,
@@ -205,161 +203,6 @@ describe('selectAccessMethod', () => {
   })
 })
 
-describe('getProjectGranules', () => {
-  test('calls lambda to get authenticated granules', async () => {
-    const granules = [{
-      id: 'granuleId1',
-      mockCollectionData: 'goes here'
-    },
-    {
-      id: 'granuleId2',
-      mockCollectionData: 'collection data 2'
-    }]
-
-    nock(/localhost/)
-      .post(/granules/)
-      .twice()
-      .reply(200, {
-        feed: {
-          updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json',
-          title: 'ECHO dataset metadata',
-          entry: granules,
-          facets: {}
-        }
-      },
-      {
-        'cmr-hits': 2,
-        'jwt-token': 'token'
-      })
-
-    // mockStore with initialState
-    const store = mockStore({
-      authToken: 'token',
-      metadata: {
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {
-            collectionId1: {
-              granules: {}
-            },
-            collectionId2: {
-              granules: {}
-            }
-          }
-        }
-      },
-      focusedCollection: '',
-      project: {
-        collectionIds: ['collectionId1', 'collectionId2']
-      },
-      query: {
-        collection: {},
-        granule: {}
-      },
-      timeline: {
-        query: {}
-      }
-    })
-
-    // call the dispatch
-    await store.dispatch(getProjectGranules(['collectionId1', 'collectionId2'])).then(() => {
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: UPDATE_AUTH,
-        payload: 'token'
-      })
-      expect(storeActions[1]).toEqual({
-        type: UPDATE_PROJECT_GRANULES,
-        payload: {
-          collectionId: 'collectionId1',
-          hits: 2,
-          isCwic: false,
-          results: [{
-            ...granules[0],
-            formatted_temporal: [null, null],
-            is_cwic: false,
-            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId1?h=85&w=85'
-          }, {
-            ...granules[1],
-            formatted_temporal: [null, null],
-            is_cwic: false,
-            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId2?h=85&w=85'
-          }],
-          totalSize: {
-            size: '0.0',
-            unit: 'MB'
-          }
-        }
-      })
-      expect(storeActions[3]).toEqual({
-        type: UPDATE_PROJECT_GRANULES,
-        payload: {
-          collectionId: 'collectionId2',
-          hits: 2,
-          isCwic: false,
-          results: [{
-            ...granules[0],
-            formatted_temporal: [null, null],
-            is_cwic: false,
-            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId1?h=85&w=85'
-          }, {
-            ...granules[1],
-            formatted_temporal: [null, null],
-            is_cwic: false,
-            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId2?h=85&w=85'
-          }],
-          totalSize: {
-            size: '0.0',
-            unit: 'MB'
-          }
-        }
-      })
-    })
-  })
-
-  test('does not call updateProjectGranules on error', async () => {
-    nock(/localhost/)
-      .post(/granules/)
-      .reply(500)
-
-    nock(/localhost/)
-      .post(/error_logger/)
-      .reply(200)
-
-    const store = mockStore({
-      authToken: 'token',
-      metadata: {
-        collections: {
-          allIds: ['collectionId1'],
-          byId: {
-            collectionId1: {
-              granules: {}
-            }
-          }
-        }
-      },
-      focusedCollection: '',
-      project: {
-        collectionIds: ['collectionId1']
-      },
-      query: {
-        collection: {},
-        granule: {}
-      },
-      timeline: {
-        query: {}
-      }
-    })
-
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
-
-    await store.dispatch(getProjectGranules(['collectionId1'])).then(() => {
-      expect(consoleMock).toHaveBeenCalledTimes(1)
-    })
-  })
-})
-
 describe('getProjectCollections', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -460,8 +303,8 @@ describe('getProjectCollections', () => {
         }
       ])
 
-    const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
-    getProjectGranulesMock.mockImplementation(() => jest.fn()
+    const getGranulesMock = jest.spyOn(actions, 'getGranules')
+    getGranulesMock.mockImplementation(() => jest.fn()
       .mockImplementation(() => Promise.resolve([
         {
           feed: {
@@ -542,7 +385,7 @@ describe('getProjectCollections', () => {
         payload: getProjectCollectionsResponse
       })
 
-      expect(getProjectGranulesMock).toHaveBeenCalledTimes(1)
+      expect(getGranulesMock).toHaveBeenCalledTimes(1)
       expect(fetchProvidersMock).toHaveBeenCalledTimes(1)
       expect(fetchAccessMethodsMock).toHaveBeenCalledTimes(1)
     })

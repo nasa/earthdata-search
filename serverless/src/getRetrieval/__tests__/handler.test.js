@@ -126,6 +126,97 @@ describe('getRetrieval', () => {
     expect(statusCode).toEqual(200)
   })
 
+  test('correctly determines the list of links', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([{
+        retrieval_id: 2,
+        jsondata: {},
+        created_at: '2019-07-09 17:05:27.000000',
+        id: 22,
+        access_method: {
+          type: 'download'
+        },
+        collection_metadata: {
+          dataset_id: 'Testing a dataset id',
+          links: [{
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+            href: 'https://search.earthdata.nasa.gov'
+          }, {
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+            href: 'https://search.earthdata.nasa.gov'
+          }]
+        },
+        granule_count: 3
+      }, {
+        retrieval_id: 2,
+        jsondata: {},
+        created_at: '2019-07-09 17:05:56.000000',
+        id: 23,
+        access_method: {
+          type: 'download'
+        },
+        collection_metadata: {},
+        granule_count: 3
+      }])
+    })
+
+    const retrievalResponse = await getRetrieval(retrievalPayload, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('select')
+
+    const { body, statusCode } = retrievalResponse
+
+    const expectedResponse = {
+      id: 2,
+      jsondata: {},
+      created_at: '2019-07-09 17:05:27.000000',
+      collections: {
+        byId: {
+          22: {
+            id: 22,
+            access_method: {
+              type: 'download'
+            },
+            collection_metadata: {
+              dataset_id: 'Testing a dataset id',
+              links: [{
+                rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+                href: 'https://search.earthdata.nasa.gov'
+              }, {
+                rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+                href: 'https://search.earthdata.nasa.gov'
+              }]
+            },
+            granule_count: 3,
+            retrieval_id: 2
+          },
+          23: {
+            id: 23,
+            access_method: {
+              type: 'download'
+            },
+            collection_metadata: {},
+            granule_count: 3,
+            retrieval_id: 2
+          }
+        },
+        download: [22, 23]
+      },
+      links: [{
+        dataset_id: 'Testing a dataset id',
+        links: [{
+          rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+          href: 'https://search.earthdata.nasa.gov'
+        }]
+      }]
+    }
+
+    expect(body).toEqual(JSON.stringify(expectedResponse))
+    expect(statusCode).toEqual(200)
+  })
+
   test('returns a 404 when no retrieval is found', async () => {
     dbTracker.on('query', (query) => {
       query.response([])
@@ -148,14 +239,12 @@ describe('getRetrieval', () => {
       query.reject('Unknown Error')
     })
 
-    const retrievalResponse = await getRetrieval(retrievalPayload, {})
+    const response = await getRetrieval(retrievalPayload, {})
 
     const { queries } = dbTracker.queries
 
     expect(queries[0].method).toEqual('select')
 
-    const { statusCode } = retrievalResponse
-
-    expect(statusCode).toEqual(500)
+    expect(response.statusCode).toEqual(500)
   })
 })
