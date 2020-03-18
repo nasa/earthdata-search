@@ -36,6 +36,7 @@ import providersReducer from './providers'
 import contactInfoReducer from './contactInfo'
 import adminIsAuthorizedReducer from './admin/isAuthorized'
 import adminRetrievalsReducer from './admin/retrievals'
+import autocompleteReducer from './autocomplete'
 
 export default history => combineReducers({
   admin: combineReducers({
@@ -44,6 +45,7 @@ export default history => combineReducers({
   }),
   advancedSearch: advancedSearchReducer,
   authToken: authTokenReducer,
+  autocomplete: autocompleteReducer,
   browser: browserReducer,
   contactInfo: contactInfoReducer,
   dataQualitySummaries: dataQualitySummariesReducer,

@@ -199,6 +199,7 @@ export const clearFilters = () => (dispatch) => {
   }
 
   // Update Store
+  dispatch(actions.clearAutocompleteSelected())
   dispatch(actions.updateAdvancedSearch({}))
   dispatch(changeQuery(query))
   dispatch(actions.clearShapefile())

@@ -15,6 +15,7 @@ const restoreFromUrl = payload => ({
 
 export const updateStore = ({
   advancedSearch,
+  autocompleteSelected,
   cmrFacets,
   collections,
   featureFacets,
@@ -40,6 +41,7 @@ export const updateStore = ({
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
     dispatch(restoreFromUrl({
       advancedSearch,
+      autocompleteSelected,
       cmrFacets,
       collections,
       featureFacets,

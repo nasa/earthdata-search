@@ -132,6 +132,13 @@ import { handleError, removeError } from './errors'
 import { updateBrowserVersion } from './browser'
 import { collectionRelevancyMetrics } from './relevancy'
 import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
+import {
+  clearAutocompleteSelected,
+  clearAutocompleteSuggestions,
+  fetchAutocomplete,
+  removeAutocompleteValue,
+  selectAutocompleteSuggestion
+} from './autocomplete'
 
 const actions = {
   addAccessMethods,
@@ -155,6 +162,8 @@ const actions = {
   changeTimelineQuery,
   changeUrl,
   changeViewAllFacet,
+  clearAutocompleteSelected,
+  clearAutocompleteSuggestions,
   clearCollectionGranules,
   clearFilters,
   clearShapefile,
@@ -165,6 +174,7 @@ const actions = {
   fetchAccessMethods,
   fetchAdminRetrieval,
   fetchAdminRetrievals,
+  fetchAutocomplete,
   fetchContactInfo,
   fetchDataQualitySummaries,
   fetchProviders,
@@ -184,6 +194,7 @@ const actions = {
   handleError,
   loadPortalConfig,
   logout,
+  removeAutocompleteValue,
   removeCollectionFromProject,
   removeError,
   removeGridFilter,
@@ -194,6 +205,7 @@ const actions = {
   saveShapefile,
   selectAccessMethod,
   setActivePanel,
+  selectAutocompleteSuggestion,
   setSavedProjects,
   shapefileErrored,
   shapefileLoading,

@@ -1,0 +1,29 @@
+.autocomplete-display {
+  &__badge {
+    margin: 0.5rem 0;
+    font-size: 0.75rem;
+    width: 100%;
+    border-radius: 0.2rem;
+    display: flex;
+    flex-grow: 0;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &__type {
+    text-transform: uppercase;
+    color: $color__black--600;
+  }
+
+  &__value {
+    margin-left: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__button {
+    margin-left: auto;
+    padding: 0;
+  }
+}
