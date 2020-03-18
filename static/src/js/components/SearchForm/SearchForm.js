@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { isEmpty } from 'lodash'
+import { isEmpty, startCase } from 'lodash'
+import Autosuggest from 'react-autosuggest'
 
 import Button from '../Button/Button'
 import AdvancedSearchDisplayContainer
@@ -13,10 +14,10 @@ import SpatialSelectionDropdownContainer
   from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
 import TemporalSelectionDropdownContainer
   from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
+import AutocompleteDisplayContainer
+  from '../../containers/AutocompleteDisplayContainer/AutocompleteDisplayContainer'
 import FilterStack
   from '../FilterStack/FilterStack'
-// Form Fields
-import TextField from '../FormFields/TextField/TextField'
 
 import './SearchForm.scss'
 
@@ -30,11 +31,15 @@ class SearchForm extends Component {
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
-    this.onInputChange = this.onInputChange.bind(this)
+    this.onAutoSuggestChange = this.onAutoSuggestChange.bind(this)
     this.onKeywordBlur = this.onKeywordBlur.bind(this)
     this.onSearchClear = this.onSearchClear.bind(this)
     this.onToggleAdvancedSearch = this.onToggleAdvancedSearch.bind(this)
     this.onToggleFilterStack = this.onToggleFilterStack.bind(this)
+    this.getSuggestionValue = this.getSuggestionValue.bind(this)
+    this.renderSuggestion = this.renderSuggestion.bind(this)
+    this.selectSuggestion = this.selectSuggestion.bind(this)
+    this.shouldRenderSuggestions = this.shouldRenderSuggestions.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,10 +56,19 @@ class SearchForm extends Component {
     document.getElementsByClassName('search-form__input').keywordSearch.blur()
   }
 
-  onInputChange(field, value) {
-    this.setState({ [field]: value })
+  /**
+   * AutoSuggest callback when the input value is changed
+   * @param {Object} event event object
+   * @param {Object} data object with the new value of the input
+   */
+  onAutoSuggestChange(event, data) {
+    const { newValue } = data
+    this.setState({ keywordSearch: newValue })
   }
 
+  /**
+   * Callback when the keyword field is blurred
+   */
   onKeywordBlur() {
     const {
       keywordSearch: propsKeyword,
@@ -97,11 +111,76 @@ class SearchForm extends Component {
     onToggleAdvancedSearchModal(true)
   }
 
+  /**
+   * AutoSuggest callback to retrieve the suggestion value, used when scrolling through suggestions with keyboard arrows
+   * @param {Object} suggestion
+   */
+  getSuggestionValue(suggestion) {
+    return `${startCase(suggestion.type)}: ${suggestion.value}`
+  }
+
+  /**
+   * AutoSuggest callback when a suggestion is selected
+   * @param {Object} event event object
+   * @param {Object} data selected suggestion
+   */
+  selectSuggestion(event, data) {
+    const { onSelectAutocompleteSuggestion } = this.props
+    const { suggestion } = data
+
+    onSelectAutocompleteSuggestion({ suggestion })
+    this.setState({ keywordSearch: '' })
+  }
+
+  /**
+   * AutoSuggest callback to determine if suggustions should be rendered
+   * @param {String} value text entered
+   */
+  shouldRenderSuggestions(value) {
+    const { autocomplete } = this.props
+    const { isLoading } = autocomplete
+    return !isLoading && value.trim().length > 2
+  }
+
+  /**
+   * AutoSuggest method to render each suggestion
+   * @param {Object} suggestion
+   */
+  renderSuggestion(suggestion) {
+    return (
+      <div>
+        <div className="search-form__suggestions-type">
+          {startCase(suggestion.type)}
+          {': '}
+        </div>
+        <div className="search-form__suggestions-value">
+          {suggestion.value}
+        </div>
+      </div>
+    )
+  }
+
+  /**
+   * AutoSuggest method to render the suggestions container
+   */
+  renderSuggestionsContainer({ containerProps, children }) {
+    return (
+      <div {...containerProps} className="search-form__suggestions-container">
+        {children}
+      </div>
+    )
+  }
+
   render() {
     const {
       advancedSearch,
-      showFilterStackToggle
+      autocomplete,
+      showFilterStackToggle,
+      onClearAutocompleteSuggestions,
+      onFetchAutocomplete
     } = this.props
+
+    const { suggestions } = autocomplete
 
     const {
       keywordSearch,
@@ -122,18 +201,24 @@ class SearchForm extends Component {
       <section className="search-form">
         <div className="search-form__primary">
           <form className="search-form__form" onSubmit={this.onFormSubmit}>
-            <TextField
-              name="keywordSearch"
-              dataTestId="keywordSearchInput"
-              classNames={{
-                label: 'search-form__label',
-                labelSpan: 'search-form__assistive',
-                input: 'search-form__input'
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={onFetchAutocomplete}
+              onSuggestionsClearRequested={onClearAutocompleteSuggestions}
+              getSuggestionValue={this.getSuggestionValue}
+              renderSuggestionsContainer={this.renderSuggestionsContainer}
+              renderSuggestion={this.renderSuggestion}
+              onSuggestionSelected={this.selectSuggestion}
+              shouldRenderSuggestions={this.shouldRenderSuggestions}
+              inputProps={{
+                name: 'keywordSearch',
+                'data-test-id': 'keywordSearchInput',
+                className: 'search-form__input',
+                placeholder: 'Search for collections or topics',
+                value: keywordSearch,
+                onChange: this.onAutoSuggestChange,
+                onBlur: this.onKeywordBlur
               }}
-              placeholder="Search for collections or topics"
-              value={keywordSearch}
-              onChange={this.onInputChange}
-              onBlur={this.onKeywordBlur}
             />
           </form>
           <Button
@@ -186,6 +271,7 @@ class SearchForm extends Component {
             />
           </div>
           <FilterStack isOpen={showFilterStack}>
+            <AutocompleteDisplayContainer />
             <AdvancedSearchDisplayContainer />
             {
               spatialDisplayIsVisible && (
@@ -203,10 +289,14 @@ class SearchForm extends Component {
 SearchForm.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
   keywordSearch: PropTypes.string.isRequired,
+  autocomplete: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  onClearAutocompleteSuggestions: PropTypes.func.isRequired,
+  onFetchAutocomplete: PropTypes.func.isRequired,
+  onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
   showFilterStackToggle: PropTypes.bool.isRequired
 }
 

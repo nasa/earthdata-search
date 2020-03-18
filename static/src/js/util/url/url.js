@@ -13,6 +13,7 @@ import { decodeGridCoords, encodeGridCoords } from './gridEncoders'
 import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesOrCwicEncoders'
 import { isPath } from '../isPath'
 import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEncoders'
+import { encodeAutocomplete, decodeAutocomplete } from './autocompleteEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -57,7 +58,8 @@ const urlDefs = {
   gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords },
   shapefileId: { shortKey: 'sf', encode: encodeString, decode: encodeString },
   tagKey: { shortKey: 'tag_key', encode: encodeString, decode: decodeString },
-  hasGranulesOrCwic: { shortKey: 'ac', encode: encodeHasGranulesOrCwic, decode: decodeHasGranulesOrCwic }
+  hasGranulesOrCwic: { shortKey: 'ac', encode: encodeHasGranulesOrCwic, decode: decodeHasGranulesOrCwic },
+  autocompleteSelected: { shortKey: 'as', encode: encodeAutocomplete, decode: decodeAutocomplete }
 }
 
 /**
@@ -140,8 +142,11 @@ export const decodeUrlParams = (paramString) => {
 
   const advancedSearch = decodeAdvancedSearch(params)
 
+  const autocompleteSelected = decodeHelp(params, 'autocompleteSelected')
+
   return {
     advancedSearch,
+    autocompleteSelected,
     cmrFacets,
     collections,
     featureFacets,

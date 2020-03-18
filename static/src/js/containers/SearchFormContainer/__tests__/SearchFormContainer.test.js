@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    autocomplete: {},
     drawingNewLayer: false,
     boundingBoxSearch: '',
     gridName: '',
@@ -23,7 +24,10 @@ function setup() {
     onClearFilters: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
-    onToggleAdvancedSearchModal: jest.fn()
+    onToggleAdvancedSearchModal: jest.fn(),
+    onFetchAutocomplete: jest.fn(),
+    onSelectAutocompleteSuggestion: jest.fn(),
+    onClearAutocompleteSuggestions: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SearchFormContainer {...props} />)
