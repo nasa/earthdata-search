@@ -1,5 +1,6 @@
 import request from 'request-promise'
 import { stringify } from 'qs'
+import { castArray } from 'lodash'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { parseError } from '../util/parseError'
@@ -101,7 +102,7 @@ export async function addTag({
           'Client-Id': getClientId().background,
           'Echo-Token': cmrToken
         },
-        body: associationData,
+        body: castArray(associationData),
         json: true,
         resolveWithFullResponse: true
       })
