@@ -61,14 +61,16 @@ const saveContactInfo = async (event) => {
       resolveWithFullResponse: true
     })
 
-    await sqs.sendMessage({
-      QueueUrl: process.env.userDataQueueUrl,
-      MessageBody: JSON.stringify({
-        environment: cmrEnvironment,
-        userId: id,
-        username: userId
-      })
-    }).promise()
+    if (process.env.IS_OFFLINE) {
+      await sqs.sendMessage({
+        QueueUrl: process.env.userDataQueueUrl,
+        MessageBody: JSON.stringify({
+          environment: cmrEnvironment,
+          userId: id,
+          username: userId
+        })
+      }).promise()
+    }
 
     const { body, statusCode } = response
 

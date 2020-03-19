@@ -135,7 +135,8 @@ Resources:
                 Action:
                   - states:*
                 Resource: '*'
-  EDSCRole:
+  
+  ServerlessAppRole:
     Type: "AWS::IAM::Role"
     Properties:
       ManagedPolicyArns:
@@ -157,7 +158,8 @@ Resources:
             Principal:
               Service:
                 - lambda.amazonaws.com
-                - states.${self:provider.region}.amazonaws.com
+                - states.amazonaws.com
+                - events.amazonaws.com
             Action: sts:AssumeRole
       Policies:
         - PolicyName: RDSIAMAuthentication
@@ -226,14 +228,14 @@ Outputs:
     Export:
       Name: ${self:provider.stage}-ApplicationRole
 
-  EDSCApplicationRole:
-    Description: Role used to execute commands across the application
+  EDSCServerlessAppRole:
+    Description: Role used to execute commands across the serverless application
     Value:
       Fn::GetAtt:
-        - EDSCRole
+        - ServerlessAppRole
         - Arn
     Export:
-      Name: ${self:provider.stage}-EDSCApplicationRole
+      Name: ${self:provider.stage}-EDSCServerlessAppRole
 
   DatabaseEndpoint:
     Value:
