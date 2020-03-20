@@ -27,7 +27,8 @@ export const CollectionResultsHeaderContainer = ({
   portal,
   onChangeQuery,
   onMetricsCollectionSortChange,
-  onToggleAdvancedSearchModal
+  onToggleAdvancedSearchModal,
+  onChangePanelView
 }) => (
   <CollectionResultsHeader
     collections={collections}
@@ -36,6 +37,7 @@ export const CollectionResultsHeaderContainer = ({
     onChangeQuery={onChangeQuery}
     onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
     onMetricsCollectionSortChange={onMetricsCollectionSortChange}
+    onChangePanelView={onChangePanelView}
   />
 )
 
@@ -45,7 +47,8 @@ CollectionResultsHeaderContainer.propTypes = {
   portal: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  onChangePanelView: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CollectionResultsHeaderContainer)

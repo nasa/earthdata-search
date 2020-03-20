@@ -44,6 +44,10 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+
+    &--doi {
+      word-break: break-all;
+    }
   }
 
   &__related-link {
