@@ -69,7 +69,7 @@ export const CollectionDetailsHighlights = ({
           </h4>
         </header>
         <div className="collection-details-highlights__item-body">
-          <div className="collection-details-highlights__item-value">
+          <div className="collection-details-highlights__item-value collection-details-highlights__item-value--doi">
             {
               (isLoading && !isLoaded) ? (
                 <Skeleton

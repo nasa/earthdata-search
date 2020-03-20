@@ -43,8 +43,13 @@ class SearchPanels extends PureComponent {
   constructor(props) {
     super(props)
 
+    this.state = {
+      panelView: 'table'
+    }
+
     this.onPanelClose = this.onPanelClose.bind(this)
     this.onChangePanel = this.onChangePanel.bind(this)
+    this.onChangePanelView = this.onChangePanelView.bind(this)
   }
 
   onPanelClose() {
@@ -57,21 +62,38 @@ class SearchPanels extends PureComponent {
     onSetActivePanel(panelId)
   }
 
+  onChangePanelView() {
+    const { panelView } = this.state
+    const nextView = panelView === 'table' ? 'list' : 'table'
+    this.setState({
+      panelView: nextView
+    })
+  }
+
   render() {
     const {
       match
     } = this.props
+
+    const {
+      panelView
+    } = this.state
 
     const panelSection = []
 
     panelSection.push(
       <PanelGroup
         key="collection-results-panel"
-        header={<CollectionResultsHeaderContainer />}
+        header={(
+          <CollectionResultsHeaderContainer
+            panelView={panelView}
+            onChangePanelView={this.onChangePanelView}
+          />
+        )}
         onPanelClose={this.onPanelClose}
       >
         <PanelItem>
-          <CollectionResultsBodyContainer />
+          <CollectionResultsBodyContainer panelView={panelView} />
         </PanelItem>
       </PanelGroup>
     )

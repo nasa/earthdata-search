@@ -13,10 +13,7 @@ import SplitBadge from '../SplitBadge/SplitBadge'
 import './CollectionResultsItem.scss'
 
 export const CollectionResultsItem = ({
-  browser,
   collection,
-  isCollectionInProject,
-  isLast,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
@@ -25,57 +22,23 @@ export const CollectionResultsItem = ({
   scrollContainer
 }) => {
   const {
-    dataset_id: datasetId = null,
-    granule_count: granuleCount = 0,
-    has_formats: hasFormats = false,
-    has_spatial_subsetting: hasSpatialSubsetting = false,
-    has_temporal_subsetting: hasTemporalSubsetting = false,
-    has_transforms: hasTransforms = false,
-    has_variables: hasVariables = false,
-    has_map_imagery: hasMapImagery = false,
-    is_cwic: isCwic = false,
-    is_nrt: isNrt = false,
-    organizations = [],
-    summary = '',
-    thumbnail = null,
-    time_end: timeEnd = null,
-    time_start: timeStart = null
+    datasetId,
+    description,
+    displayOrganization,
+    granuleCount,
+    hasFormats,
+    hasSpatialSubsetting,
+    hasTemporalSubsetting,
+    hasTransforms,
+    hasVariables,
+    hasMapImagery,
+    isCwic,
+    isNrt,
+    temporalRange,
+    thumbnail,
+    isLast,
+    isCollectionInProject
   } = collection
-
-  const {
-    name: browserName
-  } = browser
-
-  let displayOrganization = ''
-
-  if (organizations && organizations.length) {
-    [displayOrganization] = organizations
-  }
-
-  let timeRange = ''
-
-  if (timeStart || timeEnd) {
-    if (timeStart) {
-      const dateStart = new Date(timeStart).toISOString().split('T')[0]
-
-      timeRange = `${dateStart} ongoing`
-    }
-    if (timeEnd) {
-      const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
-
-      timeRange = `Up to ${dateEnd}`
-    }
-
-    if (timeStart && timeEnd) {
-      const dateStart = new Date(timeStart).toISOString().split('T')[0]
-      const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
-
-      timeRange = `${dateStart} to ${dateEnd}`
-    }
-  }
-
-  let description = summary
-  if (browserName === 'ie') description = `${description.substring(0, 280)}...`
 
   const thumbnailHeight = getApplicationConfig().thumbnailSize.height
   const thumbnailWidth = getApplicationConfig().thumbnailSize.width
@@ -256,7 +219,7 @@ export const CollectionResultsItem = ({
                   )
                 }
                 <strong> &bull; </strong>
-                <strong>{timeRange}</strong>
+                <strong>{temporalRange}</strong>
                 <strong> &bull; </strong>
                 {description}
               </p>
@@ -390,10 +353,7 @@ CollectionResultsItem.defaultProps = {
 }
 
 CollectionResultsItem.propTypes = {
-  browser: PropTypes.shape({}).isRequired,
   collection: PropTypes.shape({}).isRequired,
-  isCollectionInProject: PropTypes.bool.isRequired,
-  isLast: PropTypes.bool.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,

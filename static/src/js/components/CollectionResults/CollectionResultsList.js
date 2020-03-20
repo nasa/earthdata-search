@@ -7,10 +7,8 @@ import CollectionResultsItem from './CollectionResultsItem'
 import './CollectionResultsList.scss'
 
 export const CollectionResultsList = ({
-  browser,
   collections,
   portal,
-  projectIds,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionGranules,
@@ -18,30 +16,18 @@ export const CollectionResultsList = ({
   waypointEnter,
   scrollContainer
 }) => {
-  const collectionIds = collections.allIds
-
-  const collectionResults = collectionIds.map((id, index) => {
-    const collection = collections.byId[id]
-    const isLast = collectionIds.length > 0 && index === collectionIds.length - 1
-
-    const isCollectionInProject = projectIds.indexOf(id) !== -1
-
-    return (
-      <CollectionResultsItem
-        key={collection.id}
-        browser={browser}
-        collection={collection}
-        isCollectionInProject={isCollectionInProject}
-        isLast={isLast}
-        onAddProjectCollection={onAddProjectCollection}
-        onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-        onViewCollectionGranules={onViewCollectionGranules}
-        onViewCollectionDetails={onViewCollectionDetails}
-        waypointEnter={waypointEnter}
-        scrollContainer={scrollContainer}
-      />
-    )
-  })
+  const collectionResults = collections.map(collection => (
+    <CollectionResultsItem
+      key={collection.id}
+      collection={collection}
+      onAddProjectCollection={onAddProjectCollection}
+      onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+      onViewCollectionGranules={onViewCollectionGranules}
+      onViewCollectionDetails={onViewCollectionDetails}
+      waypointEnter={waypointEnter}
+      scrollContainer={scrollContainer}
+    />
+  ))
 
   const {
     portalId,
@@ -84,10 +70,8 @@ CollectionResultsList.defaultProps = {
 }
 
 CollectionResultsList.propTypes = {
-  browser: PropTypes.shape({}).isRequired,
-  collections: PropTypes.shape({}).isRequired,
+  collections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   portal: PropTypes.shape({}).isRequired,
-  projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,

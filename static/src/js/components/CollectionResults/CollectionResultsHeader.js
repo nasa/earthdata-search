@@ -18,7 +18,8 @@ const CollectionResultsHeader = ({
   portal,
   onChangeQuery,
   onMetricsCollectionSortChange,
-  onToggleAdvancedSearchModal
+  onToggleAdvancedSearchModal,
+  onChangePanelView
 }) => {
   const {
     allIds,
@@ -154,6 +155,11 @@ const CollectionResultsHeader = ({
             </span>
           </div>
         </div>
+        <Button
+          onClick={() => { onChangePanelView('list') }}
+        >
+          Toggle the view
+        </Button>
       </div>
       <div className="collection-results-header__meta">
         <span className="collection-results-header__collection-count">
@@ -178,7 +184,8 @@ CollectionResultsHeader.propTypes = {
   portal: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  onChangePanelView: PropTypes.func.isRequired
 }
 
 export default CollectionResultsHeader

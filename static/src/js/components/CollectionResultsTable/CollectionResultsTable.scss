@@ -1,0 +1,134 @@
+.collection-results-table {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  &__test-cell {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &__cell {
+    &--collection {
+      display: flex !important;
+      height: 3.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  &__title-button {
+    text-align: left;
+  }
+
+  &__collection-name {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 0.675rem;
+    // letter-spacing: -0.0025rem;
+    line-height: 1.3;
+    color: $color__black--700;
+    cursor: pointer;
+
+    &:hover {
+      color: $color__black--900;
+    }
+  }
+
+  &__collection-actions {
+    display: flex;
+    flex-shrink: 0;
+    margin-right: 0.125rem;
+    margin-left: 0.25rem;
+
+    .edsc-table__tr:hover & {
+      display: flex;
+    }
+  }
+
+  &__collection-action {
+    padding: 0.5rem;
+
+    .fa {
+      font-size: 0.925rem;
+    }
+
+    &--info {
+      color: $color__black--400;
+
+      &:hover {
+        color: $color__black--600;
+      }
+    }
+
+    &--add {
+      color: $color__green;
+
+      &:hover {
+        color: darken($color__green--dark, 5);
+      }
+    }
+
+    &--remove {
+      color: $color__red;
+
+      &:hover {
+        color: darken($color__red--dark, 5);
+      }
+    }
+  }
+
+  .edsc-table__tr {
+    width: 1000px;
+    height: 3.5rem;
+    border-right: 1px solid $color__black--200;
+
+    &:nth-child(even) {
+      .edsc-table__td {
+        background-color: $color__black--100;
+      }
+    }
+  }
+
+  .edsc-table__thead {
+    .edsc-table__tr {
+      height: auto;
+    }
+  }
+
+  .edsc-table__th {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+
+    &:first-child {
+      justify-content: flex-start;
+    }
+  }
+
+  .edsc-table__td {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+
+    &:first-child {
+      padding: 0;
+      padding-left: 1rem;
+      border-bottom: 1px solid $color__black--200;
+    }
+  }
+
+  .edsc-table__td:first-child,
+  .edsc-table__th:first-child {
+    box-sizing: border-box;
+    padding-left: 1rem;
+  }
+}
