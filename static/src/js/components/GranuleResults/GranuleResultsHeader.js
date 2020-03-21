@@ -294,11 +294,11 @@ class GranuleResultsHeader extends Component {
                             Granule Search:
                           </label>
                           <OverlayTrigger
-                            placement="right"
+                            placement="bottom"
                             overlay={(
                               <Tooltip
                                 id="tooltip__granule-search"
-                                className="tooltip--large tooltip--ta-left tooltip--wide granule-results-header"
+                                className="tooltip--large tooltip--ta-left tooltip--wide"
                               >
                                 <strong>Wildcards:</strong>
                                 {' '}
