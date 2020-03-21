@@ -174,7 +174,12 @@ export const getCollections = () => (dispatch, getState) => {
       const payload = {}
       const { 'cmr-hits': cmrHits } = response.headers
 
-      payload.facets = response.data.feed.facets.children || []
+      const { data } = response
+      const { feed } = data
+      const { facets = {} } = feed
+      const { children = [] } = facets
+
+      payload.facets = children
       payload.hits = cmrHits
       payload.keyword = keyword
       payload.results = response.data.feed.entry
