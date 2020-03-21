@@ -25,7 +25,7 @@ export const CollectionDetailsHighlights = ({
   // Don't attempt to render if the metadata isnt available
   if (!ummMetadata || !formattedMetadata) return null
 
-  const { doi, temporal } = formattedMetadata
+  const { doi = {}, temporal } = formattedMetadata
   const { doiText } = doi
 
   const { Abstract: collectionAbstract, Version: collectionVersion } = ummMetadata
@@ -63,26 +63,32 @@ export const CollectionDetailsHighlights = ({
           </div>
         </div>
 
-        <header className="collection-details-highlights__item-header">
-          <h4 className="collection-details-highlights__item-title">
-            DOI
-          </h4>
-        </header>
-        <div className="collection-details-highlights__item-body">
-          <div className="collection-details-highlights__item-value collection-details-highlights__item-value--doi">
-            {
-              (isLoading && !isLoaded) ? (
-                <Skeleton
-                  shapes={collectionDetailsRow}
-                  containerStyle={granuleListTotalStyle}
-                  variant="dark"
-                />
-              ) : (
-                doiText
-              )
-            }
-          </div>
-        </div>
+        {
+          doiText && (
+            <>
+              <header className="collection-details-highlights__item-header">
+                <h4 className="collection-details-highlights__item-title">
+                  DOI
+                </h4>
+              </header>
+              <div className="collection-details-highlights__item-body">
+                <div className="collection-details-highlights__item-value collection-details-highlights__item-value--doi">
+                  {
+                    (isLoading && !isLoaded) ? (
+                      <Skeleton
+                        shapes={collectionDetailsRow}
+                        containerStyle={granuleListTotalStyle}
+                        variant="dark"
+                      />
+                    ) : (
+                      doiText
+                    )
+                  }
+                </div>
+              </div>
+            </>
+          )
+        }
 
         <header className="collection-details-highlights__item-header">
           <h4 className="collection-details-highlights__item-title">
