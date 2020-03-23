@@ -22,6 +22,7 @@ export const CollectionResultsItem = ({
   scrollContainer
 }) => {
   const {
+    collectionId,
     datasetId,
     description,
     displayOrganization,
@@ -144,7 +145,7 @@ export const CollectionResultsItem = ({
     <Button
       className="collection-results-item__action collection-results-item__action--add"
       onClick={(e) => {
-        onAddProjectCollection(collection.id)
+        onAddProjectCollection(collectionId)
         e.stopPropagation()
       }}
       variant="light"
@@ -159,7 +160,7 @@ export const CollectionResultsItem = ({
     <Button
       className="collection-results-item__action collection-results-item__action--remove"
       onClick={(e) => {
-        onRemoveCollectionFromProject(collection.id)
+        onRemoveCollectionFromProject(collectionId)
         e.stopPropagation()
       }}
       variant="light"
@@ -171,19 +172,19 @@ export const CollectionResultsItem = ({
   )
 
   return (
-    <li className="collection-results-item" key={collection.id}>
+    <li className="collection-results-item" key={collectionId}>
       <div
         role="button"
         tabIndex="0"
         className="collection-results-item__link"
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
-            onViewCollectionGranules(collection.id)
+            onViewCollectionGranules(collectionId)
           }
           e.stopPropagation()
         }}
         onClick={(e) => {
-          onViewCollectionGranules(collection.id)
+          onViewCollectionGranules(collectionId)
           e.stopPropagation()
         }}
         data-test-id="collection-result-item"
@@ -228,7 +229,7 @@ export const CollectionResultsItem = ({
               <Button
                 className="collection-results-item__action collection-results-item__action--collection-details"
                 onClick={(e) => {
-                  onViewCollectionDetails(collection.id)
+                  onViewCollectionDetails(collectionId)
                   e.stopPropagation()
                 }}
                 label="View collection details"

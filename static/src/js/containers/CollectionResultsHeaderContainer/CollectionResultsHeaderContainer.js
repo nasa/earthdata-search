@@ -24,6 +24,7 @@ const mapStateToProps = state => ({
 export const CollectionResultsHeaderContainer = ({
   collections,
   collectionQuery,
+  panelView,
   portal,
   onChangeQuery,
   onMetricsCollectionSortChange,
@@ -33,6 +34,7 @@ export const CollectionResultsHeaderContainer = ({
   <CollectionResultsHeader
     collections={collections}
     collectionQuery={collectionQuery}
+    panelView={panelView}
     portal={portal}
     onChangeQuery={onChangeQuery}
     onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
@@ -44,6 +46,7 @@ export const CollectionResultsHeaderContainer = ({
 CollectionResultsHeaderContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
+  panelView: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,

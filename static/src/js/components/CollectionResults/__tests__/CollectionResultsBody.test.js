@@ -36,6 +36,7 @@ function setup(options = {
       loadTime: 1150,
       timerStart: null
     },
+    panelView: 'list',
     portal: {
       portalId: []
     },
@@ -76,8 +77,10 @@ describe('CollectionResultsBody component', () => {
   test('passes the correct props to CollectionResultsList', () => {
     const { enzymeWrapper, props } = setup()
     const collectionResultsList = enzymeWrapper.find(CollectionResultsList)
-    expect(collectionResultsList.props().collections)
-      .toEqual(props.collections)
+    expect(collectionResultsList.props().collections[0].collectionId)
+      .toEqual('collectionId1')
+    expect(collectionResultsList.props().collections[1].collectionId)
+      .toEqual('collectionId2')
     expect(collectionResultsList.props().onViewCollectionGranules)
       .toEqual(props.onViewCollectionGranules)
     expect(collectionResultsList.props().onViewCollectionDetails)

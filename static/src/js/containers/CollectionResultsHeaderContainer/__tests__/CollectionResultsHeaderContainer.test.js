@@ -10,12 +10,14 @@ function setup() {
   const props = {
     collections: {},
     collectionQuery: {},
+    panelView: 'table',
     portal: {
       portalId: ''
     },
     onChangeQuery: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
-    onToggleAdvancedSearchModal: jest.fn()
+    onToggleAdvancedSearchModal: jest.fn(),
+    onChangePanelView: jest.fn()
   }
 
   const enzymeWrapper = shallow(<CollectionResultsHeaderContainer {...props} />)
@@ -33,5 +35,9 @@ describe('CollectionResultsHeaderContainer component', () => {
     expect(enzymeWrapper.find(CollectionResultsHeader).props().portal).toEqual({ portalId: '' })
     expect(enzymeWrapper.find(CollectionResultsHeader).props().onToggleAdvancedSearchModal)
       .toEqual(props.onToggleAdvancedSearchModal)
+    expect(enzymeWrapper.find(CollectionResultsHeader).props().onChangePanelView)
+      .toEqual(props.onChangePanelView)
+    expect(enzymeWrapper.find(CollectionResultsHeader).props().panelView)
+      .toEqual(props.panelView)
   })
 })

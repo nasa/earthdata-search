@@ -44,7 +44,7 @@ class SearchPanels extends PureComponent {
     super(props)
 
     this.state = {
-      panelView: 'table'
+      panelView: 'list'
     }
 
     this.onPanelClose = this.onPanelClose.bind(this)
@@ -62,11 +62,9 @@ class SearchPanels extends PureComponent {
     onSetActivePanel(panelId)
   }
 
-  onChangePanelView() {
-    const { panelView } = this.state
-    const nextView = panelView === 'table' ? 'list' : 'table'
+  onChangePanelView(view) {
     this.setState({
-      panelView: nextView
+      panelView: view
     })
   }
 
@@ -92,7 +90,7 @@ class SearchPanels extends PureComponent {
         )}
         onPanelClose={this.onPanelClose}
       >
-        <PanelItem>
+        <PanelItem scrollable={panelView !== 'table'}>
           <CollectionResultsBodyContainer panelView={panelView} />
         </PanelItem>
       </PanelGroup>

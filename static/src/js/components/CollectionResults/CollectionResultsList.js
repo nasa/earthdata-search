@@ -14,20 +14,24 @@ export const CollectionResultsList = ({
   onViewCollectionGranules,
   onViewCollectionDetails,
   waypointEnter,
-  scrollContainer
+  scrollContainer,
+  isLoading
 }) => {
-  const collectionResults = collections.map(collection => (
-    <CollectionResultsItem
-      key={collection.id}
-      collection={collection}
-      onAddProjectCollection={onAddProjectCollection}
-      onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-      onViewCollectionGranules={onViewCollectionGranules}
-      onViewCollectionDetails={onViewCollectionDetails}
-      waypointEnter={waypointEnter}
-      scrollContainer={scrollContainer}
-    />
-  ))
+  const collectionResults = collections.map((collection, i) => {
+    const key = `${collection.id}-list-view-${i}`
+    return (
+      <CollectionResultsItem
+        key={key}
+        collection={collection}
+        onAddProjectCollection={onAddProjectCollection}
+        onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+        onViewCollectionGranules={onViewCollectionGranules}
+        onViewCollectionDetails={onViewCollectionDetails}
+        waypointEnter={waypointEnter}
+        scrollContainer={scrollContainer}
+      />
+    )
+  })
 
   const {
     portalId,
@@ -38,7 +42,7 @@ export const CollectionResultsList = ({
   return (
     <ul className="collection-results-list" data-test-id="collection-results-list">
       {collectionResults}
-      {collections.isLoading && (
+      {isLoading && (
         <li className="collection-results-list__loading">
           Loading collections...
         </li>
@@ -77,7 +81,8 @@ CollectionResultsList.propTypes = {
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   waypointEnter: PropTypes.func.isRequired,
-  scrollContainer: PropTypes.instanceOf(Element)
+  scrollContainer: PropTypes.instanceOf(Element),
+  isLoading: PropTypes.bool.isRequired
 }
 
 export default CollectionResultsList
