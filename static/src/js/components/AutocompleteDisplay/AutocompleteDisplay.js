@@ -19,7 +19,7 @@ const AutocompleteDisplay = ({ selected, onRemoveAutocompleteValue }) => {
               className="autocomplete-display__badge"
               pill
               variant="primary"
-              key={type}
+              key={`${type}-${value}`}
             >
               <span className="autocomplete-display__type">
                 {type}

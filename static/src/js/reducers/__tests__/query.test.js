@@ -1,25 +1,32 @@
 import queryReducer from '../query'
-import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY, RESTORE_FROM_URL } from '../../constants/actionTypes'
+import {
+  UPDATE_COLLECTION_QUERY,
+  UPDATE_GRANULE_QUERY,
+  RESTORE_FROM_URL,
+  CLEAR_FILTERS,
+  UPDATE_REGION_QUERY
+} from '../../constants/actionTypes'
+
+const initialState = {
+  collection: {
+    gridName: '',
+    pageNum: 1,
+    spatial: {},
+    temporal: {},
+    hasGranulesOrCwic: true
+  },
+  granule: {
+    gridCoords: '',
+    pageNum: 1
+  },
+  region: {
+    exact: false
+  }
+}
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
     const action = { type: 'dummy_action' }
-    const initialState = {
-      collection: {
-        gridName: '',
-        pageNum: 1,
-        spatial: {},
-        temporal: {},
-        hasGranulesOrCwic: true
-      },
-      granule: {
-        gridCoords: '',
-        pageNum: 1
-      },
-      region: {
-        exact: false
-      }
-    }
 
     expect(queryReducer(undefined, action)).toEqual(initialState)
   })
@@ -138,6 +145,29 @@ describe('UPDATE_GRANULE_QUERY', () => {
   })
 })
 
+describe('UPDATE_REGION_QUERY', () => {
+  test('returns the correct state', () => {
+    const payload = {
+      exact: false,
+      endpoint: 'region',
+      keyword: 'test value'
+    }
+    const action = {
+      type: UPDATE_REGION_QUERY,
+      payload
+    }
+
+    const expectedState = {
+      ...initialState,
+      region: {
+        ...payload
+      }
+    }
+
+    expect(queryReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
 describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
     const query = {
@@ -158,5 +188,13 @@ describe('RESTORE_FROM_URL', () => {
     const expectedState = query
 
     expect(queryReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('CLEAR_FILTERS', () => {
+  test('returns the correct state', () => {
+    const action = { type: CLEAR_FILTERS }
+
+    expect(queryReducer(undefined, action)).toEqual(initialState)
   })
 })

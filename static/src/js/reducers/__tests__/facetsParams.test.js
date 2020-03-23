@@ -10,7 +10,10 @@ import {
   UPDATE_SELECTED_CMR_FACET,
   UPDATE_SELECTED_FEATURE_FACET,
   UPDATE_SELECTED_VIEW_ALL_FACET,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  CLEAR_FILTERS,
+  ADD_CMR_FACET,
+  REMOVE_CMR_FACET
 } from '../../constants/actionTypes'
 
 describe('cmrFacetsReducer', () => {
@@ -63,6 +66,60 @@ describe('cmrFacetsReducer', () => {
       const expectedState = cmrFacets
 
       expect(cmrFacetsReducer(undefined, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('ADD_CMR_FACET', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: ADD_CMR_FACET,
+        payload: {
+          platform_h: 'Terra'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        platform_h: ['Aqua']
+      }
+
+      const expectedState = {
+        ...initialState,
+        platform_h: ['Aqua', 'Terra']
+      }
+
+      expect(cmrFacetsReducer(initial, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('REMOVE_CMR_FACET', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: REMOVE_CMR_FACET,
+        payload: {
+          platform_h: 'Terra'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        platform_h: ['Aqua', 'Terra']
+      }
+
+      const expectedState = {
+        ...initialState,
+        platform_h: ['Aqua']
+      }
+
+      expect(cmrFacetsReducer(initial, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('CLEAR_FILTERS', () => {
+    test('returns the correct state', () => {
+      const action = { type: CLEAR_FILTERS }
+
+      expect(cmrFacetsReducer(undefined, action)).toEqual(initialState)
     })
   })
 })
@@ -118,6 +175,14 @@ describe('featureFacetsReducer', () => {
       const expectedState = featureFacets
 
       expect(featureFacetsReducer(undefined, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('CLEAR_FILTERS', () => {
+    test('returns the correct state', () => {
+      const action = { type: CLEAR_FILTERS }
+
+      expect(featureFacetsReducer(undefined, action)).toEqual(initialState)
     })
   })
 })

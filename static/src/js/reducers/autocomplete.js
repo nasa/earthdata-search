@@ -8,7 +8,8 @@ import {
   UPDATE_AUTOCOMPLETE_SELECTED,
   DELETE_AUTOCOMPLETE_VALUE,
   RESTORE_FROM_URL,
-  CLEAR_AUTOCOMPLETE_SELECTED
+  CLEAR_AUTOCOMPLETE_SELECTED,
+  CLEAR_FILTERS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -89,6 +90,9 @@ const autocompleteReducer = (state = initialState, action) => {
         ...state,
         selected: autocompleteSelected
       }
+    }
+    case CLEAR_FILTERS: {
+      return initialState
     }
     default:
       return state

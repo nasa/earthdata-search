@@ -1,10 +1,15 @@
+import { findIndex } from 'lodash'
+
 import {
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   UPDATE_SELECTED_FEATURE_FACET,
   UPDATE_SELECTED_CMR_FACET,
   UPDATE_SELECTED_VIEW_ALL_FACET,
   COPY_CMR_FACETS_TO_VIEW_ALL,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  CLEAR_FILTERS,
+  ADD_CMR_FACET,
+  REMOVE_CMR_FACET
 } from '../constants/actionTypes'
 
 const initialCmrState = {}
@@ -18,20 +23,51 @@ const initialFeatureState = {
 const initialViewAllState = {}
 
 export const cmrFacetsReducer = (state = initialCmrState, action) => {
-  switch (action.type) {
+  const { payload, type } = action
+
+  switch (type) {
     case UPDATE_SELECTED_CMR_FACET: {
       return {
         ...state,
-        ...action.payload
+        ...payload
       }
     }
     case RESTORE_FROM_URL: {
-      const { cmrFacets } = action.payload
+      const { cmrFacets } = payload
 
       return {
         ...state,
         ...cmrFacets
       }
+    }
+    case ADD_CMR_FACET: {
+      const [key] = Object.keys(payload)
+      const previousValues = state[key] || []
+
+      return {
+        ...state,
+        [key]: [
+          ...previousValues,
+          payload[key]
+        ]
+      }
+    }
+    case REMOVE_CMR_FACET: {
+      const [key] = Object.keys(payload)
+      const value = payload[key]
+
+      const index = findIndex(state[key], item => item === value)
+
+      return {
+        ...state,
+        [key]: [
+          ...state[key].slice(0, index),
+          ...state[key].slice(index + 1)
+        ]
+      }
+    }
+    case CLEAR_FILTERS: {
+      return initialCmrState
     }
     default:
       return state
@@ -53,6 +89,9 @@ export const featureFacetsReducer = (state = initialFeatureState, action) => {
         ...state,
         ...featureFacets
       }
+    }
+    case CLEAR_FILTERS: {
+      return initialFeatureState
     }
     default:
       return state

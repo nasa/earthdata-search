@@ -56,25 +56,6 @@ describe('SearchForm component', () => {
     expect(enzymeWrapper.state().keywordSearch).toEqual('new value')
   })
 
-  test('onKeywordBlur calls onChangeQuery', () => {
-    const { enzymeWrapper, props } = setup()
-    // const input = enzymeWrapper.find(Autosuggest)
-
-    // input.simulate('change', 'keywordSearch', 'new value')
-    // input.simulate('blur')
-    enzymeWrapper.setState({ keywordSearch: 'new value' })
-    enzymeWrapper.instance().onKeywordBlur()
-
-    expect(props.onChangeQuery.mock.calls.length).toBe(1)
-    expect(props.onChangeQuery.mock.calls[0]).toEqual([{
-      collection: {
-        keyword: 'new value'
-      }
-    }])
-    expect(props.onChangeFocusedCollection.mock.calls.length).toBe(1)
-    expect(props.onChangeFocusedCollection.mock.calls[0]).toEqual([''])
-  })
-
   test('should call onClearFilters when the Clear Button is clicked', () => {
     const { enzymeWrapper, props } = setup()
     const button = enzymeWrapper.find('.search-form__button--clear')

@@ -21,7 +21,9 @@ import {
   UPDATE_AUTOCOMPLETE_SUGGESTIONS,
   UPDATE_AUTOCOMPLETE_SELECTED,
   DELETE_AUTOCOMPLETE_VALUE,
-  CLEAR_AUTOCOMPLETE_SELECTED
+  CLEAR_AUTOCOMPLETE_SELECTED,
+  ADD_CMR_FACET,
+  REMOVE_CMR_FACET
 } from '../../constants/actionTypes'
 import actions from '..'
 
@@ -184,21 +186,29 @@ describe('selectAutocompleteSuggestion', () => {
     const store = mockStore({})
 
     const data = {
-      type: 'mock type',
-      value: 'mock value'
+      suggestion: {
+        type: 'instrument',
+        value: 'mock value'
+      }
     }
 
     store.dispatch(selectAutocompleteSuggestion(data))
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
+      type: ADD_CMR_FACET,
+      payload: {
+        instrument_h: 'mock value'
+      }
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_AUTOCOMPLETE_SELECTED,
       payload: data
     })
 
     // was getCollections called
     expect(changeQueryMock).toHaveBeenCalledTimes(1)
-    expect(changeQueryMock).toHaveBeenCalledWith({ collection: { keyword: '' } })
+    expect(changeQueryMock).toHaveBeenCalledWith({ collection: { pageNum: 1, keyword: '' } })
   })
 })
 
@@ -210,7 +220,7 @@ describe('removeAutocompleteValue', () => {
     const store = mockStore({})
 
     const data = {
-      type: 'mock type',
+      type: 'instrument',
       value: 'mock value'
     }
 
@@ -218,6 +228,12 @@ describe('removeAutocompleteValue', () => {
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
+      type: REMOVE_CMR_FACET,
+      payload: {
+        instrument_h: 'mock value'
+      }
+    })
+    expect(storeActions[1]).toEqual({
       type: DELETE_AUTOCOMPLETE_VALUE,
       payload: data
     })

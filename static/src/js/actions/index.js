@@ -57,9 +57,11 @@ import {
   updateStore
 } from './urlQuery'
 import {
+  addCmrFacet,
   changeCmrFacet,
-  updateCmrFacet,
   changeFeatureFacet,
+  removeCmrFacet,
+  updateCmrFacet,
   updateFeatureFacet
 } from './facets'
 import {
@@ -135,6 +137,7 @@ import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
 import {
   clearAutocompleteSelected,
   clearAutocompleteSuggestions,
+  deleteAutocompleteValue,
   fetchAutocomplete,
   removeAutocompleteValue,
   selectAutocompleteSuggestion
@@ -142,6 +145,7 @@ import {
 
 const actions = {
   addAccessMethods,
+  addCmrFacet,
   addProjectCollection,
   adminIsAuthorized,
   adminViewRetrieval,
@@ -168,6 +172,7 @@ const actions = {
   clearFilters,
   clearShapefile,
   collectionRelevancyMetrics,
+  deleteAutocompleteValue,
   deleteRetrieval,
   deleteSavedProject,
   excludeGranule,
@@ -195,6 +200,7 @@ const actions = {
   loadPortalConfig,
   logout,
   removeAutocompleteValue,
+  removeCmrFacet,
   removeCollectionFromProject,
   removeError,
   removeGridFilter,
@@ -204,8 +210,8 @@ const actions = {
   restoreProject,
   saveShapefile,
   selectAccessMethod,
-  setActivePanel,
   selectAutocompleteSuggestion,
+  setActivePanel,
   setSavedProjects,
   shapefileErrored,
   shapefileLoading,

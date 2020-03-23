@@ -7,7 +7,8 @@ import {
   LOADING_AUTOCOMPLETE,
   RESTORE_FROM_URL,
   UPDATE_AUTOCOMPLETE_SELECTED,
-  UPDATE_AUTOCOMPLETE_SUGGESTIONS
+  UPDATE_AUTOCOMPLETE_SUGGESTIONS,
+  CLEAR_FILTERS
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -201,5 +202,13 @@ describe('RESTORE_FROM_URL', () => {
     }
 
     expect(autocompleteReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('CLEAR_FILTERS', () => {
+  test('returns the correct state', () => {
+    const action = { type: CLEAR_FILTERS }
+
+    expect(autocompleteReducer(undefined, action)).toEqual(initialState)
   })
 })
