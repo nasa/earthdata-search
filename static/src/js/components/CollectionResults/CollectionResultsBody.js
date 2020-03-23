@@ -27,7 +27,7 @@ const CollectionResultsBody = ({
   scrollContainer,
   panelView
 }) => {
-  const { allIds: collectionIds, hits: collectionHits } = collections
+  const { allIds: collectionIds, hits: collectionHits, isLoading } = collections
 
   const collectionList = useMemo(() => collectionIds.map((collectionId, index) => {
     const collection = collections.byId[collectionId]
@@ -137,6 +137,7 @@ const CollectionResultsBody = ({
             onViewCollectionDetails={onViewCollectionDetails}
             waypointEnter={waypointEnter}
             scrollContainer={scrollContainer}
+            isLoading={isLoading}
           />
         )
       }

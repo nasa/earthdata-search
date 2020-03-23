@@ -5,6 +5,9 @@ import { useTable, useBlockLayout } from 'react-table'
 import classNames from 'classnames'
 import { Waypoint } from 'react-waypoint'
 
+import Skeleton from '../Skeleton/Skeleton'
+import { rowContentLarge } from './skeleton'
+
 import './EDSCTable.scss'
 
 const EDSCTable = ({
@@ -53,20 +56,28 @@ const EDSCTable = ({
           }}
         >
           {
-            columns.map((column) => {
+            columns.map((column, i) => {
               const tdClasses = classNames([
                 'edsc-table__td',
                 'edsc-table__td--skeleton'
               ])
 
+              const key = `edsc-table-${id}-${i}`
+
               return (
                 <div
+                  key={key}
                   className={tdClasses}
                   role="cell"
                   style={{
                     width: `${column.width}px`
                   }}
-                />
+                >
+                  <Skeleton
+                    containerStyle={{ height: '18px', width: `${column.width * 0.8}px` }}
+                    shapes={rowContentLarge}
+                  />
+                </div>
               )
             })
           }

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Col, Form, Row } from 'react-bootstrap'
+import classNames from 'classnames'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { commafy } from '../../util/commafy'
@@ -15,6 +16,7 @@ import './CollectionResultsHeader.scss'
 const CollectionResultsHeader = ({
   collections,
   collectionQuery,
+  panelView,
   portal,
   onChangeQuery,
   onMetricsCollectionSortChange,
@@ -71,6 +73,20 @@ const CollectionResultsHeader = ({
   const { hasGranulesOrCwic = false, tagKey } = collectionQuery
   const isHasGranulesChecked = hasGranulesOrCwic
   const isNonEosdisChecked = tagKey !== getApplicationConfig().eosdisTagKey
+
+  const viewButtonListClasses = classNames([
+    'collection-results-header__view-button',
+    {
+      'collection-results-header__view-button--is-active': panelView === 'list'
+    }
+  ])
+
+  const viewButtonTableClasses = classNames([
+    'collection-results-header__view-button',
+    {
+      'collection-results-header__view-button--is-active': panelView === 'table'
+    }
+  ])
 
   return (
     <div className="collection-results-header">
@@ -155,11 +171,7 @@ const CollectionResultsHeader = ({
             </span>
           </div>
         </div>
-        <Button
-          onClick={() => { onChangePanelView('list') }}
-        >
-          Toggle the view
-        </Button>
+
       </div>
       <div className="collection-results-header__meta">
         <span className="collection-results-header__collection-count">
@@ -173,6 +185,22 @@ const CollectionResultsHeader = ({
           }
           {!initialLoading && `Showing ${commafy(collectionResultCount)} of ${commafy(collectionHits)} matching ${pluralize('collection', parseInt(collectionHits, 10))}`}
         </span>
+        <span className="collection-results-header__view">
+          <Button
+            className={viewButtonListClasses}
+            variant="naked"
+            icon="list"
+            label="Switch to list view"
+            onClick={() => { onChangePanelView('list') }}
+          />
+          <Button
+            className={viewButtonTableClasses}
+            variant="naked"
+            icon="table"
+            label="Switch to table view"
+            onClick={() => { onChangePanelView('table') }}
+          />
+        </span>
       </div>
     </div>
   )
@@ -181,6 +209,7 @@ const CollectionResultsHeader = ({
 CollectionResultsHeader.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
+  panelView: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
