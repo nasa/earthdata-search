@@ -34,15 +34,20 @@ export const CollectionResultsItem = ({
     hasVariables,
     hasMapImagery,
     isCwic,
+    isCollectionInProject,
+    isLast,
     isNrt,
+    shortName,
     temporalRange,
     thumbnail,
-    isLast,
-    isCollectionInProject
+    versionId
   } = collection
 
-  const thumbnailHeight = getApplicationConfig().thumbnailSize.height
-  const thumbnailWidth = getApplicationConfig().thumbnailSize.width
+  const { thumbnailSize } = getApplicationConfig()
+  const {
+    height: thumbnailHeight,
+    width: thumbnailWidth
+  } = thumbnailSize
 
   const customizeBadges = []
 
@@ -320,15 +325,15 @@ export const CollectionResultsItem = ({
             }
             {
               (
-                collection.short_name
-                && collection.version_id
+                shortName
+                && versionId
                 && displayOrganization
               ) && (
                 <Badge
                   className="badge collection-results-item__badge collection-results-item__badge--attribution"
                 >
                   {
-                    `${collection.short_name} v${collection.version_id} - ${displayOrganization}`
+                    `${shortName} v${versionId} - ${displayOrganization}`
                   }
                 </Badge>
               )
@@ -359,8 +364,8 @@ CollectionResultsItem.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
-  waypointEnter: PropTypes.func.isRequired,
-  scrollContainer: PropTypes.instanceOf(Element)
+  scrollContainer: PropTypes.instanceOf(Element),
+  waypointEnter: PropTypes.func.isRequired
 }
 
 export default CollectionResultsItem

@@ -75,14 +75,14 @@ CollectionResultsList.defaultProps = {
 
 CollectionResultsList.propTypes = {
   collections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  isLoading: PropTypes.bool.isRequired,
   portal: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   waypointEnter: PropTypes.func.isRequired,
-  scrollContainer: PropTypes.instanceOf(Element),
-  isLoading: PropTypes.bool.isRequired
+  scrollContainer: PropTypes.instanceOf(Element)
 }
 
 export default CollectionResultsList

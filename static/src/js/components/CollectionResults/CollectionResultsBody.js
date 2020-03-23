@@ -165,6 +165,7 @@ CollectionResultsBody.defaultProps = {
 CollectionResultsBody.propTypes = {
   browser: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
+  panelView: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   location: PropTypes.shape({}).isRequired,
@@ -172,7 +173,6 @@ CollectionResultsBody.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  panelView: PropTypes.string.isRequired,
   scrollContainer: PropTypes.instanceOf(Element),
   waypointEnter: PropTypes.func.isRequired
 }
