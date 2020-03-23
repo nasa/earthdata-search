@@ -19,7 +19,9 @@ function setup(propsOverride) {
     collectionQuery: {
       pageNum: 1
     },
+    panelView: 'list',
     portal: {},
+    onChangePanelView: jest.fn(),
     onChangeQuery: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn(),

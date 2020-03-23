@@ -4,37 +4,20 @@ import Adapter from 'enzyme-adapter-react-16'
 import CollectionResultsList from '../CollectionResultsList'
 import CollectionResultsItem from '../CollectionResultsItem'
 
-// TODO: Write more tests
-
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(propsOverride = {}) {
   const props = {
-    browser: {
-      name: 'browser name'
-    },
-    collections: {
-      allIds: ['collectionId1', 'collectionId2'],
-      byId: {
-        collectionId1: {
-          id: 'collectionId1'
-        },
-        collectionId2: {
-          id: 'collectionId2'
-        }
-      },
-      hits: '181',
-      isLoaded: true,
-      isLoading: false,
-      loadTime: 1150,
-      timerStart: null
-    },
+    collections: [{
+      datasetId: 'Collection Titlte 1',
+      collectionId: 'collectionId1'
+    }, {
+      datasetId: 'Collection Titlte 2',
+      collectionId: 'collectionId2'
+    }],
+    isLoading: false,
     portal: {
       portalId: ''
-    },
-    projectIds: [],
-    location: {
-      pathname: '/test'
     },
     onAddProjectCollection: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
@@ -69,11 +52,6 @@ describe('CollectionResultsList component', () => {
     expect(enzymeWrapper.find(CollectionResultsItem).length).toEqual(2)
   })
 
-  test('sets the is last prop on the last list item', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find(CollectionResultsItem).at(1).props().isLast).toEqual(true)
-  })
-
   test('should pass the scrollContainer to the items', () => {
     const { enzymeWrapper, props } = setup({
       isLast: true
@@ -86,15 +64,8 @@ describe('CollectionResultsList component', () => {
   describe('loading list item', () => {
     test('shows on first load', () => {
       const { enzymeWrapper } = setup({
-        collections: {
-          allIds: [],
-          byId: {},
-          hits: null,
-          isLoaded: false,
-          isLoading: true,
-          loadTime: 0,
-          timerStart: null
-        }
+        collections: [],
+        isLoading: true
       })
 
       expect(enzymeWrapper.find('.collection-results-list__loading').length).toEqual(1)
@@ -102,22 +73,14 @@ describe('CollectionResultsList component', () => {
 
     test('shows when additional items are being loaded', () => {
       const { enzymeWrapper } = setup({
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {
-            collectionId1: {
-              id: 'collectionId1'
-            },
-            collectionId2: {
-              id: 'collectionId2'
-            }
-          },
-          hits: '181',
-          isLoaded: true,
-          isLoading: true,
-          loadTime: 1150,
-          timerStart: null
-        }
+        collections: [{
+          datasetId: 'Collection Titlte 3',
+          collectionId: 'collectionId3'
+        }, {
+          datasetId: 'Collection Titlte 4',
+          collectionId: 'collectionId4'
+        }],
+        isLoading: true
       })
 
       expect(enzymeWrapper.find(CollectionResultsItem).length).toEqual(2)

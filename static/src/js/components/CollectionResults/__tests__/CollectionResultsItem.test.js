@@ -6,9 +6,7 @@ import { Waypoint } from 'react-waypoint'
 
 import CollectionResultsItem from '../CollectionResultsItem'
 import SplitBadge from '../../SplitBadge/SplitBadge'
-import { collectionListItemProps, longSummary } from './mocks'
-
-// TODO: Write more tests
+import { collectionListItemProps } from './mocks'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -92,48 +90,11 @@ describe('CollectionResultsList component', () => {
   })
 
   describe('collection description', () => {
-    test('renders standard description correctly', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.collection-results-item__desc').text())
-        .toContain('This is a short summary.')
-    })
-
-    describe('renders long description correctly', () => {
-      test('for ie browsers', () => {
-        const { enzymeWrapper } = setup({
-          browser: {
-            name: 'ie'
-          },
-          collection: {
-            ...collectionListItemProps.collection,
-            summary: longSummary
-          }
-        })
-
-        expect(enzymeWrapper.find('.collection-results-item__desc').text())
-          .toContain('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt...')
-      })
-
-      test('for non-ie browsers', () => {
-        const { enzymeWrapper } = setup({
-          browser: {
-            name: 'something else'
-          },
-          collection: {
-            ...collectionListItemProps.collection,
-            summary: longSummary
-          }
-        })
-        expect(enzymeWrapper.find('.collection-results-item__desc').text())
-          .toContain(longSummary)
-      })
-    })
-
     test('renders a cwic collection correctly', () => {
       const { enzymeWrapper } = setup({
         collection: {
           ...collectionListItemProps.collection,
-          is_cwic: true
+          isCwic: true
         }
       })
       expect(enzymeWrapper.find('.collection-results-item__desc').text())
@@ -144,7 +105,7 @@ describe('CollectionResultsList component', () => {
       const { enzymeWrapper } = setup({
         collection: {
           ...collectionListItemProps.collection,
-          granule_count: 1
+          granuleCount: 1
         }
       })
       expect(enzymeWrapper.find('.collection-results-item__desc').text())
@@ -155,7 +116,7 @@ describe('CollectionResultsList component', () => {
       const { enzymeWrapper } = setup({
         collection: {
           ...collectionListItemProps.collection,
-          granule_count: 0
+          granuleCount: 0
         }
       })
       expect(enzymeWrapper.find('.collection-results-item__desc').text())
@@ -173,7 +134,7 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            time_end: null
+            temporalRange: '2010-10-10 ongoing'
           }
         })
         expect(enzymeWrapper.find('.collection-results-item__desc').text())
@@ -184,7 +145,7 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            time_start: null
+            temporalRange: 'Up to 2011-10-10'
           }
         })
         expect(enzymeWrapper.find('.collection-results-item__desc').text())
@@ -220,7 +181,7 @@ describe('CollectionResultsList component', () => {
     })
 
     describe('cwic badge', () => {
-      test('does not render when is_cwic is not set', () => {
+      test('does not render when isCwic is not set', () => {
         const { enzymeWrapper } = setup()
         expect(enzymeWrapper.find('.collection-results-item__badge--cwic').length).toEqual(0)
       })
@@ -230,7 +191,7 @@ describe('CollectionResultsList component', () => {
           const { enzymeWrapper } = setup({
             collection: {
               ...collectionListItemProps.collection,
-              is_cwic: true
+              isCwic: true
             }
           })
           expect(enzymeWrapper.find('.collection-results-item__badge--cwic').length).toEqual(1)
@@ -241,7 +202,7 @@ describe('CollectionResultsList component', () => {
           const { enzymeWrapper } = setup({
             collection: {
               ...collectionListItemProps.collection,
-              is_cwic: true
+              isCwic: true
             }
           })
 
@@ -253,7 +214,7 @@ describe('CollectionResultsList component', () => {
     })
 
     describe('map imagery badge', () => {
-      test('does not render when has_map_imagery not set', () => {
+      test('does not render when hasMapImagery not set', () => {
         const { enzymeWrapper } = setup()
         expect(enzymeWrapper.find('.collection-results-item__badge--map-imagery').length).toEqual(0)
       })
@@ -263,7 +224,7 @@ describe('CollectionResultsList component', () => {
           const { enzymeWrapper } = setup({
             collection: {
               ...collectionListItemProps.collection,
-              has_map_imagery: true
+              hasMapImagery: true
             }
           })
           expect(enzymeWrapper.find('.collection-results-item__badge--map-imagery').length).toEqual(1)
@@ -274,7 +235,7 @@ describe('CollectionResultsList component', () => {
           const { enzymeWrapper } = setup({
             collection: {
               ...collectionListItemProps.collection,
-              has_map_imagery: true
+              hasMapImagery: true
             }
           })
 
@@ -286,7 +247,7 @@ describe('CollectionResultsList component', () => {
     })
 
     describe('near real time badge', () => {
-      test('does not render when has_map_imagery not set', () => {
+      test('does not render when hasMapImagery not set', () => {
         const { enzymeWrapper } = setup()
         expect(enzymeWrapper.find('.collection-results-item__badge--near-real-time').length).toEqual(0)
       })
@@ -296,7 +257,7 @@ describe('CollectionResultsList component', () => {
           const { enzymeWrapper } = setup({
             collection: {
               ...collectionListItemProps.collection,
-              is_nrt: true
+              isNrt: true
             }
           })
           expect(enzymeWrapper.find('.collection-results-item__badge--near-real-time').length).toEqual(1)
@@ -308,7 +269,7 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            is_nrt: true
+            isNrt: true
           }
         })
 
@@ -330,7 +291,7 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            has_spatial_subsetting: true
+            hasSpatialSubsetting: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
@@ -353,7 +314,7 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            has_variables: true
+            hasVariables: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
@@ -376,7 +337,7 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            has_transforms: true
+            hasTransforms: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
@@ -399,7 +360,7 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            has_formats: true
+            hasFormats: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
@@ -422,7 +383,7 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            has_temporal_subsetting: true
+            hasTemporalSubsetting: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
@@ -453,7 +414,10 @@ describe('CollectionResultsList component', () => {
     describe('when the last item in the list', () => {
       test('renders the waypoint', () => {
         const { enzymeWrapper } = setup({
-          isLast: true
+          collection: {
+            ...collectionListItemProps.collection,
+            isLast: true
+          }
         })
         expect(enzymeWrapper.find(Waypoint).length)
           .toEqual(1)
@@ -461,7 +425,10 @@ describe('CollectionResultsList component', () => {
 
       test('should pass the scrollContainer to the Waypoint', () => {
         const { enzymeWrapper, props } = setup({
-          isLast: true
+          collection: {
+            ...collectionListItemProps.collection,
+            isLast: true
+          }
         })
 
         expect(enzymeWrapper.find('Waypoint').prop('scrollableAncestor'))
@@ -489,20 +456,22 @@ describe('CollectionResultsList component', () => {
 
   describe('removeFromProjectButton', () => {
     test('shows the remove button when the collection is in the project', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
-        isCollectionInProject: true
+      const { enzymeWrapper } = setup({
+        collection: {
+          ...collectionListItemProps.collection,
+          isCollectionInProject: true
+        }
       })
 
       expect(enzymeWrapper.find('.collection-results-item__action--remove').exists()).toBeTruthy()
     })
 
     test('clicking the button removes the collection from the project', () => {
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.setProps({
-        isCollectionInProject: true
+      const { enzymeWrapper, props } = setup({
+        collection: {
+          ...collectionListItemProps.collection,
+          isCollectionInProject: true
+        }
       })
 
       const button = enzymeWrapper.find('.collection-results-item__action--remove')
