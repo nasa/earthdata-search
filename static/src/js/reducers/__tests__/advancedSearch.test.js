@@ -1,12 +1,18 @@
 import advancedSearchReducer from '../advancedSearch'
-import { UPDATE_ADVANCED_SEARCH, TOGGLE_DRAWING_NEW_LAYER } from '../../constants/actionTypes'
+import {
+  CLEAR_FILTERS,
+  RESTORE_FROM_URL,
+  TOGGLE_DRAWING_NEW_LAYER,
+  UPDATE_ADVANCED_SEARCH
+} from '../../constants/actionTypes'
+
+const initialState = {
+  regionSearch: {}
+}
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
     const action = { type: 'dummy_action' }
-    const initialState = {
-      regionSearch: {}
-    }
 
     expect(advancedSearchReducer(undefined, action)).toEqual(initialState)
   })
@@ -45,5 +51,40 @@ describe('TOGGLE_DRAWING_NEW_LAYER', () => {
         }
       }
     }, action)).toEqual(expectedState)
+  })
+})
+
+describe('RESTORE_FROM_URL', () => {
+  test('returns the correct state', () => {
+    const obj = {
+      testField: 'test field'
+    }
+    const action = {
+      type: RESTORE_FROM_URL,
+      payload: {
+        advancedSearch: obj
+      }
+    }
+
+    const expectedState = obj
+
+    expect(advancedSearchReducer(undefined, action)).toEqual(expectedState)
+  })
+
+  test('returns the initial state if no object exists', () => {
+    const action = {
+      type: RESTORE_FROM_URL,
+      payload: {}
+    }
+
+    expect(advancedSearchReducer(undefined, action)).toEqual(initialState)
+  })
+})
+
+describe('CLEAR_FILTERS', () => {
+  test('returns the correct state', () => {
+    const action = { type: CLEAR_FILTERS }
+
+    expect(advancedSearchReducer(undefined, action)).toEqual(initialState)
   })
 })

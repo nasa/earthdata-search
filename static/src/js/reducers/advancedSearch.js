@@ -1,7 +1,8 @@
 import {
   UPDATE_ADVANCED_SEARCH,
   RESTORE_FROM_URL,
-  TOGGLE_DRAWING_NEW_LAYER
+  TOGGLE_DRAWING_NEW_LAYER,
+  CLEAR_FILTERS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -27,6 +28,9 @@ const advancedSearchReducer = (state = initialState, action) => {
       const { advancedSearch = initialState } = action.payload
 
       return advancedSearch
+    }
+    case CLEAR_FILTERS: {
+      return initialState
     }
     default:
       return state

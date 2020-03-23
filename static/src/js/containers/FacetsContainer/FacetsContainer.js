@@ -8,7 +8,9 @@ import Facets from '../../components/Facets/Facets'
 
 const mapDispatchToProps = dispatch => ({
   onChangeCmrFacet:
-    (e, facetLinkInfo) => dispatch(actions.changeCmrFacet(e, facetLinkInfo)),
+    (e, facetLinkInfo, facet, applied) => dispatch(
+      actions.changeCmrFacet(e, facetLinkInfo, facet, applied)
+    ),
   onChangeFeatureFacet:
     (e, facetLinkInfo) => dispatch(actions.changeFeatureFacet(e, facetLinkInfo)),
   onTriggerViewAllFacets:

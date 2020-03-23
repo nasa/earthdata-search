@@ -3,7 +3,8 @@ import actions from './index'
 import {
   UPDATE_COLLECTION_QUERY,
   UPDATE_GRANULE_QUERY,
-  UPDATE_REGION_QUERY
+  UPDATE_REGION_QUERY,
+  CLEAR_FILTERS
 } from '../constants/actionTypes'
 import { clearExcludedGranules } from './granules'
 import { parseError } from '../../../../sharedUtils/parseError'
@@ -183,24 +184,10 @@ export const removeTemporalFilter = () => (dispatch) => {
 }
 
 export const clearFilters = () => (dispatch) => {
-  const query = {
-    collection: {
-      gridName: '',
-      keyword: '',
-      spatial: {},
-      temporal: {}
-    },
-    granule: {
-      gridCoords: ''
-    },
-    region: {
-      exact: false
-    }
-  }
+  dispatch({ type: CLEAR_FILTERS })
 
-  // Update Store
-  dispatch(actions.clearAutocompleteSelected())
-  dispatch(actions.updateAdvancedSearch({}))
-  dispatch(changeQuery(query))
-  dispatch(actions.clearShapefile())
+  dispatch(actions.getCollections())
+  dispatch(actions.getProjectCollections())
+  dispatch(actions.getGranules())
+  dispatch(actions.getTimeline())
 }

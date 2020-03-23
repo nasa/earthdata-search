@@ -81,12 +81,17 @@ export default class CollectionRequest extends Request {
       'collection_data_type',
       'concept_id',
       'data_center_h',
+      'granule_data_format',
       'granule_data_format_h',
+      'instrument',
       'instrument_h',
+      'platform',
       'platform_h',
       'processing_level_id_h',
       'project_h',
+      'provider',
       'sort_key',
+      'spatial_keyword',
       'tag_key'
     ]
   }

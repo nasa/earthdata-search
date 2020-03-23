@@ -66,13 +66,19 @@ class FacetsGroup extends Component {
       facetCategory,
       facetOptions
     } = this.props
+    const {
+      autocompleteType,
+      changeHandler,
+      children,
+      title
+    } = facet
 
     const { isOpen } = this.state
 
     const headerInfo = this.renderHeaderInfo()
 
     return (
-      <li className="facets-group" key={facet.title}>
+      <li className="facets-group" key={title}>
         <h3 className="facets-group__heading">
           <button
             className="btn btn-block facets-group__button"
@@ -80,7 +86,7 @@ class FacetsGroup extends Component {
             onClick={this.onToggle}
           >
             <span className="facets-group__title">
-              {facet.title}
+              {title}
             </span>
             <div className="facets-group__action">
               {
@@ -107,8 +113,9 @@ class FacetsGroup extends Component {
             </header>
           )}
           <FacetsList
-            changeHandler={facet.changeHandler}
-            facets={facet.children}
+            autocompleteType={autocompleteType}
+            changeHandler={changeHandler}
+            facets={children}
             facetCategory={facetCategory}
             liftSelectedFacets={facetOptions.liftSelectedFacets}
           />

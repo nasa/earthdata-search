@@ -32,7 +32,6 @@ class SearchForm extends Component {
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onAutoSuggestChange = this.onAutoSuggestChange.bind(this)
-    this.onKeywordBlur = this.onKeywordBlur.bind(this)
     this.onSearchClear = this.onSearchClear.bind(this)
     this.onToggleAdvancedSearch = this.onToggleAdvancedSearch.bind(this)
     this.onToggleFilterStack = this.onToggleFilterStack.bind(this)
@@ -52,24 +51,8 @@ class SearchForm extends Component {
 
   onFormSubmit(e) {
     e.preventDefault()
-
     document.getElementsByClassName('search-form__input').keywordSearch.blur()
-  }
 
-  /**
-   * AutoSuggest callback when the input value is changed
-   * @param {Object} event event object
-   * @param {Object} data object with the new value of the input
-   */
-  onAutoSuggestChange(event, data) {
-    const { newValue } = data
-    this.setState({ keywordSearch: newValue })
-  }
-
-  /**
-   * Callback when the keyword field is blurred
-   */
-  onKeywordBlur() {
     const {
       keywordSearch: propsKeyword,
       onChangeQuery,
@@ -85,6 +68,16 @@ class SearchForm extends Component {
         }
       })
     }
+  }
+
+  /**
+   * AutoSuggest callback when the input value is changed
+   * @param {Object} event event object
+   * @param {Object} data object with the new value of the input
+   */
+  onAutoSuggestChange(event, data) {
+    const { newValue } = data
+    this.setState({ keywordSearch: newValue })
   }
 
   onSearchClear() {
@@ -216,8 +209,7 @@ class SearchForm extends Component {
                 className: 'search-form__input',
                 placeholder: 'Search for collections or topics',
                 value: keywordSearch,
-                onChange: this.onAutoSuggestChange,
-                onBlur: this.onKeywordBlur
+                onChange: this.onAutoSuggestChange
               }}
             />
           </form>
