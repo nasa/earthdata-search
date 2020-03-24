@@ -51,4 +51,27 @@ describe('CollectionResultsBodyContainer component', () => {
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionGranules).toEqual('function')
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionDetails).toEqual('function')
   })
+
+  test('waypointEnter calls onChangeCollectionPageNum', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const collectionResultsBody = enzymeWrapper.find(CollectionResultsBody)
+
+    collectionResultsBody.prop('waypointEnter')({ event: { type: 'scroll' } })
+
+    setTimeout(() => {
+      expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(1)
+      expect(props.onChangeCollectionPageNum.mock.calls[0]).toEqual([2])
+    }, 0)
+  })
+
+  test('waypointEnter does not call onChangeCollectionPageNum if there is no scroll event', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const collectionResultsBody = enzymeWrapper.find(CollectionResultsBody)
+
+    collectionResultsBody.prop('waypointEnter')({ event: null })
+
+    expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(0)
+  })
 })

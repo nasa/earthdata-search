@@ -129,15 +129,15 @@ const CollectionResultsBody = ({
           <CollectionResultsList
             browser={browser}
             collections={collectionList}
+            isLoading={isLoading}
             portal={portal}
             projectIds={projectIds}
             onAddProjectCollection={onAddProjectCollection}
             onRemoveCollectionFromProject={onRemoveCollectionFromProject}
             onViewCollectionGranules={onViewCollectionGranules}
             onViewCollectionDetails={onViewCollectionDetails}
-            waypointEnter={waypointEnter}
             scrollContainer={scrollContainer}
-            isLoading={isLoading}
+            waypointEnter={waypointEnter}
           />
         )
       }
@@ -146,11 +146,11 @@ const CollectionResultsBody = ({
           <CollectionResultsTable
             collections={collectionList}
             collectionHits={parseInt(collectionHits, 10)}
-            waypointEnter={waypointEnter}
             onViewCollectionGranules={onViewCollectionGranules}
             onAddProjectCollection={onAddProjectCollection}
             onRemoveCollectionFromProject={onRemoveCollectionFromProject}
             onViewCollectionDetails={onViewCollectionDetails}
+            waypointEnter={waypointEnter}
           />
         )
       }
