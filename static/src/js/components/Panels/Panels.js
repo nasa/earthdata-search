@@ -81,6 +81,14 @@ export class Panels extends PureComponent {
       dragging
     } = this.state
 
+    const { show: propsShow } = this.props
+    const { show: prevPropsShow } = prevProps
+
+    // If the show prop has changed, update the state
+    if (propsShow !== prevPropsShow) {
+      this.updateShowState(propsShow)
+    }
+
     // Apply or remove the body is-panels-will-minimize class
     if ((show !== prevShow) || (prevWillMinimize !== willMinimize)) {
       // Only add the class if willMinimize is set AND the panel is showing
@@ -407,6 +415,10 @@ export class Panels extends PureComponent {
     this.handleClickIsValid = true
   }
 
+  updateShowState(show) {
+    this.setState({ show })
+  }
+
   /**
    * Update the panel with the new width.
    */
@@ -552,6 +564,7 @@ export class Panels extends PureComponent {
         ref={(node) => {
           this.container = node
         }}
+        data-test-id="panels-section"
       >
         {
           draggable && (
