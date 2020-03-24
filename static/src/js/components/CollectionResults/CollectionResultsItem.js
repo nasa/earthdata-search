@@ -345,7 +345,7 @@ export const CollectionResultsItem = ({
             <Waypoint
               bottomOffset="-200px"
               onEnter={waypointEnter}
-              scrollableAncestor={scrollContainer || window}
+              scrollableAncestor={scrollContainer}
             />
           )
         }
