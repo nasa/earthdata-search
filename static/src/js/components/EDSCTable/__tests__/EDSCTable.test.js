@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import EDSCTable from '../EDSCTable'
+import Cell from '../../CollectionResultsTable/Cell'
 
 import { collectionData } from './mocks'
 
@@ -12,7 +13,7 @@ function setup(overrideProps) {
   const props = {
     columns: [{
       Header: 'Version',
-      // Cell,
+      Cell,
       accessor: 'versionId',
       width: '100',
       customProps: {
@@ -21,6 +22,8 @@ function setup(overrideProps) {
     }],
     data: collectionData,
     id: 'test-table',
+    infiniteScrollTotal: 2,
+    infiniteScrollTrigger: jest.fn(),
     ...overrideProps
   }
 
@@ -33,8 +36,15 @@ function setup(overrideProps) {
 }
 
 describe('EDSCTable component', () => {
-  test('renders itself correctly', () => {
+  test('renders the table header correctly', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.type()).toBe('div')
+    const header = enzymeWrapper.find('.edsc-table__thead')
+    expect(header.text()).toEqual('Version')
+  })
+
+  test('renders the table cell correctly', () => {
+    const { enzymeWrapper } = setup()
+    const cell = enzymeWrapper.find('Cell')
+    expect(cell.props().data).toEqual(collectionData)
   })
 })

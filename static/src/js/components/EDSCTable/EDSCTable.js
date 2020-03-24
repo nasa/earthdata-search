@@ -1,4 +1,6 @@
 /* eslint-disable react/jsx-key */
+// Disabled because react-table adds the key prop
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useTable, useBlockLayout } from 'react-table'
