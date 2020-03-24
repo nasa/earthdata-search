@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import EDSCTable from '../EDSCTable/EDSCTable'
@@ -16,7 +16,7 @@ export const CollectionResultsTable = ({
   onViewCollectionDetails,
   waypointEnter
 }) => {
-  const columns = React.useMemo(() => [
+  const columns = useMemo(() => [
     {
       Header: 'Collection',
       Cell: CollectionCell,
