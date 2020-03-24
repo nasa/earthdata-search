@@ -187,6 +187,17 @@ describe('Panels component', () => {
       .text()).toEqual('A group footer')
   })
 
+  describe('After closing the panel', () => {
+    test('updates the state', () => {
+      const { enzymeWrapper } = setup()
+      enzymeWrapper.setProps({
+        show: false
+      })
+
+      expect(enzymeWrapper.state().show).toBeFalsy()
+    })
+  })
+
   describe('After switching a panel section', () => {
     test('renders the panel sections correctly', () => {
       const { enzymeWrapper } = setup()
