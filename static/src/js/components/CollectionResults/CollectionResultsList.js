@@ -27,8 +27,8 @@ export const CollectionResultsList = ({
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onViewCollectionGranules={onViewCollectionGranules}
         onViewCollectionDetails={onViewCollectionDetails}
-        waypointEnter={waypointEnter}
         scrollContainer={scrollContainer}
+        waypointEnter={waypointEnter}
       />
     )
   })

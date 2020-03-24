@@ -28,9 +28,8 @@ function setup(overrideProps) {
 }
 
 describe('CollectionResultsTable component', () => {
-  test('placeholder', () => {
-    setup()
-
-    expect(true).toBe(true)
+  test('renders itself correctly', () => {
+    const { enzymeWrapper } = setup()
+    expect(enzymeWrapper.type()).toBe('div')
   })
 })
