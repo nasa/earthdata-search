@@ -13,10 +13,12 @@
 
   &__cell {
     &--collection {
+      position: relative;
       display: flex !important;
       height: 3.5rem;
       align-items: center;
       justify-content: space-between;
+      z-index: 1;
     }
   }
 
