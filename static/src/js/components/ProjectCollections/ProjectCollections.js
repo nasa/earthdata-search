@@ -66,7 +66,7 @@ export class ProjectCollections extends Component {
       onToggleCollectionVisibility,
       onUpdateProjectName,
       project,
-      projectPanels,
+      panels,
       savedProject,
       mapProjection
     } = this.props
@@ -101,7 +101,7 @@ export class ProjectCollections extends Component {
           onToggleCollectionVisibility={onToggleCollectionVisibility}
           onSetActivePanel={onSetActivePanel}
           project={project}
-          projectPanels={projectPanels}
+          panels={panels}
           collectionSearch={collectionSearch}
           mapProjection={mapProjection}
         />
@@ -164,7 +164,7 @@ ProjectCollections.propTypes = {
   collectionSearch: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
+  panels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

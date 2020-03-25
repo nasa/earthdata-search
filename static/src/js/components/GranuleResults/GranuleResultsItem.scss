@@ -1,10 +1,19 @@
 .granule-results-item {
   margin: $spacer/2;
-  width: 16.75rem;
+  width: 15.75rem;
+  width: calc(50% - 1rem);
   background: $color__white;
   border: 1px solid $color__black--200;
   border-radius: $border-radius;
   box-shadow: $shadow__default;
+
+  .panels--lg & {
+    width: calc(33.33% - 1rem);
+  }
+
+  .panels--xl & {
+    width: calc(25% - 1rem);
+  }
 
   &__header {
     padding: $spacer/2;
@@ -39,7 +48,7 @@
   }
 
   &__thumb {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     align-self: flex-end;
@@ -49,6 +58,10 @@
     background-color: $color__black--900;
     overflow: hidden;
     font-size: 0.5rem;
+
+    .panels--sm & {
+      display: flex;
+    }
   }
 
   &__thumb-image {
@@ -60,17 +73,26 @@
   &__temporal {
     display: flex;
     flex-grow: 0;
-    align-items: center;
+    flex-direction: column;
     justify-content: space-between;
     padding: $spacer/4 $spacer/2 $spacer/4 $spacer/2;
+
+    .panels--sm & {
+      flex-direction: row;
+      align-items: center;
+    }
 
     h5 {
       margin: 0;
       padding: 0;
       display: inline-block;
-      font-size: 0.675rem;
+      font-size: 0.6rem;
       font-weight: 700;
       text-transform: uppercase;
+
+      .panels--sm & {
+        font-size: 0.675rem;
+      }
     }
 
     p {
@@ -90,7 +112,6 @@
 
     &--end {
       background: rgba(192,57,43,0.1);
-      border-bottom: 1px solid rgba(192,57,43,0.2);
 
       h5 {
         color: #c0392b;
@@ -102,6 +123,7 @@
     display: flex;
     width: auto;
     background: $color__black--100;
+    border-radius: 0 0 $border-radius $border-radius;
   }
 
   &__button {
@@ -118,11 +140,13 @@
     border: 1px solid $color__black--200;
     border-left: 0;
     border-radius: 0;
+    border-bottom: none;
     vertical-align: middle;
 
     &:hover {
       color: $color__black--500;
       border: 1px solid lighten($color__black--300, 10%);
+      border-bottom: none;
       border-left: 0;
     }
 
@@ -132,6 +156,10 @@
 
     .fa {
       font-size: 0.875em;
+    }
+
+    &:first-child {
+      border-radius: 0 0 0 $border-radius;
     }
   }
 

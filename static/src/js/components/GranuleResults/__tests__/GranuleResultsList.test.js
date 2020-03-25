@@ -199,16 +199,6 @@ describe('GranuleResultsList component', () => {
       .toEqual(props.scrollContainer)
   })
 
-  describe('while loading', () => {
-    test('renders the correct Skeleton elements', () => {
-      const { enzymeWrapper } = setup('loading')
-
-      expect(enzymeWrapper.find('.granule-results-list__header-item').at(0).find(Skeleton).length).toEqual(1)
-      expect(enzymeWrapper.find('.granule-results-list__header-item').at(1).find(Skeleton).length).toEqual(1)
-      expect(enzymeWrapper.find('.granule-results-list__list').find(Skeleton).length).toEqual(3)
-    })
-  })
-
   describe('while loading more pages', () => {
     test('renders the correct Skeleton elements', () => {
       const { enzymeWrapper } = setup('loadingMore')
@@ -218,18 +208,6 @@ describe('GranuleResultsList component', () => {
   })
 
   describe('when loaded', () => {
-    test('renders the correct visible granules and hits', () => {
-      const { enzymeWrapper } = setup('loaded')
-
-      expect(enzymeWrapper.find('.granule-results-list__header-item').at(0).text()).toEqual('Showing 2 of 23 matching granules')
-    })
-
-    test('renders the correct search time', () => {
-      const { enzymeWrapper } = setup('loaded')
-
-      expect(enzymeWrapper.find('.granule-results-list__header-item').at(1).text()).toEqual('Search Time: 1.5s')
-    })
-
     test('renders the correct GranuleResultsItem components', () => {
       const { enzymeWrapper } = setup('loaded')
 

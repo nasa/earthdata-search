@@ -22,7 +22,11 @@ function setup() {
     onRemoveCollectionFromProject: jest.fn(),
     onChangeCollectionPageNum: jest.fn(),
     onViewCollectionGranules: jest.fn(),
-    onViewCollectionDetails: jest.fn()
+    onViewCollectionDetails: jest.fn(),
+    panelScrollableNodeRef: {
+      current: null
+    },
+    panelView: 'list'
   }
 
   const enzymeWrapper = shallow(<CollectionResultsBodyContainer {...props} />)
@@ -55,8 +59,10 @@ describe('CollectionResultsBodyContainer component', () => {
 
     collectionResultsBody.prop('waypointEnter')({ event: { type: 'scroll' } })
 
-    expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(1)
-    expect(props.onChangeCollectionPageNum.mock.calls[0]).toEqual([2])
+    setTimeout(() => {
+      expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(1)
+      expect(props.onChangeCollectionPageNum.mock.calls[0]).toEqual([2])
+    }, 0)
   })
 
   test('waypointEnter does not call onChangeCollectionPageNum if there is no scroll event', () => {

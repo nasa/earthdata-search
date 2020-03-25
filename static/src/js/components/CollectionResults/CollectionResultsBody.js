@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import SimpleBar from 'simplebar-react'
-
 import CollectionResultsList from './CollectionResultsList'
+import CollectionResultsTable from '../CollectionResultsTable/CollectionResultsTable'
+import { formatCollectionList } from '../../util/formatCollectionList'
+
 
 import './CollectionResultsBody.scss'
 
@@ -14,67 +15,69 @@ import './CollectionResultsBody.scss'
  * @param {object} props.location - Locations passed from react router.
  * @param {function} props.onFocusedCollectionChange - Fired when a new collection is focused.
  */
-class CollectionResultsBody extends Component {
-  constructor() {
-    super()
-    this.getRef = this.getRef.bind(this)
-    this.wrapper = React.createRef()
-    this.scrollContainer = null
-  }
+const CollectionResultsBody = ({
+  browser,
+  collections,
+  portal,
+  projectIds,
+  waypointEnter,
+  onAddProjectCollection,
+  onRemoveCollectionFromProject,
+  onViewCollectionGranules,
+  onViewCollectionDetails,
+  scrollContainer,
+  panelView
+}) => {
+  const { allIds: collectionIds, hits: collectionHits, isLoading } = collections
 
-  componentDidMount() {
-    const {
-      current
-    } = this.wrapper
+  const collectionList = useMemo(() => formatCollectionList(collections, projectIds, browser),
+    [collectionIds, projectIds])
 
-    if (current) {
-      this.scrollContainer = current.querySelector('.simplebar-content-wrapper')
-    }
-  }
-
-  getRef(wrapper) {
-    this.wrapper = {
-      current: wrapper
-    }
-  }
-
-  render() {
-    const {
-      browser,
-      collections,
-      portal,
-      projectIds,
-      waypointEnter,
-      onAddProjectCollection,
-      onRemoveCollectionFromProject,
-      onViewCollectionGranules,
-      onViewCollectionDetails
-    } = this.props
-
-    return (
-      <div className="collection-results-body" ref={el => this.getRef(el)}>
-        <SimpleBar className="collection-results-body__scroll-container">
+  return (
+    <div className="collection-results-body">
+      {
+        panelView === 'list' && (
           <CollectionResultsList
             browser={browser}
-            collections={collections}
+            collections={collectionList}
+            isLoading={isLoading}
             portal={portal}
             projectIds={projectIds}
             onAddProjectCollection={onAddProjectCollection}
             onRemoveCollectionFromProject={onRemoveCollectionFromProject}
             onViewCollectionGranules={onViewCollectionGranules}
             onViewCollectionDetails={onViewCollectionDetails}
+            scrollContainer={scrollContainer}
             waypointEnter={waypointEnter}
-            scrollContainer={this.scrollContainer}
           />
-        </SimpleBar>
-      </div>
-    )
-  }
+        )
+      }
+      {
+        panelView === 'table' && (
+          <CollectionResultsTable
+            collections={collectionList}
+            collectionHits={parseInt(collectionHits, 10)}
+            onViewCollectionGranules={onViewCollectionGranules}
+            onAddProjectCollection={onAddProjectCollection}
+            onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+            onViewCollectionDetails={onViewCollectionDetails}
+            portal={portal}
+            waypointEnter={waypointEnter}
+          />
+        )
+      }
+    </div>
+  )
+}
+
+CollectionResultsBody.defaultProps = {
+  scrollContainer: null
 }
 
 CollectionResultsBody.propTypes = {
   browser: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
+  panelView: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   location: PropTypes.shape({}).isRequired,
@@ -82,6 +85,7 @@ CollectionResultsBody.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
+  scrollContainer: PropTypes.instanceOf(Element),
   waypointEnter: PropTypes.func.isRequired
 }
 

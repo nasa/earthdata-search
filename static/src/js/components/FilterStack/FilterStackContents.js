@@ -6,15 +6,19 @@ import './FilterStackContents.scss'
 const FilterStackContents = (props) => {
   const {
     body,
-    title
+    title,
+    showLabel
   } = props
 
   if (!title || !body) return null
 
+  const filterStackContentsClass = `filter-stack-contents ${showLabel ? 'filter-stack-contents--label-visible' : ''}`
+  const filterStackLabelClass = `filter-stack-contents__label ${showLabel ? 'filter-stack-contents__label--visible' : ''}`
+
   return (
-    <div className="filter-stack-contents">
+    <div className={filterStackContentsClass}>
       { title && (
-        <div className="filter-stack-contents__label">{`${title}:`}</div>
+        <div className={filterStackLabelClass}>{`${title}:`}</div>
       )}
       { body && <div className="filter-stack-contents__body">{body}</div>}
     </div>
@@ -23,11 +27,13 @@ const FilterStackContents = (props) => {
 
 FilterStackContents.defaultProps = {
   body: null,
+  showLabel: false,
   title: null
 }
 
 FilterStackContents.propTypes = {
   body: PropTypes.element,
+  showLabel: PropTypes.bool,
   title: PropTypes.string
 }
 

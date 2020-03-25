@@ -17,7 +17,6 @@ function setup(overrideProps) {
     project: {
       collectionsRequiringChunking: []
     },
-    onMasterOverlayHeightChange: jest.fn(),
     onSubmitRetrieval: jest.fn(),
     onToggleChunkedOrderModal: jest.fn(),
     ...overrideProps

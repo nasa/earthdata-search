@@ -11,17 +11,24 @@ const SidebarSection = (props) => {
 
   return (
     <section className="sidebar-section">
-      <header className="sidebar-section__header">
-        <h2 className="sidebar-section__title">{sectionTitle}</h2>
-        <i className="fa fa-times-circle sidebar-section__icon" />
-      </header>
+      {
+        sectionTitle && (
+          <header className="sidebar-section__header">
+            <h2 className="sidebar-section__title">{sectionTitle}</h2>
+          </header>
+        )
+      }
       {children}
     </section>
   )
 }
 
+SidebarSection.defaultProps = {
+  sectionTitle: null
+}
+
 SidebarSection.propTypes = {
-  sectionTitle: PropTypes.string.isRequired,
+  sectionTitle: PropTypes.string,
   children: PropTypes.node.isRequired
 }
 

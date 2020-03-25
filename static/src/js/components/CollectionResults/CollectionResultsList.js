@@ -7,38 +7,28 @@ import CollectionResultsItem from './CollectionResultsItem'
 import './CollectionResultsList.scss'
 
 export const CollectionResultsList = ({
-  browser,
   collections,
   portal,
-  projectIds,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionGranules,
   onViewCollectionDetails,
   waypointEnter,
-  scrollContainer
+  scrollContainer,
+  isLoading
 }) => {
-  const collectionIds = collections.allIds
-
-  const collectionResults = collectionIds.map((id, index) => {
-    const collection = collections.byId[id]
-    const isLast = collectionIds.length > 0 && index === collectionIds.length - 1
-
-    const isCollectionInProject = projectIds.indexOf(id) !== -1
-
+  const collectionResults = collections.map((collection, i) => {
+    const key = `${collection.id}-list-view-${i}`
     return (
       <CollectionResultsItem
-        key={collection.id}
-        browser={browser}
+        key={key}
         collection={collection}
-        isCollectionInProject={isCollectionInProject}
-        isLast={isLast}
         onAddProjectCollection={onAddProjectCollection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onViewCollectionGranules={onViewCollectionGranules}
         onViewCollectionDetails={onViewCollectionDetails}
-        waypointEnter={waypointEnter}
         scrollContainer={scrollContainer}
+        waypointEnter={waypointEnter}
       />
     )
   })
@@ -52,7 +42,7 @@ export const CollectionResultsList = ({
   return (
     <ul className="collection-results-list" data-test-id="collection-results-list">
       {collectionResults}
-      {collections.isLoading && (
+      {isLoading && (
         <li className="collection-results-list__loading">
           Loading collections...
         </li>
@@ -84,10 +74,9 @@ CollectionResultsList.defaultProps = {
 }
 
 CollectionResultsList.propTypes = {
-  browser: PropTypes.shape({}).isRequired,
-  collections: PropTypes.shape({}).isRequired,
+  collections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  isLoading: PropTypes.bool.isRequired,
   portal: PropTypes.shape({}).isRequired,
-  projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,

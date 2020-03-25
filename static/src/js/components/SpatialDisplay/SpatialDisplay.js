@@ -352,8 +352,9 @@ class SpatialDisplay extends Component {
 
     const contents = []
     const items = []
-    let entry
 
+    let entry
+    let secondaryTitle = ''
     let spatialError = error
 
     const {
@@ -443,6 +444,8 @@ class SpatialDisplay extends Component {
       ))
     }
 
+    let hint = ''
+
     if ((pointSearch && !drawingNewLayer) || drawingNewLayer === 'marker' || manuallyEntering === 'marker') {
       entry = (
         <SpatialDisplayEntry>
@@ -471,6 +474,8 @@ class SpatialDisplay extends Component {
           </Form.Row>
         </SpatialDisplayEntry>
       )
+
+      secondaryTitle = 'Point'
 
       contents.push((
         <FilterStackContents
@@ -535,11 +540,14 @@ class SpatialDisplay extends Component {
         </SpatialDisplayEntry>
       )
 
+      secondaryTitle = 'Rectangle'
+
       contents.push((
         <FilterStackContents
           key="filter__rectangle"
           body={entry}
           title="Rectangle"
+          variant="block"
         />
       ))
     } else if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
@@ -587,6 +595,8 @@ class SpatialDisplay extends Component {
         }
       }
 
+      secondaryTitle = 'Shape File'
+
       contents.push((
         <FilterStackContents
           key="filter__shapefile"
@@ -609,6 +619,12 @@ class SpatialDisplay extends Component {
           }
         </SpatialDisplayEntry>
       )
+
+      if (pointArray.length < 2) {
+        hint = 'Draw a polygon on the map to filter results'
+      }
+
+      secondaryTitle = 'Polygon'
 
       if (displaySpatialPolygonWarning) {
         spatialError = 'This collection does not support polygon search. Your polygon has been converted to a bounding box.'
@@ -639,8 +655,10 @@ class SpatialDisplay extends Component {
           key="item__spatial"
           icon="crop"
           title="Spatial"
+          secondaryTitle={secondaryTitle}
           error={drawingNewLayer ? '' : spatialError}
           onRemove={this.onSpatialRemove}
+          hint={hint}
         >
           {contents}
         </FilterStackItem>

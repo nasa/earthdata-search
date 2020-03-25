@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
 import { metricsDataAccess } from '../../middleware/metrics/actions'
-import { setActivePanel } from '../../actions/projectPanels'
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
 const mapDispatchToProps = dispatch => ({
@@ -13,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
   onToggleCollectionVisibility:
     collectionId => dispatch(actions.toggleCollectionVisibility(collectionId)),
   onSetActivePanel:
-    panelId => dispatch(setActivePanel(panelId)),
+    panelId => dispatch(actions.setActivePanel(panelId)),
   onUpdateProjectName:
     name => dispatch(actions.updateProjectName(name)),
   onMetricsDataAccess:
@@ -25,7 +24,7 @@ const mapStateToProps = state => ({
   collectionSearch: state.query.collection,
   mapProjection: state.map.projection,
   project: state.project,
-  projectPanels: state.projectPanels,
+  panels: state.panels,
   savedProject: state.savedProject
 })
 
@@ -35,7 +34,7 @@ export const ProjectCollectionsContainer = (props) => {
     collectionSearch,
     mapProjection,
     project,
-    projectPanels,
+    panels,
     savedProject,
     onMetricsDataAccess,
     onRemoveCollectionFromProject,
@@ -50,7 +49,7 @@ export const ProjectCollectionsContainer = (props) => {
       collectionSearch={collectionSearch}
       mapProjection={mapProjection}
       project={project}
-      projectPanels={projectPanels}
+      panels={panels}
       savedProject={savedProject}
       onMetricsDataAccess={onMetricsDataAccess}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
@@ -66,7 +65,7 @@ ProjectCollectionsContainer.propTypes = {
   collectionSearch: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
+  panels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

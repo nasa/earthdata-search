@@ -9,7 +9,6 @@ import { getFocusedCollectionObject } from '../../util/focusedCollection'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
-
 const mapDispatchToProps = dispatch => ({
   onChangeGranulePageNum:
     data => dispatch(actions.changeGranulePageNum(data)),
@@ -34,6 +33,7 @@ export const GranuleResultsBodyContainer = (props) => {
     focusedCollection,
     focusedGranule,
     granuleQuery,
+    isActive,
     location,
     onChangeGranulePageNum,
     onExcludeGranule,
@@ -56,10 +56,12 @@ export const GranuleResultsBodyContainer = (props) => {
   const { pageNum } = granuleQuery
 
   const onWaypointEnter = () => {
-    onChangeGranulePageNum({
-      collectionId: focusedCollection,
-      pageNum: pageNum + 1
-    })
+    if (isActive) {
+      onChangeGranulePageNum({
+        collectionId: focusedCollection,
+        pageNum: pageNum + 1
+      })
+    }
   }
 
   return (
@@ -84,6 +86,7 @@ GranuleResultsBodyContainer.propTypes = {
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
+  isActive: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,

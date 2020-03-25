@@ -1,4 +1,6 @@
 .temporal-selection {
+  margin-bottom: 0.5rem;
+
   &--is-recurring {
     .rdtMonths {
       table:first-child {
@@ -15,11 +17,21 @@
     margin-bottom: 0.25rem;
     font-size: 0.825em;
     font-weight: 700;
+
+    &:not(.form-check-label) {
+      display: block;
+    }
   }
 
   &__range-label {
     padding-left: 5px;
     font-size: 0.825em;
+  }
+
+  .datetime {
+    .form-control {
+      font-size: 0.925rem;
+    }
   }
 }
 

@@ -63,10 +63,6 @@ import {
   updateFeatureFacet
 } from './facets'
 import {
-  masterOverlayPanelDragEnd,
-  masterOverlayPanelDragStart,
-  masterOverlayPanelResize,
-  masterOverlayPanelToggle,
   toggleAdvancedSearchModal,
   toggleAboutCwicModal,
   toggleChunkedOrderModal,
@@ -90,6 +86,10 @@ import {
   changeFocusedGranule,
   getFocusedGranule
 } from './focusedGranule'
+import {
+  togglePanels,
+  setActivePanel
+} from './panels'
 import {
   addProjectCollection,
   getProjectCollections,
@@ -183,10 +183,6 @@ const actions = {
   handleError,
   loadPortalConfig,
   logout,
-  masterOverlayPanelDragEnd,
-  masterOverlayPanelDragStart,
-  masterOverlayPanelResize,
-  masterOverlayPanelToggle,
   removeCollectionFromProject,
   removeError,
   removeGridFilter,
@@ -196,6 +192,7 @@ const actions = {
   restoreProject,
   saveShapefile,
   selectAccessMethod,
+  setActivePanel,
   setSavedProjects,
   shapefileErrored,
   shapefileLoading,
@@ -207,6 +204,7 @@ const actions = {
   toggleDrawingNewLayer,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
+  togglePanels,
   toggleRelatedUrlsModal,
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,

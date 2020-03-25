@@ -15,6 +15,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     collectionSearch: {},
+    location: { search: '' },
     mapProjection: projections.geographic,
     ...overrideProps
   }

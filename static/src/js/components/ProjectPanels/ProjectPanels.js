@@ -22,7 +22,7 @@ import './ProjectPanels.scss'
  * Renders ProjectPanels.
  * @param {object} props - The props passed into the component.
  * @param {object} props.collections - The current collections from the state.
- * @param {object} props.projectPanels - The current projectPanels state.
+ * @param {object} props.panels - The current panels state.
  * @param {function} props.onTogglePanels - Toggles the panels opened or closed.
  * @param {function} props.onSetActivePanel - Switches the currently active panel.
  */
@@ -39,6 +39,7 @@ class ProjectPanels extends PureComponent {
     }
 
     this.onPanelClose = this.onPanelClose.bind(this)
+    this.onPanelOpen = this.onPanelOpen.bind(this)
     this.onChangePanel = this.onChangePanel.bind(this)
     this.selectKeyword = this.selectKeyword.bind(this)
     this.onSaveVariables = this.onSaveVariables.bind(this)
@@ -71,6 +72,11 @@ class ProjectPanels extends PureComponent {
     this.setState({
       selectedVariables
     })
+  }
+
+  onPanelOpen() {
+    const { onTogglePanels } = this.props
+    onTogglePanels(true)
   }
 
   onPanelClose() {
@@ -177,7 +183,7 @@ class ProjectPanels extends PureComponent {
       collections,
       dataQualitySummaries,
       project,
-      projectPanels,
+      panels,
       shapefileId,
       spatial,
       onSelectAccessMethod,
@@ -196,7 +202,7 @@ class ProjectPanels extends PureComponent {
     const { byId = {} } = collections
     const { collectionIds: projectIds, byId: projectById } = project
 
-    const { activePanel, isOpen } = projectPanels
+    const { activePanel, isOpen } = panels
     const panelSectionEditOptions = []
     const panelSectionCollectionDetails = []
 
@@ -292,6 +298,7 @@ class ProjectPanels extends PureComponent {
                 label="Done"
                 bootstrapVariant="primary"
                 onClick={() => onTogglePanels(false)}
+                dataTestId="project-panels-done"
               >
                 Done
               </Button>
@@ -419,9 +426,11 @@ class ProjectPanels extends PureComponent {
 
     return (
       <Panels
+        draggable
         show={collectionMetadataLoaded && isOpen}
         activePanel={loaded ? activePanel : ''}
         onPanelClose={this.onPanelClose}
+        onPanelOpen={this.onPanelOpen}
         onChangePanel={this.onChangePanel}
       >
         <PanelSection>
@@ -443,7 +452,7 @@ ProjectPanels.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   dataQualitySummaries: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
+  panels: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,

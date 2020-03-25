@@ -1,23 +1,50 @@
 .granule-results-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: $spacer/4;
+  margin-bottom: $spacer/2;
+  margin-left: -$spacer;
+  margin-right: -$spacer;
+  padding: $spacer/2 $spacer;
+  border: 1px solid $color__black--200;
+  border-left: 0;
+  border-right: 0;
+
+  .panels--sm & {
+    flex-direction: row;
+  }
+
   &__info {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: $spacer/4;
+    flex-grow: 1;
+    width: 100%;
+    padding-bottom: 0.5rem;
     vertical-align: middle;
+    font-size: 0.875rem;
+
+    .panels--sm & {
+      width: auto;
+      padding: 0;
+      padding-right: 1rem;
+    }
   }
 
   &__granule-count {
     display: inline-block;
     vertical-align: middle;
-  }
-
-  &__granule-num {
+    margin-right: 1rem;
+    line-height: 2;
     font-weight: 700;
+    color: $color__black--700;
   }
 
   &__proj-action {
     padding: 0;
+    font-size: 0.875rem;
 
     &--remove {
       color: $color__red;
@@ -26,6 +53,15 @@
       &:active {
         color: $color__red--dark;
       }
+    }
+  }
+
+  &__download-all {
+    width: 100%;
+    flex-shrink: 0;
+
+    .panels--sm & {
+      width: auto;
     }
   }
 }

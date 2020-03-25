@@ -9,8 +9,7 @@ function setup() {
   const props = {
     match: {},
     advancedSearch: {},
-    onUpdateAdvancedSearch: jest.fn(),
-    onMasterOverlayHeightChange: jest.fn()
+    onUpdateAdvancedSearch: jest.fn()
   }
 
   const enzymeWrapper = shallow(<Search {...props} />)

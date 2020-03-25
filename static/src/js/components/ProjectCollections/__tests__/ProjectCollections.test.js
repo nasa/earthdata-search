@@ -35,7 +35,7 @@ function setup() {
       },
       collectionIds: ['collectionId1', 'collectionId2']
     },
-    projectPanels: {
+    panels: {
       activePanel: '0.0.0',
       isOpen: false
     },

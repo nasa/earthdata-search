@@ -17,8 +17,8 @@
     display: flex;
     align-items: center;
     margin: 0;
-    padding: 0.2rem 0.4rem 0.2rem 1.1rem;
-    font-size: 0.9rem;
+    padding: 0.2rem 0.4rem 0.2rem 0.75rem;
+    font-size: 0.875rem;
     vertical-align: middle;
     border-left: .2rem solid transparent;
 
@@ -46,6 +46,12 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    color: $color__black--200;
+    font-weight: 300;
+
+    .facets-item:hover & {
+      color: $color__white;
+    }
   }
 
   &__total {

@@ -42,15 +42,23 @@ export const CollectionResultsBodyContainer = (props) => {
     onRemoveCollectionFromProject,
     onViewCollectionGranules,
     onViewCollectionDetails,
-    onChangeCollectionPageNum
+    onChangeCollectionPageNum,
+    panelScrollableNodeRef,
+    panelView
   } = props
 
   const { collectionIds: projectIds } = project
 
+  const scrollContainer = panelScrollableNodeRef.current
+
   const onWaypointEnter = (params = {}) => {
     if (params.event !== null) {
       const { pageNum } = query
-      onChangeCollectionPageNum(pageNum + 1)
+
+      // Using a set timeout here so the page change does not interfere with scrolling
+      setTimeout(() => {
+        onChangeCollectionPageNum(pageNum + 1)
+      }, 0)
     }
   }
 
@@ -66,6 +74,8 @@ export const CollectionResultsBodyContainer = (props) => {
       onViewCollectionGranules={onViewCollectionGranules}
       onViewCollectionDetails={onViewCollectionDetails}
       waypointEnter={onWaypointEnter}
+      scrollContainer={scrollContainer}
+      panelView={panelView}
     />
   )
 }
@@ -81,7 +91,9 @@ CollectionResultsBodyContainer.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  onChangeCollectionPageNum: PropTypes.func.isRequired
+  onChangeCollectionPageNum: PropTypes.func.isRequired,
+  panelScrollableNodeRef: PropTypes.shape({}).isRequired,
+  panelView: PropTypes.string.isRequired
 }
 
 export default withRouter(

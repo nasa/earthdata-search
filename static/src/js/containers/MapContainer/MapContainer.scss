@@ -15,4 +15,8 @@
   font-weight: bold;
   z-index: 0;
   background: #000;
+
+  .is-panels-dragging & {
+    pointer-events: none;
+  }
 }

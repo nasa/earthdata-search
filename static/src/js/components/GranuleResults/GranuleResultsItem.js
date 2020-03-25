@@ -236,7 +236,7 @@ const GranuleResultsItem = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div
+      <header
         className="granule-results-item__header"
         role="button"
         tabIndex={0}
@@ -244,7 +244,7 @@ const GranuleResultsItem = ({
         onKeyPress={handleClick}
       >
         <h3 className="granule-results-item__title">{title}</h3>
-      </div>
+      </header>
       <div className="granule-results-item__body">
         {buildThumbnail()}
         <div className="granule-results-item__meta">

@@ -1,4 +1,11 @@
 .collection-results-header {
+  width: 100%;
+
+  &__primary {
+    padding: $spacer/2 $spacer;
+    font-size: 0.875rem;
+  }
+
   &__form-group {
     align-items: center;
     margin: 0;
@@ -23,8 +30,32 @@
   }
 
   &__adv-search-btn {
+    font-size: 0.875rem;
+
     .button__icon {
       margin-right: $spacer/2;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacer/4 $spacer;
+    border-top: 1px solid $color__black--200;
+    font-size: 0.75rem;
+    color: $color__black--600;
+  }
+
+  &__view-button {
+    height: auto;
+    margin-left: 0.5rem;
+    color: $color__black--400;
+    font-size: 1.125rem;
+    line-height: 1rem;
+
+    &--is-active {
+      color: $color__black--600;
     }
   }
 }

@@ -4,7 +4,7 @@
   list-style: none;
 
   &__loading {
-    padding: $spacer*2 0;
+    padding: $spacer 0;
     text-align: center;
     color: $color__black--600;
   }
@@ -12,7 +12,7 @@
 
 .portal-escape {
   color: #424242;
-  margin-top: 1.6em;
+  margin: 0;
   padding: 15px 20px;
   border-top: 1px solid #e3e3e3; }
 

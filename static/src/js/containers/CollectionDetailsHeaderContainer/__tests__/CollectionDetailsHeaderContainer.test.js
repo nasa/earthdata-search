@@ -22,6 +22,7 @@ function setup() {
       }
     },
     focusedCollection: 'focusedCollection',
+    location: { search: '' },
     collectionSearch: {},
     mapProjection: projections.geographic
   }
@@ -42,6 +43,7 @@ describe('CollectionDetailsHeaderContainer component', () => {
     expect(enzymeWrapper.find(CollectionDetailsHeader).props('focusedCollectionMetadata')).toEqual({
       collectionSearch: {},
       focusedCollectionMetadata: { some: 'metadata' },
+      location: { search: '' },
       mapProjection: projections.geographic
     })
   })

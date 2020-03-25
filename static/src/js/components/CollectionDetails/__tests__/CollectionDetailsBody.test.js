@@ -2,8 +2,6 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import SimpleBar from 'simplebar-react'
-
 import { collectionDetailsBodyProps, metadata } from './mocks'
 import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
@@ -14,12 +12,14 @@ import CollapsePanel from '../../CollapsePanel/CollapsePanel'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     collectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata,
     formattedCollectionMetadata: collectionDetailsBodyProps
       .focusedCollectionMetadata.formattedMetadata,
-    onToggleRelatedUrlsModal: jest.fn()
+    isActive: true,
+    onToggleRelatedUrlsModal: jest.fn(),
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsBody {...props} />)
@@ -33,7 +33,7 @@ function setup() {
 describe('CollectionDetails component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.type()).toBe(SimpleBar)
+    expect(enzymeWrapper.type()).toBe('div')
     expect(enzymeWrapper.prop('className')).toBe('collection-details-body')
   })
 
@@ -41,6 +41,11 @@ describe('CollectionDetails component', () => {
     test('renders correctly', () => {
       const { enzymeWrapper } = setup()
       expect(enzymeWrapper.find(CollectionDetailsMinimap).length).toEqual(1)
+    })
+
+    test('does not render if the collectionDetailsBody is not active', () => {
+      const { enzymeWrapper } = setup({ isActive: false })
+      expect(enzymeWrapper.find(CollectionDetailsMinimap).length).toEqual(0)
     })
 
     test('has the correct props', () => {

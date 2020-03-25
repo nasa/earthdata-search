@@ -1,29 +1,491 @@
-/* eslint-disable react/no-unused-state */
-
-import React, { Component, Children } from 'react'
+import React, { PureComponent, Children } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
+
+import { Overlay, Tooltip } from 'react-bootstrap'
 
 import PanelSection from './PanelSection'
 import PanelGroup from './PanelGroup'
 
+import history from '../../util/history'
+
 import './Panels.scss'
 
-export class Panels extends Component {
+export class Panels extends PureComponent {
   constructor(props) {
     super(props)
+    this.width = 600 // The default width the panel is displayed when open
+    this.clickStartWidth = undefined
+    this.clickStartX = undefined
+    this.minimizedWidth = 20 // The width the panel is displayed when closed
+    this.minimizeThreshold = 200 // The threshold which prevents a panel from being closed when dragged passed the min width
+    this.unminimizeWidth = 200 // Distance the user needs to drag to drag open the closed panel
+    this.handleClickIsValid = true // Flag to check if a click on the handle should be treated as a click
+    this.handleClickDelay = 500 // Time in ms to delay a click event on the handle
+    this.handleClickCancelTimeout = undefined // Tracks the click event setTimeout id
+    this.handleTooltipCancelTimeout = undefined // Tracks the tooltip hover event setTimeout id
+    this.keyboardShortcuts = {
+      togglePanel: ']'
+    }
+
+    this.state = {
+      maxWidth: undefined,
+      minWidth: 400,
+      dragging: false,
+      show: true,
+      handleToolipVisible: false,
+      handleTooltipState: 'Collapse'
+    }
+
     this.onChangePanel = this.onChangePanel.bind(this)
-    this.onPanelsClose = this.onPanelsClose.bind(this)
+    this.onPanelDragStart = this.onPanelDragStart.bind(this)
+    this.onPanelDragEnd = this.onPanelDragEnd.bind(this)
+    this.onMouseMove = this.onMouseMove.bind(this)
+    this.onMouseUp = this.onMouseUp.bind(this)
+    this.onMouseDown = this.onMouseDown.bind(this)
+    this.onWindowResize = this.onWindowResize.bind(this)
+    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
+    this.onPanelHandleClickOrKeypress = this.onPanelHandleClickOrKeypress.bind(this)
+    this.onPanelHandleMouseOver = this.onPanelHandleMouseOver.bind(this)
+    this.onPanelHandleMouseOut = this.onPanelHandleMouseOut.bind(this)
+    this.onUpdate = this.onUpdate.bind(this)
+    this.disableHandleClickEvent = this.disableHandleClickEvent.bind(this)
+    this.enableHandleClickEvent = this.enableHandleClickEvent.bind(this)
   }
 
-  onPanelsClose() {
-    const { onPanelClose } = this.props
-    onPanelClose()
+  componentDidMount() {
+    window.addEventListener('resize', this.onWindowResize)
+    window.addEventListener('keydown', this.onWindowKeyDown)
+    window.addEventListener('resize', this.onWindowResize)
+    this.browserHistoryUnlisten = history.listen(this.onWindowResize)
+
+    const maxWidth = this.calculateMaxWidth()
+
+    this.setState({
+      maxWidth
+    })
+
+    this.updateResponsiveClassNames()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      show: prevShow,
+      willMinimize: prevWillMinimize,
+      dragging: prevDragging
+    } = prevState
+
+    const {
+      show,
+      willMinimize,
+      dragging
+    } = this.state
+
+    const { show: propsShow } = this.props
+    const { show: prevPropsShow } = prevProps
+
+    // If the show prop has changed, update the state
+    if (propsShow !== prevPropsShow) {
+      this.updateShowState(propsShow)
+    }
+
+    // Apply or remove the body is-panels-will-minimize class
+    if ((show !== prevShow) || (prevWillMinimize !== willMinimize)) {
+      // Only add the class if willMinimize is set AND the panel is showing
+      if (show && willMinimize) {
+        document.body.classList.add('is-panels-will-minimize')
+      } else {
+        document.body.classList.remove('is-panels-will-minimize')
+      }
+    }
+
+    // Apply or remove the body is-panels-dragging class
+    if (prevDragging !== dragging) {
+      if (dragging) {
+        document.body.classList.add('is-panels-dragging')
+      } else {
+        document.body.classList.remove('is-panels-dragging')
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.rafId) window.cancelAnimationFrame(this.rafId)
+    window.removeEventListener('resize', this.onWindowResize)
+    window.removeEventListener('keydown', this.onWindowKeyDown)
+    document.removeEventListener('mousemove', this.onMouseMove)
+    document.removeEventListener('mouseup', this.onMouseUp)
+    if (this.browserHistoryUnlisten) this.browserHistoryUnlisten()
+  }
+
+  onWindowResize() {
+    const { minWidth } = this.state
+    const { width } = this
+    const maxWidth = this.calculateMaxWidth()
+
+    // Set the new max width
+    this.setState({
+      maxWidth
+    })
+
+    // If the panels width is larger than the max and min,
+    // set the width to the new max
+    if (width > maxWidth && width > minWidth) {
+      this.updatePanelWidth(maxWidth)
+    }
+
+    // If the width is smaller than the min somehow, set the width
+    // to the min
+    if (width < minWidth) {
+      this.updatePanelWidth(minWidth)
+    }
+
+    setTimeout(() => {
+      const leafletControlContainer = document.querySelector('.leaflet-control-container')
+      const routeWrapper = document.querySelector('.route-wrapper')
+
+      if (leafletControlContainer) {
+        if (routeWrapper) leafletControlContainer.style.height = `${routeWrapper.clientHeight}px`
+      }
+    })
+  }
+
+  onWindowKeyDown(e) {
+    const { show } = this.state
+    const { key } = e
+    const { keyboardShortcuts } = this
+
+    // Toggle the panel when the closing bracket character is pressed
+    if (key === keyboardShortcuts.togglePanel) {
+      this.setState({
+        show: !show,
+        willMinimize: show
+      })
+
+      e.preventDefault()
+      e.stopPropagation()
+    }
   }
 
   onChangePanel(panelId) {
     const { onChangePanel } = this.props
     onChangePanel(panelId)
+  }
+
+  onPanelHandleMouseOver() {
+    const { show } = this.state
+
+    const nextHandleTooltipState = show ? 'Collapse' : 'Expand'
+
+    // Using a set titmeout to make sure the 'Expanded'/'Collapsed' content in the
+    // tooltip does not switch while the tooltip is fading out
+    this.handleTooltipCancelTimeout = setTimeout(() => {
+      this.setState({
+        handleToolipVisible: true,
+        handleTooltipState: nextHandleTooltipState
+      })
+    }, 750)
+  }
+
+  onPanelHandleMouseOut() {
+    // Clear the timeout in case the tooltip state has not yet been updated.
+    clearTimeout(this.handleTooltipCancelTimeout)
+
+    this.setState({
+      handleToolipVisible: false
+    })
+  }
+
+  onPanelHandleClickOrKeypress(e) {
+    const { show } = this.state
+    const {
+      type,
+      key
+    } = e
+
+    // Any keypress other than the enter or spacebar keys is not considered a click.
+    if (type === 'keydown') {
+      if ((key !== 'Enter') && (key !== ' ')) {
+        return
+      }
+    }
+
+    // Make sure this is actually a click, and not a drag of the handle.
+    if (this.handleClickIsValid) {
+      this.setState({
+        show: !show,
+        willMinimize: show,
+        dragging: false,
+        handleToolipVisible: false
+      })
+    } else {
+      this.setState({
+        handleToolipVisible: false
+      })
+    }
+
+    this.resetHandleMouseMovedDuringClick()
+    this.enableHandleClickEvent()
+
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  onMouseDown(e) {
+    if (e.button !== 0) return
+
+    this.handleClickCancelTimeout = setTimeout(this.disableHandleClickEvent, this.handleClickDelay)
+
+    const { width } = this
+
+    document.addEventListener('mousemove', this.onMouseMove)
+    document.addEventListener('mouseup', this.onMouseUp)
+
+    this.onPanelDragStart(width, e.pageX)
+  }
+
+  onMouseUp() {
+    // Clear the timeout preventing the onUpdate funtion from running
+    clearTimeout(this.handleClickCancelTimeout)
+
+    document.removeEventListener('mousemove', this.onMouseMove)
+    document.removeEventListener('mouseup', this.onMouseUp)
+
+    this.onPanelDragEnd()
+  }
+
+  onMouseMove(e) {
+    const {
+      dragging,
+      handleToolipVisible
+    } = this.state
+
+    if (handleToolipVisible) {
+      this.setState({
+        handleToolipVisible: false
+      })
+    }
+
+    this.pageX = e.pageX
+
+    if (!dragging) return
+
+    // If the user is dragging, fire the onUpdate function
+    this.rafId = window.requestAnimationFrame(this.onUpdate)
+  }
+
+  onUpdate() {
+    const {
+      maxWidth,
+      minWidth,
+      willMinimize,
+      show
+    } = this.state
+
+    const {
+      pageX,
+      clickStartX,
+      clickStartWidth
+    } = this
+
+    const distanceDragged = pageX - clickStartX
+
+    if (!show) {
+      // If the panel is closed and a user drags the handle passed the threshold, reset the clickStartWidth
+      // to recalulate the width of the current cursor position. This accounts for the minimum width of the
+      // closed panel position.
+      if (distanceDragged > this.unminimizeWidth) {
+        let widthToSet = distanceDragged
+
+        if (widthToSet < minWidth) {
+          widthToSet = minWidth
+        }
+
+        if (widthToSet > maxWidth) {
+          widthToSet = maxWidth
+        }
+
+        this.width = widthToSet
+        this.clickStartWidth = 0
+
+        this.setState({
+          show: true,
+          willMinimize: false
+        })
+      }
+    } else {
+      const newWidth = distanceDragged + clickStartWidth
+      // If the panel would minimize at the current scroll position, set the state accordingly.
+      const newWillMinimize = newWidth < (minWidth - this.minimizeThreshold)
+
+
+      if (willMinimize !== newWillMinimize) {
+        this.setState({
+          willMinimize: newWillMinimize
+        })
+      }
+
+      // Prevent the width from being set lower than minWidth.
+      if (newWidth < minWidth) {
+        this.updatePanelWidth(minWidth)
+        return
+      }
+
+      // Prevent the width from being set greater than the maxWidth
+      if (newWidth > maxWidth) {
+        this.updatePanelWidth(maxWidth)
+        return
+      }
+
+      this.updatePanelWidth(newWidth)
+    }
+  }
+
+  onPanelDragStart(clickStartWidth, clickStartX) {
+    this.onWindowResize()
+    this.setState({
+      dragging: true
+    })
+    this.clickStartWidth = clickStartWidth
+    this.clickStartX = clickStartX
+  }
+
+  onPanelDragEnd() {
+    const {
+      onPanelClose,
+      onPanelOpen
+    } = this.props
+
+    const {
+      minWidth
+    } = this.state
+
+    const {
+      pageX,
+      clickStartX,
+      clickStartWidth
+    } = this
+
+    // Only change the state when the user finishes a drag. Click events
+    // will fire this function, but they should not fire the dragend events.
+    if (!this.handleClickIsValid) {
+      const dragEndStateDefaults = {
+        dragging: false,
+        handleToolipVisible: false
+      }
+
+      const distanceDragged = pageX - clickStartX
+      const newWidth = distanceDragged + clickStartWidth
+
+      // Close the panel if its current with is smaller than the minWidth minus the threshold
+      const panelShouldClose = (newWidth < (minWidth - this.minimizeThreshold))
+
+      if (panelShouldClose) {
+        this.setState({
+          ...dragEndStateDefaults,
+          show: false,
+          willMinimize: true
+        }, () => {
+          if (onPanelClose) onPanelClose()
+        })
+      } else {
+        this.setState({
+          ...dragEndStateDefaults,
+          show: true,
+          willMinimize: false
+        }, () => {
+          if (onPanelOpen) onPanelOpen()
+        })
+      }
+    }
+  }
+
+  setHandleMouseMovedDuringClick() {
+    this.handleClickMoved = true
+  }
+
+  resetHandleMouseMovedDuringClick() {
+    this.handleClickMoved = false
+  }
+
+  disableHandleClickEvent() {
+    this.handleClickIsValid = false
+  }
+
+  enableHandleClickEvent() {
+    this.handleClickIsValid = true
+  }
+
+  updateShowState(show) {
+    this.setState({ show })
+  }
+
+  /**
+   * Update the panel with the new width.
+   */
+  updatePanelWidth(width) {
+    this.width = width
+    this.container.style.width = `${width}px`
+    this.updateResponsiveClassNames()
+  }
+
+  /**
+   * Calculate class names to apply to the responsive container.
+   */
+  updateResponsiveClassNames() {
+    const { width } = this
+
+    const sizes = {
+      'panels--xs': true,
+      'panels--sm': width >= 500,
+      'panels--md': width >= 700,
+      'panels--lg': width >= 900,
+      'panels--xl': width >= 1100
+    }
+
+    // Apply the active class names to the responsive container. A separate container
+    // is being used here because these class names need to be set outside of react
+    // and might get wiped out on rerender.
+    Object.keys(sizes).forEach((size) => {
+      if (sizes[size]) {
+        this.responsiveContainer.classList.add(size)
+      } else {
+        this.responsiveContainer.classList.remove(size)
+      }
+    })
+  }
+
+  /**
+   * Calculate the maxwidth for the current browser window size. The size is computed
+   * based on the available space for the panel. If there is more than 1000px available
+   * to display the panel, the max width is set so it does not cover any of the user/account
+   * navigation. If the available space is less than 1000px, we allow the user to cover the
+   * account information.
+   */
+  calculateMaxWidth() {
+    const routeWrapper = document.querySelector('.route-wrapper__content')
+    const secondaryToolbar = document.querySelector('.secondary-toolbar')
+
+    if (routeWrapper && secondaryToolbar) {
+      const routeWrapperWidth = routeWrapper.offsetWidth
+      const secondaryToolbarWidth = secondaryToolbar.offsetWidth
+
+      // Set the maxWidth to the available space minus the width of the
+      // secondary toolbar, with 30px of padding.
+      let maxWidth = routeWrapperWidth - secondaryToolbarWidth - 30
+
+      if (routeWrapperWidth < 1000) {
+        // If the available space is less than 1000px, set the maxWidth to
+        // the width of the available space minus 55px of padding.
+        maxWidth = routeWrapperWidth - 55
+      }
+
+      return maxWidth
+    }
+
+    // If for some reason the elements are not available in the DOM, set
+    // the maxWidth to 1000px.
+    return 1000
   }
 
   renderPanelGroup(child, index) {
@@ -64,7 +526,23 @@ export class Panels extends Component {
   }
 
   render() {
-    const { children, show } = this.props
+    const {
+      children,
+      draggable
+    } = this.props
+
+    const {
+      // transitioning,
+      dragging,
+      show,
+      willMinimize,
+      handleToolipVisible,
+      handleTooltipState
+    } = this.state
+
+    const { keyboardShortcuts } = this
+
+    const { width } = this
 
     const panelGroups = Children.map(children,
       (child, index) => this.renderPanelGroup(child, index))
@@ -72,12 +550,73 @@ export class Panels extends Component {
     const className = classNames([
       'panels',
       {
-        'panels--is-active': show
+        'panels--is-open': show,
+        'panels--is-draggable': draggable,
+        'panels--is-dragging': dragging,
+        'panels--is-minimized': willMinimize && !show,
+        'panels--will-minimize': willMinimize
       }
     ])
+
     return (
-      <section className={className}>
-        {panelGroups}
+      <section
+        className={className}
+        style={{ width: `${width}px` }}
+        ref={(node) => {
+          this.container = node
+        }}
+        data-test-id="panels-section"
+      >
+        {
+          draggable && (
+            <>
+              <div
+                className="panels__handle"
+                role="button"
+                tabIndex="0"
+                ref={(node) => {
+                  this.node = node
+                }}
+                onMouseDown={this.onMouseDown}
+                onClick={this.onPanelHandleClickOrKeypress}
+                onKeyDown={this.onPanelHandleClickOrKeypress}
+                onMouseOver={this.onPanelHandleMouseOver}
+                onFocus={this.onPanelHandleMouseOver}
+                onMouseOut={this.onPanelHandleMouseOut}
+                onBlur={this.onPanelHandleMouseOut}
+              />
+              <Overlay
+                target={this.node}
+                show={handleToolipVisible}
+                placement="right"
+              >
+                {
+                  (props) => {
+                    const tooltipProps = props
+                    delete tooltipProps.show
+                    return (
+                      <Tooltip
+                        {...tooltipProps}
+                        id="panel-handle-tooltip"
+                        className="panels__handle-tooltip panels__handle-tooltip--collapse"
+                      >
+                        {`${handleTooltipState} panel (${keyboardShortcuts.togglePanel})`}
+                      </Tooltip>
+                    )
+                  }
+                }
+              </Overlay>
+            </>
+          )
+        }
+        <div
+          className="panels__responsive-container"
+          ref={(node) => {
+            this.responsiveContainer = node
+          }}
+        >
+          {panelGroups}
+        </div>
       </section>
     )
   }
@@ -85,16 +624,23 @@ export class Panels extends Component {
 
 Panels.defaultProps = {
   activePanel: '0.0.0',
+  draggable: false,
   show: false,
   onPanelClose: null,
+  onPanelOpen: null,
   onChangePanel: null
 }
 
 Panels.propTypes = {
   activePanel: PropTypes.string,
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
+  draggable: PropTypes.bool,
   show: PropTypes.bool,
   onPanelClose: PropTypes.func,
+  onPanelOpen: PropTypes.func,
   onChangePanel: PropTypes.func
 }
 

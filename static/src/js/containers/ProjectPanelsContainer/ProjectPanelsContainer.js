@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
-import { togglePanels, setActivePanel } from '../../actions/projectPanels'
+import { togglePanels, setActivePanel } from '../../actions/panels'
 
 
 const mapStateToProps = state => ({
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
   collectionsSearch: state.searchResults.collections,
   dataQualitySummaries: state.dataQualitySummaries,
   project: state.project,
-  projectPanels: state.projectPanels,
+  panels: state.panels,
   shapefileId: state.shapefile.shapefileId,
   spatial: state.query.collection.spatial
 })
@@ -35,7 +35,7 @@ export const ProjectPanelsContainer = ({
   collectionsSearch,
   dataQualitySummaries,
   project,
-  projectPanels,
+  panels,
   shapefileId,
   spatial,
   onSelectAccessMethod,
@@ -48,7 +48,7 @@ export const ProjectPanelsContainer = ({
     collectionsSearch={collectionsSearch}
     dataQualitySummaries={dataQualitySummaries}
     project={project}
-    projectPanels={projectPanels}
+    panels={panels}
     shapefileId={shapefileId}
     spatial={spatial}
     onSelectAccessMethod={onSelectAccessMethod}
@@ -67,7 +67,7 @@ ProjectPanelsContainer.propTypes = {
   collectionsSearch: PropTypes.shape({}).isRequired,
   dataQualitySummaries: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
+  panels: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,

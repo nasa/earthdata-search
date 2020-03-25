@@ -27,6 +27,9 @@ function setup() {
     granules: {
       hits: 1
     },
+    granuleSearch: {
+      pageNum: 1
+    },
     location: { value: 'location' },
     mapProjection: projections.geographic,
     secondaryOverlayPanel: {},

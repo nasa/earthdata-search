@@ -12,7 +12,8 @@ const FilterStackItem = (props) => {
     hint,
     icon,
     onRemove,
-    title
+    title,
+    secondaryTitle
   } = props
 
   if (!title || !icon || !children) return null
@@ -29,15 +30,22 @@ const FilterStackItem = (props) => {
     <li className="filter-stack-item">
       <div className="filter-stack-item__content">
         <div className="filter-stack-item__body">
-          <header className="filter-stack-item__header">
-            <i
-              className={iconClass}
-              title={title}
-            />
-            <h3 className="filter-stack-item__title visibility-hidden">{title}</h3>
-          </header>
-          <div className="filter-stack-item__body-contents">
-            {children}
+          <div className="filter-stack-item__body-primary">
+            <header className="filter-stack-item__header">
+              <i
+                className={iconClass}
+                title={title}
+              />
+              <h3 className="filter-stack-item__title">{title}</h3>
+              {
+                secondaryTitle && (
+                  <span className="filter-stack-item__secondary-title">{secondaryTitle}</span>
+                )
+              }
+            </header>
+            <div className="filter-stack-item__body-contents">
+              {children}
+            </div>
           </div>
           <div className="filter-stack-item__body-actions">
             {
@@ -74,7 +82,8 @@ const FilterStackItem = (props) => {
 FilterStackItem.defaultProps = {
   error: null,
   hint: null,
-  onRemove: null
+  onRemove: null,
+  secondaryTitle: null
 }
 
 FilterStackItem.propTypes = {
@@ -89,7 +98,8 @@ FilterStackItem.propTypes = {
   ]),
   icon: PropTypes.string.isRequired,
   onRemove: PropTypes.func,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  secondaryTitle: PropTypes.string
 }
 
 export default FilterStackItem

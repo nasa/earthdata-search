@@ -25,7 +25,7 @@ import retrievalReducer from './retrieval'
 import regionResultsReducer from './regionResults'
 import retrievalHistoryReducer from './retrievalHistory'
 import portalsReducer from './portals'
-import projectPanelsReducer from './projectPanels'
+import panelsReducer from './panels'
 import projectReducer from './project'
 import shapefileReducer from './shapefile'
 import savedProjectReducer from './savedProject'
@@ -63,7 +63,7 @@ export default history => combineReducers({
   }),
   portal: portalsReducer,
   project: projectReducer,
-  projectPanels: projectPanelsReducer,
+  panels: panelsReducer,
   providers: providersReducer,
   query: queryReducer,
   retrieval: retrievalReducer,

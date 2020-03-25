@@ -1,9 +1,18 @@
 .collection-details-data-center {
-  flex: 0 1 320px;
+  flex: 0 0 320px;
+  flex: 0 0 calc(100% - .5rem);
   margin: 0px $spacer $spacer 0;
   font-size: 0.825rem;
   border: 1px solid $color__black--200;
   background-color: $color__black--100;
+
+  .panels--sm & {
+    flex: 0 0 calc(50% - .5rem);
+  }
+
+  &:nth-of-type(even) {
+    margin-right: 0;
+  }
 
   &__title {
     margin-bottom: 0.3125rem;

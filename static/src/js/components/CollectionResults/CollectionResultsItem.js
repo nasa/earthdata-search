@@ -13,10 +13,7 @@ import SplitBadge from '../SplitBadge/SplitBadge'
 import './CollectionResultsItem.scss'
 
 export const CollectionResultsItem = ({
-  browser,
   collection,
-  isCollectionInProject,
-  isLast,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
@@ -25,60 +22,32 @@ export const CollectionResultsItem = ({
   scrollContainer
 }) => {
   const {
-    dataset_id: datasetId = null,
-    granule_count: granuleCount = 0,
-    has_formats: hasFormats = false,
-    has_spatial_subsetting: hasSpatialSubsetting = false,
-    has_temporal_subsetting: hasTemporalSubsetting = false,
-    has_transforms: hasTransforms = false,
-    has_variables: hasVariables = false,
-    has_map_imagery: hasMapImagery = false,
-    is_cwic: isCwic = false,
-    is_nrt: isNrt = false,
-    organizations = [],
-    summary = '',
-    thumbnail = null,
-    time_end: timeEnd = null,
-    time_start: timeStart = null
+    collectionId,
+    datasetId,
+    description,
+    displayOrganization,
+    granuleCount,
+    hasFormats,
+    hasSpatialSubsetting,
+    hasTemporalSubsetting,
+    hasTransforms,
+    hasVariables,
+    hasMapImagery,
+    isCwic,
+    isCollectionInProject,
+    isLast,
+    isNrt,
+    shortName,
+    temporalRange,
+    thumbnail,
+    versionId
   } = collection
 
+  const { thumbnailSize } = getApplicationConfig()
   const {
-    name: browserName
-  } = browser
-
-  let displayOrganization = ''
-
-  if (organizations && organizations.length) {
-    [displayOrganization] = organizations
-  }
-
-  let timeRange = ''
-
-  if (timeStart || timeEnd) {
-    if (timeStart) {
-      const dateStart = new Date(timeStart).toISOString().split('T')[0]
-
-      timeRange = `${dateStart} ongoing`
-    }
-    if (timeEnd) {
-      const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
-
-      timeRange = `Up to ${dateEnd}`
-    }
-
-    if (timeStart && timeEnd) {
-      const dateStart = new Date(timeStart).toISOString().split('T')[0]
-      const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
-
-      timeRange = `${dateStart} to ${dateEnd}`
-    }
-  }
-
-  let description = summary
-  if (browserName === 'ie') description = `${description.substring(0, 280)}...`
-
-  const thumbnailHeight = getApplicationConfig().thumbnailSize.height
-  const thumbnailWidth = getApplicationConfig().thumbnailSize.width
+    height: thumbnailHeight,
+    width: thumbnailWidth
+  } = thumbnailSize
 
   const customizeBadges = []
 
@@ -181,7 +150,7 @@ export const CollectionResultsItem = ({
     <Button
       className="collection-results-item__action collection-results-item__action--add"
       onClick={(e) => {
-        onAddProjectCollection(collection.id)
+        onAddProjectCollection(collectionId)
         e.stopPropagation()
       }}
       variant="light"
@@ -196,7 +165,7 @@ export const CollectionResultsItem = ({
     <Button
       className="collection-results-item__action collection-results-item__action--remove"
       onClick={(e) => {
-        onRemoveCollectionFromProject(collection.id)
+        onRemoveCollectionFromProject(collectionId)
         e.stopPropagation()
       }}
       variant="light"
@@ -208,19 +177,19 @@ export const CollectionResultsItem = ({
   )
 
   return (
-    <li className="collection-results-item" key={collection.id}>
+    <li className="collection-results-item" key={collectionId}>
       <div
         role="button"
         tabIndex="0"
         className="collection-results-item__link"
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
-            onViewCollectionGranules(collection.id)
+            onViewCollectionGranules(collectionId)
           }
           e.stopPropagation()
         }}
         onClick={(e) => {
-          onViewCollectionGranules(collection.id)
+          onViewCollectionGranules(collectionId)
           e.stopPropagation()
         }}
         data-test-id="collection-result-item"
@@ -256,7 +225,7 @@ export const CollectionResultsItem = ({
                   )
                 }
                 <strong> &bull; </strong>
-                <strong>{timeRange}</strong>
+                <strong>{temporalRange}</strong>
                 <strong> &bull; </strong>
                 {description}
               </p>
@@ -265,7 +234,7 @@ export const CollectionResultsItem = ({
               <Button
                 className="collection-results-item__action collection-results-item__action--collection-details"
                 onClick={(e) => {
-                  onViewCollectionDetails(collection.id)
+                  onViewCollectionDetails(collectionId)
                   e.stopPropagation()
                 }}
                 label="View collection details"
@@ -356,15 +325,15 @@ export const CollectionResultsItem = ({
             }
             {
               (
-                collection.short_name
-                && collection.version_id
+                shortName
+                && versionId
                 && displayOrganization
               ) && (
                 <Badge
                   className="badge collection-results-item__badge collection-results-item__badge--attribution"
                 >
                   {
-                    `${collection.short_name} v${collection.version_id} - ${displayOrganization}`
+                    `${shortName} v${versionId} - ${displayOrganization}`
                   }
                 </Badge>
               )
@@ -376,7 +345,7 @@ export const CollectionResultsItem = ({
             <Waypoint
               bottomOffset="-200px"
               onEnter={waypointEnter}
-              scrollableAncestor={scrollContainer || window}
+              scrollableAncestor={scrollContainer}
             />
           )
         }
@@ -390,16 +359,13 @@ CollectionResultsItem.defaultProps = {
 }
 
 CollectionResultsItem.propTypes = {
-  browser: PropTypes.shape({}).isRequired,
   collection: PropTypes.shape({}).isRequired,
-  isCollectionInProject: PropTypes.bool.isRequired,
-  isLast: PropTypes.bool.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
-  waypointEnter: PropTypes.func.isRequired,
-  scrollContainer: PropTypes.instanceOf(Element)
+  scrollContainer: PropTypes.instanceOf(Element),
+  waypointEnter: PropTypes.func.isRequired
 }
 
 export default CollectionResultsItem

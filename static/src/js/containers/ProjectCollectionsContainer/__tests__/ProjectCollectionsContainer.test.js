@@ -23,7 +23,7 @@ function setup() {
     project: {
       collectionIds: ['collectionId']
     },
-    projectPanels: {
+    panels: {
       activePanel: '0.0.0',
       isOpen: false
     },

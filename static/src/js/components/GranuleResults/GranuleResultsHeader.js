@@ -1,16 +1,22 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { difference } from 'lodash'
 
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
 
-import { collectionTitle } from './skeleton'
+import { collectionTitle, granuleListTotal, granuleTimeTotal } from './skeleton'
 
-import './GranuleResultsHeader.scss'
+import murmurhash3 from '../../util/murmurhash3'
+import { commafy } from '../../util/commafy'
+import { pluralize } from '../../util/pluralize'
 import generateHandoffs from '../../util/handoffs/generateHandoffs'
 import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import GranuleResultsActionsContainer from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
+
+import './GranuleResultsHeader.scss'
 
 /**
  * Renders GranuleResultsHeader.
@@ -112,176 +118,222 @@ class GranuleResultsHeader extends Component {
       focusedCollectionObject,
       location,
       mapProjection,
+      onToggleSecondaryOverlayPanel,
+      pageNum,
       secondaryOverlayPanel,
-      onToggleAboutCwicModal,
-      onToggleSecondaryOverlayPanel
+      onToggleAboutCwicModal
     } = this.props
 
     const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
 
-    const { metadata = {}, excludedGranuleIds = {} } = focusedCollectionObject
+    const { metadata = {}, excludedGranuleIds = [], granules = {} } = focusedCollectionObject
 
-    const { dataset_id: title } = metadata
+    const {
+      hits,
+      loadTime,
+      isLoading,
+      isLoaded
+    } = granules
+
+    const { dataset_id: title, isCwic } = metadata
 
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
 
     const handoffLinks = generateHandoffs(metadata, collectionSearch, mapProjection)
 
+    const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
+    const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
+
+    const allGranuleIds = granules.allIds
+    let granuleIds
+    if (isCwic) {
+      granuleIds = allGranuleIds.filter((id) => {
+        const hashedId = murmurhash3(id).toString()
+        return excludedGranuleIds.indexOf(hashedId) === -1
+      })
+    } else {
+      granuleIds = difference(allGranuleIds, excludedGranuleIds)
+    }
+
+    const visibleGranules = granuleIds.length ? granuleIds.length : 0
+
+    // Determine the correct granule count based on granules that have been removed
+    const granuleCount = hits - excludedGranuleIds.length
+
     return (
       <div className="granule-results-header">
-        <div className="row">
-          <div className="col">
-            <div className="granule-results-header__title-wrap">
-              {
-                // TODO: Create isLoading state in reducer so we can use that rather than the title
-                !title && (
-                  <Skeleton
-                    className="granule-results-header__title"
-                    containerStyle={{ display: 'inline-block', height: '1.375rem', width: '17.5rem' }}
-                    shapes={collectionTitle}
-                  />
-                )
-              }
-              {
-                title && (
-                  <h2 className="granule-results-header__title">{title}</h2>
-                )
-              }
-              <PortalLinkContainer
-                className="granule-results-header__link"
-                to={{
-                  pathname: '/search/granules/collection-details',
-                  search: location.search
-                }}
-              >
-                <i className="fa fa-info-circle" />
-                {' View Details'}
-              </PortalLinkContainer>
-            </div>
-          </div>
-          <MoreActionsDropdown className="col-auto" handoffLinks={handoffLinks} />
-        </div>
-        <div className="row">
-          <div className="col">
-            {metadata.is_cwic && (
-              <>
-                <div>
-                  <span className="granule-results-header__cwic-note">
-                    {'This is '}
-                    <span className="granule-results-header__cwic-emph">Int&apos;l / Interagency Data</span>
-                    {' data. Searches will be performed by external services which may vary in performance and available features. '}
-                    <Button
-                      className="granule-results-header__link"
-                      onClick={() => onToggleAboutCwicModal(true)}
-                      variant="link"
-                      bootstrapVariant="link"
-                      icon="question-circle"
-                      label="More details"
-                    >
-                      More Details
-                    </Button>
-                  </span>
-                </div>
-                {
-                  granuleFiltersOpen
-                    ? (
-                      <Button
-                        className="granule-results-header__link"
-                        onClick={() => onToggleSecondaryOverlayPanel(false)}
-                        variant="link"
-                        bootstrapVariant="link"
-                        icon="times"
-                        label="Close Granule Filters"
-                      >
-                        Granule Filters
-                      </Button>
-                    )
-                    : (
-                      <Button
-                        className="granule-results-header__link"
-                        onClick={() => onToggleSecondaryOverlayPanel(true)}
-                        variant="link"
-                        bootstrapVariant="link"
-                        icon="filter"
-                        label="Open Granule Filters"
-                      >
-                        Granule Filters
-                      </Button>
-                    )
+        <div className="granule-results-header__primary">
+          <div className="row">
+            <div className="col">
+              <div className="granule-results-header__title-wrap">
+                {// TODO: Create isLoading state in reducer so we can use that rather than the title
+                  !title && (
+                    <Skeleton
+                      className="granule-results-header__title"
+                      containerStyle={{
+                        display: 'inline-block',
+                        height: '1.375rem',
+                        width: '17.5rem'
+                      }}
+                      shapes={collectionTitle}
+                    />
+                  )
                 }
-              </>
-            )}
-            {!metadata.is_cwic && (
-              <div className="form-inline">
-                <div className="form-row align-items-center">
-                  <div className="col-auto">
-                    <div className="form-group">
-                      <label
-                        className="col-form-label col-form-label-sm mr-1"
-                        htmlFor="input__sort-granules"
-                      >
-                        Sort by:
-                      </label>
-                      <select
-                        id="input__sort-granules"
-                        className="form-control form-control-sm"
-                        onChange={this.handleUpdateSortOrder}
-                        value={sortOrder}
-                      >
-                        <option value="-start_date">Start Date, Newest First</option>
-                        <option value="start_date">Start Date, Oldest First</option>
-                        <option value="-end_date">End Date, Newest First</option>
-                        <option value="end_date">End Date, Oldest First</option>
-                      </select>
+                {
+                  title && (
+                    <h2 className="granule-results-header__title">{title}</h2>
+                  )
+                }
+                <PortalLinkContainer
+                  className="granule-results-header__title-link"
+                  to={{
+                    pathname: '/search/granules/collection-details',
+                    search: location.search
+                  }}
+                >
+                  <i className="fa fa-info-circle" />
+                  {' View Details'}
+                </PortalLinkContainer>
+              </div>
+            </div>
+            <MoreActionsDropdown
+              className="col-auto"
+              handoffLinks={handoffLinks}
+            />
+          </div>
+
+          <GranuleResultsActionsContainer />
+          <div className="row">
+            <div className="col">
+              {
+                metadata.is_cwic && (
+                  <>
+                    <div>
+                      <span className="granule-results-header__cwic-note">
+                        {'This is '}
+                        <span className="granule-results-header__cwic-emph">Int&apos;l / Interagency Data</span>
+                        {' data. Searches will be performed by external services which may vary in performance and available features. '}
+                        <Button
+                          className="granule-results-header__link"
+                          onClick={() => onToggleAboutCwicModal(true)}
+                          variant="link"
+                          bootstrapVariant="link"
+                          icon="question-circle"
+                          label="More details"
+                        >
+                          More Details
+                        </Button>
+                      </span>
                     </div>
-                  </div>
-                  <div className="col-auto">
-                    <div className="form-group">
-                      <label
-                        className="col-form-label col-form-label-sm mr-1"
-                        htmlFor="input__granule-search"
-                      >
-                        Granule Search:
-                      </label>
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={(
-                          <Tooltip
-                            id="tooltip__granule-search"
-                            className="tooltip--large tooltip--ta-left tooltip--wide"
-                          >
-                            <strong>Wildcards:</strong>
-                            {' '}
-                            <ul className="m-0">
-                              <li>* (asterisk) matches any number of characters</li>
-                              <li>? (question mark) matches exactly one character.</li>
-                            </ul>
-                            <br />
-                            <strong>Delimiters:</strong>
-                            {' '}
-                            Separate multiple granule IDs by commas.
-                          </Tooltip>
-                        )}
-                      >
-                        <span>
-                          <input
-                            id="input__granule-search"
-                            className="form-control form-control-sm granule-results-header__granule-search-input"
-                            type="text"
-                            placeholder="Search Single or Multiple Granule IDs..."
-                            onBlur={this.handleBlurSearchValue}
-                            onChange={this.handleUpdateSearchValue}
-                            onKeyUp={this.handleSearchKeyUp}
-                            value={searchValue}
-                          />
-                        </span>
-                      </OverlayTrigger>
-                    </div>
-                  </div>
-                  <div className="col-auto">
                     {
                       granuleFiltersOpen
                         ? (
+                          <Button
+                            className="granule-results-header__link"
+                            onClick={() => onToggleSecondaryOverlayPanel(false)}
+                            variant="link"
+                            bootstrapVariant="link"
+                            icon="times"
+                            label="Close Granule Filters"
+                          >
+                            Granule Filters
+                          </Button>
+                        ) : (
+                          <Button
+                            className="granule-results-header__link"
+                            onClick={() => onToggleSecondaryOverlayPanel(true)}
+                            variant="link"
+                            bootstrapVariant="link"
+                            icon="filter"
+                            label="Open Granule Filters"
+                          >
+                            Granule Filters
+                          </Button>
+                        )
+                    }
+                  </>
+                )
+              }
+              {
+                !metadata.is_cwic && (
+                  <div className="form-inline">
+                    <div className="form-row align-items-center">
+                      <div className="col-auto mb-1">
+                        <div className="form-group">
+                          <label
+                            className="col-form-label col-form-label-sm mr-1"
+                            htmlFor="input__sort-granules"
+                          >
+                            Sort by:
+                          </label>
+                          <select
+                            id="input__sort-granules"
+                            className="form-control form-control-sm"
+                            onChange={this.handleUpdateSortOrder}
+                            value={sortOrder}
+                          >
+                            <option value="-start_date">
+                              Start Date, Newest First
+                            </option>
+                            <option value="start_date">
+                              Start Date, Oldest First
+                            </option>
+                            <option value="-end_date">
+                              End Date, Newest First
+                            </option>
+                            <option value="end_date">End Date, Oldest First</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-auto mb-1">
+                        <div className="form-group">
+                          <label
+                            className="col-form-label col-form-label-sm mr-1"
+                            htmlFor="input__granule-search"
+                          >
+                            Granule Search:
+                          </label>
+                          <OverlayTrigger
+                            placement="bottom"
+                            overlay={(
+                              <Tooltip
+                                id="tooltip__granule-search"
+                                className="tooltip--large tooltip--ta-left tooltip--wide"
+                              >
+                                <strong>Wildcards:</strong>
+                                {' '}
+                                <ul className="m-0">
+                                  <li>
+                                    * (asterisk) matches any number of characters
+                                  </li>
+                                  <li>
+                                    ? (question mark) matches exactly one character.
+                                  </li>
+                                </ul>
+                                <br />
+                                <strong>Delimiters:</strong>
+                                {' '}
+                                Separate multiple granule IDs by commas.
+                              </Tooltip>
+                            )}
+                          >
+                            <span>
+                              <input
+                                id="input__granule-search"
+                                className="form-control form-control-sm granule-results-header__granule-search-input"
+                                type="text"
+                                placeholder="Search Single or Multiple Granule IDs..."
+                                onBlur={this.handleBlurSearchValue}
+                                onChange={this.handleUpdateSearchValue}
+                                onKeyUp={this.handleSearchKeyUp}
+                                value={searchValue}
+                              />
+                            </span>
+                          </OverlayTrigger>
+                        </div>
+                      </div>
+                      <div className="col-auto">
+                        {granuleFiltersOpen ? (
                           <Button
                             className="granule-results-header__link"
                             onClick={() => onToggleSecondaryOverlayPanel(false)}
@@ -293,8 +345,7 @@ class GranuleResultsHeader extends Component {
                           >
                             Granule Filters
                           </Button>
-                        )
-                        : (
+                        ) : (
                           <Button
                             className="granule-results-header__link"
                             onClick={() => onToggleSecondaryOverlayPanel(true)}
@@ -306,27 +357,56 @@ class GranuleResultsHeader extends Component {
                           >
                             Granule Filters
                           </Button>
-                        )
-                    }
-                  </div>
-                  {
-                    showUndoExcludedGranules && (
-                      <div className="granule-results-header__granule-undo">
-                        Granule excluded.
-                        <button
-                          className="granule-results-header__granule-undo-button"
-                          onClick={this.handleUndoExcludeGranule}
-                          type="button"
-                        >
-                          Undo
-                        </button>
+                        )}
                       </div>
-                    )
-                  }
-                </div>
-              </div>
-            )}
+                      {showUndoExcludedGranules && (
+                        <div className="granule-results-header__granule-undo">
+                          Granule excluded.
+                          <button
+                            className="granule-results-header__granule-undo-button"
+                            onClick={this.handleUndoExcludeGranule}
+                            type="button"
+                          >
+                            Undo
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )
+              }
+            </div>
           </div>
+        </div>
+        <div className="granule-results-header__meta">
+          <span className="granule-results-header__header-item">
+            {
+              initialLoading && (
+                <Skeleton
+                  containerStyle={{ height: '18px', width: '213px' }}
+                  shapes={granuleListTotal}
+                />
+              )
+            }
+            {
+              !initialLoading && (
+                `Showing ${commafy(visibleGranules)} of ${commafy(
+                  granuleCount
+                )} matching ${pluralize('granule', granuleCount)}`
+              )
+            }
+          </span>
+          <span className="granule-results-header__header-item">
+            {
+              initialLoading && (
+                <Skeleton
+                  containerStyle={{ height: '18px', width: '110px' }}
+                  shapes={granuleTimeTotal}
+                />
+              )
+            }
+            {!initialLoading && `Search Time: ${loadTimeInSeconds}s`}
+          </span>
         </div>
       </div>
     )
@@ -343,7 +423,8 @@ GranuleResultsHeader.propTypes = {
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
-  onUndoExcludeGranule: PropTypes.func.isRequired
+  onUndoExcludeGranule: PropTypes.func.isRequired,
+  pageNum: PropTypes.number.isRequired
 }
 
 export default GranuleResultsHeader

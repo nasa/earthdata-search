@@ -25,7 +25,7 @@ export const ProjectCollectionsList = (props) => {
     location,
     onSetActivePanel,
     project,
-    projectPanels,
+    panels,
     collectionSearch,
     mapProjection
   } = props
@@ -35,7 +35,7 @@ export const ProjectCollectionsList = (props) => {
 
   const projectIsEmpty = !projectIds.length
 
-  const activePanel = projectPanels.isOpen ? projectPanels.activePanel.split('.')[1] : null
+  const activePanel = panels.isOpen ? panels.activePanel.split('.')[1] : null
 
   const collectionsList = projectIds.map((collectionId, index) => {
     const isPanelActive = activePanel === index.toString()
@@ -88,7 +88,7 @@ ProjectCollectionsList.propTypes = {
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
+  panels: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired
 }

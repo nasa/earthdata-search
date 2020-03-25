@@ -25,6 +25,7 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   collectionSearch: state.query.collection,
   focusedCollection: state.focusedCollection,
+  granuleSearch: state.query.granule,
   mapProjection: state.map.projection,
   secondaryOverlayPanel: state.ui.secondaryOverlayPanel
 })
@@ -34,6 +35,7 @@ export const GranuleResultsHeaderContainer = (props) => {
     collections,
     collectionSearch,
     focusedCollection,
+    granuleSearch,
     location,
     mapProjection,
     secondaryOverlayPanel,
@@ -44,6 +46,8 @@ export const GranuleResultsHeaderContainer = (props) => {
   } = props
 
   const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
+
+  const { pageNum } = granuleSearch
 
   return (
     <>
@@ -58,6 +62,7 @@ export const GranuleResultsHeaderContainer = (props) => {
         onToggleAboutCwicModal={onToggleAboutCwicModal}
         onToggleSecondaryOverlayPanel={onToggleSecondaryOverlayPanel}
         onUndoExcludeGranule={onUndoExcludeGranule}
+        pageNum={pageNum}
       />
     </>
   )
@@ -67,6 +72,7 @@ GranuleResultsHeaderContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
+  granuleSearch: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
   secondaryOverlayPanel: PropTypes.shape({}).isRequired,

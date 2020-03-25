@@ -2,9 +2,6 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-  masterOverlayPanelDragEnd,
-  masterOverlayPanelDragStart,
-  masterOverlayPanelResize,
   toggleAboutCwicModal,
   toggleAdvancedSearchModal,
   toggleFacetsModal,
@@ -15,9 +12,6 @@ import {
 } from '../ui'
 
 import {
-  MASTER_OVERLAY_PANEL_DRAG_END,
-  MASTER_OVERLAY_PANEL_DRAG_START,
-  MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
@@ -31,70 +25,6 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
-})
-
-describe('masterOverlayPanelDragStart', () => {
-  test('should create an action to update the state', () => {
-    const store = mockStore({
-      ui: {
-        masterOverlayPanel: {
-          dragging: false,
-          height: 350
-        }
-      }
-    })
-
-    const payload = ['test payload']
-    store.dispatch(masterOverlayPanelDragStart(payload))
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: MASTER_OVERLAY_PANEL_DRAG_START,
-      payload: ['test payload']
-    })
-  })
-})
-
-describe('masterOverlayPanelDragEnd', () => {
-  test('should create an action to update the state', () => {
-    const store = mockStore({
-      ui: {
-        masterOverlayPanel: {
-          dragging: false,
-          height: 350
-        }
-      }
-    })
-
-    store.dispatch(masterOverlayPanelDragEnd())
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: MASTER_OVERLAY_PANEL_DRAG_END
-    })
-  })
-})
-
-describe('masterOverlayPanelResize', () => {
-  test('should create an action to update the state', () => {
-    const store = mockStore({
-      ui: {
-        masterOverlayPanel: {
-          dragging: false,
-          height: 350
-        }
-      }
-    })
-
-    const payload = 100
-    store.dispatch(masterOverlayPanelResize(payload))
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
-      payload: 100
-    })
-  })
 })
 
 describe('toggleAboutCwicModal', () => {

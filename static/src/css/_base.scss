@@ -24,6 +24,15 @@ body {
   background: $color__black;
 }
 
+body.is-panels-dragging {
+  cursor: col-resize;
+  user-select: none;
+}
+
+body.is-panels-will-minimize {
+  cursor: w-resize;
+}
+
 @include media-breakpoint-up(lg) {
   html {
     font-size: 100%;

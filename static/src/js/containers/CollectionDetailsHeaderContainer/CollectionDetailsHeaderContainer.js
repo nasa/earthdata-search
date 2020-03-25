@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {
-  withRouter
-} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
 
@@ -18,16 +16,18 @@ const mapStateToProps = state => ({
 
 export const CollectionDetailsHeaderContainer = ({
   collections,
-  focusedCollection,
   collectionSearch = {},
+  focusedCollection,
+  location,
   mapProjection
 }) => {
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
   return (
     <CollectionDetailsHeader
-      focusedCollectionMetadata={focusedCollectionMetadata}
       collectionSearch={collectionSearch}
+      focusedCollectionMetadata={focusedCollectionMetadata}
+      location={location}
       mapProjection={mapProjection}
     />
   )
@@ -35,8 +35,9 @@ export const CollectionDetailsHeaderContainer = ({
 
 CollectionDetailsHeaderContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
+  focusedCollection: PropTypes.string.isRequired,
+  location: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired
 }
 

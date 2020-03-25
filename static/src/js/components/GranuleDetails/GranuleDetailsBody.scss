@@ -5,6 +5,7 @@
   background-color: $color__black--100;
 
   .nav-tabs {
+    font-size: 0.925rem;
     background-color: $color__black--100;
 
     .nav-link:not(.active):hover {
@@ -19,11 +20,12 @@
   }
 
   .tab-content {
-    min-height: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-grow: 1;
-    padding: $spacer;
     background-color: $color__white;
+    overflow-y: scroll;
+    overflow-x: scroll;
   }
 
   .tab-content > .active {
@@ -32,10 +34,7 @@
     width: 100%;
   }
 
-  .simplebar-content {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    min-height: 100%;
+  .tab-pane {
+    padding: $spacer;
   }
 }

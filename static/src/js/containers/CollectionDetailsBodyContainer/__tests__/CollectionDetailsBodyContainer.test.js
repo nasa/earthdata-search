@@ -23,6 +23,7 @@ function setup() {
       }
     },
     focusedCollection: 'focusedCollection',
+    isActive: true,
     onToggleRelatedUrlsModal: jest.fn()
   }
 
@@ -41,6 +42,7 @@ describe('CollectionDetailsBodyContainer component', () => {
     expect(enzymeWrapper.find(CollectionDetailsBody).length).toBe(1)
     expect(enzymeWrapper.find(CollectionDetailsBody).props().collectionMetadata).toEqual({ test: 'metadata' })
     expect(enzymeWrapper.find(CollectionDetailsBody).props().formattedCollectionMetadata).toEqual({ test: 'formattedMetadata' })
+    expect(enzymeWrapper.find(CollectionDetailsBody).props().isActive).toEqual(true)
     expect(typeof enzymeWrapper.find(CollectionDetailsBody).props().onToggleRelatedUrlsModal).toEqual('function')
   })
 })

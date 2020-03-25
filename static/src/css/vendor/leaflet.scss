@@ -23,7 +23,33 @@
     }
   }
 
-  // Reposition the container and controls
+  .leaflet-control-container {
+    height: 100%;
+    width: 100%;
+  }
+
+  .leaflet-bottom.leaflet-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    > div {
+      order: 3;
+    }
+
+    & :nth-child(1) {
+      order: 2;
+    }
+
+    & :nth-child(2) {
+      order: 1;
+    }
+  }
+
+  .leaflet-control.leaflet-control-zoom {
+    margin-bottom: 55px;
+  }
+
   .leaflet-container {
     height: 100%;
   }
@@ -41,58 +67,18 @@
     vertical-align: middle;
   }
 
-  // Adds padding to the container and forces rows
-  .leaflet-bottom.leaflet-right {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    margin: 10px;
-    margin-right: 44px;
-  }
-
-  // Removes bottom padding from the control elements
-  .leaflet-bottom .leaflet-control {
-    margin-bottom: 0;
-  }
-
   // Positions the layers list and scale elements outside of the default container
   // to allow the layers list to not affect position of the rest of the controls while
   // its in its expanded state
-  .leaflet-control-scale,
   .leaflet-control-layers {
+    bottom: 0;
+    right: 0px;
     position: absolute;
-    right: -44px;
-  }
-
-  .leaflet-control-layers {
-    top: 0;
-  }
-
-  // Set flex on all the controls to force them to flow horizontally
-  .leaflet-control,
-  .leaflet-touch .leaflet-bar {
-    display: flex;
-  }
-
-  // Break the scale elements on to separate lines and position it
-  .leaflet-control-scale {
-    display: block;
-    bottom: 50px;
   }
 
   // Reduce the font size on the scale elements
   .leaflet-control-scale-line {
     font-weight: 400;
-  }
-
-  // Remove default margin top on the draw toolbar
-  .leaflet-draw-toolbar {
-    margin-top: 0;
-  }
-
-  // Add right margin to be consistent with other scale elements
-  .leaflet-draw-toolbar-top {
-    margin-right: 10px;
   }
 
   // Force the layers toggle to be the same size as the other elements
@@ -121,6 +107,7 @@
   .leaflet-control-layers-expanded {
     top: auto;
     bottom: 0;
+    right: 0;
     padding: 0;
     width: 250px;
     font-weight: 400;
@@ -166,7 +153,6 @@
   .leaflet-bar button,
   .leaflet-touch .leaflet-bar a,
   .leaflet-touch .leaflet-bar button {
-    float: left;
     border: 0;
     background-color: #fff;
     width: 30px;
@@ -185,36 +171,34 @@
       line-height: 30px;
     }
 
-    &:first-child {
-      border-bottom-left-radius: 2px;
+     &:first-child {
       border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+      border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
-      border-top-right-radius: 0px;
     }
 
     &:last-child {
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-      border-bottom-right-radius: 2px;
-      border-top-right-radius: 2px;
-    }
-
-    &:only-child {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
       border-bottom-left-radius: 2px;
-      border-top-left-radius: 2px;
       border-bottom-right-radius: 2px;
-      border-top-right-radius: 2px;
     }
+  }
+
+  .leaflet-control.leaflet-control-layers {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  .leaflet-bottom .leaflet-control-scale {
+    margin-bottom: 10px;
   }
 
   // Leaflet draw section
   .leaflet-draw-section {
-    margin-bottom: 36px;
-    padding-left: 30px;
-    float: right;
-    margin: 0 0 0 10px;
-    padding: 0;
-
     &:last-child {
       margin: 0;
     }
