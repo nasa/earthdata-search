@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import EDSCTable from '../EDSCTable/EDSCTable'
 import Cell from './Cell'
 import CollectionCell from './CollectionCell'
+import EDSCTable from '../EDSCTable/EDSCTable'
 
 import './CollectionResultsTable.scss'
 
@@ -14,6 +14,7 @@ export const CollectionResultsTable = ({
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
+  portal,
   waypointEnter
 }) => {
   const columns = useMemo(() => [
@@ -96,6 +97,7 @@ export const CollectionResultsTable = ({
         data={collections}
         infiniteScrollTrigger={waypointEnter}
         infiniteScrollTotal={collectionHits}
+        portal={portal}
       />
     </div>
   )
@@ -107,6 +109,7 @@ CollectionResultsTable.propTypes = {
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
+  portal: PropTypes.shape({}).isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   waypointEnter: PropTypes.func.isRequired
 }

@@ -13,6 +13,9 @@ function setup(overrideProps) {
     bootstrapVariant: 'primary',
     collections: collectionData,
     collectionHits: 0,
+    portal: {
+      portalId: ''
+    },
     onAddProjectCollection: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onViewCollectionGranules: jest.fn(),

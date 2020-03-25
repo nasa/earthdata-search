@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { useTable, useBlockLayout } from 'react-table'
 import classNames from 'classnames'
 import { Waypoint } from 'react-waypoint'
+import { startCase } from 'lodash'
 
 import Skeleton from '../Skeleton/Skeleton'
 import { rowContentLarge } from './skeleton'
@@ -18,7 +19,8 @@ const EDSCTable = ({
   id,
   infiniteScrollTotal,
   infiniteScrollTrigger,
-  infiniteScrollScrollableAncestor
+  infiniteScrollScrollableAncestor,
+  portal
 }) => {
   const tableClassName = classNames([
     'edsc-table',
@@ -100,6 +102,12 @@ const EDSCTable = ({
     )
   }
 
+  const {
+    portalId,
+    org = portalId,
+    title = portalId
+  } = portal
+
   return (
     <div {...getTableProps()} id={id} className={tableClassName} style={{ width: '100%', height: '100%' }}>
       <div className="edsc-table__thead">
@@ -161,6 +169,26 @@ const EDSCTable = ({
               {
                 insertWaypoint && buildWaypoint()
               }
+              {
+                (isLast && portalId.length > 0) && (
+                  <div {...rowProps} className="edsc-table__tr">
+                    <div className="edsc-table--portal-escape">
+                      Looking for more collections?
+                      {' '}
+                      <a href="/" className="portal-escape-link">
+                        Leave
+                        {' '}
+                        {startCase(org)}
+                        &#39;s
+                        {' '}
+                        {startCase(title)}
+                        {' '}
+                        Portal
+                      </a>
+                    </div>
+                  </div>
+                )
+              }
             </React.Fragment>
           )
         })}
@@ -185,7 +213,8 @@ EDSCTable.propTypes = {
   id: PropTypes.string.isRequired,
   infiniteScrollTotal: PropTypes.number,
   infiniteScrollTrigger: PropTypes.func,
-  infiniteScrollScrollableAncestor: PropTypes.instanceOf(Element)
+  infiniteScrollScrollableAncestor: PropTypes.instanceOf(Element),
+  portal: PropTypes.shape({}).isRequired
 }
 
 export default EDSCTable

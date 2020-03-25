@@ -24,6 +24,9 @@ function setup(overrideProps) {
     id: 'test-table',
     infiniteScrollTotal: 2,
     infiniteScrollTrigger: jest.fn(),
+    portal: {
+      portalId: ''
+    },
     ...overrideProps
   }
 
