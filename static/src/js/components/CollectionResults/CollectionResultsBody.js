@@ -61,6 +61,7 @@ const CollectionResultsBody = ({
             onAddProjectCollection={onAddProjectCollection}
             onRemoveCollectionFromProject={onRemoveCollectionFromProject}
             onViewCollectionDetails={onViewCollectionDetails}
+            portal={portal}
             waypointEnter={waypointEnter}
           />
         )

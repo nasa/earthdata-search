@@ -6,6 +6,18 @@
   position: relative;
   padding-bottom: 1px;
 
+  &--portal-escape {
+    color: #424242;
+    margin: 0;
+    padding: 15px 20px;
+    border-top: 1px solid #e3e3e3;
+    width: inherit;
+  }
+
+  &--portal-escape a {
+    text-decoration: underline;
+  }
+
   &__tr {
     background-color: $color__white;
     border-bottom: 1px solid $color__black--200;
