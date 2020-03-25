@@ -94,6 +94,7 @@ const EDSCTable = ({
         {skeletonRow()}
         {skeletonRow()}
         <Waypoint
+          bottomOffset="-200px"
           key={`${id}-infinite-scroll-trigger`}
           onEnter={infiniteScrollTrigger}
           scrollableAncestor={infiniteScrollScrollableAncestor}
