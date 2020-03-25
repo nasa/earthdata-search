@@ -1,24 +1,34 @@
 .search-sidebar-header {
   &__link-wrapper {
+    opacity: 0;
     position: relative;
     height: 2rem;
+    background-color: $color__white;
+    border-bottom: 1px solid $color__black--200;
+    border-right: 1px solid $color__black--200;
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+
+    &--is-active {
+      opacity: 1;
+      pointer-events: initial;
+      background-color: $color__white;
+    }
   }
 
   &__button {
-    position: absolute;
     margin: 0 1rem;
-    left: -0.125rem;
-    padding: 0.125rem 0 0;
+    padding: 0.4rem 0;
     border: 0;
     outline: 0;
-    color: $color__black--400;
+    color: $color__brand--blue;
     font-size: 0.825rem;
     visibility: visible;
     opacity: 1;
     transition: all 0.1s ease-out;
 
     &:hover {
-      color: $color__black--200;
+      color: $color__brand--blue-dark;
     }
 
     &--is-hidden {

@@ -17,18 +17,18 @@ export class SearchSidebarHeader extends PureComponent {
   render() {
     const { location, onFocusedCollectionChange } = this.props
 
-    const buttonClassNames = classNames([
-      'search-sidebar-header__button',
+    const linkWrapperClassNames = classNames([
+      'search-sidebar-header__link-wrapper',
       {
-        'search-sidebar-header__button--is-hidden': location.pathname === '/search'
+        'search-sidebar-header__link-wrapper--is-active': location.pathname !== '/search'
       }
     ])
 
     return (
       <div className="search-sidebar-header">
-        <div className="search-sidebar-header__link-wrapper">
+        <div className={linkWrapperClassNames}>
           <PortalLinkContainer
-            className={buttonClassNames}
+            className="search-sidebar-header__button"
             type="button"
             label="Back to collections"
             to={{

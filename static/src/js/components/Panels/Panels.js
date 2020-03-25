@@ -342,6 +342,7 @@ export class Panels extends PureComponent {
   }
 
   onPanelDragStart(clickStartWidth, clickStartX) {
+    this.onWindowResize()
     this.setState({
       dragging: true
     })
