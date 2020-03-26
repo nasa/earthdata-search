@@ -16,16 +16,6 @@ function setup() {
         }
       }
     },
-    collectionsSearch: {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
-        }
-      },
-      isLoading: false,
-      isLoaded: true
-    },
     dataQualitySummaries: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
@@ -64,16 +54,6 @@ describe('ProjectPanelsContainer component', () => {
     })
     expect(enzymeWrapper.find(ProjectPanels).props().project).toEqual({
       collectionIds: ['collectionId']
-    })
-    expect(enzymeWrapper.find(ProjectPanels).props().collectionsSearch).toEqual({
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
-        }
-      },
-      isLoading: false,
-      isLoaded: true
     })
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onSetActivePanel).toEqual('function')
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onTogglePanels).toEqual('function')

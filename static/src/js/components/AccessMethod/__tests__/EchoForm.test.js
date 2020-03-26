@@ -7,7 +7,7 @@ import { rawModel, echoForm, formWithModel } from './mocks'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     collectionId: '',
     form: '',
@@ -15,7 +15,8 @@ function setup() {
     rawModel: '',
     shapefileId: null,
     spatial: {},
-    onUpdateAccessMethod: jest.fn()
+    onUpdateAccessMethod: jest.fn(),
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<EchoForm {...props} />)
@@ -51,6 +52,27 @@ describe('EchoForm component', () => {
       expect(enzymeWrapper.instance().initializeEchoForm.mock.calls.length).toBe(1)
       expect(enzymeWrapper.instance().initializeEchoForm.mock.calls[0])
         .toEqual([echoForm, rawModel, methodKey, {}, null])
+    })
+
+    test('resets the echoform', () => {
+      const methodKey = 'echoOrder0'
+      const { enzymeWrapper } = setup({
+        form: echoForm,
+        methodKey,
+        rawModel
+      })
+      enzymeWrapper.instance().initializeEchoForm = jest.fn()
+      enzymeWrapper.instance().$el.echoforms = jest.fn()
+
+      enzymeWrapper.setProps({
+        rawModel: undefined
+      })
+
+      expect(enzymeWrapper.instance().$el.echoforms.mock.calls.length).toBe(1)
+      expect(enzymeWrapper.instance().$el.echoforms.mock.calls).toEqual([['destroy']])
+      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls.length).toBe(1)
+      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls[0])
+        .toEqual([echoForm, null, methodKey, {}, null])
     })
   })
 

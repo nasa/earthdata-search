@@ -9,7 +9,6 @@ import { togglePanels, setActivePanel } from '../../actions/panels'
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
-  collectionsSearch: state.searchResults.collections,
   dataQualitySummaries: state.dataQualitySummaries,
   project: state.project,
   panels: state.panels,
@@ -32,7 +31,6 @@ const mapDispatchToProps = dispatch => ({
 
 export const ProjectPanelsContainer = ({
   collections,
-  collectionsSearch,
   dataQualitySummaries,
   project,
   panels,
@@ -45,7 +43,6 @@ export const ProjectPanelsContainer = ({
 }) => (
   <ProjectPanels
     collections={collections}
-    collectionsSearch={collectionsSearch}
     dataQualitySummaries={dataQualitySummaries}
     project={project}
     panels={panels}
@@ -64,7 +61,6 @@ ProjectPanelsContainer.defaultProps = {
 
 ProjectPanelsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({}).isRequired,
   dataQualitySummaries: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   panels: PropTypes.shape({}).isRequired,

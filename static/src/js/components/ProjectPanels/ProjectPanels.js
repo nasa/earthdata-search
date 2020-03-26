@@ -48,6 +48,7 @@ class ProjectPanels extends PureComponent {
     this.clearSelectedVariable = this.clearSelectedVariable.bind(this)
     this.onViewDetails = this.onViewDetails.bind(this)
     this.backToOptions = this.backToOptions.bind(this)
+    this.resetForm = this.resetForm.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -178,6 +179,20 @@ class ProjectPanels extends PureComponent {
     this.onChangePanel(panelId)
   }
 
+  resetForm(collectionId, selectedAccessMethod) {
+    const { onUpdateAccessMethod } = this.props
+
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          model: undefined,
+          rawModel: undefined
+        }
+      }
+    })
+  }
+
   render() {
     const {
       collections,
@@ -267,6 +282,22 @@ class ProjectPanels extends PureComponent {
           <span className="project-panels__collection-count">
             {`Collection ${index + 1} of ${projectIds.length}`}
           </span>
+          {
+            selectedAccessMethod
+            && (
+              selectedAccessMethod.includes('esi')
+              || selectedAccessMethod.includes('echoOrder'))
+            && (
+              <Button
+                className="project-panels__action"
+                label="Previous Collection"
+                bootstrapVariant="light"
+                onClick={() => this.resetForm(collectionId, selectedAccessMethod)}
+              >
+                Reset Form
+              </Button>
+            )
+          }
           {
             index > 0 && (
               <Button

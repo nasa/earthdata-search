@@ -34,8 +34,10 @@ class EchoForm extends Component {
   componentWillReceiveProps(nextProps) {
     const {
       form,
-      methodKey
+      methodKey,
+      rawModel
     } = this.props
+
     const {
       spatial,
       form: nextForm,
@@ -45,6 +47,12 @@ class EchoForm extends Component {
     } = nextProps
 
     if (form !== nextForm && methodKey !== nextMethodKey) {
+      this.$el.echoforms('destroy')
+
+      this.initializeEchoForm(nextForm, nextRawModel, nextMethodKey, spatial, shapefileId)
+    } else if (rawModel !== nextRawModel) {
+      // If the rawModel has changed, reinitialize the form with the new rawModel
+      // This happens when the user resets their form
       this.$el.echoforms('destroy')
 
       this.initializeEchoForm(nextForm, nextRawModel, nextMethodKey, spatial, shapefileId)
