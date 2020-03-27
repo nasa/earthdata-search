@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     selected: [{
-      type: 'mock type',
+      type: 'mock_type',
       value: 'mock value'
     }],
     onRemoveAutocompleteValue: jest.fn()
@@ -31,7 +31,7 @@ describe('AutocompleteDisplayContainer component', () => {
     expect(enzymeWrapper.find(AutocompleteDisplay).length).toBe(1)
     expect(enzymeWrapper.find(AutocompleteDisplay).props()).toEqual({
       selected: [{
-        type: 'mock type',
+        type: 'mock_type',
         value: 'mock value'
       }],
       onRemoveAutocompleteValue: props.onRemoveAutocompleteValue

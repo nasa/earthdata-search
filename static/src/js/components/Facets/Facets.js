@@ -58,7 +58,7 @@ const Facets = (props) => {
   const keywordsFacet = {
     ...cmrFacetDefaults,
     title: 'Keywords',
-    autocompleteType: 'science-keywords',
+    autocompleteType: 'science_keywords',
     options: {
       liftSelectedFacets: true
     }
@@ -79,7 +79,7 @@ const Facets = (props) => {
   const organizationsFacet = {
     ...cmrFacetDefaults,
     title: 'Organizations',
-    autocompleteType: 'dataCenter'
+    autocompleteType: 'organization'
   }
 
   const projectsTemplate = {
@@ -91,13 +91,13 @@ const Facets = (props) => {
   const processingLevels = {
     ...cmrFacetDefaults,
     title: 'Processing Levels',
-    autocompleteType: 'processingLevelId'
+    autocompleteType: 'processing_level_id'
   }
 
   const formats = {
     ...cmrFacetDefaults,
     title: 'Data Format',
-    autocompleteType: 'granuleDataFormat'
+    autocompleteType: 'granule_data_format'
   }
 
   const facetsTemplate = [

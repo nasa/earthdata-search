@@ -74,7 +74,7 @@ describe('clearAutocompleteSuggestions', () => {
 describe('updateAutocompleteSuggestions', () => {
   test('should create an action to update the store', () => {
     const payload = [{
-      type: 'mock type',
+      type: 'mock_type',
       value: 'mock value'
     }]
     const expectedAction = {
@@ -88,7 +88,7 @@ describe('updateAutocompleteSuggestions', () => {
 describe('updateAutocompleteSelected', () => {
   test('should create an action to update the search query', () => {
     const payload = {
-      type: 'mock type',
+      type: 'mock_type',
       value: 'mock value'
     }
     const expectedAction = {
@@ -102,7 +102,7 @@ describe('updateAutocompleteSelected', () => {
 describe('deleteAutocompleteValue', () => {
   test('should create an action to update the search query', () => {
     const payload = {
-      type: 'mock type',
+      type: 'mock_type',
       value: 'mock value'
     }
     const expectedAction = {
@@ -120,7 +120,7 @@ describe('fetchAutocomplete', () => {
       .reply(200, {
         feed: {
           entry: [{
-            type: 'mock type',
+            type: 'mock_type',
             value: 'mock value'
           }]
         }
@@ -143,7 +143,7 @@ describe('fetchAutocomplete', () => {
         type: UPDATE_AUTOCOMPLETE_SUGGESTIONS,
         payload: {
           suggestions: [{
-            type: 'mock type',
+            type: 'mock_type',
             value: 'mock value'
           }]
         }

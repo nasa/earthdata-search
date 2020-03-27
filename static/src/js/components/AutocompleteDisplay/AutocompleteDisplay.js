@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Badge } from 'react-bootstrap'
+import { startCase } from 'lodash'
 
 import { Button } from '../Button/Button'
 
@@ -22,7 +23,7 @@ const AutocompleteDisplay = ({ selected, onRemoveAutocompleteValue }) => {
               key={`${type}-${value}`}
             >
               <span className="autocomplete-display__type">
-                {type}
+                {startCase(type)}
               </span>
               <span className="autocomplete-display__value">
                 {value}

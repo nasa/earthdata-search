@@ -25,7 +25,8 @@ class FacetsItem extends Component {
     const {
       autocompleteType,
       changeHandler,
-      facet
+      facet,
+      level
     } = this.props
 
     const { title: facetValue } = facet
@@ -35,7 +36,11 @@ class FacetsItem extends Component {
       applied: !applied
     })
 
-    changeHandler(e, changeHandlerArgs, { type: autocompleteType, value: facetValue }, !applied)
+    changeHandler(e, changeHandlerArgs, {
+      level,
+      type: autocompleteType,
+      value: facetValue
+    }, !applied)
   }
 
   render() {

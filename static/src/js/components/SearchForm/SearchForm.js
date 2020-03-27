@@ -173,7 +173,11 @@ class SearchForm extends Component {
       onFetchAutocomplete
     } = this.props
 
-    const { suggestions } = autocomplete
+    const {
+      isLoading,
+      isLoaded,
+      suggestions
+    } = autocomplete
 
     const {
       keywordSearch,
@@ -212,6 +216,13 @@ class SearchForm extends Component {
                 onChange: this.onAutoSuggestChange
               }}
             />
+            {
+              isLoading && !isLoaded && (
+                <div className="search-form__loading-suggestions">
+                  Loading Suggestions...
+                </div>
+              )
+            }
           </form>
           <Button
             bootstrapVariant="inline-block"
