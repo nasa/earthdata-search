@@ -179,6 +179,16 @@ class ProjectPanels extends PureComponent {
     this.onChangePanel(panelId)
   }
 
+  canResetForm(accessMethods, selectedAccessMethod) {
+    if (!accessMethods || !selectedAccessMethod) return false
+
+    const { type = '' } = accessMethods[selectedAccessMethod]
+
+    if (type === 'ESI' || type === 'ECHO ORDERS') return true
+
+    return false
+  }
+
   resetForm(collectionId, selectedAccessMethod) {
     const { onUpdateAccessMethod } = this.props
 
@@ -283,11 +293,7 @@ class ProjectPanels extends PureComponent {
             {`Collection ${index + 1} of ${projectIds.length}`}
           </span>
           {
-            selectedAccessMethod
-            && (
-              selectedAccessMethod.includes('esi')
-              || selectedAccessMethod.includes('echoOrder'))
-            && (
+            this.canResetForm(accessMethods, selectedAccessMethod) && (
               <Button
                 className="project-panels__action"
                 label="Previous Collection"

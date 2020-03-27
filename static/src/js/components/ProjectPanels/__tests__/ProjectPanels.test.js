@@ -3,8 +3,6 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import ProjectPanels from '../ProjectPanels'
-import Panels from '../../Panels/Panels'
-import PanelSection from '../../Panels/PanelSection'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -406,6 +404,58 @@ describe('ProjectPanels component', () => {
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
     expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.2')
+  })
+
+  describe('canResetForm', () => {
+    test('returns false if no access methods exist', () => {
+      const { enzymeWrapper } = setup()
+
+      const accessMethods = undefined
+      const selectedAccessMethod = undefined
+      const result = enzymeWrapper.instance().canResetForm(accessMethods, selectedAccessMethod)
+
+      expect(result).toBeFalsy()
+    })
+
+    test('returns false if no selected access method exists', () => {
+      const { enzymeWrapper } = setup()
+
+      const accessMethods = { download: { type: 'download' } }
+      const selectedAccessMethod = undefined
+      const result = enzymeWrapper.instance().canResetForm(accessMethods, selectedAccessMethod)
+
+      expect(result).toBeFalsy()
+    })
+
+    test('returns false if the selected access method does not use echo forms', () => {
+      const { enzymeWrapper } = setup()
+
+      const accessMethods = { download: { type: 'download' } }
+      const selectedAccessMethod = 'download'
+      const result = enzymeWrapper.instance().canResetForm(accessMethods, selectedAccessMethod)
+
+      expect(result).toBeFalsy()
+    })
+
+    test('returns true for ESI access methods', () => {
+      const { enzymeWrapper } = setup()
+
+      const accessMethods = { esi0: { type: 'ESI' } }
+      const selectedAccessMethod = 'esi0'
+      const result = enzymeWrapper.instance().canResetForm(accessMethods, selectedAccessMethod)
+
+      expect(result).toBeTruthy()
+    })
+
+    test('returns true for ECHO ORDERS access methods', () => {
+      const { enzymeWrapper } = setup()
+
+      const accessMethods = { echoOrder0: { type: 'ECHO ORDERS' } }
+      const selectedAccessMethod = 'echoOrder0'
+      const result = enzymeWrapper.instance().canResetForm(accessMethods, selectedAccessMethod)
+
+      expect(result).toBeTruthy()
+    })
   })
 
   test('resetForm calls onUpdateAccessMethod', () => {
