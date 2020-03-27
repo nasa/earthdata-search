@@ -1,4 +1,4 @@
-import { findIndex } from 'lodash'
+import { findIndex, isEqual } from 'lodash'
 
 import {
   TOGGLE_VIEW_ALL_FACETS_MODAL,
@@ -56,7 +56,7 @@ export const cmrFacetsReducer = (state = initialCmrState, action) => {
       const [key] = Object.keys(payload)
       const value = payload[key]
 
-      const index = findIndex(state[key], item => item === value)
+      const index = findIndex(state[key], item => isEqual(item, value))
 
       return {
         ...state,

@@ -74,7 +74,7 @@ describe('CLEAR_AUTOCOMPLETE_SELECTED', () => {
     expect(autocompleteReducer({
       ...initialState,
       selected: [{
-        type: 'mock type',
+        type: 'mock_type',
         value: 'mock value'
       }]
     }, action)).toEqual(expectedState)
@@ -99,7 +99,7 @@ describe('UPDATE_AUTOCOMPLETE_SUGGESTIONS', () => {
   test('returns the correct state', () => {
     const payload = {
       suggestions: [{
-        type: 'mock type',
+        type: 'mock_type',
         value: 'mock value'
       }]
     }
@@ -111,7 +111,7 @@ describe('UPDATE_AUTOCOMPLETE_SUGGESTIONS', () => {
     const expectedState = {
       ...initialState,
       suggestions: [{
-        type: 'mock type',
+        type: 'mock_type',
         value: 'mock value'
       }]
     }
@@ -124,7 +124,7 @@ describe('UPDATE_AUTOCOMPLETE_SELECTED', () => {
   test('returns the correct state', () => {
     const payload = {
       suggestion: {
-        type: 'mock type',
+        type: 'mock_type',
         value: 'mock value'
       }
     }
@@ -136,7 +136,7 @@ describe('UPDATE_AUTOCOMPLETE_SELECTED', () => {
     const expectedState = {
       ...initialState,
       selected: [{
-        type: 'mock type',
+        type: 'mock_type',
         value: 'mock value'
       }]
     }
@@ -148,7 +148,7 @@ describe('UPDATE_AUTOCOMPLETE_SELECTED', () => {
 describe('DELETE_AUTOCOMPLETE_VALUE', () => {
   test('returns the correct state', () => {
     const payload = {
-      type: 'mock type 2',
+      type: 'mock_type_2',
       value: 'mock value 2'
     }
     const action = {
@@ -159,7 +159,7 @@ describe('DELETE_AUTOCOMPLETE_VALUE', () => {
     const expectedState = {
       ...initialState,
       selected: [{
-        type: 'mock type 1',
+        type: 'mock_type_1',
         value: 'mock value 1'
       }]
     }
@@ -168,15 +168,51 @@ describe('DELETE_AUTOCOMPLETE_VALUE', () => {
       ...initialState,
       selected: [
         {
-          type: 'mock type 1',
+          type: 'mock_type_1',
           value: 'mock value 1'
         },
         {
-          type: 'mock type 2',
+          type: 'mock_type_2',
           value: 'mock value 2'
         }
       ]
     }, action)).toEqual(expectedState)
+  })
+
+  test('returns the correct state for science_keywords', () => {
+    const payload = {
+      level: 1,
+      type: 'science_keywords',
+      value: 'Clouds'
+    }
+    const action = {
+      type: DELETE_AUTOCOMPLETE_VALUE,
+      payload
+    }
+
+    const initial = {
+      ...initialState,
+      selected: [
+        {
+          type: 'science_keywords',
+          value: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency'
+        },
+        {
+          type: 'science_keywords',
+          value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
+        }
+      ]
+    }
+
+    const expectedState = {
+      ...initialState,
+      selected: [{
+        type: 'science_keywords',
+        value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
+      }]
+    }
+
+    expect(autocompleteReducer(initial, action)).toEqual(expectedState)
   })
 })
 
@@ -184,7 +220,7 @@ describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
     const payload = {
       autocompleteSelected: [{
-        type: 'mock type',
+        type: 'mock_type',
         value: 'mock value'
       }]
     }
@@ -196,7 +232,7 @@ describe('RESTORE_FROM_URL', () => {
     const expectedState = {
       ...initialState,
       selected: [{
-        type: 'mock type',
+        type: 'mock_type',
         value: 'mock value'
       }]
     }

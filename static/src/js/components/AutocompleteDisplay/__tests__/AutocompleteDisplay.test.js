@@ -1,12 +1,10 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { Badge } from 'react-bootstrap'
 
 import AutocompleteDisplay from '../AutocompleteDisplay'
-import FilterStackItem from '../../FilterStack/FilterStackItem'
-import FilterStackContents from '../../FilterStack/FilterStackContents'
 import { Button } from '../../Button/Button'
-import { Badge } from 'react-bootstrap'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -37,7 +35,7 @@ describe('AutocompleteDisplay component', () => {
       const { enzymeWrapper } = setup()
       enzymeWrapper.setProps({
         selected: [{
-          type: 'mock type',
+          type: 'mock_type',
           value: 'mock value'
         }]
       })
@@ -46,7 +44,7 @@ describe('AutocompleteDisplay component', () => {
 
       expect(badge.props().pill).toBeTruthy()
 
-      expect(enzymeWrapper.find('.autocomplete-display__type').text()).toEqual('mock type')
+      expect(enzymeWrapper.find('.autocomplete-display__type').text()).toEqual('Mock Type')
       expect(enzymeWrapper.find('.autocomplete-display__value').text()).toEqual('mock value')
     })
   })
@@ -56,7 +54,7 @@ describe('AutocompleteDisplay component', () => {
       const { enzymeWrapper, props } = setup()
       enzymeWrapper.setProps({
         selected: [{
-          type: 'mock type',
+          type: 'mock_type',
           value: 'mock value'
         }]
       })

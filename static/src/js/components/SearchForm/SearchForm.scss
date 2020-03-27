@@ -91,6 +91,16 @@
     }
   }
 
+  &__loading-suggestions {
+    background: white;
+    color: $color__black--300;
+    font-size: 0.75rem;
+    padding: 0.825rem 0.925rem;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+  }
+
   &__filter-stack {
     display: none;
   }
