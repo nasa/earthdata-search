@@ -24,4 +24,8 @@ export default class LoggerRequest extends Request {
   logRelevancy(params) {
     return this.post('relevancy_logger', params)
   }
+
+  logSelectedAutocomplete(params) {
+    return this.post('autocomplete_logger', params)
+  }
 }

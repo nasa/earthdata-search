@@ -130,9 +130,7 @@ class SearchForm extends Component {
    * @param {String} value text entered
    */
   shouldRenderSuggestions(value) {
-    const { autocomplete } = this.props
-    const { isLoading } = autocomplete
-    return !isLoading && value.trim().length > 2
+    return value.trim().length > 2
   }
 
   /**

@@ -34,6 +34,10 @@
       padding-left: 4rem;
     }
 
+    .facets-item--level-4 & {
+      padding-left: 5rem;
+    }
+
     &:hover {
       background: $color__black--700;
       border-left: .2rem solid $color__green--500;

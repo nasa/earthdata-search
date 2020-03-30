@@ -14,6 +14,7 @@ import {
 const initialState = {
   isLoaded: false,
   isLoading: false,
+  params: null,
   suggestions: [],
   selected: []
 }
@@ -101,7 +102,8 @@ describe('UPDATE_AUTOCOMPLETE_SUGGESTIONS', () => {
       suggestions: [{
         type: 'mock_type',
         value: 'mock value'
-      }]
+      }],
+      params: { q: 'mock' }
     }
     const action = {
       type: UPDATE_AUTOCOMPLETE_SUGGESTIONS,
@@ -110,6 +112,7 @@ describe('UPDATE_AUTOCOMPLETE_SUGGESTIONS', () => {
 
     const expectedState = {
       ...initialState,
+      params: { q: 'mock' },
       suggestions: [{
         type: 'mock_type',
         value: 'mock value'
@@ -117,6 +120,42 @@ describe('UPDATE_AUTOCOMPLETE_SUGGESTIONS', () => {
     }
 
     expect(autocompleteReducer(undefined, action)).toEqual(expectedState)
+  })
+
+  test('removes already selected values from suggestions', () => {
+    const payload = {
+      suggestions: [{
+        type: 'type',
+        value: 'value1'
+      }, {
+        type: 'type',
+        value: 'value2'
+      }],
+      params: { q: 'mock' }
+    }
+    const action = {
+      type: UPDATE_AUTOCOMPLETE_SUGGESTIONS,
+      payload
+    }
+
+    const initial = {
+      ...initialState,
+      selected: [{
+        type: 'type',
+        value: 'value1'
+      }]
+    }
+
+    const expectedState = {
+      ...initial,
+      params: { q: 'mock' },
+      suggestions: [{
+        type: 'type',
+        value: 'value2'
+      }]
+    }
+
+    expect(autocompleteReducer(initial, action)).toEqual(expectedState)
   })
 })
 
@@ -184,6 +223,41 @@ describe('DELETE_AUTOCOMPLETE_VALUE', () => {
       level: 1,
       type: 'science_keywords',
       value: 'Clouds'
+    }
+    const action = {
+      type: DELETE_AUTOCOMPLETE_VALUE,
+      payload
+    }
+
+    const initial = {
+      ...initialState,
+      selected: [
+        {
+          type: 'science_keywords',
+          value: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency'
+        },
+        {
+          type: 'science_keywords',
+          value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
+        }
+      ]
+    }
+
+    const expectedState = {
+      ...initialState,
+      selected: [{
+        type: 'science_keywords',
+        value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
+      }]
+    }
+
+    expect(autocompleteReducer(initial, action)).toEqual(expectedState)
+  })
+
+  test('returns the correct state for full science_keywords', () => {
+    const payload = {
+      type: 'science_keywords',
+      value: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency'
     }
     const action = {
       type: DELETE_AUTOCOMPLETE_VALUE,
