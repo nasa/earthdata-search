@@ -1,4 +1,4 @@
-import { findIndex } from 'lodash'
+import { differenceWith, findIndex } from 'lodash'
 
 import {
   LOADED_AUTOCOMPLETE,
@@ -15,6 +15,7 @@ import {
 const initialState = {
   isLoaded: false,
   isLoading: false,
+  params: null,
   suggestions: [],
   selected: []
 }
@@ -51,11 +52,20 @@ const autocompleteReducer = (state = initialState, action) => {
       }
     }
     case UPDATE_AUTOCOMPLETE_SUGGESTIONS: {
-      const { suggestions } = payload
+      const { params, suggestions } = payload
+
+      // Removes any selected values from the list of selections
+      const { selected } = state
+      const nonSelectedSuggestions = differenceWith(
+        suggestions,
+        selected,
+        (a, b) => a.type === b.type && a.value === b.value
+      )
 
       return {
         ...state,
-        suggestions
+        params,
+        suggestions: nonSelectedSuggestions
       }
     }
     case UPDATE_AUTOCOMPLETE_SELECTED: {
@@ -80,7 +90,7 @@ const autocompleteReducer = (state = initialState, action) => {
       const { selected } = state
       const index = findIndex(selected, (item) => {
         // if the type is science_keywords, check the correct level of keyword for the autocomplete
-        if (type === 'science_keywords') {
+        if (type === 'science_keywords' && level) {
           const parts = item.value.split(':')
           return parts[level] === value
         }

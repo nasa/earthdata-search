@@ -142,6 +142,9 @@ describe('fetchAutocomplete', () => {
       expect(storeActions[2]).toEqual({
         type: UPDATE_AUTOCOMPLETE_SUGGESTIONS,
         payload: {
+          params: {
+            q: 'test value'
+          },
           suggestions: [{
             type: 'mock_type',
             value: 'mock value'
@@ -180,10 +183,17 @@ describe('fetchAutocomplete', () => {
 
 describe('selectAutocompleteSuggestion', () => {
   test('calls updateAutocompleteSelected and changeQuery', () => {
+    nock(/localhost/)
+      .post(/autocomplete_logger/)
+      .reply(200)
     const changeQueryMock = jest.spyOn(actions, 'changeQuery')
     changeQueryMock.mockImplementation(() => jest.fn())
 
-    const store = mockStore({})
+    const store = mockStore({
+      autocomplete: {
+        params: { q: 'mock' }
+      }
+    })
 
     const data = {
       suggestion: {
