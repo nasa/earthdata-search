@@ -7,6 +7,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    browser: {
+      name: 'browser name'
+    },
     collectionMetadata: {},
     temporalSearch: {},
     timeline: { intervals: {}, query: {} },
