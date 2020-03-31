@@ -64,4 +64,19 @@ describe('nativeFormat', () => {
 
     expect(buildNativeFormat(ummJson)).toEqual([])
   })
+
+  test('only returns formats if the FormatType is defined', () => {
+    const ummJson = {
+      ArchiveAndDistributionInformation: {
+        FileDistributionInformation: [
+          {
+            Fees: '0',
+            Format: 'PDF'
+          }
+        ]
+      }
+    }
+
+    expect(buildNativeFormat(ummJson)).toEqual([])
+  })
 })

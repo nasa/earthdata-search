@@ -19,7 +19,12 @@ export const buildNativeFormat = (ummJson) => {
       Format: format,
       FormatType: formatType
     } = info
-    if (formatType.toLowerCase() === 'native' && format.toLowerCase() !== 'not provided') {
+
+    if (
+      formatType
+      && formatType.toLowerCase() === 'native'
+      && format.toLowerCase() !== 'not provided'
+    ) {
       formats.push(format)
     }
   })
