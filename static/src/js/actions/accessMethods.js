@@ -1,5 +1,6 @@
 
 import actions from './index'
+import { buildPromise } from '../util/buildPromise'
 import { findProvider } from '../util/findProvider'
 import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
@@ -16,10 +17,10 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
   } = getState()
 
   // If the user is not logged in, don't fetch any methods
-  if (authToken === '') return new Promise(resolve => resolve(null))
+  if (authToken === '') return buildPromise(null)
 
   // If there are no collections, do not continue
-  if (collectionIds.length === 0) return new Promise(resolve => resolve(null))
+  if (collectionIds.length === 0) return buildPromise(null)
 
   // The process of fetching access methods requires that we have providers retrieved
   // in order to look up provider guids
@@ -100,7 +101,7 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
         }))
       }
 
-      return new Promise(resolve => resolve(null))
+      return buildPromise(null)
     })
 
     return Promise.all(accessMethodPromises)

@@ -33,6 +33,7 @@ import { updateAuthTokenFromHeaders } from './authToken'
 import { mbr } from '../util/map/mbr'
 import { getFocusedCollectionObject } from '../util/focusedCollection'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { buildPromise } from '../util/buildPromise'
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -297,7 +298,7 @@ export const getGranules = ids => (dispatch, getState) => {
 
   // Granules cannot be retrieved without a collection id
   if (collectionIds.filter(Boolean).length === 0) {
-    return new Promise(resolve => resolve(null))
+    return buildPromise(null)
   }
 
   const { collections } = metadata

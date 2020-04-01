@@ -367,10 +367,6 @@ describe('getFocusedCollection', () => {
       type: UPDATE_GRANULE_QUERY,
       payload: { pageNum: 1 }
     })
-    // expect(storeActions[2]).toEqual({
-    //   type: UPDATE_COLLECTION_METADATA,
-    //   payload: []
-    // })
   })
 
   test('does not call updateFocusedCollection on error', async () => {

@@ -19,6 +19,7 @@ import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { parseError } from '../../../../sharedUtils/parseError'
+import { buildPromise } from '../util/buildPromise'
 
 export const submittingProject = () => ({
   type: SUBMITTING_PROJECT
@@ -102,7 +103,7 @@ export const getProjectCollections = collectionIds => (dispatch, getState) => {
 
   // If no collection was provided and the project has no collections return null
   if (filteredIds.length === 0) {
-    return new Promise(resolve => resolve(null))
+    return buildPromise(null)
   }
 
   const { authToken } = getState()
