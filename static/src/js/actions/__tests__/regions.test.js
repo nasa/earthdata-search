@@ -160,7 +160,7 @@ describe('getRegions', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(getRegions()).then(() => {
       const storeActions = store.getActions()

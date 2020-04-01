@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash'
-
-import { encodeTemporal } from './url/temporalEncoders'
 import { categoryNameToCMRParam } from './facets'
+import { encodeTemporal } from './url/temporalEncoders'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { tagName } from '../../../../sharedUtils/tags'
 
 /**
@@ -134,6 +134,8 @@ export const prepareCollectionParams = (state) => {
  * @returns {Object} Parameters to be provided to the Collections request with camel cased keys
  */
 export const buildCollectionSearchParams = (params) => {
+  const { defaultCmrPageSize } = getApplicationConfig()
+
   const {
     boundingBox,
     conceptId,
@@ -189,7 +191,7 @@ export const buildCollectionSearchParams = (params) => {
         limit_to_granules: true
       }
     },
-    pageSize: 20,
+    pageSize: defaultCmrPageSize,
     sortKey: ['has_granules_or_cwic', ...selectedSortKey]
   }
 

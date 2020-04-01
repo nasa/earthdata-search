@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash'
 import { getFocusedCollectionObject } from './focusedCollection'
 import { encodeTemporal } from './url/temporalEncoders'
 import { encodeGridCoords } from './url/gridEncoders'
-import { getEarthdataConfig } from '../../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import { convertSize } from './project'
 
@@ -215,6 +215,8 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
  * @returns {Object} Parameters to be provided to the Granules request with camel cased keys
  */
 export const buildGranuleSearchParams = (params) => {
+  const { defaultCmrPageSize } = getApplicationConfig()
+
   const {
     boundingBox,
     browseOnly,
@@ -261,7 +263,7 @@ export const buildGranuleSearchParams = (params) => {
     orbitNumber,
     options,
     pageNum,
-    pageSize: 20,
+    pageSize: defaultCmrPageSize,
     point,
     polygon,
     readableGranuleName,

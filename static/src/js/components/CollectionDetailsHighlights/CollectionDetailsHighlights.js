@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { isEmpty } from 'lodash'
 import { Button } from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
@@ -10,7 +10,8 @@ import { collectionDetailsParagraph, collectionDetailsRow } from './skeleton'
 import './CollectionDetailsHighlights.scss'
 
 const granuleListTotalStyle = {
-  height: '18px'
+  height: '18px',
+  width: '225px'
 }
 
 export const CollectionDetailsHighlights = ({
@@ -20,15 +21,22 @@ export const CollectionDetailsHighlights = ({
   location,
   onToggleRelatedUrlsModal
 }) => {
-  const { formattedMetadata, ummMetadata } = collection
+  const {
+    formattedMetadata = {},
+    ummMetadata = {}
+  } = collection
 
   // Don't attempt to render if the metadata isnt available
-  if (!ummMetadata || !formattedMetadata) return null
+  if (isEmpty(ummMetadata) || isEmpty(formattedMetadata)) return null
 
-  const { doi = {}, temporal } = formattedMetadata
+  const {
+    doi = {},
+    temporal
+  } = formattedMetadata
+
   const { doiText } = doi
 
-  const { Abstract: collectionAbstract, Version: collectionVersion } = ummMetadata
+  const { Abstract: collectionAbstract = '', Version: collectionVersion } = ummMetadata
 
   let truncatedAbstract = collectionAbstract
   if (collectionAbstract.length > 300) {
@@ -63,32 +71,26 @@ export const CollectionDetailsHighlights = ({
           </div>
         </div>
 
-        {
-          doiText && (
-            <>
-              <header className="collection-details-highlights__item-header">
-                <h4 className="collection-details-highlights__item-title">
-                  DOI
-                </h4>
-              </header>
-              <div className="collection-details-highlights__item-body">
-                <div className="collection-details-highlights__item-value collection-details-highlights__item-value--doi">
-                  {
-                    (isLoading && !isLoaded) ? (
-                      <Skeleton
-                        shapes={collectionDetailsRow}
-                        containerStyle={granuleListTotalStyle}
-                        variant="dark"
-                      />
-                    ) : (
-                      doiText
-                    )
-                  }
-                </div>
-              </div>
-            </>
-          )
-        }
+        <header className="collection-details-highlights__item-header">
+          <h4 className="collection-details-highlights__item-title">
+            DOI
+          </h4>
+        </header>
+        <div className="collection-details-highlights__item-body">
+          <div className="collection-details-highlights__item-value collection-details-highlights__item-value--doi">
+            {
+              (isLoading && !isLoaded) ? (
+                <Skeleton
+                  shapes={collectionDetailsRow}
+                  containerStyle={granuleListTotalStyle}
+                  variant="dark"
+                />
+              ) : (
+                doiText
+              )
+            }
+          </div>
+        </div>
 
         <header className="collection-details-highlights__item-header">
           <h4 className="collection-details-highlights__item-title">

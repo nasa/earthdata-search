@@ -52,13 +52,18 @@ export const CollectionResultsBodyContainer = (props) => {
   const scrollContainer = panelScrollableNodeRef.current
 
   const onWaypointEnter = (params = {}) => {
-    if (params.event !== null) {
-      const { pageNum } = query
+    const { event } = params
+    if (event !== null) {
+      const { type } = event
 
-      // Using a set timeout here so the page change does not interfere with scrolling
-      setTimeout(() => {
-        onChangeCollectionPageNum(pageNum + 1)
-      }, 0)
+      if (type !== 'resize') {
+        const { pageNum } = query
+
+        // Using a set timeout here so the page change does not interfere with scrolling
+        setTimeout(() => {
+          onChangeCollectionPageNum(pageNum + 1)
+        }, 0)
+      }
     }
   }
 

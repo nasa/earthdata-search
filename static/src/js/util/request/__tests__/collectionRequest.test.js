@@ -253,7 +253,7 @@ describe('CollectionRequest#transformResponse', () => {
     const request = new CollectionRequest()
 
     const data = {
-      statusCode: 404
+      errors: ['HTTP Request Error']
     }
 
     const result = request.transformResponse(data)

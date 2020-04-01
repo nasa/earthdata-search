@@ -75,7 +75,6 @@ describe('changeQuery', () => {
           spatial: {}
         }
       },
-      metadata: {},
       project: {},
       router: {
         location: {
@@ -121,7 +120,6 @@ describe('changeQuery', () => {
     // mockStore with initialState
     const store = mockStore({
       focusedCollection: '',
-      metadata: {},
       query: {
         collection: {}
       },
@@ -153,7 +151,6 @@ describe('changeQuery', () => {
     // mockStore with initialState
     const store = mockStore({
       focusedCollection: '',
-      metadata: {},
       query: {
         collection: {}
       },
@@ -177,7 +174,7 @@ describe('changeQuery', () => {
 })
 
 describe('changeProjectQuery', () => {
-  test('should update the search query and call getCollections', () => {
+  test('should update the search query', () => {
     const newQuery = {
       collection: {
         keyword: 'new keyword',
@@ -188,10 +185,6 @@ describe('changeProjectQuery', () => {
       }
     }
 
-    // mock getCollections
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
-    getProjectCollectionsMock.mockImplementation(() => jest.fn())
-
     // mockStore with initialState
     const store = mockStore({
       focusedCollection: '',
@@ -200,7 +193,6 @@ describe('changeProjectQuery', () => {
           keyword: 'old stuff'
         }
       },
-      metadata: {},
       router: {
         location: {
           pathname: ''
@@ -223,9 +215,6 @@ describe('changeProjectQuery', () => {
         temporal: {}
       }
     })
-
-    // was getCollections called
-    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -394,6 +383,7 @@ describe('removeGridFilter', () => {
           gridCoords: 'mock coords'
         }
       },
+      project: {},
       router: {
         location: {
           pathname: ''
@@ -441,6 +431,7 @@ describe('removeSpatialFilter', () => {
           temporal: {}
         }
       },
+      project: {},
       router: {
         location: {
           pathname: ''
@@ -504,6 +495,7 @@ describe('removeTemporalFilter', () => {
           }
         }
       },
+      project: {},
       router: {
         location: {
           pathname: ''
@@ -547,7 +539,7 @@ describe('clearFilters', () => {
           gridCoords: ''
         }
       },
-      metadata: {},
+      project: {},
       router: {
         location: {
           pathname: ''

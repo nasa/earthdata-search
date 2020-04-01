@@ -121,6 +121,7 @@ class EchoForm extends Component {
   updateFormWithShapefile(shapefileId) {
     const useShapefile = $('[id*=spatial] :input[id*=use-shapefile-element]')
     const shapefileHelp = useShapefile.closest('.echoforms-elements').siblings('.echoforms-help')
+
     if (shapefileId) {
       shapefileHelp.html('Complex shapefiles may take longer to process. You will receive an email when your files are finished processing.')
     } else {
@@ -128,7 +129,6 @@ class EchoForm extends Component {
       shapefileHelp.html('Click <b>Back to Search Session</b> and upload a KML or Shapefile to enable this option.')
     }
   }
-
 
   /**
    * Update the redux store access method with current values from the EchoForm plugin

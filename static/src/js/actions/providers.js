@@ -14,20 +14,25 @@ export const setProviders = providerData => ({
 export const fetchProviders = () => (dispatch, getState) => {
   const { authToken, providers } = getState()
 
+  // If providers have already be retrieved or there is no authToken
   if (authToken === '' || providers.length > 0) {
     return new Promise(resolve => resolve(null))
   }
 
   const requestObject = new ProviderRequest(authToken)
-  const request = requestObject.all()
 
-  return request.then(
-    response => dispatch(setProviders(response.data)),
-    error => dispatch(handleError({
-      error,
-      action: 'fetchProviders',
-      resource: 'providers',
-      requestObject
-    }))
-  )
+  const response = requestObject.all()
+    .then((response) => {
+      dispatch(setProviders(response.data))
+    })
+    .catch((error) => {
+      dispatch(handleError({
+        error,
+        action: 'fetchProviders',
+        resource: 'providers',
+        requestObject
+      }))
+    })
+
+  return response
 }

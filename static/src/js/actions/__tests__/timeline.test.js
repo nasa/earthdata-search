@@ -61,6 +61,9 @@ describe('getTimeline', () => {
     // mockStore with initialState
     const store = mockStore({
       authToken: '',
+      browser: {
+        name: 'browser name'
+      },
       focusedCollection: 'collectionId',
       metadata: {},
       query: {
@@ -128,6 +131,9 @@ describe('getTimeline', () => {
     // mockStore with initialState
     const store = mockStore({
       authToken: 'token',
+      browser: {
+        name: 'browser name'
+      },
       focusedCollection: 'collectionId',
       metadata: {},
       query: {
@@ -177,6 +183,9 @@ describe('getTimeline', () => {
 
   test('returns no results if there is no focused collection', () => {
     const store = mockStore({
+      browser: {
+        name: 'browser name'
+      },
       focusedCollection: '',
       metadata: {},
       router: {
@@ -211,6 +220,9 @@ describe('getTimeline', () => {
 
     const store = mockStore({
       authToken: '',
+      browser: {
+        name: 'browser name'
+      },
       focusedCollection: 'collectionId',
       metadata: {},
       query: {
@@ -232,7 +244,7 @@ describe('getTimeline', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(getTimeline()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
@@ -248,6 +260,9 @@ describe('changeTimelineQuery', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      browser: {
+        name: 'browser name'
+      },
       timeline: {
         query: {},
         state: {}

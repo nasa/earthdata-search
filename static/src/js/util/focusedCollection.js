@@ -75,6 +75,11 @@ export const createFocusedCollectionMetadata = (json, ummJson, authToken) => {
   }
 }
 
+/**
+ * Retrieve CMR collection metatdata in multiple formats
+ * @param {Object} params Parameters to send to CMR when requesting collecitons
+ * @param {String} authToken The authenticated users' JWT token
+ */
 export const getCollectionMetadata = async (params, authToken) => {
   const requestObject = new CollectionRequest(authToken)
 

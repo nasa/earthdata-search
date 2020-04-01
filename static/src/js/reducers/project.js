@@ -6,7 +6,8 @@ import {
   ADD_ACCESS_METHODS,
   RESTORE_FROM_URL,
   SUBMITTING_PROJECT,
-  SUBMITTED_PROJECT
+  SUBMITTED_PROJECT,
+  UPDATE_ACCESS_METHOD_ORDER_COUNT
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -21,6 +22,7 @@ const projectReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_COLLECTION_TO_PROJECT: {
       const collectionId = action.payload
+
       if (state.collectionIds.indexOf(collectionId) !== -1) return state
 
       const byId = {
@@ -108,15 +110,19 @@ const projectReducer = (state = initialState, action) => {
         }
       })
 
-      const newOrderCount = ['download', 'opendap'].includes(selectedAccessMethod) ? 0 : orderCount
-
       byId[collectionId] = {
         ...byId[collectionId],
         accessMethods: {
           ...existingMethods
-        },
-        selectedAccessMethod,
-        orderCount: newOrderCount
+        }
+      }
+
+      let newOrderCount
+      if (selectedAccessMethod) {
+        byId[collectionId].selectedAccessMethod = selectedAccessMethod
+
+        newOrderCount = ['download', 'opendap'].includes(selectedAccessMethod) ? 0 : orderCount
+        byId[collectionId].orderCount = newOrderCount
       }
 
       const { collectionsRequiringChunking } = state
@@ -169,6 +175,32 @@ const projectReducer = (state = initialState, action) => {
           ...state.byId,
           ...byId
         }
+      }
+    }
+    case UPDATE_ACCESS_METHOD_ORDER_COUNT: {
+      const {
+        collectionId,
+        orderCount
+      } = action.payload
+
+      const { byId } = state
+      const { [collectionId]: desiredCollection } = byId
+
+      byId[collectionId] = {
+        ...desiredCollection,
+        orderCount
+      }
+
+      const collectionsRequiringChunking = Object.keys(byId)
+        .filter(collection => byId[collection].orderCount > 1)
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          ...byId[collectionId]
+        },
+        collectionsRequiringChunking
       }
     }
     case SUBMITTING_PROJECT: {

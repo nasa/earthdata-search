@@ -176,8 +176,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
         const oldResolution = newOptionSet.resolution
 
-        // set resolution to {projection}_resolution if it exists
-        // and if the layer exists within newOptionSet
+        // Set resolution to {projection}_resolution if it exists and if the layer exists within newOptionSet
         if ((this.projection === projections.geographic) && newOptionSet.geographic) {
           matched = true
           newResolution = newOptionSet.geographic_resolution
@@ -281,7 +280,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
     ), 0)
 
     if ((paths.length > 0) && config.debug) {
-      // eslint-disable-next-line max-len
       console.log(`${paths.length} Overlapping Granules [(${bounds.getNorth()}, ${bounds.getWest()}), (${bounds.getSouth()}, ${bounds.getEast()})]`)
     }
   }
@@ -818,11 +816,13 @@ export class GranuleGridLayer extends MapLayer {
       // If we are on the project page, return data for each project collection
       const { collectionIds: projectIds } = project
       projectIds.forEach((collectionId, index) => {
+        const { byId } = collections
+        const { [collectionId]: iterationCollection = {} } = byId
         const {
           granules: collectionGranules,
           isVisible,
           metadata
-        } = collections.byId[collectionId]
+        } = iterationCollection
 
         if (!collectionGranules) return
 
@@ -837,8 +837,8 @@ export class GranuleGridLayer extends MapLayer {
     } else if (focusedCollection && focusedCollection !== '') {
       // If we aren't on the project page, return data for focusedCollection if it exists
       const { byId } = collections
-      const collection = byId[focusedCollection] || {}
-      const { metadata = {} } = collection
+      const { [focusedCollection]: focusedCollectionObject = {} } = byId
+      const { metadata = {} } = focusedCollectionObject
 
       layers[focusedCollection] = {
         collectionId: focusedCollection,
@@ -869,12 +869,13 @@ export class GranuleGridLayer extends MapLayer {
 
     // Create a GranuleGridLayerExtended layer from each data object in getLayerData
     const layerData = this.getLayerData(props)
+
     Object.keys(layerData).forEach((id, index) => {
       const {
         collectionId,
         color,
         metadata,
-        granules
+        granules = {}
       } = layerData[id]
 
       const { byId = {} } = granules
@@ -949,20 +950,21 @@ export class GranuleGridLayer extends MapLayer {
         color,
         metadata,
         isVisible,
-        granules
+        granules = {}
       } = layerData[id]
 
-      // if there are no granules, bail out
-      if (Object.keys(granules.byId).length === 0) return
+      // If there are no granules, bail out
+      const { byId: granulesById = {} } = granules
+      if (Object.keys(granulesById).length === 0) return
 
       // If no granules were changed, bail out
       const oldCollection = oldLayerData[collectionId]
       const { granules: oldGranules = {} } = oldCollection || {}
       if (oldCollection
-        && isEqual(Object.keys(granules.byId), Object.keys(oldGranules.byId))) return
+        && isEqual(Object.keys(granulesById), Object.keys(oldGranules.byId))) return
 
       // If the collecton is not visible, set the granuleData to an empty array
-      const granuleData = isVisible ? Object.values(granules.byId) : []
+      const granuleData = isVisible ? Object.values(granulesById) : []
 
       // Find the layer for this collection
       const [layer] = Object.values(layers).filter(l => l.collectionId === collectionId)
