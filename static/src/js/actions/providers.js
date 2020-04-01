@@ -2,6 +2,7 @@ import ProviderRequest from '../util/request/providerRequest'
 
 import { SET_PROVIDERS } from '../constants/actionTypes'
 import { handleError } from './errors'
+import { buildPromise } from '../util/buildPromise'
 
 export const setProviders = providerData => ({
   type: SET_PROVIDERS,
@@ -16,7 +17,7 @@ export const fetchProviders = () => (dispatch, getState) => {
 
   // If providers have already be retrieved or there is no authToken
   if (authToken === '' || providers.length > 0) {
-    return new Promise(resolve => resolve(null))
+    return buildPromise(null)
   }
 
   const requestObject = new ProviderRequest(authToken)
