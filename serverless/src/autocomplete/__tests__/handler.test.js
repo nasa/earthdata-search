@@ -112,7 +112,7 @@ describe('autocomplete', () => {
 
     describe('google', () => {
       beforeEach(() => {
-        process.env.GEOCODING_SERVICE = ''
+        process.env.geocodingService = ''
       })
 
       test('correctly returns when no bounds are returned', async () => {
@@ -134,13 +134,13 @@ describe('autocomplete', () => {
         const { errors } = parsedBody
         const [errorMessage] = errors
 
-        expect(errorMessage).toEqual('Error: Geocoder not supported')
+        expect(errorMessage).toEqual('Error: Geocoder () not supported')
       })
     })
 
     describe('google', () => {
       beforeEach(() => {
-        process.env.GEOCODING_SERVICE = 'google'
+        process.env.geocodingService = 'google'
       })
 
       test('correctly returns when no bounds are returned', async () => {
@@ -246,12 +246,93 @@ describe('autocomplete', () => {
 
     describe('nominatim', () => {
       beforeEach(() => {
-        process.env.GEOCODING_SERVICE = 'nominatim'
+        process.env.geocodingService = 'nominatim'
 
         jest.spyOn(getEnvironmentConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
       })
 
       test('correctly returns a full result', async () => {
+        nock(/openstreetmap/)
+          .get(/search/)
+          .reply(200, [
+            {
+              display_name: 'Alexandria, VA, USA',
+              lat: 38.8048355,
+              lon: -77.0469214,
+              place_id: 235545611,
+              boundingbox: [
+                -77.144359,
+                38.785216,
+                -77.0372879,
+                38.845011
+              ],
+              geojson: {
+                type: 'Polygon',
+                coordinates: [
+                  [
+                    [
+                      -77.144359,
+                      38.810357
+                    ],
+                    [
+                      -77.143135,
+                      38.805321
+                    ],
+                    [
+                      -77.139862,
+                      38.800202
+                    ],
+                    [
+                      -77.1377474,
+                      38.8007821
+                    ],
+                    [
+                      -77.137562,
+                      38.798169
+                    ],
+                    [
+                      -77.11301,
+                      38.802987
+                    ]
+                  ]
+                ]
+              }
+            }
+          ])
+
+        const event = {
+          body: JSON.stringify({
+            params: {
+              type: 'spatial',
+              q: 'Alexandria'
+            },
+            requestId: 'asdf-1234-qwer-5678'
+          })
+        }
+
+        const response = await autocomplete(event, {})
+
+        const { body } = response
+        const parsedBody = JSON.parse(body)
+
+        expect(parsedBody).toEqual([{
+          name: 'Alexandria, VA, USA',
+          point: [
+            38.8048355,
+            -77.0469214
+          ],
+          bounding_box: [
+            -77.0372879,
+            -77.144359,
+            38.845011,
+            38.785216
+          ]
+        }])
+      })
+
+      test('correctly returns a full result with polygons enabled', async () => {
+        process.env.geocodingIncludePolygons = 'true'
+
         nock(/openstreetmap/)
           .get(/search/)
           .reply(200, [
