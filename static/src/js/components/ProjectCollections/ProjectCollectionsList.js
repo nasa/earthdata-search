@@ -31,7 +31,10 @@ export const ProjectCollectionsList = (props) => {
   } = props
 
   const { byId } = collections
-  const { collectionIds: projectIds, byId: projectById } = project
+  const {
+    collectionIds: projectIds,
+    byId: projectById
+  } = project
 
   const projectIsEmpty = !projectIds.length
 

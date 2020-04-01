@@ -58,6 +58,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
           ummMetadata,
           formattedMetadata
         } = collection
+
         byId[id] = {
           ...collection,
           excludedGranuleIds,
@@ -78,6 +79,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
       const byId = {
         ...state.byId
       }
+
       action.payload.forEach((collection, index) => {
         const [collectionId] = Object.keys(collection)
         const {
@@ -87,13 +89,17 @@ const collectionMetadataReducer = (state = initialState, action) => {
           isCwic
         } = action.payload[index][collectionId]
 
-        if (state.allIds.indexOf(collectionId) === -1) allIds.push(collectionId)
+        // If the collection isn't already in allIds add it
+        if (state.allIds.indexOf(collectionId) === -1) {
+          allIds.push(collectionId)
+        }
 
         let currentCollectionGranuleParams = {}
         let excludedGranuleIds = []
         let granuleFilters = { sortKey: '-start_date' }
         let granules = {}
         let isVisible = true
+
         if (state.byId[collectionId]) {
           ({
             currentCollectionGranuleParams,
@@ -103,6 +109,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
             isVisible
           } = state.byId[collectionId])
         }
+
         byId[collectionId] = {
           currentCollectionGranuleParams,
           excludedGranuleIds,
@@ -365,12 +372,18 @@ const collectionMetadataReducer = (state = initialState, action) => {
         granuleParams
       } = action.payload
 
+      let byId = {}
+
+      if (state.byId[collectionId]) {
+        (byId = state.byId[collectionId])
+      }
+
       return {
         ...state,
         byId: {
           ...state.byId,
           [collectionId]: {
-            ...state.byId[collectionId],
+            ...byId,
             currentCollectionGranuleParams: granuleParams
           }
         }

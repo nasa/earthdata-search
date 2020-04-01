@@ -6,6 +6,7 @@ import {
   UPDATE_REGION_QUERY
 } from '../constants/actionTypes'
 import { clearExcludedGranules } from './granules'
+import { parseError } from '../../../../sharedUtils/parseError'
 
 export const updateCollectionQuery = payload => ({
   type: UPDATE_COLLECTION_QUERY,
@@ -23,7 +24,11 @@ export const updateRegionQuery = payload => ({
 })
 
 export const changeQuery = (queryOptions = {}) => (dispatch, getState) => {
-  const { query } = getState()
+  const {
+    focusedCollection,
+    project,
+    query
+  } = getState()
   const newQuery = queryOptions
 
   // Pull out the values from the query being changed
@@ -67,19 +72,51 @@ export const changeQuery = (queryOptions = {}) => (dispatch, getState) => {
 
   // Remove all saved granules in the metadata/collections store
   dispatch(actions.clearCollectionGranules())
+
   // If the collection query didn't change don't get new collections
   if (newQuery.collection) {
     dispatch(actions.getCollections())
+
+    // Fetch collections in the project
+    const { collectionIds = [] } = project
+
+    // Create a unique list of collections to fetch and remove any empty values [.filter(Boolean)]
+    const uniqueCollectionList = [...new Set([
+      ...collectionIds,
+      focusedCollection
+    ])].filter(Boolean)
+
     // Fetch metadata for collections added to the project
-    dispatch(actions.getProjectCollections())
+    if (uniqueCollectionList.length > 0) {
+      try {
+        dispatch(actions.getProjectCollections(uniqueCollectionList))
+        dispatch(actions.getGranules(uniqueCollectionList))
+      } catch (e) {
+        parseError(e)
+      }
+    }
   }
-  dispatch(actions.getGranules())
+
   dispatch(actions.getTimeline())
 }
 
-export const changeProjectQuery = query => (dispatch) => {
-  dispatch(updateCollectionQuery(query.collection))
-  dispatch(actions.getProjectCollections())
+export const changeProjectQuery = query => async (dispatch, getState) => {
+  const { collection } = query
+
+  dispatch(updateCollectionQuery(collection))
+
+  const { project = {} } = getState()
+  const { collectionIds = [] } = project
+
+  if (collectionIds.length > 0) {
+    try {
+      await dispatch(actions.getProjectCollections(collectionIds))
+
+      dispatch(actions.getGranules(collectionIds))
+    } catch (e) {
+      parseError(e)
+    }
+  }
 }
 
 export const changeRegionQuery = query => (dispatch) => {

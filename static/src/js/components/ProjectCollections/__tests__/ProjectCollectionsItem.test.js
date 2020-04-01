@@ -17,6 +17,8 @@ function setup(overrideProps) {
       ],
       granules: {
         hits: 4,
+        isLoading: false,
+        isLoaded: true,
         totalSize: { size: '4.0', unit: 'MB' }
       },
       metadata: {

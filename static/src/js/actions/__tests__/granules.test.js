@@ -121,6 +121,7 @@ describe('getGranules', () => {
           }
         }
       },
+      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -224,6 +225,7 @@ describe('getGranules', () => {
           }
         }
       },
+      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -322,6 +324,7 @@ describe('getGranules', () => {
           }
         }
       },
+      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -372,6 +375,7 @@ describe('getGranules', () => {
     // mockStore with initialState
     const store = mockStore({
       metadata: {},
+      project: {},
       query: {
         collection: {
           temporal: {},
@@ -407,6 +411,7 @@ describe('getGranules', () => {
           }
         }
       },
+      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -420,7 +425,7 @@ describe('getGranules', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(getGranules()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)

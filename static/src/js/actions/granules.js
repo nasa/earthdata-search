@@ -32,6 +32,7 @@ import {
 import { updateAuthTokenFromHeaders } from './authToken'
 import { mbr } from '../util/map/mbr'
 import { getFocusedCollectionObject } from '../util/focusedCollection'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -275,25 +276,36 @@ const cancelTokens = {}
  */
 export const getGranules = ids => (dispatch, getState) => {
   const state = getState()
-  const { focusedCollection, metadata } = state
+
+  const {
+    focusedCollection,
+    metadata,
+    project
+  } = state
 
   let isProject = true
+
   let collectionIds
-  if (!ids) {
+
+  // If no collection ids were provided
+  if (ids == null) {
     isProject = false
     collectionIds = [focusedCollection]
   } else {
     collectionIds = ids
   }
 
+  // Granules cannot be retrieved without a collection id
+  if (collectionIds.filter(Boolean).length === 0) {
+    return new Promise(resolve => resolve(null))
+  }
+
   const { collections } = metadata
+
+  const { collectionIds: projectCollectionIds = [], byId: projectCollections = {} } = project
 
   return Promise.all(collectionIds.map((collectionId) => {
     const granuleParams = prepareGranuleParams(state, collectionId)
-
-    if (!granuleParams) {
-      return null
-    }
 
     const collectionObject = getFocusedCollectionObject(collectionId, collections)
     const { currentCollectionGranuleParams } = collectionObject || {}
@@ -302,6 +314,7 @@ export const getGranules = ids => (dispatch, getState) => {
     if (isEqual(granuleParams, currentCollectionGranuleParams)) {
       return null
     }
+
     // The params are different, save the new params and continue fetching granules
     dispatch(updateCurrentCollectionGranuleParams({
       collectionId,
@@ -364,6 +377,25 @@ export const getGranules = ids => (dispatch, getState) => {
         } else {
           dispatch(addMoreGranuleResults(payload))
         }
+
+        // If this collection is in the project update the order count if applicable
+        if (projectCollectionIds.includes(collectionId)) {
+          const { [collectionId]: projectCollection } = projectCollections
+          const { selectedAccessMethod } = projectCollection
+
+          if (selectedAccessMethod && !['download', 'opendap'].includes(selectedAccessMethod)) {
+            // Calculate the number of orders that will be created based on granule count
+            const { defaultGranulesPerOrder } = getApplicationConfig()
+            const { hits: granuleCount } = payload
+            const orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
+
+            dispatch(actions.updateAccessMethodOrderCount({
+              collectionId,
+              selectedAccessMethod,
+              orderCount
+            }))
+          }
+        }
       })
       .catch((error) => {
         if (isCancel(error)) return
@@ -393,15 +425,18 @@ export const getGranules = ids => (dispatch, getState) => {
  * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
  * @param {Boolean} closePanel - If true, tells the overlay panel to close once the granules are recieved.
  */
-// eslint-disable-next-line max-len
-export const applyGranuleFilters = (collectionId, granuleFilters, closePanel = false) => (dispatch, getState) => {
+export const applyGranuleFilters = (
+  collectionId,
+  granuleFilters,
+  closePanel = false
+) => (dispatch, getState) => {
   dispatch(actions.updateGranuleQuery({ pageNum: 1 }))
   dispatch(actions.updateCollectionGranuleFilters(collectionId, granuleFilters))
   dispatch(getGranules()).then(() => {
     if (closePanel) dispatch(actions.toggleSecondaryOverlayPanel(false))
 
     // If the collection is in the project, we need to update access methods after fetching new granules
-    const { project } = getState()
+    const { project = {} } = getState()
     const { collectionIds } = project
     if (collectionIds.includes(collectionId)) {
       dispatch(actions.fetchAccessMethods([collectionId]))

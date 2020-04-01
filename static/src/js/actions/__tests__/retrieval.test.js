@@ -165,7 +165,7 @@ describe('submitRetrieval', () => {
       shapefile: {}
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(submitRetrieval()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
@@ -435,7 +435,7 @@ describe('fetchRetrieval', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(fetchRetrieval()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
@@ -481,7 +481,7 @@ describe('deleteRetrieval', () => {
       retrievalHistory: []
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(deleteRetrieval('2057964173')).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)

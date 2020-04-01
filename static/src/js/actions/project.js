@@ -1,3 +1,4 @@
+import { isEmpty, intersection } from 'lodash'
 import actions from './index'
 import {
   ADD_COLLECTION_TO_PROJECT,
@@ -8,13 +9,16 @@ import {
   UPDATE_ACCESS_METHOD,
   ADD_ACCESS_METHODS,
   SUBMITTING_PROJECT,
-  SUBMITTED_PROJECT
+  SUBMITTED_PROJECT,
+  UPDATE_ACCESS_METHOD_ORDER_COUNT
 } from '../constants/actionTypes'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { updateCollectionMetadata } from './collections'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
+import { parseError } from '../../../../sharedUtils/parseError'
 
 export const submittingProject = () => ({
   type: SUBMITTING_PROJECT
@@ -57,19 +61,48 @@ export const updateAccessMethod = payload => ({
   }
 })
 
+export const updateAccessMethodOrderCount = payload => ({
+  type: UPDATE_ACCESS_METHOD_ORDER_COUNT,
+  payload
+})
+
 export const selectAccessMethod = payload => ({
   type: SELECT_ACCESS_METHOD,
   payload
 })
 
-export const getProjectCollections = collectionId => (dispatch, getState) => {
-  const { project } = getState()
-  const { collectionIds: projectIds = [] } = project
+/**
+ * Retrieve collection metadata for the collections provided
+ * @param {String} collectionId Single collection to lookup, if null then all collections in the project will be retrieved
+ */
+export const getProjectCollections = collectionIds => (dispatch, getState) => {
+  const { defaultCmrPageSize, defaultCmrSearchTags } = getApplicationConfig()
 
-  const filteredIds = !collectionId ? projectIds : [collectionId]
+  const emptyProjectCollections = []
 
+  // Determine which collections are in the project that we have no metadata for
+  collectionIds.forEach((projectCollection) => {
+    const { [projectCollection]: collection = {} } = collectionIds
+    const { metadata, ummMetadata = {} } = collection
+
+    // If any of the metadata is missing push this collection to our array to fetch metadata for
+    if (isEmpty(metadata) || isEmpty(ummMetadata)) {
+      emptyProjectCollections.push(projectCollection)
+    }
+  })
+
+  // Default filteredIds to the provided collectionId
+  let filteredIds = collectionIds
+
+  // If no collectionId was provided
+  if (collectionIds == null) {
+    // Prepare to retrieve all collections that we have not already retrieved
+    filteredIds = intersection(emptyProjectCollections, collectionIds)
+  }
+
+  // If no collection was provided and the project has no collections return null
   if (filteredIds.length === 0) {
-    return null
+    return new Promise(resolve => resolve(null))
   }
 
   const { authToken } = getState()
@@ -89,18 +122,19 @@ export const getProjectCollections = collectionId => (dispatch, getState) => {
 
   const response = getCollectionMetadata({
     conceptId: filteredIds,
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
+    includeTags: defaultCmrSearchTags.join(','),
     includeGranuleCounts,
     includeHasGranules,
     boundingBox,
     hasGranulesOrCwic,
-    pageSize: 20,
+    pageSize: defaultCmrPageSize,
     point,
     polygon,
     temporal
   }, authToken)
     .then(([collectionJson, collectionUmm]) => {
       const payload = []
+
       const { entry: responseJson } = collectionJson.data.feed
       const { items: responseUmm } = collectionUmm.data
 
@@ -128,13 +162,6 @@ export const getProjectCollections = collectionId => (dispatch, getState) => {
 
       dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
       dispatch(updateCollectionMetadata(payload))
-      dispatch(actions.getGranules(filteredIds)).then(() => {
-        // The process of fetching access methods requires that we have providers retrieved
-        // in order to look up provider guids
-        dispatch(actions.fetchProviders()).then(() => {
-          dispatch(actions.fetchAccessMethods(filteredIds))
-        })
-      })
     })
     .catch((error) => {
       dispatch(actions.handleError({
@@ -147,7 +174,19 @@ export const getProjectCollections = collectionId => (dispatch, getState) => {
   return response
 }
 
-export const addProjectCollection = collectionId => (dispatch) => {
+/**
+ * Adds a single collection to the project
+ * @param {String} collectionId The CMR concept id of the collection to add to the project
+ */
+export const addProjectCollection = collectionId => async (dispatch) => {
   dispatch(addCollectionToProject(collectionId))
-  dispatch(actions.getProjectCollections(collectionId))
+
+  try {
+    await dispatch(actions.getProjectCollections([collectionId]))
+
+    dispatch(actions.fetchAccessMethods([collectionId]))
+    dispatch(actions.getGranules([collectionId]))
+  } catch (e) {
+    parseError(e)
+  }
 }

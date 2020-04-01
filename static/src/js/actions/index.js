@@ -98,7 +98,8 @@ import {
   selectAccessMethod,
   toggleCollectionVisibility,
   addAccessMethods,
-  updateAccessMethod
+  updateAccessMethod,
+  updateAccessMethodOrderCount
 } from './project'
 import {
   fetchProviders
@@ -214,6 +215,7 @@ const actions = {
   triggerViewAllFacets,
   undoExcludeGranule,
   updateAccessMethod,
+  updateAccessMethodOrderCount,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
   updateAdvancedSearch,

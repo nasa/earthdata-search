@@ -10,6 +10,11 @@
     },
     "orderStatusRefreshTime": 60000,
     "eosdisTagKey": "gov.nasa.eosdis",
+    "defaultCmrPageSize": 20,
+    "defaultCmrSearchTags": [
+      "edsc.*",
+      "org.ceos.wgiss.cwic.granules.prod"
+    ],
     "defaultMaxOrderSize": 1000000,
     "defaultGranulesPerOrder": 2000,
     "ummCollectionVersion": "1.13",

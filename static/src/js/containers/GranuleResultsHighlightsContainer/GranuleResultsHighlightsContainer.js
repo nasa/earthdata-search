@@ -26,7 +26,7 @@ export const GranuleResultsHighlightsContainer = ({
     isCwic
   } = collectionObject
 
-  if (isEmpty(granules)) return null
+  if (isEmpty(granules) || granules == null) return null
 
   const {
     byId,

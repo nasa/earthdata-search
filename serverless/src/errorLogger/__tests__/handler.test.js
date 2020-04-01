@@ -25,7 +25,7 @@ describe('errorLogger', () => {
   })
 
   test('logs the event body', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     const event = {
       body: JSON.stringify({

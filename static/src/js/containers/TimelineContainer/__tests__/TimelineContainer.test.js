@@ -8,6 +8,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    browser: {
+      name: 'browser name'
+    },
     collections: {
       allIds: [],
       byId: {}
@@ -43,6 +46,9 @@ describe('TimelineContainer component', () => {
     const { enzymeWrapper, props } = setup()
 
     enzymeWrapper.setProps({
+      browser: {
+        name: 'browser name'
+      },
       collections: {
         allIds: ['collectionId'],
         byId: {
@@ -80,6 +86,9 @@ describe('TimelineContainer component', () => {
     const { enzymeWrapper, props } = setup()
 
     enzymeWrapper.setProps({
+      browser: {
+        name: 'browser name'
+      },
       collections: {
         allIds: ['collectionId'],
         byId: {

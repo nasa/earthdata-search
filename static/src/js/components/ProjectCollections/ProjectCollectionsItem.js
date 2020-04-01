@@ -63,7 +63,7 @@ const ProjectCollectionItem = ({
     dataset_id: title
   } = metadata
 
-  const { totalSize = {} } = granules
+  const { isLoaded, isLoading, totalSize = {} } = granules
 
   const granuleCount = getGranuleCount(granules, collection)
 
@@ -129,7 +129,7 @@ const ProjectCollectionItem = ({
         }
       </div>
       {
-        typeof granuleCount !== 'undefined' && size && unit ? (
+        (!isLoading && isLoaded) ? (
           <>
             <ul className="project-collections-item__stats-list">
               {

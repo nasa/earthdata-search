@@ -7,6 +7,7 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 
 import {
+  ADD_ERROR,
   ADD_ACCESS_METHODS,
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
@@ -214,7 +215,14 @@ describe('getProjectCollections', () => {
       opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
     }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-    jest.spyOn(actions, 'fetchDataQualitySummaries').mockImplementation(() => jest.fn())
+
+    nock(/localhost/)
+      .post(/dqs/)
+      .reply(200, {})
+
+    nock(/localhost/)
+      .post(/dqs/)
+      .reply(200, {})
 
     nock(/localhost/)
       .post(/collections\/json/)
@@ -285,61 +293,6 @@ describe('getProjectCollections', () => {
         'cmr-hits': 1
       })
 
-    nock(/localhost/)
-      .get(/providers/)
-      .reply(200, [
-        {
-          provider: {
-            id: 'abcd-1234-efgh-5678',
-            organization_name: 'EDSC-TEST',
-            provider_id: 'EDSC-TEST'
-          }
-        }, {
-          provider: {
-            id: 'abcd-1234-efgh-5678',
-            organization_name: 'NON-EDSC-TEST',
-            provider_id: 'NON-EDSC-TEST'
-          }
-        }
-      ])
-
-    const getGranulesMock = jest.spyOn(actions, 'getGranules')
-    getGranulesMock.mockImplementation(() => jest.fn()
-      .mockImplementation(() => Promise.resolve([
-        {
-          feed: {
-            updated: '2019-03-27T20:21:14.705Z',
-            id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
-            title: 'ECHO granule metadata',
-            entry: [{
-              id: 'G1000001-EDSC'
-            }, {
-              id: 'G1000002-EDSC'
-            }]
-          }
-        }
-      ])))
-
-    const fetchProvidersMock = jest.spyOn(actions, 'fetchProviders')
-    fetchProvidersMock.mockImplementation(() => jest.fn().mockImplementation(() => Promise.resolve([
-      {
-        provider: {
-          id: 'abcd-1234-efgh-5678',
-          organization_name: 'EDSC-TEST',
-          provider_id: 'EDSC-TEST'
-        }
-      }, {
-        provider: {
-          id: 'abcd-1234-efgh-5678',
-          organization_name: 'NON-EDSC-TEST',
-          provider_id: 'NON-EDSC-TEST'
-        }
-      }
-    ])))
-
-    const fetchAccessMethodsMock = jest.spyOn(actions, 'fetchAccessMethods')
-    fetchAccessMethodsMock.mockImplementation(() => jest.fn())
-
     // mockStore with initialState
     const store = mockStore({
       authToken: 'token',
@@ -351,7 +304,11 @@ describe('getProjectCollections', () => {
       },
       focusedCollection: '',
       project: {
-        collectionIds: ['collectionId1', 'collectionId2']
+        collectionIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {},
+          collectionId2: {}
+        }
       },
       providers: [
         {
@@ -374,20 +331,16 @@ describe('getProjectCollections', () => {
     })
 
     // call the dispatch
-    await store.dispatch(getProjectCollections()).then(() => {
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: UPDATE_AUTH,
-        payload: 'token'
-      })
-      expect(storeActions[1]).toEqual({
-        type: UPDATE_COLLECTION_METADATA,
-        payload: getProjectCollectionsResponse
-      })
+    await store.dispatch(actions.getProjectCollections(['collectionId1', 'collectionId2']))
 
-      expect(getGranulesMock).toHaveBeenCalledTimes(1)
-      expect(fetchProvidersMock).toHaveBeenCalledTimes(1)
-      expect(fetchAccessMethodsMock).toHaveBeenCalledTimes(1)
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_AUTH,
+      payload: 'token'
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_COLLECTION_METADATA,
+      payload: getProjectCollectionsResponse
     })
   })
 
@@ -402,86 +355,119 @@ describe('getProjectCollections', () => {
       },
       focusedCollection: '',
       project: {
-        collectionIds: []
+        collectionIds: [],
+        byId: {}
       },
       query: {
         collection: {}
       }
     })
 
-    expect(store.dispatch(getProjectCollections())).toBeNull()
+    expect(store.dispatch(getProjectCollections([]))).toEqual(
+      new Promise(resolve => resolve(null))
+    )
   })
 
   test('does not call updateCollectionMetadata on error', async () => {
+    const collectionId = 'collectionId'
+
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      cmrHost: 'https://cmr.earthdata.nasa.gov'
+    }))
+
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
+    const fetchAccessMethods = jest.spyOn(actions, 'fetchAccessMethods')
+      .mockImplementationOnce(() => jest.fn())
+    const getGranules = jest.spyOn(actions, 'getGranules')
+      .mockImplementationOnce(() => jest.fn())
+
     nock(/localhost/)
-      .post(/collections/)
-      .reply(500)
+      .post(/collections\/json/)
+      .reply(500, {
+        errors: ['HTTP Error']
+      },
+      {
+        'jwt-token': 'token'
+      })
+
+    nock(/localhost/)
+      .post(/collections\/umm_json/)
+      .reply(500, {
+        errors: ['HTTP Error']
+      },
+      {
+        'jwt-token': 'token'
+      })
+
 
     nock(/localhost/)
       .post(/error_logger/)
       .reply(200)
 
+    // mockStore with initialState
     const store = mockStore({
-      authToken: 'token',
-      metadata: {
-        collections: {
-          allIds: [],
-          byId: {}
-        }
-      },
-      focusedCollection: '',
-      project: {
-        collectionIds: ['collectionId']
-      },
-      query: {
-        collection: {}
-      }
+      authToken: 'token'
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    // call the dispatch
+    await store.dispatch(addProjectCollection(collectionId))
 
-    await store.dispatch(getProjectCollections()).then(() => {
-      expect(consoleMock).toHaveBeenCalledTimes(1)
+    const storeActions = store.getActions()
+
+    expect(storeActions[0]).toEqual({
+      type: ADD_COLLECTION_TO_PROJECT,
+      payload: 'collectionId'
     })
+
+    expect(storeActions[1]).toEqual({
+      type: ADD_ERROR,
+      payload: expect.objectContaining({
+        title: 'Error retrieving collections',
+        message: 'There was a problem completing the request'
+      })
+    })
+
+    expect(fetchAccessMethods).toBeCalledTimes(0)
+
+    expect(getGranules).toBeCalledTimes(0)
   })
 })
 
 describe('addProjectCollection', () => {
-  test('adds project to the collection and calls getProjectCollections', () => {
+  test('calls the correct actions to add the collection to the project', async () => {
     const collectionId = 'collectionId'
 
-    // mock getProjectCollections
     const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
-    getProjectCollectionsMock.mockImplementation(() => jest.fn())
+      .mockImplementationOnce(() => jest.fn())
+    const fetchAccessMethods = jest.spyOn(actions, 'fetchAccessMethods')
+      .mockImplementationOnce(() => jest.fn())
+    const getGranules = jest.spyOn(actions, 'getGranules')
+      .mockImplementationOnce(() => jest.fn())
+
 
     // mockStore with initialState
     const store = mockStore({
-      authToken: 'token',
-      metadata: {
-        collections: {
-          allIds: [],
-          byId: {}
-        }
-      },
-      focusedCollection: '',
-      project: {
-        collectionIds: []
-      },
-      query: {
-        collection: {}
-      }
+      authToken: 'token'
     })
 
     // call the dispatch
-    store.dispatch(addProjectCollection(collectionId))
+    await store.dispatch(addProjectCollection(collectionId))
 
     const storeActions = store.getActions()
+
     expect(storeActions[0]).toEqual({
       type: ADD_COLLECTION_TO_PROJECT,
       payload: collectionId
     })
 
-    // was getProjectCollections called
-    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getProjectCollectionsMock).toBeCalledTimes(1)
+    expect(getProjectCollectionsMock).toBeCalledWith([collectionId])
+
+    expect(fetchAccessMethods).toBeCalledTimes(1)
+    expect(fetchAccessMethods).toBeCalledWith([collectionId])
+
+    expect(getGranules).toBeCalledTimes(1)
+    expect(getGranules).toBeCalledWith([collectionId])
   })
 })

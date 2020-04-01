@@ -359,7 +359,7 @@ describe('getViewAllFacets', () => {
   })
 
   test('does not call updateCollectionResults on error', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     nock(/cmr/)
       .post(/collections/)

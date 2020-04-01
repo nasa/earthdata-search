@@ -176,7 +176,7 @@ export const CollectionDetailsBody = ({
                       <a
                         className="link link--external collection-details-body__related-link"
                         href={urls.html.href}
-                        // eslint-disable-next-line react/jsx-no-target-blank
+                        rel="noopener noreferrer"
                         target="_blank"
                       >
                         View More Info

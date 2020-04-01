@@ -18,11 +18,14 @@ describe('fetchAccessMethods', () => {
     })
 
     // call the dispatch
-    expect(store.dispatch(fetchAccessMethods())).toBeNull()
+    expect(store.dispatch(fetchAccessMethods())).toEqual(
+      new Promise(resolve => resolve(null))
+    )
   })
 
   test('returns download method if it is the only access method', async () => {
     const collectionId = 'collectionId'
+
     const store = mockStore({
       authToken: '123',
       metadata: {
@@ -30,6 +33,9 @@ describe('fetchAccessMethods', () => {
           allIds: [collectionId],
           byId: {
             collectionId: {
+              granules: {
+                hits: 100
+              },
               metadata: {
                 tags: {
                   'edsc.extra.serverless.collection_capabilities': {
@@ -46,7 +52,21 @@ describe('fetchAccessMethods', () => {
       project: {
         collectionIds: [collectionId]
       },
-      providers: []
+      providers: [
+        {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'EDSC-TEST',
+            provider_id: 'EDSC-TEST'
+          }
+        }, {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'NON-EDSC-TEST',
+            provider_id: 'NON-EDSC-TEST'
+          }
+        }
+      ]
     })
 
     // call the dispatch
@@ -83,6 +103,7 @@ describe('fetchAccessMethods', () => {
       },
       form: 'mock form here'
     }
+
     nock(/localhost/)
       .post(/access_methods/)
       .reply(200, {
@@ -100,6 +121,9 @@ describe('fetchAccessMethods', () => {
           allIds: [collectionId],
           byId: {
             collectionId: {
+              granules: {
+                hits: 100
+              },
               metadata: {
                 tags: {
                   'edsc.extra.serverless.subset_service.echo_orders': {
@@ -126,7 +150,21 @@ describe('fetchAccessMethods', () => {
       project: {
         collectionIds: [collectionId]
       },
-      providers: []
+      providers: [
+        {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'EDSC-TEST',
+            provider_id: 'EDSC-TEST'
+          }
+        }, {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'NON-EDSC-TEST',
+            provider_id: 'NON-EDSC-TEST'
+          }
+        }
+      ]
     })
 
     // call the dispatch
@@ -139,9 +177,7 @@ describe('fetchAccessMethods', () => {
           methods: {
             download,
             echoOrder0
-          },
-          orderCount: 0,
-          selectedAccessMethod: undefined
+          }
         }
       })
     })
@@ -205,7 +241,21 @@ describe('fetchAccessMethods', () => {
         project: {
           collectionIds: [collectionId]
         },
-        providers: []
+        providers: [
+          {
+            provider: {
+              id: 'abcd-1234-efgh-5678',
+              organization_name: 'EDSC-TEST',
+              provider_id: 'EDSC-TEST'
+            }
+          }, {
+            provider: {
+              id: 'abcd-1234-efgh-5678',
+              organization_name: 'NON-EDSC-TEST',
+              provider_id: 'NON-EDSC-TEST'
+            }
+          }
+        ]
       })
 
       // call the dispatch
@@ -282,7 +332,21 @@ describe('fetchAccessMethods', () => {
         project: {
           collectionIds: [collectionId]
         },
-        providers: []
+        providers: [
+          {
+            provider: {
+              id: 'abcd-1234-efgh-5678',
+              organization_name: 'EDSC-TEST',
+              provider_id: 'EDSC-TEST'
+            }
+          }, {
+            provider: {
+              id: 'abcd-1234-efgh-5678',
+              organization_name: 'NON-EDSC-TEST',
+              provider_id: 'NON-EDSC-TEST'
+            }
+          }
+        ]
       })
 
       // call the dispatch

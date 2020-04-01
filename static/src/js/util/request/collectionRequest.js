@@ -123,8 +123,8 @@ export default class CollectionRequest extends Request {
 
     // If the response status code is not 200, return unaltered data
     // If the status code is 200, it doesn't exist in the response
-    const { statusCode = 200 } = data
-    if (statusCode !== 200) return data
+    const { errors = [] } = data
+    if (errors.length > 0) return data
 
     if (!data || Object.keys(data).length === 0) return data
 

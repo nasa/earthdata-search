@@ -216,7 +216,7 @@ describe('getFocusedGranule', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(actions.getFocusedGranule()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)

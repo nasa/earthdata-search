@@ -4,11 +4,12 @@ import {
   CLEAR_COLLECTION_GRANULES,
   UPDATE_FOCUSED_COLLECTION
 } from '../constants/actionTypes'
+import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
+import { eventEmitter } from '../events/events'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { updateCollectionMetadata } from './collections'
 import { updateAuthTokenFromHeaders } from './authToken'
-import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
-import { eventEmitter } from '../events/events'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -23,28 +24,21 @@ export const clearCollectionGranules = () => ({
  * Perform a collection request based on the focusedCollection from the store.
  */
 export const getFocusedCollection = () => async (dispatch, getState) => {
+  const { defaultCmrSearchTags } = getApplicationConfig()
+
   const {
     authToken,
     focusedCollection,
     metadata,
-    query,
-    searchResults
+    query
   } = getState()
 
-  const { collections: collectionResults = {} } = searchResults
+
+  const { collections: collectionResults = {} } = metadata
 
   const { byId: searchResultsById = {} } = collectionResults
-  const focusedCollectionMetadata = searchResultsById[focusedCollection]
-
+  const { [focusedCollection]: focusedCollectionMetadata } = searchResultsById
   const { is_cwic: isCwic = false } = focusedCollectionMetadata || {}
-  const payload = [{
-    [focusedCollection]: {
-      isCwic,
-      metadata: {
-        ...focusedCollectionMetadata
-      }
-    }
-  }]
 
   const { collection: collectionQuery } = query
   const { spatial = {} } = collectionQuery
@@ -64,23 +58,26 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   }
 
   dispatch(actions.collectionRelevancyMetrics())
-  dispatch(updateCollectionMetadata(payload))
 
   const { collections } = metadata
   const { byId: fetchedCollections = {} } = collections
-  const fetchedCollection = fetchedCollections[focusedCollection]
+  const { [focusedCollection]: fetchedCollection } = fetchedCollections
   const { granules = {}, metadata: fetchedCollectionMetadata = {} } = fetchedCollection || {}
   const { allIds: allGranuleIds = [] } = granules
+
   // If we already have the metadata for this focusedCollection, don't fetch it again
   if (Object.keys(fetchedCollectionMetadata).length) {
     // If granules are already loaded, don't make a new getGranules request
-    if (allGranuleIds.length === 0) dispatch(actions.getGranules())
+    if (allGranuleIds.length === 0) {
+      dispatch(actions.getGranules())
+    }
+
     return null
   }
 
   const response = getCollectionMetadata({
     concept_id: [focusedCollection],
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
+    includeTags: defaultCmrSearchTags.join(','),
     includeHasGranules: true
   }, authToken)
     .then(([collectionJson, collectionUmm]) => {
@@ -125,7 +122,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 }
 
 /**
- * Change the focusedCollection, copy granules, and get the focusedCollection metadata.
+ * Change the focusedCollection, and get the focusedCollection metadata.
  * @param {string} collectionId
  */
 export const changeFocusedCollection = collectionId => (dispatch, getState) => {
