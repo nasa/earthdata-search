@@ -67,16 +67,27 @@ const googleGeocode = async (query) => {
  * @param {query} query The spatial query provided from the user
  */
 const nominatimGeocode = async (query) => {
+  // Nominatim terms require that we provide a referrer
   const { edscHost } = getEnvironmentConfig()
+
+  const { geocodingIncludePolygons = 'false' } = process.env
+
+  // Default query parameters
+  const queryParams = {
+    format: 'json',
+    extratags: 1,
+    dedupe: 1,
+    q: query
+  }
+
+  // Only request geojson if polygons are enabled
+  if (geocodingIncludePolygons === 'true') {
+    queryParams.polygon_geojson = 1
+  }
+
   const geocodeResult = await request.get({
     uri: 'https://nominatim.openstreetmap.org/search.php',
-    qs: {
-      format: 'json',
-      polygon_geojson: 1,
-      extratags: 1,
-      dedupe: 1,
-      q: query
-    },
+    qs: queryParams,
     headers: {
       Referer: edscHost
     },
@@ -111,9 +122,8 @@ const nominatimGeocode = async (query) => {
       bounding_box: boundingBox
     }
 
-    // Only include the polygon if we've configured the environment to do so
-    const { geocodingIncludePolygons = 'false' } = process.env
-    if (geocodingIncludePolygons.toLowerCase() === 'true') {
+    // If geojson was returned, return it as 'polygon'
+    if (geojson) {
       spatialResponse.polygon = geojson
     }
 
