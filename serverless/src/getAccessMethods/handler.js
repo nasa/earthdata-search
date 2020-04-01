@@ -11,7 +11,7 @@ import { getVariables } from './getVariables'
 import { getOutputFormats } from './getOutputFormats'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve access methods for a provided collection

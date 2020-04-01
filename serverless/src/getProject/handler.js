@@ -1,7 +1,7 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve a single project from the database

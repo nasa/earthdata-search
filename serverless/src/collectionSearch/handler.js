@@ -3,7 +3,7 @@ import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getJwtToken } from '../util/getJwtToken'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Returns the keys permitted by cmr based on the request format

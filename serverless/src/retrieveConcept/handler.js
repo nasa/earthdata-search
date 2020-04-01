@@ -6,7 +6,7 @@ import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Perform an authenticated CMR concept search

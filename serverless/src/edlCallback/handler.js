@@ -8,7 +8,7 @@ import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 // AWS SQS adapter
 let sqs

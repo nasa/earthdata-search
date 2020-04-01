@@ -3,7 +3,7 @@ import { stringify } from 'qs'
 import { castArray } from 'lodash'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Adds a tag association to any collections meeting the provided search criteria

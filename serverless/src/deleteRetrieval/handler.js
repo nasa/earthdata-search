@@ -3,7 +3,7 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Delete a retrieval from the database

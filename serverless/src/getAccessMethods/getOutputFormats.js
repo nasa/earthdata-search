@@ -4,7 +4,7 @@ import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getUmmServiceVersionHeader } from '../../../sharedUtils/ummVersionHeader'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Returns the SupportedOutputFormats field from a UMM-S record

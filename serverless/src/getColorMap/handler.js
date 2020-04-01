@@ -1,6 +1,6 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve single colormap record from the database
