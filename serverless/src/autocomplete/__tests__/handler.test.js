@@ -252,6 +252,8 @@ describe('autocomplete', () => {
       })
 
       test('correctly returns a full result', async () => {
+        process.env.geocodingIncludePolygons = 'false'
+
         nock(/openstreetmap/)
           .get(/search/)
           .reply(200, [
