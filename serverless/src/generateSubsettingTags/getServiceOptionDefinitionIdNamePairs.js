@@ -4,7 +4,7 @@ import { stringify } from 'qs'
 import { chunkArray } from '../util/chunkArray'
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve service option definition records

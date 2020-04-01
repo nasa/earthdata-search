@@ -10,7 +10,7 @@ import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { cmrStringify } from '../util/cmr/cmrStringify'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getUmmVariableVersionHeader } from '../../../sharedUtils/ummVersionHeader'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Given the items result from a CMR variable search, returns the variables in an object with the key being the concept id

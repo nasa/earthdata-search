@@ -4,7 +4,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 const fetchLegacyServicesOrder = async (input) => {
   const dbConnection = await getDbConnection()

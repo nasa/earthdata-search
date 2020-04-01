@@ -9,7 +9,7 @@ import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 // AWS SQS adapter
 let sqs

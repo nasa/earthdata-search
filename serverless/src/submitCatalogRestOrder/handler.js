@@ -18,7 +18,7 @@ import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWo
 import { portalPath } from '../../../sharedUtils/portalPath'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Submits an order to Catalog Rest (ESI)

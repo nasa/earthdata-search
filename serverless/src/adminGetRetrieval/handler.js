@@ -2,7 +2,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve all the retrievals for the authenticated user

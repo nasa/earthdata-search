@@ -6,7 +6,7 @@ import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEchoToken } from '../util/urs/getEchoToken'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve data quality summaries for a given CMR Collection

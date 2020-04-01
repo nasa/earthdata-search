@@ -5,7 +5,7 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { isLinkType } from '../../../static/src/js/util/isLinkType'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve a single retrieval record from the database

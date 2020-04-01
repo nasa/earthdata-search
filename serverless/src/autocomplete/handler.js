@@ -7,7 +7,7 @@ import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 import { getGoogleMapsApiKey } from '../util/google/maps'
 import { getJwtToken } from '../util/getJwtToken'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Search the Google Maps API endpoint

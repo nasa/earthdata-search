@@ -3,12 +3,17 @@ import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { getEchoToken } from '../urs/getEchoToken'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
-import { parseError } from '../parseError'
+import { parseError } from '../../../../sharedUtils/parseError'
 
 /**
  * Performs a search request and returns the result body and the JWT
  * @param {String} jwtToken JWT returned from edlAuthorizer
- * @param {String} url URL for to perform search
+ * @param {String} path The CMR path to perform the search against
+ * @param {String} params The parameters to send to with the HTTP request
+ * @param {String} requestId A generated request id that will be sent as a header with the HTTP request
+ * @param {String} providedHeaders Any headers to send along with the HTTP request
+ * @param {String} bodyType The body type of the HTTP request
+ * @param {String} method The HTTP method to use when making the request
  */
 export const doSearchRequest = async ({
   jwtToken,

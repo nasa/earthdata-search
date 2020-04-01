@@ -1,7 +1,7 @@
 import pgMigrate from 'node-pg-migrate'
 import { Client } from 'pg'
 import { getDbConnectionConfig } from '../util/database'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Runs migrations using node-pg-migrate

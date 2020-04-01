@@ -8,7 +8,7 @@ import {
 import { generateFormDigest } from '../util/generateFormDigest'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 export const getOptionDefinitions = async (
   collectionProvider,

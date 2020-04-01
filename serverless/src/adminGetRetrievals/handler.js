@@ -1,7 +1,7 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 const sortKeyMap = {
   '-created_at': ['retrievals.created_at', 'desc'],

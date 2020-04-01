@@ -8,7 +8,7 @@ import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtTok
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { removeSpatialFromAccessMethod } from '../util/removeSpatialFromAccessMethod'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../util/parseError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 // AWS SQS adapter
 let sqs
