@@ -102,15 +102,22 @@ const nominatimGeocode = async (query) => {
       parseFloat(boundingbox[1])
     ]
 
-    return {
+    const spatialResponse = {
       name: displayName,
       point: [
         lat,
         lon
       ],
-      bounding_box: boundingBox,
-      polygon: geojson
+      bounding_box: boundingBox
     }
+
+    // Only include the polygon if we've configured the environment to do so
+    const { geocodingIncludePolygons = false } = process.env
+    if (geocodingIncludePolygons) {
+      spatialResponse.polygon = geojson
+    }
+
+    return spatialResponse
   })
 
   return formattedResult
@@ -121,7 +128,7 @@ const nominatimGeocode = async (query) => {
  * @param {query} query The spatial query provided from the user
  */
 const geocode = (query) => {
-  const geocodingService = process.env.GEOCODING_SERVICE
+  const { geocodingService } = process.env
 
   console.log(`Geocoding '${query}' with ${geocodingService}`)
 
@@ -135,7 +142,7 @@ const geocode = (query) => {
 
   // Not setting a geocoding service should result in an
   // empty response by default
-  throw new Error('Geocoder not supported')
+  throw new Error(`Geocoder (${geocodingService}) not supported`)
 }
 
 /**
