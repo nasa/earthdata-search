@@ -18,6 +18,7 @@ import AutocompleteDisplayContainer
   from '../../containers/AutocompleteDisplayContainer/AutocompleteDisplayContainer'
 import FilterStack
   from '../FilterStack/FilterStack'
+import Spinner from '../Spinner/Spinner'
 
 import './SearchForm.scss'
 
@@ -27,7 +28,8 @@ class SearchForm extends Component {
 
     this.state = {
       keywordSearch: props.keywordSearch ? props.keywordSearch : '',
-      showFilterStack: true
+      showFilterStack: true,
+      selectedSuggestion: null
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -35,6 +37,7 @@ class SearchForm extends Component {
     this.onSearchClear = this.onSearchClear.bind(this)
     this.onToggleAdvancedSearch = this.onToggleAdvancedSearch.bind(this)
     this.onToggleFilterStack = this.onToggleFilterStack.bind(this)
+    this.onSuggestionHighlighted = this.onSuggestionHighlighted.bind(this)
     this.getSuggestionValue = this.getSuggestionValue.bind(this)
     this.renderSuggestion = this.renderSuggestion.bind(this)
     this.selectSuggestion = this.selectSuggestion.bind(this)
@@ -51,7 +54,7 @@ class SearchForm extends Component {
 
   onFormSubmit(e) {
     e.preventDefault()
-    document.getElementsByClassName('search-form__input').keywordSearch.blur()
+    // document.getElementsByClassName('search-form__input').keywordSearch.blur()
 
     const {
       keywordSearch: propsKeyword,
@@ -75,9 +78,18 @@ class SearchForm extends Component {
    * @param {Object} event event object
    * @param {Object} data object with the new value of the input
    */
-  onAutoSuggestChange(event, data) {
-    const { newValue } = data
+  onAutoSuggestChange(event, { newValue }) {
     this.setState({ keywordSearch: newValue })
+  }
+
+  /**
+   * AutoSuggest callback when a suggestion is selected
+   * @param {Object} data object with info about the selected suggestion. Value
+   * is null when no suggestion is highligted
+   */
+  onSuggestionHighlighted(data) {
+    const { suggestion } = data
+    this.setState({ selectedSuggestion: suggestion })
   }
 
   onSearchClear() {
@@ -109,7 +121,7 @@ class SearchForm extends Component {
    * @param {Object} suggestion
    */
   getSuggestionValue(suggestion) {
-    return `${startCase(suggestion.type)}: ${suggestion.value}`
+    return suggestion.value
   }
 
   /**
@@ -137,15 +149,57 @@ class SearchForm extends Component {
    * AutoSuggest method to render each suggestion
    * @param {Object} suggestion
    */
-  renderSuggestion(suggestion) {
+  renderSuggestion(data) {
+    const { type, value, field } = data
+
+    let displayHierarchy = ''
+    let hierarchy = []
+
+    if (field.indexOf(':')) {
+      hierarchy = field.split(':')
+      hierarchy.pop()
+    }
+
+    let displayValue = value
+
+    if (displayValue.indexOf(':')) {
+      displayValue = displayValue.split(':')
+      displayValue = displayValue.pop()
+    }
+
+    hierarchy.forEach((parent) => {
+      displayHierarchy += `${parent} > `
+    })
+
+    const displayTitle = `${startCase(type)}: \n${displayHierarchy}${displayValue}`
+
     return (
-      <div>
-        <div className="search-form__suggestions-type">
-          {startCase(suggestion.type)}
-          {': '}
+      <div title={displayTitle}>
+        <div className="search-form__suggestions-primary">
+          <div className="search-form__suggestions-type">
+            {startCase(type)}
+            {':'}
+          </div>
+          {
+            (hierarchy && hierarchy.length > 0) && (
+              <div className="search-form__suggestions-hierarchy">
+                <span>
+                  {
+                    hierarchy.map(parent => (
+                      <>
+                        {parent}
+                        <i className="fa fa-chevron-right" />
+                        {' '}
+                      </>
+                    ))
+                  }
+                </span>
+              </div>
+            )
+          }
         </div>
         <div className="search-form__suggestions-value">
-          {suggestion.value}
+          {displayValue}
         </div>
       </div>
     )
@@ -154,10 +208,71 @@ class SearchForm extends Component {
   /**
    * AutoSuggest method to render the suggestions container
    */
-  renderSuggestionsContainer({ containerProps, children }) {
+  renderSuggestionsContainer(opts) {
+    const {
+      containerProps,
+      children,
+      isLoading,
+      isLoaded,
+      selectedSuggestion,
+      query
+    } = opts
     return (
       <div {...containerProps} className="search-form__suggestions-container">
-        {children}
+        {
+          query && query.length > 2 && (
+            <>
+              {
+                (isLoading && !isLoaded) && (
+                  <div className="search-form__loading-suggestions">
+                    <Spinner className="search-form__spinner" type="dots" size="tiny" inline />
+                    <span className="visually-hidden">
+                      Loading collections...
+                    </span>
+                  </div>
+                )
+              }
+              {
+                (children && !isLoading && isLoaded) && children
+              }
+              {
+                (isLoading || (children && Object.keys(children).length)) && (
+                  <div className="search-form__query-hint">
+                    {
+                      selectedSuggestion
+                        ? (
+                          <>
+                            Press
+                            {' '}
+                            <strong>Enter</strong>
+                            {' to filter by '}
+                            <strong>
+                              &quot;
+                              {selectedSuggestion.value}
+                              &quot;
+                            </strong>
+                          </>
+                        )
+                        : (
+                          <>
+                            Press
+                            {' '}
+                            <strong>Enter</strong>
+                            {' to search for '}
+                            <strong>
+                              &quot;
+                              {query}
+                              &quot;
+                            </strong>
+                          </>
+                        )
+                    }
+                  </div>
+                )
+              }
+            </>
+          )
+        }
       </div>
     )
   }
@@ -179,7 +294,8 @@ class SearchForm extends Component {
 
     const {
       keywordSearch,
-      showFilterStack
+      showFilterStack,
+      selectedSuggestion
     } = this.state
 
     let spatialDisplayIsVisible = true
@@ -201,9 +317,18 @@ class SearchForm extends Component {
               onSuggestionsFetchRequested={onFetchAutocomplete}
               onSuggestionsClearRequested={onClearAutocompleteSuggestions}
               getSuggestionValue={this.getSuggestionValue}
-              renderSuggestionsContainer={this.renderSuggestionsContainer}
+              // eslint-disable-next-line arrow-body-style
+              renderSuggestionsContainer={(opts) => {
+                return this.renderSuggestionsContainer({
+                  ...opts,
+                  isLoading,
+                  isLoaded,
+                  selectedSuggestion
+                })
+              }}
               renderSuggestion={this.renderSuggestion}
               onSuggestionSelected={this.selectSuggestion}
+              onSuggestionHighlighted={this.onSuggestionHighlighted}
               shouldRenderSuggestions={this.shouldRenderSuggestions}
               inputProps={{
                 name: 'keywordSearch',
@@ -214,13 +339,6 @@ class SearchForm extends Component {
                 onChange: this.onAutoSuggestChange
               }}
             />
-            {
-              isLoading && !isLoaded && (
-                <div className="search-form__loading-suggestions">
-                  Loading Suggestions...
-                </div>
-              )
-            }
           </form>
           <Button
             bootstrapVariant="inline-block"
