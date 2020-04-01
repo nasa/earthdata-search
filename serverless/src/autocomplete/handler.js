@@ -112,8 +112,8 @@ const nominatimGeocode = async (query) => {
     }
 
     // Only include the polygon if we've configured the environment to do so
-    const { geocodingIncludePolygons = false } = process.env
-    if (geocodingIncludePolygons) {
+    const { geocodingIncludePolygons = 'false' } = process.env
+    if (geocodingIncludePolygons.toLowerCase() === 'true') {
       spatialResponse.polygon = geojson
     }
 
