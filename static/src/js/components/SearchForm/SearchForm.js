@@ -88,8 +88,22 @@ class SearchForm extends Component {
    * is null when no suggestion is highligted
    */
   onSuggestionHighlighted(data) {
-    const { suggestion } = data
-    this.setState({ selectedSuggestion: suggestion })
+    const { suggestion: newSuggestion } = data
+    const { selectedSuggestion } = this.state
+
+    if (newSuggestion === null || selectedSuggestion === null) {
+      this.setState({ selectedSuggestion: newSuggestion })
+      return
+    }
+
+    const { value = '', type = '' } = selectedSuggestion
+
+    // This check prevents updating when the new selection matches the current selection.
+    // This prevents errors that happen when the list is repopulated from the api while
+    // the user has a suggestion highlighted.
+    if (value !== newSuggestion.value && type !== newSuggestion.type) {
+      this.setState({ selectedSuggestion: newSuggestion })
+    }
   }
 
   onSearchClear() {
@@ -155,7 +169,7 @@ class SearchForm extends Component {
     let displayHierarchy = ''
     let hierarchy = []
 
-    if (field.indexOf(':')) {
+    if (field && field.indexOf(':')) {
       hierarchy = field.split(':')
       hierarchy.pop()
     }
@@ -232,9 +246,7 @@ class SearchForm extends Component {
                   </div>
                 )
               }
-              {
-                (children && !isLoading && isLoaded) && children
-              }
+              { children }
               {
                 (isLoading || (children && Object.keys(children).length)) && (
                   <div className="search-form__query-hint">
