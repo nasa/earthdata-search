@@ -152,10 +152,11 @@
     }
 
     .react-autosuggest__suggestion {
-      padding: 0.5rem;
+      padding: 0.325rem 0.75rem;
       border-bottom: 1px solid $color__black--200;
       overflow-wrap: break-word;
       transition: all 0.1s ease-in-out;
+      cursor: pointer;
 
       &--highlighted,
       &:hover {
@@ -171,6 +172,7 @@
   &__suggestions-primary {
     display: flex;
     flex-direction: row;
+    margin-bottom: 0.2rem;
   }
 
   &__suggestions-type {
@@ -180,10 +182,14 @@
     color: $color__black--400;
   }
 
+  &__suggestions-value {
+    line-height: 1.35;
+  }
+
   &__suggestions-hierarchy {
     flex-grow: 0;
     flex-shrink: 1;
-    margin-left: 0.25rem;
+    padding-left: 1em;
     font-size: 0.675rem;
     color: $color__black--400;
     white-space: nowrap;
@@ -191,6 +197,7 @@
     text-overflow: clip;
     position: relative;
     background-color: $color__white;
+    transition: all 0.1s ease-in-out;
 
     &:before {
       content: '\02026';
@@ -217,15 +224,15 @@
       position: absolute;
       display: inline-block;
       width: 1em;
-      height: 1em;
+      height: 1.5em;
       background-color: inherit;
       z-index: 200;
       left: -.5em;
     }
 
     .fa {
-      font-size: 0.425rem;
-      color: $color__black--300;
+      font-size: 0.25rem;
+      color: darken($color__black--200, 10);
     }
   }
 }

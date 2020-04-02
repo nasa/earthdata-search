@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { isEmpty, startCase } from 'lodash'
+import { isEmpty, startCase, isEqual } from 'lodash'
 import Autosuggest from 'react-autosuggest'
 
 import Button from '../Button/Button'
@@ -91,17 +91,7 @@ class SearchForm extends Component {
     const { suggestion: newSuggestion } = data
     const { selectedSuggestion } = this.state
 
-    if (newSuggestion === null || selectedSuggestion === null) {
-      this.setState({ selectedSuggestion: newSuggestion })
-      return
-    }
-
-    const { value = '', type = '' } = selectedSuggestion
-
-    // This check prevents updating when the new selection matches the current selection.
-    // This prevents errors that happen when the list is repopulated from the api while
-    // the user has a suggestion highlighted.
-    if (value !== newSuggestion.value && type !== newSuggestion.type) {
+    if (!isEqual(selectedSuggestion, newSuggestion)) {
       this.setState({ selectedSuggestion: newSuggestion })
     }
   }
@@ -164,28 +154,21 @@ class SearchForm extends Component {
    * @param {Object} suggestion
    */
   renderSuggestion(data) {
-    const { type, value, field } = data
+    const { type, value, fields = '' } = data
 
     let displayHierarchy = ''
     let hierarchy = []
 
-    if (field && field.indexOf(':')) {
-      hierarchy = field.split(':')
+    if (fields && fields.indexOf(':')) {
+      hierarchy = fields.split(':')
       hierarchy.pop()
-    }
-
-    let displayValue = value
-
-    if (displayValue.indexOf(':')) {
-      displayValue = displayValue.split(':')
-      displayValue = displayValue.pop()
     }
 
     hierarchy.forEach((parent) => {
       displayHierarchy += `${parent} > `
     })
 
-    const displayTitle = `${startCase(type)}: \n${displayHierarchy}${displayValue}`
+    const displayTitle = `${startCase(type)}: \n${displayHierarchy}${value}`
 
     return (
       <div title={displayTitle}>
@@ -213,7 +196,7 @@ class SearchForm extends Component {
           }
         </div>
         <div className="search-form__suggestions-value">
-          {displayValue}
+          {value}
         </div>
       </div>
     )
