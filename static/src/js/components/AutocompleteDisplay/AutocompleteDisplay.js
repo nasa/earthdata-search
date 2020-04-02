@@ -29,10 +29,10 @@ const AutocompleteDisplay = ({ selected, onRemoveAutocompleteValue }) => {
           }
 
           parents.forEach((parent) => {
-            titleHierarchy += ` ${parent} >`
+            titleHierarchy += `${parent} > `
           })
 
-          const title = `${startCase(type)}:${titleHierarchy} ${value}`
+          const title = `${startCase(type)}: \n${titleHierarchy}${value}`
 
           return (
             <span
