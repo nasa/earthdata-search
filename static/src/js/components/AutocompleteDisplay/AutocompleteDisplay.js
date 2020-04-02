@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { startCase } from 'lodash'
+
 import { facetCategoryAbbreviationsMap } from '../../util/facetCategoryAbbreviationsMap'
+import { buildHierarchicalAutocompleteTitle } from '../../util/autocompleteResults'
 
 import Button from '../Button/Button'
 import FilterStackItem from '../FilterStack/FilterStackItem'
@@ -16,23 +17,10 @@ const AutocompleteDisplay = ({ selected, onRemoveAutocompleteValue }) => {
     <div className="autocomplete-display">
       {
         selected.map((item) => {
-          const { type, value, fields = '' } = item
+          const { type, value } = item
 
           const label = facetCategoryAbbreviationsMap[type]
-
-          let parents = []
-          let titleHierarchy = ''
-
-          if (fields.indexOf(':')) {
-            parents = fields.split(':')
-            parents.pop()
-          }
-
-          parents.forEach((parent) => {
-            titleHierarchy += `${parent} > `
-          })
-
-          const title = `${startCase(type)}: \n${titleHierarchy}${value}`
+          const title = buildHierarchicalAutocompleteTitle(item)
 
           return (
             <span
