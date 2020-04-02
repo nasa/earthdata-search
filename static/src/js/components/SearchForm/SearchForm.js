@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { isEmpty, startCase, isEqual } from 'lodash'
 import Autosuggest from 'react-autosuggest'
 
+import { buildHierarchy, buildHierarchicalAutocompleteTitle } from '../../util/autocompleteResults'
+
 import Button from '../Button/Button'
 import AdvancedSearchDisplayContainer
   from '../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
@@ -54,7 +56,6 @@ class SearchForm extends Component {
 
   onFormSubmit(e) {
     e.preventDefault()
-    // document.getElementsByClassName('search-form__input').keywordSearch.blur()
 
     const {
       keywordSearch: propsKeyword,
@@ -156,22 +157,11 @@ class SearchForm extends Component {
   renderSuggestion(data) {
     const { type, value, fields = '' } = data
 
-    let displayHierarchy = ''
-    let hierarchy = []
-
-    if (fields && fields.indexOf(':')) {
-      hierarchy = fields.split(':')
-      hierarchy.pop()
-    }
-
-    hierarchy.forEach((parent) => {
-      displayHierarchy += `${parent} > `
-    })
-
-    const displayTitle = `${startCase(type)}: \n${displayHierarchy}${value}`
+    const title = buildHierarchicalAutocompleteTitle(data)
+    const hierarchy = buildHierarchy(fields)
 
     return (
-      <div title={displayTitle}>
+      <div title={title}>
         <div className="search-form__suggestions-primary">
           <div className="search-form__suggestions-type">
             {startCase(type)}
@@ -183,11 +173,11 @@ class SearchForm extends Component {
                 <span>
                   {
                     hierarchy.map(parent => (
-                      <>
+                      <React.Fragment key={`${value}-${parent}`}>
                         {parent}
                         <i className="fa fa-chevron-right" />
                         {' '}
-                      </>
+                      </React.Fragment>
                     ))
                   }
                 </span>
