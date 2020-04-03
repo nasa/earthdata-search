@@ -385,7 +385,7 @@ describe('getProjectCollections', () => {
     nock(/localhost/)
       .post(/collections\/json/)
       .reply(500, {
-        errors: ['HTTP Error']
+        errors: ['HTTP Request Error']
       },
       {
         'jwt-token': 'token'
@@ -394,12 +394,11 @@ describe('getProjectCollections', () => {
     nock(/localhost/)
       .post(/collections\/umm_json/)
       .reply(500, {
-        errors: ['HTTP Error']
+        errors: ['HTTP Request Error']
       },
       {
         'jwt-token': 'token'
       })
-
 
     nock(/localhost/)
       .post(/error_logger/)
