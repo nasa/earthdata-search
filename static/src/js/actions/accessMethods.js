@@ -5,11 +5,12 @@ import { findProvider } from '../util/findProvider'
 import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { parseError } from '../../../../sharedUtils/parseError'
 
 /**
  * Fetch available access methods from the API
  */
-export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
+export const fetchAccessMethods = collectionIds => async (dispatch, getState) => {
   // Get the selected Access Method
   const {
     authToken,
@@ -24,7 +25,10 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
 
   // The process of fetching access methods requires that we have providers retrieved
   // in order to look up provider guids
-  return dispatch(actions.fetchProviders()).then(() => {
+  try {
+    // Fetching access methods requires that providers be fetched and available
+    await dispatch(actions.fetchProviders())
+
     const accessMethodPromises = collectionIds.map((collectionId) => {
       // Get the tag data for the collection
       const { collections } = metadata
@@ -105,7 +109,14 @@ export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
     })
 
     return Promise.all(accessMethodPromises)
-  })
+      .catch((e) => {
+        parseError(e)
+      })
+  } catch (e) {
+    return buildPromise(
+      parseError(e, { asJSON: false })
+    )
+  }
 }
 
 export default fetchAccessMethods

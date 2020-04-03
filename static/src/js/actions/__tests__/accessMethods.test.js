@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import nock from 'nock'
 
 import { fetchAccessMethods } from '../accessMethods'
-import { ADD_ACCESS_METHODS } from '../../constants/actionTypes'
+import { ADD_ACCESS_METHODS, ADD_ERROR } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -18,9 +18,160 @@ describe('fetchAccessMethods', () => {
     })
 
     // call the dispatch
+    expect(store.dispatch(fetchAccessMethods(['collectionId']))).toEqual(
+      new Promise(resolve => resolve(null))
+    )
+  })
+
+  test('does not fetch access methods if no collections were provided', () => {
+    const store = mockStore({
+      authToken: ''
+    })
+
+    // call the dispatch
     expect(store.dispatch(fetchAccessMethods())).toEqual(
       new Promise(resolve => resolve(null))
     )
+  })
+
+  test('calls the error logger when providers action fails', async () => {
+    const collectionId = 'collectionId'
+
+    nock(/localhost/)
+      .get(/providers/)
+      .reply(500, {
+        errors: ['HTTP Request Error']
+      },
+      {
+        'jwt-token': 'token'
+      })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      authToken: '123',
+      metadata: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            collectionId: {
+              granules: {
+                hits: 100
+              },
+              metadata: {
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: {
+                      granule_online_access_flag: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      project: {
+        collectionIds: [collectionId]
+      },
+      providers: []
+    })
+
+    // call the dispatch
+    await store.dispatch(fetchAccessMethods([collectionId]))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: ADD_ERROR,
+      payload: expect.objectContaining({
+        title: 'Error retrieving providers',
+        message: 'There was a problem completing the request'
+      })
+    })
+  })
+
+  test('calls the error logger when the collections request fails', async () => {
+    const collectionId = 'collectionId'
+
+    nock(/localhost/)
+      .post(/access_methods/)
+      .reply(500, {
+        errors: ['HTTP Request Error']
+      },
+      {
+        'jwt-token': 'token'
+      })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      authToken: '123',
+      metadata: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            collectionId: {
+              granules: {
+                hits: 5000
+              },
+              metadata: {
+                tags: {
+                  'edsc.extra.serverless.subset_service.echo_orders': {
+                    data: {
+                      option_definitions: [
+                        {
+                          id: 'option_definition_guid',
+                          name: 'Delivery Option'
+                        }
+                      ]
+                    }
+                  },
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: {
+                      granule_online_access_flag: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      project: {
+        collectionIds: [collectionId]
+      },
+      providers: [
+        {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'EDSC-TEST',
+            provider_id: 'EDSC-TEST'
+          }
+        }, {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'NON-EDSC-TEST',
+            provider_id: 'NON-EDSC-TEST'
+          }
+        }
+      ]
+    })
+
+    // call the dispatch
+    await store.dispatch(fetchAccessMethods([collectionId]))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: ADD_ERROR,
+      payload: expect.objectContaining({
+        title: 'Error retrieving access methods',
+        message: 'There was a problem completing the request'
+      })
+    })
   })
 
   test('returns download method if it is the only access method', async () => {

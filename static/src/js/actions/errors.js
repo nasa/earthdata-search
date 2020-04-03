@@ -43,9 +43,9 @@ export const handleError = ({
   }
 
   const parsedError = parseError(error, { asJSON: false })
-  const [defaultErrorMessage] = parsedError
+  const [defaultErrorMessage = message] = parsedError
 
-  console.error(`Action [${action}] failed:`, defaultErrorMessage)
+  console.error(`Action [${action}] failed: ${defaultErrorMessage}`)
 
   // Send the error to be logged in lambda
   const loggerRequest = new LoggerRequest()
