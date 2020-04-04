@@ -4,7 +4,6 @@ import Adapter from 'enzyme-adapter-react-16'
 import Autosuggest from 'react-autosuggest'
 
 import SearchForm from '../SearchForm'
-import TextField from '../../FormFields/TextField/TextField'
 
 Enzyme.configure({ adapter: new Adapter() })
 

@@ -8,11 +8,11 @@ export const encodeAutocomplete = (selected) => {
   if (!selected || selected.length === 0) return ''
 
   const param = {}
-  selected.forEach(({ type, value }) => {
+  selected.forEach(({ type, fields }) => {
     if (Object.keys(param).includes(type)) {
-      param[type].push(value)
+      param[type].push(fields)
     } else {
-      param[type] = [value]
+      param[type] = [fields]
     }
   })
 
@@ -31,7 +31,16 @@ export const decodeAutocomplete = (params) => {
   Object.keys(params).forEach((key) => {
     const items = params[key]
     Object.keys(items).forEach((index) => {
-      values.push({ type: key, value: items[index] })
+      // Pull out the colon delimited value
+      const fields = items[index]
+
+      // Split the fields and pop the last element (which represents the leaf node)
+      const value = fields.split(':').slice(-1)
+
+      // slice returns an array, select the element
+      const [selectedValue] = value
+
+      values.push({ type: key, fields: items[index], value: selectedValue })
     })
   })
 

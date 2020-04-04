@@ -263,15 +263,6 @@
           cors: true
           path: relevancy_logger
 
-  autocompleteLogger:
-    handler: serverless/src/autocompleteLogger/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
-    events:
-      - http:
-          method: post
-          cors: true
-          path: autocomplete_logger
-
   edlOptionalAuthorizer:
     handler: serverless/src/edlOptionalAuthorizer/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}

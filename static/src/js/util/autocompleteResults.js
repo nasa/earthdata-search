@@ -5,15 +5,21 @@ import { startCase } from 'lodash'
  * @param {String} fields A semi-colon delimited list of the the parents.
  * @returns {Array}  Display title will be something like:
  */
-export const buildHierarchy = (fields = '') => {
-  let parents = []
+export const buildHierarchy = ({ fields, includeLeaf = false }) => {
+  let hiearchy = []
 
-  if (fields && fields.indexOf(':')) {
-    parents = fields.split(':')
-    parents.pop()
+  // If the value provided is undefined or null
+  if (fields == null) return hiearchy
+
+  // Split the value on the known delimiter
+  hiearchy = fields.split(':')
+
+  // Unless otherwise provided, remove the leaf node and only return the parently hiearchy
+  if (!includeLeaf) {
+    hiearchy.pop()
   }
 
-  return parents
+  return hiearchy
 }
 
 /**
@@ -30,16 +36,25 @@ export const buildHierarchy = (fields = '') => {
  * Parent 1 > Parent 2 > Node
  *
  */
-export const buildHierarchicalAutocompleteTitle = ({ type, value, fields = '' }) => {
+export const buildHierarchicalAutocompleteTitle = ({ type, value, fields }) => {
   let hierarchy = ''
 
-  const parents = buildHierarchy(fields)
+  const parents = buildHierarchy({ fields, includeLeaf: true })
 
-  // No-op if there is no fields defined. In that case, displayHierarchy
-  // remains an empty string
-  parents.forEach((parent) => {
-    hierarchy += `${parent} > `
-  })
+  // Parents will have a value if a value was provided in the `fields` field
+  // and we're requesting to include the leaf node which will match the `value` field
+  if (parents.length > 0) {
+    hierarchy = parents.join(' > ')
+  } else {
+    // If no hiearchy was returned fallback to using the `value` field
+    hierarchy = value
+  }
 
-  return `${startCase(type)}: \n${hierarchy}${value}`
+  let title = startCase(type)
+
+  if (hierarchy) {
+    title = `${title}:`
+  }
+
+  return [title, hierarchy].filter(Boolean).join('\n')
 }
