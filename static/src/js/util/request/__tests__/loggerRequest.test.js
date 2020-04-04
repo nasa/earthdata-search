@@ -53,17 +53,3 @@ describe('LoggerRequest#logRelevancy', () => {
     expect(postMock).toBeCalledWith('relevancy_logger', params)
   })
 })
-
-describe('LoggerRequest#logSelectedAutocomplete', () => {
-  test('calls Request#post', () => {
-    const request = new LoggerRequest()
-
-    const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
-
-    const params = { data: { mock: 'data' } }
-    request.logSelectedAutocomplete(params)
-
-    expect(postMock).toBeCalledTimes(1)
-    expect(postMock).toBeCalledWith('autocomplete_logger', params)
-  })
-})

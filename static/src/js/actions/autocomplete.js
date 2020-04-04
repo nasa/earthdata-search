@@ -14,7 +14,6 @@ import { handleError } from './errors'
 import actions from '.'
 import { autocompleteFacetsMap } from '../util/autocompleteFacetsMap'
 import { scienceKeywordTypes } from '../util/scienceKeywordTypes'
-import LoggerRequest from '../util/request/loggerRequest'
 
 export const onAutocompleteLoaded = payload => ({
   type: LOADED_AUTOCOMPLETE,
@@ -116,18 +115,18 @@ const mapScienceKeywords = (value) => {
  */
 const mapAutocompleteToFacets = (autocomplete) => {
   const { suggestion } = autocomplete
-  const { type, value } = suggestion
+  const { fields, type } = suggestion
 
   const mappedType = autocompleteFacetsMap[type]
 
   if (!mappedType) return null
 
   const facets = {
-    [mappedType]: value
+    [mappedType]: fields
   }
 
   if (mappedType === 'science_keywords_h') {
-    facets.science_keywords_h = mapScienceKeywords(value)
+    facets.science_keywords_h = mapScienceKeywords(fields)
   }
 
   return facets
@@ -137,19 +136,9 @@ const mapAutocompleteToFacets = (autocomplete) => {
  * Action for selecting an autocomplete suggestion
  * @param {Object} data Autocomplete suggestion
  */
-export const selectAutocompleteSuggestion = data => (dispatch, getState) => {
+export const selectAutocompleteSuggestion = data => (dispatch) => {
   const cmrFacet = mapAutocompleteToFacets(data)
   if (cmrFacet) dispatch(actions.addCmrFacet(cmrFacet))
-
-  const { autocomplete } = getState()
-  const { params } = autocomplete
-  const requestObject = new LoggerRequest()
-  requestObject.logSelectedAutocomplete({
-    data: {
-      ...data,
-      params
-    }
-  })
 
   dispatch(updateAutocompleteSelected(data))
   dispatch(actions.changeQuery({ collection: { pageNum: 1, keyword: '' } }))

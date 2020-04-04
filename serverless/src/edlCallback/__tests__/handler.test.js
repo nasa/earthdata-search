@@ -5,6 +5,7 @@ import simpleOAuth2 from 'simple-oauth2'
 import jwt from 'jsonwebtoken'
 
 import edlCallback from '../handler'
+import * as cmrEnv from '../../../../sharedUtils/cmrEnv'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getSecretEarthdataConfig from '../../../../sharedUtils/config'
 import * as invokeLambda from '../../util/aws/invokeLambda'
@@ -46,6 +47,7 @@ beforeEach(() => {
   }))
 
   jest.spyOn(getSecretEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'secret' }))
+  jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
   jest.spyOn(invokeLambda, 'invokeLambda').mockImplementation(() => ({}))
   jest.spyOn(jwt, 'sign').mockImplementation(() => 'mockToken')
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {

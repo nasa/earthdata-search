@@ -10,6 +10,8 @@ import {
   UPDATE_AUTH
 } from '../../constants/actionTypes'
 
+import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
@@ -57,6 +59,9 @@ describe('changeFocusedGranule', () => {
 })
 
 describe('getFocusedGranule', () => {
+  beforeEach(() => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
+  })
   const granulePayload = {
     granuleId: {
       ummJson: {
@@ -64,23 +69,23 @@ describe('getFocusedGranule', () => {
       },
       metadataUrls: {
         atom: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.atom',
+          href: 'http://cmr.example.com/search/concepts/granuleId.atom',
           title: 'ATOM'
         },
         echo10: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.echo10',
+          href: 'http://cmr.example.com/search/concepts/granuleId.echo10',
           title: 'ECHO 10'
         },
         iso19115: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.iso19115',
+          href: 'http://cmr.example.com/search/concepts/granuleId.iso19115',
           title: 'ISO 19115'
         },
         native: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId',
+          href: 'http://cmr.example.com/search/concepts/granuleId',
           title: 'Native'
         },
         umm_json: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.umm_json',
+          href: 'http://cmr.example.com/search/concepts/granuleId.umm_json',
           title: 'UMM-G'
         }
       }

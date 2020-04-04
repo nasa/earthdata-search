@@ -6,9 +6,9 @@ describe('url#decodeAutocomplete', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       autocompleteSelected: [
-        { type: 'platform', value: 'aqua' },
-        { type: 'platform', value: 'terra' },
-        { type: 'instrument', value: 'modis' }
+        { type: 'platform', fields: 'aqua', value: 'aqua' },
+        { type: 'platform', fields: 'terra', value: 'terra' },
+        { type: 'instrument', fields: 'modis', value: 'modis' }
       ]
     }
     expect(decodeUrlParams('?as[platform][0]=aqua&as[platform][1]=terra&as[instrument][0]=modis')).toEqual(expectedResult)
@@ -28,9 +28,9 @@ describe('url#encodeAutocomplete', () => {
   test('encodes autocompleteSelected correctly', () => {
     const props = {
       autocompleteSelected: [
-        { type: 'platform', value: 'aqua' },
-        { type: 'platform', value: 'terra' },
-        { type: 'instrument', value: 'modis' }
+        { type: 'platform', fields: 'aqua', value: 'aqua' },
+        { type: 'platform', fields: 'terra', value: 'terra' },
+        { type: 'instrument', fields: 'modis', value: 'modis' }
       ],
       hasGranulesOrCwic: true,
       pathname: '/path/here'

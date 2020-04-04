@@ -1,20 +1,21 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { mount, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Badge } from 'react-bootstrap'
 
 import AutocompleteDisplay from '../AutocompleteDisplay'
 import { Button } from '../../Button/Button'
+// import FilterStackItem from '../../FilterStack/FilterStackItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     selected: [],
-    onRemoveAutocompleteValue: jest.fn()
+    onRemoveAutocompleteValue: jest.fn(),
+    ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<AutocompleteDisplay {...props} />)
+  const enzymeWrapper = mount(<AutocompleteDisplay {...props} />)
 
   return {
     enzymeWrapper,
@@ -24,28 +25,49 @@ function setup() {
 
 describe('AutocompleteDisplay component', () => {
   describe('with no props', () => {
-    test('should render self without display', () => {
+    test('should render self', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.type()).toBe(null)
+
+      expect(enzymeWrapper).toBeDefined()
+      expect(enzymeWrapper.type()).toBe(AutocompleteDisplay)
+    })
+
+    test('should render self without display', () => {
+      const props = {
+        selected: [],
+        onRemoveAutocompleteValue: jest.fn()
+      }
+
+      const shallowEnzymeWrapper = shallow(<AutocompleteDisplay {...props} />).type()
+
+      expect(shallowEnzymeWrapper).toBe(null)
     })
   })
 
   describe('with selected', () => {
-    test('should render the selected suggestion', () => {
-      const { enzymeWrapper } = setup()
-      enzymeWrapper.setProps({
+    test('should render the selected suggestion correctly without a hierarchy', () => {
+      const { enzymeWrapper } = setup({
         selected: [{
-          type: 'mock_type',
-          value: 'mock value'
+          type: 'instrument',
+          value: 'MODIS'
         }]
       })
 
-      const badge = enzymeWrapper.find(Badge)
+      expect(enzymeWrapper.find('.autocomplete-display__type').text()).toEqual('Inst.')
+      expect(enzymeWrapper.find('.autocomplete-display__value').text()).toEqual('MODIS')
+    })
 
-      expect(badge.props().pill).toBeTruthy()
+    test('should render the selected suggestion correctly with a hierarchy', () => {
+      const { enzymeWrapper } = setup({
+        selected: [{
+          type: 'instrument',
+          field: 'KEYWORD:MODIS',
+          value: 'MODIS'
+        }]
+      })
 
-      expect(enzymeWrapper.find('.autocomplete-display__type').text()).toEqual('Mock Type')
-      expect(enzymeWrapper.find('.autocomplete-display__value').text()).toEqual('mock value')
+      expect(enzymeWrapper.find('.autocomplete-display__type').text()).toEqual('Inst.')
+      expect(enzymeWrapper.find('.autocomplete-display__value').text()).toEqual('MODIS')
     })
   })
 
