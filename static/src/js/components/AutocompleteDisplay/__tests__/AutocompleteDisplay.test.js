@@ -4,7 +4,6 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import AutocompleteDisplay from '../AutocompleteDisplay'
 import { Button } from '../../Button/Button'
-// import FilterStackItem from '../../FilterStack/FilterStackItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 
