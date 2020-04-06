@@ -122,7 +122,7 @@ export class CollectionDownloadDisplay extends Component {
           }
           {
             isLoading && (
-              <h4>{`Retrieving links, please wait (parsed ${granuleLinks.length} of ${totalGranules} granules)` }</h4>
+              <h4>{ `Retrieving links, please wait (parsed ${granuleLinks.length} of ${totalGranules})` }</h4>
             )
           }
           {
