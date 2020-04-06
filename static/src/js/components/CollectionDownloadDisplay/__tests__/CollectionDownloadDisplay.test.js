@@ -66,7 +66,7 @@ describe('CollectionDownloadDisplay component', () => {
 
         expect(enzymeWrapper.exists()).toBeTruthy()
         expect(enzymeWrapper.find('h4').text()).toBe(
-          'Retrieving links, please wait (parsed 1 of 2)'
+          'Retrieving links, please wait (parsed 1 of 2 granules)'
         )
         expect(enzymeWrapper.find(Button).length).toEqual(0)
       })
@@ -119,7 +119,7 @@ describe('CollectionDownloadDisplay component', () => {
           'How to use this script'
         )
         expect(enzymeWrapper.find('h4').at(1).text()).toBe(
-          'Retrieving links, please wait (parsed 1 of 2)'
+          'Retrieving links, please wait (parsed 1 of 2 granules)'
         )
         expect(enzymeWrapper.find(Button).length).toEqual(0)
       })
@@ -182,7 +182,7 @@ describe('CollectionDownloadDisplay component', () => {
 
         expect(enzymeWrapper.exists()).toBeTruthy()
         expect(enzymeWrapper.find('h4').text()).toBe(
-          'Retrieving links, please wait (parsed 1 of 2)'
+          'Retrieving links, please wait (parsed 1 of 2 granules)'
         )
         expect(enzymeWrapper.find(Button).length).toEqual(0)
       })
@@ -250,7 +250,7 @@ describe('CollectionDownloadDisplay component', () => {
           'How to use this script'
         )
         expect(enzymeWrapper.find('h4').at(1).text()).toBe(
-          'Retrieving links, please wait (parsed 1 of 2)'
+          'Retrieving links, please wait (parsed 1 of 2 granules)'
         )
         expect(enzymeWrapper.find(Button).length).toEqual(0)
       })
