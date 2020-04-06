@@ -360,13 +360,17 @@ export const createDataLinks = (links = []) => {
 // eslint-disable-next-line arrow-body-style
 export const getDownloadUrls = (granules) => {
   // Iterate through each granule search result to pull out relevant links
-  return granules.map((granuleMetadata) => {
+  const urlArrays = granules.map((granuleMetadata) => {
     const { links: linkMetadata = [] } = granuleMetadata
 
     // Find the correct link from the list within the metadata
-    return linkMetadata.find((link) => {
+    return linkMetadata.filter((link) => {
       const { inherited, rel } = link
       return rel.includes('/data#') && !inherited
     })
   }).filter(Boolean)
+
+  // `filter` returns an array so we'll end up with an array of arrays so we
+  // need to flatten the result before we return it
+  return [].concat(...urlArrays)
 }
