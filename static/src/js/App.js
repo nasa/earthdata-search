@@ -13,6 +13,7 @@ import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Project from './routes/Project/Project'
 import Search from './routes/Search/Search'
 import Downloads from './routes/Downloads/Downloads'
+import Preferences from './routes/Preferences/Preferences'
 
 import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
@@ -84,6 +85,14 @@ class App extends Component {
                     render={() => (
                       <AuthRequiredContainer>
                         <ContactInfo />
+                      </AuthRequiredContainer>
+                    )}
+                  />
+                  <Route
+                    path={this.portalPaths('/preferences')}
+                    render={() => (
+                      <AuthRequiredContainer>
+                        <Preferences />
                       </AuthRequiredContainer>
                     )}
                   />

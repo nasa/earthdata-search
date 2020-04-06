@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "EDSC Preferences",
+  "additionalProperties": false,
+  "required": [
+      "panelState",
+      "collectionListView",
+      "granuleListView"
+  ],
+  "properties": {
+      "panelState": {
+          "$id": "#/properties/panelState",
+          "type": "string",
+          "title": "Panel State",
+          "description": "Select your preference for the state of the main panel when you are logged into Earthdata Search. Collapsed maximizes usable map space on the initial load. Open allows for panel and map interactions. Full Width uses the full width of your browser for search results.",
+          "default": "default",
+          "enum": [
+            "default",
+            "collapsed",
+            "open",
+            "fullWidth"
+          ],
+          "enumNames": [
+            "Default",
+            "Collapsed",
+            "Open",
+            "Full Width"
+          ]
+      },
+      "collectionListView": {
+          "$id": "#/properties/collectionListView",
+          "type": "string",
+          "title": "Collection Search Results View",
+          "description": "Set a default view for collection search results.",
+          "default": "default",
+          "enum": [
+              "default",
+              "list",
+              "table"
+          ],
+          "enumNames": [
+            "Default",
+            "List",
+            "Table"
+          ]
+      },
+      "granuleListView": {
+          "$id": "#/properties/granuleListView",
+          "type": "string",
+          "title": "Granule Search Results View",
+          "description": "Set a default view for granule search results.",
+          "default": "default",
+          "enum": [
+              "default",
+              "list",
+              "table"
+          ],
+          "enumNames": [
+            "Default",
+            "List",
+            "Table"
+          ]
+      }
+  }
+}

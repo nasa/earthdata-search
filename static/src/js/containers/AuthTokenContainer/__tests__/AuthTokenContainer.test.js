@@ -10,6 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     children: 'children',
+    onSetPreferencesFromJwt: jest.fn(),
     onUpdateAuthToken: jest.fn()
   }
 

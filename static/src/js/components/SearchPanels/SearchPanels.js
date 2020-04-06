@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import {
   Route,
-  Switch,
-  withRouter
+  Switch
 } from 'react-router-dom'
+import { isEqual } from 'lodash'
 
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
@@ -44,12 +44,34 @@ class SearchPanels extends PureComponent {
     super(props)
 
     this.state = {
-      panelView: 'list'
+      collectionPanelView: 'list',
+      granulePanelView: 'list'
     }
 
     this.onPanelClose = this.onPanelClose.bind(this)
     this.onChangePanel = this.onChangePanel.bind(this)
-    this.onChangePanelView = this.onChangePanelView.bind(this)
+    this.onChangeCollectionPanelView = this.onChangeCollectionPanelView.bind(this)
+    this.updatePanelViewState = this.updatePanelViewState.bind(this)
+  }
+
+  componentDidUpdate(prevProps) {
+    const { preferences } = this.props
+    const { preferences: prevPreferences } = prevProps
+
+    if (!isEqual(preferences, prevPreferences)) {
+      const {
+        collectionListView,
+        granuleListView
+      } = preferences
+
+      const collectionPanelView = collectionListView === 'default' ? 'list' : collectionListView
+      const granulePanelView = granuleListView === 'default' ? 'list' : granuleListView
+
+      this.updatePanelViewState({
+        collectionPanelView,
+        granulePanelView
+      })
+    }
   }
 
   onPanelClose() {
@@ -62,19 +84,34 @@ class SearchPanels extends PureComponent {
     onSetActivePanel(panelId)
   }
 
-  onChangePanelView(view) {
+  onChangeCollectionPanelView(view) {
     this.setState({
-      panelView: view
+      collectionPanelView: view
     })
+  }
+
+  onChangeGranulePanelView(view) {
+    this.setState({
+      granulePanelView: view
+    })
+  }
+
+  updatePanelViewState(state) {
+    this.setState({ ...state })
   }
 
   render() {
     const {
-      match
+      match,
+      preferences
     } = this.props
 
+    const { panelState } = preferences
+
     const {
-      panelView
+      collectionPanelView,
+      // eslint-disable-next-line no-unused-vars
+      granulePanelView
     } = this.state
 
     const panelSection = []
@@ -84,14 +121,14 @@ class SearchPanels extends PureComponent {
         key="collection-results-panel"
         header={(
           <CollectionResultsHeaderContainer
-            panelView={panelView}
-            onChangePanelView={this.onChangePanelView}
+            panelView={collectionPanelView}
+            onChangePanelView={this.onChangeCollectionPanelView}
           />
         )}
         onPanelClose={this.onPanelClose}
       >
-        <PanelItem scrollable={panelView !== 'table'}>
-          <CollectionResultsBodyContainer panelView={panelView} />
+        <PanelItem scrollable={collectionPanelView !== 'table'}>
+          <CollectionResultsBodyContainer panelView={collectionPanelView} />
         </PanelItem>
       </PanelGroup>
     )
@@ -143,45 +180,46 @@ class SearchPanels extends PureComponent {
         <Route
           path={`${match.url}/:activePanel*`}
           render={
-          (props) => {
-            // React Router does not play nicely with our panel component due to the
-            // way the nested panels are implemented. Here we take the route information
-            // provided by React Router, and use that to determine which panel should
-            // be active at any given time. activePanel will be equal to whichever path
-            // is set after "/search"
+            (props) => {
+              // React Router does not play nicely with our panel component due to the
+              // way the nested panels are implemented. Here we take the route information
+              // provided by React Router, and use that to determine which panel should
+              // be active at any given time. activePanel will be equal to whichever path
+              // is set after "/search"
 
-            const { match = {} } = props
-            const { params = {} } = match
-            const { activePanel: activePanelFromProps = '' } = params
-            let activePanel = '0.0.0'
+              const { match = {} } = props
+              const { params = {} } = match
+              const { activePanel: activePanelFromProps = '' } = params
+              let activePanel = '0.0.0'
 
-            switch (activePanelFromProps) {
-              case 'granules/granule-details':
-                activePanel = '0.3.0'
-                break
-              case 'granules/collection-details':
-                activePanel = '0.2.0'
-                break
-              case 'granules':
-                activePanel = '0.1.0'
-                break
-              default:
-                activePanel = '0.0.0'
+              switch (activePanelFromProps) {
+                case 'granules/granule-details':
+                  activePanel = '0.3.0'
+                  break
+                case 'granules/collection-details':
+                  activePanel = '0.2.0'
+                  break
+                case 'granules':
+                  activePanel = '0.1.0'
+                  break
+                default:
+                  activePanel = '0.0.0'
+              }
+
+              return (
+                <Panels
+                  show
+                  activePanel={activePanel}
+                  draggable
+                  panelState={panelState}
+                >
+                  <PanelSection>
+                    {panelSection}
+                  </PanelSection>
+                </Panels>
+              )
             }
-
-            return (
-              <Panels
-                show
-                activePanel={activePanel}
-                draggable
-              >
-                <PanelSection>
-                  {panelSection}
-                </PanelSection>
-              </Panels>
-            )
           }
-        }
         />
       </Switch>
     )
@@ -189,11 +227,11 @@ class SearchPanels extends PureComponent {
 }
 
 SearchPanels.propTypes = {
-  location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired
+  panels: PropTypes.shape({}).isRequired,
+  preferences: PropTypes.shape({}).isRequired
 }
 
-export default withRouter(SearchPanels)
+export default SearchPanels

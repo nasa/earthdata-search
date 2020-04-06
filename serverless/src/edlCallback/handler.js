@@ -1,14 +1,14 @@
 import AWS from 'aws-sdk'
-import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
 import { stringify } from 'qs'
-import { getEarthdataConfig, getEnvironmentConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { parseError } from '../../../sharedUtils/parseError'
+import { createJwtToken } from '../util/createJwtToken'
 
 // AWS SQS adapter
 let sqs
@@ -58,19 +58,17 @@ const edlCallback = async (event, context) => {
     expires_at: expiresAt
   } = token
 
-  const { secret } = getSecretEarthdataConfig(cmrEnv())
-
   const username = getUsernameFromToken(token)
 
   let jwtToken
 
   try {
     // Look for an existing user
-    let userRow = await dbConnection('users').first('id').where({ urs_id: username, environment: cmrEnv() })
+    let userRow = await dbConnection('users').first(['id', 'urs_id', 'site_preferences']).where({ urs_id: username, environment: cmrEnv() })
 
     // If there is no existing user, create one
     if (!userRow) {
-      [userRow] = await dbConnection('users').returning(['id']).insert({
+      [userRow] = await dbConnection('users').returning(['id', 'site_preferences']).insert({
         environment: cmrEnv(),
         urs_id: username
       })
@@ -86,10 +84,7 @@ const edlCallback = async (event, context) => {
     })
 
     // Create a JWT token from the EDL response
-    jwtToken = jwt.sign({
-      id: userRow.id,
-      username
-    }, secret)
+    jwtToken = createJwtToken(userRow)
 
     if (!process.env.IS_OFFLINE) {
       await sqs.sendMessage({

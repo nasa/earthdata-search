@@ -28,11 +28,15 @@ export class Panels extends PureComponent {
       togglePanel: ']'
     }
 
+    const { panelState = '', show: showProps } = props
+    const show = panelState === 'collapsed' ? false : showProps
+    if (panelState === 'fullWidth') this.width = this.calculateMaxWidth()
+
     this.state = {
       maxWidth: undefined,
       minWidth: 400,
       dragging: false,
-      show: true,
+      show,
       handleToolipVisible: false,
       handleTooltipState: 'Collapse'
     }
@@ -81,8 +85,19 @@ export class Panels extends PureComponent {
       dragging
     } = this.state
 
-    const { show: propsShow } = this.props
-    const { show: prevPropsShow } = prevProps
+    const {
+      panelState,
+      show: propsShow
+    } = this.props
+    const {
+      panelState: prevPanelState,
+      show: prevPropsShow
+    } = prevProps
+
+    // If the panelState has changed, update the component
+    if (panelState !== prevPanelState) {
+      this.setPanelState(panelState)
+    }
 
     // If the show prop has changed, update the state
     if (propsShow !== prevPropsShow) {
@@ -404,6 +419,19 @@ export class Panels extends PureComponent {
     this.handleClickMoved = true
   }
 
+  setPanelState(panelState) {
+    switch (panelState) {
+      case 'collapsed':
+        this.updateShowState(false)
+        break
+      case 'fullWidth':
+        this.width = this.calculateMaxWidth()
+        break
+      default:
+        break
+    }
+  }
+
   resetHandleMouseMovedDuringClick() {
     this.handleClickMoved = false
   }
@@ -625,6 +653,7 @@ export class Panels extends PureComponent {
 Panels.defaultProps = {
   activePanel: '0.0.0',
   draggable: false,
+  panelState: 'default',
   show: false,
   onPanelClose: null,
   onPanelOpen: null,
@@ -633,6 +662,7 @@ Panels.defaultProps = {
 
 Panels.propTypes = {
   activePanel: PropTypes.string,
+  panelState: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node

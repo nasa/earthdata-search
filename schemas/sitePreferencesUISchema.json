@@ -1,0 +1,14 @@
+{
+  "panelState": {
+    "ui:widget": "radio",
+    "ui:field": "radio"
+  },
+  "collectionListView": {
+    "ui:widget": "radio",
+    "ui:field": "radio"
+  },
+  "granuleListView": {
+    "ui:widget": "radio",
+    "ui:field": "radio"
+  }
+}

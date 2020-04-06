@@ -132,6 +132,11 @@ import { handleError, removeError } from './errors'
 import { updateBrowserVersion } from './browser'
 import { collectionRelevancyMetrics } from './relevancy'
 import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
+import {
+  setPreferences,
+  setPreferencesFromJwt,
+  updatePreferences
+} from './preferences'
 
 const actions = {
   addAccessMethods,
@@ -194,6 +199,8 @@ const actions = {
   saveShapefile,
   selectAccessMethod,
   setActivePanel,
+  setPreferences,
+  setPreferencesFromJwt,
   setSavedProjects,
   shapefileErrored,
   shapefileLoading,
@@ -228,6 +235,7 @@ const actions = {
   updateGranuleQuery,
   updateGranuleResults,
   updateNotificationLevel,
+  updatePreferences,
   updateProjectName,
   updateRegionQuery,
   updateSavedProject,

@@ -187,6 +187,16 @@ class SecondaryToolbar extends Component {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
+            to={`${portalPath(portal)}/preferences`}
+          >
+            <Dropdown.Item
+              className="secondary-toolbar__preferences"
+              active={false}
+            >
+              Preferences
+            </Dropdown.Item>
+          </LinkContainer>
+          <LinkContainer
             to={`${portalPath(portal)}/contact_info`}
           >
             <Dropdown.Item
