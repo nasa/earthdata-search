@@ -7,7 +7,7 @@ import SearchForm from '../SearchForm'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     advancedSearch: {},
     autocomplete: {
@@ -24,7 +24,8 @@ function setup() {
     onFetchAutocomplete: jest.fn(),
     onSelectAutocompleteSuggestion: jest.fn(),
     onSuggestionsFetchRequested: jest.fn(),
-    onSuggestionsClearRequested: jest.fn()
+    onSuggestionsClearRequested: jest.fn(),
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<SearchForm {...props} />)
