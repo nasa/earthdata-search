@@ -1,0 +1,68 @@
+.autocomplete-suggestion {
+  &__suggestions-primary {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.2rem;
+  }
+
+  &__suggestions-type {
+    flex-grow: 0;
+    flex-shrink: 0;
+    font-size: 0.675rem;
+    color: $color__black--400;
+  }
+
+  &__suggestions-value {
+    line-height: 1.35;
+  }
+
+  &__suggestions-hierarchy {
+    flex-grow: 0;
+    flex-shrink: 1;
+    padding-left: 1em;
+    font-size: 0.675rem;
+    color: $color__black--400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    position: relative;
+    background-color: $color__white;
+    transition: all 0.1s ease-in-out;
+
+    &:before {
+      content: '\02026';
+      position: absolute;
+      z-index: 1;
+      left: -1em;
+      background-color: inherit;
+      padding-left: 1em;
+      margin-left: 0.5em;
+    }
+
+    & > span {
+      min-width: 100%;
+      position: relative;
+      display: inline-block;
+      float: right;
+      overflow: visible;
+      background-color: inherit;
+      text-indent: 0.5em;
+    }
+
+    & > span:before {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      width: 1em;
+      height: 1.5em;
+      background-color: inherit;
+      z-index: 200;
+      left: -.5em;
+    }
+
+    .fa {
+      font-size: 0.25rem;
+      color: darken($color__black--200, 10);
+    }
+  }
+}

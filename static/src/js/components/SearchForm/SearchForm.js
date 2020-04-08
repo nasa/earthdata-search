@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { isEmpty, startCase, isEqual } from 'lodash'
+import { isEmpty, isEqual } from 'lodash'
 import Autosuggest from 'react-autosuggest'
-
-import { buildHierarchy, buildHierarchicalAutocompleteTitle } from '../../util/autocompleteResults'
 
 import Button from '../Button/Button'
 import AdvancedSearchDisplayContainer
@@ -23,6 +21,7 @@ import FilterStack
 import Spinner from '../Spinner/Spinner'
 
 import './SearchForm.scss'
+import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
 
 class SearchForm extends Component {
   constructor(props) {
@@ -155,40 +154,10 @@ class SearchForm extends Component {
    * @param {Object} suggestion
    */
   renderSuggestion(data) {
-    const { type, value, fields = '' } = data
-
-    const title = buildHierarchicalAutocompleteTitle(data)
-    const hierarchy = buildHierarchy({ fields })
-
     return (
-      <div title={title}>
-        <div className="search-form__suggestions-primary">
-          <div className="search-form__suggestions-type">
-            {startCase(type)}
-            {':'}
-          </div>
-          {
-            (hierarchy && hierarchy.length > 0) && (
-              <div className="search-form__suggestions-hierarchy">
-                <span>
-                  {
-                    hierarchy.map(parent => (
-                      <React.Fragment key={`${value}-${parent}`}>
-                        {parent}
-                        <i className="fa fa-chevron-right" />
-                        {' '}
-                      </React.Fragment>
-                    ))
-                  }
-                </span>
-              </div>
-            )
-          }
-        </div>
-        <div className="search-form__suggestions-value">
-          {value}
-        </div>
-      </div>
+      <AutocompleteSuggestion
+        suggestion={data}
+      />
     )
   }
 
