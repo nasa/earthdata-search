@@ -8,6 +8,7 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 import { getJwtToken } from '../util/getJwtToken'
 import { createJwtToken } from '../util/createJwtToken'
+import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
 const updatePreferences = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
@@ -49,9 +50,13 @@ const updatePreferences = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: defaultResponseHeaders,
+      headers: {
+        ...defaultResponseHeaders,
+        'access-control-expose-headers': prepareExposeHeaders(defaultResponseHeaders),
+        'jwt-token': newJwtToken
+      },
       body: JSON.stringify({
-        jwtToken: newJwtToken
+        preferences
       })
     }
   } catch (e) {

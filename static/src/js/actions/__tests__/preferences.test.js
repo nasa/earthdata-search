@@ -76,11 +76,11 @@ describe('updatePreferences', () => {
 
     nock(/localhost/)
       .post(/preferences/)
-      .reply(200, {
-        jwtToken: 'token'
-      })
-
-    jest.spyOn(jwt, 'decode').mockImplementation(() => ({ preferences }))
+      .reply(200,
+        JSON.stringify({ preferences }),
+        {
+          'jwt-token': 'token'
+        })
 
     const store = mockStore({
       authToken: 'token'
@@ -103,6 +103,37 @@ describe('updatePreferences', () => {
         type: SET_PREFERENCES_IS_SUBMITTING,
         payload: false
       })
+    })
+  })
+
+  test('does not call setPreferences on error', async () => {
+    nock(/localhost/)
+      .post(/preferences/)
+      .reply(500)
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+    const preferences = {
+      panelState: 'default'
+    }
+    await store.dispatch(updatePreferences(preferences)).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: SET_PREFERENCES_IS_SUBMITTING,
+        payload: true
+      })
+      expect(storeActions[1]).toEqual({
+        type: SET_PREFERENCES_IS_SUBMITTING,
+        payload: false
+      })
+      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

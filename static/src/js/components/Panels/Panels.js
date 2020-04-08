@@ -29,7 +29,10 @@ export class Panels extends PureComponent {
     }
 
     const { panelState = '', show: showProps } = props
-    const show = panelState === 'collapsed' ? false : showProps
+    let show = showProps
+    if (panelState === 'collapsed') {
+      show = false
+    }
     if (panelState === 'fullWidth') this.width = this.calculateMaxWidth()
 
     this.state = {

@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import PreferencesRequest from '../util/request/preferencesRequest'
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
+import { handleError } from './errors'
 
 export const setIsSubmitting = payload => ({
   type: SET_PREFERENCES_IS_SUBMITTING,
@@ -33,13 +34,22 @@ export const updatePreferences = data => (dispatch, getState) => {
 
   const response = requestObject.update({ preferences })
     .then((response) => {
-      const { data } = response
-      const { jwtToken } = data
+      const { data, headers } = response
+      const { preferences } = data
 
-      dispatch(updateAuthTokenFromHeaders({ 'jwt-token': jwtToken }))
-      dispatch(setPreferencesFromJwt(jwtToken))
+      dispatch(updateAuthTokenFromHeaders(headers))
+      dispatch(setPreferences(preferences))
 
       dispatch(setIsSubmitting(false))
+    })
+    .catch((error) => {
+      dispatch(setIsSubmitting(false))
+      dispatch(handleError({
+        error,
+        action: 'updatePreferences',
+        resource: 'preferences',
+        requestObject
+      }))
     })
 
   return response

@@ -60,9 +60,7 @@ describe('updatePreferences', () => {
 
     const result = await updatePreferences(event, {})
 
-    const expectedBody = JSON.stringify({
-      jwtToken: createJwtToken({ id: 1, urs_id: 'testuser', site_preferences: preferences })
-    })
+    const expectedBody = JSON.stringify({ preferences })
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('update')
@@ -91,5 +89,31 @@ describe('updatePreferences', () => {
         message: 'should NOT have additional properties'
       }])]
     }))
+  })
+
+  test('correctly returns an error', async () => {
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+    const preferences = {
+      panelState: 'default',
+      collectionListView: 'default',
+      granuleListView: 'default'
+    }
+    const event = {
+      body: JSON.stringify({
+        params: {
+          preferences
+        }
+      })
+    }
+
+    const response = await updatePreferences(event, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('update')
+
+    expect(response.statusCode).toEqual(500)
   })
 })
