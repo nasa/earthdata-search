@@ -158,7 +158,7 @@ class SearchForm extends Component {
     const { type, value, fields = '' } = data
 
     const title = buildHierarchicalAutocompleteTitle(data)
-    const hierarchy = buildHierarchy(fields)
+    const hierarchy = buildHierarchy({ fields })
 
     return (
       <div title={title}>
