@@ -49,8 +49,16 @@
     color: $color__black--200;
     font-weight: 300;
 
+    .facets-list--light & {
+      color: $color__black--600;
+    }
+
     .facets-item:hover & {
       color: $color__white;
+
+      .facets-list--light & {
+        color: $color__black--900;
+      }
     }
   }
 
