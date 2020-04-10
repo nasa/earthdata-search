@@ -7,7 +7,8 @@ import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
 const mapStateToProps = state => ({
-  panels: state.panels
+  panels: state.panels,
+  portal: state.portal
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -20,19 +21,22 @@ const mapDispatchToProps = dispatch => ({
 export const SearchPanelsContainer = ({
   onTogglePanels,
   onSetActivePanel,
-  panels
+  panels,
+  portal
 }) => (
   <SearchPanels
     onTogglePanels={onTogglePanels}
     onSetActivePanel={onSetActivePanel}
     panels={panels}
+    portal={portal}
   />
 )
 
 SearchPanelsContainer.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired
+  panels: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired
 }
 
 

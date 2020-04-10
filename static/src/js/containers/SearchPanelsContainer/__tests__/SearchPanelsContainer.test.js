@@ -8,6 +8,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    portal: {
+      test: 'portal'
+    },
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
     panels: {
@@ -34,6 +37,9 @@ describe('SearchPanelsContainer fcomponent', () => {
     expect(enzymeWrapper.find(SearchPanels).props().panels).toEqual({
       activePanel: '0.0.0',
       isOpen: false
+    })
+    expect(enzymeWrapper.find(SearchPanels).props().portal).toEqual({
+      test: 'portal'
     })
   })
 })

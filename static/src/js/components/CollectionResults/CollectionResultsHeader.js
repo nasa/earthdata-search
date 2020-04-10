@@ -41,6 +41,8 @@ const CollectionResultsHeader = ({
     const { value } = target
     const sortKey = value === 'relevance' ? undefined : [value]
 
+    console.log('sortKey', sortKey)
+
     onChangeQuery({
       collection: {
         sortKey
@@ -188,6 +190,7 @@ const CollectionResultsHeader = ({
         <span className="collection-results-header__view">
           <Button
             className={viewButtonListClasses}
+            dataTestId="collection-results-header__view-button--list"
             variant="naked"
             icon="list"
             label="Switch to list view"
@@ -195,6 +198,7 @@ const CollectionResultsHeader = ({
           />
           <Button
             className={viewButtonTableClasses}
+            dataTestId="collection-results-header__view-button--table"
             variant="naked"
             icon="table"
             label="Switch to table view"

@@ -2,7 +2,6 @@
   height: 100%;
   width: 100%;
   max-width: 100%;
-  overflow: auto;
   position: relative;
 
   &--portal-escape {
@@ -30,6 +29,7 @@
 
   &__th,
   &__td {
+    flex-shrink: 0;
     background-color: #fff;
     overflow: hidden;
     background-color: $color__white;
@@ -65,7 +65,7 @@
 
   &__table {
     &--sticky {
-      overflow: auto;
+      overflow: hidden;
 
       .edsc-table__thead,
       .edsc-table__footer {

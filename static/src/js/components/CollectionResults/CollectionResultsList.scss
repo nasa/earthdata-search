@@ -1,20 +1,13 @@
 .collection-results-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
 
-  &__loading {
-    padding: $spacer 0;
-    text-align: center;
-    color: $color__black--600;
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 }
-
-.portal-escape {
-  color: #424242;
-  margin: 0;
-  padding: 15px 20px;
-  border-top: 1px solid #e3e3e3; }
-
-.portal-escape a {
-  text-decoration: underline; }
