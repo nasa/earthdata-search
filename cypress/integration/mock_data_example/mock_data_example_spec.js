@@ -31,7 +31,7 @@ describe('Mock data example', () => {
 
     getByTestId('collection-results-list')
       .should('not.be.empty')
-      .children().should('have.length', 20)
+      .children().should('have.length', 7)
 
 
     // // // //
@@ -55,6 +55,6 @@ describe('Mock data example', () => {
       .should((list) => {
         expect(list.first()).to.contain('MODIS')
       })
-      .children().should('have.length', 20)
+      .children().should('have.length', 7)
   })
 })
