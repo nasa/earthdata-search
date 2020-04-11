@@ -240,8 +240,14 @@ export const CollectionResultsItem = forwardRef(({
                   )
                 }
                 <strong> &bull; </strong>
-                <strong>{temporalRange}</strong>
-                <strong> &bull; </strong>
+                {
+                  temporalRange && (
+                    <>
+                      <strong>{temporalRange}</strong>
+                      <strong> &bull; </strong>
+                    </>
+                  )
+                }
                 {description}
               </p>
             </div>
