@@ -7,7 +7,6 @@ import { generateFacetArgs } from '../../util/facets'
 
 import './FacetsItem.scss'
 
-
 class FacetsItem extends Component {
   constructor(props) {
     super(props)

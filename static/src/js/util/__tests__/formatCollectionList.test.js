@@ -144,6 +144,83 @@ describe('formatCollectionList', () => {
     )
   })
 
+  describe('when dates are provided with bad formats', () => {
+    test('recovers when time_start is provided with a bad format', () => {
+      const collections = {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            id: 'collectionId',
+            time_start: '-3700-01-01T00:00:00.000Z',
+            time_end: '2019-01-14T00:00:00.000Z'
+          }
+        }
+      }
+      const projectIds = []
+      const browser = { name: 'chrome' }
+
+      const expectedResult = {
+        temporalEnd: '2019-01-14',
+        temporalRange: 'Up to 2019-01-14',
+        temporalStart: ''
+      }
+
+      expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(
+        expect.objectContaining(expectedResult)
+      )
+    })
+
+    test('recovers when time_end is provided with a bad format', () => {
+      const collections = {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            id: 'collectionId',
+            time_start: '2019-01-14T00:00:00.000Z',
+            time_end: '-2000-12-31T00:00:00.000Z'
+          }
+        }
+      }
+      const projectIds = []
+      const browser = { name: 'chrome' }
+
+      const expectedResult = {
+        temporalEnd: 'ongoing',
+        temporalRange: '2019-01-14 ongoing',
+        temporalStart: '2019-01-14'
+      }
+
+      expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(
+        expect.objectContaining(expectedResult)
+      )
+    })
+
+    test('recovers when time_start and time_end are provided with bad formats', () => {
+      const collections = {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            id: 'collectionId',
+            time_start: '-3700-01-01T00:00:00.000Z',
+            time_end: '-2000-12-31T00:00:00.000Z'
+          }
+        }
+      }
+      const projectIds = []
+      const browser = { name: 'chrome' }
+
+      const expectedResult = {
+        temporalEnd: '',
+        temporalRange: '',
+        temporalStart: ''
+      }
+
+      expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(
+        expect.objectContaining(expectedResult)
+      )
+    })
+  })
+
   test('formats the description in IE', () => {
     const collections = {
       allIds: ['collectionId'],

@@ -4,6 +4,7 @@
   bottom: 0;
   right: 0;
   left: 0;
+  visibility: hidden;
 
   &__data-cell {
     white-space: nowrap;
@@ -15,6 +16,7 @@
     &--collection {
       position: relative;
       display: flex !important;
+      flex-shrink: 0;
       height: 3.5rem;
       align-items: center;
       justify-content: space-between;
@@ -38,6 +40,7 @@
     line-height: 1.3;
     color: $color__black--700;
     cursor: pointer;
+    word-break: break-word;
 
     &:hover {
       color: $color__black--900;
@@ -120,11 +123,11 @@
   .edsc-table__td {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
+    height: 59px;
 
     &:first-child {
       padding: 0;
       padding-left: 1rem;
-      border-bottom: 1px solid $color__black--200;
     }
   }
 

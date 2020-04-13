@@ -5,6 +5,7 @@ import {
   Switch,
   withRouter
 } from 'react-router-dom'
+import { startCase } from 'lodash'
 
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
@@ -70,12 +71,41 @@ class SearchPanels extends PureComponent {
 
   render() {
     const {
-      match
+      match,
+      portal
     } = this.props
 
     const {
       panelView
     } = this.state
+
+
+    const {
+      portalId,
+      org = portalId,
+      title = portalId
+    } = portal
+
+    const buildCollectionResultsBodyFooter = () => {
+      if (!portalId.length) return null
+
+      return (
+        <div className="search-panels__portal-escape">
+          Looking for more collections?
+          {' '}
+          <a href="/" className="search-panels__portal-escape-link">
+            Leave
+            {' '}
+            {startCase(org)}
+            &#39;s
+            {' '}
+            {startCase(title)}
+            {' '}
+            Portal
+          </a>
+        </div>
+      )
+    }
 
     const panelSection = []
 
@@ -88,9 +118,10 @@ class SearchPanels extends PureComponent {
             onChangePanelView={this.onChangePanelView}
           />
         )}
+        footer={buildCollectionResultsBodyFooter()}
         onPanelClose={this.onPanelClose}
       >
-        <PanelItem scrollable={panelView !== 'table'}>
+        <PanelItem scrollable={false}>
           <CollectionResultsBodyContainer panelView={panelView} />
         </PanelItem>
       </PanelGroup>
@@ -171,6 +202,7 @@ class SearchPanels extends PureComponent {
 
             return (
               <Panels
+                className="search-panels"
                 show
                 activePanel={activePanel}
                 draggable
@@ -193,7 +225,8 @@ SearchPanels.propTypes = {
   match: PropTypes.shape({}).isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired
+  panels: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(SearchPanels)

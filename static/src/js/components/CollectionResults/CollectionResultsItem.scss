@@ -14,6 +14,12 @@
     }
   }
 
+  &__body {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
+  }
+
   &__body-primary {
     display: flex;
   }
@@ -46,6 +52,8 @@
 
   &__info {
     will-change: width;
+    flex-grow: 1;
+    flex-basis: 100%;
   }
 
   &__title {

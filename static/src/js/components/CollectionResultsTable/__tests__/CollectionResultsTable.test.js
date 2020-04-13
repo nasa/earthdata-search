@@ -10,17 +10,16 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    bootstrapVariant: 'primary',
     collections: collectionData,
-    collectionHits: 0,
-    portal: {
-      portalId: ''
-    },
+    isItemLoaded: jest.fn(),
+    itemCount: 1,
+    loadMoreItems: jest.fn(),
     onAddProjectCollection: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn(),
-    waypointEnter: jest.fn(),
+    setVisibleMiddleIndex: jest.fn(),
+    visibleMiddleIndex: 1,
     ...overrideProps
   }
 
@@ -34,7 +33,7 @@ function setup(overrideProps) {
 
 describe('CollectionResultsTable component', () => {
   test('renders EDSCTable', () => {
-    const { enzymeWrapper } = setup()
+    const { enzymeWrapper, props } = setup()
     const table = enzymeWrapper.find(EDSCTable)
 
     const { columns } = table.props()
@@ -66,6 +65,12 @@ describe('CollectionResultsTable component', () => {
       Header: 'Short Name',
       accessor: 'shortName'
     }))
+
     expect(table.props().data).toEqual(collectionData)
+    expect(table.props().itemCount).toEqual(props.itemCount)
+    expect(table.props().loadMoreItems).toEqual(props.loadMoreItems)
+    expect(table.props().isItemLoaded).toEqual(props.isItemLoaded)
+    expect(table.props().visibleMiddleIndex).toEqual(props.visibleMiddleIndex)
+    expect(table.props().setVisibleMiddleIndex).toEqual(props.setVisibleMiddleIndex)
   })
 })
