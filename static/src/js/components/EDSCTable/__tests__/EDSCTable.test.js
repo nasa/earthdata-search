@@ -72,8 +72,8 @@ function setup(mountType, overrideProps) {
 describe('EDSCTable component', () => {
   test('renders the table header correctly', () => {
     const { enzymeWrapper } = setup(mount)
-    // console.log('enzymeWrapper', enzymeWrapper.render().children()[1].children[0].children)
     const header = enzymeWrapper.find('.edsc-table__thead')
+
     expect(header.text()).toContain('Collection ID')
     expect(header.text()).toContain('Version')
   })
@@ -84,12 +84,6 @@ describe('EDSCTable component', () => {
     expect(enzymeWrapper.find(List).prop('height')).toEqual(500)
     expect(enzymeWrapper.find(List).prop('width')).toEqual(800)
   })
-
-  // test('renders the table cell correctly', () => {
-  //   const { enzymeWrapper } = setup(mount)
-  //   const cell = enzymeWrapper.find('Cell')
-  //   expect(cell.props().data).toEqual(collectionData)
-  // })
 
   describe('loading list item', () => {
     test('shows on first load', () => {

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-multi-comp */
 import React, {
   useRef,
   useEffect,
@@ -91,6 +90,8 @@ export const CollectionResultsList = ({
     listRef.current.resetAfterIndex(index, true)
   }, [])
 
+  // At the default size, collection result items will render at 162px tall, so
+  // that value is used as a default here.
   const getSize = useCallback(index => sizeMap.current[index] || 162, [])
 
   return (

@@ -41,8 +41,6 @@ const CollectionResultsHeader = ({
     const { value } = target
     const sortKey = value === 'relevance' ? undefined : [value]
 
-    console.log('sortKey', sortKey)
-
     onChangeQuery({
       collection: {
         sortKey

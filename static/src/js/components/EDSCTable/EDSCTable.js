@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-key */
-// Disabled because react-table adds the key prop
-
 import React, {
   createContext,
   forwardRef,
@@ -40,25 +37,28 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
         }) => (
           <>
             <div className="edsc-table__thead">
-              {headerGroups.map(headerGroup => (
-                <div {...headerGroup.getHeaderGroupProps()} className="edsc-table__tr">
-                  {headerGroup.headers.map((column) => {
-                    const headerProps = column.getHeaderProps()
-                    const { customProps = {} } = column
-                    const thClassNames = classNames([
-                      'edsc-table__th',
-                      {
-                        [`${customProps.headerClassName}`]: customProps.headerClassName
-                      }
-                    ])
-                    return (
-                      <div {...headerProps} className={thClassNames}>
-                        {column.render('Header')}
-                      </div>
-                    )
-                  })}
-                </div>
-              ))}
+              {headerGroups.map((headerGroup) => {
+                const { key, ...rest } = headerGroup.getHeaderGroupProps()
+                return (
+                  <div key={key} {...rest} className="edsc-table__tr">
+                    {headerGroup.headers.map((column) => {
+                      const { key, ...rest } = column.getHeaderProps()
+                      const { customProps = {} } = column
+                      const thClassNames = classNames([
+                        'edsc-table__th',
+                        {
+                          [`${customProps.headerClassName}`]: customProps.headerClassName
+                        }
+                      ])
+                      return (
+                        <div key={key} {...rest} className={thClassNames}>
+                          {column.render('Header')}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })}
             </div>
             <div ref={ref} {...getTableBodyProps()} className="edsc-table__tbody" style={{ ...style }}>
               {children}
@@ -200,7 +200,7 @@ const EDSCTable = ({
             data-test-id={rowTestId}
           >
             {row.cells.map((cell) => {
-              const cellProps = cell.getCellProps()
+              const { key, ...rest } = cell.getCellProps()
               const { column } = cell
               const { customProps = {} } = column
 
@@ -213,7 +213,7 @@ const EDSCTable = ({
               ])
 
               return (
-                <div {...cellProps} className={tdClassNames}>
+                <div key={key} {...rest} className={tdClassNames}>
                   {cell.render('Cell')}
                 </div>
               )

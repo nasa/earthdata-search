@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { Waypoint } from 'react-waypoint'
 import { isEmpty } from 'lodash'
 
 import { commafy } from '../../util/commafy'
@@ -45,7 +43,6 @@ export const CollectionResultsItem = forwardRef(({
     hasMapImagery,
     isCwic,
     isCollectionInProject,
-    isLast,
     isNrt,
     shortName,
     temporalRange,
