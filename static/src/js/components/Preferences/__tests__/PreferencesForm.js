@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import Form from 'react-jsonschema-form'
 import { act } from 'react-dom/test-utils'
 
-import Preferences from '../Preferences'
+import PreferencesForm from '../PreferencesForm'
 import schema from '../../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../../schemas/sitePreferencesUISchema.json'
 
@@ -19,11 +19,11 @@ const props = {
     },
     isSubmitting: false
   },
-  onUpdatePreferences: jest.fn()
+  onUpdatePreferencesForm: jest.fn()
 }
 
 function setup() {
-  const enzymeWrapper = shallow(<Preferences {...props} />)
+  const enzymeWrapper = shallow(<PreferencesForm {...props} />)
 
   return {
     enzymeWrapper,
@@ -32,7 +32,7 @@ function setup() {
 }
 
 function setupMount() {
-  const enzymeWrapper = mount(<Preferences {...props} />)
+  const enzymeWrapper = mount(<PreferencesForm {...props} />)
 
   return {
     enzymeWrapper,
@@ -40,7 +40,7 @@ function setupMount() {
   }
 }
 
-describe('Preferences component', () => {
+describe('PreferencesForm component', () => {
   test('renders a Form component', () => {
     const { enzymeWrapper, props } = setup()
 
@@ -49,7 +49,7 @@ describe('Preferences component', () => {
     expect(form.props().schema).toEqual(schema)
     expect(form.props().uiSchema).toEqual(uiSchema)
     expect(form.props().formData).toEqual(props.preferences.preferences)
-    expect(form.props().onSubmit).toEqual(props.onUpdatePreferences)
+    expect(form.props().onSubmit).toEqual(props.onUpdatePreferencesForm)
   })
 
   test('onChange sets the state', () => {

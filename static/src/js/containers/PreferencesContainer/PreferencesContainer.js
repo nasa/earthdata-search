@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
+
 import Preferences from '../../components/Preferences/Preferences'
 
 const mapStateToProps = state => ({

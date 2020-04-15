@@ -4,7 +4,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const config = require('./sharedUtils/config')
 
@@ -19,7 +18,7 @@ const StaticCommonConfig = {
       'core-js/stable',
       'regenerator-runtime/runtime',
       'react-hot-loader/patch',
-      './static/src/index.js'
+      path.resolve(__dirname, './static/src/index.js')
     ]
   },
   output: {

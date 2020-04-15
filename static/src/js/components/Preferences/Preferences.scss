@@ -1,4 +1,4 @@
-.preferences-form {
+.preferences {
   background-color: white;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3f3f3));
   background-image: linear-gradient(#fff, #f3f3f3);
@@ -7,33 +7,10 @@
   border-color: #e3e3e3;
   color: #333333;
 
-  &__radio {
-    border: none;
-    padding: none;
-
-    label {
-      margin: 10px, 0
-    }
-
-    &__input {
-
-    }
-
-    &__label {
-      margin-left: 10px;
-    }
-  }
-
-  &__radio-name {
-    font-weight: bold;
-  }
-
-  &__radio-description {
-    color: $color__black--400;
-    font-size: 0.875rem;
-  }
-
-  &__radio-list {
-
+  &__loading {
+    min-height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

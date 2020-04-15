@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { startCase } from 'lodash'
 
+import { Form } from 'react-bootstrap'
+
+import './PreferencesRadioField.scss'
+
 class RadioField extends Component {
   constructor(props) {
     super(props)
@@ -39,35 +43,31 @@ class RadioField extends Component {
     } = schema
 
     return (
-      <div className="preferences-form__radio">
-        <div className="preferences-form__radio-name">
+      <div className="preferences-radio-field">
+        <div className="preferences-radio-field__name">
           <span>{startCase(fieldName)}</span>
         </div>
-        <div className="preferences-form__radio-description">
+        <div className="preferences-radio-field__description">
           <span>{description}</span>
         </div>
-        <div className="preferences-form__radio-list">
+        <div className="preferences-radio-field__list">
           {
             values.map((value, index) => {
               const name = enumNames[index]
 
               return (
-                <div key={`${name}-radio`}>
-                  <label
-                    htmlFor={`${fieldName}-${name}`}
-                  >
-                    <input
-                      className="preferences-form__radio__input"
-                      id={`${fieldName}-${name}`}
-                      type="radio"
-                      name={fieldName}
-                      value={value}
-                      checked={value === formData ? 'checked' : ''}
-                      onChange={this.onChange()}
-                    />
-                    <span className="preferences-form__radio__label">{name}</span>
-                  </label>
-                </div>
+                <Form.Check
+                  key={`${name}-radio`}
+                  className="preferences-radio-field__input"
+                  inline
+                  id={`${fieldName}-${name}`}
+                  type="radio"
+                  label={name}
+                  name={fieldName}
+                  value={value}
+                  checked={value === formData ? 'checked' : ''}
+                  onChange={this.onChange()}
+                />
               )
             })
           }
