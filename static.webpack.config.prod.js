@@ -12,7 +12,7 @@ const CompressionPlugin = require('compression-webpack-plugin')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
-const debug = true
+const debug = false
 
 const defaultPlugins = [
   new webpack.HashedModuleIdsPlugin(),
