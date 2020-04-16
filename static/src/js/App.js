@@ -9,26 +9,25 @@ import history from './util/history'
 
 import Admin from './routes/Admin/Admin'
 import ContactInfo from './routes/ContactInfo/ContactInfo'
+import Downloads from './routes/Downloads/Downloads'
 import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Project from './routes/Project/Project'
+import Preferences from './routes/Preferences/Preferences'
 import Search from './routes/Search/Search'
-import Downloads from './routes/Downloads/Downloads'
 
 import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
+import AuthCallbackContainer from './containers/AuthCallbackContainer/AuthCallbackContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
-import ConnectedEdscMapContainer
-  from './containers/MapContainer/MapContainer'
-import ConnectedAuthCallbackContainer
-  from './containers/AuthCallbackContainer/AuthCallbackContainer'
-import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
-import ConnectedPortalContainer from './containers/PortalContainer/PortalContainer'
-import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
+import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
+import EdscMapContainer from './containers/MapContainer/MapContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
+import PortalContainer from './containers/PortalContainer/PortalContainer'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
+import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
@@ -65,11 +64,11 @@ class App extends Component {
           <ConnectedRouter history={history}>
             <MetricsEventsContainer />
             <Switch>
-              <Route path={this.portalPaths('/')} component={ConnectedPortalContainer} />
+              <Route path={this.portalPaths('/')} component={PortalContainer} />
             </Switch>
             <ErrorBannerContainer />
-            <ConnectedAuthTokenContainer>
-              <ConnectedUrlQueryContainer>
+            <AuthTokenContainer>
+              <UrlQueryContainer>
                 <Switch>
                   <Route
                     path="/admin"
@@ -84,6 +83,14 @@ class App extends Component {
                     render={() => (
                       <AuthRequiredContainer>
                         <ContactInfo />
+                      </AuthRequiredContainer>
+                    )}
+                  />
+                  <Route
+                    path={this.portalPaths('/preferences')}
+                    render={() => (
+                      <AuthRequiredContainer>
+                        <Preferences />
                       </AuthRequiredContainer>
                     )}
                   />
@@ -105,7 +112,7 @@ class App extends Component {
                     render={() => (
                       <>
                         <Search />
-                        <ConnectedEdscMapContainer />
+                        <EdscMapContainer />
                       </>
                     )}
                   />
@@ -113,7 +120,7 @@ class App extends Component {
                     exact
                     path="/auth_callback"
                     render={() => (
-                      <ConnectedAuthCallbackContainer />
+                      <AuthCallbackContainer />
                     )}
                   />
                   <Route component={NotFound} />
@@ -128,8 +135,8 @@ class App extends Component {
                     <AboutCwicModalContainer />
                   </Route>
                 </Switch>
-              </ConnectedUrlQueryContainer>
-            </ConnectedAuthTokenContainer>
+              </UrlQueryContainer>
+            </AuthTokenContainer>
           </ConnectedRouter>
         </Provider>
       </ErrorBoundary>

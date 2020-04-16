@@ -471,6 +471,16 @@
           path: contact_info
           authorizer: edlAuthorizer
 
+  updatePreferences:
+    handler: serverless/src/updatePreferences/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    events:
+      - http:
+          method: post
+          cors: true
+          path: preferences
+          authorizer: edlAuthorizer
+
   # Admin
   adminIsAuthorized:
     handler: serverless/src/adminIsAuthorized/handler.default

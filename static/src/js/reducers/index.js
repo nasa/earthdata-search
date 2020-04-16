@@ -36,6 +36,7 @@ import providersReducer from './providers'
 import contactInfoReducer from './contactInfo'
 import adminIsAuthorizedReducer from './admin/isAuthorized'
 import adminRetrievalsReducer from './admin/retrievals'
+import preferencesReducer from './preferences'
 import autocompleteReducer from './autocomplete'
 
 export default history => combineReducers({
@@ -66,6 +67,7 @@ export default history => combineReducers({
   portal: portalsReducer,
   project: projectReducer,
   panels: panelsReducer,
+  preferences: preferencesReducer,
   providers: providersReducer,
   query: queryReducer,
   retrieval: retrievalReducer,

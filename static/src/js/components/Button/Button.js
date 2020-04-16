@@ -107,7 +107,7 @@ export const Button = ({
         { spinner
           ? (
             <span>
-              <Spinner type="dots" color="white" size="small" inline />
+              <Spinner type="dots" color="white" size="tiny" inline />
             </span>
           )
           : children

@@ -142,6 +142,12 @@ import {
   removeAutocompleteValue,
   selectAutocompleteSuggestion
 } from './autocomplete'
+import {
+  setIsSubmitting,
+  setPreferences,
+  setPreferencesFromJwt,
+  updatePreferences
+} from './preferences'
 
 const actions = {
   addAccessMethods,
@@ -212,6 +218,9 @@ const actions = {
   selectAccessMethod,
   selectAutocompleteSuggestion,
   setActivePanel,
+  setIsSubmitting,
+  setPreferences,
+  setPreferencesFromJwt,
   setSavedProjects,
   shapefileErrored,
   shapefileLoading,
@@ -246,6 +255,7 @@ const actions = {
   updateGranuleQuery,
   updateGranuleResults,
   updateNotificationLevel,
+  updatePreferences,
   updateProjectName,
   updateRegionQuery,
   updateSavedProject,

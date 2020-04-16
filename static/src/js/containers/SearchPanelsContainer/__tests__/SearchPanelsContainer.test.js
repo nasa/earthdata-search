@@ -16,6 +16,14 @@ function setup() {
     panels: {
       activePanel: '0.0.0',
       isOpen: false
+    },
+    preferences: {
+      panelState: 'default',
+      collectionListView: 'default',
+      granuleListView: 'default'
+    },
+    match: {
+      url: '/search'
     }
   }
 
@@ -27,18 +35,21 @@ function setup() {
   }
 }
 
-describe('SearchPanelsContainer fcomponent', () => {
+describe('SearchPanelsContainer component', () => {
   test('passes its props and renders a single SearchPanels component', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(SearchPanels).length).toBe(1)
-    expect(typeof enzymeWrapper.find(SearchPanels).props().onSetActivePanel).toEqual('function')
-    expect(typeof enzymeWrapper.find(SearchPanels).props().onTogglePanels).toEqual('function')
-    expect(enzymeWrapper.find(SearchPanels).props().panels).toEqual({
+    const searchPanels = enzymeWrapper.find(SearchPanels)
+
+    expect(searchPanels.length).toBe(1)
+    expect(typeof searchPanels.props().onSetActivePanel).toEqual('function')
+    expect(typeof searchPanels.props().onTogglePanels).toEqual('function')
+    expect(searchPanels.props().panels).toEqual({
       activePanel: '0.0.0',
       isOpen: false
     })
-    expect(enzymeWrapper.find(SearchPanels).props().portal).toEqual({
+    expect(searchPanels.props().match).toEqual({ url: '/search' })
+    expect(searchPanels.props().portal).toEqual({
       test: 'portal'
     })
   })

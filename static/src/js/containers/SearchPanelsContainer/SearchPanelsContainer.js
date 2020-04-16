@@ -8,6 +8,7 @@ import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
 const mapStateToProps = state => ({
   panels: state.panels,
+  preferences: state.preferences.preferences,
   portal: state.portal
 })
 
@@ -22,20 +23,26 @@ export const SearchPanelsContainer = ({
   onTogglePanels,
   onSetActivePanel,
   panels,
+  preferences,
+  match,
   portal
 }) => (
   <SearchPanels
     onTogglePanels={onTogglePanels}
     onSetActivePanel={onSetActivePanel}
     panels={panels}
+    preferences={preferences}
+    match={match}
     portal={portal}
   />
 )
 
 SearchPanelsContainer.propTypes = {
+  match: PropTypes.shape({}).isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
+  preferences: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired
 }
 
