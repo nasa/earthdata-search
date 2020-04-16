@@ -33,6 +33,9 @@ function setup(overrideProps, location = '/search') {
       collectionListView: 'default',
       granuleListView: 'default'
     },
+    portal: {
+      portalId: ''
+    },
     ...overrideProps
   }
 
