@@ -28,11 +28,14 @@ export class Panels extends PureComponent {
       togglePanel: ']'
     }
 
-    const { panelState = '', show: showProps } = props
+    const {
+      panelState = '',
+      show: showProps
+    } = props
+
     let show = showProps
-    if (panelState === 'collapsed') {
-      show = false
-    }
+
+    if (panelState === 'collapsed') show = false
     if (panelState === 'fullWidth') this.width = this.calculateMaxWidth()
 
     this.state = {
@@ -72,7 +75,6 @@ export class Panels extends PureComponent {
       maxWidth
     })
 
-    this.updatePanelWidth(maxWidth)
     this.updateResponsiveClassNames()
   }
 
