@@ -72,6 +72,7 @@ export class Panels extends PureComponent {
       maxWidth
     })
 
+    this.updatePanelWidth(maxWidth)
     this.updateResponsiveClassNames()
   }
 
@@ -428,7 +429,7 @@ export class Panels extends PureComponent {
         this.updateShowState(false)
         break
       case 'fullWidth':
-        this.width = this.calculateMaxWidth()
+        this.updatePanelWidth(this.calculateMaxWidth())
         break
       default:
         break
@@ -548,7 +549,6 @@ export class Panels extends PureComponent {
       return <PanelGroup {...panelGroupProps} />
     })
 
-
     return (
       <PanelSection {...panelSectionProps}>
         {panelGroups}
@@ -563,7 +563,6 @@ export class Panels extends PureComponent {
     } = this.props
 
     const {
-      // transitioning,
       dragging,
       show,
       willMinimize,
