@@ -34,19 +34,27 @@ import './SearchPanels.scss'
 
 /**
  * Renders SearchPanels.
- * @param {object} props - The props passed into the component.
- * @param {object} props.panels - The current panels state.
- * @param {function} props.onTogglePanels - Toggles the panels opened or closed.
- * @param {function} props.onSetActivePanel - Switches the currently active panel.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.panels - The current panels state.
+ * @param {Function} props.onTogglePanels - Toggles the panels opened or closed.
+ * @param {Function} props.onSetActivePanel - Switches the currently active panel.
  */
-
 class SearchPanels extends PureComponent {
   constructor(props) {
     super(props)
 
+    const {
+      preferences
+    } = props
+
+    const {
+      collectionListView,
+      granuleListView
+    } = preferences
+
     this.state = {
-      collectionPanelView: 'list',
-      granulePanelView: 'list'
+      collectionPanelView: this.defaultPanelStateFromProps(collectionListView),
+      granulePanelView: this.defaultPanelStateFromProps(granuleListView)
     }
 
     this.onPanelClose = this.onPanelClose.bind(this)
@@ -65,8 +73,8 @@ class SearchPanels extends PureComponent {
         granuleListView
       } = preferences
 
-      const collectionPanelView = collectionListView === 'default' ? 'list' : collectionListView
-      const granulePanelView = granuleListView === 'default' ? 'list' : granuleListView
+      const collectionPanelView = this.defaultPanelStateFromProps(collectionListView)
+      const granulePanelView = this.defaultPanelStateFromProps(granuleListView)
 
       this.updatePanelViewState({
         collectionPanelView,
@@ -95,6 +103,20 @@ class SearchPanels extends PureComponent {
     this.setState({
       granulePanelView: view
     })
+  }
+
+  /**
+   * Determine the value of the panel view state based on user preferences
+   * @param {String} value The value stored in the preferences object
+   */
+  defaultPanelStateFromProps(value) {
+    // If the preference isn't explicitly set to table
+    if (value === 'table') {
+      return value
+    }
+
+    // Default value
+    return 'list'
   }
 
   updatePanelViewState(state) {
