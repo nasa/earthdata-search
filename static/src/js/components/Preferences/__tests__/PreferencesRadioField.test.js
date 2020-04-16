@@ -1,8 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { FormCheck } from 'react-bootstrap'
 
-import RadioField from '../RadioField'
+import PreferencesRadioField from '../PreferencesRadioField'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -18,7 +19,7 @@ function setup() {
     onChange: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<RadioField {...props} />)
+  const enzymeWrapper = shallow(<PreferencesRadioField {...props} />)
 
   return {
     enzymeWrapper,
@@ -26,12 +27,14 @@ function setup() {
   }
 }
 
-describe('RadioField component', () => {
+describe('PreferencesRadioField component', () => {
   test('renders a radio form field', () => {
     const { enzymeWrapper } = setup()
 
-    const input1 = enzymeWrapper.find('input').first()
-    const input2 = enzymeWrapper.find('input').last()
+    console.log(enzymeWrapper.debug())
+
+    const input1 = enzymeWrapper.find(FormCheck).first()
+    const input2 = enzymeWrapper.find(FormCheck).last()
 
     expect(input1.props().value).toEqual('option1')
     expect(input1.props().checked).toBeTruthy()
@@ -45,7 +48,7 @@ describe('RadioField component', () => {
   test('onChange sets the state', () => {
     const { enzymeWrapper } = setup()
 
-    const input2 = enzymeWrapper.find('input').last()
+    const input2 = enzymeWrapper.find(FormCheck).last()
 
     input2.props().onChange({ target: { value: 'option2' } })
 

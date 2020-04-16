@@ -95,7 +95,7 @@ describe('Button component', () => {
 
     test('should render Spinner correctly', () => {
       const { enzymeWrapper } = setup('spinner')
-      expect(enzymeWrapper.find(Spinner).prop('size')).toEqual('small')
+      expect(enzymeWrapper.find(Spinner).prop('size')).toEqual('tiny')
       expect(enzymeWrapper.find(Spinner).prop('inline')).toEqual(true)
       expect(enzymeWrapper.find(Spinner).prop('color')).toEqual('white')
     })

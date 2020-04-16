@@ -11,6 +11,8 @@ import uiSchema from '../../../../../schemas/sitePreferencesUISchema.json'
 import Button from '../Button/Button'
 import PreferencesRadioField from './PreferencesRadioField'
 
+import './PreferencesForm.scss'
+
 /**
  * Renders the Contact Info form
  */
@@ -46,6 +48,7 @@ const PreferencesForm = (props) => {
       >
         <div>
           <Button
+            className="preferences-form__submit"
             label="Submit"
             type="submit"
             bootstrapVariant="primary"
