@@ -25,18 +25,18 @@
         border-bottom: 0;
       }
     }
+
+    .edsc-table__table--striped & {
+      &--odd {
+        background-color: darken($color__black--100, 1);
+      }
+    }
   }
 
   &__th,
   &__td {
     flex-shrink: 0;
-    background-color: #fff;
     overflow: hidden;
-    background-color: $color__white;
-
-    :last-child {
-      border-right: 0;
-    }
   }
 
   &__td {

@@ -97,11 +97,15 @@ const EDSCTable = ({
   loadMoreItems,
   rowTestId,
   setVisibleMiddleIndex,
+  striped,
   visibleMiddleIndex
 }) => {
   const tableClassName = classNames([
     'edsc-table',
-    'edsc-table__table--sticky'
+    'edsc-table__table--sticky',
+    {
+      'edsc-table__table--striped': striped
+    }
   ])
 
   const listRef = useRef(null)
@@ -133,6 +137,18 @@ const EDSCTable = ({
     },
     useBlockLayout
   )
+
+  // Grab the style property off of the last row to be used when
+  // building a skeleton row. We do this because we cant call getRowProps
+  // on a the skeleton row to get the width.
+  let lastRowStyle = {}
+
+  if (rows && rows.length) {
+    const lastRow = rows[rows.length - 1]
+    prepareRow(lastRow)
+    const lastRowProps = lastRow.getRowProps() || {}
+    lastRowStyle = lastRowProps.style
+  }
 
   const buildSkeletonRow = style => (
     <>
@@ -182,7 +198,12 @@ const EDSCTable = ({
 
       const row = rows[index]
 
-      if (!isItemLoaded(index)) return buildSkeletonRow(style)
+      if (!isItemLoaded(index)) {
+        return buildSkeletonRow({
+          ...style,
+          width: lastRowStyle.width
+        })
+      }
 
       prepareRow(row)
       const { key, ...rowProps } = row.getRowProps({
@@ -191,12 +212,17 @@ const EDSCTable = ({
 
       const { style: rowStyle, ...rowRest } = rowProps
 
+      const rowClasses = classNames([
+        'edsc-table__tr',
+        `edsc-table__tr--${(index + 1) % 2 === 0 ? 'even' : 'odd'}`
+      ])
+
       return (
         <React.Fragment key={key}>
           <div
             {...rowRest}
             style={{ ...rowStyle, width: totalColumnsWidth }}
-            className="edsc-table__tr"
+            className={rowClasses}
             data-test-id={rowTestId}
           >
             {row.cells.map((cell) => {
@@ -292,6 +318,7 @@ EDSCTable.defaultProps = {
   loadMoreItems: null,
   rowTestId: null,
   setVisibleMiddleIndex: null,
+  striped: false,
   visibleMiddleIndex: null
 }
 
@@ -304,6 +331,7 @@ EDSCTable.propTypes = {
   itemCount: PropTypes.number,
   loadMoreItems: PropTypes.func,
   rowTestId: PropTypes.string,
+  striped: PropTypes.bool,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }

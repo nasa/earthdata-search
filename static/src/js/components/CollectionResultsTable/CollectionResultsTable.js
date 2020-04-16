@@ -122,6 +122,7 @@ export const CollectionResultsTable = ({
         loadMoreItems={loadMoreItems}
         isItemLoaded={isItemLoaded}
         setVisibleMiddleIndex={setVisibleMiddleIndex}
+        striped
       />
     </div>
   )

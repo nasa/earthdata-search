@@ -93,12 +93,6 @@
     width: 1000px;
     height: 3.5rem;
     border-right: 1px solid $color__black--200;
-
-    &:nth-child(even) {
-      .edsc-table__td {
-        background-color: $color__black--100;
-      }
-    }
   }
 
   .edsc-table__thead {

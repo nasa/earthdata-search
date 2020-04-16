@@ -85,6 +85,14 @@ describe('EDSCTable component', () => {
     expect(enzymeWrapper.find(List).prop('width')).toEqual(800)
   })
 
+  test('should add the striped class', () => {
+    const { enzymeWrapper } = setup(mount, {
+      striped: true
+    })
+
+    expect(enzymeWrapper.find('.edsc-table').prop('className')).toContain('edsc-table__table--striped')
+  })
+
   describe('loading list item', () => {
     test('shows on first load', () => {
       const isItemLoadedMock = jest.fn()
@@ -133,6 +141,24 @@ describe('EDSCTable component', () => {
       expect(enzymeWrapper.find('.edsc-table__tbody').text()).toContain('3')
       expect(enzymeWrapper.find('.edsc-table__tbody').text()).toContain('2')
       expect(enzymeWrapper.find('.edsc-table__tbody').find('.skeleton').length).toEqual(0)
+    })
+  })
+
+  describe('adds the correct classes to rows', () => {
+    test('adds even and odd classes', () => {
+      const isItemLoadedMock = jest.fn()
+        .mockReturnValue(true)
+
+      const { enzymeWrapper } = setup(mount, {
+        data: collectionDataTwo,
+        itemCount: 2,
+        isItemLoaded: isItemLoadedMock
+      })
+
+      const rows = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr')
+
+      expect(rows.at(0).prop('className')).toEqual('edsc-table__tr edsc-table__tr--odd')
+      expect(rows.at(1).prop('className')).toEqual('edsc-table__tr edsc-table__tr--even')
     })
   })
 })
