@@ -3,6 +3,7 @@ import { categoryNameToCMRParam } from './facets'
 import { encodeTemporal } from './url/temporalEncoders'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { tagName } from '../../../../sharedUtils/tags'
+import { autocompleteFacetsMap } from './autocompleteFacetsMap'
 
 /**
  * Takes the current CMR collection params and applies any changes needed to account
@@ -39,6 +40,7 @@ export const withAdvancedSearch = (collectionParams, advancedSearch) => {
  */
 export const prepareCollectionParams = (state) => {
   const {
+    autocomplete = {},
     advancedSearch = {},
     authToken,
     facetsParams = {},
@@ -121,6 +123,20 @@ export const prepareCollectionParams = (state) => {
     ...portalQuery
   }
 
+  // Add the autocomplete selected parameters if the type is not a CMR Facet
+  const { selected = [] } = autocomplete
+  selected.forEach((param) => {
+    const { type, value } = param
+
+    if (!autocompleteFacetsMap[type]) {
+      if (collectionParams[type]) {
+        collectionParams[type].push(value)
+      } else {
+        collectionParams[type] = [value]
+      }
+    }
+  })
+
   // Apply any overrides for advanced search
   const paramsWithAdvancedSearch = withAdvancedSearch(collectionParams, advancedSearch)
 
@@ -138,24 +154,29 @@ export const buildCollectionSearchParams = (params) => {
 
   const {
     boundingBox,
-    conceptId,
     cmrFacets,
+    conceptId,
     dataCenter,
     echoCollectionId,
     featureFacets,
+    granuleDataFormat,
     gridName,
     hasGranulesOrCwic,
+    instrument,
     keyword,
     line,
     pageNum,
+    platform,
     point,
     polygon,
     project,
+    provider,
     sortKey: selectedSortKey,
+    spatialKeyword,
     tagKey,
     temporalString,
-    viewAllFacetsCategory,
-    viewAllFacets
+    viewAllFacets,
+    viewAllFacetsCategory
   } = params
 
   let facetsToSend = { ...cmrFacets }
@@ -203,19 +224,24 @@ export const buildCollectionSearchParams = (params) => {
     dataCenterH: facetsToSend.data_center_h,
     dataCenter,
     echoCollectionId,
+    granuleDataFormat,
     granuleDataFormatH: facetsToSend.granule_data_format_h,
     hasGranulesOrCwic,
+    instrument,
     instrumentH: facetsToSend.instrument_h,
     keyword: keywordWithWildcard,
     line,
     pageNum,
+    platform,
     platformH: facetsToSend.platform_h,
     point,
     polygon,
     processingLevelIdH: facetsToSend.processing_level_id_h,
     projectH: facetsToSend.project_h,
     project,
+    provider,
     scienceKeywordsH: facetsToSend.science_keywords_h,
+    spatialKeyword,
     tagKey,
     temporal: temporalString,
     twoDCoordinateSystem,

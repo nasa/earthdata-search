@@ -5,6 +5,10 @@
   flex-grow: 1;
   align-items: center;
 
+  .filter-stack-item--naked & {
+    width: 100%;
+  }
+
   &__label {
     margin-right: $spacer/4;
     font-weight: 700;
@@ -29,6 +33,10 @@
     .filter-stack-contents--label-visible & {
       display: inline-block;
       width: auto;
+    }
+
+    .filter-stack-item--naked & {
+      margin-top: 0;
     }
   }
 }

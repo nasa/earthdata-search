@@ -1,3 +1,5 @@
+import { parseError } from '../../../../sharedUtils/parseError'
+
 /**
  * Formats the metadata shown in the collection results
  * @param {Object} collections collections object from searchResults in the store
@@ -46,25 +48,37 @@ export const formatCollectionList = (collections, projectIds, browser) => {
 
     if (timeStart || timeEnd) {
       if (timeStart) {
-        const dateStart = new Date(timeStart).toISOString().split('T')[0]
+        try {
+          const dateStart = new Date(timeStart).toISOString().split('T')[0]
 
-        temporalRange = `${dateStart} ongoing`
-        temporalStart = dateStart
-        temporalEnd = 'ongoing'
+          temporalRange = `${dateStart} ongoing`
+          temporalStart = dateStart
+          temporalEnd = 'ongoing'
+        } catch (e) {
+          parseError(e)
+        }
       }
 
       if (timeEnd) {
-        const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
+        try {
+          const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
 
-        temporalRange = `Up to ${dateEnd}`
-        temporalEnd = dateEnd
+          temporalRange = `Up to ${dateEnd}`
+          temporalEnd = dateEnd
+        } catch (e) {
+          parseError(e)
+        }
       }
 
       if (timeStart && timeEnd) {
-        const dateStart = new Date(timeStart).toISOString().split('T')[0]
-        const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
+        try {
+          const dateStart = new Date(timeStart).toISOString().split('T')[0]
+          const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
 
-        temporalRange = `${dateStart} to ${dateEnd}`
+          temporalRange = `${dateStart} to ${dateEnd}`
+        } catch (e) {
+          parseError(e)
+        }
       }
     }
 

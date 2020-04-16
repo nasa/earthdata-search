@@ -189,7 +189,7 @@ const autocomplete = async (event) => {
       }
     }
 
-    return doSearchRequest({
+    const results = await doSearchRequest({
       jwtToken: getJwtToken(event),
       method: 'get',
       bodyType: 'json',
@@ -202,6 +202,10 @@ const autocomplete = async (event) => {
       }),
       requestId
     })
+
+    console.log(`Autocomplete Params: ${JSON.stringify(params)}, Results: ${results.body}`)
+
+    return results
   } catch (e) {
     return {
       isBase64Encoded: false,

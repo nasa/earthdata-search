@@ -14,6 +14,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
+  autocompleteSelected: state.autocomplete.selected,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   collections: state.metadata.collections,
   granuleDataFormatFacets: state.facetsParams.cmr.granule_data_format_h,

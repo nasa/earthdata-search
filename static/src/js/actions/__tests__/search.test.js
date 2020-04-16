@@ -4,14 +4,15 @@ import thunk from 'redux-thunk'
 import actions from '../index'
 import { updateCollectionQuery, updateGranuleQuery } from '../search'
 import {
+  CLEAR_COLLECTION_GRANULES,
   CLEAR_EXCLUDE_GRANULE_ID,
+  CLEAR_FILTERS,
+  CLEAR_SHAPEFILE,
+  TOGGLE_DRAWING_NEW_LAYER,
   UPDATE_COLLECTION_QUERY,
   UPDATE_GRANULE_QUERY,
-  CLEAR_SHAPEFILE,
-  CLEAR_COLLECTION_GRANULES,
-  UPDATE_TIMELINE_INTERVALS,
-  TOGGLE_DRAWING_NEW_LAYER,
-  UPDATE_ADVANCED_SEARCH
+  UPDATE_REGION_QUERY,
+  UPDATE_TIMELINE_INTERVALS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -524,42 +525,51 @@ describe('removeTemporalFilter', () => {
   })
 })
 
-describe('clearFilters', () => {
+describe('changeRegionQuery', () => {
   test('clears the query and calls getCollections', () => {
     const query = {
-      focusedCollection: '',
-      query: {
-        collection: {
-          keyword: 'keyword search',
-          spatial: {
-            point: '0,0'
-          }
-        },
-        granule: {
-          gridCoords: ''
-        }
-      },
-      project: {},
-      router: {
-        location: {
-          pathname: ''
-        }
-      }
-    }
-    const emptyQuery = {
-      gridName: '',
-      keyword: '',
-      pageNum: 1,
-      spatial: {},
-      temporal: {}
+      exact: false,
+      endpoint: 'region',
+      keyword: 'test value'
     }
 
     // mockStore with initialState
-    const store = mockStore(query)
+    const store = mockStore({})
+
+    // mock getRegionsMock
+    const getRegionsMock = jest.spyOn(actions, 'getRegions')
+    getRegionsMock.mockImplementation(() => jest.fn())
+
+    // call the dispatch
+    store.dispatch(actions.changeRegionQuery(query))
+    const storeActions = store.getActions()
+
+    // Is updateCollectionQuery called with the right payload
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_REGION_QUERY,
+      payload: query
+    })
+
+    // was getCollections called
+    expect(getRegionsMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('clearFilters', () => {
+  test('clears the query and calls getCollections', () => {
+
+    // mockStore with initialState
+    const store = mockStore({})
 
     // mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
+    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
+    getProjectCollectionsMock.mockImplementation(() => jest.fn())
+    const getGranulesMock = jest.spyOn(actions, 'getGranules')
+    getGranulesMock.mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.spyOn(actions, 'getTimeline')
+    getTimelineMock.mockImplementation(() => jest.fn())
 
     // call the dispatch
     store.dispatch(actions.clearFilters())
@@ -567,37 +577,13 @@ describe('clearFilters', () => {
 
     // Is updateCollectionQuery called with the right payload
     expect(storeActions[0]).toEqual({
-      type: UPDATE_ADVANCED_SEARCH,
-      payload: {}
-    })
-    expect(storeActions[1]).toEqual({
-      type: CLEAR_EXCLUDE_GRANULE_ID
-    })
-    expect(storeActions[2]).toEqual({
-      type: UPDATE_COLLECTION_QUERY,
-      payload: emptyQuery
-    })
-    expect(storeActions[3]).toEqual({
-      type: UPDATE_GRANULE_QUERY,
-      payload: {
-        gridCoords: '',
-        pageNum: 1
-      }
-    })
-    expect(storeActions[4]).toEqual({
-      type: CLEAR_COLLECTION_GRANULES
-    })
-    expect(storeActions[5]).toEqual({
-      type: UPDATE_TIMELINE_INTERVALS,
-      payload: {
-        results: []
-      }
-    })
-    expect(storeActions[6]).toEqual({
-      type: CLEAR_SHAPEFILE
+      type: CLEAR_FILTERS
     })
 
     // was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getGranulesMock).toHaveBeenCalledTimes(1)
+    expect(getTimelineMock).toHaveBeenCalledTimes(1)
   })
 })

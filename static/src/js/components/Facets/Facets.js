@@ -21,8 +21,8 @@ const Facets = (props) => {
     changeFeatureFacet(e, facetLinkInfo, onChangeFeatureFacet)
   }
 
-  const cmrFacetHandler = (e, facetLinkInfo) => {
-    changeCmrFacet(e, facetLinkInfo, onChangeCmrFacet)
+  const cmrFacetHandler = (e, facetLinkInfo, facet, applied) => {
+    changeCmrFacet(e, facetLinkInfo, onChangeCmrFacet, facet, applied)
   }
 
   const featuresFacet = {
@@ -58,6 +58,7 @@ const Facets = (props) => {
   const keywordsFacet = {
     ...cmrFacetDefaults,
     title: 'Keywords',
+    autocompleteType: 'science_keywords',
     options: {
       liftSelectedFacets: true
     }
@@ -65,32 +66,38 @@ const Facets = (props) => {
 
   const platformsFacet = {
     ...cmrFacetDefaults,
-    title: 'Platforms'
+    title: 'Platforms',
+    autocompleteType: 'platform'
   }
 
   const instrumentsFacet = {
     ...cmrFacetDefaults,
-    title: 'Instruments'
+    title: 'Instruments',
+    autocompleteType: 'instrument'
   }
 
   const organizationsFacet = {
     ...cmrFacetDefaults,
-    title: 'Organizations'
+    title: 'Organizations',
+    autocompleteType: 'organization'
   }
 
   const projectsTemplate = {
     ...cmrFacetDefaults,
-    title: 'Projects'
+    title: 'Projects',
+    autocompleteType: 'project'
   }
 
   const processingLevels = {
     ...cmrFacetDefaults,
-    title: 'Processing Levels'
+    title: 'Processing Levels',
+    autocompleteType: 'processing_level_id'
   }
 
   const formats = {
     ...cmrFacetDefaults,
-    title: 'Data Format'
+    title: 'Data Format',
+    autocompleteType: 'granule_data_format'
   }
 
   const facetsTemplate = [

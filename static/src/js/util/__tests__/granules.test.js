@@ -6,6 +6,8 @@ import {
   withAdvancedSearch
 } from '../granules'
 
+import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+
 describe('#withAdvancedSearch', () => {
   describe('when no advanced search parameters are passed', () => {
     test('should return the collection params', () => {
@@ -50,26 +52,28 @@ describe('#withAdvancedSearch', () => {
 describe('#createEcho10MetadataUrls', () => {
   describe('when provided a granule id', () => {
     test('returns the an object of metadata urls', () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
+
       const data = createEcho10MetadataUrls('G1613627299-LANCEMODIS')
       const expectedData = {
         atom: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1613627299-LANCEMODIS.atom',
+          href: 'http://cmr.example.com/search/concepts/G1613627299-LANCEMODIS.atom',
           title: 'ATOM'
         },
         echo10: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1613627299-LANCEMODIS.echo10',
+          href: 'http://cmr.example.com/search/concepts/G1613627299-LANCEMODIS.echo10',
           title: 'ECHO 10'
         },
         iso19115: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1613627299-LANCEMODIS.iso19115',
+          href: 'http://cmr.example.com/search/concepts/G1613627299-LANCEMODIS.iso19115',
           title: 'ISO 19115'
         },
         native: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1613627299-LANCEMODIS',
+          href: 'http://cmr.example.com/search/concepts/G1613627299-LANCEMODIS',
           title: 'Native'
         },
         umm_json: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1613627299-LANCEMODIS.umm_json',
+          href: 'http://cmr.example.com/search/concepts/G1613627299-LANCEMODIS.umm_json',
           title: 'UMM-G'
         }
       }

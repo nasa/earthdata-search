@@ -14,11 +14,18 @@ const mapDispatchToProps = dispatch => ({
   onClearFilters:
     () => dispatch(actions.clearFilters()),
   onToggleAdvancedSearchModal:
-    state => dispatch(actions.toggleAdvancedSearchModal(state))
+    state => dispatch(actions.toggleAdvancedSearchModal(state)),
+  onClearAutocompleteSuggestions:
+    () => dispatch(actions.clearAutocompleteSuggestions()),
+  onFetchAutocomplete:
+    data => dispatch(actions.fetchAutocomplete(data)),
+  onSelectAutocompleteSuggestion:
+    data => dispatch(actions.selectAutocompleteSuggestion(data))
 })
 
 const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
+  autocomplete: state.autocomplete,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   drawingNewLayer: state.ui.map.drawingNewLayer,
   gridCoords: state.query.granule.gridCoords,
@@ -37,6 +44,7 @@ const mapStateToProps = state => ({
 export const SearchFormContainer = (props) => {
   const {
     advancedSearch,
+    autocomplete,
     boundingBoxSearch,
     drawingNewLayer,
     gridName,
@@ -51,7 +59,10 @@ export const SearchFormContainer = (props) => {
     onChangeQuery,
     onClearFilters,
     onChangeFocusedCollection,
-    onToggleAdvancedSearchModal
+    onToggleAdvancedSearchModal,
+    onClearAutocompleteSuggestions,
+    onFetchAutocomplete,
+    onSelectAutocompleteSuggestion
   } = props
 
   const {
@@ -99,8 +110,12 @@ export const SearchFormContainer = (props) => {
       onChangeFocusedCollection={onChangeFocusedCollection}
       onClearFilters={onClearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
+      onClearAutocompleteSuggestions={onClearAutocompleteSuggestions}
+      onFetchAutocomplete={onFetchAutocomplete}
+      onSelectAutocompleteSuggestion={onSelectAutocompleteSuggestion}
       advancedSearch={advancedSearch}
       keywordSearch={keywordSearch}
+      autocomplete={autocomplete}
       showFilterStackToggle={showFilterStackToggle}
     />
   )
@@ -121,6 +136,7 @@ SearchFormContainer.defaultProps = {
 
 SearchFormContainer.propTypes = {
   advancedSearch: PropTypes.shape({}),
+  autocomplete: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.string,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
@@ -134,6 +150,9 @@ SearchFormContainer.propTypes = {
   onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  onClearAutocompleteSuggestions: PropTypes.func.isRequired,
+  onFetchAutocomplete: PropTypes.func.isRequired,
+  onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
   pointSearch: PropTypes.string,
   polygonSearch: PropTypes.string,
   selectingNewGrid: PropTypes.bool.isRequired,

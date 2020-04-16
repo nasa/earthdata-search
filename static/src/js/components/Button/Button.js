@@ -148,8 +148,8 @@ Button.defaultProps = {
   badgeVariant: null,
   bootstrapSize: null,
   bootstrapVariant: null,
-  dataTestId: null,
   disabled: false,
+  dataTestId: undefined,
   children: null,
   className: null,
   href: null,
@@ -165,7 +165,7 @@ Button.defaultProps = {
   tooltipId: null,
   tooltipPlacement: null,
   type: 'button',
-  variant: null
+  variant: undefined
 }
 
 Button.propTypes = {

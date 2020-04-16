@@ -110,7 +110,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       dispatch(actions.getGranules())
     })
     .catch((error) => {
-      dispatch(updateFocusedCollection(''))
       dispatch(actions.handleError({
         error,
         action: 'getFocusedCollection',

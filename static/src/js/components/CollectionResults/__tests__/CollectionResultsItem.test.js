@@ -2,7 +2,6 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { Waypoint } from 'react-waypoint'
 
 import CollectionResultsItem from '../CollectionResultsItem'
 import SplitBadge from '../../SplitBadge/SplitBadge'
@@ -31,7 +30,7 @@ describe('CollectionResultsList component', () => {
 
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.type()).toEqual('li')
+    expect(enzymeWrapper.type()).toEqual('div')
     expect(enzymeWrapper.props().className).toEqual('collection-results-item')
   })
 
@@ -400,39 +399,6 @@ describe('CollectionResultsList component', () => {
         test('renders a tooltip with the correct text', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Temporal subsetting options available')
         })
-      })
-    })
-  })
-
-  describe('waypoint', () => {
-    test('does not render by default', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Waypoint).length)
-        .toEqual(0)
-    })
-
-    describe('when the last item in the list', () => {
-      test('renders the waypoint', () => {
-        const { enzymeWrapper } = setup({
-          collection: {
-            ...collectionListItemProps.collection,
-            isLast: true
-          }
-        })
-        expect(enzymeWrapper.find(Waypoint).length)
-          .toEqual(1)
-      })
-
-      test('should pass the scrollContainer to the Waypoint', () => {
-        const { enzymeWrapper, props } = setup({
-          collection: {
-            ...collectionListItemProps.collection,
-            isLast: true
-          }
-        })
-
-        expect(enzymeWrapper.find('Waypoint').prop('scrollableAncestor'))
-          .toEqual(props.scrollContainer)
       })
     })
   })

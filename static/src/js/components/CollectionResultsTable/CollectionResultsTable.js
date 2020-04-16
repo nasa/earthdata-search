@@ -1,21 +1,39 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
+import { commafy } from '../../util/commafy'
+
 import Cell from './Cell'
 import CollectionCell from './CollectionCell'
 import EDSCTable from '../EDSCTable/EDSCTable'
 
 import './CollectionResultsTable.scss'
 
+/**
+ * Renders CollectionResultsTable.
+ * @param {Object} props - The props passed into the component.
+ * @param {Array} props.collections - Collections passed from redux store.
+ * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
+ * @param {Boolean} props.itemCount - The current count of rows to show.
+ * @param {Function} props.loadMoreItems - Callback to load the next page of results.
+ * @param {Function} props.onAddProjectCollection - Callback to add a collection to a project.
+ * @param {Function} props.onRemoveCollectionFromProject - Callback to remove a collection to a project.
+ * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
+ * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
+ * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
+ * @param {String} props.visibleMiddleIndex - The current middle item.
+ */
 export const CollectionResultsTable = ({
   collections,
-  collectionHits,
-  onViewCollectionGranules,
+  isItemLoaded,
+  itemCount,
+  loadMoreItems,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
-  portal,
-  waypointEnter
+  onViewCollectionGranules,
+  setVisibleMiddleIndex,
+  visibleMiddleIndex
 }) => {
   const columns = useMemo(() => [
     {
@@ -62,7 +80,7 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Granules',
-      Cell,
+      Cell: ({ cell }) => commafy(cell.value),
       accessor: 'granuleCount',
       width: '100',
       customProps: {
@@ -90,28 +108,41 @@ export const CollectionResultsTable = ({
   ])
 
   return (
-    <div className="collection-results-table">
+    <div
+      className="collection-results-table"
+      data-test-id="collection-results-table"
+    >
       <EDSCTable
         id="collection-results-table"
+        rowTestId="collection-results-table__item"
+        visibleMiddleIndex={visibleMiddleIndex}
         columns={columns}
         data={collections}
-        infiniteScrollTrigger={waypointEnter}
-        infiniteScrollTotal={collectionHits}
-        portal={portal}
+        itemCount={itemCount}
+        loadMoreItems={loadMoreItems}
+        isItemLoaded={isItemLoaded}
+        setVisibleMiddleIndex={setVisibleMiddleIndex}
       />
     </div>
   )
 }
 
+CollectionResultsTable.defaultProps = {
+  setVisibleMiddleIndex: null,
+  visibleMiddleIndex: null
+}
+
 CollectionResultsTable.propTypes = {
   collections: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  collectionHits: PropTypes.number.isRequired,
+  isItemLoaded: PropTypes.func.isRequired,
+  itemCount: PropTypes.number.isRequired,
+  loadMoreItems: PropTypes.func.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  waypointEnter: PropTypes.func.isRequired
+  onViewCollectionGranules: PropTypes.func.isRequired,
+  setVisibleMiddleIndex: PropTypes.func,
+  visibleMiddleIndex: PropTypes.number
 }
 
 export default CollectionResultsTable

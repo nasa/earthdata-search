@@ -57,9 +57,11 @@ import {
   updateStore
 } from './urlQuery'
 import {
+  addCmrFacet,
   changeCmrFacet,
-  updateCmrFacet,
   changeFeatureFacet,
+  removeCmrFacet,
+  updateCmrFacet,
   updateFeatureFacet
 } from './facets'
 import {
@@ -133,13 +135,17 @@ import { updateBrowserVersion } from './browser'
 import { collectionRelevancyMetrics } from './relevancy'
 import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
 import {
-  setPreferences,
-  setPreferencesFromJwt,
-  updatePreferences
-} from './preferences'
+  clearAutocompleteSelected,
+  clearAutocompleteSuggestions,
+  deleteAutocompleteValue,
+  fetchAutocomplete,
+  removeAutocompleteValue,
+  selectAutocompleteSuggestion
+} from './autocomplete'
 
 const actions = {
   addAccessMethods,
+  addCmrFacet,
   addProjectCollection,
   adminIsAuthorized,
   adminViewRetrieval,
@@ -160,16 +166,20 @@ const actions = {
   changeTimelineQuery,
   changeUrl,
   changeViewAllFacet,
+  clearAutocompleteSelected,
+  clearAutocompleteSuggestions,
   clearCollectionGranules,
   clearFilters,
   clearShapefile,
   collectionRelevancyMetrics,
+  deleteAutocompleteValue,
   deleteRetrieval,
   deleteSavedProject,
   excludeGranule,
   fetchAccessMethods,
   fetchAdminRetrieval,
   fetchAdminRetrievals,
+  fetchAutocomplete,
   fetchContactInfo,
   fetchDataQualitySummaries,
   fetchProviders,
@@ -189,6 +199,8 @@ const actions = {
   handleError,
   loadPortalConfig,
   logout,
+  removeAutocompleteValue,
+  removeCmrFacet,
   removeCollectionFromProject,
   removeError,
   removeGridFilter,
@@ -198,9 +210,8 @@ const actions = {
   restoreProject,
   saveShapefile,
   selectAccessMethod,
+  selectAutocompleteSuggestion,
   setActivePanel,
-  setPreferences,
-  setPreferencesFromJwt,
   setSavedProjects,
   shapefileErrored,
   shapefileLoading,
@@ -235,7 +246,6 @@ const actions = {
   updateGranuleQuery,
   updateGranuleResults,
   updateNotificationLevel,
-  updatePreferences,
   updateProjectName,
   updateRegionQuery,
   updateSavedProject,

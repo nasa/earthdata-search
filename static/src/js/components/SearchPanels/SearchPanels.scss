@@ -1,0 +1,13 @@
+.search-panels {
+  &__portal-escape {
+    color: #424242;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    font-size: 0.875rem;
+  }
+
+  &__portal-escape-link {
+    text-decoration: underline;
+  }
+}

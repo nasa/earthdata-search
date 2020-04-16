@@ -4,7 +4,8 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
-import { isEqual } from 'lodash'
+
+import { isEqual, startCase } from 'lodash'
 
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
@@ -103,7 +104,8 @@ class SearchPanels extends PureComponent {
   render() {
     const {
       match,
-      preferences
+      preferences,
+      portal
     } = this.props
 
     const { panelState } = preferences
@@ -113,6 +115,34 @@ class SearchPanels extends PureComponent {
       // eslint-disable-next-line no-unused-vars
       granulePanelView
     } = this.state
+
+
+    const {
+      portalId,
+      org = portalId,
+      title = portalId
+    } = portal
+
+    const buildCollectionResultsBodyFooter = () => {
+      if (!portalId.length) return null
+
+      return (
+        <div className="search-panels__portal-escape">
+          Looking for more collections?
+          {' '}
+          <a href="/" className="search-panels__portal-escape-link">
+            Leave
+            {' '}
+            {startCase(org)}
+            &#39;s
+            {' '}
+            {startCase(title)}
+            {' '}
+            Portal
+          </a>
+        </div>
+      )
+    }
 
     const panelSection = []
 
@@ -125,9 +155,10 @@ class SearchPanels extends PureComponent {
             onChangePanelView={this.onChangeCollectionPanelView}
           />
         )}
+        footer={buildCollectionResultsBodyFooter()}
         onPanelClose={this.onPanelClose}
       >
-        <PanelItem scrollable={collectionPanelView !== 'table'}>
+        <PanelItem scrollable={false}>
           <CollectionResultsBodyContainer panelView={collectionPanelView} />
         </PanelItem>
       </PanelGroup>
@@ -208,6 +239,7 @@ class SearchPanels extends PureComponent {
 
               return (
                 <Panels
+                  className="search-panels"
                   show
                   activePanel={activePanel}
                   draggable
@@ -231,7 +263,8 @@ SearchPanels.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
-  preferences: PropTypes.shape({}).isRequired
+  preferences: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired
 }
 
 export default SearchPanels

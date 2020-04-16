@@ -13,6 +13,7 @@ import './FacetsList.scss'
 
 const FacetsList = (props) => {
   const {
+    autocompleteType,
     facets,
     facetCategory,
     liftSelectedFacets,
@@ -29,6 +30,7 @@ const FacetsList = (props) => {
 
       return (
         <FacetsItem
+          autocompleteType={autocompleteType}
           key={uid}
           uid={uid}
           facet={child}
@@ -100,6 +102,7 @@ const FacetsList = (props) => {
 }
 
 FacetsList.defaultProps = {
+  autocompleteType: null,
   facets: [],
   liftSelectedFacets: false,
   sortBy: null,
@@ -107,6 +110,7 @@ FacetsList.defaultProps = {
 }
 
 FacetsList.propTypes = {
+  autocompleteType: PropTypes.string,
   facets: PropTypes.arrayOf(PropTypes.shape({})),
   facetCategory: PropTypes.string.isRequired,
   liftSelectedFacets: PropTypes.bool,
