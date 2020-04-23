@@ -270,6 +270,8 @@ const EDSCTable = ({
         ...rowClassesFromState
       ])
 
+      // These events will be spread on to the row div element, ommiting the events
+      // where callbacks have not been defined.
       const rowEvents = {
         onMouseLeave: (onRowMouseLeave ? e => onRowMouseLeave(e, row) : undefined),
         onMouseEnter: (onRowMouseEnter ? e => onRowMouseEnter(e, row) : undefined),

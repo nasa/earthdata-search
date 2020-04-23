@@ -173,16 +173,16 @@ class GranuleResultsHeader extends Component {
     const granuleCount = hits - excludedGranuleIds.length
 
     const viewButtonListClasses = classNames([
-      'collection-results-header__view-button',
+      'granule-results-header__view-button',
       {
-        'collection-results-header__view-button--is-active': panelView === 'list'
+        'granule-results-header__view-button--is-active': panelView === 'list'
       }
     ])
 
     const viewButtonTableClasses = classNames([
-      'collection-results-header__view-button',
+      'granule-results-header__view-button',
       {
-        'collection-results-header__view-button--is-active': panelView === 'table'
+        'granule-results-header__view-button--is-active': panelView === 'table'
       }
     ])
 
@@ -422,10 +422,10 @@ class GranuleResultsHeader extends Component {
             }
           </span>
           <span className="granule-results-header__header-item">
-            <span className="collection-results-header__view">
+            <span className="granule-results-header__view">
               <Button
                 className={viewButtonListClasses}
-                dataTestId="collection-results-header__view-button--list"
+                dataTestId="granule-results-header__view-button--list"
                 variant="naked"
                 icon="list"
                 label="Switch to list view"
@@ -433,7 +433,7 @@ class GranuleResultsHeader extends Component {
               />
               <Button
                 className={viewButtonTableClasses}
-                dataTestId="collection-results-header__view-button--table"
+                dataTestId="granule-results-header__view-button--table"
                 variant="naked"
                 icon="table"
                 label="Switch to table view"

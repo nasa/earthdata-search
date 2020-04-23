@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
 import Button from '../Button/Button'
 import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
@@ -18,7 +16,6 @@ const GranuleResultsTableHeaderCell = (props) => {
     isCwic,
     dataLinks,
     onlineAccessFlag,
-    isFocusedGranule,
     handleClick
   } = rowProps
 

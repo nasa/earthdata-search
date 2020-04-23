@@ -88,4 +88,16 @@
     font-size: 0.75rem;
     color: $color__black--600;
   }
+
+  &__view-button {
+    height: auto;
+    margin-left: 0.5rem;
+    color: $color__black--400;
+    font-size: 1.125rem;
+    line-height: 1rem;
+
+    &--is-active {
+      color: $color__black--600;
+    }
+  }
 }

@@ -11,8 +11,6 @@ import { granuleListItem } from './skeleton'
 import GranuleResultsItem from './GranuleResultsItem'
 import Skeleton from '../Skeleton/Skeleton'
 
-import './GranuleResultsListItem.scss'
-
 /**
  * Renders GranuleResultsListItem.
  * @param {Object} props - The props passed into the component.

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
@@ -69,6 +68,7 @@ const GranuleResultsItem = forwardRef(({
 
     if (granuleThumbnail) {
       element = (
+        // eslint-disable-next-line jsx-a11y/img-redundant-alt
         <img
           className="granule-results-item__thumb-image"
           src={granuleThumbnail}
