@@ -1,6 +1,7 @@
 {
   "hasStyles": true,
   "hasScripts": false,
+  "hideCollectionFilters": true,
   "logo": {
     "id": "idn-logo",
     "link": "https://idn.ceos.org/",
