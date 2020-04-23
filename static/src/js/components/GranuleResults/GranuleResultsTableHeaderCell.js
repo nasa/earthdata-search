@@ -77,7 +77,7 @@ const GranuleResultsTableHeaderCell = (props) => {
           )
         }
         <Button
-          className="granule-results-table__granule-action granule-results-table__granule-action--info"
+          className="granule-results-table__granule-action granule-results-table__granule-action--remove"
           icon="times"
           variant="naked"
           label="Remove granule"

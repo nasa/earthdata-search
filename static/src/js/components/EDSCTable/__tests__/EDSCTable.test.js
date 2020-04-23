@@ -161,4 +161,107 @@ describe('EDSCTable component', () => {
       expect(rows.at(1).prop('className')).toEqual('edsc-table__tr edsc-table__tr--even')
     })
   })
+
+  describe('row classnames', () => {
+    test('are applied when the row state is set', () => {
+      const isItemLoadedMock = jest.fn()
+        .mockReturnValue(true)
+
+      const initialRowStateAccessorMock = jest.fn()
+        .mockImplementation(() => ({
+          active: true
+        }))
+
+      const { enzymeWrapper } = setup(mount, {
+        data: collectionDataTwo,
+        itemCount: 2,
+        initialRowStateAccessor: initialRowStateAccessorMock,
+        isItemLoaded: isItemLoadedMock,
+        rowClassNamesFromRowState: ({ active }) => {
+          if (active) return ['table-test-class--active']
+          return []
+        }
+      })
+
+      expect(enzymeWrapper.find('.table-test-class--active').length).toEqual(2)
+    })
+  })
+
+  describe('row callbacks', () => {
+    test('onRowMouseEnterMock', () => {
+      const onRowMouseEnterMock = jest.fn()
+      const isItemLoadedMock = jest.fn()
+        .mockReturnValue(true)
+
+      const { enzymeWrapper } = setup(mount, {
+        data: collectionDataTwo,
+        itemCount: 2,
+        isItemLoaded: isItemLoadedMock,
+        onRowMouseEnter: onRowMouseEnterMock
+      })
+
+      const row = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr').at(0)
+
+      row.simulate('mouseenter')
+
+      expect(onRowMouseEnterMock).toHaveBeenCalledTimes(1)
+    })
+
+    test('onRowMouseLeave', () => {
+      const onRowMouseLeaveMock = jest.fn()
+      const isItemLoadedMock = jest.fn()
+        .mockReturnValue(true)
+
+      const { enzymeWrapper } = setup(mount, {
+        data: collectionDataTwo,
+        itemCount: 2,
+        isItemLoaded: isItemLoadedMock,
+        onRowMouseLeave: onRowMouseLeaveMock
+      })
+
+      const row = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr').at(0)
+
+      row.simulate('mouseleave')
+
+      expect(onRowMouseLeaveMock).toHaveBeenCalledTimes(1)
+    })
+
+    test('onRowFocus', () => {
+      const onRowFocusMock = jest.fn()
+      const isItemLoadedMock = jest.fn()
+        .mockReturnValue(true)
+
+      const { enzymeWrapper } = setup(mount, {
+        data: collectionDataTwo,
+        itemCount: 2,
+        isItemLoaded: isItemLoadedMock,
+        onRowFocus: onRowFocusMock
+      })
+
+      const row = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr').at(0)
+
+      row.simulate('focus')
+
+      expect(onRowFocusMock).toHaveBeenCalledTimes(1)
+    })
+
+    test('onRowMouseBlur', () => {
+      const onRowMouseBlurMock = jest.fn()
+      const isItemLoadedMock = jest.fn()
+        .mockReturnValue(true)
+
+      const { enzymeWrapper } = setup(mount, {
+        data: collectionDataTwo,
+        itemCount: 2,
+        isItemLoaded: isItemLoadedMock,
+        onRowBlur: onRowMouseBlurMock
+      })
+
+      const row = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr').at(0)
+
+      row.simulate('blur')
+
+      expect(onRowMouseBlurMock).toHaveBeenCalledTimes(1)
+    })
+  })
 })

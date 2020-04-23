@@ -8,7 +8,7 @@ import './GranuleResultsBrowseImageCell.scss'
  * @param {Object} props - The props passed into the component from react-table.
  * @param {Object} props.row - The row info.
  */
-const GranuleResultsBrowseImageCell = ({ row }) => {
+export const GranuleResultsBrowseImageCell = ({ row }) => {
   const { original: rowProps } = row
   const {
     browseFlag,
@@ -55,7 +55,7 @@ const GranuleResultsBrowseImageCell = ({ row }) => {
     return element
   }
 
-  if (!browseFlag) {
+  if (!browseFlag || !granuleThumbnail) {
     return (
       <div className="granule-results-browse-image-cell" />
     )

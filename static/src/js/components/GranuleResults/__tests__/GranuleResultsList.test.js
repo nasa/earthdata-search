@@ -29,44 +29,6 @@ afterEach(() => {
 function setup(type) {
   let props
 
-  // if (type === 'loading') {
-  //   props = {
-  //     collectionId: 'collectionId',
-  //     excludedGranuleIds: [],
-  //     focusedGranule: '',
-  //     granules: [],
-  //     isCwic: false,
-  //     location: { search: 'value' },
-  //     onExcludeGranule: jest.fn(),
-  //     onFocusedGranuleChange: jest.fn(),
-  //     onMetricsDataAccess: jest.fn(),
-  //     itemCount: 2,
-  //     isItemLoaded: jest.fn(),
-  //     loadMoreItems: jest.fn(),
-  //     setVisibleMiddleIndex: jest.fn(),
-  //     visibleMiddleIndex: 1
-  //   }
-  // }
-
-  // if (type === 'loadingMore') {
-  //   props = {
-  //     collectionId: 'collectionId',
-  //     excludedGranuleIds: [],
-  //     focusedGranule: '',
-  //     granules: [],
-  //     isCwic: false,
-  //     location: { search: 'value' },
-  //     onExcludeGranule: jest.fn(),
-  //     onFocusedGranuleChange: jest.fn(),
-  //     onMetricsDataAccess: jest.fn(),
-  //     itemCount: 1,
-  //     isItemLoaded: jest.fn(),
-  //     loadMoreItems: jest.fn(),
-  //     setVisibleMiddleIndex: jest.fn(),
-  //     visibleMiddleIndex: 1
-  //   }
-  // }
-
   if (type === 'loaded') {
     props = {
       collectionId: 'collectionId',
@@ -92,59 +54,6 @@ function setup(type) {
       visibleMiddleIndex: 1
     }
   }
-  // }
-
-  // if (type === 'excludedCmr') {
-  //   props = {
-  //     collectionId: 'collectionId',
-  //     excludedGranuleIds: ['G12345-PROV'],
-  //     focusedGranule: '',
-  //     granules: [
-  //       {
-  //         title: 'G12345-PROV'
-  //       },
-  //       {
-  //         title: 'G56789-PROV'
-  //       }
-  //     ],
-  //     isCwic: false,
-  //     location: { search: 'value' },
-  //     onExcludeGranule: jest.fn(),
-  //     onFocusedGranuleChange: jest.fn(),
-  //     onMetricsDataAccess: jest.fn(),
-  //     itemCount: 2,
-  //     isItemLoaded: jest.fn(),
-  //     loadMoreItems: jest.fn(),
-  //     setVisibleMiddleIndex: jest.fn(),
-  //     visibleMiddleIndex: 1
-  //   }
-  // }
-
-  // if (type === 'excludedCwic') {
-  //   props = {
-  //     collectionId: 'collectionId',
-  //     excludedGranuleIds: ['329585043'],
-  //     focusedGranule: '',
-  //     granules: [
-  //       {
-  //         title: '12345 Granule'
-  //       },
-  //       {
-  //         title: '56789 Granule'
-  //       }
-  //     ],
-  //     isCwic: true,
-  //     location: { search: 'value' },
-  //     onExcludeGranule: jest.fn(),
-  //     onFocusedGranuleChange: jest.fn(),
-  //     onMetricsDataAccess: jest.fn(),
-  //     itemCount: 2,
-  //     isItemLoaded: jest.fn(),
-  //     loadMoreItems: jest.fn(),
-  //     setVisibleMiddleIndex: jest.fn(),
-  //     visibleMiddleIndex: 1
-  //   }
-  // }
 
   const enzymeWrapper = mount(<GranuleResultsList {...props} />)
 

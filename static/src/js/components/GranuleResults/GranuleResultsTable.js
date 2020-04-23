@@ -113,13 +113,13 @@ export const GranuleResultsTable = ({
   const onRowMouseEnter = useCallback((e, row) => {
     const { original: rowOriginal } = row
     const { handleMouseEnter } = rowOriginal
-    if (handleMouseEnter) handleMouseEnter()
+    if (handleMouseEnter) handleMouseEnter(e, row)
   }, [])
 
   const onRowMouseLeave = useCallback((e, row) => {
     const { original: rowOriginal } = row
-    const { handleMouseEnter } = rowOriginal
-    if (handleMouseEnter) handleMouseEnter()
+    const { handleMouseLeave } = rowOriginal
+    if (handleMouseLeave) handleMouseLeave(e, row)
   }, [])
 
   const hiddenColumns = []
