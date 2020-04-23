@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { FixedSizeList as List } from 'react-window'
 
 import EDSCTable from '../EDSCTable'
-import Cell from '../../CollectionResultsTable/Cell'
+import EDSCTableCell from '../EDSCTableCell'
 
 import { collectionData, collectionDataTwo } from './mocks'
 
@@ -31,13 +31,13 @@ const defaultProps = {
   columns: [
     {
       Header: 'Collection ID',
-      Cell,
+      EDSCTableCell,
       accessor: 'datasetId',
       width: '100'
     },
     {
       Header: 'Version',
-      Cell,
+      EDSCTableCell,
       accessor: 'versionId',
       width: '100',
       customProps: {

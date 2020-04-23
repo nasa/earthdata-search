@@ -1,4 +1,5 @@
-.collection-results-table {
+
+.granule-results-table {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -12,7 +13,7 @@
   }
 
   &__cell {
-    &--collection {
+    &--granule {
       position: relative;
       display: flex !important;
       flex-shrink: 0;
@@ -27,7 +28,7 @@
     text-align: left;
   }
 
-  &__collection-name {
+  &__granule-name {
     display: -webkit-box !important;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -35,18 +36,21 @@
     margin-bottom: 0;
     font-weight: 500;
     font-size: 0.675rem;
-    // letter-spacing: -0.0025rem;
     line-height: 1.3;
     color: $color__black--700;
     cursor: pointer;
     word-break: break-word;
 
     &:hover {
-      color: $color__black--900;
+      color: $color__brand--blue-dark;
+    }
+
+    .granule-results-table__td--selected & {
+      color: $color__brand--blue-dark;
     }
   }
 
-  &__collection-actions {
+  &__granule-actions {
     display: flex;
     flex-shrink: 0;
     margin-right: 0.125rem;
@@ -57,8 +61,14 @@
     }
   }
 
-  &__collection-action {
+  &__granule-action,
+  .granule-results-data-links-button__button {
     padding: 0.5rem;
+    color: $color__black--400;
+
+    &:hover {
+      color: $color__black--600;
+    }
 
     .fa {
       font-size: 0.925rem;
@@ -92,7 +102,6 @@
   .edsc-table__tr {
     width: 1000px;
     height: 3.5rem;
-    border-right: 1px solid $color__black--200;
   }
 
   .edsc-table__thead {
@@ -114,13 +123,12 @@
   }
 
   .edsc-table__td {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    height: 59px;
+    height: 60px;
 
     &:first-child {
       padding: 0;
       padding-left: 1rem;
+      border-bottom: 1px solid $color__black--200;
     }
   }
 

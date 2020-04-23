@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { difference } from 'lodash'
+import classNames from 'classnames'
 
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
 
-import { collectionTitle, granuleListTotal, granuleTimeTotal } from './skeleton'
+import { collectionTitle, granuleListTotal } from './skeleton'
 
 import murmurhash3 from '../../util/murmurhash3'
 import { commafy } from '../../util/commafy'
@@ -20,11 +21,19 @@ import './GranuleResultsHeader.scss'
 
 /**
  * Renders GranuleResultsHeader.
- * @param {object} props - The props passed into the component.
- * @param {object} props.focusedCollectionObject - Focused collection passed from redux store.
- * @param {function} props.onApplyGranuleFilters - Function to apply sort and granule id filters.
- * @param {function} props.onToggleSecondaryOverlayPanel - Function to open the secondary overlay panel.
- * @param {object} props.secondaryOverlayPanel - The current state of the secondaryOverlayPanel.
+  * @param {Object} props.collectionSearch - The collection search object.
+  * @param {String} props.focusedCollectionId - The focused collection ID.
+  * @param {Object} props.focusedCollectionObject - Focused collection passed from redux storee.
+  * @param {Object} props.location - Location state passed from react-router.
+  * @param {Object} props.mapProjection - Map projection passed from redux store.
+  * @param {Object} props.secondaryOverlayPanel - Secondary overlay panel state passed from redux store.
+  * @param {Function} props.onApplyGranuleFilters - Callback to apply granule filters.
+  * @param {Function} props.onChangePanelView - Callback to change panel view.
+  * @param {Function} props.onToggleAboutCwicModal - Callback to toggle the CWIC modal.
+  * @param {Function} props.onToggleSecondaryOverlayPanel - Callback to toggle the secondary overlay panel.
+  * @param {Function} props.onUndoExcludeGranule - Callback to exclude a granule.
+  * @param {String} props.pageNum - The granule pageNum view state.
+  * @param {String} props.panelView - The current panel view state.
  */
 class GranuleResultsHeader extends Component {
   constructor(props) {
@@ -121,7 +130,9 @@ class GranuleResultsHeader extends Component {
       onToggleSecondaryOverlayPanel,
       pageNum,
       secondaryOverlayPanel,
-      onToggleAboutCwicModal
+      onChangePanelView,
+      onToggleAboutCwicModal,
+      panelView
     } = this.props
 
     const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
@@ -142,6 +153,7 @@ class GranuleResultsHeader extends Component {
     const handoffLinks = generateHandoffs(metadata, collectionSearch, mapProjection)
 
     const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
+    // eslint-disable-next-line no-unused-vars
     const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
     const allGranuleIds = granules.allIds
@@ -159,6 +171,20 @@ class GranuleResultsHeader extends Component {
 
     // Determine the correct granule count based on granules that have been removed
     const granuleCount = hits - excludedGranuleIds.length
+
+    const viewButtonListClasses = classNames([
+      'collection-results-header__view-button',
+      {
+        'collection-results-header__view-button--is-active': panelView === 'list'
+      }
+    ])
+
+    const viewButtonTableClasses = classNames([
+      'collection-results-header__view-button',
+      {
+        'collection-results-header__view-button--is-active': panelView === 'table'
+      }
+    ])
 
     return (
       <div className="granule-results-header">
@@ -201,7 +227,6 @@ class GranuleResultsHeader extends Component {
               handoffLinks={handoffLinks}
             />
           </div>
-
           <GranuleResultsActionsContainer />
           <div className="row">
             <div className="col">
@@ -397,15 +422,24 @@ class GranuleResultsHeader extends Component {
             }
           </span>
           <span className="granule-results-header__header-item">
-            {
-              initialLoading && (
-                <Skeleton
-                  containerStyle={{ height: '18px', width: '110px' }}
-                  shapes={granuleTimeTotal}
-                />
-              )
-            }
-            {!initialLoading && `Search Time: ${loadTimeInSeconds}s`}
+            <span className="collection-results-header__view">
+              <Button
+                className={viewButtonListClasses}
+                dataTestId="collection-results-header__view-button--list"
+                variant="naked"
+                icon="list"
+                label="Switch to list view"
+                onClick={() => { onChangePanelView('list') }}
+              />
+              <Button
+                className={viewButtonTableClasses}
+                dataTestId="collection-results-header__view-button--table"
+                variant="naked"
+                icon="table"
+                label="Switch to table view"
+                onClick={() => { onChangePanelView('table') }}
+              />
+            </span>
           </span>
         </div>
       </div>
@@ -421,10 +455,12 @@ GranuleResultsHeader.propTypes = {
   mapProjection: PropTypes.string.isRequired,
   secondaryOverlayPanel: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
+  onChangePanelView: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
-  pageNum: PropTypes.number.isRequired
+  pageNum: PropTypes.number.isRequired,
+  panelView: PropTypes.string.isRequired
 }
 
 export default GranuleResultsHeader

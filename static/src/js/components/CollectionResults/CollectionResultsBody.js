@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
 
 import CollectionResultsList from './CollectionResultsList'
-import CollectionResultsTable from '../CollectionResultsTable/CollectionResultsTable'
+import CollectionResultsTable from './CollectionResultsTable'
 import { formatCollectionList } from '../../util/formatCollectionList'
 
 
@@ -113,14 +113,14 @@ const CollectionResultsBody = ({
 CollectionResultsBody.propTypes = {
   browser: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
-  panelView: PropTypes.string.isRequired,
-  projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  loadNextPage: PropTypes.func.isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  loadNextPage: PropTypes.func.isRequired
+  onViewCollectionGranules: PropTypes.func.isRequired,
+  panelView: PropTypes.string.isRequired,
+  projectIds: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default CollectionResultsBody

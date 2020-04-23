@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import Cell from '../Cell'
+import EDSCTableCell from '../EDSCTableCell'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -14,7 +14,7 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<Cell {...props} />)
+  const enzymeWrapper = shallow(<EDSCTableCell {...props} />)
 
   return {
     enzymeWrapper,
@@ -22,11 +22,11 @@ function setup(overrideProps) {
   }
 }
 
-describe('Cell component', () => {
+describe('EDSCTableCell component', () => {
   test('renders correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('div').props().title).toEqual('test value')
-    expect(enzymeWrapper.find('div').props().children).toEqual('test value')
+    expect(enzymeWrapper.find('.edsc-table-cell').props().title).toEqual('test value')
+    expect(enzymeWrapper.find('.edsc-table-cell__content').text()).toEqual('test value')
   })
 })

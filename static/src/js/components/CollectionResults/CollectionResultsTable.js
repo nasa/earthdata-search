@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import { commafy } from '../../util/commafy'
 
-import Cell from './Cell'
-import CollectionCell from './CollectionCell'
+import Cell from '../EDSCTable/EDSCTableCell'
+import CollectionResultsTableHeaderCell from './CollectionResultsTableHeaderCell'
 import EDSCTable from '../EDSCTable/EDSCTable'
 
 import './CollectionResultsTable.scss'
@@ -38,7 +38,7 @@ export const CollectionResultsTable = ({
   const columns = useMemo(() => [
     {
       Header: 'Collection',
-      Cell: CollectionCell,
+      Cell: CollectionResultsTableHeaderCell,
       accessor: 'datasetId',
       sticky: 'left',
       width: '300',
@@ -80,7 +80,12 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Granules',
-      Cell: ({ cell }) => commafy(cell.value),
+      // eslint-disable-next-line react/display-name,react/prop-types
+      Cell: ({ cell }) => (
+        <div className="edsc-table-cell" title={commafy(cell.value)}>
+          {commafy(cell.value)}
+        </div>
+      ),
       accessor: 'granuleCount',
       width: '100',
       customProps: {

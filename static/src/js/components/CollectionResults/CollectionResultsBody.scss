@@ -3,13 +3,6 @@
   width: 100%;
   position: relative;
 
-  &__scroll-container {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: $color__black--100;
-  }
-
   &__view-enter {
     display: block;
     visibility: visible;

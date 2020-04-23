@@ -60,6 +60,7 @@ class SearchPanels extends PureComponent {
     this.onPanelClose = this.onPanelClose.bind(this)
     this.onChangePanel = this.onChangePanel.bind(this)
     this.onChangeCollectionPanelView = this.onChangeCollectionPanelView.bind(this)
+    this.onChangeGranulePanelView = this.onChangeGranulePanelView.bind(this)
     this.updatePanelViewState = this.updatePanelViewState.bind(this)
   }
 
@@ -189,13 +190,16 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="granule-results-panel"
-        header={
-          <GranuleResultsHeaderContainer />
-        }
+        header={(
+          <GranuleResultsHeaderContainer
+            panelView={granulePanelView}
+            onChangePanelView={this.onChangeGranulePanelView}
+          />
+        )}
         onPanelClose={this.onPanelClose}
       >
-        <PanelItem>
-          <GranuleResultsBodyContainer />
+        <PanelItem scrollable={false}>
+          <GranuleResultsBodyContainer panelView={granulePanelView} />
         </PanelItem>
       </PanelGroup>
     )

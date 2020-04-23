@@ -50,3 +50,24 @@ export const collectionResultsBodyData = {
   thumbnail: 'http://some.test.com/thumbnail/url.jpg',
   versionId: 2
 }
+
+export const collectionData = [{
+  collectionId: 'collectionId1',
+  datasetId: 'Test Collection',
+  description: 'This is a short summary.',
+  displayOrganization: 'TESTORG',
+  granuleCount: 10,
+  hasFormats: false,
+  hasSpatialSubsetting: false,
+  hasTemporalSubsetting: false,
+  hasTransforms: false,
+  hasVariables: false,
+  isCollectionInProject: false,
+  isCwic: false,
+  isLast: true,
+  isNrt: false,
+  shortName: 'cId1',
+  thumbnail: 'http://some.test.com/thumbnail/url.jpg',
+  temporalRange: '2010-10-10 to 2011-10-10',
+  versionId: '2'
+}]

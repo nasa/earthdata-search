@@ -34,9 +34,11 @@ function setup() {
     mapProjection: projections.geographic,
     secondaryOverlayPanel: {},
     onApplyGranuleFilters: jest.fn(),
+    onChangePanelView: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
-    onToggleSecondaryOverlayPanel: jest.fn()
+    onToggleSecondaryOverlayPanel: jest.fn(),
+    panelView: 'list'
   }
 
   const enzymeWrapper = shallow(<GranuleResultsHeaderContainer {...props} />)
@@ -49,7 +51,7 @@ function setup() {
 
 describe('GranuleResultsHeaderContainer component', () => {
   test('passes its props and renders a single GranuleResultsHeader component', () => {
-    const { enzymeWrapper } = setup()
+    const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsHeader).length).toBe(1)
     expect(enzymeWrapper.find(GranuleResultsHeader).props().focusedCollectionObject).toEqual({
@@ -58,5 +60,7 @@ describe('GranuleResultsHeaderContainer component', () => {
     })
     expect(enzymeWrapper.find(GranuleResultsHeader).props().location).toEqual({ value: 'location' })
     expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onApplyGranuleFilters).toEqual('function')
+    expect(enzymeWrapper.find(GranuleResultsHeader).props().onChangePanelView).toEqual(props.onChangePanelView)
+    expect(enzymeWrapper.find(GranuleResultsHeader).props().panelView).toEqual(props.panelView)
   })
 })

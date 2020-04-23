@@ -1,182 +1,152 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import AutoSizer from 'react-virtualized-auto-sizer'
 
-
-import { GranuleResultsList } from '../GranuleResultsList'
-import GranuleResultsItem from '../GranuleResultsItem'
-import Skeleton from '../../Skeleton/Skeleton'
+import GranuleResultsList from '../GranuleResultsList'
+import GranuleResultsListBody from '../GranuleResultsListBody'
 
 Enzyme.configure({ adapter: new Adapter() })
+
+const originalOffsetHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetHeight')
+const originalOffsetWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetWidth')
+
+beforeEach(() => {
+  jest.clearAllMocks()
+
+  // The AutoSizer requires that the offsetHeight and offsetWidth properties are set
+  Object.defineProperty(HTMLElement.prototype, 'offsetHeight', { configurable: true, value: 500 })
+  Object.defineProperty(HTMLElement.prototype, 'offsetWidth', { configurable: true, value: 800 })
+
+  window.getComputedStyle = jest.fn(() => ({ fontSize: 16 }))
+})
+
+afterEach(() => {
+  Object.defineProperty(HTMLElement.prototype, 'offsetHeight', originalOffsetHeight)
+  Object.defineProperty(HTMLElement.prototype, 'offsetWidth', originalOffsetWidth)
+})
 
 function setup(type) {
   let props
 
-  if (type === 'loading') {
-    props = {
-      collectionId: 'collectionId',
-      excludedGranuleIds: [],
-      focusedGranule: '',
-      granules: {
-        hits: null,
-        loadTime: null,
-        isLoading: true,
-        isLoaded: false,
-        allIds: [],
-        byId: {}
-      },
-      isCwic: false,
-      pageNum: 1,
-      location: { search: 'value' },
-      waypointEnter: jest.fn(),
-      scrollContainer: (() => {
-        const el = document.createElement('div')
-        el.classList.add('simplebar-content-wrapper')
-        return el
-      })(),
-      onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn(),
-      onMetricsDataAccess: jest.fn()
-    }
-  }
+  // if (type === 'loading') {
+  //   props = {
+  //     collectionId: 'collectionId',
+  //     excludedGranuleIds: [],
+  //     focusedGranule: '',
+  //     granules: [],
+  //     isCwic: false,
+  //     location: { search: 'value' },
+  //     onExcludeGranule: jest.fn(),
+  //     onFocusedGranuleChange: jest.fn(),
+  //     onMetricsDataAccess: jest.fn(),
+  //     itemCount: 2,
+  //     isItemLoaded: jest.fn(),
+  //     loadMoreItems: jest.fn(),
+  //     setVisibleMiddleIndex: jest.fn(),
+  //     visibleMiddleIndex: 1
+  //   }
+  // }
 
-  if (type === 'loadingMore') {
-    props = {
-      collectionId: 'collectionId',
-      excludedGranuleIds: [],
-      focusedGranule: '',
-      granules: {
-        hits: null,
-        loadTime: null,
-        isLoading: true,
-        isLoaded: false,
-        allIds: [],
-        byId: {}
-      },
-      isCwic: false,
-      pageNum: 2,
-      location: { search: 'value' },
-      waypointEnter: jest.fn(),
-      scrollContainer: (() => {
-        const el = document.createElement('div')
-        el.classList.add('simplebar-content-wrapper')
-        return el
-      })(),
-      onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn(),
-      onMetricsDataAccess: jest.fn()
-    }
-  }
+  // if (type === 'loadingMore') {
+  //   props = {
+  //     collectionId: 'collectionId',
+  //     excludedGranuleIds: [],
+  //     focusedGranule: '',
+  //     granules: [],
+  //     isCwic: false,
+  //     location: { search: 'value' },
+  //     onExcludeGranule: jest.fn(),
+  //     onFocusedGranuleChange: jest.fn(),
+  //     onMetricsDataAccess: jest.fn(),
+  //     itemCount: 1,
+  //     isItemLoaded: jest.fn(),
+  //     loadMoreItems: jest.fn(),
+  //     setVisibleMiddleIndex: jest.fn(),
+  //     visibleMiddleIndex: 1
+  //   }
+  // }
 
   if (type === 'loaded') {
     props = {
       collectionId: 'collectionId',
       excludedGranuleIds: [],
       focusedGranule: '',
-      granules: {
-        hits: 23,
-        loadTime: 1524,
-        isLoading: false,
-        isLoaded: true,
-        allIds: [
-          123,
-          456
-        ],
-        byId: {
-          123: {
-            title: '123'
-          },
-          456: {
-            title: '456'
-          }
+      granules: [
+        {
+          title: '123'
+        },
+        {
+          title: '456'
         }
-      },
+      ],
       isCwic: false,
-      pageNum: 1,
       location: { search: 'value' },
-      waypointEnter: jest.fn(),
-      scrollContainer: (() => {
-        const el = document.createElement('div')
-        el.classList.add('simplebar-content-wrapper')
-        return el
-      })(),
       onExcludeGranule: jest.fn(),
       onFocusedGranuleChange: jest.fn(),
-      onMetricsDataAccess: jest.fn()
+      onMetricsDataAccess: jest.fn(),
+      itemCount: 2,
+      isItemLoaded: jest.fn(),
+      loadMoreItems: jest.fn(),
+      setVisibleMiddleIndex: jest.fn(),
+      visibleMiddleIndex: 1
     }
   }
+  // }
 
-  if (type === 'excludedCmr') {
-    props = {
-      collectionId: 'collectionId',
-      excludedGranuleIds: ['G12345-PROV'],
-      focusedGranule: '',
-      granules: {
-        hits: 23,
-        loadTime: 1524,
-        isLoading: false,
-        isLoaded: true,
-        allIds: ['G12345-PROV', 'G56789-PROV'],
-        byId: {
-          'G12345-PROV': {
-            title: 'G12345-PROV'
-          },
-          'G56789-PROV': {
-            title: 'G56789-PROV'
-          }
-        }
-      },
-      isCwic: false,
-      pageNum: 1,
-      location: { search: 'value' },
-      waypointEnter: jest.fn(),
-      scrollContainer: (() => {
-        const el = document.createElement('div')
-        el.classList.add('simplebar-content-wrapper')
-        return el
-      })(),
-      onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn(),
-      onMetricsDataAccess: jest.fn()
-    }
-  }
+  // if (type === 'excludedCmr') {
+  //   props = {
+  //     collectionId: 'collectionId',
+  //     excludedGranuleIds: ['G12345-PROV'],
+  //     focusedGranule: '',
+  //     granules: [
+  //       {
+  //         title: 'G12345-PROV'
+  //       },
+  //       {
+  //         title: 'G56789-PROV'
+  //       }
+  //     ],
+  //     isCwic: false,
+  //     location: { search: 'value' },
+  //     onExcludeGranule: jest.fn(),
+  //     onFocusedGranuleChange: jest.fn(),
+  //     onMetricsDataAccess: jest.fn(),
+  //     itemCount: 2,
+  //     isItemLoaded: jest.fn(),
+  //     loadMoreItems: jest.fn(),
+  //     setVisibleMiddleIndex: jest.fn(),
+  //     visibleMiddleIndex: 1
+  //   }
+  // }
 
-  if (type === 'excludedCwic') {
-    props = {
-      collectionId: 'collectionId',
-      excludedGranuleIds: ['329585043'],
-      focusedGranule: '',
-      granules: {
-        hits: 23,
-        loadTime: 1524,
-        isLoading: false,
-        isLoaded: true,
-        allIds: ['12345', '56789'],
-        byId: {
-          12345: {
-            title: '12345 Granule'
-          },
-          56789: {
-            title: '56789 Granule'
-          }
-        }
-      },
-      isCwic: true,
-      pageNum: 1,
-      location: { search: 'value' },
-      waypointEnter: jest.fn(),
-      scrollContainer: (() => {
-        const el = document.createElement('div')
-        el.classList.add('simplebar-content-wrapper')
-        return el
-      })(),
-      onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn(),
-      onMetricsDataAccess: jest.fn()
-    }
-  }
+  // if (type === 'excludedCwic') {
+  //   props = {
+  //     collectionId: 'collectionId',
+  //     excludedGranuleIds: ['329585043'],
+  //     focusedGranule: '',
+  //     granules: [
+  //       {
+  //         title: '12345 Granule'
+  //       },
+  //       {
+  //         title: '56789 Granule'
+  //       }
+  //     ],
+  //     isCwic: true,
+  //     location: { search: 'value' },
+  //     onExcludeGranule: jest.fn(),
+  //     onFocusedGranuleChange: jest.fn(),
+  //     onMetricsDataAccess: jest.fn(),
+  //     itemCount: 2,
+  //     isItemLoaded: jest.fn(),
+  //     loadMoreItems: jest.fn(),
+  //     setVisibleMiddleIndex: jest.fn(),
+  //     visibleMiddleIndex: 1
+  //   }
+  // }
 
-  const enzymeWrapper = shallow(<GranuleResultsList {...props} />)
+  const enzymeWrapper = mount(<GranuleResultsList {...props} />)
 
   return {
     enzymeWrapper,
@@ -186,46 +156,30 @@ function setup(type) {
 
 describe('GranuleResultsList component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup('loading')
+    const { enzymeWrapper } = setup('loaded')
 
-    expect(enzymeWrapper.type()).toBe('div')
-    expect(enzymeWrapper.prop('className')).toBe('granule-results-list')
+    expect(enzymeWrapper.exists()).toEqual(true)
+    expect(enzymeWrapper.childAt(0).props().className).toBe('granule-results-list')
   })
 
-  test('should pass the scrollContainer to the items', () => {
-    const { enzymeWrapper, props } = setup('loaded')
+  test('renders the AutoSizer', () => {
+    const { enzymeWrapper } = setup('loaded')
 
-    expect(enzymeWrapper.find(GranuleResultsItem).at(1).prop('scrollContainer'))
-      .toEqual(props.scrollContainer)
+    expect(enzymeWrapper.find(AutoSizer).length).toEqual(1)
   })
 
-  describe('while loading more pages', () => {
-    test('renders the correct Skeleton elements', () => {
-      const { enzymeWrapper } = setup('loadingMore')
-
-      expect(enzymeWrapper.find('.granule-results-list__list').find(Skeleton).length).toEqual(1)
-    })
-  })
-
-  describe('when loaded', () => {
-    test('renders the correct GranuleResultsItem components', () => {
+  describe('GranuleResultsListBody', () => {
+    test('renders the GranuleResultsListBody', () => {
       const { enzymeWrapper } = setup('loaded')
 
-      expect(enzymeWrapper.find(GranuleResultsItem).length).toEqual(2)
+      expect(enzymeWrapper.find(GranuleResultsListBody).length).toEqual(1)
     })
 
-    test('removes CMR excludedGranules from the list', () => {
-      const { enzymeWrapper } = setup('excludedCmr')
+    test('recieves the correct height and width props', () => {
+      const { enzymeWrapper } = setup('loaded')
 
-      expect(enzymeWrapper.find(GranuleResultsItem).length).toEqual(1)
-      expect(enzymeWrapper.find(GranuleResultsItem).props().granule).toEqual({ title: 'G56789-PROV' })
-    })
-
-    test('removes CWIC excludedGranules from the list', () => {
-      const { enzymeWrapper } = setup('excludedCwic')
-
-      expect(enzymeWrapper.find(GranuleResultsItem).length).toEqual(1)
-      expect(enzymeWrapper.find(GranuleResultsItem).props().granule).toEqual({ title: '56789 Granule' })
+      expect(enzymeWrapper.find(GranuleResultsListBody).prop('height')).toEqual(500)
+      expect(enzymeWrapper.find(GranuleResultsListBody).prop('width')).toEqual(800)
     })
   })
 })

@@ -40,9 +40,11 @@ export const GranuleResultsHeaderContainer = (props) => {
     mapProjection,
     secondaryOverlayPanel,
     onApplyGranuleFilters,
+    onChangePanelView,
     onToggleAboutCwicModal,
     onToggleSecondaryOverlayPanel,
-    onUndoExcludeGranule
+    onUndoExcludeGranule,
+    panelView
   } = props
 
   const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
@@ -59,10 +61,12 @@ export const GranuleResultsHeaderContainer = (props) => {
         mapProjection={mapProjection}
         secondaryOverlayPanel={secondaryOverlayPanel}
         onApplyGranuleFilters={onApplyGranuleFilters}
+        onChangePanelView={onChangePanelView}
         onToggleAboutCwicModal={onToggleAboutCwicModal}
         onToggleSecondaryOverlayPanel={onToggleSecondaryOverlayPanel}
         onUndoExcludeGranule={onUndoExcludeGranule}
         pageNum={pageNum}
+        panelView={panelView}
       />
     </>
   )
@@ -77,9 +81,11 @@ GranuleResultsHeaderContainer.propTypes = {
   mapProjection: PropTypes.string.isRequired,
   secondaryOverlayPanel: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
+  onChangePanelView: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
-  onUndoExcludeGranule: PropTypes.func.isRequired
+  onUndoExcludeGranule: PropTypes.func.isRequired,
+  panelView: PropTypes.string.isRequired
 }
 
 export default withRouter(

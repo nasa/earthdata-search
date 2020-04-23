@@ -19,16 +19,60 @@ function setup(options = {
     excludedGranuleIds: [],
     focusedGranule: '',
     granules: {
-      one: 'test',
-      two: 'test'
+      allIds: ['one', 'two'],
+      byId: {
+        one: {
+          id: 'two',
+          browse_flag: true,
+          online_access_flag: true,
+          day_night_flag: 'DAY',
+          formatted_temporal: [
+            '2019-04-28 00:00:00',
+            '2019-04-29 23:59:59'
+          ],
+          thumbnail: '/fake/path/image.jpg',
+          title: 'Granule title one',
+          links: [
+            {
+              rel: 'http://linkrel/data#',
+              title: 'linktitle',
+              href: 'http://linkhref'
+            }
+          ]
+        },
+        two: {
+          id: 'two',
+          browse_flag: true,
+          online_access_flag: true,
+          day_night_flag: 'DAY',
+          formatted_temporal: [
+            '2019-04-28 00:00:00',
+            '2019-04-29 23:59:59'
+          ],
+          thumbnail: '/fake/path/image.jpg',
+          title: 'Granule title twwo',
+          links: [
+            {
+              rel: 'http://linkrel/data#',
+              title: 'linktitle',
+              href: 'http://linkhref'
+            }
+          ]
+        }
+      },
+      hits: '2',
+      isLoaded: true,
+      isLoading: false,
+      loadTime: 1123,
+      timerStart: null
     },
     isCwic: false,
-    pageNum: 1,
+    loadNextPage: jest.fn(),
     location: { search: 'value' },
-    waypointEnter: jest.fn(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
-    onMetricsDataAccess: jest.fn()
+    onMetricsDataAccess: jest.fn(),
+    panelView: 'list'
   }
 
   let enzymeWrapper
@@ -49,7 +93,7 @@ describe('GranuleResultsBody component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.type()).toBe('div')
+    expect(enzymeWrapper.exists()).toEqual(true)
     expect(enzymeWrapper.prop('className')).toBe('granule-results-body')
   })
 
@@ -57,12 +101,17 @@ describe('GranuleResultsBody component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsList).length).toEqual(1)
-    expect(enzymeWrapper.find(GranuleResultsList).props().granules).toEqual({
-      one: 'test',
-      two: 'test'
-    })
-    expect(enzymeWrapper.find(GranuleResultsList).props().pageNum).toEqual(1)
-    expect(typeof enzymeWrapper.find(GranuleResultsList).props().waypointEnter).toEqual('function')
+    expect(enzymeWrapper.find(GranuleResultsList).props().granules[0]).toEqual(
+      expect.objectContaining({
+        title: 'Granule title one'
+      })
+    )
+
+    expect(enzymeWrapper.find(GranuleResultsList).props().granules[1]).toEqual(
+      expect.objectContaining({
+        title: 'Granule title twwo'
+      })
+    )
   })
 
   test('passes the onMetricsDataAccess callback to the GranuleResultsList component', () => {
@@ -71,5 +120,32 @@ describe('GranuleResultsBody component', () => {
     expect(enzymeWrapper.find(GranuleResultsList).length).toEqual(1)
     expect(enzymeWrapper.find(GranuleResultsList).props().onMetricsDataAccess)
       .toEqual(props.onMetricsDataAccess)
+  })
+
+  test('renders the correct search time', () => {
+    const { enzymeWrapper } = setup({
+      focusedCollectionObject: {
+        granules: {
+          hits: 23,
+          loadTime: 1524,
+          isLoading: false,
+          isLoaded: true,
+          allIds: [
+            123,
+            456
+          ],
+          byId: {
+            123: {
+              title: '123'
+            },
+            456: {
+              title: '456'
+            }
+          }
+        }
+      }
+    })
+
+    expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('1.1s')
   })
 })

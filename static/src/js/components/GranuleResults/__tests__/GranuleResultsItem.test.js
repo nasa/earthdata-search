@@ -1,7 +1,8 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import GranuleResultsItem, { DataLinksButton } from '../GranuleResultsItem'
+import GranuleResultsItem from '../GranuleResultsItem'
+import GranuleResultsDataLinksButton from '../GranuleResultsDataLinksButton'
 import * as EventEmitter from '../../../events/events'
 import Button from '../../Button/Button'
 
@@ -9,18 +10,12 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(type) {
   const defaultProps = {
-    browse_url: undefined,
+    browseUrl: undefined,
     collectionId: 'collectionId',
     focusedGranule: '',
     isFocused: false,
     isLast: false,
     location: { search: 'location' },
-    waypointEnter: jest.fn(),
-    scrollContainer: (() => {
-      const el = document.createElement('div')
-      el.classList.add('simplebar-content-wrapper')
-      return el
-    })(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn()
@@ -32,15 +27,17 @@ function setup(type) {
       ...defaultProps,
       granule: {
         id: 'granuleId',
-        browse_flag: true,
-        online_access_flag: true,
-        formatted_temporal: [
+        browseFlag: true,
+        onlineAccessFlag: true,
+        formattedTemporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
-        thumbnail: '/fake/path/image.jpg',
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
+        granuleThumbnail: '/fake/path/image.jpg',
         title: 'Granule title',
-        links: [
+        dataLinks: [
           {
             rel: 'http://linkrel/data#',
             title: 'linktitle',
@@ -56,15 +53,17 @@ function setup(type) {
       ...defaultProps,
       granule: {
         id: 'granuleId',
-        browse_flag: true,
-        online_access_flag: true,
-        formatted_temporal: [
+        browseFlag: true,
+        onlineAccessFlag: false,
+        formattedTemporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
-        thumbnail: '/fake/path/image.jpg',
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
+        granuleThumbnail: '/fake/path/image.jpg',
         title: 'Granule title',
-        links: [
+        dataLinks: [
           {
             rel: 'http://linkrel/data#',
             title: 'linktitle',
@@ -81,14 +80,16 @@ function setup(type) {
       focusedGranule: 'granuleId',
       granule: {
         id: 'granuleId',
-        browse_flag: true,
-        formatted_temporal: [
+        browseFlag: true,
+        formattedTemporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
-        thumbnail: '/fake/path/image.jpg',
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
+        granuleThumbnail: '/fake/path/image.jpg',
         title: 'Granule title',
-        links: [
+        dataLinks: [
           {
             rel: 'http://linkrel',
             title: 'linktitle',
@@ -103,13 +104,15 @@ function setup(type) {
     props = {
       ...defaultProps,
       granule: {
-        browse_flag: false,
-        formatted_temporal: [
+        browseFlag: false,
+        formattedTemporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
         title: 'Granule title',
-        links: [
+        dataLinks: [
           {
             rel: 'http://linkrel/data#',
             title: 'linktitle',
@@ -124,15 +127,17 @@ function setup(type) {
     props = {
       ...defaultProps,
       granule: {
-        browse_flag: true,
-        browse_url: 'https://test.com/browse_image',
-        formatted_temporal: [
+        browseFlag: true,
+        browseUrl: 'https://test.com/browse_image',
+        formattedTemporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
         title: 'Granule title',
-        thumbnail: '/fake/path/image.jpg',
-        links: [
+        granuleThumbnail: '/fake/path/image.jpg',
+        dataLinks: [
           {
             rel: 'http://linkrel/data#',
             title: 'linktitle',
@@ -148,15 +153,17 @@ function setup(type) {
       ...defaultProps,
       granule: {
         id: 'granuleId',
-        browse_flag: true,
-        formatted_temporal: [
+        browseFlag: true,
+        formattedTemporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
+        title: 'Granule title',
         is_cwic: true,
-        producer_granule_id: 'Granule title',
-        thumbnail: '/fake/path/image.jpg',
-        links: [
+        granuleThumbnail: '/fake/path/image.jpg',
+        dataLinks: [
           {
             rel: 'http://linkrel/data#',
             title: 'linktitle',
@@ -172,15 +179,17 @@ function setup(type) {
       ...defaultProps,
       granule: {
         id: 'granuleId',
-        browse_flag: true,
-        online_access_flag: true,
-        formatted_temporal: [
+        browseFlag: true,
+        onlineAccessFlag: true,
+        formattedTemporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
-        thumbnail: '/fake/path/image.jpg',
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
+        granuleThumbnail: '/fake/path/image.jpg',
         title: 'Granule title',
-        links: [
+        dataLinks: [
           {
             rel: 'http://linkrel/data#',
             title: 'linktitle',
@@ -208,7 +217,8 @@ describe('GranuleResultsItem component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup('cmr')
 
-    expect(enzymeWrapper.type()).toBe('li')
+    expect(enzymeWrapper.exists()).toEqual(true)
+    expect(enzymeWrapper.type()).toBe('div')
   })
 
   describe('when passed a CMR granule', () => {
@@ -288,87 +298,78 @@ describe('GranuleResultsItem component', () => {
   describe('download button', () => {
     test('is passed the metrics callback', () => {
       const { enzymeWrapper, props } = setup('cmr')
-      const dataLinksButton = enzymeWrapper.find('DataLinksButton')
+      const dataLinksButton = enzymeWrapper.find(GranuleResultsDataLinksButton)
 
       expect(dataLinksButton.props().onMetricsDataAccess).toEqual(props.onMetricsDataAccess)
     })
   })
 
   describe('download button with no link', () => {
-    test('disables the buttom', () => {
+    test('disables the button', () => {
       const { enzymeWrapper } = setup('cmr-no-download')
 
-      const downloadButton = enzymeWrapper.find(DataLinksButton)
+      const downloadButton = enzymeWrapper.find(GranuleResultsDataLinksButton)
 
-      expect(downloadButton.props().dataLinks).toEqual([])
+      expect(downloadButton.length).toEqual(0)
     })
   })
 
-  describe('granule map events', () => {
-    test('hovering over a granule highlights the granule on the map', () => {
-      const { enzymeWrapper, props } = setup('cmr')
+  // describe('granule map events', () => {
+  //   test('hovering over a granule highlights the granule on the map', () => {
+  //     const { enzymeWrapper, props } = setup('cmr')
 
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-      eventEmitterEmitMock.mockImplementation(() => jest.fn())
+  //     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+  //     eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
-      const item = enzymeWrapper.find('.granule-results-item')
-      item.simulate('mouseenter')
+  //     const item = enzymeWrapper.find('.granule-results-item')
+  //     item.simulate('mouseenter')
 
-      expect(eventEmitterEmitMock).toBeCalledTimes(1)
-      expect(eventEmitterEmitMock).toBeCalledWith('map.focusgranule', { granule: props.granule })
+  //     expect(eventEmitterEmitMock).toBeCalledTimes(1)
+  //     expect(eventEmitterEmitMock).toBeCalledWith('map.focusgranule', { granule: props.granule })
 
-      jest.clearAllMocks()
-      item.simulate('mouseleave')
+  //     jest.clearAllMocks()
+  //     item.simulate('mouseleave')
 
-      expect(eventEmitterEmitMock).toBeCalledTimes(1)
-      expect(eventEmitterEmitMock).toBeCalledWith('map.focusgranule', { granule: null })
-    })
+  //     expect(eventEmitterEmitMock).toBeCalledTimes(1)
+  //     expect(eventEmitterEmitMock).toBeCalledWith('map.focusgranule', { granule: null })
+  //   })
 
-    test('clicking on a granule sets that granule as sticky on the map', () => {
-      const { enzymeWrapper, props } = setup('cmr')
+  //   test('clicking on a granule sets that granule as sticky on the map', () => {
+  //     const { enzymeWrapper, props } = setup('cmr')
 
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-      eventEmitterEmitMock.mockImplementation(() => jest.fn())
+  //     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+  //     eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
-      const itemHeader = enzymeWrapper.find('.granule-results-item__header')
-      itemHeader.simulate('click')
+  //     const itemHeader = enzymeWrapper.find('.granule-results-item__header')
+  //     itemHeader.simulate('click')
 
-      expect(eventEmitterEmitMock).toBeCalledTimes(1)
-      expect(eventEmitterEmitMock).toBeCalledWith('map.stickygranule', { granule: props.granule })
-    })
+  //     expect(eventEmitterEmitMock).toBeCalledTimes(1)
+  //     expect(eventEmitterEmitMock).toBeCalledWith('map.stickygranule', { granule: props.granule })
+  //   })
 
-    test('clicking on a focused granule removes that granule as sticky on the map', () => {
-      const { enzymeWrapper } = setup('focusedGranule')
+  //   test('clicking on a focused granule removes that granule as sticky on the map', () => {
+  //     const { enzymeWrapper } = setup('focusedGranule')
 
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-      eventEmitterEmitMock.mockImplementation(() => jest.fn())
+  //     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+  //     eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
-      const itemHeader = enzymeWrapper.find('.granule-results-item__header')
-      itemHeader.simulate('click')
+  //     const itemHeader = enzymeWrapper.find('.granule-results-item__header')
+  //     itemHeader.simulate('click')
 
-      expect(eventEmitterEmitMock).toBeCalledTimes(1)
-      expect(eventEmitterEmitMock).toBeCalledWith('map.stickygranule', { granule: null })
-    })
-  })
+  //     expect(eventEmitterEmitMock).toBeCalledTimes(1)
+  //     expect(eventEmitterEmitMock).toBeCalledWith('map.stickygranule', { granule: null })
+  //   })
+  // })
 
-  describe('when the last item in the list', () => {
-    test('should pass the scrollContainer to the Waypoint', () => {
-      const { enzymeWrapper, props } = setup('is-last')
-
-      expect(enzymeWrapper.find('Waypoint').prop('scrollableAncestor'))
-        .toEqual(props.scrollContainer)
-    })
-  })
-
-  describe('without an thumbnail', () => {
-    test('does not render an thumbnail', () => {
+  describe('without an granuleThumbnail', () => {
+    test('does not render an granuleThumbnail', () => {
       const { enzymeWrapper } = setup('no-thumb')
 
       expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(0)
     })
   })
 
-  describe('with a thumbnail', () => {
+  describe('with a granuleThumbnail', () => {
     test('without a full size browse', () => {
       const { enzymeWrapper } = setup('cmr')
 
@@ -380,6 +381,19 @@ describe('GranuleResultsItem component', () => {
       const { enzymeWrapper } = setup('with-browse')
       expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(1)
       expect(enzymeWrapper.find('.granule-results-item__thumb').type()).toEqual('a')
+    })
+  })
+
+  describe('granule info button', () => {
+    test('calls handleClickGranuleDetails on click', () => {
+      const { enzymeWrapper, props } = setup('cmr')
+
+      const infoButton = enzymeWrapper.find('.granule-results-item__button--info')
+
+      infoButton.simulate('click')
+
+      expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
+      expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('granuleId')
     })
   })
 })

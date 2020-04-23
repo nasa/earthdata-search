@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import CollectionCell from '../CollectionCell'
+import CollectionResultsTableHeaderCell from '../CollectionResultsTableHeaderCell'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -28,7 +28,7 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<CollectionCell {...props} />)
+  const enzymeWrapper = shallow(<CollectionResultsTableHeaderCell {...props} />)
 
   return {
     enzymeWrapper,
@@ -36,7 +36,7 @@ function setup(overrideProps) {
   }
 }
 
-describe('CollectionCell component', () => {
+describe('CollectionResultsTableHeaderCell component', () => {
   test('renders correctly', () => {
     const { enzymeWrapper } = setup()
 

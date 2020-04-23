@@ -82,6 +82,7 @@
   &__meta {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: $spacer/4 $spacer;
     border-top: 1px solid $color__black--200;
     font-size: 0.75rem;

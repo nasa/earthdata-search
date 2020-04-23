@@ -31,8 +31,6 @@ describe('PreferencesRadioField component', () => {
   test('renders a radio form field', () => {
     const { enzymeWrapper } = setup()
 
-    console.log(enzymeWrapper.debug())
-
     const input1 = enzymeWrapper.find(FormCheck).first()
     const input2 = enzymeWrapper.find(FormCheck).last()
 
