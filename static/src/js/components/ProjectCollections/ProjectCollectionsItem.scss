@@ -110,6 +110,9 @@
     }
 
     &--invalid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: $color__red;
     }
   }

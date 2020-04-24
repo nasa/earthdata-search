@@ -6,6 +6,7 @@ import { AccessMethod } from '../AccessMethod'
 import Radio from '../../FormFields/Radio/Radio'
 import RadioList from '../../FormFields/Radio/RadioList'
 import EchoForm from '../EchoForm'
+import ProjectPanelSection from '../../ProjectPanels/ProjectPanelSection'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -165,6 +166,34 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method has an echoform', () => {
+    test('lazy loads the echoforms component and provides the correct fallback', () => {
+      const collectionId = 'collectionId'
+      const form = 'echo form here'
+
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setProps({
+        accessMethods: {
+          echoOrder0: {
+            isValid: true,
+            type: 'ECHO ORDERS',
+            form
+          }
+        },
+        metadata: { id: collectionId },
+        selectedAccessMethod: 'echoOrder0'
+      })
+
+      enzymeWrapper.update()
+
+      const echoFormWrapper = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const suspenseComponent = echoFormWrapper.childAt(0)
+      const echoForm = suspenseComponent.childAt(0)
+
+      expect(echoFormWrapper.childAt(0).props().fallback.props.className).toEqual('access-method__echoform-loading')
+      expect(echoForm.props().form).toEqual(form)
+    })
+
     test('renders an echoform', () => {
       const collectionId = 'collectionId'
       const form = 'echo form here'
@@ -183,7 +212,12 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      const echoForm = enzymeWrapper.find(EchoForm)
+      enzymeWrapper.update()
+
+      const echoFormWrapper = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const suspenseComponent = echoFormWrapper.childAt(0)
+      const echoForm = suspenseComponent.childAt(0)
+
       expect(echoForm.props().collectionId).toEqual(collectionId)
       expect(echoForm.props().form).toEqual(form)
       expect(echoForm.props().methodKey).toEqual('echoOrder0')
@@ -211,7 +245,10 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      const echoForm = enzymeWrapper.find(EchoForm)
+      const echoFormWrapper = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const suspenseComponent = echoFormWrapper.childAt(0)
+      const echoForm = suspenseComponent.childAt(0)
+
       expect(echoForm.props().collectionId).toEqual(collectionId)
       expect(echoForm.props().form).toEqual(form)
       expect(echoForm.props().methodKey).toEqual('echoOrder0')
