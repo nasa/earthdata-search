@@ -1,19 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { pluralize } from '../../util/pluralize'
 
-import Skeleton from '../Skeleton/Skeleton'
+import Button from '../Button/Button'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import Radio from '../FormFields/Radio/Radio'
 import RadioList from '../FormFields/Radio/RadioList'
-
-import EchoForm from './EchoForm'
-import Button from '../Button/Button'
+import Skeleton from '../Skeleton/Skeleton'
+import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+const EchoForm = lazy(() => import('./EchoForm'))
 
 const downloadButton = collectionId => (
   <Radio
@@ -293,7 +294,7 @@ export class AccessMethod extends Component {
     const selectedMethod = accessMethods[selectedAccessMethod]
     const {
       form,
-      rawModel,
+      rawModel = null,
       selectedVariables = [],
       supportedOutputFormats = []
     } = selectedMethod || {}
@@ -312,6 +313,12 @@ export class AccessMethod extends Component {
         <option key={format} value={formatMapping[format]}>{format}</option>
       ))
     }
+
+    const echoFormFallback = (
+      <div className="access-method__echoform-loading">
+        <Spinner className="access-method__echoform-spinner" size="tiny" type="dots" />
+      </div>
+    )
 
     return (
       <div className="access-method">
@@ -334,15 +341,17 @@ export class AccessMethod extends Component {
         {
           form && isActive && (
             <ProjectPanelSection>
-              <EchoForm
-                collectionId={collectionId}
-                form={form}
-                methodKey={selectedAccessMethod}
-                rawModel={rawModel}
-                shapefileId={shapefileId}
-                spatial={spatial}
-                onUpdateAccessMethod={onUpdateAccessMethod}
-              />
+              <Suspense fallback={echoFormFallback}>
+                <EchoForm
+                  collectionId={collectionId}
+                  form={form}
+                  methodKey={selectedAccessMethod}
+                  rawModel={rawModel}
+                  shapefileId={shapefileId}
+                  spatial={spatial}
+                  onUpdateAccessMethod={onUpdateAccessMethod}
+                />
+              </Suspense>
             </ProjectPanelSection>
           )
         }
