@@ -58,7 +58,7 @@ const CollectionResultsBody = ({
   const itemCount = hasNextPage ? collectionList.length + 1 : collectionList.length
 
   // If collections are currently loading, pass an empty function, otherwise load more collections.
-  const loadMoreItems = isLoading ? () => { } : loadNextPage
+  const loadMoreItems = isLoading ? () => {} : loadNextPage
 
   // Callback to check if a particular collection has loaded.
   const isItemLoaded = index => !hasNextPage || index < collectionList.length

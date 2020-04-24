@@ -38,7 +38,7 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
           totalColumnsWidth,
           width
         }) => {
-          const actualWidth = width > totalColumnsWidth ? width : totalColumnsWidth
+          const actualWidth = Math.max(width, totalColumnsWidth)
           const { style: originalTableBodyStyle, ...tableBodyRest } = getTableBodyProps()
 
           const tableBodyStyle = {

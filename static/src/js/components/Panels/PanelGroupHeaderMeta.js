@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 /**
  * Renders PanelGroupHeaderMeta.
- * @param {object} props - The props passed into the component.
- * @param {string} props.children - Children components.
+ * @param {Object} props - The props passed into the component.
+ * @param {String} props.children - Children components.
  */
 export const PanelGroupHeaderMeta = ({
   children

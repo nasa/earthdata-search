@@ -42,8 +42,7 @@ export const formatGranulesList = (granules, granuleIds, focusedGranule) => {
 
     const title = producerGranuleId || granuleTitle
     const temporal = formattedTemporal
-    const timeStart = temporal[0]
-    const timeEnd = temporal[1]
+    const [timeStart, timeEnd] = temporal
     const thumbnail = browseFlag ? granuleThumbnail : false
 
     const dataLinks = createDataLinks(links)

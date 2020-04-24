@@ -82,19 +82,16 @@
       }
     }
 
-    &--add {
-      color: $color__green;
-
-      &:hover {
-        color: darken($color__green--dark, 5);
-      }
-    }
-
     &--remove {
-      color: $color__red;
+      color: $color__black--400;
 
       &:hover {
-        color: darken($color__red--dark, 5);
+        color: $color__black--600;
+      }
+
+      .fa {
+        position: relative;
+        top: -0.05rem;
       }
     }
   }

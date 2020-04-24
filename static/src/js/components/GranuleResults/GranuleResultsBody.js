@@ -90,7 +90,7 @@ const GranuleResultsBody = ({
   const itemCount = hasNextPage ? granulesList.length + 1 : granulesList.length
 
   // If collections are currently loading, pass an empty function, otherwise load more collections.
-  const loadMoreItems = isLoading || loadingFirstGranules ? () => { } : loadNextPage
+  const loadMoreItems = isLoading || loadingFirstGranules ? () => {} : loadNextPage
 
   // Callback to check if a particular collection has loaded.
   const isItemLoaded = index => !hasNextPage || index < granulesList.length

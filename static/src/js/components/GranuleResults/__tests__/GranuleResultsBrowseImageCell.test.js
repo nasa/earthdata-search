@@ -9,9 +9,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     row: {
-      original: {
-
-      }
+      original: {}
     },
     ...overrideProps
   }
