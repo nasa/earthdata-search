@@ -141,7 +141,6 @@ class GranuleResultsHeader extends Component {
 
     const {
       hits,
-      loadTime,
       isLoading,
       isLoaded
     } = granules
@@ -153,8 +152,6 @@ class GranuleResultsHeader extends Component {
     const handoffLinks = generateHandoffs(metadata, collectionSearch, mapProjection)
 
     const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
-    // eslint-disable-next-line no-unused-vars
-    const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
     const allGranuleIds = granules.allIds
     let granuleIds

@@ -275,8 +275,6 @@ describe('GranuleResultsBody component', () => {
       }
     })
 
-    // console.log('enzymeWrapper', enzymeWrapper.debug())
-
     expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('1.1s')
   })
 
