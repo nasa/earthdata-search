@@ -8,6 +8,7 @@ import PanelSection from './PanelSection'
 import PanelGroup from './PanelGroup'
 
 import history from '../../util/history'
+import { getPanelSizeMap } from '../../util/getPanelSizeMap'
 
 import './Panels.scss'
 
@@ -469,22 +470,16 @@ export class Panels extends PureComponent {
   updateResponsiveClassNames() {
     const { width } = this
 
-    const sizes = {
-      'panels--xs': true,
-      'panels--sm': width >= 500,
-      'panels--md': width >= 700,
-      'panels--lg': width >= 900,
-      'panels--xl': width >= 1100
-    }
+    const sizes = getPanelSizeMap(width)
 
     // Apply the active class names to the responsive container. A separate container
     // is being used here because these class names need to be set outside of react
     // and might get wiped out on rerender.
     Object.keys(sizes).forEach((size) => {
       if (sizes[size]) {
-        this.responsiveContainer.classList.add(size)
+        this.responsiveContainer.classList.add(`panels--${size}`)
       } else {
-        this.responsiveContainer.classList.remove(size)
+        this.responsiveContainer.classList.remove(`panels--${size}`)
       }
     })
   }

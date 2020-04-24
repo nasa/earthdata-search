@@ -6,7 +6,8 @@ import React, {
   useRef
 } from 'react'
 import PropTypes from 'prop-types'
-import { useTable, useBlockLayout } from 'react-table'
+import { useTable, useBlockLayout, useRowState } from 'react-table'
+import { isEmpty } from 'lodash'
 import classNames from 'classnames'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import InfiniteLoader from 'react-window-infinite-loader'
@@ -32,39 +33,62 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
     <EDSCTableContext.Consumer>
       {
         ({
+          getTableBodyProps,
           headerGroups,
-          getTableBodyProps
-        }) => (
-          <>
-            <div className="edsc-table__thead">
-              {headerGroups.map((headerGroup) => {
-                const { key, ...rest } = headerGroup.getHeaderGroupProps()
-                return (
-                  <div key={key} {...rest} className="edsc-table__tr">
-                    {headerGroup.headers.map((column) => {
-                      const { key, ...rest } = column.getHeaderProps()
-                      const { customProps = {} } = column
-                      const thClassNames = classNames([
-                        'edsc-table__th',
-                        {
-                          [`${customProps.headerClassName}`]: customProps.headerClassName
-                        }
-                      ])
-                      return (
-                        <div key={key} {...rest} className={thClassNames}>
-                          {column.render('Header')}
-                        </div>
-                      )
-                    })}
-                  </div>
-                )
-              })}
-            </div>
-            <div ref={ref} {...getTableBodyProps()} className="edsc-table__tbody" style={{ ...style }}>
-              {children}
-            </div>
-          </>
-        )
+          totalColumnsWidth,
+          width
+        }) => {
+          const actualWidth = Math.max(width, totalColumnsWidth)
+          const { style: originalTableBodyStyle, ...tableBodyRest } = getTableBodyProps()
+
+          const tableBodyStyle = {
+            ...style,
+            ...originalTableBodyStyle,
+            width: actualWidth
+          }
+
+          return (
+            <>
+              <div className="edsc-table__thead">
+                {headerGroups.map((headerGroup) => {
+                  const {
+                    key,
+                    style,
+                    ...rest
+                  } = headerGroup.getHeaderGroupProps()
+
+                  const trStyle = {
+                    ...style,
+                    width: actualWidth
+                  }
+
+                  return (
+                    <div key={key} {...rest} style={trStyle} className="edsc-table__tr">
+                      {headerGroup.headers.map((column) => {
+                        const { key, ...rest } = column.getHeaderProps()
+                        const { customProps = {} } = column
+                        const thClassNames = classNames([
+                          'edsc-table__th',
+                          {
+                            [`${customProps.headerClassName}`]: customProps.headerClassName
+                          }
+                        ])
+                        return (
+                          <div key={key} {...rest} className={thClassNames}>
+                            {column.render('Header')}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )
+                })}
+              </div>
+              <div ref={ref} {...tableBodyRest} style={tableBodyStyle} className="edsc-table__tbody">
+                {children}
+              </div>
+            </>
+          )
+        }
       }
     </EDSCTableContext.Consumer>
   )
@@ -83,8 +107,15 @@ innerElementType.displayName = 'EDSCTableInnerElement'
  * @param {Array} props.data - The collection data.
  * @param {String} props.id - A unique id to pass the table.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
+ * @param {Object} props.initialTableState - The initial state to be passed to react-table.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
+ * @param {Function} props.initialRowStateAccessor - initialRowStateAccessor to be passed to react-table.
+ * @param {Function} props.rowClassNamesFromRowState - Callback to detirmine the classnames of a row based on its state.
+ * @param {Function} props.onRowMouseEnter - Callback for onRowMouseEnter.
+ * @param {Function} props.onRowMouseLeave - Callback for onRowMouseLeave.
+ * @param {Function} props.onRowFocus - Callback for onRowFocus.
+ * @param {Function} props.onRowBlur - Callback for onRowBlur.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
  * @param {String} props.visibleMiddleIndex - The current middle item.
  */
@@ -97,11 +128,22 @@ const EDSCTable = ({
   loadMoreItems,
   rowTestId,
   setVisibleMiddleIndex,
-  visibleMiddleIndex
+  striped,
+  visibleMiddleIndex,
+  initialRowStateAccessor,
+  initialTableState,
+  rowClassNamesFromRowState,
+  onRowMouseEnter,
+  onRowMouseLeave,
+  onRowFocus,
+  onRowBlur
 }) => {
   const tableClassName = classNames([
     'edsc-table',
-    'edsc-table__table--sticky'
+    'edsc-table__table--sticky',
+    {
+      'edsc-table__table--striped': striped
+    }
   ])
 
   const listRef = useRef(null)
@@ -119,20 +161,42 @@ const EDSCTable = ({
     if (scrollToItem && listRef.current) listRef.current.scrollToItem(scrollToItem, 'center')
   }, [listRef.current])
 
+  useEffect(() => {
+  }, [visibleMiddleIndex])
+
+  const options = {}
+
+  if (initialRowStateAccessor) options.initialRowStateAccessor = initialRowStateAccessor
+  if (!isEmpty(initialTableState)) options.initialState = initialTableState
+
   const {
-    getTableProps,
     getTableBodyProps,
+    getTableProps,
     headerGroups,
-    rows,
     prepareRow,
+    rows,
     totalColumnsWidth
   } = useTable(
     {
       columns,
-      data
+      data,
+      ...options
     },
-    useBlockLayout
+    useBlockLayout,
+    useRowState
   )
+
+  // Grab the style property off of the last row to be used when
+  // building a skeleton row. We do this because we cant call getRowProps
+  // on a the skeleton row to get the width.
+  let lastRowStyle = {}
+
+  if (rows && rows.length) {
+    const lastRow = rows[rows.length - 1]
+    prepareRow(lastRow)
+    const lastRowProps = lastRow.getRowProps() || {}
+    lastRowStyle = lastRowProps.style
+  }
 
   const buildSkeletonRow = style => (
     <>
@@ -182,22 +246,47 @@ const EDSCTable = ({
 
       const row = rows[index]
 
-      if (!isItemLoaded(index)) return buildSkeletonRow(style)
+      if (!isItemLoaded(index)) {
+        return buildSkeletonRow({
+          ...style,
+          width: lastRowStyle.width
+        })
+      }
 
       prepareRow(row)
       const { key, ...rowProps } = row.getRowProps({
         style
       })
 
+      let rowClassesFromState = []
+
+      if (rowClassNamesFromRowState) rowClassesFromState = rowClassNamesFromRowState(row.state)
+
       const { style: rowStyle, ...rowRest } = rowProps
+
+      const rowClasses = classNames([
+        'edsc-table__tr',
+        `edsc-table__tr--${(index + 1) % 2 === 0 ? 'even' : 'odd'}`,
+        ...rowClassesFromState
+      ])
+
+      // These events will be spread on to the row div element, ommiting the events
+      // where callbacks have not been defined.
+      const rowEvents = {
+        onMouseLeave: (onRowMouseLeave ? e => onRowMouseLeave(e, row) : undefined),
+        onMouseEnter: (onRowMouseEnter ? e => onRowMouseEnter(e, row) : undefined),
+        onFocus: (onRowFocus ? e => onRowFocus(e, row) : undefined),
+        onBlur: (onRowBlur ? e => onRowBlur(e, row) : undefined)
+      }
 
       return (
         <React.Fragment key={key}>
           <div
             {...rowRest}
-            style={{ ...rowStyle, width: totalColumnsWidth }}
-            className="edsc-table__tr"
+            style={{ ...rowStyle, width: '100%' }}
+            className={rowClasses}
             data-test-id={rowTestId}
+            {...rowEvents}
           >
             {row.cells.map((cell) => {
               const { key, ...rest } = cell.getCellProps()
@@ -225,8 +314,10 @@ const EDSCTable = ({
     [prepareRow, rows]
   )
 
+  const tableProps = getTableProps()
+
   return (
-    <div {...getTableProps()} id={id} className={tableClassName}>
+    <div {...tableProps} id={id} className={tableClassName}>
       <AutoSizer style={{ position: 'relative', height: '100%', width: '100%' }}>
         {
           ({ height, width }) => (
@@ -234,6 +325,7 @@ const EDSCTable = ({
               headerGroups,
               height,
               width,
+              totalColumnsWidth,
               getTableBodyProps
             }}
             >
@@ -249,6 +341,9 @@ const EDSCTable = ({
                       ref={(list) => {
                         ref(list)
                         listRef.current = list
+                      }}
+                      style={{
+                        overflow: 'scroll'
                       }}
                       height={height}
                       innerElementType={innerElementType}
@@ -286,12 +381,20 @@ const EDSCTable = ({
 }
 
 EDSCTable.defaultProps = {
+  initialRowStateAccessor: null,
+  initialTableState: {},
   isItemLoaded: null,
   isLoading: null,
   itemCount: null,
   loadMoreItems: null,
+  onRowBlur: null,
+  onRowFocus: null,
+  onRowMouseEnter: null,
+  onRowMouseLeave: null,
+  rowClassNamesFromRowState: null,
   rowTestId: null,
   setVisibleMiddleIndex: null,
+  striped: false,
   visibleMiddleIndex: null
 }
 
@@ -299,12 +402,20 @@ EDSCTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   id: PropTypes.string.isRequired,
+  initialRowStateAccessor: PropTypes.func,
+  initialTableState: PropTypes.shape({}),
   isItemLoaded: PropTypes.func,
   isLoading: PropTypes.bool,
   itemCount: PropTypes.number,
   loadMoreItems: PropTypes.func,
+  onRowBlur: PropTypes.func,
+  onRowFocus: PropTypes.func,
+  onRowMouseEnter: PropTypes.func,
+  onRowMouseLeave: PropTypes.func,
+  rowClassNamesFromRowState: PropTypes.func,
   rowTestId: PropTypes.string,
   setVisibleMiddleIndex: PropTypes.func,
+  striped: PropTypes.bool,
   visibleMiddleIndex: PropTypes.number
 }
 

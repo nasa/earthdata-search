@@ -33,35 +33,30 @@ export const GranuleResultsBodyContainer = (props) => {
     focusedCollection,
     focusedGranule,
     granuleQuery,
-    isActive,
     location,
     onChangeGranulePageNum,
     onExcludeGranule,
     onFocusedGranuleChange,
-    onMetricsDataAccess
+    onMetricsDataAccess,
+    panelView
   } = props
 
   const collectionObject = getFocusedCollectionObject(focusedCollection, collections)
 
   const {
     excludedGranuleIds = [],
-    granules,
-    metadata: collectionMetadata
+    granules = {},
+    metadata: collectionMetadata = {}
   } = collectionObject
-
-  if (!collectionMetadata) return null
 
   const { isCwic = false } = collectionMetadata
 
-  const { pageNum } = granuleQuery
-
-  const onWaypointEnter = () => {
-    if (isActive) {
-      onChangeGranulePageNum({
-        collectionId: focusedCollection,
-        pageNum: pageNum + 1
-      })
-    }
+  const loadNextPage = () => {
+    const { pageNum } = granuleQuery
+    onChangeGranulePageNum({
+      collectionId: focusedCollection,
+      pageNum: pageNum + 1
+    })
   }
 
   return (
@@ -71,12 +66,12 @@ export const GranuleResultsBodyContainer = (props) => {
       focusedGranule={focusedGranule}
       granules={granules}
       isCwic={isCwic}
-      pageNum={pageNum}
       location={location}
-      waypointEnter={onWaypointEnter}
+      loadNextPage={loadNextPage}
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
       onMetricsDataAccess={onMetricsDataAccess}
+      panelView={panelView}
     />
   )
 }
@@ -86,12 +81,12 @@ GranuleResultsBodyContainer.propTypes = {
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
-  isActive: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired
+  onMetricsDataAccess: PropTypes.func.isRequired,
+  panelView: PropTypes.string.isRequired
 }
 
 export default withRouter(

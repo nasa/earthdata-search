@@ -41,10 +41,12 @@ function setup(overrideProps) {
       isOpen: false
     },
     onApplyGranuleFilters: jest.fn(),
+    onChangePanelView: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
     onToggleSecondaryOverlayPanel: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
     pageNum: 1,
+    panelView: 'list',
     ...overrideProps
   }
 
@@ -81,7 +83,6 @@ describe('GranuleResultsHeader component', () => {
         })
 
         expect(enzymeWrapper.find('.granule-results-header__header-item').at(0).find(Skeleton).length).toEqual(1)
-        expect(enzymeWrapper.find('.granule-results-header__header-item').at(1).find(Skeleton).length).toEqual(1)
       })
     })
 
@@ -112,33 +113,6 @@ describe('GranuleResultsHeader component', () => {
         })
 
         expect(enzymeWrapper.find('.granule-results-header__header-item').at(0).text()).toEqual('Showing 2 of 23 matching granules')
-      })
-
-      test('renders the correct search time', () => {
-        const { enzymeWrapper } = setup({
-          focusedCollectionObject: {
-            granules: {
-              hits: 23,
-              loadTime: 1524,
-              isLoading: false,
-              isLoaded: true,
-              allIds: [
-                123,
-                456
-              ],
-              byId: {
-                123: {
-                  title: '123'
-                },
-                456: {
-                  title: '456'
-                }
-              }
-            }
-          }
-        })
-
-        expect(enzymeWrapper.find('.granule-results-header__header-item').at(1).text()).toEqual('Search Time: 1.5s')
       })
     })
   })

@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 
 import Button from '../Button/Button'
 
-const CollectionCell = (props) => {
+/**
+ * Renders CollectionResultsTableHeaderCell.
+ * @param {Object} props - The props passed into the component from react-table.
+ */
+const CollectionResultsTableHeaderCell = (props) => {
   const { column, cell, row } = props
   const { customProps } = column
   const { original: rowProps } = row
@@ -78,10 +82,10 @@ const CollectionCell = (props) => {
   )
 }
 
-CollectionCell.propTypes = {
+CollectionResultsTableHeaderCell.propTypes = {
   column: PropTypes.shape({}).isRequired,
   cell: PropTypes.shape({}).isRequired,
   row: PropTypes.shape({}).isRequired
 }
 
-export default CollectionCell
+export default CollectionResultsTableHeaderCell

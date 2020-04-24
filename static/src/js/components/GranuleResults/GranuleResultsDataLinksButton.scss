@@ -1,0 +1,11 @@
+.granule-results-data-links-button {
+  &__dropdown-item {
+    color: $color__black--800;
+    font-size: 0.875rem;
+
+    &:hover {
+      background-color: $color__brand--blue-dark;
+      color: $color__black--200;
+    }
+  }
+}

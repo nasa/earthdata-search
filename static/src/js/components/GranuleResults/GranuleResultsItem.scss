@@ -1,19 +1,10 @@
 .granule-results-item {
-  margin: $spacer/2;
-  width: 15.75rem;
-  width: calc(50% - 1rem);
+  width: 100%;
   background: $color__white;
   border: 1px solid $color__black--200;
   border-radius: $border-radius;
   box-shadow: $shadow__default;
-
-  .panels--lg & {
-    width: calc(33.33% - 1rem);
-  }
-
-  .panels--xl & {
-    width: calc(25% - 1rem);
-  }
+  overflow: hidden;
 
   &__header {
     padding: $spacer/2;
@@ -55,7 +46,7 @@
     padding: 0.25rem;
     height: 5.2rem;
     width: 5.2rem;
-    background-color: $color__black--900;
+    background-color: #1a1a1a;
     overflow: hidden;
     font-size: 0.5rem;
 
@@ -126,7 +117,8 @@
     border-radius: 0 0 $border-radius $border-radius;
   }
 
-  &__button {
+  &__button,
+  .granule-results-data-links-button__button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -160,16 +152,6 @@
 
     &:first-child {
       border-radius: 0 0 0 $border-radius;
-    }
-  }
-
-  &__dropdown-item {
-    color: $color__black--800;
-    font-size: 0.875rem;
-
-    &:hover {
-      background-color: $color__brand--blue-dark;
-      color: $color__black--200;
     }
   }
 }

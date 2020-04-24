@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import CollectionResultsBody from '../CollectionResultsBody'
 import CollectionResultsList from '../CollectionResultsList'
 import { collectionResultsBodyData } from './mocks'
-import CollectionResultsTable from '../../CollectionResultsTable/CollectionResultsTable'
+import CollectionResultsTable from '../CollectionResultsTable'
 
 beforeEach(() => {
   jest.clearAllMocks()

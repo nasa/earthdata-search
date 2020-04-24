@@ -17,12 +17,29 @@
   }
 
   &__tr {
+    height: 60px;
     background-color: $color__white;
     border-bottom: 1px solid $color__black--200;
+
+    .edsc-table__td {
+      background-color: $color__white;
+    }
 
     :last-child {
       .edsc-table__td {
         border-bottom: 0;
+      }
+    }
+
+    .edsc-table__table--striped & {
+      background-color: $color__white;
+
+      &--odd {
+        background-color: darken($color__black--100, 1);
+
+        .edsc-table__td {
+          background-color: darken($color__black--100, 1);
+        }
       }
     }
   }
@@ -30,27 +47,18 @@
   &__th,
   &__td {
     flex-shrink: 0;
-    background-color: #fff;
     overflow: hidden;
-    background-color: $color__white;
 
-    :last-child {
-      border-right: 0;
+    &--skeleton {
+      border-bottom: 1px solid $color__black--200;
     }
   }
 
   &__td {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.7rem;
-
-    &--centered {
-      display: flex !important;
-      justify-content: center;
-      align-items: center;
-    }
+    display: flex !important;
 
     &--skeleton {
-      display: flex !important;
+      display: flex;
       justify-content: center;
       align-items: center;
     }
@@ -61,6 +69,7 @@
     font-size: 0.725rem;
     font-weight: 700;
     color: $color__black--500;
+    background-color: $color__white;
   }
 
   &__table {
@@ -76,12 +85,10 @@
 
       .edsc-table__thead {
         top: 0;
-        box-shadow: 0px 3px 3px $color__black--200;
       }
 
       .edsc-table__footer {
         bottom: 0;
-        box-shadow: 0px -3px 3px $color__black--200;
       }
 
       .edsc-table__tbody {
@@ -93,8 +100,20 @@
       .edsc-table__td:first-child {
         position: sticky;
         left: 0;
-        box-shadow: 2px 0px 3px $color__black--200;
         z-index: 1;
+        overflow: visible;
+
+        &:after {
+          content: "";
+          width: 0.5rem;
+          height: 100%;
+          background-color: transparent;
+          background-image: linear-gradient(to left, rgba($color__black--900, 0) 0%, rgba($color__black--900, 0.1) 100%);
+          display: block;
+          position: absolute;
+          left: 100%;
+          z-index: 1;
+        }
       }
     }
   }

@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Dropdown } from 'react-bootstrap'
 
-import { DataLinksButton } from '../GranuleResultsItem'
+import { GranuleResultsDataLinksButton } from '../GranuleResultsDataLinksButton'
 import Button from '../../Button/Button'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -22,7 +22,7 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<DataLinksButton {...props} />)
+  const enzymeWrapper = shallow(<GranuleResultsDataLinksButton {...props} />)
 
   return {
     enzymeWrapper,
@@ -34,7 +34,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('DataLinksButton component', () => {
+describe('GranuleResultsDataLinksButton component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 

@@ -1,144 +1,37 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { Component } from 'react'
+import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
-import { Waypoint } from 'react-waypoint'
-import { Dropdown } from 'react-bootstrap'
+import classNames from 'classnames'
 
 import murmurhash3 from '../../util/murmurhash3'
-import { createDataLinks } from '../../util/granules'
-import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { eventEmitter } from '../../events/events'
 
-import './GranuleResultsItem.scss'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
+import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 
-class CustomDataLinksToggle extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.handleClick = this.handleClick.bind(this)
-  }
+import './GranuleResultsItem.scss'
 
-  handleClick(e) {
-    e.preventDefault()
-    const { onClick } = this.props
-    onClick(e)
-  }
-
-  render() {
-    return (
-      <Button
-        className="button granule-results-item__button"
-        type="button"
-        label="Download single granule data"
-        onClick={this.handleClick}
-      >
-        <i className="fa fa-download" />
-      </Button>
-    )
-  }
-}
-
-CustomDataLinksToggle.propTypes = {
-  onClick: PropTypes.func.isRequired
-}
-
-export const DataLinksButton = ({
-  collectionId,
-  dataLinks,
-  onMetricsDataAccess
-}) => {
-  if (dataLinks.length > 1) {
-    return (
-      <Dropdown>
-        <Dropdown.Toggle as={CustomDataLinksToggle} />
-        <Dropdown.Menu>
-          {
-            dataLinks.map((dataLink, i) => {
-              const key = `data_link_${i}`
-              let dataLinkTitle = dataLink.title
-
-              if (!dataLinkTitle) dataLinkTitle = getFilenameFromPath(dataLink.href)
-
-              return (
-                <Dropdown.Item
-                  key={key}
-                  href={dataLink.href}
-                  onClick={() => onMetricsDataAccess({
-                    type: 'single_granule_download',
-                    collections: [{
-                      collectionId
-                    }]
-                  })}
-                >
-                  {dataLinkTitle}
-                </Dropdown.Item>
-              )
-            })
-          }
-        </Dropdown.Menu>
-      </Dropdown>
-    )
-  }
-
-  if (dataLinks.length === 1) {
-    return (
-      <Button
-        className="button granule-results-item__button"
-        href={dataLinks[0].href}
-        onClick={() => onMetricsDataAccess({
-          type: 'single_granule_download',
-          collections: [{
-            collectionId
-          }]
-        })}
-        rel="noopener noreferrer"
-        label="Download single granule data"
-        target="_blank"
-      >
-        <i className="fa fa-download" />
-      </Button>
-    )
-  }
-
-  return (
-    <Button
-      className="button granule-results-item__button"
-      type="button"
-      label="No download link available"
-      disabled
-      onClick={e => e.preventDefault()}
-    >
-      <i className="fa fa-download" />
-    </Button>
-  )
-}
-
-DataLinksButton.propTypes = {
-  collectionId: PropTypes.string.isRequired,
-  dataLinks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired
-}
+const thumbnailHeight = getApplicationConfig().thumbnailSize.height
+const thumbnailWidth = getApplicationConfig().thumbnailSize.width
 
 /**
  * Renders GranuleResultsItem.
- * @param {object} props - The props passed into the component.
- * @param {object} props.granule - Granule passed from redux store.
+ * @param {Object} props - The props passed into the component.
+ * @param {String} props.collectionId - Granule passed from redux store.
+ * @param {Object} props.granule - Granule passed from redux store.
+ * @param {Object} props.location - Location passed from react router.
+ * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
+ * @param {Function} props.onFocusedGranuleChange - Callback to focus a granule.
+ * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
  */
-const GranuleResultsItem = ({
+const GranuleResultsItem = forwardRef(({
   collectionId,
-  focusedGranule,
   granule,
-  isFocused,
-  isLast,
   location,
-  waypointEnter,
-  scrollContainer,
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess
-}) => {
+}, ref) => {
   const handleRemoveClick = () => {
     let { id } = granule
     const { is_cwic: isCwic } = granule
@@ -155,52 +48,30 @@ const GranuleResultsItem = ({
   }
 
   const {
-    browse_flag: browseFlag,
-    browse_url: browseUrl,
-    formatted_temporal: formattedTemporal,
+    browseFlag,
+    browseUrl,
+    dataLinks,
+    granuleThumbnail,
+    handleClick,
+    handleMouseEnter,
+    handleMouseLeave,
     id,
-    links,
-    online_access_flag: onlineAccessFlag,
-    producer_granule_id: producerGranuleId,
-    thumbnail: granuleThumbnail,
-    title: granuleTitle
+    isFocusedGranule,
+    onlineAccessFlag,
+    timeEnd,
+    timeStart,
+    title
   } = granule
-
-  const title = producerGranuleId || granuleTitle
-  const temporal = formattedTemporal
-  const timeStart = temporal[0]
-  const timeEnd = temporal[1]
-  const thumbnail = browseFlag ? granuleThumbnail : false
-
-  const thumbnailHeight = getApplicationConfig().thumbnailSize.height
-  const thumbnailWidth = getApplicationConfig().thumbnailSize.width
-
-  const dataLinks = createDataLinks(links)
-  const isFocusedGranule = isFocused || focusedGranule === id
-
-  const handleClick = () => {
-    let stickyGranule = granule
-    if (focusedGranule === id) stickyGranule = null
-
-    eventEmitter.emit('map.stickygranule', { granule: stickyGranule })
-  }
-
-  const handleMouseEnter = () => {
-    eventEmitter.emit('map.focusgranule', { granule })
-  }
-
-  const handleMouseLeave = () => {
-    eventEmitter.emit('map.focusgranule', { granule: null })
-  }
 
   const buildThumbnail = () => {
     let element = null
 
-    if (thumbnail) {
+    if (granuleThumbnail) {
       element = (
+        // eslint-disable-next-line jsx-a11y/img-redundant-alt
         <img
           className="granule-results-item__thumb-image"
-          src={thumbnail}
+          src={granuleThumbnail}
           height={thumbnailHeight}
           width={thumbnailWidth}
           alt={`Browse Image for ${title}`}
@@ -212,7 +83,7 @@ const GranuleResultsItem = ({
           <a
             className="granule-results-item__thumb"
             href={browseUrl}
-            title="Browse image"
+            title="View image"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -230,9 +101,17 @@ const GranuleResultsItem = ({
     return element
   }
 
+  const granuleResultsItemClasses = classNames([
+    'granule-results-item',
+    {
+      'granule-results-item--selected': isFocusedGranule
+    }
+  ])
+
   return (
-    <li
-      className={`granule-results-item ${isFocusedGranule ? 'granule-results-item--selected' : ''}`}
+    <div
+      ref={ref}
+      className={granuleResultsItemClasses}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -246,7 +125,7 @@ const GranuleResultsItem = ({
         <h3 className="granule-results-item__title">{title}</h3>
       </header>
       <div className="granule-results-item__body">
-        {buildThumbnail()}
+        {browseFlag && buildThumbnail()}
         <div className="granule-results-item__meta">
           <div className="granule-results-item__temporal granule-results-item__temporal--start">
             <h5>Start</h5>
@@ -259,7 +138,7 @@ const GranuleResultsItem = ({
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">
               <PortalLinkContainer
-                className="button granule-results-item__button"
+                className="button granule-results-item__button granule-results-item__button--info"
                 type="button"
                 label="View granule details"
                 title="View granule details"
@@ -273,7 +152,7 @@ const GranuleResultsItem = ({
               </PortalLinkContainer>
               {
                 onlineAccessFlag && (
-                  <DataLinksButton
+                  <GranuleResultsDataLinksButton
                     collectionId={collectionId}
                     dataLinks={dataLinks}
                     onMetricsDataAccess={onMetricsDataAccess}
@@ -292,29 +171,14 @@ const GranuleResultsItem = ({
           </div>
         </div>
       </div>
-      { isLast && (
-        <Waypoint
-          onEnter={waypointEnter}
-          scrollableAncestor={scrollContainer}
-        />
-      ) }
-    </li>
+    </div>
   )
-}
-
-GranuleResultsItem.defaultProps = {
-  scrollContainer: null
-}
+})
 
 GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired,
   granule: PropTypes.shape({}).isRequired,
-  isFocused: PropTypes.bool.isRequired,
-  isLast: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
-  waypointEnter: PropTypes.func.isRequired,
-  scrollContainer: PropTypes.instanceOf(Element),
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired
