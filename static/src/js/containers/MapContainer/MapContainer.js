@@ -77,6 +77,13 @@ export class MapContainer extends Component {
     this.onMapReady = this.onMapReady.bind(this)
   }
 
+  componentDidMount() {
+    // Resize the Leaflet controls container when the component map mounts,
+    // and any time the browser is resized
+    this.resizeLeafletControls()
+    window.addEventListener('resize', this.resizeLeafletControls)
+  }
+
   componentDidUpdate() {
     const {
       leafletElement: map = null
@@ -85,6 +92,10 @@ export class MapContainer extends Component {
     if (this.mapRef) {
       map.invalidateSize()
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeLeafletControls)
   }
 
   onMapReady(e) {
@@ -179,6 +190,23 @@ export class MapContainer extends Component {
 
     onMetricsMap(`Set Projection: ${Projection}`)
     onChangeMap({ ...map })
+  }
+
+  /**
+   * Sets the height of the leaflet controls. This is needed so they do not
+   * fall behind the footer.
+   */
+  resizeLeafletControls() {
+    if (!document) return
+
+    const leafletControlContainer = document.querySelector('.leaflet-control-container')
+    const routeWrapper = document.querySelector('.route-wrapper')
+
+    // If the control container and the route wrapper are defined, set the leaflet controls to
+    // the same height as the route wrapper.
+    if (leafletControlContainer && routeWrapper) {
+      leafletControlContainer.style.height = `${routeWrapper.clientHeight}px`
+    }
   }
 
   render() {

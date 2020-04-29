@@ -64,17 +64,12 @@
   }
 
   &__body {
-    height: 0;
     overflow: hidden;
     background: $color__black--900;
+    border-bottom: 1px solid $color__black--700;
 
     &:first-child {
       padding-top: 0.6rem;
-    }
-
-    &--is-open {
-      height: auto;
-      border-bottom: 1px solid $color__black--700;
     }
   }
 }
