@@ -161,15 +161,6 @@ export class Panels extends PureComponent {
     if (width < minWidth) {
       this.updatePanelWidth(minWidth)
     }
-
-    setTimeout(() => {
-      const leafletControlContainer = document.querySelector('.leaflet-control-container')
-      const routeWrapper = document.querySelector('.route-wrapper')
-
-      if (leafletControlContainer) {
-        if (routeWrapper) leafletControlContainer.style.height = `${routeWrapper.clientHeight}px`
-      }
-    })
   }
 
   onWindowKeyDown(e) {
