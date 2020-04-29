@@ -106,7 +106,7 @@ class FacetsGroup extends Component {
         </h3>
         {
           isOpen && (
-            <section className={`facets-group__body ${isOpen ? ' facets-group__body--is-open' : ''}`}>
+            <section className="facets-group__body">
               {headerInfo && (
                 <header className="facets-group__header">
                   {headerInfo}
