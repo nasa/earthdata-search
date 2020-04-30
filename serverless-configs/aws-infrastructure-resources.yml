@@ -67,74 +67,6 @@ Resources:
           FromPort: 5432
           ToPort: 5432
       VpcId: ${env:VPC_ID}
-
-  EDSCLambdaRole:
-    Type: "AWS::IAM::Role"
-    Properties:
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
-      PermissionsBoundary:
-        Fn::Join: [
-          "", [
-            "arn:aws:iam::",
-            {
-              "Ref": "AWS::AccountId"
-            },
-            ":policy/NGAPShRoleBoundary"
-          ]
-        ]
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - lambda.amazonaws.com
-                - states.amazonaws.com
-            Action: sts:AssumeRole
-      Policies:
-        - PolicyName: RDSIAMAuthentication
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - rds-db:connect
-                Resource:
-                  Fn::Join: [
-                    "", [
-                        "arn:aws:rds-db:",
-                        {
-                          "Ref": "AWS::Region"
-                        },
-                        ":",
-                        {
-                          "Ref": "AWS::AccountId"
-                        },
-                        ":dbuser",
-                        "/lambda"
-                    ]
-                  ]
-        - PolicyName: EDSCLambdaBase
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - sqs:*
-                Resource: '*'
-              - Effect: Allow
-                Action:
-                  - secretsmanager:GetSecretValue
-                Resource: '*'
-              - Effect: Allow
-                Action:
-                  - lambda:InvokeFunction
-                Resource: '*'
-              - Effect: Allow
-                Action:
-                  - states:*
-                Resource: '*'
   
   ServerlessAppRole:
     Type: "AWS::IAM::Role"
@@ -218,15 +150,6 @@ Outputs:
       Ref: LambdaSecurityGroup
     Export:
       Name: ${self:provider.stage}-LambdaSecurityGroup
-
-  ApplicationRole:
-    Description: Role used to execute commands across the application
-    Value:
-      Fn::GetAtt:
-        - EDSCLambdaRole
-        - Arn
-    Export:
-      Name: ${self:provider.stage}-ApplicationRole
 
   EDSCServerlessAppRole:
     Description: Role used to execute commands across the serverless application
