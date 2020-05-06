@@ -166,7 +166,7 @@ const cwicGranuleSearch = async (event) => {
     })
 
     console.log(`CWIC Granule Request took ${granuleResponse.elapsedTime} ms`)
-    console.log(responseHeaders)
+
     return {
       isBase64Encoded: false,
       statusCode: granuleResponse.statusCode,
