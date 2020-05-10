@@ -16,6 +16,7 @@ function setup(overrideProps) {
     authToken: '',
     keywordSearch: 'Test value',
     showFilterStackToggle: false,
+    onCancelAutocomplete: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
     onClearFilters: jest.fn(),

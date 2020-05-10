@@ -21,6 +21,7 @@ function setup() {
     shapefile: {},
     temporalSearch: {},
     temporalSearchordSearch: 'Test value',
+    onCancelAutocomplete: jest.fn(),
     onClearFilters: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
@@ -48,6 +49,8 @@ describe('SearchFormContainer component', () => {
     expect(searchForm.length).toBe(1)
     expect(searchFormProps.keywordSearch)
       .toEqual('Test value')
+    expect(searchFormProps.onCancelAutocomplete)
+      .toEqual(props.onCancelAutocomplete)
     expect(searchFormProps.onClearFilters)
       .toEqual(props.onClearFilters)
     expect(searchFormProps.onChangeQuery)

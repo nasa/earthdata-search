@@ -15,6 +15,8 @@ const mapDispatchToProps = dispatch => ({
     () => dispatch(actions.clearFilters()),
   onToggleAdvancedSearchModal:
     state => dispatch(actions.toggleAdvancedSearchModal(state)),
+  onCancelAutocomplete:
+    () => dispatch(actions.cancelAutocomplete()),
   onClearAutocompleteSuggestions:
     () => dispatch(actions.clearAutocompleteSuggestions()),
   onFetchAutocomplete:
@@ -56,6 +58,7 @@ export const SearchFormContainer = (props) => {
     selectingNewGrid,
     shapefile,
     temporalSearch,
+    onCancelAutocomplete,
     onChangeQuery,
     onClearFilters,
     onChangeFocusedCollection,
@@ -110,6 +113,7 @@ export const SearchFormContainer = (props) => {
       onChangeFocusedCollection={onChangeFocusedCollection}
       onClearFilters={onClearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
+      onCancelAutocomplete={onCancelAutocomplete}
       onClearAutocompleteSuggestions={onClearAutocompleteSuggestions}
       onFetchAutocomplete={onFetchAutocomplete}
       onSelectAutocompleteSuggestion={onSelectAutocompleteSuggestion}
@@ -150,6 +154,7 @@ SearchFormContainer.propTypes = {
   onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  onCancelAutocomplete: PropTypes.func.isRequired,
   onClearAutocompleteSuggestions: PropTypes.func.isRequired,
   onFetchAutocomplete: PropTypes.func.isRequired,
   onSelectAutocompleteSuggestion: PropTypes.func.isRequired,

@@ -58,12 +58,14 @@ class SearchForm extends Component {
 
     const {
       keywordSearch: propsKeyword,
+      onCancelAutocomplete,
       onChangeQuery,
       onChangeFocusedCollection
     } = this.props
     const { keywordSearch } = this.state
 
     if (propsKeyword !== keywordSearch) {
+      onCancelAutocomplete()
       onChangeFocusedCollection('')
       onChangeQuery({
         collection: {
@@ -142,7 +144,7 @@ class SearchForm extends Component {
   }
 
   /**
-   * AutoSuggest callback to determine if suggustions should be rendered
+   * AutoSuggest callback to determine if suggestions should be rendered
    * @param {String} value text entered
    */
   shouldRenderSuggestions(value) {
@@ -367,6 +369,7 @@ SearchForm.propTypes = {
   onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  onCancelAutocomplete: PropTypes.func.isRequired,
   onClearAutocompleteSuggestions: PropTypes.func.isRequired,
   onFetchAutocomplete: PropTypes.func.isRequired,
   onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
