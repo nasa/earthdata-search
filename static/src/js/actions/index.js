@@ -135,6 +135,7 @@ import { updateBrowserVersion } from './browser'
 import { collectionRelevancyMetrics } from './relevancy'
 import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
 import {
+  cancelAutocomplete,
   clearAutocompleteSelected,
   clearAutocompleteSuggestions,
   deleteAutocompleteValue,
@@ -157,6 +158,7 @@ const actions = {
   adminViewRetrieval,
   applyGranuleFilters,
   applyViewAllFacets,
+  cancelAutocomplete,
   changeCmrFacet,
   changeCollectionPageNum,
   changeFeatureFacet,

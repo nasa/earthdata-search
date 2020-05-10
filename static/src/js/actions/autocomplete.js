@@ -14,6 +14,7 @@ import { handleError } from './errors'
 import actions from '.'
 import { autocompleteFacetsMap } from '../util/autocompleteFacetsMap'
 import { scienceKeywordTypes } from '../util/scienceKeywordTypes'
+import { buildPromise } from '../util/buildPromise'
 
 export const onAutocompleteLoaded = payload => ({
   type: LOADED_AUTOCOMPLETE,
@@ -48,6 +49,21 @@ export const deleteAutocompleteValue = payload => ({
 })
 
 let cancelToken
+
+/**
+ * When a user submits the search form before an autocomplete response comes back
+ * this action is called to cancel any requests that are in flight and update the
+ * store to inform the ui that we're no longer loading suggestions
+ */
+export const cancelAutocomplete = () => (dispatch) => {
+  if (cancelToken) {
+    cancelToken.cancel()
+  }
+
+  dispatch(onAutocompleteLoaded({ loaded: true }))
+
+  return buildPromise(null)
+}
 
 export const fetchAutocomplete = data => (dispatch, getState) => {
   if (!data) return null
