@@ -9,5 +9,8 @@
   },
   "org": "IDN",
   "pageTitle": "IDN",
+  "query": {
+    "hasGranulesOrCwic": null
+  },  
   "title": "Search"
 }
