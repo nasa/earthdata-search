@@ -85,4 +85,21 @@ describe('SearchForm component', () => {
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)
     })
   })
+
+  describe('autocomplete', () => {
+    test('cancels inflight requests if search form is submitted', () => {
+      const { enzymeWrapper, props } = setup({
+        keywordSearch: 'AST'
+      })
+
+      // Force the state change so that the form submit actually happens
+      enzymeWrapper.setState({
+        keywordSearch: 'ASTER'
+      })
+
+      enzymeWrapper.find('.search-form__form').simulate('submit', { preventDefault: jest.fn() })
+
+      expect(props.onCancelAutocomplete).toHaveBeenCalledTimes(1)
+    })
+  })
 })

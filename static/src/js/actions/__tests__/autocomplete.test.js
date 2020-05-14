@@ -3,17 +3,18 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-  onAutocompleteLoading,
-  onAutocompleteLoaded,
-  clearAutocompleteSuggestions,
-  updateAutocompleteSuggestions,
-  updateAutocompleteSelected,
-  deleteAutocompleteValue,
-  fetchAutocomplete,
-  selectAutocompleteSuggestion,
-  removeAutocompleteValue,
-  clearAutocompleteSelected
-} from '../autocomplete'
+    onAutocompleteLoading,
+    onAutocompleteLoaded,
+    clearAutocompleteSuggestions,
+    updateAutocompleteSuggestions,
+    updateAutocompleteSelected,
+    deleteAutocompleteValue,
+    fetchAutocomplete,
+    selectAutocompleteSuggestion,
+    removeAutocompleteValue,
+    clearAutocompleteSelected,
+    cancelAutocomplete
+} from '../autocomplete';
 import {
   LOADING_AUTOCOMPLETE,
   LOADED_AUTOCOMPLETE,
@@ -113,6 +114,23 @@ describe('deleteAutocompleteValue', () => {
       payload
     }
     expect(deleteAutocompleteValue(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('cancelAutocomplete', () => {
+  test('sets autocomplete as loaded when cancelled', () => {
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: ''
+    })
+
+    store.dispatch(cancelAutocomplete()).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: LOADED_AUTOCOMPLETE,
+        payload: { loaded: true }
+      })
+    })
   })
 })
 
