@@ -3,18 +3,18 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-    onAutocompleteLoading,
-    onAutocompleteLoaded,
-    clearAutocompleteSuggestions,
-    updateAutocompleteSuggestions,
-    updateAutocompleteSelected,
-    deleteAutocompleteValue,
-    fetchAutocomplete,
-    selectAutocompleteSuggestion,
-    removeAutocompleteValue,
-    clearAutocompleteSelected,
-    cancelAutocomplete
-} from '../autocomplete';
+  onAutocompleteLoading,
+  onAutocompleteLoaded,
+  clearAutocompleteSuggestions,
+  updateAutocompleteSuggestions,
+  updateAutocompleteSelected,
+  deleteAutocompleteValue,
+  fetchAutocomplete,
+  selectAutocompleteSuggestion,
+  removeAutocompleteValue,
+  clearAutocompleteSelected,
+  cancelAutocomplete
+} from '../autocomplete'
 import {
   LOADING_AUTOCOMPLETE,
   LOADED_AUTOCOMPLETE,
