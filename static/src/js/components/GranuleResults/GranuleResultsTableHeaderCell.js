@@ -1,11 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import Button from '../Button/Button'
-import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import murmurhash3 from '../../util/murmurhash3'
+import { portalPath } from '../../../../../sharedUtils/portalPath'
+
+import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
+import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
+
 
 const GranuleResultsTableHeaderCell = (props) => {
   const { column, cell, row } = props
@@ -15,8 +19,7 @@ const GranuleResultsTableHeaderCell = (props) => {
     id,
     isCwic,
     dataLinks,
-    onlineAccessFlag,
-    handleClick
+    onlineAccessFlag
   } = rowProps
 
   const {
@@ -24,12 +27,13 @@ const GranuleResultsTableHeaderCell = (props) => {
     location,
     onExcludeGranule,
     onFocusedGranuleChange,
-    onMetricsDataAccess
+    onMetricsDataAccess,
+    portal
   } = customProps
 
   const { value } = cell
 
-  const handleRemoveClick = (id) => {
+  const handleFilterClick = (id) => {
     let granuleId = id
 
     if (isCwic) granuleId = murmurhash3(id).toString()
@@ -41,30 +45,22 @@ const GranuleResultsTableHeaderCell = (props) => {
 
   return (
     <>
-      <Button
-        className="granule-results-table__title-button"
-        variant="naked"
-        label={value}
-        title={value}
-        onClick={handleClick}
-      >
-        <h4 className="granule-results-table__granule-name">
-          {value}
-        </h4>
-      </Button>
+      <h4 className="granule-results-table__granule-name">
+        {value}
+      </h4>
       <div className="granule-results-table__granule-actions">
         <PortalLinkContainer
-          className="button granule-results-table__granule-action granule-results-table__granule-action--info"
+          className="button granule-results-table__granule-action granule-results-table__granule-action--add"
           type="button"
-          label="View granule details"
-          title="View granule details"
+          label="Add granule"
+          title="Add granule"
           onClick={() => onFocusedGranuleChange(id)}
           to={{
             pathname: '/search/granules/granule-details',
             search: location.search
           }}
         >
-          <i className="fa fa-info-circle" />
+          <i className="fa fa-plus" />
         </PortalLinkContainer>
         {
           onlineAccessFlag && (
@@ -76,17 +72,32 @@ const GranuleResultsTableHeaderCell = (props) => {
             />
           )
         }
-        <Button
-          className="granule-results-table__granule-action granule-results-table__granule-action--remove"
-          icon="times"
-          variant="naked"
-          label="Remove granule"
-          title="Remove granule"
-          onClick={(e) => {
-            handleRemoveClick(id)
-            e.stopPropagation()
-          }}
-        />
+        <MoreActionsDropdown
+          className="granule-results-table__granule-action granule-results-table__more-actions-dropdown"
+        >
+          <LinkContainer
+            onClick={() => {
+              onFocusedGranuleChange(id)
+            }}
+            to={{
+              pathname: `${portalPath(portal)}/search/granules/granule-details`,
+              search: location.search
+            }}
+          >
+            <MoreActionsDropdownItem
+              title="View details"
+              icon="info-circle"
+            />
+          </LinkContainer>
+          <MoreActionsDropdownItem
+            title="Filter granule"
+            icon="times-circle"
+            onClick={(e) => {
+              handleFilterClick(id)
+              e.stopPropagation()
+            }}
+          />
+        </MoreActionsDropdown>
       </div>
     </>
   )

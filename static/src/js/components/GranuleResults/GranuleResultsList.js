@@ -21,6 +21,7 @@ import './GranuleResultsList.scss'
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
+ * @param {Object} props.portal - Portal object passed from the store.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the visible middle index.
  * @param {Number} props.visibleMiddleIndex - The current visible middle index.
  */
@@ -37,6 +38,7 @@ export const GranuleResultsList = ({
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
+  portal,
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => (
@@ -55,6 +57,7 @@ export const GranuleResultsList = ({
             onExcludeGranule={onExcludeGranule}
             onFocusedGranuleChange={onFocusedGranuleChange}
             onMetricsDataAccess={onMetricsDataAccess}
+            portal={portal}
             isItemLoaded={isItemLoaded}
             itemCount={itemCount}
             loadMoreItems={loadMoreItems}
@@ -83,6 +86,7 @@ GranuleResultsList.propTypes = {
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
+  portal: PropTypes.shape({}).isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,

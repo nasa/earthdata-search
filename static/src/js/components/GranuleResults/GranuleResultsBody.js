@@ -25,6 +25,7 @@ import './GranuleResultsBody.scss'
  * @param {Function} props.onFocusedGranuleChange - Callback change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
  * @param {Function} props.panelView - The current panel view.
+ * @param {Object} props.portal - Portal object passed from the store.
  */
 const GranuleResultsBody = ({
   collectionId,
@@ -37,7 +38,8 @@ const GranuleResultsBody = ({
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
-  panelView
+  panelView,
+  portal
 }) => {
   const {
     hits: granuleHits,
@@ -116,6 +118,7 @@ const GranuleResultsBody = ({
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
+          portal={portal}
           visibleMiddleIndex={visibleMiddleIndex}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
         />
@@ -140,6 +143,7 @@ const GranuleResultsBody = ({
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
+          portal={portal}
           visibleMiddleIndex={visibleMiddleIndex}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
         />
@@ -180,7 +184,8 @@ GranuleResultsBody.propTypes = {
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  panelView: PropTypes.string.isRequired
+  panelView: PropTypes.string.isRequired,
+  portal: PropTypes.shape({}).isRequired
 }
 
 export default GranuleResultsBody

@@ -19,6 +19,7 @@ import './GranuleResultsTable.scss'
  * @param {Function} props.onRemoveCollectionFromProject - Callback to remove a collection to a project.
  * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
  * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
+ * @param {Object} props.portal - Portal object passed from the store.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
  * @param {String} props.visibleMiddleIndex - The current middle item.
  */
@@ -34,6 +35,7 @@ export const GranuleResultsTable = ({
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
+  portal,
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => {
@@ -50,7 +52,8 @@ export const GranuleResultsTable = ({
         collectionId,
         onExcludeGranule,
         onFocusedGranuleChange,
-        onMetricsDataAccess
+        onMetricsDataAccess,
+        portal
       }
     },
     {
@@ -105,10 +108,23 @@ export const GranuleResultsTable = ({
   }), [focusedGranule])
 
   const rowClassNamesFromRowState = useMemo(() => ({ isFocusedGranule }) => {
-    const classNames = []
-    if (isFocusedGranule) classNames.push('granule-results-table__td--selected')
+    const classNames = ['granule-results-table__tr']
+    if (isFocusedGranule) classNames.push('granule-results-table__tr--selected')
     return classNames
   })
+
+  const rowTitleFromRowState = useMemo(() => ({ isFocusedGranule }) => {
+    let rowTitle = 'Focus granule in map'
+
+    if (isFocusedGranule) rowTitle = 'Unfocus granule in map'
+    return rowTitle
+  })
+
+  const onRowClick = useCallback((e, row) => {
+    const { original: rowOriginal } = row
+    const { handleClick } = rowOriginal
+    if (handleClick) handleClick(e, row)
+  }, [])
 
   const onRowMouseEnter = useCallback((e, row) => {
     const { original: rowOriginal } = row
@@ -149,8 +165,10 @@ export const GranuleResultsTable = ({
         striped
         initialRowStateAccessor={initialRowStateAccessor}
         rowClassNamesFromRowState={rowClassNamesFromRowState}
+        rowTitleFromRowState={rowTitleFromRowState}
         onRowMouseEnter={onRowMouseEnter}
         onRowMouseLeave={onRowMouseLeave}
+        onRowClick={onRowClick}
       />
     </div>
   )
@@ -173,6 +191,7 @@ GranuleResultsTable.propTypes = {
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
+  portal: PropTypes.shape({}).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }

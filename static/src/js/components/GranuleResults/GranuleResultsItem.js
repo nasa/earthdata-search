@@ -1,13 +1,16 @@
 import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import murmurhash3 from '../../util/murmurhash3'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { portalPath } from '../../../../../sharedUtils/portalPath'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import Button from '../Button/Button'
 import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
+import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
+import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 
 import './GranuleResultsItem.scss'
 
@@ -23,6 +26,7 @@ const thumbnailWidth = getApplicationConfig().thumbnailSize.width
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to focus a granule.
  * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
+ * @param {Object} props.portal - Portal object passed from the store.
  */
 const GranuleResultsItem = forwardRef(({
   collectionId,
@@ -30,9 +34,10 @@ const GranuleResultsItem = forwardRef(({
   location,
   onExcludeGranule,
   onFocusedGranuleChange,
-  onMetricsDataAccess
+  onMetricsDataAccess,
+  portal
 }, ref) => {
-  const handleRemoveClick = () => {
+  const handleFilterClick = () => {
     let { id } = granule
     const { is_cwic: isCwic } = granule
 
@@ -101,6 +106,29 @@ const GranuleResultsItem = forwardRef(({
     return element
   }
 
+  let textSelectionFlag = false
+
+  const enhancedOnRowMouseUp = () => {
+    textSelectionFlag = false
+
+    // Check the window to see if any text is currently selected.
+    if (window.getSelection().toString().length > 0) {
+      textSelectionFlag = true
+    }
+  }
+
+  const enhancedHandleOnClick = (e) => {
+    // Only fire the click event on the row if no text is currently selected
+    if (textSelectionFlag) return
+    handleClick(e)
+  }
+
+  const itemTitle = {
+    title: 'Focus granule in map'
+  }
+
+  if (isFocusedGranule) itemTitle.title = 'Unfocus granule in map'
+
   const granuleResultsItemClasses = classNames([
     'granule-results-item',
     {
@@ -112,17 +140,48 @@ const GranuleResultsItem = forwardRef(({
     <div
       ref={ref}
       className={granuleResultsItemClasses}
+      tabIndex={0}
+      role="button"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onMouseUp={enhancedOnRowMouseUp}
+      onKeyPress={handleClick}
+      onClick={enhancedHandleOnClick}
+      {...itemTitle}
     >
       <header
         className="granule-results-item__header"
-        role="button"
-        tabIndex={0}
-        onClick={handleClick}
-        onKeyPress={handleClick}
       >
-        <h3 className="granule-results-item__title">{title}</h3>
+        <div
+          className="granule-results-item__title-wrapper"
+        >
+          <h3
+            className="granule-results-item__title"
+          >
+            {title}
+          </h3>
+        </div>
+        <MoreActionsDropdown
+          className="granule-results-item__more-actions-dropdown"
+        >
+          <LinkContainer
+            onClick={() => handleClickGranuleDetails(id)}
+            to={{
+              pathname: `${portalPath(portal)}/search/granules/granule-details`,
+              search: location.search
+            }}
+          >
+            <MoreActionsDropdownItem
+              title="View details"
+              icon="info-circle"
+            />
+          </LinkContainer>
+          <MoreActionsDropdownItem
+            title="Filter granule"
+            icon="times-circle"
+            onClick={handleFilterClick}
+          />
+        </MoreActionsDropdown>
       </header>
       <div className="granule-results-item__body">
         {browseFlag && buildThumbnail()}
@@ -138,17 +197,17 @@ const GranuleResultsItem = forwardRef(({
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">
               <PortalLinkContainer
-                className="button granule-results-item__button granule-results-item__button--info"
+                className="button granule-results-item__button granule-results-item__button--add"
                 type="button"
-                label="View granule details"
-                title="View granule details"
+                label="Add granule"
+                title="Add granule"
                 onClick={() => handleClickGranuleDetails(id)}
                 to={{
                   pathname: '/search/granules/granule-details',
                   search: location.search
                 }}
               >
-                <i className="fa fa-info-circle" />
+                <i className="fa fa-plus" />
               </PortalLinkContainer>
               {
                 onlineAccessFlag && (
@@ -159,14 +218,6 @@ const GranuleResultsItem = forwardRef(({
                   />
                 )
               }
-              <Button
-                className="button granule-results-item__button"
-                type="button"
-                label="Remove granule"
-                onClick={handleRemoveClick}
-              >
-                <i className="fa fa-close" />
-              </Button>
             </div>
           </div>
         </div>
@@ -181,7 +232,8 @@ GranuleResultsItem.propTypes = {
   location: PropTypes.shape({}).isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired
+  onMetricsDataAccess: PropTypes.func.isRequired,
+  portal: PropTypes.shape({}).isRequired
 }
 
 export default GranuleResultsItem

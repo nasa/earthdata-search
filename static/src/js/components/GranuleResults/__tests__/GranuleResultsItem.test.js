@@ -1,10 +1,10 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { LinkContainer } from 'react-router-bootstrap'
 import GranuleResultsItem from '../GranuleResultsItem'
 import GranuleResultsDataLinksButton from '../GranuleResultsDataLinksButton'
-import * as EventEmitter from '../../../events/events'
-import Button from '../../Button/Button'
+import MoreActionsDropdownItem from '../../MoreActionsDropdown/MoreActionsDropdownItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -18,7 +18,8 @@ function setup(type) {
     location: { search: 'location' },
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
-    onMetricsDataAccess: jest.fn()
+    onMetricsDataAccess: jest.fn(),
+    portal: {}
   }
   let props
 
@@ -271,26 +272,26 @@ describe('GranuleResultsItem component', () => {
     describe('with CMR granules', () => {
       test('it excludes the granule from results', () => {
         const { enzymeWrapper, props } = setup('cmr')
-        const removeButton = enzymeWrapper.find(Button)
+        const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
 
         removeButton.simulate('click')
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
 
-        expect(removeButton.props().label).toEqual('Remove granule')
+        expect(removeButton.props().title).toEqual('Filter granule')
       })
     })
 
     describe('with CWIC granules', () => {
       test('it excludes the granule from results with a hashed granule id', () => {
         const { enzymeWrapper, props } = setup('cwic')
-        const removeButton = enzymeWrapper.find(Button)
+        const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
 
         removeButton.simulate('click')
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: '170417722' }])
 
-        expect(removeButton.props().label).toEqual('Remove granule')
+        expect(removeButton.props().title).toEqual('Filter granule')
       })
     })
   })
@@ -388,7 +389,7 @@ describe('GranuleResultsItem component', () => {
     test('calls handleClickGranuleDetails on click', () => {
       const { enzymeWrapper, props } = setup('cmr')
 
-      const infoButton = enzymeWrapper.find('.granule-results-item__button--info')
+      const infoButton = enzymeWrapper.find(LinkContainer).at(0)
 
       infoButton.simulate('click')
 

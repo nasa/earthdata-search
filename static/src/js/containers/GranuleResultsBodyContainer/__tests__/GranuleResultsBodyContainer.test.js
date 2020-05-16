@@ -28,6 +28,7 @@ function setup(overrideProps) {
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     panelView: 'list',
+    portal: {},
     ...overrideProps
   }
 

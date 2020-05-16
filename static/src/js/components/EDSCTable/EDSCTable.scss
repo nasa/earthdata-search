@@ -85,6 +85,7 @@
 
       .edsc-table__thead {
         top: 0;
+        z-index: -1;
       }
 
       .edsc-table__footer {
@@ -107,10 +108,12 @@
           content: "";
           width: 0.5rem;
           height: 100%;
+          height: calc(100% + 1px);
           background-color: transparent;
           background-image: linear-gradient(to left, rgba($color__black--900, 0) 0%, rgba($color__black--900, 0.1) 100%);
           display: block;
           position: absolute;
+          top: -1px;
           left: 100%;
           z-index: 1;
         }

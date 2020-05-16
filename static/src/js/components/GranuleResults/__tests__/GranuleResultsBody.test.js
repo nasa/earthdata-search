@@ -74,6 +74,7 @@ function setup(options = {
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     panelView: 'list',
+    portal: {},
     ...overrideProps
   }
 
@@ -133,8 +134,6 @@ describe('GranuleResultsBody component', () => {
     } = props
 
     const resultsTable = enzymeWrapper.find(GranuleResultsTable)
-
-    // console.log('resultsTable', resultsTable.debug())
 
     expect(resultsTable.props()).toEqual(expect.objectContaining({
       collectionId,

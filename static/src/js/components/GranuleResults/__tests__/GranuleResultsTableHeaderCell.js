@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+import MoreActionsDropdownItem from '../../MoreActionsDropdown/MoreActionsDropdownItem'
 import GranuleResultsTableHeaderCell from '../GranuleResultsTableHeaderCell'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -44,19 +45,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
   test('renders correctly', () => {
     const { enzymeWrapper } = setup()
 
-    const titleButton = enzymeWrapper.find('.granule-results-table__title-button')
-    expect(titleButton.props().label).toEqual('test value')
-    expect(titleButton.find('h4').text()).toEqual('test value')
-  })
-
-  test('clicking the title button calls onFocusedGranuleChange', () => {
-    const { enzymeWrapper, props } = setup()
-
-    const titleButton = enzymeWrapper.find('.granule-results-table__title-button')
-    titleButton.simulate('click')
-
-    expect(props.row.original.handleClick).toHaveBeenCalledTimes(1)
-    expect(props.row.original.handleClick).toHaveBeenCalledWith()
+    const titleElement = enzymeWrapper.find('.granule-results-table__granule-name')
+    expect(titleElement.text()).toEqual('test value')
   })
 
   test('clicking the details button calls onViewCollectionDetails', () => {
@@ -72,8 +62,11 @@ describe('GranuleResultsTableHeaderCell component', () => {
   test('clicking the remove from granule button calls onExcludeGranule', () => {
     const { enzymeWrapper, props } = setup()
 
-    const removeButton = enzymeWrapper.find('.granule-results-table__granule-action--remove')
-    removeButton.simulate('click', { stopPropagation: jest.fn() })
+    const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
+
+    removeButton.props().onClick({
+      stopPropagation: () => {}
+    })
 
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({ collectionId: 'collectionId', granuleId: 'one' })
@@ -92,8 +85,11 @@ describe('GranuleResultsTableHeaderCell component', () => {
       }
     })
 
-    const removeButton = enzymeWrapper.find('.granule-results-table__granule-action--remove')
-    removeButton.simulate('click', { stopPropagation: jest.fn() })
+    const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
+
+    removeButton.props().onClick({
+      stopPropagation: () => {}
+    })
 
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({ collectionId: 'collectionId', granuleId: '2257684172' })

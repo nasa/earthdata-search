@@ -24,7 +24,8 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
-  granuleQuery: state.query.granule
+  granuleQuery: state.query.granule,
+  portal: state.portal
 })
 
 export const GranuleResultsBodyContainer = (props) => {
@@ -38,7 +39,8 @@ export const GranuleResultsBodyContainer = (props) => {
     onExcludeGranule,
     onFocusedGranuleChange,
     onMetricsDataAccess,
-    panelView
+    panelView,
+    portal
   } = props
 
   const collectionObject = getFocusedCollectionObject(focusedCollection, collections)
@@ -72,6 +74,7 @@ export const GranuleResultsBodyContainer = (props) => {
       onFocusedGranuleChange={onFocusedGranuleChange}
       onMetricsDataAccess={onMetricsDataAccess}
       panelView={panelView}
+      portal={portal}
     />
   )
 }
@@ -86,7 +89,8 @@ GranuleResultsBodyContainer.propTypes = {
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  panelView: PropTypes.string.isRequired
+  panelView: PropTypes.string.isRequired,
+  portal: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

@@ -36,6 +36,7 @@ export const GranuleResultsListItem = memo(({
     onExcludeGranule,
     onFocusedGranuleChange,
     onMetricsDataAccess,
+    portal,
     setRowHeight,
     windowWidth
   } = data
@@ -97,6 +98,7 @@ export const GranuleResultsListItem = memo(({
         onExcludeGranule={onExcludeGranule}
         onFocusedGranuleChange={onFocusedGranuleChange}
         onMetricsDataAccess={onMetricsDataAccess}
+        portal={portal}
       />
     </li>
   )

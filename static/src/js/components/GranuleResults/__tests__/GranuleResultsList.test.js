@@ -47,6 +47,7 @@ function setup(type) {
       onExcludeGranule: jest.fn(),
       onFocusedGranuleChange: jest.fn(),
       onMetricsDataAccess: jest.fn(),
+      portal: {},
       itemCount: 2,
       isItemLoaded: jest.fn(),
       loadMoreItems: jest.fn(),

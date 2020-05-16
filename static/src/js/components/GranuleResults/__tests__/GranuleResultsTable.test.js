@@ -23,6 +23,7 @@ function setup(overrideProps) {
     onMetricsDataAccess: jest.fn(),
     setVisibleMiddleIndex: jest.fn(),
     visibleMiddleIndex: 1,
+    portal: {},
     ...overrideProps
   }
 
@@ -71,6 +72,32 @@ describe('GranuleResultsTable component', () => {
     expect(table.props().isItemLoaded).toEqual(props.isItemLoaded)
     expect(table.props().visibleMiddleIndex).toEqual(props.visibleMiddleIndex)
     expect(table.props().setVisibleMiddleIndex).toEqual(props.setVisibleMiddleIndex)
+  })
+
+  describe('onRowClick', () => {
+    test('fires the callback with the correct values', () => {
+      const handleClickMock = jest.fn()
+      const { enzymeWrapper } = setup()
+      const table = enzymeWrapper.find(EDSCTable)
+
+      table.props().onRowClick({ event: 'event' }, {
+        original: {
+          handleClick: handleClickMock
+        }
+      })
+
+      expect(handleClickMock).toHaveBeenCalledTimes(1)
+      expect(handleClickMock).toHaveBeenCalledWith(
+        {
+          event: 'event'
+        },
+        {
+          original: {
+            handleClick: handleClickMock
+          }
+        }
+      )
+    })
   })
 
   describe('onRowMouseEnter', () => {
@@ -135,7 +162,10 @@ describe('GranuleResultsTable component', () => {
           isFocusedGranule: true
         })
 
-        expect(result).toEqual(['granule-results-table__td--selected'])
+        expect(result).toEqual([
+          'granule-results-table__tr',
+          'granule-results-table__tr--selected'
+        ])
       })
     })
 
@@ -148,7 +178,9 @@ describe('GranuleResultsTable component', () => {
           isFocusedGranule: false
         })
 
-        expect(result).toEqual([])
+        expect(result).toEqual([
+          'granule-results-table__tr'
+        ])
       })
     })
 

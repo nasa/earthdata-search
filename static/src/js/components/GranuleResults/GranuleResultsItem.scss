@@ -4,9 +4,59 @@
   border: 1px solid $color__black--200;
   border-radius: $border-radius;
   box-shadow: $shadow__default;
+  overflow: hidden;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      height: calc(100% + 2px);
+      width: calc(100% + 2px);
+      border: 2px solid rgba(#5ee79b, 0.5);
+      border-radius: 0.325rem;
+    }
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    height: calc(100% + 10px);
+    width: calc(100% + 10px);
+    border: 0px solid transparent;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    z-index: -1;
+  }
+
+  &--selected {
+    border: 1px solid #48bd7c;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      height: calc(100% + 2px);
+      width: calc(100% + 2px);
+      border: 4px solid #5ee79b;
+      border-radius: 0.325rem;
+    }
+  }
 
   &__header {
-    padding: $spacer/2;
+    display: flex;
 
     &:hover {
       cursor: pointer;
@@ -21,20 +71,37 @@
     flex-grow: 1;
   }
 
+  &__title-wrapper {
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
   &__title {
+    padding: $spacer/2;
     margin: 0;
     font-size: 0.825rem;
     font-weight: 400;
     line-height: 1.4em;
     word-wrap: break-word;
+    line-break: anywhere;
+    color: $color__black--600;
 
     .granule-results-item--selected & {
-      color: $color__brand--blue;
+      color: $color__black--900;
     }
 
     &:hover {
-      color: $color__brand--blue;
+      color: $color__black--900;
     }
+  }
+
+  &__more-actions-dropdown {
+    padding: $spacer/2;
+    padding-left: 0;
   }
 
   &__thumb {
@@ -151,6 +218,14 @@
 
     &:first-child {
       border-radius: 0 0 0 $border-radius;
+    }
+
+    &--add {
+      color: $color__green;
+
+      &:hover {
+        color: $color__green--dark;
+      }
     }
   }
 }
