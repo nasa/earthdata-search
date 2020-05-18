@@ -96,7 +96,7 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'sort_key',
       'spatial_keyword',
       'tag_key'
-      ])
+    ])
   })
 })
 
