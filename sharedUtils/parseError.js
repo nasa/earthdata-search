@@ -39,7 +39,10 @@ export const parseError = (errorObj, {
   if (asJSON) {
     return {
       statusCode,
-      body: JSON.stringify({ errors: errorArray })
+      body: JSON.stringify({
+        statusCode,
+        errors: errorArray
+      })
     }
   }
 

@@ -5,7 +5,6 @@ import Adapter from 'enzyme-adapter-react-16'
 import { AccessMethod } from '../AccessMethod'
 import Radio from '../../FormFields/Radio/Radio'
 import RadioList from '../../FormFields/Radio/RadioList'
-import EchoForm from '../EchoForm'
 import ProjectPanelSection from '../../ProjectPanels/ProjectPanelSection'
 
 Enzyme.configure({ adapter: new Adapter() })

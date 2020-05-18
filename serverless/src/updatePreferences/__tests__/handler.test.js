@@ -5,7 +5,6 @@ import updatePreferences from '../handler'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
-import { createJwtToken } from '../../util/createJwtToken'
 
 let dbConnectionToMock
 let dbTracker
@@ -81,6 +80,7 @@ describe('updatePreferences', () => {
     const result = await updatePreferences(event, {})
 
     expect(result.body).toEqual(JSON.stringify({
+      statusCode: 500,
       errors: [JSON.stringify([{
         keyword: 'additionalProperties',
         dataPath: '',
