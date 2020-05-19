@@ -1,0 +1,17 @@
+{
+  "hasStyles": true,
+  "hasScripts": false,
+  "hideCollectionFilters": true,
+  "logo": {
+    "id": "SOOS-logo",
+    "link": "http://www.soos.aq",   
+    "title": "SOOS Metadata Search"
+  },
+  "org": "SOOS"
+  "pageTitle": "Southern Ocean Observing System",   
+  "query": {
+    "bounding_box": "-180,-90,180,-30"
+    "hasGranulesOrCwic": null
+  },	
+  "title": "Search"   
+}
