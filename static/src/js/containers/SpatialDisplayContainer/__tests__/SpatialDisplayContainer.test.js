@@ -9,6 +9,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     boundingBoxSearch: 'Test Bounding Box',
+    circleSearch: 'Test Circle',
     displaySpatialPolygonWarning: false,
     drawingNewLayer: false,
     gridName: 'Test Grid',
@@ -39,6 +40,7 @@ describe('SpatialDisplayContainer component', () => {
     expect(enzymeWrapper.find(SpatialDisplay).length).toBe(1)
     expect(enzymeWrapper.find(SpatialDisplay).props()).toEqual({
       boundingBoxSearch: 'Test Bounding Box',
+      circleSearch: 'Test Circle',
       displaySpatialPolygonWarning: false,
       drawingNewLayer: false,
       gridName: 'Test Grid',

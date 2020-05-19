@@ -67,6 +67,7 @@ export const prepareCollectionParams = (state) => {
 
   const {
     boundingBox,
+    circle,
     line,
     point,
     polygon
@@ -106,6 +107,7 @@ export const prepareCollectionParams = (state) => {
   const collectionParams = {
     authToken,
     boundingBox,
+    circle,
     cmrFacets,
     featureFacets,
     gridName,
@@ -154,6 +156,7 @@ export const buildCollectionSearchParams = (params) => {
 
   const {
     boundingBox,
+    circle,
     cmrFacets,
     conceptId,
     dataCenter,
@@ -219,6 +222,7 @@ export const buildCollectionSearchParams = (params) => {
   return {
     ...defaultParams,
     boundingBox,
+    circle,
     collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
     concept_id: conceptId,
     dataCenterH: facetsToSend.data_center_h,

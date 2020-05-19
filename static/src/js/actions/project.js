@@ -76,7 +76,7 @@ export const selectAccessMethod = payload => ({
  * Retrieve collection metadata for the collections provided
  * @param {String} collectionId Single collection to lookup, if null then all collections in the project will be retrieved
  */
-export const getProjectCollections = collectionIds => (dispatch, getState) => {
+export const getProjectCollections = (collectionIds = []) => (dispatch, getState) => {
   const { defaultCmrPageSize, defaultCmrSearchTags } = getApplicationConfig()
 
   const emptyProjectCollections = []

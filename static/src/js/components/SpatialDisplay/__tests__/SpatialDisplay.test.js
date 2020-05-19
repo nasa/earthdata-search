@@ -11,6 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     boundingBoxSearch: '',
+    circleSearch: '',
     displaySpatialPolygonWarning: false,
     drawingNewLayer: false,
     lineSearch: '',
@@ -85,6 +86,33 @@ describe('SpatialDisplay component', () => {
       const neInput = ne.props.children[1]
       expect(neLabel.props.children).toEqual('NE:')
       expect(neInput.props.children.props.value).toEqual('38.995845,-76.909393')
+    })
+  })
+
+  describe('with circleSearch', () => {
+    test('should render the spatial info', () => {
+      const { enzymeWrapper } = setup()
+      const newCircle = '-77.119759,38.791645,20000'
+      enzymeWrapper.setProps({ circleSearch: newCircle })
+
+      const filterStackItem = enzymeWrapper.find(FilterStackItem)
+      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+
+      expect(filterStackItem.props().title).toEqual('Spatial')
+      expect(filterStackItem.props().icon).toEqual('crop')
+      expect(filterStackContents.props().title).toEqual('Circle')
+
+      const center = filterStackContents.props().body.props.children.props.children[0]
+      const centerLabel = center.props.children[0]
+      const centerInput = center.props.children[1]
+      expect(centerLabel.props.children).toEqual('Center:')
+      expect(centerInput.props.children.props.value).toEqual('38.791645,-77.119759')
+
+      const radius = filterStackContents.props().body.props.children.props.children[1]
+      const radiusLabel = radius.props.children[0]
+      const radiusInput = radius.props.children[1]
+      expect(radiusLabel.props.children).toEqual('Radius:')
+      expect(radiusInput.props.children.props.value).toEqual('20000')
     })
   })
 
@@ -317,6 +345,7 @@ describe('SpatialDisplay component', () => {
       expect(enzymeWrapper.state()).toEqual({
         error: '',
         boundingBoxSearch: ['', ''],
+        circleSearch: ['', '', ''],
         gridCoords: 'test coords',
         gridName: '',
         lineSearch: '',
@@ -397,6 +426,101 @@ describe('SpatialDisplay component', () => {
       enzymeWrapper.instance().onSpatialRemove()
 
       expect(props.onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('manual entry of spatial values', () => {
+    test('changing point search updates the state', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setState({ manuallyEntering: 'marker' })
+
+      enzymeWrapper.instance().onChangePointSearch({ target: { value: '38,-77' } })
+
+      expect(enzymeWrapper.state().pointSearch).toEqual('-77,38')
+      expect(enzymeWrapper.state().error).toEqual('')
+    })
+
+    test('submitting point search calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.setState({
+        manuallyEntering: 'marker',
+        pointSearch: '-77,38',
+        error: ''
+      })
+
+      enzymeWrapper.instance().onSubmitPointSearch({
+        type: 'blur',
+        preventDefault: jest.fn()
+      })
+
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { point: '-77,38' } } })
+    })
+
+    test('changing bounding box search updates the state', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setState({ manuallyEntering: 'rectangle' })
+
+      enzymeWrapper.instance().onChangeBoundingBoxSearch({ target: { value: '10,20', name: 'swPoint' } })
+      expect(enzymeWrapper.state().boundingBoxSearch).toEqual(['10,20', ''])
+      expect(enzymeWrapper.state().error).toEqual('')
+
+      enzymeWrapper.instance().onChangeBoundingBoxSearch({ target: { value: '30,40', name: 'nePoint' } })
+      expect(enzymeWrapper.state().boundingBoxSearch).toEqual(['10,20', '30,40'])
+      expect(enzymeWrapper.state().error).toEqual('')
+    })
+
+    test('submitting bounding box search calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.setState({
+        manuallyEntering: 'rectangle',
+        boundingBoxSearch: ['10,20', '30,40'],
+        error: ''
+      })
+
+      enzymeWrapper.instance().onSubmitBoundingBoxSearch({
+        type: 'blur',
+        preventDefault: jest.fn()
+      })
+
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: '20,10,40,30' } } })
+    })
+
+    test('changing circle search updates the state', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setState({ manuallyEntering: 'circle' })
+
+      enzymeWrapper.instance().onChangeCircleSearch({ target: { value: '38,-77', name: 'center' } })
+      expect(enzymeWrapper.state().circleSearch).toEqual(['38,-77', ''])
+      expect(enzymeWrapper.state().error).toEqual('')
+
+      enzymeWrapper.instance().onChangeCircleSearch({ target: { value: '10000', name: 'radius' } })
+      expect(enzymeWrapper.state().circleSearch).toEqual(['38,-77', '10000'])
+      expect(enzymeWrapper.state().error).toEqual('')
+    })
+
+    test('submitting circle search calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.setState({
+        manuallyEntering: 'circle',
+        circleSearch: ['38,-77', '10000'],
+        error: ''
+      })
+
+      enzymeWrapper.instance().onSubmitCircleSearch({
+        type: 'blur',
+        preventDefault: jest.fn()
+      })
+
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { circle: '-77,38,10000' } } })
     })
   })
 })

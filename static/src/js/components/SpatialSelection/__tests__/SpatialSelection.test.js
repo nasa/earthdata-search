@@ -23,6 +23,7 @@ const defaultProps = {
     regionSearch: {}
   },
   boundingBoxSearch: '',
+  circleSearch: '',
   isCwic: false,
   isProjectPage: false,
   lineSearch: '',
@@ -61,7 +62,10 @@ describe('SpatialSelection component', () => {
       },
       polyline: false,
       circlemarker: false,
-      circle: false
+      circle: {
+        drawError: errorOptions,
+        shapeOptions: colorOptions
+      }
     })
   })
 
@@ -320,12 +324,38 @@ describe('SpatialSelection component', () => {
       }])
     })
 
+    test('with circle spatial sets the state and calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+
+      const editControl = enzymeWrapper.find(EditControl)
+      const latLngResponse = { lng: 0, lat: 0 }
+      const radiusResponse = 20000
+      editControl.prop('onCreated')({
+        layerType: 'circle',
+        layer: {
+          getLatLng: jest.fn(() => latLngResponse),
+          getRadius: jest.fn(() => radiusResponse),
+          remove: jest.fn()
+        }
+      })
+
+      expect(enzymeWrapper.state().drawnPoints).toEqual('0,0,20000')
+      expect(props.onChangeQuery.mock.calls.length).toBe(1)
+      expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+        collection: {
+          spatial: {
+            circle: '0,0,20000'
+          }
+        }
+      }])
+    })
+
     test('with invalid shape does not setState or call onChangeQuery', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onCreated')({
-        layerType: 'circle',
+        layerType: 'circleMarker',
         layer: {
           remove: jest.fn()
         }
@@ -399,6 +429,23 @@ describe('SpatialSelection component', () => {
         '10,0'
       ])
       expect(enzymeWrapper.instance().renderLine.mock.calls[0][1])
+        .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
+    })
+
+    test('with circle spatial it calls renderCircle', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+      enzymeWrapper.instance().renderCircle = jest.fn()
+      enzymeWrapper.instance().featureGroupRef = { leafletElement: jest.fn() }
+
+      enzymeWrapper.instance().renderShape({ ...props, circleSearch: '0,0,20000' })
+
+      expect(enzymeWrapper.instance().renderCircle.mock.calls.length).toBe(1)
+      expect(enzymeWrapper.instance().renderCircle.mock.calls[0][0]).toEqual([
+        '0',
+        '0',
+        '20000'
+      ])
+      expect(enzymeWrapper.instance().renderCircle.mock.calls[0][1])
         .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
     })
   })
