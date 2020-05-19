@@ -20,6 +20,7 @@ const mapDispathToProps = dispatch => ({
 const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  circleSearch: state.query.collection.spatial.circle,
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   lineSearch: state.query.collection.spatial.line,
@@ -32,6 +33,7 @@ export const SpatialSelectionContainer = (props) => {
   const {
     advancedSearch,
     boundingBoxSearch,
+    circleSearch,
     collections,
     focusedCollection,
     lineSearch,
@@ -54,6 +56,7 @@ export const SpatialSelectionContainer = (props) => {
     <SpatialSelection
       advancedSearch={advancedSearch}
       boundingBoxSearch={boundingBoxSearch}
+      circleSearch={circleSearch}
       isCwic={isCwic}
       isProjectPage={isProjectPage}
       lineSearch={lineSearch}
@@ -70,6 +73,7 @@ export const SpatialSelectionContainer = (props) => {
 
 SpatialSelectionContainer.defaultProps = {
   boundingBoxSearch: '',
+  circleSearch: '',
   lineSearch: '',
   mapRef: {},
   pointSearch: '',
@@ -81,6 +85,7 @@ SpatialSelectionContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   boundingBoxSearch: PropTypes.string,
+  circleSearch: PropTypes.string,
   lineSearch: PropTypes.string,
   mapRef: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired,

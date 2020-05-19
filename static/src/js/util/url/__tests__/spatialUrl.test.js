@@ -53,6 +53,23 @@ describe('url#decodeUrlParams', () => {
     }
     expect(decodeUrlParams('?polygon=-77%2C38%2C-77%2C38%2C-76%2C38%2C-77%2C38')).toEqual(expectedResult)
   })
+
+  test('decodes circleSearch correctly', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      query: {
+        ...emptyDecodedResult.query,
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          spatial: {
+            ...emptyDecodedResult.query.collection.spatial,
+            circle: '0,0,20000'
+          }
+        }
+      }
+    }
+    expect(decodeUrlParams('?circle=0%2C0%2C20000')).toEqual(expectedResult)
+  })
 })
 
 describe('url#encodeUrlQuery', () => {
@@ -81,5 +98,14 @@ describe('url#encodeUrlQuery', () => {
       polygonSearch: '-77,38,-77,38,-76,38,-77,38'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?polygon=-77%2C38%2C-77%2C38%2C-76%2C38%2C-77%2C38')
+  })
+
+  test('encodes circleSearch correctly', () => {
+    const props = {
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      circleSearch: '0,0,20000'
+    }
+    expect(encodeUrlQuery(props)).toEqual('/path/here?circle=0%2C0%2C20000')
   })
 })

@@ -18,6 +18,7 @@ function getPermittedCmrKeys(format) {
 
   return [
     'bounding_box',
+    'circle',
     'collection_data_type',
     'concept_id',
     'data_center_h',

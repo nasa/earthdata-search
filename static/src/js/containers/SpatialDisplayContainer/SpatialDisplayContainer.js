@@ -15,6 +15,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  circleSearch: state.query.collection.spatial.circle,
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer,
   gridCoords: state.query.granule.gridCoords,
@@ -29,6 +30,7 @@ const mapStateToProps = state => ({
 export const SpatialDisplayContainer = (props) => {
   const {
     boundingBoxSearch,
+    circleSearch,
     displaySpatialPolygonWarning,
     drawingNewLayer,
     gridName,
@@ -47,6 +49,7 @@ export const SpatialDisplayContainer = (props) => {
   return (
     <SpatialDisplay
       boundingBoxSearch={boundingBoxSearch}
+      circleSearch={circleSearch}
       displaySpatialPolygonWarning={displaySpatialPolygonWarning}
       drawingNewLayer={drawingNewLayer}
       gridName={gridName}
@@ -66,6 +69,7 @@ export const SpatialDisplayContainer = (props) => {
 
 SpatialDisplayContainer.defaultProps = {
   boundingBoxSearch: '',
+  circleSearch: '',
   gridName: '',
   gridCoords: '',
   lineSearch: '',
@@ -76,6 +80,7 @@ SpatialDisplayContainer.defaultProps = {
 
 SpatialDisplayContainer.propTypes = {
   boundingBoxSearch: PropTypes.string,
+  circleSearch: PropTypes.string,
   displaySpatialPolygonWarning: PropTypes.bool.isRequired,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,

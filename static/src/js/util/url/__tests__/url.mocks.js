@@ -26,6 +26,7 @@ export const emptyDecodedResult = {
       overrideTemporal: {},
       spatial: {
         boundingBox: undefined,
+        circle: undefined,
         point: undefined,
         polygon: undefined
       },

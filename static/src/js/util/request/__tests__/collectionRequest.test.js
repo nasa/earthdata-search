@@ -35,6 +35,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
     expect(request.permittedCmrKeys()).toEqual([
       'params',
       'bounding_box',
+      'circle',
       'collection_data_type',
       'concept_id',
       'data_center_h',

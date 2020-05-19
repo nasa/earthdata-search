@@ -121,6 +121,7 @@ class SpatialSelection extends Component {
       boundingBoxSearch,
       polygonSearch,
       lineSearch,
+      circleSearch,
       mapRef
     } = this.props
     const {
@@ -138,10 +139,12 @@ class SpatialSelection extends Component {
       || nextProps.boundingBoxSearch
       || nextProps.polygonSearch
       || nextProps.lineSearch
+      || nextProps.circleSearch
     const oldDrawing = pointSearch
     || boundingBoxSearch
     || polygonSearch
     || lineSearch
+    || circleSearch
 
     const { featureGroupRef = {} } = this
     const { leafletElement = {} } = featureGroupRef
@@ -232,6 +235,7 @@ class SpatialSelection extends Component {
     if (this.drawControl) {
       this.drawControl._toolbars.draw._modes.marker.handler.disable()
       this.drawControl._toolbars.draw._modes.rectangle.handler.disable()
+      this.drawControl._toolbars.draw._modes.circle.handler.disable()
     }
   }
 
@@ -346,26 +350,36 @@ class SpatialSelection extends Component {
       case 'line':
         latLngs = Array.from(layer.getLatLngs()).map(p => `${p.lng},${p.lat}`)
         break
+      case 'circle': {
+        const center = layer.getLatLng()
+        const radius = layer.getRadius()
+        latLngs = [center.lng, center.lat, radius]
+        break
+      }
       default:
         return
     }
 
-    // If the shape crosses the anti-meridian, adjust the points to fit in the globe
-    const latLngsAntiMeridian = []
-    latLngs.forEach((coord) => {
-      let [lon, lat] = Array.from(coord.split(','))
-      lon = parseFloat(lon)
-      while (lon < -180) { lon += 360 }
-      while (lon > 180) { lon -= 360 }
-      lat = parseFloat(lat)
-      lat = Math.min(90, lat)
-      lat = Math.max(-90, lat)
-      latLngsAntiMeridian.push(`${lon},${lat}`)
-    })
+    let latLngsAntiMeridian = []
+    if (type === 'circle') {
+      latLngsAntiMeridian = latLngs
+    } else {
+      // If the shape crosses the anti-meridian, adjust the points to fit in the globe
+      latLngs.forEach((coord) => {
+        let [lon, lat] = Array.from(coord.split(','))
+        lon = parseFloat(lon)
+        while (lon < -180) { lon += 360 }
+        while (lon > 180) { lon -= 360 }
+        lat = parseFloat(lat)
+        lat = Math.min(90, lat)
+        lat = Math.max(-90, lat)
+        latLngsAntiMeridian.push(`${lon},${lat}`)
+      })
 
-    if (type === 'polygon') {
-      // Close the polygon by duplicating the first point as the last point
-      latLngsAntiMeridian.push(latLngsAntiMeridian[0])
+      if (type === 'polygon') {
+        // Close the polygon by duplicating the first point as the last point
+        latLngsAntiMeridian.push(latLngsAntiMeridian[0])
+      }
     }
 
     this.setState({
@@ -407,7 +421,8 @@ class SpatialSelection extends Component {
       pointSearch,
       boundingBoxSearch,
       lineSearch,
-      polygonSearch
+      polygonSearch,
+      circleSearch
     } = props
 
     const {
@@ -437,6 +452,10 @@ class SpatialSelection extends Component {
       this.setState({ drawnPoints: lineSearch })
       const points = splitListOfPoints(lineSearch)
       this.renderLine(points, featureGroup)
+    } else if (circleSearch) {
+      this.setState({ drawnPoints: circleSearch })
+      const points = circleSearch.split(',')
+      this.renderCircle(points, featureGroup)
     }
   }
 
@@ -559,6 +578,27 @@ class SpatialSelection extends Component {
     }
   }
 
+  renderCircle(points, featureGroup) {
+    if (featureGroup) {
+      const center = new L.LatLng(points[1], points[0])
+      const radius = points[2]
+
+      const circle = new L.Circle(center, {
+        radius,
+        ...colorOptions
+      })
+
+      circle.type = 'circle'
+      circle.addTo(featureGroup)
+
+      this.setState({
+        drawnLayer: circle,
+        drawnLayerType: 'circle'
+      })
+      this.setLayer(circle)
+    }
+  }
+
   render() {
     const { isProjectPage } = this.props
 
@@ -574,17 +614,20 @@ class SpatialSelection extends Component {
         onEditStart={this.onEditStart}
         onEditStop={this.onEditStop}
         draw={{
+          circle: {
+            drawError: errorOptions,
+            shapeOptions: colorOptions
+          },
+          circlemarker: false,
           polygon: {
             drawError: errorOptions,
             shapeOptions: colorOptions
           },
+          polyline: false,
           rectangle: {
             drawError: errorOptions,
             shapeOptions: colorOptions
-          },
-          polyline: false,
-          circlemarker: false,
-          circle: false
+          }
         }}
         edit={{
           selectedPathOptions: {
@@ -604,6 +647,7 @@ class SpatialSelection extends Component {
 
 SpatialSelection.defaultProps = {
   boundingBoxSearch: '',
+  circleSearch: '',
   lineSearch: '',
   mapRef: {},
   pointSearch: '',
@@ -613,6 +657,7 @@ SpatialSelection.defaultProps = {
 SpatialSelection.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.string,
+  circleSearch: PropTypes.string,
   isCwic: PropTypes.bool.isRequired,
   isProjectPage: PropTypes.bool.isRequired,
   mapRef: PropTypes.shape({}),

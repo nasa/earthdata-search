@@ -26,6 +26,7 @@ class SpatialDisplay extends Component {
     this.state = {
       error: '',
       boundingBoxSearch: '',
+      circleSearch: '',
       lineSearch: '',
       gridName: '',
       gridCoords: '',
@@ -44,12 +45,15 @@ class SpatialDisplay extends Component {
     this.onSubmitPointSearch = this.onSubmitPointSearch.bind(this)
     this.onChangeBoundingBoxSearch = this.onChangeBoundingBoxSearch.bind(this)
     this.onSubmitBoundingBoxSearch = this.onSubmitBoundingBoxSearch.bind(this)
+    this.onChangeCircleSearch = this.onChangeCircleSearch.bind(this)
+    this.onSubmitCircleSearch = this.onSubmitCircleSearch.bind(this)
     this.onFocusSpatialSearch = this.onFocusSpatialSearch.bind(this)
   }
 
   componentDidMount() {
     const {
       boundingBoxSearch,
+      circleSearch,
       gridName,
       gridCoords,
       pointSearch,
@@ -60,6 +64,7 @@ class SpatialDisplay extends Component {
     this.setState({
       error: '',
       boundingBoxSearch: this.transformBoundingBoxCoordinates(boundingBoxSearch),
+      circleSearch: this.transformCircleCoordinates(circleSearch),
       gridName,
       gridCoords,
       pointSearch,
@@ -71,6 +76,7 @@ class SpatialDisplay extends Component {
   componentWillReceiveProps(nextProps) {
     const {
       boundingBoxSearch,
+      circleSearch,
       lineSearch,
       gridName,
       gridCoords,
@@ -118,6 +124,13 @@ class SpatialDisplay extends Component {
       shouldUpdateState = true
 
       state.lineSearch = nextProps.lineSearch
+    }
+
+    if (circleSearch !== nextProps.circleSearch) {
+      shouldUpdateState = true
+
+      const points = this.transformCircleCoordinates(nextProps.circleSearch)
+      state.circleSearch = points
     }
 
     if (gridName !== nextProps.gridName) {
@@ -279,6 +292,59 @@ class SpatialDisplay extends Component {
     e.preventDefault()
   }
 
+  onChangeCircleSearch(e) {
+    const { circleSearch } = this.state
+    const [center, radius] = circleSearch
+
+    const {
+      name,
+      value = ''
+    } = e.target
+
+    let newSearch
+
+    if (name === 'center') {
+      newSearch = [value, radius]
+    }
+
+    if (name === 'radius') {
+      newSearch = [center, value]
+    }
+
+    this.setState({
+      circleSearch: newSearch,
+      error: this.validateCircleCoordinates(newSearch)
+    })
+  }
+
+  onSubmitCircleSearch(e) {
+    if (e.type === 'blur' || e.key === 'Enter') {
+      const { circleSearch, error } = this.state
+      const [center, radius] = circleSearch
+      const { onChangeQuery } = this.props
+
+      if (center && radius) {
+        eventEmitter.emit('map.drawCancel')
+
+        if (error === '') {
+          this.setState({
+            manuallyEntering: false
+          })
+
+          onChangeQuery({
+            collection: {
+              spatial: {
+                circle: [this.transformCircleCoordinates(circleSearch.join(','))].join(',')
+              }
+            }
+          })
+        }
+      }
+    }
+
+    e.preventDefault()
+  }
+
   /**
    * Validate the provided point setting any errors to the component state
    * @param {String} coordinates Value provided by an input field containing a single point of 'lat,lon'
@@ -310,6 +376,10 @@ class SpatialDisplay extends Component {
     return errorMessage
   }
 
+  validateCircleCoordinates(circle) {
+    return this.validateCoordinate(circle[0])
+  }
+
   /**
    * Turns '1,2' into '2,1' for leaflet
    * @param {String} coordinateString A single coordinate representing a point on a map
@@ -331,6 +401,25 @@ class SpatialDisplay extends Component {
       : ['', '']
   }
 
+  /**
+   * Turns '1,2,3' into '2,1,3' for leaflet
+   * @param {String} circleCoordinates A center point and radius
+   */
+  transformCircleCoordinates(circleCoordinates) {
+    const points = circleCoordinates.split(',')
+
+    const lat = points[0] || ''
+    const lng = points[1] || ''
+    const radius = points[2] || ''
+
+    if (lat && lng) {
+      const coordinate = [lat, lng]
+      return [this.transformSingleCoordinate(coordinate.join(',')), radius]
+    }
+
+    return ['', '', '']
+  }
+
   render() {
     const {
       displaySpatialPolygonWarning,
@@ -341,6 +430,7 @@ class SpatialDisplay extends Component {
     const {
       error,
       boundingBoxSearch,
+      circleSearch,
       lineSearch,
       gridName,
       gridCoords,
@@ -484,7 +574,7 @@ class SpatialDisplay extends Component {
           title="Point"
         />
       ))
-    } else if ((boundingBoxSearch && (boundingBoxSearch[0] || boundingBoxSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'rectangle' || manuallyEntering) {
+    } else if ((boundingBoxSearch && (boundingBoxSearch[0] || boundingBoxSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'rectangle' || manuallyEntering === 'rectangle') {
       entry = (
         <SpatialDisplayEntry>
           <Form.Row className="spatial-display__form-row">
@@ -547,6 +637,72 @@ class SpatialDisplay extends Component {
           key="filter__rectangle"
           body={entry}
           title="Rectangle"
+          variant="block"
+        />
+      ))
+    } else if ((circleSearch && (circleSearch[0] || circleSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'circle' || manuallyEntering === 'circle') {
+      entry = (
+        <SpatialDisplayEntry>
+          <Form.Row className="spatial-display__form-row">
+            <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
+              <Form.Label
+                className="spatial-display__form-label"
+                column
+                sm="auto"
+              >
+                Center:
+              </Form.Label>
+              <Col className="spatial-display__form-column">
+                <Form.Control
+                  className="spatial-display__text-input"
+                  sm="auto"
+                  type="text"
+                  placeholder="lat, lon (e.g. 44.2, 130)"
+                  size="sm"
+                  name="center"
+                  value={circleSearch[0]}
+                  onChange={this.onChangeCircleSearch}
+                  onBlur={this.onSubmitCircleSearch}
+                  onKeyUp={this.onSubmitCircleSearch}
+                  onFocus={() => this.onFocusSpatialSearch('circle')}
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
+              <Form.Label
+                className="spatial-display__form-label"
+                column
+                sm="auto"
+              >
+                Radius:
+              </Form.Label>
+              <Col className="spatial-display__form-column">
+                <Form.Control
+                  className="spatial-display__text-input"
+                  sm="auto"
+                  type="text"
+                  placeholder="meters (e.g. 200)"
+                  size="sm"
+                  name="radius"
+                  value={circleSearch[1]}
+                  onChange={this.onChangeCircleSearch}
+                  onBlur={this.onSubmitCircleSearch}
+                  onKeyUp={this.onSubmitCircleSearch}
+                  onFocus={() => this.onFocusSpatialSearch('circle')}
+                />
+              </Col>
+            </Form.Group>
+          </Form.Row>
+        </SpatialDisplayEntry>
+      )
+
+      secondaryTitle = 'Circle'
+
+      contents.push((
+        <FilterStackContents
+          key="filter__circle"
+          body={entry}
+          title="Circle"
           variant="block"
         />
       ))
@@ -679,6 +835,7 @@ class SpatialDisplay extends Component {
 
 SpatialDisplay.propTypes = {
   boundingBoxSearch: PropTypes.string.isRequired,
+  circleSearch: PropTypes.string.isRequired,
   displaySpatialPolygonWarning: PropTypes.bool.isRequired,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
