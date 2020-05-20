@@ -7,10 +7,10 @@
     "link": "http://www.soos.aq",   
     "title": "SOOS Metadata Search"
   },
-  "org": "SOOS"
+  "org": "SOOS",
   "pageTitle": "Southern Ocean Observing System",   
   "query": {
-    "bounding_box": "-180,-90,180,-30"
+    "bounding_box": "-180,-90,180,-30",
     "hasGranulesOrCwic": null
   },	
   "title": "Search"   
