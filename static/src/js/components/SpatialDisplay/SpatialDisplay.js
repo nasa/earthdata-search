@@ -376,8 +376,13 @@ class SpatialDisplay extends Component {
     return errorMessage
   }
 
+  /**
+   * Validate the provided center point of a circle
+   * @param {Array} circle Array with [point, radius] values
+   */
   validateCircleCoordinates(circle) {
-    return this.validateCoordinate(circle[0])
+    const [center] = circle
+    return this.validateCoordinate(center)
   }
 
   /**
@@ -408,9 +413,11 @@ class SpatialDisplay extends Component {
   transformCircleCoordinates(circleCoordinates) {
     const points = circleCoordinates.split(',')
 
-    const lat = points[0] || ''
-    const lng = points[1] || ''
-    const radius = points[2] || ''
+    const [
+      lat = '',
+      lng = '',
+      radius = ''
+    ] = points
 
     if (lat && lng) {
       const coordinate = [lat, lng]
@@ -674,7 +681,7 @@ class SpatialDisplay extends Component {
                 column
                 sm="auto"
               >
-                Radius:
+                Radius (m):
               </Form.Label>
               <Col className="spatial-display__form-column">
                 <Form.Control

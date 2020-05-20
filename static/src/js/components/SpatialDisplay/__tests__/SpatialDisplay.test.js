@@ -111,7 +111,7 @@ describe('SpatialDisplay component', () => {
       const radius = filterStackContents.props().body.props.children.props.children[1]
       const radiusLabel = radius.props.children[0]
       const radiusInput = radius.props.children[1]
-      expect(radiusLabel.props.children).toEqual('Radius:')
+      expect(radiusLabel.props.children).toEqual('Radius (m):')
       expect(radiusInput.props.children.props.value).toEqual('20000')
     })
   })

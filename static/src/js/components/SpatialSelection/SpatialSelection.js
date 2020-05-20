@@ -580,8 +580,12 @@ class SpatialSelection extends Component {
 
   renderCircle(points, featureGroup) {
     if (featureGroup) {
-      const center = new L.LatLng(points[1], points[0])
-      const radius = points[2]
+      const [
+        lat,
+        lng,
+        radius
+      ] = points
+      const center = new L.LatLng(lng, lat)
 
       const circle = new L.Circle(center, {
         radius,
