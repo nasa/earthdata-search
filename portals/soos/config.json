@@ -10,7 +10,7 @@
   "org": "SOOS",
   "pageTitle": "Southern Ocean Observing System",   
   "query": {
-    "bounding_box": "-180,-90,180,-30",
+    "tagKey": "aq.soos",
     "hasGranulesOrCwic": null
   },	
   "title": "Search"   
