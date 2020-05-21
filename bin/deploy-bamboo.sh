@@ -59,6 +59,7 @@ dockerRun() {
         -e "NODE_ENV=production" \
         -e "AWS_ACCESS_KEY_ID=$bamboo_AWS_ACCESS_KEY_ID" \
         -e "AWS_SECRET_ACCESS_KEY=$bamboo_AWS_SECRET_ACCESS_KEY" \
+        -e "CLOUDFRONT_BUCKET_NAME=$bamboo_CLOUDFRONT_BUCKET_NAME" \
         -e "DB_INSTANCE_CLASS=$bamboo_DB_INSTANCE_CLASS" \
         -e "GEOCODING_SERVICE=$bamboo_GEOCODING_SERVICE" \
         -e "GEOCODING_INCLUDE_POLYGONS=$bamboo_GEOCODING_INCLUDE_POLYGONS" \
