@@ -104,6 +104,51 @@ Resources:
       RestApiId:
         Ref: ApiGatewayRestApi
 
+  # This role must not be changed -- if it is removed Serverless will attempt to automatically
+  # recreate it and deployments will faile because our permissions boundary does not allow for
+  # creation of roles. This role is used specifically for S3 Lambda triggers that use existing
+  # buckets, which is what we're using for forwarding cloudfront logs to Splunk.
+  IamRoleCustomResourcesLambdaExecution:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+      PermissionsBoundary:
+        Fn::Join: [
+          "", [
+            "arn:aws:iam::",
+            {
+              "Ref": "AWS::AccountId"
+            },
+            ":policy/NGAPShRoleBoundary"
+          ]
+        ]
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+
+  S3CloudfrontLogToCloudwatchPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Action:
+              - "s3:GetBucketLocation"
+              - "s3:ListBucket"
+              - "s3:ListAllMyBuckets"
+              - "s3:GetObject"
+            Effect: "Allow"
+            Resource: "*"
+      PolicyName: ${opt:stage}-S3CloudfrontLogToCloudwatchPolicy
+      Roles:
+        - Ref: IamRoleCustomResourcesLambdaExecution
 Outputs:
   UpdateOrderStatusWorkflow:
     Description: ARN of the order status step function workflow
