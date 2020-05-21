@@ -16,7 +16,7 @@
                     {
                       "Ref": "AWS::AccountId"
                     },
-                    "${self:provider.region}/search_sit_api/"
+                    "${self:provider.region}/search_${self:provider.stage}_api/"
                   ]
                 ]
       - s3:
@@ -32,7 +32,7 @@
                     {
                       "Ref": "AWS::AccountId"
                     },
-                    "${self:provider.region}/search_sit_s3/"
+                    "${self:provider.region}/search_${self:provider.stage}_s3/"
                   ]
                 ]
 
