@@ -22,6 +22,7 @@ const cmrGranuleSearch = async (event) => {
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
     'bounding_box',
+    'circle',
     'browse_only',
     'cloud_cover',
     'day_night_flag',

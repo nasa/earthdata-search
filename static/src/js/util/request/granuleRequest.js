@@ -28,6 +28,7 @@ export default class GranuleRequest extends Request {
   permittedCmrKeys() {
     return [
       'bounding_box',
+      'circle',
       'browse_only',
       'cloud_cover',
       'day_night_flag',
