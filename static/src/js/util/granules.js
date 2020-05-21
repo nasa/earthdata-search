@@ -123,6 +123,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
 
   const {
     boundingBox,
+    circle,
     point,
     polygon,
     line
@@ -181,6 +182,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
   const granuleParams = {
     authToken,
     boundingBox,
+    circle,
     browseOnly,
     cloudCover: cloudCoverString,
     collectionId,
@@ -219,6 +221,7 @@ export const buildGranuleSearchParams = (params) => {
 
   const {
     boundingBox,
+    circle,
     browseOnly,
     cloudCover,
     collectionId,
@@ -251,6 +254,7 @@ export const buildGranuleSearchParams = (params) => {
 
   return {
     boundingBox,
+    circle,
     browseOnly,
     cloudCover,
     dayNightFlag,

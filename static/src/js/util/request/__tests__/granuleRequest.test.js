@@ -34,6 +34,7 @@ describe('GranuleRequest#permittedCmrKeys', () => {
 
     expect(request.permittedCmrKeys()).toEqual([
       'bounding_box',
+      'circle',
       'browse_only',
       'cloud_cover',
       'day_night_flag',
