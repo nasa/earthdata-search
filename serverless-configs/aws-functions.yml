@@ -1,3 +1,41 @@
+  cloudfrontToCloudwatch:
+    handler: serverless/src/cloudfrontToCloudwatch/handler.default
+    timeout: 300
+    role: IamRoleCustomResourcesLambdaExecution
+    events:
+      - s3:
+          bucket: ${env:CLOUDFRONT_BUCKET_NAME}
+          event: s3:ObjectCreated:*
+          existing: true
+          rules:
+            - suffix: .gz
+            - prefix:
+                Fn::Join: [
+                  "/", [
+                    "cloudfront/AWSLogs",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "${self:provider.region}/search_sit_api/"
+                  ]
+                ]
+      - s3:
+          bucket: ${env:CLOUDFRONT_BUCKET_NAME}
+          event: s3:ObjectCreated:*
+          existing: true
+          rules:
+            - suffix: .gz
+            - prefix:
+                Fn::Join: [
+                  "/", [
+                    "cloudfront/AWSLogs",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "${self:provider.region}/search_sit_s3/"
+                  ]
+                ]
+
   #
   # Standalone functions
   #
