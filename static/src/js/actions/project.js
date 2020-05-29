@@ -10,7 +10,9 @@ import {
   ADD_ACCESS_METHODS,
   SUBMITTING_PROJECT,
   SUBMITTED_PROJECT,
-  UPDATE_ACCESS_METHOD_ORDER_COUNT
+  UPDATE_ACCESS_METHOD_ORDER_COUNT,
+  ADD_GRANULE_TO_PROJECT_COLLECTION,
+  REMOVE_GRANULE_FROM_PROJECT_COLLECTION
 } from '../constants/actionTypes'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { updateAuthTokenFromHeaders } from './authToken'
@@ -20,6 +22,7 @@ import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { parseError } from '../../../../sharedUtils/parseError'
 import { buildPromise } from '../util/buildPromise'
+import { getGranuleCount } from '../util/collectionMetadata/granuleCount'
 
 export const submittingProject = () => ({
   type: SUBMITTING_PROJECT
@@ -190,4 +193,68 @@ export const addProjectCollection = collectionId => async (dispatch) => {
   } catch (e) {
     parseError(e)
   }
+}
+
+/**
+ * Adds a single single granule to a project. If the collection is not in the
+ * project, it will be added first.
+*/
+export const addGranuleToProjectCollection = payload => (dispatch, getState) => {
+  const { project } = getState()
+  const { collectionIds } = project
+
+  const { collectionId } = payload
+
+  // If the current collection is not in the project, add it.
+  if (collectionIds.indexOf(collectionId) === -1) {
+    dispatch(addProjectCollection(collectionId))
+  }
+
+  // Add the granule to the project collection.c
+  dispatch({
+    type: ADD_GRANULE_TO_PROJECT_COLLECTION,
+    payload
+  })
+}
+
+/**
+ * Removes a single single granule from a project. If the collection would not have any granules
+ * after removal, the collection is removed from the project.
+*/
+export const removeGranuleFromProjectCollection = payload => (dispatch, getState) => {
+  const { collectionId, granuleId } = payload
+  const { project, metadata } = getState()
+
+  const { collections } = metadata
+  const { byId: collectionsById } = collections
+  const { byId: projectCollectionsById } = project
+
+  const collection = collectionsById[collectionId]
+  const projectCollection = projectCollectionsById[collectionId]
+
+  const { granules } = collection
+  const { removedGranuleIds = [] } = projectCollection
+
+  const { allIds: collectionGranulesIds } = granules
+
+  const indexInRemovedGranulesArray = removedGranuleIds.indexOf(granuleId)
+  const indexInCollectionGranulesArray = collectionGranulesIds.indexOf(granuleId)
+
+  const granuleCount = getGranuleCount(collection, projectCollection)
+
+  // If the granule does not exist in the removed granules array and the
+  // removing the granule would result in 0 granules in the project, remove
+  // the current collection from the project.
+  if (
+    indexInRemovedGranulesArray === -1
+    && indexInCollectionGranulesArray === 1
+    && granuleCount - 1 === 0
+  ) {
+    dispatch(removeCollectionFromProject(collectionId))
+  }
+
+  dispatch({
+    type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
+    payload
+  })
 }

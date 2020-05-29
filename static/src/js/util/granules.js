@@ -42,7 +42,11 @@ export const withAdvancedSearch = (granuleParams, advancedSearch) => {
  * @param {Object} response
  * @returns {Object} Granule payload
  */
-export const populateGranuleResults = (collectionId, isCwic, response) => {
+export const populateGranuleResults = ({
+  collectionId,
+  isCwic,
+  response
+}) => {
   const payload = {}
 
   payload.collectionId = collectionId
@@ -60,8 +64,11 @@ export const populateGranuleResults = (collectionId, isCwic, response) => {
     size += parseFloat(granule.granule_size || 0)
   })
 
-  const totalSize = size / payload.results.length * payload.hits
+  const singleGranuleSize = size / payload.results.length
+
+  const totalSize = singleGranuleSize * payload.hits
   payload.totalSize = convertSize(totalSize)
+  payload.singleGranuleSize = singleGranuleSize
 
   return payload
 }
@@ -214,12 +221,14 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
  * Translates the values returned from prepareGranuleParams to the camelCased keys that are expected in
  * the granules.search() function
  * @param {Object} params - Params to be passed to the granules.search() function.
+ * @param {Object} opts - An optional options object.
  * @returns {Object} Parameters to be provided to the Granules request with camel cased keys
  */
-export const buildGranuleSearchParams = (params) => {
+export const buildGranuleSearchParams = (params, opts = {}) => {
   const { defaultCmrPageSize } = getApplicationConfig()
 
   const {
+    conceptId,
     boundingBox,
     circle,
     browseOnly,
@@ -252,7 +261,14 @@ export const buildGranuleSearchParams = (params) => {
     if (gridCoords) twoDCoordinateSystem.coordinates = gridCoords
   }
 
-  return {
+  // If forceConceptId is set, omit all other properties.
+  if (opts.forceConceptId && conceptId) {
+    return {
+      conceptId
+    }
+  }
+
+  const granuleParams = {
     boundingBox,
     circle,
     browseOnly,
@@ -275,6 +291,16 @@ export const buildGranuleSearchParams = (params) => {
     temporal: temporalString,
     twoDCoordinateSystem
   }
+
+  // If includeConceptId is set, add the conceptId property to the granule params.
+  if (opts.includeConceptId && conceptId) {
+    return {
+      ...granuleParams,
+      conceptId
+    }
+  }
+
+  return granuleParams
 }
 
 /**

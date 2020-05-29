@@ -2,7 +2,9 @@ import projectReducer from '../project'
 import {
   ADD_ACCESS_METHODS,
   ADD_COLLECTION_TO_PROJECT,
+  ADD_GRANULE_TO_PROJECT_COLLECTION,
   REMOVE_COLLECTION_FROM_PROJECT,
+  REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
   SELECT_ACCESS_METHOD,
   UPDATE_ACCESS_METHOD,
   RESTORE_FROM_URL,
@@ -48,7 +50,113 @@ describe('ADD_COLLECTION_TO_PROJECT', () => {
       collectionIds: ['existingCollectionId', collectionId]
     }
 
-    expect(projectReducer(initial, action)).toEqual(expectedState)
+    const res = projectReducer(initial, action)
+    expect(res).toEqual(expectedState)
+  })
+})
+
+describe('ADD_GRANULE_TO_PROJECT_COLLECTION', () => {
+  describe('when there are no removed granules', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: ADD_GRANULE_TO_PROJECT_COLLECTION,
+        payload: {
+          collectionId: 'collectionId',
+          granuleId: 'GRAN-ID'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        byId: {
+          collectionId: {}
+        },
+        collectionIds: ['collectionId']
+      }
+
+      const expectedState = {
+        ...initial,
+        byId: {
+          collectionId: {
+            addedGranuleIds: ['GRAN-ID']
+          }
+        },
+        collectionIds: ['collectionId']
+      }
+
+      const res = projectReducer(initial, action)
+      expect(res).toEqual(expectedState)
+    })
+  })
+
+  describe('when there are removed granules', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: ADD_GRANULE_TO_PROJECT_COLLECTION,
+        payload: {
+          collectionId: 'collectionId',
+          granuleId: 'GRAN-ID1'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        byId: {
+          collectionId: {
+            removedGranuleIds: ['GRAN-ID1', 'GRAN-ID2']
+          }
+        },
+        collectionIds: ['collectionId']
+      }
+
+      const expectedState = {
+        ...initial,
+        byId: {
+          collectionId: {
+            removedGranuleIds: ['GRAN-ID2']
+          }
+        },
+        collectionIds: ['collectionId']
+      }
+
+      const res = projectReducer(initial, action)
+      expect(res).toEqual(expectedState)
+    })
+  })
+
+  describe('when the granule is already added', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: ADD_GRANULE_TO_PROJECT_COLLECTION,
+        payload: {
+          collectionId: 'collectionId',
+          granuleId: 'GRAN-ID2'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        byId: {
+          collectionId: {
+            addedGranuleIds: ['GRAN-ID2']
+          }
+        },
+        collectionIds: ['collectionId']
+      }
+
+      const expectedState = {
+        ...initial,
+        byId: {
+          collectionId: {
+            addedGranuleIds: ['GRAN-ID2']
+          }
+        },
+        collectionIds: ['collectionId']
+      }
+
+      const res = projectReducer(initial, action)
+      expect(res).toEqual(expectedState)
+    })
   })
 
   test('returns the correct state if collection is already a project collection', () => {
@@ -70,6 +178,103 @@ describe('ADD_COLLECTION_TO_PROJECT', () => {
     }
 
     expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('REMOVE_GRANULE_FROM_PROJECT_COLLECTION', () => {
+  describe('when the collection is not in the current project', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
+        payload: {
+          collectionId: 'collectionId2',
+          granuleId: 'GRAN-ID'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        byId: {
+          collectionId: {}
+        },
+        collectionIds: ['collectionId']
+      }
+
+      const expectedState = {
+        ...initial
+      }
+
+      const res = projectReducer(initial, action)
+      expect(res).toEqual(expectedState)
+    })
+  })
+
+  describe('when there are no added granules', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
+        payload: {
+          collectionId: 'collectionId',
+          granuleId: 'GRAN-ID'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        byId: {
+          collectionId: {}
+        },
+        collectionIds: ['collectionId']
+      }
+
+      const expectedState = {
+        ...initial,
+        collectionIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            removedGranuleIds: ['GRAN-ID']
+          }
+        }
+      }
+
+      const res = projectReducer(initial, action)
+      expect(res).toEqual(expectedState)
+    })
+  })
+
+  describe('when there are added granules', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
+        payload: {
+          collectionId: 'collectionId',
+          granuleId: 'GRAN-ID1'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        byId: {
+          collectionId: {
+            addedGranuleIds: ['GRAN-ID1', 'GRAN-ID2']
+          }
+        },
+        collectionIds: ['collectionId']
+      }
+
+      const expectedState = {
+        ...initial,
+        collectionIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            addedGranuleIds: ['GRAN-ID2']
+          }
+        }
+      }
+
+      const res = projectReducer(initial, action)
+      expect(res).toEqual(expectedState)
+    })
   })
 })
 

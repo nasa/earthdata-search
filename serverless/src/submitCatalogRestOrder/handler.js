@@ -19,6 +19,7 @@ import { portalPath } from '../../../sharedUtils/portalPath'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { parseError } from '../../../sharedUtils/parseError'
+import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 
 /**
  * Submits an order to Catalog Rest (ESI)
@@ -50,6 +51,7 @@ const submitCatalogRestOrder = async (event, context) => {
 
     const edlConfig = await getEdlConfig()
     const { client } = edlConfig
+
     const { id: clientId } = client
 
     const accessTokenWithClient = `${accessToken}:${clientId}`
@@ -76,8 +78,10 @@ const submitCatalogRestOrder = async (event, context) => {
     } = retrievalRecord
     const { portalId, shapefile_id: shapefileId } = jsondata
 
+    const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
+
     const granuleResponse = await request.get({
-      uri: cmrUrl('search/granules.json', granuleParams),
+      uri: cmrUrl('search/granules.json', preparedGranuleParams),
       headers: {
         'Echo-Token': accessTokenWithClient,
         'Client-Id': getClientId().background

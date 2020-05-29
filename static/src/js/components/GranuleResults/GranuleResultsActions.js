@@ -22,7 +22,9 @@ const GranuleResultsActions = ({
   isCollectionInProject,
   location,
   onAddProjectCollection,
-  onRemoveCollectionFromProject
+  onRemoveCollectionFromProject,
+  allGranulesInProject,
+  projectGranuleCount
 }) => {
   const addToProjectButton = (
     <Button
@@ -54,7 +56,13 @@ const GranuleResultsActions = ({
 
   const tooManyGranules = granuleLimit && granuleCount > granuleLimit
   const downloadAllButton = () => {
-    const badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
+    let buttonText = 'Download All'
+    let badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
+
+    if (projectGranuleCount > 0) {
+      buttonText = 'Download'
+      badge = `${commafy(projectGranuleCount)} ${pluralize('Granule', projectGranuleCount)}`
+    }
 
     if (tooManyGranules) {
       return (
@@ -82,11 +90,11 @@ const GranuleResultsActions = ({
               bootstrapVariant="secondary"
               icon="download"
               variant="full"
-              label="Download All"
+              label={buttonText}
               disabled
               style={{ pointerEvents: 'none' }}
             >
-              Download All
+              {buttonText}
             </Button>
           </div>
         </OverlayTrigger>
@@ -136,10 +144,10 @@ const GranuleResultsActions = ({
           bootstrapVariant="success"
           icon="download"
           variant="full"
-          label="Download All"
+          label={buttonText}
           disabled={granuleCount === 0 || initialLoading}
         >
-          Download All
+          {buttonText}
         </Button>
       </PortalLinkContainer>
     )
@@ -164,12 +172,34 @@ const GranuleResultsActions = ({
                 }}
               />
             ) : (
-              <span className="granule-results-actions__granule-count">
-                <span className="granule-results-actions__granule-num">
-                  {`${commafy(granuleCount)} `}
+              <div className="granule-results-actions__granule-count-wrapper">
+                <span className="granule-results-actions__granule-count">
+                  <span className="granule-results-actions__granule-num">
+                    {`${commafy(granuleCount)} `}
+                  </span>
+                  {`${pluralize('Granule', granuleCount)}`}
                 </span>
-                {`${pluralize('Granule', granuleCount)}`}
-              </span>
+                {
+                  isCollectionInProject && (
+                    <div className="granule-results-actions__project-pill">
+                      <i className="fa fa-folder granule-results-actions__project-pill-icon" />
+                      {
+                        // eslint-disable-next-line no-self-compare
+                        allGranulesInProject && <span title="All granules in project">All Granules</span>
+                      }
+                      {
+                        projectGranuleCount > 0 && (
+                          <span
+                            title={`${commafy(projectGranuleCount)} ${pluralize('granule', projectGranuleCount)} in project`}
+                          >
+                            {`${commafy(projectGranuleCount)} ${pluralize('Granule', projectGranuleCount)}`}
+                          </span>
+                        )
+                      }
+                    </div>
+                  )
+                }
+              </div>
             )
         }
         {
@@ -197,7 +227,9 @@ GranuleResultsActions.propTypes = {
   isCollectionInProject: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  allGranulesInProject: PropTypes.bool.isRequired,
+  projectGranuleCount: PropTypes.number.isRequired
 }
 
 export default GranuleResultsActions

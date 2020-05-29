@@ -13,12 +13,16 @@ function setup(type) {
     browseUrl: undefined,
     collectionId: 'collectionId',
     focusedGranule: '',
+    isCollectionInProject: false,
+    isInProject: false,
     isFocused: false,
     isLast: false,
     location: { search: 'location' },
+    onAddGranuleToProjectCollection: jest.fn(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
+    onRemoveGranuleFromProjectCollection: jest.fn(),
     portal: {}
   }
   let props

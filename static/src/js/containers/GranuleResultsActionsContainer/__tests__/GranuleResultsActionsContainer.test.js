@@ -26,7 +26,10 @@ function setup() {
       pageNum: 1
     },
     project: {
-      collectionIds: ['focusedCollection']
+      collectionIds: ['focusedCollection'],
+      byId: {
+        focusedCollection: {}
+      }
     },
     onAddProjectCollection: jest.fn(),
     onRemoveCollectionFromProject: jest.fn()

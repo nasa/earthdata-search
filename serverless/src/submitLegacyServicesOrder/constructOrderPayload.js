@@ -4,6 +4,7 @@ import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 
 export const constructOrderPayload = async (accessMethod, granuleParams, accessTokenWithClient) => {
   const {
@@ -20,8 +21,10 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
     }
   }
 
+  const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
+
   const granuleResponse = await request.get({
-    uri: cmrUrl('search/granules.json', granuleParams),
+    uri: cmrUrl('search/granules.json', preparedGranuleParams),
     headers: {
       'Echo-Token': accessTokenWithClient,
       'Client-Id': getClientId().background

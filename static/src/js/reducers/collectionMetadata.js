@@ -316,7 +316,8 @@ const collectionMetadataReducer = (state = initialState, action) => {
         hits,
         isCwic,
         results,
-        totalSize
+        totalSize,
+        singleGranuleSize
       } = action.payload
       const { byId, allIds } = processResults(results)
 
@@ -332,7 +333,8 @@ const collectionMetadataReducer = (state = initialState, action) => {
               byId,
               hits,
               isCwic,
-              totalSize
+              totalSize,
+              singleGranuleSize
             }
           }
         }

@@ -383,7 +383,7 @@ class GranuleResultsHeader extends Component {
                       </div>
                       {showUndoExcludedGranules && (
                         <div className="granule-results-header__granule-undo">
-                          Granule excluded.
+                          Granule filtered
                           <button
                             className="granule-results-header__granule-undo-button"
                             onClick={this.handleUndoExcludeGranule}

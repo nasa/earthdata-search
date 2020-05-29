@@ -30,6 +30,7 @@ export default class GranuleRequest extends Request {
       'bounding_box',
       'circle',
       'browse_only',
+      'concept_id',
       'cloud_cover',
       'day_night_flag',
       'echo_collection_id',

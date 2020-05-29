@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react'
 import { PropTypes } from 'prop-types'
@@ -12,6 +13,7 @@ import { isAccessMethodValid } from '../../util/accessMethods'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import pluralize from '../../util/pluralize'
 import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
+import { convertSize } from '../../util/project'
 
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
@@ -63,9 +65,11 @@ const ProjectCollectionItem = ({
     dataset_id: title
   } = metadata
 
-  const { isLoaded, isLoading, totalSize = {} } = granules
+  const { isLoaded, isLoading, singleGranuleSize } = granules
 
-  const granuleCount = getGranuleCount(granules, collection)
+  const granuleCount = getGranuleCount(collection, projectCollection)
+
+  const totalSize = convertSize(granuleCount * singleGranuleSize)
 
   const { size = '', unit = '' } = totalSize
 
@@ -129,7 +133,7 @@ const ProjectCollectionItem = ({
           <>
             <ul className="project-collections-item__stats-list">
               {
-                (typeof granuleCount !== 'undefined' && size && unit) && (
+                (typeof granuleCount !== 'undefined' && !!(size) && unit) && (
                   <>
                     <li
                       className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
@@ -145,7 +149,6 @@ const ProjectCollectionItem = ({
                         </li>
                       )
                     }
-
                   </>
                 )
               }

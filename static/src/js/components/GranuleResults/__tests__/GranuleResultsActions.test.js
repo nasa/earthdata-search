@@ -8,6 +8,8 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    allGranulesInProject: false,
+    projectGranuleCount: 0,
     collectionId: 'collectionId',
     granuleCount: 5000,
     initialLoading: false,
@@ -33,6 +35,45 @@ describe('GranuleResultsActions component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toBe('div')
+  })
+
+  describe('when no granules are in the project', () => {
+    test('renders a Download All button', () => {
+      const { enzymeWrapper } = setup()
+      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().children).toEqual('Download All')
+      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().badge).toEqual('5,000 Granules')
+    })
+  })
+
+  describe('when some granules are in the project', () => {
+    test('renders a Download button', () => {
+      const { enzymeWrapper } = setup({
+        projectGranuleCount: 1
+      })
+      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().children).toEqual('Download')
+      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().badge).toEqual('1 Granule')
+    })
+
+    test('renders a project indicator', () => {
+      const { enzymeWrapper } = setup({
+        projectGranuleCount: 1,
+        isCollectionInProject: true
+      })
+      expect(enzymeWrapper.find('.granule-results-actions__project-pill')).toBeTruthy()
+      expect(enzymeWrapper.find('.granule-results-actions__project-pill').text()).toEqual('1 Granule')
+    })
+  })
+
+  describe('when all granules are in the project', () => {
+    test('renders a Download button', () => {
+      const { enzymeWrapper } = setup({
+        allGranulesInProject: true,
+        projectGranuleCount: 5000,
+        isCollectionInProject: true
+      })
+      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().children).toEqual('Download')
+      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().badge).toEqual('5,000 Granules')
+    })
   })
 
   test('renders the granule count', () => {

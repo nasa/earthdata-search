@@ -13,9 +13,12 @@ function setup(overrideProps) {
       customProps: {
         collectionId: 'collectionId',
         location: {},
+        isGranuleInProject: jest.fn(),
+        onAddGranuleToProjectCollection: jest.fn(),
         onExcludeGranule: jest.fn(),
         onFocusedGranuleChange: jest.fn(),
-        onMetricsDataAccess: jest.fn()
+        onMetricsDataAccess: jest.fn(),
+        onRemoveGranuleFromProjectCollection: jest.fn()
       }
     },
     cell: {
@@ -52,7 +55,9 @@ describe('GranuleResultsTableHeaderCell component', () => {
   test('clicking the details button calls onViewCollectionDetails', () => {
     const { enzymeWrapper, props } = setup()
 
-    const detailsButton = enzymeWrapper.find('.granule-results-table__granule-action--info').at(0)
+    console.log('enzymeWrapper', enzymeWrapper.debug())
+
+    const detailsButton = enzymeWrapper.find('MoreActionsDropdown').childAt(0)
     detailsButton.simulate('click', { stopPropagation: jest.fn() })
 
     expect(props.column.customProps.onFocusedGranuleChange).toHaveBeenCalledTimes(1)

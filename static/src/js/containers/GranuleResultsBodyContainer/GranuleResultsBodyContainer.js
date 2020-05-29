@@ -17,7 +17,11 @@ const mapDispatchToProps = dispatch => ({
   onFocusedGranuleChange:
     granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
   onMetricsDataAccess:
-    data => dispatch(metricsDataAccess(data))
+    data => dispatch(metricsDataAccess(data)),
+  onAddGranuleToProjectCollection:
+    data => dispatch(actions.addGranuleToProjectCollection(data)),
+  onRemoveGranuleFromProjectCollection:
+    data => dispatch(actions.removeGranuleFromProjectCollection(data))
 })
 
 const mapStateToProps = state => ({
@@ -25,7 +29,8 @@ const mapStateToProps = state => ({
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
   granuleQuery: state.query.granule,
-  portal: state.portal
+  portal: state.portal,
+  project: state.project
 })
 
 export const GranuleResultsBodyContainer = (props) => {
@@ -35,12 +40,15 @@ export const GranuleResultsBodyContainer = (props) => {
     focusedGranule,
     granuleQuery,
     location,
+    onAddGranuleToProjectCollection,
     onChangeGranulePageNum,
     onExcludeGranule,
     onFocusedGranuleChange,
     onMetricsDataAccess,
+    onRemoveGranuleFromProjectCollection,
     panelView,
-    portal
+    portal,
+    project
   } = props
 
   const collectionObject = getFocusedCollectionObject(focusedCollection, collections)
@@ -75,6 +83,9 @@ export const GranuleResultsBodyContainer = (props) => {
       onMetricsDataAccess={onMetricsDataAccess}
       panelView={panelView}
       portal={portal}
+      project={project}
+      onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
+      onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
     />
   )
 }
@@ -85,12 +96,15 @@ GranuleResultsBodyContainer.propTypes = {
   focusedGranule: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
+  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
-  portal: PropTypes.shape({}).isRequired
+  portal: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(
