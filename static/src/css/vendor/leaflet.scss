@@ -48,6 +48,14 @@
 
   .leaflet-control.leaflet-control-zoom {
     margin-bottom: 55px;
+
+    .leaflet-disabled {
+      color: $color__black--300;
+
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
   }
 
   .leaflet-container {
