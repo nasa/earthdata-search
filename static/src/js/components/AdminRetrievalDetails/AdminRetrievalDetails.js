@@ -48,10 +48,6 @@ export const AdminRetrievalDetails = ({
             </p>
             <p className="admin-retrieval-details__metadata-display-item">
               <span className="admin-retrieval-details__metadata-display-heading">Source Path</span>
-              {/* <span className="admin-retrieval-details__metadata-display-content">
-                {source}
-              </span> */}
-
               <a className="admin-retrieval-details__metadata-display-content" href={sourcePath} target="_blank" rel="noopener noreferrer">
                 {sourcePath}
               </a>
