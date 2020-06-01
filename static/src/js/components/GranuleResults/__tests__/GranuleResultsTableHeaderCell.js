@@ -55,8 +55,6 @@ describe('GranuleResultsTableHeaderCell component', () => {
   test('clicking the details button calls onViewCollectionDetails', () => {
     const { enzymeWrapper, props } = setup()
 
-    console.log('enzymeWrapper', enzymeWrapper.debug())
-
     const detailsButton = enzymeWrapper.find('MoreActionsDropdown').childAt(0)
     detailsButton.simulate('click', { stopPropagation: jest.fn() })
 
