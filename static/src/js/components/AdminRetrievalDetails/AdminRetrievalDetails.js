@@ -31,7 +31,7 @@ export const AdminRetrievalDetails = ({
     portalPath = `/portal/${portalId}`
   }
 
-  const sourcePath = `${portalPath}/projects${source}`
+  const sourcePath = `${portalPath}/search${source}`
 
   return (
     <div className="admin-retrieval-details">
