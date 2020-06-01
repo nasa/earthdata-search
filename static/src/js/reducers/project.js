@@ -142,6 +142,9 @@ const projectReducer = (state = initialState, action) => {
 
       const collectionIndex = state.collectionIds.indexOf(collectionId)
 
+      // If the last granule is being removed from the added granules array,
+      // remove the collection from the project as well to prevent having all
+      // granules added to the project.
       const collectionIds = addedGranuleIds.length === 1
         ? [
           ...state.collectionIds.slice(0, collectionIndex),

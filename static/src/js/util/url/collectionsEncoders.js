@@ -208,12 +208,20 @@ export const encodeCollections = (props) => {
       const removedKey = isCwic ? 'cr' : 'r'
 
       // Encode granules added to the current project
-      if (projectCollection && projectCollection.addedGranuleIds && projectCollection.addedGranuleIds.length > 0) {
+      if (
+        projectCollection
+        && projectCollection.addedGranuleIds
+        && projectCollection.addedGranuleIds.length > 0
+      ) {
         encodedAddedGranules = encodeAddedGranules(isCwic, projectCollection)
       }
 
       // Encode granules removed from the current project
-      if (projectCollection && projectCollection.removedGranuleIds && projectCollection.removedGranuleIds.length > 0) {
+      if (
+        projectCollection
+        && projectCollection.removedGranuleIds
+        && projectCollection.removedGranuleIds.length > 0
+      ) {
         encodedRemovedGranules = encodeRemovedGranules(isCwic, projectCollection)
       }
 
@@ -292,7 +300,6 @@ export const decodeCollections = (params) => {
     let variableIds
     if (pg && pg[index]) {
       // Excluded Granules
-      // eslint-disable-next-line semi
       ({ isCwic: excludedIsCwic, granuleIds: excludedGranuleIds } = decodedGranules('x', pg[index]));
 
       ({ isCwic: addedIsCwic, granuleIds: addedGranuleIds = [] } = decodedGranules('a', pg[index]));

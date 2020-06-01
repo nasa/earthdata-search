@@ -23,7 +23,7 @@ const thumbnailWidth = getApplicationConfig().thumbnailSize.width
  * @param {String} props.collectionId - Granule passed from redux store.
  * @param {Object} props.granule - Granule passed from redux store.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
- * @param {Boolean} props.isInProject - Flag designating if the granule is in the project.
+ * @param {Function} props.isGranuleInProject - Function designating if the granule is in the project.
  * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
@@ -36,7 +36,7 @@ const GranuleResultsItem = forwardRef(({
   collectionId,
   granule,
   isCollectionInProject,
-  isInProject,
+  isGranuleInProject,
   location,
   onAddGranuleToProjectCollection,
   onExcludeGranule,
@@ -136,6 +136,8 @@ const GranuleResultsItem = forwardRef(({
   }
 
   if (isFocusedGranule) itemTitle.title = 'Unfocus granule on map'
+
+  const isInProject = isGranuleInProject(id)
 
   const granuleResultsItemClasses = classNames([
     'granule-results-item',
@@ -266,7 +268,7 @@ GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
   granule: PropTypes.shape({}).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  isInProject: PropTypes.bool.isRequired,
+  isGranuleInProject: PropTypes.func.isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,

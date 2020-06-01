@@ -39,7 +39,13 @@ class ZoomExtended extends Control.Zoom {
 
   onAdd(map) {
     const { options } = this
+
+    // Assign the zoom end handler to add custom zoom button titles and styling
     map.on('zoomend', this.onZoomEnd)
+
+    // Trigger a zoom to the current map zoom level so zoomend fires and calls onZoomEnd on load
+    // eslint-disable-next-line no-underscore-dangle
+    map.fire('zoom', { zoom: map._zoom })
 
     const container = Control.Zoom.prototype.onAdd.call(this, map)
     // eslint-disable-next-line no-underscore-dangle

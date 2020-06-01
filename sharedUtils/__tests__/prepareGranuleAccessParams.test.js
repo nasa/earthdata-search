@@ -11,20 +11,9 @@ const paramsWithAddedGranulesArr = {
   day_night_flag: 'DAY'
 }
 
-const paramsWithAddedGranulesStr = {
-  concept_id: '1',
-  temporal: '2020-01-01',
-  day_night_flag: 'DAY'
-}
-
 const returnParamsWithAddedGranulesArr = {
   concept_id: ['1', '2', '3', '4']
 }
-
-const returnParamsWithAddedGranulesStr = {
-  concept_id: ['1']
-}
-
 
 describe('prepareGranuleAccessParams', () => {
   describe('when no params are sent', () => {
@@ -38,13 +27,6 @@ describe('prepareGranuleAccessParams', () => {
     test('returns the correct state', () => {
       expect(prepareGranuleAccessParams(defaultParams))
         .toEqual(defaultParams)
-    })
-  })
-
-  describe('for params with added granules', () => {
-    test('returns the correct state', () => {
-      expect(prepareGranuleAccessParams(paramsWithAddedGranulesStr))
-        .toEqual(returnParamsWithAddedGranulesStr)
     })
   })
 

@@ -15,7 +15,7 @@ function setup(type, overrideProps) {
     collectionId: 'collectionId',
     focusedGranule: '',
     isCollectionInProject: false,
-    isInProject: false,
+    isGranuleInProject: jest.fn(() => false),
     isFocused: false,
     isLast: false,
     location: { search: 'location' },
@@ -346,7 +346,7 @@ describe('GranuleResultsItem component', () => {
     describe('when displaying granule in the project', () => {
       test('displays the remove button', () => {
         const { enzymeWrapper } = setup('override', {
-          isInProject: true,
+          isGranuleInProject: jest.fn(() => true),
           isCollectionInProject: true
         })
         const addButton = enzymeWrapper.find(Button)
@@ -359,7 +359,7 @@ describe('GranuleResultsItem component', () => {
     describe('when displaying granule not in the project', () => {
       test('displays the add button', () => {
         const { enzymeWrapper } = setup('override', {
-          isInProject: false,
+          isGranuleInProject: jest.fn(() => false),
           isCollectionInProject: true
         })
         const addButton = enzymeWrapper.find(Button)
@@ -392,7 +392,7 @@ describe('GranuleResultsItem component', () => {
   describe('when clicking the remove button', () => {
     test('it removes the granule to the project', () => {
       const { enzymeWrapper, props } = setup('override', {
-        isInProject: true
+        isGranuleInProject: jest.fn(() => true)
       })
 
       const removeButton = enzymeWrapper.find(Button)

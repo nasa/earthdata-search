@@ -94,10 +94,6 @@ export const GranuleResultsListItem = memo(({
   // Prevent rendering of additional items so we only get 1 placeholder during loading
   if (!granule) return null
 
-  const { id: granuleId } = granule
-
-  const isInProject = isGranuleInProject(granuleId)
-
   return (
     <li className="granule-results-list-item" style={customStyle}>
       <GranuleResultsItem
@@ -105,7 +101,7 @@ export const GranuleResultsListItem = memo(({
         collectionId={collectionId}
         focusedGranule={focusedGranule}
         granule={granules[index]}
-        isInProject={isInProject}
+        isGranuleInProject={isGranuleInProject}
         isCollectionInProject={isCollectionInProject}
         location={location}
         onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}

@@ -10,12 +10,7 @@ export const prepareGranuleAccessParams = (params = {}) => {
 
   // If the concept_id value is truthy, we know granules have been manually added.
   if (conceptIdsFromParams) {
-    // Because concept_id is supported as a string, make sure we wrap a string in an array.
-    if (typeof (conceptIdsFromParams) === 'string') {
-      addedGranules = [conceptIdsFromParams]
-    } else {
-      addedGranules = [...conceptIdsFromParams]
-    }
+    addedGranules = [...conceptIdsFromParams]
   }
 
   // If there are any added granules, ignore all other granule parameters.

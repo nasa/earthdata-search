@@ -10,7 +10,6 @@ export const MoreActionsDropdown = ({
   children,
   className,
   handoffLinks
-  // onClick
 }) => {
   const moreActionClasses = classNames(
     className,
@@ -32,7 +31,6 @@ export const MoreActionsDropdown = ({
         <Dropdown.Toggle
           className="more-actions-dropdown__toggle"
           as={ToggleMoreActions}
-          // onClick={onClick}
         />
         {
           ReactDOM.createPortal(
