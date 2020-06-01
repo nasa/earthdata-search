@@ -101,7 +101,9 @@ import {
   toggleCollectionVisibility,
   addAccessMethods,
   updateAccessMethod,
-  updateAccessMethodOrderCount
+  updateAccessMethodOrderCount,
+  addGranuleToProjectCollection,
+  removeGranuleFromProjectCollection
 } from './project'
 import {
   fetchProviders
@@ -153,6 +155,7 @@ import {
 const actions = {
   addAccessMethods,
   addCmrFacet,
+  addGranuleToProjectCollection,
   addProjectCollection,
   adminIsAuthorized,
   adminViewRetrieval,
@@ -211,6 +214,7 @@ const actions = {
   removeCmrFacet,
   removeCollectionFromProject,
   removeError,
+  removeGranuleFromProjectCollection,
   removeGridFilter,
   removeSpatialFilter,
   removeTemporalFilter,

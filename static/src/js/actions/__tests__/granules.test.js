@@ -3,7 +3,6 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-  // applyGranuleFilters,
   updateGranuleResults,
   getGranules,
   excludeGranule,
@@ -185,6 +184,7 @@ describe('getGranules', () => {
             ],
             is_cwic: false
           }],
+          singleGranuleSize: 0,
           totalSize: {
             size: '0.0',
             unit: 'MB'
@@ -289,6 +289,7 @@ describe('getGranules', () => {
             ],
             is_cwic: false
           }],
+          singleGranuleSize: 0,
           totalSize: {
             size: '0.0',
             unit: 'MB'

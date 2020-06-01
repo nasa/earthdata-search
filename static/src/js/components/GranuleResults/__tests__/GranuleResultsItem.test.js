@@ -1,24 +1,30 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { LinkContainer } from 'react-router-bootstrap'
+import Button from '../../Button/Button'
 import GranuleResultsItem from '../GranuleResultsItem'
 import GranuleResultsDataLinksButton from '../GranuleResultsDataLinksButton'
-import * as EventEmitter from '../../../events/events'
-import Button from '../../Button/Button'
+import MoreActionsDropdownItem from '../../MoreActionsDropdown/MoreActionsDropdownItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(type) {
+function setup(type, overrideProps) {
   const defaultProps = {
     browseUrl: undefined,
     collectionId: 'collectionId',
     focusedGranule: '',
+    isCollectionInProject: false,
+    isGranuleInProject: jest.fn(() => false),
     isFocused: false,
     isLast: false,
     location: { search: 'location' },
+    onAddGranuleToProjectCollection: jest.fn(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
-    onMetricsDataAccess: jest.fn()
+    onMetricsDataAccess: jest.fn(),
+    onRemoveGranuleFromProjectCollection: jest.fn(),
+    portal: {}
   }
   let props
 
@@ -201,6 +207,33 @@ function setup(type) {
     }
   }
 
+  if (type === 'override') {
+    props = {
+      ...defaultProps,
+      granule: {
+        id: 'granuleId',
+        browseFlag: true,
+        onlineAccessFlag: true,
+        formattedTemporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
+        granuleThumbnail: '/fake/path/image.jpg',
+        title: 'Granule title',
+        dataLinks: [
+          {
+            rel: 'http://linkrel/data#',
+            title: 'linktitle',
+            href: 'http://linkhref'
+          }
+        ]
+      },
+      ...overrideProps
+    }
+  }
+
   const enzymeWrapper = shallow(<GranuleResultsItem {...props} />)
 
   return {
@@ -269,29 +302,112 @@ describe('GranuleResultsItem component', () => {
 
   describe('when clicking the remove button', () => {
     describe('with CMR granules', () => {
-      test('it excludes the granule from results', () => {
+      test('it removes the granule from results', () => {
         const { enzymeWrapper, props } = setup('cmr')
-        const removeButton = enzymeWrapper.find(Button)
+        const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
 
         removeButton.simulate('click')
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
 
-        expect(removeButton.props().label).toEqual('Remove granule')
+        expect(removeButton.props().title).toEqual('Filter granule')
       })
     })
 
     describe('with CWIC granules', () => {
       test('it excludes the granule from results with a hashed granule id', () => {
         const { enzymeWrapper, props } = setup('cwic')
-        const removeButton = enzymeWrapper.find(Button)
+        const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
 
         removeButton.simulate('click')
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: '170417722' }])
 
-        expect(removeButton.props().label).toEqual('Remove granule')
+        expect(removeButton.props().title).toEqual('Filter granule')
       })
+    })
+  })
+
+  describe('when no granules are in the project', () => {
+    test('does not have an emphisized or deepmphisized class', () => {
+      const { enzymeWrapper } = setup('cmr')
+      expect(enzymeWrapper.props().className).toEqual('granule-results-item')
+    })
+
+    test('displays the add button', () => {
+      const { enzymeWrapper } = setup('cmr')
+      const addButton = enzymeWrapper.find(Button)
+
+      expect(addButton.props().title).toContain('Add granule')
+    })
+  })
+
+  describe('when displaying granules in the project', () => {
+    describe('when displaying granule in the project', () => {
+      test('displays the remove button', () => {
+        const { enzymeWrapper } = setup('override', {
+          isGranuleInProject: jest.fn(() => true),
+          isCollectionInProject: true
+        })
+        const addButton = enzymeWrapper.find(Button)
+
+        expect(addButton.props().title).toContain('Remove granule')
+        expect(enzymeWrapper.props().className).toContain('granule-results-item--emphisized')
+      })
+    })
+
+    describe('when displaying granule not in the project', () => {
+      test('displays the add button', () => {
+        const { enzymeWrapper } = setup('override', {
+          isGranuleInProject: jest.fn(() => false),
+          isCollectionInProject: true
+        })
+        const addButton = enzymeWrapper.find(Button)
+
+        expect(addButton.props().title).toContain('Add granule')
+        expect(enzymeWrapper.props().className).toContain('granule-results-item--deemphisized')
+      })
+    })
+  })
+
+  describe('when clicking the add button', () => {
+    test('it adds the granule to the project', () => {
+      const { enzymeWrapper, props } = setup('cmr')
+      const addButton = enzymeWrapper.find(Button)
+
+      expect(addButton.props().title).toContain('Add granule')
+
+      const mockEvent = {
+        stopPropagation: jest.fn()
+      }
+
+      addButton.simulate('click', mockEvent)
+      expect(props.onAddGranuleToProjectCollection.mock.calls.length).toBe(1)
+      expect(props.onAddGranuleToProjectCollection.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
+      expect(mockEvent.stopPropagation.mock.calls.length).toBe(1)
+      expect(mockEvent.stopPropagation.mock.calls[0]).toEqual([])
+    })
+  })
+
+  describe('when clicking the remove button', () => {
+    test('it removes the granule to the project', () => {
+      const { enzymeWrapper, props } = setup('override', {
+        isGranuleInProject: jest.fn(() => true)
+      })
+
+      const removeButton = enzymeWrapper.find(Button)
+
+      expect(removeButton.props().title).toContain('Remove granule')
+
+      const mockEvent = {
+        stopPropagation: jest.fn()
+      }
+
+      removeButton.simulate('click', mockEvent)
+      expect(props.onRemoveGranuleFromProjectCollection.mock.calls.length).toBe(1)
+      expect(props.onRemoveGranuleFromProjectCollection.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
+      expect(mockEvent.stopPropagation.mock.calls.length).toBe(1)
+      expect(mockEvent.stopPropagation.mock.calls[0]).toEqual([])
     })
   })
 
@@ -388,7 +504,7 @@ describe('GranuleResultsItem component', () => {
     test('calls handleClickGranuleDetails on click', () => {
       const { enzymeWrapper, props } = setup('cmr')
 
-      const infoButton = enzymeWrapper.find('.granule-results-item__button--info')
+      const infoButton = enzymeWrapper.find(LinkContainer).at(0)
 
       infoButton.simulate('click')
 

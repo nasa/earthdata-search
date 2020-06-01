@@ -33,10 +33,19 @@
     }
   }
 
-  &__granule-count {
-    display: inline-block;
+  &__granule-count-wrapper {
+   display: flex;
     vertical-align: middle;
     margin-right: 1rem;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  &__granule-count {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    vertical-align: middle;
+    margin-right: 0.5rem;
     line-height: 2;
     font-weight: 700;
     color: $color__black--700;
@@ -58,10 +67,38 @@
 
   &__download-all {
     width: 100%;
-    flex-shrink: 0;
+    flex-shrink: 1;
 
     .panels--sm & {
       width: auto;
     }
+
+    .panels--md & {
+      flex-shrink: 0;
+    }
+  }
+
+  &__download-all-button {
+    white-space: nowrap;
+  }
+
+  &__project-pill {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.05rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.65rem;
+    background-color: $color__brand--blue-dark;
+    color: $color__white;
+    text-align: center;
+  }
+
+  &__project-pill-icon {
+    position: relative;
+    top: 0.065rem;
+    padding-right: 0.25rem;
   }
 }

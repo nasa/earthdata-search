@@ -70,10 +70,14 @@ function setup(options = {
     isCwic: false,
     loadNextPage: jest.fn(),
     location: { search: 'value' },
+    onAddGranuleToProjectCollection: jest.fn(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
+    onRemoveGranuleFromProjectCollection: jest.fn(),
     panelView: 'list',
+    portal: {},
+    project: {},
     ...overrideProps
   }
 
@@ -133,8 +137,6 @@ describe('GranuleResultsBody component', () => {
     } = props
 
     const resultsTable = enzymeWrapper.find(GranuleResultsTable)
-
-    // console.log('resultsTable', resultsTable.debug())
 
     expect(resultsTable.props()).toEqual(expect.objectContaining({
       collectionId,
@@ -357,6 +359,57 @@ describe('GranuleResultsBody component', () => {
 
         expect(resultsList.props().isItemLoaded(2)).toEqual(false)
       })
+    })
+  })
+
+  describe('isGranuleInProject', () => {
+    test('when the granule is added to the project', () => {
+      const { enzymeWrapper } = setup({}, {
+        project: {
+          collectionIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              addedGranuleIds: ['one']
+            }
+          }
+        }
+      })
+
+      const resultsList = enzymeWrapper.find(GranuleResultsList)
+      expect(resultsList.prop('isGranuleInProject')('one')).toBe(true)
+      expect(resultsList.prop('isGranuleInProject')('two')).toBe(false)
+    })
+
+    test('when all granules are added to the project', () => {
+      const { enzymeWrapper } = setup({}, {
+        project: {
+          collectionIds: ['collectionId'],
+          byId: {
+            collectionId: {}
+          }
+        }
+      })
+
+      const resultsList = enzymeWrapper.find(GranuleResultsList)
+      expect(resultsList.prop('isGranuleInProject')('one')).toBe(true)
+      expect(resultsList.prop('isGranuleInProject')('two')).toBe(true)
+    })
+
+    test('when granules are removed from the project', () => {
+      const { enzymeWrapper } = setup({}, {
+        project: {
+          collectionIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              removedGranuleIds: ['one']
+            }
+          }
+        }
+      })
+
+      const resultsList = enzymeWrapper.find(GranuleResultsList)
+      expect(resultsList.prop('isGranuleInProject')('one')).toBe(false)
+      expect(resultsList.prop('isGranuleInProject')('two')).toBe(true)
     })
   })
 })

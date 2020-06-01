@@ -23,11 +23,15 @@ function setup(overrideProps) {
     granuleQuery: { pageNum: 1 },
     isActive: true,
     location: { search: 'value' },
+    onAddGranuleToProjectCollection: jest.fn(),
     onChangeGranulePageNum: jest.fn(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
+    onRemoveGranuleFromProjectCollection: jest.fn(),
     panelView: 'list',
+    portal: {},
+    project: {},
     ...overrideProps
   }
 

@@ -7,7 +7,9 @@ import {
   RESTORE_FROM_URL,
   SUBMITTING_PROJECT,
   SUBMITTED_PROJECT,
-  UPDATE_ACCESS_METHOD_ORDER_COUNT
+  UPDATE_ACCESS_METHOD_ORDER_COUNT,
+  ADD_GRANULE_TO_PROJECT_COLLECTION,
+  REMOVE_GRANULE_FROM_PROJECT_COLLECTION
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -20,6 +22,147 @@ const initialState = {
 
 const projectReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_GRANULE_TO_PROJECT_COLLECTION: {
+      const { collectionId, granuleId } = action.payload
+
+      if (state.collectionIds.indexOf(collectionId) === -1) return state
+
+      let byId = {
+        ...state.byId
+      }
+
+      const collection = byId[collectionId]
+      const { addedGranuleIds = [], removedGranuleIds = [] } = collection
+
+      if (removedGranuleIds.length) {
+        // If there are no added granules or removed granules but the collection is in the project,
+        // the user is trying to add a granule back a granule thats been removed from a project thats been added
+        const index = removedGranuleIds.indexOf(granuleId)
+
+        if (index !== -1) {
+          byId = {
+            ...byId,
+            [collectionId]: {
+              ...collection,
+              removedGranuleIds: [
+                ...removedGranuleIds.slice(0, index),
+                ...removedGranuleIds.slice(index + 1)
+              ]
+            }
+          }
+        }
+
+        return {
+          ...state,
+          byId: {
+            ...state.byId,
+            ...byId
+          }
+        }
+      }
+
+      // If the granule already exists in added granule ids, do nothing.
+      if (addedGranuleIds.indexOf(granuleId) !== -1) return state
+
+      // Add the granule to the list.
+      byId = {
+        ...byId,
+        [collectionId]: {
+          ...collection,
+          addedGranuleIds: [
+            ...addedGranuleIds,
+            granuleId
+          ]
+        }
+      }
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          ...byId
+        }
+      }
+    }
+    case REMOVE_GRANULE_FROM_PROJECT_COLLECTION: {
+      const { collectionId, granuleId } = action.payload
+
+      // If the collection does not exist in the project, dont do anything.
+      if (state.collectionIds.indexOf(collectionId) === -1) return state
+
+      const collection = state.byId[collectionId]
+      const { addedGranuleIds = [], removedGranuleIds = [] } = collection
+
+      let byId = {
+        ...state.byId,
+        [collectionId]: {
+          ...collection
+        }
+      }
+
+      if (!addedGranuleIds.length) {
+        // If there are no added granules, a user is trying to remove a granule from
+        // a collection in their project.
+        const index = removedGranuleIds.indexOf(granuleId)
+
+        if (index === -1) {
+          byId = {
+            ...byId,
+            [collectionId]: {
+              ...byId[collectionId],
+              removedGranuleIds: [
+                ...removedGranuleIds,
+                granuleId
+              ]
+            }
+          }
+        }
+
+        return {
+          ...state,
+          byId: {
+            ...state.byId,
+            ...byId
+          }
+        }
+      }
+
+      const index = addedGranuleIds.indexOf(granuleId)
+
+      byId = {
+        ...byId,
+        [collectionId]: {
+          ...byId[collectionId],
+          addedGranuleIds: [
+            ...addedGranuleIds.slice(0, index),
+            ...addedGranuleIds.slice(index + 1)
+          ]
+        }
+      }
+
+      const collectionIndex = state.collectionIds.indexOf(collectionId)
+
+      // If the last granule is being removed from the added granules array,
+      // remove the collection from the project as well to prevent having all
+      // granules added to the project.
+      const collectionIds = addedGranuleIds.length === 1
+        ? [
+          ...state.collectionIds.slice(0, collectionIndex),
+          ...state.collectionIds.slice(collectionIndex + 1)
+        ]
+        : [
+          ...state.collectionIds
+        ]
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          ...byId
+        },
+        collectionIds
+      }
+    }
     case ADD_COLLECTION_TO_PROJECT: {
       const collectionId = action.payload
 
@@ -44,11 +187,18 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case REMOVE_COLLECTION_FROM_PROJECT: {
-      const { collectionIds } = state
-      const index = collectionIds.indexOf(action.payload)
+      const { byId, collectionIds } = state
+      const collectionId = action.payload
+      const index = collectionIds.indexOf(collectionId)
+
+      const projectById = { ...byId }
+      delete projectById[collectionId]
 
       return {
         ...state,
+        byId: {
+          ...projectById
+        },
         collectionIds: [
           ...state.collectionIds.slice(0, index),
           ...state.collectionIds.slice(index + 1)

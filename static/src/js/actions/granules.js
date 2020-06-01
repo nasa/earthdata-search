@@ -33,7 +33,9 @@ import { updateAuthTokenFromHeaders } from './authToken'
 import { mbr } from '../util/map/mbr'
 import { getFocusedCollectionObject } from '../util/focusedCollection'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { prepareGranuleAccessParams } from '../../../../sharedUtils/prepareGranuleAccessParams'
 import { buildPromise } from '../util/buildPromise'
+
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -44,7 +46,6 @@ export const updateGranuleResults = payload => ({
   type: UPDATE_GRANULE_RESULTS,
   payload
 })
-
 
 export const resetGranuleResults = payload => ({
   type: RESET_GRANULE_RESULTS,
@@ -145,9 +146,11 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
   // Determine how many pages we will need to load to display all granules
   const totalPages = Math.ceil(granuleCount / pageSize)
 
+  const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
+
   return Promise.all(Array.from(Array(totalPages)).map((_, pageNum) => {
     const granuleResponse = requestObject.search({
-      ...granuleParams,
+      ...preparedGranuleParams,
       pageSize,
       pageNum: pageNum + 1,
       echoCollectionId: collectionId
@@ -195,6 +198,7 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   } = retrievalCollectionData
 
   const {
+    concept_id: conceptId,
     temporal,
     bounding_box: boundingBox,
     exclude = {}
@@ -206,18 +210,26 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   } = accessMethod
 
   const ousPayload = {
-    boundingBox,
-    echoCollectionId: collectionId,
     format,
-    temporal,
-    variables
+    variables,
+    echoCollectionId: collectionId
   }
 
-  // OUS has a slightly different syntax for excluding params
-  const { concept_id: excludedGranuleIds = [] } = exclude
-  if (excludedGranuleIds.length > 0) {
-    ousPayload.exclude_granules = true
-    ousPayload.granules = excludedGranuleIds
+  // If conceptId is truthy, send those granules explictly. Otherwise, set the
+  // relevant OUS parameters.
+  if (conceptId) {
+    ousPayload.granules = conceptId
+  } else {
+    const { concept_id: excludedGranuleIds = [] } = exclude
+
+    ousPayload.boundingBox = boundingBox
+    ousPayload.temporal = temporal
+
+    // OUS has a slightly different syntax for excluding params
+    if (excludedGranuleIds.length > 0) {
+      ousPayload.exclude_granules = true
+      ousPayload.granules = excludedGranuleIds
+    }
   }
 
   const response = requestObject.search(ousPayload)
@@ -364,7 +376,11 @@ export const getGranules = ids => (dispatch, getState) => {
 
     const response = requestObject.search(searchParams)
       .then((response) => {
-        const payload = populateGranuleResults(collectionId, isCwicCollection, response)
+        const payload = populateGranuleResults({
+          collectionId,
+          isCwic: isCwicCollection,
+          response
+        })
 
         dispatch(finishGranulesTimer(collectionId))
         dispatch(updateAuthTokenFromHeaders(response.headers))

@@ -15,10 +15,20 @@ function setup() {
       allIds: ['collectionId1', 'collectionId2'],
       byId: {
         collectionId1: {
-          mock: 'data 1'
+          granules: {
+            hits: 1
+          },
+          granules: {
+            hits: 1
+          }
         },
         collectionId2: {
-          mock: 'data 2'
+          granules: {
+            hits: 1
+          },
+          granules: {
+            hits: 1
+          }
         }
       }
     },
@@ -67,10 +77,14 @@ describe('ProjectCollectionsList component', () => {
       allIds: ['collectionId1', 'collectionId2'],
       byId: {
         collectionId1: {
-          mock: 'data 1'
+          granules: {
+            hits: 1
+          }
         },
         collectionId2: {
-          mock: 'data 2'
+          granules: {
+            hits: 1
+          }
         }
       }
     })
@@ -95,10 +109,14 @@ describe('ProjectCollectionsList component', () => {
       allIds: ['collectionId1', 'collectionId2'],
       byId: {
         collectionId1: {
-          mock: 'data 1'
+          granules: {
+            hits: 1
+          }
         },
         collectionId2: {
-          mock: 'data 2'
+          granules: {
+            hits: 1
+          }
         }
       }
     })

@@ -99,7 +99,8 @@ describe('isProjectValid', () => {
           collection3: {
             metadata: {
               tags: {}
-            }
+            },
+            granules: {}
           }
         }
       }

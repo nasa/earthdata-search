@@ -6,6 +6,17 @@ import { MoreActionsDropdown } from '../MoreActionsDropdown'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+beforeEach(() => {
+  const rootNode = document.createElement('div')
+  rootNode.id = 'root'
+  document.body.appendChild(rootNode)
+})
+
+afterEach(() => {
+  const rootNode = document.getElementById('root')
+  document.body.removeChild(rootNode)
+})
+
 function setup(overrideProps) {
   const props = {
     children: null,
@@ -22,7 +33,7 @@ function setup(overrideProps) {
   }
 }
 
-describe('CollectionDetails component', () => {
+describe('MoreActionsDropdown component', () => {
   test('renders nothing when no data is provided', () => {
     const { enzymeWrapper } = setup()
 

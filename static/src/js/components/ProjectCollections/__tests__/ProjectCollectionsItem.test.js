@@ -19,7 +19,8 @@ function setup(overrideProps) {
         hits: 4,
         isLoading: false,
         isLoaded: true,
-        totalSize: { size: '4.0', unit: 'MB' }
+        totalSize: { size: '4.0', unit: 'MB' },
+        singleGranuleSize: 1
       },
       metadata: {
         dataset_id: 'Collection Title',
@@ -85,7 +86,7 @@ describe('ProjectCollectionItem component', () => {
 
       expect(enzymeWrapper.find('h3').text()).toEqual('Collection Title')
       expect(enzymeWrapper.find('.project-collections-item__stats-item--granule-count').text()).toEqual('3 Granules')
-      expect(enzymeWrapper.find('.project-collections-item__stats-item--total-size').text()).toEqual('Est. Size 4.0 MB')
+      expect(enzymeWrapper.find('.project-collections-item__stats-item--total-size').text()).toEqual('Est. Size 3.0 MB')
       expect(enzymeWrapper.find('.project-collections-item__more-options-button').length).toEqual(1)
     })
   })

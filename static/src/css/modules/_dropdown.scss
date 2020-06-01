@@ -1,9 +1,9 @@
 .dropdown-menu {
   padding: .25rem 0;
 
-  .dropdown--carat-right & {
+  &--carat-right {
     @include carat('topright');
-    left: 0.5rem!important;
+    left: 0.45rem !important;
   }
 }
 
@@ -11,7 +11,7 @@
   font-weight: 700;
   color: $color__black--500;
 
-  .dropdown--condensed & {
+  .dropdown-menu--condensed & {
     padding: .25rem .75rem;
     padding-bottom: 0;
     font-size: 0.625rem;
@@ -27,7 +27,7 @@
     color: $color__black--700;
   }
 
-  .dropdown--condensed & {
+  .dropdown-menu--condensed & {
     padding: .25rem .75rem;
     font-size: 0.75rem;
   }

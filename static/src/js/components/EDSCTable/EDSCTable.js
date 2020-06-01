@@ -111,9 +111,12 @@ innerElementType.displayName = 'EDSCTableInnerElement'
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
  * @param {Function} props.initialRowStateAccessor - initialRowStateAccessor to be passed to react-table.
- * @param {Function} props.rowClassNamesFromRowState - Callback to detirmine the classnames of a row based on its state.
+ * @param {Function} props.rowClassNamesFromRowState - Callback to determine the classnames of a row based on its state.
+ * @param {Function} props.rowTitleFromRowState - Callback to determine the title attribute of a row based on its state.
+ * @param {Function} props.onRowClick - Callback for onRowClick.
  * @param {Function} props.onRowMouseEnter - Callback for onRowMouseEnter.
  * @param {Function} props.onRowMouseLeave - Callback for onRowMouseLeave.
+ * @param {Function} props.onRowMouseUp - Callback for onRowMouseUp.
  * @param {Function} props.onRowFocus - Callback for onRowFocus.
  * @param {Function} props.onRowBlur - Callback for onRowBlur.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
@@ -133,8 +136,11 @@ const EDSCTable = ({
   initialRowStateAccessor,
   initialTableState,
   rowClassNamesFromRowState,
+  rowTitleFromRowState,
+  onRowClick,
   onRowMouseEnter,
   onRowMouseLeave,
+  onRowMouseUp,
   onRowFocus,
   onRowBlur
 }) => {
@@ -259,8 +265,12 @@ const EDSCTable = ({
       })
 
       let rowClassesFromState = []
+      const rowTitleFromState = {
+        title: undefined
+      }
 
       if (rowClassNamesFromRowState) rowClassesFromState = rowClassNamesFromRowState(row.state)
+      if (rowTitleFromRowState) rowTitleFromState.title = rowTitleFromRowState(row.state)
 
       const { style: rowStyle, ...rowRest } = rowProps
 
@@ -270,14 +280,45 @@ const EDSCTable = ({
         ...rowClassesFromState
       ])
 
+      // If a user selects text in a cell, we want to prevent an onclick from firing.
+      // This flag keeps track if a user has selected any text at the time mouseup is firing.
+      // Because this event fires before the click event, we can check to see if any
+      // text is currently selected and bail out if that's the case.
+      let textSelectionFlag = false
+
+      const enhancedOnRowMouseUp = (e, row) => {
+        textSelectionFlag = false
+
+        // Check the window to see if any text is currently selected.
+        if (window.getSelection().toString().length > 0) {
+          textSelectionFlag = true
+        }
+
+        if (onRowMouseUp) onRowMouseUp(e, row)
+      }
+
+      const enhancedOnRowClick = (e, row) => {
+        // Only fire the click event on the row if no text is currently selected
+        if (textSelectionFlag) return
+        onRowClick(e, row)
+      }
+
       // These events will be spread on to the row div element, ommiting the events
       // where callbacks have not been defined.
       const rowEvents = {
+        onClick: (onRowClick ? e => enhancedOnRowClick(e, row) : undefined),
         onMouseLeave: (onRowMouseLeave ? e => onRowMouseLeave(e, row) : undefined),
         onMouseEnter: (onRowMouseEnter ? e => onRowMouseEnter(e, row) : undefined),
+        onMouseUp: (onRowMouseUp || onRowClick ? e => enhancedOnRowMouseUp(e, row) : undefined),
         onFocus: (onRowFocus ? e => onRowFocus(e, row) : undefined),
         onBlur: (onRowBlur ? e => onRowBlur(e, row) : undefined)
       }
+
+      const focusableProps = onRowClick
+        ? {
+          tabIndex: 0,
+          onKeyPress: e => onRowClick(e, row)
+        } : {}
 
       return (
         <React.Fragment key={key}>
@@ -287,6 +328,8 @@ const EDSCTable = ({
             className={rowClasses}
             data-test-id={rowTestId}
             {...rowEvents}
+            {...focusableProps}
+            {...rowTitleFromState}
           >
             {row.cells.map((cell) => {
               const { key, ...rest } = cell.getCellProps()
@@ -388,10 +431,13 @@ EDSCTable.defaultProps = {
   itemCount: null,
   loadMoreItems: null,
   onRowBlur: null,
+  onRowClick: null,
   onRowFocus: null,
   onRowMouseEnter: null,
   onRowMouseLeave: null,
+  onRowMouseUp: null,
   rowClassNamesFromRowState: null,
+  rowTitleFromRowState: null,
   rowTestId: null,
   setVisibleMiddleIndex: null,
   striped: false,
@@ -409,10 +455,13 @@ EDSCTable.propTypes = {
   itemCount: PropTypes.number,
   loadMoreItems: PropTypes.func,
   onRowBlur: PropTypes.func,
+  onRowClick: PropTypes.func,
   onRowFocus: PropTypes.func,
   onRowMouseEnter: PropTypes.func,
   onRowMouseLeave: PropTypes.func,
+  onRowMouseUp: PropTypes.func,
   rowClassNamesFromRowState: PropTypes.func,
+  rowTitleFromRowState: PropTypes.func,
   rowTestId: PropTypes.string,
   setVisibleMiddleIndex: PropTypes.func,
   striped: PropTypes.bool,

@@ -9,12 +9,20 @@ import { createDataLinks } from './granules'
 
 /**
  * Formats granule results
+ * @param {String} focusedGranule - The focused granule.
  * @param {Object} granules - The granules from the redux store.
  * @param {Array} granuleIds - Granule IDs to return in the list.
- * @param {String} focusedGranule - The focused granule.
+ * @param {Function} isGranuleInProject - Returns a boolean to designate if a granule is in the project.
+ * @param {Boolean} isCollectionInProject - Boolean to designate if a collection is in the project.
  * @returns {GranuleListInfo} - The return object
  */
-export const formatGranulesList = (granules, granuleIds, focusedGranule) => {
+export const formatGranulesList = (
+  granules,
+  granuleIds,
+  focusedGranule,
+  isGranuleInProject,
+  isCollectionInProject
+) => {
   let hasBrowseImagery = false
 
   const granulesList = granuleIds.map((granuleId) => {
@@ -47,6 +55,7 @@ export const formatGranulesList = (granules, granuleIds, focusedGranule) => {
 
     const dataLinks = createDataLinks(links)
     const isFocusedGranule = isFocused || focusedGranule === id
+    const isInProject = isGranuleInProject(id)
 
     const handleClick = () => {
       let stickyGranule = original
@@ -81,6 +90,8 @@ export const formatGranulesList = (granules, granuleIds, focusedGranule) => {
       timeEnd,
       thumbnail,
       isFocusedGranule,
+      isInProject,
+      isCollectionInProject,
       handleClick,
       handleMouseEnter,
       handleMouseLeave

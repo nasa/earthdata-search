@@ -25,6 +25,7 @@ import './GranuleResultsBody.scss'
  * @param {Function} props.onFocusedGranuleChange - Callback change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
  * @param {Function} props.panelView - The current panel view.
+ * @param {Object} props.portal - Portal object passed from the store.
  */
 const GranuleResultsBody = ({
   collectionId,
@@ -34,10 +35,14 @@ const GranuleResultsBody = ({
   isCwic,
   loadNextPage,
   location,
+  onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
-  panelView
+  onRemoveGranuleFromProjectCollection,
+  panelView,
+  portal,
+  project
 }) => {
   const {
     hits: granuleHits,
@@ -54,11 +59,53 @@ const GranuleResultsBody = ({
     limit: false
   })
 
+  const {
+    byId: projectCollectionsById = {},
+    collectionIds: projectCollectionIds = []
+  } = project
+
+  let isCollectionInProject = false
+  let allGranulesInProject = false
+
+  if (projectCollectionIds.indexOf(collectionId) > -1 && projectCollectionsById[collectionId]) {
+    const {
+      addedGranuleIds = [],
+      removedGranuleIds = []
+    } = projectCollectionsById[collectionId]
+
+    isCollectionInProject = true
+    if (!addedGranuleIds.length && !removedGranuleIds.length) allGranulesInProject = true
+  }
+
+  /**
+  * Takes the granule id and returns whether or not a granule is in the project.
+  * @param {String} granuleId - The granule id.
+  * @returns {Boolean}
+  */
+  const isGranuleInProject = (granuleId) => {
+    const projectCollection = projectCollectionsById[collectionId] || {}
+    const {
+      addedGranuleIds = [],
+      removedGranuleIds = []
+    } = projectCollection
+
+    if (isCollectionInProject && removedGranuleIds.length) {
+      return removedGranuleIds.indexOf(granuleId) === -1
+    }
+    return allGranulesInProject || addedGranuleIds.indexOf(granuleId) !== -1
+  }
+
   const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
   // eslint-disable-next-line arrow-body-style
   const result = useMemo(() => {
-    return formatGranulesList(granules, granuleIds, focusedGranule)
+    return formatGranulesList(
+      granules,
+      granuleIds,
+      focusedGranule,
+      isGranuleInProject,
+      isCollectionInProject
+    )
   }, [granules, granuleIds, focusedGranule, excludedGranuleIds])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
@@ -116,8 +163,13 @@ const GranuleResultsBody = ({
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
+          portal={portal}
           visibleMiddleIndex={visibleMiddleIndex}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
+          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
+          onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+          isGranuleInProject={isGranuleInProject}
+          isCollectionInProject={isCollectionInProject}
         />
       </CSSTransition>
       <CSSTransition
@@ -140,8 +192,13 @@ const GranuleResultsBody = ({
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
+          portal={portal}
           visibleMiddleIndex={visibleMiddleIndex}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
+          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
+          onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+          isGranuleInProject={isGranuleInProject}
+          isCollectionInProject={isCollectionInProject}
         />
       </CSSTransition>
       <div className="granule-results-body__floating-footer">
@@ -177,10 +234,14 @@ GranuleResultsBody.propTypes = {
   isCwic: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   loadNextPage: PropTypes.func.isRequired,
+  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  panelView: PropTypes.string.isRequired
+  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
+  panelView: PropTypes.string.isRequired,
+  portal: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired
 }
 
 export default GranuleResultsBody

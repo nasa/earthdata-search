@@ -58,14 +58,19 @@ innerElementType.propTypes = {
  * @param {String} props.focusedGranule - The focused granule ID.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Number} props.height - The height of the container provided by AutoSizer.
+ * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Boolean} props.isCwic - Flag designating CWIC collections.
+ * @param {Function} props.isGranuleInProject - Function to detirmine if the granule is in the project.
  * @param {Function} props.isItemLoaded - Callback to detirmine if a granule has been loaded.
  * @param {Number} props.itemCount - Number of total granule list itmes.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
  * @param {Object} props.location - The location provided by react-router.
+ * @param { Function } props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
+ * @param { Function } props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
+ * @param {Object} props.portal - Portal object passed from the store.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the visible middle index.
  * @param {Number} props.visibleMiddleIndex - The current visible middle index.
  * @param {Number} props.width - The width of the container provided by AutoSizer.
@@ -76,14 +81,19 @@ export const GranuleResultsListBody = ({
   focusedGranule,
   granules,
   height,
+  isCollectionInProject,
   isCwic,
+  isGranuleInProject,
   isItemLoaded,
   itemCount,
   loadMoreItems,
   location,
+  onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
+  onRemoveGranuleFromProjectCollection,
+  portal,
   setVisibleMiddleIndex,
   visibleMiddleIndex,
   width
@@ -183,13 +193,18 @@ export const GranuleResultsListBody = ({
               focusedGranule,
               getRowHeight,
               granules,
+              isCollectionInProject,
               isCwic,
+              isGranuleInProject,
               isItemLoaded,
               location,
               numColumns,
+              onAddGranuleToProjectCollection,
               onExcludeGranule,
               onFocusedGranuleChange,
               onMetricsDataAccess,
+              onRemoveGranuleFromProjectCollection,
+              portal,
               setRowHeight,
               windowHeight: height,
               windowWidth: width
@@ -232,14 +247,19 @@ GranuleResultsListBody.propTypes = {
   focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,
+  isCollectionInProject: PropTypes.bool.isRequired,
   isCwic: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
-  onExcludeGranule: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired,
+  isGranuleInProject: PropTypes.func.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
+  location: PropTypes.shape({}).isRequired,
+  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
+  onExcludeGranule: PropTypes.func.isRequired,
+  onFocusedGranuleChange: PropTypes.func.isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired,
+  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
+  portal: PropTypes.shape({}).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number,
   width: PropTypes.number.isRequired

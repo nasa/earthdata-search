@@ -21,6 +21,7 @@ const cmrGranuleSearch = async (event) => {
 
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
+    'concept_id',
     'bounding_box',
     'circle',
     'browse_only',
@@ -45,6 +46,7 @@ const cmrGranuleSearch = async (event) => {
   ]
 
   const nonIndexedKeys = [
+    'concept_id',
     'exclude',
     'readable_granule_name',
     'sort_key'

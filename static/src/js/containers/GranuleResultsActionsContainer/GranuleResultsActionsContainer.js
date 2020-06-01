@@ -44,15 +44,46 @@ export const GranuleResultsActionsContainer = (props) => {
 
   if (isEmpty(metadata)) return null
 
-  const { collectionIds: projectIds } = project
-  const isCollectionInProject = projectIds.indexOf(focusedCollection) !== -1
+  const {
+    byId: projectById = {},
+    collectionIds: projectCollectionIds = []
+  } = project
 
-  // Determine the correct granule count based on granules that have been removed
+  // Determine if the current collection is in the project. Using '!!' here so
+  // isCollectionInProject is not equal to projectById[focusedCollection]
+  const isCollectionInProject = !!(
+    projectCollectionIds.indexOf(focusedCollection) > -1
+    && projectById[focusedCollection]
+  )
+
+  let allGranulesInProject = false
+  let projectGranuleCount = 0
+
+  if (isCollectionInProject) {
+    const { addedGranuleIds = [], removedGranuleIds = [] } = projectById[focusedCollection]
+
+    // If there are no added granules and no removed granules, all granules are in the project.
+    if (!addedGranuleIds.length && !removedGranuleIds.length) {
+      allGranulesInProject = true
+    }
+
+    // If granules are added, use that length as the number of granules.
+    if (addedGranuleIds.length) {
+      projectGranuleCount = addedGranuleIds.length
+    }
+
+    // If granules are removed, calculate the granule count.
+    if (removedGranuleIds.length) {
+      projectGranuleCount = getGranuleCount(collection, projectById[focusedCollection])
+    }
+  }
+
+  // Determine the correct granule count based on granules that have been removed.
   const { pageNum } = granuleQuery
   const { isLoading, isLoaded } = granules
   const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
 
-  const granuleCount = getGranuleCount(granules, collection)
+  const granuleCount = getGranuleCount(collection)
 
   const granuleLimit = getGranuleLimit(metadata)
 
@@ -67,6 +98,8 @@ export const GranuleResultsActionsContainer = (props) => {
         location={location}
         onAddProjectCollection={onAddProjectCollection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+        allGranulesInProject={allGranulesInProject}
+        projectGranuleCount={projectGranuleCount}
       />
     </>
   )

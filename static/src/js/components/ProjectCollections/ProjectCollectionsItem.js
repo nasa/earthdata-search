@@ -1,7 +1,5 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import { Dropdown } from 'react-bootstrap'
 import classNames from 'classnames'
 import abbreviate from 'number-abbreviate'
 
@@ -11,14 +9,16 @@ import {
 } from './skeleton'
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
-import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
+import pluralize from '../../util/pluralize'
+import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
+import { convertSize } from '../../util/project'
 
+import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
+import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
 
 import './ProjectCollectionsItem.scss'
-import pluralize from '../../util/pluralize'
-import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 
 /**
  * Renders ProjectCollectionItem.
@@ -63,9 +63,11 @@ const ProjectCollectionItem = ({
     dataset_id: title
   } = metadata
 
-  const { isLoaded, isLoading, totalSize = {} } = granules
+  const { isLoaded, isLoading, singleGranuleSize } = granules
 
-  const granuleCount = getGranuleCount(granules, collection)
+  const granuleCount = getGranuleCount(collection, projectCollection)
+
+  const totalSize = convertSize(granuleCount * singleGranuleSize)
 
   const { size = '', unit = '' } = totalSize
 
@@ -107,22 +109,18 @@ const ProjectCollectionItem = ({
                 </h3>
               </Button>
               <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
-                <Dropdown.Item
-                  as="button"
+                <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
+                  icon={isVisible ? 'eye-slash' : 'eye'}
+                  title="Toggle Visibility"
                   onClick={handleToggleCollectionVisibility}
-                >
-                  <i className={`project-collections-item__more-actions-icon fa fa-${isVisible ? 'eye-slash' : 'eye'}`} />
-                  Toggle Visibility
-                </Dropdown.Item>
-                <Dropdown.Item
-                  as="button"
+                />
+                <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
+                  icon="times-circle"
+                  title="Remove"
                   onClick={() => onRemoveCollectionFromProject(collectionId)}
-                >
-                  <i className="project-collections-item__more-actions-icon fa fa-times-circle" />
-                  Remove
-                </Dropdown.Item>
+                />
               </MoreActionsDropdown>
             </>
           )
@@ -133,7 +131,7 @@ const ProjectCollectionItem = ({
           <>
             <ul className="project-collections-item__stats-list">
               {
-                (typeof granuleCount !== 'undefined' && size && unit) && (
+                (typeof granuleCount !== 'undefined' && !!(size) && unit) && (
                   <>
                     <li
                       className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
@@ -149,7 +147,6 @@ const ProjectCollectionItem = ({
                         </li>
                       )
                     }
-
                   </>
                 )
               }

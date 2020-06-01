@@ -26,16 +26,22 @@ export const GranuleResultsListItem = memo(({
   style
 }) => {
   const element = useRef()
+
   const {
     collectionId,
     focusedGranule,
     granules,
+    isCollectionInProject,
+    isGranuleInProject,
     isItemLoaded,
     location,
     numColumns,
+    onAddGranuleToProjectCollection,
     onExcludeGranule,
     onFocusedGranuleChange,
     onMetricsDataAccess,
+    onRemoveGranuleFromProjectCollection,
+    portal,
     setRowHeight,
     windowWidth
   } = data
@@ -83,8 +89,10 @@ export const GranuleResultsListItem = memo(({
     )
   }
 
+  const granule = granules[index] || false
+
   // Prevent rendering of additional items so we only get 1 placeholder during loading
-  if (!granules[index]) return null
+  if (!granule) return null
 
   return (
     <li className="granule-results-list-item" style={customStyle}>
@@ -93,10 +101,15 @@ export const GranuleResultsListItem = memo(({
         collectionId={collectionId}
         focusedGranule={focusedGranule}
         granule={granules[index]}
+        isGranuleInProject={isGranuleInProject}
+        isCollectionInProject={isCollectionInProject}
         location={location}
+        onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
         onExcludeGranule={onExcludeGranule}
         onFocusedGranuleChange={onFocusedGranuleChange}
         onMetricsDataAccess={onMetricsDataAccess}
+        onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+        portal={portal}
       />
     </li>
   )
