@@ -5,7 +5,7 @@
  */
 export const prepareGranuleAccessParams = (params = {}) => {
   let granuleParams = params
-  const { concept_id: conceptIdsFromParams } = granuleParams
+  const { concept_id: conceptIdsFromParams = [] } = granuleParams
 
   // If there are any added granules, overwrite and ignore all
   // other granule parameters.
