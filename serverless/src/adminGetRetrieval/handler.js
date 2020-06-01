@@ -51,12 +51,14 @@ export default async function adminGetRetrievals(event, context) {
 
     const {
       id,
+      jsondata,
       user_id: userId,
       username
     } = retrievalObject
 
     const formattedResponse = {
       id,
+      jsondata,
       obfuscated_id: obfuscateId(id),
       user_id: userId,
       username,
