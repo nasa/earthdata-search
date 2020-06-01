@@ -98,6 +98,7 @@ describe('adminGetRetrievals', () => {
 
     const responseObj = {
       id: 1,
+      jsondata: {},
       obfuscated_id: '4517239960',
       user_id: 1,
       username: 'edsc-test',
@@ -210,6 +211,7 @@ describe('adminGetRetrievals', () => {
 
     const responseObj = {
       id: 1,
+      jsondata: {},
       obfuscated_id: '4517239960',
       user_id: 1,
       username: 'edsc-test',
@@ -283,6 +285,7 @@ describe('adminGetRetrievals', () => {
 
     const responseObj = {
       id: 1,
+      jsondata: {},
       obfuscated_id: '4517239960',
       user_id: 1,
       username: 'edsc-test',
