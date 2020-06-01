@@ -52,7 +52,7 @@ describe('AdminRetrievalDetails component', () => {
 
       expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(0).text()).toEqual('edsc-test')
       expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(1).text()).toEqual('06347346')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(2).text()).toEqual('/portal/testPortal/projects?mock-source')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(2).text()).toEqual('/portal/testPortal/search?mock-source')
       expect(enzymeWrapper.find('.admin-retrieval-details__collection').length).toEqual(1)
 
       expect(enzymeWrapper.find('.admin-retrieval-details__collection-heading').at(0).text()).toEqual('C10000005')
@@ -96,7 +96,7 @@ describe('AdminRetrievalDetails component', () => {
 
       expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(0).text()).toEqual('edsc-test')
       expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(1).text()).toEqual('06347346')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(2).text()).toEqual('/projects?mock-source')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(2).text()).toEqual('/search?mock-source')
 
       expect(enzymeWrapper.find('.admin-retrieval-details__collection').length).toEqual(1)
       expect(enzymeWrapper.find('.admin-retrieval-details__collection-heading').at(0).text()).toEqual('C10000005')
