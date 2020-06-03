@@ -1,8 +1,10 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { act } from 'react-dom/test-utils'
 
-import EchoForm from '../EchoForm'
+// eslint-disable-next-line import/named
+import EchoForm, { $imports } from '../EchoForm'
 import { rawModel, echoForm, formWithModel } from './mocks'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -19,7 +21,7 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<EchoForm {...props} />)
+  const enzymeWrapper = mount(<EchoForm {...props} />)
 
   return {
     enzymeWrapper,
@@ -28,191 +30,117 @@ function setup(overrideProps) {
 }
 
 describe('EchoForm component', () => {
-  test('should render self', () => {
+  // Enzyme does not support shallow rendering of useEffect hooks. We also don't want to do a full mount on EDSCEchoform because it is an outside component (and jest xpath does not work).
+  // So we are using babel-plugin-mockable-imports to mock EDSCEchoform so we can view it's props during these tests
+  beforeEach(() => {
+    const MockedEDSCEchoform = props => props.children || null
+
+    $imports.$mock({
+      '@edsc/echoforms': { default: MockedEDSCEchoform }
+    })
+  })
+
+  afterEach(() => {
+    $imports.$restore()
+  })
+
+  test('should render EDSCEchoform component', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.exists()).toBeTruthy()
+    expect(enzymeWrapper.find('MockedEDSCEchoform').exists()).toBeTruthy()
   })
 
-  describe('componentWillReceiveProps', () => {
-    test('renders a new echoform', () => {
-      const { enzymeWrapper } = setup()
-      const methodKey = 'echoOrder0'
-      enzymeWrapper.instance().initializeEchoForm = jest.fn()
-      enzymeWrapper.instance().$el.echoforms = jest.fn()
-
-      enzymeWrapper.setProps({
+  test.only('renders an EDSCEchoform with a provided rawModel', () => {
+    const collectionId = 'collectionId'
+    const methodKey = 'echoOrder0'
+    let enzymeWrapper
+    act(() => {
+      ({ enzymeWrapper } = setup({
+        collectionId,
         form: echoForm,
         methodKey,
         rawModel
-      })
-
-      expect(enzymeWrapper.instance().$el.echoforms.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().$el.echoforms.mock.calls).toEqual([['destroy']])
-      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls[0])
-        .toEqual([echoForm, rawModel, methodKey, {}, null])
+      }))
     })
 
-    test('resets the echoform', () => {
-      const methodKey = 'echoOrder0'
-      const { enzymeWrapper } = setup({
-        form: echoForm,
-        methodKey,
-        rawModel
-      })
-      enzymeWrapper.instance().initializeEchoForm = jest.fn()
-      enzymeWrapper.instance().$el.echoforms = jest.fn()
+    expect(enzymeWrapper.find('MockedEDSCEchoform').props().form).toEqual(formWithModel)
+  })
 
-      enzymeWrapper.setProps({
-        rawModel: undefined
-      })
+  test('renders an EDSCEchoform with spatial prepopulated', () => {
+    const { enzymeWrapper } = setup({
+      spatial: {
+        polygon: '-77,38,-77,38,-76,38,-77,38'
+      }
+    })
 
-      expect(enzymeWrapper.instance().$el.echoforms.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().$el.echoforms.mock.calls).toEqual([['destroy']])
-      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls[0])
-        .toEqual([echoForm, null, methodKey, {}, null])
+    expect(enzymeWrapper.find('MockedEDSCEchoform').props().prepopulateValues).toEqual({
+      BBOX_EAST: -76,
+      BBOX_NORTH: 38.00105844675541,
+      BBOX_SOUTH: 37.99999999999998,
+      BBOX_WEST: -77
     })
   })
 
-  describe('componentWillUnmount', () => {
-    test('renders a new echoform', () => {
-      const { enzymeWrapper } = setup()
-
-      const mockEchoForms = jest.fn()
-      enzymeWrapper.instance().$el.echoforms = mockEchoForms
-
-      enzymeWrapper.unmount()
-
-      expect(mockEchoForms.mock.calls.length).toBe(1)
-      expect(mockEchoForms.mock.calls).toEqual([['destroy']])
+  test('renders an EDSCEchoform with a shapefile', () => {
+    const { enzymeWrapper } = setup({
+      shapefileId: '1234'
     })
+
+    expect(enzymeWrapper.find('MockedEDSCEchoform').props().hasShapefile).toEqual(true)
   })
 
-  describe('initializeEchoForm', () => {
-    test('calls insertModelIntoForm', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.instance().insertModelIntoForm = jest.fn()
-      enzymeWrapper.instance().$el.echoforms = jest.fn()
-      enzymeWrapper.instance().syncModel = jest.fn()
-
-      enzymeWrapper.instance().initializeEchoForm(echoForm)
-
-      expect(enzymeWrapper.instance().insertModelIntoForm.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().insertModelIntoForm.mock.calls[0])
-        .toEqual([undefined, echoForm])
+  test('onFormModelUpdated calls onUpdateAccessMethod', () => {
+    const collectionId = 'collectionId'
+    const methodKey = 'echoOrder0'
+    const { enzymeWrapper, props } = setup({
+      collectionId,
+      form: echoForm,
+      methodKey
     })
 
-    test('initializes the echoform plugin', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.instance().insertModelIntoForm = jest.fn(() => echoForm)
-      enzymeWrapper.instance().$el.echoforms = jest.fn()
-      enzymeWrapper.instance().syncModel = jest.fn()
-
-      enzymeWrapper.instance().initializeEchoForm(echoForm)
-
-      expect(enzymeWrapper.instance().$el.echoforms.mock.calls.length).toBe(1)
-    })
-
-    test('calls syncModel', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.instance().insertModelIntoForm = jest.fn()
-      enzymeWrapper.instance().$el.echoforms = jest.fn()
-      enzymeWrapper.instance().syncModel = jest.fn()
-
-      enzymeWrapper.instance().initializeEchoForm(echoForm)
-
-      expect(enzymeWrapper.instance().syncModel.mock.calls.length).toBe(1)
-    })
-  })
-
-  describe('insertModelIntoForm', () => {
-    test('updates an echoform with saved fields from a rawModel', () => {
-      const { enzymeWrapper } = setup()
-
-      const newForm = enzymeWrapper.instance().insertModelIntoForm(rawModel, echoForm)
-
-      expect(newForm).toEqual(formWithModel)
-    })
-
-    test('does not update the echoform if model does not exist', () => {
-      const { enzymeWrapper } = setup()
-
-      const newForm = enzymeWrapper.instance().insertModelIntoForm(undefined, echoForm)
-
-      expect(newForm).toEqual(echoForm)
-    })
-  })
-
-  describe('syncModel', () => {
-    test('updates the store with the echoform data', () => {
-      const collectionId = 'collectionId'
-
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.setProps({
-        collectionId
+    act(() => {
+      enzymeWrapper.find('MockedEDSCEchoform').props().onFormModelUpdated({
+        model: 'new model',
+        rawModel: 'new rawModel'
       })
+    })
 
-      enzymeWrapper.instance().$el.echoforms = jest.fn((param, options) => {
-        if (param === 'isValid') return true
-        if (param === 'serialize' && options) return 'form rawModel'
-        if (param === 'serialize') return 'form model'
-        return null
-      })
-
-      enzymeWrapper.instance().syncModel('echoOrder0')
-
-      // 2 because componentDidMount calls syncModel
-      expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
-      expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
-        collectionId,
-        method: {
-          echoOrder0: {
-            isValid: true,
-            model: 'form model',
-            rawModel: 'form rawModel'
-          }
+    expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
+    expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
+      collectionId,
+      method: {
+        echoOrder0: {
+          isValid: true,
+          model: 'new model',
+          rawModel: 'new rawModel'
         }
-      }])
+      }
+    }])
+  })
+
+  test('onFormIsValidUpdated calls onUpdateAccessMethod', () => {
+    const collectionId = 'collectionId'
+    const methodKey = 'echoOrder0'
+    const { enzymeWrapper, props } = setup({
+      collectionId,
+      form: echoForm,
+      methodKey
     })
 
-    test('updates the store with the echoform data if key is not provided', () => {
-      const collectionId = 'collectionId'
+    act(() => {
+      enzymeWrapper.find('MockedEDSCEchoform').props().onFormIsValidUpdated(false)
+    })
 
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.setProps({
-        collectionId,
-        methodKey: 'newMethodKey'
-      })
-
-      enzymeWrapper.instance().$el.echoforms = jest.fn((param, options) => {
-        if (param === 'isValid') return true
-        if (param === 'serialize' && options) return 'form rawModel'
-        if (param === 'serialize') return 'form model'
-        return null
-      })
-
-      // syncModel gets called with a jQuery event on componentDidMount
-      enzymeWrapper.instance().syncModel(jest.fn())
-
-      // 2 because componentDidMount calls syncModel
-      expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
-      expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
-        collectionId,
-        method: {
-          newMethodKey: {
-            isValid: true,
-            model: 'form model',
-            rawModel: 'form rawModel'
-          }
+    expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
+    expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
+      collectionId,
+      method: {
+        echoOrder0: {
+          isValid: false,
+          model: '',
+          rawModel: ''
         }
-      }])
-    })
+      }
+    }])
   })
 })
