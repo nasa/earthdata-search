@@ -1,12 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { act } from 'react-dom/test-utils'
 import EDSCEchoform from '@edsc/echoforms'
 
-// eslint-disable-next-line import/named
 import EchoForm from '../EchoForm'
-import { rawModel, echoForm, formWithModel } from './mocks'
 
 Enzyme.configure({ adapter: new Adapter() })
 

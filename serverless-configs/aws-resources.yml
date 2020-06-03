@@ -146,7 +146,7 @@ Resources:
               - "s3:GetObject"
             Effect: "Allow"
             Resource: "*"
-      PolicyName: ${opt:stage, 'lab'}-S3CloudfrontLogToCloudwatchPolicy
+      PolicyName: ${opt:stage}-S3CloudfrontLogToCloudwatchPolicy
       Roles:
         - Ref: IamRoleCustomResourcesLambdaExecution
 Outputs:
