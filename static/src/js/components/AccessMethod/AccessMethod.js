@@ -197,7 +197,7 @@ export class AccessMethod extends Component {
   handleAccessMethodSelection(method) {
     const { granuleMetadata, metadata, onSelectAccessMethod } = this.props
 
-    const { id: collectionId } = metadata
+    const { concept_id: collectionId } = metadata
 
     // Calculate the number of orders that will be created based on granule count
     const { defaultGranulesPerOrder } = getApplicationConfig()
@@ -213,7 +213,7 @@ export class AccessMethod extends Component {
 
   handleOutputFormatSelection(event) {
     const { metadata, onUpdateAccessMethod } = this.props
-    const { id: collectionId } = metadata
+    const { concept_id: collectionId } = metadata
 
     const { target } = event
     const { value } = target
@@ -244,7 +244,7 @@ export class AccessMethod extends Component {
       onUpdateAccessMethod
     } = this.props
 
-    const { id: collectionId } = metadata
+    const { concept_id: collectionId } = metadata
 
     const radioList = []
     Object.keys(accessMethods).forEach((methodKey) => {

@@ -1,7 +1,6 @@
 import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { getProjectCollectionsResponse } from './mocks'
 import actions from '../index'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
@@ -225,54 +224,20 @@ describe('getProjectCollections', () => {
       .reply(200, {})
 
     nock(/localhost/)
-      .post(/collections\/json/)
+      .post(/graphql/)
       .reply(200, {
-        feed: {
-          updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic',
-          title: 'ECHO dataset metadata',
-          entry: [{
-            id: 'collectionId1',
-            mockCollectionData: 'goes here'
-          },
-          {
-            id: 'collectionId2',
-            mockCollectionData: 'collection data 2'
-          }],
-          facets: {}
+        data: {
+          collections: {
+            items: [{
+              concept_id: 'collectionId1'
+            },
+            {
+              concept_id: 'collectionId2'
+            }]
+          }
         }
       },
       {
-        'cmr-hits': 1,
-        'jwt-token': 'token'
-      })
-
-    nock(/localhost/)
-      .post(/collections\/umm_json/)
-      .reply(200, {
-        hits: 1,
-        took: 234,
-        items: [
-          {
-            meta: {
-              'concept-id': 'collectionId1'
-            },
-            umm: {
-              data: 'collectionId1'
-            }
-          },
-          {
-            meta: {
-              'concept-id': 'collectionId2'
-            },
-            umm: {
-              data: 'collectionId2'
-            }
-          }
-        ]
-      },
-      {
-        'cmr-hits': 1,
         'jwt-token': 'token'
       })
 
@@ -304,11 +269,7 @@ describe('getProjectCollections', () => {
       },
       focusedCollection: '',
       project: {
-        collectionIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {},
-          collectionId2: {}
-        }
+        collectionIds: ['collectionId1', 'collectionId2']
       },
       providers: [
         {
@@ -340,7 +301,22 @@ describe('getProjectCollections', () => {
     })
     expect(storeActions[1]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
-      payload: getProjectCollectionsResponse
+      payload: [
+        {
+          collectionId1: expect.objectContaining({
+            metadata: expect.objectContaining({
+              concept_id: 'collectionId1'
+            })
+          })
+        },
+        {
+          collectionId2: expect.objectContaining({
+            metadata: expect.objectContaining({
+              concept_id: 'collectionId2'
+            })
+          })
+        }
+      ]
     })
   })
 
@@ -383,16 +359,7 @@ describe('getProjectCollections', () => {
       .mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
-      .post(/collections\/json/)
-      .reply(500, {
-        errors: ['HTTP Request Error']
-      },
-      {
-        'jwt-token': 'token'
-      })
-
-    nock(/localhost/)
-      .post(/collections\/umm_json/)
+      .post(/graphql/)
       .reply(500, {
         errors: ['HTTP Request Error']
       },
@@ -406,7 +373,11 @@ describe('getProjectCollections', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      authToken: 'token'
+      authToken: 'token',
+      metadata: {
+        collections: {},
+        granules: {}
+      }
     })
 
     // call the dispatch
@@ -418,7 +389,6 @@ describe('getProjectCollections', () => {
       type: ADD_COLLECTION_TO_PROJECT,
       payload: 'collectionId'
     })
-
     expect(storeActions[1]).toEqual({
       type: ADD_ERROR,
       payload: expect.objectContaining({

@@ -329,9 +329,7 @@ export const decodeCollections = (params) => {
       granuleFilters,
       isCwic,
       isVisible,
-      metadata: {},
-      ummMetadata: {},
-      formattedMetadata: {}
+      metadata: {}
     }
 
     if (index > 0) {

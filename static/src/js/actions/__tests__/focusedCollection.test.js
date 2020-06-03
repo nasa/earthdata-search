@@ -4,7 +4,6 @@ import thunk from 'redux-thunk'
 
 import actions from '../index'
 import { updateFocusedCollection, getFocusedCollection } from '../focusedCollection'
-import { getCollectionsResponseUnauth, getCollectionsResponseAuth } from './mocks'
 import {
   UPDATE_AUTH,
   UPDATE_COLLECTION_METADATA,
@@ -157,56 +156,36 @@ describe('changeFocusedCollection', () => {
 
 describe('getFocusedCollection', () => {
   test('should update the focusedCollection and call getGranules', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphHost: 'https://graphql.example.com',
+      opensearchRoot: 'https://cmr.example.com'
+    }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
-    nock(/cmr/)
-      .post(/collections\.json/)
+    nock(/graph/)
+      .post(/api/)
       .reply(200, {
-        feed: {
-          updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
-          title: 'ECHO dataset metadata',
-          entry: [{
-            id: 'collectionId1',
+        data: {
+          collection: {
+            concept_id: 'collectionId1',
             short_name: 'id_1',
             version_id: 'VersionID'
-          }],
-          facets: {},
-          hits: 1
-        }
-      }, {
-        'cmr-hits': 1
-      })
-
-    nock(/cmr/)
-      .post(/collections\.umm_json/)
-      .reply(200, {
-        hits: 1,
-        took: 234,
-        items: [{
-          meta: {
-            'concept-id': 'collectionId1'
-          },
-          umm: {
-            data: 'collectionId1'
           }
-        }]
-      }, {
-        'cmr-hits': 1
+        }
       })
-
-    const collectionId = 'collectionId'
 
     // mock getGranules
     const getGranulesMock = jest.spyOn(actions, 'getGranules')
     getGranulesMock.mockImplementation(() => jest.fn())
+
     const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
     relevancyMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const store = mockStore({
       authToken: '',
-      focusedCollection: collectionId,
+      focusedCollection: 'collectionId1',
       metadata: {
         collections: {
           allIds: []
@@ -232,7 +211,55 @@ describe('getFocusedCollection', () => {
       // updateCollectionMetadata
       expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
-        payload: getCollectionsResponseUnauth
+        payload: [{
+          collectionId1: expect.objectContaining({
+            isCwic: false,
+            metadata: {
+              concept_id: 'collectionId1',
+              gibsLayers: [
+                'None'
+              ],
+              nativeFormats: [],
+              relatedUrls: [],
+              scienceKeywords: [],
+              short_name: 'id_1',
+              temporal: [
+                'Not available'
+              ],
+              urls: {
+                atom: {
+                  href: 'https://cmr.example.com/search/concepts/collectionId1.atom',
+                  title: 'ATOM'
+                },
+                dif: {
+                  href: 'https://cmr.example.com/search/concepts/collectionId1.dif',
+                  title: 'DIF'
+                },
+                echo10: {
+                  href: 'https://cmr.example.com/search/concepts/collectionId1.echo10',
+                  title: 'ECHO10'
+                },
+                html: {
+                  href: 'https://cmr.example.com/search/concepts/collectionId1.html',
+                  title: 'HTML'
+                },
+                iso19115: {
+                  href: 'https://cmr.example.com/search/concepts/collectionId1.iso19115',
+                  title: 'ISO19115'
+                },
+                native: {
+                  href: 'https://cmr.example.com/search/concepts/collectionId1.native',
+                  title: 'Native'
+                },
+                osdd: {
+                  href: 'https://cmr.example.com/granules/descriptor_document.xml?clientId=eed-edsc-test-serverless-client&shortName=id_1&versionId=VersionID&dataCenter=collectionId1',
+                  title: 'OSDD'
+                }
+              },
+              version_id: 'VersionID'
+            }
+          })
+        }]
       })
     })
 
@@ -243,46 +270,22 @@ describe('getFocusedCollection', () => {
 
   test('should update the authenticated focusedCollection and call getGranules', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
-      cmrHost: 'https://cmr.earthdata.nasa.gov',
-      opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
+      cmrHost: 'https://cmr.example.com',
+      opensearchRoot: 'https://cmr.example.com/opensearch'
     }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
     nock(/localhost/)
-      .post(/collections\/json/)
+      .post(/graphql/)
       .reply(200, {
-        feed: {
-          updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
-          title: 'ECHO dataset metadata',
-          entry: [{
-            id: 'collectionId1',
+        data: {
+          collection: {
+            concept_id: 'collectionId1',
             short_name: 'id_1',
             version_id: 'VersionID'
-          }],
-          facets: {},
-          hits: 1
+          }
         }
       }, {
-        'cmr-hits': 1,
-        'jwt-token': 'token'
-      })
-
-    nock(/localhost/)
-      .post(/collections\/umm_json/)
-      .reply(200, {
-        hits: 1,
-        took: 234,
-        items: [{
-          meta: {
-            'concept-id': 'collectionId1'
-          },
-          umm: {
-            data: 'collectionId1'
-          }
-        }]
-      }, {
-        'cmr-hits': 1,
         'jwt-token': 'token'
       })
 
@@ -329,7 +332,55 @@ describe('getFocusedCollection', () => {
       // updateCollectionMetadata
       expect(storeActions[3]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
-        payload: getCollectionsResponseAuth
+        payload: [{
+          collectionId: expect.objectContaining({
+            isCwic: false,
+            metadata: {
+              concept_id: 'collectionId1',
+              gibsLayers: [
+                'None'
+              ],
+              nativeFormats: [],
+              relatedUrls: [],
+              scienceKeywords: [],
+              short_name: 'id_1',
+              temporal: [
+                'Not available'
+              ],
+              urls: {
+                atom: {
+                  href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.example.com%2Fsearch%2Fconcepts%2FcollectionId1.atom&token=token',
+                  title: 'ATOM'
+                },
+                dif: {
+                  href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.example.com%2Fsearch%2Fconcepts%2FcollectionId1.dif&token=token',
+                  title: 'DIF'
+                },
+                echo10: {
+                  href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.example.com%2Fsearch%2Fconcepts%2FcollectionId1.echo10&token=token',
+                  title: 'ECHO10'
+                },
+                html: {
+                  href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.example.com%2Fsearch%2Fconcepts%2FcollectionId1.html&token=token',
+                  title: 'HTML'
+                },
+                iso19115: {
+                  href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.example.com%2Fsearch%2Fconcepts%2FcollectionId1.iso19115&token=token',
+                  title: 'ISO19115'
+                },
+                native: {
+                  href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.example.com%2Fsearch%2Fconcepts%2FcollectionId1.native&token=token',
+                  title: 'Native'
+                },
+                osdd: {
+                  href: 'https://cmr.example.com/opensearch/granules/descriptor_document.xml?clientId=eed-edsc-test-serverless-client&shortName=id_1&versionId=VersionID&dataCenter=collectionId1',
+                  title: 'OSDD'
+                }
+              },
+              version_id: 'VersionID'
+            }
+          })
+        }]
       })
     })
 
@@ -365,7 +416,7 @@ describe('getFocusedCollection', () => {
 
   test('does not call updateFocusedCollection on error', async () => {
     nock(/localhost/)
-      .post(/collections/)
+      .post(/graph/)
       .reply(500)
 
     nock(/localhost/)

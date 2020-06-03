@@ -23,7 +23,7 @@ function setup(overrideProps) {
         singleGranuleSize: 1
       },
       metadata: {
-        dataset_id: 'Collection Title',
+        title: 'Collection Title',
         granule_count: 4
       }
     },
@@ -70,7 +70,7 @@ describe('ProjectCollectionItem component', () => {
           excludedGranuleIds: [],
           granules: {},
           metadata: {
-            dataset_id: 'Collection Title',
+            title: 'Collection Title',
             granule_count: 4
           }
         }

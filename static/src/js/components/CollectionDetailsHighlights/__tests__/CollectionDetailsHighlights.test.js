@@ -9,23 +9,23 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     collection: {
-      formattedMetadata: {
-        temporal: [
-          '1860-01-01 to 2050-12-31'
-        ],
+      metadata: {
         doi: {
           doiLink: 'https://dx.doi.org/ADFD/DS456SD',
           doiText: 'ADFD/DS456SD'
-        }
-      },
-      ummMetadata: {
-        Abstract: 'An example collection summary.',
-        Version: '5'
+        },
+        temporal: [
+          '1860-01-01 to 2050-12-31'
+        ],
+        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.',
+        version_id: '5'
       }
     },
     isLoaded: false,
     isLoading: true,
-    location: { search: '' },
+    location: {
+      search: ''
+    },
     onToggleRelatedUrlsModal: jest.fn(),
     ...overrideProps
   }
@@ -64,7 +64,7 @@ describe('CollectionDetailsHighlights component', () => {
     })
   })
 
-  describe('version', () => {
+  describe('doi', () => {
     describe('when collection is loading', () => {
       test('shows the loading state', () => {
         const { enzymeWrapper } = setup()
@@ -102,21 +102,22 @@ describe('CollectionDetailsHighlights component', () => {
     })
   })
 
-  describe('description', () => {
+  describe('summary', () => {
     describe('when collection is loading', () => {
       test('shows the loading state', () => {
         const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(3).find(Skeleton).length).toEqual(1)
+        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(4).find(Skeleton).length).toEqual(1)
       })
     })
 
     describe('when collection is loaded', () => {
-      test('shows the description', () => {
+      test('shows the summary', () => {
         const { enzymeWrapper } = setup({
           isLoading: false,
           isLoaded: true
         })
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(3).text()).toEqual('1860-01-01 to 2050-12-31')
+        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(4).text())
+          .toEqual('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.')
       })
     })
   })

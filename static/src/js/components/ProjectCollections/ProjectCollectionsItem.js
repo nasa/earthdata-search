@@ -60,7 +60,7 @@ const ProjectCollectionItem = ({
   } = collection
 
   const {
-    dataset_id: title
+    title
   } = metadata
 
   const { isLoaded, isLoading, singleGranuleSize } = granules

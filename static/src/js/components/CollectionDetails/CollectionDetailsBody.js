@@ -24,11 +24,11 @@ const buildRelatedUrlsList = (relatedUrls) => {
         <a
           key={key}
           className="link link--separated collection-details-body__related-link"
-          href={url.URL}
+          href={url.url}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {url.HighlightedType}
+          {url.highlightedType}
         </a>
       )
     })
@@ -105,24 +105,24 @@ const buildForDeveloperLink = (linkData, token) => {
  */
 export const CollectionDetailsBody = ({
   collectionMetadata,
-  formattedCollectionMetadata,
   isActive,
   onToggleRelatedUrlsModal
 }) => {
-  const { summary } = collectionMetadata
   const {
     dataCenters,
     doi,
     gibsLayers,
     nativeFormats,
     relatedUrls,
+    services,
     scienceKeywords,
     spatial,
+    summary,
     temporal,
     urls
-  } = formattedCollectionMetadata
+  } = collectionMetadata
 
-  if (!Object.keys(collectionMetadata).length || !Object.keys(formattedCollectionMetadata).length) {
+  if (!Object.keys(collectionMetadata).length) {
     return (
       <div className="collection-details-body">
         <div className="collection-details-body__content">
@@ -130,6 +130,23 @@ export const CollectionDetailsBody = ({
         </div>
       </div>
     )
+  }
+
+  const outputFormats = []
+  if (services) {
+    const { items } = services
+
+    items.forEach((service) => {
+      const { supported_output_formats: formats } = service
+      if (formats) {
+        outputFormats.push(...formats)
+      }
+    })
+  }
+
+  let formattedRelatedUrls = []
+  if (relatedUrls && relatedUrls.length > 0) {
+    formattedRelatedUrls = buildRelatedUrlsList(relatedUrls)
   }
 
   return (
@@ -157,9 +174,9 @@ export const CollectionDetailsBody = ({
                     <dt>Related URLs:</dt>
                     <dd className="collection-details-body__related-links">
                       {
-                        relatedUrls.length > 0 && (
+                        formattedRelatedUrls.length > 0 && (
                           <>
-                            {buildRelatedUrlsList(relatedUrls)}
+                            {formattedRelatedUrls}
                             <Button
                               className="link link--separated collection-details-body__related-link"
                               type="button"
@@ -193,6 +210,16 @@ export const CollectionDetailsBody = ({
                           const key = `temporal_entry_${i}`
                           return <span key={key}>{entry}</span>
                         })}
+                      </dd>
+                    </>
+                  )
+                }
+                {
+                  outputFormats.length > 0 && (
+                    <>
+                      <dt>Supported Output Formats:</dt>
+                      <dd>
+                        {outputFormats.join(', ')}
                       </dd>
                     </>
                   )
@@ -295,13 +322,11 @@ export const CollectionDetailsBody = ({
 }
 
 CollectionDetailsBody.defaultProps = {
-  collectionMetadata: {},
-  formattedCollectionMetadata: {}
+  collectionMetadata: {}
 }
 
 CollectionDetailsBody.propTypes = {
   collectionMetadata: PropTypes.shape({}),
-  formattedCollectionMetadata: PropTypes.shape({}),
   isActive: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

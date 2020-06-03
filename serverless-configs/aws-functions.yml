@@ -319,6 +319,16 @@
   #
   # EDL Authenticated API Gateway Endpoints
   #
+  graphQl:
+    handler: serverless/src/graphQl/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    events:
+      - http:
+          method: post
+          cors: true
+          path: graphql
+          authorizer: edlAuthorizer
+
   retrieveConcept:
     handler: serverless/src/retrieveConcept/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}

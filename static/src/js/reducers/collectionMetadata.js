@@ -54,18 +54,14 @@ const collectionMetadataReducer = (state = initialState, action) => {
         const collection = state.byId[id]
         const {
           excludedGranuleIds,
-          metadata,
-          ummMetadata,
-          formattedMetadata
+          metadata
         } = collection
 
         byId[id] = {
           ...collection,
           excludedGranuleIds,
           granules: {},
-          metadata,
-          ummMetadata,
-          formattedMetadata
+          metadata
         }
       })
 
@@ -84,8 +80,6 @@ const collectionMetadataReducer = (state = initialState, action) => {
         const [collectionId] = Object.keys(collection)
         const {
           metadata,
-          ummMetadata,
-          formattedMetadata,
           isCwic
         } = action.payload[index][collectionId]
 
@@ -113,13 +107,11 @@ const collectionMetadataReducer = (state = initialState, action) => {
         byId[collectionId] = {
           currentCollectionGranuleParams,
           excludedGranuleIds,
-          formattedMetadata,
           granuleFilters,
           granules,
           isCwic,
           isVisible,
-          metadata,
-          ummMetadata
+          metadata
         }
       })
 

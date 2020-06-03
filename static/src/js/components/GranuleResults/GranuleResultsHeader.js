@@ -145,7 +145,7 @@ class GranuleResultsHeader extends Component {
       isLoaded
     } = granules
 
-    const { dataset_id: title, isCwic } = metadata
+    const { title, isCwic } = metadata
 
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
 
@@ -154,6 +154,7 @@ class GranuleResultsHeader extends Component {
     const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
 
     const allGranuleIds = granules.allIds
+
     let granuleIds
     if (isCwic) {
       granuleIds = allGranuleIds.filter((id) => {

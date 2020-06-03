@@ -78,6 +78,7 @@ export class ProjectCollections extends Component {
     } = isProjectValid(project, collections)
     const { isSubmitting } = project
 
+    // TODO: Use a loading state instead of relying on metadata keys
     const isLoading = collections.allIds.every((collectionId) => {
       const { byId } = collections
       const collection = byId[collectionId]

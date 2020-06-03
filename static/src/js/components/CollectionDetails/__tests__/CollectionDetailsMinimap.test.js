@@ -5,17 +5,16 @@ import {
   Map,
   ImageOverlay
 } from 'react-leaflet'
-import { collectionDetailsBodyProps } from './mocks'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 import CollectionDetailsFeatureGroup from '../CollectionDetailsFeatureGroup'
-
-// TODO: Write more tests
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    metadata: collectionDetailsBodyProps.focusedCollectionMetadata
+    metadata: {
+      boxes: [-90, -180, 90, 180]
+    }
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsMinimap {...props} />)
@@ -60,8 +59,8 @@ describe('CollectionDetails component', () => {
 
   test('passes correct props to CollectionDetailsFeatureGroup', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find(CollectionDetailsFeatureGroup).prop('metadata')).toEqual(
-      collectionDetailsBodyProps.focusedCollectionMetadata
-    )
+    expect(enzymeWrapper.find(CollectionDetailsFeatureGroup).prop('metadata')).toEqual({
+      boxes: [-90, -180, 90, 180]
+    })
   })
 })
