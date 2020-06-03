@@ -125,7 +125,7 @@
     "connected-react-router": "^6.4.0",
     "core-js": "^3.2.1",
     "dropzone": "^5.5.1",
-    "edsc-echoforms": "git+https://github.com/nasa/edsc-echoforms.git",
+    "edsc-echoforms": "git+https://github.com/nasa/edsc-echoforms.git#jquery-plugin",
     "edsc-timeline": "git+https://github.com/nasa/edsc-timeline.git",
     "events": "^3.0.0",
     "fast-xml-parser": "^3.12.16",
