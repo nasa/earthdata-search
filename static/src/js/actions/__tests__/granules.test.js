@@ -161,17 +161,13 @@ describe('getGranules', () => {
         payload: 'collectionId'
       })
       expect(storeActions[6]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
-      })
-      expect(storeActions[7]).toEqual({
         type: LOADED_GRANULES,
         payload: {
           collectionId: 'collectionId',
           loaded: true
         }
       })
-      expect(storeActions[8]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
