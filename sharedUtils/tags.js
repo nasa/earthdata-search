@@ -7,15 +7,15 @@ import { getApplicationConfig } from './config'
  */
 export const tagName = (key, namespaceOverride) => {
   let namespace
-  if (namespaceOverride) {
-    namespace = namespaceOverride
-  } else {
+  if (namespaceOverride == null) {
     const { cmrTagNamespace } = getApplicationConfig()
 
     namespace = cmrTagNamespace
+  } else {
+    namespace = namespaceOverride
   }
 
-  return [namespace, key].join('.')
+  return [namespace, key].filter(Boolean).join('.')
 }
 
 /**
@@ -42,6 +42,9 @@ export const getValueForTag = (key, tags, namespaceOverride = null) => {
  */
 export const hasTag = (collection, key, namespaceOverride = null) => {
   const { tags = {} } = collection
+
+  // GraphQL will return null if no tags are present
+  if (tags == null) return false
 
   const tag = tagName(key, namespaceOverride)
 

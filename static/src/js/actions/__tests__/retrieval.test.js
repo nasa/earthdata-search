@@ -384,7 +384,7 @@ describe('fetchRetrieval', () => {
 
   test('does not call updateOrder on error', async () => {
     nock(/localhost/)
-      .get(/2057964173/)
+      .get(/retrievals/)
       .reply(500, {
         errors: ['An error occured.']
       })
@@ -437,7 +437,7 @@ describe('fetchRetrieval', () => {
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
-    await store.dispatch(fetchRetrieval()).then(() => {
+    await store.dispatch(fetchRetrieval(7)).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })

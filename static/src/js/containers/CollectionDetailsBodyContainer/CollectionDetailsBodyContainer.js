@@ -7,8 +7,7 @@ import {
 
 import actions from '../../actions/index'
 import {
-  getFocusedCollectionMetadata,
-  getFocusedCollectionFormattedMetadata
+  getFocusedCollectionMetadata
 } from '../../util/focusedCollection'
 
 import CollectionDetailsBody from '../../components/CollectionDetails/CollectionDetailsBody'
@@ -30,14 +29,10 @@ export const CollectionDetailsBodyContainer = ({
   onToggleRelatedUrlsModal
 }) => {
   const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
-  const formattedCollectionMetadata = getFocusedCollectionFormattedMetadata(
-    focusedCollection, collections
-  )
 
   return (
     <CollectionDetailsBody
       collectionMetadata={collectionMetadata}
-      formattedCollectionMetadata={formattedCollectionMetadata}
       isActive={isActive}
       onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
     />

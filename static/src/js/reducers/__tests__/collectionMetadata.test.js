@@ -129,13 +129,11 @@ describe('UPDATE_COLLECTION_METADATA', () => {
         collectionId: {
           currentCollectionGranuleParams: {},
           excludedGranuleIds: [],
-          formattedMetadata: undefined,
           granuleFilters: { sortKey: '-start_date' },
           granules: {},
           isCwic: undefined,
           isVisible: true,
-          metadata: undefined,
-          ummMetadata: undefined
+          metadata: undefined
         }
       }
     }
@@ -188,9 +186,7 @@ describe('UPDATE_COLLECTION_METADATA', () => {
           },
           isVisible: true,
           isCwic: undefined,
-          metadata: undefined,
-          ummMetadata: undefined,
-          formattedMetadata: undefined
+          metadata: undefined
         }
       }
     }

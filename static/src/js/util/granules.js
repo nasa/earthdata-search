@@ -1,11 +1,12 @@
 import { isEmpty } from 'lodash'
 
-import { getFocusedCollectionObject } from './focusedCollection'
-import { encodeTemporal } from './url/temporalEncoders'
-import { encodeGridCoords } from './url/gridEncoders'
-import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import { convertSize } from './project'
+import { encodeGridCoords } from './url/gridEncoders'
+import { encodeTemporal } from './url/temporalEncoders'
+import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
+import { getFocusedCollectionObject } from './focusedCollection'
+import { hasTag } from '../../../../sharedUtils/tags'
 
 /**
  * Takes the current CMR granule params and applies any changes needed to
@@ -178,8 +179,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     temporalString = encodeTemporal(temporal)
   }
 
-  const isCwicCollection = Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod')
-    && !collectionMetadata.has_granules
+  const isCwicCollection = collectionMetadata.has_granules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
 
   const options = {}
   if (readableGranuleName) {

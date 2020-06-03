@@ -3,11 +3,10 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Badge } from 'react-bootstrap'
 
-import { collectionDetailsBodyProps } from './mocks'
-
 import CollectionDetailsHeader from '../CollectionDetailsHeader'
+import MoreActionsDropdown from '../../MoreActionsDropdown/MoreActionsDropdown'
 import Skeleton from '../../Skeleton/Skeleton'
-import { MoreActionsDropdown } from '../../MoreActionsDropdown/MoreActionsDropdown'
+
 import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -15,7 +14,9 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     collectionSearch: {},
-    location: { search: '' },
+    location: {
+      search: ''
+    },
     mapProjection: projections.geographic,
     ...overrideProps
   }
@@ -39,7 +40,11 @@ describe('CollectionDetails component', () => {
   describe('when metadata is provided', () => {
     test('renders itself correctly with focused collection metadata', () => {
       const { enzymeWrapper } = setup({
-        focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata.metadata
+        focusedCollectionMetadata: {
+          short_name: '1860_1993_2050_NITROGEN_830',
+          title: 'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050',
+          version_id: '1'
+        }
       })
       expect(enzymeWrapper.type()).toEqual('div')
       expect(enzymeWrapper.props().className).toEqual('collection-details-header')

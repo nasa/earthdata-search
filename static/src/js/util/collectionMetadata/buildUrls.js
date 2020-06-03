@@ -4,7 +4,7 @@ import { buildAuthenticatedRedirectUrl } from '../url/buildAuthenticatedRedirect
 
 export const buildUrls = (json, authToken) => {
   const {
-    id: collectionId,
+    concept_id: collectionId,
     short_name: providedCollectionShortName,
     version_id: collectionVersionId,
     is_cwic: isCwic

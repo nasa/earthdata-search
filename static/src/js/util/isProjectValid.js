@@ -12,7 +12,9 @@ export const isProjectValid = (project, collections) => {
 
   if (collectionIds.length === 0) return { valid: false }
 
+  // Default valid state
   const valid = { ...validAccessMethod }
+
   collectionIds.forEach((collectionId) => {
     const projectCollection = projectById[collectionId]
     const collection = collectionById[collectionId]

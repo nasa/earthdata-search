@@ -1,15 +1,19 @@
 import actions from './index'
-import { updateGranuleQuery } from './search'
 import {
   CLEAR_COLLECTION_GRANULES,
   UPDATE_FOCUSED_COLLECTION
 } from '../constants/actionTypes'
-import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
+
+import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { eventEmitter } from '../events/events'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
-import { updateCollectionMetadata } from './collections'
-import { updateAuthTokenFromHeaders } from './authToken'
+import { hasTag } from '../../../../sharedUtils/tags'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
+import { updateAuthTokenFromHeaders } from './authToken'
+import { updateCollectionMetadata } from './collections'
+import { updateGranuleQuery } from './search'
+
+import GraphRequest from '../util/request/graphRequest'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -24,8 +28,6 @@ export const clearCollectionGranules = () => ({
  * Perform a collection request based on the focusedCollection from the store.
  */
 export const getFocusedCollection = () => async (dispatch, getState) => {
-  const { defaultCmrSearchTags } = getApplicationConfig()
-
   const {
     authToken,
     focusedCollection,
@@ -33,12 +35,11 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     query
   } = getState()
 
-
   const { collections: collectionResults = {} } = metadata
 
   const { byId: searchResultsById = {} } = collectionResults
   const { [focusedCollection]: focusedCollectionMetadata } = searchResultsById
-  const { is_cwic: isCwic = false } = focusedCollectionMetadata || {}
+  const { isCwic = false } = focusedCollectionMetadata || {}
 
   const { collection: collectionQuery } = query
   const { spatial = {} } = collectionQuery
@@ -75,38 +76,101 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     return null
   }
 
-  const response = getCollectionMetadata({
-    concept_id: [focusedCollection],
-    includeTags: defaultCmrSearchTags.join(','),
-    includeHasGranules: true
-  }, authToken)
-    .then(([collectionJson, collectionUmm]) => {
+  const { defaultCmrSearchTags } = getApplicationConfig()
+
+  const graphRequestObject = new GraphRequest(authToken)
+
+  const graphQuery = `
+    query GetCollection(
+      $id: String!
+      $includeHasGranules: Boolean
+      $includeTags: String
+    ) {
+      collection(
+        concept_id: $id
+        include_has_granules: $includeHasGranules
+        include_tags: $includeTags
+      ) {
+        boxes
+        concept_id
+        data_center
+        data_centers
+        doi
+        has_granules
+        related_urls
+        science_keywords
+        short_name
+        spatial_extent
+        summary
+        tags
+        temporal_extents
+        title
+        version_id
+        services {
+          items {
+            concept_id
+            type
+            supported_output_formats
+          }
+        }
+      }
+    }`
+
+  const response = graphRequestObject.search(graphQuery, {
+    id: focusedCollection,
+    includeTags: defaultCmrSearchTags.join(',')
+  })
+    .then((response) => {
       const payload = []
-      const [metadata] = collectionJson.data.feed.entry
-      const [ummItem] = collectionUmm.data.items
-      const ummMetadata = ummItem.umm
 
-      // Pass json and ummJson into createFocusedCollectionMetadata to transform/normalize the data
-      // to be used in the UI.
-      const formattedMetadata = createFocusedCollectionMetadata(metadata, ummMetadata, authToken)
+      const {
+        data: responseData,
+        headers
+      } = response
+      const { data } = responseData
+      const { collection } = data
 
-      const { is_cwic: isCwic = false } = metadata
+      const {
+        boxes,
+        concept_id: conceptId,
+        data_center: dataCenter,
+        has_granules: hasGranules,
+        services,
+        short_name: shortName,
+        summary,
+        tags,
+        title,
+        version_id: versionId
+      } = collection
 
-      // The raw data from the json and ummJson requests are added to the state, as well as the
-      // transformed/normalized metadata.
+      // TODO: Move this logic to graphql
+      const focusedMetadata = createFocusedCollectionMetadata(collection, authToken)
+
       payload.push({
         [focusedCollection]: {
-          metadata,
-          ummMetadata,
-          formattedMetadata,
-          isCwic
+          metadata: {
+            boxes,
+            concept_id: conceptId,
+            data_center: dataCenter,
+            has_granules: hasGranules,
+            services,
+            short_name: shortName,
+            summary,
+            tags,
+            title,
+            version_id: versionId,
+            ...focusedMetadata
+          },
+          isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
         }
       })
 
-      // The .all().then() will only fire when both requests resolve successfully, so we can
-      // rely on collectionJson to have the correct auth information in its headers.
-      dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
+      // A users authToken will come back with an authenticated request if a valid token was used
+      dispatch(updateAuthTokenFromHeaders(headers))
+
+      // Update metadata in the store
       dispatch(updateCollectionMetadata(payload))
+
       dispatch(actions.getGranules())
     })
     .catch((error) => {

@@ -22,25 +22,24 @@ export const CollectionDetailsHighlights = ({
   onToggleRelatedUrlsModal
 }) => {
   const {
-    formattedMetadata = {},
-    ummMetadata = {}
+    metadata = {}
   } = collection
 
   // Don't attempt to render if the metadata isnt available
-  if (isEmpty(ummMetadata) || isEmpty(formattedMetadata)) return null
+  if (isEmpty(metadata)) return null
 
   const {
     doi = {},
-    temporal
-  } = formattedMetadata
+    summary,
+    temporal,
+    version_id: collectionVersion
+  } = metadata
 
   const { doiText } = doi
 
-  const { Abstract: collectionAbstract = '', Version: collectionVersion } = ummMetadata
-
-  let truncatedAbstract = collectionAbstract
-  if (collectionAbstract.length > 300) {
-    truncatedAbstract = `${collectionAbstract.substr(0, 300)}...`
+  let truncatedAbstract = summary
+  if (summary.length > 300) {
+    truncatedAbstract = `${summary.substr(0, 300)}...`
   }
 
   return (
@@ -137,7 +136,7 @@ export const CollectionDetailsHighlights = ({
         </div>
 
         {
-          collectionAbstract && (
+          summary && (
             <>
               <header className="collection-details-highlights__item-header">
                 <h4 className="collection-details-highlights__item-title">

@@ -28,8 +28,8 @@ function setup(overrideProps) {
         sortKey: '-start_date'
       },
       metadata: {
-        dataset_id: 'Title',
-        id: 'collectionId'
+        title: 'Title',
+        concept_id: 'collectionId'
       }
     },
     location: {
@@ -239,7 +239,7 @@ describe('handleUndoExcludeGranule', () => {
         excludedGranuleIds: ['granuleId1', 'granuleId2'],
         metadata: {
           title: 'Title',
-          id: 'collectionId'
+          concept_id: 'collectionId'
         }
       }
     })

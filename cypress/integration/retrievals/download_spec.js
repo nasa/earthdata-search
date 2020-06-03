@@ -1,6 +1,5 @@
 import { getByTestId } from '../../support/getByTestId'
-import collectionsJson from './download_mocks/collections_json'
-import collectionsUmmJson from './download_mocks/collections_umm_json'
+import collectionsGraphJson from './download_mocks/collections_graph'
 import timeline from './download_mocks/timeline'
 import granules from './download_mocks/granules'
 import providers from './download_mocks/providers'
@@ -19,14 +18,8 @@ describe('Download project spec', () => {
 
     cy.route({
       method: 'POST',
-      url: '**/collections/json',
-      response: collectionsJson.body,
-      headers: authHeaders
-    })
-    cy.route({
-      method: 'POST',
-      url: '**/collections/umm_json',
-      response: collectionsUmmJson.body,
+      url: '**/graphql',
+      response: collectionsGraphJson.body,
       headers: authHeaders
     })
     cy.route({

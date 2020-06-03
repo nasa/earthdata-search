@@ -15,9 +15,7 @@ describe('url#decodeUrlParams', () => {
             isCwic: undefined,
             granules: {},
             granuleFilters: {},
-            metadata: {},
-            formattedMetadata: {},
-            ummMetadata: {}
+            metadata: {}
           },
           collectionId2: {
             excludedGranuleIds: [],
@@ -25,9 +23,7 @@ describe('url#decodeUrlParams', () => {
             isCwic: undefined,
             granules: {},
             granuleFilters: {},
-            metadata: {},
-            formattedMetadata: {},
-            ummMetadata: {}
+            metadata: {}
           }
         }
       },
@@ -55,9 +51,7 @@ describe('url#decodeUrlParams', () => {
             isVisible: false,
             granules: {},
             granuleFilters: {},
-            metadata: {},
-            formattedMetadata: {},
-            ummMetadata: {}
+            metadata: {}
           },
           collectionId2: {
             excludedGranuleIds: [],
@@ -65,9 +59,7 @@ describe('url#decodeUrlParams', () => {
             isVisible: false,
             granules: {},
             granuleFilters: {},
-            metadata: {},
-            formattedMetadata: {},
-            ummMetadata: {}
+            metadata: {}
           }
         }
       },
@@ -94,9 +86,7 @@ describe('url#decodeUrlParams', () => {
             isVisible: false,
             granules: {},
             granuleFilters: {},
-            metadata: {},
-            formattedMetadata: {},
-            ummMetadata: {}
+            metadata: {}
           },
           collectionId2: {
             excludedGranuleIds: [],
@@ -104,9 +94,7 @@ describe('url#decodeUrlParams', () => {
             isVisible: true,
             granules: {},
             granuleFilters: {},
-            metadata: {},
-            formattedMetadata: {},
-            ummMetadata: {}
+            metadata: {}
           }
         }
       },
@@ -134,9 +122,7 @@ describe('url#decodeUrlParams', () => {
             isVisible: false,
             granules: {},
             granuleFilters: {},
-            metadata: {},
-            formattedMetadata: {},
-            ummMetadata: {}
+            metadata: {}
           },
           collectionId2: {
             excludedGranuleIds: [],
@@ -144,9 +130,7 @@ describe('url#decodeUrlParams', () => {
             isVisible: false,
             granules: {},
             granuleFilters: {},
-            metadata: {},
-            formattedMetadata: {},
-            ummMetadata: {}
+            metadata: {}
           }
         }
       },

@@ -16,9 +16,7 @@ describe('url#decodeUrlParams', () => {
               isVisible: false,
               granules: {},
               granuleFilters: {},
-              metadata: {},
-              formattedMetadata: {},
-              ummMetadata: {}
+              metadata: {}
             }
           }
         },
@@ -43,9 +41,7 @@ describe('url#decodeUrlParams', () => {
               isVisible: false,
               granules: {},
               granuleFilters: {},
-              metadata: {},
-              formattedMetadata: {},
-              ummMetadata: {}
+              metadata: {}
             }
           }
         },
@@ -72,9 +68,7 @@ describe('url#decodeUrlParams', () => {
               isVisible: false,
               granules: {},
               granuleFilters: {},
-              metadata: {},
-              formattedMetadata: {},
-              ummMetadata: {}
+              metadata: {}
             }
           }
         },
@@ -103,9 +97,7 @@ describe('url#decodeUrlParams', () => {
               isVisible: false,
               granules: {},
               granuleFilters: {},
-              metadata: {},
-              formattedMetadata: {},
-              ummMetadata: {}
+              metadata: {}
             }
           }
         },

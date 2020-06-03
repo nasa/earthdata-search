@@ -12,8 +12,7 @@ function setup(overrideProps) {
       allIds: ['focusedCollection'],
       byId: {
         focusedCollection: {
-          metadata: {},
-          ummMetadata: {}
+          metadata: {}
         }
       }
     },
@@ -41,8 +40,7 @@ describe('CollectionDetailsHighlightsContainer component', () => {
 
     expect(enzymeWrapper.find(CollectionDetailsHighlights).length).toBe(1)
     expect(enzymeWrapper.find(CollectionDetailsHighlights).props().collection).toEqual({
-      metadata: {},
-      ummMetadata: {}
+      metadata: {}
     })
     expect(enzymeWrapper.find(CollectionDetailsHighlights).props().location).toEqual({ search: '' })
     expect(enzymeWrapper.find(CollectionDetailsHighlights).props().isLoaded).toEqual(true)

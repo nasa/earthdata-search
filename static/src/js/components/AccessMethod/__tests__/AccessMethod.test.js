@@ -51,7 +51,7 @@ describe('AccessMethod component', () => {
           }
         },
         metadata: {
-          id: collectionId,
+          concept_id: collectionId,
           granule_count: 10000
         },
         granuleMetadata: {
@@ -82,7 +82,7 @@ describe('AccessMethod component', () => {
           }
         },
         metadata: {
-          id: collectionId,
+          concept_id: collectionId,
           granule_count: 10000
         },
         granuleMetadata: {
@@ -179,7 +179,9 @@ describe('AccessMethod component', () => {
             form
           }
         },
-        metadata: { id: collectionId },
+        metadata: {
+          concept_id: collectionId
+        },
         selectedAccessMethod: 'echoOrder0'
       })
 
@@ -207,7 +209,9 @@ describe('AccessMethod component', () => {
             form
           }
         },
-        metadata: { id: collectionId },
+        metadata: {
+          concept_id: collectionId
+        },
         selectedAccessMethod: 'echoOrder0'
       })
 
@@ -240,7 +244,9 @@ describe('AccessMethod component', () => {
             rawModel
           }
         },
-        metadata: { id: collectionId },
+        metadata: {
+          concept_id: collectionId
+        },
         selectedAccessMethod: 'echoOrder0'
       })
 
@@ -270,7 +276,9 @@ describe('AccessMethod component', () => {
             supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
           }
         },
-        metadata: { id: collectionId },
+        metadata: {
+          concept_id: collectionId
+        },
         selectedAccessMethod: 'opendap'
       })
 

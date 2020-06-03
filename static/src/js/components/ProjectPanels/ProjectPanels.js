@@ -233,9 +233,10 @@ class ProjectPanels extends PureComponent {
 
     let loaded = false
 
+    // TODO: Figure out a more reliable way of determining if the metadata is loaded
     let collectionMetadataLoaded = Object.values(byId).some((collection) => {
       const { metadata = {} } = collection
-      return Object.prototype.hasOwnProperty.call(metadata, 'dataset_id')
+      return Object.prototype.hasOwnProperty.call(metadata, 'title')
     })
 
     projectIds.forEach((collectionId, index) => {
@@ -251,8 +252,8 @@ class ProjectPanels extends PureComponent {
       collectionMetadataLoaded = true
 
       const {
-        dataset_id: title = '',
-        id
+        title = '',
+        concept_id: id
       } = metadata
 
       // Granule count should come from the granules hits because the collection
