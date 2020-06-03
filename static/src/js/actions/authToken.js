@@ -12,9 +12,12 @@ export const updateAuthToken = payload => ({
 export const updateAuthTokenFromHeaders = headers => (dispatch) => {
   const { 'jwt-token': jwtToken = '' } = headers || {}
 
-  // Update the authToken cookie when we get a new token
-  set('authToken', jwtToken)
-  dispatch(updateAuthToken(jwtToken))
+  // Prevent optional authorizers from logging users out because they don't return an auth token
+  if (jwtToken) {
+    // Update the authToken cookie when we get a new token
+    set('authToken', jwtToken)
+    dispatch(updateAuthToken(jwtToken))
+  }
 }
 
 export const logout = () => (dispatch, getState) => {

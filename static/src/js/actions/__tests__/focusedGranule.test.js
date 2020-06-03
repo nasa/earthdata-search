@@ -119,10 +119,6 @@ describe('getFocusedGranule', () => {
 
       // updateGranuleMetadata
       expect(storeActions[0]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
-      })
-      expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_METADATA,
         payload: granulePayload
       })
