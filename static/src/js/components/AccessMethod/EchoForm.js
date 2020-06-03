@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
 
 import { mbr } from '../../util/map/mbr'
+import { insertRawModelIntoEchoForm } from '../../util/insertRawModelIntoEchoForm'
 
 export const EchoForm = ({
   collectionId,
@@ -28,15 +29,6 @@ export const EchoForm = ({
     setIsValid(valid)
   }
 
-  const insertModelIntoForm = (rawModel, form) => {
-    console.log('insertModelIntoForm -> rawModel', rawModel)
-    if (rawModel) {
-      return form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, `<instance>\n${rawModel}\n</instance>`)
-    }
-
-    return form
-  }
-
   const getMbr = (spatial) => {
     // if there is no spatial, return undefined
     if (!spatial) return undefined
@@ -54,7 +46,7 @@ export const EchoForm = ({
   }
 
   useEffect(() => {
-    echoForm.current = insertModelIntoForm(propsRawModel, form)
+    echoForm.current = insertRawModelIntoEchoForm(propsRawModel, form)
   }, [])
 
   useEffect(() => {
