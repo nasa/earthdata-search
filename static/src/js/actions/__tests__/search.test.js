@@ -87,7 +87,6 @@ describe('changeQuery', () => {
     // call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -135,7 +134,6 @@ describe('changeQuery', () => {
     // call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -166,7 +164,6 @@ describe('changeQuery', () => {
     // call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -204,7 +201,6 @@ describe('changeProjectQuery', () => {
     // call the dispatch
     store.dispatch(actions.changeProjectQuery({ ...newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
@@ -237,7 +233,6 @@ describe('changeCollectionPageNum', () => {
     // call the dispatch
     store.dispatch(actions.changeCollectionPageNum(pageNum))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
@@ -398,7 +393,6 @@ describe('removeGridFilter', () => {
     // call the dispatch
     store.dispatch(actions.removeGridFilter())
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -446,7 +440,6 @@ describe('removeSpatialFilter', () => {
     // call the dispatch
     store.dispatch(actions.removeSpatialFilter())
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -510,7 +503,6 @@ describe('removeTemporalFilter', () => {
     // call the dispatch
     store.dispatch(actions.removeTemporalFilter())
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -544,7 +536,6 @@ describe('changeRegionQuery', () => {
     store.dispatch(actions.changeRegionQuery(query))
     const storeActions = store.getActions()
 
-    // Is updateCollectionQuery called with the right payload
     expect(storeActions[0]).toEqual({
       type: UPDATE_REGION_QUERY,
       payload: query
@@ -575,7 +566,6 @@ describe('clearFilters', () => {
     store.dispatch(actions.clearFilters())
     const storeActions = store.getActions()
 
-    // Is updateCollectionQuery called with the right payload
     expect(storeActions[0]).toEqual({
       type: CLEAR_FILTERS
     })

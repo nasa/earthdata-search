@@ -69,7 +69,6 @@ describe('changeFocusedCollection', () => {
     // call the dispatch
     store.dispatch(actions.changeFocusedCollection(collectionId))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_FOCUSED_COLLECTION,
@@ -132,7 +131,6 @@ describe('changeFocusedCollection', () => {
     // call the dispatch
     store.dispatch(actions.changeFocusedCollection(collectionId))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_FOCUSED_GRANULE,
@@ -231,12 +229,8 @@ describe('getFocusedCollection', () => {
         type: UPDATE_GRANULE_QUERY,
         payload: { pageNum: 1 }
       })
-      expect(storeActions[2]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
-      })
       // updateCollectionMetadata
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: getCollectionsResponseUnauth
       })

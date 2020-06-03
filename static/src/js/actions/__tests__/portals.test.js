@@ -48,7 +48,6 @@ describe('loadPortalConfig', () => {
     // call the dispatch
     store.dispatch(loadPortalConfig(portalId))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: ADD_PORTAL,
