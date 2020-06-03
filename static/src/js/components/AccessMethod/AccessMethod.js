@@ -343,7 +343,6 @@ export class AccessMethod extends Component {
             <ProjectPanelSection>
               <Suspense fallback={echoFormFallback}>
                 <EchoForm
-                  key={selectedAccessMethod}
                   collectionId={collectionId}
                   form={form}
                   methodKey={selectedAccessMethod}
