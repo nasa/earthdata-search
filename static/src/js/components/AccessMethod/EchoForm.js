@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
 
+import './EchoForm.scss'
+
 import { mbr } from '../../util/map/mbr'
 import { insertRawModelIntoEchoForm } from '../../util/insertRawModelIntoEchoForm'
 
