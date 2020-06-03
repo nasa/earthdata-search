@@ -89,11 +89,8 @@ describe('getTimeline', () => {
     await store.dispatch(getTimeline()).then(() => {
       // Is updateTimelineIntervals called with the right payload
       const storeActions = store.getActions()
+
       expect(storeActions[0]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
-      })
-      expect(storeActions[1]).toEqual({
         type: UPDATE_TIMELINE_INTERVALS,
         payload: {
           results: [{
@@ -276,7 +273,6 @@ describe('changeTimelineQuery', () => {
     // call the dispatch
     store.dispatch(changeTimelineQuery({ newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_TIMELINE_QUERY,
