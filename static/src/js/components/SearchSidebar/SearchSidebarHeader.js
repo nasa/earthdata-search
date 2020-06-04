@@ -20,7 +20,7 @@ export class SearchSidebarHeader extends PureComponent {
     const linkWrapperClassNames = classNames([
       'search-sidebar-header__link-wrapper',
       {
-        'search-sidebar-header__link-wrapper--is-active': location.pathname !== '/search'
+        'search-sidebar-header__link-wrapper--is-active': !location.pathname.endsWith('/search')
       }
     ])
 
