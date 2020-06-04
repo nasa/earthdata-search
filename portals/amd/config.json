@@ -10,7 +10,7 @@
   "org": "AMD",
   "pageTitle": "Antarctic Master Directory",   
   "query": {
-    "tagKeg": "org.scar.amd"
+    "tagKey": "org.scar.amd"
     "hasGranulesOrCwic": null
   },	
   "title": "Search"   
