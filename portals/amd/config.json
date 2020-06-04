@@ -1,0 +1,17 @@
+{
+  "hasStyles": true,
+  "hasScripts": false,
+  "hideCollectionFilters": true,
+  "logo": {
+    "id": "amd_logo",
+    "link": "https://www.scar.org/data-products/antarctic-master-directory/",   
+    "title": "Antarctic Master Directory"
+  },
+  "org": "AMD",
+  "pageTitle": "Antarctic Master Directory",   
+  "query": {
+    "tagKeg": "org.scar.amd"
+    "hasGranulesOrCwic": null
+  },	
+  "title": "Search"   
+}
