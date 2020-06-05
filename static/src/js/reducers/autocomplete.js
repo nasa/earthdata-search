@@ -83,19 +83,24 @@ const autocompleteReducer = (state = initialState, action) => {
     case DELETE_AUTOCOMPLETE_VALUE: {
       const {
         level,
-        type,
-        value
+        type: autocompleteType,
+        value: autocompleteValue
       } = payload
 
       const { selected } = state
       const index = findIndex(selected, (item) => {
-        // if the type is science_keywords, check the correct level of keyword for the autocomplete
-        if (type === 'science_keywords' && level) {
-          const parts = item.value.split(':')
-          return parts[level] === value
+        const {
+          fields,
+          type: itemType,
+          value: itemValue
+        } = item
+        // if the autocompleteType is science_keywords, check the correct level of keyword for the autocomplete
+        if (autocompleteType === 'science_keywords' && level != null) {
+          const parts = fields.split(':')
+          return parts[level] === autocompleteValue
         }
 
-        return item.type === type && item.value === value
+        return itemType === autocompleteType && itemValue === autocompleteValue
       })
 
       return {

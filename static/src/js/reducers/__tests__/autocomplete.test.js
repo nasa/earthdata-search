@@ -234,11 +234,13 @@ describe('DELETE_AUTOCOMPLETE_VALUE', () => {
       selected: [
         {
           type: 'science_keywords',
-          value: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency'
+          fields: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency',
+          value: 'Cloud Frequency'
         },
         {
           type: 'science_keywords',
-          value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
+          fields: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols',
+          value: 'Stratospheric Aerosols'
         }
       ]
     }
@@ -247,7 +249,8 @@ describe('DELETE_AUTOCOMPLETE_VALUE', () => {
       ...initialState,
       selected: [{
         type: 'science_keywords',
-        value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
+        fields: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols',
+        value: 'Stratospheric Aerosols'
       }]
     }
 
