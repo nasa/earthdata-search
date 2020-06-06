@@ -272,19 +272,3 @@ describe('CollectionRequest#transformResponse', () => {
     expect(result).toEqual(data)
   })
 })
-
-describe('CollectionRequest#transformRequest', () => {
-  test('adds umm version header', () => {
-    const request = new CollectionRequest()
-
-    const data = { param1: 123 }
-    const headers = {}
-
-    request.transformRequest(data, headers)
-
-    expect(headers).toEqual({
-      Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.13',
-      'Client-Id': 'eed-edsc-test-serverless-client'
-    })
-  })
-})

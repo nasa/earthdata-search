@@ -24,9 +24,9 @@ const getContactInfo = async (event, context) => {
 
   try {
     const userRecord = await dbConnection('users')
-      .select(
+      .first(
         'echo_preferences',
-        'urs_profile',
+        'urs_profile'
       )
       .where({
         id
@@ -36,7 +36,7 @@ const getContactInfo = async (event, context) => {
       isBase64Encoded: false,
       statusCode: 200,
       headers: defaultResponseHeaders,
-      body: JSON.stringify(userRecord[0])
+      body: JSON.stringify(userRecord)
     }
   } catch (e) {
     return {

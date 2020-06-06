@@ -78,11 +78,10 @@ const storeUserData = async (event, context) => {
       }
 
       // Update the previously defined value for this variable
-      const { user: echoProfileUser } = echoProfileData
-      user = echoProfileUser
+      ({ user = {} } = echoProfileData);
 
       // The user GUID will be used to get the preference data as well as stored separately in the database
-      const { id } = user
+      ({ id } = user)
 
       try {
         echoPreferencesData = await getEchoPreferencesData(id, token, environment)
@@ -100,7 +99,7 @@ const storeUserData = async (event, context) => {
       urs_profile: ursUserData
     }
 
-    await dbConnection('users').update({ ...userPayload }).where({ urs_id: username, environment })
+    await dbConnection('users').update({ ...userPayload }).where({ id: userId })
   })
 }
 

@@ -2,22 +2,25 @@ import { uniq } from 'lodash'
 
 /**
  * Extracts the native format(s) from the UMM-C metadata
- * @param {Object} ummJson UMM-C JSON metadata
+ * @param {Object} json GraphQL query result]
  */
-export const buildNativeFormat = (ummJson) => {
+export const buildNativeFormat = (json) => {
   const {
-    ArchiveAndDistributionInformation: archiveAndDistributionInformation = {}
-  } = ummJson
-  const {
-    FileDistributionInformation: fileDistributionInformation = []
-  } = archiveAndDistributionInformation
+    archiveAndDistributionInformation = {}
+  } = json
+
+  let fileDistributionInformation = []
+
+  if (archiveAndDistributionInformation) {
+    ({ fileDistributionInformation = [] } = archiveAndDistributionInformation)
+  }
 
   const formats = []
 
   fileDistributionInformation.forEach((info) => {
     const {
-      Format: format,
-      FormatType: formatType
+      format,
+      formatType
     } = info
 
     if (

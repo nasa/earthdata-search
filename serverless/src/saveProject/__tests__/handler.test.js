@@ -95,7 +95,7 @@ describe('saveProject', () => {
         body: JSON.stringify({
           params: {
             path,
-            project_id: 6249150326
+            projectId: 6249150326
           }
         })
       }
@@ -136,7 +136,7 @@ describe('saveProject', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            auth_token: 'mock token',
+            authToken: 'mock token',
             path
           }
         })
@@ -180,9 +180,9 @@ describe('saveProject', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            auth_token: 'mock token',
+            authToken: 'mock token',
             path,
-            project_id: '6249150326'
+            projectId: '6249150326'
           }
         })
       }
@@ -225,9 +225,9 @@ describe('saveProject', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            auth_token: 'mock token',
+            authToken: 'mock token',
             path,
-            project_id: '6249150326'
+            projectId: '6249150326'
           }
         })
       }
@@ -291,7 +291,7 @@ describe('saveProject', () => {
       body: JSON.stringify({
         params: {
           path,
-          project_id: 6249150326
+          projectId: 6249150326
         }
       })
     }
@@ -323,9 +323,9 @@ describe('saveProject', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          auth_token: 'mock token',
+          authToken: 'mock token',
           path,
-          project_id: '6249150326'
+          projectId: '6249150326'
         }
       })
     }

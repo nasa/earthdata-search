@@ -20,18 +20,8 @@ describe('CwicGranuleRequest#transformRequest', () => {
         echoCollectionId: 'TEST_COLLECTION_ID'
       }, {})
 
-      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
-    })
-
-    test('returns only permitted keys correctly transformed', () => {
-      const cwicRequest = new CwicGranuleRequest()
-
-      const transformedData = cwicRequest.transformRequest({
-        echoCollectionId: 'TEST_COLLECTION_ID',
-        nonPermittedKey: 'NOPE'
-      }, {})
-
-      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
+      const parsedData = JSON.parse(transformedData)
+      expect(parsedData).toEqual(expect.objectContaining({ params: { echoCollectionId: 'TEST_COLLECTION_ID' } }))
     })
   })
 
@@ -45,20 +35,8 @@ describe('CwicGranuleRequest#transformRequest', () => {
         echoCollectionId: 'TEST_COLLECTION_ID'
       }, {})
 
-      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
-    })
-
-    test('returns only permitted keys correctly transformed', () => {
-      const cwicRequest = new CwicGranuleRequest('authToken')
-      cwicRequest.startTime = 1576855756
-
-
-      const transformedData = cwicRequest.transformRequest({
-        echoCollectionId: 'TEST_COLLECTION_ID',
-        nonPermittedKey: 'NOPE'
-      }, {})
-
-      expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
+      const parsedData = JSON.parse(transformedData)
+      expect(parsedData).toEqual(expect.objectContaining({ params: { echoCollectionId: 'TEST_COLLECTION_ID' } }))
     })
   })
 })

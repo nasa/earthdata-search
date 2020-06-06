@@ -15,18 +15,6 @@ describe('ShapefileRequest#constructor', () => {
   })
 })
 
-describe('ShapefileRequest#permittedCmrKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
-    const request = new ShapefileRequest()
-
-    expect(request.permittedCmrKeys()).toEqual([
-      'file',
-      'filename',
-      'auth_token'
-    ])
-  })
-})
-
 describe('ShapefileRequest#save', () => {
   test('calls Request#post', () => {
     const request = new ShapefileRequest()

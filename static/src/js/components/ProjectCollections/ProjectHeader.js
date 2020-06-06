@@ -140,8 +140,6 @@ export class ProjectHeader extends Component {
       if (!collection) return
       const { granules } = collection
 
-      // if (granules == null) return
-
       const { singleGranuleSize } = granules
 
       const totalCollectionGranules = getGranuleCount(collection, projectById[collectionId])

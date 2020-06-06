@@ -8,7 +8,6 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getVariables } from './getVariables'
-import { getOutputFormats } from './getOutputFormats'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -29,10 +28,11 @@ const getAccessMethods = async (event, context) => {
     const { body } = event
     const { params = {} } = JSON.parse(body)
     const {
-      associations,
-      collection_id: collectionId,
-      collection_provider: collectionProvider,
-      tags
+      collectionId,
+      collectionProvider,
+      services: associatedServices,
+      tags,
+      variables: associatedVariables
     } = params
 
     const jwtToken = getJwtToken(event)
@@ -98,11 +98,20 @@ const getAccessMethods = async (event, context) => {
 
     if (hasOpendap) {
       const opendapData = getValueForTag('subset_service.opendap', tags)
-      const { id: serviceId } = opendapData
-      const { variables: variableIds } = associations
 
-      const { keywordMappings, variables } = await getVariables(variableIds, jwtToken)
-      const { supportedOutputFormats } = await getOutputFormats(serviceId, jwtToken)
+      const { id: serviceId } = opendapData
+
+      const { keywordMappings, variables } = getVariables(associatedVariables)
+
+      let supportedOutputFormats = null
+
+      const { items = [] } = associatedServices || {}
+
+      const fullServiceObject = items.find(service => service.conceptId === serviceId)
+
+      if (fullServiceObject) {
+        ({ supportedOutputFormats } = fullServiceObject)
+      }
 
       accessMethods.opendap = {
         ...opendapData,

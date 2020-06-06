@@ -22,10 +22,7 @@ describe('collectionSearch', () => {
           tag_key: 'edsc.extra.serverless'
         },
         requestId: 'asdf-1234-qwer-5678'
-      }),
-      pathParameters: {
-        format: 'json'
-      }
+      })
     }
 
     await collectionSearch(event, {})
@@ -35,34 +32,6 @@ describe('collectionSearch', () => {
       jwtToken: 'mockJwt',
       path: '/search/collections.json',
       params: 'concept_id=C100005-EDSC&tag_key=edsc.extra.serverless',
-      providedHeaders: {},
-      requestId: 'asdf-1234-qwer-5678'
-    })
-  })
-
-  test('calls doSearchRequest with only permitted params when using umm_json', async () => {
-    const mock = jest.spyOn(doSearchRequest, 'doSearchRequest').mockImplementationOnce(() => jest.fn())
-
-    const event = {
-      body: JSON.stringify({
-        params: {
-          concept_id: 'C100005-EDSC',
-          tag_key: 'edsc.extra.serverless'
-        },
-        requestId: 'asdf-1234-qwer-5678'
-      }),
-      pathParameters: {
-        format: 'umm_json'
-      }
-    }
-
-    await collectionSearch(event, {})
-
-    expect(mock).toBeCalledTimes(1)
-    expect(mock).toBeCalledWith({
-      jwtToken: 'mockJwt',
-      path: '/search/collections.umm_json',
-      params: 'concept_id=C100005-EDSC',
       providedHeaders: {},
       requestId: 'asdf-1234-qwer-5678'
     })
@@ -84,10 +53,7 @@ describe('collectionSearch', () => {
           tag_key: 'edsc.extra.serverless'
         },
         requestId: 'asdf-1234-qwer-5678'
-      }),
-      pathParameters: {
-        format: 'json'
-      }
+      })
     }
 
     const response = await collectionSearch(event, {})
@@ -112,10 +78,7 @@ describe('collectionSearch', () => {
           tag_key: 'edsc.extra.serverless'
         },
         requestId: 'asdf-1234-qwer-5678'
-      }),
-      pathParameters: {
-        format: 'json'
-      }
+      })
     }
 
     const response = await collectionSearch(event, {})

@@ -23,9 +23,9 @@ export const CollectionDetailsHeader = ({
   mapProjection
 }) => {
   const {
-    short_name: shortName,
+    shortName,
     title,
-    version_id: versionId
+    versionId
   } = focusedCollectionMetadata
 
   const handoffLinks = generateHandoffs(focusedCollectionMetadata, collectionSearch, mapProjection)

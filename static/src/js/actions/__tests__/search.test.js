@@ -548,7 +548,6 @@ describe('changeRegionQuery', () => {
 
 describe('clearFilters', () => {
   test('clears the query and calls getCollections', () => {
-
     // mockStore with initialState
     const store = mockStore({})
 

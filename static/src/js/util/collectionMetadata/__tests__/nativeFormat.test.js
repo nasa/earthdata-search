@@ -2,81 +2,81 @@ import { buildNativeFormat } from '../nativeFormat'
 
 describe('nativeFormat', () => {
   test('returns an empty array when no format exists', () => {
-    const ummJson = {}
+    const json = {}
 
-    expect(buildNativeFormat(ummJson)).toEqual([])
+    expect(buildNativeFormat(json)).toEqual([])
   })
 
   test('returns an array of the native data formats', () => {
-    const ummJson = {
-      ArchiveAndDistributionInformation: {
-        FileDistributionInformation: [
+    const json = {
+      archiveAndDistributionInformation: {
+        fileDistributionInformation: [
           {
-            FormatType: 'Native',
-            Fees: '0',
-            Format: 'PDF'
+            formatType: 'Native',
+            fees: '0',
+            format: 'PDF'
           }
         ]
       }
     }
 
-    expect(buildNativeFormat(ummJson)).toEqual(['PDF'])
+    expect(buildNativeFormat(json)).toEqual(['PDF'])
   })
 
   test('removes duplicate formats', () => {
-    const ummJson = {
-      ArchiveAndDistributionInformation: {
-        FileDistributionInformation: [
+    const json = {
+      archiveAndDistributionInformation: {
+        fileDistributionInformation: [
           {
-            FormatType: 'Native',
-            Fees: '0',
-            Format: 'PDF'
+            formatType: 'Native',
+            fees: '0',
+            format: 'PDF'
           },
           {
-            FormatType: 'Native',
-            Fees: '0',
-            Format: 'Powerpoint'
+            formatType: 'Native',
+            fees: '0',
+            format: 'Powerpoint'
           },
           {
-            FormatType: 'Native',
-            Fees: '0',
-            Format: 'PDF'
+            formatType: 'Native',
+            fees: '0',
+            format: 'PDF'
           }
         ]
       }
     }
 
-    expect(buildNativeFormat(ummJson)).toEqual(['PDF', 'Powerpoint'])
+    expect(buildNativeFormat(json)).toEqual(['PDF', 'Powerpoint'])
   })
 
   test('removes "Not Provided" formats', () => {
-    const ummJson = {
-      ArchiveAndDistributionInformation: {
-        FileDistributionInformation: [
+    const json = {
+      archiveAndDistributionInformation: {
+        fileDistributionInformation: [
           {
-            FormatType: 'Native',
-            Fees: '0',
-            Format: 'Not provided'
+            formatType: 'Native',
+            fees: '0',
+            format: 'Not provided'
           }
         ]
       }
     }
 
-    expect(buildNativeFormat(ummJson)).toEqual([])
+    expect(buildNativeFormat(json)).toEqual([])
   })
 
   test('only returns formats if the FormatType is defined', () => {
-    const ummJson = {
-      ArchiveAndDistributionInformation: {
-        FileDistributionInformation: [
+    const json = {
+      archiveAndDistributionInformation: {
+        fileDistributionInformation: [
           {
-            Fees: '0',
-            Format: 'PDF'
+            fees: '0',
+            format: 'PDF'
           }
         ]
       }
     }
 
-    expect(buildNativeFormat(ummJson)).toEqual([])
+    expect(buildNativeFormat(json)).toEqual([])
   })
 })

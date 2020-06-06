@@ -229,10 +229,10 @@ describe('getProjectCollections', () => {
         data: {
           collections: {
             items: [{
-              concept_id: 'collectionId1'
+              conceptId: 'collectionId1'
             },
             {
-              concept_id: 'collectionId2'
+              conceptId: 'collectionId2'
             }]
           }
         }
@@ -305,14 +305,14 @@ describe('getProjectCollections', () => {
         {
           collectionId1: expect.objectContaining({
             metadata: expect.objectContaining({
-              concept_id: 'collectionId1'
+              conceptId: 'collectionId1'
             })
           })
         },
         {
           collectionId2: expect.objectContaining({
             metadata: expect.objectContaining({
-              concept_id: 'collectionId2'
+              conceptId: 'collectionId2'
             })
           })
         }

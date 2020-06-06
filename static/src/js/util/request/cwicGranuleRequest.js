@@ -19,15 +19,6 @@ export default class CwicGranuleRequest extends Request {
     this.searchPath = 'cwic/granules'
   }
 
-  permittedCmrKeys() {
-    return [
-      'bounding_box',
-      'echo_collection_id',
-      'point',
-      'temporal'
-    ]
-  }
-
   /**
    * Transform the response before completing the Promise.
    * @param {Object} data - Response object from the CWIC.

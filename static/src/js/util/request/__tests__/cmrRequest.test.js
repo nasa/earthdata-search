@@ -1,4 +1,4 @@
-import Request from '../request'
+import CmrRequest from '../cmrRequest'
 import * as cmrEnv from '../../../../../../sharedUtils/cmrEnv'
 
 const baseUrl = 'http://example.com'
@@ -8,9 +8,9 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('Request#constructor', () => {
+describe('CmrRequest#constructor', () => {
   test('sets the default values', () => {
-    const request = new Request(baseUrl)
+    const request = new CmrRequest(baseUrl)
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual(baseUrl)
@@ -20,21 +20,21 @@ describe('Request#constructor', () => {
 
   test('throws an error when no baseUrl value is provided', () => {
     expect(() => {
-      Request()
+      CmrRequest()
     }).toThrow()
   })
 })
 
-describe('Request#getAuthToken', () => {
+describe('CmrRequest#getAuthToken', () => {
   test('returns the auth token', () => {
-    const request = new Request(baseUrl)
+    const request = new CmrRequest(baseUrl)
     request.authToken = 'test auth token'
 
     expect(request.getAuthToken()).toEqual('test auth token')
   })
 
   test('returns an empty string if optionallyAuthenticated', () => {
-    const request = new Request(baseUrl)
+    const request = new CmrRequest(baseUrl)
 
     request.optionallyAuthenticated = true
 
@@ -42,9 +42,25 @@ describe('Request#getAuthToken', () => {
   })
 })
 
-describe('Request#transformRequest', () => {
+describe('CmrRequest#permittedCmrKeys', () => {
+  test('returns an empty array', () => {
+    const request = new CmrRequest(baseUrl)
+
+    expect(request.permittedCmrKeys()).toEqual([])
+  })
+})
+
+describe('CmrRequest#nonIndexedKeys', () => {
+  test('returns an empty array', () => {
+    const request = new CmrRequest(baseUrl)
+
+    expect(request.nonIndexedKeys()).toEqual([])
+  })
+})
+
+describe('CmrRequest#transformRequest', () => {
   test('adds authorization header when authenticated', () => {
-    const request = new Request(baseUrl)
+    const request = new CmrRequest(baseUrl)
     const token = '123'
 
     request.authenticated = true
@@ -62,7 +78,7 @@ describe('Request#transformRequest', () => {
   })
 
   test('adds client-id header when not authenticated', () => {
-    const request = new Request(baseUrl)
+    const request = new CmrRequest(baseUrl)
 
     request.authenticated = false
 
@@ -75,13 +91,45 @@ describe('Request#transformRequest', () => {
       'Client-Id': 'eed-edsc-test-serverless-client'
     }))
   })
+
+  test('correctly transforms data for CMR requests', () => {
+    const request = new CmrRequest(baseUrl)
+
+    const data = { ParamName: 123 }
+
+    jest.spyOn(CmrRequest.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
+
+    const transformedData = request.transformRequest(data, {})
+
+    expect(transformedData).toEqual('param_name=123')
+  })
+
+  test('correctly transforms data for Lambda requests', () => {
+    const request = new CmrRequest(baseUrl)
+    request.lambda = true
+    request.startTime = 1576855756
+
+    const data = { paramName: 123 }
+
+    jest.spyOn(CmrRequest.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
+
+    const transformedData = request.transformRequest(data, {})
+
+    const parsedData = JSON.parse(transformedData)
+    expect(parsedData).toEqual({
+      params: {
+        param_name: 123
+      },
+      requestId: expect.any(String)
+    })
+  })
 })
 
-describe('Request#transformResponse', () => {
+describe('CmrRequest#transformResponse', () => {
   test('calls handleUnauthorized and returns data', () => {
-    const request = new Request(baseUrl)
+    const request = new CmrRequest(baseUrl)
 
-    const handleUnauthorizedMock = jest.spyOn(Request.prototype, 'handleUnauthorized').mockImplementation()
+    const handleUnauthorizedMock = jest.spyOn(CmrRequest.prototype, 'handleUnauthorized').mockImplementation()
 
     const data = { param1: 123 }
     const result = request.transformResponse(data)
@@ -93,11 +141,11 @@ describe('Request#transformResponse', () => {
   })
 })
 
-describe('Request#search', () => {
-  test('calls Request#post', () => {
-    const request = new Request(baseUrl)
+describe('CmrRequest#search', () => {
+  test('calls CmrRequest#post', () => {
+    const request = new CmrRequest(baseUrl)
 
-    const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
+    const postMock = jest.spyOn(CmrRequest.prototype, 'post').mockImplementation()
 
     const params = { param1: 12, ext: 'json' }
     request.search(params)
@@ -107,7 +155,7 @@ describe('Request#search', () => {
   })
 })
 
-describe('Request#handleUnauthorized', () => {
+describe('CmrRequest#handleUnauthorized', () => {
   const { href } = window.location
 
   afterEach(() => {
@@ -118,7 +166,7 @@ describe('Request#handleUnauthorized', () => {
   test('redirects if the response is unauthorized', () => {
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
-    const request = new Request(baseUrl)
+    const request = new CmrRequest(baseUrl)
     const data = {
       statusCode: 401
     }
@@ -132,7 +180,7 @@ describe('Request#handleUnauthorized', () => {
   })
 
   test('does not redirect if the response is valid', () => {
-    const request = new Request(baseUrl)
+    const request = new CmrRequest(baseUrl)
 
     delete window.location
     window.location = { href: jest.fn() }

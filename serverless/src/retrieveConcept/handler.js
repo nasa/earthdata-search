@@ -1,12 +1,12 @@
 import request from 'request-promise'
-import { getJwtToken } from '../util/getJwtToken'
-import { cmrStringify } from '../util/cmr/cmrStringify'
-import { pick } from '../util/pick'
-import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
-import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
+import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
+import { pick } from '../util/pick'
+import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
+import { prepKeysForCmr } from '../../../sharedUtils/prepKeysForCmr'
 
 /**
  * Perform an authenticated CMR concept search
@@ -24,7 +24,7 @@ const retrieveConcept = async (event) => {
   const permittedCmrKeys = ['pretty']
 
   const obj = pick(queryStringParameters, permittedCmrKeys)
-  const queryParams = cmrStringify(obj)
+  const queryParams = prepKeysForCmr(obj)
 
   const jwtToken = getJwtToken(event)
   const path = `/search/concepts/${event.pathParameters.id}?${queryParams}`

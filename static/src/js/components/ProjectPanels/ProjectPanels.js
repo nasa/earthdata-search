@@ -253,7 +253,7 @@ class ProjectPanels extends PureComponent {
 
       const {
         title = '',
-        concept_id: id
+        conceptId: id
       } = metadata
 
       // Granule count should come from the granules hits because the collection

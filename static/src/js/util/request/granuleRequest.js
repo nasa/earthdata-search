@@ -1,4 +1,4 @@
-import Request from './request'
+import CmrRequest from './cmrRequest'
 import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { getTemporal } from '../edscDate'
@@ -8,7 +8,7 @@ import { getUmmGranuleVersionHeader } from '../../../../../sharedUtils/ummVersio
 /**
  * Request object for granule specific requests
  */
-export default class GranuleRequest extends Request {
+export default class GranuleRequest extends CmrRequest {
   constructor(authToken) {
     const cmrEnvironment = cmrEnv()
 

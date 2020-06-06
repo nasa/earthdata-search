@@ -6,7 +6,7 @@ import { stringify } from 'qs'
  * @param {array} nonIndexedKeys - An array of strings that represent the keys which should not be indexed.
  * @return {string} A query string containing both indexed and non-indexed keys.
  */
-export const cmrStringify = (queryParams, nonIndexedKeys = []) => {
+export const prepKeysForCmr = (queryParams, nonIndexedKeys = []) => {
   const nonIndexedAttrs = {}
   const indexedAttrs = { ...queryParams }
 

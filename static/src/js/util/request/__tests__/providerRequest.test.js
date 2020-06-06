@@ -17,14 +17,6 @@ describe('ProviderRequest#constructor', () => {
   })
 })
 
-describe('ProviderRequest#permittedCmrKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
-    const request = new ProviderRequest()
-
-    expect(request.permittedCmrKeys()).toEqual([])
-  })
-})
-
 describe('ProviderRequest#all', () => {
   test('calls Request#get', () => {
     const token = '123'

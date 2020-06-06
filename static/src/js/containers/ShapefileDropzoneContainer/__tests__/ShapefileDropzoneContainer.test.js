@@ -90,7 +90,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
       expect(props.onSaveShapefile).toHaveBeenCalledTimes(1)
       expect(props.onSaveShapefile).toHaveBeenCalledWith({
-        auth_token: 'test-auth-token',
+        authToken: 'test-auth-token',
         file: {
           test: 'test-response'
         },

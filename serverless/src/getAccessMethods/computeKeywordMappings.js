@@ -1,14 +1,15 @@
 /**
  * Returns variable ids grouped by their scienceKeywords
- * @param {*} items items field from a CMR variable search result
+ * @param {Array} items Array of UMM V Objects
  */
 export const computeKeywordMappings = (items) => {
   const calculatedMappings = {}
 
   items.forEach((variable) => {
-    const { meta, umm } = variable
-    const { 'concept-id': variableId } = meta
-    const { ScienceKeywords: scienceKeywords = [] } = umm
+    const { conceptId: variableId, scienceKeywords = [] } = variable
+
+    // Skip this iteration of the loop if scienceKeywords is null
+    if (scienceKeywords == null) return
 
     scienceKeywords.forEach((scienceKeyword) => {
       const values = Object.values(scienceKeyword)

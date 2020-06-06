@@ -12,15 +12,6 @@ export default class ProjectRequest extends Request {
     }
   }
 
-  permittedCmrKeys() {
-    return [
-      'auth_token',
-      'name',
-      'path',
-      'project_id'
-    ]
-  }
-
   all() {
     this.authenticated = true
     return this.get('projects')

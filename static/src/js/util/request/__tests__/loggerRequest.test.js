@@ -15,17 +15,6 @@ describe('LoggerRequest#constructor', () => {
   })
 })
 
-describe('LoggerRequest#permittedCmrKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
-    const request = new LoggerRequest()
-
-    expect(request.permittedCmrKeys()).toEqual([
-      'error',
-      'data'
-    ])
-  })
-})
-
 describe('LoggerRequest#log', () => {
   test('calls Request#post', () => {
     const request = new LoggerRequest()

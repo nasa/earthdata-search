@@ -13,12 +13,11 @@ export const VariableDetailsPanel = (props) => {
 
   if (!variable) return null
 
-  const { umm } = variable
   const {
-    Definition: definition = 'No definition available for this variable.',
-    LongName: longName,
-    Name: name
-  } = umm
+    definition = 'No definition available for this variable.',
+    longName,
+    name
+  } = variable
 
   return (
     <div className="variable-details-panel">

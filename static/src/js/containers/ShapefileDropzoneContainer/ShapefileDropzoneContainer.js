@@ -62,7 +62,7 @@ export const ShapefileDropzoneContainer = ({
       onToggleShapefileUploadModal(false)
 
       onSaveShapefile({
-        auth_token: authToken,
+        authToken,
         file: resp,
         filename: name,
         size: fileSize

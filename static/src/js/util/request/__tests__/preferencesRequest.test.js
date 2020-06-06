@@ -17,14 +17,6 @@ describe('PreferencesRequest#constructor', () => {
   })
 })
 
-describe('PreferencesRequest#permittedCmrKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
-    const request = new PreferencesRequest()
-
-    expect(request.permittedCmrKeys()).toEqual(['preferences'])
-  })
-})
-
 describe('PreferencesRequest#update', () => {
   test('calls Request#post', () => {
     const token = '123'
@@ -53,7 +45,19 @@ describe('PreferencesRequest#transformRequest', () => {
     const headers = {}
     const result = request.transformRequest(data, headers)
 
-    expect(headers).toEqual({ Authorization: 'Bearer: 123' })
-    expect(result).toEqual('{"params":{"preferences":{"panelState":"default"}}}')
+    expect(headers).toEqual(expect.objectContaining({
+      Authorization: 'Bearer: 123',
+      'Client-Id': 'eed-edsc-test-serverless-client'
+    }))
+
+    const parsedData = JSON.parse(result)
+    expect(parsedData).toEqual({
+      params: {
+        preferences: {
+          panelState: 'default'
+        }
+      },
+      requestId: expect.any(String)
+    })
   })
 })

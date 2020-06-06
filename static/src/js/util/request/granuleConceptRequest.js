@@ -1,4 +1,4 @@
-import Request from './request'
+import CmrRequest from './cmrRequest'
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import { getUmmGranuleVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
@@ -6,7 +6,7 @@ import { getUmmGranuleVersionHeader } from '../../../../../sharedUtils/ummVersio
 /**
  * Request object for concept specific requests
  */
-export default class GranuleConceptRequest extends Request {
+export default class GranuleConceptRequest extends CmrRequest {
   constructor(authToken) {
     const cmrEnvironment = cmrEnv()
 

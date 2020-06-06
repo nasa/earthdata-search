@@ -52,8 +52,9 @@ export const VariableKeywordPanel = (props) => {
           Object.keys(keywordMappings).map((keyword) => {
             const keywordVariables = getKeywordVariables(keywordMappings, keyword, variables)
             const key = `keywords-${keyword}`
-            // eslint-disable-next-line max-len
-            const numberSelected = getNumberVariablesSelected(keywordMappings[keyword], selectedVariables)
+            const numberSelected = getNumberVariablesSelected(
+              keywordMappings[keyword], selectedVariables
+            )
 
             return (
               <li

@@ -8,14 +8,6 @@ export default class RetrievalRequest extends Request {
     this.authToken = authToken
   }
 
-  permittedCmrKeys() {
-    return [
-      'collections',
-      'environment',
-      'json_data'
-    ]
-  }
-
   all() {
     return this.get('retrievals')
   }

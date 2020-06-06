@@ -16,26 +16,6 @@ describe('RegionRequest#constructor', () => {
   })
 })
 
-describe('RegionRequest#permittedCmrKeys', () => {
-  test('returns an array of permitted region keys', () => {
-    const request = new RegionRequest()
-
-    expect(request.permittedCmrKeys()).toEqual([
-      'endpoint',
-      'exact',
-      'query'
-    ])
-  })
-})
-
-describe('RegionRequest#nonIndexedKeys', () => {
-  test('returns an array of permitted region keys', () => {
-    const request = new RegionRequest()
-
-    expect(request.nonIndexedKeys()).toEqual([])
-  })
-})
-
 describe('RegionRequest#transformResponse', () => {
   beforeEach(() => {
     jest.spyOn(RegionRequest.prototype, 'handleUnauthorized').mockImplementation()

@@ -31,8 +31,8 @@ export const GranuleResultsHighlightsContainer = ({
   const {
     byId,
     hits,
-    isLoading = true,
-    isLoaded = false
+    isLoading,
+    isLoaded
   } = granules
 
   // Limit the number of granules shown
