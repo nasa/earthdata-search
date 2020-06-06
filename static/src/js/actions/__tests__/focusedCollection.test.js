@@ -168,9 +168,9 @@ describe('getFocusedCollection', () => {
       .reply(200, {
         data: {
           collection: {
-            concept_id: 'collectionId1',
-            short_name: 'id_1',
-            version_id: 'VersionID'
+            conceptId: 'collectionId1',
+            shortName: 'id_1',
+            versionId: 'VersionID'
           }
         }
       })
@@ -215,14 +215,14 @@ describe('getFocusedCollection', () => {
           collectionId1: expect.objectContaining({
             isCwic: false,
             metadata: {
-              concept_id: 'collectionId1',
+              conceptId: 'collectionId1',
               gibsLayers: [
                 'None'
               ],
               nativeFormats: [],
               relatedUrls: [],
               scienceKeywords: [],
-              short_name: 'id_1',
+              shortName: 'id_1',
               temporal: [
                 'Not available'
               ],
@@ -256,7 +256,7 @@ describe('getFocusedCollection', () => {
                   title: 'OSDD'
                 }
               },
-              version_id: 'VersionID'
+              versionId: 'VersionID'
             }
           })
         }]
@@ -280,9 +280,9 @@ describe('getFocusedCollection', () => {
       .reply(200, {
         data: {
           collection: {
-            concept_id: 'collectionId1',
-            short_name: 'id_1',
-            version_id: 'VersionID'
+            conceptId: 'collectionId1',
+            shortName: 'id_1',
+            versionId: 'VersionID'
           }
         }
       }, {
@@ -336,14 +336,14 @@ describe('getFocusedCollection', () => {
           collectionId: expect.objectContaining({
             isCwic: false,
             metadata: {
-              concept_id: 'collectionId1',
+              conceptId: 'collectionId1',
               gibsLayers: [
                 'None'
               ],
               nativeFormats: [],
               relatedUrls: [],
               scienceKeywords: [],
-              short_name: 'id_1',
+              shortName: 'id_1',
               temporal: [
                 'Not available'
               ],
@@ -377,7 +377,7 @@ describe('getFocusedCollection', () => {
                   title: 'OSDD'
                 }
               },
-              version_id: 'VersionID'
+              versionId: 'VersionID'
             }
           })
         }]

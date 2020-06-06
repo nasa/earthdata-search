@@ -1,4 +1,4 @@
-import { pick } from 'lodash'
+// import { pick } from 'lodash'
 
 import Request from './request'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -10,10 +10,6 @@ export default class PreferencesRequest extends Request {
     this.authToken = authToken
   }
 
-  permittedCmrKeys() {
-    return ['preferences']
-  }
-
   update(params) {
     return this.post('preferences', params)
   }
@@ -23,15 +19,15 @@ export default class PreferencesRequest extends Request {
    * @param {*} data - An object containing any keys.
    * @param {*} headers - Request headers.
    */
-  transformRequest(data, headers) {
-    // eslint-disable-next-line no-param-reassign
-    headers.Authorization = `Bearer: ${this.getAuthToken()}`
+  // transformRequest(data, headers) {
+  //   // eslint-disable-next-line no-param-reassign
+  //   headers.Authorization = `Bearer: ${this.getAuthToken()}`
 
-    const filteredData = pick(data, this.permittedCmrKeys())
+  //   const filteredData = pick(data, this.permittedCmrKeys())
 
-    return JSON.stringify({
-      requestId: this.requestId,
-      params: filteredData
-    })
-  }
+  //   return JSON.stringify({
+  //     requestId: this.requestId,
+  //     params: filteredData
+  //   })
+  // }
 }

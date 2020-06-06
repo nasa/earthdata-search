@@ -22,7 +22,7 @@ const getDataQualitySummaries = async (event) => {
 
   const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
-  const { catalog_item_id: catalogItemId } = params
+  const { catalogItemId } = params
 
   const { defaultResponseHeaders } = getApplicationConfig()
 

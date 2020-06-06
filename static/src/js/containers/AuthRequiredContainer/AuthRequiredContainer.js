@@ -19,7 +19,6 @@ export class AuthRequiredContainer extends Component {
     const cmrEnvironment = cmrEnv()
 
     const token = get('authToken')
-    console.log('token', token)
 
     const returnPath = window.location.href
 

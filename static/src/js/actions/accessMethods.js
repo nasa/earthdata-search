@@ -1,11 +1,13 @@
 
 import actions from './index'
+
 import { buildPromise } from '../util/buildPromise'
 import { findProvider } from '../util/findProvider'
 import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
-import AccessMethodsRequest from '../util/request/accessMethodsRequest'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { parseError } from '../../../../sharedUtils/parseError'
+
+import AccessMethodsRequest from '../util/request/accessMethodsRequest'
 
 /**
  * Fetch available access methods from the API
@@ -36,7 +38,12 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
       const collection = byId[collectionId]
       const { granules, metadata: collectionMetadata } = collection
 
-      const { associations, data_center: dataCenter, tags } = collectionMetadata
+      const {
+        dataCenter,
+        services,
+        tags,
+        variables
+      } = collectionMetadata
 
       const { hits: granuleCount } = granules
 
@@ -58,10 +65,11 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
         const requestObject = new AccessMethodsRequest(authToken)
 
         const response = requestObject.search({
-          associations,
           collectionId,
           collectionProvider,
-          tags
+          services,
+          tags,
+          variables
         })
           .then((response) => {
             const { data } = response

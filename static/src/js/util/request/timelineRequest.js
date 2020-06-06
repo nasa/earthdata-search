@@ -1,11 +1,11 @@
-import Request from './request'
+import CmrRequest from './cmrRequest'
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 /**
  * Request object for timeline specific requests
  */
-export default class TimelineRequest extends Request {
+export default class TimelineRequest extends CmrRequest {
   constructor(authToken) {
     const cmrEnvironment = cmrEnv()
 

@@ -8,12 +8,6 @@ export default class DataQualitySummaryRequest extends Request {
     this.authToken = authToken
   }
 
-  permittedCmrKeys() {
-    return [
-      'catalog_item_id'
-    ]
-  }
-
   fetch(params) {
     return this.post('dqs', params)
   }

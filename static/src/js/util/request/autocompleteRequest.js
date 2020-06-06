@@ -1,10 +1,10 @@
-import Request from './request'
+import CmrRequest from './cmrRequest'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Request object for autocomplete requests
  */
-export default class AutocompleteRequest extends Request {
+export default class AutocompleteRequest extends CmrRequest {
   constructor(authToken) {
     super(getEnvironmentConfig().apiHost)
 

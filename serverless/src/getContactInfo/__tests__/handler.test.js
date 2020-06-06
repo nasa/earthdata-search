@@ -58,7 +58,7 @@ describe('getContactInfo', () => {
     })
 
     const { queries } = dbTracker.queries
-    expect(queries[0].method).toEqual('select')
+    expect(queries[0].method).toEqual('first')
 
     expect(result.body).toEqual(expectedBody)
   })

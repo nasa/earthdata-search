@@ -22,7 +22,7 @@ const saveShapefile = async (event, context) => {
   const { body } = event
   const { params } = JSON.parse(body)
   const {
-    auth_token: jwtToken,
+    authToken,
     file,
     filename
   } = params
@@ -44,8 +44,8 @@ const saveShapefile = async (event, context) => {
     }
 
     // If user information was included, use it in the queries
-    if (jwtToken) {
-      const { id: userId } = getVerifiedJwtToken(jwtToken)
+    if (authToken) {
+      const { id: userId } = getVerifiedJwtToken(authToken)
 
       shapefileSearchOptions.user_id = userId
       shapefileInsertOptions.user_id = userId

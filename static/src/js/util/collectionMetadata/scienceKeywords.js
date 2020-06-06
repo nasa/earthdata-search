@@ -7,12 +7,12 @@ import {
 
 const fixCase = keyword => startCase(capitalize(keyword))
 
-export const buildScienceKeywords = (ummJson) => {
-  const keywords = ummJson.science_keywords
+export const buildScienceKeywords = (json) => {
+  const { scienceKeywords } = json
 
-  if (!keywords) return []
+  if (!scienceKeywords) return []
 
-  return uniqWith(keywords.map(keyword => ([
+  return uniqWith(scienceKeywords.map(keyword => ([
     fixCase(keyword.category),
     fixCase(keyword.topic),
     fixCase(keyword.term)

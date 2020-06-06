@@ -1,14 +1,14 @@
-import Request from './request'
+import CmrRequest from './cmrRequest'
 import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { hasTag } from '../../../../../sharedUtils/tags'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
-import { getUmmCollectionVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
+// import { getUmmCollectionVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
 /**
  * Base Request object for collection specific requests
  */
-export default class CollectionRequest extends Request {
+export default class CollectionRequest extends CmrRequest {
   constructor(authToken) {
     const cmrEnvironment = cmrEnv()
 
@@ -26,13 +26,7 @@ export default class CollectionRequest extends Request {
     }
   }
 
-  permittedCmrKeys(ext) {
-    if (ext === 'umm_json') {
-      return [
-        'concept_id'
-      ]
-    }
-
+  permittedCmrKeys() {
     return [
       'params',
       'bounding_box',
@@ -97,18 +91,13 @@ export default class CollectionRequest extends Request {
     ]
   }
 
-  search(params, ext = 'json') {
-    let urlWithExtension = `${this.searchPath}.${ext}`
-    if (this.authToken && this.authToken !== '') {
-      urlWithExtension = `${this.searchPath}/${ext}`
-    }
-
+  search(params) {
     if (params.twoDCoordinateSystem && params.twoDCoordinateSystem.coordinates) {
       // eslint-disable-next-line no-param-reassign
       delete params.twoDCoordinateSystem.coordinates
     }
 
-    return this.post(urlWithExtension, { ...params, ext })
+    return this.post(this.searchPath, params)
   }
 
   /**
@@ -119,7 +108,7 @@ export default class CollectionRequest extends Request {
    */
   transformRequest(data, headers) {
     // eslint-disable-next-line no-param-reassign
-    headers.Accept = getUmmCollectionVersionHeader()
+    // headers.Accept = getUmmCollectionVersionHeader()
 
     return super.transformRequest(data, headers)
   }

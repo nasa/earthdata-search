@@ -7,38 +7,38 @@ const degrees = (degrees) => {
   return `${parseFloat(degrees).toFixed(1)}\xB0`
 }
 
-export const buildSpatial = (ummJson) => {
-  const spatial = ummJson.spatial_extent
+export const buildSpatial = (json) => {
+  const { spatialExtent } = json
 
-  if (!spatial) return undefined
+  if (!spatialExtent) return undefined
 
   const spatialList = []
 
-  if (spatial.horizontal_spatial_domain) {
-    const { horizontal_spatial_domain: horizontalSpatialDomain } = spatial
+  const { horizontalSpatialDomain } = spatialExtent
+  if (horizontalSpatialDomain) {
     const { geometry } = horizontalSpatialDomain
 
-    if (geometry.Points) {
-      const points = castArray(geometry.Points)
+    if (geometry.points) {
+      const points = castArray(geometry.points)
 
       points.forEach((point) => {
         const { latitude, longitude } = point
 
         spatialList.push(`Point: (${degrees(latitude)}, ${degrees(longitude)})`)
       })
-    } else if (geometry.bounding_rectangles) {
-      const boxes = castArray(geometry.bounding_rectangles)
+    } else if (geometry.boundingRectangles) {
+      const boxes = castArray(geometry.boundingRectangles)
 
       boxes.forEach((box) => {
-        const north = box.north_bounding_coordinate
-        const south = box.south_bounding_coordinate
-        const east = box.east_bounding_coordinate
-        const west = box.west_bounding_coordinate
+        const north = box.northBoundingCoordinate
+        const south = box.southBoundingCoordinate
+        const east = box.eastBoundingCoordinate
+        const west = box.westBoundingCoordinate
 
         spatialList.push(`Bounding Rectangle: (${degrees(north)}, ${degrees(west)}, ${degrees(south)}, ${degrees(east)})`)
       })
-    } else if (geometry.g_polygons) {
-      const polygons = castArray(geometry.g_polygons)
+    } else if (geometry.gPolygons) {
+      const polygons = castArray(geometry.gPolygons)
       let string = 'Polygon: ('
 
       polygons.forEach((polygon) => {

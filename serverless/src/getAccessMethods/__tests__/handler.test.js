@@ -8,7 +8,6 @@ import * as getServiceOptionDefinitions from '../getServiceOptionDefinitions'
 import * as getVariables from '../getVariables'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getOutputFormats from '../getOutputFormats'
 
 let dbConnectionToMock
 let dbTracker
@@ -47,7 +46,7 @@ describe('getAccessMethods', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
           tags: {
             'edsc.extra.serverless.collection_capabilities': {
               data: {
@@ -110,7 +109,7 @@ describe('getAccessMethods', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
           tags: {
             'edsc.extra.serverless.subset_service.echo_orders': {
               data: {
@@ -182,7 +181,7 @@ describe('getAccessMethods', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
           tags: {
             'edsc.extra.serverless.subset_service.esi': {
               data: {
@@ -254,7 +253,7 @@ describe('getAccessMethods', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
           tags: {
             'edsc.extra.serverless.subset_service.esi': {
               data: {
@@ -316,35 +315,34 @@ describe('getAccessMethods', () => {
 
     const variables = {
       'V123456-EDSC': {
-        meta: {
-          mock: 'data'
-        },
-        umm: {
-          'concept-id': 'V123456-EDSC'
-        },
-        associations: {}
+        conceptId: 'V123456-EDSC',
+        mock: 'data'
       }
     }
 
-    const supportedOutputFormats = [
-      'HDF4',
-      'NETCDF-3',
-      'NETCDF-4',
-      'BINARY',
-      'ASCII'
-    ]
-
     jest.spyOn(getVariables, 'getVariables').mockImplementation(() => ({ keywordMappings, variables }))
-    jest.spyOn(getOutputFormats, 'getOutputFormats').mockImplementation(() => ({ supportedOutputFormats }))
 
     const event = {
       body: JSON.stringify({
         params: {
-          associations: [],
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
+          services: {
+            count: 1,
+            items: [{
+              conceptId: 'S1000000-EDSC',
+              supportedOutputFormats: [
+                'HDF4',
+                'NETCDF-3',
+                'NETCDF-4',
+                'BINARY',
+                'ASCII'
+              ]
+            }]
+          },
           tags: {
             'edsc.extra.serverless.subset_service.opendap': {
               data: {
+                id: 'S1000000-EDSC',
                 type: 'OPeNDAP'
               }
             }
@@ -359,11 +357,18 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         accessMethods: {
           opendap: {
+            id: 'S1000000-EDSC',
             type: 'OPeNDAP',
             isValid: true,
             keywordMappings,
             variables,
-            supportedOutputFormats
+            supportedOutputFormats: [
+              'HDF4',
+              'NETCDF-3',
+              'NETCDF-4',
+              'BINARY',
+              'ASCII'
+            ]
           }
         },
         selectedAccessMethod: 'opendap'
@@ -408,7 +413,7 @@ describe('getAccessMethods', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            collection_id: 'collectionId',
+            collectionId: 'collectionId',
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -480,7 +485,7 @@ describe('getAccessMethods', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            collection_id: 'collectionId',
+            collectionId: 'collectionId',
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -530,7 +535,7 @@ describe('getAccessMethods', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            collection_id: 'collectionId',
+            collectionId: 'collectionId',
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -542,9 +547,9 @@ describe('getAccessMethods', () => {
         })
       }
 
-      const response = await getAccessMethods(event, {})
+      const result = await getAccessMethods(event, {})
 
-      expect(response.statusCode).toEqual(500)
+      expect(result.statusCode).toEqual(500)
     })
 
     test('populates the saved access configuration', async () => {
@@ -588,7 +593,7 @@ describe('getAccessMethods', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            collection_id: 'collectionId',
+            collectionId: 'collectionId',
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -684,7 +689,7 @@ describe('getAccessMethods', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            collection_id: 'collectionId',
+            collectionId: 'collectionId',
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {

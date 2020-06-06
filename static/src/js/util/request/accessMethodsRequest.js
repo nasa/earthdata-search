@@ -8,13 +8,4 @@ export default class AccessMethodsRequest extends Request {
     this.authToken = authToken
     this.searchPath = 'access_methods'
   }
-
-  permittedCmrKeys() {
-    return [
-      'associations',
-      'collection_id',
-      'collection_provider',
-      'tags'
-    ]
-  }
 }

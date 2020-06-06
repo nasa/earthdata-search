@@ -10,13 +10,6 @@ export default class LoggerRequest extends Request {
     this.lambda = true
   }
 
-  permittedCmrKeys() {
-    return [
-      'error',
-      'data'
-    ]
-  }
-
   log(params) {
     return this.post('error_logger', params)
   }

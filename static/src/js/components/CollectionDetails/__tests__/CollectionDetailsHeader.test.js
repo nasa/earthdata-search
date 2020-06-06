@@ -41,9 +41,9 @@ describe('CollectionDetails component', () => {
     test('renders itself correctly with focused collection metadata', () => {
       const { enzymeWrapper } = setup({
         focusedCollectionMetadata: {
-          short_name: '1860_1993_2050_NITROGEN_830',
+          shortName: '1860_1993_2050_NITROGEN_830',
           title: 'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050',
-          version_id: '1'
+          versionId: '1'
         }
       })
       expect(enzymeWrapper.type()).toEqual('div')

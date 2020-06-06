@@ -284,19 +284,3 @@ describe('GranuleRequest#transformResponse', () => {
     expect(result).toEqual(data)
   })
 })
-
-describe('GranuleRequest#transformRequest', () => {
-  test('adds umm version header', () => {
-    const request = new GranuleRequest()
-
-    const data = { param1: 123 }
-    const headers = {}
-
-    request.transformRequest(data, headers)
-
-    expect(headers).toEqual({
-      Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.5',
-      'Client-Id': 'eed-edsc-test-serverless-client'
-    })
-  })
-})

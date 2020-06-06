@@ -51,7 +51,7 @@ describe('AccessMethod component', () => {
           }
         },
         metadata: {
-          concept_id: collectionId,
+          conceptId: collectionId,
           granule_count: 10000
         },
         granuleMetadata: {
@@ -82,7 +82,7 @@ describe('AccessMethod component', () => {
           }
         },
         metadata: {
-          concept_id: collectionId,
+          conceptId: collectionId,
           granule_count: 10000
         },
         granuleMetadata: {
@@ -180,7 +180,7 @@ describe('AccessMethod component', () => {
           }
         },
         metadata: {
-          concept_id: collectionId
+          conceptId: collectionId
         },
         selectedAccessMethod: 'echoOrder0'
       })
@@ -210,7 +210,7 @@ describe('AccessMethod component', () => {
           }
         },
         metadata: {
-          concept_id: collectionId
+          conceptId: collectionId
         },
         selectedAccessMethod: 'echoOrder0'
       })
@@ -245,7 +245,7 @@ describe('AccessMethod component', () => {
           }
         },
         metadata: {
-          concept_id: collectionId
+          conceptId: collectionId
         },
         selectedAccessMethod: 'echoOrder0'
       })
@@ -277,7 +277,7 @@ describe('AccessMethod component', () => {
           }
         },
         metadata: {
-          concept_id: collectionId
+          conceptId: collectionId
         },
         selectedAccessMethod: 'opendap'
       })

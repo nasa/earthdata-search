@@ -106,7 +106,7 @@ describe('saveShapefile', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            auth_token: 'mock token',
+            authToken: 'mock token',
             file: {},
             filename: 'test_file.geojson'
           }
@@ -134,7 +134,7 @@ describe('saveShapefile', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            auth_token: 'mock token',
+            authToken: 'mock token',
             file: {},
             filename: 'test_file.geojson'
           }
@@ -157,7 +157,7 @@ describe('saveShapefile', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          auth_token: 'mock token',
+          authToken: 'mock token',
           file: {},
           filename: 'test_file.geojson'
         }
@@ -185,7 +185,7 @@ describe('saveShapefile', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          auth_token: 'mock token',
+          authToken: 'mock token',
           file: {},
           filename: 'test_file.geojson'
         }

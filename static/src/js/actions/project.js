@@ -144,37 +144,49 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
       $temporal: String
     ) {
       collections(
-        concept_id: $ids
-        bounding_box: $boundingBox
-        has_granules_or_cwic: $hasGranulesOrCwic
-        include_has_granules: $includeHasGranules
-        include_tags: $includeTags
+        conceptId: $ids
+        boundingBox: $boundingBox
+        hasGranulesOrCwic: $hasGranulesOrCwic
+        includeHasGranules: $includeHasGranules
+        includeTags: $includeTags
         first: $pageSize
         point: $point
         polygon: $polygon
         temporal: $temporal
       ) {
         items {
+          archiveAndDistributionInformation
           boxes
-          concept_id
-          data_center
-          data_centers
+          conceptId
+          dataCenter
+          dataCenters
           doi
-          has_granules
-          related_urls
-          science_keywords
-          short_name
-          spatial_extent
+          hasGranules
+          relatedUrls
+          scienceKeywords
+          shortName
+          spatialExtent
           summary
           tags
-          temporal_extents
+          temporalExtents
           title
-          version_id
+          versionId
           services {
+            count
             items {
-              concept_id
+              conceptId
               type
-              supported_output_formats
+              supportedOutputFormats
+            }
+          }
+          variables {
+            count
+            items {
+              conceptId
+              definition
+              longName
+              name
+              scienceKeywords
             }
           }
         }
@@ -207,15 +219,17 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
 
       items.forEach((metadata) => {
         const {
-          concept_id: conceptId,
-          data_center: dataCenter,
-          has_granules: hasGranules,
+          conceptId,
+          archiveAndDistributionInformation,
+          dataCenter,
+          hasGranules,
           services,
-          short_name: shortName,
+          shortName,
           summary,
           tags,
           title,
-          version_id: versionId
+          variables,
+          versionId
         } = metadata
 
         // TODO: Move this logic to graphql
@@ -224,15 +238,17 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
         payload.push({
           [conceptId]: {
             metadata: {
-              concept_id: conceptId,
-              data_center: dataCenter,
-              has_granules: hasGranules,
+              conceptId,
+              archiveAndDistributionInformation,
+              dataCenter,
+              hasGranules,
               services,
-              short_name: shortName,
+              shortName,
               summary,
               tags,
               title,
-              version_id: versionId,
+              variables,
+              versionId,
               ...focusedMetadata
             },
             isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')

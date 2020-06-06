@@ -62,9 +62,11 @@ export const VariablesPanel = (props) => {
               const variable = variables[variableId]
               const selected = selectedVariables.indexOf(variableId) > -1
 
-              const { meta, umm } = variable
-              const { 'concept-id': conceptId } = meta
-              const { LongName, Name } = umm
+              const {
+                conceptId,
+                longName,
+                name
+              } = variable
 
               return (
                 <li
@@ -81,12 +83,12 @@ export const VariablesPanel = (props) => {
                     <div className="variables-panel__list-item-info">
                       <h4 className="variables-panel__list-item-heading">
                         <span className="variables-panel__list-item-name">
-                          {Name}
+                          {name}
                         </span>
                       </h4>
                       <ul className="variables-panel__list-item-details">
                         <li className="variables-panel__list-item-longname">
-                          {LongName}
+                          {longName}
                         </li>
                         <li>
                           <Button

@@ -41,8 +41,8 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
               )
             }
             {
-              dataCenter.contactInformation.contact_mechanisms && (
-                dataCenter.contactInformation.contact_mechanisms.map((contact, i) => {
+              dataCenter.contactInformation.contactMechanisms && (
+                dataCenter.contactInformation.contactMechanisms.map((contact, i) => {
                   const key = `data_center_email_${item}-${i}`
                   if (contact.type === 'Email') {
                     return (
@@ -58,10 +58,10 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
               )
             }
             {
-              dataCenter.contactInformation.contact_mechanisms && (
+              dataCenter.contactInformation.contactMechanisms && (
                 <dl className="collection-details-data-center__contact">
                   {
-                    dataCenter.contactInformation.contact_mechanisms.map((contact, i) => {
+                    dataCenter.contactInformation.contactMechanisms.map((contact, i) => {
                       const key = `data_center_other_${item}-${i}`
                       if (contact.type === 'Facebook') {
                         return (

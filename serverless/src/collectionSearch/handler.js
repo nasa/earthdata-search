@@ -6,17 +6,21 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
- * Returns the keys permitted by cmr based on the request format
- * @param {String} format Format of the request (extension i.e. json or umm_json)
+ * Perform an authenticated CMR Collection search
+ * @param {Object} event Details about the HTTP request that it received
  */
-function getPermittedCmrKeys(format) {
-  if (format === 'umm_json') {
-    return [
-      'concept_id'
-    ]
-  }
+const collectionSearch = async (event) => {
+  const { body, headers } = event
 
-  return [
+  const { defaultResponseHeaders } = getApplicationConfig()
+
+  const { requestId } = JSON.parse(body)
+
+  // The 'Accept' header contains the UMM version
+  const providedHeaders = pick(headers, ['Accept'])
+
+  // Whitelist parameters supplied by the request
+  const permittedCmrKeys = [
     'bounding_box',
     'circle',
     'collection_data_type',
@@ -56,25 +60,6 @@ function getPermittedCmrKeys(format) {
     'temporal',
     'two_d_coordinate_system'
   ]
-}
-
-/**
- * Perform an authenticated CMR Collection search
- * @param {Object} event Details about the HTTP request that it received
- */
-const collectionSearch = async (event) => {
-  const { body, headers, pathParameters } = event
-  const { format } = pathParameters
-
-  const { defaultResponseHeaders } = getApplicationConfig()
-
-  const { requestId } = JSON.parse(body)
-
-  // The 'Accept' header contains the UMM version
-  const providedHeaders = pick(headers, ['Accept'])
-
-  // Whitelist parameters supplied by the request
-  const permittedCmrKeys = getPermittedCmrKeys(format)
 
   const nonIndexedKeys = [
     'collection_data_type',
@@ -97,7 +82,7 @@ const collectionSearch = async (event) => {
   try {
     return doSearchRequest({
       jwtToken: getJwtToken(event),
-      path: `/search/collections.${format}`,
+      path: '/search/collections.json',
       params: buildParams({
         body,
         nonIndexedKeys,

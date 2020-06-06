@@ -8,14 +8,6 @@ export default class RegionRequest extends Request {
     this.searchPath = 'regions'
   }
 
-  permittedCmrKeys() {
-    return [
-      'endpoint',
-      'exact',
-      'query'
-    ]
-  }
-
   search(params) {
     return this.get(this.searchPath, params)
   }

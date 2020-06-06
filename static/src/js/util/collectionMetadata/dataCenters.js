@@ -1,12 +1,13 @@
-export const buildDataCenters = (ummJson) => {
-  const dataCenters = ummJson.data_centers
+export const buildDataCenters = (json) => {
+  const { dataCenters } = json
+
   if (!dataCenters || !dataCenters.length) return undefined
 
   return dataCenters.map(dataCenter => ({
-    shortname: `${dataCenter.short_name.toLowerCase() === 'not provided' ? 'Name Not Provided' : dataCenter.short_name}`,
-    longname: dataCenter.long_name,
+    shortname: `${dataCenter.shortName.toLowerCase() === 'not provided' ? 'Name Not Provided' : dataCenter.shortName}`,
+    longname: dataCenter.longName,
     roles: dataCenter.roles,
-    contactInformation: dataCenter.contact_information ? dataCenter.contact_information : undefined
+    contactInformation: dataCenter.contactInformation ? dataCenter.contactInformation : undefined
   }))
 }
 

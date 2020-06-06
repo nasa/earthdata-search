@@ -8,6 +8,7 @@ export const buildGibsLayers = (collectionJson) => {
   const availableLayers = []
 
   const { tags = {} } = collectionJson
+
   // Exract the gibs tags from the collection metadata
   const gibsTag = getValueForTag('gibs', tags)
 

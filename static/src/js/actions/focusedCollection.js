@@ -87,30 +87,42 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       $includeTags: String
     ) {
       collection(
-        concept_id: $id
-        include_has_granules: $includeHasGranules
-        include_tags: $includeTags
+        conceptId: $id
+        includeHasGranules: $includeHasGranules
+        includeTags: $includeTags
       ) {
+        archiveAndDistributionInformation
         boxes
-        concept_id
-        data_center
-        data_centers
+        conceptId
+        dataCenter
+        dataCenters
         doi
-        has_granules
-        related_urls
-        science_keywords
-        short_name
-        spatial_extent
+        hasGranules
+        relatedUrls
+        scienceKeywords
+        shortName
+        spatialExtent
         summary
         tags
-        temporal_extents
+        temporalExtents
         title
-        version_id
+        versionId
         services {
+          count
           items {
-            concept_id
+            conceptId
             type
-            supported_output_formats
+            supportedOutputFormats
+          }
+        }
+        variables {
+          count
+          items {
+            conceptId
+            definition
+            longName
+            name
+            scienceKeywords
           }
         }
       }
@@ -131,16 +143,18 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       const { collection } = data
 
       const {
+        archiveAndDistributionInformation,
         boxes,
-        concept_id: conceptId,
-        data_center: dataCenter,
-        has_granules: hasGranules,
+        conceptId,
+        dataCenter,
+        hasGranules,
         services,
-        short_name: shortName,
+        shortName,
         summary,
         tags,
         title,
-        version_id: versionId
+        variables,
+        versionId
       } = collection
 
       // TODO: Move this logic to graphql
@@ -149,16 +163,18 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       payload.push({
         [focusedCollection]: {
           metadata: {
+            archiveAndDistributionInformation,
             boxes,
-            concept_id: conceptId,
-            data_center: dataCenter,
-            has_granules: hasGranules,
+            conceptId,
+            dataCenter,
+            hasGranules,
             services,
-            short_name: shortName,
+            shortName,
             summary,
             tags,
             title,
-            version_id: versionId,
+            variables,
+            versionId,
             ...focusedMetadata
           },
           isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')

@@ -20,10 +20,10 @@ const saveProject = async (event, context) => {
   const { body } = event
   const { params } = JSON.parse(body)
   const {
-    auth_token: jwtToken,
+    authToken,
     name = '',
     path,
-    project_id: projectId
+    projectId
   } = params
 
   // Retrive a connection to the database
@@ -34,8 +34,8 @@ const saveProject = async (event, context) => {
   try {
     let userId
     // If user information was included, use it in the queries
-    if (jwtToken) {
-      const { username } = getVerifiedJwtToken(jwtToken)
+    if (authToken) {
+      const { username } = getVerifiedJwtToken(authToken)
 
       const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
 

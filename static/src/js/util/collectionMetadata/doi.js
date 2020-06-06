@@ -1,5 +1,5 @@
-export const buildDoi = (ummJson) => {
-  const { doi } = ummJson
+export const buildDoi = (json) => {
+  const { doi } = json
 
   if (!doi) return undefined
 
