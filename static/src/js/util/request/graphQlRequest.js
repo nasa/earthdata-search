@@ -8,7 +8,7 @@ import {
   getClientId
 } from '../../../../../sharedUtils/config'
 
-export default class GraphRequest extends Request {
+export default class GraphQlRequest extends Request {
   constructor(authToken) {
     const cmrEnvironment = cmrEnv()
 
@@ -19,7 +19,7 @@ export default class GraphRequest extends Request {
       this.authToken = authToken
       this.searchPath = 'graphql'
     } else {
-      super(getEarthdataConfig(cmrEnvironment).graphHost)
+      super(getEarthdataConfig(cmrEnvironment).graphQlHost)
 
       this.searchPath = 'api'
     }

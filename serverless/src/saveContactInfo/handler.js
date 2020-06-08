@@ -24,8 +24,6 @@ const saveContactInfo = async (event) => {
   const { body } = event
   const { params } = JSON.parse(body)
 
-  console.log(params)
-
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()
 
@@ -53,7 +51,7 @@ const saveContactInfo = async (event) => {
     const url = `${getEarthdataConfig(cmrEnvironment).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
 
     const echoToken = await getEchoToken(jwtToken)
-    console.log(echoToken)
+
     const response = await request.put({
       uri: url,
       headers: {
