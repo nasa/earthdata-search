@@ -25,7 +25,7 @@ import { parseError } from '../../../../sharedUtils/parseError'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { updateCollectionMetadata } from './collections'
 
-import GraphRequest from '../util/request/graphRequest'
+import GraphQlRequest from '../util/request/graphQlRequest'
 
 export const submittingProject = () => ({
   type: SUBMITTING_PROJECT
@@ -129,7 +129,7 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
     temporal
   } = searchParams
 
-  const graphRequestObject = new GraphRequest(authToken)
+  const graphRequestObject = new GraphQlRequest(authToken)
 
   const graphQuery = `
     query GetCollections(

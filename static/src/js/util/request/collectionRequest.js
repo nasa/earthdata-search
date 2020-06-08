@@ -3,7 +3,7 @@ import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '
 import { hasTag } from '../../../../../sharedUtils/tags'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
-// import { getUmmCollectionVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
+import { getUmmCollectionVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
 /**
  * Base Request object for collection specific requests
@@ -22,7 +22,7 @@ export default class CollectionRequest extends CmrRequest {
       super(getEarthdataConfig(cmrEnvironment).cmrHost)
 
       // We do not define an extension here. It will be added in the search method.
-      this.searchPath = 'search/collections'
+      this.searchPath = 'search/collections.json'
     }
   }
 
@@ -108,7 +108,7 @@ export default class CollectionRequest extends CmrRequest {
    */
   transformRequest(data, headers) {
     // eslint-disable-next-line no-param-reassign
-    // headers.Accept = getUmmCollectionVersionHeader()
+    headers.Accept = getUmmCollectionVersionHeader()
 
     return super.transformRequest(data, headers)
   }

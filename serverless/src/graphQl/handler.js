@@ -27,8 +27,8 @@ const graphQl = async (event, context) => {
   const jwtToken = getJwtToken(event)
 
   const echoToken = await getEchoToken(jwtToken)
-  const { graphHost } = getEarthdataConfig(cmrEnv())
-  const graphQlUrl = `${graphHost}/api`
+  const { graphQlHost } = getEarthdataConfig(cmrEnv())
+  const graphQlUrl = `${graphQlHost}/api`
 
   try {
     const response = await axios({

@@ -24,7 +24,7 @@ describe('CollectionRequest#constructor', () => {
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
-    expect(request.searchPath).toEqual('search/collections')
+    expect(request.searchPath).toEqual('search/collections.json')
   })
 })
 

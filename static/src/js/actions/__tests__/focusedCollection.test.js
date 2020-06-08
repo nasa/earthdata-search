@@ -158,7 +158,7 @@ describe('getFocusedCollection', () => {
   test('should update the focusedCollection and call getGranules', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.example.com',
-      graphHost: 'https://graphql.example.com',
+      graphQlHost: 'https://graphql.example.com',
       opensearchRoot: 'https://cmr.example.com'
     }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')

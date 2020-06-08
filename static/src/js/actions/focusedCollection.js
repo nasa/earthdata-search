@@ -13,7 +13,7 @@ import { updateAuthTokenFromHeaders } from './authToken'
 import { updateCollectionMetadata } from './collections'
 import { updateGranuleQuery } from './search'
 
-import GraphRequest from '../util/request/graphRequest'
+import GraphQlRequest from '../util/request/graphQlRequest'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -78,7 +78,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   const { defaultCmrSearchTags } = getApplicationConfig()
 
-  const graphRequestObject = new GraphRequest(authToken)
+  const graphRequestObject = new GraphQlRequest(authToken)
 
   const graphQuery = `
     query GetCollection(

@@ -11,7 +11,7 @@ describe('Authentication', () => {
     cy.server()
     cy.route({
       method: 'POST',
-      url: '**/collections/json',
+      url: '**/collections',
       response: collectionFixture.body,
       headers: collectionFixture.headers
     })
@@ -28,7 +28,7 @@ describe('Authentication', () => {
     cy.server()
     cy.route({
       method: 'POST',
-      url: '**/collections/json',
+      url: '**/collections',
       response: collectionFixture.body,
       headers: collectionFixture.headers
     })
