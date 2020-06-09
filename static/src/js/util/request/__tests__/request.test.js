@@ -56,23 +56,7 @@ describe('Request#transformRequest', () => {
     request.transformRequest(data, headers)
 
     expect(headers).toEqual(expect.objectContaining({
-      Authorization: 'Bearer: 123',
-      'Client-Id': 'eed-edsc-test-serverless-client'
-    }))
-  })
-
-  test('adds client-id header when not authenticated', () => {
-    const request = new Request(baseUrl)
-
-    request.authenticated = false
-
-    const data = { param1: 123 }
-    const headers = {}
-
-    request.transformRequest(data, headers)
-
-    expect(headers).toEqual(expect.objectContaining({
-      'Client-Id': 'eed-edsc-test-serverless-client'
+      Authorization: 'Bearer: 123'
     }))
   })
 })

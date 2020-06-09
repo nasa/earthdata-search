@@ -121,12 +121,7 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
 
   const {
     includeGranuleCounts,
-    includeHasGranules,
-    boundingBox,
-    hasGranulesOrCwic,
-    point,
-    polygon,
-    temporal
+    includeHasGranules
   } = searchParams
 
   const graphRequestObject = new GraphQlRequest(authToken)
@@ -134,25 +129,15 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
   const graphQuery = `
     query GetCollections(
       $ids: [String]
-      $boundingBox: String
-      $hasGranulesOrCwic: Boolean
       $includeHasGranules: Boolean
       $includeTags: String
       $pageSize: Int
-      $point: String
-      $polygon: String
-      $temporal: String
     ) {
       collections(
         conceptId: $ids
-        boundingBox: $boundingBox
-        hasGranulesOrCwic: $hasGranulesOrCwic
         includeHasGranules: $includeHasGranules
         includeTags: $includeTags
         first: $pageSize
-        point: $point
-        polygon: $polygon
-        temporal: $temporal
       ) {
         items {
           archiveAndDistributionInformation
@@ -198,12 +183,7 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
     includeTags: defaultCmrSearchTags.join(','),
     includeGranuleCounts,
     includeHasGranules,
-    boundingBox,
-    hasGranulesOrCwic,
-    pageSize: filteredIds.length,
-    point,
-    polygon,
-    temporal
+    pageSize: filteredIds.length
   })
     .then((response) => {
       const payload = []

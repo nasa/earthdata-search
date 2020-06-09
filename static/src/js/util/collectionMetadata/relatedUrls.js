@@ -61,9 +61,9 @@ export const buildRelatedUrls = (json) => {
     publicationUrls,
     visualizationUrls,
     highlightedUrls
-  ];
+  ]
 
-  (relatedUrls || []).forEach((related) => {
+  Array.from(relatedUrls).forEach((related) => {
     const relatedUrl = { ...related }
 
     // Exclude EDSC and Reverb URLs

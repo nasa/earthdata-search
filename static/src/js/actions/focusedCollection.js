@@ -130,6 +130,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   const response = graphRequestObject.search(graphQuery, {
     id: focusedCollection,
+    includeHasGranules: true,
     includeTags: defaultCmrSearchTags.join(',')
   })
     .then((response) => {

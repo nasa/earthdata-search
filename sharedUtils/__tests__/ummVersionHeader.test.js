@@ -1,9 +1,7 @@
 import * as applicationConfig from '../config'
 import {
-  getUmmCollectionVersionHeader,
   getUmmGranuleVersionHeader,
-  getUmmServiceVersionHeader,
-  getUmmVariableVersionHeader
+  getUmmServiceVersionHeader
 } from '../ummVersionHeader'
 
 beforeEach(() => {
@@ -17,13 +15,6 @@ beforeEach(() => {
   }))
 })
 
-describe('getUmmCollectionVersionHeader', () => {
-  test('returns the correct version from the config', () => {
-    const name = getUmmCollectionVersionHeader()
-    expect(name).toEqual('application/vnd.nasa.cmr.umm_results+json; version=5')
-  })
-})
-
 describe('getUmmGranuleVersionHeader', () => {
   test('returns the correct version from the config', () => {
     const name = getUmmGranuleVersionHeader()
@@ -35,12 +26,5 @@ describe('getUmmServiceVersionHeader', () => {
   test('returns the correct version from the config', () => {
     const name = getUmmServiceVersionHeader()
     expect(name).toEqual('application/vnd.nasa.cmr.umm_results+json; version=7')
-  })
-})
-
-describe('getUmmVariableVersionHeader', () => {
-  test('returns the correct version from the config', () => {
-    const name = getUmmVariableVersionHeader()
-    expect(name).toEqual('application/vnd.nasa.cmr.umm_results+json; version=8')
   })
 })

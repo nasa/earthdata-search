@@ -135,12 +135,15 @@ export class ProjectHeader extends Component {
     let totalGranules = 0
     let size = 0
 
+    const granuleLoadingStates = []
+
     projectIds.forEach((collectionId) => {
       const collection = byId[collectionId]
       if (!collection) return
       const { granules } = collection
 
-      const { singleGranuleSize } = granules
+      const { isLoaded, singleGranuleSize } = granules
+      granuleLoadingStates.push(isLoaded)
 
       const totalCollectionGranules = getGranuleCount(collection, projectById[collectionId])
 
@@ -227,7 +230,7 @@ export class ProjectHeader extends Component {
           }
         </div>
         {
-          !Number.isNaN(totalGranules) && !Number.isNaN(totalProjectSize) ? (
+          granuleLoadingStates.every(isLoaded => isLoaded === true) ? (
             <ul className="project-header__stats-list">
               <>
                 <li

@@ -3,7 +3,7 @@ import uuidv4 from 'uuid/v4'
 
 import configureStore from '../../store/configureStore'
 import { metricsTiming } from '../../middleware/metrics/actions'
-import { getEnvironmentConfig, getClientId } from '../../../../../sharedUtils/config'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 const store = configureStore()
@@ -78,15 +78,6 @@ export default class Request {
     }
 
     if (data) {
-      // Lambda will set this for us, if we're not using lambda
-      // we'll set it to ensure its provided to CMR
-      // eslint-disable-next-line no-param-reassign
-      headers['CMR-Request-Id'] = this.requestId
-
-      // Add the Client-Id header for requests directly to CMR
-      // eslint-disable-next-line no-param-reassign
-      headers['Client-Id'] = getClientId().client
-
       // POST requests to Lambda use a JSON string
       if (this.authenticated || this.lambda) {
         return JSON.stringify({

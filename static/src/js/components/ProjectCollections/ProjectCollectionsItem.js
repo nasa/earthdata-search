@@ -56,14 +56,15 @@ const ProjectCollectionItem = ({
   const {
     granules,
     isVisible,
-    metadata
+    metadata,
+    isCwic
   } = collection
 
   const {
     title
   } = metadata
 
-  const { isLoaded, isLoading, singleGranuleSize } = granules
+  const { isLoaded, singleGranuleSize } = granules
 
   const granuleCount = getGranuleCount(collection, projectCollection)
 
@@ -127,28 +128,26 @@ const ProjectCollectionItem = ({
         }
       </div>
       {
-        (!isLoading && isLoaded) ? (
+        isLoaded ? (
           <>
             <ul className="project-collections-item__stats-list">
               {
-                (typeof granuleCount !== 'undefined' && !!(size) && unit) && (
-                  <>
-                    <li
-                      className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
-                    >
-                      {`${abbreviate(granuleCount, 1)} ${pluralize('Granule', granuleCount)}`}
-                    </li>
-                    {
-                      granuleCount > 0 && size && unit && (
-                        <li
-                          className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
-                        >
-                          {`Est. Size ${size} ${unit}`}
-                        </li>
-                      )
-                    }
-                  </>
-                )
+                <>
+                  <li
+                    className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
+                  >
+                    {`${abbreviate(granuleCount, 1)} ${pluralize('Granule', granuleCount)}`}
+                  </li>
+                  {
+                    !isCwic && (granuleCount > 0 && size && unit) && (
+                      <li
+                        className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
+                      >
+                        {`Est. Size ${size} ${unit}`}
+                      </li>
+                    )
+                  }
+                </>
               }
             </ul>
             <div className="project-collections-item__footer">

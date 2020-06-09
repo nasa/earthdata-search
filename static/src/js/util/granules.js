@@ -65,11 +65,18 @@ export const populateGranuleResults = ({
     size += parseFloat(granule.granule_size || 0)
   })
 
-  const singleGranuleSize = size / payload.results.length
+  let singleGranuleSize = 0
 
-  const totalSize = singleGranuleSize * payload.hits
-  payload.totalSize = convertSize(totalSize)
-  payload.singleGranuleSize = singleGranuleSize
+  if (payload.hits > 0) {
+    singleGranuleSize = size / payload.results.length
+
+    const totalSize = singleGranuleSize * payload.hits
+    payload.totalSize = convertSize(totalSize)
+    payload.singleGranuleSize = singleGranuleSize
+  } else {
+    payload.totalSize = convertSize(0)
+    payload.singleGranuleSize = 0
+  }
 
   return payload
 }
@@ -179,7 +186,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     temporalString = encodeTemporal(temporal)
   }
 
-  const isCwicCollection = collectionMetadata.has_granules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
+  const isCwicCollection = collectionMetadata.hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
 
   const options = {}
   if (readableGranuleName) {

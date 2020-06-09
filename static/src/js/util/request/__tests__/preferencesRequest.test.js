@@ -46,8 +46,7 @@ describe('PreferencesRequest#transformRequest', () => {
     const result = request.transformRequest(data, headers)
 
     expect(headers).toEqual(expect.objectContaining({
-      Authorization: 'Bearer: 123',
-      'Client-Id': 'eed-edsc-test-serverless-client'
+      Authorization: 'Bearer: 123'
     }))
 
     const parsedData = JSON.parse(result)

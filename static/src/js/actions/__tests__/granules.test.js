@@ -313,7 +313,7 @@ describe('getGranules', () => {
               isCwic: true,
               mock: 'data',
               metadata: {
-                has_granules: false,
+                hasGranules: false,
                 tags: {
                   'org.ceos.wgiss.cwic.granules.prod': {}
                 }

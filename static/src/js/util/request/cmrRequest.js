@@ -3,6 +3,8 @@ import snakeCaseKeys from 'snakecase-keys'
 
 import Request from './request'
 
+import { getClientId } from '../../../../../sharedUtils/config'
+
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 
 /**
@@ -56,5 +58,30 @@ export default class CmrRequest extends Request {
       super.transformData(data),
       this.nonIndexedKeys()
     )
+  }
+
+  /**
+   * Modifies the payload just before the request is sent.
+   * @param {Object} data - An object representing an HTTP request payload.
+   * @return {Object} A modified object.
+   */
+  transformRequest(data, headers) {
+    // If this request is not going to lambda, add headers that lambda would add for us
+    if (
+      !this.authenticated
+      && !this.optionallyAuthenticated
+      && !this.lambda
+    ) {
+      // Lambda will set this for us, if we're not using lambda
+      // we'll set it to ensure its provided to CMR
+      // eslint-disable-next-line no-param-reassign
+      headers['CMR-Request-Id'] = this.requestId
+
+      // Add the Client-Id header for requests directly to CMR
+      // eslint-disable-next-line no-param-reassign
+      headers['Client-Id'] = getClientId().client
+    }
+
+    return super.transformRequest(data, headers)
   }
 }
