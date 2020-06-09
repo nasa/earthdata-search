@@ -62,7 +62,7 @@ export const buildUrls = (json, authToken) => {
     //   title: 'CWIC',
     //   href: 'example.com'
     // }
-  } else if (json.has_granules) {
+  } else if (json.hasGranules) {
     let cmrGranulesUrl = `${cmrHost}/search/granules.json?echo_collection_id=${collectionId}`
 
     if (authToken !== '') {

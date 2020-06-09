@@ -3,7 +3,6 @@ import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '
 
 import { getTemporal } from '../edscDate'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
-import { getUmmGranuleVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
 /**
  * Request object for granule specific requests
@@ -57,19 +56,6 @@ export default class GranuleRequest extends CmrRequest {
       'readable_granule_name',
       'sort_key'
     ]
-  }
-
-  /**
-   * Modifies the payload just before the request is sent.
-   * @param {Object} data - An object containing any keys.
-   * @param {Object} headers - An object containing headers that will be sent with the request.
-   * @return {Object} A modified object.
-   */
-  transformRequest(data, headers) {
-    // eslint-disable-next-line no-param-reassign
-    headers.Accept = getUmmGranuleVersionHeader()
-
-    return super.transformRequest(data, headers)
   }
 
   transformResponse(data) {

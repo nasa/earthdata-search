@@ -72,8 +72,7 @@ describe('CmrRequest#transformRequest', () => {
     request.transformRequest(data, headers)
 
     expect(headers).toEqual(expect.objectContaining({
-      Authorization: 'Bearer: 123',
-      'Client-Id': 'eed-edsc-test-serverless-client'
+      Authorization: 'Bearer: 123'
     }))
   })
 

@@ -3,7 +3,6 @@ import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '
 import { hasTag } from '../../../../../sharedUtils/tags'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
-import { getUmmCollectionVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
 /**
  * Base Request object for collection specific requests
@@ -98,19 +97,6 @@ export default class CollectionRequest extends CmrRequest {
     }
 
     return this.post(this.searchPath, params)
-  }
-
-  /**
-   * Modifies the payload just before the request is sent.
-   * @param {Object} data - An object containing any keys.
-   * @param {Object} headers - An object containing headers that will be sent with the request.
-   * @return {Object} A modified object.
-   */
-  transformRequest(data, headers) {
-    // eslint-disable-next-line no-param-reassign
-    headers.Accept = getUmmCollectionVersionHeader()
-
-    return super.transformRequest(data, headers)
   }
 
   /**

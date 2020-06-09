@@ -135,13 +135,14 @@ export const CollectionDetailsBody = ({
   const outputFormats = []
   if (services) {
     const { items } = services
-
-    items.forEach((service) => {
-      const { supported_output_formats: formats } = service
-      if (formats) {
-        outputFormats.push(...formats)
-      }
-    })
+    if (items) {
+      items.forEach((service) => {
+        const { supported_output_formats: formats } = service
+        if (formats) {
+          outputFormats.push(...formats)
+        }
+      })
+    }
   }
 
   let formattedRelatedUrls = []

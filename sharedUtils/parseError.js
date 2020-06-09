@@ -1,3 +1,5 @@
+import { parse as parseXml } from 'fast-xml-parser'
+
 /**
  * Parse and return a lambda friendly response to errors
  * @param {Object} errorObj The error object that was thrown
@@ -8,12 +10,34 @@ export const parseError = (errorObj, {
   asJSON = true,
   reThrowError = false
 } = {}) => {
-  const { error, name = 'Error', statusCode = 500 } = errorObj
+  const {
+    error,
+    name = 'Error',
+    response = {},
+    statusCode = 500
+  } = errorObj
 
   let errorArray = []
 
   if (error) {
-    const { errors = [] } = error
+    const { body = {}, headers = {} } = response
+    const { 'content-type': contentType = '' } = headers
+
+    let errors = []
+
+    if (contentType.indexOf('application/opensearchdescription+xml') > -1) {
+      // CWIC collections return errors in XML, ensure we capture them
+      const osddBody = parseXml(body, {
+        ignoreAttributes: false,
+        attributeNamePrefix: ''
+      })
+      const { OpenSearchDescription: description } = osddBody
+      const { Description: errorMessage } = description
+
+      errors = [errorMessage]
+    } else {
+      ({ errors = [] } = error)
+    }
 
     if (shouldLog) {
       // Log each error provided

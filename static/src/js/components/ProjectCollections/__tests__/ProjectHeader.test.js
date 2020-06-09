@@ -14,6 +14,8 @@ function setup(overrideProps) {
       byId: {
         collectionId1: {
           granules: {
+            isLoading: false,
+            isLoaded: true,
             hits: 1,
             totalSize: { size: '4.0', unit: 'MB' },
             singleGranuleSize: 4
@@ -94,6 +96,8 @@ describe('ProjectHeader component', () => {
         byId: {
           collectionId1: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 1,
               totalSize: { size: '4.0', unit: 'MB' },
               singleGranuleSize: 4
@@ -104,6 +108,8 @@ describe('ProjectHeader component', () => {
           },
           collectionId2: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 5,
               totalSize: { size: '5.0', unit: 'MB' },
               singleGranuleSize: 5
@@ -146,6 +152,8 @@ describe('ProjectHeader component', () => {
         byId: {
           collectionId1: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 1,
               totalSize: { size: '4.0', unit: 'MB' },
               singleGranuleSize: 4
@@ -156,6 +164,8 @@ describe('ProjectHeader component', () => {
           },
           collectionId2: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 5,
               totalSize: { size: '5.0', unit: 'MB' },
               singleGranuleSize: 5
@@ -187,6 +197,8 @@ describe('ProjectHeader component', () => {
         byId: {
           collectionId1: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 1,
               totalSize: { size: '4.0', unit: 'MB' },
               singleGranuleSize: 4
@@ -197,6 +209,8 @@ describe('ProjectHeader component', () => {
           },
           collectionId2: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 5,
               totalSize: { size: '5.0', unit: 'MB' },
               singleGranuleSize: 5
@@ -234,6 +248,8 @@ describe('ProjectHeader component', () => {
         byId: {
           collectionId1: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 1,
               totalSize: { size: '4.0', unit: 'MB' },
               singleGranuleSize: 4
@@ -245,6 +261,8 @@ describe('ProjectHeader component', () => {
           collectionId2: {
             excludedGranuleIds: [1, 2],
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 5,
               totalSize: { size: '5.0', unit: 'MB' },
               singleGranuleSize: 5
@@ -280,6 +298,8 @@ describe('ProjectHeader component', () => {
         byId: {
           collectionId1: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 1,
               totalSize: { size: '4.0', unit: 'MB' },
               singleGranuleSize: 4
@@ -291,6 +311,8 @@ describe('ProjectHeader component', () => {
           collectionId2: {
             excludedGranuleIds: [1],
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 5,
               totalSize: { size: '5.0', unit: 'MB' },
               singleGranuleSize: 5
@@ -328,6 +350,8 @@ describe('ProjectHeader component', () => {
         byId: {
           collectionId1: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 1,
               totalSize: { size: '4.0', unit: 'MB' },
               singleGranuleSize: 4
@@ -339,6 +363,8 @@ describe('ProjectHeader component', () => {
           collectionId2: {
             excludedGranuleIds: [1],
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 5,
               totalSize: { size: '5.0', unit: 'MB' },
               singleGranuleSize: 5
@@ -376,6 +402,8 @@ describe('ProjectHeader component', () => {
         byId: {
           collectionId1: {
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 1,
               totalSize: { size: '4.0', unit: 'MB' },
               singleGranuleSize: 4
@@ -387,6 +415,8 @@ describe('ProjectHeader component', () => {
           collectionId2: {
             excludedGranuleIds: ['G10000001-EDSC', 'G10000002-EDSC'],
             granules: {
+              isLoading: false,
+              isLoaded: true,
               hits: 5,
               totalSize: { size: '5.0', unit: 'MB' },
               singleGranuleSize: 5
