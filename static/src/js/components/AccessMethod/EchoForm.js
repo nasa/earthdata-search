@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
 
@@ -17,6 +17,7 @@ export const EchoForm = ({
   const [rawModel, setRawModel] = useState('')
   const [model, setModel] = useState('')
   const [isValid, setIsValid] = useState(true)
+  const formWithModel = useRef(insertRawModelIntoEchoForm(propsRawModel, form))
 
   const onFormModelUpdated = (value) => {
     const { model: newModel, rawModel: newRawModel } = value
@@ -58,15 +59,16 @@ export const EchoForm = ({
   }, [model, rawModel, isValid])
 
   const spatialMbr = getMbr(spatial)
-  const formWithModel = insertRawModelIntoEchoForm(propsRawModel, form)
+
+  // EDSCEchoforms doesn't care about the shapefileId, just is there a shapefileId or not
+  const hasShapefile = !!(shapefileId)
 
   return (
     <section className="echoform">
       <EDSCEchoform
-        key={methodKey}
         addBootstrapClasses
-        form={formWithModel}
-        hasShapefile={shapefileId != null}
+        form={formWithModel.current}
+        hasShapefile={hasShapefile}
         prepopulateValues={spatialMbr}
         onFormModelUpdated={onFormModelUpdated}
         onFormIsValidUpdated={onFormIsValidUpdated}
