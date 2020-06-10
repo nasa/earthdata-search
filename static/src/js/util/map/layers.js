@@ -61,24 +61,28 @@ export function getRectangles(metadata = {}) {
   const rects = []
   // eslint-disable-next-line no-underscore-dangle
   if ((metadata._rects == null) && (metadata.boxes != null)) {
-    metadata.boxes.map(parseSpatial).forEach((rect) => {
-      let divided
-      if (rect[0].lng > rect[1].lng) {
-        divided = [
-          [rect[0], L.latLng(rect[1].lat, 180)],
-          [L.latLng(rect[0].lat, -180), rect[1]]
-        ]
-      } else {
-        divided = [rect]
-      }
+    const { boxes = [] } = metadata
 
-      divided.forEach((box) => {
-        rects.push([L.latLng(box[0].lat, box[0].lng), L.latLng(box[0].lat, box[1].lng),
-          L.latLng(box[1].lat, box[1].lng), L.latLng(box[1].lat, box[0].lng),
-          L.latLng(box[0].lat, box[0].lng)
-        ])
+    if (boxes) {
+      boxes.map(parseSpatial).forEach((rect) => {
+        let divided
+        if (rect[0].lng > rect[1].lng) {
+          divided = [
+            [rect[0], L.latLng(rect[1].lat, 180)],
+            [L.latLng(rect[0].lat, -180), rect[1]]
+          ]
+        } else {
+          divided = [rect]
+        }
+
+        divided.forEach((box) => {
+          rects.push([L.latLng(box[0].lat, box[0].lng), L.latLng(box[0].lat, box[1].lng),
+            L.latLng(box[1].lat, box[1].lng), L.latLng(box[1].lat, box[0].lng),
+            L.latLng(box[0].lat, box[0].lng)
+          ])
+        })
       })
-    })
+    }
   }
   return rects
 }
