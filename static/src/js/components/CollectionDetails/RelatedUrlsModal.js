@@ -31,7 +31,7 @@ export class RelatedUrlsModal extends Component {
     const body = (
       <>
         {
-          relatedUrls.map((category, i) => {
+          relatedUrls && relatedUrls.map((category, i) => {
             if (category.urls.length) {
               const key = `modal_related_url_${i}`
               return (

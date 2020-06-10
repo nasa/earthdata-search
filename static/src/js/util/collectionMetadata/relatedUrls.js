@@ -63,6 +63,8 @@ export const buildRelatedUrls = (json) => {
     highlightedUrls
   ]
 
+  if (!relatedUrls) return allRelatedUrls
+
   Array.from(relatedUrls).forEach((related) => {
     const relatedUrl = { ...related }
 
