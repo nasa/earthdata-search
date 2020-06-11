@@ -18,6 +18,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import GranuleResultsActionsContainer from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 
 import './GranuleResultsHeader.scss'
+import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 
 /**
  * Renders GranuleResultsHeader.
@@ -41,11 +42,15 @@ class GranuleResultsHeader extends Component {
 
     const { focusedCollectionObject } = props
     const { granuleFilters = {} } = focusedCollectionObject
+    const {
+      readableGranuleName = [],
+      sortKey
+    } = granuleFilters
 
     this.state = {
-      sortOrder: granuleFilters.sortKey,
-      searchValue: granuleFilters.readableGranuleName || '',
-      prevSearchValue: granuleFilters.readableGranuleName
+      sortOrder: sortKey,
+      searchValue: readableGranuleName.join() || '',
+      prevSearchValue: readableGranuleName.join()
     }
 
     this.handleUpdateSortOrder = this.handleUpdateSortOrder.bind(this)
@@ -53,6 +58,19 @@ class GranuleResultsHeader extends Component {
     this.handleBlurSearchValue = this.handleBlurSearchValue.bind(this)
     this.handleUndoExcludeGranule = this.handleUndoExcludeGranule.bind(this)
     this.handleSearchKeyUp = this.handleSearchKeyUp.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { focusedCollectionObject } = nextProps
+    const { granuleFilters = {} } = focusedCollectionObject
+    const { readableGranuleName = [] } = granuleFilters
+
+    const { searchValue } = this.state
+
+    const propsGranuleName = readableGranuleName.join(',')
+    if (propsGranuleName !== searchValue) {
+      this.setState({ searchValue: propsGranuleName, prevSearchValue: searchValue })
+    }
   }
 
   handleUpdateSortOrder(e) {
@@ -140,7 +158,6 @@ class GranuleResultsHeader extends Component {
     const { metadata = {}, excludedGranuleIds = [], granules = {} } = focusedCollectionObject
 
     const {
-      hits,
       isLoading,
       isLoaded
     } = granules
@@ -167,8 +184,7 @@ class GranuleResultsHeader extends Component {
 
     const visibleGranules = granuleIds.length ? granuleIds.length : 0
 
-    // Determine the correct granule count based on granules that have been removed
-    const granuleCount = hits - excludedGranuleIds.length
+    const granuleCount = getGranuleCount(focusedCollectionObject)
 
     const viewButtonListClasses = classNames([
       'granule-results-header__view-button',

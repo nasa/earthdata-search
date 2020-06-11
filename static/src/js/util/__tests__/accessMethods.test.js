@@ -194,7 +194,7 @@ describe('isAccessMethodValid', () => {
     expect(isAccessMethodValid(projectCollection, collection)).toEqual({
       ...validAccessMethod,
       valid: false,
-      zeroGranules: true
+      noGranules: true
     })
   })
 })

@@ -73,8 +73,8 @@ export class ProjectCollections extends Component {
 
     const {
       valid: isValid,
-      tooManyGranules,
-      zeroGranules
+      noGranules,
+      tooManyGranules
     } = isProjectValid(project, collections)
     const { isSubmitting } = project
 
@@ -111,7 +111,7 @@ export class ProjectCollections extends Component {
             !isLoading && (
               <p className="project-collections__footer-message">
                 {
-                  !isValid && !tooManyGranules && !zeroGranules && (
+                  !isValid && !tooManyGranules && !noGranules && (
                     <>
                       {'Select a data access method for each collection in your project before downloading.'}
                     </>
@@ -132,9 +132,9 @@ export class ProjectCollections extends Component {
                   )
                 }
                 {
-                  !isValid && zeroGranules && (
+                  !isValid && noGranules && (
                     <>
-                      {'One or more collections in your project contains zero granules. Adjust temporal constraints or remove the collections before downloading.'}
+                      {'One or more collections in your project does not contain granules. Adjust temporal constraints or remove the collections before downloading.'}
                     </>
                   )
                 }

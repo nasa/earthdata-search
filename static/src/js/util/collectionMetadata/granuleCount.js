@@ -4,7 +4,7 @@
  * @param {Object} projectCollection - An optional projectCollection to account for added or removed granules.
  */
 export const getGranuleCount = (collection, projectCollection = {}) => {
-  const { excludedGranuleIds = [], granules } = collection
+  const { excludedGranuleIds = [], granules = {} } = collection
   const { hits = 0 } = granules
   const {
     addedGranuleIds = [],
@@ -28,7 +28,12 @@ export const getGranuleCount = (collection, projectCollection = {}) => {
           ]
         )
       ]
-      return hits - uniqueRemovedIds.length
+
+      const projectCount = hits - uniqueRemovedIds.length
+
+      if (projectCount > 0) return projectCount
+
+      return hits
     }
   }
 

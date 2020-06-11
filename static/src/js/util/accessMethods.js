@@ -6,7 +6,7 @@ import { getGranuleCount } from './collectionMetadata/granuleCount'
  */
 export const validAccessMethod = {
   valid: true,
-  zeroGranules: false,
+  noGranules: false,
   tooManyGranules: false
 }
 
@@ -28,11 +28,11 @@ export const isAccessMethodValid = (projectCollection, collection) => {
   const granuleLimit = getGranuleLimit(metadata)
   const granuleCount = getGranuleCount(collection)
 
-  if (granuleCount === 0) {
+  if (granuleCount <= 0) {
     return {
       ...validAccessMethod,
       valid: false,
-      zeroGranules: true
+      noGranules: true
     }
   }
 
