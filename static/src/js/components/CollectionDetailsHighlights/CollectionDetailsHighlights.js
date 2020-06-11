@@ -32,7 +32,7 @@ export const CollectionDetailsHighlights = ({
     doi = {},
     summary,
     temporal,
-    version_id: collectionVersion
+    versionId
   } = metadata
 
   const { doiText } = doi
@@ -64,32 +64,38 @@ export const CollectionDetailsHighlights = ({
                   variant="dark"
                 />
               ) : (
-                collectionVersion
+                versionId
               )
             }
           </div>
         </div>
 
-        <header className="collection-details-highlights__item-header">
-          <h4 className="collection-details-highlights__item-title">
-            DOI
-          </h4>
-        </header>
-        <div className="collection-details-highlights__item-body">
-          <div className="collection-details-highlights__item-value collection-details-highlights__item-value--doi">
-            {
-              (isLoading && !isLoaded) ? (
-                <Skeleton
-                  shapes={collectionDetailsRow}
-                  containerStyle={granuleListTotalStyle}
-                  variant="dark"
-                />
-              ) : (
-                doiText
-              )
-            }
-          </div>
-        </div>
+        {
+          Object.keys(doi).length > 0 && (
+            <>
+              <header className="collection-details-highlights__item-header">
+                <h4 className="collection-details-highlights__item-title">
+                  DOI
+                </h4>
+              </header>
+              <div className="collection-details-highlights__item-body">
+                <div className="collection-details-highlights__item-value collection-details-highlights__item-value--doi">
+                  {
+                    (isLoading && !isLoaded) ? (
+                      <Skeleton
+                        shapes={collectionDetailsRow}
+                        containerStyle={granuleListTotalStyle}
+                        variant="dark"
+                      />
+                    ) : (
+                      doiText
+                    )
+                  }
+                </div>
+              </div>
+            </>
+          )
+        }
 
         <header className="collection-details-highlights__item-header">
           <h4 className="collection-details-highlights__item-title">
