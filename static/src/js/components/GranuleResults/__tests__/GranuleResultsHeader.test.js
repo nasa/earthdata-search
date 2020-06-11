@@ -24,7 +24,7 @@ function setup(overrideProps) {
         byId: {}
       },
       granuleFilters: {
-        readableGranuleName: 'searchValue',
+        readableGranuleName: ['searchValue'],
         sortKey: '-start_date'
       },
       metadata: {

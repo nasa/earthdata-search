@@ -23,8 +23,7 @@ const GranuleResultsActions = ({
   location,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
-  allGranulesInProject,
-  projectGranuleCount
+  allGranulesInProject
 }) => {
   const addToProjectButton = (
     <Button
@@ -57,11 +56,10 @@ const GranuleResultsActions = ({
   const tooManyGranules = granuleLimit && granuleCount > granuleLimit
   const downloadAllButton = () => {
     let buttonText = 'Download All'
-    let badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
+    const badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
 
-    if (projectGranuleCount > 0) {
+    if (isCollectionInProject && !allGranulesInProject && granuleCount > 0) {
       buttonText = 'Download'
-      badge = `${commafy(projectGranuleCount)} ${pluralize('Granule', projectGranuleCount)}`
     }
 
     if (tooManyGranules) {
@@ -188,11 +186,11 @@ const GranuleResultsActions = ({
                         allGranulesInProject && <span title="All granules in project">All Granules</span>
                       }
                       {
-                        projectGranuleCount > 0 && (
+                        !allGranulesInProject && granuleCount > 0 && (
                           <span
-                            title={`${commafy(projectGranuleCount)} ${pluralize('granule', projectGranuleCount)} in project`}
+                            title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
                           >
-                            {`${commafy(projectGranuleCount)} ${pluralize('Granule', projectGranuleCount)}`}
+                            {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
                           </span>
                         )
                       }
@@ -228,8 +226,7 @@ GranuleResultsActions.propTypes = {
   location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  allGranulesInProject: PropTypes.bool.isRequired,
-  projectGranuleCount: PropTypes.number.isRequired
+  allGranulesInProject: PropTypes.bool.isRequired
 }
 
 export default GranuleResultsActions

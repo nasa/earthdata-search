@@ -57,7 +57,7 @@ export const GranuleResultsActionsContainer = (props) => {
   )
 
   let allGranulesInProject = false
-  let projectGranuleCount = 0
+  let addedGranuleCount = 0
 
   if (isCollectionInProject) {
     const { addedGranuleIds = [], removedGranuleIds = [] } = projectById[focusedCollection]
@@ -69,12 +69,7 @@ export const GranuleResultsActionsContainer = (props) => {
 
     // If granules are added, use that length as the number of granules.
     if (addedGranuleIds.length) {
-      projectGranuleCount = addedGranuleIds.length
-    }
-
-    // If granules are removed, calculate the granule count.
-    if (removedGranuleIds.length) {
-      projectGranuleCount = getGranuleCount(collection, projectById[focusedCollection])
+      addedGranuleCount = addedGranuleIds.length
     }
   }
 
@@ -83,7 +78,7 @@ export const GranuleResultsActionsContainer = (props) => {
   const { isLoading, isLoaded } = granules
   const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
 
-  const granuleCount = getGranuleCount(collection)
+  const granuleCount = addedGranuleCount || getGranuleCount(collection, projectById[focusedCollection])
 
   const granuleLimit = getGranuleLimit(metadata)
 
@@ -99,7 +94,6 @@ export const GranuleResultsActionsContainer = (props) => {
         onAddProjectCollection={onAddProjectCollection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         allGranulesInProject={allGranulesInProject}
-        projectGranuleCount={projectGranuleCount}
       />
     </>
   )
