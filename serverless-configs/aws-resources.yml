@@ -105,7 +105,7 @@ Resources:
         Ref: ApiGatewayRestApi
 
   # This role must not be changed -- if it is removed Serverless will attempt to automatically
-  # recreate it and deployments will faile because our permissions boundary does not allow for
+  # recreate it and deployments will fail because our permissions boundary does not allow for
   # creation of roles. This role is used specifically for S3 Lambda triggers that use existing
   # buckets, which is what we're using for forwarding cloudfront logs to Splunk.
   IamRoleCustomResourcesLambdaExecution:

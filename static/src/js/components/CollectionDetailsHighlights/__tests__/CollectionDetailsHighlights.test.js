@@ -18,7 +18,7 @@ function setup(overrideProps) {
           '1860-01-01 to 2050-12-31'
         ],
         summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.',
-        version_id: '5'
+        versionId: '5'
       }
     },
     isLoaded: false,
