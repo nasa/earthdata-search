@@ -236,7 +236,7 @@ export class MapContainer extends Component {
       zoom
     } = map
 
-    const isProjectPage = isPath(pathname, '/project')
+    const isProjectPage = isPath(pathname, '/projects')
 
     const center = [latitude, longitude]
 
