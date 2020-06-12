@@ -138,10 +138,6 @@ describe('getServiceOptionDefinitions', () => {
       {
         id: 'service_option_def_guid_1',
         name: 'Service Option Definition'
-      },
-      {
-        id: 'service_option_def_guid_2',
-        name: 'Service Option Definition'
       }
     ]
 
@@ -149,8 +145,6 @@ describe('getServiceOptionDefinitions', () => {
 
     const forms = await getServiceOptionDefinitions(collectionProvider, serviceOptionDefinitions, 'mockJwt')
 
-    // The first will output the number of records, the second will
-    // contain the message we're looking for
     expect(consoleMock).toBeCalledTimes(1)
 
     expect(consoleMock.mock.calls[0]).toEqual([

@@ -36,7 +36,7 @@ export const parseError = (errorObj, {
 
       errors = [errorMessage]
     } else {
-      ({ errors = [] } = error)
+      ({ errors = ['Unknown Error'] } = error)
     }
 
     if (shouldLog) {
