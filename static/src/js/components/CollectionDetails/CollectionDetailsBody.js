@@ -137,7 +137,7 @@ export const CollectionDetailsBody = ({
     const { items } = services
     if (items) {
       items.forEach((service) => {
-        const { supported_output_formats: formats } = service
+        const { supportedOutputFormats: formats } = service
         if (formats) {
           outputFormats.push(...formats)
         }
