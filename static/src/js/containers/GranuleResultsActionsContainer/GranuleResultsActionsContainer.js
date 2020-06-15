@@ -78,7 +78,8 @@ export const GranuleResultsActionsContainer = (props) => {
   const { isLoading, isLoaded } = granules
   const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
 
-  const granuleCount = addedGranuleCount || getGranuleCount(collection, projectById[focusedCollection])
+  const granuleCount = addedGranuleCount
+    || getGranuleCount(collection, projectById[focusedCollection])
 
   const granuleLimit = getGranuleLimit(metadata)
 

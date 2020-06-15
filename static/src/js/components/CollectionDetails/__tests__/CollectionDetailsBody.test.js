@@ -248,7 +248,7 @@ describe('CollectionDetails component', () => {
               urls: [
                 {
                   description: 'Data set Landing Page DOI URL',
-                  url_content_type: 'CollectionURL',
+                  urlContentType: 'CollectionURL',
                   type: 'DATA SET LANDING PAGE',
                   url: 'https://doi.org/10.3334/ORNLDAAC/830',
                   subtype: ''
@@ -261,23 +261,23 @@ describe('CollectionDetails component', () => {
               urls: [
                 {
                   description: 'This link allows direct data access via Earthdata login',
-                  url_content_type: 'DistributionURL',
+                  urlContentType: 'DistributionURL',
                   type: 'GET DATA',
                   url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/',
                   subtype: ''
                 },
                 {
                   description: 'Web Coverage Service for this collection.',
-                  url_content_type: 'DistributionURL',
+                  urlContentType: 'DistributionURL',
                   type: 'USE SERVICE API',
                   subtype: 'WEB COVERAGE SERVICE (WCS)',
                   url: 'https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830',
                   get_service: {
-                    mime_type: 'application/gml+xml',
+                    mimeType: 'application/gml+xml',
                     protocol: 'Not provided',
-                    full_name: 'Not provided',
-                    data_id: 'Not provided',
-                    data_type: 'Not provided'
+                    fullName: 'Not provided',
+                    dataId: 'NotProvided',
+                    dataType: 'Not provided'
                   }
                 }
               ]
@@ -288,28 +288,28 @@ describe('CollectionDetails component', () => {
               urls: [
                 {
                   description: 'ORNL DAAC Data Set Documentation',
-                  url_content_type: 'PublicationURL',
+                  urlContentType: 'PublicationURL',
                   type: 'VIEW RELATED INFORMATION',
                   subtype: 'GENERAL DOCUMENTATION',
                   url: 'https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html'
                 },
                 {
                   description: 'Data Set Documentation',
-                  url_content_type: 'PublicationURL',
+                  urlContentType: 'PublicationURL',
                   type: 'VIEW RELATED INFORMATION',
                   subtype: 'GENERAL DOCUMENTATION',
                   url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg'
                 },
                 {
                   description: 'Data Set Documentation',
-                  url_content_type: 'PublicationURL',
+                  urlContentType: 'PublicationURL',
                   type: 'VIEW RELATED INFORMATION',
                   subtype: 'GENERAL DOCUMENTATION',
                   url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf'
                 },
                 {
                   description: 'Data Set Documentation',
-                  url_content_type: 'PublicationURL',
+                  urlContentType: 'PublicationURL',
                   type: 'VIEW RELATED INFORMATION',
                   subtype: 'GENERAL DOCUMENTATION',
                   url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf'
@@ -322,7 +322,7 @@ describe('CollectionDetails component', () => {
               urls: [
                 {
                   description: 'Browse Image',
-                  url_content_type: 'VisualizationURL',
+                  urlContentType: 'VisualizationURL',
                   type: 'GET RELATED VISUALIZATION',
                   url: 'https://daac.ornl.gov/graphics/browse/sdat-tds/830_1_fit.png',
                   subtype: ''
@@ -335,7 +335,7 @@ describe('CollectionDetails component', () => {
               urls: [
                 {
                   description: 'Data set Landing Page DOI URL',
-                  url_content_type: 'CollectionURL',
+                  urlContentType: 'CollectionURL',
                   type: 'DATA SET LANDING PAGE',
                   url: 'https://doi.org/10.3334/ORNLDAAC/830',
                   highlightedType: 'Data Set Landing Page'
@@ -404,11 +404,11 @@ describe('CollectionDetails component', () => {
             items: [
               {
                 type: 'ECHO ORDERS',
-                supported_output_formats: null
+                supportedOutputFormats: null
               },
               {
                 type: 'ESI',
-                supported_output_formats: [
+                supportedOutputFormats: [
                   'ASCII',
                   'GEOTIFF',
                   'HDF-EOS5',
@@ -419,7 +419,7 @@ describe('CollectionDetails component', () => {
               },
               {
                 type: 'NOT PROVIDED',
-                supported_output_formats: null
+                supportedOutputFormats: null
               }
             ]
           }
