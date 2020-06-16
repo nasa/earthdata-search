@@ -63,22 +63,26 @@ export const ProjectCollectionsList = (props) => {
 
   return (
     <SimpleBar className="project-collections-list" style={{ height: '100%', overflowX: 'hidden' }}>
-      {projectIsEmpty && (
-        <p className="project-collections-list__notice">
-          {'Your project is empty. Click '}
-          <PortalLinkContainer
-            to={`/search${location.search}`}
-          >
-            here
-          </PortalLinkContainer>
-          {' to return to search and add collections to your project.'}
-        </p>
-      )}
-      {!projectIsEmpty && (
-        <ul className="project-collections-list__list">
-          {collectionsList}
-        </ul>
-      )}
+      {
+        projectIsEmpty && (
+          <p className="project-collections-list__notice">
+            {'Your project is empty. Click '}
+            <PortalLinkContainer
+              to={`/search${location.search}`}
+            >
+              here
+            </PortalLinkContainer>
+            {' to return to search and add collections to your project.'}
+          </p>
+        )
+      }
+      {
+        !projectIsEmpty && (
+          <ul className="project-collections-list__list">
+            {collectionsList}
+          </ul>
+        )
+      }
       <div className="project-collections-list__filler" />
     </SimpleBar>
   )
