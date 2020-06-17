@@ -2,8 +2,8 @@ import { encodeTemporal, decodeTemporal } from './temporalEncoders'
 
 /**
  * Encodes a granule filters object into an object.
- * @param {object} granuleFilters - The granule filters object.
- * @return {string} An object with encoded granule filters.
+ * @param {Object} granuleFilters - The granule filters object.
+ * @return {String} An object with encoded granule filters.
  */
 export const encodeGranuleFilters = (granuleFilters) => {
   const pg = {}
@@ -18,14 +18,15 @@ export const encodeGranuleFilters = (granuleFilters) => {
   if (granuleFilters.equatorCrossingDate) {
     pg.ecd = encodeTemporal(granuleFilters.equatorCrossingDate)
   }
+  if (granuleFilters.sortKey) pg.gsk = granuleFilters.sortKey
 
   return pg
 }
 
 /**
  * Decodes part of the decoded ?pg url parameter into a granule filters object
- * @param {object} params - URL parameter object from parsing the URL parameter string
- * @return {object} A granule filters object
+ * @param {Object} params - URL parameter object from parsing the URL parameter string
+ * @return {Object} A granule filters object
  */
 export const decodeGranuleFilters = (params = {}) => {
   const granuleFilters = {}
@@ -38,6 +39,7 @@ export const decodeGranuleFilters = (params = {}) => {
   if (params.ecl) granuleFilters.equatorCrossingLongitude = params.ecl
   if (params.id) granuleFilters.readableGranuleName = params.id.split('!')
   if (params.ecd) granuleFilters.equatorCrossingDate = decodeTemporal(params.ecd)
+  if (params.gsk) granuleFilters.sortKey = params.gsk
 
   return granuleFilters
 }
