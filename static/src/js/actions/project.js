@@ -137,7 +137,7 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
         conceptId: $ids
         includeHasGranules: $includeHasGranules
         includeTags: $includeTags
-        first: $pageSize
+        limit: $pageSize
       ) {
         items {
           archiveAndDistributionInformation
