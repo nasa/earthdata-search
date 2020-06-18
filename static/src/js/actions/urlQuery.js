@@ -77,9 +77,7 @@ export const updateStore = ({
     if (uniqueCollectionList.length > 0) {
       try {
         await dispatch(actions.getProjectCollections(uniqueCollectionList))
-
         dispatch(actions.fetchAccessMethods(uniqueCollectionList))
-
         dispatch(actions.getGranules(uniqueCollectionList, {
           requestAddedGranules
         }))

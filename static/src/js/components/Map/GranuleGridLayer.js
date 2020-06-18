@@ -405,13 +405,13 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const ctx = canvas.getContext('2d')
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
-    ctx.globalCompositeOperation = 'source-over'
+    ctx.globalCompositeOperation = 'destination-over'
 
     paths.forEach((path) => {
       // Faint stroke of whole path
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0)'
+      ctx.strokeStyle = 'rgba(128, 128, 128, .2)'
       ctx.beginPath()
-      addPath(ctx, path)
+      addPath(ctx, path, false)
       ctx.stroke()
     })
     ctx.restore()
@@ -431,14 +431,14 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
       ctx.strokeStyle = this.color
 
-      ctx.globalCompositeOperation = 'source-over'
+      ctx.globalCompositeOperation = 'destination-over'
 
       if (path.deemphisized !== undefined) {
         ctx.strokeStyle = path.deemphisized ? this.lightColor : this.color
         ctx.lineWidth = path.deemphisized ? 1 : 2
       }
 
-      addPath(ctx, path)
+      addPath(ctx, path, false)
 
       holes.forEach((hole) => {
         if (hole.deemphisized !== undefined) {
@@ -446,18 +446,13 @@ class GranuleGridLayerExtended extends L.GridLayer {
           ctx.lineWidth = hole.deemphisized ? 1 : 2
         }
 
-        addPath(ctx, { poly: hole.poly.concat().reverse() })
+        addPath(ctx, { poly: hole.poly.concat().reverse() }, false)
       })
 
       ctx.stroke()
-      addPath(ctx, boundary)
+      addPath(ctx, boundary, false)
 
-      if (
-        !(path.line != null ? path.line.length : undefined) > 0
-        && path.deemphisized === undefined
-      ) {
-        ctx.clip()
-      }
+      if (!(path.line != null ? path.line.length : undefined) > 0) ctx.clip()
     })
     ctx.restore()
     return null
