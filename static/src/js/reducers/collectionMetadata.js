@@ -22,8 +22,9 @@ const initialState = {
   byId: {}
 }
 
-const initialGranuleState = {
+export const initialGranuleState = {
   allIds: [],
+  additionalIds: [],
   byId: {},
   hits: null,
   isCwic: null,
@@ -91,7 +92,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
         let currentCollectionGranuleParams = {}
         let excludedGranuleIds = []
         let granuleFilters = { sortKey: '-start_date' }
-        let granules = {}
+        let granules = { ...initialGranuleState }
         let isVisible = true
 
         if (state.byId[collectionId]) {
@@ -337,7 +338,23 @@ const collectionMetadataReducer = (state = initialState, action) => {
         collectionId,
         results
       } = action.payload
+
       const { byId, allIds } = processResults(results)
+
+      const granulesObj = {
+        ...state.byId[collectionId].granules,
+        additionalIds: [],
+        byId: {
+          ...state.byId[collectionId].granules.byId,
+          ...byId
+        }
+      }
+
+      granulesObj.allIds = [
+        ...state.byId[collectionId].granules.allIds,
+        ...allIds
+      ]
+      if (!granulesObj.allIds) granulesObj.allIds = []
 
       return {
         ...state,
@@ -345,17 +362,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
           ...state.byId,
           [collectionId]: {
             ...state.byId[collectionId],
-            granules: {
-              ...state.byId[collectionId].granules,
-              allIds: [
-                ...state.byId[collectionId].granules.allIds,
-                ...allIds
-              ],
-              byId: {
-                ...state.byId[collectionId].granules.byId,
-                ...byId
-              }
-            }
+            granules: granulesObj
           }
         }
       }

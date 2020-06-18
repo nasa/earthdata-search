@@ -2,11 +2,17 @@
   position: absolute;
   top: 100px;
   right: 1.5rem;
-  width: 16rem;
-  height: auto;
+  width: 0;
+  height: 0;
   z-index: 401; // Sits above .leaflet-map-pane at index 400
   color: $color__white;
   background-color: $color__black;
+  transition: all 0.2s ease;
+
+  &--is-open {
+    width: 16rem;
+    height: auto;
+  }
 
   &__container {
     width: 100%;
@@ -19,6 +25,7 @@
     transform: scale(0);
     transition: transform 0.2s ease-in-out;
     border: 2px solid rgba(0,0,0,.2);
+    overflow: hidden;
 
     .granule-image--is-open & {
       transform: scale(1);

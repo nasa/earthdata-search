@@ -1,5 +1,5 @@
 import { isCancel } from 'axios'
-import { isEqual } from 'lodash'
+import { difference, isEqual } from 'lodash'
 
 import actions from './index'
 import {
@@ -286,9 +286,14 @@ const cancelTokens = {}
 /**
  * Perform a granules request based on the current redux state.
  * @param {Array} collectionIds - Optional, collection IDs to get granules for. If not provided will return granules from focused collection
+ * @param {Object} opts - Optional, options object.
  */
-export const getGranules = ids => (dispatch, getState) => {
+export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
   const state = getState()
+
+  const {
+    requestAddedGranules = false
+  } = opts
 
   const {
     focusedCollection,
@@ -318,6 +323,7 @@ export const getGranules = ids => (dispatch, getState) => {
   const { collectionIds: projectCollectionIds = [], byId: projectCollections = {} } = project
 
   return Promise.all(collectionIds.map((collectionId) => {
+    const collectionIsInProject = projectCollectionIds.includes(collectionId)
     const granuleParams = prepareGranuleParams(state, collectionId)
 
     const collectionObject = getFocusedCollectionObject(collectionId, collections)
@@ -355,7 +361,31 @@ export const getGranules = ids => (dispatch, getState) => {
 
     dispatch(actions.toggleSpatialPolygonWarning(false))
 
-    const searchParams = buildGranuleSearchParams(granuleParams)
+    const granuleParamsOptions = {}
+
+    // If we should request the the added concept ids, only request them when there is less than one page (2000 results)
+    if (requestAddedGranules && collectionIsInProject) {
+      const { [collectionId]: projectCollection } = projectCollections
+      const {
+        addedGranuleIds = []
+      } = projectCollection
+
+      const { metadata: newMetadata = {} } = getState()
+      const { collections } = newMetadata
+      const { byId: collectionsById } = collections
+      const { granules: collectionGranules = {} } = collectionsById
+      const { allIds: collectionGranulesAllIds } = collectionGranules
+
+      if (addedGranuleIds.length && addedGranuleIds.length < 2000) {
+        const granulesWithoutMetadata = difference(addedGranuleIds, collectionGranulesAllIds)
+        if (granulesWithoutMetadata) {
+          granuleParams.conceptId = granulesWithoutMetadata
+          granuleParamsOptions.forceConceptId = true
+        }
+      }
+    }
+
+    const searchParams = buildGranuleSearchParams(granuleParams, granuleParamsOptions)
     let requestObject = null
     if (isCwicCollection) {
       requestObject = new CwicGranuleRequest(authToken)
@@ -398,7 +428,9 @@ export const getGranules = ids => (dispatch, getState) => {
         // If this collection is in the project update the order count if applicable
         if (projectCollectionIds.includes(collectionId)) {
           const { [collectionId]: projectCollection } = projectCollections
-          const { selectedAccessMethod } = projectCollection
+          const {
+            selectedAccessMethod
+          } = projectCollection
 
           if (selectedAccessMethod && !['download', 'opendap'].includes(selectedAccessMethod)) {
             // Calculate the number of orders that will be created based on granule count

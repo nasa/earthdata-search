@@ -46,7 +46,6 @@ const MAX_RETRIES = 1 // Maximum number of times to attempt to reload an image
 
 class GranuleGridLayerExtended extends L.GridLayer {
   initialize(props) {
-    console.log('initializing granule grid layer', props)
     const {
       collectionId,
       metadata,
@@ -79,14 +78,16 @@ class GranuleGridLayerExtended extends L.GridLayer {
     this.removedGranuleIds = removedGranuleIds
 
     this.setResults({
+      addedGranuleIds,
       collectionId,
-      metadata,
-      granules,
       color,
       defaultGranules: granules,
       focusedGranule,
+      granules,
+      isProjectPage,
+      metadata,
       projectCollection,
-      isProjectPage
+      removedGranuleIds
     })
 
     eventEmitter.on('map.mousemove', e => this._onEdscMousemove(e))
@@ -147,25 +148,50 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return element
   }
 
-  // Create a new canvas tile
+  /**
+   * Sets up a canvas to be placed in the tile.
+   * @param {Object} size - Size information from the tile.
+   * @param {String} name - A unique name for the tile class name.
+   * @param {Boolean} highResolution - A boolean determining whether or not the canvas should render in high resolution.
+   * @return {Element} A canvas element.
+   */
+  setupCanvas(size, name, highResolution) {
+    const dpr = window.devicePixelRatio || 1
+    const canvas = L.DomUtil.create('canvas', `leaflet-${name}-tile`)
+
+    let width = size.x
+    let height = size.y
+
+    canvas.onmousemove = L.Util.falseFn
+    canvas.onselectstart = L.Util.falseFn
+
+    if (highResolution) {
+      const ctx = canvas.getContext('2d')
+
+      width = size.x * dpr
+      height = size.y * dpr
+
+      ctx.scale(dpr, dpr)
+
+      canvas.classList.add('leaflet-high-res-tile')
+    }
+
+    canvas.width = width
+    canvas.height = height
+
+    return canvas
+  }
+
+  /**
+   * Creates an object of canvases to be used for the tile.
+   * @return {Object} A object containing the canvases for each tile.
+   */
   newTile() {
-    const outline = L.DomUtil.create('canvas', 'leaflet-outline-tile')
-    const imagery = L.DomUtil.create('canvas', 'leaflet-imagery-tile')
-
     const size = this.getTileSize()
-    imagery.width = size.x
-    imagery.height = size.y
-    outline.width = size.x
-    outline.height = size.y
-
-    imagery.onmousemove = L.Util.falseFn
-    imagery.onselectstart = L.Util.falseFn
-    outline.onmousemove = L.Util.falseFn
-    outline.onselectstart = L.Util.falseFn
 
     return {
-      imagery,
-      outline
+      imagery: this.setupCanvas(size, 'imagery'),
+      outline: this.setupCanvas(size, 'outline', true)
     }
   }
 
@@ -251,6 +277,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       z: tilePoint.z,
       time: this.options.time
     }
+
     if (this._map && !this._map.options.crs.infinite) {
       const invertedY = this._globalTileRange.max.y - (tilePoint.y)
       if (this.options.tms) {
@@ -258,6 +285,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       }
       data['-y'] = invertedY
     }
+
     return L.Util.template(this._url, L.Util.extend(data, this.options))
   }
 
@@ -267,6 +295,11 @@ class GranuleGridLayerExtended extends L.GridLayer {
       imagery: imageryCanvas,
       outline: outlineCanvas
     } = canvases
+
+    const outlineContext = outlineCanvas.getContext('2d')
+
+    // Scale the outline context to account for the higher resolution
+    outlineContext.scale(2, 2)
 
     let reverse
 
@@ -387,7 +420,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
   // Draws the granule paths
   drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint) {
-    console.log('pathsWithHoles', pathsWithHoles)
     const ctx = canvas.getContext('2d')
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -691,7 +723,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
   // Set the granule results that need to be drawn
   setResults(props) {
-    console.log('setting results', props)
     const {
       metadata,
       granules,
@@ -775,8 +806,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
       removedGranuleIds,
       isProjectPage
     } = this
-
-    console.log('loading results', this.isProjectPage)
 
     return this.setResults({
       granules,
@@ -993,7 +1022,6 @@ export class GranuleGridLayer extends MapLayer {
       collections,
       focusedCollection,
       isProjectPage,
-      granules,
       project
     } = props
 
@@ -1028,7 +1056,7 @@ export class GranuleGridLayer extends MapLayer {
       // If we aren't on the project page, return data for focusedCollection if it exists
       const { byId } = collections
       const { [focusedCollection]: focusedCollectionObject = {} } = byId
-      const { metadata = {} } = focusedCollectionObject
+      const { metadata = {}, granules } = focusedCollectionObject
 
       layers[focusedCollection] = {
         collectionId: focusedCollection,
@@ -1060,7 +1088,6 @@ export class GranuleGridLayer extends MapLayer {
       isProjectPage
     } = props
 
-    console.log('creating leaflet element', props)
 
     // Create a GranuleGridLayerExtended layer from each data object in getLayerData
     const layerData = this.getLayerData(props)
@@ -1186,6 +1213,7 @@ export class GranuleGridLayer extends MapLayer {
       const oldCollection = oldLayerData[collectionId]
       const { granules: oldGranules = {} } = oldCollection || {}
       const { byId: oldGranulesById = {} } = oldGranules
+
       if (
         oldCollection
         && oldIsProjectPage !== isProjectPage
@@ -1203,11 +1231,6 @@ export class GranuleGridLayer extends MapLayer {
       this.addedGranuleIds = addedGranuleIds
       this.removedGranuleIds = removedGranuleIds
 
-      console.log({
-        removedGranuleIds,
-        addedGranuleIds
-      })
-
       if (layer) {
         const {
           isVisible: oldIsVisible
@@ -1217,6 +1240,8 @@ export class GranuleGridLayer extends MapLayer {
         if (
           oldGranules === granules
           && oldIsVisible === isVisible
+          && isEqual(addedGranuleIds, oldAddedGranuleIds)
+          && isEqual(removedGranuleIds, oldRemovedGranuleIds)
         ) return
 
         // Update the layer with the new granuleData

@@ -54,8 +54,13 @@ export const updateStore = ({
       timeline
     }))
 
-    // Unless we are moving to the search page, don't fetch collection results, this saves an extra request on the projects page
+    let requestAddedGranules = true
+
+    // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
+    // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
+    // other cases, getGranules will be requested using the granule search query params.
     if ((pathname.includes('/search') && !newPathname) || (newPathname && newPathname.includes('/search'))) {
+      requestAddedGranules = false
       dispatch(actions.getCollections())
       dispatch(actions.getFocusedCollection())
     }
@@ -75,7 +80,9 @@ export const updateStore = ({
 
         dispatch(actions.fetchAccessMethods(uniqueCollectionList))
 
-        dispatch(actions.getGranules(uniqueCollectionList))
+        dispatch(actions.getGranules(uniqueCollectionList, {
+          requestAddedGranules
+        }))
       } catch (e) {
         parseError(e)
       }
