@@ -1,6 +1,5 @@
 import isNumber from '../isNumber'
 import { encodeGranuleFilters, decodeGranuleFilters } from './granuleFiltersEncoders'
-import { initialGranuleState } from '../../reducers/collectionMetadata'
 
 /**
  * Encode a list of Granule IDs
@@ -326,7 +325,7 @@ export const decodeCollections = (params) => {
     // Populate the collection object for the redux store
     byId[collectionId] = {
       excludedGranuleIds,
-      granules: { ...initialGranuleState },
+      granules: {},
       granuleFilters,
       isCwic,
       isVisible,
