@@ -363,7 +363,9 @@ export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
 
     const granuleParamsOptions = {}
 
-    // If we should request the the added concept ids, only request them when there is less than one page (2000 results)
+    // If we should request the the added concept ids, only request them when there is less than one page (2000 results). In the
+    // event more than 2000 added granules are needed, paging will need to be accounted for, but this is considered an edge case
+    // at this time.
     if (requestAddedGranules && collectionIsInProject) {
       const { [collectionId]: projectCollection } = projectCollections
       const {
@@ -378,7 +380,7 @@ export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
 
       if (addedGranuleIds.length && addedGranuleIds.length < 2000) {
         const granulesWithoutMetadata = difference(addedGranuleIds, collectionGranulesAllIds)
-        if (granulesWithoutMetadata) {
+        if (granulesWithoutMetadata && granulesWithoutMetadata.length) {
           granuleParams.conceptId = granulesWithoutMetadata
           granuleParamsOptions.forceConceptId = true
         }
@@ -428,9 +430,7 @@ export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
         // If this collection is in the project update the order count if applicable
         if (projectCollectionIds.includes(collectionId)) {
           const { [collectionId]: projectCollection } = projectCollections
-          const {
-            selectedAccessMethod
-          } = projectCollection
+          const { selectedAccessMethod } = projectCollection
 
           if (selectedAccessMethod && !['download', 'opendap'].includes(selectedAccessMethod)) {
             // Calculate the number of orders that will be created based on granule count

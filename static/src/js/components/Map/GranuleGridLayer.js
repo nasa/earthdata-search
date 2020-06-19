@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 
 import L from 'leaflet'
@@ -165,15 +164,15 @@ class GranuleGridLayerExtended extends L.GridLayer {
     canvas.onmousemove = L.Util.falseFn
     canvas.onselectstart = L.Util.falseFn
 
-    if (highResolution) {
+    if (highResolution && dpr !== 1) {
       const ctx = canvas.getContext('2d')
-
-      width = size.x * dpr
-      height = size.y * dpr
-
+      const currentWidth = canvas.width
+      const currentHeight = canvas.height
+      canvas.style.transform = `scale(${dpr / 4})`
+      canvas.style.transformOrigin = 'top left'
+      width = currentWidth * dpr
+      height = currentHeight * dpr
       ctx.scale(dpr, dpr)
-
-      canvas.classList.add('leaflet-high-res-tile')
     }
 
     canvas.width = width
@@ -296,11 +295,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
       outline: outlineCanvas
     } = canvases
 
-    const outlineContext = outlineCanvas.getContext('2d')
-
-    // Scale the outline context to account for the higher resolution
-    outlineContext.scale(2, 2)
-
     let reverse
 
     if ((this.granules == null) || (this.granules.length <= 0)) return
@@ -332,19 +326,21 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
         for (let j = 0; j < overlaps.length; j += 1) {
           const path = overlaps[j]
+          const existsInAddedGranules = this.addedGranuleIds.indexOf(granule.id) === -1
+          const existsInRemovedGranules = this.removedGranuleIds.indexOf(granule.id) === -1
 
           // If on the project page, only want to show granules that are in the users current project.
           if (this.isProjectPage) {
             if (
               this.addedGranuleIds.length
-              && this.addedGranuleIds.indexOf(granule.id) === -1
+              && existsInAddedGranules
             ) {
               break
             }
 
             if (
               this.removedGranuleIds.length
-              && this.removedGranuleIds.indexOf(granule.id) !== -1
+              && !existsInRemovedGranules
             ) {
               break
             }
@@ -361,12 +357,12 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
           // If there are added granules, set deemphisized on the non-added granules.
           if (this.addedGranuleIds.length) {
-            path.deemphisized = this.addedGranuleIds.indexOf(granule.id) === -1
+            path.deemphisized = existsInAddedGranules
           }
 
           // If there are removed granules, set deemphisized on the removed granules.
           if (this.removedGranuleIds.length) {
-            path.deemphisized = this.removedGranuleIds.indexOf(granule.id) !== -1
+            path.deemphisized = !existsInRemovedGranules
           }
 
           visibleOverlappingGranulePaths.push(path)
@@ -401,7 +397,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   // Draws an outline of the granule paths
-  drawOutlines(canvas, paths, nwPoint, deemphisized) {
+  drawOutlines(canvas, paths, nwPoint) {
     const ctx = canvas.getContext('2d')
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -411,7 +407,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       // Faint stroke of whole path
       ctx.strokeStyle = 'rgba(128, 128, 128, .2)'
       ctx.beginPath()
-      addPath(ctx, path, false)
+      addPath(ctx, path)
       ctx.stroke()
     })
     ctx.restore()
@@ -438,7 +434,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
         ctx.lineWidth = path.deemphisized ? 1 : 2
       }
 
-      addPath(ctx, path, false)
+      addPath(ctx, path)
 
       holes.forEach((hole) => {
         if (hole.deemphisized !== undefined) {
@@ -446,11 +442,11 @@ class GranuleGridLayerExtended extends L.GridLayer {
           ctx.lineWidth = hole.deemphisized ? 1 : 2
         }
 
-        addPath(ctx, { poly: hole.poly.concat().reverse() }, false)
+        addPath(ctx, { poly: hole.poly.concat().reverse() })
       })
 
       ctx.stroke()
-      addPath(ctx, boundary, false)
+      addPath(ctx, boundary)
 
       if (!(path.line != null ? path.line.length : undefined) > 0) ctx.clip()
     })
@@ -613,10 +609,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   drawFullBackTile(canvases, boundary, pathsWithHoles, nwPoint) {
-    const {
-      imagery: imageryCanvas,
-      outline: outlineCanvas
-    } = canvases
+    const { outline: outlineCanvas } = canvases
 
     const ctx = outlineCanvas.getContext('2d')
 
@@ -697,7 +690,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const tileSize = this.getTileSize()
     const tilePoint = point.add(origin).divideBy(tileSize.x).floor()
     const {
-      imagery: imageryCanvas,
       outline: outlineCanvas
     } = this.getBackTile(tilePoint)
     const bounds = this._tileCoordsToBounds(tilePoint)
@@ -1021,8 +1013,6 @@ export class GranuleGridLayer extends MapLayer {
     } = props
 
     const layers = {}
-    const color = 'rgb(46, 204, 113)'
-    const colorDeemphisized = 'rgb(46, 204, 113)'
 
     if (isProjectPage) {
       // If we are on the project page, return data for each project collection
@@ -1082,7 +1072,6 @@ export class GranuleGridLayer extends MapLayer {
       onMetricsMap,
       isProjectPage
     } = props
-
 
     // Create a GranuleGridLayerExtended layer from each data object in getLayerData
     const layerData = this.getLayerData(props)
