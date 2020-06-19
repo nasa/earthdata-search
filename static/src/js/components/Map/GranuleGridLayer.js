@@ -151,32 +151,16 @@ class GranuleGridLayerExtended extends L.GridLayer {
    * Sets up a canvas to be placed in the tile.
    * @param {Object} size - Size information from the tile.
    * @param {String} name - A unique name for the tile class name.
-   * @param {Boolean} highResolution - A boolean determining whether or not the canvas should render in high resolution.
    * @return {Element} A canvas element.
    */
-  setupCanvas(size, name, highResolution) {
-    const dpr = window.devicePixelRatio || 1
+  setupCanvas(size, name) {
     const canvas = L.DomUtil.create('canvas', `leaflet-${name}-tile`)
 
-    let width = size.x
-    let height = size.y
+    canvas.width = size.x
+    canvas.height = size.y
 
     canvas.onmousemove = L.Util.falseFn
     canvas.onselectstart = L.Util.falseFn
-
-    if (highResolution && dpr !== 1) {
-      const ctx = canvas.getContext('2d')
-      const currentWidth = canvas.width
-      const currentHeight = canvas.height
-      canvas.style.transform = `scale(${dpr / 4})`
-      canvas.style.transformOrigin = 'top left'
-      width = currentWidth * dpr
-      height = currentHeight * dpr
-      ctx.scale(dpr, dpr)
-    }
-
-    canvas.width = width
-    canvas.height = height
 
     return canvas
   }
@@ -290,10 +274,23 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
   // Draw the granule tile
   drawTile(canvases, back, tilePoint) {
+    const dpr = window.devicePixelRatio || 1
     const {
       imagery: imageryCanvas,
       outline: outlineCanvas
     } = canvases
+
+    // If the devicePixelRatio is not 1, adjust the outline tile so pixelation of the borders is avoided.
+    if (dpr !== 1) {
+      const outlineCanvasCtx = outlineCanvas.getContext('2d')
+      const currentWidth = outlineCanvas.width
+      const currentHeight = outlineCanvas.height
+      outlineCanvas.style.transform = `scale(${dpr / 4})`
+      outlineCanvas.style.transformOrigin = 'top left'
+      outlineCanvas.width = currentWidth * dpr
+      outlineCanvas.height = currentHeight * dpr
+      outlineCanvasCtx.scale(dpr, dpr)
+    }
 
     let reverse
 
