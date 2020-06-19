@@ -52,10 +52,14 @@ class GranuleGridLayerExtended extends L.GridLayer {
       color,
       focusedGranule,
       projection,
+      project,
       onChangeFocusedGranule,
       onExcludeGranule,
-      onMetricsMap
+      onMetricsMap,
+      isProjectPage
     } = props
+
+    const projectCollection = project.byId[collectionId] || {}
 
     this.collectionId = collectionId
     this.projection = projection
@@ -63,13 +67,26 @@ class GranuleGridLayerExtended extends L.GridLayer {
     this.onExcludeGranule = onExcludeGranule
     this.onMetricsMap = onMetricsMap
 
+    const {
+      addedGranuleIds = [],
+      removedGranuleIds = []
+    } = projectCollection
+
+    this.isProjectPage = isProjectPage
+    this.addedGranuleIds = addedGranuleIds
+    this.removedGranuleIds = removedGranuleIds
+
     this.setResults({
+      addedGranuleIds,
       collectionId,
-      metadata,
-      granules,
       color,
       defaultGranules: granules,
-      focusedGranule
+      focusedGranule,
+      granules,
+      isProjectPage,
+      metadata,
+      projectCollection,
+      removedGranuleIds
     })
 
     eventEmitter.on('map.mousemove', e => this._onEdscMousemove(e))
@@ -117,26 +134,55 @@ class GranuleGridLayerExtended extends L.GridLayer {
     // @_map._zoom = tilePoint.z
     this.drawTile(tile, this.getBackTile(tilePoint), tilePoint)
 
-    return tile
+    const element = L.DomUtil.create('div', 'leaflet-tile')
+
+    const {
+      imagery,
+      outline
+    } = tile
+
+    element.appendChild(imagery)
+    element.appendChild(outline)
+
+    return element
   }
 
-  // Create a new canvas tile
+  /**
+   * Sets up a canvas to be placed in the tile.
+   * @param {Object} size - Size information from the tile.
+   * @param {String} name - A unique name for the tile class name.
+   * @return {Element} A canvas element.
+   */
+  setupCanvas(size, name) {
+    const canvas = L.DomUtil.create('canvas', `leaflet-${name}-tile`)
+
+    canvas.width = size.x
+    canvas.height = size.y
+
+    canvas.onmousemove = L.Util.falseFn
+    canvas.onselectstart = L.Util.falseFn
+
+    return canvas
+  }
+
+  /**
+   * Creates an object of canvases to be used for the tile.
+   * @return {Object} A object containing the canvases for each tile.
+   */
   newTile() {
-    const tile = L.DomUtil.create('canvas', 'leaflet-tile')
-
     const size = this.getTileSize()
-    tile.width = size.x
-    tile.height = size.y
 
-    tile.onmousemove = L.Util.falseFn
-    tile.onselectstart = L.Util.falseFn
-    return tile
+    return {
+      imagery: this.setupCanvas(size, 'imagery'),
+      outline: this.setupCanvas(size, 'outline', true)
+    }
   }
 
   getBackTile(tilePoint) {
     const key = `${tilePoint.x}:${tilePoint.y}`
     if (this._backTiles == null) { this._backTiles = {} }
     if (this._backTiles[key] == null) { this._backTiles[key] = this.newTile() }
+
     return this._backTiles[key]
   }
 
@@ -214,6 +260,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       z: tilePoint.z,
       time: this.options.time
     }
+
     if (this._map && !this._map.options.crs.infinite) {
       const invertedY = this._globalTileRange.max.y - (tilePoint.y)
       if (this.options.tms) {
@@ -221,13 +268,33 @@ class GranuleGridLayerExtended extends L.GridLayer {
       }
       data['-y'] = invertedY
     }
+
     return L.Util.template(this._url, L.Util.extend(data, this.options))
   }
 
   // Draw the granule tile
-  drawTile(canvas, back, tilePoint) {
+  drawTile(canvases, back, tilePoint) {
+    const dpr = window.devicePixelRatio || 1
+    const {
+      imagery: imageryCanvas,
+      outline: outlineCanvas
+    } = canvases
+
+    // If the devicePixelRatio is not 1, adjust the outline tile so pixelation of the borders is avoided.
+    if (dpr !== 1) {
+      const outlineCanvasCtx = outlineCanvas.getContext('2d')
+      const currentWidth = outlineCanvas.width
+      const currentHeight = outlineCanvas.height
+      outlineCanvas.style.transform = `scale(${dpr / 4})`
+      outlineCanvas.style.transformOrigin = 'top left'
+      outlineCanvas.width = currentWidth * dpr
+      outlineCanvas.height = currentHeight * dpr
+      outlineCanvasCtx.scale(dpr, dpr)
+    }
+
     let reverse
-    if ((this.granules == null) || (this.granules.length <= 0)) { return }
+
+    if ((this.granules == null) || (this.granules.length <= 0)) return
 
     const tileSize = this.getTileSize()
 
@@ -248,32 +315,74 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const pathsWithHoles = []
 
     this.granules.forEach((granule, index) => {
+      const visibleOverlappingGranulePaths = []
       const overlaps = this.granulePathsOverlappingTile(granule, bounds)
+
       if (overlaps.length > 0) {
         const url = this.getTileUrl(tilePoint, granule)
+
         for (let j = 0; j < overlaps.length; j += 1) {
           const path = overlaps[j]
+          const existsInAddedGranules = this.addedGranuleIds.indexOf(granule.id) === -1
+          const existsInRemovedGranules = this.removedGranuleIds.indexOf(granule.id) === -1
+
+          // If on the project page, only want to show granules that are in the users current project.
+          if (this.isProjectPage) {
+            if (
+              this.addedGranuleIds.length
+              && existsInAddedGranules
+            ) {
+              break
+            }
+
+            if (
+              this.removedGranuleIds.length
+              && !existsInRemovedGranules
+            ) {
+              break
+            }
+          }
+
           path.index = index
           path.url = url
           path.granule = granule
+
           if (path.poly != null) {
             reverse = (j === 0) === isClockwise(path.poly)
-            if (reverse) { path.poly.reverse() }
+            if (reverse) path.poly.reverse()
           }
+
+          // If there are added granules, set deemphisized on the non-added granules.
+          if (this.addedGranuleIds.length) {
+            path.deemphisized = existsInAddedGranules
+          }
+
+          // If there are removed granules, set deemphisized on the removed granules.
+          if (this.removedGranuleIds.length) {
+            path.deemphisized = !existsInRemovedGranules
+          }
+
+          visibleOverlappingGranulePaths.push(path)
         }
-        pathsWithHoles.push(overlaps)
-        paths = paths.concat(overlaps)
+
+        if (visibleOverlappingGranulePaths.length) {
+          pathsWithHoles.push(visibleOverlappingGranulePaths)
+          paths = paths.concat(visibleOverlappingGranulePaths)
+        }
       }
     })
 
+    // Draw the granule outlines.
     setTimeout((
-      () => this.drawOutlines(canvas, paths, nwPoint)
+      () => this.drawClippedPaths(outlineCanvas, boundary, pathsWithHoles, nwPoint)
     ), 0)
     setTimeout((
-      () => this.drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint)
+      () => this.drawOutlines(outlineCanvas, paths, nwPoint)
     ), 0)
+
+    // Draw the granule imagery.
     setTimeout((
-      () => this.drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)
+      () => this.drawClippedImagery(imageryCanvas, boundary, paths, nwPoint, tilePoint)
     ), 0)
     setTimeout((
       () => this.drawFullBackTile(back, boundary, pathsWithHoles.concat().reverse(), nwPoint)
@@ -289,10 +398,11 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const ctx = canvas.getContext('2d')
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
+    ctx.globalCompositeOperation = 'destination-over'
 
-    // Faint stroke of whole path
-    ctx.strokeStyle = 'rgba(128, 128, 128, .2)'
     paths.forEach((path) => {
+      // Faint stroke of whole path
+      ctx.strokeStyle = 'rgba(128, 128, 128, .2)'
       ctx.beginPath()
       addPath(ctx, path)
       ctx.stroke()
@@ -306,22 +416,36 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const ctx = canvas.getContext('2d')
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
-    ctx.strokeStyle = this.color
 
     pathsWithHoles.forEach((pathWithHoles) => {
       const [path, ...holes] = Array.from(pathWithHoles)
 
       ctx.beginPath()
+
+      ctx.strokeStyle = this.color
+
+      ctx.globalCompositeOperation = 'destination-over'
+
+      if (path.deemphisized !== undefined) {
+        ctx.strokeStyle = path.deemphisized ? this.lightColor : this.color
+        ctx.lineWidth = path.deemphisized ? 1 : 2
+      }
+
       addPath(ctx, path)
 
       holes.forEach((hole) => {
+        if (hole.deemphisized !== undefined) {
+          ctx.strokeStyle = hole.deemphisized ? this.lightColor : this.color
+          ctx.lineWidth = hole.deemphisized ? 1 : 2
+        }
+
         addPath(ctx, { poly: hole.poly.concat().reverse() })
       })
 
       ctx.stroke()
       addPath(ctx, boundary)
 
-      if (!(path.line != null ? path.line.length : undefined) > 0) { ctx.clip() }
+      if (!(path.line != null ? path.line.length : undefined) > 0) ctx.clip()
     })
     ctx.restore()
     return null
@@ -357,25 +481,62 @@ class GranuleGridLayerExtended extends L.GridLayer {
     if (image != null) {
       ctx.save()
       ctx.beginPath()
-      paths.forEach(path => addPath(ctx, path))
+
+      paths.forEach((path) => {
+        if (
+          (path.deemphisized !== undefined && !path.deemphisized)
+          || path.deemphisized === undefined
+        ) {
+          addPath(ctx, path)
+        }
+      })
+
+      ctx.globalAlpha = 1
+
+      // Clear out existing pixels so any transparent deemphisized tranparent granules
+      // opacities do not stack up.
+      ctx.globalCompositeOperation = 'destination-out'
+      ctx.fill()
+
+      // Draw the granule imagery.
+      ctx.globalCompositeOperation = 'source-over'
       ctx.clip()
-      ctx.globalCompositeOperation = 'destination-over'
       ctx.drawImage(image, nwPoint.x, nwPoint.y, size, size)
+
       ctx.restore()
     }
 
-    paths.forEach((path) => {
+    return null
+  }
+
+  drawClippedImageDeemphisized(ctx, boundary, paths, nwPoint, image, size) {
+    if (image != null) {
+      ctx.save()
       ctx.beginPath()
-      addPath(ctx, path)
-      addPath(ctx, boundary)
+
+      paths.forEach((path) => {
+        if (path.deemphisized !== undefined && path.deemphisized) addPath(ctx, path)
+      })
+
       ctx.clip()
-    })
+      ctx.globalCompositeOperation = 'destination-out'
+      ctx.fill()
+      ctx.globalAlpha = 0.5
+      ctx.globalCompositeOperation = 'source-over'
+
+      ctx.drawImage(image, nwPoint.x, nwPoint.y, size, size)
+
+      ctx.globalAlpha = 1
+      ctx.restore()
+    }
+
     return null
   }
 
   // Draws the gibs imagery for the granule
   drawClippedImagery(canvas, boundary, paths, nwPoint) {
     const ctx = canvas.getContext('2d')
+
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
 
@@ -413,7 +574,22 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
       // eslint-disable-next-line no-loop-func
       self.loadImage(url, (image) => {
-        queue[i] = () => this.drawClippedImage(ctx, boundary, urlPaths, nwPoint, image, size)
+        queue[i] = () => {
+          const paths = []
+          const deemphisizedPaths = []
+
+          urlPaths.forEach((path) => {
+            if (path.deemphisized !== undefined && path.deemphisized) {
+              deemphisizedPaths.push(path)
+            } else {
+              paths.push(path)
+            }
+          })
+
+          // TODO: Figure out a way that we can prevent this from redrawing twice, every time a granule is loaded in.
+          this.drawClippedImageDeemphisized(ctx, boundary, deemphisizedPaths, nwPoint, image, size)
+          this.drawClippedImage(ctx, boundary, paths, nwPoint, image, size)
+        }
 
         while (queue[index] != null) {
           queue[index]()
@@ -429,8 +605,10 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return null
   }
 
-  drawFullBackTile(canvas, boundary, pathsWithHoles, nwPoint) {
-    const ctx = canvas.getContext('2d')
+  drawFullBackTile(canvases, boundary, pathsWithHoles, nwPoint) {
+    const { outline: outlineCanvas } = canvases
+
+    const ctx = outlineCanvas.getContext('2d')
 
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -508,13 +686,15 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const origin = this._map.getPixelOrigin()
     const tileSize = this.getTileSize()
     const tilePoint = point.add(origin).divideBy(tileSize.x).floor()
-    const canvas = this.getBackTile(tilePoint)
+    const {
+      outline: outlineCanvas
+    } = this.getBackTile(tilePoint)
     const bounds = this._tileCoordsToBounds(tilePoint)
 
     const tilePixel = point.subtract(this._map.latLngToLayerPoint(bounds.getNorthWest()))
 
     let result = null
-    const ctx = canvas.getContext('2d')
+    const ctx = outlineCanvas.getContext('2d')
     const { data } = ctx.getImageData(tilePixel.x, tilePixel.y, 1, 1)
     if (data[3] === 255) {
       // eslint-disable-next-line no-bitwise
@@ -525,18 +705,29 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return result
   }
 
-  // Set the granule results that need to be drawna
+  // Set the granule results that need to be drawn
   setResults(props) {
     const {
-      collectionId,
       metadata,
       granules,
       color,
+      lightColor,
       defaultGranules,
-      focusedGranule
+      focusedGranule,
+      addedGranuleIds = [],
+      removedGranuleIds = [],
+      isProjectPage
     } = props
 
+    const {
+      collectionId
+    } = this
+
     this.granules = granules
+    this.addedGranuleIds = addedGranuleIds
+    this.removedGranuleIds = removedGranuleIds
+    this.isProjectPage = isProjectPage
+
     if (defaultGranules) {
       this.defaultGranules = defaultGranules
 
@@ -549,6 +740,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     }
 
     if (color) this.color = color
+    if (lightColor) this.lightColor = lightColor
 
     if (metadata) {
       // Set multiOptions (gibs data)
@@ -593,8 +785,17 @@ class GranuleGridLayerExtended extends L.GridLayer {
       Object.values(this.defaultGranules)
     )
 
+    const {
+      addedGranuleIds,
+      removedGranuleIds,
+      isProjectPage
+    } = this
+
     return this.setResults({
-      granules
+      granules,
+      addedGranuleIds,
+      removedGranuleIds,
+      isProjectPage
     })
   }
 
@@ -805,12 +1006,10 @@ export class GranuleGridLayer extends MapLayer {
       collections,
       focusedCollection,
       isProjectPage,
-      granules,
       project
     } = props
 
     const layers = {}
-    const color = '#2ECC71'
 
     if (isProjectPage) {
       // If we are on the project page, return data for each project collection
@@ -829,6 +1028,7 @@ export class GranuleGridLayer extends MapLayer {
         layers[collectionId] = {
           collectionId,
           color: getColorByIndex(index),
+          lightColor: getColorByIndex(index, true),
           metadata,
           isVisible,
           granules: collectionGranules
@@ -838,11 +1038,12 @@ export class GranuleGridLayer extends MapLayer {
       // If we aren't on the project page, return data for focusedCollection if it exists
       const { byId } = collections
       const { [focusedCollection]: focusedCollectionObject = {} } = byId
-      const { metadata = {} } = focusedCollectionObject
+      const { metadata = {}, granules } = focusedCollectionObject
 
       layers[focusedCollection] = {
         collectionId: focusedCollection,
-        color,
+        color: getColorByIndex(0),
+        lightColor: getColorByIndex(0, true),
         isVisible: true,
         metadata,
         granules
@@ -862,9 +1063,11 @@ export class GranuleGridLayer extends MapLayer {
     const {
       focusedGranule,
       projection,
+      project,
       onChangeFocusedGranule,
       onExcludeGranule,
-      onMetricsMap
+      onMetricsMap,
+      isProjectPage
     } = props
 
     // Create a GranuleGridLayerExtended layer from each data object in getLayerData
@@ -887,10 +1090,12 @@ export class GranuleGridLayer extends MapLayer {
         granules: granuleData,
         color,
         focusedGranule,
+        project,
         projection,
         onChangeFocusedGranule,
         onExcludeGranule,
-        onMetricsMap
+        onMetricsMap,
+        isProjectPage
       })
 
       // Set the ZIndex for the layer
@@ -915,10 +1120,16 @@ export class GranuleGridLayer extends MapLayer {
     const {
       focusedGranule,
       projection,
+      project,
+      isProjectPage,
       onChangeFocusedGranule,
       onExcludeGranule,
       onMetricsMap
     } = toProps
+
+    this.isProjectPage = isProjectPage
+
+    const { isProjectPage: oldIsProjectPage } = fromProps
 
     const oldLayerData = this.getLayerData(fromProps)
     const layerData = this.getLayerData(toProps)
@@ -948,10 +1159,32 @@ export class GranuleGridLayer extends MapLayer {
       const {
         collectionId,
         color,
+        lightColor,
         metadata,
         isVisible,
         granules = {}
       } = layerData[id]
+
+      const oldProjectCollection = fromProps.project.byId[collectionId]
+      const projectCollection = project.byId[collectionId]
+      let oldAddedGranuleIds
+      let oldRemovedGranuleIds
+      let addedGranuleIds
+      let removedGranuleIds
+
+      if (oldProjectCollection) {
+        ({
+          addedGranuleIds: oldAddedGranuleIds,
+          removedGranuleIds: oldRemovedGranuleIds
+        } = oldProjectCollection)
+      }
+
+      if (projectCollection) {
+        ({
+          addedGranuleIds,
+          removedGranuleIds
+        } = projectCollection)
+      }
 
       // If there are no granules, bail out
       const { byId: granulesById = {} } = granules
@@ -960,21 +1193,37 @@ export class GranuleGridLayer extends MapLayer {
       // If no granules were changed, bail out
       const oldCollection = oldLayerData[collectionId]
       const { granules: oldGranules = {} } = oldCollection || {}
-      if (oldCollection
-        && isEqual(Object.keys(granulesById), Object.keys(oldGranules.byId))) return
+      const { byId: oldGranulesById = {} } = oldGranules
+
+      if (
+        oldCollection
+        && oldIsProjectPage !== isProjectPage
+        && isEqual(Object.keys(granulesById), Object.keys(oldGranulesById))
+        && isEqual(addedGranuleIds, oldAddedGranuleIds)
+        && isEqual(removedGranuleIds, oldRemovedGranuleIds)
+      ) return
 
       // If the collecton is not visible, set the granuleData to an empty array
       const granuleData = isVisible ? Object.values(granulesById) : []
 
       // Find the layer for this collection
       const [layer] = Object.values(layers).filter(l => l.collectionId === collectionId)
+
+      this.addedGranuleIds = addedGranuleIds
+      this.removedGranuleIds = removedGranuleIds
+
       if (layer) {
         const {
           isVisible: oldIsVisible
         } = oldCollection
 
         // If the granules and the visibility haven't changed, bail out
-        if (oldGranules === granules && oldIsVisible === isVisible) return
+        if (
+          oldGranules === granules
+          && oldIsVisible === isVisible
+          && isEqual(addedGranuleIds, oldAddedGranuleIds)
+          && isEqual(removedGranuleIds, oldRemovedGranuleIds)
+        ) return
 
         // Update the layer with the new granuleData
         layer.setResults({
@@ -982,8 +1231,13 @@ export class GranuleGridLayer extends MapLayer {
           metadata,
           granules: granuleData,
           color,
+          lightColor,
           defaultGranules: granuleData,
-          focusedGranule
+          focusedGranule,
+          projectCollection,
+          addedGranuleIds,
+          removedGranuleIds,
+          isProjectPage
         })
       } else {
         // A layer doesn't exist for this collection yet, maybe we just added a focusedCollection, so create a new layer
@@ -992,11 +1246,16 @@ export class GranuleGridLayer extends MapLayer {
           metadata,
           granules: granuleData,
           color,
+          lightColor,
           focusedGranule,
           projection,
+          project,
           onChangeFocusedGranule,
           onExcludeGranule,
-          onMetricsMap
+          onMetricsMap,
+          addedGranuleIds,
+          removedGranuleIds,
+          isProjectPage
         })
         layer.setZIndex(20)
 

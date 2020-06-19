@@ -17,9 +17,16 @@ describe('util#colors', () => {
         expect(getColorByIndex(1)).toEqual('#3498DB')
       })
     })
+
     describe('when color is out of range', () => {
       test('returns the correct color', () => {
         expect(getColorByIndex(5)).toEqual('#2ECC71')
+      })
+    })
+
+    describe('when lighten is set to true', () => {
+      test('returns the correct color', () => {
+        expect(getColorByIndex(5, true)).toEqual('rgb(46, 204, 113, 0.5)')
       })
     })
   })

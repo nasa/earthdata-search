@@ -429,6 +429,316 @@ describe('getGranules', () => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe('when requestAddedGranules is set to true', () => {
+    describe('when there are no added granules', () => {
+      test('calls the API to get granules', async () => {
+        nock(/cmr/)
+          .post(/granules/)
+          .reply(200, {
+            feed: {
+              updated: '2019-03-27T20:21:14.705Z',
+              id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+              title: 'ECHO granule metadata',
+              entry: [{
+                mockGranuleData: 'goes here'
+              }]
+            }
+          },
+          {
+            'cmr-hits': 1
+          })
+
+        // mockStore with initialState
+        const store = mockStore({
+          authToken: '',
+          metadata: {
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  mock: 'data'
+                }
+              }
+            }
+          },
+          project: {},
+          focusedCollection: 'collectionId',
+          query: {
+            collection: {
+              temporal: {},
+              spatial: {}
+            },
+            granule: { pageNum: 1 }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        // call the dispatch
+        await store.dispatch(getGranules(['collectionId'], { requestAdditionalGranules: true })).then(() => {
+          // Is updateGranuleResults called with the right payload
+          const storeActions = store.getActions()
+          expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+          expect(storeActions[1]).toEqual({
+            type: STARTED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[2]).toEqual({
+            type: LOADING_GRANULES,
+            payload: 'collectionId'
+          })
+          expect(storeActions[3]).toEqual({
+            type: TOGGLE_SPATIAL_POLYGON_WARNING,
+            payload: false
+          })
+          expect(storeActions[4]).toEqual({
+            type: FINISHED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[5]).toEqual({
+            type: LOADED_GRANULES,
+            payload: {
+              collectionId: 'collectionId',
+              loaded: true
+            }
+          })
+          expect(storeActions[6]).toEqual({
+            type: UPDATE_GRANULE_RESULTS,
+            payload: {
+              collectionId: 'collectionId',
+              hits: 1,
+              isCwic: false,
+              results: [{
+                mockGranuleData: 'goes here',
+                formatted_temporal: [
+                  null,
+                  null
+                ],
+                is_cwic: false
+              }],
+              singleGranuleSize: 0,
+              totalSize: {
+                size: '0.0',
+                unit: 'MB'
+              }
+            }
+          })
+        })
+      })
+    })
+
+    describe('when there are added granules', () => {
+      test('calls the API to get granules', async () => {
+        nock(/cmr/)
+          .post(/granules/)
+          .reply(200, {
+            feed: {
+              updated: '2019-03-27T20:21:14.705Z',
+              id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+              title: 'ECHO granule metadata',
+              entry: [{
+                mockGranuleData: 'goes here'
+              }]
+            }
+          },
+          {
+            'cmr-hits': 1
+          })
+
+        // mockStore with initialState
+        const store = mockStore({
+          authToken: '',
+          metadata: {
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  mock: 'data'
+                }
+              }
+            }
+          },
+          project: {
+            byId: {
+              collectionId: {
+                addedGranuleIds: ['GRAN-ID-1']
+              }
+            },
+            collectionIds: ['collectionId']
+          },
+          focusedCollection: 'collectionId',
+          query: {
+            collection: {
+              temporal: {},
+              spatial: {}
+            },
+            granule: { pageNum: 1 }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        // call the dispatch
+        await store.dispatch(getGranules(['collectionId'], { requestAdditionalGranules: true })).then(() => {
+          // Is updateGranuleResults called with the right payload
+          const storeActions = store.getActions()
+          expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+          expect(storeActions[1]).toEqual({
+            type: STARTED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[2]).toEqual({
+            type: LOADING_GRANULES,
+            payload: 'collectionId'
+          })
+          expect(storeActions[3]).toEqual({
+            type: TOGGLE_SPATIAL_POLYGON_WARNING,
+            payload: false
+          })
+          expect(storeActions[4]).toEqual({
+            type: FINISHED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[5]).toEqual({
+            type: LOADED_GRANULES,
+            payload: {
+              collectionId: 'collectionId',
+              loaded: true
+            }
+          })
+          expect(storeActions[6]).toEqual({
+            type: UPDATE_GRANULE_RESULTS,
+            payload: {
+              collectionId: 'collectionId',
+              hits: 1,
+              isCwic: false,
+              results: [{
+                mockGranuleData: 'goes here',
+                formatted_temporal: [
+                  null,
+                  null
+                ],
+                is_cwic: false
+              }],
+              singleGranuleSize: 0,
+              totalSize: {
+                size: '0.0',
+                unit: 'MB'
+              }
+            }
+          })
+        })
+      })
+    })
+
+    describe('when there are removed granules', () => {
+      test('calls the API to get granules', async () => {
+        nock(/cmr/)
+          .post(/granules/)
+          .reply(200, {
+            feed: {
+              updated: '2019-03-27T20:21:14.705Z',
+              id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+              title: 'ECHO granule metadata',
+              entry: [{
+                mockGranuleData: 'goes here'
+              }]
+            }
+          },
+          {
+            'cmr-hits': 1
+          })
+
+        // mockStore with initialState
+        const store = mockStore({
+          authToken: '',
+          metadata: {
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  mock: 'data'
+                }
+              }
+            }
+          },
+          project: {
+            byId: {
+              collectionId: {
+                removedGranuleIds: ['GRAN-ID-1']
+              }
+            },
+            collectionIds: ['collectionId']
+          },
+          focusedCollection: 'collectionId',
+          query: {
+            collection: {
+              temporal: {},
+              spatial: {}
+            },
+            granule: { pageNum: 1 }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        // call the dispatch
+        await store.dispatch(getGranules(['collectionId'], { requestAdditionalGranules: true })).then(() => {
+          // Is updateGranuleResults called with the right payload
+          const storeActions = store.getActions()
+          expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+          expect(storeActions[1]).toEqual({
+            type: STARTED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[2]).toEqual({
+            type: LOADING_GRANULES,
+            payload: 'collectionId'
+          })
+          expect(storeActions[3]).toEqual({
+            type: TOGGLE_SPATIAL_POLYGON_WARNING,
+            payload: false
+          })
+          expect(storeActions[4]).toEqual({
+            type: FINISHED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[5]).toEqual({
+            type: LOADED_GRANULES,
+            payload: {
+              collectionId: 'collectionId',
+              loaded: true
+            }
+          })
+          expect(storeActions[6]).toEqual({
+            type: UPDATE_GRANULE_RESULTS,
+            payload: {
+              collectionId: 'collectionId',
+              hits: 1,
+              isCwic: false,
+              results: [{
+                mockGranuleData: 'goes here',
+                formatted_temporal: [
+                  null,
+                  null
+                ],
+                is_cwic: false
+              }],
+              singleGranuleSize: 0,
+              totalSize: {
+                size: '0.0',
+                unit: 'MB'
+              }
+            }
+          })
+        })
+      })
+    })
+  })
 })
 
 describe('excludeGranule', () => {
