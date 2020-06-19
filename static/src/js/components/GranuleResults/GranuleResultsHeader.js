@@ -63,13 +63,17 @@ class GranuleResultsHeader extends Component {
   componentWillReceiveProps(nextProps) {
     const { focusedCollectionObject } = nextProps
     const { granuleFilters = {} } = focusedCollectionObject
-    const { readableGranuleName = [] } = granuleFilters
+    const { readableGranuleName = [], sortKey } = granuleFilters
 
-    const { searchValue } = this.state
+    const { searchValue, sortOrder } = this.state
 
     const propsGranuleName = readableGranuleName.join(',')
     if (propsGranuleName !== searchValue) {
       this.setState({ searchValue: propsGranuleName, prevSearchValue: searchValue })
+    }
+
+    if (sortKey && sortKey !== sortOrder) {
+      this.setState({ sortOrder: sortKey })
     }
   }
 
