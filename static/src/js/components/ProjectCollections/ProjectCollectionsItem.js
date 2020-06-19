@@ -34,17 +34,20 @@ import './ProjectCollectionsItem.scss'
  * @param {Object} props.collectionSearch - Search values from query.collection
  */
 const ProjectCollectionItem = ({
+  activePanelSection,
   collection,
+  collectionCount,
   collectionId,
   collectionSearch,
   color,
   index,
   isPanelActive,
   mapProjection,
-  projectCollection,
   onRemoveCollectionFromProject,
   onSetActivePanel,
-  onToggleCollectionVisibility
+  onToggleCollectionVisibility,
+  onTogglePanels,
+  projectCollection
 }) => {
   const handleToggleCollectionVisibility = (event) => {
     onToggleCollectionVisibility(collectionId)
@@ -103,7 +106,10 @@ const ProjectCollectionItem = ({
                 variant="naked"
                 bootstrapVariant="link"
                 label={`${title} Collection Details`}
-                onClick={() => onSetActivePanel(`1.${index}.0`)}
+                onClick={() => {
+                  onSetActivePanel(`1.${index}.0`)
+                  onTogglePanels(true)
+                }}
               >
                 <h3 className="project-collections-item__title">
                   {title}
@@ -120,7 +126,22 @@ const ProjectCollectionItem = ({
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
                   icon="times-circle"
                   title="Remove"
-                  onClick={() => onRemoveCollectionFromProject(collectionId)}
+                  onClick={() => {
+                    onRemoveCollectionFromProject(collectionId)
+
+                    // If removing the first collection in the list
+                    if (index === 0) {
+                      let panelSectionToSelect = activePanelSection
+
+                      // If this is the last collection in the project reset the active panel
+                      if (collectionCount === 1) panelSectionToSelect = 0
+
+                      onSetActivePanel(`${panelSectionToSelect}.0.0`)
+                    } else {
+                      // Select the previous collection in the list
+                      onSetActivePanel(`${activePanelSection}.${index - 1}.0`)
+                    }
+                  }}
                 />
               </MoreActionsDropdown>
             </>
@@ -164,7 +185,10 @@ const ProjectCollectionItem = ({
                 bootstrapVariant="link"
                 icon="cog"
                 label="More options"
-                onClick={() => onSetActivePanel(`0.${index}.0`)}
+                onClick={() => {
+                  onSetActivePanel(`0.${index}.0`)
+                  onTogglePanels(true)
+                }}
               >
                 More Options
               </Button>
@@ -189,17 +213,20 @@ ProjectCollectionItem.defaultProps = {
 }
 
 ProjectCollectionItem.propTypes = {
-  collectionId: PropTypes.string.isRequired,
+  activePanelSection: PropTypes.string.isRequired,
   collection: PropTypes.shape({}),
+  collectionCount: PropTypes.number.isRequired,
+  collectionId: PropTypes.string.isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired,
   color: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,
   mapProjection: PropTypes.string.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  projectCollection: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired
+  onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onTogglePanels: PropTypes.func.isRequired,
+  projectCollection: PropTypes.shape({}).isRequired
 }
 
 export default ProjectCollectionItem

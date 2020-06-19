@@ -25,6 +25,7 @@ function setup() {
     mapProjection: projections.geographic,
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
+    onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
     project: {
       byId: {

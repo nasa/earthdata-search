@@ -12,9 +12,9 @@ import './ProjectCollections.scss'
 
 /**
  * Renders ProjectCollections.
- * @param {object} props - The props passed into the component.
- * @param {object} props.collections - List of collections passed from redux store.
- * @param {function} props.onRemoveCollectionFromProject - Fired when the remove button is clicked
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.collections - List of collections passed from redux store.
+ * @param {Function} props.onRemoveCollectionFromProject - Fired when the remove button is clicked
  */
 export class ProjectCollections extends Component {
   constructor() {
@@ -58,17 +58,18 @@ export class ProjectCollections extends Component {
 
   render() {
     const {
-      collectionSearch,
       collections,
+      collectionSearch,
+      mapProjection,
       onMetricsDataAccess,
       onRemoveCollectionFromProject,
       onSetActivePanel,
       onToggleCollectionVisibility,
+      onTogglePanels,
       onUpdateProjectName,
-      project,
       panels,
-      savedProject,
-      mapProjection
+      project,
+      savedProject
     } = this.props
 
     const {
@@ -101,6 +102,7 @@ export class ProjectCollections extends Component {
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onToggleCollectionVisibility={onToggleCollectionVisibility}
           onSetActivePanel={onSetActivePanel}
+          onTogglePanels={onTogglePanels}
           project={project}
           panels={panels}
           collectionSearch={collectionSearch}
@@ -164,14 +166,15 @@ ProjectCollections.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
-  project: PropTypes.shape({}).isRequired,
-  panels: PropTypes.shape({}).isRequired,
-  savedProject: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired
+  onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onTogglePanels: PropTypes.func.isRequired,
+  onUpdateProjectName: PropTypes.func.isRequired,
+  panels: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired,
+  savedProject: PropTypes.shape({}).isRequired
 }
 
 export default ProjectCollections

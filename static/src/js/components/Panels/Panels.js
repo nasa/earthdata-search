@@ -515,6 +515,7 @@ export class Panels extends PureComponent {
     const [activePanelSectionId = 0, activePanelGroupId = 0, activePanelId = 0] = activePanel.split('.')
     const panelSectionProps = { ...child.props }
     const { children } = panelSectionProps
+
     if (!panelSectionProps.panelSectionId) panelSectionProps.panelSectionId = `${index}`
     panelSectionProps.isOpen = !!(panelSectionProps.panelSectionId === activePanelSectionId)
     panelSectionProps.isActive = !!(panelSectionProps.panelSectionId === activePanelSectionId)

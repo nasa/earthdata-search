@@ -30,8 +30,9 @@ function setup() {
     savedProject: {},
     onMetricsDataAccess: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
-    onSetActivePanel: jest.fn(),
+    onTogglePanels: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
+    onSetActivePanel: jest.fn(),
     onUpdateProjectName: jest.fn()
   }
 

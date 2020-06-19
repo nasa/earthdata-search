@@ -16,8 +16,7 @@ const panelsReducer = (state = initialState, action) => {
     case PANELS_SET_PANEL: {
       return {
         ...state,
-        activePanel: action.payload,
-        isOpen: true
+        activePanel: action.payload
       }
     }
     default:

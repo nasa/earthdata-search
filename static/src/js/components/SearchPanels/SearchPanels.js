@@ -90,8 +90,9 @@ class SearchPanels extends PureComponent {
   }
 
   onChangePanel(panelId) {
-    const { onSetActivePanel } = this.props
+    const { onSetActivePanel, onTogglePanels } = this.props
     onSetActivePanel(panelId)
+    onTogglePanels(true)
   }
 
   onChangeCollectionPanelView(view) {

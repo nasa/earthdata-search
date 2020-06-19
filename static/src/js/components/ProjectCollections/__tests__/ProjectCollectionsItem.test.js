@@ -10,7 +10,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    activePanelSection: '0',
     collectionId: 'collectionId',
+    collectionCount: 1,
     collection: {
       excludedGranuleIds: [
         'G10000001-EDSC'
@@ -19,7 +21,10 @@ function setup(overrideProps) {
         hits: 4,
         isLoading: false,
         isLoaded: true,
-        totalSize: { size: '4.0', unit: 'MB' },
+        totalSize: {
+          size: '4.0',
+          unit: 'MB'
+        },
         singleGranuleSize: 1
       },
       metadata: {
@@ -33,6 +38,7 @@ function setup(overrideProps) {
     isPanelActive: false,
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
+    onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
     projectCollection: {
       accessMethods: {}
@@ -91,14 +97,73 @@ describe('ProjectCollectionItem component', () => {
     })
   })
 
-  test('Remove from project button calls onRemoveCollectionFromProject', () => {
-    const { enzymeWrapper, props } = setup()
+  describe('clicking onRemoveCollectionFromProject', () => {
+    test('removes collection from project and updates the active panel', () => {
+      const { enzymeWrapper, props } = setup()
 
-    const button = enzymeWrapper.find('.project-collections-item__more-actions-remove')
+      const button = enzymeWrapper.find('.project-collections-item__more-actions-remove')
 
-    button.simulate('click')
-    expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
-    expect(props.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
+      button.simulate('click')
+      expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
+      expect(props.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
+
+      expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
+      expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.0')
+    })
+
+    describe('when any collection but the first in the project is removed', () => {
+      test('removes collection from project and updates the active panel to be the one listed above the removed collection', () => {
+        const { enzymeWrapper, props } = setup({
+          index: 2
+        })
+
+        const button = enzymeWrapper.find('.project-collections-item__more-actions-remove')
+
+        button.simulate('click')
+        expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
+        expect(props.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
+
+        expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
+        expect(props.onSetActivePanel).toHaveBeenCalledWith('0.1.0')
+      })
+    })
+
+    describe('when the user is looking at a non default panel section and a project is removed', () => {
+      describe('if the project only contains one collection', () => {
+        test('removes collection from project and updates the active panel, resetting it to 0', () => {
+          const { enzymeWrapper, props } = setup({
+            activePanelSection: '1'
+          })
+
+          const button = enzymeWrapper.find('.project-collections-item__more-actions-remove')
+
+          button.simulate('click')
+          expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
+          expect(props.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
+
+          expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
+          expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.0')
+        })
+      })
+
+      describe('if the project contains multiple collections', () => {
+        test('removes collection from project and updates the active panel ensuring the same panel section is displayed', () => {
+          const { enzymeWrapper, props } = setup({
+            activePanelSection: '1',
+            collectionCount: 2
+          })
+
+          const button = enzymeWrapper.find('.project-collections-item__more-actions-remove')
+
+          button.simulate('click')
+          expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
+          expect(props.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
+
+          expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
+          expect(props.onSetActivePanel).toHaveBeenCalledWith('1.0.0')
+        })
+      })
+    })
   })
 
   test('Toggle visibility button calls onToggleCollectionVisibility', () => {

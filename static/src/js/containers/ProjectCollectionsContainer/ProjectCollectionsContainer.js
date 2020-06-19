@@ -13,6 +13,8 @@ const mapDispatchToProps = dispatch => ({
     collectionId => dispatch(actions.toggleCollectionVisibility(collectionId)),
   onSetActivePanel:
     panelId => dispatch(actions.setActivePanel(panelId)),
+  onTogglePanels:
+    isOpen => dispatch(actions.onTogglePanels(isOpen)),
   onUpdateProjectName:
     name => dispatch(actions.updateProjectName(name)),
   onMetricsDataAccess:
@@ -40,6 +42,7 @@ export const ProjectCollectionsContainer = (props) => {
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
     onSetActivePanel,
+    onTogglePanels,
     onUpdateProjectName
   } = props
 
@@ -55,6 +58,7 @@ export const ProjectCollectionsContainer = (props) => {
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onToggleCollectionVisibility={onToggleCollectionVisibility}
       onSetActivePanel={onSetActivePanel}
+      onTogglePanels={onTogglePanels}
       onUpdateProjectName={onUpdateProjectName}
     />
   )
@@ -71,6 +75,7 @@ ProjectCollectionsContainer.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
+  onTogglePanels: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired
 }
 

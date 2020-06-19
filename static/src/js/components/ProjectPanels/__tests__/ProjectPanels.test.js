@@ -150,6 +150,9 @@ describe('ProjectPanels component', () => {
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
     expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
+
+    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
+    expect(props.onTogglePanels).toHaveBeenCalledWith(true)
   })
 
   describe('onCheckboxChange', () => {
@@ -299,6 +302,9 @@ describe('ProjectPanels component', () => {
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
     expect(props.onSetActivePanel).toHaveBeenCalledWith('0.1.1')
+
+    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
+    expect(props.onTogglePanels).toHaveBeenCalledWith(true)
   })
 
   test('onViewDetails sets the state and calls onChangePanel', () => {
@@ -318,6 +324,9 @@ describe('ProjectPanels component', () => {
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
     expect(props.onSetActivePanel).toHaveBeenCalledWith('0.1.3')
+
+    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
+    expect(props.onTogglePanels).toHaveBeenCalledWith(true)
   })
 
   test('backToOptions sets the state', () => {
@@ -362,6 +371,9 @@ describe('ProjectPanels component', () => {
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
     expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.2')
+
+    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
+    expect(props.onTogglePanels).toHaveBeenCalledWith(true)
   })
 
   test('clearSelectedKeyword sets the state and calls onChangePanel', () => {
@@ -385,6 +397,9 @@ describe('ProjectPanels component', () => {
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
     expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
+
+    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
+    expect(props.onTogglePanels).toHaveBeenCalledWith(true)
   })
 
   test('clearSelectedVariable sets the state and calls onChangePanel', () => {
@@ -404,6 +419,9 @@ describe('ProjectPanels component', () => {
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
     expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.2')
+
+    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
+    expect(props.onTogglePanels).toHaveBeenCalledWith(true)
   })
 
   describe('canResetForm', () => {
