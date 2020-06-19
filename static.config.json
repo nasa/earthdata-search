@@ -11,6 +11,7 @@
     "orderStatusRefreshTime": 60000,
     "eosdisTagKey": "gov.nasa.eosdis",
     "defaultCmrPageSize": 20,
+    "maxCmrPageSize": 2000,
     "defaultCmrSearchTags": [
       "edsc.*",
       "org.ceos.wgiss.cwic.granules.prod"

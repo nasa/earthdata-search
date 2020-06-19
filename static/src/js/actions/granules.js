@@ -36,6 +36,8 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { prepareGranuleAccessParams } from '../../../../sharedUtils/prepareGranuleAccessParams'
 import { buildPromise } from '../util/buildPromise'
 
+const { defaultGranulesPerOrder, maxCmrPageSize } = getApplicationConfig()
+
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -323,7 +325,6 @@ export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
   const { collectionIds: projectCollectionIds = [], byId: projectCollections = {} } = project
 
   return Promise.all(collectionIds.map((collectionId) => {
-    const collectionIsInProject = projectCollectionIds.includes(collectionId)
     const granuleParams = prepareGranuleParams(state, collectionId)
 
     const collectionObject = getFocusedCollectionObject(collectionId, collections)
@@ -366,7 +367,7 @@ export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
     // If we should request the the added concept ids, only request them when there is less than one page (2000 results). In the
     // event more than 2000 added granules are needed, paging will need to be accounted for, but this is considered an edge case
     // at this time.
-    if (requestAddedGranules && collectionIsInProject) {
+    if (requestAddedGranules && projectCollectionIds.includes(collectionId)) {
       const { [collectionId]: projectCollection } = projectCollections
       const {
         addedGranuleIds = []
@@ -378,7 +379,7 @@ export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
       const { granules: collectionGranules = {} } = collectionsById
       const { allIds: collectionGranulesAllIds } = collectionGranules
 
-      if (addedGranuleIds.length && addedGranuleIds.length < 2000) {
+      if (addedGranuleIds.length && addedGranuleIds.length < maxCmrPageSize) {
         const granulesWithoutMetadata = difference(addedGranuleIds, collectionGranulesAllIds)
         if (granulesWithoutMetadata && granulesWithoutMetadata.length) {
           granuleParams.conceptId = granulesWithoutMetadata
@@ -434,7 +435,6 @@ export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
 
           if (selectedAccessMethod && !['download', 'opendap'].includes(selectedAccessMethod)) {
             // Calculate the number of orders that will be created based on granule count
-            const { defaultGranulesPerOrder } = getApplicationConfig()
             const { hits: granuleCount } = payload
             const orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
 
