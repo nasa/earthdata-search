@@ -86,8 +86,9 @@ class ProjectPanels extends PureComponent {
   }
 
   onChangePanel(panelId) {
-    const { onSetActivePanel } = this.props
+    const { onSetActivePanel, onTogglePanels } = this.props
     onSetActivePanel(panelId)
+    onTogglePanels(true)
   }
 
   onCheckboxChange(e, variableId, collectionId) {
@@ -461,6 +462,11 @@ class ProjectPanels extends PureComponent {
         </PanelGroup>
       )
     })
+
+    // Don't display the panels if the project doesn't have any collections
+    if (projectIds.length === 0) {
+      return null
+    }
 
     return (
       <Panels

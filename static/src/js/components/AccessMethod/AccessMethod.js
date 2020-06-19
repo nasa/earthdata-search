@@ -241,6 +241,7 @@ export class AccessMethod extends Component {
       shapefileId,
       spatial,
       onSetActivePanel,
+      onTogglePanels,
       onUpdateAccessMethod
     } = this.props
 
@@ -386,7 +387,10 @@ export class AccessMethod extends Component {
                   bootstrapVariant="primary"
                   label="Edit Variables"
                   bootstrapSize="sm"
-                  onClick={() => onSetActivePanel(`0.${index}.1`)}
+                  onClick={() => {
+                    onSetActivePanel(`0.${index}.1`)
+                    onTogglePanels(true)
+                  }}
                 >
                   Edit Variables
                 </Button>
@@ -422,6 +426,7 @@ AccessMethod.defaultProps = {
   shapefileId: null,
   spatial: {},
   onSetActivePanel: null,
+  onTogglePanels: null,
   selectedAccessMethod: null
 }
 
@@ -435,6 +440,7 @@ AccessMethod.propTypes = {
   spatial: PropTypes.shape({}),
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
+  onTogglePanels: PropTypes.func,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string
 }

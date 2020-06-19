@@ -17,15 +17,9 @@ function setup() {
         collectionId1: {
           granules: {
             hits: 1
-          },
-          granules: {
-            hits: 1
           }
         },
         collectionId2: {
-          granules: {
-            hits: 1
-          },
           granules: {
             hits: 1
           }
@@ -55,6 +49,7 @@ function setup() {
     },
     onMetricsDataAccess: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
+    onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
     onUpdateProjectName: jest.fn()
