@@ -167,6 +167,7 @@ class SpatialSelection extends Component {
 
       // Draw the new shape
       this.renderShape(nextProps)
+      this.renderShape(nextProps, true)
     }
 
     // If a polygon is drawn for a CWIC collection, render the MBR to show the user what is being sent
