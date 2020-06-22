@@ -16,6 +16,7 @@ import { eventEmitter } from '../../events/events'
 import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
 import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
 import { mbr } from '../../util/map/mbr'
+import { limitLatLngDecimalPoints } from '../../util/limitDecimalPoints'
 
 const normalColor = '#00ffff'
 const errorColor = '#990000'
@@ -338,22 +339,23 @@ class SpatialSelection extends Component {
     let latLngs
     switch (type) {
       case 'point':
-        latLngs = [layer.getLatLng()].map(p => `${p.lng},${p.lat}`)
+        latLngs = limitLatLngDecimalPoints([layer.getLatLng()].map(p => `${p.lng},${p.lat}`))
         break
       case 'boundingBox':
-        latLngs = [layer.getLatLngs()[0][0], layer.getLatLngs()[0][2]].map(p => `${p.lng},${p.lat}`)
+        latLngs = limitLatLngDecimalPoints([layer.getLatLngs()[0][0], layer.getLatLngs()[0][2]].map(p => `${p.lng},${p.lat}`))
         break
       case 'polygon':
         originalLatLngs = Array.from(layer.getLatLngs())
-        latLngs = makeCounterClockwise(originalLatLngs).map(p => `${p.lng},${p.lat}`)
+        latLngs = limitLatLngDecimalPoints(makeCounterClockwise(originalLatLngs).map(p => `${p.lng},${p.lat}`))
         break
       case 'line':
-        latLngs = Array.from(layer.getLatLngs()).map(p => `${p.lng},${p.lat}`)
+        latLngs = limitLatLngDecimalPoints(Array.from(layer.getLatLngs()).map(p => `${p.lng},${p.lat}`))
         break
       case 'circle': {
         const center = layer.getLatLng()
         const radius = layer.getRadius()
-        latLngs = [center.lng, center.lat, radius]
+        latLngs = limitLatLngDecimalPoints([center].map(p => `${p.lng},${p.lat}`))
+        latLngs.push(radius.toFixed(0))
         break
       }
       default:
@@ -367,10 +369,10 @@ class SpatialSelection extends Component {
       // If the shape crosses the anti-meridian, adjust the points to fit in the globe
       latLngs.forEach((coord) => {
         let [lon, lat] = Array.from(coord.split(','))
-        lon = parseFloat(lon)
+        // lon = parseFloat(lon)
         while (lon < -180) { lon += 360 }
         while (lon > 180) { lon -= 360 }
-        lat = parseFloat(lat)
+        // lat = parseFloat(lat)
         lat = Math.min(90, lat)
         lat = Math.max(-90, lat)
         latLngsAntiMeridian.push(`${lon},${lat}`)
