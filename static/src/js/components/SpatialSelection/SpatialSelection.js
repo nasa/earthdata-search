@@ -374,10 +374,10 @@ class SpatialSelection extends Component {
       // If the shape crosses the anti-meridian, adjust the points to fit in the globe
       latLngs.forEach((coord) => {
         let [lon, lat] = Array.from(coord.split(','))
-        // lon = parseFloat(lon)
+        lon = parseFloat(lon)
         while (lon < -180) { lon += 360 }
         while (lon > 180) { lon -= 360 }
-        // lat = parseFloat(lat)
+        lat = parseFloat(lat)
         lat = Math.min(90, lat)
         lat = Math.max(-90, lat)
         latLngsAntiMeridian.push(`${lon},${lat}`)
