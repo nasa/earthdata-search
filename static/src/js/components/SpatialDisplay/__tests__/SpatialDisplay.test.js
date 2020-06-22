@@ -496,11 +496,11 @@ describe('SpatialDisplay component', () => {
 
       enzymeWrapper.setState({ manuallyEntering: 'circle' })
 
-      enzymeWrapper.instance().onChangeCircleSearch({ target: { value: '38,-77', name: 'center' } })
+      enzymeWrapper.instance().onChangeCircleCenter({ target: { value: '38,-77' } })
       expect(enzymeWrapper.state().circleSearch).toEqual(['38,-77', ''])
       expect(enzymeWrapper.state().error).toEqual('')
 
-      enzymeWrapper.instance().onChangeCircleSearch({ target: { value: '10000', name: 'radius' } })
+      enzymeWrapper.instance().onChangeCircleRadius({ target: { value: '10000' } })
       expect(enzymeWrapper.state().circleSearch).toEqual(['38,-77', '10000'])
       expect(enzymeWrapper.state().error).toEqual('')
     })

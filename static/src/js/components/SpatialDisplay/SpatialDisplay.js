@@ -45,7 +45,8 @@ class SpatialDisplay extends Component {
     this.onSubmitPointSearch = this.onSubmitPointSearch.bind(this)
     this.onChangeBoundingBoxSearch = this.onChangeBoundingBoxSearch.bind(this)
     this.onSubmitBoundingBoxSearch = this.onSubmitBoundingBoxSearch.bind(this)
-    this.onChangeCircleSearch = this.onChangeCircleSearch.bind(this)
+    this.onChangeCircleCenter = this.onChangeCircleCenter.bind(this)
+    this.onChangeCircleRadius = this.onChangeCircleRadius.bind(this)
     this.onSubmitCircleSearch = this.onSubmitCircleSearch.bind(this)
     this.onFocusSpatialSearch = this.onFocusSpatialSearch.bind(this)
   }
@@ -203,10 +204,12 @@ class SpatialDisplay extends Component {
   onChangePointSearch(e) {
     const { value = '' } = e.target
 
-    this.setState({
-      pointSearch: this.transformSingleCoordinate(value),
-      error: this.validateCoordinate(value)
-    })
+    if (this.isValidDecimalLatLng(value)) {
+      this.setState({
+        pointSearch: this.transformSingleCoordinate(value),
+        error: this.validateCoordinate(value)
+      })
+    }
   }
 
   onSubmitPointSearch(e) {
@@ -253,10 +256,12 @@ class SpatialDisplay extends Component {
       newSearch = [swPoint, value]
     }
 
-    this.setState({
-      boundingBoxSearch: newSearch,
-      error: this.validateCoordinate(value)
-    })
+    if (this.isValidDecimalLatLng(value)) {
+      this.setState({
+        boundingBoxSearch: newSearch,
+        error: this.validateCoordinate(value)
+      })
+    }
   }
 
   onFocusSpatialSearch(spatialType) {
@@ -292,29 +297,36 @@ class SpatialDisplay extends Component {
     e.preventDefault()
   }
 
-  onChangeCircleSearch(e) {
+  onChangeCircleCenter(e) {
     const { circleSearch } = this.state
-    const [center, radius] = circleSearch
+    const [, radius] = circleSearch
 
-    const {
-      name,
-      value = ''
-    } = e.target
+    const { value = '' } = e.target
 
-    let newSearch
+    if (this.isValidDecimalLatLng(value)) {
+      const newSearch = [value, radius]
 
-    if (name === 'center') {
-      newSearch = [value, radius]
+      this.setState({
+        circleSearch: newSearch,
+        error: this.validateCircleCoordinates(newSearch)
+      })
     }
+  }
 
-    if (name === 'radius') {
-      newSearch = [center, value]
+  onChangeCircleRadius(e) {
+    const { circleSearch } = this.state
+    const [center] = circleSearch
+
+    const { value = '' } = e.target
+
+    if (this.isValidRadius(value)) {
+      const newSearch = [center, value]
+
+      this.setState({
+        circleSearch: newSearch,
+        error: this.validateCircleCoordinates(newSearch)
+      })
     }
-
-    this.setState({
-      circleSearch: newSearch,
-      error: this.validateCircleCoordinates(newSearch)
-    })
   }
 
   onSubmitCircleSearch(e) {
@@ -343,6 +355,26 @@ class SpatialDisplay extends Component {
     }
 
     e.preventDefault()
+  }
+
+  /**
+   * Validates a Lat/Lng is limited to 5 decimal points
+   * @param {*} latLng
+   */
+  isValidDecimalLatLng(latLng) {
+    const regex = /^-?\d*\.?\d{0,5},?-?\d*\.?\d{0,5}$/
+
+    return latLng.match(regex)
+  }
+
+  /**
+   * Validates a radius is limited to an integer
+   * @param {*} value
+   */
+  isValidRadius(value) {
+    const regex = /^\d*$/
+
+    return value.match(regex)
   }
 
   /**
@@ -668,7 +700,7 @@ class SpatialDisplay extends Component {
                   size="sm"
                   name="center"
                   value={circleSearch[0]}
-                  onChange={this.onChangeCircleSearch}
+                  onChange={this.onChangeCircleCenter}
                   onBlur={this.onSubmitCircleSearch}
                   onKeyUp={this.onSubmitCircleSearch}
                   onFocus={() => this.onFocusSpatialSearch('circle')}
@@ -692,7 +724,7 @@ class SpatialDisplay extends Component {
                   size="sm"
                   name="radius"
                   value={circleSearch[1]}
-                  onChange={this.onChangeCircleSearch}
+                  onChange={this.onChangeCircleRadius}
                   onBlur={this.onSubmitCircleSearch}
                   onKeyUp={this.onSubmitCircleSearch}
                   onFocus={() => this.onFocusSpatialSearch('circle')}
