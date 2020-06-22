@@ -18,9 +18,16 @@ function setup() {
       byId: {}
     },
     focusedCollection: '',
+    mapRef: {
+      leafletElement: {}
+    },
     onChangeQuery: jest.fn(),
     onToggleDrawingNewLayer: jest.fn(),
-    pathname: '/search',
+    router: {
+      location: {
+        pathname: '/search'
+      }
+    },
     pointSearch: 'Test value',
     polygonSearch: 'Test value',
     onMetricsMap: jest.fn(),

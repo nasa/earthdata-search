@@ -99,17 +99,22 @@ class SpatialSelection extends Component {
 
   componentDidMount() {
     const { mapRef } = this.props
-    const map = mapRef.leafletElement
+    const {
+      leafletElement: map,
+      props: mapProps
+    } = mapRef
     if (!map) {
       return
     }
 
     this.renderShape(this.props)
 
+    const { center = [] } = mapProps
+
     const { featureGroupRef = {} } = this
     const { leafletElement: featureGroup = null } = featureGroupRef
 
-    if (featureGroup && featureGroup.getBounds) {
+    if (!center.length && featureGroup && featureGroup.getBounds) {
       const bounds = featureGroup.getBounds() || false
       panFeatureGroupToCenter(map, bounds)
     }
@@ -130,7 +135,7 @@ class SpatialSelection extends Component {
       drawnPoints
     } = this.state
 
-    const map = mapRef.leafletElement
+    const { leafletElement: map } = mapRef
     if (!map) {
       return
     }
@@ -316,7 +321,7 @@ class SpatialSelection extends Component {
     })
   }
 
-  setLayer(layer) {
+  setLayer(layer, shouldCenter) {
     this.layer = layer
 
     const { mapRef } = this.props
@@ -325,7 +330,7 @@ class SpatialSelection extends Component {
     const { featureGroupRef = {} } = this
     const { leafletElement: featureGroup = null } = featureGroupRef
 
-    if (featureGroup) {
+    if (shouldCenter && featureGroup) {
       panFeatureGroupToCenter(map, featureGroup)
     }
   }
@@ -411,7 +416,7 @@ class SpatialSelection extends Component {
   }
 
   // Draws a leaflet shape based on provided props
-  renderShape(props) {
+  renderShape(props, shouldCenter = false) {
     const { featureGroupRef = {} } = this
     if (featureGroupRef === null) return
     const { leafletElement: featureGroup = null } = featureGroupRef
@@ -436,31 +441,31 @@ class SpatialSelection extends Component {
     if (selectedRegion && selectedRegion.spatial) {
       this.setState({ drawnPoints: selectedRegion.spatial })
       const points = splitListOfPoints(selectedRegion.spatial)
-      this.renderPolygon(getShape(points), featureGroup)
+      this.renderPolygon(getShape(points), featureGroup, shouldCenter)
     } else if (pointSearch) {
       this.setState({ drawnPoints: pointSearch })
-      this.renderPoint(getShape([pointSearch]), featureGroup)
+      this.renderPoint(getShape([pointSearch]), featureGroup, shouldCenter)
     } else if (boundingBoxSearch) {
       this.setState({ drawnPoints: boundingBoxSearch })
       const points = splitListOfPoints(boundingBoxSearch)
-      this.renderBoundingBox(getShape(points), featureGroup)
+      this.renderBoundingBox(getShape(points), featureGroup, shouldCenter)
     } else if (polygonSearch) {
       this.setState({ drawnPoints: polygonSearch })
       const points = splitListOfPoints(polygonSearch)
-      this.renderPolygon(getShape(points), featureGroup)
+      this.renderPolygon(getShape(points), featureGroup, shouldCenter)
     } else if (lineSearch) {
       this.setState({ drawnPoints: lineSearch })
       const points = splitListOfPoints(lineSearch)
-      this.renderLine(points, featureGroup)
+      this.renderLine(points, featureGroup, shouldCenter)
     } else if (circleSearch) {
       this.setState({ drawnPoints: circleSearch })
       const points = circleSearch.split(',')
-      this.renderCircle(points, featureGroup)
+      this.renderCircle(points, featureGroup, shouldCenter)
     }
   }
 
   // Draws a leaflet Marker
-  renderPoint(point, featureGroup) {
+  renderPoint(point, featureGroup, shouldCenter) {
     if (featureGroup) {
       const marker = new L.Marker(point[0], {
         icon: L.Draw.Marker.prototype.options.icon
@@ -473,12 +478,12 @@ class SpatialSelection extends Component {
         drawnLayer: marker,
         drawnLayerType: 'point'
       })
-      this.setLayer(marker)
+      this.setLayer(marker, shouldCenter)
     }
   }
 
   // Draws a leaflet Rectangle
-  renderBoundingBox(rectangle, featureGroup) {
+  renderBoundingBox(rectangle, featureGroup, shouldCenter) {
     if (featureGroup) {
       const shape = rectangle
       // southwest longitude should not be greater than northeast
@@ -501,7 +506,7 @@ class SpatialSelection extends Component {
         drawnLayer: rect,
         drawnLayerType: 'boundingBox'
       })
-      this.setLayer(rect)
+      this.setLayer(rect, shouldCenter)
     }
   }
 
@@ -534,7 +539,7 @@ class SpatialSelection extends Component {
   }
 
   // Draws a leaflet Polygon
-  renderPolygon(polygon, featureGroup) {
+  renderPolygon(polygon, featureGroup, shouldCenter) {
     if (featureGroup) {
       const options = L.extend(
         {},
@@ -550,11 +555,11 @@ class SpatialSelection extends Component {
         drawnLayer: poly,
         drawnLayerType: 'polygon'
       })
-      this.setLayer(poly)
+      this.setLayer(poly, shouldCenter)
     }
   }
 
-  renderLine(points, featureGroup) {
+  renderLine(points, featureGroup, shouldCenter) {
     if (featureGroup) {
       const options = L.extend(
         {},
@@ -574,11 +579,11 @@ class SpatialSelection extends Component {
         drawnLayer: line,
         drawnLayerType: 'line'
       })
-      this.setLayer(line)
+      this.setLayer(line, shouldCenter)
     }
   }
 
-  renderCircle(points, featureGroup) {
+  renderCircle(points, featureGroup, shouldCenter) {
     if (featureGroup) {
       const [
         lat,
@@ -599,7 +604,7 @@ class SpatialSelection extends Component {
         drawnLayer: circle,
         drawnLayerType: 'circle'
       })
-      this.setLayer(circle)
+      this.setLayer(circle, shouldCenter)
     }
   }
 
