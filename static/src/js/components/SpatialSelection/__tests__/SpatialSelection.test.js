@@ -28,7 +28,8 @@ const defaultProps = {
   isProjectPage: false,
   lineSearch: '',
   mapRef: {
-    leafletElement: {}
+    leafletElement: {},
+    props: {}
   },
   pointSearch: '',
   polygonSearch: '',

@@ -28,17 +28,17 @@ import ProjectionSwitcher
   from '../../components/Map/ProjectionSwitcher'
 import GranuleImageContainer
   from '../GranuleImageContainer/GranuleImageContainer'
+import ShapefileLayer from '../../components/Map/ShapefileLayer'
+import MouseEventsLayer from '../../components/Map/MouseEventsLayer'
 
 import crsProjections from '../../util/map/crs'
 import projections from '../../util/map/projections'
+import murmurhash3 from '../../util/murmurhash3'
 
 import actions from '../../actions/index'
 
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
-import ShapefileLayer from '../../components/Map/ShapefileLayer'
-import MouseEventsLayer from '../../components/Map/MouseEventsLayer'
-import murmurhash3 from '../../util/murmurhash3'
 
 const { BaseLayer, Overlay } = LayersControl
 
@@ -61,7 +61,7 @@ const mapStateToProps = state => ({
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
   map: state.map,
-  pathname: state.router.location.pathname,
+  router: state.router,
   shapefile: state.shapefile,
   project: state.project
 })
@@ -216,8 +216,8 @@ export class MapContainer extends Component {
       collections,
       focusedCollection,
       focusedGranule,
-      pathname,
       project,
+      router,
       shapefile,
       onChangeFocusedGranule,
       onExcludeGranule,
@@ -236,6 +236,8 @@ export class MapContainer extends Component {
       zoom
     } = map
 
+    const { location } = router
+    const { pathname } = location
     const isProjectPage = isPath(pathname, '/projects')
 
     const center = [latitude, longitude]
@@ -405,8 +407,8 @@ MapContainer.propTypes = {
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
   map: PropTypes.shape({}),
-  pathname: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
+  router: PropTypes.shape({}).isRequired,
   shapefile: PropTypes.shape({}).isRequired,
   onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
