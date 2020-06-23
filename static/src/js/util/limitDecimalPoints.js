@@ -1,7 +1,7 @@
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 /**
- * Limits a Latitude/Longitude point to 5 decimal places
+ * Limits a Latitude/Longitude point to a configured number of decimal places
  * @param {Array} latLng A Lat/Lng point as an array
  */
 export const limitDecimalPoints = (latLng) => {
@@ -10,7 +10,7 @@ export const limitDecimalPoints = (latLng) => {
 }
 
 /**
- * Limits an array of Latitude/Longitude points to 5 decimal places
+ * Limits an array of Latitude/Longitude points to a configured number of decimal places
  * @param {Array} latLngs  Array of Lat/Lng points (each point a comma delimited string)
  */
 export const limitLatLngDecimalPoints = latLngs => latLngs.map((latLng) => {

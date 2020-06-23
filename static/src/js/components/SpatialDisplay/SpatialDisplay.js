@@ -361,23 +361,23 @@ class SpatialDisplay extends Component {
   }
 
   /**
-   * Validates a Lat/Lng is limited to 5 decimal points
-   * @param {*} latLng
+   * Validates a Lat/Lng is limited to a configured number of decimal places
+   * @param {String} latLng
    */
   isValidDecimalLatLng(latLng) {
     const regex = new RegExp(`^-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}},?-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}}$`)
 
-    return latLng.match(regex)
+    return !!(latLng.match(regex))
   }
 
   /**
    * Validates a radius is limited to an integer
-   * @param {*} value
+   * @param {String} value
    */
   isValidRadius(value) {
     const regex = /^\d*$/
 
-    return value.match(regex)
+    return !!(value.match(regex))
   }
 
   /**
@@ -391,7 +391,7 @@ class SpatialDisplay extends Component {
 
     const validCoordinates = coordinates.trim().match(/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/)
     if (validCoordinates == null) {
-      errorMessage = `Coordinates (${coordinates}) must use 'lat,lon' format with ${defaultSpatialDecimalSize} decimal places`
+      errorMessage = `Coordinates (${coordinates}) must use 'lat,lon' format with up to ${defaultSpatialDecimalSize} decimal place(s)`
     }
 
     if (validCoordinates) {
