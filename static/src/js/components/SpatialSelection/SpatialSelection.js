@@ -122,12 +122,13 @@ class SpatialSelection extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      pointSearch,
+      advancedSearch = {},
       boundingBoxSearch,
-      polygonSearch,
-      lineSearch,
       circleSearch,
-      mapRef
+      lineSearch,
+      mapRef,
+      pointSearch,
+      polygonSearch
     } = this.props
     const {
       drawnLayer,
@@ -140,16 +141,26 @@ class SpatialSelection extends Component {
       return
     }
 
+    const { regionSearch = {} } = advancedSearch
+    const { selectedRegion = {} } = regionSearch
+    const { spatial: regionSpatial } = selectedRegion
+
+    const { regionSearch: nextRegionSearch = {} } = nextProps.advancedSearch
+    const { selectedRegion: nextSelectedRegion = {} } = nextRegionSearch
+    const { spatial: nextRegionSpatial } = nextSelectedRegion
+
     const newDrawing = nextProps.pointSearch
       || nextProps.boundingBoxSearch
       || nextProps.polygonSearch
       || nextProps.lineSearch
       || nextProps.circleSearch
+      || nextRegionSpatial
     const oldDrawing = pointSearch
     || boundingBoxSearch
     || polygonSearch
     || lineSearch
     || circleSearch
+    || regionSpatial
 
     const { featureGroupRef = {} } = this
     const { leafletElement = {} } = featureGroupRef
