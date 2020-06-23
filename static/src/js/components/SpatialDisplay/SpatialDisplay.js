@@ -16,8 +16,11 @@ import FilterStackContents from '../FilterStack/FilterStackContents'
 import SpatialDisplayEntry from './SpatialDisplayEntry'
 import { eventEmitter } from '../../events/events'
 import pluralize from '../../util/pluralize'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import './SpatialDisplay.scss'
+
+const { defaultSpatialDecimalSize } = getApplicationConfig()
 
 class SpatialDisplay extends Component {
   constructor(props) {
@@ -362,7 +365,7 @@ class SpatialDisplay extends Component {
    * @param {*} latLng
    */
   isValidDecimalLatLng(latLng) {
-    const regex = /^-?\d*\.?\d{0,5},?-?\d*\.?\d{0,5}$/
+    const regex = new RegExp(`^-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}},?-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}}$`)
 
     return latLng.match(regex)
   }
@@ -388,7 +391,7 @@ class SpatialDisplay extends Component {
 
     const validCoordinates = coordinates.trim().match(/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/)
     if (validCoordinates == null) {
-      errorMessage = `Coordinates (${coordinates}) must use 'lat,lon' format.`
+      errorMessage = `Coordinates (${coordinates}) must use 'lat,lon' format with ${defaultSpatialDecimalSize} decimal places`
     }
 
     if (validCoordinates) {

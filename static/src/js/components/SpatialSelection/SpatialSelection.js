@@ -17,6 +17,9 @@ import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/ma
 import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
 import { mbr } from '../../util/map/mbr'
 import { limitLatLngDecimalPoints } from '../../util/limitDecimalPoints'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+const { defaultSpatialDecimalSize } = getApplicationConfig()
 
 const normalColor = '#00ffff'
 const errorColor = '#990000'
@@ -64,7 +67,7 @@ L.Draw.Tooltip.prototype.updateContent = function updateContent(content) {
 const originalUpdatePosition = L.Draw.Tooltip.prototype.updatePosition
 
 L.Draw.Tooltip.prototype.updatePosition = function updatePosition(latlng) {
-  this._point = `(${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)})`
+  this._point = `(${latlng.lat.toFixed(defaultSpatialDecimalSize)}, ${latlng.lng.toFixed(defaultSpatialDecimalSize)})`
   if (this._content != null) {
     this.updateContent(this._content)
   }
