@@ -166,7 +166,6 @@ class SpatialSelection extends Component {
       }
 
       // Draw the new shape
-      this.renderShape(nextProps)
       this.renderShape(nextProps, true)
     }
 
