@@ -18,6 +18,7 @@
     ],
     "defaultMaxOrderSize": 1000000,
     "defaultGranulesPerOrder": 2000,
+    "defaultSpatialDecimalSize": 5,
     "ummGranuleVersion": "1.5",
     "ummServiceVersion": "1.2",
     "temporalDateFormatFull": "YYYY-MM-DD HH:mm:ss",

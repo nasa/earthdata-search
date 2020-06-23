@@ -1,10 +1,13 @@
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+
 /**
  * Limits a Latitude/Longitude point to 5 decimal places
  * @param {Array} latLng A Lat/Lng point as an array
  */
-export const limitDecimalPoints = latLng => (
-  latLng.map(point => Number(parseFloat(point).toFixed(5)))
-)
+export const limitDecimalPoints = (latLng) => {
+  const { defaultSpatialDecimalSize } = getApplicationConfig()
+  return latLng.map(point => Number(parseFloat(point).toFixed(defaultSpatialDecimalSize)))
+}
 
 /**
  * Limits an array of Latitude/Longitude points to 5 decimal places
