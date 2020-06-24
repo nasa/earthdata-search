@@ -48,6 +48,10 @@ npm is a separate project from Node.js, and tends to update more frequently. As 
 
     npm install -g npm@latest
 
+##### NVM
+To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly.
+
+
 ##### Serverless Framework
 Earthdata Search utilizes the [Serverless Framework](https://serverless.com/) for managing AWS resources. In order to fully run and manage the application you'll need to install it:
 

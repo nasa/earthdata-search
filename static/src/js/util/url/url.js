@@ -17,8 +17,8 @@ import { encodeAutocomplete, decodeAutocomplete } from './autocompleteEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
- * @param {string} url - A string containing both a path and query string
- * @return {string} A string containing only query parameter values
+ * @param {String} url - A string containing both a path and query string
+ * @return {String} A string containing only query parameter values
  */
 export const queryParamsFromUrlString = url => url.split(/[?#]/)[1]
 
@@ -65,8 +65,8 @@ const urlDefs = {
 
 /**
  * Helper method to decode a given paramName from URL parameters base on urlDefs keys
- * @param {object} params Object of encoded URL parameters
- * @param {string} paramName Param to decode
+ * @param {Object} params Object of encoded URL parameters
+ * @param {String} paramName Param to decode
  */
 const decodeHelp = (params, paramName) => {
   const value = params[urlDefs[paramName].shortKey]
@@ -75,8 +75,8 @@ const decodeHelp = (params, paramName) => {
 
 /**
  * Given a URL param string, returns an object that matches the redux store
- * @param {string} paramString a URL encoded parameter string
- * @return {object} An object of values that match the redux store
+ * @param {String} paramString a URL encoded parameter string
+ * @return {Object} An object of values that match the redux store
  */
 export const decodeUrlParams = (paramString) => {
   // decode the paramString
@@ -164,8 +164,8 @@ export const decodeUrlParams = (paramString) => {
 
 /**
  * Given a set of React Component Props, returns a URL path with URL encoded parameter string
- * @param {object} props React Props
- * @return {string} URL encoded parameter string
+ * @param {Object} props React Props
+ * @return {String} URL encoded parameter string
  */
 export const encodeUrlQuery = (props) => {
   const query = {}
@@ -196,27 +196,6 @@ export const encodeUrlQuery = (props) => {
   const { pathname } = props
   const fullPath = pathname + paramString
   return fullPath
-}
-
-/**
- * Create a query string containing both indexed and non-indexed keys.
- * @param {object} queryParams - An object containing all queryParams.
- * @param {array} nonIndexedKeys - An array of strings that represent the keys which should not be indexed.
- * @return {string} A query string containing both indexed and non-indexed keys.
- */
-export const prepKeysForCmr = (queryParams, nonIndexedKeys = []) => {
-  const nonIndexedAttrs = {}
-  const indexedAttrs = { ...queryParams }
-
-  nonIndexedKeys.forEach((key) => {
-    nonIndexedAttrs[key] = indexedAttrs[key]
-    delete indexedAttrs[key]
-  })
-
-  return [
-    qs.stringify(indexedAttrs),
-    qs.stringify(nonIndexedAttrs, { indices: false, arrayFormat: 'brackets' })
-  ].filter(Boolean).join('&')
 }
 
 /**
