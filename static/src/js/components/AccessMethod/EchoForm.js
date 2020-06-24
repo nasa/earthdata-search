@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
 
 import { mbr } from '../../util/map/mbr'
-import { insertRawModelIntoEchoForm } from '../../util/insertRawModelIntoEchoForm'
 
 export const EchoForm = ({
   collectionId,
@@ -17,7 +16,6 @@ export const EchoForm = ({
   const [rawModel, setRawModel] = useState('')
   const [model, setModel] = useState('')
   const [isValid, setIsValid] = useState(true)
-  const formWithModel = useRef(insertRawModelIntoEchoForm(propsRawModel, form))
 
   const onFormModelUpdated = (value) => {
     const { model: newModel, rawModel: newRawModel } = value
@@ -46,16 +44,19 @@ export const EchoForm = ({
   }
 
   useEffect(() => {
-    onUpdateAccessMethod({
-      collectionId,
-      method: {
-        [methodKey]: {
-          isValid,
-          model,
-          rawModel
+    // If model and rawModel have been changed from their default value, update the store
+    if (model !== '' && rawModel !== '') {
+      onUpdateAccessMethod({
+        collectionId,
+        method: {
+          [methodKey]: {
+            isValid,
+            model,
+            rawModel
+          }
         }
-      }
-    })
+      })
+    }
   }, [model, rawModel, isValid])
 
   const spatialMbr = getMbr(spatial)
@@ -67,7 +68,8 @@ export const EchoForm = ({
     <section className="echoform">
       <EDSCEchoform
         addBootstrapClasses
-        form={formWithModel.current}
+        defaultRawModel={propsRawModel}
+        form={form}
         hasShapefile={hasShapefile}
         prepopulateValues={spatialMbr}
         onFormModelUpdated={onFormModelUpdated}
