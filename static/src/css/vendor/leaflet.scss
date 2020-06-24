@@ -1,5 +1,7 @@
 #root {
   .map {
+    height: 100%;
+
     .projection-switcher {
       &__button {
         background-image: url('~Images/projection-sprite.png');
@@ -45,10 +47,6 @@
           cursor: not-allowed;
         }
       }
-    }
-
-    .leaflet-container {
-      height: 100%;
     }
 
     .leaflet-control-container {
@@ -206,16 +204,21 @@
     }
 
     .leaflet-right .leaflet-draw-actions {
-      top: -30px !important;
-      right: 0;
+      top: 2px !important;
+      right: 35px !important;
 
       li:first-child a {
-        border-radius: 0;
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+      }
 
+      li:last-child a {
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
       }
     }
 
-    .leaflet-container .leaflet-draw-actions a {
+    .leaflet-draw-actions a {
       background-color: $color__black--400;
       color: $color__white;
     }
