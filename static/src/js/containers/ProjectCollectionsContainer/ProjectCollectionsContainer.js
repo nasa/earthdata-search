@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 import { metricsDataAccess } from '../../middleware/metrics/actions'
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
+import { viewCollectionGranules, viewCollectionDetails } from '../../actions/focusedCollection'
 
 const mapDispatchToProps = dispatch => ({
   onRemoveCollectionFromProject:
@@ -22,7 +23,11 @@ const mapDispatchToProps = dispatch => ({
   onMetricsDataAccess:
     data => dispatch(metricsDataAccess(data)),
   onUpdateFocusedCollection:
-    collectionId => dispatch(actions.updateFocusedCollection(collectionId))
+    collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
+  onViewCollectionDetails:
+    data => dispatch(viewCollectionDetails(data)),
+  onViewCollectionGranules:
+    data => dispatch(viewCollectionGranules(data))
 })
 
 const mapStateToProps = state => ({
@@ -49,7 +54,9 @@ export const ProjectCollectionsContainer = (props) => {
     onSetActivePanel,
     onTogglePanels,
     onSetActivePanelSection,
-    onUpdateProjectName
+    onUpdateProjectName,
+    onViewCollectionDetails,
+    onViewCollectionGranules
   } = props
 
   return (
@@ -68,6 +75,8 @@ export const ProjectCollectionsContainer = (props) => {
       onTogglePanels={onTogglePanels}
       onSetActivePanelSection={onSetActivePanelSection}
       onUpdateProjectName={onUpdateProjectName}
+      onViewCollectionDetails={onViewCollectionDetails}
+      onViewCollectionGranules={onViewCollectionGranules}
     />
   )
 }
@@ -86,7 +95,9 @@ ProjectCollectionsContainer.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired
+  onUpdateProjectName: PropTypes.func.isRequired,
+  onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCollectionsContainer)

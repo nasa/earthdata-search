@@ -25,10 +25,12 @@ export const ProjectCollectionsList = (props) => {
     mapProjection,
     onRemoveCollectionFromProject,
     onSetActivePanel,
+    onSetActivePanelSection,
     onToggleCollectionVisibility,
     onTogglePanels,
-    onSetActivePanelSection,
     onUpdateFocusedCollection,
+    onViewCollectionDetails,
+    onViewCollectionGranules,
     panels,
     project
   } = props
@@ -52,23 +54,25 @@ export const ProjectCollectionsList = (props) => {
     const color = getColorByIndex(index)
     return (
       <ProjectCollectionItem
+        activePanelSection={activePanelSection}
+        collection={byId[collectionId]}
         collectionCount={projectIds.length}
         collectionId={collectionId}
-        collection={byId[collectionId]}
         collectionSearch={collectionSearch}
-        projectCollection={projectById[collectionId]}
         color={color}
         index={index}
-        activePanelSection={activePanelSection}
         isPanelActive={isPanelActive}
-        mapProjection={mapProjection}
         key={collectionId}
-        onToggleCollectionVisibility={onToggleCollectionVisibility}
-        onUpdateFocusedCollection={onUpdateFocusedCollection}
+        mapProjection={mapProjection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onSetActivePanel={onSetActivePanel}
-        onTogglePanels={onTogglePanels}
         onSetActivePanelSection={onSetActivePanelSection}
+        onToggleCollectionVisibility={onToggleCollectionVisibility}
+        onTogglePanels={onTogglePanels}
+        onUpdateFocusedCollection={onUpdateFocusedCollection}
+        onViewCollectionDetails={onViewCollectionDetails}
+        onViewCollectionGranules={onViewCollectionGranules}
+        projectCollection={projectById[collectionId]}
       />
     )
   })
@@ -107,10 +111,12 @@ ProjectCollectionsList.propTypes = {
   mapProjection: PropTypes.string.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
+  onSetActivePanelSection: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
+  onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired
 }

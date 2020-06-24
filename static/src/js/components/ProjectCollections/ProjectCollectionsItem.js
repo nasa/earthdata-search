@@ -46,11 +46,13 @@ const ProjectCollectionItem = ({
   mapProjection,
   onRemoveCollectionFromProject,
   onSetActivePanel,
+  onSetActivePanelSection,
   onToggleCollectionVisibility,
   onTogglePanels,
-  projectCollection,
-  onSetActivePanelSection,
-  onUpdateFocusedCollection
+  onUpdateFocusedCollection,
+  onViewCollectionDetails,
+  onViewCollectionGranules,
+  projectCollection
 }) => {
   const handleToggleCollectionVisibility = (event) => {
     onToggleCollectionVisibility(collectionId)
@@ -148,6 +150,18 @@ const ProjectCollectionItem = ({
                     }
                   }}
                 />
+                <MoreActionsDropdownItem
+                  className="project-collections-item__more-actions-item project-collections-item__more-actions-collection-details"
+                  icon="info-circle"
+                  title="Collection Details"
+                  onClick={() => onViewCollectionDetails(collectionId)}
+                />
+                <MoreActionsDropdownItem
+                  className="project-collections-item__more-actions-item project-collections-item__more-actions-granules"
+                  icon="map"
+                  title="View Granules"
+                  onClick={() => onViewCollectionGranules(collectionId)}
+                />
               </MoreActionsDropdown>
             </>
           )
@@ -232,6 +246,8 @@ ProjectCollectionItem.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({}).isRequired

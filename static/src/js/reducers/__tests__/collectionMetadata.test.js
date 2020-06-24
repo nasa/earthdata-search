@@ -643,6 +643,13 @@ describe('STARTED_GRANULES_TIMER', () => {
       byId: {
         collectionId: {
           granules: {
+            allIds: [],
+            byId: {},
+            hits: null,
+            isCwic: null,
+            isLoaded: false,
+            isLoading: false,
+            loadTime: 0,
             timerStart: 5
           }
         }
@@ -671,6 +678,13 @@ describe('FINISHED_GRANULES_TIMER', () => {
       byId: {
         collectionId: {
           granules: {
+            allIds: [],
+            byId: {},
+            hits: null,
+            isCwic: null,
+            isLoaded: false,
+            isLoading: false,
+            loadTime: 0,
             timerStart: start
           }
         }
@@ -682,8 +696,14 @@ describe('FINISHED_GRANULES_TIMER', () => {
       byId: {
         collectionId: {
           granules: {
-            timerStart: null,
-            loadTime: 5
+            allIds: [],
+            byId: {},
+            hits: null,
+            isCwic: null,
+            isLoaded: false,
+            isLoading: false,
+            loadTime: 5,
+            timerStart: null
           }
         }
       }

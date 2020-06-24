@@ -79,6 +79,8 @@ export class ProjectCollections extends Component {
       onTogglePanels,
       onUpdateFocusedCollection,
       onUpdateProjectName,
+      onViewCollectionDetails,
+      onViewCollectionGranules,
       panels,
       project,
       savedProject
@@ -89,6 +91,7 @@ export class ProjectCollections extends Component {
       noGranules,
       tooManyGranules
     } = isProjectValid(project, collections)
+
     const { isSubmitting } = project
 
     // TODO: Use a loading state instead of relying on metadata keys
@@ -110,17 +113,19 @@ export class ProjectCollections extends Component {
         />
         <ProjectCollectionsList
           collections={collections}
-          onMetricsDataAccess={onMetricsDataAccess}
-          onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-          onToggleCollectionVisibility={onToggleCollectionVisibility}
-          onSetActivePanel={onSetActivePanel}
-          onTogglePanels={onTogglePanels}
-          onSetActivePanelSection={onSetActivePanelSection}
-          onUpdateFocusedCollection={onUpdateFocusedCollection}
-          project={project}
-          panels={panels}
           collectionSearch={collectionSearch}
           mapProjection={mapProjection}
+          onMetricsDataAccess={onMetricsDataAccess}
+          onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+          onSetActivePanel={onSetActivePanel}
+          onSetActivePanelSection={onSetActivePanelSection}
+          onToggleCollectionVisibility={onToggleCollectionVisibility}
+          onTogglePanels={onTogglePanels}
+          onUpdateFocusedCollection={onUpdateFocusedCollection}
+          onViewCollectionDetails={onViewCollectionDetails}
+          onViewCollectionGranules={onViewCollectionGranules}
+          panels={panels}
+          project={project}
         />
         <div className="project-collections__footer">
           {
@@ -188,6 +193,8 @@ ProjectCollections.propTypes = {
   onSetActivePanelSection: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
+  onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired

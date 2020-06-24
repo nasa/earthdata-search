@@ -26,6 +26,8 @@ function setup() {
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
     onTogglePanels: jest.fn(),
+    onViewCollectionDetails: jest.fn(),
+    onViewCollectionGranules: jest.fn(),
     onSetActivePanel: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),

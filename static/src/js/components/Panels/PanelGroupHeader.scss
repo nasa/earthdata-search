@@ -16,6 +16,10 @@
 
   &__heading {
     margin: 0;
+    display: inline;
+    font-weight: 700;
+    font-size: 1rem;
+    vertical-align: middle;
   }
 
   &__heading-secondary {
@@ -26,9 +30,21 @@
   }
 
   &__heading-primary {
-    display: block;
+    margin-right: 0.75rem;
     font-size: 1rem;
     font-weight: 700;
     color: $color__black--500;
+  }
+
+  &__heading-primary-link {
+    position: relative;
+    display: inline;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    vertical-align: middle;
+  }
+
+  &__heading-wrap {
+    margin-bottom: $spacer/4;
   }
 }

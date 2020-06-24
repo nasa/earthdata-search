@@ -24,6 +24,7 @@ export const PanelGroup = ({
   children,
   footer,
   header,
+  headingLink,
   isActive,
   isOpen,
   onChangePanel,
@@ -58,6 +59,7 @@ export const PanelGroup = ({
       <PanelGroupHeader
         primaryHeading={primaryHeading}
         secondaryHeading={secondaryHeading}
+        headingLink={headingLink}
         header={header}
         secondaryHeader={secondaryHeader}
       />
@@ -70,6 +72,7 @@ PanelGroup.defaultProps = {
   activePanelId: '0',
   footer: null,
   header: null,
+  headingLink: null,
   isActive: false,
   isOpen: false,
   onChangePanel: null,
@@ -86,6 +89,7 @@ PanelGroup.propTypes = {
   ]).isRequired,
   footer: PropTypes.node,
   header: PropTypes.node,
+  headingLink: PropTypes.shape({}),
   isActive: PropTypes.bool,
   isOpen: PropTypes.bool,
   onChangePanel: PropTypes.func,

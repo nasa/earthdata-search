@@ -32,8 +32,13 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     authToken,
     focusedCollection,
     metadata,
+    project = {},
     query
   } = getState()
+
+  const { byId: projectById = {} } = project
+  const { [focusedCollection]: focusedProjectCollection = {} } = projectById
+  const { addedGranuleIds = [] } = focusedProjectCollection
 
   const { collections: collectionResults = {} } = metadata
 
@@ -68,8 +73,11 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   // If we already have the metadata for this focusedCollection, don't fetch it again
   if (Object.keys(fetchedCollectionMetadata).length) {
-    // If granules are already loaded, don't make a new getGranules request
-    if (allGranuleIds.length === 0) {
+    // Only request granules if there are none in teh store for the collection or if the only
+    // granules in the store are the same ones that the user as specifically added
+    if (
+      (addedGranuleIds.length > 0 && addedGranuleIds.length === allGranuleIds.length)
+      || allGranuleIds.length === 0) {
       dispatch(actions.getGranules())
     }
 
@@ -203,7 +211,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
 /**
  * Change the focusedCollection, and get the focusedCollection metadata.
- * @param {string} collectionId
+ * @param {String} collectionId
  */
 export const changeFocusedCollection = collectionId => (dispatch, getState) => {
   const { focusedCollection: currentFocusedCollection } = getState()

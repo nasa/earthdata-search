@@ -20,6 +20,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  onChangePath:
+    path => dispatch(actions.changePath(path)),
   onSelectAccessMethod:
     method => dispatch(actions.selectAccessMethod(method)),
   onTogglePanels:
@@ -57,6 +59,7 @@ export const ProjectPanelsContainer = ({
   shapefileId,
   spatial,
   onChangeGranulePageNum,
+  onChangePath,
   onSelectAccessMethod,
   onTogglePanels,
   onSetActivePanel,
@@ -74,21 +77,22 @@ export const ProjectPanelsContainer = ({
     focusedGranule={focusedGranule}
     granuleQuery={granuleQuery}
     location={location}
-    portal={portal}
-    project={project}
-    panels={panels}
-    shapefileId={shapefileId}
-    spatial={spatial}
+    onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
     onChangeGranulePageNum={onChangeGranulePageNum}
+    onChangePath={onChangePath}
+    onFocusedGranuleChange={onFocusedGranuleChange}
+    onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
     onSelectAccessMethod={onSelectAccessMethod}
-    onTogglePanels={onTogglePanels}
     onSetActivePanel={onSetActivePanel}
     onSetActivePanelGroup={onSetActivePanelGroup}
+    onTogglePanels={onTogglePanels}
     onUpdateAccessMethod={onUpdateAccessMethod}
     onUpdateFocusedCollection={onUpdateFocusedCollection}
-    onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
-    onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
-    onFocusedGranuleChange={onFocusedGranuleChange}
+    panels={panels}
+    portal={portal}
+    project={project}
+    shapefileId={shapefileId}
+    spatial={spatial}
   />
 )
 
@@ -109,6 +113,7 @@ ProjectPanelsContainer.propTypes = {
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
