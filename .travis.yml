@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 10
+  - '12.16.3'
 addons:
   apt:
     packages:
@@ -20,7 +20,6 @@ script:
 branches:
   only: # Only build master. All pull requests also get built
     - master
-    - EDSC-2545
 deploy:
   provider: script
   script: bin/ecc-sync
