@@ -56,7 +56,6 @@ function setup(overrideProps) {
     focusedCollection: '',
     focusedGranule: '',
     granuleQuery: {},
-    location: {},
     portal: {},
     project: {
       byId: {
@@ -72,12 +71,16 @@ function setup(overrideProps) {
       },
       collectionIds: ['collectionId']
     },
+    location: {
+      search: ''
+    },
     panels: {
       activePanel: '0.0.0',
       isOpen: true
     },
     shapefileId: '',
     spatial: {},
+    onChangePath: jest.fn(),
     onSelectAccessMethod: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),

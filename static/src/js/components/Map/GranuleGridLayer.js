@@ -1198,7 +1198,6 @@ export class GranuleGridLayer extends MapLayer {
     layerDataCollectionIds.forEach((id) => {
       const {
         collectionId,
-        collectionIndex,
         color,
         lightColor,
         metadata,

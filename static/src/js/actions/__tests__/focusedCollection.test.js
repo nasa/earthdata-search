@@ -41,6 +41,7 @@ describe('changeFocusedCollection', () => {
     // mocks
     const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
     getFocusedCollectionMock.mockImplementation(() => jest.fn())
+
     const getTimelineMock = jest.spyOn(actions, 'getTimeline')
     getTimelineMock.mockImplementation(() => jest.fn())
 
@@ -85,10 +86,13 @@ describe('changeFocusedCollection', () => {
     // mocks
     const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
     getFocusedCollectionMock.mockImplementation(() => jest.fn())
+
     const getTimelineMock = jest.spyOn(actions, 'getTimeline')
     getTimelineMock.mockImplementation(() => jest.fn())
+
     const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule')
     getFocusedGranuleMock.mockImplementation(() => jest.fn())
+
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
     // mockStore with initialState
@@ -268,6 +272,154 @@ describe('getFocusedCollection', () => {
     expect(relevancyMock).toHaveBeenCalledTimes(1)
   })
 
+  describe('when added granules are in the store as well as granule metadata', () => {
+    test('should update the focusedCollection and not call getGranules', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+      jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
+      // mock getGranules
+      const getGranulesMock = jest.spyOn(actions, 'getGranules')
+      getGranulesMock.mockImplementation(() => jest.fn())
+
+      const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+      relevancyMock.mockImplementation(() => jest.fn())
+
+      // mockStore with initialState
+      const store = mockStore({
+        authToken: '',
+        focusedCollection: 'collectionId1',
+        metadata: {
+          collections: {
+            allIds: ['collectionId1'],
+            byId: {
+              collectionId1: {
+                granules: {
+                  hits: 2,
+                  allIds: ['granuleOne', 'granuleTwo'],
+                  byId: {
+                    granuleOne: {},
+                    granuleTwo: {}
+                  }
+                },
+                metadata: {
+                  conceptId: 'collectionId1'
+                }
+              }
+            }
+          }
+        },
+        project: {
+          collectionIds: ['collectionId1'],
+          byId: {
+            collectionId1: {
+              addedGranuleIds: ['granuleOne']
+            }
+          }
+        },
+        query: {
+          collection: {}
+        },
+        searchResults: {}
+      })
+
+      // call the dispatch
+      await store.dispatch(getFocusedCollection()).then(() => {
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          type: TOGGLE_SPATIAL_POLYGON_WARNING,
+          payload: false
+        })
+        expect(storeActions[1]).toEqual({
+          type: UPDATE_GRANULE_QUERY,
+          payload: { pageNum: 1 }
+        })
+      })
+
+      // getGranules should not be called
+      expect(getGranulesMock).toHaveBeenCalledTimes(0)
+      expect(relevancyMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when only added granules are in the store and not granule search metadata', () => {
+    test('should update the focusedCollection and call getGranules', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+      jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            collection: {
+              conceptId: 'collectionId1',
+              shortName: 'id_1',
+              versionId: 'VersionID'
+            }
+          }
+        })
+
+      // mock getGranules
+      const getGranulesMock = jest.spyOn(actions, 'getGranules')
+      getGranulesMock.mockImplementation(() => jest.fn())
+
+      const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+      relevancyMock.mockImplementation(() => jest.fn())
+
+      // mockStore with initialState
+      const store = mockStore({
+        authToken: '',
+        focusedCollection: 'collectionId1',
+        metadata: {
+          collections: {
+            allIds: ['collectionId1'],
+            byId: {
+              collectionId1: {
+                granules: {}
+              }
+            }
+          }
+        },
+        project: {
+          collectionIds: ['collectionId1'],
+          byId: {
+            collectionId1: {
+              addedGranuleIds: ['granuleOne']
+            }
+          }
+        },
+        query: {
+          collection: {}
+        },
+        searchResults: {}
+      })
+
+      // call the dispatch
+      await store.dispatch(getFocusedCollection()).then(() => {
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          type: TOGGLE_SPATIAL_POLYGON_WARNING,
+          payload: false
+        })
+        expect(storeActions[1]).toEqual({
+          type: UPDATE_GRANULE_QUERY,
+          payload: { pageNum: 1 }
+        })
+      })
+
+      // getGranules should not be called
+      expect(getGranulesMock).toHaveBeenCalledTimes(1)
+      expect(relevancyMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
   test('should update the authenticated focusedCollection and call getGranules', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.example.com',
@@ -294,6 +446,7 @@ describe('getFocusedCollection', () => {
     // mock getGranules
     const getGranulesMock = jest.spyOn(actions, 'getGranules')
     getGranulesMock.mockImplementation(() => jest.fn())
+
     const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
     relevancyMock.mockImplementation(() => jest.fn())
 
@@ -415,8 +568,11 @@ describe('getFocusedCollection', () => {
   })
 
   test('does not call updateFocusedCollection on error', async () => {
-    nock(/localhost/)
-      .post(/graph/)
+    const getGranulesMock = jest.spyOn(actions, 'getGranules')
+    getGranulesMock.mockImplementation(() => jest.fn())
+
+    nock(/graph/)
+      .post(/api/)
       .reply(500)
 
     nock(/localhost/)
@@ -432,7 +588,8 @@ describe('getFocusedCollection', () => {
         }
       },
       query: {
-        collection: {}
+        collection: {},
+        granule: {}
       },
       searchResults: {
         granules: {}
@@ -443,7 +600,7 @@ describe('getFocusedCollection', () => {
     const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
     relevancyMock.mockImplementation(() => jest.fn())
 
-    await store.dispatch(actions.getFocusedCollection('')).then(() => {
+    await store.dispatch(actions.getFocusedCollection()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(relevancyMock).toHaveBeenCalledTimes(1)
     })

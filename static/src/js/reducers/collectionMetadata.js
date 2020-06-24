@@ -257,6 +257,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
           [collectionId]: {
             ...state.byId[collectionId],
             granules: {
+              ...initialGranuleState,
               ...state.byId[collectionId].granules,
               timerStart: Date.now()
             }
@@ -278,6 +279,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
           [collectionId]: {
             ...state.byId[collectionId],
             granules: {
+              ...initialGranuleState,
               ...state.byId[collectionId].granules,
               timerStart: null,
               loadTime: Date.now() - timerStart

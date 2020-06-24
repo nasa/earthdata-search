@@ -134,7 +134,6 @@ export const changePath = (path = '') => (dispatch) => {
   return null
 }
 
-
 const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
   // Only replace if the pathname stays the same as the current pathname.
   // Push if the pathname is different

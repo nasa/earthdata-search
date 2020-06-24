@@ -15,6 +15,7 @@ import VariableDetailsPanel from './VariableDetailsPanel'
 import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
 
 import { isAccessMethodValid } from '../../util/accessMethods'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ProjectPanels.scss'
 
@@ -28,6 +29,7 @@ import './ProjectPanels.scss'
  * @param {String} collectionId - The current collection ID.
  * @param {Object} granuleQuery - The granule query from the store.
  * @param {Object} location - The location from the store.
+ * @param {Object} panels - The current panels state.
  * @param {Object} portal - The portal from the store.
  * @param {Object} project - The project from the store.
  * @param {Object} spatial - The spatial from the store.
@@ -40,6 +42,8 @@ import './ProjectPanels.scss'
  * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
  * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
+ * @param {Function} onTogglePanels - Toggles the panels opened or closed.
+ * @param {Function} onSetActivePanel - Switches the currently active panel.
  */
 class ProjectPanels extends PureComponent {
   constructor(props) {
@@ -100,7 +104,10 @@ class ProjectPanels extends PureComponent {
     const nextFocusedCollectionIndex = collectionIds.indexOf(nextFocusedCollection).toString()
     const newFocusedCollectionIndex = activePanel.split('.')[1].toString()
 
-    if (nextFocusedCollectionIndex > -1 && nextFocusedCollectionIndex !== newFocusedCollectionIndex) {
+    if (
+      nextFocusedCollectionIndex > -1
+      && nextFocusedCollectionIndex !== newFocusedCollectionIndex
+    ) {
       onSetActivePanelGroup(nextFocusedCollectionIndex)
       onTogglePanels(true)
     } else if (focusedCollection !== nextFocusedCollection && nextFocusedCollection === '') {
@@ -271,6 +278,7 @@ class ProjectPanels extends PureComponent {
       shapefileId,
       spatial,
       onChangeGranulePageNum,
+      onChangePath,
       onSelectAccessMethod,
       onSetActivePanel,
       onUpdateAccessMethod,
@@ -411,7 +419,6 @@ class ProjectPanels extends PureComponent {
             bootstrapVariant="light"
             className="project-panels__action"
             onClick={() => this.clearSelectedKeyword(`0.${index}.1`)}
-            data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword"
           >
             Back
           </Button>
@@ -421,7 +428,6 @@ class ProjectPanels extends PureComponent {
             bootstrapVariant="primary"
             className="project-panels__action"
             onClick={() => this.onSaveVariables(collectionId, index)}
-            data-bind="visible: selectedKeyword() && !selectedVariable(), click: saveState"
           >
             Save
           </Button>
@@ -436,11 +442,24 @@ class ProjectPanels extends PureComponent {
             bootstrapVariant="primary"
             className="project-panels__action"
             onClick={() => this.clearSelectedVariable(`0.${index}.2`)}
-            data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword"
           >
             Back
           </Button>
         </div>
+      )
+
+      const projectHeadingLink = (
+        <PortalLinkContainer
+          className="panel-group-header__heading-primary-link"
+          to={{
+            pathname: '/search/granules',
+            search: location.search
+          }}
+          onClick={() => { onChangePath(`/search/granules${location.search}`) }}
+        >
+          <i className="fa fa-map" />
+          {' View Granules'}
+        </PortalLinkContainer>
       )
 
       // Panels are controlled using the onSetActivePanel action. The parameters are
@@ -450,6 +469,7 @@ class ProjectPanels extends PureComponent {
       panelSectionEditOptions.push(
         <PanelGroup
           key={`${id}_edit-options`}
+          headingLink={projectHeadingLink}
           primaryHeading={title}
           secondaryHeading="Edit Options"
           footer={editOptionsFooter}
@@ -510,6 +530,7 @@ class ProjectPanels extends PureComponent {
       panelSectionCollectionDetails.push(
         <PanelGroup
           key={`${id}_collection-details`}
+          headingLink={projectHeadingLink}
           primaryHeading={title}
           secondaryHeading="Details"
         >
@@ -574,6 +595,7 @@ ProjectPanels.propTypes = {
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,

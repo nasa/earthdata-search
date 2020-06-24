@@ -20,7 +20,6 @@ function setup() {
     focusedCollection: '',
     focusedGranule: '',
     granuleQuery: {},
-    location: {},
     portal: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
@@ -32,6 +31,10 @@ function setup() {
     onAddGranuleToProjectCollection: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
+    location: {
+      search: ''
+    },
+    onChangePath: jest.fn(),
     project: {
       collectionIds: ['collectionId']
     },

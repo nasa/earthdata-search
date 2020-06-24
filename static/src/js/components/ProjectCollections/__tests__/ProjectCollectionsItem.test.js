@@ -42,6 +42,8 @@ function setup(overrideProps) {
     onSetActivePanel: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),
+    onViewCollectionDetails: jest.fn(),
+    onViewCollectionGranules: jest.fn(),
     projectCollection: {
       accessMethods: {}
     },
@@ -176,6 +178,26 @@ describe('ProjectCollectionItem component', () => {
     button.simulate('click', { preventDefault: jest.fn() })
     expect(props.onToggleCollectionVisibility).toHaveBeenCalledTimes(1)
     expect(props.onToggleCollectionVisibility).toHaveBeenCalledWith('collectionId')
+  })
+
+  test('View collection details button calls onViewCollectionDetails', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const button = enzymeWrapper.find('.project-collections-item__more-actions-collection-details')
+
+    button.simulate('click', { preventDefault: jest.fn() })
+    expect(props.onViewCollectionDetails).toHaveBeenCalledTimes(1)
+    expect(props.onViewCollectionDetails).toHaveBeenCalledWith('collectionId')
+  })
+
+  test('View collection details button calls onViewCollectionGranules', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const button = enzymeWrapper.find('.project-collections-item__more-actions-granules')
+
+    button.simulate('click', { preventDefault: jest.fn() })
+    expect(props.onViewCollectionGranules).toHaveBeenCalledTimes(1)
+    expect(props.onViewCollectionGranules).toHaveBeenCalledWith('collectionId')
   })
 
   describe('validity icon', () => {
