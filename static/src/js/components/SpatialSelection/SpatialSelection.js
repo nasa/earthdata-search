@@ -318,6 +318,10 @@ class SpatialSelection extends Component {
     }
 
     this.updateStateAndQuery(layer, type)
+
+    // Assign the type to the layer, and then the layer so that it's available when editing
+    layer.type = layerType
+    this.layer = layer
   }
 
   // Callback from EditControl, called when the layer is deleted
@@ -374,7 +378,7 @@ class SpatialSelection extends Component {
         const center = layer.getLatLng()
         const radius = layer.getRadius()
         latLngs = limitLatLngDecimalPoints([center].map(p => `${p.lng},${p.lat}`))
-        latLngs.push(radius.toFixed(0))
+        latLngs.push(parseFloat(radius).toFixed(0))
         break
       }
       default:
@@ -422,10 +426,21 @@ class SpatialSelection extends Component {
     const map = mapRef.leafletElement
     let bounds = []
 
-    if (layer.type === 'marker') {
+    if (['circle', 'marker'].indexOf(layer.type) > -1) {
+      // Circle and Marker (Point) only have a single
+      // LatLng, normalize the LatLng for our response
       bounds = [layer.getLatLng()]
     } else {
-      bounds = layer.getLatLngs()
+      const allLatLngs = layer.getLatLngs()
+
+      if (layer.type === 'rectangle') {
+        // Rectangles return an array of arrays. The docs suggest this
+        // is due to the fact that its a multi-polyline
+        // https://leafletjs.com/reference-1.6.0.html#rectangle-getlatlngs
+        ([bounds] = allLatLngs)
+      } else {
+        bounds = allLatLngs
+      }
     }
 
     return bounds.map(latLng => map.latLngToLayerPoint(latLng))
