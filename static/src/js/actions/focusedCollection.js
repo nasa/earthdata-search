@@ -73,7 +73,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   // If we already have the metadata for this focusedCollection, don't fetch it again
   if (Object.keys(fetchedCollectionMetadata).length) {
-    // Only request granules if there are none in teh store for the collection or if the only
+    // Only request granules if there are none in the store for the collection or if the only
     // granules in the store are the same ones that the user as specifically added
     if (
       (addedGranuleIds.length > 0 && addedGranuleIds.length === allGranuleIds.length)
