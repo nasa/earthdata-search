@@ -40,6 +40,8 @@ function setup(overrideProps) {
     onToggleCollectionVisibility: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
+    onSetActivePanelSection: jest.fn(),
+    onUpdateFocusedCollection: jest.fn(),
     projectCollection: {
       accessMethods: {}
     },

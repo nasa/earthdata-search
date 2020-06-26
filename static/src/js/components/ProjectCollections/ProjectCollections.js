@@ -12,9 +12,19 @@ import './ProjectCollections.scss'
 
 /**
  * Renders ProjectCollections.
- * @param {Object} props - The props passed into the component.
- * @param {Object} props.collections - List of collections passed from redux store.
- * @param {Function} props.onRemoveCollectionFromProject - Fired when the remove button is clicked
+ * @param {Object} collections - List of collections passed from redux store.
+ * @param {String} collectionSearch - The collection search.
+ * @param {String} mapProjection - The current map projection.
+ * @param {Function} onMetricsDataAccess - Callback to log metrics events.
+ * @param {Function} onRemoveCollectionFromProject - Callback to remove the current collection from the project.
+ * @param {Function} onSetActivePanel - Callback to set the active panel.
+ * @param {Function} onSetActivePanelSection - Callback to set the active panel section.
+ * @param {Function} onTogglePanels - Callback to toggle the visibility of the panels.
+ * @param {Function} onToggleCollectionVisibility - Callback to toggle the visibility of the collection.
+ * @param {Function} onUpdateProjectName - Callback to update the projet name.
+ * @param {Object} panels - The panels state.
+ * @param {Object} project - The project state.
+ * @param {Object} savedProject - The saved project state.
  */
 export class ProjectCollections extends Component {
   constructor() {
@@ -64,8 +74,10 @@ export class ProjectCollections extends Component {
       onMetricsDataAccess,
       onRemoveCollectionFromProject,
       onSetActivePanel,
+      onSetActivePanelSection,
       onToggleCollectionVisibility,
       onTogglePanels,
+      onUpdateFocusedCollection,
       onUpdateProjectName,
       panels,
       project,
@@ -103,6 +115,8 @@ export class ProjectCollections extends Component {
           onToggleCollectionVisibility={onToggleCollectionVisibility}
           onSetActivePanel={onSetActivePanel}
           onTogglePanels={onTogglePanels}
+          onSetActivePanelSection={onSetActivePanelSection}
+          onUpdateFocusedCollection={onUpdateFocusedCollection}
           project={project}
           panels={panels}
           collectionSearch={collectionSearch}
@@ -171,6 +185,8 @@ ProjectCollections.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,

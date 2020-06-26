@@ -17,10 +17,21 @@ function setup() {
       }
     },
     dataQualitySummaries: {},
+    focusedCollection: '',
+    focusedGranule: '',
+    granuleQuery: {},
+    location: {},
+    portal: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
+    onChangeGranulePageNum: jest.fn(),
+    onSetActivePanelGroup: jest.fn(),
+    onUpdateFocusedCollection: jest.fn(),
+    onAddGranuleToProjectCollection: jest.fn(),
+    onRemoveGranuleFromProjectCollection: jest.fn(),
+    onFocusedGranuleChange: jest.fn(),
     project: {
       collectionIds: ['collectionId']
     },

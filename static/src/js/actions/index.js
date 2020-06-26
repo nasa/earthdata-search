@@ -19,6 +19,7 @@ import {
   changeFocusedCollection,
   clearCollectionGranules,
   getFocusedCollection,
+  updateFocusedCollection,
   viewCollectionGranules,
   viewCollectionDetails
 } from './focusedCollection'
@@ -90,7 +91,9 @@ import {
 } from './focusedGranule'
 import {
   togglePanels,
-  setActivePanel
+  setActivePanel,
+  setActivePanelGroup,
+  setActivePanelSection
 } from './panels'
 import {
   addProjectCollection,
@@ -224,6 +227,8 @@ const actions = {
   selectAccessMethod,
   selectAutocompleteSuggestion,
   setActivePanel,
+  setActivePanelGroup,
+  setActivePanelSection,
   setIsSubmitting,
   setPreferences,
   setPreferencesFromJwt,
@@ -257,6 +262,7 @@ const actions = {
   updateCmrFacet,
   updateCollectionGranuleFilters,
   updateFeatureFacet,
+  updateFocusedCollection,
   updateGranuleMetadata,
   updateGranuleQuery,
   updateGranuleResults,

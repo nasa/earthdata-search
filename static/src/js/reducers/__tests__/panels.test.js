@@ -1,7 +1,9 @@
 import panelsReducer from '../panels'
 import {
   PANELS_TOGGLE,
-  PANELS_SET_PANEL
+  PANELS_SET_PANEL,
+  PANELS_SET_PANEL_GROUP,
+  PANELS_SET_PANEL_SECTION
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -44,6 +46,40 @@ describe('PANELS_SET_PANEL', () => {
       ...initialState,
       isOpen: true,
       activePanel: '0.0.1'
+    }
+
+    expect(panelsReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('PANELS_SET_PANEL_GROUP', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: PANELS_SET_PANEL_GROUP,
+      payload: '1'
+    }
+
+    const expectedState = {
+      ...initialState,
+      isOpen: true,
+      activePanel: '0.1.0'
+    }
+
+    expect(panelsReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('PANELS_SET_PANEL_SECTION', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: PANELS_SET_PANEL_SECTION,
+      payload: '1'
+    }
+
+    const expectedState = {
+      ...initialState,
+      isOpen: true,
+      activePanel: '1.0.0'
     }
 
     expect(panelsReducer(undefined, action)).toEqual(expectedState)

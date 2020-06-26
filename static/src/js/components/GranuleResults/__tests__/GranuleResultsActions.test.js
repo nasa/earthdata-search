@@ -18,6 +18,8 @@ function setup(overrideProps) {
     },
     onAddProjectCollection: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
+    onSetActivePanelSection: jest.fn(),
+    onChangePath: jest.fn(),
     ...overrideProps
   }
 
@@ -59,8 +61,37 @@ describe('GranuleResultsActions component', () => {
         granuleCount: 1,
         isCollectionInProject: true
       })
+
       expect(enzymeWrapper.find('.granule-results-actions__project-pill')).toBeTruthy()
-      expect(enzymeWrapper.find('.granule-results-actions__project-pill').text()).toEqual('1 Granule')
+      expect(enzymeWrapper.find('.granule-results-actions__project-pill').find('span').text()).toEqual('1 Granule')
+    })
+  })
+
+  describe('when the project indicator is clicked', () => {
+    test('sets the panel section', () => {
+      const { enzymeWrapper, props } = setup({
+        granuleCount: 1,
+        isCollectionInProject: true
+      })
+
+      const button = enzymeWrapper.find('.granule-results-actions__project-pill')
+      button.props().onClick()
+
+      expect(props.onSetActivePanelSection).toHaveBeenCalledTimes(1)
+      expect(props.onSetActivePanelSection).toHaveBeenCalledWith('1')
+    })
+
+    test('changes the path', () => {
+      const { enzymeWrapper, props } = setup({
+        granuleCount: 1,
+        isCollectionInProject: true
+      })
+
+      const button = enzymeWrapper.find('.granule-results-actions__project-pill')
+      button.props().onClick()
+
+      expect(props.onChangePath).toHaveBeenCalledTimes(1)
+      expect(props.onChangePath).toHaveBeenCalledWith('/projects?p=collectionId')
     })
   })
 

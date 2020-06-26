@@ -206,9 +206,10 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
  * @param {string} collectionId
  */
 export const changeFocusedCollection = collectionId => (dispatch, getState) => {
+  const { focusedCollection: currentFocusedCollection } = getState()
   if (collectionId === '') {
     dispatch(actions.changeFocusedGranule(''))
-    eventEmitter.emit('map.stickygranule', { granule: null })
+    eventEmitter.emit(`map.layer.${currentFocusedCollection}.stickygranule`, { granule: null })
 
     const { router } = getState()
     const { location } = router

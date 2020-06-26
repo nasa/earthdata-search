@@ -25,11 +25,12 @@ import './ProjectCollectionsItem.scss'
  * @param {Object} props.collectionId - CMR Concept ID of the collection
  * @param {Object} props.collection - CMR metadata of the collection.
  * @param {Object} props.color - Color assigned to the collection based on its location in the project list.
- * @param {Object} props.index - Position of the collection in the project list.
  * @param {Object} props.isPanelActive - Whether or not the panel for the collection is active.
  * @param {Function} props.onRemoveCollectionFromProject - Function called when a collection is removed from the project.
  * @param {Function} props.onToggleCollectionVisibility - Function called when visibility of the collection is toggled.
  * @param {Function} props.onSetActivePanel - Function called when an active panel is set.
+ * @param {Function} props.onSetActivePanelSection - Callback to set the active panel.
+ * @param {Function} props.onUpdateFocusedCollection - Callback to set the focused collection ID.
  * @param {Object} props.projectCollection - Collection from project.byId
  * @param {Object} props.collectionSearch - Search values from query.collection
  */
@@ -47,7 +48,9 @@ const ProjectCollectionItem = ({
   onSetActivePanel,
   onToggleCollectionVisibility,
   onTogglePanels,
-  projectCollection
+  projectCollection,
+  onSetActivePanelSection,
+  onUpdateFocusedCollection
 }) => {
   const handleToggleCollectionVisibility = (event) => {
     onToggleCollectionVisibility(collectionId)
@@ -64,7 +67,8 @@ const ProjectCollectionItem = ({
   } = collection
 
   const {
-    title
+    title,
+    conceptId
   } = metadata
 
   const { isLoaded, singleGranuleSize } = granules
@@ -107,8 +111,9 @@ const ProjectCollectionItem = ({
                 bootstrapVariant="link"
                 label={`${title} Collection Details`}
                 onClick={() => {
-                  onSetActivePanel(`1.${index}.0`)
                   onTogglePanels(true)
+                  onUpdateFocusedCollection(conceptId)
+                  onSetActivePanelSection('1')
                 }}
               >
                 <h3 className="project-collections-item__title">
@@ -186,11 +191,12 @@ const ProjectCollectionItem = ({
                 icon="cog"
                 label="More options"
                 onClick={() => {
-                  onSetActivePanel(`0.${index}.0`)
+                  onUpdateFocusedCollection(conceptId)
+                  onSetActivePanelSection('0')
                   onTogglePanels(true)
                 }}
               >
-                More Options
+                Edit Options
               </Button>
             </div>
           </>
@@ -224,8 +230,10 @@ ProjectCollectionItem.propTypes = {
   mapProjection: PropTypes.string.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
+  onSetActivePanelSection: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
+  onUpdateFocusedCollection: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({}).isRequired
 }
 

@@ -17,7 +17,12 @@ const mapDispatchToProps = dispatch => ({
   onAddProjectCollection:
     collectionId => dispatch(actions.addProjectCollection(collectionId)),
   onRemoveCollectionFromProject:
-    collectionId => dispatch(actions.removeCollectionFromProject(collectionId))
+    collectionId => dispatch(actions.removeCollectionFromProject(collectionId)),
+  onSetActivePanelSection:
+    panelId => dispatch(actions.setActivePanelSection(panelId)),
+  onUpdateFocusedCollection:
+    collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
+  onChangePath: path => dispatch(actions.changePath(path))
 })
 
 const mapStateToProps = state => ({
@@ -37,7 +42,9 @@ export const GranuleResultsActionsContainer = (props) => {
     location,
     project,
     onAddProjectCollection,
-    onRemoveCollectionFromProject
+    onSetActivePanelSection,
+    onRemoveCollectionFromProject,
+    onChangePath
   } = props
   const collection = getFocusedCollectionObject(focusedCollection, collections)
   const { granules, metadata } = collection
@@ -87,14 +94,17 @@ export const GranuleResultsActionsContainer = (props) => {
     <>
       <GranuleResultsActions
         collectionId={focusedCollection}
+        projectCollectionIds={projectCollectionIds}
         granuleCount={granuleCount}
         granuleLimit={granuleLimit}
         initialLoading={initialLoading}
         isCollectionInProject={isCollectionInProject}
         location={location}
         onAddProjectCollection={onAddProjectCollection}
+        onSetActivePanelSection={onSetActivePanelSection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         allGranulesInProject={allGranulesInProject}
+        onChangePath={onChangePath}
       />
     </>
   )
@@ -107,7 +117,9 @@ GranuleResultsActionsContainer.propTypes = {
   granuleQuery: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired
 }
 
 export default withRouter(
