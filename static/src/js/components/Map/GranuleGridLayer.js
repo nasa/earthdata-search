@@ -111,7 +111,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
     super.onAdd()
 
     this._container.setAttribute('id', `granule-vis-${this.collectionId}`)
-    this._handle(this._map, 'on', 'edsc.focuscollection')
     this.setFocus(this.collectionId)
   }
 
@@ -858,9 +857,15 @@ class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   _onEdscMousemove(e) {
+    console.log('_onEdscMousemove')
     if (this._map) {
       const granule = this.granuleAt(e.layerPoint)
+      console.log('granule', granule)
+      console.log('this.collectionId', this.collectionId)
+      console.log('this.granule', this._granule)
       if (this._granule !== granule) {
+        console.log('granule', this._granule !== granule)
+        console.log(`emitting map event map.layer.${this.collectionId}.focusgranule`)
         eventEmitter.emit(`map.layer.${this.collectionId}.focusgranule`, { granule })
       }
     }
@@ -884,7 +889,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
       if (this._stickied === granule) granule = null
 
-      if (granule && granule.collection_concept_id === this.focusedCollection) {
+      if (this.collectionId === this.focusedCollection) {
         eventEmitter.emit(`map.layer.${this.collectionId}.focusgranule`, { granule })
         eventEmitter.emit(`map.layer.${this.collectionId}.stickygranule`, { granule })
       }
