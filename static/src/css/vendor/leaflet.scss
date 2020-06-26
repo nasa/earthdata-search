@@ -204,7 +204,7 @@
     }
 
     .leaflet-right .leaflet-draw-actions {
-      top: 2px !important;
+      top: 0 !important;
       right: 35px !important;
 
       li:first-child a {
@@ -265,6 +265,11 @@
     .leaflet-draw-toolbar .leaflet-draw-draw-polygon,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
       background-position: -29px 0px;
+    }
+
+    .leaflet-draw-toolbar .leaflet-draw-draw-circle,
+    .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-circle {
+      background-position: -90px 0px;
     }
 
     .leaflet-draw-toolbar .leaflet-draw-draw-rectangle,
