@@ -32,8 +32,9 @@ function setup() {
     onRemoveCollectionFromProject: jest.fn(),
     onTogglePanels: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
-    onSetActivePanel: jest.fn(),
-    onUpdateProjectName: jest.fn()
+    onUpdateProjectName: jest.fn(),
+    onUpdateFocusedCollection: jest.fn(),
+    onSetActivePanelSection: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsContainer {...props} />)

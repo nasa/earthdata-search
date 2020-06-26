@@ -6,6 +6,11 @@ import ProjectPanels from '../ProjectPanels'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.restoreAllMocks()
+})
+
 const opendapProps = {
   project: {
     byId: {
@@ -48,6 +53,11 @@ function setup(overrideProps) {
       }
     },
     dataQualitySummaries: {},
+    focusedCollection: '',
+    focusedGranule: '',
+    granuleQuery: {},
+    location: {},
+    portal: {},
     project: {
       byId: {
         collectionId: {
@@ -72,6 +82,12 @@ function setup(overrideProps) {
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
+    onChangeGranulePageNum: jest.fn(),
+    onSetActivePanelGroup: jest.fn(),
+    onUpdateFocusedCollection: jest.fn(),
+    onAddGranuleToProjectCollection: jest.fn(),
+    onRemoveGranuleFromProjectCollection: jest.fn(),
+    onFocusedGranuleChange: jest.fn(),
     ...overrideProps
   }
 
@@ -143,16 +159,17 @@ describe('ProjectPanels component', () => {
     expect(props.onTogglePanels).toHaveBeenCalledWith(false)
   })
 
-  test('onChangePanel calls onSetActivePanel', () => {
+  test('onChangePanel calls onUpdateFocusedCollection', () => {
     const { enzymeWrapper, props } = setup()
 
     enzymeWrapper.instance().onChangePanel('0.0.1')
 
-    expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
-    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
-
+    expect(props.onUpdateFocusedCollection).toHaveBeenCalledTimes(1)
+    expect(props.onUpdateFocusedCollection).toHaveBeenCalledWith('collectionId')
     expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
     expect(props.onTogglePanels).toHaveBeenCalledWith(true)
+    expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
+    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
   })
 
   describe('onCheckboxChange', () => {
@@ -273,7 +290,7 @@ describe('ProjectPanels component', () => {
     })
   })
 
-  test('onSaveVariables calls onUpdateAccessMethod and onChangePanel', () => {
+  test('onSaveVariables calls onUpdateAccessMethod and onUpdateFocusedCollection', () => {
     const { enzymeWrapper, props } = setup(opendapProps)
 
     enzymeWrapper.instance().onSaveVariables('collectionId', 1)
@@ -302,9 +319,10 @@ describe('ProjectPanels component', () => {
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
     expect(props.onSetActivePanel).toHaveBeenCalledWith('0.1.1')
-
     expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
     expect(props.onTogglePanels).toHaveBeenCalledWith(true)
+    expect(props.onUpdateFocusedCollection).toHaveBeenCalledTimes(1)
+    expect(props.onUpdateFocusedCollection).toHaveBeenCalledWith('collectionId')
   })
 
   test('onViewDetails sets the state and calls onChangePanel', () => {

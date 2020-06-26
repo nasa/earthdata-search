@@ -147,6 +147,9 @@ class SecondaryToolbar extends Component {
       }
       return (
         <PortalLinkContainer
+          onClick={() => {
+            onChangePath(`/projects${location.search}`)
+          }}
           to={{
             pathname: '/projects',
             search: location.search

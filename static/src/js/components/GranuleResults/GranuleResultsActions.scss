@@ -88,12 +88,19 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 0.05rem 0.5rem;
+    padding: 0.125rem 0.5rem;
     border-radius: 0.5rem;
+    outline: 0;
+    border: 0;
     font-size: 0.65rem;
-    background-color: $color__brand--blue-dark;
+    background-color: $color__brand--blue;
     color: $color__white;
     text-align: center;
+
+    &:hover {
+      color: rgba($color__white, 0.8);
+      background-color: $color__brand--blue-dark;
+    }
   }
 
   &__project-pill-icon {

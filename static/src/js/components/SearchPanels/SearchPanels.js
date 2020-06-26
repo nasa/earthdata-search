@@ -36,6 +36,7 @@ import './SearchPanels.scss'
  * Renders SearchPanels.
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.panels - The current panels state.
+ * @param {Object} props.portal - The current portal state.
  * @param {Function} props.onTogglePanels - Toggles the panels opened or closed.
  * @param {Function} props.onSetActivePanel - Switches the currently active panel.
  */
@@ -129,7 +130,8 @@ class SearchPanels extends PureComponent {
     const {
       match,
       preferences,
-      portal
+      portal,
+      onSetActivePanel
     } = this.props
 
     const { panelState } = preferences
@@ -195,6 +197,7 @@ class SearchPanels extends PureComponent {
           <GranuleResultsHeaderContainer
             panelView={granulePanelView}
             onChangePanelView={this.onChangeGranulePanelView}
+            onSetActivePanel={onSetActivePanel}
           />
         )}
         onPanelClose={this.onPanelClose}

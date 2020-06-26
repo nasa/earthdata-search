@@ -14,7 +14,22 @@ import Skeleton from '../Skeleton/Skeleton'
 
 import './GranuleResultsActions.scss'
 
+/**
+ * Renders GranuleResultsActions.
+ * @param {Boolean} allGranulesInProject - Flag designating if all granules are in the project.
+ * @param {String} collectionId - The collection ID.
+ * @param {Number} granuleCount - The granule count.
+ * @param {Number} granuleLimit - The granule limit.
+ * @param {Boolean} initialLoading - Flag designating the inital loading state.
+ * @param {Boolean} isCollectionInProject - Flag designating if the collection is in the project.
+ * @param {Object} location - The location from the store.
+ * @param {Function} onAddProjectCollection - Callback to add the collection from the project.
+ * @param {Function} onChangePath - Callback to change the path.
+ * @param {Function} onRemoveCollectionFromProject - Callback to remove the collection from the project.
+ * @param {Function} onSetActivePanelSection - Callback to set the active panel section on the project page.
+ */
 const GranuleResultsActions = ({
+  allGranulesInProject,
   collectionId,
   granuleCount,
   granuleLimit,
@@ -22,8 +37,9 @@ const GranuleResultsActions = ({
   isCollectionInProject,
   location,
   onAddProjectCollection,
+  onChangePath,
   onRemoveCollectionFromProject,
-  allGranulesInProject
+  onSetActivePanelSection
 }) => {
   const addToProjectButton = (
     <Button
@@ -179,7 +195,19 @@ const GranuleResultsActions = ({
                 </span>
                 {
                   isCollectionInProject && (
-                    <div className="granule-results-actions__project-pill">
+                    <PortalLinkContainer
+                      type="button"
+                      label="View granules in project"
+                      className="granule-results-actions__project-pill"
+                      onClick={() => {
+                        onSetActivePanelSection('1')
+                        onChangePath(`/projects${location.search}`)
+                      }}
+                      to={{
+                        pathname: '/projects',
+                        search: location.search
+                      }}
+                    >
                       <i className="fa fa-folder granule-results-actions__project-pill-icon" />
                       {
                         // eslint-disable-next-line no-self-compare
@@ -194,7 +222,7 @@ const GranuleResultsActions = ({
                           </span>
                         )
                       }
-                    </div>
+                    </PortalLinkContainer>
                   )
                 }
               </div>
@@ -225,7 +253,9 @@ GranuleResultsActions.propTypes = {
   isCollectionInProject: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
+  onSetActivePanelSection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   allGranulesInProject: PropTypes.bool.isRequired
 }
 

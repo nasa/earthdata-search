@@ -27,6 +27,8 @@ export const ProjectCollectionsList = (props) => {
     onSetActivePanel,
     onToggleCollectionVisibility,
     onTogglePanels,
+    onSetActivePanelSection,
+    onUpdateFocusedCollection,
     panels,
     project
   } = props
@@ -53,6 +55,7 @@ export const ProjectCollectionsList = (props) => {
         collectionCount={projectIds.length}
         collectionId={collectionId}
         collection={byId[collectionId]}
+        collectionSearch={collectionSearch}
         projectCollection={projectById[collectionId]}
         color={color}
         index={index}
@@ -60,11 +63,12 @@ export const ProjectCollectionsList = (props) => {
         isPanelActive={isPanelActive}
         mapProjection={mapProjection}
         key={collectionId}
-        onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onToggleCollectionVisibility={onToggleCollectionVisibility}
+        onUpdateFocusedCollection={onUpdateFocusedCollection}
+        onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onSetActivePanel={onSetActivePanel}
         onTogglePanels={onTogglePanels}
-        collectionSearch={collectionSearch}
+        onSetActivePanelSection={onSetActivePanelSection}
       />
     )
   })
@@ -105,6 +109,8 @@ ProjectCollectionsList.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  onUpdateFocusedCollection: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired
 }
