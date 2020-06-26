@@ -139,12 +139,8 @@ class ProjectPanels extends PureComponent {
     } = this.props
     const { collectionIds } = project
 
-    console.log('activePanel', activePanel)
-
     const newFocusedCollectionIndex = activePanel.split('.')[1]
     const newFocusedCollectionId = collectionIds[newFocusedCollectionIndex]
-
-    console.log('newFocusedCollectionId', newFocusedCollectionId)
 
     onUpdateFocusedCollection(newFocusedCollectionId)
     onSetActivePanel(activePanel)
@@ -189,7 +185,6 @@ class ProjectPanels extends PureComponent {
   }
 
   onSaveVariables(collectionId, index) {
-    console.log('onSaveVariables', index)
     const { selectedVariables } = this.state
     const { project, onUpdateAccessMethod } = this.props
 
