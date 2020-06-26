@@ -663,9 +663,6 @@ class SpatialSelection extends Component {
             opacity: 0.6,
             dashArray: '10, 10',
             maintainColor: true
-          },
-          polygon: {
-            allowIntersection: false
           }
         }}
       />

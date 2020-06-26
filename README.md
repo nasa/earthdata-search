@@ -188,5 +188,3 @@ For production use, this application uses Scatter Swap to obfuscate some IDs -- 
 To deploy the full application use the following:
 
 	NODE_ENV=production serverless deploy --stage UNIQUE_STAGE
-
-We specify `NODE_ENV` here because we are using `dotenv` which breaks our environment variables out into logical files that contain environment specific values. `UNIQUE_STAGE` defaults to `dev` but customizing it here allows you to deploy multiple stacks within the same account.
