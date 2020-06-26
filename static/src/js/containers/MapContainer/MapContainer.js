@@ -12,7 +12,6 @@ import {
 } from 'react-leaflet'
 import { difference } from 'lodash'
 
-import '../../util/map/sphericalPolygon'
 import isPath from '../../util/isPath'
 import { metricsMap } from '../../middleware/metrics/actions'
 

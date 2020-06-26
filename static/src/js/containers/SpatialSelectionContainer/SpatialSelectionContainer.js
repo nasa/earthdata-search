@@ -56,6 +56,7 @@ export const SpatialSelectionContainer = (props) => {
   const { isCwic = false } = focusedCollectionObject
 
   const { leafletElement } = mapRef
+
   // If the map isn't loaded yet, don't render the spatial selection component
   if (!leafletElement) return null
 

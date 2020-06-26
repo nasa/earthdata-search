@@ -109,7 +109,7 @@ export const buildLayer = (options, metadata) => {
         // eslint-disable-next-line no-underscore-dangle
         polyLayer._interpolationFn = 'cartesian'
       } else {
-        polyLayer = L.sphericalPolygon(polygon, options)
+        polyLayer = L.polygon(polygon, options)
       }
       layer.addLayer(polyLayer)
 

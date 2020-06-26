@@ -246,11 +246,11 @@ describe('SpatialSelection component', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
       const editControl = enzymeWrapper.find(EditControl)
-      const latLngResponse = [
+      const latLngResponse = [[
         { lng: 10, lat: 0 },
         { lng: 20, lat: 10 },
         { lng: 5, lat: 15 }
-      ]
+      ]]
       editControl.prop('onCreated')({
         layerType: 'polygon',
         layer: {
@@ -259,12 +259,12 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15,10,0')
+      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            polygon: '10,0,20,10,5,15,10,0'
+            polygon: '10,0,20,10,5,15'
           }
         }
       }])
@@ -274,11 +274,11 @@ describe('SpatialSelection component', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
       const editControl = enzymeWrapper.find(EditControl)
-      const latLngResponse = [
+      const latLngResponse = [[
         { lng: 5, lat: 15 },
         { lng: 20, lat: 10 },
         { lng: 10, lat: 0 }
-      ]
+      ]]
       editControl.prop('onCreated')({
         layerType: 'polygon',
         layer: {
@@ -287,12 +287,12 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15,10,0')
+      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            polygon: '10,0,20,10,5,15,10,0'
+            polygon: '10,0,20,10,5,15'
           }
         }
       }])

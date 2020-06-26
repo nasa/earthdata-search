@@ -172,7 +172,7 @@ class ShapefileLayerExtended extends L.Layer {
         this.onToggleTooManyPointsModal(true)
       }
 
-      layer = L.sphericalPolygon(latlngs, this.options.selection)
+      layer = L.polygon(latlngs, this.options.selection)
       layerType = 'polygon'
     } else if (sourceLayer.getLatLng != null) {
       // Point
