@@ -43,6 +43,8 @@ const config = {
 
 const MAX_RETRIES = 1 // Maximum number of times to attempt to reload an image
 
+const layerBuffer = 20
+
 class GranuleGridLayerExtended extends L.GridLayer {
   initialize(props) {
     const {
@@ -793,6 +795,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       color,
       lightColor,
       focusedCollection,
+      focusedGranule,
       collectionId,
       addedGranuleIds,
       removedGranuleIds,
@@ -803,6 +806,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       color,
       lightColor,
       focusedCollection,
+      focusedGranule,
       collectionId,
       granules,
       addedGranuleIds,
@@ -857,15 +861,9 @@ class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   _onEdscMousemove(e) {
-    console.log('_onEdscMousemove')
     if (this._map) {
       const granule = this.granuleAt(e.layerPoint)
-      console.log('granule', granule)
-      console.log('this.collectionId', this.collectionId)
-      console.log('this.granule', this._granule)
       if (this._granule !== granule) {
-        console.log('granule', this._granule !== granule)
-        console.log(`emitting map event map.layer.${this.collectionId}.focusgranule`)
         eventEmitter.emit(`map.layer.${this.collectionId}.focusgranule`, { granule })
       }
     }
@@ -931,11 +929,14 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
       let focusedGranuleId = ''
       if (granule != null) focusedGranuleId = granule.id
+
       this.onChangeFocusedGranule(focusedGranuleId)
 
       this._granuleStickyLayer = this._stickyLayer(granule, true)
+
       if (this._granuleStickyLayer != null) {
         this.onMetricsMap('Selected Granule')
+
         this._granuleStickyLayer.onAdd(this._map)
 
         if ((this.projection === projections.geographic) && (this._granuleFocusLayer != null)) {
@@ -1055,7 +1056,6 @@ export class GranuleGridLayer extends MapLayer {
 
         layers[collectionId] = {
           collectionId,
-          collectionIndex: index,
           color: getColorByIndex(index),
           lightColor: getColorByIndex(index, true),
           metadata,
@@ -1071,7 +1071,6 @@ export class GranuleGridLayer extends MapLayer {
 
       layers[focusedCollection] = {
         collectionId: focusedCollection,
-        collectionIndex: 0,
         color: getColorByIndex(0),
         lightColor: getColorByIndex(0, true),
         isVisible: true,
@@ -1107,7 +1106,6 @@ export class GranuleGridLayer extends MapLayer {
     Object.keys(layerData).forEach((id) => {
       const {
         collectionId,
-        collectionIndex,
         color,
         metadata,
         granules = {}
@@ -1118,7 +1116,6 @@ export class GranuleGridLayer extends MapLayer {
 
       const layer = new GranuleGridLayerExtended({
         collectionId,
-        collectionIndex,
         metadata,
         granules: granuleData,
         color,
@@ -1169,6 +1166,7 @@ export class GranuleGridLayer extends MapLayer {
     this.isProjectPage = isProjectPage
 
     const {
+      focusedGranule: oldFocusedGranule,
       focusedCollection: oldFocusedCollection,
       isProjectPage: oldIsProjectPage
     } = fromProps
@@ -1242,6 +1240,7 @@ export class GranuleGridLayer extends MapLayer {
         oldCollection
         && oldIsProjectPage !== isProjectPage
         && oldFocusedCollection !== focusedCollection
+        && oldFocusedGranule !== focusedGranule
         && isEqual(Object.keys(granulesById), Object.keys(oldGranulesById))
         && isEqual(addedGranuleIds, oldAddedGranuleIds)
         && isEqual(removedGranuleIds, oldRemovedGranuleIds)
@@ -1274,7 +1273,6 @@ export class GranuleGridLayer extends MapLayer {
         layer.setResults({
           addedGranuleIds,
           collectionId,
-          collectionIndex,
           color,
           defaultGranules: granuleData,
           focusedCollection,
@@ -1288,16 +1286,15 @@ export class GranuleGridLayer extends MapLayer {
         })
 
         if (focusedCollection === collectionId) {
-          layer.setZIndex(2)
+          layer.setZIndex(layerBuffer + 2)
         } else {
-          layer.setZIndex(1)
+          layer.setZIndex(layerBuffer + 1)
         }
       } else {
         // A layer doesn't exist for this collection yet, maybe we just added a focusedCollection, so create a new layer
         const layer = new GranuleGridLayerExtended({
           addedGranuleIds,
           collectionId,
-          collectionIndex,
           color,
           focusedCollection,
           focusedGranule,
@@ -1314,9 +1311,9 @@ export class GranuleGridLayer extends MapLayer {
         })
 
         if (focusedCollection === collectionId) {
-          layer.setZIndex(2)
+          layer.setZIndex(layerBuffer + 2)
         } else {
-          layer.setZIndex(1)
+          layer.setZIndex(layerBuffer + 1)
         }
 
         layer.getLayerData = this.getLayerData

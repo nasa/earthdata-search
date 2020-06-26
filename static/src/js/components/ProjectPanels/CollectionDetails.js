@@ -66,7 +66,7 @@ export const CollectionDetails = ({
   return (
     <div className="collection-details">
       <span className="collection-details__meta">
-        {`Showing ${granulesToDisplay.length} of ${granuleCount} granules in project`}
+        {!granuleCount ? 'Loading granules' : `Showing ${granulesToDisplay.length} of ${granuleCount} granules in project`}
       </span>
       <div className="collection-details__list-wrapper">
         <ul className="collection-details__list">
@@ -99,7 +99,8 @@ export const CollectionDetails = ({
                       eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: null })
                     }}
                     onClick={() => {
-                      eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule })
+                      const newGranule = id === focusedGranule ? { granule: null } : { granule }
+                      eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, newGranule)
                     }}
                     onKeyPress={() => {
                       eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule })
@@ -113,8 +114,9 @@ export const CollectionDetails = ({
                         className="collection-details__item-action"
                         type="button"
                         bootstrapSize="sm"
-                        onClick={() => {
+                        onClick={(e) => {
                           onFocusedGranuleChange(id)
+                          e.stopPropagation()
                         }}
                         label="View granule details"
                         to={{
@@ -129,11 +131,12 @@ export const CollectionDetails = ({
                         bootstrapSize="sm"
                         type="button"
                         label="Remove granule"
-                        onClick={() => {
+                        onClick={(e) => {
                           onRemoveGranuleFromProjectCollection({
                             collectionId,
                             granuleId: id
                           })
+                          e.stopPropagation()
                         }}
                       >
                         <i className="fa fa-minus" />

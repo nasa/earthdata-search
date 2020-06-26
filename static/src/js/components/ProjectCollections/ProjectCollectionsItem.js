@@ -189,7 +189,7 @@ const ProjectCollectionItem = ({
                 variant="link"
                 bootstrapVariant="link"
                 icon="cog"
-                label="More options"
+                label="Edit options"
                 onClick={() => {
                   onUpdateFocusedCollection(conceptId)
                   onSetActivePanelSection('0')
