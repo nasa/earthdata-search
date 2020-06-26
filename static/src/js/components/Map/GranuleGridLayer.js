@@ -900,7 +900,9 @@ class GranuleGridLayerExtended extends L.GridLayer {
         this._granuleFocusLayer.onRemove(this._map)
       }
       this._granuleFocusLayer = this._focusLayer(granule, false)
-      if (this._granuleFocusLayer != null && this.collectionId === this.focusedCollection) this._granuleFocusLayer.onAdd(this._map)
+      if (this._granuleFocusLayer != null && this.collectionId === this.focusedCollection) {
+        this._granuleFocusLayer.onAdd(this._map)
+      }
     }
   }
 
