@@ -98,9 +98,9 @@ class ProjectPanels extends PureComponent {
     })
 
     const nextFocusedCollectionIndex = collectionIds.indexOf(nextFocusedCollection).toString()
-    const activePanelGroup = activePanel.split('.')[1].toString()
+    const newFocusedCollectionIndex = activePanel.split('.')[1].toString()
 
-    if (nextFocusedCollectionIndex > -1 && nextFocusedCollectionIndex !== activePanelGroup) {
+    if (nextFocusedCollectionIndex > -1 && nextFocusedCollectionIndex !== newFocusedCollectionIndex) {
       onSetActivePanelGroup(nextFocusedCollectionIndex)
       onTogglePanels(true)
     } else if (focusedCollection !== nextFocusedCollection && nextFocusedCollection === '') {
@@ -123,7 +123,7 @@ class ProjectPanels extends PureComponent {
     onTogglePanels(false)
   }
 
-  onChangePanel(panelId) {
+  onChangePanel(activePanel) {
     const {
       onSetActivePanel,
       onTogglePanels,
@@ -132,9 +132,8 @@ class ProjectPanels extends PureComponent {
     } = this.props
     const { collectionIds } = project
 
-    const panels = panelId.split('.')
-    const newCollectionIndex = panels[1]
-    const newFocusedCollectionId = collectionIds[newCollectionIndex]
+    const newFocusedCollectionIndex = activePanel.split('.')[1]
+    const newFocusedCollectionId = collectionIds[newFocusedCollectionIndex]
 
     onUpdateFocusedCollection(newFocusedCollectionId)
     onSetActivePanel(panelId)
@@ -179,7 +178,6 @@ class ProjectPanels extends PureComponent {
   }
 
   onSaveVariables(collectionId, index) {
-    const indexInProject = index - 1
     const { selectedVariables } = this.state
     const { project, onUpdateAccessMethod } = this.props
 
@@ -201,7 +199,7 @@ class ProjectPanels extends PureComponent {
       }
     })
 
-    this.onChangePanel(`0.${indexInProject}.1`)
+    this.onChangePanel(`0.${index}.1`)
   }
 
   onViewDetails(variable, index) {
