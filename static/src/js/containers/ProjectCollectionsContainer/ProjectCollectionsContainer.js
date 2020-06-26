@@ -14,7 +14,7 @@ const mapDispatchToProps = dispatch => ({
   onSetActivePanel:
     panelId => dispatch(actions.setActivePanel(panelId)),
   onTogglePanels:
-    isOpen => dispatch(actions.onTogglePanels(isOpen)),
+    isOpen => dispatch(actions.togglePanels(isOpen)),
   onSetActivePanelSection:
     sectionId => dispatch(actions.setActivePanelSection(sectionId)),
   onUpdateProjectName:
