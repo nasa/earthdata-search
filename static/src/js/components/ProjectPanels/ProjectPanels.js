@@ -269,10 +269,8 @@ class ProjectPanels extends PureComponent {
       spatial,
       onChangeGranulePageNum,
       onSelectAccessMethod,
-      // onTogglePanels,
       onSetActivePanel,
       onUpdateAccessMethod,
-      // onAddGranuleToProjectCollection,
       onRemoveGranuleFromProjectCollection,
       onFocusedGranuleChange
     } = this.props
