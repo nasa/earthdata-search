@@ -318,7 +318,7 @@ describe('ProjectPanels component', () => {
     })
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
-    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.1.1')
+    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
     expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
     expect(props.onTogglePanels).toHaveBeenCalledWith(true)
     expect(props.onUpdateFocusedCollection).toHaveBeenCalledTimes(1)
