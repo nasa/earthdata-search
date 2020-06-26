@@ -323,7 +323,6 @@ describe('fetchOptionDefinitions', () => {
     }
 
     await fetchOptionDefinitions(event, {})
-    // console.log(consoleMock.calls)
 
     // We should not send a message to sqs
     expect(sqsOptionDefinitions).toBeCalledTimes(0)
