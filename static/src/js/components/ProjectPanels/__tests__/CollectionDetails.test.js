@@ -157,7 +157,9 @@ describe('CollectionDetails component', () => {
       const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
       const removeButton = item.find('.collection-details__item-action').at(1)
 
-      removeButton.props().onClick()
+      removeButton.props().onClick({
+        stopPropagation: jest.fn()
+      })
 
       expect(props.onRemoveGranuleFromProjectCollection).toHaveBeenCalledTimes(1)
       expect(props.onRemoveGranuleFromProjectCollection).toHaveBeenCalledWith({
@@ -174,7 +176,9 @@ describe('CollectionDetails component', () => {
       const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
       const infoButton = item.find('.collection-details__item-action').at(0)
 
-      infoButton.props().onClick()
+      infoButton.props().onClick({
+        stopPropagation: jest.fn()
+      })
 
       expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
       expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('GRAN-1-PROV')

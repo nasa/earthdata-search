@@ -290,10 +290,10 @@ describe('ProjectPanels component', () => {
     })
   })
 
-  test('onSaveVariables calls onUpdateAccessMethod and onUpdateFocusedCollection', () => {
+  test.only('onSaveVariables calls onUpdateAccessMethod and onUpdateFocusedCollection', () => {
     const { enzymeWrapper, props } = setup(opendapProps)
 
-    enzymeWrapper.instance().onSaveVariables('collectionId', 1)
+    enzymeWrapper.instance().onSaveVariables('collectionId', 0)
 
     expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
     expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
