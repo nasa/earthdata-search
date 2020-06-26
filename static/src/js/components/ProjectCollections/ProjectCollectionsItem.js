@@ -124,12 +124,6 @@ const ProjectCollectionItem = ({
               </Button>
               <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
                 <MoreActionsDropdownItem
-                  className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
-                  icon={isVisible ? 'eye-slash' : 'eye'}
-                  title="Toggle Visibility"
-                  onClick={handleToggleCollectionVisibility}
-                />
-                <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
                   icon="times-circle"
                   title="Remove"
@@ -161,6 +155,12 @@ const ProjectCollectionItem = ({
                   icon="map"
                   title="View Granules"
                   onClick={() => onViewCollectionGranules(collectionId)}
+                />
+                <MoreActionsDropdownItem
+                  className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
+                  icon={isVisible ? 'eye-slash' : 'eye'}
+                  title="Toggle Visibility"
+                  onClick={handleToggleCollectionVisibility}
                 />
               </MoreActionsDropdown>
             </>
