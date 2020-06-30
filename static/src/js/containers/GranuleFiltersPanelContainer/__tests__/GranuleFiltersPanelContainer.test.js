@@ -29,6 +29,7 @@ function setup() {
     handleSubmit: jest.fn(),
     isValid: true,
     onApplyGranuleFilters: jest.fn(),
+    portal: {},
     setFieldTouched: jest.fn(),
     setFieldValue: jest.fn(),
     touched: {},
@@ -72,6 +73,7 @@ describe('GranuleFiltersPanelContainer component', () => {
       expect(granuleFiltersFormProps.handleBlur).toEqual(props.handleBlur)
       expect(granuleFiltersFormProps.setFieldValue).toEqual(props.setFieldValue)
       expect(granuleFiltersFormProps.setFieldTouched).toEqual(props.setFieldTouched)
+      expect(granuleFiltersFormProps.portal).toEqual(props.portal)
     })
 
     test('renders with the correct footer prop and passes the correct props', () => {

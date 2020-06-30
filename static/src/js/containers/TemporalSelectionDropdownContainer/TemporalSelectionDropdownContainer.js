@@ -11,6 +11,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  portal: state.portal,
   temporalSearch: state.query.collection.temporal
 })
 
@@ -22,12 +23,14 @@ const mapStateToProps = state => ({
 const TemporalSelectionDropdownContainer = (props) => {
   const {
     onChangeQuery,
+    portal,
     temporalSearch
   } = props
 
   return (
     <TemporalSelectionDropdown
       onChangeQuery={onChangeQuery}
+      portal={portal}
       temporalSearch={temporalSearch}
     />
   )
@@ -38,6 +41,7 @@ TemporalSelectionDropdownContainer.defaultProps = {
 }
 
 TemporalSelectionDropdownContainer.propTypes = {
+  portal: PropTypes.shape({}).isRequired,
   temporalSearch: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired
 }

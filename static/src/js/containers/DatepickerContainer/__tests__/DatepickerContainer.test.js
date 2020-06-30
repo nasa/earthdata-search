@@ -9,14 +9,11 @@ import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
-  const {
-    minimumTemporalDateString,
-    temporalDateFormatFull
-  } = getApplicationConfig()
+  const { temporalDateFormatFull } = getApplicationConfig()
 
   const props = {
     id: 'test-id',
-    minDate: minimumTemporalDateString,
+    minDate: '1960-01-01 00:00:00',
     maxDate: moment.utc().format(temporalDateFormatFull),
     onSubmit: jest.fn(),
     ...overrideProps

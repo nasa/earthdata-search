@@ -112,6 +112,7 @@ export class TemporalSelection extends Component {
       allowRecurring,
       controlId,
       format,
+      portal,
       temporal,
       onChangeRecurring,
       onRecurringToggle,
@@ -131,7 +132,8 @@ export class TemporalSelection extends Component {
       isRecurring = false
     }
 
-    const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
+    const { temporalDateFormatFull } = getApplicationConfig()
+    const { minimumTemporalDateString } = portal
     const minimumTemporalDate = moment(minimumTemporalDateString, temporalDateFormatFull)
 
     let sliderStartDate = moment(temporal.startDate)
@@ -285,14 +287,15 @@ TemporalSelection.propTypes = {
   allowRecurring: PropTypes.bool,
   controlId: PropTypes.string.isRequired,
   format: PropTypes.string,
+  portal: PropTypes.shape({}).isRequired,
+  temporal: PropTypes.shape({}).isRequired,
+  validate: PropTypes.bool,
   onChangeRecurring: PropTypes.func,
   onRecurringToggle: PropTypes.func,
   onSubmitStart: PropTypes.func.isRequired,
   onSubmitEnd: PropTypes.func.isRequired,
-  temporal: PropTypes.shape({}).isRequired,
   onValid: PropTypes.func,
-  onInvalid: PropTypes.func,
-  validate: PropTypes.bool
+  onInvalid: PropTypes.func
 }
 
 export default TemporalSelection
