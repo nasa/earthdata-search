@@ -150,7 +150,7 @@ class SearchPanels extends PureComponent {
     } = portal
 
     const buildCollectionResultsBodyFooter = () => {
-      if (!portalId.length) return null
+      if (!portalId.length || portalId === 'default') return null
 
       return (
         <div className="search-panels__portal-escape">
