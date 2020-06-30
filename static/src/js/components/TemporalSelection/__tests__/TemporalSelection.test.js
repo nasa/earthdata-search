@@ -12,8 +12,11 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    temporal: {},
     controlId: 'test-id',
+    portal: {
+      minimumTemporalDateString: '1960-01-01 00:00:00'
+    },
+    temporal: {},
     onRecurringToggle: jest.fn(),
     onChangeRecurring: jest.fn(),
     onSubmitStart: jest.fn(),

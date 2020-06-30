@@ -20,6 +20,7 @@ function setup(overrideProps) {
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
     metadata: {},
+    portal: {},
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
     touched: {},
