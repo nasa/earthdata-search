@@ -1,0 +1,25 @@
+{
+  "hasStyles": false,
+  "hasScripts": false,
+  "hideCollectionFilters": false,
+  "org": "Earthdata",
+  "pageTitle": "Earthdata Search",
+  "title": "Search",
+  "minimumTemporalDateString": "1960-01-01 00:00:00",
+  "datasource": {
+    "collectionPageSize": 20,
+    "granulePageSize": 20,
+    "granulePerOrder": 2000,
+    "maxCollectionPageSize": 2000,
+    "maxGranulePageSize": 2000,
+    "maxOrderSize": 1000000,
+    "authCallbackUriPath": "/urs_callback",
+    "authHost": "https://urs.earthdata.nasa.gov",
+    "autocompleteEndpoint": "",
+    "collectionMetadataEndpoint": "https://graphql.earthdata.nasa.gov/api",
+    "collectionSearchEndpoint": "https://cmr.earthdata.nasa.gov/search/collections",
+    "granuleMetadataEndpoint": "https://cmr.earthdata.nasa.gov/search/concepts",
+    "granuleSearchEndpoint": "https://cmr.earthdata.nasa.gov/search/granules",
+    "opensearchGranuleEndpoint": "https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml"
+  }
+}

@@ -13,9 +13,14 @@ export const addPortal = payload => ({
 export const loadPortalConfig = portalId => (dispatch) => {
   if (!portalId) return
   try {
-    const json = require(`../../../../portals/${portalId}/config.json`)
+    const defaultJson = require('../../../../portals/default/config.json')
+    const portalJson = require(`../../../../portals/${portalId}/config.json`)
+    const fullJson = {
+      ...defaultJson,
+      ...portalJson
+    }
 
-    const { hasStyles, hasScripts } = json
+    const { hasStyles, hasScripts } = fullJson
 
     if (hasStyles) {
       const css = require(`../../../../portals/${portalId}/styles.scss`)
@@ -26,7 +31,7 @@ export const loadPortalConfig = portalId => (dispatch) => {
       require(`../../../../portals/${portalId}/scripts.js`)
     }
 
-    dispatch(addPortal({ portalId, ...json }))
+    dispatch(addPortal({ portalId, ...fullJson }))
   } catch (error) {
     console.error('Portal could not be loaded', error)
   }
