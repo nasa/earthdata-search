@@ -21,8 +21,7 @@ export class PortalContainer extends Component {
   componentWillMount() {
     const { match, onLoadPortalConfig } = this.props
     const { params } = match
-    const { portalId } = params
-    console.log('PortalContainer -> componentWillMount -> params', params)
+    const { portalId = 'default' } = params
 
     onLoadPortalConfig(portalId)
   }
