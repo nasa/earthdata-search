@@ -1,11 +1,8 @@
 {
-  "hasStyles": false,
-  "hasScripts": false,
   "hideCollectionFilters": true,
   "org": "ABoVE",
   "pageTitle": "ABoVE",
   "query": {
     "project": "ABoVE"
-  },
-  "title": "Search"
+  }
 }
