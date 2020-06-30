@@ -65,10 +65,10 @@ describe('PortalContainer component', () => {
     const { props } = setup()
 
     expect(props.onLoadPortalConfig.mock.calls.length).toBe(1)
-    expect(props.onLoadPortalConfig.mock.calls[0]).toEqual([undefined])
+    expect(props.onLoadPortalConfig.mock.calls[0]).toEqual(['default'])
   })
 
-  test('should call onLoadPortalConfig on mount without a portal', () => {
+  test('should call onLoadPortalConfig on mount with a portal', () => {
     const { props } = setup({
       match: {
         params: {
