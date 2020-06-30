@@ -23,12 +23,12 @@
     "ummServiceVersion": "1.2",
     "temporalDateFormatFull": "YYYY-MM-DD HH:mm:ss",
     "temporalDateFormatRange": "MM-DD HH:mm:ss",
-    "minimumTemporalDateString": "1960-01-01 00:00:00",
     "defaultResponseHeaders": {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
       "Access-Control-Allow-Credentials": true
-    }
+    },
+    "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov"
   },
   "environment": {
     "test": {
