@@ -1,6 +1,5 @@
 {
   "hasStyles": true,
-  "hasScripts": false,
   "hideCollectionFilters": true,
   "logo": {
     "id": "podaac-logo",
@@ -12,6 +11,5 @@
   "query": {
     "dataCenter": "NASA/JPL/PODAAC",
     "hasGranulesOrCwic": null
-  },
-  "title": "Search"
+  }
 }
