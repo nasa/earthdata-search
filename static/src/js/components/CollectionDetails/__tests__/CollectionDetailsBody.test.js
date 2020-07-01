@@ -404,7 +404,8 @@ describe('CollectionDetails component', () => {
             items: [
               {
                 type: 'ECHO ORDERS',
-                supportedOutputFormats: null
+                supportedOutputFormats: null,
+                supportedReformattings: null
               },
               {
                 type: 'ESI',
@@ -415,11 +416,13 @@ describe('CollectionDetails component', () => {
                   'KML',
                   'NETCDF-3',
                   'NETCDF-4'
-                ]
+                ],
+                supportedReformattings: null
               },
               {
                 type: 'NOT PROVIDED',
-                supportedOutputFormats: null
+                supportedOutputFormats: null,
+                supportedReformattings: null
               }
             ]
           }
@@ -429,6 +432,53 @@ describe('CollectionDetails component', () => {
       expect(enzymeWrapper.find('.collection-details-body__info').find('dd').at(1).text()).toEqual(
         'ASCII, GEOTIFF, HDF-EOS5, KML, NETCDF-3, NETCDF-4'
       )
+    })
+  })
+
+  describe('Supported Reformatting', () => {
+    test('renders correctly', () => {
+      const { enzymeWrapper } = setup({
+        overrideMetadata: {
+          services: {
+            items: [
+              {
+                type: 'ECHO ORDERS',
+                supportedOutputFormats: null,
+                supportedReformattings: null
+              },
+              {
+                type: 'ESI',
+                supportedReformattings: [
+                  {
+                    supportedInputFormat: 'HDF-EOS2',
+                    supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                  },
+                  {
+                    supportedInputFormat: 'HDF-EOS5',
+                    supportedOutputFormats: ['PNG', 'JPEG']
+                  }
+                ]
+              },
+              {
+                type: 'NOT PROVIDED',
+                supportedOutputFormats: null,
+                supportedReformattings: null
+              }
+            ]
+          }
+        }
+      })
+
+      const reformattingsDataElement = enzymeWrapper.find('.collection-details-body__info').find('dd').at(1)
+
+      const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
+      const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
+
+      expect(format1.find('dt').text()).toEqual('HDF-EOS2')
+      expect(format2.find('dt').text()).toEqual('HDF-EOS5')
+
+      expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
+      expect(format2.find('dd').text()).toEqual('PNG, JPEG')
     })
   })
 

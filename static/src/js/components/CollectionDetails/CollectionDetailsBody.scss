@@ -38,16 +38,22 @@
   }
 
   &__info {
-    dt {
+    > dt {
       font-size: 0.75rem;
       font-weight: 400;
     }
 
-    dd {
+    > dd {
       font-size: 0.925rem;
       font-weight: 700;
       word-wrap: break-word;
     }
+  }
+
+  &__heading-tooltip {
+    margin-left: 0.25rem;
+    color: $color__black--400;
+    font-size: 0.625rem;
   }
 
   &__doi {
@@ -85,6 +91,29 @@
         vertical-align: baseline;
       }
     }
+  }
+
+  &__reformatting-item {
+    display: flex;
+    margin-bottom: 0.125rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__reformatting-item-heading {
+    display: flex;
+    align-items: center;
+  }
+
+  &__reformatting-item-icon {
+    margin: 0 0.325rem;
+    color: $color__black--400;
+    font-size: 0.625rem;
+  }
+
+  &__reformatting-item-body {
+    margin: 0;
+    font-weight: 400;
   }
 
   &__keywords {
