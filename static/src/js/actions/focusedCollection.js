@@ -121,6 +121,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             conceptId
             type
             supportedOutputFormats
+            supportedReformattings
           }
         }
         variables {

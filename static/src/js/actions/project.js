@@ -162,6 +162,7 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
               conceptId
               type
               supportedOutputFormats
+              supportedReformattings
             }
           }
           variables {

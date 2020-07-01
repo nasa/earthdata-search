@@ -432,6 +432,51 @@ describe('CollectionDetails component', () => {
     })
   })
 
+  describe('Supported Reformatting', () => {
+    test('renders correctly', () => {
+      const { enzymeWrapper } = setup({
+        overrideMetadata: {
+          services: {
+            items: [
+              {
+                type: 'ECHO ORDERS',
+                supportedOutputFormats: null
+              },
+              {
+                type: 'ESI',
+                supportedReformattings: [
+                  {
+                    supportedInputFormat: 'HDF-EOS2',
+                    supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                  },
+                  {
+                    supportedInputFormat: 'HDF-EOS5',
+                    supportedOutputFormats: ['PNG', 'JPEG']
+                  }
+                ]
+              },
+              {
+                type: 'NOT PROVIDED',
+                supportedOutputFormats: null
+              }
+            ]
+          }
+        }
+      })
+
+      const reformattingsDataElement = enzymeWrapper.find('.collection-details-body__info').find('dd').at(1)
+
+      const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
+      const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
+
+      expect(format1.find('dt').text()).toEqual('HDF-EOS2')
+      expect(format2.find('dt').text()).toEqual('HDF-EOS5')
+
+      expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
+      expect(format2.find('dd').text()).toEqual('PNG, JPEG')
+    })
+  })
+
   describe('Science Keywords', () => {
     test('renders correctly', () => {
       const { enzymeWrapper } = setup({
