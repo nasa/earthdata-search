@@ -440,7 +440,8 @@ describe('CollectionDetails component', () => {
             items: [
               {
                 type: 'ECHO ORDERS',
-                supportedOutputFormats: null
+                supportedOutputFormats: null,
+                supportedReformattings: null
               },
               {
                 type: 'ESI',
@@ -457,7 +458,8 @@ describe('CollectionDetails component', () => {
               },
               {
                 type: 'NOT PROVIDED',
-                supportedOutputFormats: null
+                supportedOutputFormats: null,
+                supportedReformattings: null
               }
             ]
           }

@@ -135,7 +135,7 @@ export const CollectionDetailsBody = ({
   }
 
   const outputFormats = []
-  const supportedReformattings = []
+  const reformattings = []
 
   if (services) {
     const { items } = services
@@ -143,8 +143,8 @@ export const CollectionDetailsBody = ({
     if (items) {
       items.forEach((service) => {
         const {
-          supportedOutputFormats = [],
-          supportedReformattings: supportedReformattingsList = []
+          supportedOutputFormats,
+          supportedReformattings: supportedReformattingsList
         } = service
 
         if (supportedOutputFormats) {
@@ -152,7 +152,7 @@ export const CollectionDetailsBody = ({
         }
 
         if (supportedReformattingsList) {
-          supportedReformattings.push(...supportedReformattingsList)
+          reformattings.push(...supportedReformattingsList)
         }
       })
     }
@@ -246,7 +246,7 @@ export const CollectionDetailsBody = ({
                   )
                 }
                 {
-                  supportedReformattings.length > 0 && (
+                  reformattings.length > 0 && (
                     <>
                       <dt>
                         Reformatting Options
@@ -269,26 +269,29 @@ export const CollectionDetailsBody = ({
                         </span>
                       </dt>
                       <dd>
-                        {supportedReformattings.map((supportedReformatting) => {
-                          const {
-                            supportedInputFormat,
-                            supportedOutputFormats
-                          } = supportedReformatting
-                          return (
-                            <dl
-                              key={`input-format__${supportedInputFormat}`}
-                              className="collection-details-body__reformatting-item"
-                            >
-                              <dt className="collection-details-body__reformatting-item-heading">
-                                {supportedInputFormat}
-                                <i className="fa fa-arrow-right collection-details-body__reformatting-item-icon" />
-                              </dt>
-                              <dd className="collection-details-body__reformatting-item-body">
-                                {supportedOutputFormats.join(', ')}
-                              </dd>
-                            </dl>
-                          )
-                        })}
+                        {
+                          reformattings.map((supportedReformatting) => {
+                            const {
+                              supportedInputFormat,
+                              supportedOutputFormats
+                            } = supportedReformatting
+
+                            return (
+                              <dl
+                                key={`input-format__${supportedInputFormat}`}
+                                className="collection-details-body__reformatting-item"
+                              >
+                                <dt className="collection-details-body__reformatting-item-heading">
+                                  {supportedInputFormat}
+                                  <i className="fa fa-arrow-right collection-details-body__reformatting-item-icon" />
+                                </dt>
+                                <dd className="collection-details-body__reformatting-item-body">
+                                  {supportedOutputFormats.join(', ')}
+                                </dd>
+                              </dl>
+                            )
+                          })
+                        }
                       </dd>
                     </>
                   )
