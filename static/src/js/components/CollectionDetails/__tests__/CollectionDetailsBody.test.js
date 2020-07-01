@@ -404,7 +404,8 @@ describe('CollectionDetails component', () => {
             items: [
               {
                 type: 'ECHO ORDERS',
-                supportedOutputFormats: null
+                supportedOutputFormats: null,
+                supportedReformattings: null
               },
               {
                 type: 'ESI',
@@ -415,11 +416,13 @@ describe('CollectionDetails component', () => {
                   'KML',
                   'NETCDF-3',
                   'NETCDF-4'
-                ]
+                ],
+                supportedReformattings: null
               },
               {
                 type: 'NOT PROVIDED',
-                supportedOutputFormats: null
+                supportedOutputFormats: null,
+                supportedReformattings: null
               }
             ]
           }
