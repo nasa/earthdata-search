@@ -16,12 +16,10 @@ export const AppLogoContainer = ({
   const edscEnv = getApplicationConfig().env
 
   return (
-    <header className="app-logo">
-      <AppLogo
-        portal={portal}
-        edscEnv={edscEnv}
-      />
-    </header>
+    <AppLogo
+      portal={portal}
+      edscEnv={edscEnv}
+    />
   )
 }
 
