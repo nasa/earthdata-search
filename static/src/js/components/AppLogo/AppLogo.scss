@@ -1,8 +1,8 @@
 .app-logo {
   color: $color__white;
-  padding: 1.5rem 0 0.5rem 0.75rem;
 
   &__site-logo {
+    padding: 1.5rem 0 0.5rem 0.75rem;
     display: flex;
     align-items: flex-end;
     flex-wrap: wrap;
@@ -84,27 +84,31 @@
   }
 
   &__site-env {
-    margin-left: 0.5rem;
-    padding: 0.3rem 0.4rem;
-    font-size: 0.725rem;
+    position: absolute;
+    right: 0;
+    color: white;
+    padding: 0.2rem 0.3rem;
+    font-size: 0.625rem;
     background: $color__brand--blue;
-    border-radius: 0.125rem;
+    border-radius: 0 0 0 0.125rem;
   }
 
   &__portal-logo {
     display: block;
     background-repeat: no-repeat;
-    background-size: auto 50px;
-    height: 50px;
+    background-size: contain;
+    background-position: center;
+    height: 40px;
+    max-width: 95px;
     text-indent: inherit;
     margin: 0;
-    margin-right: $spacer/4;
+    margin-right: $spacer*0.75;
     transition: background 0.2s ease-in-out;
     flex-shrink: 0;
 
     img {
       display: block;
-      height: 50px;
+      height: 40px;
     }
   }
 }

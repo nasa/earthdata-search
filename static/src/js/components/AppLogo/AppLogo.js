@@ -47,26 +47,7 @@ const AppLogo = ({
   }
 
   return (
-    <h1 className="app-logo__site-logo">
-      <a
-        className="app-logo__site-meatball"
-        href="/"
-        title="Earthdata Search Home"
-      >
-        <span className="visually-hidden">
-          Earthdata Search Home
-        </span>
-      </a>
-
-      {portalLogo()}
-
-      <a
-        className="app-logo__site-name"
-        href={portalLink}
-      >
-        <span className="app-logo__site-name-ent app-logo__site-name-ent--e">{org}</span>
-        <span className="app-logo__site-name-ent app-logo__site-name-ent--s">{title}</span>
-      </a>
+    <header className="app-logo">
       {
         edscEnv !== 'prod' && (
           <span className="app-logo__site-env">
@@ -74,7 +55,26 @@ const AppLogo = ({
           </span>
         )
       }
-    </h1>
+      <h1 className="app-logo__site-logo">
+        <a
+          className="app-logo__site-meatball"
+          href="/"
+          title="Earthdata Search Home"
+        >
+          <span className="visually-hidden">
+            Earthdata Search Home
+          </span>
+        </a>
+        {portalLogo()}
+        <a
+          className="app-logo__site-name"
+          href={portalLink}
+        >
+          <span className="app-logo__site-name-ent app-logo__site-name-ent--e">{org}</span>
+          <span className="app-logo__site-name-ent app-logo__site-name-ent--s">{title}</span>
+        </a>
+      </h1>
+    </header>
   )
 }
 
