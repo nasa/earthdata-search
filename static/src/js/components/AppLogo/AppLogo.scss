@@ -2,29 +2,24 @@
   color: $color__white;
 
   &__site-logo {
-    padding: 1.5rem 0 0.5rem 0.75rem;
+    padding: 2rem 0 0.5rem 0.75rem;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     flex-wrap: wrap;
-    margin-top: -$spacer/2;
-
-    & > * {
-      margin-top: $spacer/2;
-    }
   }
 
   &__site-meatball {
     display: flex;
     align-items: flex-end;
     background-image: url('~Images/app-logo.png');
-    background-size: 3.125rem 2.5rem;
+    background-size: 52px 42px;
     background-repeat: no-repeat;
     background-position: 0 center;
     margin-right: 0.25rem;
     transition: background 0.2s ease-in-out;
     cursor: pointer;
-    width: 3.125rem;
-    height: 2.5rem;
+    width: 52px;
+    height: 42px;
     flex-shrink: 0;
 
     &:hover {
