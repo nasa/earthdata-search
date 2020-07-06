@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import './AppLogo.scss'
 
 const AppLogo = ({
-  edscEnv,
   portal
 }) => {
   const {
@@ -48,13 +47,6 @@ const AppLogo = ({
 
   return (
     <header className="app-logo">
-      {
-        edscEnv !== 'prod' && (
-          <span className="app-logo__site-env">
-            {edscEnv.toUpperCase()}
-          </span>
-        )
-      }
       <h1 className="app-logo__site-logo">
         <a
           className="app-logo__site-meatball"
@@ -79,7 +71,6 @@ const AppLogo = ({
 }
 
 AppLogo.propTypes = {
-  edscEnv: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired
 }
 
