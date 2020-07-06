@@ -14,9 +14,7 @@ const mapStateToProps = state => ({
   loadTime: state.searchResults.collections.loadTime
 })
 
-const edscVersion = getApplicationConfig().version
-
-class FooterContainer extends Component {
+export class FooterContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -25,14 +23,26 @@ class FooterContainer extends Component {
   render() {
     const { loadTime, location } = this.props
     const searchTimeVisible = isPath(location.pathname, ['/search', '/projects'])
-
     const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
+
+    const {
+      env: edscEnv,
+      version: edscVersion
+    } = getApplicationConfig()
+
     return (
       <React.Fragment>
         <ConnectedTimelineContainer />
         <footer className="footer">
           <span className="footer__info footer__info--left">
             <span className="footer__ver-pill">
+              {
+                edscEnv !== 'prod' && (
+                  <span className="footer__env">
+                    {edscEnv.toUpperCase()}
+                  </span>
+                )
+              }
               {`v${edscVersion}`}
             </span>
             {(searchTimeVisible && loadTime !== 0) && (
