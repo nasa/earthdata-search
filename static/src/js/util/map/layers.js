@@ -128,6 +128,7 @@ export const buildLayer = (options, metadata) => {
       const lineLayer = L.polyline(line, options)
       // eslint-disable-next-line no-underscore-dangle
       if (cartesian) lineLayer._interpolationFn = 'cartesian'
+      layer.addLayer(lineLayer)
     })
   }
 
