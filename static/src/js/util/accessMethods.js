@@ -26,7 +26,7 @@ export const isAccessMethodValid = (projectCollection, collection) => {
   // check the granule count and granule limit
   const { metadata } = collection
   const granuleLimit = getGranuleLimit(metadata)
-  const granuleCount = getGranuleCount(collection)
+  const granuleCount = getGranuleCount(collection, projectCollection)
 
   if (granuleCount <= 0) {
     return {
