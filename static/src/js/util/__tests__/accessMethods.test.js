@@ -197,4 +197,136 @@ describe('isAccessMethodValid', () => {
       noGranules: true
     })
   })
+
+  describe('if added granules exist', () => {
+    test('returns true if the added granule count is under the limit', () => {
+      const projectCollection = {
+        addedGranuleIds: ['GRANULE-1', 'GRANULE-2'],
+        accessMethods: {
+          download: {
+            isValid: true,
+            type: 'download'
+          }
+        },
+        selectedAccessMethod: 'download'
+      }
+
+      const collection = {
+        granules: {
+          hits: 150
+        },
+        metadata: {
+          tags: {
+            'edsc.limited_collections': {
+              data: {
+                limit: 2
+              }
+            }
+          }
+        }
+      }
+
+      expect(isAccessMethodValid(projectCollection, collection)).toEqual(validAccessMethod)
+    })
+
+    test('returns false if the added granule count is over the limit', () => {
+      const projectCollection = {
+        addedGranuleIds: ['GRANULE-1', 'GRANULE-2', 'GRANULE-3'],
+        accessMethods: {
+          download: {
+            isValid: true,
+            type: 'download'
+          }
+        },
+        selectedAccessMethod: 'download'
+      }
+
+      const collection = {
+        granules: {
+          hits: 150
+        },
+        metadata: {
+          tags: {
+            'edsc.limited_collections': {
+              data: {
+                limit: 2
+              }
+            }
+          }
+        }
+      }
+
+      expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+        ...validAccessMethod,
+        valid: false,
+        tooManyGranules: true
+      })
+    })
+  })
+
+  describe('if removed granules exist', () => {
+    test('returns true if the count is under the limit', () => {
+      const projectCollection = {
+        removedGranuleIds: ['GRANULE-1', 'GRANULE-2'],
+        accessMethods: {
+          download: {
+            isValid: true,
+            type: 'download'
+          }
+        },
+        selectedAccessMethod: 'download'
+      }
+
+      const collection = {
+        granules: {
+          hits: 151
+        },
+        metadata: {
+          tags: {
+            'edsc.limited_collections': {
+              data: {
+                limit: 150
+              }
+            }
+          }
+        }
+      }
+
+      expect(isAccessMethodValid(projectCollection, collection)).toEqual(validAccessMethod)
+    })
+
+    test('returns false if the count is over the limit', () => {
+      const projectCollection = {
+        removedGranuleIds: ['GRANULE-1', 'GRANULE-2'],
+        accessMethods: {
+          download: {
+            isValid: true,
+            type: 'download'
+          }
+        },
+        selectedAccessMethod: 'download'
+      }
+
+      const collection = {
+        granules: {
+          hits: 153
+        },
+        metadata: {
+          tags: {
+            'edsc.limited_collections': {
+              data: {
+                limit: 150
+              }
+            }
+          }
+        }
+      }
+
+      expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+        ...validAccessMethod,
+        valid: false,
+        tooManyGranules: true
+      })
+    })
+  })
 })
