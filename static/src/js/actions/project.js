@@ -194,7 +194,7 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
       } = response
 
       const { data } = responseData
-      const { collections = [] } = data
+      const { collections } = data
       const { items } = collections
 
       items.forEach((metadata) => {
@@ -212,7 +212,6 @@ export const getProjectCollections = (collectionIds = []) => (dispatch, getState
           versionId
         } = metadata
 
-        // TODO: Move this logic to graphql
         const focusedMetadata = createFocusedCollectionMetadata(metadata, authToken)
 
         payload.push({
