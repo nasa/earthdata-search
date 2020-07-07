@@ -33,8 +33,12 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     focusedCollection,
     metadata,
     project = {},
-    query
+    query,
+    router
   } = getState()
+
+  const { location } = router
+  const { search } = location
 
   const { byId: projectById = {} } = project
   const { [focusedCollection]: focusedProjectCollection = {} } = projectById
@@ -152,52 +156,61 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       const { data } = responseData
       const { collection } = data
 
-      const {
-        archiveAndDistributionInformation,
-        boxes,
-        conceptId,
-        dataCenter,
-        hasGranules,
-        services,
-        shortName,
-        summary,
-        tags,
-        title,
-        variables,
-        versionId
-      } = collection
+      if (collection) {
+        const {
+          archiveAndDistributionInformation,
+          boxes,
+          conceptId,
+          dataCenter,
+          hasGranules,
+          services,
+          shortName,
+          summary,
+          tags,
+          title,
+          variables,
+          versionId
+        } = collection
 
-      // TODO: Move this logic to graphql
-      const focusedMetadata = createFocusedCollectionMetadata(collection, authToken)
+        const focusedMetadata = createFocusedCollectionMetadata(collection, authToken)
 
-      payload.push({
-        [focusedCollection]: {
-          metadata: {
-            archiveAndDistributionInformation,
-            boxes,
-            conceptId,
-            dataCenter,
-            hasGranules,
-            services,
-            shortName,
-            summary,
-            tags,
-            title,
-            variables,
-            versionId,
-            ...focusedMetadata
-          },
-          isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
-        }
-      })
+        payload.push({
+          [focusedCollection]: {
+            metadata: {
+              archiveAndDistributionInformation,
+              boxes,
+              conceptId,
+              dataCenter,
+              hasGranules,
+              services,
+              shortName,
+              summary,
+              tags,
+              title,
+              variables,
+              versionId,
+              ...focusedMetadata
+            },
+            isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
+          }
+        })
 
-      // A users authToken will come back with an authenticated request if a valid token was used
-      dispatch(updateAuthTokenFromHeaders(headers))
+        // A users authToken will come back with an authenticated request if a valid token was used
+        dispatch(updateAuthTokenFromHeaders(headers))
 
-      // Update metadata in the store
-      dispatch(updateCollectionMetadata(payload))
+        // Update metadata in the store
+        dispatch(updateCollectionMetadata(payload))
 
-      dispatch(actions.getGranules())
+        dispatch(actions.getGranules())
+      } else {
+        // If no data was returned, clear the focused collection and redirect the user back to the search page
+        dispatch(actions.updateFocusedCollection(''))
+
+        dispatch(actions.changeUrl({
+          pathname: `${portalPathFromState(getState())}/search`,
+          search
+        }))
+      }
     })
     .catch((error) => {
       dispatch(actions.handleError({
