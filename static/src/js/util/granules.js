@@ -144,7 +144,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     line
   } = spatial
 
-  const { tags = {} } = collectionMetadata
+  const { tags } = collectionMetadata
   const {
     browseOnly,
     cloudCover,
