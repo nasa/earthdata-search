@@ -34,7 +34,9 @@ describe('GranuleRequest#permittedCmrKeys', () => {
 
     expect(request.permittedCmrKeys()).toEqual([
       'bounding_box',
+      'circle',
       'browse_only',
+      'concept_id',
       'cloud_cover',
       'day_night_flag',
       'echo_collection_id',
@@ -280,21 +282,5 @@ describe('GranuleRequest#transformResponse', () => {
     const result = request.transformResponse(data)
 
     expect(result).toEqual(data)
-  })
-})
-
-describe('GranuleRequest#transformRequest', () => {
-  test('adds umm version header', () => {
-    const request = new GranuleRequest()
-
-    const data = { param1: 123 }
-    const headers = {}
-
-    request.transformRequest(data, headers)
-
-    expect(headers).toEqual({
-      Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.5',
-      'Client-Id': 'eed-edsc-test-serverless-client'
-    })
   })
 })

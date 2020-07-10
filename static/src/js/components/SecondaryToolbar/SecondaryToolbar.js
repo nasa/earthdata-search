@@ -103,7 +103,7 @@ class SecondaryToolbar extends Component {
     const cmrEnvironment = cmrEnv()
 
     // remove focused collection from back button params
-    const params = parse(location.search, { ignoreQueryPrefix: true })
+    const params = parse(location.search, { parseArrays: false, ignoreQueryPrefix: true })
     let { p = '' } = params
     p = p.replace(/^[^!]*/, '')
 
@@ -147,6 +147,9 @@ class SecondaryToolbar extends Component {
       }
       return (
         <PortalLinkContainer
+          onClick={() => {
+            onChangePath(`/projects${location.search}`)
+          }}
           to={{
             pathname: '/projects',
             search: location.search
@@ -186,6 +189,16 @@ class SecondaryToolbar extends Component {
           <i className="fa fa-user" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
+          <LinkContainer
+            to={`${portalPath(portal)}/preferences`}
+          >
+            <Dropdown.Item
+              className="secondary-toolbar__preferences"
+              active={false}
+            >
+              Preferences
+            </Dropdown.Item>
+          </LinkContainer>
           <LinkContainer
             to={`${portalPath(portal)}/contact_info`}
           >

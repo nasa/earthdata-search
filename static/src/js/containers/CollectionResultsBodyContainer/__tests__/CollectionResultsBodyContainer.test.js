@@ -22,7 +22,8 @@ function setup() {
     onRemoveCollectionFromProject: jest.fn(),
     onChangeCollectionPageNum: jest.fn(),
     onViewCollectionGranules: jest.fn(),
-    onViewCollectionDetails: jest.fn()
+    onViewCollectionDetails: jest.fn(),
+    panelView: 'list'
   }
 
   const enzymeWrapper = shallow(<CollectionResultsBodyContainer {...props} />)
@@ -48,24 +49,16 @@ describe('CollectionResultsBodyContainer component', () => {
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionDetails).toEqual('function')
   })
 
-  test('waypointEnter calls onChangeCollectionPageNum', () => {
+  test('loadNextPage calls onChangeCollectionPageNum', () => {
     const { enzymeWrapper, props } = setup()
 
     const collectionResultsBody = enzymeWrapper.find(CollectionResultsBody)
 
-    collectionResultsBody.prop('waypointEnter')({ event: { type: 'scroll' } })
+    collectionResultsBody.prop('loadNextPage')()
 
-    expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(1)
-    expect(props.onChangeCollectionPageNum.mock.calls[0]).toEqual([2])
-  })
-
-  test('waypointEnter does not call onChangeCollectionPageNum if there is no scroll event', () => {
-    const { enzymeWrapper, props } = setup()
-
-    const collectionResultsBody = enzymeWrapper.find(CollectionResultsBody)
-
-    collectionResultsBody.prop('waypointEnter')({ event: null })
-
-    expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(0)
+    setTimeout(() => {
+      expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(1)
+      expect(props.onChangeCollectionPageNum.mock.calls[0]).toEqual([2])
+    }, 0)
   })
 })

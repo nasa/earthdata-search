@@ -19,11 +19,11 @@ import {
   changeFocusedCollection,
   clearCollectionGranules,
   getFocusedCollection,
+  updateFocusedCollection,
   viewCollectionGranules,
   viewCollectionDetails
 } from './focusedCollection'
 import {
-  addGranulesFromCollection,
   applyGranuleFilters,
   excludeGranule,
   getGranules,
@@ -58,16 +58,14 @@ import {
   updateStore
 } from './urlQuery'
 import {
+  addCmrFacet,
   changeCmrFacet,
-  updateCmrFacet,
   changeFeatureFacet,
+  removeCmrFacet,
+  updateCmrFacet,
   updateFeatureFacet
 } from './facets'
 import {
-  masterOverlayPanelDragEnd,
-  masterOverlayPanelDragStart,
-  masterOverlayPanelResize,
-  masterOverlayPanelToggle,
   toggleAdvancedSearchModal,
   toggleAboutCwicModal,
   toggleChunkedOrderModal,
@@ -78,6 +76,7 @@ import {
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
+  toggleSpatialPolygonWarning,
   toggleTooManyPointsModal
 } from './ui'
 import {
@@ -91,15 +90,23 @@ import {
   getFocusedGranule
 } from './focusedGranule'
 import {
+  togglePanels,
+  setActivePanel,
+  setActivePanelGroup,
+  setActivePanelSection
+} from './panels'
+import {
   addProjectCollection,
   getProjectCollections,
-  getProjectGranules,
   removeCollectionFromProject,
   restoreProject,
   selectAccessMethod,
   toggleCollectionVisibility,
   addAccessMethods,
-  updateAccessMethod
+  updateAccessMethod,
+  updateAccessMethodOrderCount,
+  addGranuleToProjectCollection,
+  removeGranuleFromProjectCollection
 } from './project'
 import {
   fetchProviders
@@ -132,15 +139,32 @@ import { handleError, removeError } from './errors'
 import { updateBrowserVersion } from './browser'
 import { collectionRelevancyMetrics } from './relevancy'
 import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
+import {
+  cancelAutocomplete,
+  clearAutocompleteSelected,
+  clearAutocompleteSuggestions,
+  deleteAutocompleteValue,
+  fetchAutocomplete,
+  removeAutocompleteValue,
+  selectAutocompleteSuggestion
+} from './autocomplete'
+import {
+  setIsSubmitting,
+  setPreferences,
+  setPreferencesFromJwt,
+  updatePreferences
+} from './preferences'
 
 const actions = {
   addAccessMethods,
-  addGranulesFromCollection,
+  addCmrFacet,
+  addGranuleToProjectCollection,
   addProjectCollection,
   adminIsAuthorized,
   adminViewRetrieval,
   applyGranuleFilters,
   applyViewAllFacets,
+  cancelAutocomplete,
   changeCmrFacet,
   changeCollectionPageNum,
   changeFeatureFacet,
@@ -156,16 +180,20 @@ const actions = {
   changeTimelineQuery,
   changeUrl,
   changeViewAllFacet,
+  clearAutocompleteSelected,
+  clearAutocompleteSuggestions,
   clearCollectionGranules,
   clearFilters,
   clearShapefile,
   collectionRelevancyMetrics,
+  deleteAutocompleteValue,
   deleteRetrieval,
   deleteSavedProject,
   excludeGranule,
   fetchAccessMethods,
   fetchAdminRetrieval,
   fetchAdminRetrievals,
+  fetchAutocomplete,
   fetchContactInfo,
   fetchDataQualitySummaries,
   fetchProviders,
@@ -179,19 +207,17 @@ const actions = {
   getFocusedGranule,
   getGranules,
   getProjectCollections,
-  getProjectGranules,
   getRegions,
   getTimeline,
   getViewAllFacets,
   handleError,
   loadPortalConfig,
   logout,
-  masterOverlayPanelDragEnd,
-  masterOverlayPanelDragStart,
-  masterOverlayPanelResize,
-  masterOverlayPanelToggle,
+  removeAutocompleteValue,
+  removeCmrFacet,
   removeCollectionFromProject,
   removeError,
+  removeGranuleFromProjectCollection,
   removeGridFilter,
   removeSpatialFilter,
   removeTemporalFilter,
@@ -199,6 +225,13 @@ const actions = {
   restoreProject,
   saveShapefile,
   selectAccessMethod,
+  selectAutocompleteSuggestion,
+  setActivePanel,
+  setActivePanelGroup,
+  setActivePanelSection,
+  setIsSubmitting,
+  setPreferences,
+  setPreferencesFromJwt,
   setSavedProjects,
   shapefileErrored,
   shapefileLoading,
@@ -210,14 +243,17 @@ const actions = {
   toggleDrawingNewLayer,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
+  togglePanels,
   toggleRelatedUrlsModal,
   toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
+  toggleSpatialPolygonWarning,
   toggleTooManyPointsModal,
   triggerViewAllFacets,
   undoExcludeGranule,
   updateAccessMethod,
+  updateAccessMethodOrderCount,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
   updateAdvancedSearch,
@@ -226,10 +262,12 @@ const actions = {
   updateCmrFacet,
   updateCollectionGranuleFilters,
   updateFeatureFacet,
+  updateFocusedCollection,
   updateGranuleMetadata,
   updateGranuleQuery,
   updateGranuleResults,
   updateNotificationLevel,
+  updatePreferences,
   updateProjectName,
   updateRegionQuery,
   updateSavedProject,

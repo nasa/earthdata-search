@@ -99,7 +99,8 @@ describe('isProjectValid', () => {
           collection3: {
             metadata: {
               tags: {}
-            }
+            },
+            granules: {}
           }
         }
       }
@@ -107,7 +108,7 @@ describe('isProjectValid', () => {
       expect(isProjectValid(project, collections)).toEqual({
         ...validAccessMethod,
         valid: false,
-        zeroGranules: true
+        noGranules: true
       })
     })
   })

@@ -20,6 +20,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  browser: state.browser,
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   pathname: state.router.location.pathname,
@@ -30,6 +31,7 @@ const mapStateToProps = state => ({
 
 export const TimelineContainer = (props) => {
   const {
+    browser,
     collections,
     focusedCollection,
     pathname,
@@ -67,6 +69,7 @@ export const TimelineContainer = (props) => {
 
   return (
     <Timeline
+      browser={browser}
       collectionMetadata={collectionMetadata}
       pathname={pathname}
       showOverrideModal={isProjectPage}
@@ -85,6 +88,7 @@ TimelineContainer.defaultProps = {
 }
 
 TimelineContainer.propTypes = {
+  browser: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   pathname: PropTypes.string.isRequired,

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -7,138 +7,94 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import MasterOverlayPanelContainer
-  from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
-import SearchFormContainer
-  from '../../containers/SearchFormContainer/SearchFormContainer'
-import CollectionResultsBodyContainer
-  from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
-import CollectionResultsTabContainer
-  from '../../containers/CollectionResultsTabContainer/CollectionResultsTabContainer'
-import CollectionDetailsTabContainer
-  from '../../containers/CollectionDetailsTabContainer/CollectionDetailsTabContainer'
-import CollectionDetailsBodyContainer
-  from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
-import CollectionDetailsHeaderContainer
-  from '../../containers/CollectionDetailsHeaderContainer/CollectionDetailsHeaderContainer'
-import FacetsModalContainer
-  from '../../containers/FacetsModalContainer/FacetsModalContainer'
-import GranuleResultsTabContainer
-  from '../../containers/GranuleResultsTabContainer/GranuleResultsTabContainer'
-import GranuleResultsBodyContainer
-  from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
-import GranuleResultsHeaderContainer
-  from '../../containers/GranuleResultsHeaderContainer/GranuleResultsHeaderContainer'
-import GranuleResultsActionsContainer
-  from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
-import GranuleDetailsTabContainer
-  from '../../containers/GranuleDetailsTabContainer/GranuleDetailsTabContainer'
-import GranuleDetailsBodyContainer
-  from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
-import GranuleDetailsHeaderContainer
-  from '../../containers/GranuleDetailsHeaderContainer/GranuleDetailsHeaderContainer'
-import GranuleFiltersPanelContainer
-  from '../../containers/GranuleFiltersPanelContainer/GranuleFiltersPanelContainer'
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
+import CollectionDetailsHighlightsContainer
+  from '../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'
+import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
+import FacetsModalContainer
+  from '../../containers/FacetsModalContainer/FacetsModalContainer'
+import GranuleResultsHighlightsContainer
+  from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
+import GranuleFiltersPanelContainer
+  from '../../containers/GranuleFiltersPanelContainer/GranuleFiltersPanelContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
-import SidebarContainer
-  from '../../containers/SidebarContainer/SidebarContainer'
+import SearchPanelsContainer
+  from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
+import SearchSidebarHeaderContainer
+  from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
-import CollectionResultsHeaderContainer
-  from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
-import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
+import SidebarContainer
+  from '../../containers/SidebarContainer/SidebarContainer'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 
 const mapDispatchToProps = dispatch => ({
-  onMasterOverlayHeightChange:
-    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
   onUpdateAdvancedSearch:
-    values => dispatch(actions.updateAdvancedSearch(values))
+    values => dispatch(actions.updateAdvancedSearch(values)),
+  onFocusedCollectionChange:
+    collectionId => dispatch(actions.changeFocusedCollection(collectionId))
 })
 
-export class Search extends Component {
-  componentDidMount() {
-    const { onMasterOverlayHeightChange } = this.props
+export const Search = ({
+  match,
+  onUpdateAdvancedSearch
+}) => {
+  const { path } = match
 
-    // Set the height of the master overlay to 500px by default
-    const panelHeight = window.innerHeight ? window.innerHeight / 2 : 500
-    onMasterOverlayHeightChange(panelHeight)
-  }
-
-  render() {
-    const {
-      match,
-      onUpdateAdvancedSearch
-    } = this.props
-    const { path } = match
-
-    return (
-      <div className="route-wrapper route-wrapper--search search">
-        <SidebarContainer>
-          <SidebarSection sectionTitle="Browse Collections">
-            <FacetsContainer />
-          </SidebarSection>
-        </SidebarContainer>
-        <div className="route-wrapper__content">
-          <header className="route-wrapper__header">
-            <div className="route-wrapper__header-primary">
-              <SearchFormContainer />
-              <SecondaryToolbarContainer />
-            </div>
-          </header>
+  return (
+    <div className="route-wrapper route-wrapper--search search">
+      <SidebarContainer
+        headerChildren={(
+          <SearchSidebarHeaderContainer />
+        )}
+        panels={<SearchPanelsContainer />}
+      >
+        <SidebarSection>
           <Switch>
-            <Route exact path={`${path}`}>
-              <MasterOverlayPanelContainer
-                tabHandle={<CollectionResultsTabContainer />}
-                header={<CollectionResultsHeaderContainer />}
-                body={<CollectionResultsBodyContainer />}
-              />
+            <Route exact path={`${path}/granules/collection-details`}>
+              <GranuleResultsHighlightsContainer />
             </Route>
             <Route exact path={`${path}/granules`}>
-              <MasterOverlayPanelContainer
-                tabHandle={<GranuleResultsTabContainer />}
-                header={<GranuleResultsHeaderContainer />}
-                actions={<GranuleResultsActionsContainer />}
-                body={<GranuleResultsBodyContainer />}
-              />
-              <GranuleFiltersPanelContainer />
+              <CollectionDetailsHighlightsContainer />
             </Route>
             <Route exact path={`${path}/granules/granule-details`}>
-              <MasterOverlayPanelContainer
-                tabHandle={<GranuleDetailsTabContainer />}
-                header={<GranuleDetailsHeaderContainer />}
-                body={<GranuleDetailsBodyContainer />}
-              />
+              <CollectionDetailsHighlightsContainer />
             </Route>
-            <Route exact path={`${path}/granules/collection-details`}>
-              <MasterOverlayPanelContainer
-                tabHandle={<CollectionDetailsTabContainer />}
-                header={<CollectionDetailsHeaderContainer />}
-                body={<CollectionDetailsBodyContainer />}
-              />
+            <Route path={path}>
+              <FacetsContainer />
             </Route>
           </Switch>
-          <RelatedUrlsModalContainer />
-          <FacetsModalContainer />
-          <AdvancedSearchModalContainer
-            fields={advancedSearchFields}
-            onUpdateAdvancedSearch={onUpdateAdvancedSearch}
-          />
-        </div>
+        </SidebarSection>
+      </SidebarContainer>
+      <div className="route-wrapper__content">
+        <header className="route-wrapper__header">
+          <div className="route-wrapper__header-primary">
+            <SecondaryToolbarContainer />
+          </div>
+        </header>
+        <Switch>
+          <Route exact path={`${path}/granules`}>
+            <GranuleFiltersPanelContainer />
+          </Route>
+        </Switch>
+        <RelatedUrlsModalContainer />
+        <FacetsModalContainer />
+        <AdvancedSearchModalContainer
+          fields={advancedSearchFields}
+          onUpdateAdvancedSearch={onUpdateAdvancedSearch}
+        />
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 Search.propTypes = {
   match: PropTypes.shape({}).isRequired,
-  onMasterOverlayHeightChange: PropTypes.func.isRequired,
   onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 

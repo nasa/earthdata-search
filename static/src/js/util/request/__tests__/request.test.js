@@ -25,19 +25,20 @@ describe('Request#constructor', () => {
   })
 })
 
-describe('Request#permittedCmrKeys', () => {
-  test('returns an empty array', () => {
+describe('Request#getAuthToken', () => {
+  test('returns the auth token', () => {
     const request = new Request(baseUrl)
+    request.authToken = 'test auth token'
 
-    expect(request.permittedCmrKeys()).toEqual([])
+    expect(request.getAuthToken()).toEqual('test auth token')
   })
-})
 
-describe('Request#nonIndexedKeys', () => {
-  test('returns an empty array', () => {
+  test('returns an empty string if optionallyAuthenticated', () => {
     const request = new Request(baseUrl)
 
-    expect(request.nonIndexedKeys()).toEqual([])
+    request.optionallyAuthenticated = true
+
+    expect(request.getAuthToken()).toEqual('')
   })
 })
 
@@ -54,50 +55,9 @@ describe('Request#transformRequest', () => {
 
     request.transformRequest(data, headers)
 
-    expect(headers).toEqual({
-      Authorization: `Bearer: ${token}`
-    })
-  })
-
-  test('adds client-id header when not authenticated', () => {
-    const request = new Request(baseUrl)
-
-    request.authenticated = false
-
-    const data = { param1: 123 }
-    const headers = {}
-
-    request.transformRequest(data, headers)
-
-    expect(headers).toEqual({
-      'Client-Id': 'eed-edsc-test-serverless-client'
-    })
-  })
-
-  test('correctly transforms data for CMR requests', () => {
-    const request = new Request(baseUrl)
-
-    const data = { ParamName: 123 }
-
-    jest.spyOn(Request.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
-
-    const transformedData = request.transformRequest(data, {})
-
-    expect(transformedData).toEqual('param_name=123')
-  })
-
-  test('correctly transforms data for Lambda requests', () => {
-    const request = new Request(baseUrl)
-    request.lambda = true
-    request.startTime = 1576855756
-
-    const data = { ParamName: 123 }
-
-    jest.spyOn(Request.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
-
-    const transformedData = request.transformRequest(data, {})
-
-    expect(transformedData).toEqual('{"invocationTime":1576855756,"params":{"param_name":123}}')
+    expect(headers).toEqual(expect.objectContaining({
+      Authorization: 'Bearer: 123'
+    }))
   })
 })
 

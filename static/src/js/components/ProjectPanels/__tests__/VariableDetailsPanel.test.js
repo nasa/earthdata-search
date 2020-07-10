@@ -10,11 +10,9 @@ function setup() {
   const props = {
     panelHeader: '',
     variable: {
-      umm: {
-        Definition: 'Variable Definition',
-        Name: 'Variable Name',
-        LongName: 'Variable Long Name'
-      }
+      definition: 'Variable Definition',
+      name: 'Variable Name',
+      longName: 'Variable Long Name'
     }
   }
 

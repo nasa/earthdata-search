@@ -2,35 +2,51 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { OverlayTrigger } from 'react-bootstrap'
+
 import GranuleResultsHeader from '../GranuleResultsHeader'
+import projections from '../../../util/map/projections'
+
+import Skeleton from '../../Skeleton/Skeleton'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    collectionSearch: {},
     focusedCollectionId: 'collectionId',
     focusedCollectionObject: {
-      excludedGranuleIds: [],
+      granules: {
+        hits: null,
+        loadTime: null,
+        isLoading: true,
+        isLoaded: false,
+        allIds: [],
+        byId: {}
+      },
       granuleFilters: {
-        readableGranuleName: 'searchValue',
+        readableGranuleName: ['searchValue'],
         sortKey: '-start_date'
       },
       metadata: {
-        dataset_id: 'Title',
-        id: 'collectionId'
+        title: 'Title',
+        concept_id: 'collectionId'
       }
     },
     location: {
       search: '?test=search-value'
     },
-    collectionSearch: {},
+    granuleSearch: {},
+    mapProjection: projections.geographic,
     secondaryOverlayPanel: {
       isOpen: false
     },
     onApplyGranuleFilters: jest.fn(),
+    onChangePanelView: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
     onToggleSecondaryOverlayPanel: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
+    pageNum: 1,
+    panelView: 'list',
     ...overrideProps
   }
 
@@ -47,6 +63,58 @@ describe('GranuleResultsHeader component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toBe('div')
+  })
+
+  describe('granule list header', () => {
+    describe('while loading', () => {
+      test('renders the correct Skeleton elements', () => {
+        const { enzymeWrapper } = setup({
+          focusedCollectionObject: {
+            excludedGranuleIds: [],
+            granules: {
+              hits: null,
+              loadTime: null,
+              isLoading: true,
+              isLoaded: false,
+              allIds: [],
+              byId: {}
+            }
+          }
+        })
+
+        expect(enzymeWrapper.find('.granule-results-header__header-item').at(0).find(Skeleton).length).toEqual(1)
+      })
+    })
+
+    describe('when loaded', () => {
+      test('renders the correct visible granules and hits', () => {
+        const { enzymeWrapper } = setup({
+          focusedCollectionObject: {
+            excludedGranuleIds: [],
+            granules: {
+              hits: 23,
+              loadTime: 1524,
+              isLoading: false,
+              isLoaded: true,
+              allIds: [
+                123,
+                456
+              ],
+              byId: {
+                123: {
+                  title: '123'
+                },
+                456: {
+                  title: '456'
+                }
+              }
+            }
+          }
+        })
+
+        expect(enzymeWrapper.find('.granule-results-header__header-item').at(0).text()).toEqual('Showing 2 of 23 matching granules')
+      })
+    })
   })
 
   test('renders a title', () => {
@@ -171,7 +239,7 @@ describe('handleUndoExcludeGranule', () => {
         excludedGranuleIds: ['granuleId1', 'granuleId2'],
         metadata: {
           title: 'Title',
-          id: 'collectionId'
+          concept_id: 'collectionId'
         }
       }
     })
@@ -191,7 +259,7 @@ describe('granuleFilters link', () => {
           isOpen: false
         }
       })
-      expect(enzymeWrapper.find('.granule-results-header__link').at(1).prop('icon')).toEqual('filter')
+      expect(enzymeWrapper.find('.granule-results-header__link').prop('icon')).toEqual('filter')
     })
 
     test('fires the correct callback on click', () => {
@@ -200,7 +268,7 @@ describe('granuleFilters link', () => {
           isOpen: false
         }
       })
-      enzymeWrapper.find('.granule-results-header__link').at(1).simulate('click')
+      enzymeWrapper.find('.granule-results-header__link').simulate('click')
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(1)
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(true)
     })
@@ -213,7 +281,7 @@ describe('granuleFilters link', () => {
           isOpen: true
         }
       })
-      expect(enzymeWrapper.find('.granule-results-header__link').at(1).prop('icon')).toEqual('times')
+      expect(enzymeWrapper.find('.granule-results-header__link').prop('icon')).toEqual('times')
     })
 
     test('fires the correct callback on click', () => {
@@ -222,7 +290,7 @@ describe('granuleFilters link', () => {
           isOpen: true
         }
       })
-      enzymeWrapper.find('.granule-results-header__link').at(1).simulate('click')
+      enzymeWrapper.find('.granule-results-header__link').simulate('click')
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(1)
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(false)
     })

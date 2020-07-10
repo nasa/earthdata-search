@@ -1,10 +1,10 @@
 .panel-item {
   position: relative;
   display: none;
+  height: 100%;
   width: 100%;
-  flex-grow: 1;
-  flex-direction: column;
   overflow: hidden;
+  flex-direction: column;
 
   &--is-active {
     display: flex;
@@ -14,7 +14,10 @@
     min-height: 0;
     height: 100%;
     width: 100%;
-    padding-top: 3rem;
+
+    .panel-item--has-header & {
+      padding-top: 3rem;
+    }
   }
 
   &__header {
@@ -39,5 +42,11 @@
     top: $spacer;
     margin-top: 0.5rem;
     color: $color__black--500;
+  }
+
+  &__simplebar-content > .simplebar-content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
   }
 }

@@ -20,6 +20,10 @@ import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 const store = configureStore()
 
 function setup() {
@@ -29,7 +33,11 @@ function setup() {
     focusedCollection: '',
     focusedGranule: '',
     granules: {},
-    pathname: '/search',
+    router: {
+      location: {
+        pathname: '/search'
+      }
+    },
     project: {},
     map: {
       base: {
@@ -47,7 +55,6 @@ function setup() {
       projection: projections.geographic,
       zoom: 2
     },
-    masterOverlayPanelHeight: 500,
     shapefile: {},
     onChangeFocusedGranule: jest.fn(),
     onChangeMap: jest.fn(),
@@ -106,5 +113,42 @@ describe('MapContainer component', () => {
 
     expect(props.onChangeMap.mock.calls.length).toBe(1)
     expect(props.onChangeMap.mock.calls[0]).toEqual([{ ...newMap }])
+  })
+
+  describe('when rendering', () => {
+    test('resizes the leaflet container', () => {
+      const resizeLeafletControlsMock = jest.spyOn(MapContainer.prototype, 'resizeLeafletControls')
+      setup()
+
+      expect(resizeLeafletControlsMock).toHaveBeenCalledTimes(1)
+      expect(resizeLeafletControlsMock).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('when the window is resized', () => {
+    test('resizes the leaflet container', () => {
+      // Get the starting value or the inner width.
+      const prevInnerWidth = global.innerWidth
+
+      // Set the inner width and mock the resizeLeafletControls method.
+      global.innerWidth = 1000
+      const resizeLeafletControlsMock = jest.spyOn(MapContainer.prototype, 'resizeLeafletControls')
+
+      setup()
+
+      // Assert the mock has only fired once when the component mounted.
+      expect(resizeLeafletControlsMock).toHaveBeenCalledTimes(1)
+
+      // Change the inner width and manually trigger a window resize event.
+      global.innerWidth = 950
+      global.dispatchEvent(new Event('resize'))
+
+      // Assert the mock has fired again due to the resize event.
+      expect(resizeLeafletControlsMock).toHaveBeenCalledTimes(2)
+      expect(resizeLeafletControlsMock).toHaveBeenCalledWith()
+
+      // Reset the inner width to the starting value.
+      global.innerWidth = prevInnerWidth
+    })
   })
 })

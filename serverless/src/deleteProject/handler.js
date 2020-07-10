@@ -2,6 +2,8 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Delete a project from the database
@@ -12,6 +14,8 @@ const deleteProject = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   const jwtToken = getJwtToken(event)
   const { id: userId } = getVerifiedJwtToken(jwtToken)
@@ -39,7 +43,7 @@ const deleteProject = async (event, context) => {
         isBase64Encoded: false,
         statusCode: 204,
         headers: {
-          'Access-Control-Allow-Origin': '*',
+          ...defaultResponseHeaders,
           'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
         },
         body: null
@@ -51,22 +55,19 @@ const deleteProject = async (event, context) => {
       isBase64Encoded: false,
       statusCode: 404,
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
       body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
-  } catch (error) {
-    console.log(error)
-
+  } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
-      body: JSON.stringify({ errors: [error] })
+      ...parseError(e)
     }
   }
 }

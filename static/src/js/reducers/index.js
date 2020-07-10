@@ -14,7 +14,6 @@ import {
   viewAllFacetsReducer
 } from './facetsParams'
 import focusedCollectionReducer from './focusedCollection'
-import granuleResultsReducer from './granuleResults'
 import granuleDownloadReducer from './granuleDownload'
 import mapReducer from './map'
 import queryReducer from './query'
@@ -26,7 +25,7 @@ import retrievalReducer from './retrieval'
 import regionResultsReducer from './regionResults'
 import retrievalHistoryReducer from './retrievalHistory'
 import portalsReducer from './portals'
-import projectPanelsReducer from './projectPanels'
+import panelsReducer from './panels'
 import projectReducer from './project'
 import shapefileReducer from './shapefile'
 import savedProjectReducer from './savedProject'
@@ -37,6 +36,8 @@ import providersReducer from './providers'
 import contactInfoReducer from './contactInfo'
 import adminIsAuthorizedReducer from './admin/isAuthorized'
 import adminRetrievalsReducer from './admin/retrievals'
+import preferencesReducer from './preferences'
+import autocompleteReducer from './autocomplete'
 
 export default history => combineReducers({
   admin: combineReducers({
@@ -45,6 +46,7 @@ export default history => combineReducers({
   }),
   advancedSearch: advancedSearchReducer,
   authToken: authTokenReducer,
+  autocomplete: autocompleteReducer,
   browser: browserReducer,
   contactInfo: contactInfoReducer,
   dataQualitySummaries: dataQualitySummariesReducer,
@@ -64,7 +66,8 @@ export default history => combineReducers({
   }),
   portal: portalsReducer,
   project: projectReducer,
-  projectPanels: projectPanelsReducer,
+  panels: panelsReducer,
+  preferences: preferencesReducer,
   providers: providersReducer,
   query: queryReducer,
   retrieval: retrievalReducer,
@@ -76,7 +79,6 @@ export default history => combineReducers({
     collections: collectionsResultsReducer,
     facets: facetsReducer,
     regions: regionResultsReducer,
-    granules: granuleResultsReducer,
     viewAllFacets: viewAllFacetsRequestReducer
   }),
   shapefile: shapefileReducer,

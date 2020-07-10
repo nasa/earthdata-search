@@ -15,18 +15,36 @@ import VariableDetailsPanel from './VariableDetailsPanel'
 import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
 
 import { isAccessMethodValid } from '../../util/accessMethods'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ProjectPanels.scss'
 
 /**
  * Renders ProjectPanels.
- * @param {object} props - The props passed into the component.
- * @param {object} props.collections - The current collections from the state.
- * @param {object} props.projectPanels - The current projectPanels state.
- * @param {function} props.onTogglePanels - Toggles the panels opened or closed.
- * @param {function} props.onSetActivePanel - Switches the currently active panel.
+ * @param {Object} collections - The collections from the store.
+ * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
+ * @param {String} focusedCollection - The focused collection ID.
+ * @param {String} focusedGranule - The focused granule ID.
+ * @param {Object} collection - The current collection.
+ * @param {String} collectionId - The current collection ID.
+ * @param {Object} granuleQuery - The granule query from the store.
+ * @param {Object} location - The location from the store.
+ * @param {Object} panels - The current panels state.
+ * @param {Object} portal - The portal from the store.
+ * @param {Object} project - The project from the store.
+ * @param {Object} spatial - The spatial from the store.
+ * @param {Object} shapefileId - The shapefileId from the store.
+ * @param {Object} projectCollection - The project collection.
+ * @param {Function} onSetActivePanelGroup - Callback to set the page number.
+ * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
+ * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
+ * @param {Function} onUpdateAccessMethod - Callback to update the access method.
+ * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
+ * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
+ * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
+ * @param {Function} onTogglePanels - Toggles the panels opened or closed.
+ * @param {Function} onSetActivePanel - Switches the currently active panel.
  */
-
 class ProjectPanels extends PureComponent {
   constructor(props) {
     super(props)
@@ -39,6 +57,7 @@ class ProjectPanels extends PureComponent {
     }
 
     this.onPanelClose = this.onPanelClose.bind(this)
+    this.onPanelOpen = this.onPanelOpen.bind(this)
     this.onChangePanel = this.onChangePanel.bind(this)
     this.selectKeyword = this.selectKeyword.bind(this)
     this.onSaveVariables = this.onSaveVariables.bind(this)
@@ -47,11 +66,25 @@ class ProjectPanels extends PureComponent {
     this.clearSelectedVariable = this.clearSelectedVariable.bind(this)
     this.onViewDetails = this.onViewDetails.bind(this)
     this.backToOptions = this.backToOptions.bind(this)
+    this.resetForm = this.resetForm.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
-    const { project: nextProject } = nextProps
+    const {
+      focusedCollection,
+      onSetActivePanelGroup,
+      onTogglePanels,
+      panels
+    } = this.props
+    const {
+      project: nextProject,
+      focusedCollection: nextFocusedCollection
+    } = nextProps
     const { byId, collectionIds } = nextProject
+
+    const {
+      activePanel
+    } = panels
 
     const selectedVariables = {}
 
@@ -68,19 +101,50 @@ class ProjectPanels extends PureComponent {
       }
     })
 
+    const nextFocusedCollectionIndex = collectionIds.indexOf(nextFocusedCollection).toString()
+    const newFocusedCollectionIndex = activePanel.split('.')[1].toString()
+
+    if (
+      nextFocusedCollectionIndex > -1
+      && nextFocusedCollectionIndex !== newFocusedCollectionIndex
+    ) {
+      onSetActivePanelGroup(nextFocusedCollectionIndex)
+      onTogglePanels(true)
+    } else if (focusedCollection !== nextFocusedCollection && nextFocusedCollection === '') {
+      onTogglePanels(false)
+    }
+
     this.setState({
       selectedVariables
     })
   }
 
-  onPanelClose() {
+  onPanelOpen() {
     const { onTogglePanels } = this.props
+    onTogglePanels(true)
+  }
+
+  onPanelClose() {
+    const { onTogglePanels, onUpdateFocusedCollection } = this.props
+    onUpdateFocusedCollection('')
     onTogglePanels(false)
   }
 
-  onChangePanel(panelId) {
-    const { onSetActivePanel } = this.props
-    onSetActivePanel(panelId)
+  onChangePanel(activePanel) {
+    const {
+      onSetActivePanel,
+      onTogglePanels,
+      onUpdateFocusedCollection,
+      project
+    } = this.props
+    const { collectionIds } = project
+
+    const newFocusedCollectionIndex = activePanel.split('.')[1]
+    const newFocusedCollectionId = collectionIds[newFocusedCollectionIndex]
+
+    onUpdateFocusedCollection(newFocusedCollectionId)
+    onSetActivePanel(activePanel)
+    onTogglePanels(true)
   }
 
   onCheckboxChange(e, variableId, collectionId) {
@@ -172,18 +236,49 @@ class ProjectPanels extends PureComponent {
     this.onChangePanel(panelId)
   }
 
+  canResetForm(accessMethods, selectedAccessMethod) {
+    if (!accessMethods || !selectedAccessMethod) return false
+
+    const { type = '' } = accessMethods[selectedAccessMethod]
+
+    if (type === 'ESI' || type === 'ECHO ORDERS') return true
+
+    return false
+  }
+
+  resetForm(collectionId, selectedAccessMethod) {
+    const { onUpdateAccessMethod } = this.props
+
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          model: undefined,
+          rawModel: undefined
+        }
+      }
+    })
+  }
+
   render() {
     const {
       collections,
       dataQualitySummaries,
+      focusedGranule,
+      granuleQuery,
+      location,
+      portal,
       project,
-      projectPanels,
+      panels,
       shapefileId,
       spatial,
+      onChangeGranulePageNum,
+      onChangePath,
       onSelectAccessMethod,
-      onTogglePanels,
       onSetActivePanel,
-      onUpdateAccessMethod
+      onUpdateAccessMethod,
+      onRemoveGranuleFromProjectCollection,
+      onFocusedGranuleChange
     } = this.props
 
     const {
@@ -196,15 +291,16 @@ class ProjectPanels extends PureComponent {
     const { byId = {} } = collections
     const { collectionIds: projectIds, byId: projectById } = project
 
-    const { activePanel, isOpen } = projectPanels
+    const { activePanel, isOpen } = panels
     const panelSectionEditOptions = []
     const panelSectionCollectionDetails = []
 
     let loaded = false
 
+    // TODO: Figure out a more reliable way of determining if the metadata is loaded
     let collectionMetadataLoaded = Object.values(byId).some((collection) => {
       const { metadata = {} } = collection
-      return Object.prototype.hasOwnProperty.call(metadata, 'dataset_id')
+      return Object.prototype.hasOwnProperty.call(metadata, 'title')
     })
 
     projectIds.forEach((collectionId, index) => {
@@ -213,16 +309,15 @@ class ProjectPanels extends PureComponent {
       if (!collection || Object.keys(collection).length === 0) return
 
       const projectCollection = projectById[collectionId]
-      const { metadata } = collection
+      const { metadata, granules } = collection
 
       if (!collectionMetadataLoaded) return
 
       collectionMetadataLoaded = true
 
       const {
-        dataset_id: title = '',
-        id,
-        granule_count: granuleCount
+        title = '',
+        conceptId: id
       } = metadata
 
       const { [id]: collectionDataQualitySummaries = [] } = dataQualitySummaries
@@ -231,6 +326,7 @@ class ProjectPanels extends PureComponent {
         accessMethods,
         selectedAccessMethod
       } = projectCollection
+
       const { valid: isValid } = isAccessMethodValid(projectCollection, collection)
 
       const backButtonOptions = {
@@ -259,12 +355,24 @@ class ProjectPanels extends PureComponent {
             {`Collection ${index + 1} of ${projectIds.length}`}
           </span>
           {
+            this.canResetForm(accessMethods, selectedAccessMethod) && (
+              <Button
+                className="project-panels__action"
+                label="Previous Collection"
+                bootstrapVariant="light"
+                onClick={() => this.resetForm(collectionId, selectedAccessMethod)}
+              >
+                Reset Form
+              </Button>
+            )
+          }
+          {
             index > 0 && (
               <Button
                 className="project-panels__action"
                 label="Previous Collection"
                 bootstrapVariant="light"
-                onClick={() => onSetActivePanel(`0.${index - 1}.0`)}
+                onClick={() => this.onChangePanel(`0.${index - 1}.0`)}
               >
                 Back
               </Button>
@@ -276,7 +384,7 @@ class ProjectPanels extends PureComponent {
                 className="project-panels__action"
                 label="Next Collection"
                 bootstrapVariant="primary"
-                onClick={() => onSetActivePanel(`0.${index + 1}.0`)}
+                onClick={() => this.onChangePanel(`0.${index + 1}.0`)}
               >
                 Next
               </Button>
@@ -288,7 +396,8 @@ class ProjectPanels extends PureComponent {
                 className="project-panels__action"
                 label="Done"
                 bootstrapVariant="primary"
-                onClick={() => onTogglePanels(false)}
+                onClick={() => this.onPanelClose()}
+                dataTestId="project-panels-done"
               >
                 Done
               </Button>
@@ -305,7 +414,6 @@ class ProjectPanels extends PureComponent {
             bootstrapVariant="light"
             className="project-panels__action"
             onClick={() => this.clearSelectedKeyword(`0.${index}.1`)}
-            data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword"
           >
             Back
           </Button>
@@ -315,7 +423,6 @@ class ProjectPanels extends PureComponent {
             bootstrapVariant="primary"
             className="project-panels__action"
             onClick={() => this.onSaveVariables(collectionId, index)}
-            data-bind="visible: selectedKeyword() && !selectedVariable(), click: saveState"
           >
             Save
           </Button>
@@ -330,11 +437,24 @@ class ProjectPanels extends PureComponent {
             bootstrapVariant="primary"
             className="project-panels__action"
             onClick={() => this.clearSelectedVariable(`0.${index}.2`)}
-            data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword"
           >
             Back
           </Button>
         </div>
+      )
+
+      const projectHeadingLink = (
+        <PortalLinkContainer
+          className="panel-group-header__heading-primary-link"
+          to={{
+            pathname: '/search/granules',
+            search: location.search
+          }}
+          onClick={() => { onChangePath(`/search/granules${location.search}`) }}
+        >
+          <i className="fa fa-map" />
+          {' View Granules'}
+        </PortalLinkContainer>
       )
 
       // Panels are controlled using the onSetActivePanel action. The parameters are
@@ -344,6 +464,7 @@ class ProjectPanels extends PureComponent {
       panelSectionEditOptions.push(
         <PanelGroup
           key={`${id}_edit-options`}
+          headingLink={projectHeadingLink}
           primaryHeading={title}
           secondaryHeading="Edit Options"
           footer={editOptionsFooter}
@@ -355,6 +476,7 @@ class ProjectPanels extends PureComponent {
               accessMethods={accessMethods}
               index={index}
               metadata={metadata}
+              granuleMetadata={granules}
               shapefileId={shapefileId}
               spatial={spatial}
               onSelectAccessMethod={onSelectAccessMethod}
@@ -403,21 +525,41 @@ class ProjectPanels extends PureComponent {
       panelSectionCollectionDetails.push(
         <PanelGroup
           key={`${id}_collection-details`}
+          headingLink={projectHeadingLink}
           primaryHeading={title}
           secondaryHeading="Details"
         >
-          <PanelItem>
-            <CollectionDetails granuleCount={granuleCount} />
+          <PanelItem scrollable={false}>
+            <CollectionDetails
+              granules={granules}
+              granuleQuery={granuleQuery}
+              collection={collection}
+              collectionId={collectionId}
+              focusedGranule={focusedGranule}
+              location={location}
+              portal={portal}
+              projectCollection={projectCollection}
+              onChangeGranulePageNum={onChangeGranulePageNum}
+              onFocusedGranuleChange={onFocusedGranuleChange}
+              onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+            />
           </PanelItem>
         </PanelGroup>
       )
     })
 
+    // Don't display the panels if the project doesn't have any collections
+    if (projectIds.length === 0) {
+      return null
+    }
+
     return (
       <Panels
+        draggable
         show={collectionMetadataLoaded && isOpen}
         activePanel={loaded ? activePanel : ''}
         onPanelClose={this.onPanelClose}
+        onPanelOpen={this.onPanelOpen}
         onChangePanel={this.onChangePanel}
       >
         <PanelSection>
@@ -438,14 +580,25 @@ ProjectPanels.defaultProps = {
 ProjectPanels.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   dataQualitySummaries: PropTypes.shape({}).isRequired,
+  focusedCollection: PropTypes.string.isRequired,
+  focusedGranule: PropTypes.string.isRequired,
+  granuleQuery: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
+  panels: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
+  onChangeGranulePageNum: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  onUpdateAccessMethod: PropTypes.func.isRequired
+  onSetActivePanelGroup: PropTypes.func.isRequired,
+  onUpdateAccessMethod: PropTypes.func.isRequired,
+  onUpdateFocusedCollection: PropTypes.func.isRequired,
+  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
+  onFocusedGranuleChange: PropTypes.func.isRequired
 }
 
 export default ProjectPanels

@@ -15,6 +15,8 @@ const processTag = async (event, context) => {
 
   const { Records: sqsRecords = [] } = event
 
+  if (sqsRecords.length === 0) return
+
   console.log(`Processing ${sqsRecords.length} tag(s)`)
 
   // Retrieve a connection to the database
@@ -49,13 +51,6 @@ const processTag = async (event, context) => {
       await removeTag(tagName, searchCriteria, cmrToken)
     }
   })
-
-  return {
-    isBase64Encoded: false,
-    statusCode: 200,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    body: sqsRecords
-  }
 }
 
 export default processTag

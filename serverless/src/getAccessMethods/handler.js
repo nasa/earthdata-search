@@ -1,3 +1,5 @@
+import parser from 'fast-xml-parser'
+
 import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 import { getOptionDefinitions } from './getOptionDefinitions'
 import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
@@ -6,10 +8,9 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getVariables } from './getVariables'
-import { getOutputFormats } from './getOutputFormats'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve access methods for a provided collection
@@ -27,10 +28,11 @@ const getAccessMethods = async (event, context) => {
     const { body } = event
     const { params = {} } = JSON.parse(body)
     const {
-      associations,
-      collection_id: collectionId,
-      collection_provider: collectionProvider,
-      tags
+      collectionId,
+      collectionProvider,
+      services: associatedServices,
+      tags,
+      variables: associatedVariables
     } = params
 
     const jwtToken = getJwtToken(event)
@@ -96,11 +98,20 @@ const getAccessMethods = async (event, context) => {
 
     if (hasOpendap) {
       const opendapData = getValueForTag('subset_service.opendap', tags)
-      const { id: serviceId } = opendapData
-      const { variables: variableIds } = associations
 
-      const { keywordMappings, variables } = await getVariables(variableIds, jwtToken)
-      const { supportedOutputFormats } = await getOutputFormats(serviceId, jwtToken)
+      const { id: serviceId } = opendapData
+
+      const { keywordMappings, variables } = getVariables(associatedVariables)
+
+      let supportedOutputFormats = null
+
+      const { items = [] } = associatedServices || {}
+
+      const fullServiceObject = items.find(service => service.conceptId === serviceId)
+
+      if (fullServiceObject) {
+        ({ supportedOutputFormats } = fullServiceObject)
+      }
 
       accessMethods.opendap = {
         ...opendapData,
@@ -136,6 +147,7 @@ const getAccessMethods = async (event, context) => {
 
         if (method.type === savedAccessConfig.type && ['download', 'OPeNDAP'].includes(method.type)) {
           selectedAccessMethod = methodName
+
           return
         }
 
@@ -155,13 +167,22 @@ const getAccessMethods = async (event, context) => {
               form_digest: formDigest
             } = savedAccessConfig
 
-            // Only override values that the user configured
-            accessMethods[methodName] = {
-              ...accessMethods[methodName],
-              form,
-              model,
-              rawModel,
-              form_digest: formDigest
+            // Parse the savedAccessConfig values and if it is not valid XML, don't use it
+            if (parser.validate(form) === true
+              && parser.validate(model) === true
+              && parser.validate(rawModel) === true
+            ) {
+              // Only override values that the user configured
+              accessMethods[methodName] = {
+                ...accessMethods[methodName],
+                form,
+                model,
+                rawModel,
+                form_digest: formDigest
+              }
+            } else {
+              console.log('There was a problem parsing the savedAccessConfig values, using the default form instead.')
+              return
             }
           }
         }
@@ -195,13 +216,10 @@ const getAccessMethods = async (event, context) => {
       body: JSON.stringify({ accessMethods, selectedAccessMethod })
     }
   } catch (e) {
-    console.log('error', e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

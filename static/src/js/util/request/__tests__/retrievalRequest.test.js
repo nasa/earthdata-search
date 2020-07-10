@@ -17,26 +17,6 @@ describe('RetrievalRequest#constructor', () => {
   })
 })
 
-describe('RetrievalRequest#permittedCmrKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
-    const request = new RetrievalRequest()
-
-    expect(request.permittedCmrKeys()).toEqual([
-      'collections',
-      'environment',
-      'json_data'
-    ])
-  })
-})
-
-describe('RetrievalRequest#nonIndexedKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
-    const request = new RetrievalRequest()
-
-    expect(request.nonIndexedKeys()).toEqual([])
-  })
-})
-
 describe('RetrievalRequest#transformResponse', () => {
   beforeEach(() => {
     jest.spyOn(RetrievalRequest.prototype, 'handleUnauthorized').mockImplementation()

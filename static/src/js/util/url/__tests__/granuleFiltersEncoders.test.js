@@ -13,6 +13,7 @@ describe('url#decodeGranuleFilters', () => {
       dayNightFlag: 'NIGHT',
       browseOnly: true,
       onlineOnly: true,
+      sortKey: '-start_date',
       cloudCover: {
         max: 2,
         min: 1
@@ -33,11 +34,13 @@ describe('url#decodeGranuleFilters', () => {
         isRecurring: false
       }
     }
+
     expect(decodeGranuleFilters({
       qt: '2015-07-09T00:00.000Z,2016-07-09T00:00.000Z',
       dnf: 'NIGHT',
       bo: 'true',
       oo: 'true',
+      gsk: '-start_date',
       cc: {
         max: 2,
         min: 1
@@ -66,6 +69,7 @@ describe('url#encodeGranuleFilters', () => {
       dayNightFlag: 'NIGHT',
       browseOnly: true,
       onlineOnly: true,
+      sortKey: '-end_date',
       cloudCover: {
         max: 2,
         min: 1
@@ -83,11 +87,13 @@ describe('url#encodeGranuleFilters', () => {
         startDate: '2015-06-09T00:00.000Z'
       }
     }
+
     expect(encodeGranuleFilters(props)).toEqual({
       qt: '2015-07-09T00:00.000Z,2016-07-09T00:00.000Z',
       dnf: 'NIGHT',
       bo: true,
       oo: true,
+      gsk: '-end_date',
       cc: {
         max: 2,
         min: 1

@@ -14,6 +14,7 @@ function setup() {
       byId: {
         focusedCollection: {
           excludedGranuleIds: [],
+          granules: { hits: 100 },
           metadata: {
             mock: 'data'
           }
@@ -21,15 +22,19 @@ function setup() {
       }
     },
     focusedCollection: 'focusedCollection',
-    granules: { hits: 100 },
     granuleQuery: {
       pageNum: 1
     },
     project: {
-      collectionIds: ['focusedCollection']
+      collectionIds: ['focusedCollection'],
+      byId: {
+        focusedCollection: {}
+      }
     },
     onAddProjectCollection: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn()
+    onRemoveCollectionFromProject: jest.fn(),
+    onSetActivePanelSection: jest.fn(),
+    onChangePath: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsActionsContainer {...props} />)

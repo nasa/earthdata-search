@@ -48,7 +48,7 @@ class FacetsGroup extends Component {
         }
         {
           (facet.totalSelected === 0 && facet.children.length > 49) && (
-            <span className="facets-group__meta">{`Showing Top 50 ${facet.title}`}</span>
+            <span className="facets-group__meta">Showing Top 50</span>
           )
         }
         {
@@ -66,13 +66,19 @@ class FacetsGroup extends Component {
       facetCategory,
       facetOptions
     } = this.props
+    const {
+      autocompleteType,
+      changeHandler,
+      children,
+      title
+    } = facet
 
     const { isOpen } = this.state
 
     const headerInfo = this.renderHeaderInfo()
 
     return (
-      <li className="facets-group" key={facet.title}>
+      <li className="facets-group" key={title}>
         <h3 className="facets-group__heading">
           <button
             className="btn btn-block facets-group__button"
@@ -80,17 +86,17 @@ class FacetsGroup extends Component {
             onClick={this.onToggle}
           >
             <span className="facets-group__title">
-              {facet.title}
+              {title}
             </span>
             <div className="facets-group__action">
               {
                 !isOpen
                   ? (
-                    <i className="fa fa-chevron-left">
+                    <i className="fa fa-chevron-down">
                       <span className="visually-hidden">Open</span>
                     </i>
                   ) : (
-                    <i className="fa fa-chevron-down">
+                    <i className="fa fa-chevron-up">
                       <span className="visually-hidden">Close</span>
                     </i>
                   )
@@ -98,21 +104,24 @@ class FacetsGroup extends Component {
             </div>
           </button>
         </h3>
-        <section className={`facets-group__body
-          ${isOpen ? ' facets-group__body--is-open' : ''}`}
-        >
-          {headerInfo && (
-            <header className="facets-group__header">
-              {headerInfo}
-            </header>
-          )}
-          <FacetsList
-            changeHandler={facet.changeHandler}
-            facets={facet.children}
-            facetCategory={facetCategory}
-            liftSelectedFacets={facetOptions.liftSelectedFacets}
-          />
-        </section>
+        {
+          isOpen && (
+            <section className="facets-group__body">
+              {headerInfo && (
+                <header className="facets-group__header">
+                  {headerInfo}
+                </header>
+              )}
+              <FacetsList
+                autocompleteType={autocompleteType}
+                changeHandler={changeHandler}
+                facets={children}
+                facetCategory={facetCategory}
+                liftSelectedFacets={facetOptions.liftSelectedFacets}
+              />
+            </section>
+          )
+        }
       </li>
     )
   }

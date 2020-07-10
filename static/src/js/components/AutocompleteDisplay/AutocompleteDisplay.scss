@@ -1,0 +1,80 @@
+.autocomplete-display {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -0.25rem;
+  padding: 0 0.5rem;
+
+  &__item {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    max-width: 100%;
+    border-radius: 0.125rem;
+    overflow: hidden;
+    flex-grow: 0;
+    align-items: center;
+    margin: 0.25rem;
+    line-height: 1.25rem;
+    vertical-align: middle;
+  }
+
+  &__item-body {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+    height: 1.25rem;
+    max-width: 100%;
+    padding: 0.125rem 0.5rem;
+    padding-right: 1.5rem;
+    font-size: 0.625rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+    background-color: $color__brand--blue;
+  }
+
+  &__button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    height: 1.25rem;
+    width: 1.25rem;
+    margin-left: auto;
+    padding: 0.125rem;
+    padding-right: 0.25rem;
+    font-size: 0.725rem;
+    background-color: $color__brand--blue;
+    border-radius: 0;
+    align-items: center;
+    color: rgba($color__black, 0.7);
+
+    .button__icon {
+      display: block;
+      position: relative;
+      top: -0.0375rem;
+      right: -0.0375rem;
+    }
+
+    &:hover {
+      background-color: darken($color__brand--blue-dark, 1);
+      color: rgba($color__black, 0.7);
+    }
+  }
+
+  &__type {
+    text-transform: uppercase;
+    color: rgba($color__black, 0.7);
+    font-weight: 600;
+    letter-spacing: -0.025rem;
+  }
+
+  &__value {
+    position: relative;
+    z-index: 1;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

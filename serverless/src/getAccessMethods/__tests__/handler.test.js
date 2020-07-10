@@ -8,7 +8,6 @@ import * as getServiceOptionDefinitions from '../getServiceOptionDefinitions'
 import * as getVariables from '../getVariables'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getOutputFormats from '../getOutputFormats'
 
 let dbConnectionToMock
 let dbTracker
@@ -47,7 +46,7 @@ describe('getAccessMethods', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
           tags: {
             'edsc.extra.serverless.collection_capabilities': {
               data: {
@@ -110,7 +109,7 @@ describe('getAccessMethods', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
           tags: {
             'edsc.extra.serverless.subset_service.echo_orders': {
               data: {
@@ -182,7 +181,7 @@ describe('getAccessMethods', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
           tags: {
             'edsc.extra.serverless.subset_service.esi': {
               data: {
@@ -254,7 +253,7 @@ describe('getAccessMethods', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
           tags: {
             'edsc.extra.serverless.subset_service.esi': {
               data: {
@@ -316,35 +315,34 @@ describe('getAccessMethods', () => {
 
     const variables = {
       'V123456-EDSC': {
-        meta: {
-          mock: 'data'
-        },
-        umm: {
-          'concept-id': 'V123456-EDSC'
-        },
-        associations: {}
+        conceptId: 'V123456-EDSC',
+        mock: 'data'
       }
     }
 
-    const supportedOutputFormats = [
-      'HDF4',
-      'NETCDF-3',
-      'NETCDF-4',
-      'BINARY',
-      'ASCII'
-    ]
-
     jest.spyOn(getVariables, 'getVariables').mockImplementation(() => ({ keywordMappings, variables }))
-    jest.spyOn(getOutputFormats, 'getOutputFormats').mockImplementation(() => ({ supportedOutputFormats }))
 
     const event = {
       body: JSON.stringify({
         params: {
-          associations: [],
-          collection_id: 'collectionId',
+          collectionId: 'collectionId',
+          services: {
+            count: 1,
+            items: [{
+              conceptId: 'S1000000-EDSC',
+              supportedOutputFormats: [
+                'HDF4',
+                'NETCDF-3',
+                'NETCDF-4',
+                'BINARY',
+                'ASCII'
+              ]
+            }]
+          },
           tags: {
             'edsc.extra.serverless.subset_service.opendap': {
               data: {
+                id: 'S1000000-EDSC',
                 type: 'OPeNDAP'
               }
             }
@@ -359,11 +357,18 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         accessMethods: {
           opendap: {
+            id: 'S1000000-EDSC',
             type: 'OPeNDAP',
             isValid: true,
             keywordMappings,
             variables,
-            supportedOutputFormats
+            supportedOutputFormats: [
+              'HDF4',
+              'NETCDF-3',
+              'NETCDF-4',
+              'BINARY',
+              'ASCII'
+            ]
           }
         },
         selectedAccessMethod: 'opendap'
@@ -408,7 +413,7 @@ describe('getAccessMethods', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            collection_id: 'collectionId',
+            collectionId: 'collectionId',
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -459,20 +464,108 @@ describe('getAccessMethods', () => {
       })
     })
 
-    test('populates the default access configuration', async () => {
+    test('does not populate selectedAccessMethod if method is download', async () => {
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response({
+            access_method: {
+              type: 'download',
+              isValid: true
+            }
+          })
+        } else if (step === 2) {
+          query.response({
+            urs_profile: {
+              email_address: 'test@edsc.com'
+            }
+          })
+        }
+      })
+
+      const event = {
+        body: JSON.stringify({
+          params: {
+            collectionId: 'collectionId',
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: {
+                  granule_online_access_flag: true
+                }
+              }
+            }
+          }
+        })
+      }
+
+      const result = await getAccessMethods(event, {})
+
+      expect(result).toEqual({
+        body: JSON.stringify({
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
+        }),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Credentials': true
+        },
+        isBase64Encoded: false,
+        statusCode: 200
+      })
+    })
+
+    test('does not populate selectedAccessMethod when an error occurrs', async () => {
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.reject('Unknown Error')
+        } else if (step === 2) {
+          query.response({
+            urs_profile: {
+              email_address: 'test@edsc.com'
+            }
+          })
+        }
+      })
+
+      const event = {
+        body: JSON.stringify({
+          params: {
+            collectionId: 'collectionId',
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: {
+                  granule_online_access_flag: true
+                }
+              }
+            }
+          }
+        })
+      }
+
+      const result = await getAccessMethods(event, {})
+
+      expect(result.statusCode).toEqual(500)
+    })
+
+    test('populates the saved access configuration', async () => {
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
           query.response({
             access_method: {
               type: 'ECHO ORDERS',
-              form: 'mock echo form',
+              form: '<form>echo form</form>',
               option_definition: {
                 id: 'option_def_guid',
                 name: 'Option Definition'
               },
-              model: 'mock model',
-              rawModel: 'mock raw model',
-              form_digest: '948c584e60f9791b4d7b0e84ff538cd58ac8c0e4'
+              model: '<mock>model</mock>',
+              rawModel: '<mock>raw model</mock>',
+              form_digest: '95d8b918c2634d9d27daece7bf941a33caec9bb6'
             }
           })
         } else if (step === 2) {
@@ -487,7 +580,7 @@ describe('getAccessMethods', () => {
       jest.spyOn(getOptionDefinitions, 'getOptionDefinitions').mockImplementation(() => [
         {
           echoOrder0: {
-            form: 'mock echo form',
+            form: '<form>echo form</form>',
             option_definition: {
               id: 'option_def_guid',
               name: 'Option Definition'
@@ -500,7 +593,7 @@ describe('getAccessMethods', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            collection_id: 'collectionId',
+            collectionId: 'collectionId',
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -532,15 +625,108 @@ describe('getAccessMethods', () => {
             },
             echoOrder0: {
               type: 'ECHO ORDERS',
-              form: 'mock echo form',
+              form: '<form>echo form</form>',
               option_definition: {
                 id: 'option_def_guid',
                 name: 'Option Definition'
               },
               option_definitions: undefined,
-              model: 'mock model',
-              rawModel: 'mock raw model',
-              form_digest: '948c584e60f9791b4d7b0e84ff538cd58ac8c0e4'
+              model: '<mock>model</mock>',
+              rawModel: '<mock>raw model</mock>',
+              form_digest: '95d8b918c2634d9d27daece7bf941a33caec9bb6'
+            }
+          },
+          selectedAccessMethod: 'echoOrder0'
+        }),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Credentials': true
+        },
+        isBase64Encoded: false,
+        statusCode: 200
+      })
+    })
+
+    test('populates the default access configuration if the saved access config has malformed XML', async () => {
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response({
+            access_method: {
+              type: 'ECHO ORDERS',
+              form: '<form a="a"b="b">echo form</form>',
+              option_definition: {
+                id: 'option_def_guid',
+                name: 'Option Definition'
+              },
+              model: '<mock>model</mock>',
+              rawModel: '<mock>raw model</mock>',
+              form_digest: '95d8b918c2634d9d27daece7bf941a33caec9bb6'
+            }
+          })
+        } else if (step === 2) {
+          query.response({
+            urs_profile: {
+              email_address: 'test@edsc.com'
+            }
+          })
+        }
+      })
+
+      jest.spyOn(getOptionDefinitions, 'getOptionDefinitions').mockImplementation(() => [
+        {
+          echoOrder0: {
+            form: '<form>echo form</form>',
+            option_definition: {
+              id: 'option_def_guid',
+              name: 'Option Definition'
+            },
+            option_definitions: undefined
+          }
+        }
+      ])
+
+      const event = {
+        body: JSON.stringify({
+          params: {
+            collectionId: 'collectionId',
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: {
+                  granule_online_access_flag: true
+                }
+              },
+              'edsc.extra.serverless.subset_service.echo_orders': {
+                data: {
+                  option_definitions: [{
+                    id: 'option_def_guid',
+                    name: 'Option Definition'
+                  }],
+                  type: 'ECHO ORDERS'
+                }
+              }
+            }
+          }
+        })
+      }
+
+      const result = await getAccessMethods(event, {})
+
+      expect(result).toEqual({
+        body: JSON.stringify({
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            },
+            echoOrder0: {
+              type: 'ECHO ORDERS',
+              form: '<form>echo form</form>',
+              option_definition: {
+                id: 'option_def_guid',
+                name: 'Option Definition'
+              },
+              option_definitions: undefined
             }
           },
           selectedAccessMethod: 'echoOrder0'

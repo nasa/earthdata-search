@@ -1,8 +1,9 @@
 import { isEmpty } from 'lodash'
-
-import { encodeTemporal } from './url/temporalEncoders'
 import { categoryNameToCMRParam } from './facets'
+import { encodeTemporal } from './url/temporalEncoders'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { tagName } from '../../../../sharedUtils/tags'
+import { autocompleteFacetsMap } from './autocompleteFacetsMap'
 
 /**
  * Takes the current CMR collection params and applies any changes needed to account
@@ -39,11 +40,14 @@ export const withAdvancedSearch = (collectionParams, advancedSearch) => {
  */
 export const prepareCollectionParams = (state) => {
   const {
+    autocomplete = {},
     advancedSearch = {},
     authToken,
     facetsParams = {},
     portal = {},
-    query,
+    query = {
+      collection: {}
+    },
     searchResults = {}
   } = state
 
@@ -63,6 +67,7 @@ export const prepareCollectionParams = (state) => {
 
   const {
     boundingBox,
+    circle,
     line,
     point,
     polygon
@@ -91,7 +96,10 @@ export const prepareCollectionParams = (state) => {
 
   const tagKey = []
   if (selectedTag) tagKey.push(selectedTag)
-  if (featureFacets.customizable) tagKey.push(tagName('subset_service.*'))
+  if (featureFacets.customizable) {
+    tagKey.push(tagName('subset_service.esi'))
+    tagKey.push(tagName('subset_service.opendap'))
+  }
   if (featureFacets.mapImagery) tagKey.push(tagName('gibs'))
 
   const { query: portalQuery = {} } = portal
@@ -99,6 +107,7 @@ export const prepareCollectionParams = (state) => {
   const collectionParams = {
     authToken,
     boundingBox,
+    circle,
     cmrFacets,
     featureFacets,
     gridName,
@@ -116,6 +125,20 @@ export const prepareCollectionParams = (state) => {
     ...portalQuery
   }
 
+  // Add the autocomplete selected parameters if the type is not a CMR Facet
+  const { selected = [] } = autocomplete
+  selected.forEach((param) => {
+    const { type, value } = param
+
+    if (!autocompleteFacetsMap[type]) {
+      if (collectionParams[type]) {
+        collectionParams[type].push(value)
+      } else {
+        collectionParams[type] = [value]
+      }
+    }
+  })
+
   // Apply any overrides for advanced search
   const paramsWithAdvancedSearch = withAdvancedSearch(collectionParams, advancedSearch)
 
@@ -129,26 +152,34 @@ export const prepareCollectionParams = (state) => {
  * @returns {Object} Parameters to be provided to the Collections request with camel cased keys
  */
 export const buildCollectionSearchParams = (params) => {
+  const { defaultCmrPageSize } = getApplicationConfig()
+
   const {
     boundingBox,
-    conceptId,
+    circle,
     cmrFacets,
+    conceptId,
     dataCenter,
     echoCollectionId,
     featureFacets,
+    granuleDataFormat,
     gridName,
     hasGranulesOrCwic,
+    instrument,
     keyword,
     line,
     pageNum,
+    platform,
     point,
     polygon,
     project,
+    provider,
     sortKey: selectedSortKey,
+    spatialKeyword,
     tagKey,
     temporalString,
-    viewAllFacetsCategory,
-    viewAllFacets
+    viewAllFacets,
+    viewAllFacetsCategory
   } = params
 
   let facetsToSend = { ...cmrFacets }
@@ -184,31 +215,37 @@ export const buildCollectionSearchParams = (params) => {
         limit_to_granules: true
       }
     },
-    pageSize: 20,
+    pageSize: defaultCmrPageSize,
     sortKey: ['has_granules_or_cwic', ...selectedSortKey]
   }
 
   return {
     ...defaultParams,
     boundingBox,
+    circle,
     collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
     concept_id: conceptId,
     dataCenterH: facetsToSend.data_center_h,
     dataCenter,
     echoCollectionId,
+    granuleDataFormat,
     granuleDataFormatH: facetsToSend.granule_data_format_h,
     hasGranulesOrCwic,
+    instrument,
     instrumentH: facetsToSend.instrument_h,
     keyword: keywordWithWildcard,
     line,
     pageNum,
+    platform,
     platformH: facetsToSend.platform_h,
     point,
     polygon,
     processingLevelIdH: facetsToSend.processing_level_id_h,
     projectH: facetsToSend.project_h,
     project,
+    provider,
     scienceKeywordsH: facetsToSend.science_keywords_h,
+    spatialKeyword,
     tagKey,
     temporal: temporalString,
     twoDCoordinateSystem,

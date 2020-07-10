@@ -8,6 +8,7 @@ import {
 import { generateFormDigest } from '../util/generateFormDigest'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
+import { parseError } from '../../../sharedUtils/parseError'
 
 export const getOptionDefinitions = async (
   collectionProvider,
@@ -36,13 +37,14 @@ export const getOptionDefinitions = async (
           'Client-Id': getClientId().lambda,
           'Echo-Token': await getEchoToken(jwtToken)
         },
+        json: true,
         resolveWithFullResponse: true
       })
 
       console.log(`Took ${response.elapsedTime / 1000}s to retrieve option definition '${name}' for ${organizationName}`)
 
       const { body } = response
-      const [firstOptionDefinition] = JSON.parse(body)
+      const [firstOptionDefinition] = body
       const {
         option_definition: responseOptionDefinition
       } = firstOptionDefinition
@@ -59,7 +61,7 @@ export const getOptionDefinitions = async (
         }
       })
     } catch (e) {
-      console.log('error', e)
+      parseError(e)
     }
   })
 

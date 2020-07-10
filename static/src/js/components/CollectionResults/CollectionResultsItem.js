@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { Waypoint } from 'react-waypoint'
+import { isEmpty } from 'lodash'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
@@ -12,73 +12,49 @@ import SplitBadge from '../SplitBadge/SplitBadge'
 
 import './CollectionResultsItem.scss'
 
-export const CollectionResultsItem = ({
-  browser,
+/**
+ * Renders CollectionResultsItem.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.collection - The collection metadata.
+ * @param {Function} props.onAddProjectCollection - Callback to add a collection to a project.
+ * @param {Function} props.onRemoveCollectionFromProject - Callback to remove a collection to a project.
+ * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
+ * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
+ */
+export const CollectionResultsItem = forwardRef(({
   collection,
-  isCollectionInProject,
-  isLast,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
-  onViewCollectionGranules,
-  waypointEnter,
-  scrollContainer
-}) => {
+  onViewCollectionGranules
+}, ref) => {
+  if (isEmpty(collection)) return null
   const {
-    dataset_id: datasetId = null,
-    granule_count: granuleCount = 0,
-    has_formats: hasFormats = false,
-    has_spatial_subsetting: hasSpatialSubsetting = false,
-    has_temporal_subsetting: hasTemporalSubsetting = false,
-    has_transforms: hasTransforms = false,
-    has_variables: hasVariables = false,
-    has_map_imagery: hasMapImagery = false,
-    is_cwic: isCwic = false,
-    is_nrt: isNrt = false,
-    organizations = [],
-    summary = '',
-    thumbnail = null,
-    time_end: timeEnd = null,
-    time_start: timeStart = null
+    collectionId,
+    datasetId,
+    description,
+    displayOrganization,
+    granuleCount,
+    hasFormats,
+    hasSpatialSubsetting,
+    hasTemporalSubsetting,
+    hasTransforms,
+    hasVariables,
+    hasMapImagery,
+    isCwic,
+    isCollectionInProject,
+    isNrt,
+    shortName,
+    temporalRange,
+    thumbnail,
+    versionId
   } = collection
 
+  const { thumbnailSize } = getApplicationConfig()
   const {
-    name: browserName
-  } = browser
-
-  let displayOrganization = ''
-
-  if (organizations && organizations.length) {
-    [displayOrganization] = organizations
-  }
-
-  let timeRange = ''
-
-  if (timeStart || timeEnd) {
-    if (timeStart) {
-      const dateStart = new Date(timeStart).toISOString().split('T')[0]
-
-      timeRange = `${dateStart} ongoing`
-    }
-    if (timeEnd) {
-      const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
-
-      timeRange = `Up to ${dateEnd}`
-    }
-
-    if (timeStart && timeEnd) {
-      const dateStart = new Date(timeStart).toISOString().split('T')[0]
-      const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
-
-      timeRange = `${dateStart} to ${dateEnd}`
-    }
-  }
-
-  let description = summary
-  if (browserName === 'ie') description = `${description.substring(0, 280)}...`
-
-  const thumbnailHeight = getApplicationConfig().thumbnailSize.height
-  const thumbnailWidth = getApplicationConfig().thumbnailSize.width
+    height: thumbnailHeight,
+    width: thumbnailWidth
+  } = thumbnailSize
 
   const customizeBadges = []
 
@@ -181,7 +157,7 @@ export const CollectionResultsItem = ({
     <Button
       className="collection-results-item__action collection-results-item__action--add"
       onClick={(e) => {
-        onAddProjectCollection(collection.id)
+        onAddProjectCollection(collectionId)
         e.stopPropagation()
       }}
       variant="light"
@@ -196,7 +172,7 @@ export const CollectionResultsItem = ({
     <Button
       className="collection-results-item__action collection-results-item__action--remove"
       onClick={(e) => {
-        onRemoveCollectionFromProject(collection.id)
+        onRemoveCollectionFromProject(collectionId)
         e.stopPropagation()
       }}
       variant="light"
@@ -208,19 +184,24 @@ export const CollectionResultsItem = ({
   )
 
   return (
-    <li className="collection-results-item" key={collection.id}>
+    <div
+      className="collection-results-item"
+      data-test-id="collection-results-item"
+      key={collectionId}
+      ref={ref}
+    >
       <div
         role="button"
         tabIndex="0"
         className="collection-results-item__link"
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
-            onViewCollectionGranules(collection.id)
+            onViewCollectionGranules(collectionId)
           }
           e.stopPropagation()
         }}
         onClick={(e) => {
-          onViewCollectionGranules(collection.id)
+          onViewCollectionGranules(collectionId)
           e.stopPropagation()
         }}
         data-test-id="collection-result-item"
@@ -256,8 +237,14 @@ export const CollectionResultsItem = ({
                   )
                 }
                 <strong> &bull; </strong>
-                <strong>{timeRange}</strong>
-                <strong> &bull; </strong>
+                {
+                  temporalRange && (
+                    <>
+                      <strong>{temporalRange}</strong>
+                      <strong> &bull; </strong>
+                    </>
+                  )
+                }
                 {description}
               </p>
             </div>
@@ -265,7 +252,7 @@ export const CollectionResultsItem = ({
               <Button
                 className="collection-results-item__action collection-results-item__action--collection-details"
                 onClick={(e) => {
-                  onViewCollectionDetails(collection.id)
+                  onViewCollectionDetails(collectionId)
                   e.stopPropagation()
                 }}
                 label="View collection details"
@@ -356,50 +343,34 @@ export const CollectionResultsItem = ({
             }
             {
               (
-                collection.short_name
-                && collection.version_id
+                shortName
+                && versionId
                 && displayOrganization
               ) && (
                 <Badge
                   className="badge collection-results-item__badge collection-results-item__badge--attribution"
                 >
                   {
-                    `${collection.short_name} v${collection.version_id} - ${displayOrganization}`
+                    `${shortName} v${versionId} - ${displayOrganization}`
                   }
                 </Badge>
               )
             }
           </div>
         </div>
-        {
-          isLast && (
-            <Waypoint
-              bottomOffset="-200px"
-              onEnter={waypointEnter}
-              scrollableAncestor={scrollContainer || window}
-            />
-          )
-        }
       </div>
-    </li>
+    </div>
   )
-}
+})
 
-CollectionResultsItem.defaultProps = {
-  scrollContainer: null
-}
+CollectionResultsItem.displayName = 'CollectionResultsItem'
 
 CollectionResultsItem.propTypes = {
-  browser: PropTypes.shape({}).isRequired,
   collection: PropTypes.shape({}).isRequired,
-  isCollectionInProject: PropTypes.bool.isRequired,
-  isLast: PropTypes.bool.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
-  waypointEnter: PropTypes.func.isRequired,
-  scrollContainer: PropTypes.instanceOf(Element)
+  onViewCollectionGranules: PropTypes.func.isRequired
 }
 
 export default CollectionResultsItem

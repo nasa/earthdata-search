@@ -1,8 +1,9 @@
-export const buildDoi = (ummJson) => {
-  const doi = ummJson.DOI
+export const buildDoi = (json) => {
+  const { doi } = json
+
   if (!doi) return undefined
 
-  const doiText = doi.DOI
+  const doiText = doi.doi
   if (!doiText) return { doiLink: undefined, doiText: undefined }
 
   // This link varies. Clean it up so all links start from the same place.

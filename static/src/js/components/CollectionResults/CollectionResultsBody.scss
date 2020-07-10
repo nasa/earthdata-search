@@ -1,10 +1,38 @@
 .collection-results-body {
   height: 100%;
+  width: 100%;
+  position: relative;
 
-  &__scroll-container {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: $color__black--100;
+  &__view-enter {
+    display: block;
+    visibility: visible;
+    opacity: 0;
+  }
+
+  &__view-enter-active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 200ms;
+  }
+
+  &__view-enter-done {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &__view-exit {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__view-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+
+  &__view-exit-done {
+    opacity: 0;
+    visibility: hidden;
   }
 }

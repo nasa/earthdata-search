@@ -12,9 +12,19 @@ import './ProjectCollections.scss'
 
 /**
  * Renders ProjectCollections.
- * @param {object} props - The props passed into the component.
- * @param {object} props.collections - List of collections passed from redux store.
- * @param {function} props.onRemoveCollectionFromProject - Fired when the remove button is clicked
+ * @param {Object} collections - List of collections passed from redux store.
+ * @param {String} collectionSearch - The collection search.
+ * @param {String} mapProjection - The current map projection.
+ * @param {Function} onMetricsDataAccess - Callback to log metrics events.
+ * @param {Function} onRemoveCollectionFromProject - Callback to remove the current collection from the project.
+ * @param {Function} onSetActivePanel - Callback to set the active panel.
+ * @param {Function} onSetActivePanelSection - Callback to set the active panel section.
+ * @param {Function} onTogglePanels - Callback to toggle the visibility of the panels.
+ * @param {Function} onToggleCollectionVisibility - Callback to toggle the visibility of the collection.
+ * @param {Function} onUpdateProjectName - Callback to update the projet name.
+ * @param {Object} panels - The panels state.
+ * @param {Object} project - The project state.
+ * @param {Object} savedProject - The saved project state.
  */
 export class ProjectCollections extends Component {
   constructor() {
@@ -58,25 +68,33 @@ export class ProjectCollections extends Component {
 
   render() {
     const {
-      collectionSearch,
       collections,
+      collectionSearch,
+      mapProjection,
       onMetricsDataAccess,
       onRemoveCollectionFromProject,
       onSetActivePanel,
+      onSetActivePanelSection,
       onToggleCollectionVisibility,
+      onTogglePanels,
+      onUpdateFocusedCollection,
       onUpdateProjectName,
+      onViewCollectionDetails,
+      onViewCollectionGranules,
+      panels,
       project,
-      projectPanels,
       savedProject
     } = this.props
 
     const {
       valid: isValid,
-      tooManyGranules,
-      zeroGranules
+      noGranules,
+      tooManyGranules
     } = isProjectValid(project, collections)
+
     const { isSubmitting } = project
 
+    // TODO: Use a loading state instead of relying on metadata keys
     const isLoading = collections.allIds.every((collectionId) => {
       const { byId } = collections
       const collection = byId[collectionId]
@@ -95,20 +113,26 @@ export class ProjectCollections extends Component {
         />
         <ProjectCollectionsList
           collections={collections}
+          collectionSearch={collectionSearch}
+          mapProjection={mapProjection}
           onMetricsDataAccess={onMetricsDataAccess}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-          onToggleCollectionVisibility={onToggleCollectionVisibility}
           onSetActivePanel={onSetActivePanel}
+          onSetActivePanelSection={onSetActivePanelSection}
+          onToggleCollectionVisibility={onToggleCollectionVisibility}
+          onTogglePanels={onTogglePanels}
+          onUpdateFocusedCollection={onUpdateFocusedCollection}
+          onViewCollectionDetails={onViewCollectionDetails}
+          onViewCollectionGranules={onViewCollectionGranules}
+          panels={panels}
           project={project}
-          projectPanels={projectPanels}
-          collectionSearch={collectionSearch}
         />
         <div className="project-collections__footer">
           {
             !isLoading && (
               <p className="project-collections__footer-message">
                 {
-                  !isValid && !tooManyGranules && !zeroGranules && (
+                  !isValid && !tooManyGranules && !noGranules && (
                     <>
                       {'Select a data access method for each collection in your project before downloading.'}
                     </>
@@ -129,9 +153,9 @@ export class ProjectCollections extends Component {
                   )
                 }
                 {
-                  !isValid && zeroGranules && (
+                  !isValid && noGranules && (
                     <>
-                      {'One or more collections in your project contains zero granules. Adjust temporal constraints or remove the collections before downloading.'}
+                      {'One or more collections in your project does not contain granules. Adjust temporal constraints or remove the collections before downloading.'}
                     </>
                   )
                 }
@@ -160,14 +184,20 @@ export class ProjectCollections extends Component {
 ProjectCollections.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
-  savedProject: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired
+  onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onTogglePanels: PropTypes.func.isRequired,
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  onUpdateFocusedCollection: PropTypes.func.isRequired,
+  onUpdateProjectName: PropTypes.func.isRequired,
+  onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
+  panels: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired,
+  savedProject: PropTypes.shape({}).isRequired
 }
 
 export default ProjectCollections

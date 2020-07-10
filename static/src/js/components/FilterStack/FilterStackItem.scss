@@ -3,9 +3,13 @@
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  padding: $spacer/2 $spacer*0.78 $spacer/2 $spacer;
+  padding: $spacer/2 $spacer*0.78 $spacer/2 $spacer*0.925;
   color: $color__white;
   border-bottom: 1px solid rgba($color__black--700, 0.5);
+
+  &--naked {
+    padding: 0.5rem;
+  }
 
   &:last-child {
     border-bottom: transparent;
@@ -16,13 +20,13 @@
     flex-grow: 0;
     align-items: center;
     justify-content: flex-start;
-    width: 1.5rem;
+    margin-bottom: 0.125rem;
   }
 
   &__icon {
     text-align: center;
     color: $color__black--400;
-    font-size: 1.25rem;
+    font-size: 0.925rem !important;
 
     &--small {
       font-size: 1rem;
@@ -31,10 +35,19 @@
 
   &__title {
     display: block;
-    height: 0;
-    width: 0;
-    font-size: 1rem;
-    visibility: hidden;
+    margin-bottom: 0;
+    margin-left: 0.25rem;
+    font-size: 0.875rem;
+    color: $color__black--400;
+  }
+
+  &__secondary-title {
+    margin-left: 0.5rem;
+    padding: 0.0125rem .25rem;
+    border-radius: 0.125rem;
+    background-color: $color__black--600;
+    color: $color__black--100;
+    font-size: 0.75rem;
   }
 
   &__content {
@@ -44,13 +57,19 @@
   &__body {
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
+  }
+
+  &__body-primary {
+    width: 100%;
+    margin-right: 0.25rem;
   }
 
   &__body-contents {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
-    align-items: center;
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 
   &__body-actions {

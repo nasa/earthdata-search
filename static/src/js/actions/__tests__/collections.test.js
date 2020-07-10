@@ -268,18 +268,14 @@ describe('getCollections', () => {
       expect(storeActions[3]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
       expect(storeActions[4]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
       expect(storeActions[5]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
-      })
-      expect(storeActions[6]).toEqual({
         type: LOADED_COLLECTIONS,
         payload: { loaded: true }
       })
-      expect(storeActions[7]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: LOADED_FACETS,
         payload: { loaded: true }
       })
-      expect(storeActions[8]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: UPDATE_COLLECTION_RESULTS,
         payload: {
           keyword: 'search keyword',
@@ -398,7 +394,7 @@ describe('getCollections', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(getCollections()).then(() => {
       const storeActions = store.getActions()

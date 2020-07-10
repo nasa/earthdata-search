@@ -98,6 +98,7 @@ describe('adminGetRetrievals', () => {
 
     const responseObj = {
       id: 1,
+      jsondata: {},
       obfuscated_id: '4517239960',
       user_id: 1,
       username: 'edsc-test',
@@ -210,6 +211,7 @@ describe('adminGetRetrievals', () => {
 
     const responseObj = {
       id: 1,
+      jsondata: {},
       obfuscated_id: '4517239960',
       user_id: 1,
       username: 'edsc-test',
@@ -283,6 +285,7 @@ describe('adminGetRetrievals', () => {
 
     const responseObj = {
       id: 1,
+      jsondata: {},
       obfuscated_id: '4517239960',
       user_id: 1,
       username: 'edsc-test',
@@ -316,7 +319,7 @@ describe('adminGetRetrievals', () => {
       query.reject('Unknown Error')
     })
 
-    const retrievalResponse = await adminGetRetrievals({
+    const response = await adminGetRetrievals({
       pathParameters: {
         id: 1
       }
@@ -326,8 +329,6 @@ describe('adminGetRetrievals', () => {
 
     expect(queries[0].method).toEqual('select')
 
-    const { statusCode } = retrievalResponse
-
-    expect(statusCode).toEqual(500)
+    expect(response.statusCode).toEqual(500)
   })
 })

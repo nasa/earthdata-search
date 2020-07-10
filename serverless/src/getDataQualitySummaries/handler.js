@@ -6,15 +6,15 @@ import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEchoToken } from '../util/urs/getEchoToken'
-import { logLambdaEntryTime } from '../util/logging/logLambdaEntryTime'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve data quality summaries for a given CMR Collection
  * @param {Object} event Details about the HTTP request that it received
  */
-const getDataQualitySummaries = async (event, context) => {
+const getDataQualitySummaries = async (event) => {
   const { body } = event
-  const { invocationTime, params = {}, requestId } = JSON.parse(body)
+  const { params, requestId } = JSON.parse(body)
 
   const jwtToken = getJwtToken(event)
 
@@ -22,15 +22,13 @@ const getDataQualitySummaries = async (event, context) => {
 
   const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
-  const { catalog_item_id: catalogItemId } = params
+  const { catalogItemId } = params
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
     const dataQualitySummaries = []
     const errors = []
-
-    logLambdaEntryTime(requestId, invocationTime, context)
 
     const dqsAssociationResponse = await request.get({
       uri: `${echoRestRoot}/data_quality_summary_definitions.json`,
@@ -83,7 +81,7 @@ const getDataQualitySummaries = async (event, context) => {
 
         console.log(`Request ${dataQualitySummaryRequestId} for data quality summary ${catalogItemId} completed after ${dqsResponse.elapsedTime} ms`)
 
-        const { body = {} } = dqsResponse
+        const { body } = dqsResponse
         const { data_quality_summary_definition: dataQualitySummary = {} } = body
 
         dataQualitySummaries.push(dataQualitySummary)
@@ -116,13 +114,10 @@ const getDataQualitySummaries = async (event, context) => {
       body: JSON.stringify({ errors })
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

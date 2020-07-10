@@ -1,19 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { pluralize } from '../../util/pluralize'
 
-import Skeleton from '../Skeleton/Skeleton'
+import Button from '../Button/Button'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import Radio from '../FormFields/Radio/Radio'
 import RadioList from '../FormFields/Radio/RadioList'
-
-import EchoForm from './EchoForm'
-import Button from '../Button/Button'
+import Skeleton from '../Skeleton/Skeleton'
+import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+const EchoForm = lazy(() => import('./EchoForm'))
 
 const downloadButton = collectionId => (
   <Radio
@@ -136,6 +137,7 @@ const formatMapping = {
  * @param {object} props.accessMethods - The accessMethods of the current collection.
  * @param {number} props.index - The index of the current collection.
  * @param {object} props.metadata - The metadata of the current collection.
+ * @param {object} props.granuleMetadata - The metadata of granules belonging to the current collection.
  * @param {string} props.selectedAccessMethod - The selected access method of the current collection.
  * @param {string} props.shapefileId - The shapefile id of the uploaded shapefile.
  * @param {function} props.onSelectAccessMethod - Selects an access method.
@@ -193,11 +195,13 @@ export class AccessMethod extends Component {
   }
 
   handleAccessMethodSelection(method) {
-    const { metadata, onSelectAccessMethod } = this.props
-    const { granule_count: granuleCount, id: collectionId } = metadata
+    const { granuleMetadata, metadata, onSelectAccessMethod } = this.props
 
+    const { conceptId: collectionId } = metadata
+
+    // Calculate the number of orders that will be created based on granule count
     const { defaultGranulesPerOrder } = getApplicationConfig()
-
+    const { hits: granuleCount } = granuleMetadata
     const orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
 
     onSelectAccessMethod({
@@ -209,7 +213,7 @@ export class AccessMethod extends Component {
 
   handleOutputFormatSelection(event) {
     const { metadata, onUpdateAccessMethod } = this.props
-    const { id: collectionId } = metadata
+    const { conceptId: collectionId } = metadata
 
     const { target } = event
     const { value } = target
@@ -237,10 +241,11 @@ export class AccessMethod extends Component {
       shapefileId,
       spatial,
       onSetActivePanel,
+      onTogglePanels,
       onUpdateAccessMethod
     } = this.props
 
-    const { id: collectionId } = metadata
+    const { conceptId: collectionId } = metadata
 
     const radioList = []
     Object.keys(accessMethods).forEach((methodKey) => {
@@ -290,7 +295,7 @@ export class AccessMethod extends Component {
     const selectedMethod = accessMethods[selectedAccessMethod]
     const {
       form,
-      rawModel,
+      rawModel = null,
       selectedVariables = [],
       supportedOutputFormats = []
     } = selectedMethod || {}
@@ -309,6 +314,12 @@ export class AccessMethod extends Component {
         <option key={format} value={formatMapping[format]}>{format}</option>
       ))
     }
+
+    const echoFormFallback = (
+      <div className="access-method__echoform-loading">
+        <Spinner className="access-method__echoform-spinner" size="tiny" type="dots" />
+      </div>
+    )
 
     return (
       <div className="access-method">
@@ -331,15 +342,17 @@ export class AccessMethod extends Component {
         {
           form && isActive && (
             <ProjectPanelSection>
-              <EchoForm
-                collectionId={collectionId}
-                form={form}
-                methodKey={selectedAccessMethod}
-                rawModel={rawModel}
-                shapefileId={shapefileId}
-                spatial={spatial}
-                onUpdateAccessMethod={onUpdateAccessMethod}
-              />
+              <Suspense fallback={echoFormFallback}>
+                <EchoForm
+                  collectionId={collectionId}
+                  form={form}
+                  methodKey={selectedAccessMethod}
+                  rawModel={rawModel}
+                  shapefileId={shapefileId}
+                  spatial={spatial}
+                  onUpdateAccessMethod={onUpdateAccessMethod}
+                />
+              </Suspense>
             </ProjectPanelSection>
           )
         }
@@ -373,7 +386,10 @@ export class AccessMethod extends Component {
                   bootstrapVariant="primary"
                   label="Edit Variables"
                   bootstrapSize="sm"
-                  onClick={() => onSetActivePanel(`0.${index}.1`)}
+                  onClick={() => {
+                    onSetActivePanel(`0.${index}.1`)
+                    onTogglePanels(true)
+                  }}
                 >
                   Edit Variables
                 </Button>
@@ -405,9 +421,11 @@ AccessMethod.defaultProps = {
   index: null,
   isActive: false,
   metadata: {},
+  granuleMetadata: {},
   shapefileId: null,
   spatial: {},
   onSetActivePanel: null,
+  onTogglePanels: null,
   selectedAccessMethod: null
 }
 
@@ -416,10 +434,12 @@ AccessMethod.propTypes = {
   index: PropTypes.number,
   isActive: PropTypes.bool,
   metadata: PropTypes.shape({}),
+  granuleMetadata: PropTypes.shape({}),
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}),
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
+  onTogglePanels: PropTypes.func,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string
 }

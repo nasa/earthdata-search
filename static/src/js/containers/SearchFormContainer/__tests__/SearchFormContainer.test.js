@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    autocomplete: {},
     drawingNewLayer: false,
     boundingBoxSearch: '',
     gridName: '',
@@ -20,10 +21,14 @@ function setup() {
     shapefile: {},
     temporalSearch: {},
     temporalSearchordSearch: 'Test value',
+    onCancelAutocomplete: jest.fn(),
     onClearFilters: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
-    onToggleAdvancedSearchModal: jest.fn()
+    onToggleAdvancedSearchModal: jest.fn(),
+    onFetchAutocomplete: jest.fn(),
+    onSelectAutocompleteSuggestion: jest.fn(),
+    onClearAutocompleteSuggestions: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SearchFormContainer {...props} />)
@@ -44,6 +49,8 @@ describe('SearchFormContainer component', () => {
     expect(searchForm.length).toBe(1)
     expect(searchFormProps.keywordSearch)
       .toEqual('Test value')
+    expect(searchFormProps.onCancelAutocomplete)
+      .toEqual(props.onCancelAutocomplete)
     expect(searchFormProps.onClearFilters)
       .toEqual(props.onClearFilters)
     expect(searchFormProps.onChangeQuery)

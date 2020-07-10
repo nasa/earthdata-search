@@ -1,14 +1,13 @@
-import Request from './request'
+import CmrRequest from './cmrRequest'
 import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { getTemporal } from '../edscDate'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
-import { getUmmGranuleVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
 /**
  * Request object for granule specific requests
  */
-export default class GranuleRequest extends Request {
+export default class GranuleRequest extends CmrRequest {
   constructor(authToken) {
     const cmrEnvironment = cmrEnv()
 
@@ -28,7 +27,9 @@ export default class GranuleRequest extends Request {
   permittedCmrKeys() {
     return [
       'bounding_box',
+      'circle',
       'browse_only',
+      'concept_id',
       'cloud_cover',
       'day_night_flag',
       'echo_collection_id',
@@ -55,19 +56,6 @@ export default class GranuleRequest extends Request {
       'readable_granule_name',
       'sort_key'
     ]
-  }
-
-  /**
-   * Modifies the payload just before the request is sent.
-   * @param {Object} data - An object containing any keys.
-   * @param {Object} headers - An object containing headers that will be sent with the request.
-   * @return {Object} A modified object.
-   */
-  transformRequest(data, headers) {
-    // eslint-disable-next-line no-param-reassign
-    headers.Accept = getUmmGranuleVersionHeader()
-
-    return super.transformRequest(data, headers)
   }
 
   transformResponse(data) {

@@ -16,25 +16,29 @@ function setup() {
         }
       }
     },
-    collectionsSearch: {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
-        }
-      },
-      isLoading: false,
-      isLoaded: true
-    },
     dataQualitySummaries: {},
+    focusedCollection: '',
+    focusedGranule: '',
+    granuleQuery: {},
+    portal: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
+    onChangeGranulePageNum: jest.fn(),
+    onSetActivePanelGroup: jest.fn(),
+    onUpdateFocusedCollection: jest.fn(),
+    onAddGranuleToProjectCollection: jest.fn(),
+    onRemoveGranuleFromProjectCollection: jest.fn(),
+    onFocusedGranuleChange: jest.fn(),
+    location: {
+      search: ''
+    },
+    onChangePath: jest.fn(),
     project: {
       collectionIds: ['collectionId']
     },
-    projectPanels: {
+    panels: {
       activePanel: '0.0.0',
       isOpen: false
     },
@@ -65,19 +69,9 @@ describe('ProjectPanelsContainer component', () => {
     expect(enzymeWrapper.find(ProjectPanels).props().project).toEqual({
       collectionIds: ['collectionId']
     })
-    expect(enzymeWrapper.find(ProjectPanels).props().collectionsSearch).toEqual({
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
-        }
-      },
-      isLoading: false,
-      isLoaded: true
-    })
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onSetActivePanel).toEqual('function')
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onTogglePanels).toEqual('function')
-    expect(enzymeWrapper.find(ProjectPanels).props().projectPanels).toEqual({
+    expect(enzymeWrapper.find(ProjectPanels).props().panels).toEqual({
       activePanel: '0.0.0',
       isOpen: false
     })

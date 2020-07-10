@@ -1,3 +1,41 @@
+  cloudfrontToCloudwatch:
+    handler: serverless/src/cloudfrontToCloudwatch/handler.default
+    timeout: 300
+    role: IamRoleCustomResourcesLambdaExecution
+    events:
+      - s3:
+          bucket: ${env:CLOUDFRONT_BUCKET_NAME}
+          event: s3:ObjectCreated:*
+          existing: true
+          rules:
+            - suffix: .gz
+            - prefix:
+                Fn::Join: [
+                  "/", [
+                    "cloudfront/AWSLogs",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "${self:provider.region}/search_${self:provider.stage}_api/"
+                  ]
+                ]
+      - s3:
+          bucket: ${env:CLOUDFRONT_BUCKET_NAME}
+          event: s3:ObjectCreated:*
+          existing: true
+          rules:
+            - suffix: .gz
+            - prefix:
+                Fn::Join: [
+                  "/", [
+                    "cloudfront/AWSLogs",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "${self:provider.region}/search_${self:provider.stage}_s3/"
+                  ]
+                ]
+
   #
   # Standalone functions
   #
@@ -138,6 +176,19 @@
   #
   # API Gateway Endpoints
   #
+  autocomplete:
+    handler: serverless/src/autocomplete/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    events:
+      - http:
+          method: post
+          cors: true
+          path: autocomplete
+          authorizer:
+            name: edlOptionalAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
   regionSearch:
     handler: serverless/src/regionSearch/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
@@ -173,7 +224,10 @@
           method: post
           cors: true
           path: cwic/granules
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlOptionalAuthorizer
+            type: request
+            resultTtlInSeconds: 0
 
   conceptMetadata:
     handler: serverless/src/conceptMetadata/handler.default
@@ -247,6 +301,11 @@
           cors: true
           path: relevancy_logger
 
+  edlOptionalAuthorizer:
+    handler: serverless/src/edlOptionalAuthorizer/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    cors: true
+
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
@@ -260,6 +319,16 @@
   #
   # EDL Authenticated API Gateway Endpoints
   #
+  graphQl:
+    handler: serverless/src/graphQl/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    events:
+      - http:
+          method: post
+          cors: true
+          path: graphql
+          authorizer: edlAuthorizer
+
   retrieveConcept:
     handler: serverless/src/retrieveConcept/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
@@ -282,7 +351,7 @@
       - http:
           method: post
           cors: true
-          path: collections/{format}
+          path: collections
           request:
             parameters:
               paths:
@@ -448,6 +517,16 @@
           method: post
           cors: true
           path: contact_info
+          authorizer: edlAuthorizer
+
+  updatePreferences:
+    handler: serverless/src/updatePreferences/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    events:
+      - http:
+          method: post
+          cors: true
+          path: preferences
           authorizer: edlAuthorizer
 
   # Admin

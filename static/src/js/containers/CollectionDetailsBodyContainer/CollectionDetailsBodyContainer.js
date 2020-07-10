@@ -7,8 +7,7 @@ import {
 
 import actions from '../../actions/index'
 import {
-  getFocusedCollectionMetadata,
-  getFocusedCollectionFormattedMetadata
+  getFocusedCollectionMetadata
 } from '../../util/focusedCollection'
 
 import CollectionDetailsBody from '../../components/CollectionDetails/CollectionDetailsBody'
@@ -26,16 +25,15 @@ const mapStateToProps = state => ({
 export const CollectionDetailsBodyContainer = ({
   collections,
   focusedCollection,
+  isActive,
   onToggleRelatedUrlsModal
 }) => {
   const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
-  // eslint-disable-next-line max-len
-  const formattedCollectionMetadata = getFocusedCollectionFormattedMetadata(focusedCollection, collections)
 
   return (
     <CollectionDetailsBody
       collectionMetadata={collectionMetadata}
-      formattedCollectionMetadata={formattedCollectionMetadata}
+      isActive={isActive}
       onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
     />
   )
@@ -44,6 +42,7 @@ export const CollectionDetailsBodyContainer = ({
 CollectionDetailsBodyContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 

@@ -10,7 +10,8 @@ import './Sidebar.scss'
 const Sidebar = ({
   children,
   panels,
-  visible
+  visible,
+  headerChildren
 }) => {
   const className = classNames({
     sidebar: true,
@@ -21,7 +22,13 @@ const Sidebar = ({
     <section className={className}>
       <div className="sidebar__inner">
         <AppLogoContainer />
-        <SimpleBar className="sidebar__content" style={{ height: '100%', overflowX: 'hidden' }}>
+        { headerChildren }
+        <SimpleBar
+          className="sidebar__content"
+          style={{
+            height: '100%'
+          }}
+        >
           {children}
         </SimpleBar>
       </div>
@@ -31,13 +38,15 @@ const Sidebar = ({
 }
 
 Sidebar.defaultProps = {
-  panels: null
+  panels: null,
+  headerChildren: null
 }
 
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   panels: PropTypes.node,
-  visible: PropTypes.bool.isRequired
+  visible: PropTypes.bool.isRequired,
+  headerChildren: PropTypes.node
 }
 
 export default Sidebar

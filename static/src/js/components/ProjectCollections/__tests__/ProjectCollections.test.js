@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import ProjectCollections from '../ProjectCollections'
 import ProjectCollectionsList from '../ProjectCollectionsList'
 import ProjectHeader from '../ProjectHeader'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -14,16 +15,19 @@ function setup() {
       allIds: ['collectionId1', 'collectionId2'],
       byId: {
         collectionId1: {
-          mock: 'data 1'
+          granules: {
+            hits: 1
+          }
         },
         collectionId2: {
-          mock: 'data 2'
+          granules: {
+            hits: 1
+          }
         }
       }
     },
-    onRemoveCollectionFromProject: jest.fn(),
-    onToggleCollectionVisibility: jest.fn(),
-    onSetActivePanel: jest.fn(),
+    collectionSearch: {},
+    mapProjection: projections.geographic,
     project: {
       byId: {
         collectionId1: {
@@ -35,17 +39,24 @@ function setup() {
       },
       collectionIds: ['collectionId1', 'collectionId2']
     },
-    projectPanels: {
+    panels: {
       activePanel: '0.0.0',
       isOpen: false
     },
-    collectionSearch: {},
     savedProject: {
       projectId: 1,
       name: 'test name'
     },
+    onMetricsDataAccess: jest.fn(),
+    onRemoveCollectionFromProject: jest.fn(),
+    onTogglePanels: jest.fn(),
+    onSetActivePanel: jest.fn(),
+    onToggleCollectionVisibility: jest.fn(),
     onUpdateProjectName: jest.fn(),
-    onMetricsDataAccess: jest.fn()
+    onSetActivePanelSection: jest.fn(),
+    onUpdateFocusedCollection: jest.fn(),
+    onViewCollectionDetails: jest.fn(),
+    onViewCollectionGranules: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ProjectCollections {...props} />)
@@ -65,10 +76,14 @@ describe('ProjectCollectionsList component', () => {
       allIds: ['collectionId1', 'collectionId2'],
       byId: {
         collectionId1: {
-          mock: 'data 1'
+          granules: {
+            hits: 1
+          }
         },
         collectionId2: {
-          mock: 'data 2'
+          granules: {
+            hits: 1
+          }
         }
       }
     })
@@ -93,10 +108,14 @@ describe('ProjectCollectionsList component', () => {
       allIds: ['collectionId1', 'collectionId2'],
       byId: {
         collectionId1: {
-          mock: 'data 1'
+          granules: {
+            hits: 1
+          }
         },
         collectionId2: {
-          mock: 'data 2'
+          granules: {
+            hits: 1
+          }
         }
       }
     })

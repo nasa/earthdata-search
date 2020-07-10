@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import './AppLogo.scss'
 
 const AppLogo = ({
-  edscEnv,
   portal
 }) => {
   const {
@@ -47,39 +46,31 @@ const AppLogo = ({
   }
 
   return (
-    <h1 className="app-logo__site-logo">
-      <a
-        className="app-logo__site-meatball"
-        href="/"
-        title="Earthdata Search Home"
-      >
-        <span className="visually-hidden">
-          Earthdata Search Home
-        </span>
-      </a>
-
-      {portalLogo()}
-
-      <a
-        className="app-logo__site-name"
-        href={portalLink}
-      >
-        <span className="app-logo__site-name-ent app-logo__site-name-ent--e">{org}</span>
-        <span className="app-logo__site-name-ent app-logo__site-name-ent--s">{title}</span>
-      </a>
-      {
-        edscEnv !== 'prod' && (
-          <span className="app-logo__site-env">
-            {edscEnv.toUpperCase()}
+    <header className="app-logo">
+      <h1 className="app-logo__site-logo">
+        <a
+          className="app-logo__site-meatball"
+          href="/"
+          title="Earthdata Search Home"
+        >
+          <span className="visually-hidden">
+            Earthdata Search Home
           </span>
-        )
-      }
-    </h1>
+        </a>
+        {portalLogo()}
+        <a
+          className="app-logo__site-name"
+          href={portalLink}
+        >
+          <span className="app-logo__site-name-ent app-logo__site-name-ent--e">{org}</span>
+          <span className="app-logo__site-name-ent app-logo__site-name-ent--s">{title}</span>
+        </a>
+      </h1>
+    </header>
   )
 }
 
 AppLogo.propTypes = {
-  edscEnv: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired
 }
 

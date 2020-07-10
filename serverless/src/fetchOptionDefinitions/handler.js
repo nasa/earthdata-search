@@ -9,6 +9,7 @@ import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
+import { parseError } from '../../../sharedUtils/parseError'
 
 // AWS SQS adapter
 let sqs
@@ -24,6 +25,8 @@ const fetchOptionDefinitions = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   const { Records: sqsRecords = [] } = event
+
+  if (sqsRecords.length === 0) return
 
   console.log(`Processing ${sqsRecords.length} tag(s)`)
 
@@ -65,7 +68,8 @@ const fetchOptionDefinitions = async (event, context) => {
       })
 
       const { body } = optionDefinitionResponse
-      const { order_information: orderInformation = {} } = body[0]
+      const [optionDefinition] = body
+      const { order_information: orderInformation } = optionDefinition
       const { option_definition_refs: optionDefinitions = [] } = orderInformation
 
       // Merge the option definitions into the previous tag data
@@ -97,7 +101,7 @@ const fetchOptionDefinitions = async (event, context) => {
         console.log(`No Option Definitions for ${collectionId}, skipping '${tagName('subset_service.echo_orders')}' tag.`)
       }
     } catch (e) {
-      console.log(e)
+      parseError(e)
     }
   })
 }

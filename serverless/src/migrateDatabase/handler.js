@@ -1,6 +1,7 @@
 import pgMigrate from 'node-pg-migrate'
 import { Client } from 'pg'
 import { getDbConnectionConfig } from '../util/database'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Runs migrations using node-pg-migrate
@@ -41,8 +42,7 @@ const migrateDatabase = async (event) => {
   } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

@@ -27,12 +27,14 @@ const getLegendTooltip = (legends, ref) => legends.find(legend => legend.id === 
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-export default async function processColorMap(event, context) {
+const processColorMap = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
   const { Records: sqsRecords = {} } = event
+
+  if (sqsRecords.length === 0) return
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
@@ -175,11 +177,6 @@ export default async function processColorMap(event, context) {
         .update({ jsondata: data })
     })
   })
-
-  return {
-    isBase64Encoded: false,
-    statusCode: 200,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    body: JSON.stringify(sqsRecords)
-  }
 }
+
+export default processColorMap

@@ -95,4 +95,10 @@
   &__info-link--underline {
     text-decoration: underline;
   }
+
+  &__env {
+    margin-right: 0.25rem;
+    padding-right: 0.25rem;
+    border-right: 1px solid #5d9cc3;
+  }
 }

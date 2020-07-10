@@ -1,295 +1,301 @@
-.root {
-  .projection-switcher {
-    &__button {
-      background-image: url('~Images/projection-sprite.png');
-      background-size: 90px 30px;
-      background-repeat: no-repeat;
-
-      &--arctic {
-        background-position: -57px -1px;
-      }
-
-      &--geo {
-        background-position: -29px -1px;
-      }
-
-      &--antarctic {
-        background-position: -1px -1px;
-      }
-
-      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-        background-image: url('~Images/projection-sprite@2x.png');
-      }
-    }
-  }
-
-  // Reposition the container and controls
-  .leaflet-container {
+#root {
+  .map {
     height: 100%;
-  }
 
-  .leaflet-control-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+    .projection-switcher {
+      &__button {
+        background-image: url('~Images/projection-sprite.png');
+        background-size: 90px 30px;
+        background-repeat: no-repeat;
 
-  // Set baseline styles for icons
-  .leaflet-control-container .fa {
-    font-size: 12px;
-    line-height: 1.65;
-    vertical-align: middle;
-  }
+        &--arctic {
+          background-position: -57px -1px;
+        }
 
-  // Adds padding to the container and forces rows
-  .leaflet-bottom.leaflet-right {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    margin: 10px;
-    margin-right: 44px;
-  }
+        &--geo {
+          background-position: -29px -1px;
+        }
 
-  // Removes bottom padding from the control elements
-  .leaflet-bottom .leaflet-control {
-    margin-bottom: 0;
-  }
+        &--antarctic {
+          background-position: -1px -1px;
+        }
 
-  // Positions the layers list and scale elements outside of the default container
-  // to allow the layers list to not affect position of the rest of the controls while
-  // its in its expanded state
-  .leaflet-control-scale,
-  .leaflet-control-layers {
-    position: absolute;
-    right: -44px;
-  }
-
-  .leaflet-control-layers {
-    top: 0;
-  }
-
-  // Set flex on all the controls to force them to flow horizontally
-  .leaflet-control,
-  .leaflet-touch .leaflet-bar {
-    display: flex;
-  }
-
-  // Break the scale elements on to separate lines and position it
-  .leaflet-control-scale {
-    display: block;
-    bottom: 50px;
-  }
-
-  // Reduce the font size on the scale elements
-  .leaflet-control-scale-line {
-    font-weight: 400;
-  }
-
-  // Remove default margin top on the draw toolbar
-  .leaflet-draw-toolbar {
-    margin-top: 0;
-  }
-
-  // Add right margin to be consistent with other scale elements
-  .leaflet-draw-toolbar-top {
-    margin-right: 10px;
-  }
-
-  // Force the layers toggle to be the same size as the other elements
-  .leaflet-control-layers-toggle,
-  .leaflet-touch .leaflet-control-layers-toggle,
-  .leaflet-retina .leaflet-control-layers-toggle {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    background-size: 16px 16px;
-  }
-
-  .leaflet-control-layers,
-  .leaflet-touch .leaflet-control-layers {
-    border-radius: 2px;
-
-    label {
-      margin-bottom: 5px;
-
-      &:last-child {
-        margin-bottom: 0;
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+          background-image: url('~Images/projection-sprite@2x.png');
+        }
       }
     }
-  }
 
-  .leaflet-control-layers-expanded {
-    top: auto;
-    bottom: 0;
-    padding: 0;
-    width: 250px;
-    font-weight: 400;
-  }
-
-  .leaflet-control-layers-list {
-    width: 100%;
-  }
-
-  .leaflet-control-layers-separator {
-    margin: 0;
-    width: 100%;
-  }
-
-  .leaflet-control-layers-selector {
-    position: relative;
-    display: inline-block;
-    margin-top: 0;
-    margin-right: $spacer/4;
-    top: 0px;
-  }
-
-  .leaflet-control-layers-base {
-    padding: 10px;
-  }
-
-  .leaflet-control-layers-overlays {
-    padding: 10px;
-    padding-bottom: 0;
-  }
-
-  .leaflet-control-layers-attribution {
-    margin-top: 5px;
-    padding: 10px;
-    padding-top: 0px;
-    font-size: 10px;
-    color: $color__black--400;
-    text-align: right;
-  }
-
-  // Force the horizontal toolbar and adjust button radius
-  .leaflet-bar a,
-  .leaflet-bar button,
-  .leaflet-touch .leaflet-bar a,
-  .leaflet-touch .leaflet-bar button {
-    float: left;
-    border: 0;
-    background-color: #fff;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    color: #000;
-
-    &:hover,
-    &:last-child {
-      border: 0;
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
+    .leaflet-bottom.leaflet-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
 
-    &:first-child {
-      border-bottom-left-radius: 2px;
-      border-top-left-radius: 2px;
-      border-bottom-right-radius: 0px;
-      border-top-right-radius: 0px;
+    .leaflet-control-container {
+      height: 100%;
+      width: 100%;
     }
 
-    &:last-child {
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-      border-bottom-right-radius: 2px;
-      border-top-right-radius: 2px;
+    .leaflet-control.leaflet-control-zoom {
+      margin-bottom: 55px;
+
+      .leaflet-disabled {
+        color: $color__black--300;
+
+        &:hover {
+          cursor: not-allowed;
+        }
+      }
     }
 
-    &:only-child {
-      border-bottom-left-radius: 2px;
-      border-top-left-radius: 2px;
-      border-bottom-right-radius: 2px;
-      border-top-right-radius: 2px;
-    }
-  }
-
-  // Leaflet draw section
-  .leaflet-draw-section {
-    margin-bottom: 36px;
-    padding-left: 30px;
-    float: right;
-    margin: 0 0 0 10px;
-    padding: 0;
-
-    &:last-child {
-      margin: 0;
-    }
-  }
-
-  .leaflet-draw-actions-top {
-    margin-top: 0;
-  }
-
-  .leaflet-right .leaflet-draw-actions {
-    top: -30px !important;
-    right: 0;
-
-    li:first-child a {
-      border-radius: 0;
-
-    }
-  }
-
-  .leaflet-container .leaflet-draw-actions a {
-    background-color: $color__black--400;
-    color: $color__white;
-  }
-
-  .leaflet-draw-toolbar .leaflet-draw-edit-remove,
-  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove {
-    background-position: -240px 0px;
-
-    &.leaflet-disabled {
-      background-position: -240px 0px;
-    }
-  }
-
-  .leaflet-draw-toolbar .leaflet-draw-edit-edit,
-  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit {
-    background-position: -209px 0px;
-
-    &.leaflet-disabled {
-      background-position: -209px 0px;
-    }
-  }
-
-  .leaflet-draw-toolbar .leaflet-draw-edit-remove.leaflet-disabled,
-  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove.leaflet-disabled,
-  .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled,
-  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled {
-    position: relative;
-    cursor: not-allowed;
-    background-color: #e6e6e6;
-    overflow: hidden;
-
-    // A little trickery to make the background image look faded to match the other disabled styles
-    &:before {
-      content: '';
+    .leaflet-control-container {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
+    }
+
+    // Set baseline styles for icons
+    .leaflet-control-container .fa {
+      font-size: 12px;
+      line-height: 1.65;
+      vertical-align: middle;
+    }
+
+    // Positions the layers list and scale elements outside of the default container
+    // to allow the layers list to not affect position of the rest of the controls while
+    // its in its expanded state
+    .leaflet-control-layers {
       bottom: 0;
-      background-color: rgba(255, 255, 255, 0.5);
+      right: 0px;
+      position: absolute;
+    }
+
+    // Reduce the font size on the scale elements
+    .leaflet-control-scale-line {
+      font-weight: 400;
+    }
+
+    // Force the layers toggle to be the same size as the other elements
+    .leaflet-control-layers-toggle,
+    .leaflet-touch .leaflet-control-layers-toggle,
+    .leaflet-retina .leaflet-control-layers-toggle {
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      background-size: 16px 16px;
+    }
+
+    .leaflet-control-layers,
+    .leaflet-touch .leaflet-control-layers {
+      border-radius: 2px;
+
+      label {
+        margin-bottom: 5px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .leaflet-control-layers-expanded {
+      top: auto;
+      bottom: 0;
+      right: 0;
+      padding: 0;
+      width: 250px;
+      font-weight: 400;
+    }
+
+    .leaflet-control-layers-list {
+      width: 100%;
+    }
+
+    .leaflet-control-layers-separator {
+      margin: 0;
+      width: 100%;
+    }
+
+    .leaflet-control-layers-selector {
+      position: relative;
+      display: inline-block;
+      margin-top: 0;
+      margin-right: $spacer/4;
+      top: 0px;
+    }
+
+    .leaflet-control-layers-base {
+      padding: 10px;
+    }
+
+    .leaflet-control-layers-overlays {
+      padding: 10px;
+      padding-bottom: 0;
+    }
+
+    .leaflet-control-layers-attribution {
+      margin-top: 5px;
+      padding: 10px;
+      padding-top: 0px;
+      font-size: 10px;
+      color: $color__black--400;
+      text-align: right;
+    }
+
+    // Force the horizontal toolbar and adjust button radius
+    .leaflet-bar a,
+    .leaflet-bar button,
+    .leaflet-touch .leaflet-bar a,
+    .leaflet-touch .leaflet-bar button {
+      border: 0;
+      background-color: #fff;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: #000;
+
+      &:hover,
+      &:last-child {
+        border: 0;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+      }
+
+      &:first-child {
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+
+      &:last-child {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+      }
+    }
+
+    .leaflet-control.leaflet-control-layers {
+      border-bottom-left-radius: 4px;
+      border-top-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .leaflet-bottom .leaflet-control-scale {
+      margin-bottom: 10px;
+    }
+
+    // Leaflet draw section
+    .leaflet-draw-section {
+      &:last-child {
+        margin: 0;
+      }
+    }
+
+    .leaflet-draw-actions-top {
+      margin-top: 0;
+    }
+
+    .leaflet-right .leaflet-draw-actions {
+      top: 0 !important;
+      right: 35px !important;
+
+      li:first-child a {
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+      }
+
+      li:last-child a {
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+      }
+    }
+
+    .leaflet-draw-actions a {
+      background-color: $color__black--400;
+      color: $color__white;
+    }
+
+    .leaflet-draw-toolbar .leaflet-draw-edit-remove,
+    .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove {
+      background-position: -240px 0px;
+
+      &.leaflet-disabled {
+        background-position: -240px 0px;
+      }
+    }
+
+    .leaflet-draw-toolbar .leaflet-draw-edit-edit,
+    .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit {
+      background-position: -209px 0px;
+
+      &.leaflet-disabled {
+        background-position: -209px 0px;
+      }
+    }
+
+    .leaflet-draw-toolbar .leaflet-draw-edit-remove.leaflet-disabled,
+    .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove.leaflet-disabled,
+    .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled,
+    .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled {
+      position: relative;
+      cursor: not-allowed;
+      background-color: #e6e6e6;
+      overflow: hidden;
+
+      // A little trickery to make the background image look faded to match the other disabled styles
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    .leaflet-draw-toolbar .leaflet-draw-draw-polygon,
+    .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
+      background-position: -29px 0px;
+    }
+
+    .leaflet-draw-toolbar .leaflet-draw-draw-circle,
+    .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-circle {
+      background-position: -90px 0px;
+    }
+
+    .leaflet-draw-toolbar .leaflet-draw-draw-rectangle,
+    .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
+      background-position: -60px 0px;
+    }
+
+    .leaflet-draw-toolbar .leaflet-draw-draw-marker,
+    .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-marker {
+      background-position: -120px 0px;
     }
   }
 
-  .leaflet-draw-toolbar .leaflet-draw-draw-polygon,
-  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
-    background-position: -29px 0px;
-  }
+  .route-wrapper--search + .map {
+    .leaflet-bottom.leaflet-right {
+      > div {
+        order: 3;
 
-  .leaflet-draw-toolbar .leaflet-draw-draw-rectangle,
-  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
-    background-position: -60px 0px;
-  }
+        &:nth-child(1) {
+          order: 2;
+        }
 
-  .leaflet-draw-toolbar .leaflet-draw-draw-marker,
-  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-marker {
-    background-position: -120px 0px;
+        &:nth-child(2) {
+          order: 1;
+        }
+      }
+    }
   }
 }

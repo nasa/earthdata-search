@@ -17,14 +17,6 @@ describe('ContactInfoRequest#constructor', () => {
   })
 })
 
-describe('ContactInfoRequest#permittedCmrKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
-    const request = new ContactInfoRequest()
-
-    expect(request.permittedCmrKeys()).toEqual(['preferences'])
-  })
-})
-
 describe('ContactInfoRequest#fetch', () => {
   test('calls Request#get', () => {
     const token = '123'

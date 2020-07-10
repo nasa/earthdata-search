@@ -13,7 +13,7 @@ describe('Spinner component', () => {
     })
 
     test('sets dots to inline', () => {
-      const enzymeWrapper = shallow(<Spinner type="dots" inline={true} />)
+      const enzymeWrapper = shallow(<Spinner type="dots" inline />)
       expect(enzymeWrapper.find(Dots).prop('inline')).toEqual(true)
     })
 
@@ -28,9 +28,9 @@ describe('Spinner component', () => {
     })
 
     test('sets the className', () => {
-    const enzymeWrapper = shallow(<Dots type="dots" className="test-class" />)
-    expect(enzymeWrapper.hasClass('test-class')).toBe(true)
-  })
+      const enzymeWrapper = shallow(<Dots type="dots" className="test-class" />)
+      expect(enzymeWrapper.hasClass('test-class')).toBe(true)
+    })
   })
 })
 
@@ -43,7 +43,7 @@ describe('Dots component', () => {
   })
 
   test('sets dots to inline', () => {
-    const enzymeWrapper = shallow(<Dots type="dots" inline={true} />)
+    const enzymeWrapper = shallow(<Dots type="dots" inline />)
     expect(enzymeWrapper.hasClass('spinner--inline')).toBe(true)
   })
 

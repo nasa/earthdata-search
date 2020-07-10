@@ -1,4 +1,4 @@
-import { withAdvancedSearch } from '../collections'
+import { withAdvancedSearch, prepareCollectionParams } from '../collections'
 
 describe('#withAdvancedSearch', () => {
   describe('when no advanced search parameters are passed', () => {
@@ -36,6 +36,29 @@ describe('#withAdvancedSearch', () => {
           polygon: advSearchPolygon
         })
       })
+    })
+  })
+})
+
+describe('#prepareCollectionParams', () => {
+  describe('when the customize facet is selected', () => {
+    test('includes the correct tags', () => {
+      const params = prepareCollectionParams({
+        facetsParams: {
+          feature: {
+            customizable: true
+          }
+        }
+      })
+
+      expect(params).toEqual(
+        expect.objectContaining({
+          tagKey: [
+            'edsc.extra.serverless.subset_service.esi',
+            'edsc.extra.serverless.subset_service.opendap'
+          ]
+        })
+      )
     })
   })
 })

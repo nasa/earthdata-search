@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
 import classNames from 'classnames'
@@ -20,37 +21,47 @@ export const MoreActionsDropdown = ({
   if (children == null && handoffLinks.length === 0) return null
 
   return (
-    <div className={moreActionClasses}>
-      <Dropdown className="dropdown--carat-right dropdown--condensed more-actions-dropdown__dropdown">
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+    <div
+      className={moreActionClasses}
+      onClick={e => e.stopPropagation()}
+      onKeyPress={e => e.stopPropagation()}
+    >
+      <Dropdown className="more-actions-dropdown__dropdown">
         <Dropdown.Toggle
           className="more-actions-dropdown__toggle"
           as={ToggleMoreActions}
         />
-        <Dropdown.Menu
-          className="more-actions-dropdown__menu"
-          alignRight={alignRight}
-        >
-          {children}
-          {
-            handoffLinks.length > 0 && (
-              <>
-                <Dropdown.Header>Open collection in:</Dropdown.Header>
-                {
-                  handoffLinks.map(link => (
-                    <Dropdown.Item
-                      key={link.title}
-                      className="link link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
-                      href={link.href}
-                      target="_blank"
-                    >
-                      {link.title}
-                    </Dropdown.Item>
-                  ))
-                }
-              </>
-            )
-          }
-        </Dropdown.Menu>
+        {
+          ReactDOM.createPortal(
+            <Dropdown.Menu
+              className="more-actions-dropdown__menu dropdown-menu--carat-right dropdown-menu--condensed"
+              alignRight={alignRight}
+            >
+              {children}
+              {
+                handoffLinks.length > 0 && (
+                  <>
+                    <Dropdown.Header>Open collection in:</Dropdown.Header>
+                    {
+                      handoffLinks.map(link => (
+                        <Dropdown.Item
+                          key={link.title}
+                          className="link link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
+                          href={link.href}
+                          target="_blank"
+                        >
+                          {link.title}
+                        </Dropdown.Item>
+                      ))
+                    }
+                  </>
+                )
+              }
+            </Dropdown.Menu>,
+            document.getElementById('root')
+          )
+        }
       </Dropdown>
     </div>
   )

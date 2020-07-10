@@ -10,12 +10,17 @@
     },
     "orderStatusRefreshTime": 60000,
     "eosdisTagKey": "gov.nasa.eosdis",
+    "defaultCmrPageSize": 20,
+    "maxCmrPageSize": 2000,
+    "defaultCmrSearchTags": [
+      "edsc.*",
+      "org.ceos.wgiss.cwic.granules.prod"
+    ],
     "defaultMaxOrderSize": 1000000,
     "defaultGranulesPerOrder": 2000,
-    "ummCollectionVersion": "1.13",
+    "defaultSpatialDecimalSize": 5,
     "ummGranuleVersion": "1.5",
     "ummServiceVersion": "1.2",
-    "ummVariableVersion": "1.5",
     "temporalDateFormatFull": "YYYY-MM-DD HH:mm:ss",
     "temporalDateFormatRange": "MM-DD HH:mm:ss",
     "minimumTemporalDateString": "1960-01-01 00:00:00",
@@ -73,7 +78,8 @@
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
       "feedbackApp": "EdSearch",
-      "regionHost": "https://g6zl7z2x7j.execute-api.us-west-2.amazonaws.com/prod",
+      "graphQlHost": "https://graphql.earthdata.nasa.gov",
+      "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
@@ -87,7 +93,8 @@
       "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
       "feedbackApp": "EDSC-SIT",
-      "regionHost": "https://g6zl7z2x7j.execute-api.us-west-2.amazonaws.com/prod",
+      "graphQlHost": "https://graphql.sit.earthdata.nasa.gov",
+      "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
@@ -101,7 +108,8 @@
       "echoRestRoot": "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://uat.urs.earthdata.nasa.gov",
       "feedbackApp": "EDSC-UAT",
-      "regionHost": "https://g6zl7z2x7j.execute-api.us-west-2.amazonaws.com/prod",
+      "graphQlHost": "https://graphql.uat.earthdata.nasa.gov",
+      "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
@@ -115,7 +123,8 @@
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
       "feedbackApp": "EdSearch",
-      "regionHost": "https://g6zl7z2x7j.execute-api.us-west-2.amazonaws.com/prod",
+      "graphQlHost": "https://graphql.earthdata.nasa.gov",
+      "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     }

@@ -1,8 +1,10 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { GranuleResultsHeaderContainer } from '../GranuleResultsHeaderContainer'
 import GranuleResultsHeader from '../../../components/GranuleResults/GranuleResultsHeader'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -20,18 +22,23 @@ function setup() {
       },
       projectIds: []
     },
+    collectionSearch: {},
     focusedCollection: 'collectionId',
     granules: {
       hits: 1
     },
+    granuleSearch: {
+      pageNum: 1
+    },
     location: { value: 'location' },
+    mapProjection: projections.geographic,
+    secondaryOverlayPanel: {},
     onApplyGranuleFilters: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
+    onChangePanelView: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
-    collectionSearch: {},
     onToggleAboutCwicModal: jest.fn(),
     onToggleSecondaryOverlayPanel: jest.fn(),
-    secondaryOverlayPanel: {}
+    panelView: 'list'
   }
 
   const enzymeWrapper = shallow(<GranuleResultsHeaderContainer {...props} />)
@@ -44,7 +51,7 @@ function setup() {
 
 describe('GranuleResultsHeaderContainer component', () => {
   test('passes its props and renders a single GranuleResultsHeader component', () => {
-    const { enzymeWrapper } = setup()
+    const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsHeader).length).toBe(1)
     expect(enzymeWrapper.find(GranuleResultsHeader).props().focusedCollectionObject).toEqual({
@@ -53,5 +60,7 @@ describe('GranuleResultsHeaderContainer component', () => {
     })
     expect(enzymeWrapper.find(GranuleResultsHeader).props().location).toEqual({ value: 'location' })
     expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onApplyGranuleFilters).toEqual('function')
+    expect(enzymeWrapper.find(GranuleResultsHeader).props().onChangePanelView).toEqual(props.onChangePanelView)
+    expect(enzymeWrapper.find(GranuleResultsHeader).props().panelView).toEqual(props.panelView)
   })
 })

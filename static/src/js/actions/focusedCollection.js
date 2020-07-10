@@ -1,75 +1,28 @@
 import actions from './index'
-import { updateGranuleQuery } from './search'
 import {
   CLEAR_COLLECTION_GRANULES,
-  COPY_GRANULE_RESULTS_TO_COLLECTION,
   UPDATE_FOCUSED_COLLECTION
 } from '../constants/actionTypes'
-import { updateCollectionMetadata } from './collections'
-import { resetGranuleResults, addGranulesFromCollection } from './granules'
-import { updateAuthTokenFromHeaders } from './authToken'
-import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
-import { portalPathFromState } from '../../../../sharedUtils/portalPath'
+
+import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { eventEmitter } from '../events/events'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { hasTag } from '../../../../sharedUtils/tags'
+import { portalPathFromState } from '../../../../sharedUtils/portalPath'
+import { updateAuthTokenFromHeaders } from './authToken'
+import { updateCollectionMetadata } from './collections'
+import { updateGranuleQuery } from './search'
+
+import GraphQlRequest from '../util/request/graphQlRequest'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
   payload
 })
 
-export const addCollectionGranules = payload => ({
-  type: COPY_GRANULE_RESULTS_TO_COLLECTION,
-  payload
-})
-
 export const clearCollectionGranules = () => ({
   type: CLEAR_COLLECTION_GRANULES
 })
-
-/**
- * Copy granules from searchResults to collections
- */
-export const copyGranulesToCollection = () => (dispatch, getState) => {
-  const { focusedCollection, searchResults } = getState()
-  const { granules } = searchResults
-
-  const {
-    allIds,
-    byId,
-    isCwic,
-    hits,
-    loadTime
-  } = granules
-
-  dispatch(addCollectionGranules({
-    collectionId: focusedCollection,
-    granules: {
-      allIds,
-      byId,
-      isCwic,
-      hits,
-      loadTime
-    }
-  }))
-}
-
-/**
- * Copy granules from a given collection into searchResults
- * @param {string} collectionId
- */
-export const copyGranulesFromCollection = collectionId => (dispatch, getState) => {
-  const { metadata } = getState()
-  const { collections } = metadata
-  const collection = collections.byId[collectionId]
-
-  if (!collection) return dispatch(resetGranuleResults())
-
-  const { granules } = collection
-  const { allIds } = granules
-  if (!allIds) return dispatch(resetGranuleResults())
-
-  return dispatch(addGranulesFromCollection(granules))
-}
 
 /**
  * Perform a collection request based on the focusedCollection from the store.
@@ -79,87 +32,187 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     authToken,
     focusedCollection,
     metadata,
-    searchResults
+    project = {},
+    query,
+    router
   } = getState()
 
-  const { granules, collections: collectionResults = {} } = searchResults
-  const { allIds = [] } = granules
+  const { location } = router
+  const { search } = location
+
+  const { byId: projectById = {} } = project
+  const { [focusedCollection]: focusedProjectCollection = {} } = projectById
+  const { addedGranuleIds = [] } = focusedProjectCollection
+
+  const { collections: collectionResults = {} } = metadata
 
   const { byId: searchResultsById = {} } = collectionResults
-  const focusedCollectionMetadata = searchResultsById[focusedCollection]
+  const { [focusedCollection]: focusedCollectionMetadata } = searchResultsById
+  const { isCwic = false } = focusedCollectionMetadata || {}
 
-  const { is_cwic: isCwic = false } = metadata
-  const payload = [{
-    [focusedCollection]: {
-      isCwic,
-      metadata: {
-        ...focusedCollectionMetadata
-      }
-    }
-  }]
+  const { collection: collectionQuery } = query
+  const { spatial = {} } = collectionQuery
+  const { polygon } = spatial
+  if (isCwic && polygon) {
+    dispatch(actions.toggleSpatialPolygonWarning(true))
+  } else {
+    dispatch(actions.toggleSpatialPolygonWarning(false))
+  }
 
   // Reset granule pageNum to 1 when focusedCollection is changing
   dispatch(updateGranuleQuery({ pageNum: 1 }))
 
   if (focusedCollection === '') {
     dispatch(updateCollectionMetadata([]))
-    dispatch(resetGranuleResults())
     return null
   }
 
   dispatch(actions.collectionRelevancyMetrics())
-  dispatch(updateCollectionMetadata(payload))
 
   const { collections } = metadata
-  const { allIds: fetchedCollectionIds, byId: fetchedCollections } = collections
+  const { byId: fetchedCollections = {} } = collections
+  const { [focusedCollection]: fetchedCollection } = fetchedCollections
+  const { granules = {}, metadata: fetchedCollectionMetadata = {} } = fetchedCollection || {}
+  const { allIds: allGranuleIds = [] } = granules
+
   // If we already have the metadata for this focusedCollection, don't fetch it again
-  if (fetchedCollectionIds.indexOf(focusedCollection) !== -1) {
-    // Check to see if we already have metadata for this collection
-    if (Object.keys(fetchedCollections[focusedCollection].metadata).length) {
-      // If granules were copied from collections, don't make a new getGranules request
-      if (allIds.length === 0) dispatch(actions.getGranules())
-      return null
+  if (Object.keys(fetchedCollectionMetadata).length) {
+    // Only request granules if there are none in the store for the collection or if the number
+    // of granules in the store is the same as the number granules the user has manually added
+    if (
+      (addedGranuleIds.length > 0 && addedGranuleIds.length === allGranuleIds.length)
+      || allGranuleIds.length === 0) {
+      dispatch(actions.getGranules())
     }
+
+    return null
   }
 
-  const response = getCollectionMetadata({
-    concept_id: [focusedCollection],
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
-    includeHasGranules: true
-  }, authToken)
-    .then(([collectionJson, collectionUmm]) => {
-      const payload = []
-      const [metadata] = collectionJson.data.feed.entry
-      const [ummItem] = collectionUmm.data.items
-      const ummMetadata = ummItem.umm
+  const { defaultCmrSearchTags } = getApplicationConfig()
 
-      // Pass json and ummJson into createFocusedCollectionMetadata to transform/normalize the data
-      // to be used in the UI.
-      const formattedMetadata = createFocusedCollectionMetadata(metadata, ummMetadata, authToken)
+  const graphRequestObject = new GraphQlRequest(authToken)
 
-      const { is_cwic: isCwic = false } = metadata
-
-      // The raw data from the json and ummJson requests are added to the state, as well as the
-      // transformed/normalized metadata.
-      payload.push({
-        [focusedCollection]: {
-          metadata,
-          ummMetadata,
-          formattedMetadata,
-          isCwic
+  const graphQuery = `
+    query GetCollection(
+      $id: String!
+      $includeHasGranules: Boolean
+      $includeTags: String
+    ) {
+      collection(
+        conceptId: $id
+        includeHasGranules: $includeHasGranules
+        includeTags: $includeTags
+      ) {
+        archiveAndDistributionInformation
+        boxes
+        conceptId
+        dataCenter
+        dataCenters
+        doi
+        hasGranules
+        relatedUrls
+        scienceKeywords
+        shortName
+        spatialExtent
+        summary
+        tags
+        temporalExtents
+        title
+        versionId
+        services {
+          count
+          items {
+            conceptId
+            type
+            supportedOutputFormats
+            supportedReformattings
+          }
         }
-      })
+        variables {
+          count
+          items {
+            conceptId
+            definition
+            longName
+            name
+            scienceKeywords
+          }
+        }
+      }
+    }`
 
-      // The .all().then() will only fire when both requests resolve successfully, so we can
-      // rely on collectionJson to have the correct auth information in its headers.
-      dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
-      dispatch(updateCollectionMetadata(payload))
+  const response = graphRequestObject.search(graphQuery, {
+    id: focusedCollection,
+    includeHasGranules: true,
+    includeTags: defaultCmrSearchTags.join(',')
+  })
+    .then((response) => {
+      const payload = []
 
-      // If granules were copied from collections, don't make a new getGranules request.
-      if (allIds.length === 0) dispatch(actions.getGranules())
+      const {
+        data: responseData,
+        headers
+      } = response
+      const { data } = responseData
+      const { collection } = data
+
+      if (collection) {
+        const {
+          archiveAndDistributionInformation,
+          boxes,
+          conceptId,
+          dataCenter,
+          hasGranules,
+          services,
+          shortName,
+          summary,
+          tags,
+          title,
+          variables,
+          versionId
+        } = collection
+
+        const focusedMetadata = createFocusedCollectionMetadata(collection, authToken)
+
+        payload.push({
+          [focusedCollection]: {
+            metadata: {
+              archiveAndDistributionInformation,
+              boxes,
+              conceptId,
+              dataCenter,
+              hasGranules,
+              services,
+              shortName,
+              summary,
+              tags,
+              title,
+              variables,
+              versionId,
+              ...focusedMetadata
+            },
+            isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
+          }
+        })
+
+        // A users authToken will come back with an authenticated request if a valid token was used
+        dispatch(updateAuthTokenFromHeaders(headers))
+
+        // Update metadata in the store
+        dispatch(updateCollectionMetadata(payload))
+
+        dispatch(actions.getGranules())
+      } else {
+        // If no data was returned, clear the focused collection and redirect the user back to the search page
+        dispatch(actions.updateFocusedCollection(''))
+
+        dispatch(actions.changeUrl({
+          pathname: `${portalPathFromState(getState())}/search`,
+          search
+        }))
+      }
     })
     .catch((error) => {
-      dispatch(updateFocusedCollection(''))
       dispatch(actions.handleError({
         error,
         action: 'getFocusedCollection',
@@ -171,14 +224,14 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 }
 
 /**
- * Change the focusedCollection, copy granules, and get the focusedCollection metadata.
- * @param {string} collectionId
+ * Change the focusedCollection, and get the focusedCollection metadata.
+ * @param {String} collectionId
  */
 export const changeFocusedCollection = collectionId => (dispatch, getState) => {
+  const { focusedCollection: currentFocusedCollection } = getState()
   if (collectionId === '') {
-    dispatch(copyGranulesToCollection())
     dispatch(actions.changeFocusedGranule(''))
-    eventEmitter.emit('map.stickygranule', { granule: null })
+    eventEmitter.emit(`map.layer.${currentFocusedCollection}.stickygranule`, { granule: null })
 
     const { router } = getState()
     const { location } = router
@@ -189,8 +242,6 @@ export const changeFocusedCollection = collectionId => (dispatch, getState) => {
       search
     }))
   }
-
-  if (collectionId !== '') dispatch(copyGranulesFromCollection(collectionId))
 
   dispatch(updateFocusedCollection(collectionId))
   dispatch(actions.getTimeline())

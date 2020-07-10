@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
 import { metricsDataAccess } from '../../middleware/metrics/actions'
-import { setActivePanel } from '../../actions/projectPanels'
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
+import { viewCollectionGranules, viewCollectionDetails } from '../../actions/focusedCollection'
 
 const mapDispatchToProps = dispatch => ({
   onRemoveCollectionFromProject:
@@ -13,18 +13,29 @@ const mapDispatchToProps = dispatch => ({
   onToggleCollectionVisibility:
     collectionId => dispatch(actions.toggleCollectionVisibility(collectionId)),
   onSetActivePanel:
-    panelId => dispatch(setActivePanel(panelId)),
+    panelId => dispatch(actions.setActivePanel(panelId)),
+  onTogglePanels:
+    isOpen => dispatch(actions.togglePanels(isOpen)),
+  onSetActivePanelSection:
+    sectionId => dispatch(actions.setActivePanelSection(sectionId)),
   onUpdateProjectName:
     name => dispatch(actions.updateProjectName(name)),
   onMetricsDataAccess:
-    data => dispatch(metricsDataAccess(data))
+    data => dispatch(metricsDataAccess(data)),
+  onUpdateFocusedCollection:
+    collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
+  onViewCollectionDetails:
+    data => dispatch(viewCollectionDetails(data)),
+  onViewCollectionGranules:
+    data => dispatch(viewCollectionGranules(data))
 })
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
   collectionSearch: state.query.collection,
+  mapProjection: state.map.projection,
   project: state.project,
-  projectPanels: state.projectPanels,
+  panels: state.panels,
   savedProject: state.savedProject
 })
 
@@ -32,28 +43,40 @@ export const ProjectCollectionsContainer = (props) => {
   const {
     collections,
     collectionSearch,
+    mapProjection,
     project,
-    projectPanels,
+    panels,
     savedProject,
     onMetricsDataAccess,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
+    onUpdateFocusedCollection,
     onSetActivePanel,
-    onUpdateProjectName
+    onTogglePanels,
+    onSetActivePanelSection,
+    onUpdateProjectName,
+    onViewCollectionDetails,
+    onViewCollectionGranules
   } = props
 
   return (
     <ProjectCollections
       collections={collections}
       collectionSearch={collectionSearch}
+      mapProjection={mapProjection}
       project={project}
-      projectPanels={projectPanels}
+      panels={panels}
       savedProject={savedProject}
       onMetricsDataAccess={onMetricsDataAccess}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onToggleCollectionVisibility={onToggleCollectionVisibility}
+      onUpdateFocusedCollection={onUpdateFocusedCollection}
       onSetActivePanel={onSetActivePanel}
+      onTogglePanels={onTogglePanels}
+      onSetActivePanelSection={onSetActivePanelSection}
       onUpdateProjectName={onUpdateProjectName}
+      onViewCollectionDetails={onViewCollectionDetails}
+      onViewCollectionGranules={onViewCollectionGranules}
     />
   )
 }
@@ -61,14 +84,20 @@ export const ProjectCollectionsContainer = (props) => {
 ProjectCollectionsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
+  panels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onUpdateFocusedCollection: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired
+  onTogglePanels: PropTypes.func.isRequired,
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  onUpdateProjectName: PropTypes.func.isRequired,
+  onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCollectionsContainer)

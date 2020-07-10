@@ -15,19 +15,6 @@ describe('ProjectRequest#constructor', () => {
   })
 })
 
-describe('ProjectRequest#permittedCmrKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
-    const request = new ProjectRequest()
-
-    expect(request.permittedCmrKeys()).toEqual([
-      'auth_token',
-      'name',
-      'path',
-      'project_id'
-    ])
-  })
-})
-
 describe('ProjectRequest#all', () => {
   test('calls Request#get', () => {
     const token = '123'

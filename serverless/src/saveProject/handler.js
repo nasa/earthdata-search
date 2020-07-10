@@ -2,6 +2,8 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Saves a project to the database
@@ -13,13 +15,15 @@ const saveProject = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   const { body } = event
   const { params } = JSON.parse(body)
   const {
-    auth_token: jwtToken,
+    authToken,
     name = '',
     path,
-    project_id: projectId
+    projectId
   } = params
 
   // Retrive a connection to the database
@@ -30,8 +34,8 @@ const saveProject = async (event, context) => {
   try {
     let userId
     // If user information was included, use it in the queries
-    if (jwtToken) {
-      const { username } = getVerifiedJwtToken(jwtToken)
+    if (authToken) {
+      const { username } = getVerifiedJwtToken(authToken)
 
       const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
 
@@ -85,27 +89,23 @@ const saveProject = async (event, context) => {
 
       newProjectId = newProjectRecord[0].id
     }
-  } catch (e) {
-    console.log(e)
 
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [e] })
+      statusCode: 200,
+      headers: defaultResponseHeaders,
+      body: JSON.stringify({
+        name,
+        path,
+        project_id: obfuscateId(newProjectId)
+      })
     }
-  }
-
-  // Return the projectId and path
-  return {
-    isBase64Encoded: false,
-    statusCode: 200,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    body: JSON.stringify({
-      name,
-      path,
-      project_id: obfuscateId(newProjectId)
-    })
+  } catch (e) {
+    return {
+      isBase64Encoded: false,
+      headers: defaultResponseHeaders,
+      ...parseError(e)
+    }
   }
 }
 

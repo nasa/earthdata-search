@@ -9,7 +9,6 @@ import { getFocusedCollectionObject } from '../../util/focusedCollection'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
-
 const mapDispatchToProps = dispatch => ({
   onChangeGranulePageNum:
     data => dispatch(actions.changeGranulePageNum(data)),
@@ -18,15 +17,20 @@ const mapDispatchToProps = dispatch => ({
   onFocusedGranuleChange:
     granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
   onMetricsDataAccess:
-    data => dispatch(metricsDataAccess(data))
+    data => dispatch(metricsDataAccess(data)),
+  onAddGranuleToProjectCollection:
+    data => dispatch(actions.addGranuleToProjectCollection(data)),
+  onRemoveGranuleFromProjectCollection:
+    data => dispatch(actions.removeGranuleFromProjectCollection(data))
 })
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
-  granules: state.searchResults.granules,
-  granuleQuery: state.query.granule
+  granuleQuery: state.query.granule,
+  portal: state.portal,
+  project: state.project
 })
 
 export const GranuleResultsBodyContainer = (props) => {
@@ -34,30 +38,35 @@ export const GranuleResultsBodyContainer = (props) => {
     collections,
     focusedCollection,
     focusedGranule,
-    granules,
     granuleQuery,
     location,
+    onAddGranuleToProjectCollection,
     onChangeGranulePageNum,
     onExcludeGranule,
     onFocusedGranuleChange,
-    onMetricsDataAccess
+    onMetricsDataAccess,
+    onRemoveGranuleFromProjectCollection,
+    panelView,
+    portal,
+    project
   } = props
 
   const collectionObject = getFocusedCollectionObject(focusedCollection, collections)
 
   const {
     excludedGranuleIds = [],
-    metadata: collectionMetadata
+    granules = {},
+    metadata: collectionMetadata = {}
   } = collectionObject
-
-  if (!collectionMetadata) return null
 
   const { isCwic = false } = collectionMetadata
 
-  const { pageNum } = granuleQuery
-
-  const onWaypointEnter = () => {
-    onChangeGranulePageNum(pageNum + 1)
+  const loadNextPage = () => {
+    const { pageNum } = granuleQuery
+    onChangeGranulePageNum({
+      collectionId: focusedCollection,
+      pageNum: pageNum + 1
+    })
   }
 
   return (
@@ -67,12 +76,16 @@ export const GranuleResultsBodyContainer = (props) => {
       focusedGranule={focusedGranule}
       granules={granules}
       isCwic={isCwic}
-      pageNum={pageNum}
       location={location}
-      waypointEnter={onWaypointEnter}
+      loadNextPage={loadNextPage}
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
       onMetricsDataAccess={onMetricsDataAccess}
+      panelView={panelView}
+      portal={portal}
+      project={project}
+      onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
+      onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
     />
   )
 }
@@ -81,13 +94,17 @@ GranuleResultsBodyContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired
+  onMetricsDataAccess: PropTypes.func.isRequired,
+  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
+  panelView: PropTypes.string.isRequired,
+  portal: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

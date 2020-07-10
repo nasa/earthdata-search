@@ -69,12 +69,4 @@ describe('AppLogo component', () => {
       expect(enzymeWrapper.find('.app-logo__site-name').props().href).toEqual('/portal/simple/search')
     })
   })
-
-  describe('application version', () => {
-    test('displays the version correctly', () => {
-      const { enzymeWrapper } = setup()
-
-      expect(enzymeWrapper.find('.app-logo__site-env').text()).toEqual('SIT')
-    })
-  })
 })

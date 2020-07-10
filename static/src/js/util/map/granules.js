@@ -30,7 +30,7 @@ export function addPath(ctx, path) {
 
     ctx.moveTo(poly[0].x, poly[0].y)
     poly.slice(1).forEach(p => ctx.lineTo(p.x, p.y))
-    if (line == null) { ctx.closePath() }
+    if (line == null) ctx.closePath()
   }
 }
 

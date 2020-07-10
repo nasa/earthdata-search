@@ -67,8 +67,8 @@ Resources:
           FromPort: 5432
           ToPort: 5432
       VpcId: ${env:VPC_ID}
-
-  EDSCLambdaRole:
+  
+  ServerlessAppRole:
     Type: "AWS::IAM::Role"
     Properties:
       ManagedPolicyArns:
@@ -91,6 +91,7 @@ Resources:
               Service:
                 - lambda.amazonaws.com
                 - states.amazonaws.com
+                - events.amazonaws.com
             Action: sts:AssumeRole
       Policies:
         - PolicyName: RDSIAMAuthentication
@@ -150,14 +151,14 @@ Outputs:
     Export:
       Name: ${self:provider.stage}-LambdaSecurityGroup
 
-  ApplicationRole:
-    Description: Role used to execute commands across the application
+  EDSCServerlessAppRole:
+    Description: Role used to execute commands across the serverless application
     Value:
       Fn::GetAtt:
-        - EDSCLambdaRole
+        - ServerlessAppRole
         - Arn
     Export:
-      Name: ${self:provider.stage}-ApplicationRole
+      Name: ${self:provider.stage}-EDSCServerlessAppRole
 
   DatabaseEndpoint:
     Value:

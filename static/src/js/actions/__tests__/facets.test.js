@@ -13,7 +13,8 @@ import {
 import {
   UPDATE_COLLECTION_QUERY,
   UPDATE_SELECTED_FEATURE_FACET,
-  UPDATE_SELECTED_CMR_FACET
+  UPDATE_SELECTED_CMR_FACET,
+  DELETE_AUTOCOMPLETE_VALUE
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -76,6 +77,52 @@ describe('changeCmrFacet', () => {
     })
 
     // was getCollections called
+    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('should remove science keyword facets that match autocomplete suggestions', () => {
+    const getCollectionsMock = jest.spyOn(actions, 'getCollections')
+    getCollectionsMock.mockImplementation(() => jest.fn())
+
+    const newParams = {
+      science_keywords_h: [{ topic: 'Atmosphere' }]
+    }
+
+    const facet = {
+      level: 1,
+      type: 'science_keywords',
+      value: 'Atmospheric Temperature'
+    }
+
+    const store = mockStore({
+      autocomplete: {
+        selected: [
+          {
+            type: 'science_keywords',
+            fields: 'Atmosphere:Atmospheric Temperature',
+            value: 'Atmospheric Temperature'
+          }
+        ]
+      }
+    })
+
+    store.dispatch(changeCmrFacet(newParams, facet, false))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: DELETE_AUTOCOMPLETE_VALUE,
+      payload: facet
+    })
+
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: { pageNum: 1 }
+    })
+    expect(storeActions[2]).toEqual({
+      type: UPDATE_SELECTED_CMR_FACET,
+      payload: { science_keywords_h: [] }
+    })
+
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
   })
 })

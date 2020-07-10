@@ -4,7 +4,7 @@
 
   &__link {
     display: flex;
-    padding: $spacer;
+    padding: $spacer/2 $spacer;
     background-color: $color__white;
 
     &:hover,
@@ -15,31 +15,33 @@
   }
 
   &__body {
-    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
   }
 
   &__body-primary {
     display: flex;
   }
 
-  &__info {
-    width: 100%;
-  }
-
   &__thumb {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     flex-basis: auto;
     flex-shrink: 0;
     flex-grow: 0;
     padding: 0.25rem;
-    width: 85px;
-    height: 85px;
+    width: 75px;
+    height: 75px;
     margin-right: $spacer;
     background: $color__black--900;
     font-size: 0.5rem;
     overflow: hidden;
+
+    .panels--sm & {
+      display: flex;
+    }
   }
 
   &__thumb-image {
@@ -48,33 +50,76 @@
     object-fit: contain;
   }
 
+  &__info {
+    will-change: width;
+    flex-grow: 1;
+    flex-basis: 100%;
+  }
+
   &__title {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     margin-top: $spacer * 0.25;
-    margin-bottom: $spacer * 0.75;
-    font-size: 0.8rem;
+    margin-bottom: $spacer * 0.325;
+    font-size: 0.75rem;
     font-weight: 700;
     color: $color__black--800;
+
+    .panels--md & {
+      display: block;
+      -webkit-line-clamp: initial;
+      -webkit-box-orient: initial;
+    }
   }
 
   &__desc {
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin-bottom: $spacer * 0.25;
     font-size: 0.75rem;
     color: $color__black--600;
+    word-break: break-all;
+
+    strong {
+      color: $color__black--600;
+      font-size: 0.725rem;
+    }
+
+    .panels--md & {
+       -webkit-line-clamp: 2;
+    }
   }
 
   &__actions {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     margin-left: $spacer;
+
+    .panels--md & {
+      flex-direction: row;
+    }
   }
 
   &__action {
-    margin-right: $spacer/4;
+    margin-bottom: $spacer/4;
     color: $color__black--500;
+    padding: 0.3rem 0.625rem;
+    font-size: 0.925rem;
+
+    .panels--sm & {
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+    }
+
+    .panels--md & {
+      margin-bottom: 0;
+      margin-right: $spacer/4;
+    }
 
     &:last-child {
       margin-right: 0;
@@ -112,7 +157,11 @@
   }
 
   &__badge {
+    word-break: break-all;
+    line-break: normal;
+    white-space: normal;
     margin-right: $spacer/4;
+    margin-bottom: $spacer/8;
     color: $color__white;
     text-transform: uppercase;
 

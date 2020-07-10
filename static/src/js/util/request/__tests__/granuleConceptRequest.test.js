@@ -56,9 +56,9 @@ describe('GranuleConceptRequest#transformRequest', () => {
 
     request.transformRequest(data, headers)
 
-    expect(headers).toEqual({
+    expect(headers).toEqual(expect.objectContaining({
       Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.5',
       'Client-Id': 'eed-edsc-test-serverless-client'
-    })
+    }))
   })
 })

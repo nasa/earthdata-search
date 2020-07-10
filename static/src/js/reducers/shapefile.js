@@ -3,7 +3,8 @@ import {
   UPDATE_SHAPEFILE,
   ERRORED_SHAPEFILE,
   RESTORE_FROM_URL,
-  LOADING_SHAPEFILE
+  LOADING_SHAPEFILE,
+  CLEAR_FILTERS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -61,6 +62,9 @@ const shapefileReducer = (state = initialState, action) => {
         ...state,
         ...shapefile
       }
+    }
+    case CLEAR_FILTERS: {
+      return initialState
     }
     default:
       return state

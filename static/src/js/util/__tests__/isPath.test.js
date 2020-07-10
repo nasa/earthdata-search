@@ -53,8 +53,8 @@ describe('isPath', () => {
 
   describe('when passed a regex', () => {
     test('returns true when a path is matched', () => {
-        expect(isPath('/test/this/one', /^\/test/)).toEqual(true)
-      })
+      expect(isPath('/test/this/one', /^\/test/)).toEqual(true)
+    })
 
     test('returns false with a path that does not match', () => {
       expect(isPath('/nope', /^\/test/)).toEqual(false)

@@ -13,9 +13,21 @@ function setup() {
       regionSearch: {}
     },
     boundingBoxSearch: 'Test value',
+    collections: {
+      allIds: [],
+      byId: {}
+    },
+    focusedCollection: '',
+    mapRef: {
+      leafletElement: {}
+    },
     onChangeQuery: jest.fn(),
     onToggleDrawingNewLayer: jest.fn(),
-    pathname: '/search',
+    router: {
+      location: {
+        pathname: '/search'
+      }
+    },
     pointSearch: 'Test value',
     polygonSearch: 'Test value',
     onMetricsMap: jest.fn(),
@@ -36,6 +48,7 @@ describe('SpatialSelectionContainer component', () => {
 
     expect(enzymeWrapper.find(SpatialSelection).length).toBe(1)
     expect(enzymeWrapper.find(SpatialSelection).props().boundingBoxSearch).toEqual('Test value')
+    expect(enzymeWrapper.find(SpatialSelection).props().isCwic).toEqual(false)
     expect(enzymeWrapper.find(SpatialSelection).props().isProjectPage).toEqual(false)
     expect(enzymeWrapper.find(SpatialSelection).props().pointSearch).toEqual('Test value')
     expect(enzymeWrapper.find(SpatialSelection).props().polygonSearch).toEqual('Test value')

@@ -7,7 +7,7 @@ import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
-import { logHttpError } from '../util/logging/logHttpError'
+import { parseError } from '../../../sharedUtils/parseError'
 
 // AWS SQS adapter
 let sqs
@@ -50,52 +50,43 @@ const saveContactInfo = async (event) => {
 
     const url = `${getEarthdataConfig(cmrEnvironment).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
 
-    let response
-    try {
-      response = await request.put({
-        uri: url,
-        headers: {
-          'Client-Id': getClientId().lambda,
-          'Echo-Token': await getEchoToken(jwtToken)
-        },
-        body: params,
-        json: true,
-        resolveWithFullResponse: true
-      })
-    } catch (e) {
-      const errors = logHttpError(e)
+    const echoToken = await getEchoToken(jwtToken)
 
-      return {
-        isBase64Encoded: false,
-        statusCode: 500,
-        headers: defaultResponseHeaders,
-        body: JSON.stringify({ errors })
-      }
+    const response = await request.put({
+      uri: url,
+      headers: {
+        'Client-Id': getClientId().lambda,
+        'Echo-Token': echoToken
+      },
+      body: params,
+      json: true,
+      resolveWithFullResponse: true
+    })
+
+    if (process.env.IS_OFFLINE) {
+      await sqs.sendMessage({
+        QueueUrl: process.env.userDataQueueUrl,
+        MessageBody: JSON.stringify({
+          environment: cmrEnvironment,
+          userId: id,
+          username: userId
+        })
+      }).promise()
     }
 
-    await sqs.sendMessage({
-      QueueUrl: process.env.userDataQueueUrl,
-      MessageBody: JSON.stringify({
-        environment: cmrEnvironment,
-        userId: id,
-        username: userId
-      })
-    }).promise()
+    const { body, statusCode } = response
 
     return {
       isBase64Encoded: false,
-      statusCode: response.statusCode,
+      statusCode,
       headers: defaultResponseHeaders,
-      body: JSON.stringify(response.body)
+      body: JSON.stringify(body)
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

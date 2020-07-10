@@ -6,6 +6,7 @@ import { decodeUrlParams, isSavedProjectsPage, urlPathsWithoutUrlParams } from '
 import actions from './index'
 import ProjectRequest from '../util/request/projectRequest'
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
+import { parseError } from '../../../../sharedUtils/parseError'
 
 const restoreFromUrl = payload => ({
   type: RESTORE_FROM_URL,
@@ -14,6 +15,7 @@ const restoreFromUrl = payload => ({
 
 export const updateStore = ({
   advancedSearch,
+  autocompleteSelected,
   cmrFacets,
   collections,
   featureFacets,
@@ -24,7 +26,7 @@ export const updateStore = ({
   query,
   shapefile,
   timeline
-}, newPathname) => (dispatch, getState) => {
+}, newPathname) => async (dispatch, getState) => {
   const { router } = getState()
   const { location } = router
   const { pathname } = location
@@ -39,6 +41,7 @@ export const updateStore = ({
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
     dispatch(restoreFromUrl({
       advancedSearch,
+      autocompleteSelected,
       cmrFacets,
       collections,
       featureFacets,
@@ -51,16 +54,38 @@ export const updateStore = ({
       timeline
     }))
 
-    // Unless we are moving to the search page, don't fetch collection results, this saves an extra request on the projects page
-    if (
-      (pathname.includes('/search') && !newPathname)
-      || newPathname.includes('/search')
-    ) {
+    let requestAddedGranules = true
+
+    // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
+    // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
+    // other cases, getGranules will be requested using the granule search query params.
+    if ((pathname.includes('/search') && !newPathname) || (newPathname && newPathname.includes('/search'))) {
+      requestAddedGranules = false
       dispatch(actions.getCollections())
       dispatch(actions.getFocusedCollection())
     }
-    dispatch(actions.getProjectCollections())
-    dispatch(actions.getGranules())
+
+    // Fetch collections in the project
+    const { collectionIds = [] } = project || {}
+
+    // Create a unique list of collections to fetch and remove any empty values [.filter(Boolean)]
+    const uniqueCollectionList = [...new Set([
+      ...collectionIds,
+      focusedCollection
+    ])].filter(Boolean)
+
+    if (uniqueCollectionList.length > 0) {
+      try {
+        await dispatch(actions.getProjectCollections(uniqueCollectionList))
+        dispatch(actions.fetchAccessMethods(uniqueCollectionList))
+        dispatch(actions.getGranules(uniqueCollectionList, {
+          requestAddedGranules
+        }))
+      } catch (e) {
+        parseError(e)
+      }
+    }
+
     dispatch(actions.getTimeline())
   }
 }
@@ -68,7 +93,7 @@ export const updateStore = ({
 export const changePath = (path = '') => (dispatch) => {
   const [pathname, queryString] = path.split('?')
 
-  // if query string is a projectId, call getProject
+  // If query string is a projectId, call getProject
   if (queryString && queryString.indexOf('projectId=') === 0) {
     const requestObject = new ProjectRequest()
 
@@ -81,8 +106,10 @@ export const changePath = (path = '') => (dispatch) => {
           name,
           path: projectPath
         } = data
+
         const projectQueryString = projectPath.split('?')[1]
-        // save name and path into store, and projectId?
+
+        // Save name, path and projectId into store
         dispatch(actions.updateSavedProject({
           path: projectPath,
           name,
@@ -106,7 +133,6 @@ export const changePath = (path = '') => (dispatch) => {
   dispatch(actions.updateStore(decodeUrlParams(queryString), pathname))
   return null
 }
-
 
 const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
   // Only replace if the pathname stays the same as the current pathname.

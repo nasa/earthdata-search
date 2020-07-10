@@ -82,21 +82,24 @@ class TemporalDisplay extends PureComponent {
 
     return (
       <FilterStackItem
-        icon="clock-o"
+        icon="calendar"
         title="Temporal"
         onRemove={this.onTimelineRemove}
       >
         <FilterStackContents
           body={temporalStartDisplay}
           title="Start"
+          showLabel
         />
         <FilterStackContents
           body={temporalEndDisplay}
           title="Stop"
+          showLabel
         />
         <FilterStackContents
           body={temporalRangeDisplay}
           title="Range"
+          showLabel
         />
       </FilterStackItem>
     )

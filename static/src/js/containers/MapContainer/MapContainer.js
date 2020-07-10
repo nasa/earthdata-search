@@ -10,10 +10,8 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-import $ from 'jquery'
 import { difference } from 'lodash'
 
-import '../../util/map/sphericalPolygon'
 import isPath from '../../util/isPath'
 import { metricsMap } from '../../middleware/metrics/actions'
 
@@ -29,17 +27,17 @@ import ProjectionSwitcher
   from '../../components/Map/ProjectionSwitcher'
 import GranuleImageContainer
   from '../GranuleImageContainer/GranuleImageContainer'
+import ShapefileLayer from '../../components/Map/ShapefileLayer'
+import MouseEventsLayer from '../../components/Map/MouseEventsLayer'
 
 import crsProjections from '../../util/map/crs'
 import projections from '../../util/map/projections'
+import murmurhash3 from '../../util/murmurhash3'
 
 import actions from '../../actions/index'
 
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
-import ShapefileLayer from '../../components/Map/ShapefileLayer'
-import MouseEventsLayer from '../../components/Map/MouseEventsLayer'
-import murmurhash3 from '../../util/murmurhash3'
 
 const { BaseLayer, Overlay } = LayersControl
 
@@ -61,10 +59,8 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
-  granules: state.searchResults.granules,
   map: state.map,
-  masterOverlayPanelHeight: state.ui.masterOverlayPanel.height,
-  pathname: state.router.location.pathname,
+  router: state.router,
   shapefile: state.shapefile,
   project: state.project
 })
@@ -80,8 +76,14 @@ export class MapContainer extends Component {
     this.onMapReady = this.onMapReady.bind(this)
   }
 
+  componentDidMount() {
+    // Resize the Leaflet controls container when the component map mounts,
+    // and any time the browser is resized
+    this.resizeLeafletControls()
+    window.addEventListener('resize', this.resizeLeafletControls)
+  }
+
   componentDidUpdate() {
-    const { masterOverlayPanelHeight } = this.props
     const {
       leafletElement: map = null
     } = this.mapRef
@@ -89,10 +91,10 @@ export class MapContainer extends Component {
     if (this.mapRef) {
       map.invalidateSize()
     }
+  }
 
-    if (this.controlContainer) {
-      this.onMasterOverlayPanelResize(masterOverlayPanelHeight)
-    }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeLeafletControls)
   }
 
   onMapReady(e) {
@@ -105,15 +107,6 @@ export class MapContainer extends Component {
     attributionElement.classList.add('leaflet-control-layers-attribution')
     attributionElement.innerHTML = '* © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     layersControl.appendChild(attributionElement)
-
-    this.onMasterOverlayPanelResize()
-  }
-
-  onMasterOverlayPanelResize(newHeight) {
-    const routeWrapperHeight = $('.route-wrapper').height()
-
-    this.controlContainer.style.width = '100%'
-    this.controlContainer.style.height = `${routeWrapperHeight - newHeight}px`
   }
 
   handleMoveend(event) {
@@ -198,6 +191,23 @@ export class MapContainer extends Component {
     onChangeMap({ ...map })
   }
 
+  /**
+   * Sets the height of the leaflet controls. This is needed so they do not
+   * fall behind the footer.
+   */
+  resizeLeafletControls() {
+    if (!document) return
+
+    const leafletControlContainer = document.querySelector('.leaflet-control-container')
+    const routeWrapper = document.querySelector('.route-wrapper')
+
+    // If the control container and the route wrapper are defined, set the leaflet controls to
+    // the same height as the route wrapper.
+    if (leafletControlContainer && routeWrapper) {
+      leafletControlContainer.style.height = `${routeWrapper.clientHeight}px`
+    }
+  }
+
   render() {
     const {
       authToken,
@@ -205,9 +215,8 @@ export class MapContainer extends Component {
       collections,
       focusedCollection,
       focusedGranule,
-      granules,
-      pathname,
       project,
+      router,
       shapefile,
       onChangeFocusedGranule,
       onExcludeGranule,
@@ -226,17 +235,20 @@ export class MapContainer extends Component {
       zoom
     } = map
 
-    const isProjectPage = isPath(pathname, '/project')
+    const { location } = router
+    const { pathname } = location
+    const isProjectPage = isPath(pathname, '/projects')
 
     const center = [latitude, longitude]
 
     const maxZoom = projection === projections.geographic ? 7 : 4
 
-    const { isCwic } = granules
-    let nonExcludedGranules = granules
+    let nonExcludedGranules
     if (focusedCollection && collections.byId[focusedCollection]) {
-      const { excludedGranuleIds = [] } = collections.byId[focusedCollection]
-      const allGranuleIds = granules.allIds
+      const { excludedGranuleIds = [], granules } = collections.byId[focusedCollection]
+      const { allIds, isCwic } = granules
+      const allGranuleIds = allIds
+      nonExcludedGranules = granules
       let granuleIds
       if (isCwic) {
         granuleIds = allGranuleIds.filter((id) => {
@@ -393,11 +405,9 @@ MapContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}),
-  masterOverlayPanelHeight: PropTypes.number.isRequired,
-  pathname: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
+  router: PropTypes.shape({}).isRequired,
   shapefile: PropTypes.shape({}).isRequired,
   onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,

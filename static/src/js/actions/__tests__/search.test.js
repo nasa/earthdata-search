@@ -4,14 +4,15 @@ import thunk from 'redux-thunk'
 import actions from '../index'
 import { updateCollectionQuery, updateGranuleQuery } from '../search'
 import {
+  CLEAR_COLLECTION_GRANULES,
   CLEAR_EXCLUDE_GRANULE_ID,
+  CLEAR_FILTERS,
+  CLEAR_SHAPEFILE,
+  TOGGLE_DRAWING_NEW_LAYER,
   UPDATE_COLLECTION_QUERY,
   UPDATE_GRANULE_QUERY,
-  CLEAR_SHAPEFILE,
-  CLEAR_COLLECTION_GRANULES,
-  UPDATE_TIMELINE_INTERVALS,
-  TOGGLE_DRAWING_NEW_LAYER,
-  UPDATE_ADVANCED_SEARCH
+  UPDATE_REGION_QUERY,
+  UPDATE_TIMELINE_INTERVALS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -75,7 +76,6 @@ describe('changeQuery', () => {
           spatial: {}
         }
       },
-      metadata: {},
       project: {},
       router: {
         location: {
@@ -87,7 +87,6 @@ describe('changeQuery', () => {
     // call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -135,7 +134,6 @@ describe('changeQuery', () => {
     // call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -166,7 +164,6 @@ describe('changeQuery', () => {
     // call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -175,7 +172,7 @@ describe('changeQuery', () => {
 })
 
 describe('changeProjectQuery', () => {
-  test('should update the search query and call getCollections', () => {
+  test('should update the search query', () => {
     const newQuery = {
       collection: {
         keyword: 'new keyword',
@@ -186,10 +183,6 @@ describe('changeProjectQuery', () => {
       }
     }
 
-    // mock getCollections
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
-    getProjectCollectionsMock.mockImplementation(() => jest.fn())
-
     // mockStore with initialState
     const store = mockStore({
       focusedCollection: '',
@@ -198,7 +191,6 @@ describe('changeProjectQuery', () => {
           keyword: 'old stuff'
         }
       },
-      metadata: {},
       router: {
         location: {
           pathname: ''
@@ -209,7 +201,6 @@ describe('changeProjectQuery', () => {
     // call the dispatch
     store.dispatch(actions.changeProjectQuery({ ...newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
@@ -221,9 +212,6 @@ describe('changeProjectQuery', () => {
         temporal: {}
       }
     })
-
-    // was getCollections called
-    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -245,7 +233,6 @@ describe('changeCollectionPageNum', () => {
     // call the dispatch
     store.dispatch(actions.changeCollectionPageNum(pageNum))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
@@ -261,6 +248,7 @@ describe('changeCollectionPageNum', () => {
 
 describe('changeGranulePageNum', () => {
   test('should update the collection query and call getCollections', () => {
+    const collectionId = 'collectionId'
     const pageNum = 2
 
     // mock getGranules
@@ -269,20 +257,27 @@ describe('changeGranulePageNum', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      metadata: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            collectionId: {
+              granules: {
+                allIds: ['123', '456'],
+                hits: 100
+              }
+            }
+          }
+        }
+      },
       query: {
         collection: {},
         granule: { pageNum: 1 }
-      },
-      searchResults: {
-        granules: {
-          allIds: ['123', '456'],
-          hits: 100
-        }
       }
     })
 
     // call the dispatch
-    store.dispatch(actions.changeGranulePageNum(pageNum))
+    store.dispatch(actions.changeGranulePageNum({ collectionId, pageNum }))
 
     // Is updateGranuleQuery called with the right payload
     const storeActions = store.getActions()
@@ -298,6 +293,7 @@ describe('changeGranulePageNum', () => {
   })
 
   test('should not update the collection query and call getCollections if there are no more granules', () => {
+    const collectionId = 'collectionId'
     const pageNum = 2
 
     // mock getGranules
@@ -306,20 +302,27 @@ describe('changeGranulePageNum', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      metadata: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            collectionId: {
+              granules: {
+                allIds: ['123', '456'],
+                hits: 2
+              }
+            }
+          }
+        }
+      },
       query: {
         collection: {},
         granule: { pageNum: 1 }
-      },
-      searchResults: {
-        granules: {
-          allIds: ['123', '456'],
-          hits: 2
-        }
       }
     })
 
     // call the dispatch
-    store.dispatch(actions.changeGranulePageNum(pageNum))
+    store.dispatch(actions.changeGranulePageNum({ collectionId, pageNum }))
 
     // Is updateGranuleQuery called with the right payload
     const storeActions = store.getActions()
@@ -376,6 +379,7 @@ describe('removeGridFilter', () => {
           gridCoords: 'mock coords'
         }
       },
+      project: {},
       router: {
         location: {
           pathname: ''
@@ -389,7 +393,6 @@ describe('removeGridFilter', () => {
     // call the dispatch
     store.dispatch(actions.removeGridFilter())
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -423,6 +426,7 @@ describe('removeSpatialFilter', () => {
           temporal: {}
         }
       },
+      project: {},
       router: {
         location: {
           pathname: ''
@@ -436,7 +440,6 @@ describe('removeSpatialFilter', () => {
     // call the dispatch
     store.dispatch(actions.removeSpatialFilter())
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -486,6 +489,7 @@ describe('removeTemporalFilter', () => {
           }
         }
       },
+      project: {},
       router: {
         location: {
           pathname: ''
@@ -499,7 +503,6 @@ describe('removeTemporalFilter', () => {
     // call the dispatch
     store.dispatch(actions.removeTemporalFilter())
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: CLEAR_EXCLUDE_GRANULE_ID
@@ -514,80 +517,62 @@ describe('removeTemporalFilter', () => {
   })
 })
 
-describe('clearFilters', () => {
+describe('changeRegionQuery', () => {
   test('clears the query and calls getCollections', () => {
     const query = {
-      focusedCollection: '',
-      query: {
-        collection: {
-          keyword: 'keyword search',
-          spatial: {
-            point: '0,0'
-          }
-        },
-        granule: {
-          gridCoords: ''
-        }
-      },
-      metadata: {},
-      router: {
-        location: {
-          pathname: ''
-        }
-      }
-    }
-    const emptyQuery = {
-      gridName: '',
-      keyword: '',
-      pageNum: 1,
-      spatial: {},
-      temporal: {}
+      exact: false,
+      endpoint: 'region',
+      keyword: 'test value'
     }
 
     // mockStore with initialState
-    const store = mockStore(query)
+    const store = mockStore({})
+
+    // mock getRegionsMock
+    const getRegionsMock = jest.spyOn(actions, 'getRegions')
+    getRegionsMock.mockImplementation(() => jest.fn())
+
+    // call the dispatch
+    store.dispatch(actions.changeRegionQuery(query))
+    const storeActions = store.getActions()
+
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_REGION_QUERY,
+      payload: query
+    })
+
+    // was getCollections called
+    expect(getRegionsMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('clearFilters', () => {
+  test('clears the query and calls getCollections', () => {
+    // mockStore with initialState
+    const store = mockStore({})
 
     // mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
+    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
+    getProjectCollectionsMock.mockImplementation(() => jest.fn())
+    const getGranulesMock = jest.spyOn(actions, 'getGranules')
+    getGranulesMock.mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.spyOn(actions, 'getTimeline')
+    getTimelineMock.mockImplementation(() => jest.fn())
 
     // call the dispatch
     store.dispatch(actions.clearFilters())
     const storeActions = store.getActions()
 
-    // Is updateCollectionQuery called with the right payload
     expect(storeActions[0]).toEqual({
-      type: UPDATE_ADVANCED_SEARCH,
-      payload: {}
-    })
-    expect(storeActions[1]).toEqual({
-      type: CLEAR_EXCLUDE_GRANULE_ID
-    })
-    expect(storeActions[2]).toEqual({
-      type: UPDATE_COLLECTION_QUERY,
-      payload: emptyQuery
-    })
-    expect(storeActions[3]).toEqual({
-      type: UPDATE_GRANULE_QUERY,
-      payload: {
-        gridCoords: '',
-        pageNum: 1
-      }
-    })
-    expect(storeActions[4]).toEqual({
-      type: CLEAR_COLLECTION_GRANULES
-    })
-    expect(storeActions[5]).toEqual({
-      type: UPDATE_TIMELINE_INTERVALS,
-      payload: {
-        results: []
-      }
-    })
-    expect(storeActions[6]).toEqual({
-      type: CLEAR_SHAPEFILE
+      type: CLEAR_FILTERS
     })
 
     // was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getGranulesMock).toHaveBeenCalledTimes(1)
+    expect(getTimelineMock).toHaveBeenCalledTimes(1)
   })
 })

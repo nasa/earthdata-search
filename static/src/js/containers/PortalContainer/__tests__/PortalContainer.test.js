@@ -34,6 +34,8 @@ beforeEach(() => {
 
 describe('PortalContainer component', () => {
   test('renders the page title without a portal', () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({ env: 'dev' }))
+
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find('title').text()).toEqual('[DEV] Earthdata Search')
@@ -47,6 +49,8 @@ describe('PortalContainer component', () => {
   })
 
   test('renders the page title with a portal', () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({ env: 'dev' }))
+
     const { enzymeWrapper } = setup({
       portal: {
         portalId: 'simple',

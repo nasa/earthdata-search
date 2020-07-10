@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import SimpleBar from 'simplebar-react'
 
 import ArrowTags from '../ArrowTags/ArrowTags'
@@ -9,6 +10,7 @@ import CollapsePanel from '../CollapsePanel/CollapsePanel'
 import CollectionDetailsDataCenter from './CollectionDetailsDataCenter'
 import CollectionDetailsMinimap from './CollectionDetailsMinimap'
 import SplitBadge from '../SplitBadge/SplitBadge'
+
 import { pluralize } from '../../util/pluralize'
 
 import './CollectionDetailsBody.scss'
@@ -24,11 +26,11 @@ const buildRelatedUrlsList = (relatedUrls) => {
         <a
           key={key}
           className="link link--separated collection-details-body__related-link"
-          href={url.URL}
-          // eslint-disable-next-line react/jsx-no-target-blank
+          href={url.url}
           target="_blank"
+          rel="noopener noreferrer"
         >
-          {url.HighlightedType}
+          {url.highlightedType}
         </a>
       )
     })
@@ -62,9 +64,9 @@ const buildNativeFormatList = (nativeFormats) => {
   if (!nativeFormats.length) return null
 
   return (
-    <strong className="collection-details-body__native-formats">
+    <span className="collection-details-body__native-formats">
       {nativeFormats.join(', ')}
-    </strong>
+    </span>
   )
 }
 
@@ -105,23 +107,24 @@ const buildForDeveloperLink = (linkData, token) => {
  */
 export const CollectionDetailsBody = ({
   collectionMetadata,
-  formattedCollectionMetadata,
+  isActive,
   onToggleRelatedUrlsModal
 }) => {
-  const { summary } = collectionMetadata
   const {
     dataCenters,
     doi,
     gibsLayers,
     nativeFormats,
     relatedUrls,
+    services,
     scienceKeywords,
     spatial,
+    summary,
     temporal,
     urls
-  } = formattedCollectionMetadata
+  } = collectionMetadata
 
-  if (!Object.keys(collectionMetadata).length || !Object.keys(formattedCollectionMetadata).length) {
+  if (!Object.keys(collectionMetadata).length) {
     return (
       <div className="collection-details-body">
         <div className="collection-details-body__content">
@@ -131,125 +134,223 @@ export const CollectionDetailsBody = ({
     )
   }
 
+  const outputFormats = []
+  const reformattings = []
+
+  if (services) {
+    const { items } = services
+
+    if (items) {
+      items.forEach((service) => {
+        const {
+          supportedOutputFormats,
+          supportedReformattings: supportedReformattingsList
+        } = service
+
+        if (supportedOutputFormats) {
+          outputFormats.push(...supportedOutputFormats)
+        }
+
+        if (supportedReformattingsList) {
+          reformattings.push(...supportedReformattingsList)
+        }
+      })
+    }
+  }
+
+  let formattedRelatedUrls = []
+  if (relatedUrls && relatedUrls.length > 0) {
+    formattedRelatedUrls = buildRelatedUrlsList(relatedUrls)
+  }
+
   return (
-    <SimpleBar className="collection-details-body" style={{ height: '100%' }}>
-      <div className="collection-details-body__content">
-        <div className="row collection-details-body__row">
-          <div className="col col-auto">
-            <CollectionDetailsMinimap metadata={collectionMetadata} />
-            {
-              spatial && (
-                <div className="collection-details-body__spatial-bounding">
-                  {spatial}
-                </div>
-              )
-            }
-          </div>
-          <div className="col col-md-3">
-            {
-              doi && buildDoiLink(doi)
-            }
-            <dl className="collection-details-body__info">
+    <div className="collection-details-body">
+      <SimpleBar
+        className="collection-details-body__simplebar"
+        scrollableNodeProps={{
+          className: 'collection-details-body__simplebar-content'
+        }}
+      >
+        <div className="collection-details-body__content">
+          <div className="row collection-details-body__row">
+            <div className="col col-12">
               {
-                <>
-                  <dt>Related URLs:</dt>
-                  <dd className="collection-details-body__related-links">
-                    {
-                      relatedUrls.length > 0 && (
-                        <>
-                          {buildRelatedUrlsList(relatedUrls)}
-                          <Button
-                            className="link link--separated collection-details-body__related-link"
-                            type="button"
-                            variant="link"
-                            bootstrapVariant="link"
-                            label="View All Related URLs"
-                            onClick={() => onToggleRelatedUrlsModal(true)}
-                          >
-                            View All Related URLs
-                          </Button>
-                        </>
-                      )
-                    }
-                    <a
-                      className="link link--external collection-details-body__related-link"
-                      href={urls.html.href}
-                      // eslint-disable-next-line react/jsx-no-target-blank
-                      target="_blank"
-                    >
-                      View More Info
-                    </a>
-                  </dd>
-                </>
+                doi && buildDoiLink(doi)
               }
+              <dl className="collection-details-body__info">
+                {
+                  <>
+                    <dt>Related URLs</dt>
+                    <dd className="collection-details-body__related-links">
+                      {
+                        formattedRelatedUrls.length > 0 && (
+                          <>
+                            {formattedRelatedUrls}
+                            <Button
+                              className="link link--separated collection-details-body__related-link"
+                              type="button"
+                              variant="link"
+                              bootstrapVariant="link"
+                              label="View All Related URLs"
+                              onClick={() => onToggleRelatedUrlsModal(true)}
+                            >
+                              View All Related URLs
+                            </Button>
+                          </>
+                        )
+                      }
+                      <a
+                        className="link link--external collection-details-body__related-link"
+                        href={urls.html.href}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        View More Info
+                      </a>
+                    </dd>
+                  </>
+                }
+                {
+                  temporal && (
+                    <>
+                      <dt>Temporal Extent</dt>
+                      <dd>
+                        {temporal.map((entry, i) => {
+                          const key = `temporal_entry_${i}`
+                          return <span key={key}>{entry}</span>
+                        })}
+                      </dd>
+                    </>
+                  )
+                }
+                {
+                  nativeFormats.length > 0 && (
+                    <>
+                      <dt>{`Native ${pluralize('Format', nativeFormats.length)}`}</dt>
+                      <dd>
+                        {
+                          nativeFormats.length > 0 && buildNativeFormatList(nativeFormats)
+                        }
+                      </dd>
+                    </>
+                  )
+                }
+                {
+                  outputFormats.length > 0 && (
+                    <>
+                      <dt>{`Output ${pluralize('Format', outputFormats.length)}`}</dt>
+                      <dd>
+                        {outputFormats.join(', ')}
+                      </dd>
+                    </>
+                  )
+                }
+                {
+                  reformattings.length > 0 && (
+                    <>
+                      <dt>
+                        Reformatting Options
+                        <span className="collection-details-body__heading-tooltip">
+                          <OverlayTrigger
+                            placement="right"
+                            overlay={(
+                              <Tooltip
+                                id="tooltip_supported-reformatting"
+                                className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
+                              >
+                                In addition to their native format, some data products can be
+                                reformatted to additional formats. If reformatting is desired,
+                                reformatting options can be set prior to downloading the data.
+                              </Tooltip>
+                            )}
+                          >
+                            <i className="fa fa-question-circle" />
+                          </OverlayTrigger>
+                        </span>
+                      </dt>
+                      <dd>
+                        {
+                          reformattings.map((supportedReformatting) => {
+                            const {
+                              supportedInputFormat,
+                              supportedOutputFormats
+                            } = supportedReformatting
+
+                            return (
+                              <dl
+                                key={`input-format__${supportedInputFormat}`}
+                                className="collection-details-body__reformatting-item"
+                              >
+                                <dt className="collection-details-body__reformatting-item-heading">
+                                  {supportedInputFormat}
+                                  <i className="fa fa-arrow-right collection-details-body__reformatting-item-icon" />
+                                </dt>
+                                <dd className="collection-details-body__reformatting-item-body">
+                                  {supportedOutputFormats.join(', ')}
+                                </dd>
+                              </dl>
+                            )
+                          })
+                        }
+                      </dd>
+                    </>
+                  )
+                }
+                <dt>GIBS Imagery Projection Availability</dt>
+                <dd>
+                  {gibsLayers && gibsLayers}
+                </dd>
+                <dt>Science Keywords</dt>
+                <dd>
+                  {
+                    scienceKeywords.length === 0 && <span>Not Available</span>
+                  }
+                  {
+                    scienceKeywords.length > 0 && buildScienceKeywordList(scienceKeywords)
+                  }
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div className="row collection-details-body__row">
+            <div className="col col-12 collection-details-body__minimap">
               {
-                temporal && (
-                <>
-                  <dt>Temporal Extent:</dt>
-                  <dd>
-                    {temporal.map((entry, i) => {
-                      const key = `temporal_entry_${i}`
-                      return <span key={key}>{entry}</span>
-                    })}
-                  </dd>
-                </>
+                isActive && (
+                  <CollectionDetailsMinimap metadata={collectionMetadata} />
                 )
               }
-              <dt>GIBS Imagery Projection Availability:</dt>
-              <dd>
-                {gibsLayers && gibsLayers}
-              </dd>
-            </dl>
+              {
+                spatial && (
+                  <div className="collection-details-body__spatial-bounding">
+                    {spatial}
+                  </div>
+                )
+              }
+            </div>
           </div>
-          <div className="col collection-details-body__group--secondary">
-            <dl className="collection-details-body__info">
-              <dt>Science Keywords:</dt>
-              <dd>
-                {
-                  scienceKeywords.length === 0 && <span>Not Available</span>
-                }
-                {
-                  scienceKeywords.length > 0 && buildScienceKeywordList(scienceKeywords)
-                }
-              </dd>
-            </dl>
+          <div className="row collection-details-body__row">
+            <div className="col collection-details-body__summary">
+              {summary}
+            </div>
+          </div>
+          <div className="row collection-details-body__row">
             {
-              nativeFormats.length > 0 && (
-                <dl className="collection-details-body__info">
-                  <dt>{`Native Data ${pluralize('Format', nativeFormats.length)}:`}</dt>
-                  <dd>
-                    {
-                      nativeFormats.length > 0 && buildNativeFormatList(nativeFormats)
-                    }
-                  </dd>
-                </dl>
+              dataCenters.length && (
+                <ul className="col collection-details-body__provider-list">
+                  {
+                    dataCenters.map((dataCenter, i) => {
+                      const key = `data_center_${i}`
+                      return (
+                        <CollectionDetailsDataCenter key={key} item={i} dataCenter={dataCenter} />
+                      )
+                    })
+                  }
+                </ul>
               )
             }
           </div>
         </div>
-        <div className="row collection-details-body__row">
-          {/* eslint-disable-next-line react/no-danger */}
-          <div className="col collection-details-body__summary">
-            {summary}
-          </div>
-        </div>
-        <div className="row">
-          {
-            dataCenters.length && (
-              <ul className="col collection-details-body__provider-list">
-                {
-                  dataCenters.map((dataCenter, i) => {
-                    const key = `data_center_${i}`
-                    return (
-                      <CollectionDetailsDataCenter key={key} item={i} dataCenter={dataCenter} />
-                    )
-                  })
-                }
-              </ul>
-            )
-          }
-        </div>
-      </div>
+      </SimpleBar>
       <CollapsePanel
         className="collection-details-body__for-devs"
         header="For Developers"
@@ -281,18 +382,17 @@ export const CollectionDetailsBody = ({
           </div>
         </div>
       </CollapsePanel>
-    </SimpleBar>
+    </div>
   )
 }
 
 CollectionDetailsBody.defaultProps = {
-  collectionMetadata: {},
-  formattedCollectionMetadata: {}
+  collectionMetadata: {}
 }
 
 CollectionDetailsBody.propTypes = {
   collectionMetadata: PropTypes.shape({}),
-  formattedCollectionMetadata: PropTypes.shape({}),
+  isActive: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 

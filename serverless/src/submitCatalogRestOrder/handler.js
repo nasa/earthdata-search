@@ -18,6 +18,8 @@ import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWo
 import { portalPath } from '../../../sharedUtils/portalPath'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { parseError } from '../../../sharedUtils/parseError'
+import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 
 /**
  * Submits an order to Catalog Rest (ESI)
@@ -34,6 +36,8 @@ const submitCatalogRestOrder = async (event, context) => {
 
   const { Records: sqsRecords = [] } = event
 
+  if (sqsRecords.length === 0) return
+
   console.log(`Processing ${sqsRecords.length} order(s)`)
 
   await sqsRecords.forEachAsync(async (sqsRecord) => {
@@ -47,6 +51,7 @@ const submitCatalogRestOrder = async (event, context) => {
 
     const edlConfig = await getEdlConfig()
     const { client } = edlConfig
+
     const { id: clientId } = client
 
     const accessTokenWithClient = `${accessToken}:${clientId}`
@@ -73,8 +78,10 @@ const submitCatalogRestOrder = async (event, context) => {
     } = retrievalRecord
     const { portalId, shapefile_id: shapefileId } = jsondata
 
+    const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
+
     const granuleResponse = await request.get({
-      uri: cmrUrl('search/granules.json', granuleParams),
+      uri: cmrUrl('search/granules.json', preparedGranuleParams),
       headers: {
         'Echo-Token': accessTokenWithClient,
         'Client-Id': getClientId().background
@@ -157,14 +164,16 @@ const submitCatalogRestOrder = async (event, context) => {
       // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
     } catch (e) {
-      console.log(e)
+      const parsedErrorMessage = parseError(e, { asJSON: false })
+
+      const [errorMessage] = parsedErrorMessage
 
       await dbConnection('retrieval_orders').update({
         state: 'create_failed'
       }).where({ id })
 
-      // Re-throw the error to utilize the dead letter queue
-      throw e
+      // Re-throw the error so the state machine handles the error correctly
+      throw Error(errorMessage)
     }
   })
 }

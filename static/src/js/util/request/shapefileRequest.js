@@ -7,14 +7,6 @@ export default class ShapefileRequest extends Request {
     this.lambda = true
   }
 
-  permittedCmrKeys() {
-    return [
-      'file',
-      'filename',
-      'auth_token'
-    ]
-  }
-
   save(params) {
     return this.post('shapefiles', params)
   }

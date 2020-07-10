@@ -4,10 +4,10 @@ import { buildAuthenticatedRedirectUrl } from '../url/buildAuthenticatedRedirect
 
 export const buildUrls = (json, authToken) => {
   const {
-    id: collectionId,
-    short_name: providedCollectionShortName,
-    version_id: collectionVersionId,
-    is_cwic: isCwic
+    conceptId: collectionId,
+    shortName: providedCollectionShortName,
+    versionId: collectionVersionId,
+    isCwic
   } = json
 
   const collectionShortName = encodeURI(providedCollectionShortName)
@@ -62,7 +62,7 @@ export const buildUrls = (json, authToken) => {
     //   title: 'CWIC',
     //   href: 'example.com'
     // }
-  } else if (json.has_granules) {
+  } else if (json.hasGranules) {
     let cmrGranulesUrl = `${cmrHost}/search/granules.json?echo_collection_id=${collectionId}`
 
     if (authToken !== '') {

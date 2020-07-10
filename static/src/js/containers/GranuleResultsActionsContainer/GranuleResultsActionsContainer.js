@@ -17,13 +17,17 @@ const mapDispatchToProps = dispatch => ({
   onAddProjectCollection:
     collectionId => dispatch(actions.addProjectCollection(collectionId)),
   onRemoveCollectionFromProject:
-    collectionId => dispatch(actions.removeCollectionFromProject(collectionId))
+    collectionId => dispatch(actions.removeCollectionFromProject(collectionId)),
+  onSetActivePanelSection:
+    panelId => dispatch(actions.setActivePanelSection(panelId)),
+  onUpdateFocusedCollection:
+    collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
+  onChangePath: path => dispatch(actions.changePath(path))
 })
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
-  granules: state.searchResults.granules,
   granuleQuery: state.query.granule,
   project: state.project,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
@@ -34,27 +38,55 @@ export const GranuleResultsActionsContainer = (props) => {
   const {
     collections,
     focusedCollection,
-    granules,
     granuleQuery,
     location,
     project,
     onAddProjectCollection,
-    onRemoveCollectionFromProject
+    onSetActivePanelSection,
+    onRemoveCollectionFromProject,
+    onChangePath
   } = props
   const collection = getFocusedCollectionObject(focusedCollection, collections)
-  const { metadata } = collection
+  const { granules, metadata } = collection
 
   if (isEmpty(metadata)) return null
 
-  const { collectionIds: projectIds } = project
-  const isCollectionInProject = projectIds.indexOf(focusedCollection) !== -1
+  const {
+    byId: projectById = {},
+    collectionIds: projectCollectionIds = []
+  } = project
 
-  // Determine the correct granule count based on granules that have been removed
+  // Determine if the current collection is in the project. Using '!!' here so
+  // isCollectionInProject is not equal to projectById[focusedCollection]
+  const isCollectionInProject = !!(
+    projectCollectionIds.indexOf(focusedCollection) > -1
+    && projectById[focusedCollection]
+  )
+
+  let allGranulesInProject = false
+  let addedGranuleCount = 0
+
+  if (isCollectionInProject) {
+    const { addedGranuleIds = [], removedGranuleIds = [] } = projectById[focusedCollection]
+
+    // If there are no added granules and no removed granules, all granules are in the project.
+    if (!addedGranuleIds.length && !removedGranuleIds.length) {
+      allGranulesInProject = true
+    }
+
+    // If granules are added, use that length as the number of granules.
+    if (addedGranuleIds.length) {
+      addedGranuleCount = addedGranuleIds.length
+    }
+  }
+
+  // Determine the correct granule count based on granules that have been removed.
   const { pageNum } = granuleQuery
   const { isLoading, isLoaded } = granules
   const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
 
-  const granuleCount = getGranuleCount(granules, collection)
+  const granuleCount = addedGranuleCount
+    || getGranuleCount(collection, projectById[focusedCollection])
 
   const granuleLimit = getGranuleLimit(metadata)
 
@@ -62,13 +94,17 @@ export const GranuleResultsActionsContainer = (props) => {
     <>
       <GranuleResultsActions
         collectionId={focusedCollection}
+        projectCollectionIds={projectCollectionIds}
         granuleCount={granuleCount}
         granuleLimit={granuleLimit}
         initialLoading={initialLoading}
         isCollectionInProject={isCollectionInProject}
         location={location}
         onAddProjectCollection={onAddProjectCollection}
+        onSetActivePanelSection={onSetActivePanelSection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+        allGranulesInProject={allGranulesInProject}
+        onChangePath={onChangePath}
       />
     </>
   )
@@ -78,11 +114,12 @@ GranuleResultsActionsContainer.propTypes = {
   location: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired
 }
 
 export default withRouter(

@@ -4,7 +4,8 @@ import {
   UPDATE_SHAPEFILE,
   LOADING_SHAPEFILE,
   ERRORED_SHAPEFILE,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  CLEAR_FILTERS
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -49,7 +50,6 @@ describe('CLEAR_SHAPEFILE', () => {
 
 describe('UPDATE_SHAPEFILE', () => {
   test('returns the correct state', () => {
-
     const payload = {
       shapefileName: 'test-name'
     }
@@ -74,7 +74,6 @@ describe('UPDATE_SHAPEFILE', () => {
 
 describe('LOADING_SHAPEFILE', () => {
   test('returns the correct state', () => {
-
     const payload = {
       name: 'test-name'
     }
@@ -98,7 +97,6 @@ describe('LOADING_SHAPEFILE', () => {
 
 describe('ERRORED_SHAPEFILE', () => {
   test('returns the correct state', () => {
-
     const payload = {
       type: 'test-error-type'
     }
@@ -123,7 +121,6 @@ describe('ERRORED_SHAPEFILE', () => {
 
 describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
-
     const payload = {
       shapefile: {
         shapefileId: 'test-id'
@@ -141,5 +138,13 @@ describe('RESTORE_FROM_URL', () => {
     }
 
     expect(shapefileReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('CLEAR_FILTERS', () => {
+  test('returns the correct state', () => {
+    const action = { type: CLEAR_FILTERS }
+
+    expect(shapefileReducer(undefined, action)).toEqual(initialState)
   })
 })

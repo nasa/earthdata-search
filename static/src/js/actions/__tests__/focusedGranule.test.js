@@ -10,6 +10,8 @@ import {
   UPDATE_AUTH
 } from '../../constants/actionTypes'
 
+import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
@@ -57,39 +59,41 @@ describe('changeFocusedGranule', () => {
 })
 
 describe('getFocusedGranule', () => {
+  beforeEach(() => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
+  })
   const granulePayload = {
     granuleId: {
-      json: {
+      ummJson: {
         MockGranule: 'Data'
       },
       metadataUrls: {
         atom: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.atom',
+          href: 'http://cmr.example.com/search/concepts/granuleId.atom',
           title: 'ATOM'
         },
         echo10: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.echo10',
+          href: 'http://cmr.example.com/search/concepts/granuleId.echo10',
           title: 'ECHO 10'
         },
         iso19115: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.iso19115',
+          href: 'http://cmr.example.com/search/concepts/granuleId.iso19115',
           title: 'ISO 19115'
         },
         native: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId',
+          href: 'http://cmr.example.com/search/concepts/granuleId',
           title: 'Native'
         },
         umm_json: {
-          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.umm_json',
+          href: 'http://cmr.example.com/search/concepts/granuleId.umm_json',
           title: 'UMM-G'
         }
-      },
-      xml: '<MockGranule>Data</MockGranule>'
+      }
     }
   }
 
   test('should update the granule metadata', async () => {
-    const metadata = '<MockGranule>Data</MockGranule>'
+    const metadata = { MockGranule: 'Data' }
 
     nock(/cmr/)
       .get(/concepts/)
@@ -115,10 +119,6 @@ describe('getFocusedGranule', () => {
 
       // updateGranuleMetadata
       expect(storeActions[0]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
-      })
-      expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_METADATA,
         payload: granulePayload
       })
@@ -126,7 +126,7 @@ describe('getFocusedGranule', () => {
   })
 
   test('should update the authenticated granule metadata', async () => {
-    const metadata = '<MockGranule>Data</MockGranule>'
+    const metadata = { MockGranule: 'Data' }
 
     nock(/localhost/)
       .get(/concepts/)
@@ -217,7 +217,7 @@ describe('getFocusedGranule', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(actions.getFocusedGranule()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)

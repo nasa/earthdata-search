@@ -20,7 +20,7 @@ describe('getFocusedCollectionObject', () => {
     test('returns an empty object', () => {
       const collections = {
         byId: {
-          'TEST2': {
+          TEST2: {
             test: 'test'
           }
         }
@@ -34,7 +34,7 @@ describe('getFocusedCollectionObject', () => {
       const obj = { test: 'test' }
       const collections = {
         byId: {
-          'TEST': obj
+          TEST: obj
         }
       }
       expect(getFocusedCollectionObject('TEST', collections)).toEqual(obj)
@@ -59,7 +59,7 @@ describe('getFocusedCollectionMetadata', () => {
     test('returns an empty object', () => {
       const collections = {
         byId: {
-          'TEST2': {
+          TEST2: {
             test: 'test'
           }
         }
@@ -73,7 +73,7 @@ describe('getFocusedCollectionMetadata', () => {
       const metadata = { test: 'test' }
       const collections = {
         byId: {
-          'TEST': {
+          TEST: {
             metadata
           }
         }

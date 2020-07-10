@@ -62,4 +62,18 @@ describe('logout', () => {
     expect(result.body).toEqual(JSON.stringify({ errors: ['User token for user \'1\' not found.'] }))
     expect(result.statusCode).toBe(404)
   })
+
+  test('correctly returns an error', async () => {
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+
+    const result = await logout({}, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('del')
+
+    expect(result.statusCode).toEqual(500)
+  })
 })

@@ -1,18 +1,21 @@
 .sidebar-section {
-  width: 100%;
   min-height: 0;
+  margin: 0.5*$spacer;
+  background-color: $color__black--900;
 
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1rem 1rem 1.125rem;
-    color: $color__white;
+    padding: 0.75rem 0.75rem 0.75rem 1.125rem;
+    color: $color__black--300;
+    border-bottom: 1px solid $color__black--700;
   }
 
   &__title {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.875rem;
+    color: $color__black--400;
   }
 
   &__icon {

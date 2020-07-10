@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import { ProjectCollectionsList } from '../ProjectCollectionsList'
 import ProjectCollectionsItem from '../ProjectCollectionsItem'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -21,9 +22,15 @@ function setup() {
       }
     },
     location: {},
+    mapProjection: projections.geographic,
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
+    onTogglePanels: jest.fn(),
+    onViewCollectionDetails: jest.fn(),
+    onViewCollectionGranules: jest.fn(),
     onSetActivePanel: jest.fn(),
+    onSetActivePanelSection: jest.fn(),
+    onUpdateFocusedCollection: jest.fn(),
     project: {
       byId: {
         collectionId1: {
@@ -35,7 +42,7 @@ function setup() {
       },
       collectionIds: ['collectionId1', 'collectionId2']
     },
-    projectPanels: {
+    panels: {
       activePanel: '0.0.0',
       isOpen: true
     },

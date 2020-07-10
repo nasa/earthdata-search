@@ -5,16 +5,16 @@ export const formatRelatedUrl = (url) => {
   return `http://${url}`
 }
 
-// Sorts the list of related urls in the following order: Type, Subtype, URL
+// Sorts the list of related urls in the following order: Type, subtype, URL
 export const sortRelatedUrls = (a, b) => {
-  const type1 = a.Type
-  const type2 = b.Type
+  const type1 = a.type
+  const type2 = b.type
 
-  const subType1 = a.SubType
-  const subType2 = b.SubType
+  const subType1 = a.subtype
+  const subType2 = b.subtype
 
-  const url1 = a.URL
-  const url2 = b.URL
+  const url1 = a.url
+  const url2 = b.url
 
   if (type1 > type2) return 1
   if (type1 < type2) return -1
@@ -25,9 +25,8 @@ export const sortRelatedUrls = (a, b) => {
   return false
 }
 
-// Takes a umm_json object and returns the related urls formatted into a categorized array
-export const buildRelatedUrls = (ummJson) => {
-  const { RelatedUrls: relatedUrls = [] } = ummJson
+export const buildRelatedUrls = (json) => {
+  const { relatedUrls: relatedUrls = [] } = json
 
   // Build out an array of the categories in the correct order
   const collectionUrls = {
@@ -64,44 +63,46 @@ export const buildRelatedUrls = (ummJson) => {
     highlightedUrls
   ]
 
-  relatedUrls.forEach((related) => {
+  if (!relatedUrls) return allRelatedUrls
+
+  Array.from(relatedUrls).forEach((related) => {
     const relatedUrl = { ...related }
 
     // Exclude EDSC and Reverb URLs
     if (
-      relatedUrl.URL.search(/search\.(sit|uat)?(\.)?earthdata\.nasa\.gov/g) > -1
-      || relatedUrl.URL.search(/echo\.nasa\.gov/g) > -1
+      relatedUrl.url.search(/search\.(sit|uat)?(\.)?earthdata\.nasa\.gov/g) > -1
+      || relatedUrl.url.search(/echo\.nasa\.gov/g) > -1
     ) return
 
     // Add the http protocol if none exists
-    if (relatedUrl.URL) relatedUrl.URL = formatRelatedUrl(relatedUrl.URL)
+    if (relatedUrl.url) relatedUrl.url = formatRelatedUrl(relatedUrl.url)
 
     // Add the neccesary highlighed URLs
-    if (relatedUrl.URLContentType === 'CollectionURL' && relatedUrl.Type === 'DATA SET LANDING PAGE') {
-      highlightedUrls.urls.push({ ...relatedUrl, HighlightedType: 'Data Set Landing Page' })
+    if (relatedUrl.urlContentType === 'CollectionURL' && relatedUrl.type === 'DATA SET LANDING PAGE') {
+      highlightedUrls.urls.push({ ...relatedUrl, highlightedType: 'Data Set Landing Page' })
     }
 
-    if (relatedUrl.URLContentType === 'PublicationURL' && relatedUrl.Type === 'VIEW RELATED INFORMATION') {
-      if (relatedUrl.Subtype === 'DATA QUALITY') {
-        highlightedUrls.urls.push({ ...relatedUrl, HighlightedType: 'QA' })
+    if (relatedUrl.urlContentType === 'PublicationURL' && relatedUrl.type === 'VIEW RELATED INFORMATION') {
+      if (relatedUrl.subtype === 'DATA QUALITY') {
+        highlightedUrls.urls.push({ ...relatedUrl, highlightedType: 'QA' })
       }
 
-      if (relatedUrl.Subtype === 'ALGORITHM THEORETICAL BASIS DOCUMENT') {
-        highlightedUrls.urls.push({ ...relatedUrl, HighlightedType: 'ATBD' })
+      if (relatedUrl.subtype === 'ALGORITHM THEORETICAL BASIS DOCUMENT') {
+        highlightedUrls.urls.push({ ...relatedUrl, highlightedType: 'ATBD' })
       }
 
-      if (relatedUrl.Subtype === 'USER\'S GUIDE') {
-        highlightedUrls.urls.push({ ...relatedUrl, HighlightedType: 'User\'s Guide' })
+      if (relatedUrl.subtype === 'USER\'S GUIDE') {
+        highlightedUrls.urls.push({ ...relatedUrl, highlightedType: 'User\'s Guide' })
       }
     }
 
-    // Make sure Subtype is an empty string if it does not exist
-    if (!relatedUrl.Subtype) relatedUrl.Subtype = ''
+    // Make sure subtype is an empty string if it does not exist
+    if (!relatedUrl.subtype) relatedUrl.subtype = ''
 
-    if (relatedUrl.URLContentType === 'CollectionURL') collectionUrls.urls.push(relatedUrl)
-    if (relatedUrl.URLContentType === 'DistributionURL') distributionUrls.urls.push(relatedUrl)
-    if (relatedUrl.URLContentType === 'PublicationURL') publicationUrls.urls.push(relatedUrl)
-    if (relatedUrl.URLContentType === 'VisualizationURL') visualizationUrls.urls.push(relatedUrl)
+    if (relatedUrl.urlContentType === 'CollectionURL') collectionUrls.urls.push(relatedUrl)
+    if (relatedUrl.urlContentType === 'DistributionURL') distributionUrls.urls.push(relatedUrl)
+    if (relatedUrl.urlContentType === 'PublicationURL') publicationUrls.urls.push(relatedUrl)
+    if (relatedUrl.urlContentType === 'VisualizationURL') visualizationUrls.urls.push(relatedUrl)
   })
 
   // Sort all url lists

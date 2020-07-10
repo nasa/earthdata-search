@@ -36,13 +36,13 @@ const TemporalDisplayEntry = pure((props) => {
 
 TemporalDisplayEntry.defaultProps = {
   startDate: {},
-  endDate: {}
+  endDate: {},
+  isRecurring: false
 }
-
 TemporalDisplayEntry.propTypes = {
   startDate: PropTypes.shape({}),
   endDate: PropTypes.shape({}),
-  isRecurring: PropTypes.bool.isRequired
+  isRecurring: PropTypes.bool
 }
 
 export default TemporalDisplayEntry

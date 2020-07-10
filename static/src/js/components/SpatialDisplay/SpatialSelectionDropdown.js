@@ -38,6 +38,12 @@ export class SpatialSelectionDropdown extends PureComponent {
       })
     }
 
+    if (item === 'circle') {
+      eventEmitter.emit('map.drawStart', {
+        type: 'circle'
+      })
+    }
+
     if (item === 'file') {
       onToggleShapefileUploadModal(true)
     }
@@ -49,11 +55,11 @@ export class SpatialSelectionDropdown extends PureComponent {
 
   render() {
     return (
-      <Dropdown className="spatial-selection-dropdown">
+      <Dropdown className="spatial-selection-dropdown dropdown-dark">
         <Dropdown.Toggle
           variant="inline-block"
           id="spatial-selection-dropdown"
-          className="search-form__button"
+          className="search-form__button search-form__button--dark"
         >
           <i className="fa fa-crop" />
         </Dropdown.Toggle>
@@ -84,6 +90,15 @@ export class SpatialSelectionDropdown extends PureComponent {
             label="Select Point"
           >
             <span>Point</span>
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="spatial-selection-dropdown__button"
+            as={Button}
+            icon="circle"
+            onClick={() => this.onItemClick('circle')}
+            label="Select Circle"
+          >
+            <span>Circle</span>
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"

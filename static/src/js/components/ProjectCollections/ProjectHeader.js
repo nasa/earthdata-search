@@ -9,6 +9,7 @@ import { projectHeader } from './skeleton'
 import { convertSizeToMB, convertSize } from '../../util/project'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
+import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 
 import Skeleton from '../Skeleton/Skeleton'
 
@@ -126,19 +127,36 @@ export class ProjectHeader extends Component {
     const { isEditingName, projectName } = this.state
     const { collections, project } = this.props
     const { byId } = collections
-    const { collectionIds: projectIds } = project
+    const {
+      collectionIds: projectIds,
+      byId: projectById
+    } = project
 
     let totalGranules = 0
     let size = 0
+
+    const granuleLoadingStates = []
+
     projectIds.forEach((collectionId) => {
       const collection = byId[collectionId]
       if (!collection) return
+      const { granules } = collection
 
-      const { excludedGranuleIds = [], granules } = collection
-      const { hits, totalSize: granuleSize } = granules
+      const { isLoaded, singleGranuleSize } = granules
+      granuleLoadingStates.push(isLoaded)
 
-      totalGranules += (hits - excludedGranuleIds.length)
-      const convertedSize = convertSizeToMB(granuleSize)
+      const totalCollectionGranules = getGranuleCount(collection, projectById[collectionId])
+
+      // If added granules exist use that value, otherwise subtract any excluded granule from the total
+      totalGranules += totalCollectionGranules
+
+      const granuleSize = totalCollectionGranules * singleGranuleSize
+
+      const convertedSize = convertSizeToMB({
+        size: granuleSize,
+        unit: 'MB'
+      })
+
       size += convertedSize
     })
 
@@ -212,7 +230,7 @@ export class ProjectHeader extends Component {
           }
         </div>
         {
-          !Number.isNaN(totalGranules) ? (
+          granuleLoadingStates.every(isLoaded => isLoaded === true) ? (
             <ul className="project-header__stats-list">
               <>
                 <li

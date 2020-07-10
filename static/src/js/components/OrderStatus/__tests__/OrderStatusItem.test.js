@@ -218,34 +218,6 @@ describe('OrderStatus component', () => {
     })
   })
 
-  describe('when unmounting', () => {
-    test('should clear the timeout if an interval exists', () => {
-      const { enzymeWrapper } = setup({
-        type: 'echo_orders',
-        collection: {
-          id: 'TEST_COLLECTION_111',
-          collection_metadata: {
-            id: 'TEST_COLLECTION_111',
-            dataset_id: 'Test Dataset ID'
-          },
-          access_method: {
-            type: 'ECHO ORDERS'
-          },
-          orders: [{
-            state: 'processing',
-            order_information: {
-              requestStatus: {
-                status: 'processing'
-              }
-            }
-          }],
-          isLoaded: true
-        }
-      })
-
-    })
-  })
-
   describe('Downloadable Orders', () => {
     test('renders correct status classname', () => {
       const { enzymeWrapper } = setup()

@@ -21,7 +21,7 @@ afterEach(() => {
 })
 
 describe('generateGibsTags', () => {
-  test('correctly stuff', async () => {
+  test('correctly generates and queues tag data', async () => {
     process.env.tagQueueUrl = 'http://example.com/tagQueue'
 
     jest.spyOn(getSupportedGibsLayers, 'getSupportedGibsLayers').mockImplementation(() => ({

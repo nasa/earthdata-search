@@ -1,8 +1,4 @@
 import {
-  MASTER_OVERLAY_PANEL_DRAG_END,
-  MASTER_OVERLAY_PANEL_DRAG_START,
-  MASTER_OVERLAY_PANEL_TOGGLE,
-  MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
@@ -12,35 +8,10 @@ import {
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+  TOGGLE_SPATIAL_POLYGON_WARNING,
   TOGGLE_TOO_MANY_POINTS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../constants/actionTypes'
-
-export const masterOverlayPanelDragStart = data => (dispatch) => {
-  dispatch({
-    type: MASTER_OVERLAY_PANEL_DRAG_START,
-    payload: data
-  })
-}
-
-export const masterOverlayPanelDragEnd = () => (dispatch) => {
-  dispatch({
-    type: MASTER_OVERLAY_PANEL_DRAG_END
-  })
-}
-
-export const masterOverlayPanelResize = newHeight => (dispatch) => {
-  dispatch({
-    type: MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
-    payload: newHeight
-  })
-}
-
-export const masterOverlayPanelToggle = () => (dispatch) => {
-  dispatch({
-    type: MASTER_OVERLAY_PANEL_TOGGLE
-  })
-}
 
 export const toggleFacetsModal = state => ({
   type: TOGGLE_VIEW_ALL_FACETS_MODAL,
@@ -94,5 +65,10 @@ export const toggleChunkedOrderModal = state => ({
 
 export const toggleAboutCwicModal = state => ({
   type: TOGGLE_ABOUT_CWIC_MODAL,
+  payload: state
+})
+
+export const toggleSpatialPolygonWarning = state => ({
+  type: TOGGLE_SPATIAL_POLYGON_WARNING,
   payload: state
 })

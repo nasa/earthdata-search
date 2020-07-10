@@ -23,4 +23,23 @@ describe('errorLogger', () => {
     expect(response.statusCode).toBe(200)
     expect(consoleMock).toBeCalledTimes(1)
   })
+
+  test('logs the event body', async () => {
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    const event = {
+      body: JSON.stringify({
+        params: {
+          error: {
+            mock: 'error'
+          }
+        }
+      })
+    }
+
+    const response = await errorLogger(event)
+
+    expect(response.statusCode).toBe(200)
+    expect(consoleMock).toBeCalledTimes(1)
+  })
 })

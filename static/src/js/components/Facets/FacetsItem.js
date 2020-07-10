@@ -7,7 +7,6 @@ import { generateFacetArgs } from '../../util/facets'
 
 import './FacetsItem.scss'
 
-
 class FacetsItem extends Component {
   constructor(props) {
     super(props)
@@ -22,18 +21,30 @@ class FacetsItem extends Component {
   }
 
   onFacetChange(changeHandlerArgs, e) {
-    const { changeHandler } = this.props
+    const {
+      autocompleteType,
+      changeHandler,
+      facet,
+      level
+    } = this.props
+
+    const { title: facetValue } = facet
     const { applied } = this.state
 
     this.setState({
       applied: !applied
     })
 
-    changeHandler(e, changeHandlerArgs)
+    changeHandler(e, changeHandlerArgs, {
+      level,
+      type: autocompleteType,
+      value: facetValue
+    }, !applied)
   }
 
   render() {
     const {
+      autocompleteType,
       changeHandler,
       facet,
       facetCategory,
@@ -53,6 +64,7 @@ class FacetsItem extends Component {
         const nextLevel = level + 1
         return (
           <FacetsItem
+            autocompleteType={autocompleteType}
             key={nextUid}
             uid={nextUid}
             facet={child}
@@ -93,10 +105,12 @@ class FacetsItem extends Component {
 }
 
 FacetsItem.defaultProps = {
+  autocompleteType: null,
   uid: ''
 }
 
 FacetsItem.propTypes = {
+  autocompleteType: PropTypes.string,
   changeHandler: PropTypes.func.isRequired,
   facet: PropTypes.shape({}).isRequired,
   facetCategory: PropTypes.string.isRequired,

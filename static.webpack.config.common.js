@@ -4,7 +4,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const config = require('./sharedUtils/config')
 
@@ -18,7 +17,8 @@ const StaticCommonConfig = {
     client: [
       'core-js/stable',
       'regenerator-runtime/runtime',
-      './static/src/index.js'
+      'react-hot-loader/patch',
+      path.resolve(__dirname, './static/src/index.js')
     ]
   },
   output: {
@@ -29,6 +29,7 @@ const StaticCommonConfig = {
   },
   resolve: {
     alias: {
+      'react-dom': '@hot-loader/react-dom',
       Fonts: path.join(__dirname, 'static/src/assets/fonts'),
       Images: path.join(__dirname, 'static/src/assets/images')
     }

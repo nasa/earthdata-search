@@ -48,6 +48,10 @@ npm is a separate project from Node.js, and tends to update more frequently. As 
 
     npm install -g npm@latest
 
+##### NVM
+To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly.
+
+
 ##### Serverless Framework
 Earthdata Search utilizes the [Serverless Framework](https://serverless.com/) for managing AWS resources. In order to fully run and manage the application you'll need to install it:
 
@@ -184,5 +188,3 @@ For production use, this application uses Scatter Swap to obfuscate some IDs -- 
 To deploy the full application use the following:
 
 	NODE_ENV=production serverless deploy --stage UNIQUE_STAGE
-
-We specify `NODE_ENV` here because we are using `dotenv` which breaks our environment variables out into logical files that contain environment specific values. `UNIQUE_STAGE` defaults to `dev` but customizing it here allows you to deploy multiple stacks within the same account.

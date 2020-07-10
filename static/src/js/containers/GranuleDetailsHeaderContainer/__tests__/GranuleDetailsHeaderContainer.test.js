@@ -12,17 +12,17 @@ function setup() {
       allIds: ['focusedGranule'],
       byId: {
         focusedGranule: {
-          json: {
+          ummJson: {
             Granule: {}
           },
           metadataUrls: {
             atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'
-          },
-          xml: '<Granule><Granule>'
+          }
         }
       }
     },
-    focusedGranule: 'focusedGranule'
+    focusedGranule: 'focusedGranule',
+    location: { data: 'data' }
   }
 
   const enzymeWrapper = shallow(<GranuleDetailsHeaderContainer {...props} />)
@@ -38,8 +38,9 @@ describe('GranuleDetailsHeaderContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleDetailsHeader).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleDetailsHeader).props().json).toEqual({
+    expect(enzymeWrapper.find(GranuleDetailsHeader).props().ummJson).toEqual({
       Granule: {}
     })
+    expect(enzymeWrapper.find(GranuleDetailsHeader).props().location).toEqual({ data: 'data' })
   })
 })

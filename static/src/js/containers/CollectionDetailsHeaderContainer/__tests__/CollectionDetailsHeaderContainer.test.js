@@ -1,8 +1,10 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { CollectionDetailsHeaderContainer } from '../CollectionDetailsHeaderContainer'
 import CollectionDetailsHeader from '../../../components/CollectionDetails/CollectionDetailsHeader'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -20,7 +22,9 @@ function setup() {
       }
     },
     focusedCollection: 'focusedCollection',
-    collectionSearch: {}
+    location: { search: '' },
+    collectionSearch: {},
+    mapProjection: projections.geographic
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsHeaderContainer {...props} />)
@@ -38,7 +42,9 @@ describe('CollectionDetailsHeaderContainer component', () => {
     expect(enzymeWrapper.find(CollectionDetailsHeader).length).toBe(1)
     expect(enzymeWrapper.find(CollectionDetailsHeader).props('focusedCollectionMetadata')).toEqual({
       collectionSearch: {},
-      focusedCollectionMetadata: { some: 'metadata' }
+      focusedCollectionMetadata: { some: 'metadata' },
+      location: { search: '' },
+      mapProjection: projections.geographic
     })
   })
 })

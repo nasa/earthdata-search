@@ -39,7 +39,6 @@ describe('updateAuthTokenFromHeaders', () => {
     // call the dispatch
     store.dispatch(updateAuthTokenFromHeaders(payload))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_AUTH,
@@ -47,7 +46,7 @@ describe('updateAuthTokenFromHeaders', () => {
     })
   })
 
-  test('should remove the authToken if a header token is not available', () => {
+  test('should not remove the authToken if a header token is not available', () => {
     // mockStore with initialState
     const store = mockStore({
       authToken: 'authToken-token'
@@ -56,12 +55,9 @@ describe('updateAuthTokenFromHeaders', () => {
     // call the dispatch
     store.dispatch(updateAuthTokenFromHeaders({}))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_AUTH,
-      payload: ''
-    })
+
+    expect(storeActions.length).toBe(0)
   })
 })
 

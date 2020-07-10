@@ -3,6 +3,8 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve all the retrievals for the authenticated user
@@ -13,6 +15,8 @@ export default async function getRetrievals(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
     const jwtToken = getJwtToken(event)
@@ -62,17 +66,14 @@ export default async function getRetrievals(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify(Object.values(sortBy(retrievalsResponse, 'created_at')).reverse())
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [e] })
+      headers: defaultResponseHeaders,
+      ...parseError(e)
     }
   }
 }

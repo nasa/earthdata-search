@@ -10,8 +10,6 @@ import App from './js/App'
 
 // Only bootstrap the app if the browser is compatible
 if (isBrowserCompatible()) {
-  if (process.env.NODE_ENV === 'development' && module.hot) module.hot.accept()
-
   const rootElement = document.getElementById('root')
   const appElement = document.getElementById('app')
 

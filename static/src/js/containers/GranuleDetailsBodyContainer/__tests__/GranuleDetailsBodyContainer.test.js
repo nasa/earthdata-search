@@ -24,13 +24,12 @@ describe('GranuleResultsBodyContainer component', () => {
           allIds: ['focusedGranule'],
           byId: {
             focusedGranule: {
-              json: {
+              ummJson: {
                 Granule: {}
               },
               metadataUrls: {
                 atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'
-              },
-              xml: '<Granule><Granule>'
+              }
             }
           }
         },
@@ -39,9 +38,8 @@ describe('GranuleResultsBodyContainer component', () => {
 
       expect(enzymeWrapper.find(GranuleDetailsBody).length).toBe(1)
       expect(enzymeWrapper.find(GranuleDetailsBody).props().authToken).toEqual('')
-      expect(enzymeWrapper.find(GranuleDetailsBody).props().json).toEqual({ Granule: {} })
+      expect(enzymeWrapper.find(GranuleDetailsBody).props().ummJson).toEqual({ Granule: {} })
       expect(enzymeWrapper.find(GranuleDetailsBody).props().metadataUrls).toEqual({ atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom' })
-      expect(enzymeWrapper.find(GranuleDetailsBody).props().xml).toEqual('<Granule><Granule>')
     })
   })
 })

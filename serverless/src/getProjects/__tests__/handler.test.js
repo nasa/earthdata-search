@@ -58,7 +58,7 @@ describe('getProjects', () => {
       }
     })
 
-    const result = await getProjects({})
+    const result = await getProjects({}, {})
 
     const expectedBody = JSON.stringify([
       {
@@ -79,5 +79,15 @@ describe('getProjects', () => {
     expect(queries[0].method).toEqual('select')
 
     expect(result.body).toEqual(expectedBody)
+  })
+
+  test('responds correctly on error', async () => {
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+
+    const response = await getProjects({}, {})
+
+    expect(response.statusCode).toEqual(500)
   })
 })

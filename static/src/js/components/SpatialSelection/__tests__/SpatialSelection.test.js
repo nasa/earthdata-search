@@ -23,10 +23,13 @@ const defaultProps = {
     regionSearch: {}
   },
   boundingBoxSearch: '',
+  circleSearch: '',
+  isCwic: false,
   isProjectPage: false,
   lineSearch: '',
   mapRef: {
-    leafletElement: {}
+    leafletElement: {},
+    props: {}
   },
   pointSearch: '',
   polygonSearch: '',
@@ -60,7 +63,10 @@ describe('SpatialSelection component', () => {
       },
       polyline: false,
       circlemarker: false,
-      circle: false
+      circle: {
+        drawError: errorOptions,
+        shapeOptions: colorOptions
+      }
     })
   })
 
@@ -77,7 +83,7 @@ describe('SpatialSelection component', () => {
   })
 
   describe('componentWillReceiveProps', () => {
-    test('removes the drawnLayer and calls renderShape', () => {
+    test('removes the drawnLayers and drawnMbr and calls renderShape', () => {
       const mockRemoveLayer = jest.fn()
       const { enzymeWrapper } = setup(defaultProps)
 
@@ -95,7 +101,7 @@ describe('SpatialSelection component', () => {
       })
       enzymeWrapper.setProps({ pointSearch: '0,0' })
 
-      expect(mockRemoveLayer).toHaveBeenCalledTimes(1)
+      expect(mockRemoveLayer).toHaveBeenCalledTimes(2)
       expect(enzymeWrapper.instance().renderShape.mock.calls.length).toBe(1)
     })
 
@@ -150,7 +156,7 @@ describe('SpatialSelection component', () => {
       expect(props.onMetricsMap.mock.calls[0]).toEqual(['Spatial: Marker'])
     })
 
-    test('removes drawnLayers if they exist', () => {
+    test('removes drawnLayers and drawnMbr if they exist', () => {
       const { enzymeWrapper } = setup(defaultProps)
 
       enzymeWrapper.instance().featureGroupRef = {
@@ -165,7 +171,7 @@ describe('SpatialSelection component', () => {
       editControl.prop('onDrawStart')({ layerType: 'marker' })
 
       expect(enzymeWrapper.instance().featureGroupRef.leafletElement.removeLayer.mock.calls.length)
-        .toBe(1)
+        .toBe(2)
     })
   })
 
@@ -240,11 +246,11 @@ describe('SpatialSelection component', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
       const editControl = enzymeWrapper.find(EditControl)
-      const latLngResponse = [
+      const latLngResponse = [[
         { lng: 10, lat: 0 },
         { lng: 20, lat: 10 },
         { lng: 5, lat: 15 }
-      ]
+      ]]
       editControl.prop('onCreated')({
         layerType: 'polygon',
         layer: {
@@ -253,12 +259,12 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15,10,0')
+      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            polygon: '10,0,20,10,5,15,10,0'
+            polygon: '10,0,20,10,5,15'
           }
         }
       }])
@@ -268,11 +274,11 @@ describe('SpatialSelection component', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
       const editControl = enzymeWrapper.find(EditControl)
-      const latLngResponse = [
+      const latLngResponse = [[
         { lng: 5, lat: 15 },
         { lng: 20, lat: 10 },
         { lng: 10, lat: 0 }
-      ]
+      ]]
       editControl.prop('onCreated')({
         layerType: 'polygon',
         layer: {
@@ -281,12 +287,12 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15,10,0')
+      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            polygon: '10,0,20,10,5,15,10,0'
+            polygon: '10,0,20,10,5,15'
           }
         }
       }])
@@ -319,12 +325,38 @@ describe('SpatialSelection component', () => {
       }])
     })
 
+    test('with circle spatial sets the state and calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+
+      const editControl = enzymeWrapper.find(EditControl)
+      const latLngResponse = { lng: 0, lat: 0 }
+      const radiusResponse = 20000
+      editControl.prop('onCreated')({
+        layerType: 'circle',
+        layer: {
+          getLatLng: jest.fn(() => latLngResponse),
+          getRadius: jest.fn(() => radiusResponse),
+          remove: jest.fn()
+        }
+      })
+
+      expect(enzymeWrapper.state().drawnPoints).toEqual('0,0,20000')
+      expect(props.onChangeQuery.mock.calls.length).toBe(1)
+      expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+        collection: {
+          spatial: {
+            circle: '0,0,20000'
+          }
+        }
+      }])
+    })
+
     test('with invalid shape does not setState or call onChangeQuery', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onCreated')({
-        layerType: 'circle',
+        layerType: 'circleMarker',
         layer: {
           remove: jest.fn()
         }
@@ -398,6 +430,23 @@ describe('SpatialSelection component', () => {
         '10,0'
       ])
       expect(enzymeWrapper.instance().renderLine.mock.calls[0][1])
+        .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
+    })
+
+    test('with circle spatial it calls renderCircle', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+      enzymeWrapper.instance().renderCircle = jest.fn()
+      enzymeWrapper.instance().featureGroupRef = { leafletElement: jest.fn() }
+
+      enzymeWrapper.instance().renderShape({ ...props, circleSearch: '0,0,20000' })
+
+      expect(enzymeWrapper.instance().renderCircle.mock.calls.length).toBe(1)
+      expect(enzymeWrapper.instance().renderCircle.mock.calls[0][0]).toEqual([
+        '0',
+        '0',
+        '20000'
+      ])
+      expect(enzymeWrapper.instance().renderCircle.mock.calls[0][1])
         .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
     })
   })

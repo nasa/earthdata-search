@@ -1,0 +1,25 @@
+.temporal-selection-dropdown-menu {
+  width: 27.25rem;
+  margin-top: -0.5rem;
+  padding: $spacer;
+  border: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: $shadow__panel-dark;
+
+  @include media-breakpoint-up(xl) {
+    width: 29.25rem;
+  }
+
+  &__button {
+    margin-right: 0.5rem;
+
+    &--cancel {
+      color: $color__black--400;
+
+      &:hover {
+        color: $color__black--600;
+      }
+    }
+  }
+}

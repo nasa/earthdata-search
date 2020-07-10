@@ -22,32 +22,10 @@ export const getUmmGranuleVersionHeader = () => {
 /**
  * Returns the full Accept header as a string
  */
-export const getUmmCollectionVersionHeader = () => {
-  const {
-    ummCollectionVersion
-  } = getApplicationConfig()
-
-  return getUmmVersionHeaderPrefix(ummCollectionVersion)
-}
-
-/**
- * Returns the full Accept header as a string
- */
 export const getUmmServiceVersionHeader = () => {
   const {
     ummServiceVersion
   } = getApplicationConfig()
 
   return getUmmVersionHeaderPrefix(ummServiceVersion)
-}
-
-/**
- * Returns the full Accept header as a string
- */
-export const getUmmVariableVersionHeader = () => {
-  const {
-    ummVariableVersion
-  } = getApplicationConfig()
-
-  return getUmmVersionHeaderPrefix(ummVariableVersion)
 }

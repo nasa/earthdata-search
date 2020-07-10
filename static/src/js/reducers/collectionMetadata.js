@@ -1,19 +1,36 @@
 import {
-  COPY_GRANULE_RESULTS_TO_COLLECTION,
   CLEAR_COLLECTION_GRANULES,
   EXCLUDE_GRANULE_ID,
   UNDO_EXCLUDE_GRANULE_ID,
   CLEAR_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
-  UPDATE_PROJECT_GRANULES,
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_COLLECTION_GRANULE_FILTERS,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  STARTED_GRANULES_TIMER,
+  LOADING_GRANULES,
+  LOADED_GRANULES,
+  RESET_GRANULE_RESULTS,
+  FINISHED_GRANULES_TIMER,
+  UPDATE_GRANULE_RESULTS,
+  ADD_MORE_GRANULE_RESULTS,
+  UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS
 } from '../constants/actionTypes'
 
 const initialState = {
   allIds: [],
   byId: {}
+}
+
+const initialGranuleState = {
+  allIds: [],
+  byId: {},
+  hits: null,
+  isCwic: null,
+  isLoaded: false,
+  isLoading: false,
+  loadTime: 0,
+  timerStart: null
 }
 
 const processResults = (results) => {
@@ -37,17 +54,14 @@ const collectionMetadataReducer = (state = initialState, action) => {
         const collection = state.byId[id]
         const {
           excludedGranuleIds,
-          metadata,
-          ummMetadata,
-          formattedMetadata
+          metadata
         } = collection
+
         byId[id] = {
           ...collection,
           excludedGranuleIds,
           granules: {},
-          metadata,
-          ummMetadata,
-          formattedMetadata
+          metadata
         }
       })
 
@@ -56,42 +70,48 @@ const collectionMetadataReducer = (state = initialState, action) => {
         byId
       }
     }
-
     case UPDATE_COLLECTION_METADATA: {
       const allIds = []
       const byId = {
         ...state.byId
       }
+
       action.payload.forEach((collection, index) => {
         const [collectionId] = Object.keys(collection)
         const {
           metadata,
-          ummMetadata,
-          formattedMetadata,
           isCwic
         } = action.payload[index][collectionId]
 
-        if (state.allIds.indexOf(collectionId) === -1) allIds.push(collectionId)
+        // If the collection isn't already in allIds add it
+        if (state.allIds.indexOf(collectionId) === -1) {
+          allIds.push(collectionId)
+        }
 
+        let currentCollectionGranuleParams = {}
         let excludedGranuleIds = []
-        let isVisible = true
         let granuleFilters = { sortKey: '-start_date' }
+        let granules = {}
+        let isVisible = true
+
         if (state.byId[collectionId]) {
           ({
+            currentCollectionGranuleParams,
             excludedGranuleIds,
-            isVisible,
-            granuleFilters
+            granuleFilters,
+            granules,
+            isVisible
           } = state.byId[collectionId])
         }
+
         byId[collectionId] = {
+          currentCollectionGranuleParams,
           excludedGranuleIds,
-          granules: {},
           granuleFilters,
+          granules,
           isCwic,
           isVisible,
-          metadata,
-          ummMetadata,
-          formattedMetadata
+          metadata
         }
       })
 
@@ -165,36 +185,6 @@ const collectionMetadataReducer = (state = initialState, action) => {
         byId
       }
     }
-
-    case COPY_GRANULE_RESULTS_TO_COLLECTION: {
-      const { collectionId, granules } = action.payload
-      const {
-        allIds,
-        byId,
-        hits,
-        isCwic,
-        totalSize,
-        loadTime
-      } = granules
-
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [collectionId]: {
-            ...state.byId[collectionId],
-            granules: {
-              allIds,
-              byId,
-              hits,
-              isCwic,
-              totalSize,
-              loadTime
-            }
-          }
-        }
-      }
-    }
     case TOGGLE_COLLECTION_VISIBILITY: {
       return {
         ...state,
@@ -221,14 +211,8 @@ const collectionMetadataReducer = (state = initialState, action) => {
         }
       }
     }
-    case UPDATE_PROJECT_GRANULES: {
-      const {
-        collectionId,
-        hits,
-        isCwic,
-        totalSize
-      } = action.payload
-      const { byId, allIds } = processResults(action.payload.results)
+    case LOADING_GRANULES: {
+      const collectionId = action.payload
 
       return {
         ...state,
@@ -237,12 +221,166 @@ const collectionMetadataReducer = (state = initialState, action) => {
           [collectionId]: {
             ...state.byId[collectionId],
             granules: {
+              ...state.byId[collectionId].granules,
+              isLoading: true,
+              isLoaded: false
+            }
+          }
+        }
+      }
+    }
+    case LOADED_GRANULES: {
+      const { collectionId, loaded } = action.payload
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            granules: {
+              ...state.byId[collectionId].granules,
+              isLoading: false,
+              isLoaded: loaded
+            }
+          }
+        }
+      }
+    }
+    case STARTED_GRANULES_TIMER: {
+      const collectionId = action.payload
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            granules: {
+              ...initialGranuleState,
+              ...state.byId[collectionId].granules,
+              timerStart: Date.now()
+            }
+          }
+        }
+      }
+    }
+    case FINISHED_GRANULES_TIMER: {
+      const collectionId = action.payload
+
+      const { byId } = state
+      const { granules } = byId[collectionId]
+      const { timerStart } = granules
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            granules: {
+              ...initialGranuleState,
+              ...state.byId[collectionId].granules,
+              timerStart: null,
+              loadTime: Date.now() - timerStart
+            }
+          }
+        }
+      }
+    }
+    case RESET_GRANULE_RESULTS: {
+      const collectionId = action.payload
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            granules: {
+              ...initialGranuleState
+            }
+          }
+        }
+      }
+    }
+    case UPDATE_GRANULE_RESULTS: {
+      const {
+        collectionId,
+        hits,
+        isCwic,
+        results,
+        totalSize,
+        singleGranuleSize
+      } = action.payload
+      const { byId, allIds } = processResults(results)
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            granules: {
+              ...state.byId[collectionId].granules,
               allIds,
               byId,
               hits,
               isCwic,
-              totalSize
+              totalSize,
+              singleGranuleSize
             }
+          }
+        }
+      }
+    }
+    case ADD_MORE_GRANULE_RESULTS: {
+      const {
+        collectionId,
+        results
+      } = action.payload
+      const { byId, allIds } = processResults(results)
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            granules: {
+              ...state.byId[collectionId].granules,
+              allIds: [
+                ...state.byId[collectionId].granules.allIds,
+                ...allIds
+              ],
+              byId: {
+                ...state.byId[collectionId].granules.byId,
+                ...byId
+              }
+            }
+          }
+        }
+      }
+    }
+    case UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS: {
+      const {
+        collectionId,
+        granuleParams
+      } = action.payload
+
+      let byId = {}
+
+      if (state.byId[collectionId]) {
+        (byId = state.byId[collectionId])
+      }
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...byId,
+            currentCollectionGranuleParams: granuleParams
           }
         }
       }

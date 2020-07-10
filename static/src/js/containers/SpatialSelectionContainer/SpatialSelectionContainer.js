@@ -8,6 +8,8 @@ import actions from '../../actions'
 import { metricsMap, metricsSpatialEdit } from '../../middleware/metrics/actions'
 
 import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
+import { getFocusedCollectionObject } from '../../util/focusedCollection'
+import { isPath } from '../../util/isPath'
 
 const mapDispathToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
@@ -19,8 +21,11 @@ const mapDispathToProps = dispatch => ({
 const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  circleSearch: state.query.collection.spatial.circle,
+  collections: state.metadata.collections,
+  focusedCollection: state.focusedCollection,
   lineSearch: state.query.collection.spatial.line,
-  pathname: state.router.location.pathname,
+  router: state.router,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon
 })
@@ -29,23 +34,38 @@ export const SpatialSelectionContainer = (props) => {
   const {
     advancedSearch,
     boundingBoxSearch,
+    circleSearch,
+    collections,
+    focusedCollection,
     lineSearch,
     mapRef,
     onChangeQuery,
-    pathname,
     pointSearch,
     polygonSearch,
+    router,
     onToggleDrawingNewLayer,
     onMetricsMap,
     onMetricsSpatialEdit
   } = props
 
-  const isProjectPage = pathname.startsWith('/project')
+  const { location } = router
+  const { pathname } = location
+  const isProjectPage = isPath(pathname, '/projects')
+
+  const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
+  const { isCwic = false } = focusedCollectionObject
+
+  const { leafletElement } = mapRef
+
+  // If the map isn't loaded yet, don't render the spatial selection component
+  if (!leafletElement) return null
 
   return (
     <SpatialSelection
       advancedSearch={advancedSearch}
       boundingBoxSearch={boundingBoxSearch}
+      circleSearch={circleSearch}
+      isCwic={isCwic}
       isProjectPage={isProjectPage}
       lineSearch={lineSearch}
       mapRef={mapRef}
@@ -61,6 +81,7 @@ export const SpatialSelectionContainer = (props) => {
 
 SpatialSelectionContainer.defaultProps = {
   boundingBoxSearch: '',
+  circleSearch: '',
   lineSearch: '',
   mapRef: {},
   pointSearch: '',
@@ -69,13 +90,16 @@ SpatialSelectionContainer.defaultProps = {
 
 SpatialSelectionContainer.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
+  collections: PropTypes.shape({}).isRequired,
+  focusedCollection: PropTypes.string.isRequired,
   boundingBoxSearch: PropTypes.string,
+  circleSearch: PropTypes.string,
   lineSearch: PropTypes.string,
   mapRef: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired,
-  pathname: PropTypes.string.isRequired,
   pointSearch: PropTypes.string,
   polygonSearch: PropTypes.string,
+  router: PropTypes.shape({}).isRequired,
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onMetricsSpatialEdit: PropTypes.func.isRequired

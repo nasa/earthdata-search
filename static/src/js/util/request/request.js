@@ -1,12 +1,9 @@
 import axios, { CancelToken } from 'axios'
-import pick from 'lodash/pick'
-import snakeCaseKeys from 'snakecase-keys'
 import uuidv4 from 'uuid/v4'
 
 import configureStore from '../../store/configureStore'
 import { metricsTiming } from '../../middleware/metrics/actions'
-import { prepKeysForCmr } from '../url/url'
-import { getEnvironmentConfig, getClientId } from '../../../../../sharedUtils/config'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 const store = configureStore()
@@ -21,11 +18,25 @@ export default class Request {
     }
 
     this.authenticated = false
+    this.optionallyAuthenticated = false
     this.baseUrl = baseUrl
     this.lambda = false
     this.searchPath = ''
     this.startTime = null
     this.cancelToken = CancelToken.source()
+
+    this.generateRequestId()
+  }
+
+  /**
+   * Getter for the authToken. Returns an empty string if the request is optionallyAuthenticated
+   */
+  getAuthToken() {
+    if (this.optionallyAuthenticated && !this.authToken) {
+      return ''
+    }
+
+    return this.authToken
   }
 
   /**
@@ -37,68 +48,46 @@ export default class Request {
   }
 
   /**
-   * Defines the default keys that our API endpoints allow.
-   * @return {Array} An empty array
+   * Filter out any unwanted or non-permitted data
+   * @param {Objet} data - An object representing an HTTP request payload
    */
-  permittedCmrKeys() {
-    return []
+  filterData(data) {
+    return data
   }
 
   /**
-   * Defines the default array keys that should exclude their index when stringified.
-   * @return {Array} An empty array
+   * Transforms data before sending it as a payload to an HTTP endpoint
+   * @param {Object} data - An object representing an HTTP request payload
    */
-  nonIndexedKeys() {
-    return []
+  transformData(data) {
+    return data
   }
 
   /**
    * Modifies the payload just before the request is sent.
-   * @param {Object} data - An object containing any keys.
+   * @param {Object} data - An object representing an HTTP request payload.
    * @return {Object} A modified object.
    */
   transformRequest(data, headers) {
-    if (this.authenticated) {
+    // Filter out an unwanted data
+    const filteredData = this.filterData(data)
+
+    if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
-      headers.Authorization = `Bearer: ${this.authToken}`
+      headers.Authorization = `Bearer: ${this.getAuthToken()}`
     }
 
     if (data) {
-      // Converts javascript compliant keys to snake cased keys for use
-      // in URLs and request payloads
-      const snakeKeyData = snakeCaseKeys(data, {
-        exclude: [
-          /edsc\.extra\.serverless/,
-          'rawModel',
-          'isValid'
-        ]
-      })
-
-      const { ext } = data
-
-      // Prevent keys that our external services don't support from being sent
-      const filteredData = pick(snakeKeyData, this.permittedCmrKeys(ext))
-
       // POST requests to Lambda use a JSON string
       if (this.authenticated || this.lambda) {
         return JSON.stringify({
-          requestId: this.requestId,
-          invocationTime: this.startTime,
           params: filteredData,
-          ext
+          requestId: this.requestId
         })
       }
 
-      // Lambda will set this for us, if we're not using lambda
-      // we'll set it to ensure its provided to CMR
-      // eslint-disable-next-line no-param-reassign
-      headers['CMR-Request-Id'] = this.requestId
-
-      // Add the Client-Id header for requests directly to CMR
-      // eslint-disable-next-line no-param-reassign
-      headers['Client-Id'] = getClientId().client
-
-      return prepKeysForCmr(filteredData, this.nonIndexedKeys())
+      // Transform the provided data before we send it to it's endpoint
+      return this.transformData(filteredData)
     }
 
     return null
@@ -130,7 +119,6 @@ export default class Request {
   post(url, data) {
     this.startTimer()
     this.setFullUrl(url)
-    this.generateRequestId()
 
     return axios({
       method: 'post',
@@ -138,7 +126,8 @@ export default class Request {
       url,
       data,
       transformRequest: [
-        (data, headers) => this.transformRequest(data, headers)
+        (data, headers) => this.transformRequest(data, headers),
+        ...axios.defaults.transformRequest
       ],
       transformResponse: axios.defaults.transformResponse.concat(
         (data, headers) => this.transformResponse(data, headers)
@@ -156,7 +145,6 @@ export default class Request {
   get(url, params) {
     this.startTimer()
     this.setFullUrl(url)
-    this.generateRequestId()
 
     let requestOptions = {
       method: 'get',
@@ -175,7 +163,7 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer: ${this.authToken}`
+          Authorization: `Bearer: ${this.getAuthToken()}`
         }
       }
     }
@@ -190,7 +178,6 @@ export default class Request {
   delete(url) {
     this.startTimer()
     this.setFullUrl(url)
-    this.generateRequestId()
 
     let requestOptions = {
       method: 'delete',
@@ -207,7 +194,7 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer: ${this.authToken}`
+          Authorization: `Bearer: ${this.getAuthToken()}`
         }
       }
     }

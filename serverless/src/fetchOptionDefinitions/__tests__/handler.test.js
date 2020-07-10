@@ -3,7 +3,7 @@ import nock from 'nock'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 import * as getSingleGranule from '../../util/cmr/getSingleGranule'
-import generateSubsettingTags from '../handler'
+import fetchOptionDefinitions from '../handler'
 
 const OLD_ENV = process.env
 
@@ -21,14 +21,29 @@ afterEach(() => {
   process.env = OLD_ENV
 })
 
-describe('generateSubsettingTags', () => {
+describe('fetchOptionDefinitions', () => {
+  test('takes no action when no records are provided', async () => {
+    const sqsOptionDefinitions = jest.fn().mockReturnValue({
+      promise: jest.fn().mockResolvedValue()
+    })
+
+    AWS.SQS = jest.fn()
+      .mockImplementationOnce(() => ({
+        sendMessage: sqsOptionDefinitions
+      }))
+
+    await fetchOptionDefinitions({}, {})
+
+    expect(sqsOptionDefinitions).toBeCalledTimes(0)
+  })
+
   test('submits the correct data to sqs when option definitions exist', async () => {
     // Set the necessary ENV variables to ensure all values are tested
     process.env.tagQueueUrl = 'http://example.com/tagQueue'
 
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ echoRestRoot: 'http://echorest.example.com' }))
-    jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementation(() => ({ id: 'G10000001-EDSC' }))
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementationOnce(() => 'mocked-system-token')
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({ echoRestRoot: 'http://echorest.example.com' }))
+    jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
 
     nock(/echorest/)
       .post(/order_information/)
@@ -73,8 +88,8 @@ describe('generateSubsettingTags', () => {
         }
       ]
     }
-    const context = {}
-    await generateSubsettingTags(event, context)
+
+    await fetchOptionDefinitions(event, {})
 
     expect(sqsOptionDefinitions).toBeCalledTimes(1)
 
@@ -100,13 +115,117 @@ describe('generateSubsettingTags', () => {
     }])
   })
 
+  test('does not submit data to sqs when no order information exist', async () => {
+    // Set the necessary ENV variables to ensure all values are tested
+    process.env.tagQueueUrl = 'http://example.com/tagQueue'
+
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementationOnce(() => 'mocked-system-token')
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({ echoRestRoot: 'http://echorest.example.com' }))
+    jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
+
+    nock(/echorest/)
+      .post(/order_information/)
+      .reply(200, [{
+        order_information: {}
+      }])
+
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+
+    const sqsOptionDefinitions = jest.fn().mockReturnValue({
+      promise: jest.fn().mockResolvedValue()
+    })
+
+    AWS.SQS = jest.fn()
+      .mockImplementationOnce(() => ({
+        sendMessage: sqsOptionDefinitions
+      }))
+
+    const event = {
+      Records: [
+        {
+          body: JSON.stringify({
+            collectionId: 'C10000001-EDSC',
+            tagData: {
+              updated_at: '1984-07-02T16:00:00.000Z',
+              id: 'S00000001-EDSC',
+              type: 'ESI',
+              url: 'http://mapserver.eol.ucar.edu/acadis/'
+            }
+          })
+        }
+      ]
+    }
+
+    await fetchOptionDefinitions(event, {})
+
+    // We should not send a message to sqs
+    expect(sqsOptionDefinitions).toBeCalledTimes(0)
+
+    // The first will output the number of records, the second will
+    // contain the message we're looking for
+    expect(consoleMock).toBeCalledTimes(2)
+
+    expect(consoleMock.mock.calls[1]).toEqual([
+      "No Option Definitions for C10000001-EDSC, skipping 'edsc.extra.serverless.subset_service.echo_orders' tag."
+    ])
+  })
+
+  test('does not submit data to sqs when no order information exist', async () => {
+    // Set the necessary ENV variables to ensure all values are tested
+    process.env.tagQueueUrl = 'http://example.com/tagQueue'
+
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementationOnce(() => 'mocked-system-token')
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({ echoRestRoot: 'http://echorest.example.com' }))
+    jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
+
+    nock(/echorest/)
+      .post(/order_information/)
+      .reply(200, [])
+
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+
+    const sqsOptionDefinitions = jest.fn().mockReturnValue({
+      promise: jest.fn().mockResolvedValue()
+    })
+
+    AWS.SQS = jest.fn()
+      .mockImplementationOnce(() => ({
+        sendMessage: sqsOptionDefinitions
+      }))
+
+    const event = {
+      Records: [
+        {
+          body: JSON.stringify({
+            collectionId: 'C10000001-EDSC',
+            tagData: {
+              updated_at: '1984-07-02T16:00:00.000Z',
+              id: 'S00000001-EDSC',
+              type: 'ESI',
+              url: 'http://mapserver.eol.ucar.edu/acadis/'
+            }
+          })
+        }
+      ]
+    }
+
+    await fetchOptionDefinitions(event, {})
+
+    // We should not send a message to sqs
+    expect(sqsOptionDefinitions).toBeCalledTimes(0)
+
+    // The first will output the number of records, the second will
+    // contain the message we're looking for
+    expect(consoleMock).toBeCalledTimes(2)
+  })
+
   test('does not submit data to sqs when no option definitions exist', async () => {
     // Set the necessary ENV variables to ensure all values are tested
     process.env.tagQueueUrl = 'http://example.com/tagQueue'
 
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ echoRestRoot: 'http://echorest.example.com' }))
-    jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementation(() => ({ id: 'G10000001-EDSC' }))
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementationOnce(() => 'mocked-system-token')
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({ echoRestRoot: 'http://echorest.example.com' }))
+    jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
 
     nock(/echorest/)
       .post(/order_information/)
@@ -149,8 +268,8 @@ describe('generateSubsettingTags', () => {
         }
       ]
     }
-    const context = {}
-    await generateSubsettingTags(event, context)
+
+    await fetchOptionDefinitions(event, {})
 
     // We should not send a message to sqs
     expect(sqsOptionDefinitions).toBeCalledTimes(0)
@@ -158,5 +277,62 @@ describe('generateSubsettingTags', () => {
     // The first will output the number of records, the second will
     // contain the message we're looking for
     expect(consoleMock).toBeCalledTimes(2)
+  })
+
+  test('catches and logs errors correctly', async () => {
+    // Set the necessary ENV variables to ensure all values are tested
+    process.env.tagQueueUrl = 'http://example.com/tagQueue'
+
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementationOnce(() => 'mocked-system-token')
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({ echoRestRoot: 'http://echorest.example.com' }))
+    jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
+
+    nock(/echorest/)
+      .post(/order_information/)
+      .reply(500, {
+        errors: [
+          'Test error message'
+        ]
+      })
+
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+
+    const sqsOptionDefinitions = jest.fn().mockReturnValue({
+      promise: jest.fn().mockResolvedValue()
+    })
+
+    AWS.SQS = jest.fn()
+      .mockImplementationOnce(() => ({
+        sendMessage: sqsOptionDefinitions
+      }))
+
+    const event = {
+      Records: [
+        {
+          body: JSON.stringify({
+            collectionId: 'C10000001-EDSC',
+            tagData: {
+              updated_at: '1984-07-02T16:00:00.000Z',
+              id: 'S00000001-EDSC',
+              type: 'ESI',
+              url: 'http://mapserver.eol.ucar.edu/acadis/'
+            }
+          })
+        }
+      ]
+    }
+
+    await fetchOptionDefinitions(event, {})
+
+    // We should not send a message to sqs
+    expect(sqsOptionDefinitions).toBeCalledTimes(0)
+
+    // The first will output the number of records, the second will
+    // contain the message we're looking for
+    expect(consoleMock).toBeCalledTimes(2)
+
+    expect(consoleMock.mock.calls[1]).toEqual([
+      'StatusCodeError (500): Test error message'
+    ])
   })
 })

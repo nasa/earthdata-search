@@ -1,5 +1,6 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve single colormap record from the database
@@ -39,13 +40,10 @@ export default async function getColorMap(event, context) {
       body: JSON.stringify({ errors: [`ColorMap '${providedProduct}' not found.`] })
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ errors: [e] })
+      ...parseError(e)
     }
   }
 }

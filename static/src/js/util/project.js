@@ -13,7 +13,13 @@ export const convertSize = (sizeInMB) => {
     size = parseFloat(size) / 1024
     units.shift()
   }
-  return { size: size.toFixed(1), unit: units[0] }
+
+  // Only call toFixed() when the size is a truthy value. Otherwise, toFixed will
+  // return a string when called on an NaN object.
+  return {
+    size: !Number.isNaN(size) ? size.toFixed(1) : size,
+    unit: units[0]
+  }
 }
 
 /**

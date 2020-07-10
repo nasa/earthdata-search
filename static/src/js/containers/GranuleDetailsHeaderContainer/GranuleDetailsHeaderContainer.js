@@ -16,19 +16,21 @@ const mapStateToProps = state => ({
 
 export const GranuleDetailsHeaderContainer = ({
   focusedGranule,
-  granules
+  granules,
+  location
 }) => {
   const focusedGranuleMetadata = getFocusedGranuleObject(focusedGranule, granules)
-  const { json = {} } = focusedGranuleMetadata
+  const { ummJson = {} } = focusedGranuleMetadata
 
   return (
-    <GranuleDetailsHeader json={json} />
+    <GranuleDetailsHeader ummJson={ummJson} location={location} />
   )
 }
 
 GranuleDetailsHeaderContainer.propTypes = {
   granules: PropTypes.shape({}).isRequired,
-  focusedGranule: PropTypes.string.isRequired
+  focusedGranule: PropTypes.string.isRequired,
+  location: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

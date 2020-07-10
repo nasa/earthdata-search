@@ -20,60 +20,85 @@ import './ProjectCollectionsList.scss'
 export const ProjectCollectionsList = (props) => {
   const {
     collections,
-    onRemoveCollectionFromProject,
-    onToggleCollectionVisibility,
+    collectionSearch,
     location,
+    mapProjection,
+    onRemoveCollectionFromProject,
     onSetActivePanel,
-    project,
-    projectPanels,
-    collectionSearch
+    onSetActivePanelSection,
+    onToggleCollectionVisibility,
+    onTogglePanels,
+    onUpdateFocusedCollection,
+    onViewCollectionDetails,
+    onViewCollectionGranules,
+    panels,
+    project
   } = props
 
   const { byId } = collections
-  const { collectionIds: projectIds, byId: projectById } = project
+  const {
+    collectionIds: projectIds,
+    byId: projectById
+  } = project
 
   const projectIsEmpty = !projectIds.length
 
-  const activePanel = projectPanels.isOpen ? projectPanels.activePanel.split('.')[1] : null
+  const { activePanel } = panels
+  const [
+    activePanelSection,
+    activePanelGroup
+  ] = activePanel.split('.')
 
   const collectionsList = projectIds.map((collectionId, index) => {
-    const isPanelActive = activePanel === index.toString()
+    const isPanelActive = activePanelGroup === index.toString()
     const color = getColorByIndex(index)
     return (
       <ProjectCollectionItem
-        collectionId={collectionId}
+        activePanelSection={activePanelSection}
         collection={byId[collectionId]}
-        projectCollection={projectById[collectionId]}
+        collectionCount={projectIds.length}
+        collectionId={collectionId}
+        collectionSearch={collectionSearch}
         color={color}
         index={index}
         isPanelActive={isPanelActive}
         key={collectionId}
+        mapProjection={mapProjection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-        onToggleCollectionVisibility={onToggleCollectionVisibility}
         onSetActivePanel={onSetActivePanel}
-        collectionSearch={collectionSearch}
+        onSetActivePanelSection={onSetActivePanelSection}
+        onToggleCollectionVisibility={onToggleCollectionVisibility}
+        onTogglePanels={onTogglePanels}
+        onUpdateFocusedCollection={onUpdateFocusedCollection}
+        onViewCollectionDetails={onViewCollectionDetails}
+        onViewCollectionGranules={onViewCollectionGranules}
+        projectCollection={projectById[collectionId]}
       />
     )
   })
 
   return (
     <SimpleBar className="project-collections-list" style={{ height: '100%', overflowX: 'hidden' }}>
-      {projectIsEmpty && (
-        <p className="project-collections-list__notice">
-          {'Your project is empty. Click '}
-          <PortalLinkContainer
-            to={`/search${location.search}`}
-          >
-            here
-          </PortalLinkContainer>
-          {' to return to search and add collections to your project.'}
-        </p>
-      )}
-      {!projectIsEmpty && (
-        <ul className="project-collections-list__list">
-          {collectionsList}
-        </ul>
-      )}
+      {
+        projectIsEmpty && (
+          <p className="project-collections-list__notice">
+            {'Your project is empty. Click '}
+            <PortalLinkContainer
+              to={`/search${location.search}`}
+            >
+              here
+            </PortalLinkContainer>
+            {' to return to search and add collections to your project.'}
+          </p>
+        )
+      }
+      {
+        !projectIsEmpty && (
+          <ul className="project-collections-list__list">
+            {collectionsList}
+          </ul>
+        )
+      }
       <div className="project-collections-list__filler" />
     </SimpleBar>
   )
@@ -81,13 +106,19 @@ export const ProjectCollectionsList = (props) => {
 
 ProjectCollectionsList.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onTogglePanels: PropTypes.func.isRequired,
+  onUpdateFocusedCollection: PropTypes.func.isRequired,
+  onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
+  panels: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(ProjectCollectionsList)

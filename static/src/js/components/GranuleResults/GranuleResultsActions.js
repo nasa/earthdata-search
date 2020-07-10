@@ -14,7 +14,22 @@ import Skeleton from '../Skeleton/Skeleton'
 
 import './GranuleResultsActions.scss'
 
+/**
+ * Renders GranuleResultsActions.
+ * @param {Boolean} allGranulesInProject - Flag designating if all granules are in the project.
+ * @param {String} collectionId - The collection ID.
+ * @param {Number} granuleCount - The granule count.
+ * @param {Number} granuleLimit - The granule limit.
+ * @param {Boolean} initialLoading - Flag designating the inital loading state.
+ * @param {Boolean} isCollectionInProject - Flag designating if the collection is in the project.
+ * @param {Object} location - The location from the store.
+ * @param {Function} onAddProjectCollection - Callback to add the collection from the project.
+ * @param {Function} onChangePath - Callback to change the path.
+ * @param {Function} onRemoveCollectionFromProject - Callback to remove the collection from the project.
+ * @param {Function} onSetActivePanelSection - Callback to set the active panel section on the project page.
+ */
 const GranuleResultsActions = ({
+  allGranulesInProject,
   collectionId,
   granuleCount,
   granuleLimit,
@@ -22,7 +37,9 @@ const GranuleResultsActions = ({
   isCollectionInProject,
   location,
   onAddProjectCollection,
-  onRemoveCollectionFromProject
+  onChangePath,
+  onRemoveCollectionFromProject,
+  onSetActivePanelSection
 }) => {
   const addToProjectButton = (
     <Button
@@ -54,7 +71,12 @@ const GranuleResultsActions = ({
 
   const tooManyGranules = granuleLimit && granuleCount > granuleLimit
   const downloadAllButton = () => {
+    let buttonText = 'Download All'
     const badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
+
+    if (isCollectionInProject && !allGranulesInProject && granuleCount > 0) {
+      buttonText = 'Download'
+    }
 
     if (tooManyGranules) {
       return (
@@ -82,11 +104,11 @@ const GranuleResultsActions = ({
               bootstrapVariant="secondary"
               icon="download"
               variant="full"
-              label="Download All"
+              label={buttonText}
               disabled
               style={{ pointerEvents: 'none' }}
             >
-              Download All
+              {buttonText}
             </Button>
           </div>
         </OverlayTrigger>
@@ -136,10 +158,10 @@ const GranuleResultsActions = ({
           bootstrapVariant="success"
           icon="download"
           variant="full"
-          label="Download All"
+          label={buttonText}
           disabled={granuleCount === 0 || initialLoading}
         >
-          Download All
+          {buttonText}
         </Button>
       </PortalLinkContainer>
     )
@@ -164,12 +186,46 @@ const GranuleResultsActions = ({
                 }}
               />
             ) : (
-              <span className="granule-results-actions__granule-count">
-                <span className="granule-results-actions__granule-num">
-                  {`${commafy(granuleCount)} `}
+              <div className="granule-results-actions__granule-count-wrapper">
+                <span className="granule-results-actions__granule-count">
+                  <span className="granule-results-actions__granule-num">
+                    {`${commafy(granuleCount)} `}
+                  </span>
+                  {`${pluralize('Granule', granuleCount)}`}
                 </span>
-                {`${pluralize('Granule', granuleCount)}`}
-              </span>
+                {
+                  isCollectionInProject && (
+                    <PortalLinkContainer
+                      type="button"
+                      label="View granules in project"
+                      className="granule-results-actions__project-pill"
+                      onClick={() => {
+                        onSetActivePanelSection('1')
+                        onChangePath(`/projects${location.search}`)
+                      }}
+                      to={{
+                        pathname: '/projects',
+                        search: location.search
+                      }}
+                    >
+                      <i className="fa fa-folder granule-results-actions__project-pill-icon" />
+                      {
+                        // eslint-disable-next-line no-self-compare
+                        allGranulesInProject && <span title="All granules in project">All Granules</span>
+                      }
+                      {
+                        !allGranulesInProject && granuleCount > 0 && (
+                          <span
+                            title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
+                          >
+                            {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
+                          </span>
+                        )
+                      }
+                    </PortalLinkContainer>
+                  )
+                }
+              </div>
             )
         }
         {
@@ -197,7 +253,10 @@ GranuleResultsActions.propTypes = {
   isCollectionInProject: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired,
+  allGranulesInProject: PropTypes.bool.isRequired
 }
 
 export default GranuleResultsActions

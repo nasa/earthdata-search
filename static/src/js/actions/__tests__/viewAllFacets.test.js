@@ -280,16 +280,12 @@ describe('getViewAllFacets', () => {
         payload: true
       })
       expect(storeActions[2]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
-      })
-      expect(storeActions[3]).toEqual({
         type: LOADED_VIEW_ALL_FACETS,
         payload: {
           loaded: true
         }
       })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_VIEW_ALL_FACETS,
         payload: facetsPayload
       })
@@ -359,7 +355,7 @@ describe('getViewAllFacets', () => {
   })
 
   test('does not call updateCollectionResults on error', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     nock(/cmr/)
       .post(/collections/)

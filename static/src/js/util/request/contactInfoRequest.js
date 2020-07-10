@@ -8,10 +8,6 @@ export default class ContactInfoRequest extends Request {
     this.authToken = authToken
   }
 
-  permittedCmrKeys() {
-    return ['preferences']
-  }
-
   fetch() {
     return this.get('contact_info')
   }

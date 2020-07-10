@@ -6,9 +6,28 @@ const TerserJsPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CSSNano = require('cssnano')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
+
+const debug = false
+
+const defaultPlugins = [
+  new webpack.HashedModuleIdsPlugin(),
+  new CleanWebpackPlugin([path.resolve(__dirname, 'static/dist')]),
+  new MiniCssExtractPlugin({
+    filename: '[name].[contenthash].min.css',
+    chunkFilename: '[id].[contenthash].min.css'
+  })
+]
+
+const debugPlugins = [
+  new DuplicatePackageCheckerPlugin(),
+  new BundleAnalyzerPlugin(),
+  new CompressionPlugin()
+]
 
 const Config = merge.smartStrategy({
   devtool: 'replace',
@@ -25,6 +44,7 @@ const Config = merge.smartStrategy({
   optimization: {
     nodeEnv: 'production',
     concatenateModules: true,
+    minimize: true,
     minimizer: [
       new TerserJsPlugin({
         cache: true,
@@ -39,23 +59,26 @@ const Config = merge.smartStrategy({
         }
       })
     ],
+    runtimeChunk: true,
     splitChunks: {
+      maxInitialRequests: Infinity,
+      maxSize: 300000,
+      minSize: 150000,
       cacheGroups: {
         vendor: {
-          name: 'vendor',
-          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // or node_modules/packageName
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+
+            // npm package names are URL-safe, but some servers don't like @ symbols
+            return `npm.${packageName.replace('@', '')}`
+          },
           chunks: 'all',
-          maxSize: 500000
-        },
-        styles: {
-          name: 'styles',
-          test: /\.css$/,
-          chunks: 'all'
+          test: /[\\/]node_modules[\\/]/
         }
       }
-    },
-    runtimeChunk: true,
-    sideEffects: true
+    }
   },
   module: {
     rules: [
@@ -74,13 +97,8 @@ const Config = merge.smartStrategy({
     ]
   },
   plugins: [
-    new webpack.HashedModuleIdsPlugin(),
-    new CleanWebpackPlugin([path.resolve(__dirname, 'static/dist')]),
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].min.css',
-      chunkFilename: '[id].[contenthash].min.css',
-    })
-    // new BundleAnalyzerPlugin()
+    ...defaultPlugins,
+    ...(debug ? debugPlugins : [])
   ]
 })
 

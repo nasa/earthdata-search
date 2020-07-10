@@ -15,10 +15,23 @@ export const AdminRetrievalDetails = ({
   retrieval
 }) => {
   const {
-    username,
     collections = [],
-    obfuscated_id: obfuscatedId
+    jsondata = {},
+    obfuscated_id: obfuscatedId,
+    username
   } = retrieval
+
+  const {
+    portal_id: portalId,
+    source
+  } = jsondata
+
+  let portalPath = ''
+  if (portalId) {
+    portalPath = `/portal/${portalId}`
+  }
+
+  const sourcePath = `${portalPath}/search${source}`
 
   return (
     <div className="admin-retrieval-details">
@@ -32,6 +45,12 @@ export const AdminRetrievalDetails = ({
             <p className="admin-retrieval-details__metadata-display-item">
               <span className="admin-retrieval-details__metadata-display-heading">Obfuscated ID</span>
               <span className="admin-retrieval-details__metadata-display-content">{obfuscatedId}</span>
+            </p>
+            <p className="admin-retrieval-details__metadata-display-item">
+              <span className="admin-retrieval-details__metadata-display-heading">Source Path</span>
+              <a className="admin-retrieval-details__metadata-display-content" href={sourcePath} target="_blank" rel="noopener noreferrer">
+                {sourcePath}
+              </a>
             </p>
           </div>
         </Col>

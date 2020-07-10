@@ -34,8 +34,8 @@ describe('updateStore', () => {
 
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
     const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
-    const getGranulesMock = jest.spyOn(actions, 'getGranules').mockImplementation(() => jest.fn())
+    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
+      .mockImplementation(() => new Promise(resolve => resolve(null)))
     const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
     const store = mockStore({
@@ -56,8 +56,56 @@ describe('updateStore', () => {
     expect(getCollectionsMock).toBeCalledTimes(1)
     expect(getFocusedCollectionMock).toBeCalledTimes(1)
     expect(getProjectCollectionsMock).toBeCalledTimes(1)
-    expect(getGranulesMock).toBeCalledTimes(1)
     expect(getTimelineMock).toBeCalledTimes(1)
+  })
+
+  describe('on the projects page', () => {
+    test('calls restoreFromUrl and gets new search results', async () => {
+      const params = {
+        cmrFacets: {},
+        featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
+        focusedCollection: 'C00001-EDSC',
+        map: {},
+        query: {
+          collection: {
+            overrideTemporal: {},
+            pageNum: 1,
+            spatial: {},
+            temporal: {}
+          },
+          granule: { pageNum: 1 }
+        },
+        shapefile: {}
+      }
+
+      jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+      jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
+      const getGranulesMock = jest.spyOn(actions, 'getGranules').mockImplementation(() => jest.fn())
+      jest.spyOn(actions, 'getProjectCollections')
+        .mockImplementation(() => jest.fn())
+      jest.spyOn(actions, 'fetchAccessMethods').mockImplementation(() => jest.fn())
+      jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
+
+      const store = mockStore({
+        router: {
+          location: {
+            pathname: '/projects'
+          }
+        }
+      })
+      await store.dispatch(urlQuery.updateStore(params, '/projects'))
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        payload: params,
+        type: RESTORE_FROM_URL
+      })
+
+      expect(getGranulesMock).toBeCalledTimes(1)
+      expect(getGranulesMock).toBeCalledWith(['C00001-EDSC'], {
+        requestAddedGranules: true
+      })
+    })
   })
 })
 

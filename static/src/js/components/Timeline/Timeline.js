@@ -232,6 +232,17 @@ class Timeline extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const { browser = {} } = this.props
+    const { name } = browser
+
+    if (browser && name !== 'ie') {
+      window.dispatchEvent(new Event('resize'))
+    } else {
+      $(window).trigger('resize')
+    }
+  }
+
   componentWillUnmount() {
     // Remove the timeline
     this.$el.off('temporalchange.timeline', this.handleTemporalSet)
@@ -564,6 +575,7 @@ Timeline.defaultProps = {
 }
 
 Timeline.propTypes = {
+  browser: PropTypes.shape({}).isRequired,
   collectionMetadata: PropTypes.shape({}),
   pathname: PropTypes.string.isRequired,
   showOverrideModal: PropTypes.bool.isRequired,

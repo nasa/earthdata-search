@@ -1,3 +1,4 @@
+import { isEmpty, intersection } from 'lodash'
 import actions from './index'
 import {
   ADD_COLLECTION_TO_PROJECT,
@@ -6,21 +7,25 @@ import {
   SELECT_ACCESS_METHOD,
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
-  UPDATE_PROJECT_GRANULES,
   ADD_ACCESS_METHODS,
   SUBMITTING_PROJECT,
-  SUBMITTED_PROJECT
+  SUBMITTED_PROJECT,
+  UPDATE_ACCESS_METHOD_ORDER_COUNT,
+  ADD_GRANULE_TO_PROJECT_COLLECTION,
+  REMOVE_GRANULE_FROM_PROJECT_COLLECTION
 } from '../constants/actionTypes'
-import GranuleRequest from '../util/request/granuleRequest'
-import CwicGranuleRequest from '../util/request/cwic'
+import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
+import { buildPromise } from '../util/buildPromise'
+import { createFocusedCollectionMetadata } from '../util/focusedCollection'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { getGranuleCount } from '../util/collectionMetadata/granuleCount'
+import { hasTag } from '../../../../sharedUtils/tags'
+import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
+import { parseError } from '../../../../sharedUtils/parseError'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { updateCollectionMetadata } from './collections'
-import { prepareGranuleParams, populateGranuleResults, buildGranuleSearchParams } from '../util/granules'
-import { convertSize } from '../util/project'
-import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
-import isProjectCollectionValid from '../util/isProjectCollectionValid'
-import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 
+import GraphQlRequest from '../util/request/graphQlRequest'
 
 export const submittingProject = () => ({
   type: SUBMITTING_PROJECT
@@ -37,11 +42,6 @@ export const addCollectionToProject = payload => ({
 
 export const removeCollectionFromProject = payload => ({
   type: REMOVE_COLLECTION_FROM_PROJECT,
-  payload
-})
-
-export const updateProjectGranules = payload => ({
-  type: UPDATE_PROJECT_GRANULES,
   payload
 })
 
@@ -68,132 +68,181 @@ export const updateAccessMethod = payload => ({
   }
 })
 
+export const updateAccessMethodOrderCount = payload => ({
+  type: UPDATE_ACCESS_METHOD_ORDER_COUNT,
+  payload
+})
+
 export const selectAccessMethod = payload => ({
   type: SELECT_ACCESS_METHOD,
   payload
 })
 
-export const getProjectGranules = collectionIds => (dispatch, getState) => (
-  Promise.all(collectionIds.map((collectionId) => {
-    const granuleParams = prepareGranuleParams(getState(), collectionId)
+/**
+ * Retrieve collection metadata for the collections provided
+ * @param {String} collectionId Single collection to lookup, if null then all collections in the project will be retrieved
+ */
+export const getProjectCollections = (collectionIds = []) => (dispatch, getState) => {
+  const { authToken, metadata } = getState()
+  const { collections = {} } = metadata
+  const { byId = {} } = collections
 
-    if (!granuleParams) {
-      return null
+  const { defaultCmrSearchTags } = getApplicationConfig()
+
+  const emptyProjectCollections = []
+
+  // Determine which collections are in the project that we have no metadata for
+  collectionIds.forEach((projectCollection) => {
+    const { [projectCollection]: collection = {} } = byId
+    const { metadata } = collection
+
+    // If any of the metadata is missing push this collection to our array to fetch metadata for
+    if (isEmpty(metadata)) {
+      emptyProjectCollections.push(projectCollection)
     }
+  })
 
-    const {
-      authToken,
-      isCwicCollection
-    } = granuleParams
+  // Default filteredIds to the provided collectionId
+  let filteredIds = collectionIds
 
-    let requestObject = null
-    if (isCwicCollection) {
-      requestObject = new CwicGranuleRequest(authToken)
-    } else {
-      requestObject = new GranuleRequest(authToken)
-    }
-
-    const searchResponse = requestObject.search(buildGranuleSearchParams(granuleParams))
-      .then((response) => {
-        const payload = populateGranuleResults(collectionId, isCwicCollection, response)
-        let size = 0
-        payload.results.forEach((granule) => {
-          size += parseFloat(granule.granule_size || 0)
-        })
-
-        const totalSize = size / payload.results.length * payload.hits
-
-        payload.totalSize = convertSize(totalSize)
-
-        dispatch(updateAuthTokenFromHeaders(response.headers))
-        dispatch(updateProjectGranules(payload))
-      })
-      .catch((error) => {
-        dispatch(actions.handleError({
-          error,
-          action: 'getProjectGranules',
-          resource: 'granules',
-          requestObject
-        }))
-      })
-
-    return searchResponse
-  }))
-)
-
-export const getProjectCollections = collectionId => (dispatch, getState) => {
-  const { project } = getState()
-  const { collectionIds: projectIds = [] } = project
-
-  const filteredIds = !collectionId ? projectIds : [collectionId]
-
-  if (filteredIds.length === 0) {
-    return null
+  // If no collectionId was provided
+  if (collectionIds == null) {
+    // Prepare to retrieve all collections that we have not already retrieved
+    filteredIds = intersection(emptyProjectCollections, collectionIds)
   }
 
-  const { authToken } = getState()
+  // If no collection was provided and the project has no collections return null
+  if (filteredIds.length === 0) {
+    return buildPromise(null)
+  }
 
   const collectionParams = prepareCollectionParams(getState())
   const searchParams = buildCollectionSearchParams(collectionParams)
 
   const {
     includeGranuleCounts,
-    includeHasGranules,
-    boundingBox,
-    hasGranulesOrCwic,
-    point,
-    polygon,
-    temporal
+    includeHasGranules
   } = searchParams
 
-  const response = getCollectionMetadata({
-    conceptId: filteredIds,
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
+  const graphRequestObject = new GraphQlRequest(authToken)
+
+  const graphQuery = `
+    query GetCollections(
+      $ids: [String]
+      $includeHasGranules: Boolean
+      $includeTags: String
+      $pageSize: Int
+    ) {
+      collections(
+        conceptId: $ids
+        includeHasGranules: $includeHasGranules
+        includeTags: $includeTags
+        limit: $pageSize
+      ) {
+        items {
+          archiveAndDistributionInformation
+          boxes
+          conceptId
+          dataCenter
+          dataCenters
+          doi
+          hasGranules
+          relatedUrls
+          scienceKeywords
+          shortName
+          spatialExtent
+          summary
+          tags
+          temporalExtents
+          title
+          versionId
+          services {
+            count
+            items {
+              conceptId
+              type
+              supportedOutputFormats
+              supportedReformattings
+            }
+          }
+          variables {
+            count
+            items {
+              conceptId
+              definition
+              longName
+              name
+              scienceKeywords
+            }
+          }
+        }
+      }
+    }`
+
+  const response = graphRequestObject.search(graphQuery, {
+    ids: filteredIds,
+    includeTags: defaultCmrSearchTags.join(','),
     includeGranuleCounts,
     includeHasGranules,
-    boundingBox,
-    hasGranulesOrCwic,
-    pageSize: 20,
-    point,
-    polygon,
-    temporal
-  }, authToken)
-    .then(([collectionJson, collectionUmm]) => {
+    pageSize: filteredIds.length
+  })
+    .then((response) => {
       const payload = []
-      const { entry: responseJson } = collectionJson.data.feed
-      const { items: responseUmm } = collectionUmm.data
 
-      responseJson.forEach((collection) => {
-        const { id } = collection
-        const metadata = collection
-        const ummIndex = responseUmm.findIndex(item => id === item.meta['concept-id'])
-        const ummMetadata = responseUmm[ummIndex].umm
+      const {
+        data: responseData,
+        headers
+      } = response
 
-        const formattedMetadata = createFocusedCollectionMetadata(metadata, ummMetadata, authToken)
+      const { data } = responseData
+      const { collections } = data
+      const { items } = collections
 
-        const { is_cwic: isCwic = false } = metadata
+      items.forEach((metadata) => {
+        const {
+          conceptId,
+          archiveAndDistributionInformation,
+          dataCenter,
+          hasGranules,
+          services,
+          shortName,
+          summary,
+          tags,
+          title,
+          variables,
+          versionId
+        } = metadata
 
-        dispatch(actions.fetchDataQualitySummaries(id))
+        const focusedMetadata = createFocusedCollectionMetadata(metadata, authToken)
 
         payload.push({
-          [id]: {
-            metadata,
-            ummMetadata,
-            formattedMetadata,
-            isCwic
+          [conceptId]: {
+            metadata: {
+              conceptId,
+              archiveAndDistributionInformation,
+              dataCenter,
+              hasGranules,
+              services,
+              shortName,
+              summary,
+              tags,
+              title,
+              variables,
+              versionId,
+              ...focusedMetadata
+            },
+            isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
           }
         })
+
+        dispatch(actions.fetchDataQualitySummaries(conceptId))
       })
 
-      dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
+      // A users authToken will come back with an authenticated request if a valid token was used
+      dispatch(updateAuthTokenFromHeaders(headers))
+
+      // Update metadata in the store
       dispatch(updateCollectionMetadata(payload))
-      dispatch(actions.getProjectGranules(filteredIds))
-
-      // The process of fetching access methods requires that we have providers retrieved
-      // in order to look up provider guids
-      dispatch(actions.fetchProviders()).then(() => {
-        dispatch(actions.fetchAccessMethods(filteredIds))
-      })
     })
     .catch((error) => {
       dispatch(actions.handleError({
@@ -206,7 +255,83 @@ export const getProjectCollections = collectionId => (dispatch, getState) => {
   return response
 }
 
-export const addProjectCollection = collectionId => (dispatch) => {
+/**
+ * Adds a single collection to the project
+ * @param {String} collectionId The CMR concept id of the collection to add to the project
+ */
+export const addProjectCollection = collectionId => async (dispatch) => {
   dispatch(addCollectionToProject(collectionId))
-  dispatch(actions.getProjectCollections(collectionId))
+
+  try {
+    await dispatch(actions.getProjectCollections([collectionId]))
+
+    dispatch(actions.fetchAccessMethods([collectionId]))
+    dispatch(actions.getGranules([collectionId]))
+  } catch (error) {
+    parseError(error)
+  }
+}
+
+/**
+ * Adds a single single granule to a project. If the collection is not in the
+ * project, it will be added first.
+*/
+export const addGranuleToProjectCollection = payload => (dispatch, getState) => {
+  const { project } = getState()
+  const { collectionIds } = project
+
+  const { collectionId } = payload
+
+  // If the current collection is not in the project, add it.
+  if (collectionIds.indexOf(collectionId) === -1) {
+    dispatch(addProjectCollection(collectionId))
+  }
+
+  // Add the granule to the project collection.c
+  dispatch({
+    type: ADD_GRANULE_TO_PROJECT_COLLECTION,
+    payload
+  })
+}
+
+/**
+ * Removes a single single granule from a project. If the collection would not have any granules
+ * after removal, the collection is removed from the project.
+*/
+export const removeGranuleFromProjectCollection = payload => (dispatch, getState) => {
+  const { collectionId, granuleId } = payload
+  const { project, metadata } = getState()
+
+  const { collections } = metadata
+  const { byId: collectionsById } = collections
+  const { byId: projectCollectionsById } = project
+
+  const collection = collectionsById[collectionId]
+  const projectCollection = projectCollectionsById[collectionId]
+
+  const { granules } = collection
+  const { removedGranuleIds = [] } = projectCollection
+
+  const { allIds: collectionGranulesIds } = granules
+
+  const indexInRemovedGranulesArray = removedGranuleIds.indexOf(granuleId)
+  const indexInCollectionGranulesArray = collectionGranulesIds.indexOf(granuleId)
+
+  const granuleCount = getGranuleCount(collection, projectCollection)
+
+  // If the granule does not exist in the removed granules array and the
+  // removing the granule would result in 0 granules in the project, remove
+  // the current collection from the project.
+  if (
+    indexInRemovedGranulesArray === -1
+    && indexInCollectionGranulesArray === 1
+    && granuleCount - 1 === 0
+  ) {
+    dispatch(removeCollectionFromProject(collectionId))
+  }
+
+  dispatch({
+    type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
+    payload
+  })
 }

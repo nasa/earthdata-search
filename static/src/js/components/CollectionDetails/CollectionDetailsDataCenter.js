@@ -41,14 +41,14 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
               )
             }
             {
-              dataCenter.contactInformation.ContactMechanisms && (
-                dataCenter.contactInformation.ContactMechanisms.map((contact, i) => {
+              dataCenter.contactInformation.contactMechanisms && (
+                dataCenter.contactInformation.contactMechanisms.map((contact, i) => {
                   const key = `data_center_email_${item}-${i}`
-                  if (contact.Type === 'Email') {
+                  if (contact.type === 'Email') {
                     return (
                       <p key={key} className="collection-details-data-center__email">
-                        <a href={`mailto:${contact.Value}`}>
-                          {contact.Value}
+                        <a href={`mailto:${contact.value}`}>
+                          {contact.value}
                         </a>
                       </p>
                     )
@@ -58,29 +58,29 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
               )
             }
             {
-              dataCenter.contactInformation.ContactMechanisms && (
+              dataCenter.contactInformation.contactMechanisms && (
                 <dl className="collection-details-data-center__contact">
                   {
-                    dataCenter.contactInformation.ContactMechanisms.map((contact, i) => {
+                    dataCenter.contactInformation.contactMechanisms.map((contact, i) => {
                       const key = `data_center_other_${item}-${i}`
-                      if (contact.Type === 'Facebook') {
+                      if (contact.type === 'Facebook') {
                         return (
                           <React.Fragment key={key}>
-                            <dt>{`${contact.Type}:`}</dt>
+                            <dt>{`${contact.type}:`}</dt>
                             <dd>
-                              <a href={contact.Value} title={contact.Value}>
+                              <a href={contact.value} title={contact.value}>
                                 Profile Link
                               </a>
                             </dd>
                           </React.Fragment>
                         )
                       }
-                      if (contact.Type !== 'Email' && contact.Type !== 'Facebook') {
+                      if (contact.type !== 'Email' && contact.type !== 'Facebook') {
                         return (
                           <React.Fragment key={key}>
-                            <dt>{`${contact.Type}:`}</dt>
+                            <dt>{`${contact.type}:`}</dt>
                             <dd>
-                              {contact.Value}
+                              {contact.value}
                             </dd>
                           </React.Fragment>
                         )

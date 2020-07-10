@@ -30,4 +30,8 @@
     min-height: 0;
     flex: 0 1 100%;
   }
+
+  .simplebar-scrollbar:before {
+    background-color: $color__black--300;
+  }
 }

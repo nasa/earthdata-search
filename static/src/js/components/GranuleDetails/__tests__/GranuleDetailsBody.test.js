@@ -2,9 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Tabs, Tab } from 'react-bootstrap'
-import { granuleResultsBodyProps } from './mocks'
 
-import SimpleBar from 'simplebar-react'
+import { granuleResultsBodyProps } from './mocks'
 
 import GranuleDetailsBody from '../GranuleDetailsBody'
 import GranuleDetailsInfo from '../GranuleDetailsInfo'
@@ -27,7 +26,7 @@ describe('GranuleDetailsBody component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.type()).toBe(SimpleBar)
+    expect(enzymeWrapper.type()).toBe('div')
     expect(enzymeWrapper.prop('className')).toBe('granule-details-body')
   })
 
@@ -53,8 +52,8 @@ describe('GranuleDetailsBody component', () => {
       expect(infoTab.props().eventKey).toEqual('information')
       expect(infoTab.props().title).toEqual('Information')
       expect(infoTab.find(GranuleDetailsInfo).length).toEqual(1)
-      expect(infoTab.find(GranuleDetailsInfo).props().xml)
-        .toEqual(granuleResultsBodyProps.xml)
+      expect(infoTab.find(GranuleDetailsInfo).props().ummJson)
+        .toEqual(granuleResultsBodyProps.ummJson)
 
       // Metadata tab
       const metaTab = enzymeWrapper.find(Tab).at(1)

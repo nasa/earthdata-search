@@ -1,13 +1,14 @@
 import { isCancel } from 'axios'
 import { isPlainObject } from 'lodash'
 
+import actions from './index'
+
 import CollectionRequest from '../util/request/collectionRequest'
 import {
   buildCollectionSearchParams,
   prepareCollectionParams
 } from '../util/collections'
 import { updateAuthTokenFromHeaders } from './authToken'
-import { getProjectCollections } from './project'
 import { handleError } from './errors'
 
 import {
@@ -26,6 +27,7 @@ import {
   RESTORE_COLLECTIONS,
   UPDATE_COLLECTION_GRANULE_FILTERS
 } from '../constants/actionTypes'
+import { parseError } from '../../../../sharedUtils/parseError'
 
 export const addMoreCollectionResults = payload => ({
   type: ADD_MORE_COLLECTION_RESULTS,
@@ -81,12 +83,23 @@ export const finishCollectionsTimer = () => ({
   type: FINISHED_COLLECTIONS_TIMER
 })
 
-export const restoreCollections = payload => (dispatch) => {
+export const restoreCollections = payload => async (dispatch, getState) => {
   dispatch({
     type: RESTORE_COLLECTIONS,
     payload
   })
-  dispatch(getProjectCollections())
+
+  const { metadata } = getState()
+  const { collections } = metadata
+  const { allIds = [] } = collections
+
+  try {
+    await dispatch(actions.getProjectCollections(allIds))
+
+    dispatch(actions.getGranules(allIds))
+  } catch (e) {
+    parseError(e)
+  }
 }
 
 /**
@@ -174,7 +187,12 @@ export const getCollections = () => (dispatch, getState) => {
       const payload = {}
       const { 'cmr-hits': cmrHits } = response.headers
 
-      payload.facets = response.data.feed.facets.children || []
+      const { data } = response
+      const { feed } = data
+      const { facets = {} } = feed
+      const { children = [] } = facets
+
+      payload.facets = children
       payload.hits = cmrHits
       payload.keyword = keyword
       payload.results = response.data.feed.entry

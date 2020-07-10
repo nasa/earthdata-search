@@ -1,10 +1,9 @@
 import request from 'request-promise'
-import { parse as parseQueryString } from 'qs'
 import { parse as parseXml } from 'fast-xml-parser'
 import { pick } from '../util/pick'
 import { getClientId, getApplicationConfig } from '../../../sharedUtils/config'
-import { getJwtToken } from '../util/getJwtToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
@@ -41,17 +40,7 @@ const getCwicGranulesUrl = async (collectionId) => {
       body: granuleUrls.find(url => url.type === 'application/atom+xml')
     }
   } catch (e) {
-    if (e.response) {
-      return {
-        statusCode: e.statusCode,
-        body: e.response.body
-      }
-    }
-
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Oh No!' })
-    }
+    return parseError(e)
   }
 }
 
@@ -119,28 +108,15 @@ const cwicGranuleSearch = async (event) => {
     'Content-Type': 'application/xml'
   }
 
-  let params
-  try {
-    const jwtToken = getJwtToken(event)
-    if (jwtToken) {
-      responseHeaders['jwt-token'] = jwtToken
-    }
-
-    // If a jwt token is found the payload provided is slightly different
-    const responseBody = JSON.parse(event.body)
-
-    // eslint-disable-next-line prefer-destructuring
-    params = responseBody.params
-  } catch (e) {
-    params = parseQueryString(event.body)
-  }
+  const { body } = event
+  const { params } = JSON.parse(body)
 
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
-    'bounding_box',
-    'echo_collection_id',
-    'page_num',
-    'page_size',
+    'boundingBox',
+    'echoCollectionId',
+    'pageNum',
+    'pageSize',
     'point',
     'temporal'
   ]
@@ -151,7 +127,7 @@ const cwicGranuleSearch = async (event) => {
 
   console.log(`Filtered parameters: ${Object.keys(obj)}`)
 
-  const conceptUrl = await getCwicGranulesUrl(obj.echo_collection_id)
+  const conceptUrl = await getCwicGranulesUrl(obj.echoCollectionId)
 
   console.log(`Completed OSDD request with status ${conceptUrl.statusCode}.`)
 
@@ -180,8 +156,6 @@ const cwicGranuleSearch = async (event) => {
       }
     })
 
-    const { headers: responseHeaders } = granuleResponse
-
     console.log(`CWIC Granule Request took ${granuleResponse.elapsedTime} ms`)
 
     return {
@@ -196,9 +170,8 @@ const cwicGranuleSearch = async (event) => {
   } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: e.statusCode,
-      headers: { responseHeaders },
-      body: e.error
+      headers: defaultResponseHeaders,
+      ...parseError(e)
     }
   }
 }

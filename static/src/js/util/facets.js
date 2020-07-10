@@ -80,7 +80,7 @@ export const changeFeatureFacet = (e, facetLinkInfo, onChangeHandler) => {
  * @param {object} facetLinkInfo - The information for the clicked facet.
  * @param {object} onChangeHandler - The change handler to call.
  */
-export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler) => {
+export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied) => {
   const newParams = qs.parse(queryParamsFromUrlString(facetLinkInfo.destination))
 
   const paramsToSend = {
@@ -93,7 +93,7 @@ export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler) => {
     science_keywords_h: newParams.science_keywords_h
   }
 
-  onChangeHandler(paramsToSend)
+  onChangeHandler(paramsToSend, facet, applied)
 }
 
 /**

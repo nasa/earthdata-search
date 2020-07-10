@@ -16,16 +16,3 @@ describe('AccessMethodsRequest#constructor', () => {
     expect(request.searchPath).toEqual('access_methods')
   })
 })
-
-describe('AccessMethodsRequest#permittedCmrKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
-    const request = new AccessMethodsRequest()
-
-    expect(request.permittedCmrKeys()).toEqual([
-      'associations',
-      'collection_id',
-      'collection_provider',
-      'tags'
-    ])
-  })
-})

@@ -2,6 +2,7 @@ import uuidv4 from 'uuid/v4'
 
 import { REMOVE_ERROR, ADD_ERROR } from '../constants/actionTypes'
 import LoggerRequest from '../util/request/loggerRequest'
+import { parseError } from '../../../../sharedUtils/parseError'
 
 export const addError = payload => ({
   type: ADD_ERROR,
@@ -15,6 +16,7 @@ export const removeError = payload => ({
 
 export const handleError = ({
   error,
+  message = 'There was a problem completing the request',
   action,
   resource,
   verb = 'retrieving',
@@ -31,10 +33,6 @@ export const handleError = ({
     requestId = existingRequestId
   }
 
-  const {
-    error: message = 'There was a problem completing the request'
-  } = error
-
   if (displayBanner) {
     dispatch(addError({
       id: requestId,
@@ -44,7 +42,10 @@ export const handleError = ({
     }))
   }
 
-  console.error(`Action [${action}] failed:`, error)
+  const parsedError = parseError(error, { asJSON: false })
+  const [defaultErrorMessage = message] = parsedError
+
+  console.error(`Action [${action}] failed: ${defaultErrorMessage}`)
 
   // Send the error to be logged in lambda
   const loggerRequest = new LoggerRequest()
@@ -55,5 +56,5 @@ export const handleError = ({
       message,
       error
     }
-  }).then(() => {})
+  })
 }

@@ -15,22 +15,14 @@ function setup() {
     selectedVariables: [],
     variables: {
       'V123456-EDSC': {
-        meta: {
-          'concept-id': 'V123456-EDSC'
-        },
-        umm: {
-          LongName: 'Long Variable Name 1',
-          Name: 'Variable 1'
-        }
+        conceptId: 'V123456-EDSC',
+        longName: 'Long Variable Name 1',
+        name: 'Variable 1'
       },
       'V987654-EDSC': {
-        meta: {
-          'concept-id': 'V987654-EDSC'
-        },
-        umm: {
-          LongName: 'Long Variable Name 2',
-          Name: 'Variable 2'
-        }
+        conceptId: 'V987654-EDSC',
+        longName: 'Long Variable Name 2',
+        name: 'Variable 2'
       }
     },
     onCheckboxChange: jest.fn(),
@@ -130,13 +122,9 @@ describe('VariablesPanel', () => {
 
     expect(props.onViewDetails.mock.calls.length).toBe(1)
     expect(props.onViewDetails.mock.calls[0]).toEqual([{
-      meta: {
-        'concept-id': 'V123456-EDSC'
-      },
-      umm: {
-        LongName: 'Long Variable Name 1',
-        Name: 'Variable 1'
-      }
+      conceptId: 'V123456-EDSC',
+      longName: 'Long Variable Name 1',
+      name: 'Variable 1'
     }, 0])
   })
 })

@@ -21,25 +21,23 @@ export const GranuleDetailsBodyContainer = ({
   const focusedGranuleMetadata = getFocusedGranuleObject(focusedGranule, granules)
 
   const {
-    json,
-    metadataUrls,
-    xml
+    ummJson,
+    metadataUrls
   } = focusedGranuleMetadata
 
   return (
     <GranuleDetailsBody
       authToken={authToken}
-      json={json}
       metadataUrls={metadataUrls}
-      xml={xml}
+      ummJson={ummJson}
     />
   )
 }
 
 GranuleDetailsBodyContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
-  focusedGranule: PropTypes.string.isRequired
+  focusedGranule: PropTypes.string.isRequired,
+  granules: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

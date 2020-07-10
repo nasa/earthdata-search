@@ -4,6 +4,8 @@ import forge from 'node-forge'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Saves a shapefile to the database
@@ -15,10 +17,12 @@ const saveShapefile = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   const { body } = event
   const { params } = JSON.parse(body)
   const {
-    auth_token: jwtToken,
+    authToken,
     file,
     filename
   } = params
@@ -40,8 +44,8 @@ const saveShapefile = async (event, context) => {
     }
 
     // If user information was included, use it in the queries
-    if (jwtToken) {
-      const { id: userId } = getVerifiedJwtToken(jwtToken)
+    if (authToken) {
+      const { id: userId } = getVerifiedJwtToken(authToken)
 
       shapefileSearchOptions.user_id = userId
       shapefileInsertOptions.user_id = userId
@@ -54,7 +58,7 @@ const saveShapefile = async (event, context) => {
       return {
         isBase64Encoded: false,
         statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        headers: defaultResponseHeaders,
         body: JSON.stringify({
           shapefile_id: obfuscateId(
             existingShapefileRecord.id,
@@ -72,19 +76,16 @@ const saveShapefile = async (event, context) => {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: defaultResponseHeaders,
       body: JSON.stringify({
         shapefile_id: obfuscateId(newShapefileRecord[0].id, process.env.obfuscationSpinShapefiles)
       })
     }
   } catch (e) {
-    console.log(e)
-
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [e] })
+      headers: defaultResponseHeaders,
+      ...parseError(e)
     }
   }
 }

@@ -3,7 +3,6 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-  // applyGranuleFilters,
   updateGranuleResults,
   getGranules,
   excludeGranule,
@@ -22,12 +21,18 @@ import {
   EXCLUDE_GRANULE_ID,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
-  RESET_GRANULE_RESULTS
+  RESET_GRANULE_RESULTS,
+  TOGGLE_SPATIAL_POLYGON_WARNING,
+  UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS
 } from '../../constants/actionTypes'
-// import actions from '../index'
-
+import CwicGranuleRequest from '../../util/request/cwicGranuleRequest'
 
 const mockStore = configureMockStore([thunk])
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 
 describe('updateGranuleResults', () => {
   test('should create an action to update the search query', () => {
@@ -115,6 +120,7 @@ describe('getGranules', () => {
           }
         }
       },
+      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -132,20 +138,35 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       // Is updateGranuleResults called with the right payload
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
-      expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
-      expect(storeActions[2]).toEqual({ type: FINISHED_GRANULES_TIMER })
+      expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+      expect(storeActions[1]).toEqual({
+        type: RESET_GRANULE_RESULTS,
+        payload: 'collectionId'
+      })
+      expect(storeActions[2]).toEqual({
+        type: STARTED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
       expect(storeActions[3]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
+        type: LOADING_GRANULES,
+        payload: 'collectionId'
       })
       expect(storeActions[4]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[5]).toEqual({
+        type: FINISHED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[6]).toEqual({
         type: LOADED_GRANULES,
         payload: {
+          collectionId: 'collectionId',
           loaded: true
         }
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
@@ -158,7 +179,12 @@ describe('getGranules', () => {
               null
             ],
             is_cwic: false
-          }]
+          }],
+          singleGranuleSize: 0,
+          totalSize: {
+            size: '0.0',
+            unit: 'MB'
+          }
         }
       })
     })
@@ -195,6 +221,7 @@ describe('getGranules', () => {
           }
         }
       },
+      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -212,20 +239,39 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       // Is updateGranules called with the right payload
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
-      expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
-      expect(storeActions[2]).toEqual({ type: FINISHED_GRANULES_TIMER })
+      expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+      expect(storeActions[1]).toEqual({
+        type: RESET_GRANULE_RESULTS,
+        payload: 'collectionId'
+      })
+      expect(storeActions[2]).toEqual({
+        type: STARTED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
       expect(storeActions[3]).toEqual({
+        type: LOADING_GRANULES,
+        payload: 'collectionId'
+      })
+      expect(storeActions[4]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[5]).toEqual({
+        type: FINISHED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[6]).toEqual({
         type: UPDATE_AUTH,
         payload: 'token'
       })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: LOADED_GRANULES,
         payload: {
+          collectionId: 'collectionId',
           loaded: true
         }
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[8]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
@@ -238,15 +284,96 @@ describe('getGranules', () => {
               null
             ],
             is_cwic: false
-          }]
+          }],
+          singleGranuleSize: 0,
+          totalSize: {
+            size: '0.0',
+            unit: 'MB'
+          }
         }
       })
+    })
+  })
+
+  test('substitutes MBR for polygon in cwic granule searches', async () => {
+    const cwicRequestMock = jest.spyOn(CwicGranuleRequest.prototype, 'search')
+
+    nock(/localhost/)
+      .post(/cwic\/granules/)
+      .reply(200, '<feed></feed>')
+
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: 'token',
+      metadata: {
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              isCwic: true,
+              mock: 'data',
+              metadata: {
+                hasGranules: false,
+                tags: {
+                  'org.ceos.wgiss.cwic.granules.prod': {}
+                }
+              }
+            }
+          }
+        }
+      },
+      project: {},
+      focusedCollection: 'collectionId',
+      query: {
+        collection: {
+          temporal: {},
+          spatial: {
+            polygon: '-77,38,-77,38,-76,38,-77,38'
+          }
+        },
+        granule: { pageNum: 1 }
+      },
+      timeline: {
+        query: {}
+      }
+    })
+
+    // call the dispatch
+    await store.dispatch(getGranules()).then(() => {
+      // Is updateGranules called with the right payload
+      const storeActions = store.getActions()
+      expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+      expect(storeActions[1]).toEqual({
+        type: RESET_GRANULE_RESULTS,
+        payload: 'collectionId'
+      })
+      expect(storeActions[2]).toEqual({
+        type: STARTED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[3]).toEqual({
+        type: LOADING_GRANULES,
+        payload: 'collectionId'
+      })
+      expect(storeActions[4]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[5]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: true
+      })
+
+      expect(cwicRequestMock).toHaveBeenCalledTimes(1)
+      expect(cwicRequestMock.mock.calls[0][0].boundingBox).toEqual('-77,37.99999999999998,-76,38.00105844675541')
     })
   })
 
   test('returns no results if there is no focused collection', () => {
     // mockStore with initialState
     const store = mockStore({
+      metadata: {},
+      project: {},
       query: {
         collection: {
           temporal: {},
@@ -258,9 +385,7 @@ describe('getGranules', () => {
 
     store.dispatch(getGranules())
     const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({ type: STARTED_GRANULES_TIMER })
-    expect(storeActions[1]).toEqual({ type: LOADING_GRANULES })
-    expect(storeActions[2]).toEqual({ type: RESET_GRANULE_RESULTS })
+    expect(storeActions.length).toEqual(0)
   })
 
   test('does not call updateGranuleResults on error', async () => {
@@ -284,6 +409,7 @@ describe('getGranules', () => {
           }
         }
       },
+      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -297,10 +423,320 @@ describe('getGranules', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(getGranules()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when requestAddedGranules is set to true', () => {
+    describe('when there are no added granules', () => {
+      test('calls the API to get granules', async () => {
+        nock(/cmr/)
+          .post(/granules/)
+          .reply(200, {
+            feed: {
+              updated: '2019-03-27T20:21:14.705Z',
+              id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+              title: 'ECHO granule metadata',
+              entry: [{
+                mockGranuleData: 'goes here'
+              }]
+            }
+          },
+          {
+            'cmr-hits': 1
+          })
+
+        // mockStore with initialState
+        const store = mockStore({
+          authToken: '',
+          metadata: {
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  mock: 'data'
+                }
+              }
+            }
+          },
+          project: {},
+          focusedCollection: 'collectionId',
+          query: {
+            collection: {
+              temporal: {},
+              spatial: {}
+            },
+            granule: { pageNum: 1 }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        // call the dispatch
+        await store.dispatch(getGranules(['collectionId'], { requestAdditionalGranules: true })).then(() => {
+          // Is updateGranuleResults called with the right payload
+          const storeActions = store.getActions()
+          expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+          expect(storeActions[1]).toEqual({
+            type: STARTED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[2]).toEqual({
+            type: LOADING_GRANULES,
+            payload: 'collectionId'
+          })
+          expect(storeActions[3]).toEqual({
+            type: TOGGLE_SPATIAL_POLYGON_WARNING,
+            payload: false
+          })
+          expect(storeActions[4]).toEqual({
+            type: FINISHED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[5]).toEqual({
+            type: LOADED_GRANULES,
+            payload: {
+              collectionId: 'collectionId',
+              loaded: true
+            }
+          })
+          expect(storeActions[6]).toEqual({
+            type: UPDATE_GRANULE_RESULTS,
+            payload: {
+              collectionId: 'collectionId',
+              hits: 1,
+              isCwic: false,
+              results: [{
+                mockGranuleData: 'goes here',
+                formatted_temporal: [
+                  null,
+                  null
+                ],
+                is_cwic: false
+              }],
+              singleGranuleSize: 0,
+              totalSize: {
+                size: '0.0',
+                unit: 'MB'
+              }
+            }
+          })
+        })
+      })
+    })
+
+    describe('when there are added granules', () => {
+      test('calls the API to get granules', async () => {
+        nock(/cmr/)
+          .post(/granules/)
+          .reply(200, {
+            feed: {
+              updated: '2019-03-27T20:21:14.705Z',
+              id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+              title: 'ECHO granule metadata',
+              entry: [{
+                mockGranuleData: 'goes here'
+              }]
+            }
+          },
+          {
+            'cmr-hits': 1
+          })
+
+        // mockStore with initialState
+        const store = mockStore({
+          authToken: '',
+          metadata: {
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  mock: 'data'
+                }
+              }
+            }
+          },
+          project: {
+            byId: {
+              collectionId: {
+                addedGranuleIds: ['GRAN-ID-1']
+              }
+            },
+            collectionIds: ['collectionId']
+          },
+          focusedCollection: 'collectionId',
+          query: {
+            collection: {
+              temporal: {},
+              spatial: {}
+            },
+            granule: { pageNum: 1 }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        // call the dispatch
+        await store.dispatch(getGranules(['collectionId'], { requestAdditionalGranules: true })).then(() => {
+          // Is updateGranuleResults called with the right payload
+          const storeActions = store.getActions()
+          expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+          expect(storeActions[1]).toEqual({
+            type: STARTED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[2]).toEqual({
+            type: LOADING_GRANULES,
+            payload: 'collectionId'
+          })
+          expect(storeActions[3]).toEqual({
+            type: TOGGLE_SPATIAL_POLYGON_WARNING,
+            payload: false
+          })
+          expect(storeActions[4]).toEqual({
+            type: FINISHED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[5]).toEqual({
+            type: LOADED_GRANULES,
+            payload: {
+              collectionId: 'collectionId',
+              loaded: true
+            }
+          })
+          expect(storeActions[6]).toEqual({
+            type: UPDATE_GRANULE_RESULTS,
+            payload: {
+              collectionId: 'collectionId',
+              hits: 1,
+              isCwic: false,
+              results: [{
+                mockGranuleData: 'goes here',
+                formatted_temporal: [
+                  null,
+                  null
+                ],
+                is_cwic: false
+              }],
+              singleGranuleSize: 0,
+              totalSize: {
+                size: '0.0',
+                unit: 'MB'
+              }
+            }
+          })
+        })
+      })
+    })
+
+    describe('when there are removed granules', () => {
+      test('calls the API to get granules', async () => {
+        nock(/cmr/)
+          .post(/granules/)
+          .reply(200, {
+            feed: {
+              updated: '2019-03-27T20:21:14.705Z',
+              id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+              title: 'ECHO granule metadata',
+              entry: [{
+                mockGranuleData: 'goes here'
+              }]
+            }
+          },
+          {
+            'cmr-hits': 1
+          })
+
+        // mockStore with initialState
+        const store = mockStore({
+          authToken: '',
+          metadata: {
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  mock: 'data'
+                }
+              }
+            }
+          },
+          project: {
+            byId: {
+              collectionId: {
+                removedGranuleIds: ['GRAN-ID-1']
+              }
+            },
+            collectionIds: ['collectionId']
+          },
+          focusedCollection: 'collectionId',
+          query: {
+            collection: {
+              temporal: {},
+              spatial: {}
+            },
+            granule: { pageNum: 1 }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        // call the dispatch
+        await store.dispatch(getGranules(['collectionId'], { requestAdditionalGranules: true })).then(() => {
+          // Is updateGranuleResults called with the right payload
+          const storeActions = store.getActions()
+          expect(storeActions[0].type).toEqual(UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS)
+          expect(storeActions[1]).toEqual({
+            type: STARTED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[2]).toEqual({
+            type: LOADING_GRANULES,
+            payload: 'collectionId'
+          })
+          expect(storeActions[3]).toEqual({
+            type: TOGGLE_SPATIAL_POLYGON_WARNING,
+            payload: false
+          })
+          expect(storeActions[4]).toEqual({
+            type: FINISHED_GRANULES_TIMER,
+            payload: 'collectionId'
+          })
+          expect(storeActions[5]).toEqual({
+            type: LOADED_GRANULES,
+            payload: {
+              collectionId: 'collectionId',
+              loaded: true
+            }
+          })
+          expect(storeActions[6]).toEqual({
+            type: UPDATE_GRANULE_RESULTS,
+            payload: {
+              collectionId: 'collectionId',
+              hits: 1,
+              isCwic: false,
+              results: [{
+                mockGranuleData: 'goes here',
+                formatted_temporal: [
+                  null,
+                  null
+                ],
+                is_cwic: false
+              }],
+              singleGranuleSize: 0,
+              totalSize: {
+                size: '0.0',
+                unit: 'MB'
+              }
+            }
+          })
+        })
+      })
     })
   })
 })

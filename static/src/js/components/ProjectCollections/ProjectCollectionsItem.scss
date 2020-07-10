@@ -86,16 +86,6 @@
     color: $color__black--400;
   }
 
-  &__more-actions-item {
-    padding: $spacer/4 $spacer/2;
-  }
-
-  &__more-actions-icon {
-    width: 1rem;
-    margin-right: $spacer/4;
-    text-align: center;
-  }
-
   &__footer {
     display: flex;
     justify-content: flex-end;
@@ -110,6 +100,9 @@
     }
 
     &--invalid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: $color__red;
     }
   }

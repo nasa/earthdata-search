@@ -2,7 +2,8 @@ import {
   UPDATE_COLLECTION_QUERY,
   UPDATE_GRANULE_QUERY,
   UPDATE_REGION_QUERY,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  CLEAR_FILTERS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -58,6 +59,9 @@ const queryReducer = (state = initialState, action) => {
         ...state,
         ...query
       }
+    }
+    case CLEAR_FILTERS: {
+      return initialState
     }
     default:
       return state

@@ -1,21 +1,32 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import Autosuggest from 'react-autosuggest'
+
 import SearchForm from '../SearchForm'
-import TextField from '../../FormFields/TextField/TextField'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     advancedSearch: {},
+    autocomplete: {
+      suggestions: []
+    },
     authToken: '',
     keywordSearch: 'Test value',
     showFilterStackToggle: false,
+    onCancelAutocomplete: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
     onClearFilters: jest.fn(),
-    onToggleAdvancedSearchModal: jest.fn()
+    onToggleAdvancedSearchModal: jest.fn(),
+    onClearAutocompleteSuggestions: jest.fn(),
+    onFetchAutocomplete: jest.fn(),
+    onSelectAutocompleteSuggestion: jest.fn(),
+    onSuggestionsFetchRequested: jest.fn(),
+    onSuggestionsClearRequested: jest.fn(),
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<SearchForm {...props} />)
@@ -29,37 +40,21 @@ function setup() {
 describe('SearchForm component', () => {
   test('should render self and form fields', () => {
     const { enzymeWrapper } = setup()
-    const keywordSearch = enzymeWrapper.find('TextField')
+    const keywordSearch = enzymeWrapper.find(Autosuggest)
 
-    expect(keywordSearch.prop('name')).toEqual('keywordSearch')
-    expect(keywordSearch.prop('value')).toEqual('Test value')
+    expect(keywordSearch.prop('inputProps')).toEqual(expect.objectContaining({
+      name: 'keywordSearch',
+      value: 'Test value'
+    }))
   })
 
-  test('should call onInputChange when TextField value changes', () => {
+  test('onAutoSuggestChange updates the state', () => {
     const { enzymeWrapper } = setup()
-    const input = enzymeWrapper.find(TextField)
 
     expect(enzymeWrapper.state().keywordSearch).toEqual('Test value')
 
-    input.simulate('change', 'keywordSearch', 'new value')
+    enzymeWrapper.instance().onAutoSuggestChange({}, { newValue: 'new value' })
     expect(enzymeWrapper.state().keywordSearch).toEqual('new value')
-  })
-
-  test('should call onBlur when the TextField is blurred', () => {
-    const { enzymeWrapper, props } = setup()
-    const input = enzymeWrapper.find(TextField)
-
-    input.simulate('change', 'keywordSearch', 'new value')
-    input.simulate('blur')
-
-    expect(props.onChangeQuery.mock.calls.length).toBe(1)
-    expect(props.onChangeQuery.mock.calls[0]).toEqual([{
-      collection: {
-        keyword: 'new value'
-      }
-    }])
-    expect(props.onChangeFocusedCollection.mock.calls.length).toBe(1)
-    expect(props.onChangeFocusedCollection.mock.calls[0]).toEqual([''])
   })
 
   test('should call onClearFilters when the Clear Button is clicked', () => {
@@ -88,6 +83,23 @@ describe('SearchForm component', () => {
 
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)
+    })
+  })
+
+  describe('autocomplete', () => {
+    test('cancels inflight requests if search form is submitted', () => {
+      const { enzymeWrapper, props } = setup({
+        keywordSearch: 'AST'
+      })
+
+      // Force the state change so that the form submit actually happens
+      enzymeWrapper.setState({
+        keywordSearch: 'ASTER'
+      })
+
+      enzymeWrapper.find('.search-form__form').simulate('submit', { preventDefault: jest.fn() })
+
+      expect(props.onCancelAutocomplete).toHaveBeenCalledTimes(1)
     })
   })
 })

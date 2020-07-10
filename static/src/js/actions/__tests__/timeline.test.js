@@ -61,6 +61,9 @@ describe('getTimeline', () => {
     // mockStore with initialState
     const store = mockStore({
       authToken: '',
+      browser: {
+        name: 'browser name'
+      },
       focusedCollection: 'collectionId',
       metadata: {},
       query: {
@@ -86,11 +89,8 @@ describe('getTimeline', () => {
     await store.dispatch(getTimeline()).then(() => {
       // Is updateTimelineIntervals called with the right payload
       const storeActions = store.getActions()
+
       expect(storeActions[0]).toEqual({
-        type: UPDATE_AUTH,
-        payload: ''
-      })
-      expect(storeActions[1]).toEqual({
         type: UPDATE_TIMELINE_INTERVALS,
         payload: {
           results: [{
@@ -128,6 +128,9 @@ describe('getTimeline', () => {
     // mockStore with initialState
     const store = mockStore({
       authToken: 'token',
+      browser: {
+        name: 'browser name'
+      },
       focusedCollection: 'collectionId',
       metadata: {},
       query: {
@@ -177,6 +180,9 @@ describe('getTimeline', () => {
 
   test('returns no results if there is no focused collection', () => {
     const store = mockStore({
+      browser: {
+        name: 'browser name'
+      },
       focusedCollection: '',
       metadata: {},
       router: {
@@ -211,6 +217,9 @@ describe('getTimeline', () => {
 
     const store = mockStore({
       authToken: '',
+      browser: {
+        name: 'browser name'
+      },
       focusedCollection: 'collectionId',
       metadata: {},
       query: {
@@ -232,7 +241,7 @@ describe('getTimeline', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(getTimeline()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
@@ -248,6 +257,9 @@ describe('changeTimelineQuery', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      browser: {
+        name: 'browser name'
+      },
       timeline: {
         query: {},
         state: {}
@@ -261,7 +273,6 @@ describe('changeTimelineQuery', () => {
     // call the dispatch
     store.dispatch(changeTimelineQuery({ newQuery }))
 
-    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_TIMELINE_QUERY,

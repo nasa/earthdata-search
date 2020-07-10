@@ -4,13 +4,24 @@ import Adapter from 'enzyme-adapter-react-16'
 import { Form } from 'react-bootstrap'
 
 import CollectionResultsHeader from '../CollectionResultsHeader'
+import Skeleton from '../../Skeleton/Skeleton'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(propsOverride) {
   const props = {
-    collectionQuery: {},
+    collections: {
+      allIds: [],
+      hits: null,
+      isLoading: true,
+      isLoaded: false
+    },
+    collectionQuery: {
+      pageNum: 1
+    },
+    panelView: 'list',
     portal: {},
+    onChangePanelView: jest.fn(),
     onChangeQuery: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn(),
@@ -30,6 +41,28 @@ describe('CollectionResultsHeader component', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.type()).toEqual('div')
     expect(enzymeWrapper.props().className).toEqual('collection-results-header')
+  })
+
+  describe('collection hits', () => {
+    test('do not render when not provided', () => {
+      const { enzymeWrapper } = setup()
+      expect(enzymeWrapper.find('.collection-results-header__collection-count').length).toEqual(1)
+      expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
+    })
+
+    test('renders correctly when provided', () => {
+      const { enzymeWrapper } = setup({
+        collections: {
+          allIds: ['ID1', 'ID2'],
+          hits: '2',
+          isLoading: false,
+          isLoaded: true
+        }
+      })
+
+      expect(enzymeWrapper.find('.collection-results-header__collection-count').length).toEqual(1)
+      expect(enzymeWrapper.find('.collection-results-header__collection-count').text()).toEqual('Showing 2 of 2 matching collections')
+    })
   })
 
   describe('advanced search button', () => {

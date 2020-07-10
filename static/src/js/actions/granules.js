@@ -1,4 +1,5 @@
 import { isCancel } from 'axios'
+import { difference, isEqual } from 'lodash'
 
 import actions from './index'
 import {
@@ -9,9 +10,8 @@ import {
 } from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
 import OusGranuleRequest from '../util/request/ousGranuleRequest'
-import CwicGranuleRequest from '../util/request/cwic'
+import CwicGranuleRequest from '../util/request/cwicGranuleRequest'
 import {
-  ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   ADD_MORE_GRANULE_RESULTS,
   CLEAR_EXCLUDE_GRANULE_ID,
   ERRORED_GRANULES,
@@ -26,15 +26,18 @@ import {
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_METADATA,
-  UPDATE_GRANULE_RESULTS
+  UPDATE_GRANULE_RESULTS,
+  UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
+import { mbr } from '../util/map/mbr'
+import { getFocusedCollectionObject } from '../util/focusedCollection'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { prepareGranuleAccessParams } from '../../../../sharedUtils/prepareGranuleAccessParams'
+import { buildPromise } from '../util/buildPromise'
 
+const { defaultGranulesPerOrder, maxCmrPageSize } = getApplicationConfig()
 
-export const addGranulesFromCollection = payload => ({
-  type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
-  payload
-})
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -46,9 +49,9 @@ export const updateGranuleResults = payload => ({
   payload
 })
 
-
-export const resetGranuleResults = () => ({
-  type: RESET_GRANULE_RESULTS
+export const resetGranuleResults = payload => ({
+  type: RESET_GRANULE_RESULTS,
+  payload
 })
 
 export const updateGranuleMetadata = payload => ({
@@ -56,8 +59,9 @@ export const updateGranuleMetadata = payload => ({
   payload
 })
 
-export const onGranulesLoading = () => ({
-  type: LOADING_GRANULES
+export const onGranulesLoading = payload => ({
+  type: LOADING_GRANULES,
+  payload
 })
 
 export const onGranulesLoaded = payload => ({
@@ -69,12 +73,14 @@ export const onGranulesErrored = () => ({
   type: ERRORED_GRANULES
 })
 
-export const startGranulesTimer = () => ({
-  type: STARTED_GRANULES_TIMER
+export const startGranulesTimer = payload => ({
+  type: STARTED_GRANULES_TIMER,
+  payload
 })
 
-export const finishGranulesTimer = () => ({
-  type: FINISHED_GRANULES_TIMER
+export const finishGranulesTimer = payload => ({
+  type: FINISHED_GRANULES_TIMER,
+  payload
 })
 
 export const onExcludeGranule = payload => ({
@@ -102,6 +108,11 @@ export const setGranuleLinksLoading = () => ({
 
 export const setGranuleLinksLoaded = () => ({
   type: SET_GRANULE_LINKS_LOADED
+})
+
+export const updateCurrentCollectionGranuleParams = payload => ({
+  type: UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS,
+  payload
 })
 
 export const excludeGranule = data => (dispatch) => {
@@ -137,9 +148,11 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
   // Determine how many pages we will need to load to display all granules
   const totalPages = Math.ceil(granuleCount / pageSize)
 
+  const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
+
   return Promise.all(Array.from(Array(totalPages)).map((_, pageNum) => {
     const granuleResponse = requestObject.search({
-      ...granuleParams,
+      ...preparedGranuleParams,
       pageSize,
       pageNum: pageNum + 1,
       echoCollectionId: collectionId
@@ -187,6 +200,7 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   } = retrievalCollectionData
 
   const {
+    concept_id: conceptId,
     temporal,
     bounding_box: boundingBox,
     exclude = {}
@@ -198,18 +212,26 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   } = accessMethod
 
   const ousPayload = {
-    boundingBox,
-    echoCollectionId: collectionId,
     format,
-    temporal,
-    variables
+    variables,
+    echoCollectionId: collectionId
   }
 
-  // OUS has a slightly different syntax for excluding params
-  const { concept_id: excludedGranuleIds = [] } = exclude
-  if (excludedGranuleIds.length > 0) {
-    ousPayload.exclude_granules = true
-    ousPayload.granules = excludedGranuleIds
+  // If conceptId is truthy, send those granules explictly. Otherwise, set the
+  // relevant OUS parameters.
+  if (conceptId) {
+    ousPayload.granules = conceptId
+  } else {
+    const { concept_id: excludedGranuleIds = [] } = exclude
+
+    ousPayload.boundingBox = boundingBox
+    ousPayload.temporal = temporal
+
+    // OUS has a slightly different syntax for excluding params
+    if (excludedGranuleIds.length > 0) {
+      ousPayload.exclude_granules = true
+      ousPayload.granules = excludedGranuleIds
+    }
   }
 
   const response = requestObject.search(ousPayload)
@@ -261,77 +283,188 @@ export const clearExcludedGranules = collectionId => (dispatch) => {
 }
 
 // Cancel token to cancel pending requests
-let cancelToken
+const cancelTokens = {}
 
 /**
  * Perform a granules request based on the current redux state.
- * @param {function} dispatch - A dispatch function provided by redux.
- * @param {function} getState - A function that returns the current state provided by redux.
+ * @param {Array} collectionIds - Optional, collection IDs to get granules for. If not provided will return granules from focused collection
+ * @param {Object} opts - Optional, options object.
  */
-export const getGranules = () => (dispatch, getState) => {
-  // If cancel token is set, cancel the previous request(s)
-  if (cancelToken) {
-    cancelToken.cancel()
-  }
-
-  const granuleParams = prepareGranuleParams(getState())
-  dispatch(startGranulesTimer())
-  dispatch(onGranulesLoading())
-
-  if (!granuleParams) {
-    dispatch(resetGranuleResults())
-    return null
-  }
+export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
+  const state = getState()
 
   const {
-    authToken,
-    collectionId,
-    isCwicCollection,
-    pageNum
-  } = granuleParams
+    requestAddedGranules = false
+  } = opts
 
-  let requestObject = null
-  if (isCwicCollection) {
-    requestObject = new CwicGranuleRequest(authToken)
+  const {
+    focusedCollection,
+    metadata,
+    project
+  } = state
+
+  let isProject = true
+
+  let collectionIds
+
+  // If no collection ids were provided
+  if (ids == null) {
+    isProject = false
+    collectionIds = [focusedCollection]
   } else {
-    requestObject = new GranuleRequest(authToken)
+    collectionIds = ids
   }
 
-  cancelToken = requestObject.getCancelToken()
+  // Granules cannot be retrieved without a collection id
+  if (collectionIds.filter(Boolean).length === 0) {
+    return buildPromise(null)
+  }
 
-  const response = requestObject.search(buildGranuleSearchParams(granuleParams))
-    .then((response) => {
-      const payload = populateGranuleResults(collectionId, isCwicCollection, response)
+  const { collections } = metadata
 
-      dispatch(finishGranulesTimer())
-      dispatch(updateAuthTokenFromHeaders(response.headers))
-      dispatch(onGranulesLoaded({
-        loaded: true
-      }))
+  const { collectionIds: projectCollectionIds = [], byId: projectCollections = {} } = project
 
-      if (pageNum === 1) {
-        dispatch(updateGranuleResults(payload))
-      } else {
-        dispatch(addMoreGranuleResults(payload))
+  return Promise.all(collectionIds.map((collectionId) => {
+    const granuleParams = prepareGranuleParams(state, collectionId)
+
+    const collectionObject = getFocusedCollectionObject(collectionId, collections)
+    const { currentCollectionGranuleParams } = collectionObject || {}
+
+    // If granuleParams are equal to the last used granule params in the store, don't fetch new granules
+    if (isEqual(granuleParams, currentCollectionGranuleParams)) {
+      return null
+    }
+
+    // The params are different, save the new params and continue fetching granules
+    dispatch(updateCurrentCollectionGranuleParams({
+      collectionId,
+      granuleParams
+    }))
+
+    // If cancel token is set, cancel the previous request(s)
+    if (cancelTokens[collectionId]) {
+      cancelTokens[collectionId].cancel()
+      cancelTokens[collectionId] = undefined
+    }
+
+    const {
+      authToken,
+      isCwicCollection,
+      pageNum
+    } = granuleParams
+
+    if (!isProject && pageNum === 1) {
+      dispatch(resetGranuleResults(collectionId))
+    }
+
+    dispatch(startGranulesTimer(collectionId))
+    dispatch(onGranulesLoading(collectionId))
+
+    dispatch(actions.toggleSpatialPolygonWarning(false))
+
+    const granuleParamsOptions = {}
+
+    // If we should request the the added concept ids, only request them when there is less than one page (2000 results). In the
+    // event more than 2000 added granules are needed, paging will need to be accounted for, but this is considered an edge case
+    // at this time.
+    if (requestAddedGranules && projectCollectionIds.includes(collectionId)) {
+      const { [collectionId]: projectCollection } = projectCollections
+      const {
+        addedGranuleIds = []
+      } = projectCollection
+
+      const { metadata: newMetadata = {} } = getState()
+      const { collections } = newMetadata
+      const { byId: collectionsById } = collections
+      const { granules: collectionGranules = {} } = collectionsById
+      const { allIds: collectionGranulesAllIds } = collectionGranules
+
+      if (addedGranuleIds.length && addedGranuleIds.length < maxCmrPageSize) {
+        const granulesWithoutMetadata = difference(addedGranuleIds, collectionGranulesAllIds)
+        if (granulesWithoutMetadata && granulesWithoutMetadata.length) {
+          granuleParams.conceptId = granulesWithoutMetadata
+          granuleParamsOptions.forceConceptId = true
+        }
       }
-    })
-    .catch((error) => {
-      if (isCancel(error)) return
+    }
 
-      dispatch(onGranulesErrored())
-      dispatch(finishGranulesTimer())
-      dispatch(onGranulesLoaded({
-        loaded: false
-      }))
-      dispatch(actions.handleError({
-        error,
-        action: 'getGranules',
-        resource: 'granules',
-        requestObject
-      }))
-    })
+    const searchParams = buildGranuleSearchParams(granuleParams, granuleParamsOptions)
+    let requestObject = null
+    if (isCwicCollection) {
+      requestObject = new CwicGranuleRequest(authToken)
+      const { polygon } = searchParams
 
-  return response
+      // CWIC does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
+      if (polygon) {
+        dispatch(actions.toggleSpatialPolygonWarning(true))
+        const [llLat, llLng, urLat, urLng] = mbr({ polygon })
+        searchParams.boundingBox = [llLng, llLat, urLng, urLat].join(',')
+        searchParams.polygon = undefined
+      }
+    } else {
+      requestObject = new GranuleRequest(authToken)
+    }
+
+    cancelTokens[collectionId] = requestObject.getCancelToken()
+
+    const response = requestObject.search(searchParams)
+      .then((response) => {
+        const payload = populateGranuleResults({
+          collectionId,
+          isCwic: isCwicCollection,
+          response
+        })
+
+        dispatch(finishGranulesTimer(collectionId))
+        dispatch(updateAuthTokenFromHeaders(response.headers))
+        dispatch(onGranulesLoaded({
+          collectionId,
+          loaded: true
+        }))
+
+        if (isProject || pageNum === 1) {
+          dispatch(updateGranuleResults(payload))
+        } else {
+          dispatch(addMoreGranuleResults(payload))
+        }
+
+        // If this collection is in the project update the order count if applicable
+        if (projectCollectionIds.includes(collectionId)) {
+          const { [collectionId]: projectCollection } = projectCollections
+          const { selectedAccessMethod } = projectCollection
+
+          if (selectedAccessMethod && !['download', 'opendap'].includes(selectedAccessMethod)) {
+            // Calculate the number of orders that will be created based on granule count
+            const { hits: granuleCount } = payload
+            const orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
+
+            dispatch(actions.updateAccessMethodOrderCount({
+              collectionId,
+              selectedAccessMethod,
+              orderCount
+            }))
+          }
+        }
+      })
+      .catch((error) => {
+        if (isCancel(error)) return
+
+        dispatch(onGranulesErrored())
+        dispatch(finishGranulesTimer(collectionId))
+        dispatch(onGranulesLoaded({
+          collectionId,
+          loaded: false
+        }))
+        dispatch(actions.handleError({
+          error,
+          action: 'getGranules',
+          resource: 'granules',
+          requestObject
+        }))
+      })
+
+    return response
+  }))
 }
 
 /**
@@ -341,11 +474,21 @@ export const getGranules = () => (dispatch, getState) => {
  * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
  * @param {Boolean} closePanel - If true, tells the overlay panel to close once the granules are recieved.
  */
-// eslint-disable-next-line max-len
-export const applyGranuleFilters = (collectionId, granuleFilters, closePanel = false) => (dispatch) => {
+export const applyGranuleFilters = (
+  collectionId,
+  granuleFilters,
+  closePanel = false
+) => (dispatch, getState) => {
   dispatch(actions.updateGranuleQuery({ pageNum: 1 }))
   dispatch(actions.updateCollectionGranuleFilters(collectionId, granuleFilters))
   dispatch(getGranules()).then(() => {
     if (closePanel) dispatch(actions.toggleSecondaryOverlayPanel(false))
+
+    // If the collection is in the project, we need to update access methods after fetching new granules
+    const { project = {} } = getState()
+    const { collectionIds } = project
+    if (collectionIds.includes(collectionId)) {
+      dispatch(actions.fetchAccessMethods([collectionId]))
+    }
   })
 }

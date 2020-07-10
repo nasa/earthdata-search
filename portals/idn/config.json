@@ -1,6 +1,7 @@
 {
   "hasStyles": true,
   "hasScripts": false,
+  "hideCollectionFilters": true,
   "logo": {
     "id": "idn-logo",
     "link": "https://idn.ceos.org/",
@@ -8,5 +9,8 @@
   },
   "org": "IDN",
   "pageTitle": "IDN",
+  "query": {
+    "hasGranulesOrCwic": null
+  },  
   "title": "Search"
 }

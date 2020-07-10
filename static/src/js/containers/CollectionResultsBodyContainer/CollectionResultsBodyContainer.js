@@ -42,16 +42,15 @@ export const CollectionResultsBodyContainer = (props) => {
     onRemoveCollectionFromProject,
     onViewCollectionGranules,
     onViewCollectionDetails,
-    onChangeCollectionPageNum
+    onChangeCollectionPageNum,
+    panelView
   } = props
 
   const { collectionIds: projectIds } = project
 
-  const onWaypointEnter = (params = {}) => {
-    if (params.event !== null) {
-      const { pageNum } = query
-      onChangeCollectionPageNum(pageNum + 1)
-    }
+  const loadNextPage = () => {
+    const { pageNum } = query
+    onChangeCollectionPageNum(pageNum + 1)
   }
 
   return (
@@ -65,7 +64,8 @@ export const CollectionResultsBodyContainer = (props) => {
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onViewCollectionGranules={onViewCollectionGranules}
       onViewCollectionDetails={onViewCollectionDetails}
-      waypointEnter={onWaypointEnter}
+      loadNextPage={loadNextPage}
+      panelView={panelView}
     />
   )
 }
@@ -81,7 +81,8 @@ CollectionResultsBodyContainer.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  onChangeCollectionPageNum: PropTypes.func.isRequired
+  onChangeCollectionPageNum: PropTypes.func.isRequired,
+  panelView: PropTypes.string.isRequired
 }
 
 export default withRouter(

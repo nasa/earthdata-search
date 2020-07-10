@@ -35,6 +35,10 @@ describe('AdminRetrievalDetails component', () => {
       const { enzymeWrapper } = setup({
         retrieval: {
           username: 'edsc-test',
+          jsondata: {
+            portal_id: 'testPortal',
+            source: '?mock-source'
+          },
           obfuscated_id: '06347346',
           collections: [{
             id: 1,
@@ -48,13 +52,14 @@ describe('AdminRetrievalDetails component', () => {
 
       expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(0).text()).toEqual('edsc-test')
       expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(1).text()).toEqual('06347346')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(2).text()).toEqual('/portal/testPortal/search?mock-source')
       expect(enzymeWrapper.find('.admin-retrieval-details__collection').length).toEqual(1)
 
       expect(enzymeWrapper.find('.admin-retrieval-details__collection-heading').at(0).text()).toEqual('C10000005')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(2).text()).toEqual('1')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(3).text()).toEqual('EDSC')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(4).text()).toEqual('0')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(5).text()).toEqual('35')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(3).text()).toEqual('1')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(4).text()).toEqual('EDSC')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(5).text()).toEqual('0')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(6).text()).toEqual('35')
     })
   })
 
@@ -63,6 +68,9 @@ describe('AdminRetrievalDetails component', () => {
       const { enzymeWrapper } = setup({
         retrieval: {
           username: 'edsc-test',
+          jsondata: {
+            source: '?mock-source'
+          },
           obfuscated_id: '06347346',
           collections: [{
             id: 1,
@@ -88,13 +96,14 @@ describe('AdminRetrievalDetails component', () => {
 
       expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(0).text()).toEqual('edsc-test')
       expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(1).text()).toEqual('06347346')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(2).text()).toEqual('/search?mock-source')
 
       expect(enzymeWrapper.find('.admin-retrieval-details__collection').length).toEqual(1)
       expect(enzymeWrapper.find('.admin-retrieval-details__collection-heading').at(0).text()).toEqual('C10000005')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(2).text()).toEqual('1')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(3).text()).toEqual('EDSC')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(4).text()).toEqual('2')
-      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(5).text()).toEqual('35')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(3).text()).toEqual('1')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(4).text()).toEqual('EDSC')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(5).text()).toEqual('2')
+      expect(enzymeWrapper.find('.admin-retrieval-details__metadata-display-content').at(6).text()).toEqual('35')
 
       expect(enzymeWrapper.find('.admin-retrieval-details__orders-table').length).toEqual(1)
       expect(enzymeWrapper.find('.admin-retrieval-details__order-row').length).toEqual(2)

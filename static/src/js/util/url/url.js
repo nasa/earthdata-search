@@ -13,11 +13,12 @@ import { decodeGridCoords, encodeGridCoords } from './gridEncoders'
 import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesOrCwicEncoders'
 import { isPath } from '../isPath'
 import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEncoders'
+import { encodeAutocomplete, decodeAutocomplete } from './autocompleteEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
- * @param {string} url - A string containing both a path and query string
- * @return {string} A string containing only query parameter values
+ * @param {String} url - A string containing both a path and query string
+ * @return {String} A string containing only query parameter values
  */
 export const queryParamsFromUrlString = url => url.split(/[?#]/)[1]
 
@@ -43,6 +44,7 @@ const urlDefs = {
   boundingBoxSearch: { shortKey: 'sb', encode: encodeString, decode: decodeString },
   polygonSearch: { shortKey: 'polygon', encode: encodeString, decode: decodeString },
   lineSearch: { shortKey: 'line', encode: encodeString, decode: decodeString },
+  circleSearch: { shortKey: 'circle', encode: encodeString, decode: decodeString },
   map: { shortKey: 'm', encode: encodeMap, decode: decodeMap },
   temporalSearch: { shortKey: 'qt', encode: encodeTemporal, decode: decodeTemporal },
   overrideTemporalSearch: { shortKey: 'ot', encode: encodeTemporal, decode: decodeTemporal },
@@ -57,13 +59,14 @@ const urlDefs = {
   gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords },
   shapefileId: { shortKey: 'sf', encode: encodeString, decode: encodeString },
   tagKey: { shortKey: 'tag_key', encode: encodeString, decode: decodeString },
-  hasGranulesOrCwic: { shortKey: 'ac', encode: encodeHasGranulesOrCwic, decode: decodeHasGranulesOrCwic }
+  hasGranulesOrCwic: { shortKey: 'ac', encode: encodeHasGranulesOrCwic, decode: decodeHasGranulesOrCwic },
+  autocompleteSelected: { shortKey: 'as', encode: encodeAutocomplete, decode: decodeAutocomplete }
 }
 
 /**
  * Helper method to decode a given paramName from URL parameters base on urlDefs keys
- * @param {object} params Object of encoded URL parameters
- * @param {string} paramName Param to decode
+ * @param {Object} params Object of encoded URL parameters
+ * @param {String} paramName Param to decode
  */
 const decodeHelp = (params, paramName) => {
   const value = params[urlDefs[paramName].shortKey]
@@ -72,8 +75,8 @@ const decodeHelp = (params, paramName) => {
 
 /**
  * Given a URL param string, returns an object that matches the redux store
- * @param {string} paramString a URL encoded parameter string
- * @return {object} An object of values that match the redux store
+ * @param {String} paramString a URL encoded parameter string
+ * @return {Object} An object of values that match the redux store
  */
 export const decodeUrlParams = (paramString) => {
   // decode the paramString
@@ -90,6 +93,7 @@ export const decodeUrlParams = (paramString) => {
   spatial.boundingBox = decodeHelp(params, 'boundingBoxSearch')
   spatial.polygon = decodeHelp(params, 'polygonSearch')
   spatial.line = decodeHelp(params, 'lineSearch')
+  spatial.circle = decodeHelp(params, 'circleSearch')
 
   const collectionQuery = { pageNum: 1 }
   const granuleQuery = { pageNum: 1 }
@@ -140,8 +144,11 @@ export const decodeUrlParams = (paramString) => {
 
   const advancedSearch = decodeAdvancedSearch(params)
 
+  const autocompleteSelected = decodeHelp(params, 'autocompleteSelected')
+
   return {
     advancedSearch,
+    autocompleteSelected,
     cmrFacets,
     collections,
     featureFacets,
@@ -157,8 +164,8 @@ export const decodeUrlParams = (paramString) => {
 
 /**
  * Given a set of React Component Props, returns a URL path with URL encoded parameter string
- * @param {object} props React Props
- * @return {string} URL encoded parameter string
+ * @param {Object} props React Props
+ * @return {String} URL encoded parameter string
  */
 export const encodeUrlQuery = (props) => {
   const query = {}
@@ -189,27 +196,6 @@ export const encodeUrlQuery = (props) => {
   const { pathname } = props
   const fullPath = pathname + paramString
   return fullPath
-}
-
-/**
- * Create a query string containing both indexed and non-indexed keys.
- * @param {object} queryParams - An object containing all queryParams.
- * @param {array} nonIndexedKeys - An array of strings that represent the keys which should not be indexed.
- * @return {string} A query string containing both indexed and non-indexed keys.
- */
-export const prepKeysForCmr = (queryParams, nonIndexedKeys = []) => {
-  const nonIndexedAttrs = {}
-  const indexedAttrs = { ...queryParams }
-
-  nonIndexedKeys.forEach((key) => {
-    nonIndexedAttrs[key] = indexedAttrs[key]
-    delete indexedAttrs[key]
-  })
-
-  return [
-    qs.stringify(indexedAttrs),
-    qs.stringify(nonIndexedAttrs, { indices: false, arrayFormat: 'brackets' })
-  ].filter(Boolean).join('&')
 }
 
 /**

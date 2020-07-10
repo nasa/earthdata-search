@@ -7,6 +7,7 @@ import { isEmpty } from 'lodash'
  */
 export const isProjectCollectionValid = (method) => {
   if (!method) return false
+
   // Here is where we can check the method to see if its valid
   const [methodKey] = Object.keys(method)
 
@@ -17,5 +18,3 @@ export const isProjectCollectionValid = (method) => {
 
   return isValid
 }
-
-export default isProjectCollectionValid

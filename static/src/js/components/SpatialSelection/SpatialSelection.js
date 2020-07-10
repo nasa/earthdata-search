@@ -15,6 +15,11 @@ import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 import { eventEmitter } from '../../events/events'
 import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
 import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
+import { mbr } from '../../util/map/mbr'
+import { limitLatLngDecimalPoints } from '../../util/limitDecimalPoints'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+const { defaultSpatialDecimalSize } = getApplicationConfig()
 
 const normalColor = '#00ffff'
 const errorColor = '#990000'
@@ -22,7 +27,9 @@ export const colorOptions = {
   color: normalColor,
   dashArray: null,
   pointerEvents: 'stroke',
-  fillOpacity: 0
+  fillOpacity: 0,
+  weight: 3,
+  fill: true
 }
 export const errorOptions = {
   color: errorColor,
@@ -39,6 +46,7 @@ L.Icon.Default.mergeOptions({
 
 // Add some custom text to leaflet draw things
 L.drawLocal.draw.handlers.simpleshape.tooltip.end = 'Release to finish drawing'
+L.drawLocal.draw.toolbar.buttons.circle = 'Search by spatial circle'
 L.drawLocal.draw.toolbar.buttons.polygon = 'Search by spatial polygon'
 L.drawLocal.draw.toolbar.buttons.rectangle = 'Search by spatial rectangle'
 L.drawLocal.draw.toolbar.buttons.marker = 'Search by spatial coordinate'
@@ -61,7 +69,7 @@ L.Draw.Tooltip.prototype.updateContent = function updateContent(content) {
 const originalUpdatePosition = L.Draw.Tooltip.prototype.updatePosition
 
 L.Draw.Tooltip.prototype.updatePosition = function updatePosition(latlng) {
-  this._point = `(${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)})`
+  this._point = `(${latlng.lat.toFixed(defaultSpatialDecimalSize)}, ${latlng.lng.toFixed(defaultSpatialDecimalSize)})`
   if (this._content != null) {
     this.updateContent(this._content)
   }
@@ -76,6 +84,7 @@ class SpatialSelection extends Component {
     this.state = {
       drawnLayer: null,
       drawnLayerType: null,
+      drawnMbr: null,
       drawnPoints: null
     }
 
@@ -96,48 +105,111 @@ class SpatialSelection extends Component {
 
   componentDidMount() {
     const { mapRef } = this.props
-    const map = mapRef.leafletElement
+    const {
+      leafletElement: map,
+      props: mapProps
+    } = mapRef
     if (!map) {
       return
     }
 
     this.renderShape(this.props)
 
+    const { center = [] } = mapProps
+
     const { featureGroupRef = {} } = this
     const { leafletElement: featureGroup = null } = featureGroupRef
 
-    if (featureGroup && featureGroup.getBounds) {
+    if (!center.length && featureGroup && featureGroup.getBounds) {
       const bounds = featureGroup.getBounds() || false
       panFeatureGroupToCenter(map, bounds)
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mapRef } = this.props
-    const { drawnPoints, drawnLayer } = this.state
+    const {
+      advancedSearch = {},
+      boundingBoxSearch,
+      circleSearch,
+      lineSearch,
+      mapRef,
+      pointSearch,
+      polygonSearch
+    } = this.props
+    const {
+      drawnLayer,
+      drawnMbr,
+      drawnPoints
+    } = this.state
 
-    const map = mapRef.leafletElement
+    const { leafletElement: map } = mapRef
     if (!map) {
       return
     }
+
+    const { regionSearch = {} } = advancedSearch
+    const { selectedRegion = {} } = regionSearch
+    const { spatial: regionSpatial } = selectedRegion
+
+    const { regionSearch: nextRegionSearch = {} } = nextProps.advancedSearch
+    const { selectedRegion: nextSelectedRegion = {} } = nextRegionSearch
+    const { spatial: nextRegionSpatial } = nextSelectedRegion
 
     const newDrawing = nextProps.pointSearch
       || nextProps.boundingBoxSearch
       || nextProps.polygonSearch
       || nextProps.lineSearch
+      || nextProps.circleSearch
+      || nextRegionSpatial
+    const oldDrawing = pointSearch
+    || boundingBoxSearch
+    || polygonSearch
+    || lineSearch
+    || circleSearch
+    || regionSpatial
 
-    if ((drawnLayer && drawnLayer._map === null) || newDrawing !== drawnPoints) {
+    const { featureGroupRef = {} } = this
+    const { leafletElement = {} } = featureGroupRef
+
+    if (oldDrawing !== newDrawing && newDrawing !== drawnPoints) {
       if (drawnLayer) {
-        const { featureGroupRef = {} } = this
-        const { leafletElement = {} } = featureGroupRef
-
         if (leafletElement.removeLayer) {
           leafletElement.removeLayer(drawnLayer)
+          leafletElement.removeLayer(drawnMbr)
+          this.setState({
+            drawnMbr: null
+          })
         }
       }
 
       // Draw the new shape
-      this.renderShape(nextProps)
+      this.renderShape(nextProps, true)
+    }
+
+    // If a polygon is drawn for a CWIC collection, render the MBR to show the user what is being sent
+    // to CWIC as their spatial
+    if (!nextProps.isProjectPage) {
+      if (
+        (nextProps.polygonSearch !== '')
+        && drawnMbr === null
+        && nextProps.isCwic
+      ) {
+        this.renderMbr(nextProps.polygonSearch)
+      } else if (drawnMbr !== null && !nextProps.isCwic) {
+        if (leafletElement.removeLayer) {
+          leafletElement.removeLayer(drawnMbr)
+          this.setState({
+            drawnMbr: null
+          })
+        }
+      }
+    } else if (drawnMbr !== null) {
+      if (leafletElement.removeLayer) {
+        leafletElement.removeLayer(drawnMbr)
+        this.setState({
+          drawnMbr: null
+        })
+      }
     }
   }
 
@@ -148,16 +220,18 @@ class SpatialSelection extends Component {
 
   // Callback from EditControl, called when clicking the draw shape button
   onDrawStart(e) {
-    const { drawnLayer } = this.state
+    const { drawnLayer, drawnMbr } = this.state
 
     if (drawnLayer) {
       const { featureGroupRef } = this
       const { leafletElement } = featureGroupRef
       leafletElement.removeLayer(drawnLayer)
+      leafletElement.removeLayer(drawnMbr)
 
       this.setState({
         drawnLayer: null,
-        drawnLayerType: null
+        drawnLayerType: null,
+        drawnMbr: null
       })
     }
 
@@ -183,6 +257,7 @@ class SpatialSelection extends Component {
     if (this.drawControl) {
       this.drawControl._toolbars.draw._modes.marker.handler.disable()
       this.drawControl._toolbars.draw._modes.rectangle.handler.disable()
+      this.drawControl._toolbars.draw._modes.circle.handler.disable()
     }
   }
 
@@ -245,6 +320,10 @@ class SpatialSelection extends Component {
     }
 
     this.updateStateAndQuery(layer, type)
+
+    // Assign the type to the layer, and then the layer so that it's available when editing
+    layer.type = layerType
+    this.layer = layer
   }
 
   // Callback from EditControl, called when the layer is deleted
@@ -263,7 +342,7 @@ class SpatialSelection extends Component {
     })
   }
 
-  setLayer(layer) {
+  setLayer(layer, shouldCenter) {
     this.layer = layer
 
     const { mapRef } = this.props
@@ -272,7 +351,7 @@ class SpatialSelection extends Component {
     const { featureGroupRef = {} } = this
     const { leafletElement: featureGroup = null } = featureGroupRef
 
-    if (featureGroup) {
+    if (shouldCenter && featureGroup) {
       panFeatureGroupToCenter(map, featureGroup)
     }
   }
@@ -285,38 +364,44 @@ class SpatialSelection extends Component {
     let latLngs
     switch (type) {
       case 'point':
-        latLngs = [layer.getLatLng()].map(p => `${p.lng},${p.lat}`)
+        latLngs = limitLatLngDecimalPoints([layer.getLatLng()].map(p => `${p.lng},${p.lat}`))
         break
       case 'boundingBox':
-        latLngs = [layer.getLatLngs()[0][0], layer.getLatLngs()[0][2]].map(p => `${p.lng},${p.lat}`)
+        latLngs = limitLatLngDecimalPoints([layer.getLatLngs()[0][0], layer.getLatLngs()[0][2]].map(p => `${p.lng},${p.lat}`))
         break
       case 'polygon':
-        originalLatLngs = Array.from(layer.getLatLngs())
-        latLngs = makeCounterClockwise(originalLatLngs).map(p => `${p.lng},${p.lat}`)
+        ([originalLatLngs] = layer.getLatLngs())
+        latLngs = limitLatLngDecimalPoints(makeCounterClockwise(originalLatLngs).map(p => `${p.lng},${p.lat}`))
         break
       case 'line':
-        latLngs = Array.from(layer.getLatLngs()).map(p => `${p.lng},${p.lat}`)
+        latLngs = limitLatLngDecimalPoints(Array.from(layer.getLatLngs()).map(p => `${p.lng},${p.lat}`))
         break
+      case 'circle': {
+        const center = layer.getLatLng()
+        const radius = layer.getRadius()
+        latLngs = limitLatLngDecimalPoints([center].map(p => `${p.lng},${p.lat}`))
+        latLngs.push(parseFloat(radius).toFixed(0))
+        break
+      }
       default:
         return
     }
 
-    // If the shape crosses the anti-meridian, adjust the points to fit in the globe
-    const latLngsAntiMeridian = []
-    latLngs.forEach((coord) => {
-      let [lon, lat] = Array.from(coord.split(','))
-      lon = parseFloat(lon)
-      while (lon < -180) { lon += 360 }
-      while (lon > 180) { lon -= 360 }
-      lat = parseFloat(lat)
-      lat = Math.min(90, lat)
-      lat = Math.max(-90, lat)
-      latLngsAntiMeridian.push(`${lon},${lat}`)
-    })
-
-    if (type === 'polygon') {
-      // Close the polygon by duplicating the first point as the last point
-      latLngsAntiMeridian.push(latLngsAntiMeridian[0])
+    let latLngsAntiMeridian = []
+    if (type === 'circle') {
+      latLngsAntiMeridian = latLngs
+    } else {
+      // If the shape crosses the anti-meridian, adjust the points to fit in the globe
+      latLngs.forEach((coord) => {
+        let [lon, lat] = Array.from(coord.split(','))
+        lon = parseFloat(lon)
+        while (lon < -180) { lon += 360 }
+        while (lon > 180) { lon -= 360 }
+        lat = parseFloat(lat)
+        lat = Math.min(90, lat)
+        lat = Math.max(-90, lat)
+        latLngsAntiMeridian.push(`${lon},${lat}`)
+      })
     }
 
     this.setState({
@@ -324,6 +409,7 @@ class SpatialSelection extends Component {
       drawnLayerType: type,
       drawnPoints: latLngsAntiMeridian.join()
     })
+
     onChangeQuery({
       collection: {
         spatial: {
@@ -338,17 +424,19 @@ class SpatialSelection extends Component {
     const map = mapRef.leafletElement
     let bounds = []
 
-    if (layer.type === 'marker') {
+    if (['circle', 'marker'].indexOf(layer.type) > -1) {
+      // Circle and Marker (Point) only have a single
+      // LatLng, normalize the LatLng for our response
       bounds = [layer.getLatLng()]
     } else {
-      bounds = layer.getLatLngs()
+      ([bounds] = layer.getLatLngs())
     }
 
     return bounds.map(latLng => map.latLngToLayerPoint(latLng))
   }
 
   // Draws a leaflet shape based on provided props
-  renderShape(props) {
+  renderShape(props, shouldCenter = false) {
     const { featureGroupRef = {} } = this
     if (featureGroupRef === null) return
     const { leafletElement: featureGroup = null } = featureGroupRef
@@ -358,7 +446,8 @@ class SpatialSelection extends Component {
       pointSearch,
       boundingBoxSearch,
       lineSearch,
-      polygonSearch
+      polygonSearch,
+      circleSearch
     } = props
 
     const {
@@ -372,27 +461,31 @@ class SpatialSelection extends Component {
     if (selectedRegion && selectedRegion.spatial) {
       this.setState({ drawnPoints: selectedRegion.spatial })
       const points = splitListOfPoints(selectedRegion.spatial)
-      this.renderPolygon(getShape(points), featureGroup)
+      this.renderPolygon(getShape(points), featureGroup, shouldCenter)
     } else if (pointSearch) {
       this.setState({ drawnPoints: pointSearch })
-      this.renderPoint(getShape([pointSearch]), featureGroup)
+      this.renderPoint(getShape([pointSearch]), featureGroup, shouldCenter)
     } else if (boundingBoxSearch) {
       this.setState({ drawnPoints: boundingBoxSearch })
       const points = splitListOfPoints(boundingBoxSearch)
-      this.renderBoundingBox(getShape(points), featureGroup)
+      this.renderBoundingBox(getShape(points), featureGroup, shouldCenter)
     } else if (polygonSearch) {
       this.setState({ drawnPoints: polygonSearch })
       const points = splitListOfPoints(polygonSearch)
-      this.renderPolygon(getShape(points), featureGroup)
+      this.renderPolygon(getShape(points), featureGroup, shouldCenter)
     } else if (lineSearch) {
       this.setState({ drawnPoints: lineSearch })
       const points = splitListOfPoints(lineSearch)
-      this.renderLine(points, featureGroup)
+      this.renderLine(points, featureGroup, shouldCenter)
+    } else if (circleSearch) {
+      this.setState({ drawnPoints: circleSearch })
+      const points = circleSearch.split(',')
+      this.renderCircle(points, featureGroup, shouldCenter)
     }
   }
 
   // Draws a leaflet Marker
-  renderPoint(point, featureGroup) {
+  renderPoint(point, featureGroup, shouldCenter) {
     if (featureGroup) {
       const marker = new L.Marker(point[0], {
         icon: L.Draw.Marker.prototype.options.icon
@@ -405,12 +498,12 @@ class SpatialSelection extends Component {
         drawnLayer: marker,
         drawnLayerType: 'point'
       })
-      this.setLayer(marker)
+      this.setLayer(marker, shouldCenter)
     }
   }
 
   // Draws a leaflet Rectangle
-  renderBoundingBox(rectangle, featureGroup) {
+  renderBoundingBox(rectangle, featureGroup, shouldCenter) {
     if (featureGroup) {
       const shape = rectangle
       // southwest longitude should not be greater than northeast
@@ -433,19 +526,47 @@ class SpatialSelection extends Component {
         drawnLayer: rect,
         drawnLayerType: 'boundingBox'
       })
-      this.setLayer(rect)
+      this.setLayer(rect, shouldCenter)
+    }
+  }
+
+  renderMbr(drawnPoints) {
+    const { featureGroupRef = {} } = this
+    if (featureGroupRef === null) return
+    const { leafletElement: featureGroup = null } = featureGroupRef
+
+    if (featureGroup) {
+      const latLngs = mbr({ polygon: drawnPoints })
+
+      const sw = new L.LatLng(latLngs[0], latLngs[1])
+      const ne = new L.LatLng(latLngs[2], latLngs[3])
+      const bounds = new L.LatLngBounds(sw, ne)
+
+      const options = {
+        color: '#c0392b',
+        weight: 3,
+        fill: false,
+        dashArray: '2, 10',
+        opacity: 0.8
+      }
+      const rect = new L.Rectangle([bounds], options)
+
+      rect.addTo(featureGroup)
+      this.setState({
+        drawnMbr: rect
+      })
     }
   }
 
   // Draws a leaflet Polygon
-  renderPolygon(polygon, featureGroup) {
+  renderPolygon(polygon, featureGroup, shouldCenter) {
     if (featureGroup) {
       const options = L.extend(
         {},
         L.Draw.Polygon.prototype.options.shapeOptions,
         colorOptions
       )
-      const poly = new L.SphericalPolygon(polygon, options)
+      const poly = new L.Polygon(polygon, options)
 
       poly.type = 'polygon'
       poly.addTo(featureGroup)
@@ -454,11 +575,11 @@ class SpatialSelection extends Component {
         drawnLayer: poly,
         drawnLayerType: 'polygon'
       })
-      this.setLayer(poly)
+      this.setLayer(poly, shouldCenter)
     }
   }
 
-  renderLine(points, featureGroup) {
+  renderLine(points, featureGroup, shouldCenter) {
     if (featureGroup) {
       const options = L.extend(
         {},
@@ -478,7 +599,32 @@ class SpatialSelection extends Component {
         drawnLayer: line,
         drawnLayerType: 'line'
       })
-      this.setLayer(line)
+      this.setLayer(line, shouldCenter)
+    }
+  }
+
+  renderCircle(points, featureGroup, shouldCenter) {
+    if (featureGroup) {
+      const [
+        lat,
+        lng,
+        radius
+      ] = points
+      const center = new L.LatLng(lng, lat)
+
+      const circle = new L.Circle(center, {
+        radius,
+        ...colorOptions
+      })
+
+      circle.type = 'circle'
+      circle.addTo(featureGroup)
+
+      this.setState({
+        drawnLayer: circle,
+        drawnLayerType: 'circle'
+      })
+      this.setLayer(circle, shouldCenter)
     }
   }
 
@@ -497,22 +643,26 @@ class SpatialSelection extends Component {
         onEditStart={this.onEditStart}
         onEditStop={this.onEditStop}
         draw={{
+          circle: {
+            drawError: errorOptions,
+            shapeOptions: colorOptions
+          },
+          circlemarker: false,
           polygon: {
             drawError: errorOptions,
             shapeOptions: colorOptions
           },
+          polyline: false,
           rectangle: {
             drawError: errorOptions,
             shapeOptions: colorOptions
-          },
-          polyline: false,
-          circlemarker: false,
-          circle: false
+          }
         }}
         edit={{
           selectedPathOptions: {
             opacity: 0.6,
-            dashArray: '10, 10'
+            dashArray: '10, 10',
+            maintainColor: true
           }
         }}
       />
@@ -527,6 +677,7 @@ class SpatialSelection extends Component {
 
 SpatialSelection.defaultProps = {
   boundingBoxSearch: '',
+  circleSearch: '',
   lineSearch: '',
   mapRef: {},
   pointSearch: '',
@@ -536,6 +687,8 @@ SpatialSelection.defaultProps = {
 SpatialSelection.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.string,
+  circleSearch: PropTypes.string,
+  isCwic: PropTypes.bool.isRequired,
   isProjectPage: PropTypes.bool.isRequired,
   mapRef: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired,

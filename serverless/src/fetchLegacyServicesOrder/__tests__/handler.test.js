@@ -7,7 +7,6 @@ import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as cmrEnv from '../../../../sharedUtils/cmrEnv'
 import fetchLegacyServicesOrder from '../handler'
 
-
 let dbTracker
 
 beforeEach(() => {
@@ -16,7 +15,9 @@ beforeEach(() => {
   jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
   jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
+  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementation(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false
@@ -38,8 +39,6 @@ afterEach(() => {
 
 describe('fetchLegacyServicesOrder', () => {
   test('correctly retrieves a known catalog rest order currently processing', async () => {
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
@@ -99,8 +98,6 @@ describe('fetchLegacyServicesOrder', () => {
   })
 
   test('correctly retrieves a known catalog rest order that is complete', async () => {
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
@@ -160,8 +157,6 @@ describe('fetchLegacyServicesOrder', () => {
   })
 
   test('correctly retrieves a known catalog rest order that has failed', async () => {
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
@@ -245,5 +240,53 @@ describe('fetchLegacyServicesOrder', () => {
       orderStatus: 'not_found',
       orderType: 'ECHO ORDERS'
     })
+  })
+
+  test('responds correctly on code error', async () => {
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+
+    // Exclude an error message from the `toThrow` matcher because its
+    // a specific sql statement and not necessary
+    await expect(fetchLegacyServicesOrder({
+      accessToken: 'fake.access.token:clientId',
+      id: 1,
+      orderType: 'ECHO ORDERS'
+    })).rejects.toThrow()
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('first')
+  })
+
+  test('responds correctly on http error', async () => {
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response({
+          order_number: 'ABCD-1234-EFGH-5678'
+        })
+      } else {
+        query.response([])
+      }
+    })
+
+    nock('https://cmr.earthdata.nasa.gov')
+      .get('/legacy-services/rest/orders.json?id=ABCD-1234-EFGH-5678')
+      .reply(500, {
+        errors: [
+          'Test error message'
+        ]
+      })
+
+    await expect(fetchLegacyServicesOrder({
+      accessToken: 'fake.access.token:clientId',
+      id: 1,
+      orderType: 'ECHO ORDERS'
+    })).rejects.toThrow('Test error message')
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('first')
   })
 })

@@ -7,17 +7,22 @@ import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import getFocusedGranuleObject from '../../util/focusedGranule'
 
 import GranuleImage from '../../components/GranuleImage/GranuleImage'
+import { getFocusedCollectionObject } from '../../util/focusedCollection'
 
 const mapStateToProps = state => ({
-  focusedGranule: state.focusedGranule,
-  granulesResults: state.searchResults.granules
+  collections: state.metadata.collections,
+  focusedCollection: state.focusedCollection,
+  focusedGranule: state.focusedGranule
 })
 
 export const GranuleImageContainer = ({
-  focusedGranule,
-  granulesResults
+  collections,
+  focusedCollection,
+  focusedGranule
 }) => {
-  const focusedGranuleResult = getFocusedGranuleObject(focusedGranule, granulesResults)
+  const collection = getFocusedCollectionObject(focusedCollection, collections)
+  const { granules } = collection
+  const focusedGranuleResult = getFocusedGranuleObject(focusedGranule, granules)
 
   let imageSrc = ''
 
@@ -31,7 +36,8 @@ export const GranuleImageContainer = ({
 }
 
 GranuleImageContainer.propTypes = {
-  granulesResults: PropTypes.shape({}).isRequired,
+  collections: PropTypes.shape({}).isRequired,
+  focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired
 }
 

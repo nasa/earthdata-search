@@ -24,7 +24,7 @@ describe('CollectionRequest#constructor', () => {
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
-    expect(request.searchPath).toEqual('search/collections')
+    expect(request.searchPath).toEqual('search/collections.json')
   })
 })
 
@@ -35,6 +35,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
     expect(request.permittedCmrKeys()).toEqual([
       'params',
       'bounding_box',
+      'circle',
       'collection_data_type',
       'concept_id',
       'data_center_h',
@@ -42,6 +43,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'echo_collection_id',
       'format',
       'facets_size',
+      'granule_data_format',
       'granule_data_format_h',
       'has_granules',
       'has_granules_or_cwic',
@@ -50,20 +52,24 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'include_has_granules',
       'include_tags',
       'include_tags',
+      'instrument',
       'instrument_h',
       'keyword',
       'line',
       'options',
       'page_num',
       'page_size',
+      'platform',
       'platform_h',
       'point',
       'polygon',
       'processing_level_id_h',
       'project_h',
       'project',
+      'provider',
       'science_keywords_h',
       'sort_key',
+      'spatial_keyword',
       'tag_key',
       'temporal',
       'two_d_coordinate_system'
@@ -79,12 +85,17 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'collection_data_type',
       'concept_id',
       'data_center_h',
+      'granule_data_format',
       'granule_data_format_h',
+      'instrument',
       'instrument_h',
+      'platform',
       'platform_h',
       'processing_level_id_h',
       'project_h',
+      'provider',
       'sort_key',
+      'spatial_keyword',
       'tag_key'
     ])
   })
@@ -253,27 +264,11 @@ describe('CollectionRequest#transformResponse', () => {
     const request = new CollectionRequest()
 
     const data = {
-      statusCode: 404
+      errors: ['HTTP Request Error']
     }
 
     const result = request.transformResponse(data)
 
     expect(result).toEqual(data)
-  })
-})
-
-describe('CollectionRequest#transformRequest', () => {
-  test('adds umm version header', () => {
-    const request = new CollectionRequest()
-
-    const data = { param1: 123 }
-    const headers = {}
-
-    request.transformRequest(data, headers)
-
-    expect(headers).toEqual({
-      Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.13',
-      'Client-Id': 'eed-edsc-test-serverless-client'
-    })
   })
 })

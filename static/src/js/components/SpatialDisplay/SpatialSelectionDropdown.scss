@@ -1,12 +1,16 @@
 .spatial-selection-dropdown {
   display: flex;
 
+  .dropdown-toggle:after {
+    display: none;
+  }
+
   &__menu {
     margin-top: -0.5rem;
     border: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    box-shadow: $shadow__panel;
+    box-shadow: $shadow__panel-dark;
   }
 
   &__button {
@@ -37,7 +41,7 @@
     color: $color__black--500;
 
     .dropdown-item:hover & {
-      color: inherit;
+      color: $color__black--500;
     }
   }
 }

@@ -24,6 +24,16 @@
       width: 0.65rem;
       height: 0.65rem;
     }
+
+    .spinner--tiny & {
+      width: 0.425rem;
+      height: 0.425rem;
+    }
+
+    .spinner--x-tiny & {
+      width: 0.25rem;
+      height: 0.25rem;
+    }
   }
 
   &--dots {
@@ -41,6 +51,14 @@
 
   &--small {
     width: 2.8rem;
+  }
+
+  &--tiny {
+    width: 1.925rem;
+  }
+
+  &--x-tiny {
+    width: 1rem;
   }
 }
 

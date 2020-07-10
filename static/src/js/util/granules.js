@@ -1,10 +1,12 @@
 import { isEmpty } from 'lodash'
 
-import { getFocusedCollectionObject } from './focusedCollection'
-import { encodeTemporal } from './url/temporalEncoders'
-import { encodeGridCoords } from './url/gridEncoders'
-import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { convertSize } from './project'
+import { encodeGridCoords } from './url/gridEncoders'
+import { encodeTemporal } from './url/temporalEncoders'
+import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
+import { getFocusedCollectionObject } from './focusedCollection'
+import { hasTag } from '../../../../sharedUtils/tags'
 
 /**
  * Takes the current CMR granule params and applies any changes needed to
@@ -41,7 +43,11 @@ export const withAdvancedSearch = (granuleParams, advancedSearch) => {
  * @param {Object} response
  * @returns {Object} Granule payload
  */
-export const populateGranuleResults = (collectionId, isCwic, response) => {
+export const populateGranuleResults = ({
+  collectionId,
+  isCwic,
+  response
+}) => {
   const payload = {}
 
   payload.collectionId = collectionId
@@ -52,6 +58,24 @@ export const populateGranuleResults = (collectionId, isCwic, response) => {
     payload.hits = response.data.feed.hits
   } else {
     payload.hits = parseInt(response.headers['cmr-hits'], 10)
+  }
+
+  let size = 0
+  payload.results.forEach((granule) => {
+    size += parseFloat(granule.granule_size || 0)
+  })
+
+  let singleGranuleSize = 0
+
+  if (payload.hits > 0) {
+    singleGranuleSize = size / payload.results.length
+
+    const totalSize = singleGranuleSize * payload.hits
+    payload.totalSize = convertSize(totalSize)
+    payload.singleGranuleSize = singleGranuleSize
+  } else {
+    payload.totalSize = convertSize(0)
+    payload.singleGranuleSize = 0
   }
 
   return payload
@@ -114,6 +138,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
 
   const {
     boundingBox,
+    circle,
     point,
     polygon,
     line
@@ -161,8 +186,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     temporalString = encodeTemporal(temporal)
   }
 
-  const isCwicCollection = Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod')
-    && !collectionMetadata.has_granules
+  const isCwicCollection = collectionMetadata.hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
 
   const options = {}
   if (readableGranuleName) {
@@ -171,20 +195,21 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
 
   const granuleParams = {
     authToken,
-    browseOnly,
     boundingBox,
+    circle,
+    browseOnly,
     cloudCover: cloudCoverString,
     collectionId,
     dayNightFlag,
     equatorCrossingDate: encodeTemporal(equatorCrossingDate),
     equatorCrossingLongitude,
-    gridName,
     gridCoords: encodeGridCoords(gridCoords),
+    gridName,
+    isCwicCollection,
     line,
     onlineOnly,
-    orbitNumber,
     options,
-    isCwicCollection,
+    orbitNumber,
     pageNum,
     point,
     polygon,
@@ -203,11 +228,16 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
  * Translates the values returned from prepareGranuleParams to the camelCased keys that are expected in
  * the granules.search() function
  * @param {Object} params - Params to be passed to the granules.search() function.
+ * @param {Object} opts - An optional options object.
  * @returns {Object} Parameters to be provided to the Granules request with camel cased keys
  */
-export const buildGranuleSearchParams = (params) => {
+export const buildGranuleSearchParams = (params, opts = {}) => {
+  const { defaultCmrPageSize } = getApplicationConfig()
+
   const {
+    conceptId,
     boundingBox,
+    circle,
     browseOnly,
     cloudCover,
     collectionId,
@@ -238,8 +268,16 @@ export const buildGranuleSearchParams = (params) => {
     if (gridCoords) twoDCoordinateSystem.coordinates = gridCoords
   }
 
-  return {
+  // If forceConceptId is set, omit all other properties.
+  if (opts.forceConceptId && conceptId) {
+    return {
+      conceptId
+    }
+  }
+
+  const granuleParams = {
     boundingBox,
+    circle,
     browseOnly,
     cloudCover,
     dayNightFlag,
@@ -252,7 +290,7 @@ export const buildGranuleSearchParams = (params) => {
     orbitNumber,
     options,
     pageNum,
-    pageSize: 20,
+    pageSize: defaultCmrPageSize,
     point,
     polygon,
     readableGranuleName,
@@ -260,6 +298,16 @@ export const buildGranuleSearchParams = (params) => {
     temporal: temporalString,
     twoDCoordinateSystem
   }
+
+  // If includeConceptId is set, add the conceptId property to the granule params.
+  if (opts.includeConceptId && conceptId) {
+    return {
+      ...granuleParams,
+      conceptId
+    }
+  }
+
+  return granuleParams
 }
 
 /**
@@ -349,13 +397,17 @@ export const createDataLinks = (links = []) => {
 // eslint-disable-next-line arrow-body-style
 export const getDownloadUrls = (granules) => {
   // Iterate through each granule search result to pull out relevant links
-  return granules.map((granuleMetadata) => {
+  const urlArrays = granules.map((granuleMetadata) => {
     const { links: linkMetadata = [] } = granuleMetadata
 
     // Find the correct link from the list within the metadata
-    return linkMetadata.find((link) => {
+    return linkMetadata.filter((link) => {
       const { inherited, rel } = link
       return rel.includes('/data#') && !inherited
     })
   }).filter(Boolean)
+
+  // `filter` returns an array so we'll end up with an array of arrays so we
+  // need to flatten the result before we return it
+  return [].concat(...urlArrays)
 }

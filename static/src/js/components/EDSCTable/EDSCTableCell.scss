@@ -1,0 +1,26 @@
+.edsc-table-cell {
+  flex: 1;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  border-top: 1px solid $color__white;
+  border-bottom: 1px solid $color__black--200;
+
+  .edsc-table__tr--odd & {
+    border-top: 1px solid darken($color__black--100, 1);
+  }
+
+  .edsc-table__td--centered & {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__content {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: text;
+  }
+}

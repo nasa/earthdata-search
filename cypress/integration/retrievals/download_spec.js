@@ -1,6 +1,5 @@
 import { getByTestId } from '../../support/getByTestId'
-import collectionsJson from './download_mocks/collections_json'
-import collectionsUmmJson from './download_mocks/collections_umm_json'
+import collectionsGraphJson from './download_mocks/collections_graph'
 import timeline from './download_mocks/timeline'
 import granules from './download_mocks/granules'
 import providers from './download_mocks/providers'
@@ -19,14 +18,8 @@ describe('Download project spec', () => {
 
     cy.route({
       method: 'POST',
-      url: '**/collections/json',
-      response: collectionsJson.body,
-      headers: authHeaders
-    })
-    cy.route({
-      method: 'POST',
-      url: '**/collections/umm_json',
-      response: collectionsUmmJson.body,
+      url: '**/graphql',
+      response: collectionsGraphJson.body,
       headers: authHeaders
     })
     cy.route({
@@ -44,7 +37,10 @@ describe('Download project spec', () => {
       method: 'POST',
       url: '**/granules',
       response: granules.body,
-      headers: authHeaders
+      headers: {
+        ...authHeaders,
+        'cmr-hits': 42
+      }
     })
     cy.route({
       method: 'GET',
@@ -59,7 +55,12 @@ describe('Download project spec', () => {
 
     cy.visit('/projects?p=!C1443528505-LAADS&sb=-77.15071678161621%2C38.78817179999825%2C-76.89801406860352%2C38.99784152603538&m=37.64643450971326!-77.407470703125!7!1!0!0%2C2&qt=2020-01-06T04%3A15%3A27.310Z%2C2020-01-13T07%3A32%3A50.962Z&ff=Map%20Imagery&tl=1563377338!4!!')
 
+    // Check the download method
     getByTestId('C1443528505-LAADS_access-method__direct-download').check()
+
+    // Click the done button
+    getByTestId('project-panels-done').click()
+    getByTestId('panels-section').should('not.have.class', 'panels--is-open')
 
     cy.route({
       method: 'POST',
@@ -74,6 +75,7 @@ describe('Download project spec', () => {
       headers: retrieval.headers
     })
 
+    // Click the download button
     getByTestId('project-download-data').click()
 
     // view download links

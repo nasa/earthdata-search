@@ -37,6 +37,9 @@ provider:
 
     collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
 
+    geocodingService: ${env:GEOCODING_SERVICE}
+    geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS}
+
   vpc:
     securityGroupIds:
       - Fn::ImportValue: ${self:provider.stage}-LambdaSecurityGroup
@@ -45,7 +48,7 @@ provider:
       - ${env:SUBNET_ID_B}
 
   role:
-    Fn::ImportValue: ${self:provider.stage}-ApplicationRole
+    Fn::ImportValue: ${self:provider.stage}-EDSCServerlessAppRole
 
 plugins:
   - serverless-finch

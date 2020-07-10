@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import { Button } from '../Button/Button'
 
@@ -12,10 +13,12 @@ const FilterStackItem = (props) => {
     hint,
     icon,
     onRemove,
-    title
+    title,
+    secondaryTitle,
+    variant
   } = props
 
-  if (!title || !icon || !children) return null
+  if (!children) return null
 
   let iconClass = ''
 
@@ -25,32 +28,54 @@ const FilterStackItem = (props) => {
     iconClass = `fa fa-${icon} filter-stack-item__icon`
   }
 
+  const filterStackItemClasses = classNames([
+    'filter-stack-item',
+    {
+      [`filter-stack-item--${variant}`]: variant
+    }
+  ])
+
   return (
-    <li className="filter-stack-item">
+    <li className={filterStackItemClasses}>
       <div className="filter-stack-item__content">
         <div className="filter-stack-item__body">
-          <header className="filter-stack-item__header">
-            <i
-              className={iconClass}
-              title={title}
-            />
-            <h3 className="filter-stack-item__title visibility-hidden">{title}</h3>
-          </header>
-          <div className="filter-stack-item__body-contents">
-            {children}
-          </div>
-          <div className="filter-stack-item__body-actions">
-            {
-              onRemove && (
-                <Button
-                  className="filter-stack-item__action-button"
-                  label={`Remove ${title.toLowerCase()} filter`}
-                  icon="times-circle"
-                  onClick={() => { onRemove() }}
-                />
+          {
+            variant === 'naked'
+              ? children
+              : (
+                <>
+                  <div className="filter-stack-item__body-primary">
+                    <header className="filter-stack-item__header">
+                      <i
+                        className={iconClass}
+                        title={title}
+                      />
+                      <h3 className="filter-stack-item__title">{title}</h3>
+                      {
+                        secondaryTitle && (
+                          <span className="filter-stack-item__secondary-title">{secondaryTitle}</span>
+                        )
+                      }
+                    </header>
+                    <div className="filter-stack-item__body-contents">
+                      {children}
+                    </div>
+                  </div>
+                  <div className="filter-stack-item__body-actions">
+                    {
+                      onRemove && (
+                        <Button
+                          className="filter-stack-item__action-button"
+                          label={`Remove ${title.toLowerCase()} filter`}
+                          icon="times-circle"
+                          onClick={() => { onRemove() }}
+                        />
+                      )
+                    }
+                  </div>
+                </>
               )
-            }
-          </div>
+          }
         </div>
         {
           hint && (
@@ -74,7 +99,10 @@ const FilterStackItem = (props) => {
 FilterStackItem.defaultProps = {
   error: null,
   hint: null,
-  onRemove: null
+  icon: null,
+  onRemove: null,
+  secondaryTitle: null,
+  variant: 'icon'
 }
 
 FilterStackItem.propTypes = {
@@ -87,9 +115,11 @@ FilterStackItem.propTypes = {
     PropTypes.string,
     PropTypes.node
   ]),
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   onRemove: PropTypes.func,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  secondaryTitle: PropTypes.string,
+  variant: PropTypes.string
 }
 
 export default FilterStackItem

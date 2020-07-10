@@ -1,11 +1,21 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Handler for retreiving a users contact information
+ * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-const getContactInfo = async (event) => {
+const getContactInfo = async (event, context) => {
+  // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
+  // eslint-disable-next-line no-param-reassign
+  context.callbackWaitsForEmptyEventLoop = false
+
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   const jwtToken = getJwtToken(event)
   const { id } = getVerifiedJwtToken(jwtToken)
 
@@ -14,9 +24,9 @@ const getContactInfo = async (event) => {
 
   try {
     const userRecord = await dbConnection('users')
-      .select(
+      .first(
         'echo_preferences',
-        'urs_profile',
+        'urs_profile'
       )
       .where({
         id
@@ -25,17 +35,14 @@ const getContactInfo = async (event) => {
     return {
       isBase64Encoded: false,
       statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify(userRecord[0])
+      headers: defaultResponseHeaders,
+      body: JSON.stringify(userRecord)
     }
-  } catch (error) {
-    console.log('getContactInfo error', error)
-
+  } catch (e) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [error] })
+      headers: defaultResponseHeaders,
+      ...parseError(e)
     }
   }
 }

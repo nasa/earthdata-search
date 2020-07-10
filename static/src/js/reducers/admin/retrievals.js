@@ -9,6 +9,9 @@ import {
   UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
   SET_ADMIN_RETRIEVALS_PAGINATION
 } from '../../constants/actionTypes'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+const { defaultCmrPageSize } = getApplicationConfig()
 
 const initialState = {
   allIds: [],
@@ -17,7 +20,7 @@ const initialState = {
   isLoaded: false,
   sortKey: '',
   pagination: {
-    pageSize: 20,
+    pageSize: defaultCmrPageSize,
     pageNum: 1,
     pageCount: null,
     totalResults: null
