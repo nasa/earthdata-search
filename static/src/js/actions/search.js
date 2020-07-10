@@ -6,7 +6,7 @@ import {
   UPDATE_REGION_QUERY,
   CLEAR_FILTERS
 } from '../constants/actionTypes'
-import { clearExcludedGranules } from './granules'
+import { clearExcludedGranules, clearRemovedGranules } from './granules'
 import { parseError } from '../../../../sharedUtils/parseError'
 
 export const updateCollectionQuery = payload => ({
@@ -56,7 +56,9 @@ export const changeQuery = (queryOptions = {}) => (dispatch, getState) => {
     || (!isEqual(temporal, temporalQuery))
     || (!isEqual(overideTemporal, overrideTemporalQuery))
   ) {
+    // TODO: When the project and search granules stores are separated, persist these values rather than clearing them.
     dispatch(clearExcludedGranules())
+    dispatch(clearRemovedGranules())
   }
 
   if (newQuery.collection) {

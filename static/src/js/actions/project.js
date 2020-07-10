@@ -73,10 +73,36 @@ export const updateAccessMethodOrderCount = payload => ({
   payload
 })
 
-export const selectAccessMethod = payload => ({
-  type: SELECT_ACCESS_METHOD,
-  payload
-})
+/**
+ * Selects a given access method on a project collection
+ * @param {String} collectionId Single collection to lookup, if null then all collections in the project will be retrieved
+ * @param {String} selectedAccessMethod The new access method name
+ */
+export const selectAccessMethod = ({
+  collectionId,
+  selectedAccessMethod
+}) => (dispatch, getState) => {
+  const { defaultGranulesPerOrder } = getApplicationConfig()
+  const { metadata, project } = getState()
+
+  const { collections } = metadata
+  const { byId: collectionsById } = collections
+  const { byId: projectCollectionsById } = project
+  const collection = collectionsById[collectionId]
+  const projectCollection = projectCollectionsById[collectionId]
+
+  const granuleCount = getGranuleCount(collection, projectCollection)
+  const orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
+
+  dispatch({
+    type: SELECT_ACCESS_METHOD,
+    payload: {
+      collectionId,
+      selectedAccessMethod,
+      orderCount: ['download', 'opendap'].includes(selectedAccessMethod) ? 0 : orderCount
+    }
+  })
+}
 
 /**
  * Retrieve collection metadata for the collections provided

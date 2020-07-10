@@ -6,6 +6,7 @@ import { updateCollectionQuery, updateGranuleQuery } from '../search'
 import {
   CLEAR_COLLECTION_GRANULES,
   CLEAR_EXCLUDE_GRANULE_ID,
+  CLEAR_REMOVED_GRANULE_ID,
   CLEAR_FILTERS,
   CLEAR_SHAPEFILE,
   TOGGLE_DRAWING_NEW_LAYER,
@@ -92,6 +93,9 @@ describe('changeQuery', () => {
       type: CLEAR_EXCLUDE_GRANULE_ID
     })
     expect(storeActions[1]).toEqual({
+      type: CLEAR_REMOVED_GRANULE_ID
+    })
+    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: {
         keyword: 'new keyword',
@@ -398,13 +402,16 @@ describe('removeGridFilter', () => {
       type: CLEAR_EXCLUDE_GRANULE_ID
     })
     expect(storeActions[1]).toEqual({
+      type: CLEAR_REMOVED_GRANULE_ID
+    })
+    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: {
         gridName: '',
         pageNum: 1
       }
     })
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[3]).toEqual({
       type: UPDATE_GRANULE_QUERY,
       payload: {
         gridCoords: '',
@@ -445,32 +452,35 @@ describe('removeSpatialFilter', () => {
       type: CLEAR_EXCLUDE_GRANULE_ID
     })
     expect(storeActions[1]).toEqual({
+      type: CLEAR_REMOVED_GRANULE_ID
+    })
+    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: {
         pageNum: 1,
         spatial: {}
       }
     })
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[3]).toEqual({
       type: UPDATE_GRANULE_QUERY,
       payload: {
         pageNum: 1
       }
     })
-    expect(storeActions[3]).toEqual({
+    expect(storeActions[4]).toEqual({
       type: CLEAR_COLLECTION_GRANULES
     })
-    expect(storeActions[4]).toEqual({
+    expect(storeActions[5]).toEqual({
       type: UPDATE_TIMELINE_INTERVALS,
       payload: {
         results: []
       }
     })
-    expect(storeActions[5]).toEqual({
+    expect(storeActions[6]).toEqual({
       type: TOGGLE_DRAWING_NEW_LAYER,
       payload: false
     })
-    expect(storeActions[6]).toEqual({
+    expect(storeActions[7]).toEqual({
       type: CLEAR_SHAPEFILE
     })
   })
@@ -508,6 +518,9 @@ describe('removeTemporalFilter', () => {
       type: CLEAR_EXCLUDE_GRANULE_ID
     })
     expect(storeActions[1]).toEqual({
+      type: CLEAR_REMOVED_GRANULE_ID
+    })
+    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: {
         pageNum: 1,
