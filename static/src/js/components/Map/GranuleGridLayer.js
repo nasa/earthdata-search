@@ -752,7 +752,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       // Set multiOptions (gibs data)
       const { tags } = metadata
 
-      if (!tags) {
+      if (tags) {
         // TODO: Use getTagValue below.
         const gibsTag = tags[tagName('gibs')] || {}
         const { data } = gibsTag
