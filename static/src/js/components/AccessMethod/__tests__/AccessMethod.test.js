@@ -65,7 +65,6 @@ describe('AccessMethod component', () => {
       expect(props.onSelectAccessMethod.mock.calls.length).toBe(1)
       expect(props.onSelectAccessMethod.mock.calls[0]).toEqual([{
         collectionId,
-        orderCount: 0,
         selectedAccessMethod: 'download'
       }])
     })
@@ -96,7 +95,6 @@ describe('AccessMethod component', () => {
       expect(props.onSelectAccessMethod.mock.calls.length).toBe(1)
       expect(props.onSelectAccessMethod.mock.calls[0]).toEqual([{
         collectionId,
-        orderCount: 2,
         selectedAccessMethod: 'esi0'
       }])
     })

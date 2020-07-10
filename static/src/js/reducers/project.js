@@ -1,15 +1,16 @@
 import {
-  ADD_COLLECTION_TO_PROJECT,
-  REMOVE_COLLECTION_FROM_PROJECT,
-  SELECT_ACCESS_METHOD,
-  UPDATE_ACCESS_METHOD,
   ADD_ACCESS_METHODS,
-  RESTORE_FROM_URL,
-  SUBMITTING_PROJECT,
-  SUBMITTED_PROJECT,
-  UPDATE_ACCESS_METHOD_ORDER_COUNT,
+  ADD_COLLECTION_TO_PROJECT,
   ADD_GRANULE_TO_PROJECT_COLLECTION,
-  REMOVE_GRANULE_FROM_PROJECT_COLLECTION
+  CLEAR_REMOVED_GRANULE_ID,
+  REMOVE_COLLECTION_FROM_PROJECT,
+  REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
+  RESTORE_FROM_URL,
+  SELECT_ACCESS_METHOD,
+  SUBMITTED_PROJECT,
+  SUBMITTING_PROJECT,
+  UPDATE_ACCESS_METHOD,
+  UPDATE_ACCESS_METHOD_ORDER_COUNT
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -161,6 +162,23 @@ const projectReducer = (state = initialState, action) => {
           ...byId
         },
         collectionIds
+      }
+    }
+    case CLEAR_REMOVED_GRANULE_ID: {
+      const { collectionIds } = state
+      const byId = {
+        ...state.byId
+      }
+
+      collectionIds.forEach((collectionId) => {
+        if ('removedGranuleIds' in byId[collectionId]) {
+          byId[collectionId].removedGranuleIds = []
+        }
+      })
+
+      return {
+        ...state,
+        byId
       }
     }
     case ADD_COLLECTION_TO_PROJECT: {
@@ -336,7 +354,7 @@ const projectReducer = (state = initialState, action) => {
       const { byId } = state
       const { [collectionId]: desiredCollection } = byId
 
-      byId[collectionId] = {
+      const newCollection = {
         ...desiredCollection,
         orderCount
       }
@@ -348,7 +366,7 @@ const projectReducer = (state = initialState, action) => {
         ...state,
         byId: {
           ...state.byId,
-          ...byId[collectionId]
+          [collectionId]: newCollection
         },
         collectionsRequiringChunking
       }
