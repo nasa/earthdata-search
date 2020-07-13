@@ -1,6 +1,16 @@
 import { isDefaultPortal } from '../portals'
+import * as getApplicationConfig from '../../../../../sharedUtils/config'
+
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.restoreAllMocks()
+})
 
 describe('isDefaultPortal', () => {
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    defaultPortal: 'edsc'
+  }))
+
   test('returns true if the portalId matches the defaultPortal', () => {
     expect(isDefaultPortal('edsc')).toBeTruthy()
   })
