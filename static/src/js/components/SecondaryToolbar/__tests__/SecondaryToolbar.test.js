@@ -12,7 +12,7 @@ function setup(state, overrideProps) {
       pathname: '/search'
     },
     portal: {
-      portalId: ''
+      portalId: 'edsc'
     },
     projectIds: [],
     savedProject: {},

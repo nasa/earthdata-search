@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { isDefaultPortal } from '../../util/portals'
+
 import './AppLogo.scss'
 
 const AppLogo = ({
@@ -14,7 +16,9 @@ const AppLogo = ({
   } = portal
 
   let portalLink = '/'
-  if (portalId.length > 0) portalLink = `/portal/${portalId}/search`
+  if (!isDefaultPortal(portalId)) {
+    portalLink = `/portal/${portalId}/search`
+  }
 
   const portalLogo = () => {
     if (!logo) return null

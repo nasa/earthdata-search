@@ -29,7 +29,6 @@ function setup() {
     handleSubmit: jest.fn(),
     isValid: true,
     onApplyGranuleFilters: jest.fn(),
-    portal: {},
     setFieldTouched: jest.fn(),
     setFieldValue: jest.fn(),
     touched: {},

@@ -51,7 +51,7 @@ function setup(overrideProps) {
     loadNextPage: jest.fn(),
     panelView: 'list',
     portal: {
-      portalId: ''
+      portalId: 'edsc'
     },
     projectIds: [],
     location: {

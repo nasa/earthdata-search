@@ -11,7 +11,7 @@ function setup() {
     authToken: '',
     location: {},
     portal: {
-      portalId: ''
+      portalId: 'edsc'
     },
     projectIds: [],
     savedProject: {},

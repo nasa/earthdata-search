@@ -4,6 +4,7 @@
     "link": "https://example.com/logo"
   },
   "pageTitle": "Complex",
+  "parentConfig": "edsc",
   "query": {
     "echoCollectionId": "C203234523-LAADS"
   },

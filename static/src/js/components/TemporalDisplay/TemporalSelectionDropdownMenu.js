@@ -21,7 +21,6 @@ const TemporalSelectionDropdownMenu = ({
   onInvalid,
   onRecurringToggle,
   onValid,
-  portal,
   setEndDate,
   setStartDate,
   temporal
@@ -57,7 +56,6 @@ const TemporalSelectionDropdownMenu = ({
         controlId="temporal-selection-dropdown"
         temporal={temporal}
         format={temporalDateFormat}
-        portal={portal}
         onRecurringToggle={onRecurringToggle}
         onChangeRecurring={onChangeRecurring}
         onChangeQuery={onChangeQuery}
@@ -99,7 +97,6 @@ TemporalSelectionDropdownMenu.propTypes = {
   onInvalid: PropTypes.func.isRequired,
   onRecurringToggle: PropTypes.func.isRequired,
   onValid: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   setEndDate: PropTypes.func.isRequired,
   setStartDate: PropTypes.func.isRequired,
   temporal: PropTypes.shape({}).isRequired
