@@ -1,7 +1,6 @@
 {
   "hasStyles": true,
   "hasScripts": true,
-  "hideCollectionFilters": true,
   "logo": {
     "id": "ornl-daac-logo",
     "link": "https://daac.ornl.gov",
@@ -9,8 +8,13 @@
   },
   "org": "ORNL DAAC",
   "pageTitle": "ORNL DAAC",
+  "parentConfig": "edsc",
   "query": {
     "dataCenter": "ORNL_DAAC",
     "hasGranulesOrCwic": null
+  },
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
   }
 }

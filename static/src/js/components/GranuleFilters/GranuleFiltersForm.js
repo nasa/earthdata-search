@@ -29,7 +29,6 @@ export const GranuleFiltersForm = (props) => {
     handleBlur,
     handleChange,
     metadata,
-    portal,
     values,
     setFieldValue,
     setFieldTouched,
@@ -120,7 +119,6 @@ export const GranuleFiltersForm = (props) => {
                   <TemporalSelection
                     controlId="granule-filters__temporal-selection"
                     format={temporalDateFormat}
-                    portal={portal}
                     temporal={temporal}
                     validate={false}
                     onRecurringToggle={(e) => {
@@ -433,7 +431,6 @@ export const GranuleFiltersForm = (props) => {
                                 allowRecurring={false}
                                 controlId="granule-filters__equatorial-crossing-date-selection"
                                 format={temporalDateFormat}
-                                portal={portal}
                                 temporal={equatorCrossingDate}
                                 validate={false}
                                 onSubmitStart={(startDate) => {
@@ -490,7 +487,6 @@ GranuleFiltersForm.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   metadata: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,

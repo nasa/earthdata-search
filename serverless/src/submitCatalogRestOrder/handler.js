@@ -1,7 +1,7 @@
 import 'array-foreach-async'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
-import { getClientId, getEnvironmentConfig } from '../../../sharedUtils/config'
+import { getClientId, getEnvironmentConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -76,7 +76,10 @@ const submitCatalogRestOrder = async (event, context) => {
       access_method: accessMethod,
       granule_params: granuleParams
     } = retrievalRecord
-    const { portalId, shapefileId } = jsondata
+    const {
+      portalId = getApplicationConfig().defaultPortal,
+      shapefileId
+    } = jsondata
 
     const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
 

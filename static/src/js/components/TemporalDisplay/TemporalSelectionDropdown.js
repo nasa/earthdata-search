@@ -308,7 +308,6 @@ export default class TemporalSelectionDropdown extends PureComponent {
     } = this.state
 
     const {
-      portal,
       onChangeQuery
     } = this.props
 
@@ -326,7 +325,6 @@ export default class TemporalSelectionDropdown extends PureComponent {
               onInvalid={this.onInvalid}
               onRecurringToggle={this.onRecurringToggle}
               onValid={this.onValid}
-              portal={portal}
               setEndDate={this.setEndDate}
               setStartDate={this.setStartDate}
               temporal={temporal}
@@ -344,6 +342,5 @@ TemporalSelectionDropdown.defaultProps = {
 
 TemporalSelectionDropdown.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   temporalSearch: PropTypes.shape({})
 }

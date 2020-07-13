@@ -35,32 +35,47 @@ describe('loadPortalConfig', () => {
 
     const payload = {
       portalId: 'simple',
-      hasStyles: false,
+      features: {
+        advancedSearch: true,
+        authentication: true,
+        featureFacets: [],
+        includeNtPageTag: true
+      },
+      footer: {
+        displayVersion: true,
+        attributionText: 'NASA Official: Stephen Berrick',
+        primaryLinks: [{
+          title: 'FOIA',
+          href: 'http://www.nasa.gov/FOIA/index.html'
+        },
+        {
+          title: 'NASA Privacy Policy',
+          href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html'
+        },
+        {
+          title: 'USA.gov',
+          href: 'http://www.usa.gov'
+        }],
+        secondaryLinks: [{
+          title: 'Earthdata Access: A Section 508 accessible alternative',
+          href: 'https://access.earthdata.nasa.gov/'
+        }]
+      },
       hasScripts: false,
+      hasStyles: false,
+      logo: {},
+      org: 'Earthdata',
+      pageTitle: 'Earthdata Search',
       query: {
         echoCollectionId: 'C203234523-LAADS'
       },
-      hideCollectionFilters: false,
-      org: 'Earthdata',
-      pageTitle: 'Earthdata Search',
       title: 'Search',
-      minimumTemporalDateString: '1960-01-01 00:00:00',
-      datasource: {
-        collectionPageSize: 20,
-        granulePageSize: 20,
-        granulePerOrder: 2000,
-        maxCollectionPageSize: 2000,
-        maxGranulePageSize: 2000,
-        maxOrderSize: 1000000,
-        authCallbackUriPath: '/urs_callback',
-        authHost: 'https://urs.earthdata.nasa.gov',
-        autocompleteEndpoint: '',
-        collectionMetadataEndpoint: 'https://graphql.earthdata.nasa.gov/api',
-        collectionSearchEndpoint: 'https://cmr.earthdata.nasa.gov/search/collections',
-        granuleMetadataEndpoint: 'https://cmr.earthdata.nasa.gov/search/concepts',
-        granuleSearchEndpoint: 'https://cmr.earthdata.nasa.gov/search/granules',
-        opensearchGranuleEndpoint: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml'
-      }
+      ui: {
+        showOnlyGranulesCheckbox: true,
+        showNonEosdisCheckbox: true,
+        showTophat: true
+      },
+      parentConfig: 'edsc'
     }
 
     // mockStore with initialState

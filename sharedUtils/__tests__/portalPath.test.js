@@ -5,8 +5,8 @@ describe('portalPath', () => {
     expect(portalPath()).toEqual('')
   })
 
-  test('returns no portal prefix when the portalId is empty', () => {
-    expect(portalPath({ portalId: '' })).toEqual('')
+  test('returns no portal prefix when the portalId is the default', () => {
+    expect(portalPath({ portalId: 'edsc' })).toEqual('')
   })
 
   test('returns portal prefix with the portalId', () => {
@@ -15,10 +15,10 @@ describe('portalPath', () => {
 })
 
 describe('portalPathFromState', () => {
-  test('returns no portal prefix when the portalId is empty', () => {
+  test('returns no portal prefix when the portalId is the default', () => {
     expect(portalPathFromState({
       portal: {
-        portalId: ''
+        portalId: 'edsc'
       }
     })).toEqual('')
   })

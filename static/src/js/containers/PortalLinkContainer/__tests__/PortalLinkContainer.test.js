@@ -17,7 +17,9 @@ function setup(overrideProps) {
     location: {},
     history: {},
     onClick: jest.fn(),
-    portalId: '',
+    portal: {
+      portalId: 'edsc'
+    },
     to: {
       pathname: '/search'
     },
@@ -34,7 +36,7 @@ function setup(overrideProps) {
 }
 
 describe('PortalLinkContainer component', () => {
-  test('should return a link without a portal provided', () => {
+  test('should return a link with the default portal provided', () => {
     const { enzymeWrapper } = setup()
 
     const link = enzymeWrapper.find(Link)
@@ -46,9 +48,11 @@ describe('PortalLinkContainer component', () => {
     })
   })
 
-  test('should return a link with a portal provided', () => {
+  test('should return a link with a non-default portal provided', () => {
     const { enzymeWrapper } = setup({
-      portalId: 'simple'
+      portal: {
+        portalId: 'simple'
+      }
     })
 
     const link = enzymeWrapper.find(Link)
@@ -60,9 +64,11 @@ describe('PortalLinkContainer component', () => {
     })
   })
 
-  test('should return a link with a portal and a string `to` link', () => {
+  test('should return a link with a non-default portal and a string `to` link', () => {
     const { enzymeWrapper } = setup({
-      portalId: 'simple',
+      portal: {
+        portalId: 'simple'
+      },
       to: '/search'
     })
 

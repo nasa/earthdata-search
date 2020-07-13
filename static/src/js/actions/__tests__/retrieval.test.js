@@ -51,7 +51,7 @@ describe('submitRetrieval', () => {
         }
       },
       portal: {
-        portalId: ''
+        portalId: 'edsc'
       },
       project: {
         byId: {
@@ -142,7 +142,7 @@ describe('submitRetrieval', () => {
         }
       },
       portal: {
-        portalId: ''
+        portalId: 'edsc'
       },
       project: {
         byId: {
