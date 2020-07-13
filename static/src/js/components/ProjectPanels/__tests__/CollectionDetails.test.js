@@ -53,7 +53,9 @@ function setup(overrideProps) {
     location: {
       search: '?=test_search=test'
     },
-    portal: {},
+    portal: {
+      portalId: 'edsc'
+    },
     projectCollection: {},
     onChangeGranulePageNum: jest.fn(),
     onFocusedGranuleChange: jest.fn(),

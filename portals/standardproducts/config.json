@@ -1,9 +1,13 @@
 {
-  "hideCollectionFilters": true,
   "org": "Standard Products",
   "pageTitle": "Standard Products",
+  "parentConfig": "edsc",
   "query": {
     "tagKey": "gov.nasa.eosdis.standardproduct",
     "hasGranulesOrCwic": null
+  },
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
   }
 }

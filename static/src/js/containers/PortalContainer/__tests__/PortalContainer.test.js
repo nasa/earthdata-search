@@ -13,7 +13,7 @@ function setup(overrideProps) {
       params: {}
     },
     portal: {
-      portalId: ''
+      portalId: 'edsc'
     },
     onLoadPortalConfig: jest.fn(),
     ...overrideProps
@@ -34,7 +34,10 @@ beforeEach(() => {
 
 describe('PortalContainer component', () => {
   test('renders the page title without a portal', () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({ env: 'dev' }))
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      env: 'dev',
+      defaultPortal: 'edsc'
+    }))
 
     const { enzymeWrapper } = setup()
 
@@ -42,14 +45,20 @@ describe('PortalContainer component', () => {
   })
 
   test('does not include the env in the site title in prod', () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({ env: 'prod' }))
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      env: 'prod',
+      defaultPortal: 'edsc'
+    }))
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find('title').text()).toEqual('Earthdata Search')
   })
 
   test('renders the page title with a portal', () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({ env: 'dev' }))
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      env: 'dev',
+      defaultPortal: 'edsc'
+    }))
 
     const { enzymeWrapper } = setup({
       portal: {
@@ -59,13 +68,6 @@ describe('PortalContainer component', () => {
     })
 
     expect(enzymeWrapper.find('title').text()).toEqual('[DEV] Earthdata Search :: Simple Portal')
-  })
-
-  test('should call onLoadPortalConfig on mount without a portal', () => {
-    const { props } = setup()
-
-    expect(props.onLoadPortalConfig.mock.calls.length).toBe(1)
-    expect(props.onLoadPortalConfig.mock.calls[0]).toEqual(['default'])
   })
 
   test('should call onLoadPortalConfig on mount with a portal', () => {

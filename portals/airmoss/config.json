@@ -1,7 +1,6 @@
 {
   "hasStyles": true,
   "hasScripts": true,
-  "hideCollectionFilters": true,
   "logo": {
     "id": "ornl-daac-logo",
     "link": "https://airmoss.ornl.gov",
@@ -9,9 +8,14 @@
   },
   "org": "ORNL DAAC",
   "pageTitle": "AirMOSS",
+  "parentConfig": "edsc",
   "query": {
     "project": "AirMOSS",
     "hasGranulesOrCwic": null
   },
-  "title": "AirMOSS"
+  "title": "AirMOSS",
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
+  }
 }

@@ -1,6 +1,5 @@
 {
   "hasStyles": true,
-  "hideCollectionFilters": true,
   "logo": {
     "id": "idn-logo",
     "link": "https://idn.ceos.org/",
@@ -8,7 +7,12 @@
   },
   "org": "IDN",
   "pageTitle": "IDN",
+  "parentConfig": "edsc",
   "query": {
     "hasGranulesOrCwic": null
+  },
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
   }
 }

@@ -1,6 +1,5 @@
 {
   "hasStyles": true,
-  "hideCollectionFilters": true,
   "logo": {
     "id": "ceos-logo",
     "link": "http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/",
@@ -8,8 +7,13 @@
   },
   "org": "CWIC",
   "pageTitle": "CWIC",
+  "parentConfig": "edsc",
   "query": {
     "tagKey": "org.ceos.wgiss.cwic.granules.prod",
     "hasGranulesOrCwic": null
+  },
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
   }
 }

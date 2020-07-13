@@ -1,3 +1,5 @@
+import { isDefaultPortal } from '../static/src/js/util/portals'
+
 /**
  * Provides a prefix for links that takes the active portal into account
  * @param {Object} portal Object with a portalId key
@@ -6,7 +8,7 @@ export const portalPath = (portal) => {
   if (!portal) return ''
   const { portalId = '' } = portal
   let portalPath = ''
-  if (portalId.length > 0) portalPath = `/portal/${portalId}`
+  if (!isDefaultPortal(portalId)) portalPath = `/portal/${portalId}`
 
   return portalPath
 }

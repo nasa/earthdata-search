@@ -29,6 +29,7 @@ import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
+import { isDefaultPortal } from '../../util/portals'
 
 import './SearchPanels.scss'
 
@@ -138,10 +139,8 @@ class SearchPanels extends PureComponent {
 
     const {
       collectionPanelView,
-      // eslint-disable-next-line no-unused-vars
       granulePanelView
     } = this.state
-
 
     const {
       portalId,
@@ -150,7 +149,7 @@ class SearchPanels extends PureComponent {
     } = portal
 
     const buildCollectionResultsBodyFooter = () => {
-      if (!portalId.length || portalId === 'default') return null
+      if (isDefaultPortal(portalId)) return null
 
       return (
         <div className="search-panels__portal-escape">

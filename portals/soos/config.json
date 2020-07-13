@@ -1,6 +1,5 @@
 {
   "hasStyles": true,
-  "hideCollectionFilters": true,
   "logo": {
     "id": "SOOS-logo",
     "link": "http://www.soos.aq",
@@ -8,8 +7,13 @@
   },
   "org": "SOOS",
   "pageTitle": "Southern Ocean Observing System",
+  "parentConfig": "edsc",
   "query": {
     "tagKey": "aq.soos",
     "hasGranulesOrCwic": null
+  },
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
   }
 }
