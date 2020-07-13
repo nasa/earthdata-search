@@ -9,7 +9,7 @@ function setup(overrideProps) {
   const props = {
     edscEnv: 'sit',
     portal: {
-      portalId: ''
+      portalId: 'edsc'
     },
     ...overrideProps
   }

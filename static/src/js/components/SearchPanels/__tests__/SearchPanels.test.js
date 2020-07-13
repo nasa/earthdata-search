@@ -34,7 +34,7 @@ function setup(overrideProps, location = '/search') {
       granuleListView: 'default'
     },
     portal: {
-      portalId: ''
+      portalId: 'edsc'
     },
     ...overrideProps
   }

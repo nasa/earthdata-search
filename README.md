@@ -87,7 +87,9 @@ For local development Earthdata Search uses a json configuration file to store s
 In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally)
 
 ###### Public (Non-Secure)
-Non-secure values are stored in `static.config.json`. It's best to keep these values as they are set and use the values in your local environment to prevent conflicts amongst developers.
+Non-secure values are stored in `static.config.json`. In order to prevent conflicts amongst developers you copy the static config into `overrideStatic.config.json` and change the config values there. Do not commit changes to `static.config.json`.
+
+    cp static.config.json overrideStatic.config.json
 
 ##### Database Migration
 

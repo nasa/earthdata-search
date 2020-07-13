@@ -1,6 +1,5 @@
 {
   "hasStyles": true,
-  "hideCollectionFilters": true,
   "logo": {
     "id": "podaac-logo",
     "link": "https://podaac.jpl.nasa.gov",
@@ -8,8 +7,13 @@
   },
   "org": "PO.DAAC",
   "pageTitle": "PO.DAAC",
+  "parentConfig": "edsc",
   "query": {
     "dataCenter": "NASA/JPL/PODAAC",
     "hasGranulesOrCwic": null
+  },
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
   }
 }

@@ -1,8 +1,12 @@
 {
-  "hideCollectionFilters": true,
   "org": "ABoVE",
   "pageTitle": "ABoVE",
+  "parentConfig": "edsc",
   "query": {
     "project": "ABoVE"
+  },
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
   }
 }

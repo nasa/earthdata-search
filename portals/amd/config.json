@@ -1,6 +1,5 @@
 {
   "hasStyles": true,
-  "hideCollectionFilters": true,
   "logo": {
     "id": "amd-logo",
     "link": "https://www.scar.org/data-products/antarctic-master-directory/",
@@ -8,9 +7,13 @@
   },
   "org": "AMD",
   "pageTitle": "Antarctic Master Directory",
+  "parentConfig": "edsc",
   "query": {
     "tagKey": "org.scar.amd",
     "hasGranulesOrCwic": null
   },
-  "title": "Search"
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
+  }
 }

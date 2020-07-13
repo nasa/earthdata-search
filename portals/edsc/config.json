@@ -1,0 +1,40 @@
+{
+  "features": {
+    "advancedSearch": true,
+    "authentication": true,
+    "featureFacets": [],
+    "includeNtPageTag": true
+  },
+  "footer": {
+    "displayVersion": true,
+    "attributionText": "NASA Official: Stephen Berrick",
+    "primaryLinks": [{
+      "title": "FOIA",
+      "href": "http://www.nasa.gov/FOIA/index.html"
+    },
+    {
+      "title": "NASA Privacy Policy",
+      "href": "http://www.nasa.gov/about/highlights/HP_Privacy.html"
+    },
+    {
+      "title": "USA.gov",
+      "href": "http://www.usa.gov"
+    }],
+    "secondaryLinks": [{
+      "title": "Earthdata Access: A Section 508 accessible alternative",
+      "href": "https://access.earthdata.nasa.gov/"
+    }]
+  },
+  "hasScripts": false,
+  "hasStyles": false,
+  "logo": {},
+  "org": "Earthdata",
+  "pageTitle": "Earthdata Search",
+  "query": {},
+  "title": "Search",
+  "ui": {
+    "showOnlyGranulesCheckbox": true,
+    "showNonEosdisCheckbox": true,
+    "showTophat": true
+  }
+}

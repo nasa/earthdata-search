@@ -30,7 +30,6 @@ import actions from '../../actions'
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
-  portal: state.portal,
   temporal: state.query.collection.temporal
 })
 
@@ -92,7 +91,6 @@ export class GranuleFiltersPanelContainer extends Component {
       handleChange,
       handleSubmit,
       isValid,
-      portal,
       setFieldValue,
       setFieldTouched,
       touched,
@@ -116,7 +114,6 @@ export class GranuleFiltersPanelContainer extends Component {
                 errors={errors}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-                portal={portal}
                 setFieldValue={setFieldValue}
                 setFieldTouched={setFieldTouched}
               />
@@ -380,7 +377,6 @@ GranuleFiltersPanelContainer.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isValid: PropTypes.bool.isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,

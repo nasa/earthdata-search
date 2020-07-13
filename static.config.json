@@ -2,6 +2,15 @@
   "application": {
     "version": "dev",
     "env": "dev",
+    "defaultPortal": "default",
+    "feedbackApp": "",
+    "analytics": {
+      "gtmPropertyId": "",
+      "localIdentifier": {
+        "enabled": false,
+        "propertyId": ""
+      }
+    },
     "ciMode": false,
     "cmrTagNamespace": "edsc.extra.serverless",
     "thumbnailSize": {
@@ -23,12 +32,17 @@
     "ummServiceVersion": "1.2",
     "temporalDateFormatFull": "YYYY-MM-DD HH:mm:ss",
     "temporalDateFormatRange": "MM-DD HH:mm:ss",
+    "minimumTemporalDateString": "1960-01-01 00:00:00",
     "defaultResponseHeaders": {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
       "Access-Control-Allow-Credentials": true
     },
-    "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov"
+    "clientId": {
+      "background": "eed-PORTAL-ENV-serverless-background",
+      "client": "eed-PORTAL-ENV-serverless-client",
+      "lambda": "eed-PORTAL-ENV-serverless-lambda"
+    }
   },
   "environment": {
     "test": {

@@ -7,6 +7,7 @@ import { startCase } from 'lodash'
 
 import actions from '../../actions/index'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { isDefaultPortal } from '../../util/portals'
 
 const mapDispatchToProps = dispatch => ({
   onLoadPortalConfig:
@@ -21,7 +22,7 @@ export class PortalContainer extends Component {
   componentWillMount() {
     const { match, onLoadPortalConfig } = this.props
     const { params } = match
-    const { portalId = 'default' } = params
+    const { portalId = getApplicationConfig().defaultPortal } = params
 
     onLoadPortalConfig(portalId)
   }
@@ -31,7 +32,7 @@ export class PortalContainer extends Component {
     const { portalId, pageTitle } = portal
 
     let portalTitle = ''
-    if (portalId.length > 0) portalTitle = ` :: ${pageTitle || startCase(portalId)} Portal`
+    if (!isDefaultPortal(portalId)) portalTitle = ` :: ${pageTitle || startCase(portalId)} Portal`
 
     const { env } = getApplicationConfig()
     const titleEnv = env.toUpperCase() === 'PROD' ? '' : `[${env.toUpperCase()}] `

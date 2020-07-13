@@ -9,6 +9,7 @@ const config = require('./sharedUtils/config')
 
 const envConfig = config.getEnvironmentConfig()
 const appEnv = config.getApplicationConfig().env
+// TODO: EDSC-2806 read feedbackApp from application config
 const earthdataConfig = config.getEarthdataConfig(appEnv)
 
 const StaticCommonConfig = {

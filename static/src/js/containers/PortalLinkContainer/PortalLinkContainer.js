@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import Button from '../../components/Button/Button'
+import { portalPath } from '../../../../../sharedUtils/portalPath'
 
 const mapStateToProps = state => ({
-  portalId: state.portal.portalId
+  portal: state.portal
 })
 
 export const PortalLinkContainer = (props) => {
@@ -14,16 +15,16 @@ export const PortalLinkContainer = (props) => {
     className,
     dataTestId,
     onClick,
-    portalId,
+    portal,
     to,
     type,
     target
   } = props
 
-  const portalPrefix = `/portal/${portalId}`
+  const portalPrefix = portalPath(portal)
   let newTo = to
 
-  if (portalId.length > 0) {
+  if (portalPrefix.length > 0) {
     if (typeof to === 'object') {
       const { pathname } = to
       const portalPath = `${portalPrefix}${pathname}`
@@ -47,7 +48,7 @@ export const PortalLinkContainer = (props) => {
       location,
       to,
       match,
-      portalId,
+      portal,
       staticContext,
       target,
       onClick,
@@ -85,7 +86,7 @@ PortalLinkContainer.defaultProps = {
   className: '',
   dataTestId: null,
   onClick: null,
-  portalId: '',
+  portal: {},
   staticContext: null,
   type: '',
   target: '',
@@ -101,7 +102,7 @@ PortalLinkContainer.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  portalId: PropTypes.string,
+  portal: PropTypes.shape({}),
   to: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({})

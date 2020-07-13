@@ -1,7 +1,6 @@
 {
   "hasStyles": true,
   "hasScripts": true,
-  "hideCollectionFilters": true,
   "logo": {
     "id": "ornl-daac-logo",
     "link": "https://carve.ornl.gov",
@@ -9,9 +8,14 @@
   },
   "org": "ORNL DAAC",
   "pageTitle": "CARVE",
+  "parentConfig": "edsc",
   "query": {
     "project": "CARVE",
     "hasGranulesOrCwic": null
   },
-  "title": "CARVE"
+  "title": "CARVE",
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
+  }
 }
