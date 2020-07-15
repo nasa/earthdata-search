@@ -37,9 +37,7 @@ export default class CmrRequest extends Request {
       // in URLs and request payloads
       const snakeKeyData = snakeCaseKeys(data, {
         exclude: [
-          /edsc\.extra\.serverless/,
-          'rawModel',
-          'isValid'
+          /edsc\.extra\.serverless/
         ]
       })
 

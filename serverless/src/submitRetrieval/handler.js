@@ -70,13 +70,7 @@ const submitRetrieval = async (event, context) => {
       } = collection
 
       // Snake case the granule params for sending to CMR
-      const snakeGranuleParams = snakecaseKeys(granuleParams, {
-        exclude: [
-          /edsc\.extra\.serverless/,
-          'rawModel',
-          'isValid'
-        ]
-      })
+      const snakeGranuleParams = snakecaseKeys(granuleParams)
 
       const newRetrievalCollection = await retrievalDbTransaction('retrieval_collections')
         .returning([
