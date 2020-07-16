@@ -1,9 +1,10 @@
 import request from 'request-promise'
 import { stringify } from 'qs'
 import { castArray } from 'lodash'
-import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Adds a tag association to any collections meeting the provided search criteria

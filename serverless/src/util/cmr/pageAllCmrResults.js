@@ -2,7 +2,8 @@ import 'array-foreach-async'
 import { stringify } from 'qs'
 import request from 'request-promise'
 import { readCmrResults } from './readCmrResults'
-import { getClientId, getEarthdataConfig } from '../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../sharedUtils/config'
+import { getClientId } from '../../../../sharedUtils/getClientId'
 
 /**
  * CMR has a maximum page size of 2000, this method will automatically page through all results regardless of how many there are

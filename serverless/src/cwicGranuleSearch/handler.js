@@ -1,9 +1,10 @@
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { pick } from '../util/pick'
-import { getClientId, getApplicationConfig } from '../../../sharedUtils/config'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch

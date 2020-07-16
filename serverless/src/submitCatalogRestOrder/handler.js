@@ -1,7 +1,7 @@
 import 'array-foreach-async'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
-import { getClientId, getEnvironmentConfig, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEnvironmentConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -20,6 +20,7 @@ import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { parseError } from '../../../sharedUtils/parseError'
 import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Submits an order to Catalog Rest (ESI)

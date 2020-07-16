@@ -6,11 +6,15 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
 
 const config = require('./sharedUtils/config')
+const { getPortalConfig } = require('./static/src/js/util/portals')
 
-const envConfig = config.getEnvironmentConfig()
-const appEnv = config.getApplicationConfig().env
-// TODO: EDSC-2806 read feedbackApp from application config
-const earthdataConfig = config.getEarthdataConfig(appEnv)
+const {
+  analytics,
+  defaultPortal,
+  feedbackApp
+} = config.getApplicationConfig()
+
+const portalConfig = getPortalConfig(defaultPortal)
 
 const StaticCommonConfig = {
   name: 'static',
@@ -144,10 +148,9 @@ const StaticCommonConfig = {
         priority: 'high',
         options: {
           environment: process.env.NODE_ENV,
-          gtmPropertyId: envConfig.gtmPropertyId,
-          includeGoogleTagManager: envConfig.includeGoogleTagManager,
-          gaId: envConfig.gaId,
-          includeDevGoogleAnalytics: envConfig.includeDevGoogleAnalytics
+          gtmPropertyId: analytics.gtmPropertyId,
+          gaPropertyId: analytics.localIdentifier.propertyId,
+          includeDevGoogleAnalytics: analytics.localIdentifier.enabled
         }
       },
       {
@@ -158,15 +161,16 @@ const StaticCommonConfig = {
       {
         path: path.join(__dirname, './static/src/partials/body.html'),
         options: {
-          feedbackApp: earthdataConfig.feedbackApp,
-          gtmPropertyId: envConfig.gtmPropertyId
+          feedbackApp,
+          gtmPropertyId: analytics.gtmPropertyId
         }
       },
       {
         path: path.join(__dirname, './static/src/partials/ntpagetag.html'),
         location: 'body',
         options: {
-          includeNtPageTag: envConfig.includeNtPageTag
+          environment: process.env.NODE_ENV,
+          includeNtPageTag: portalConfig.features.includeNtPageTag
         }
       }]),
     new webpack.HashedModuleIdsPlugin(),

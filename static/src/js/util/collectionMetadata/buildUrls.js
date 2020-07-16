@@ -1,6 +1,7 @@
-import { getEarthdataConfig, getClientId } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import { buildAuthenticatedRedirectUrl } from '../url/buildAuthenticatedRedirectUrl'
+import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 export const buildUrls = (json, authToken) => {
   const {
