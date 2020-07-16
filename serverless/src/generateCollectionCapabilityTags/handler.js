@@ -4,11 +4,12 @@ import request from 'request-promise'
 import { stringify } from 'qs'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { readCmrResults } from '../util/cmr/readCmrResults'
-import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 // AWS SQS Adapter
 let sqs

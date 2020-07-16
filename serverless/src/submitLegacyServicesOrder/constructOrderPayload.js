@@ -1,10 +1,11 @@
 import request from 'request-promise'
 import { stringify } from 'qs'
-import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 export const constructOrderPayload = async (accessMethod, granuleParams, accessTokenWithClient) => {
   const {

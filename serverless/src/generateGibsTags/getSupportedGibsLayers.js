@@ -1,7 +1,7 @@
 import 'array-foreach-async'
 import request from 'request-promise'
 import customGibsProducts from '../static/gibs'
-import { getClientId } from '../../../sharedUtils/config'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /*
  * Retrieve the worldview configuration file and pull out products that Earthdata Search supports

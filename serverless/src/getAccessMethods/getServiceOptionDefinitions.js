@@ -1,14 +1,12 @@
 import request from 'request-promise'
 import 'array-foreach-async'
 
-import {
-  getEarthdataConfig,
-  getClientId
-} from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 export const getServiceOptionDefinitions = async (
   collectionProvider,

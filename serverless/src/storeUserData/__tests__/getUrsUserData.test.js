@@ -1,6 +1,7 @@
 import request from 'request-promise'
 import { getUrsUserData } from '../getUrsUserData'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getClientId from '../../../../sharedUtils/getClientId'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -15,6 +16,7 @@ describe('getUrsUserData', () => {
     jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
       clientId: 'test-clientId'
     }))
+    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ lambda: 'eed-edsc-test-serverless-lambda' }))
 
     const ursGetMock = jest.spyOn(request, 'get')
       .mockImplementationOnce(() => jest.fn())

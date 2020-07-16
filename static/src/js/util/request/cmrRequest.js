@@ -3,7 +3,7 @@ import snakeCaseKeys from 'snakecase-keys'
 
 import Request from './request'
 
-import { getClientId } from '../../../../../sharedUtils/config'
+import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 

@@ -7,7 +7,7 @@ import {
   computeFacets
 } from './helpers'
 
-const { dataLayer = {} } = window
+const { dataLayer = [] } = window
 
 /**
 * Pushes a virtualPageView event on the dataLayer. Only fires on PUSH events.

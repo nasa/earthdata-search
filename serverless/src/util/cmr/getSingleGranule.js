@@ -1,8 +1,9 @@
 import request from 'promise-request-retry'
 import { stringify } from 'qs'
 import { readCmrResults } from './readCmrResults'
-import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { getClientId } from '../../../../sharedUtils/getClientId'
 
 /**
  * Returns tags for a collection based on a single granule sample

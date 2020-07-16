@@ -1,10 +1,11 @@
 import 'array-foreach-async'
 import request from 'request-promise'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 const fetchLegacyServicesOrder = async (input) => {
   const dbConnection = await getDbConnection()
@@ -47,7 +48,7 @@ const fetchLegacyServicesOrder = async (input) => {
       uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders.json`,
       headers: {
         'Echo-Token': accessToken,
-        'Client-Id': getClientId(cmrEnv()).background
+        'Client-Id': getClientId().background
       },
       qs: { id: orderNumber },
       qsStringifyOptions: {
