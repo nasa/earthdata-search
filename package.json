@@ -134,7 +134,7 @@
     "knex": "^0.19.3",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "node-forge": "^0.8.5",
     "node-pg-migrate": "^4.5.0",
