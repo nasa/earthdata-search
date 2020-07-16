@@ -2,9 +2,8 @@ import 'array-foreach-async'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getClientId } from '../../../sharedUtils/config'
+import { getClientId } from '../../../sharedUtils/getClientId'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 const fetchCatalogRestOrder = async (input) => {
   // Retrieve a connection to the database
@@ -51,7 +50,7 @@ const fetchCatalogRestOrder = async (input) => {
     uri: `${url}/${orderNumber}`,
     headers: {
       'Echo-Token': accessToken,
-      'Client-Id': getClientId(cmrEnv()).background
+      'Client-Id': getClientId().background
     },
     resolveWithFullResponse: true
   })

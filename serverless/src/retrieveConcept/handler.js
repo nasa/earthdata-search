@@ -1,12 +1,13 @@
 import request from 'request-promise'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { pick } from '../util/pick'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 import { prepKeysForCmr } from '../../../sharedUtils/prepKeysForCmr'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Perform an authenticated CMR concept search

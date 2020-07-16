@@ -2,11 +2,12 @@ import 'array-foreach-async'
 import request from 'request-promise'
 import uuidv4 from 'uuid/v4'
 
-import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Retrieve data quality summaries for a given CMR Collection

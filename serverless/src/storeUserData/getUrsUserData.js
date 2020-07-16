@@ -1,10 +1,8 @@
 import request from 'request-promise'
-import {
-  getEarthdataConfig,
-  getClientId
-} from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Retrieve URS profile data for the provided username

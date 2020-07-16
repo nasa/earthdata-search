@@ -1,5 +1,6 @@
 import CmrRequest from '../cmrRequest'
 import * as cmrEnv from '../../../../../../sharedUtils/cmrEnv'
+import * as getClientId from '../../../../../../sharedUtils/getClientId'
 
 const baseUrl = 'http://example.com'
 
@@ -77,6 +78,8 @@ describe('CmrRequest#transformRequest', () => {
   })
 
   test('adds client-id header when not authenticated', () => {
+    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
+
     const request = new CmrRequest(baseUrl)
 
     request.authenticated = false

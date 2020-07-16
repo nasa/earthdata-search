@@ -1,5 +1,6 @@
 import request from 'request-promise'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getClientId from '../../../../sharedUtils/getClientId'
 import * as removeTag from '../removeTag'
 
 beforeEach(() => {
@@ -9,6 +10,7 @@ beforeEach(() => {
 describe('removeTag', () => {
   test('correctly calls cmr endpoint', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
     const cmrDeleteMock = jest.spyOn(request, 'delete').mockImplementation(() => jest.fn())
 
@@ -35,6 +37,7 @@ describe('removeTag', () => {
 
   test('reports an error when calls to cmr fail', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
     const cmrDeleteMock = jest.spyOn(request, 'delete').mockImplementation(() => {
       throw new Error()

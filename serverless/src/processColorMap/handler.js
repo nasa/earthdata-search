@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getClientId } from '../../../sharedUtils/config'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Converts a single color component to hex
