@@ -3,13 +3,14 @@ import AWS from 'aws-sdk'
 import 'array-foreach-async'
 import request from 'request-promise'
 import { stringify } from 'qs'
-import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 // AWS SQS adapter
 let sqs

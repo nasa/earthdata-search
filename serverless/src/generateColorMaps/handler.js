@@ -3,8 +3,9 @@ import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getClientId, getApplicationConfig } from '../../../sharedUtils/config'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 // Name of the db table that this lambda operates on
 const colorMapsTableName = 'colormaps'

@@ -1,9 +1,10 @@
 import request from 'request-promise'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
-import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { getEchoToken } from '../urs/getEchoToken'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import { parseError } from '../../../../sharedUtils/parseError'
+import { getClientId } from '../../../../sharedUtils/getClientId'
 
 /**
  * Performs a search request and returns the result body and the JWT

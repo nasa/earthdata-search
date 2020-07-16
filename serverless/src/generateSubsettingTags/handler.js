@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import request from 'request-promise'
 import { chunkArray } from '../util/chunkArray'
-import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getRelevantServices } from './getRelevantServices'
 import { getServiceOptionDefinitionIdNamePairs } from './getServiceOptionDefinitionIdNamePairs'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
@@ -11,6 +11,7 @@ import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 // AWS SQS adapter
 let sqs

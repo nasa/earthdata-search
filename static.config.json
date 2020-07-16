@@ -48,8 +48,6 @@
     "test": {
       "apiHost": "http://localhost:3000",
       "edscHost": "http://localhost:8080",
-      "includeGoogleTagManager": false,
-      "gtmPropertyId": "GTM-XXXXX",
       "includeNtPageTag": false,
       "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3Nn0.f867w-UMt4je4Ey86soRPP1KPcBxofPGmqyTljzcgWU"
     },
@@ -59,84 +57,47 @@
       "dbPort": 5432,
       "apiHost": "http://localhost:3001",
       "edscHost": "http://localhost:8080",
-      "includeGoogleTagManager": true,
-      "gtmPropertyId": "GTM-WNP7MLF",
-      "includeDevGoogleAnalytics": false,
-      "gaId": "UA-50960810-4",
       "includeNtPageTag": false
     },
     "production": {
       "apiHost": "http://localhost:3001",
       "edscHost": "http://localhost:8080",
-      "includeGoogleTagManager": true,
-      "gtmPropertyId": "GTM-WNP7MLF",
       "includeNtPageTag": true
     }
   },
   "earthdata": {
-    "dev": {
-      "clientId": {
-        "background": "eed-edsc-dev-serverless-background",
-        "client": "eed-edsc-dev-serverless-client",
-        "lambda": "eed-edsc-dev-serverless-lambda"
-      },
-      "feedbackApp": "EDSC-SIT"
-    },
+    "dev": {},
     "test": {
-      "clientId": {
-        "background": "eed-edsc-test-serverless-background",
-        "client": "eed-edsc-test-serverless-client",
-        "lambda": "eed-edsc-test-serverless-lambda"
-      },
       "cmrHost": "https://cmr.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
-      "feedbackApp": "EdSearch",
       "graphQlHost": "https://graphql.earthdata.nasa.gov",
       "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
     "sit": {
-      "clientId": {
-        "background": "eed-edsc-sit-serverless-background",
-        "client": "eed-edsc-sit-serverless-client",
-        "lambda": "eed-edsc-sit-serverless-lambda"
-      },
       "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
-      "feedbackApp": "EDSC-SIT",
       "graphQlHost": "https://graphql.sit.earthdata.nasa.gov",
       "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
     "uat": {
-      "clientId": {
-        "background": "eed-edsc-uat-serverless-background",
-        "client": "eed-edsc-uat-serverless-client",
-        "lambda": "eed-edsc-uat-serverless-lambda"
-      },
       "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://uat.urs.earthdata.nasa.gov",
-      "feedbackApp": "EDSC-UAT",
       "graphQlHost": "https://graphql.uat.earthdata.nasa.gov",
       "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
     "prod": {
-      "clientId": {
-        "background": "eed-edsc-prod-serverless-background",
-        "client": "eed-edsc-prod-serverless-client",
-        "lambda": "eed-edsc-prod-serverless-lambda"
-      },
       "cmrHost": "https://cmr.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
-      "feedbackApp": "EdSearch",
       "graphQlHost": "https://graphql.earthdata.nasa.gov",
       "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",

@@ -3,11 +3,12 @@ import request from 'request-promise'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getEarthdataConfig, getClientId, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 // AWS SQS adapter
 let sqs

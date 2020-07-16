@@ -4,9 +4,9 @@ import Request from './request'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import {
   getEnvironmentConfig,
-  getEarthdataConfig,
-  getClientId
+  getEarthdataConfig
 } from '../../../../../sharedUtils/config'
+import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 export default class GraphQlRequest extends Request {
   constructor(authToken) {

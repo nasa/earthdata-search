@@ -1,6 +1,7 @@
 import GranuleConceptRequest from '../granuleConceptRequest'
 import Request from '../request'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
+import * as getClientId from '../../../../../../sharedUtils/getClientId'
 
 beforeEach(() => {
   jest.restoreAllMocks()
@@ -49,6 +50,8 @@ describe('GranuleConceptRequest#search', () => {
 
 describe('GranuleConceptRequest#transformRequest', () => {
   test('adds umm version header', () => {
+    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
+
     const request = new GranuleConceptRequest()
 
     const data = { param1: 123 }

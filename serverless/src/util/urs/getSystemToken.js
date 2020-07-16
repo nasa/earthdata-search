@@ -1,9 +1,10 @@
 import request from 'request-promise'
 
 import { getEdlConfig } from '../configUtil'
-import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { getUrsSystemCredentials } from './getUrsSystemCredentials'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { getClientId } from '../../../../sharedUtils/getClientId'
 
 // Initalize a variable to be set once
 let cmrToken

@@ -1,9 +1,10 @@
 import request from 'request-promise'
-import { getClientId, getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Perform an authenticated CMR Concept Metadata search

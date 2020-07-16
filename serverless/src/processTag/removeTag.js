@@ -1,6 +1,7 @@
 import request from 'request-promise'
-import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Removes a tag association from any collections meeting the provided search criteria

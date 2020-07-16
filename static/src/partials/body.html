@@ -1,5 +1,7 @@
 <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=<%= gtmPropertyId %>" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    <% if (gtmPropertyId.length > 0) { %>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=<%= gtmPropertyId %>" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    <% } %>
 </noscript>
 <script type="text/javascript">
     var htmlElement = document.getElementsByTagName('html')[0];
@@ -102,12 +104,18 @@
     src="https://cdn.earthdata.nasa.gov/tophat2/tophat2.js"
     async="async"
     defer="defer"
+    <% if (feedbackApp.length > 0) { %>
     data-show-fbm="true"
+    <% } else { %>
+    data-show-fbm="false"
+    <% } %>
     data-show-status="true"
     data-status-api-url="https://status.earthdata.nasa.gov/api/v1/notifications"
 ></script>
+<% if (feedbackApp.length > 0) { %>
 <script
     src="https://fbm.earthdata.nasa.gov/for/<%= feedbackApp %>/feedback.js"
     type="text/javascript"
 ></script>
 <script type="text/javascript">feedback.init({ showIcon: false });</script>
+<% } %>

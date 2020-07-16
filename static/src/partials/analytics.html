@@ -1,11 +1,11 @@
-<% if (includeGoogleTagManager) { %>
+<% if (gtmPropertyId.length > 0) { %>
 <script>
   var dataLayer = window.dataLayer = window.dataLayer || [];
 
   <% if (environment === 'development' && includeDevGoogleAnalytics === true) { %>
     dataLayer.push({
       'event': 'localIdentifier',
-      'localGAProperty': '<%= gaId %>'
+      'localGAProperty': '<%= gaPropertyId %>'
     });
   <% } %>
 
