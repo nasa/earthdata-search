@@ -35,6 +35,11 @@ const defaultProps = {
     onRemoveCollectionFromProject: jest.fn(),
     onViewCollectionDetails: jest.fn(),
     onViewCollectionGranules: jest.fn(),
+    portal: {
+      features: {
+        authentication: true
+      }
+    },
     setSize: jest.fn(),
     windowWidth: 800
   },

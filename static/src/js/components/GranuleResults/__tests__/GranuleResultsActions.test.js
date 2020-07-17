@@ -16,6 +16,11 @@ function setup(overrideProps) {
     location: {
       search: '?p=collectionId'
     },
+    portal: {
+      features: {
+        authentication: true
+      }
+    },
     onAddProjectCollection: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
@@ -143,6 +148,20 @@ describe('GranuleResultsActions component', () => {
       expect(props.onAddProjectCollection).toHaveBeenCalledTimes(1)
       expect(props.onAddProjectCollection).toHaveBeenCalledWith('collectionId')
     })
+
+    test('hides the add to project button if authentication is disabled', () => {
+      const { enzymeWrapper } = setup({
+        portal: {
+          features: {
+            authentication: false
+          }
+        }
+      })
+
+      const button = enzymeWrapper.find('.granule-results-actions__proj-action--add')
+
+      expect(button.exists()).toBeFalsy()
+    })
   })
 
   describe('removeFromProjectButton', () => {
@@ -202,6 +221,20 @@ describe('GranuleResultsActions component', () => {
       const button = enzymeWrapper.find('.granule-results-actions__download-all-button')
 
       expect(button.props().badge).toBeNull()
+    })
+
+    test('hides the download all button when authentication is disabled', () => {
+      const { enzymeWrapper } = setup({
+        portal: {
+          features: {
+            authentication: false
+          }
+        }
+      })
+
+      const button = enzymeWrapper.find('.granule-results-actions__download-all-button')
+
+      expect(button.exists()).toBeFalsy()
     })
   })
 })

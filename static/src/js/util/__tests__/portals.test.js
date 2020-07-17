@@ -1,4 +1,4 @@
-import { isDefaultPortal } from '../portals'
+import { isDefaultPortal, authenticationEnabled } from '../portals'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
 
 beforeEach(() => {
@@ -17,5 +17,27 @@ describe('isDefaultPortal', () => {
 
   test('returns false if the portalId does not match the defaultPortal', () => {
     expect(isDefaultPortal('simple')).toBeFalsy()
+  })
+})
+
+describe('authenticationEnabled', () => {
+  test('returns true when authentication is enabled', () => {
+    const portal = {
+      features: {
+        authentication: true
+      }
+    }
+
+    expect(authenticationEnabled(portal)).toBeTruthy()
+  })
+
+  test('returns false when authentication is not enabled', () => {
+    const portal = {
+      features: {
+        authentication: false
+      }
+    }
+
+    expect(authenticationEnabled(portal)).toBeFalsy()
   })
 })

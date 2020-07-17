@@ -10,10 +10,11 @@ import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
-
-import './SecondaryToolbar.scss'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { stringify } from '../../util/url/url'
+import { authenticationEnabled } from '../../util/portals'
+
+import './SecondaryToolbar.scss'
 
 class SecondaryToolbar extends Component {
   constructor(props) {
@@ -284,13 +285,19 @@ class SecondaryToolbar extends Component {
           isPath(location.pathname, ['/projects']) && backLink
         }
         {
-          (!isPath(location.pathname, ['/projects', '/downloads']) && projectIds.length > 0) && projectLink
-        }
-        {
-          pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
-        }
-        {
-          !loggedIn ? loginLink : loggedInDropdown
+          authenticationEnabled(portal) && (
+            <>
+              {
+                (!isPath(location.pathname, ['/projects', '/downloads']) && projectIds.length > 0) && projectLink
+              }
+              {
+                pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
+              }
+              {
+                !loggedIn ? loginLink : loggedInDropdown
+              }
+            </>
+          )
         }
       </section>
     )
