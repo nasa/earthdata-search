@@ -12,6 +12,9 @@ function setup(state, overrideProps) {
       pathname: '/search'
     },
     portal: {
+      features: {
+        authentication: true
+      },
       portalId: 'edsc'
     },
     projectIds: [],
@@ -157,6 +160,21 @@ describe('SecondaryToolbar component', () => {
       expect(enzymeWrapper.state('projectDropdownOpen')).toBeFalsy()
       expect(props.onUpdateProjectName).toBeCalledTimes(1)
       expect(props.onUpdateProjectName).toBeCalledWith('test project name')
+    })
+  })
+
+  describe('when authentication is disabled', () => {
+    test('hides the login button and user dropdown', () => {
+      const { enzymeWrapper } = setup(undefined, {
+        portal: {
+          features: {
+            authentication: false
+          }
+        }
+      })
+
+      expect(enzymeWrapper.find('.secondary-toolbar__login').exists()).toBeFalsy()
+      expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').exists()).toBeFalsy()
     })
   })
 })

@@ -12,6 +12,7 @@ import Skeleton from '../Skeleton/Skeleton'
 import { collectionResultsTotal } from './skeleton'
 
 import './CollectionResultsHeader.scss'
+import { authenticationEnabled } from '../../util/portals'
 
 const CollectionResultsHeader = ({
   collections,
@@ -161,17 +162,20 @@ const CollectionResultsHeader = ({
             </Col>
           </Form.Group>
         </Row>
-        <div className="row mt-1">
-          <div className="col">
-            <span className="collection-results-header__tip">
-              <strong className="collection-results-header__tip-label">Tip:</strong>
-              Add
-              <i className="collection-results-header__tip-icon fa fa-plus" />
-              collections to your project to compare and download their data.
-            </span>
-          </div>
-        </div>
-
+        {
+          authenticationEnabled(portal) && (
+            <div className="row mt-1">
+              <div className="col">
+                <span className="collection-results-header__tip">
+                  <strong className="collection-results-header__tip-label">Tip:</strong>
+                  Add
+                  <i className="collection-results-header__tip-icon fa fa-plus" />
+                  collections to your project to compare and download their data.
+                </span>
+              </div>
+            </div>
+          )
+        }
       </div>
       <div className="collection-results-header__meta">
         <span className="collection-results-header__collection-count">

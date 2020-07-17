@@ -24,13 +24,14 @@ import './CollectionResultsBody.scss'
 const CollectionResultsBody = ({
   browser,
   collections,
-  projectIds,
   loadNextPage,
+  panelView,
+  portal,
+  projectIds,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionGranules,
-  onViewCollectionDetails,
-  panelView
+  onViewCollectionDetails
 }) => {
   const {
     allIds: collectionIds,
@@ -84,6 +85,7 @@ const CollectionResultsBody = ({
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
           isItemLoaded={isItemLoaded}
+          portal={portal}
         />
       </CSSTransition>
       <CSSTransition
@@ -104,6 +106,7 @@ const CollectionResultsBody = ({
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
           isItemLoaded={isItemLoaded}
+          portal={portal}
         />
       </CSSTransition>
     </div>
@@ -120,6 +123,7 @@ CollectionResultsBody.propTypes = {
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
+  portal: PropTypes.shape({}).isRequired,
   projectIds: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 

@@ -9,6 +9,7 @@ import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 import Button from '../Button/Button'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
+import { authenticationEnabled } from '../../util/portals'
 
 
 const GranuleResultsTableHeaderCell = (props) => {
@@ -58,46 +59,52 @@ const GranuleResultsTableHeaderCell = (props) => {
       </h4>
       <div className="granule-results-table__granule-actions">
         {
-          !isInProject
-            ? (
-              <Button
-                className="button granule-results-table__granule-action granule-results-table__granule-action--add"
-                type="button"
-                label="Add granule"
-                title="Add granule"
-                onClick={(e) => {
-                  onAddGranuleToProjectCollection({
-                    collectionId,
-                    granuleId: id
-                  })
+          authenticationEnabled(portal) && (
+            <>
+              {
+                !isInProject
+                  ? (
+                    <Button
+                      className="button granule-results-table__granule-action granule-results-table__granule-action--add"
+                      type="button"
+                      label="Add granule"
+                      title="Add granule"
+                      onClick={(e) => {
+                        onAddGranuleToProjectCollection({
+                          collectionId,
+                          granuleId: id
+                        })
 
-                  // Prevent event bubbling up to the granule focus event.
-                  e.stopPropagation()
-                }}
-              >
-                <i className="fa fa-plus" />
-              </Button>
-            )
-            : (
-              <Button
-                className="button granule-results-table__granule-action granule-results-table__granule-action--remove"
-                type="button"
-                label="Remove granule"
-                title="Remove granule"
-                onClick={(e) => {
-                  onRemoveGranuleFromProjectCollection({
-                    collectionId,
-                    granuleId: id
-                  })
+                        // Prevent event bubbling up to the granule focus event.
+                        e.stopPropagation()
+                      }}
+                    >
+                      <i className="fa fa-plus" />
+                    </Button>
+                  )
+                  : (
+                    <Button
+                      className="button granule-results-table__granule-action granule-results-table__granule-action--remove"
+                      type="button"
+                      label="Remove granule"
+                      title="Remove granule"
+                      onClick={(e) => {
+                        onRemoveGranuleFromProjectCollection({
+                          collectionId,
+                          granuleId: id
+                        })
 
-                  // Prevent event bubbling up to the granule focus event.
-                  e.stopPropagation()
-                }}
-              >
-                <i className="fa fa-minus" />
-              </Button>
-            )
-          }
+                        // Prevent event bubbling up to the granule focus event.
+                        e.stopPropagation()
+                      }}
+                    >
+                      <i className="fa fa-minus" />
+                    </Button>
+                  )
+              }
+            </>
+          )
+        }
         {
           onlineAccessFlag && (
             <GranuleResultsDataLinksButton

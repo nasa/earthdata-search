@@ -25,6 +25,11 @@ function setup() {
     granuleQuery: {
       pageNum: 1
     },
+    portal: {
+      features: {
+        authentication: true
+      }
+    },
     project: {
       collectionIds: ['focusedCollection'],
       byId: {
