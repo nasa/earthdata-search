@@ -10,6 +10,11 @@ function setup(overrideProps) {
   const props = {
     column: {
       customProps: {
+        portal: {
+          features: {
+            authentication: true
+          }
+        },
         onViewCollectionGranules: jest.fn(),
         onAddProjectCollection: jest.fn(),
         onRemoveCollectionFromProject: jest.fn(),
@@ -63,7 +68,6 @@ describe('CollectionResultsTableHeaderCell component', () => {
 
     expect(props.column.customProps.onViewCollectionDetails).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onViewCollectionDetails).toHaveBeenCalledWith('collectionId')
-
   })
 
   test('clicking the add to project button calls onAddProjectCollection', () => {
@@ -74,7 +78,6 @@ describe('CollectionResultsTableHeaderCell component', () => {
 
     expect(props.column.customProps.onAddProjectCollection).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onAddProjectCollection).toHaveBeenCalledWith('collectionId')
-
   })
 
   test('clicking the remove from project button calls onRemoveCollectionFromProject', () => {
@@ -92,6 +95,29 @@ describe('CollectionResultsTableHeaderCell component', () => {
 
     expect(props.column.customProps.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
+  })
 
+  describe('when authentication is disabled', () => {
+    test('hides the add to project button', () => {
+      const { enzymeWrapper } = setup({
+        column: {
+          customProps: {
+            portal: {
+              features: {
+                authentication: false
+              }
+            },
+            onViewCollectionGranules: jest.fn(),
+            onAddProjectCollection: jest.fn(),
+            onRemoveCollectionFromProject: jest.fn(),
+            onViewCollectionDetails: jest.fn()
+          }
+        }
+      })
+
+      const addButton = enzymeWrapper.find('.collection-results-table__collection-action--add')
+
+      expect(addButton.exists()).toBeFalsy()
+    })
   })
 })

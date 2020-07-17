@@ -446,4 +446,18 @@ describe('CollectionResultsList component', () => {
       expect(props.onRemoveCollectionFromProject.mock.calls.length).toBe(1)
     })
   })
+
+  describe('when authentication is disabled', () => {
+    test('hides the addToProjectButton', () => {
+      const { enzymeWrapper } = setup({
+        portal: {
+          features: {
+            authentication: false
+          }
+        }
+      })
+
+      expect(enzymeWrapper.find('.collection-results-item__action--add').exists()).toBeFalsy()
+    })
+  })
 })
