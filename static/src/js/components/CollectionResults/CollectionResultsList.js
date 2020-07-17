@@ -63,6 +63,7 @@ export const CollectionResultsList = ({
   onViewCollectionDetails,
   onViewCollectionGranules,
   setVisibleMiddleIndex,
+  portal,
   visibleMiddleIndex
 }) => {
   const infiniteLoaderRef = useRef(null)
@@ -127,7 +128,8 @@ export const CollectionResultsList = ({
                       onViewCollectionDetails,
                       loadMoreItems,
                       isItemLoaded,
-                      setSize
+                      setSize,
+                      portal
                     }}
                     onItemsRendered={
                       (data) => {
@@ -170,6 +172,7 @@ CollectionResultsList.propTypes = {
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   setVisibleMiddleIndex: PropTypes.func,
+  portal: PropTypes.shape({}).isRequired,
   visibleMiddleIndex: PropTypes.number
 }
 

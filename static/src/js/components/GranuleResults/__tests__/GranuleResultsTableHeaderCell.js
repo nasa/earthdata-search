@@ -14,6 +14,11 @@ function setup(overrideProps) {
         collectionId: 'collectionId',
         location: {},
         isGranuleInProject: jest.fn(),
+        portal: {
+          features: {
+            authentication: true
+          }
+        },
         onAddGranuleToProjectCollection: jest.fn(),
         onExcludeGranule: jest.fn(),
         onFocusedGranuleChange: jest.fn(),
@@ -96,5 +101,33 @@ describe('GranuleResultsTableHeaderCell component', () => {
 
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({ collectionId: 'collectionId', granuleId: '2257684172' })
+  })
+
+  describe('when authentication is disabled', () => {
+    test('hides the add to project button', () => {
+      const { enzymeWrapper } = setup({
+        column: {
+          customProps: {
+            collectionId: 'collectionId',
+            location: {},
+            isGranuleInProject: jest.fn(),
+            portal: {
+              features: {
+                authentication: false
+              }
+            },
+            onAddGranuleToProjectCollection: jest.fn(),
+            onExcludeGranule: jest.fn(),
+            onFocusedGranuleChange: jest.fn(),
+            onMetricsDataAccess: jest.fn(),
+            onRemoveGranuleFromProjectCollection: jest.fn()
+          }
+        }
+      })
+
+      const addButton = enzymeWrapper.find('.granule-results-table__granule-action--add')
+
+      expect(addButton.exists()).toBeFalsy()
+    })
   })
 })

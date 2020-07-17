@@ -24,7 +24,11 @@ function setup(type, overrideProps) {
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
-    portal: {}
+    portal: {
+      features: {
+        authentication: true
+      }
+    }
   }
   let props
 
@@ -510,6 +514,19 @@ describe('GranuleResultsItem component', () => {
 
       expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
       expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('granuleId')
+    })
+  })
+
+  describe('when authentication is disabled', () => {
+    test('hides the add to project button', () => {
+      const { enzymeWrapper } = setup('override', {
+        portal: {
+          features: {
+            authentication: false
+          }
+        }
+      })
+      expect(enzymeWrapper.find('.granule-results-item__button--add').exists()).toBeFalsy()
     })
   })
 })

@@ -11,6 +11,7 @@ import Button from '../Button/Button'
 import SplitBadge from '../SplitBadge/SplitBadge'
 
 import './CollectionResultsItem.scss'
+import { authenticationEnabled } from '../../util/portals'
 
 /**
  * Renders CollectionResultsItem.
@@ -23,6 +24,7 @@ import './CollectionResultsItem.scss'
  */
 export const CollectionResultsItem = forwardRef(({
   collection,
+  portal,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
@@ -261,11 +263,18 @@ export const CollectionResultsItem = forwardRef(({
                 icon="info-circle"
               />
               {
-                isCollectionInProject && removeFromProjectButton
+                authenticationEnabled(portal) && (
+                  <>
+                    {
+                      isCollectionInProject && removeFromProjectButton
+                    }
+                    {
+                      !isCollectionInProject && addToProjectButton
+                    }
+                  </>
+                )
               }
-              {
-                !isCollectionInProject && addToProjectButton
-              }
+
             </div>
           </div>
           <div className="collection-results-item__body-secondary">
@@ -367,6 +376,7 @@ CollectionResultsItem.displayName = 'CollectionResultsItem'
 
 CollectionResultsItem.propTypes = {
   collection: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
