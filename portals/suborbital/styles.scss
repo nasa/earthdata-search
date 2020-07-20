@@ -1,0 +1,9 @@
+#suborbital-logo {
+  height: 40px;
+  width: 40px;
+  background-image: url('./images/suborbital-icon-grey-clear.png');
+
+  &:hover {
+    background-image: url('./images/suborbital-icon-white-clear.png');
+  }
+}
