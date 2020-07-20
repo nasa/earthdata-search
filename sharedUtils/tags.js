@@ -41,7 +41,7 @@ export const getValueForTag = (key, tags, namespaceOverride = null) => {
  * @param {String} key Tag key
  */
 export const hasTag = (collection, key, namespaceOverride = null) => {
-  const { tags = {} } = collection
+  const { tags } = collection
 
   // GraphQL will return null if no tags are present
   if (tags == null) return false

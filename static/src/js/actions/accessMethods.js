@@ -3,8 +3,9 @@ import actions from './index'
 
 import { buildPromise } from '../util/buildPromise'
 import { findProvider } from '../util/findProvider'
-import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { getGranuleCount } from '../util/collectionMetadata/granuleCount'
+import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
 import { parseError } from '../../../../sharedUtils/parseError'
 
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
@@ -16,7 +17,8 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
   // Get the selected Access Method
   const {
     authToken,
-    metadata
+    metadata,
+    project
   } = getState()
 
   // If the user is not logged in, don't fetch any methods
@@ -34,9 +36,13 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
     const accessMethodPromises = collectionIds.map((collectionId) => {
       // Get the tag data for the collection
       const { collections } = metadata
-      const { byId } = collections
-      const collection = byId[collectionId]
-      const { granules, metadata: collectionMetadata } = collection
+      const { byId: collectionsById } = collections
+      const { byId: projectCollectionsById } = project
+
+      const collection = collectionsById[collectionId]
+      const projectCollection = projectCollectionsById[collectionId] || {}
+
+      const { metadata: collectionMetadata } = collection
 
       const {
         dataCenter,
@@ -45,7 +51,7 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
         variables
       } = collectionMetadata
 
-      const { hits: granuleCount } = granules
+      const granuleCount = getGranuleCount(collection, projectCollection)
 
       // Calculate the number of orders that will be created based on granule count
       const { defaultGranulesPerOrder } = getApplicationConfig()

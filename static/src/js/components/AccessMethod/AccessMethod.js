@@ -12,7 +12,6 @@ import Skeleton from '../Skeleton/Skeleton'
 import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 const EchoForm = lazy(() => import('./EchoForm'))
 
@@ -195,19 +194,13 @@ export class AccessMethod extends Component {
   }
 
   handleAccessMethodSelection(method) {
-    const { granuleMetadata, metadata, onSelectAccessMethod } = this.props
+    const { metadata, onSelectAccessMethod } = this.props
 
     const { conceptId: collectionId } = metadata
 
-    // Calculate the number of orders that will be created based on granule count
-    const { defaultGranulesPerOrder } = getApplicationConfig()
-    const { hits: granuleCount } = granuleMetadata
-    const orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
-
     onSelectAccessMethod({
       collectionId,
-      selectedAccessMethod: method,
-      orderCount: ['download', 'opendap'].includes(method) ? 0 : orderCount
+      selectedAccessMethod: method
     })
   }
 

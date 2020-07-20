@@ -1,5 +1,7 @@
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
+import snakecaseKeys from 'snakecase-keys'
+
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { generateRetrievalPayloads } from './generateRetrievalPayloads'
@@ -67,6 +69,9 @@ const submitRetrieval = async (event, context) => {
         granule_params: granuleParams
       } = collection
 
+      // Snake case the granule params for sending to CMR
+      const snakeGranuleParams = snakecaseKeys(granuleParams)
+
       const newRetrievalCollection = await retrievalDbTransaction('retrieval_collections')
         .returning([
           'id',
@@ -81,7 +86,7 @@ const submitRetrieval = async (event, context) => {
           access_method: accessMethod,
           collection_id: id,
           collection_metadata: collectionMetadata,
-          granule_params: granuleParams,
+          granule_params: snakeGranuleParams,
           granule_count: granuleCount
         })
 

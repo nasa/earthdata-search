@@ -136,8 +136,27 @@ describe('selectAccessMethod', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      metadata: {
+        collections: {
+          byId: {
+            collectionId: {
+              granules: {
+                hits: 1,
+                byId: {
+                  'GRAN-1': {}
+                },
+                allIds: ['GRAN-1']
+              }
+            }
+          }
+        }
+      },
       project: {
-        byId: {},
+        byId: {
+          collectionId: {
+            orderCount: 1
+          }
+        },
         collectionIds: ['collectionId']
       }
     })
@@ -147,7 +166,11 @@ describe('selectAccessMethod', () => {
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: SELECT_ACCESS_METHOD,
-      payload
+      payload: {
+        collectionId: 'collectionId',
+        orderCount: 0,
+        selectedAccessMethod: 'download'
+      }
     })
   })
 
@@ -177,6 +200,21 @@ describe('selectAccessMethod', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      metadata: {
+        collections: {
+          byId: {
+            collectionId: {
+              granules: {
+                hits: 1,
+                byId: {
+                  'GRAN-1': {}
+                },
+                allIds: ['GRAN-1']
+              }
+            }
+          }
+        }
+      },
       project: {
         byId: {
           collectionId: {
@@ -198,7 +236,11 @@ describe('selectAccessMethod', () => {
     expect(storeActions.length).toBe(1)
     expect(storeActions[0]).toEqual({
       type: SELECT_ACCESS_METHOD,
-      payload
+      payload: {
+        collectionId: 'collectionId',
+        orderCount: 0,
+        selectedAccessMethod: 'download'
+      }
     })
   })
 })

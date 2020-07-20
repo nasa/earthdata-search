@@ -14,6 +14,7 @@ import CwicGranuleRequest from '../util/request/cwicGranuleRequest'
 import {
   ADD_MORE_GRANULE_RESULTS,
   CLEAR_EXCLUDE_GRANULE_ID,
+  CLEAR_REMOVED_GRANULE_ID,
   ERRORED_GRANULES,
   EXCLUDE_GRANULE_ID,
   FINISHED_GRANULES_TIMER,
@@ -24,10 +25,10 @@ import {
   SET_GRANULE_LINKS_LOADING,
   STARTED_GRANULES_TIMER,
   UNDO_EXCLUDE_GRANULE_ID,
+  UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_METADATA,
-  UPDATE_GRANULE_RESULTS,
-  UPDATE_CURRENT_COLLECTION_GRANULE_PARAMS
+  UPDATE_GRANULE_RESULTS
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { mbr } from '../util/map/mbr'
@@ -35,6 +36,7 @@ import { getFocusedCollectionObject } from '../util/focusedCollection'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { prepareGranuleAccessParams } from '../../../../sharedUtils/prepareGranuleAccessParams'
 import { buildPromise } from '../util/buildPromise'
+import { getGranuleCount } from '../util/collectionMetadata/granuleCount'
 
 const { defaultGranulesPerOrder, maxCmrPageSize } = getApplicationConfig()
 
@@ -95,6 +97,10 @@ export const onUndoExcludeGranule = payload => ({
 
 export const onClearExcludedGranules = () => ({
   type: CLEAR_EXCLUDE_GRANULE_ID
+})
+
+export const onClearRemovedGranules = () => ({
+  type: CLEAR_REMOVED_GRANULE_ID
 })
 
 export const updateGranuleLinks = payload => ({
@@ -278,8 +284,12 @@ export const undoExcludeGranule = collectionId => (dispatch) => {
   dispatch(onUndoExcludeGranule(collectionId))
 }
 
-export const clearExcludedGranules = collectionId => (dispatch) => {
-  dispatch(onClearExcludedGranules(collectionId))
+export const clearExcludedGranules = () => (dispatch) => {
+  dispatch(onClearExcludedGranules())
+}
+
+export const clearRemovedGranules = () => (dispatch) => {
+  dispatch(onClearRemovedGranules())
 }
 
 // Cancel token to cancel pending requests
@@ -376,7 +386,8 @@ export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
       const { metadata: newMetadata = {} } = getState()
       const { collections } = newMetadata
       const { byId: collectionsById } = collections
-      const { granules: collectionGranules = {} } = collectionsById
+      const collection = collectionsById[collectionId]
+      const { granules: collectionGranules = {} } = collection
       const { allIds: collectionGranulesAllIds } = collectionGranules
 
       if (addedGranuleIds.length && addedGranuleIds.length < maxCmrPageSize) {
@@ -433,9 +444,15 @@ export const getGranules = (ids, opts = {}) => (dispatch, getState) => {
           const { [collectionId]: projectCollection } = projectCollections
           const { selectedAccessMethod } = projectCollection
 
+          const { metadata } = getState()
+          const { collections } = metadata
+          const { byId: collectionsById } = collections
+          const collection = collectionsById[collectionId]
+
+          const granuleCount = getGranuleCount(collection, projectCollection)
+
           if (selectedAccessMethod && !['download', 'opendap'].includes(selectedAccessMethod)) {
             // Calculate the number of orders that will be created based on granule count
-            const { hits: granuleCount } = payload
             const orderCount = Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
 
             dispatch(actions.updateAccessMethodOrderCount({
