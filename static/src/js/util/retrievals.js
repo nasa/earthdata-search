@@ -80,7 +80,6 @@ export const prepareRetrievalParams = (state) => {
     const params = buildGranuleSearchParams(preparedParams, {
       includeConceptId: true
     })
-    console.log('prepareRetrievalParams -> params', params)
 
     returnValue.granule_params = params
 
