@@ -274,7 +274,6 @@ export const CollectionResultsItem = forwardRef(({
                   </>
                 )
               }
-
             </div>
           </div>
           <div className="collection-results-item__body-secondary">
