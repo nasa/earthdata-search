@@ -248,7 +248,6 @@ const GranuleResultsActions = ({
             </>
           )
         }
-
       </div>
       {
         authenticationEnabled(portal) && downloadButton
