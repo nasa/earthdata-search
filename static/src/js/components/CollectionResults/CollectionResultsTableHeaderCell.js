@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Button from '../Button/Button'
-import { authenticationEnabled } from '../../util/portals'
+import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 /**
  * Renders CollectionResultsTableHeaderCell.
@@ -15,7 +15,6 @@ const CollectionResultsTableHeaderCell = (props) => {
   const { collectionId, isCollectionInProject } = rowProps
 
   const {
-    portal,
     onViewCollectionGranules,
     onAddProjectCollection,
     onRemoveCollectionFromProject,
@@ -51,40 +50,38 @@ const CollectionResultsTableHeaderCell = (props) => {
             e.stopPropagation()
           }}
         />
-        {
-          authenticationEnabled(portal) && (
-            <>
-              {
-                !isCollectionInProject
-                  ? (
-                    <Button
-                      className="collection-results-table__collection-action collection-results-table__collection-action--add"
-                      icon="plus"
-                      variant="naked"
-                      label="Add collection to the current project"
-                      title="Add collection to the current project"
-                      onClick={(e) => {
-                        onAddProjectCollection(collectionId)
-                        e.stopPropagation()
-                      }}
-                    />
-                  ) : (
-                    <Button
-                      className="collection-results-table__collection-action collection-results-table__collection-action--remove"
-                      icon="minus"
-                      variant="naked"
-                      label="Remove collection from the current project"
-                      title="Remove collection from the current project"
-                      onClick={(e) => {
-                        onRemoveCollectionFromProject(collectionId)
-                        e.stopPropagation()
-                      }}
-                    />
-                  )
-              }
-            </>
-          )
-        }
+        <PortalAuthEnabledContainer>
+          <>
+            {
+              !isCollectionInProject
+                ? (
+                  <Button
+                    className="collection-results-table__collection-action collection-results-table__collection-action--add"
+                    icon="plus"
+                    variant="naked"
+                    label="Add collection to the current project"
+                    title="Add collection to the current project"
+                    onClick={(e) => {
+                      onAddProjectCollection(collectionId)
+                      e.stopPropagation()
+                    }}
+                  />
+                ) : (
+                  <Button
+                    className="collection-results-table__collection-action collection-results-table__collection-action--remove"
+                    icon="minus"
+                    variant="naked"
+                    label="Remove collection from the current project"
+                    title="Remove collection from the current project"
+                    onClick={(e) => {
+                      onRemoveCollectionFromProject(collectionId)
+                      e.stopPropagation()
+                    }}
+                  />
+                )
+            }
+          </>
+        </PortalAuthEnabledContainer>
       </div>
     </>
   )

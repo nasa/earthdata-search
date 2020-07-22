@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import MoreActionsDropdownItem from '../../MoreActionsDropdown/MoreActionsDropdownItem'
 import GranuleResultsTableHeaderCell from '../GranuleResultsTableHeaderCell'
+import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -103,31 +104,11 @@ describe('GranuleResultsTableHeaderCell component', () => {
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({ collectionId: 'collectionId', granuleId: '2257684172' })
   })
 
-  describe('when authentication is disabled', () => {
-    test('hides the add to project button', () => {
-      const { enzymeWrapper } = setup({
-        column: {
-          customProps: {
-            collectionId: 'collectionId',
-            location: {},
-            isGranuleInProject: jest.fn(),
-            portal: {
-              features: {
-                authentication: false
-              }
-            },
-            onAddGranuleToProjectCollection: jest.fn(),
-            onExcludeGranule: jest.fn(),
-            onFocusedGranuleChange: jest.fn(),
-            onMetricsDataAccess: jest.fn(),
-            onRemoveGranuleFromProjectCollection: jest.fn()
-          }
-        }
-      })
+  test('renders the add button under PortalAuthEnabledContainer', () => {
+    const { enzymeWrapper } = setup(undefined)
 
-      const addButton = enzymeWrapper.find('.granule-results-table__granule-action--add')
-
-      expect(addButton.exists()).toBeFalsy()
-    })
+    expect(enzymeWrapper
+      .find(PortalAuthEnabledContainer)
+      .find('.granule-results-table__granule-action--add').exists()).toBeTruthy()
   })
 })

@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import CollectionResultsTableHeaderCell from '../CollectionResultsTableHeaderCell'
+import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -97,27 +98,11 @@ describe('CollectionResultsTableHeaderCell component', () => {
     expect(props.column.customProps.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
   })
 
-  describe('when authentication is disabled', () => {
-    test('hides the add to project button', () => {
-      const { enzymeWrapper } = setup({
-        column: {
-          customProps: {
-            portal: {
-              features: {
-                authentication: false
-              }
-            },
-            onViewCollectionGranules: jest.fn(),
-            onAddProjectCollection: jest.fn(),
-            onRemoveCollectionFromProject: jest.fn(),
-            onViewCollectionDetails: jest.fn()
-          }
-        }
-      })
+  test('renders the login button under PortalAuthEnabledContainer', () => {
+    const { enzymeWrapper } = setup()
 
-      const addButton = enzymeWrapper.find('.collection-results-table__collection-action--add')
-
-      expect(addButton.exists()).toBeFalsy()
-    })
+    expect(enzymeWrapper
+      .find(PortalAuthEnabledContainer)
+      .find('.collection-results-table__collection-action--add').exists()).toBeTruthy()
   })
 })

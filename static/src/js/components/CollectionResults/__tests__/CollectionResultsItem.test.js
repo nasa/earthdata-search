@@ -6,6 +6,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import CollectionResultsItem from '../CollectionResultsItem'
 import SplitBadge from '../../SplitBadge/SplitBadge'
 import { collectionListItemProps } from './mocks'
+import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -43,6 +44,12 @@ describe('CollectionResultsList component', () => {
     expect(props.onViewCollectionGranules).toHaveBeenCalledTimes(1)
     expect(props.onViewCollectionGranules).toHaveBeenCalledWith('collectionId1')
     expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('renders the add button under PortalAuthEnabledContainer', () => {
+    const { enzymeWrapper } = setup()
+
+    expect(enzymeWrapper.find(PortalAuthEnabledContainer).find('.collection-results-item__action--add').exists()).toBeTruthy()
   })
 
   describe('on keypress', () => {
@@ -444,20 +451,6 @@ describe('CollectionResultsList component', () => {
       button.simulate('click', { stopPropagation: jest.fn() })
 
       expect(props.onRemoveCollectionFromProject.mock.calls.length).toBe(1)
-    })
-  })
-
-  describe('when authentication is disabled', () => {
-    test('hides the addToProjectButton', () => {
-      const { enzymeWrapper } = setup({
-        portal: {
-          features: {
-            authentication: false
-          }
-        }
-      })
-
-      expect(enzymeWrapper.find('.collection-results-item__action--add').exists()).toBeFalsy()
     })
   })
 })

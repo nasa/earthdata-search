@@ -9,8 +9,7 @@ import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 import Button from '../Button/Button'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
-import { authenticationEnabled } from '../../util/portals'
-
+import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 const GranuleResultsTableHeaderCell = (props) => {
   const { column, cell, row } = props
@@ -58,53 +57,51 @@ const GranuleResultsTableHeaderCell = (props) => {
         {value}
       </h4>
       <div className="granule-results-table__granule-actions">
-        {
-          authenticationEnabled(portal) && (
-            <>
-              {
-                !isInProject
-                  ? (
-                    <Button
-                      className="button granule-results-table__granule-action granule-results-table__granule-action--add"
-                      type="button"
-                      label="Add granule"
-                      title="Add granule"
-                      onClick={(e) => {
-                        onAddGranuleToProjectCollection({
-                          collectionId,
-                          granuleId: id
-                        })
+        <PortalAuthEnabledContainer>
+          <>
+            {
+              !isInProject
+                ? (
+                  <Button
+                    className="button granule-results-table__granule-action granule-results-table__granule-action--add"
+                    type="button"
+                    label="Add granule"
+                    title="Add granule"
+                    onClick={(e) => {
+                      onAddGranuleToProjectCollection({
+                        collectionId,
+                        granuleId: id
+                      })
 
-                        // Prevent event bubbling up to the granule focus event.
-                        e.stopPropagation()
-                      }}
-                    >
-                      <i className="fa fa-plus" />
-                    </Button>
-                  )
-                  : (
-                    <Button
-                      className="button granule-results-table__granule-action granule-results-table__granule-action--remove"
-                      type="button"
-                      label="Remove granule"
-                      title="Remove granule"
-                      onClick={(e) => {
-                        onRemoveGranuleFromProjectCollection({
-                          collectionId,
-                          granuleId: id
-                        })
+                      // Prevent event bubbling up to the granule focus event.
+                      e.stopPropagation()
+                    }}
+                  >
+                    <i className="fa fa-plus" />
+                  </Button>
+                )
+                : (
+                  <Button
+                    className="button granule-results-table__granule-action granule-results-table__granule-action--remove"
+                    type="button"
+                    label="Remove granule"
+                    title="Remove granule"
+                    onClick={(e) => {
+                      onRemoveGranuleFromProjectCollection({
+                        collectionId,
+                        granuleId: id
+                      })
 
-                        // Prevent event bubbling up to the granule focus event.
-                        e.stopPropagation()
-                      }}
-                    >
-                      <i className="fa fa-minus" />
-                    </Button>
-                  )
-              }
-            </>
-          )
-        }
+                      // Prevent event bubbling up to the granule focus event.
+                      e.stopPropagation()
+                    }}
+                  >
+                    <i className="fa fa-minus" />
+                  </Button>
+                )
+            }
+          </>
+        </PortalAuthEnabledContainer>
         {
           onlineAccessFlag && (
             <GranuleResultsDataLinksButton

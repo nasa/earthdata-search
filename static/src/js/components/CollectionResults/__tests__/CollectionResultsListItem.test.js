@@ -1,9 +1,11 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import Enzyme, { mount, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import CollectionResultsItem from '../CollectionResultsItem'
 import CollectionResultsListItem from '../CollectionResultsListItem'
+import configureStore from '../../../store/configureStore'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -35,11 +37,6 @@ const defaultProps = {
     onRemoveCollectionFromProject: jest.fn(),
     onViewCollectionDetails: jest.fn(),
     onViewCollectionGranules: jest.fn(),
-    portal: {
-      features: {
-        authentication: true
-      }
-    },
     setSize: jest.fn(),
     windowWidth: 800
   },
@@ -50,13 +47,25 @@ const defaultProps = {
   }
 }
 
+const store = configureStore()
+
 function setup(mountType, propsOverride) {
   const props = {
     ...defaultProps,
     ...propsOverride
   }
 
-  const enzymeWrapper = mountType(<CollectionResultsListItem {...props} />)
+  let enzymeWrapper
+
+  if (mountType === shallow) {
+    enzymeWrapper = shallow(<CollectionResultsListItem {...props} />)
+  } else {
+    enzymeWrapper = mount(
+      <Provider store={store}>
+        <CollectionResultsListItem {...props} />
+      </Provider>
+    )
+  }
 
   return {
     enzymeWrapper,

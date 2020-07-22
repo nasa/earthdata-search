@@ -30,7 +30,6 @@ export const CollectionResultsListItem = memo(({
     onRemoveCollectionFromProject,
     onViewCollectionDetails,
     onViewCollectionGranules,
-    portal,
     setSize,
     windowWidth
   } = data
@@ -61,7 +60,6 @@ export const CollectionResultsListItem = memo(({
         onViewCollectionGranules={onViewCollectionGranules}
         onViewCollectionDetails={onViewCollectionDetails}
         loadMoreItems={loadMoreItems}
-        portal={portal}
       />
     </li>
   )
