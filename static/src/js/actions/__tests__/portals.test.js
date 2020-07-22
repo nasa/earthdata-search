@@ -38,7 +38,11 @@ describe('loadPortalConfig', () => {
       features: {
         advancedSearch: true,
         authentication: true,
-        featureFacets: [],
+        featureFacets: {
+          showMapImagery: true,
+          showNearRealTime: true,
+          showCustomizable: true
+        },
         includeNtPageTag: true
       },
       footer: {

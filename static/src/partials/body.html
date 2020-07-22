@@ -23,7 +23,9 @@
         }
     }
 </script>
+<% if (showTophat) { %>
 <div id="earthdata-tophat2" class="th-wrapper" style="height: 34px; background: #000;"></div>
+<% } %>
 <div id="root" class="root root--loading">
     <div class="root__loading">
         <div class="root__spinner spinner spinner--dots spinner--white spinner--small">
@@ -99,6 +101,7 @@
         </span>
     </div>
 </div>
+<% if (showTophat) { %>
 <script
     id="earthdata-tophat-script"
     src="https://cdn.earthdata.nasa.gov/tophat2/tophat2.js"
@@ -112,6 +115,7 @@
     data-show-status="true"
     data-status-api-url="https://status.earthdata.nasa.gov/api/v1/notifications"
 ></script>
+<% } %>
 <% if (feedbackApp.length > 0) { %>
 <script
     src="https://fbm.earthdata.nasa.gov/for/<%= feedbackApp %>/feedback.js"

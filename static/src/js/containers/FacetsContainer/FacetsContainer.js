@@ -19,13 +19,15 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   facets: state.searchResults.facets,
-  featureFacets: state.facetsParams.feature
+  featureFacets: state.facetsParams.feature,
+  portal: state.portal
 })
 
 const FacetsContainer = (props) => {
   const {
     facets,
     featureFacets,
+    portal,
     onChangeCmrFacet,
     onChangeFeatureFacet,
     onTriggerViewAllFacets
@@ -35,6 +37,7 @@ const FacetsContainer = (props) => {
     <Facets
       facets={facets}
       featureFacets={featureFacets}
+      portal={portal}
       onChangeCmrFacet={onChangeCmrFacet}
       onChangeFeatureFacet={onChangeFeatureFacet}
       onTriggerViewAllFacets={onTriggerViewAllFacets}
@@ -45,6 +48,7 @@ const FacetsContainer = (props) => {
 FacetsContainer.propTypes = {
   facets: PropTypes.shape({}).isRequired,
   featureFacets: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,
   onChangeFeatureFacet: PropTypes.func.isRequired,
   onTriggerViewAllFacets: PropTypes.func.isRequired

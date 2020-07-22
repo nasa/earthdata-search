@@ -2,7 +2,11 @@
   "features": {
     "advancedSearch": false,
     "authentication": false,
-    "featureFacets": [],
+    "featureFacets": {
+      "showMapImagery": false,
+      "showNearRealTime": true,
+      "showCustomizable": false
+    },
     "includeNtPageTag": false
   },
   "footer": {

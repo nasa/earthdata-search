@@ -16,6 +16,8 @@ const {
 
 const portalConfig = getPortalConfig(defaultPortal)
 
+const { ui } = portalConfig
+
 const StaticCommonConfig = {
   name: 'static',
   entry: {
@@ -162,7 +164,8 @@ const StaticCommonConfig = {
         path: path.join(__dirname, './static/src/partials/body.html'),
         options: {
           feedbackApp,
-          gtmPropertyId: analytics.gtmPropertyId
+          gtmPropertyId: analytics.gtmPropertyId,
+          showTophat: ui.showTophat
         }
       },
       {
