@@ -213,31 +213,30 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   } = granuleParams
 
   const {
-    selected_variables: variables,
-    selected_output_format: format
+    selectedVariables: variables,
+    selectedOutputFormat: format
   } = accessMethod
 
   const ousPayload = {
     format,
     variables,
-    echoCollectionId: collectionId
+    echo_collection_id: collectionId
   }
 
-  // If conceptId is truthy, send those granules explictly. Otherwise, set the
-  // relevant OUS parameters.
+  // If conceptId is truthy, send those granules explictly.
   if (conceptId) {
     ousPayload.granules = conceptId
-  } else {
-    const { concept_id: excludedGranuleIds = [] } = exclude
+  }
 
-    ousPayload.boundingBox = boundingBox
-    ousPayload.temporal = temporal
+  const { concept_id: excludedGranuleIds = [] } = exclude
 
-    // OUS has a slightly different syntax for excluding params
-    if (excludedGranuleIds.length > 0) {
-      ousPayload.exclude_granules = true
-      ousPayload.granules = excludedGranuleIds
-    }
+  ousPayload.bounding_box = boundingBox
+  ousPayload.temporal = temporal
+
+  // OUS has a slightly different syntax for excluding params
+  if (excludedGranuleIds.length > 0) {
+    ousPayload.exclude_granules = true
+    ousPayload.granules = excludedGranuleIds
   }
 
   const response = requestObject.search(ousPayload)

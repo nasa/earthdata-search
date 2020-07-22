@@ -897,7 +897,19 @@ describe('fetchOpendapLinks', () => {
 
   test('calls lambda to get links from opendap', async () => {
     nock(/localhost/)
-      .post(/ous/)
+      .post(/ous/, (body) => {
+        const { params } = body
+
+        delete params.requestId
+
+        // Ensure that the payload we're sending OUS is correct
+        return JSON.stringify(params) === JSON.stringify({
+          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
+          echo_collection_id: 'C10000005-EDSC',
+          format: 'nc4',
+          variables: ['V1000004-EDSC']
+        })
+      })
       .reply(200, {
         items: [
           'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
@@ -914,11 +926,138 @@ describe('fetchOpendapLinks', () => {
       id: 3,
       environment: 'prod',
       access_method: {
-        type: 'OPeNDAP'
+        type: 'OPeNDAP',
+        selectedVariables: ['V1000004-EDSC'],
+        selectedOutputFormat: 'nc4'
       },
       collection_id: 'C10000005-EDSC',
       collection_metadata: {},
       granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
+        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+      },
+      granule_count: 3
+    }
+
+    await store.dispatch(fetchOpendapLinks(params))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: {
+        id: 3,
+        links: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+  })
+
+  test('calls lambda to get links from opendap with excluded granules', async () => {
+    nock(/localhost/)
+      .post(/ous/, (body) => {
+        const { params } = body
+
+        delete params.requestId
+
+        // Ensure that the payload we're sending OUS is correct
+        return JSON.stringify(params) === JSON.stringify({
+          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
+          echo_collection_id: 'C10000005-EDSC',
+          exclude_granules: true,
+          granules: ['G10000404-EDSC'],
+          format: 'nc4',
+          variables: ['V1000004-EDSC']
+        })
+      })
+      .reply(200, {
+        items: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'OPeNDAP',
+        selectedVariables: ['V1000004-EDSC'],
+        selectedOutputFormat: 'nc4'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
+        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
+        exclude: {
+          concept_id: ['G10000404-EDSC']
+        }
+      },
+      granule_count: 3
+    }
+
+    await store.dispatch(fetchOpendapLinks(params))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: {
+        id: 3,
+        links: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+  })
+
+  test('calls lambda to get links from opendap when using additive model', async () => {
+    nock(/localhost/)
+      .post(/ous/, (body) => {
+        const { params } = body
+
+        delete params.requestId
+
+        // Ensure that the payload we're sending OUS is correct
+        return JSON.stringify(params) === JSON.stringify({
+          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
+          echo_collection_id: 'C10000005-EDSC',
+          granules: ['G10000003-EDSC'],
+          format: 'nc4',
+          variables: ['V1000004-EDSC']
+        })
+      })
+      .reply(200, {
+        items: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'OPeNDAP',
+        selectedVariables: ['V1000004-EDSC'],
+        selectedOutputFormat: 'nc4'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        concept_id: ['G10000003-EDSC'],
         echo_collection_id: 'C10000005-EDSC',
         bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
       },
