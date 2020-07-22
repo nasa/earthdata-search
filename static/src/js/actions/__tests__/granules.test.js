@@ -1036,8 +1036,6 @@ describe('fetchOpendapLinks', () => {
       })
       .reply(200, {
         items: [
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
           'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
         ]
       })
@@ -1061,7 +1059,7 @@ describe('fetchOpendapLinks', () => {
         echo_collection_id: 'C10000005-EDSC',
         bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
       },
-      granule_count: 3
+      granule_count: 1
     }
 
     await store.dispatch(fetchOpendapLinks(params))
@@ -1070,8 +1068,6 @@ describe('fetchOpendapLinks', () => {
       payload: {
         id: 3,
         links: [
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
           'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
         ]
       },
