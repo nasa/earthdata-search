@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import SecondaryToolbar from '../SecondaryToolbar'
+import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -12,9 +14,6 @@ function setup(state, overrideProps) {
       pathname: '/search'
     },
     portal: {
-      features: {
-        authentication: true
-      },
       portalId: 'edsc'
     },
     projectIds: [],
@@ -163,18 +162,11 @@ describe('SecondaryToolbar component', () => {
     })
   })
 
-  describe('when authentication is disabled', () => {
-    test('hides the login button and user dropdown', () => {
-      const { enzymeWrapper } = setup(undefined, {
-        portal: {
-          features: {
-            authentication: false
-          }
-        }
-      })
+  test('renders the login button under PortalAuthEnabledContainer', () => {
+    const { enzymeWrapper } = setup(undefined)
 
-      expect(enzymeWrapper.find('.secondary-toolbar__login').exists()).toBeFalsy()
-      expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').exists()).toBeFalsy()
-    })
+    expect(enzymeWrapper
+      .find(PortalAuthEnabledContainer)
+      .find('.secondary-toolbar__login').exists()).toBeTruthy()
   })
 })

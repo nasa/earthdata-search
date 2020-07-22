@@ -10,9 +10,9 @@ import { pluralize } from '../../util/pluralize'
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
 import { collectionResultsTotal } from './skeleton'
+import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 import './CollectionResultsHeader.scss'
-import { authenticationEnabled } from '../../util/portals'
 
 const CollectionResultsHeader = ({
   collections,
@@ -162,20 +162,18 @@ const CollectionResultsHeader = ({
             </Col>
           </Form.Group>
         </Row>
-        {
-          authenticationEnabled(portal) && (
-            <div className="row mt-1">
-              <div className="col">
-                <span className="collection-results-header__tip">
-                  <strong className="collection-results-header__tip-label">Tip:</strong>
-                  Add
-                  <i className="collection-results-header__tip-icon fa fa-plus" />
-                  collections to your project to compare and download their data.
-                </span>
-              </div>
+        <PortalAuthEnabledContainer>
+          <div className="row mt-1">
+            <div className="col">
+              <span className="collection-results-header__tip">
+                <strong className="collection-results-header__tip-label">Tip:</strong>
+                Add
+                <i className="collection-results-header__tip-icon fa fa-plus" />
+                collections to your project to compare and download their data.
+              </span>
             </div>
-          )
-        }
+          </div>
+        </PortalAuthEnabledContainer>
       </div>
       <div className="collection-results-header__meta">
         <span className="collection-results-header__collection-count">

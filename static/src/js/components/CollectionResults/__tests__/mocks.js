@@ -19,11 +19,6 @@ export const collectionListItemProps = {
     temporalRange: '2010-10-10 to 2011-10-10',
     versionId: '2'
   },
-  portal: {
-    features: {
-      authentication: true
-    }
-  },
   onAddProjectCollection: jest.fn(),
   onRemoveCollectionFromProject: jest.fn(),
   onViewCollectionGranules: jest.fn(),

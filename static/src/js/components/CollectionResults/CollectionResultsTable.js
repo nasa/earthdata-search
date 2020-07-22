@@ -32,7 +32,6 @@ export const CollectionResultsTable = ({
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
   onViewCollectionGranules,
-  portal,
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => {
@@ -46,7 +45,6 @@ export const CollectionResultsTable = ({
       customProps: {
         cellClassName: 'collection-results-table__cell--collection',
         collectionId: '1234',
-        portal,
         onViewCollectionGranules,
         onAddProjectCollection,
         onRemoveCollectionFromProject,
@@ -149,7 +147,6 @@ CollectionResultsTable.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }
