@@ -9,13 +9,11 @@ class FacetsGroup extends Component {
   constructor(props) {
     super(props)
 
-    const {
-      facet,
-      facetOptions
-    } = props
+    const { facet } = props
+    const { options = {} } = facet
 
     this.state = {
-      isOpen: facet.applied || facetOptions.isOpen
+      isOpen: facet.applied || options.isOpen
     }
 
     this.onToggle = this.onToggle.bind(this)
@@ -63,13 +61,13 @@ class FacetsGroup extends Component {
   render() {
     const {
       facet,
-      facetCategory,
-      facetOptions
+      facetCategory
     } = this.props
     const {
       autocompleteType,
       changeHandler,
       children,
+      options = {},
       title
     } = facet
 
@@ -117,7 +115,7 @@ class FacetsGroup extends Component {
                 changeHandler={changeHandler}
                 facets={children}
                 facetCategory={facetCategory}
-                liftSelectedFacets={facetOptions.liftSelectedFacets}
+                liftSelectedFacets={options.liftSelectedFacets}
               />
             </section>
           )
@@ -127,14 +125,9 @@ class FacetsGroup extends Component {
   }
 }
 
-FacetsGroup.defaultProps = {
-  facetOptions: {}
-}
-
 FacetsGroup.propTypes = {
   facet: PropTypes.shape({}).isRequired,
   facetCategory: PropTypes.string.isRequired,
-  facetOptions: PropTypes.shape({}),
   onTriggerViewAllFacets: PropTypes.func.isRequired
 }
 

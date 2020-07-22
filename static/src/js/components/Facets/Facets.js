@@ -12,6 +12,7 @@ const Facets = (props) => {
   const {
     facets,
     featureFacets,
+    portal,
     onChangeCmrFacet,
     onChangeFeatureFacet,
     onTriggerViewAllFacets
@@ -25,29 +26,43 @@ const Facets = (props) => {
     changeCmrFacet(e, facetLinkInfo, onChangeCmrFacet, facet, applied)
   }
 
+  const { features = {} } = portal
+  const { featureFacets: portalFeatureFacets = {} } = features
+  const {
+    showMapImagery,
+    showNearRealTime,
+    showCustomizable
+  } = portalFeatureFacets
+
   const featuresFacet = {
     title: 'Features',
     options: {
       isOpen: true
     },
     changeHandler: featureFacetHandler,
-    children: [
-      {
-        applied: featureFacets.mapImagery,
-        title: 'Map Imagery',
-        type: 'feature'
-      },
-      {
-        applied: featureFacets.nearRealTime,
-        title: 'Near Real Time',
-        type: 'feature'
-      },
-      {
-        applied: featureFacets.customizable,
-        title: 'Customizable',
-        type: 'feature'
-      }
-    ]
+    children: []
+  }
+
+  if (showMapImagery) {
+    featuresFacet.children.push({
+      applied: featureFacets.mapImagery,
+      title: 'Map Imagery',
+      type: 'feature'
+    })
+  }
+  if (showNearRealTime) {
+    featuresFacet.children.push({
+      applied: featureFacets.nearRealTime,
+      title: 'Near Real Time',
+      type: 'feature'
+    })
+  }
+  if (showCustomizable) {
+    featuresFacet.children.push({
+      applied: featureFacets.customizable,
+      title: 'Customizable',
+      type: 'feature'
+    })
   }
 
   const cmrFacetDefaults = {
@@ -111,8 +126,12 @@ const Facets = (props) => {
     formats
   ]
 
+  // If all feature facets were disabled, don't show the featuresFacet group
+  if (!featuresFacet.children.length) {
+    facetsTemplate.shift()
+  }
+
   const facetsGroups = facetsTemplate.map((group) => {
-    const { options } = group
     const facet = {
       ...group,
       ...facets.byId[group.title]
@@ -123,24 +142,22 @@ const Facets = (props) => {
         key={facet.title}
         facet={facet}
         facetCategory={camelCase(facet.title)}
-        facetOptions={options}
         onTriggerViewAllFacets={onTriggerViewAllFacets}
       />
     )
   })
 
   return (
-    <>
-      <ul className="facets">
-        {facetsGroups}
-      </ul>
-    </>
+    <ul className="facets">
+      {facetsGroups}
+    </ul>
   )
 }
 
 Facets.propTypes = {
   facets: PropTypes.shape({}).isRequired,
   featureFacets: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,
   onChangeFeatureFacet: PropTypes.func.isRequired,
   onTriggerViewAllFacets: PropTypes.func.isRequired
