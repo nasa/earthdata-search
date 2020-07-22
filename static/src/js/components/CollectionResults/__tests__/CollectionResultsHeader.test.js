@@ -20,7 +20,12 @@ function setup(propsOverride) {
       pageNum: 1
     },
     panelView: 'list',
-    portal: {},
+    portal: {
+      ui: {
+        showOnlyGranulesCheckbox: true,
+        showNonEosdisCheckbox: true
+      }
+    },
     onChangePanelView: jest.fn(),
     onChangeQuery: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
@@ -77,14 +82,36 @@ describe('CollectionResultsHeader component', () => {
   })
 
   describe('portal config', () => {
-    test('hides the checkboxes if the portal hides them', () => {
+    test('hides the only granules checkbox', () => {
       const { enzymeWrapper } = setup({
         portal: {
-          hideCollectionFilters: true
+          ui: {
+            showOnlyGranulesCheckbox: false,
+            showNonEosdisCheckbox: true
+          }
         }
       })
 
-      expect(enzymeWrapper.find(Form.Check).length).toBe(0)
+      const checkbox = enzymeWrapper.find(Form.Check)
+
+      expect(checkbox.length).toBe(1)
+      expect(checkbox.props().id).toEqual('input__non-eosdis')
+    })
+
+    test('hides the non-eosdis checkbox', () => {
+      const { enzymeWrapper } = setup({
+        portal: {
+          ui: {
+            showOnlyGranulesCheckbox: true,
+            showNonEosdisCheckbox: false
+          }
+        }
+      })
+
+      const checkbox = enzymeWrapper.find(Form.Check)
+
+      expect(checkbox.length).toBe(1)
+      expect(checkbox.props().id).toEqual('input__only-granules')
     })
   })
 
