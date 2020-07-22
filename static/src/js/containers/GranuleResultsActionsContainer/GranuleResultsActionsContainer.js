@@ -29,7 +29,6 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   granuleQuery: state.query.granule,
-  portal: state.portal,
   project: state.project,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
   searchValue: state.ui.granuleResultsPanel.searchValue
@@ -41,7 +40,6 @@ export const GranuleResultsActionsContainer = (props) => {
     focusedCollection,
     granuleQuery,
     location,
-    portal,
     project,
     onAddProjectCollection,
     onSetActivePanelSection,
@@ -102,7 +100,6 @@ export const GranuleResultsActionsContainer = (props) => {
         initialLoading={initialLoading}
         isCollectionInProject={isCollectionInProject}
         location={location}
-        portal={portal}
         projectCollectionIds={projectCollectionIds}
         onAddProjectCollection={onAddProjectCollection}
         onChangePath={onChangePath}
@@ -118,7 +115,6 @@ GranuleResultsActionsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,

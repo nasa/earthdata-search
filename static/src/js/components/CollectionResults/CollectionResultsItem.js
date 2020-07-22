@@ -9,9 +9,9 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
 import SplitBadge from '../SplitBadge/SplitBadge'
+import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 import './CollectionResultsItem.scss'
-import { authenticationEnabled } from '../../util/portals'
 
 /**
  * Renders CollectionResultsItem.
@@ -24,7 +24,6 @@ import { authenticationEnabled } from '../../util/portals'
  */
 export const CollectionResultsItem = forwardRef(({
   collection,
-  portal,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
@@ -262,18 +261,16 @@ export const CollectionResultsItem = forwardRef(({
                 bootstrapVariant="light"
                 icon="info-circle"
               />
-              {
-                authenticationEnabled(portal) && (
-                  <>
-                    {
-                      isCollectionInProject && removeFromProjectButton
-                    }
-                    {
-                      !isCollectionInProject && addToProjectButton
-                    }
-                  </>
-                )
-              }
+              <PortalAuthEnabledContainer>
+                <>
+                  {
+                    isCollectionInProject && removeFromProjectButton
+                  }
+                  {
+                    !isCollectionInProject && addToProjectButton
+                  }
+                </>
+              </PortalAuthEnabledContainer>
             </div>
           </div>
           <div className="collection-results-item__body-secondary">
@@ -375,7 +372,6 @@ CollectionResultsItem.displayName = 'CollectionResultsItem'
 
 CollectionResultsItem.propTypes = {
   collection: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,

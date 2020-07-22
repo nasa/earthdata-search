@@ -6,13 +6,14 @@ import { parse } from 'qs'
 
 import { isPath } from '../../util/isPath'
 import { pathStartsWith } from '../../util/pathStartsWith'
-import Button from '../Button/Button'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { stringify } from '../../util/url/url'
-import { authenticationEnabled } from '../../util/portals'
+
+import Button from '../Button/Button'
+import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './SecondaryToolbar.scss'
 
@@ -284,21 +285,19 @@ class SecondaryToolbar extends Component {
         {
           isPath(location.pathname, ['/projects']) && backLink
         }
-        {
-          authenticationEnabled(portal) && (
-            <>
-              {
-                (!isPath(location.pathname, ['/projects', '/downloads']) && projectIds.length > 0) && projectLink
-              }
-              {
-                pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
-              }
-              {
-                !loggedIn ? loginLink : loggedInDropdown
-              }
-            </>
-          )
-        }
+        <PortalAuthEnabledContainer>
+          <>
+            {
+              (!isPath(location.pathname, ['/projects', '/downloads']) && projectIds.length > 0) && projectLink
+            }
+            {
+              pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
+            }
+            {
+              !loggedIn ? loginLink : loggedInDropdown
+            }
+          </>
+        </PortalAuthEnabledContainer>
       </section>
     )
   }

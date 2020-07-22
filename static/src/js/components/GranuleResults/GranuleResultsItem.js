@@ -11,9 +11,9 @@ import Button from '../Button/Button'
 import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
+import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 import './GranuleResultsItem.scss'
-import { authenticationEnabled } from '../../util/portals'
 
 const thumbnailHeight = getApplicationConfig().thumbnailSize.height
 const thumbnailWidth = getApplicationConfig().thumbnailSize.width
@@ -209,51 +209,49 @@ const GranuleResultsItem = forwardRef(({
           </div>
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">
-              {
-                authenticationEnabled(portal) && (
-                  <>
-                    {
-                      !isInProject
-                        ? (
-                          <Button
-                            className="button granule-results-item__button granule-results-item__button--add"
-                            label="Add granule"
-                            title="Add granule"
-                            onClick={(e) => {
-                              onAddGranuleToProjectCollection({
-                                collectionId,
-                                granuleId: id
-                              })
+              <PortalAuthEnabledContainer>
+                <>
+                  {
+                    !isInProject
+                      ? (
+                        <Button
+                          className="button granule-results-item__button granule-results-item__button--add"
+                          label="Add granule"
+                          title="Add granule"
+                          onClick={(e) => {
+                            onAddGranuleToProjectCollection({
+                              collectionId,
+                              granuleId: id
+                            })
 
-                              // Prevent clicks from bubbling up to other granule item events.
-                              e.stopPropagation()
-                            }}
-                          >
-                            <i className="fa fa-plus" />
-                          </Button>
-                        )
-                        : (
-                          <Button
-                            className="button granule-results-item__button granule-results-item__button--remove"
-                            label="Remove granule"
-                            title="Remove granule"
-                            onClick={(e) => {
-                              onRemoveGranuleFromProjectCollection({
-                                collectionId,
-                                granuleId: id
-                              })
+                            // Prevent clicks from bubbling up to other granule item events.
+                            e.stopPropagation()
+                          }}
+                        >
+                          <i className="fa fa-plus" />
+                        </Button>
+                      )
+                      : (
+                        <Button
+                          className="button granule-results-item__button granule-results-item__button--remove"
+                          label="Remove granule"
+                          title="Remove granule"
+                          onClick={(e) => {
+                            onRemoveGranuleFromProjectCollection({
+                              collectionId,
+                              granuleId: id
+                            })
 
-                              // Prevent clicks from bubbling up to other granule item events.
-                              e.stopPropagation()
-                            }}
-                          >
-                            <i className="fa fa-minus" />
-                          </Button>
-                        )
-                    }
-                  </>
-                )
-              }
+                            // Prevent clicks from bubbling up to other granule item events.
+                            e.stopPropagation()
+                          }}
+                        >
+                          <i className="fa fa-minus" />
+                        </Button>
+                      )
+                  }
+                </>
+              </PortalAuthEnabledContainer>
               {
                 onlineAccessFlag && (
                   <GranuleResultsDataLinksButton
