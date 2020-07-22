@@ -11,9 +11,9 @@ import { granuleTotalCount } from './skeleton'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
+import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 import './GranuleResultsActions.scss'
-import { authenticationEnabled } from '../../util/portals'
 
 /**
  * Renders GranuleResultsActions.
@@ -37,7 +37,6 @@ const GranuleResultsActions = ({
   initialLoading,
   isCollectionInProject,
   location,
-  portal,
   onAddProjectCollection,
   onChangePath,
   onRemoveCollectionFromProject,
@@ -195,63 +194,59 @@ const GranuleResultsActions = ({
                   </span>
                   {`${pluralize('Granule', granuleCount)}`}
                 </span>
-                {
-                  authenticationEnabled(portal) && (
-                    <>
-                      {
-                        isCollectionInProject && (
-                          <PortalLinkContainer
-                            type="button"
-                            label="View granules in project"
-                            className="granule-results-actions__project-pill"
-                            onClick={() => {
-                              onSetActivePanelSection('1')
-                              onChangePath(`/projects${location.search}`)
-                            }}
-                            to={{
-                              pathname: '/projects',
-                              search: location.search
-                            }}
-                          >
-                            <i className="fa fa-folder granule-results-actions__project-pill-icon" />
-                            {
-                              // eslint-disable-next-line no-self-compare
-                              allGranulesInProject && <span title="All granules in project">All Granules</span>
-                            }
-                            {
-                              !allGranulesInProject && granuleCount > 0 && (
-                                <span
-                                  title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
-                                >
-                                  {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
-                                </span>
-                              )
-                            }
-                          </PortalLinkContainer>
-                        )
-                      }
-                    </>
-                  )
-                }
+                <PortalAuthEnabledContainer>
+                  <>
+                    {
+                      isCollectionInProject && (
+                        <PortalLinkContainer
+                          type="button"
+                          label="View granules in project"
+                          className="granule-results-actions__project-pill"
+                          onClick={() => {
+                            onSetActivePanelSection('1')
+                            onChangePath(`/projects${location.search}`)
+                          }}
+                          to={{
+                            pathname: '/projects',
+                            search: location.search
+                          }}
+                        >
+                          <i className="fa fa-folder granule-results-actions__project-pill-icon" />
+                          {
+                            // eslint-disable-next-line no-self-compare
+                            allGranulesInProject && <span title="All granules in project">All Granules</span>
+                          }
+                          {
+                            !allGranulesInProject && granuleCount > 0 && (
+                              <span
+                                title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
+                              >
+                                {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
+                              </span>
+                            )
+                          }
+                        </PortalLinkContainer>
+                      )
+                    }
+                  </>
+                </PortalAuthEnabledContainer>
               </div>
             )
         }
-        {
-          authenticationEnabled(portal) && (
-            <>
-              {
-                isCollectionInProject && !tooManyGranules && removeFromProjectButton
-              }
-              {
-                !isCollectionInProject && !tooManyGranules && addToProjectButton
-              }
-            </>
-          )
-        }
+        <PortalAuthEnabledContainer>
+          <>
+            {
+              isCollectionInProject && !tooManyGranules && removeFromProjectButton
+            }
+            {
+              !isCollectionInProject && !tooManyGranules && addToProjectButton
+            }
+          </>
+        </PortalAuthEnabledContainer>
       </div>
-      {
-        authenticationEnabled(portal) && downloadButton
-      }
+      <PortalAuthEnabledContainer>
+        {downloadButton}
+      </PortalAuthEnabledContainer>
     </div>
   )
 }
@@ -268,7 +263,6 @@ GranuleResultsActions.propTypes = {
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

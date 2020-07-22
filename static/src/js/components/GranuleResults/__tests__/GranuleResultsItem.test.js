@@ -6,6 +6,7 @@ import Button from '../../Button/Button'
 import GranuleResultsItem from '../GranuleResultsItem'
 import GranuleResultsDataLinksButton from '../GranuleResultsDataLinksButton'
 import MoreActionsDropdownItem from '../../MoreActionsDropdown/MoreActionsDropdownItem'
+import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -256,6 +257,14 @@ describe('GranuleResultsItem component', () => {
 
     expect(enzymeWrapper.exists()).toEqual(true)
     expect(enzymeWrapper.type()).toBe('div')
+  })
+
+  test('renders the add button under PortalAuthEnabledContainer', () => {
+    const { enzymeWrapper } = setup('cmr')
+
+    expect(enzymeWrapper
+      .find(PortalAuthEnabledContainer)
+      .find('.granule-results-item__button--add').exists()).toBeTruthy()
   })
 
   describe('when passed a CMR granule', () => {
@@ -514,19 +523,6 @@ describe('GranuleResultsItem component', () => {
 
       expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
       expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('granuleId')
-    })
-  })
-
-  describe('when authentication is disabled', () => {
-    test('hides the add to project button', () => {
-      const { enzymeWrapper } = setup('override', {
-        portal: {
-          features: {
-            authentication: false
-          }
-        }
-      })
-      expect(enzymeWrapper.find('.granule-results-item__button--add').exists()).toBeFalsy()
     })
   })
 })
