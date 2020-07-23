@@ -12,6 +12,6 @@
   "query": {
     "tagKey": ["gov.nasa.impact.*"], 
     "hasGranulesOrCwic": null
-  },
+  }
   "title": "Sub-Orbital Catalog"
 }
