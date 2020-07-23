@@ -98,11 +98,15 @@ describe('CollectionResultsTableHeaderCell component', () => {
     expect(props.column.customProps.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
   })
 
-  test('renders the login button under PortalFeatureContainer', () => {
+  test('renders the add button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper
+    const button = enzymeWrapper
       .find(PortalFeatureContainer)
-      .find('.collection-results-table__collection-action--add').exists()).toBeTruthy()
+      .find('.collection-results-table__collection-action--add')
+    const portalFeatureContainer = button.parents(PortalFeatureContainer)
+
+    expect(button.exists()).toBeTruthy()
+    expect(portalFeatureContainer.props().authentication).toBeTruthy()
   })
 })

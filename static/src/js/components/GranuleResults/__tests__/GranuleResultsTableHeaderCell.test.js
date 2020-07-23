@@ -107,8 +107,12 @@ describe('GranuleResultsTableHeaderCell component', () => {
   test('renders the add button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup(undefined)
 
-    expect(enzymeWrapper
+    const button = enzymeWrapper
       .find(PortalFeatureContainer)
-      .find('.granule-results-table__granule-action--add').exists()).toBeTruthy()
+      .find('.granule-results-table__granule-action--add')
+    const portalFeatureContainer = button.parents(PortalFeatureContainer)
+
+    expect(button.exists()).toBeTruthy()
+    expect(portalFeatureContainer.props().authentication).toBeTruthy()
   })
 })

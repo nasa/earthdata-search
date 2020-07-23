@@ -148,9 +148,13 @@ describe('GranuleResultsActions component', () => {
     test('renders the add button under PortalFeatureContainer', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper
+      const button = enzymeWrapper
         .find(PortalFeatureContainer)
-        .find('.granule-results-actions__proj-action--add').exists()).toBeTruthy()
+        .find('.granule-results-actions__proj-action--add')
+      const portalFeatureContainer = button.parents(PortalFeatureContainer)
+
+      expect(button.exists()).toBeTruthy()
+      expect(portalFeatureContainer.props().authentication).toBeTruthy()
     })
   })
 
@@ -216,9 +220,13 @@ describe('GranuleResultsActions component', () => {
     test('renders the download all button under PortalFeatureContainer', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper
+      const button = enzymeWrapper
         .find(PortalFeatureContainer)
-        .find('.granule-results-actions__download-all-button').exists()).toBeTruthy()
+        .find('.granule-results-actions__download-all-button')
+      const portalFeatureContainer = button.parents(PortalFeatureContainer)
+
+      expect(button.exists()).toBeTruthy()
+      expect(portalFeatureContainer.props().authentication).toBeTruthy()
     })
   })
 })

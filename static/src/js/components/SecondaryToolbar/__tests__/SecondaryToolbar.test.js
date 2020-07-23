@@ -165,8 +165,12 @@ describe('SecondaryToolbar component', () => {
   test('renders the login button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup(undefined)
 
-    expect(enzymeWrapper
+    const button = enzymeWrapper
       .find(PortalFeatureContainer)
-      .find('.secondary-toolbar__login').exists()).toBeTruthy()
+      .find('.secondary-toolbar__login')
+    const portalFeatureContainer = button.parents(PortalFeatureContainer)
+
+    expect(button.exists()).toBeTruthy()
+    expect(portalFeatureContainer.props().authentication).toBeTruthy()
   })
 })

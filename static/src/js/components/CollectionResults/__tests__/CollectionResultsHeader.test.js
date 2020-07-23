@@ -5,6 +5,7 @@ import { Form } from 'react-bootstrap'
 
 import CollectionResultsHeader from '../CollectionResultsHeader'
 import Skeleton from '../../Skeleton/Skeleton'
+import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -20,12 +21,6 @@ function setup(propsOverride) {
       pageNum: 1
     },
     panelView: 'list',
-    portal: {
-      ui: {
-        showOnlyGranulesCheckbox: true,
-        showNonEosdisCheckbox: true
-      }
-    },
     onChangePanelView: jest.fn(),
     onChangeQuery: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
@@ -82,36 +77,52 @@ describe('CollectionResultsHeader component', () => {
   })
 
   describe('portal config', () => {
-    test('hides the only granules checkbox', () => {
-      const { enzymeWrapper } = setup({
-        portal: {
-          ui: {
-            showOnlyGranulesCheckbox: false,
-            showNonEosdisCheckbox: true
-          }
-        }
-      })
+    test('renders the advanced search button under PortalFeatureContainer', () => {
+      const { enzymeWrapper } = setup()
 
-      const checkbox = enzymeWrapper.find(Form.Check)
+      const button = enzymeWrapper
+        .find(PortalFeatureContainer)
+        .find('.collection-results-header__adv-search-btn')
+      const portalFeatureContainer = button.parents(PortalFeatureContainer)
 
-      expect(checkbox.length).toBe(1)
-      expect(checkbox.props().id).toEqual('input__non-eosdis')
+      expect(button.exists()).toBeTruthy()
+      expect(portalFeatureContainer.props().advancedSearch).toBeTruthy()
     })
 
-    test('hides the non-eosdis checkbox', () => {
-      const { enzymeWrapper } = setup({
-        portal: {
-          ui: {
-            showOnlyGranulesCheckbox: true,
-            showNonEosdisCheckbox: false
-          }
-        }
-      })
+    test('renders the only granules checkbox under PortalFeatureContainer', () => {
+      const { enzymeWrapper } = setup()
 
-      const checkbox = enzymeWrapper.find(Form.Check)
+      const checkbox = enzymeWrapper
+        .find(PortalFeatureContainer)
+        .find('#input__only-granules')
+      const portalFeatureContainer = checkbox.parents(PortalFeatureContainer)
 
-      expect(checkbox.length).toBe(1)
-      expect(checkbox.props().id).toEqual('input__only-granules')
+      expect(checkbox.exists()).toBeTruthy()
+      expect(portalFeatureContainer.props().onlyGranulesCheckbox).toBeTruthy()
+    })
+
+    test('renders the non-eosdis checkbox under PortalFeatureContainer', () => {
+      const { enzymeWrapper } = setup()
+
+      const checkbox = enzymeWrapper
+        .find(PortalFeatureContainer)
+        .find('#input__non-eosdis')
+      const portalFeatureContainer = checkbox.parents(PortalFeatureContainer)
+
+      expect(checkbox.exists()).toBeTruthy()
+      expect(portalFeatureContainer.props().nonEosdisCheckbox).toBeTruthy()
+    })
+
+    test('renders the project tip under PortalFeatureContainer', () => {
+      const { enzymeWrapper } = setup()
+
+      const tip = enzymeWrapper
+        .find(PortalFeatureContainer)
+        .find('.collection-results-header__tip')
+      const portalFeatureContainer = tip.parents(PortalFeatureContainer)
+
+      expect(tip.exists()).toBeTruthy()
+      expect(portalFeatureContainer.props().authentication).toBeTruthy()
     })
   })
 

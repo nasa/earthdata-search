@@ -49,7 +49,13 @@ describe('CollectionResultsList component', () => {
   test('renders the add button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(PortalFeatureContainer).find('.collection-results-item__action--add').exists()).toBeTruthy()
+    const button = enzymeWrapper
+      .find(PortalFeatureContainer)
+      .find('.collection-results-item__action--add')
+    const portalFeatureContainer = button.parents(PortalFeatureContainer)
+
+    expect(button.exists()).toBeTruthy()
+    expect(portalFeatureContainer.props().authentication).toBeTruthy()
   })
 
   describe('on keypress', () => {

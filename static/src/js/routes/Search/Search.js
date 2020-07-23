@@ -32,6 +32,7 @@ import SidebarSection from '../../components/Sidebar/SidebarSection'
 
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 const mapDispatchToProps = dispatch => ({
   onUpdateAdvancedSearch:
@@ -84,10 +85,12 @@ export const Search = ({
         </Switch>
         <RelatedUrlsModalContainer />
         <FacetsModalContainer />
-        <AdvancedSearchModalContainer
-          fields={advancedSearchFields}
-          onUpdateAdvancedSearch={onUpdateAdvancedSearch}
-        />
+        <PortalFeatureContainer advancedSearch>
+          <AdvancedSearchModalContainer
+            fields={advancedSearchFields}
+            onUpdateAdvancedSearch={onUpdateAdvancedSearch}
+          />
+        </PortalFeatureContainer>
       </div>
     </div>
   )
