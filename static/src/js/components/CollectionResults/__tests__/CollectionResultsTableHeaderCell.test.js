@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import CollectionResultsTableHeaderCell from '../CollectionResultsTableHeaderCell'
-import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -98,11 +98,11 @@ describe('CollectionResultsTableHeaderCell component', () => {
     expect(props.column.customProps.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
   })
 
-  test('renders the login button under PortalAuthEnabledContainer', () => {
+  test('renders the login button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper
-      .find(PortalAuthEnabledContainer)
+      .find(PortalFeatureContainer)
       .find('.collection-results-table__collection-action--add').exists()).toBeTruthy()
   })
 })

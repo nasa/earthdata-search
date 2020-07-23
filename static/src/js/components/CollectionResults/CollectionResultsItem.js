@@ -9,7 +9,7 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
 import SplitBadge from '../SplitBadge/SplitBadge'
-import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './CollectionResultsItem.scss'
 
@@ -261,7 +261,7 @@ export const CollectionResultsItem = forwardRef(({
                 bootstrapVariant="light"
                 icon="info-circle"
               />
-              <PortalAuthEnabledContainer>
+              <PortalFeatureContainer authentication>
                 <>
                   {
                     isCollectionInProject && removeFromProjectButton
@@ -270,7 +270,7 @@ export const CollectionResultsItem = forwardRef(({
                     !isCollectionInProject && addToProjectButton
                   }
                 </>
-              </PortalAuthEnabledContainer>
+              </PortalFeatureContainer>
             </div>
           </div>
           <div className="collection-results-item__body-secondary">

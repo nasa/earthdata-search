@@ -6,7 +6,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import CollectionResultsItem from '../CollectionResultsItem'
 import SplitBadge from '../../SplitBadge/SplitBadge'
 import { collectionListItemProps } from './mocks'
-import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -46,10 +46,10 @@ describe('CollectionResultsList component', () => {
     expect(stopPropagationMock).toHaveBeenCalledTimes(1)
   })
 
-  test('renders the add button under PortalAuthEnabledContainer', () => {
+  test('renders the add button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(PortalAuthEnabledContainer).find('.collection-results-item__action--add').exists()).toBeTruthy()
+    expect(enzymeWrapper.find(PortalFeatureContainer).find('.collection-results-item__action--add').exists()).toBeTruthy()
   })
 
   describe('on keypress', () => {
