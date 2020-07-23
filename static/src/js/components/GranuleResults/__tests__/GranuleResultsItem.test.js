@@ -262,9 +262,13 @@ describe('GranuleResultsItem component', () => {
   test('renders the add button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup('cmr')
 
-    expect(enzymeWrapper
+    const button = enzymeWrapper
       .find(PortalFeatureContainer)
-      .find('.granule-results-item__button--add').exists()).toBeTruthy()
+      .find('.granule-results-item__button--add')
+    const portalFeatureContainer = button.parents(PortalFeatureContainer)
+
+    expect(button.exists()).toBeTruthy()
+    expect(portalFeatureContainer.props().authentication).toBeTruthy()
   })
 
   describe('when passed a CMR granule', () => {
