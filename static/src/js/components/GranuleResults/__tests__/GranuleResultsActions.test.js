@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import GranuleResultsActions from '../GranuleResultsActions'
-import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -145,11 +145,11 @@ describe('GranuleResultsActions component', () => {
       expect(props.onAddProjectCollection).toHaveBeenCalledWith('collectionId')
     })
 
-    test('renders the add button under PortalAuthEnabledContainer', () => {
+    test('renders the add button under PortalFeatureContainer', () => {
       const { enzymeWrapper } = setup()
 
       expect(enzymeWrapper
-        .find(PortalAuthEnabledContainer)
+        .find(PortalFeatureContainer)
         .find('.granule-results-actions__proj-action--add').exists()).toBeTruthy()
     })
   })
@@ -213,11 +213,11 @@ describe('GranuleResultsActions component', () => {
       expect(button.props().badge).toBeNull()
     })
 
-    test('renders the download all button under PortalAuthEnabledContainer', () => {
+    test('renders the download all button under PortalFeatureContainer', () => {
       const { enzymeWrapper } = setup()
 
       expect(enzymeWrapper
-        .find(PortalAuthEnabledContainer)
+        .find(PortalFeatureContainer)
         .find('.granule-results-actions__download-all-button').exists()).toBeTruthy()
     })
   })

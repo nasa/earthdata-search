@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import MoreActionsDropdownItem from '../../MoreActionsDropdown/MoreActionsDropdownItem'
 import GranuleResultsTableHeaderCell from '../GranuleResultsTableHeaderCell'
-import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -104,11 +104,11 @@ describe('GranuleResultsTableHeaderCell component', () => {
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({ collectionId: 'collectionId', granuleId: '2257684172' })
   })
 
-  test('renders the add button under PortalAuthEnabledContainer', () => {
+  test('renders the add button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup(undefined)
 
     expect(enzymeWrapper
-      .find(PortalAuthEnabledContainer)
+      .find(PortalFeatureContainer)
       .find('.granule-results-table__granule-action--add').exists()).toBeTruthy()
   })
 })

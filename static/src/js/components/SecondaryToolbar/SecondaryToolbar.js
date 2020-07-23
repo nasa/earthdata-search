@@ -12,7 +12,7 @@ import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { stringify } from '../../util/url/url'
 
 import Button from '../Button/Button'
-import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './SecondaryToolbar.scss'
@@ -285,7 +285,7 @@ class SecondaryToolbar extends Component {
         {
           isPath(location.pathname, ['/projects']) && backLink
         }
-        <PortalAuthEnabledContainer>
+        <PortalFeatureContainer authentication>
           <>
             {
               (!isPath(location.pathname, ['/projects', '/downloads']) && projectIds.length > 0) && projectLink
@@ -297,7 +297,7 @@ class SecondaryToolbar extends Component {
               !loggedIn ? loginLink : loggedInDropdown
             }
           </>
-        </PortalAuthEnabledContainer>
+        </PortalFeatureContainer>
       </section>
     )
   }

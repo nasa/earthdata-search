@@ -11,7 +11,7 @@ import Button from '../Button/Button'
 import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
-import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './GranuleResultsItem.scss'
 
@@ -209,7 +209,7 @@ const GranuleResultsItem = forwardRef(({
           </div>
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">
-              <PortalAuthEnabledContainer>
+              <PortalFeatureContainer authentication>
                 <>
                   {
                     !isInProject
@@ -251,7 +251,7 @@ const GranuleResultsItem = forwardRef(({
                       )
                   }
                 </>
-              </PortalAuthEnabledContainer>
+              </PortalFeatureContainer>
               {
                 onlineAccessFlag && (
                   <GranuleResultsDataLinksButton
