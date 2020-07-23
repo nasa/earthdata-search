@@ -4,6 +4,8 @@ import Adapter from 'enzyme-adapter-react-16'
 import Autosuggest from 'react-autosuggest'
 
 import SearchForm from '../SearchForm'
+import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import AdvancedSearchDisplayContainer from '../../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -76,6 +78,30 @@ describe('SearchForm component', () => {
   })
 
   describe('advanced search button', () => {
+    test('renders the advanced search button under PortalFeatureContainer', () => {
+      const { enzymeWrapper } = setup()
+
+      const button = enzymeWrapper
+        .find(PortalFeatureContainer)
+        .find('.search-form__button--advanced-search')
+      const portalFeatureContainer = button.parents(PortalFeatureContainer)
+
+      expect(button.exists()).toBeTruthy()
+      expect(portalFeatureContainer.props().advancedSearch).toBeTruthy()
+    })
+
+    test('renders the AdvancedSearchDisplayContainer under PortalFeatureContainer', () => {
+      const { enzymeWrapper } = setup()
+
+      const advancedSearchDisplayContainer = enzymeWrapper
+        .find(PortalFeatureContainer)
+        .find(AdvancedSearchDisplayContainer)
+      const portalFeatureContainer = advancedSearchDisplayContainer.parents(PortalFeatureContainer)
+
+      expect(advancedSearchDisplayContainer.exists()).toBeTruthy()
+      expect(portalFeatureContainer.props().advancedSearch).toBeTruthy()
+    })
+
     test('fires the action to open the advanced search modal', () => {
       const { enzymeWrapper, props } = setup()
 

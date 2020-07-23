@@ -19,9 +19,10 @@ import AutocompleteDisplayContainer
 import FilterStack
   from '../FilterStack/FilterStack'
 import Spinner from '../Spinner/Spinner'
+import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './SearchForm.scss'
-import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
 
 class SearchForm extends Component {
   constructor(props) {
@@ -337,17 +338,21 @@ class SearchForm extends Component {
           <div className="search-form__secondary-actions">
             <TemporalSelectionDropdownContainer />
             <SpatialSelectionDropdownContainer />
-            <Button
-              bootstrapVariant="inline-block"
-              className="search-form__button search-form__button--dark search-form__button--advanced-search"
-              label="Advanced search"
-              onClick={this.onToggleAdvancedSearch}
-              icon="sliders"
-            />
+            <PortalFeatureContainer advancedSearch>
+              <Button
+                bootstrapVariant="inline-block"
+                className="search-form__button search-form__button--dark search-form__button--advanced-search"
+                label="Advanced search"
+                onClick={this.onToggleAdvancedSearch}
+                icon="sliders"
+              />
+            </PortalFeatureContainer>
           </div>
           <FilterStack isOpen={showFilterStack}>
             <AutocompleteDisplayContainer />
-            <AdvancedSearchDisplayContainer />
+            <PortalFeatureContainer advancedSearch>
+              <AdvancedSearchDisplayContainer />
+            </PortalFeatureContainer>
             {
               spatialDisplayIsVisible && (
                 <SpatialDisplayContainer />

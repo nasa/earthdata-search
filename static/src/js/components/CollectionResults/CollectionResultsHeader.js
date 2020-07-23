@@ -18,7 +18,6 @@ const CollectionResultsHeader = ({
   collections,
   collectionQuery,
   panelView,
-  portal,
   onChangeQuery,
   onMetricsCollectionSortChange,
   onToggleAdvancedSearchModal,
@@ -31,8 +30,6 @@ const CollectionResultsHeader = ({
     isLoading
   } = collections
   const { pageNum } = collectionQuery
-  const { ui: portalUI = {} } = portal
-  const { showOnlyGranulesCheckbox, showNonEosdisCheckbox } = portalUI
 
   const collectionResultCount = allIds.length
 
@@ -121,48 +118,46 @@ const CollectionResultsHeader = ({
                 <option value="-ongoing">End Date</option>
               </Form.Control>
             </Col>
-            {
-              showOnlyGranulesCheckbox && (
-                <Col
-                  className="collection-results-header__form-column"
-                  sm="auto"
-                >
-                  <Form.Check
-                    checked={isHasGranulesChecked}
-                    id="input__only-granules"
-                    label="Only include collections with granules"
-                    onChange={event => handleCheckboxCheck(event)}
-                  />
-                </Col>
-              )
-            }
-            {
-              showNonEosdisCheckbox && (
-                <Col
-                  className="collection-results-header__form-column"
-                  sm="auto"
-                >
-                  <Form.Check
-                    checked={isNonEosdisChecked}
-                    id="input__non-eosdis"
-                    label="Include non-EOSDIS collections"
-                    onChange={event => handleCheckboxCheck(event)}
-                  />
-                </Col>
-              )
-            }
-            <Col sm="auto">
-              <Button
-                className="collection-results-header__adv-search-btn"
-                bootstrapVariant="link"
-                variant="link"
-                icon="sliders"
-                label="Advanced search"
-                onClick={() => onToggleAdvancedSearchModal(true)}
+            <PortalFeatureContainer onlyGranulesCheckbox>
+              <Col
+                className="collection-results-header__form-column"
+                sm="auto"
               >
-                Advanced Search
-              </Button>
-            </Col>
+                <Form.Check
+                  checked={isHasGranulesChecked}
+                  id="input__only-granules"
+                  label="Only include collections with granules"
+                  onChange={event => handleCheckboxCheck(event)}
+                />
+              </Col>
+            </PortalFeatureContainer>
+            <PortalFeatureContainer nonEosdisCheckbox>
+              <Col
+                className="collection-results-header__form-column"
+                sm="auto"
+              >
+                <Form.Check
+                  checked={isNonEosdisChecked}
+                  id="input__non-eosdis"
+                  label="Include non-EOSDIS collections"
+                  onChange={event => handleCheckboxCheck(event)}
+                />
+              </Col>
+            </PortalFeatureContainer>
+            <PortalFeatureContainer advancedSearch>
+              <Col sm="auto">
+                <Button
+                  className="collection-results-header__adv-search-btn"
+                  bootstrapVariant="link"
+                  variant="link"
+                  icon="sliders"
+                  label="Advanced search"
+                  onClick={() => onToggleAdvancedSearchModal(true)}
+                >
+                  Advanced Search
+                </Button>
+              </Col>
+            </PortalFeatureContainer>
           </Form.Group>
         </Row>
         <PortalFeatureContainer authentication>
@@ -217,7 +212,6 @@ CollectionResultsHeader.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
   panelView: PropTypes.string.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired,
