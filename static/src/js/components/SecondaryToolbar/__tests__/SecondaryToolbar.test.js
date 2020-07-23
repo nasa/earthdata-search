@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import SecondaryToolbar from '../SecondaryToolbar'
-import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -162,11 +162,11 @@ describe('SecondaryToolbar component', () => {
     })
   })
 
-  test('renders the login button under PortalAuthEnabledContainer', () => {
+  test('renders the login button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup(undefined)
 
     expect(enzymeWrapper
-      .find(PortalAuthEnabledContainer)
+      .find(PortalFeatureContainer)
       .find('.secondary-toolbar__login').exists()).toBeTruthy()
   })
 })
