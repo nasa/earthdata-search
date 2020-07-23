@@ -11,7 +11,7 @@ import { granuleTotalCount } from './skeleton'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
-import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './GranuleResultsActions.scss'
 
@@ -194,7 +194,7 @@ const GranuleResultsActions = ({
                   </span>
                   {`${pluralize('Granule', granuleCount)}`}
                 </span>
-                <PortalAuthEnabledContainer>
+                <PortalFeatureContainer authentication>
                   <>
                     {
                       isCollectionInProject && (
@@ -229,11 +229,11 @@ const GranuleResultsActions = ({
                       )
                     }
                   </>
-                </PortalAuthEnabledContainer>
+                </PortalFeatureContainer>
               </div>
             )
         }
-        <PortalAuthEnabledContainer>
+        <PortalFeatureContainer authentication>
           <>
             {
               isCollectionInProject && !tooManyGranules && removeFromProjectButton
@@ -242,11 +242,11 @@ const GranuleResultsActions = ({
               !isCollectionInProject && !tooManyGranules && addToProjectButton
             }
           </>
-        </PortalAuthEnabledContainer>
+        </PortalFeatureContainer>
       </div>
-      <PortalAuthEnabledContainer>
+      <PortalFeatureContainer authentication>
         {downloadButton}
-      </PortalAuthEnabledContainer>
+      </PortalFeatureContainer>
     </div>
   )
 }

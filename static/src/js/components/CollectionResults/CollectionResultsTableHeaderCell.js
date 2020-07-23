@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Button from '../Button/Button'
-import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 /**
  * Renders CollectionResultsTableHeaderCell.
@@ -50,7 +50,7 @@ const CollectionResultsTableHeaderCell = (props) => {
             e.stopPropagation()
           }}
         />
-        <PortalAuthEnabledContainer>
+        <PortalFeatureContainer authentication>
           <>
             {
               !isCollectionInProject
@@ -81,7 +81,7 @@ const CollectionResultsTableHeaderCell = (props) => {
                 )
             }
           </>
-        </PortalAuthEnabledContainer>
+        </PortalFeatureContainer>
       </div>
     </>
   )

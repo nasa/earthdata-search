@@ -10,7 +10,7 @@ import { pluralize } from '../../util/pluralize'
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
 import { collectionResultsTotal } from './skeleton'
-import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './CollectionResultsHeader.scss'
 
@@ -162,7 +162,7 @@ const CollectionResultsHeader = ({
             </Col>
           </Form.Group>
         </Row>
-        <PortalAuthEnabledContainer>
+        <PortalFeatureContainer authentication>
           <div className="row mt-1">
             <div className="col">
               <span className="collection-results-header__tip">
@@ -173,7 +173,7 @@ const CollectionResultsHeader = ({
               </span>
             </div>
           </div>
-        </PortalAuthEnabledContainer>
+        </PortalFeatureContainer>
       </div>
       <div className="collection-results-header__meta">
         <span className="collection-results-header__collection-count">

@@ -6,7 +6,7 @@ import Button from '../../Button/Button'
 import GranuleResultsItem from '../GranuleResultsItem'
 import GranuleResultsDataLinksButton from '../GranuleResultsDataLinksButton'
 import MoreActionsDropdownItem from '../../MoreActionsDropdown/MoreActionsDropdownItem'
-import PortalAuthEnabledContainer from '../../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -259,11 +259,11 @@ describe('GranuleResultsItem component', () => {
     expect(enzymeWrapper.type()).toBe('div')
   })
 
-  test('renders the add button under PortalAuthEnabledContainer', () => {
+  test('renders the add button under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup('cmr')
 
     expect(enzymeWrapper
-      .find(PortalAuthEnabledContainer)
+      .find(PortalFeatureContainer)
       .find('.granule-results-item__button--add').exists()).toBeTruthy()
   })
 

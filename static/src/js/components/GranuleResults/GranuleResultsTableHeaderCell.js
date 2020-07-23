@@ -9,7 +9,7 @@ import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 import Button from '../Button/Button'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
-import PortalAuthEnabledContainer from '../../containers/PortalAuthEnabledContainer/PortalAuthEnabledContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 const GranuleResultsTableHeaderCell = (props) => {
   const { column, cell, row } = props
@@ -57,7 +57,7 @@ const GranuleResultsTableHeaderCell = (props) => {
         {value}
       </h4>
       <div className="granule-results-table__granule-actions">
-        <PortalAuthEnabledContainer>
+        <PortalFeatureContainer authentication>
           <>
             {
               !isInProject
@@ -101,7 +101,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                 )
             }
           </>
-        </PortalAuthEnabledContainer>
+        </PortalFeatureContainer>
         {
           onlineAccessFlag && (
             <GranuleResultsDataLinksButton
