@@ -161,9 +161,9 @@ const getAccessMethods = async (event, context) => {
 
             // Pull out values from the saved access method that would not have changed
             const {
-              form,
-              model,
-              rawModel,
+              form = '',
+              model = '',
+              rawModel = '',
               form_digest: formDigest
             } = savedAccessConfig
 

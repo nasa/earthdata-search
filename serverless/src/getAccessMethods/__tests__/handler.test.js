@@ -740,5 +740,96 @@ describe('getAccessMethods', () => {
         statusCode: 200
       })
     })
+
+    test('populates the default access configuration if the saved access config does not have model and rawModel', async () => {
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response({
+            access_method: {
+              type: 'ECHO ORDERS',
+              form: '<form a="a"b="b">echo form</form>',
+              option_definition: {
+                id: 'option_def_guid',
+                name: 'Option Definition'
+              },
+              form_digest: '95d8b918c2634d9d27daece7bf941a33caec9bb6'
+            }
+          })
+        } else if (step === 2) {
+          query.response({
+            urs_profile: {
+              email_address: 'test@edsc.com'
+            }
+          })
+        }
+      })
+
+      jest.spyOn(getOptionDefinitions, 'getOptionDefinitions').mockImplementation(() => [
+        {
+          echoOrder0: {
+            form: '<form>echo form</form>',
+            option_definition: {
+              id: 'option_def_guid',
+              name: 'Option Definition'
+            },
+            option_definitions: undefined
+          }
+        }
+      ])
+
+      const event = {
+        body: JSON.stringify({
+          params: {
+            collectionId: 'collectionId',
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: {
+                  granule_online_access_flag: true
+                }
+              },
+              'edsc.extra.serverless.subset_service.echo_orders': {
+                data: {
+                  option_definitions: [{
+                    id: 'option_def_guid',
+                    name: 'Option Definition'
+                  }],
+                  type: 'ECHO ORDERS'
+                }
+              }
+            }
+          }
+        })
+      }
+
+      const result = await getAccessMethods(event, {})
+
+      expect(result).toEqual({
+        body: JSON.stringify({
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            },
+            echoOrder0: {
+              type: 'ECHO ORDERS',
+              form: '<form>echo form</form>',
+              option_definition: {
+                id: 'option_def_guid',
+                name: 'Option Definition'
+              },
+              option_definitions: undefined
+            }
+          },
+          selectedAccessMethod: 'echoOrder0'
+        }),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Credentials': true
+        },
+        isBase64Encoded: false,
+        statusCode: 200
+      })
+    })
   })
 })
