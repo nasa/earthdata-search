@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import EDSCEchoform from '@edsc/echoforms'
 
 import EchoForm from '../EchoForm'
+import { echoForm } from './mocks'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -57,59 +58,63 @@ describe('EchoForm component', () => {
     expect(enzymeWrapper.find(EDSCEchoform).props().hasShapefile).toEqual(true)
   })
 
-  // Jest/Enzyme don't support useEffect, so we can't test these methods yet
-  // test('onFormModelUpdated calls onUpdateAccessMethod', () => {
-  //   const collectionId = 'collectionId'
-  //   const methodKey = 'echoOrder0'
-  //   const { enzymeWrapper, props } = setup({
-  //     collectionId,
-  //     form: echoForm,
-  //     methodKey
-  //   })
+  test('onFormModelUpdated calls onUpdateAccessMethod', () => {
+    const collectionId = 'collectionId'
+    const methodKey = 'echoOrder0'
+    const { enzymeWrapper, props } = setup({
+      collectionId,
+      form: echoForm,
+      methodKey
+    })
 
-  //   act(() => {
-  //     enzymeWrapper.find(EDSCEchoform).props().onFormModelUpdated({
-  //       model: 'new model',
-  //       rawModel: 'new rawModel'
-  //     })
-  //   })
+    enzymeWrapper.find(EDSCEchoform).props().onFormModelUpdated({
+      model: 'new model',
+      rawModel: 'new rawModel'
+    })
 
-  //   expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
-  //   expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
-  //     collectionId,
-  //     method: {
-  //       echoOrder0: {
-  //         isValid: true,
-  //         model: 'new model',
-  //         rawModel: 'new rawModel'
-  //       }
-  //     }
-  //   }])
-  // })
+    expect(props.onUpdateAccessMethod.mock.calls.length).toBe(1)
+    expect(props.onUpdateAccessMethod.mock.calls[0]).toEqual([{
+      collectionId,
+      method: {
+        echoOrder0: {
+          isValid: true,
+          model: 'new model',
+          rawModel: 'new rawModel'
+        }
+      }
+    }])
+  })
 
-  // test('onFormIsValidUpdated calls onUpdateAccessMethod', () => {
-  //   const collectionId = 'collectionId'
-  //   const methodKey = 'echoOrder0'
-  //   const { enzymeWrapper, props } = setup({
-  //     collectionId,
-  //     form: echoForm,
-  //     methodKey
-  //   })
+  test('onFormIsValidUpdated calls onUpdateAccessMethod', () => {
+    const collectionId = 'collectionId'
+    const methodKey = 'echoOrder0'
+    const { enzymeWrapper, props } = setup({
+      collectionId,
+      form: echoForm,
+      methodKey
+    })
 
-  //   act(() => {
-  //     enzymeWrapper.find(EDSCEchoform).props().onFormIsValidUpdated(false)
-  //   })
+    // Update the form model first so the check for those values pass in updateAccessMethod
+    enzymeWrapper.find(EDSCEchoform).props().onFormModelUpdated({
+      model: 'new model',
+      rawModel: 'new rawModel'
+    })
 
-  //   expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
-  //   expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
-  //     collectionId,
-  //     method: {
-  //       echoOrder0: {
-  //         isValid: false,
-  //         model: '',
-  //         rawModel: ''
-  //       }
-  //     }
-  //   }])
-  // })
+    expect(props.onUpdateAccessMethod.mock.calls.length).toBe(1)
+
+    // Update isValid
+    enzymeWrapper.find(EDSCEchoform).props().onFormIsValidUpdated(false)
+
+    expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
+    expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
+      collectionId,
+      method: {
+        echoOrder0: {
+          isValid: false,
+          model: 'new model',
+          rawModel: 'new rawModel'
+        }
+      }
+    }])
+  })
 })

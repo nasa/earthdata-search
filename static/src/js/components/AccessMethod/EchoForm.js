@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
 
@@ -13,23 +13,44 @@ export const EchoForm = ({
   spatial,
   onUpdateAccessMethod
 }) => {
-  const [rawModel, setRawModel] = useState('')
-  const [model, setModel] = useState('')
+  const [rawModel, setRawModel] = useState()
+  const [model, setModel] = useState()
   const [isValid, setIsValid] = useState(true)
+
+  const updateAccessMethod = ({
+    updatedIsValid = isValid,
+    updatedModel = model,
+    updatedRawModel = rawModel
+  }) => {
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [methodKey]: {
+          isValid: updatedIsValid,
+          model: updatedModel,
+          rawModel: updatedRawModel
+        }
+      }
+    })
+  }
 
   const onFormModelUpdated = (value) => {
     const { model: newModel, rawModel: newRawModel } = value
     setModel(newModel)
     setRawModel(newRawModel)
+    updateAccessMethod({
+      updatedModel: newModel,
+      updatedRawModel: newRawModel
+    })
   }
 
   const onFormIsValidUpdated = (valid) => {
     setIsValid(valid)
+    updateAccessMethod({ updatedIsValid: valid })
   }
 
   const getMbr = (spatial) => {
     // if there is no spatial, return undefined
-    if (!spatial) return undefined
     const { point, boundingBox, polygon } = spatial
     if (!point && !boundingBox && !polygon) return undefined
 
@@ -42,22 +63,6 @@ export const EchoForm = ({
       BBOX_EAST: east
     }
   }
-
-  useEffect(() => {
-    // If model and rawModel have been changed from their default value, update the store
-    if (model !== '' && rawModel !== '') {
-      onUpdateAccessMethod({
-        collectionId,
-        method: {
-          [methodKey]: {
-            isValid,
-            model,
-            rawModel
-          }
-        }
-      })
-    }
-  }, [model, rawModel, isValid])
 
   const spatialMbr = getMbr(spatial)
 
