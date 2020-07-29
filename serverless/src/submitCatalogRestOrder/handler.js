@@ -76,7 +76,7 @@ const submitCatalogRestOrder = async (event, context) => {
       access_method: accessMethod,
       granule_params: granuleParams
     } = retrievalRecord
-    const { portalId, shapefile_id: shapefileId } = jsondata
+    const { portalId, shapefileId } = jsondata
 
     const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
 
