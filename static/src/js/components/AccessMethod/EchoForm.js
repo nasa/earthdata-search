@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
 
@@ -8,45 +8,32 @@ export const EchoForm = ({
   collectionId,
   form,
   methodKey,
-  rawModel: propsRawModel,
+  rawModel,
   shapefileId,
   spatial,
   onUpdateAccessMethod
 }) => {
-  const [rawModel, setRawModel] = useState()
-  const [model, setModel] = useState()
-  const [isValid, setIsValid] = useState(true)
-
-  const updateAccessMethod = ({
-    updatedIsValid = isValid,
-    updatedModel = model,
-    updatedRawModel = rawModel
-  }) => {
+  const updateAccessMethod = (data) => {
     onUpdateAccessMethod({
       collectionId,
       method: {
         [methodKey]: {
-          isValid: updatedIsValid,
-          model: updatedModel,
-          rawModel: updatedRawModel
+          ...data
         }
       }
     })
   }
 
   const onFormModelUpdated = (value) => {
-    const { model: newModel, rawModel: newRawModel } = value
-    setModel(newModel)
-    setRawModel(newRawModel)
+    const { model, rawModel } = value
     updateAccessMethod({
-      updatedModel: newModel,
-      updatedRawModel: newRawModel
+      model,
+      rawModel
     })
   }
 
   const onFormIsValidUpdated = (valid) => {
-    setIsValid(valid)
-    updateAccessMethod({ updatedIsValid: valid })
+    updateAccessMethod({ isValid: valid })
   }
 
   const getMbr = (spatial) => {
@@ -73,7 +60,7 @@ export const EchoForm = ({
     <section className="echoform">
       <EDSCEchoform
         addBootstrapClasses
-        defaultRawModel={propsRawModel}
+        defaultRawModel={rawModel}
         form={form}
         hasShapefile={hasShapefile}
         prepopulateValues={spatialMbr}

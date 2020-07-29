@@ -77,7 +77,6 @@ describe('EchoForm component', () => {
       collectionId,
       method: {
         echoOrder0: {
-          isValid: true,
           model: 'new model',
           rawModel: 'new rawModel'
         }
@@ -94,25 +93,14 @@ describe('EchoForm component', () => {
       methodKey
     })
 
-    // Update the form model first so the check for those values pass in updateAccessMethod
-    enzymeWrapper.find(EDSCEchoform).props().onFormModelUpdated({
-      model: 'new model',
-      rawModel: 'new rawModel'
-    })
-
-    expect(props.onUpdateAccessMethod.mock.calls.length).toBe(1)
-
-    // Update isValid
     enzymeWrapper.find(EDSCEchoform).props().onFormIsValidUpdated(false)
 
-    expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
-    expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
+    expect(props.onUpdateAccessMethod.mock.calls.length).toBe(1)
+    expect(props.onUpdateAccessMethod.mock.calls[0]).toEqual([{
       collectionId,
       method: {
         echoOrder0: {
-          isValid: false,
-          model: 'new model',
-          rawModel: 'new rawModel'
+          isValid: false
         }
       }
     }])
