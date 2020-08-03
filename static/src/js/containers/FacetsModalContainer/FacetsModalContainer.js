@@ -23,19 +23,19 @@ const mapDispatchToProps = dispatch => ({
 
 export const FacetsModalContainer = ({
   collectionHits,
-  viewAllFacets,
   isOpen,
   onApplyViewAllFacets,
   onChangeViewAllFacet,
-  onToggleFacetsModal
+  onToggleFacetsModal,
+  viewAllFacets
 }) => (
   <FacetsModal
     collectionHits={collectionHits}
-    viewAllFacets={viewAllFacets}
     isOpen={isOpen}
     onApplyViewAllFacets={onApplyViewAllFacets}
     onChangeViewAllFacet={onChangeViewAllFacet}
     onToggleFacetsModal={onToggleFacetsModal}
+    viewAllFacets={viewAllFacets}
   />
 )
 
@@ -44,7 +44,7 @@ FacetsModalContainer.defaultProps = {
 }
 
 FacetsModalContainer.propTypes = {
-  collectionHits: PropTypes.string,
+  collectionHits: PropTypes.number,
   isOpen: PropTypes.bool.isRequired,
   onApplyViewAllFacets: PropTypes.func.isRequired,
   onChangeViewAllFacet: PropTypes.func.isRequired,

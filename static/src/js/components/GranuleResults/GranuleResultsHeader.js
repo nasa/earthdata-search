@@ -1,31 +1,27 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { difference } from 'lodash'
 import classNames from 'classnames'
 
+import { collectionTitle, granuleListTotal } from './skeleton'
+import { commafy } from '../../util/commafy'
+import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
+import { pluralize } from '../../util/pluralize'
+
 import Button from '../Button/Button'
+import GranuleResultsActionsContainer from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
+import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
 
-import { collectionTitle, granuleListTotal } from './skeleton'
-
-import murmurhash3 from '../../util/murmurhash3'
-import { commafy } from '../../util/commafy'
-import { pluralize } from '../../util/pluralize'
-import generateHandoffs from '../../util/handoffs/generateHandoffs'
-import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import GranuleResultsActionsContainer from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
-
 import './GranuleResultsHeader.scss'
-import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 
 /**
  * Renders GranuleResultsHeader.
-  * @param {Object} props.collectionSearch - The collection search object.
-  * @param {String} props.focusedCollectionId - The focused collection ID.
-  * @param {Object} props.focusedCollectionObject - Focused collection passed from redux storee.
-  * @param {Object} props.location - Location state passed from react-router.
+  * @param {Object} props.collectionsSearch - The collection search object.
+  * @param {String} props.focusedCollection - The focused collection ID.
+  * @param {Object} props.collectionMetadata - Focused collection passed from redux storee.
+  * @param {Object} props.location - Location passed from react router.
   * @param {Object} props.mapProjection - Map projection passed from redux store.
   * @param {Object} props.secondaryOverlayPanel - Secondary overlay panel state passed from redux store.
   * @param {Function} props.onApplyGranuleFilters - Callback to apply granule filters.
@@ -40,12 +36,11 @@ class GranuleResultsHeader extends Component {
   constructor(props) {
     super(props)
 
-    const { focusedCollectionObject } = props
-    const { granuleFilters = {} } = focusedCollectionObject
+    const { granuleQuery } = props
     const {
       readableGranuleName = [],
       sortKey
-    } = granuleFilters
+    } = granuleQuery
 
     this.state = {
       sortOrder: sortKey,
@@ -61,9 +56,8 @@ class GranuleResultsHeader extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { focusedCollectionObject } = nextProps
-    const { granuleFilters = {} } = focusedCollectionObject
-    const { readableGranuleName = [], sortKey } = granuleFilters
+    const { granuleQuery } = nextProps
+    const { readableGranuleName = [], sortKey } = granuleQuery
 
     const { searchValue, sortOrder } = this.state
 
@@ -79,7 +73,6 @@ class GranuleResultsHeader extends Component {
 
   handleUpdateSortOrder(e) {
     const {
-      focusedCollectionId,
       onApplyGranuleFilters
     } = this.props
 
@@ -88,7 +81,7 @@ class GranuleResultsHeader extends Component {
       sortOrder: value
     })
 
-    onApplyGranuleFilters(focusedCollectionId, { sortKey: value })
+    onApplyGranuleFilters({ sortKey: value })
   }
 
   handleUpdateSearchValue(e) {
@@ -101,7 +94,6 @@ class GranuleResultsHeader extends Component {
 
   handleSearch() {
     const {
-      focusedCollectionId,
       onApplyGranuleFilters
     } = this.props
 
@@ -114,7 +106,7 @@ class GranuleResultsHeader extends Component {
         readableGranuleName = searchValue.split(',')
       }
 
-      onApplyGranuleFilters(focusedCollectionId, { readableGranuleName })
+      onApplyGranuleFilters({ readableGranuleName })
 
       this.setState({
         prevSearchValue: searchValue
@@ -134,61 +126,57 @@ class GranuleResultsHeader extends Component {
 
   handleUndoExcludeGranule() {
     const {
-      focusedCollectionId,
+      focusedCollection,
       onUndoExcludeGranule
     } = this.props
 
-    onUndoExcludeGranule(focusedCollectionId)
+    onUndoExcludeGranule(focusedCollection)
   }
 
   render() {
     const { sortOrder, searchValue } = this.state
 
     const {
-      collectionSearch,
-      focusedCollectionObject,
+      collectionMetadata,
+      collectionQuery,
+      collectionsSearch,
+      granuleQuery,
+      granuleSearchResults,
       location,
       mapProjection,
-      onToggleSecondaryOverlayPanel,
-      pageNum,
-      secondaryOverlayPanel,
       onChangePanelView,
       onToggleAboutCwicModal,
-      panelView
+      onToggleSecondaryOverlayPanel,
+      pageNum,
+      panelView,
+      secondaryOverlayPanel
     } = this.props
 
     const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
 
-    const { metadata = {}, excludedGranuleIds = [], granules = {} } = focusedCollectionObject
+    const {
+      isLoaded: collectionSearchIsLoaded
+    } = collectionsSearch
 
     const {
+      excludedGranuleIds = []
+    } = granuleQuery
+
+    const {
+      allIds: allGranuleIds,
+      hits: granuleHits,
       isLoading,
       isLoaded
-    } = granules
+    } = granuleSearchResults
 
-    const { title, isCwic } = metadata
+    const {
+      isCwic,
+      title
+    } = collectionMetadata
 
-    const showUndoExcludedGranules = excludedGranuleIds.length > 0
-
-    const handoffLinks = generateHandoffs(metadata, collectionSearch, mapProjection)
+    const handoffLinks = generateHandoffs(collectionMetadata, collectionQuery, mapProjection)
 
     const initialLoading = ((pageNum === 1 && isLoading) || (!isLoaded && !isLoading))
-
-    const allGranuleIds = granules.allIds
-
-    let granuleIds
-    if (isCwic) {
-      granuleIds = allGranuleIds.filter((id) => {
-        const hashedId = murmurhash3(id).toString()
-        return excludedGranuleIds.indexOf(hashedId) === -1
-      })
-    } else {
-      granuleIds = difference(allGranuleIds, excludedGranuleIds)
-    }
-
-    const visibleGranules = granuleIds.length ? granuleIds.length : 0
-
-    const granuleCount = getGranuleCount(focusedCollectionObject)
 
     const viewButtonListClasses = classNames([
       'granule-results-header__view-button',
@@ -210,8 +198,8 @@ class GranuleResultsHeader extends Component {
           <div className="row">
             <div className="col">
               <div className="granule-results-header__title-wrap">
-                {// TODO: Create isLoading state in reducer so we can use that rather than the title
-                  !title && (
+                {
+                  !collectionSearchIsLoaded && (
                     <Skeleton
                       className="granule-results-header__title"
                       containerStyle={{
@@ -249,7 +237,7 @@ class GranuleResultsHeader extends Component {
           <div className="row">
             <div className="col">
               {
-                metadata.is_cwic && (
+                isCwic && (
                   <>
                     <div>
                       <span className="granule-results-header__cwic-note">
@@ -298,7 +286,7 @@ class GranuleResultsHeader extends Component {
                 )
               }
               {
-                !metadata.is_cwic && (
+                !isCwic && (
                   <div className="form-inline">
                     <div className="form-row align-items-center">
                       <div className="col-auto mb-1">
@@ -402,18 +390,25 @@ class GranuleResultsHeader extends Component {
                           </Button>
                         )}
                       </div>
-                      {showUndoExcludedGranules && (
-                        <div className="granule-results-header__granule-undo">
-                          Granule filtered
-                          <button
-                            className="granule-results-header__granule-undo-button"
-                            onClick={this.handleUndoExcludeGranule}
-                            type="button"
-                          >
-                            Undo
-                          </button>
-                        </div>
-                      )}
+                      {
+                        excludedGranuleIds.length > 0 && (
+                          <div className="granule-results-header__granule-undo">
+                            { excludedGranuleIds.length }
+                            {' '}
+                            {
+                              pluralize('Granule', excludedGranuleIds.length)
+                            }
+                            {' Filtered'}
+                            <button
+                              className="granule-results-header__granule-undo-button"
+                              onClick={this.handleUndoExcludeGranule}
+                              type="button"
+                            >
+                              Undo
+                            </button>
+                          </div>
+                        )
+                      }
                     </div>
                   </div>
                 )
@@ -433,9 +428,9 @@ class GranuleResultsHeader extends Component {
             }
             {
               !initialLoading && (
-                `Showing ${commafy(visibleGranules)} of ${commafy(
-                  granuleCount
-                )} matching ${pluralize('granule', granuleCount)}`
+                `Showing ${commafy(allGranuleIds.length)} of ${commafy(
+                  granuleHits
+                )} matching ${pluralize('granule', granuleHits)}`
               )
             }
           </span>
@@ -466,19 +461,22 @@ class GranuleResultsHeader extends Component {
 }
 
 GranuleResultsHeader.propTypes = {
-  collectionSearch: PropTypes.shape({}).isRequired,
-  focusedCollectionId: PropTypes.string.isRequired,
-  focusedCollectionObject: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionQuery: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
+  focusedCollection: PropTypes.string.isRequired,
+  granuleQuery: PropTypes.shape({}).isRequired,
+  granuleSearchResults: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
-  secondaryOverlayPanel: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onChangePanelView: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
   pageNum: PropTypes.number.isRequired,
-  panelView: PropTypes.string.isRequired
+  panelView: PropTypes.string.isRequired,
+  secondaryOverlayPanel: PropTypes.shape({}).isRequired
 }
 
 export default GranuleResultsHeader

@@ -1,21 +1,18 @@
-import { isEqual } from 'lodash'
 import actions from './index'
 import {
   UPDATE_COLLECTION_QUERY,
-  UPDATE_GRANULE_QUERY,
+  UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_REGION_QUERY,
   CLEAR_FILTERS
 } from '../constants/actionTypes'
-import { clearExcludedGranules, clearRemovedGranules } from './granules'
-import { parseError } from '../../../../sharedUtils/parseError'
 
 export const updateCollectionQuery = payload => ({
   type: UPDATE_COLLECTION_QUERY,
   payload
 })
 
-export const updateGranuleQuery = payload => ({
-  type: UPDATE_GRANULE_QUERY,
+export const updateGranuleSearchQuery = payload => ({
+  type: UPDATE_GRANULE_SEARCH_QUERY,
   payload
 })
 
@@ -24,102 +21,50 @@ export const updateRegionQuery = payload => ({
   payload
 })
 
-export const changeQuery = (queryOptions = {}) => (dispatch, getState) => {
+export const changeQuery = (queryOptions = {}) => async (dispatch, getState) => {
+  console.log('changeQuery', queryOptions)
+
   const {
     focusedCollection,
-    project,
     query
   } = getState()
+
   const newQuery = queryOptions
 
-  // Pull out the values from the query being changed
-  const { collection = {} } = newQuery
-
-  const {
-    gridName,
-    spatial,
-    temporal,
-    overideTemporal
-  } = collection
-
-  // Pull out data from the store to compare to, if there are changes we should clear the excluded granules
   const { collection: collectionQuery = {} } = query
   const {
-    gridName: gridNameQuery,
-    spatial: spatialQuery,
-    temporal: temporalQuery,
-    overrideTemporal: overrideTemporalQuery
+    byId: collectionQueryById
   } = collectionQuery
-
-  if ((!isEqual(gridName, gridNameQuery))
-    || (!isEqual(spatial, spatialQuery))
-    || (!isEqual(temporal, temporalQuery))
-    || (!isEqual(overideTemporal, overrideTemporalQuery))
-  ) {
-    // TODO: When the project and search granules stores are separated, persist these values rather than clearing them.
-    dispatch(clearExcludedGranules())
-    dispatch(clearRemovedGranules())
-  }
 
   if (newQuery.collection) {
     dispatch(updateCollectionQuery({
       pageNum: 1,
       ...newQuery.collection
     }))
-  }
 
-  dispatch(updateGranuleQuery({
-    pageNum: 1,
-    ...newQuery.granule
-  }))
-
-  // Remove all saved granules in the metadata/collections store
-  dispatch(actions.clearCollectionGranules())
-
-  // If the collection query didn't change don't get new collections
-  if (newQuery.collection) {
     dispatch(actions.getCollections())
 
-    // Fetch collections in the project
-    const { collectionIds = [] } = project
+    if (focusedCollection) {
+      const { [focusedCollection]: focusedCollectionCollectionQuery } = collectionQueryById
+      const { granules: focusedCollectionGranuleQuery } = focusedCollectionCollectionQuery
 
-    // Create a unique list of collections to fetch and remove any empty values [.filter(Boolean)]
-    const uniqueCollectionList = [...new Set([
-      ...collectionIds,
-      focusedCollection
-    ])].filter(Boolean)
+      dispatch(updateGranuleSearchQuery({
+        collectionId: focusedCollection,
+        ...focusedCollectionGranuleQuery,
+        pageNum: 1
+      }))
 
-    // Fetch metadata for collections added to the project
-    if (uniqueCollectionList.length > 0) {
-      try {
-        dispatch(actions.getProjectCollections(uniqueCollectionList))
-        dispatch(actions.getGranules(uniqueCollectionList))
-      } catch (e) {
-        parseError(e)
-      }
+      dispatch(actions.searchGranules())
     }
   }
-
-  dispatch(actions.getTimeline())
 }
 
-export const changeProjectQuery = query => async (dispatch, getState) => {
+export const changeProjectQuery = query => async (dispatch) => {
   const { collection } = query
 
   dispatch(updateCollectionQuery(collection))
 
-  const { project = {} } = getState()
-  const { collectionIds = [] } = project
-
-  if (collectionIds.length > 0) {
-    try {
-      await dispatch(actions.getProjectCollections(collectionIds))
-
-      dispatch(actions.getGranules(collectionIds))
-    } catch (e) {
-      parseError(e)
-    }
-  }
+  dispatch(actions.getProjectGranules())
 }
 
 export const changeRegionQuery = query => (dispatch) => {
@@ -133,34 +78,50 @@ export const changeCollectionPageNum = pageNum => (dispatch) => {
 }
 
 export const changeGranulePageNum = ({ collectionId, pageNum }) => (dispatch, getState) => {
-  const { metadata } = getState()
-  const { collections } = metadata
-  const { byId } = collections
-  const { granules } = byId[collectionId]
-  const { allIds, hits } = granules
+  const { searchResults } = getState()
+
+  const {
+    collections: collectionsSearchResults
+  } = searchResults
+
+  const {
+    byId: collectionsSearchResultsById
+  } = collectionsSearchResults
+
+  const {
+    [collectionId]: collectionSearchResults
+  } = collectionsSearchResultsById
+
+  const {
+    granules
+  } = collectionSearchResults
+
+  const {
+    allIds,
+    hits
+  } = granules
 
   // Only load the next page of granules if there are granule results already loaded
   // and the granules loaded is less than the total granules
   if (allIds.length > 0 && allIds.length < hits) {
-    dispatch(updateGranuleQuery({ pageNum }))
-    dispatch(actions.getGranules())
-  }
-}
+    // Update the collection specific granule query params
+    dispatch(updateGranuleSearchQuery({
+      collectionId,
+      pageNum
+    }))
 
-export const changeGranuleGridCoords = gridCoords => (dispatch) => {
-  dispatch(updateGranuleQuery({ gridCoords }))
-  dispatch(actions.getGranules())
+    // Fetch the next page of granules
+    dispatch(actions.searchGranules(collectionId))
+  }
 }
 
 export const removeGridFilter = () => (dispatch) => {
   dispatch(changeQuery({
     collection: {
       gridName: ''
-    },
-    granule: {
-      gridCoords: ''
     }
   }))
+
   dispatch(actions.toggleSelectingNewGrid(false))
 }
 
@@ -190,6 +151,6 @@ export const clearFilters = () => (dispatch) => {
 
   dispatch(actions.getCollections())
   dispatch(actions.getProjectCollections())
-  dispatch(actions.getGranules())
+  dispatch(actions.searchGranules())
   dispatch(actions.getTimeline())
 }

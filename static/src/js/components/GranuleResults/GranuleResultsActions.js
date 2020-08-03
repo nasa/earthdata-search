@@ -1,15 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import qs from 'qs'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { commafy } from '../../util/commafy'
-import { pluralize } from '../../util/pluralize'
-import { stringify } from '../../util/url/url'
 import { granuleTotalCount } from './skeleton'
+import { pluralize } from '../../util/pluralize'
 
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
+import GranuleDownloadButton from './GranuleDownloadButton'
+import ProjectCollectionContents from '../ProjectCollectionContents/ProjectCollectionContents'
 import Skeleton from '../Skeleton/Skeleton'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
@@ -17,7 +15,6 @@ import './GranuleResultsActions.scss'
 
 /**
  * Renders GranuleResultsActions.
- * @param {Boolean} allGranulesInProject - Flag designating if all granules are in the project.
  * @param {String} collectionId - The collection ID.
  * @param {Number} granuleCount - The granule count.
  * @param {Number} granuleLimit - The granule limit.
@@ -30,7 +27,6 @@ import './GranuleResultsActions.scss'
  * @param {Function} onSetActivePanelSection - Callback to set the active panel section on the project page.
  */
 const GranuleResultsActions = ({
-  allGranulesInProject,
   collectionId,
   granuleCount,
   granuleLimit,
@@ -40,7 +36,8 @@ const GranuleResultsActions = ({
   onAddProjectCollection,
   onChangePath,
   onRemoveCollectionFromProject,
-  onSetActivePanelSection
+  onSetActivePanelSection,
+  focusedProjectCollection
 }) => {
   const addToProjectButton = (
     <Button
@@ -71,106 +68,22 @@ const GranuleResultsActions = ({
   )
 
   const tooManyGranules = granuleLimit && granuleCount > granuleLimit
-  const downloadAllButton = () => {
-    let buttonText = 'Download All'
-    const badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
-
-    if (isCollectionInProject && !allGranulesInProject && granuleCount > 0) {
-      buttonText = 'Download'
-    }
-
-    if (tooManyGranules) {
-      return (
-        <OverlayTrigger
-          placement="bottom"
-          overlay={(
-            <Tooltip
-              id="tooltip__granule-results-actions__download-all-button"
-              className="tooltip--large tooltip--ta-left tooltip--wide"
-            >
-              Due to significant processing times, orders for this collection are limited to
-              {' '}
-              {commafy(granuleLimit)}
-              {' '}
-              granules. Please narrow your search before downloading.
-              Contact the data provider with questions.
-              You can find contact information by clicking on the information icon.
-            </Tooltip>
-          )}
-        >
-          <div>
-            <Button
-              className="granule-results-actions__download-all-button"
-              badge={badge}
-              bootstrapVariant="secondary"
-              icon="download"
-              variant="full"
-              label={buttonText}
-              disabled
-              style={{ pointerEvents: 'none' }}
-            >
-              {buttonText}
-            </Button>
-          </div>
-        </OverlayTrigger>
-      )
-    }
-
-    const params = qs.parse(location.search, { ignoreQueryPrefix: true, parseArrays: false })
-    let { p = '', pg = {} } = params
-
-    // If the collection is not already in the project we need to add it to the project and update the url to represent that
-    if (!isCollectionInProject) {
-      // Append the p parameter that stores the collections in the project
-      p = `${p}!${collectionId}`
-
-      // While it won't yet be in the project, it will be the focused collection so we will grab that object
-      const focusedCollection = pg[0]
-
-      // We need to place the collection as the last collection in the project, get the number of collections in the project
-      // so that we know what index to use
-      const projectCollectionCount = Object.keys(pg).length
-
-      // Move the object at the 0 index (focused collection) into the project by adding it to the end of the pg array (resulting
-      // in a non 0 index)
-      pg = {
-        ...pg,
-        0: {},
-        [projectCollectionCount]: focusedCollection
-      }
-    }
-
-    return (
-      <PortalLinkContainer
-        className="granule-results-actions__download-all"
-        onClick={() => onAddProjectCollection(collectionId)}
-        to={{
-          pathname: '/projects',
-          search: stringify({
-            ...params,
-            p,
-            pg
-          })
-        }}
-      >
-        <Button
-          className="granule-results-actions__download-all-button"
-          badge={badge}
-          bootstrapVariant="success"
-          icon="download"
-          variant="full"
-          label={buttonText}
-          disabled={granuleCount === 0 || initialLoading}
-        >
-          {buttonText}
-        </Button>
-      </PortalLinkContainer>
-    )
-  }
 
   // TODO: Implement maxOrderSizeReached modal that currently exists in master @critical
 
-  const downloadButton = downloadAllButton()
+  const downloadButton = (
+    <GranuleDownloadButton
+      collectionId={collectionId}
+      projectCollection={focusedProjectCollection}
+      granuleCount={granuleCount}
+      granuleLimit={granuleLimit}
+      initialLoading={initialLoading}
+      isCollectionInProject={isCollectionInProject}
+      location={location}
+      onAddProjectCollection={onAddProjectCollection}
+      tooManyGranules={tooManyGranules}
+    />
+  )
 
   return (
     <div className="granule-results-actions">
@@ -195,40 +108,16 @@ const GranuleResultsActions = ({
                   {`${pluralize('Granule', granuleCount)}`}
                 </span>
                 <PortalFeatureContainer authentication>
-                  <>
-                    {
-                      isCollectionInProject && (
-                        <PortalLinkContainer
-                          type="button"
-                          label="View granules in project"
-                          className="granule-results-actions__project-pill"
-                          onClick={() => {
-                            onSetActivePanelSection('1')
-                            onChangePath(`/projects${location.search}`)
-                          }}
-                          to={{
-                            pathname: '/projects',
-                            search: location.search
-                          }}
-                        >
-                          <i className="fa fa-folder granule-results-actions__project-pill-icon" />
-                          {
-                            // eslint-disable-next-line no-self-compare
-                            allGranulesInProject && <span title="All granules in project">All Granules</span>
-                          }
-                          {
-                            !allGranulesInProject && granuleCount > 0 && (
-                              <span
-                                title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
-                              >
-                                {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
-                              </span>
-                            )
-                          }
-                        </PortalLinkContainer>
-                      )
-                    }
-                  </>
+                  {
+                    isCollectionInProject && (
+                      <ProjectCollectionContents
+                        projectCollection={focusedProjectCollection}
+                        onChangePath={onChangePath}
+                        onSetActivePanelSection={onSetActivePanelSection}
+                        location={location}
+                      />
+                    )
+                  }
                 </PortalFeatureContainer>
               </div>
             )
@@ -264,10 +153,10 @@ GranuleResultsActions.propTypes = {
   isCollectionInProject: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  allGranulesInProject: PropTypes.bool.isRequired
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  focusedProjectCollection: PropTypes.shape({}).isRequired
 }
 
 export default GranuleResultsActions

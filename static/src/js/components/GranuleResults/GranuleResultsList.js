@@ -19,7 +19,7 @@ import './GranuleResultsList.scss'
  * @param {Function} props.isItemLoaded - Callback to detirmine if a granule has been loaded.
  * @param {Number} props.itemCount - Number of total granule list itmes.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
- * @param {Object} props.location - The location provided by react-router.
+ * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
@@ -34,8 +34,8 @@ export const GranuleResultsList = ({
   excludedGranuleIds,
   focusedGranule,
   granules,
-  isCwic,
   isCollectionInProject,
+  isCwic,
   isGranuleInProject,
   isItemLoaded,
   itemCount,
@@ -60,19 +60,19 @@ export const GranuleResultsList = ({
             focusedGranule={focusedGranule}
             granules={granules}
             height={height}
-            isCwic={isCwic}
             isCollectionInProject={isCollectionInProject}
+            isCwic={isCwic}
             isGranuleInProject={isGranuleInProject}
-            location={location}
-            onExcludeGranule={onExcludeGranule}
-            onFocusedGranuleChange={onFocusedGranuleChange}
-            onMetricsDataAccess={onMetricsDataAccess}
-            onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
-            onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
-            portal={portal}
             isItemLoaded={isItemLoaded}
             itemCount={itemCount}
             loadMoreItems={loadMoreItems}
+            location={location}
+            onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
+            onExcludeGranule={onExcludeGranule}
+            onFocusedGranuleChange={onFocusedGranuleChange}
+            onMetricsDataAccess={onMetricsDataAccess}
+            onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+            portal={portal}
             setVisibleMiddleIndex={setVisibleMiddleIndex}
             visibleMiddleIndex={visibleMiddleIndex}
             width={width}

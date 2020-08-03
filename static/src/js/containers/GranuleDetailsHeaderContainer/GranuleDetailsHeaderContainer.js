@@ -5,31 +5,23 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import getFocusedGranuleObject from '../../util/focusedGranule'
+import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleDetailsHeader from '../../components/GranuleDetails/GranuleDetailsHeader'
 
 const mapStateToProps = state => ({
-  focusedGranule: state.focusedGranule,
-  granules: state.metadata.granules
+  granuleMetadata: getFocusedGranuleMetadata(state)
 })
 
 export const GranuleDetailsHeaderContainer = ({
-  focusedGranule,
-  granules,
+  granuleMetadata,
   location
-}) => {
-  const focusedGranuleMetadata = getFocusedGranuleObject(focusedGranule, granules)
-  const { ummJson = {} } = focusedGranuleMetadata
-
-  return (
-    <GranuleDetailsHeader ummJson={ummJson} location={location} />
-  )
-}
+}) => (
+  <GranuleDetailsHeader granuleMetadata={granuleMetadata} location={location} />
+)
 
 GranuleDetailsHeaderContainer.propTypes = {
-  granules: PropTypes.shape({}).isRequired,
-  focusedGranule: PropTypes.string.isRequired,
+  granuleMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired
 }
 

@@ -2,14 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form as FormikForm } from 'formik'
 import { Col, Form, Row } from 'react-bootstrap'
+
 import moment from 'moment'
 
 import { getValueForTag } from '../../../../../sharedUtils/tags'
-
-import GranuleFiltersList from './GranuleFiltersList'
-import GranuleFiltersItem from './GranuleFiltersItem'
-import TemporalSelection from '../TemporalSelection/TemporalSelection'
 import { getTemporalDateFormat } from '../../util/edscDate'
+
+import GranuleFiltersItem from './GranuleFiltersItem'
+import GranuleFiltersList from './GranuleFiltersList'
+import TemporalSelection from '../TemporalSelection/TemporalSelection'
 
 /**
  * Renders GranuleFiltersForm.
@@ -28,7 +29,7 @@ export const GranuleFiltersForm = (props) => {
     errors,
     handleBlur,
     handleChange,
-    metadata,
+    collectionMetadata,
     values,
     setFieldValue,
     setFieldTouched,
@@ -67,9 +68,9 @@ export const GranuleFiltersForm = (props) => {
   } = equatorCrossingLongitude
 
   const {
-    is_cwic: isCwic,
+    isCwic,
     tags
-  } = metadata
+  } = collectionMetadata
 
   const capabilities = getValueForTag('collection_capabilities', tags)
 
@@ -486,7 +487,7 @@ GranuleFiltersForm.propTypes = {
   errors: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  metadata: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,

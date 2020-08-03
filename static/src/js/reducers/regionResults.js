@@ -22,8 +22,10 @@ const initialState = {
 const processResults = (results) => {
   const byId = {}
   const allIds = []
+
   results.forEach((result) => {
     const { id } = result
+
     byId[id] = result
     allIds.push(id)
   })

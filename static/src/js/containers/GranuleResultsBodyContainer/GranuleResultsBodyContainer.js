@@ -4,8 +4,12 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
+
 import { metricsDataAccess } from '../../middleware/metrics/actions'
-import { getFocusedCollectionObject } from '../../util/focusedCollection'
+
+import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
+import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
@@ -25,20 +29,24 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
+  collectionMetadata: getFocusedCollectionMetadata(state),
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
-  granuleQuery: state.query.granule,
+  granuleQuery: getFocusedCollectionGranuleQuery(state),
+  granuleSearchResults: getFocusedCollectionGranuleResults(state),
+  granulesMetadata: state.metadata.granules,
   portal: state.portal,
   project: state.project
 })
 
 export const GranuleResultsBodyContainer = (props) => {
   const {
-    collections,
+    collectionMetadata,
     focusedCollection,
     focusedGranule,
     granuleQuery,
+    granuleSearchResults,
+    granulesMetadata,
     location,
     onAddGranuleToProjectCollection,
     onChangeGranulePageNum,
@@ -51,18 +59,15 @@ export const GranuleResultsBodyContainer = (props) => {
     project
   } = props
 
-  const collectionObject = getFocusedCollectionObject(focusedCollection, collections)
+  const {
+    pageNum = 1
+  } = granuleQuery
 
   const {
-    excludedGranuleIds = [],
-    granules = {},
-    metadata: collectionMetadata = {}
-  } = collectionObject
-
-  const { isCwic = false } = collectionMetadata
+    isCwic = false
+  } = collectionMetadata
 
   const loadNextPage = () => {
-    const { pageNum } = granuleQuery
     onChangeGranulePageNum({
       collectionId: focusedCollection,
       pageNum: pageNum + 1
@@ -72,29 +77,32 @@ export const GranuleResultsBodyContainer = (props) => {
   return (
     <GranuleResultsBody
       collectionId={focusedCollection}
-      excludedGranuleIds={excludedGranuleIds}
       focusedGranule={focusedGranule}
-      granules={granules}
+      granuleQuery={granuleQuery}
+      granuleSearchResults={granuleSearchResults}
+      granulesMetadata={granulesMetadata}
       isCwic={isCwic}
-      location={location}
       loadNextPage={loadNextPage}
+      location={location}
+      onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
       onMetricsDataAccess={onMetricsDataAccess}
+      onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
       panelView={panelView}
       portal={portal}
       project={project}
-      onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
-      onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
     />
   )
 }
 
 GranuleResultsBodyContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
+  granuleSearchResults: PropTypes.shape({}).isRequired,
+  granulesMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,

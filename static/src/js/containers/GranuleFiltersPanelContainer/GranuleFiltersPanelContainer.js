@@ -4,39 +4,41 @@ import { connect } from 'react-redux'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
 
-import { getFocusedCollectionMetadata, getFocusedCollectionObject } from '../../util/focusedCollection'
+import actions from '../../actions'
+
 import {
   dateOutsideRange,
-  nullableValue,
-  nullableTemporal,
-  minLessThanMax,
   maxLessThanMin,
+  minLessThanMax,
+  nullableTemporal,
+  nullableValue,
   startBeforeEnd
 } from '../../util/validation'
 
-import SecondaryOverlayPanelContainer
-  from '../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
-import GranuleFiltersHeaderContainer
-  from '../GranuleFiltersHeaderContainer/GranuleFiltersHeaderContainer'
+import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
+
 import GranuleFiltersActions
   from '../../components/GranuleFilters/GranuleFiltersActions'
 import GranuleFiltersBody
   from '../../components/GranuleFilters/GranuleFiltersBody'
 import GranuleFiltersForm
   from '../../components/GranuleFilters/GranuleFiltersForm'
-
-import actions from '../../actions'
+import GranuleFiltersHeaderContainer
+  from '../GranuleFiltersHeaderContainer/GranuleFiltersHeaderContainer'
+import SecondaryOverlayPanelContainer
+  from '../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
-  focusedCollection: state.focusedCollection,
+  collectionMetadata: getFocusedCollectionMetadata(state),
+  granuleQuery: getFocusedCollectionGranuleQuery(state),
   temporal: state.query.collection.temporal
 })
 
 const mapDispatchToProps = dispatch => ({
   onApplyGranuleFilters:
-    (focusedCollection, values, closePanel) => dispatch(
-      actions.applyGranuleFilters(focusedCollection, values, closePanel)
+    (values, closePanel) => dispatch(
+      actions.applyGranuleFilters(values, closePanel)
     )
 })
 
@@ -66,7 +68,6 @@ export class GranuleFiltersPanelContainer extends Component {
   onClearGranuleFilters() {
     const {
       onApplyGranuleFilters,
-      focusedCollection,
       handleReset,
       values
     } = this.props
@@ -79,14 +80,13 @@ export class GranuleFiltersPanelContainer extends Component {
     Object.keys(values).forEach((key) => {
       emptyObject[key] = ''
     })
-    onApplyGranuleFilters(focusedCollection, emptyObject)
+    onApplyGranuleFilters(emptyObject)
   }
 
   render() {
     const {
-      collections,
+      collectionMetadata,
       errors,
-      focusedCollection,
       handleBlur,
       handleChange,
       handleSubmit,
@@ -97,10 +97,6 @@ export class GranuleFiltersPanelContainer extends Component {
       values
     } = this.props
 
-    const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
-
-    if (!focusedCollectionMetadata) return null
-
     return (
       <SecondaryOverlayPanelContainer
         header={<GranuleFiltersHeaderContainer />}
@@ -108,7 +104,7 @@ export class GranuleFiltersPanelContainer extends Component {
           <GranuleFiltersBody
             granuleFiltersForm={(
               <GranuleFiltersForm
-                metadata={focusedCollectionMetadata}
+                collectionMetadata={collectionMetadata}
                 values={values}
                 touched={touched}
                 errors={errors}
@@ -279,14 +275,8 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
   validationSchema: ValidationSchema,
   mapPropsToValues: (props) => {
     const {
-      collections,
-      focusedCollection
+      granuleQuery
     } = props
-    const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
-
-    if (!focusedCollectionObject) return {}
-
-    const { granuleFilters = {} } = focusedCollectionObject
 
     const {
       dayNightFlag = '',
@@ -297,7 +287,7 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
       orbitNumber = {},
       equatorCrossingLongitude = {},
       equatorCrossingDate = {}
-    } = granuleFilters
+    } = granuleQuery
 
     const {
       min: cloudCoverMin,
@@ -358,19 +348,18 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
   },
   handleSubmit: (values, { props, setSubmitting }) => {
     const {
-      focusedCollection,
       onApplyGranuleFilters
     } = props
 
-    onApplyGranuleFilters(focusedCollection, values, true)
+    onApplyGranuleFilters(values, true)
     setSubmitting(false)
   }
 })(GranuleFiltersPanelContainer)
 
 GranuleFiltersPanelContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
+  granuleQuery: PropTypes.shape({}).isRequired,
   errors: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,

@@ -12,12 +12,10 @@ import {
 } from './advancedSearch'
 import {
   getCollections,
-  restoreCollections,
-  updateCollectionGranuleFilters
+  updateFocusedCollectionGranuleFilters
 } from './collections'
 import {
   changeFocusedCollection,
-  clearCollectionGranules,
   getFocusedCollection,
   updateFocusedCollection,
   viewCollectionGranules,
@@ -26,7 +24,9 @@ import {
 import {
   applyGranuleFilters,
   excludeGranule,
-  getGranules,
+  getProjectGranules,
+  initializeCollectionGranulesResults,
+  searchGranules,
   undoExcludeGranule,
   fetchRetrievalCollectionGranuleLinks,
   updateGranuleResults,
@@ -39,7 +39,6 @@ import {
 } from './timeline'
 import {
   changeCollectionPageNum,
-  changeGranuleGridCoords,
   changeGranulePageNum,
   changeProjectQuery,
   changeRegionQuery,
@@ -48,7 +47,6 @@ import {
   removeGridFilter,
   removeSpatialFilter,
   removeTemporalFilter,
-  updateGranuleQuery,
   updateRegionQuery
 } from './search'
 import { changeMap } from './map'
@@ -96,17 +94,17 @@ import {
   setActivePanelSection
 } from './panels'
 import {
+  addAccessMethods,
+  addGranuleToProjectCollection,
   addProjectCollection,
   getProjectCollections,
   removeCollectionFromProject,
+  removeGranuleFromProjectCollection,
   restoreProject,
   selectAccessMethod,
   toggleCollectionVisibility,
-  addAccessMethods,
   updateAccessMethod,
-  updateAccessMethodOrderCount,
-  addGranuleToProjectCollection,
-  removeGranuleFromProjectCollection
+  updateProjectGranuleParams
 } from './project'
 import {
   fetchProviders
@@ -170,7 +168,6 @@ const actions = {
   changeFeatureFacet,
   changeFocusedCollection,
   changeFocusedGranule,
-  changeGranuleGridCoords,
   changeGranulePageNum,
   changeMap,
   changePath,
@@ -182,7 +179,6 @@ const actions = {
   changeViewAllFacet,
   clearAutocompleteSelected,
   clearAutocompleteSuggestions,
-  clearCollectionGranules,
   clearFilters,
   clearShapefile,
   collectionRelevancyMetrics,
@@ -205,12 +201,13 @@ const actions = {
   getCollections,
   getFocusedCollection,
   getFocusedGranule,
-  getGranules,
   getProjectCollections,
+  getProjectGranules,
   getRegions,
   getTimeline,
   getViewAllFacets,
   handleError,
+  initializeCollectionGranulesResults,
   loadPortalConfig,
   logout,
   removeAutocompleteValue,
@@ -221,9 +218,9 @@ const actions = {
   removeGridFilter,
   removeSpatialFilter,
   removeTemporalFilter,
-  restoreCollections,
   restoreProject,
   saveShapefile,
+  searchGranules,
   selectAccessMethod,
   selectAutocompleteSuggestion,
   setActivePanel,
@@ -253,21 +250,20 @@ const actions = {
   triggerViewAllFacets,
   undoExcludeGranule,
   updateAccessMethod,
-  updateAccessMethodOrderCount,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
   updateAdvancedSearch,
   updateAuthToken,
   updateBrowserVersion,
   updateCmrFacet,
-  updateCollectionGranuleFilters,
   updateFeatureFacet,
   updateFocusedCollection,
+  updateFocusedCollectionGranuleFilters,
   updateGranuleMetadata,
-  updateGranuleQuery,
   updateGranuleResults,
   updateNotificationLevel,
   updatePreferences,
+  updateProjectGranuleParams,
   updateProjectName,
   updateRegionQuery,
   updateSavedProject,

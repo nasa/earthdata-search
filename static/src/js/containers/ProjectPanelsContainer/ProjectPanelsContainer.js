@@ -4,17 +4,19 @@ import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
+import { getProjectCollectionsMetadata } from '../../selectors/project'
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
   dataQualitySummaries: state.dataQualitySummaries,
+  projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
-  granuleQuery: state.query.granule,
+  granulesMetadata: state.metadata.granules,
   location: state.router.location,
+  panels: state.panels,
   portal: state.portal,
   project: state.project,
-  panels: state.panels,
   shapefileId: state.shapefile.shapefileId,
   spatial: state.query.collection.spatial
 })
@@ -42,23 +44,24 @@ const mapDispatchToProps = dispatch => ({
     collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
   onFocusedGranuleChange:
     granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
-  onChangeGranulePageNum:
-    data => dispatch(actions.changeGranulePageNum(data))
+  onChangeProjectGranulePageNum:
+    data => dispatch(actions.changeProjectGranulePageNum(data))
 })
 
 export const ProjectPanelsContainer = ({
   collections,
   dataQualitySummaries,
+  projectCollectionsMetadata,
   focusedCollection,
   focusedGranule,
-  granuleQuery,
+  granulesMetadata,
   location,
   portal,
   project,
   panels,
   shapefileId,
   spatial,
-  onChangeGranulePageNum,
+  onChangeProjectGranulePageNum,
   onChangePath,
   onSelectAccessMethod,
   onTogglePanels,
@@ -73,12 +76,13 @@ export const ProjectPanelsContainer = ({
   <ProjectPanels
     collections={collections}
     dataQualitySummaries={dataQualitySummaries}
+    projectCollectionsMetadata={projectCollectionsMetadata}
     focusedCollection={focusedCollection}
     focusedGranule={focusedGranule}
-    granuleQuery={granuleQuery}
+    granulesMetadata={granulesMetadata}
     location={location}
     onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
-    onChangeGranulePageNum={onChangeGranulePageNum}
+    onChangeProjectGranulePageNum={onChangeProjectGranulePageNum}
     onChangePath={onChangePath}
     onFocusedGranuleChange={onFocusedGranuleChange}
     onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
@@ -105,24 +109,25 @@ ProjectPanelsContainer.propTypes = {
   dataQualitySummaries: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
-  granuleQuery: PropTypes.shape({}).isRequired,
+  granulesMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
-  panels: PropTypes.shape({}).isRequired,
-  shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({}).isRequired,
-  onChangeGranulePageNum: PropTypes.func.isRequired,
+  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
+  onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
+  onFocusedGranuleChange: PropTypes.func.isRequired,
+  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelGroup: PropTypes.func.isRequired,
+  onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
-  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired
+  panels: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired,
+  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
+  shapefileId: PropTypes.string,
+  spatial: PropTypes.shape({}).isRequired
 }
 
 

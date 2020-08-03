@@ -3,9 +3,12 @@
  * @param {Object} collection - Collection object from the redux store
  * @param {Object} projectCollection - An optional projectCollection to account for added or removed granules.
  */
-export const getGranuleCount = (collection, projectCollection = {}) => {
-  const { excludedGranuleIds = [], granules = {} } = collection
-  const { hits = 0 } = granules
+// export const getGranuleCount = (collection, projectCollection = {}) => {
+export const getGranuleCount = (granuleSearchResults, granuleQuery, projectCollection = {}) => {
+  const { excludedGranuleIds = [] } = granuleQuery
+
+  const { hits = 0 } = granuleSearchResults
+
   const {
     addedGranuleIds = [],
     removedGranuleIds = []

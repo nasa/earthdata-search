@@ -10,7 +10,7 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-import { difference } from 'lodash'
+// import { difference } from 'lodash'
 
 import isPath from '../../util/isPath'
 import { metricsMap } from '../../middleware/metrics/actions'
@@ -32,7 +32,7 @@ import MouseEventsLayer from '../../components/Map/MouseEventsLayer'
 
 import crsProjections from '../../util/map/crs'
 import projections from '../../util/map/projections'
-import murmurhash3 from '../../util/murmurhash3'
+// import murmurhash3 from '../../util/murmurhash3'
 
 import actions from '../../actions/index'
 
@@ -56,7 +56,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   authToken: state.authToken,
-  collections: state.metadata.collections,
+  collectionsMetadata: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
   map: state.map,
@@ -212,7 +212,7 @@ export class MapContainer extends Component {
     const {
       authToken,
       map,
-      collections,
+      collectionsMetadata,
       focusedCollection,
       focusedGranule,
       project,
@@ -244,25 +244,25 @@ export class MapContainer extends Component {
     const maxZoom = projection === projections.geographic ? 7 : 4
 
     let nonExcludedGranules
-    if (focusedCollection && collections.byId[focusedCollection]) {
-      const { excludedGranuleIds = [], granules } = collections.byId[focusedCollection]
-      const { allIds, isCwic } = granules
-      const allGranuleIds = allIds
-      nonExcludedGranules = granules
-      let granuleIds
-      if (isCwic) {
-        granuleIds = allGranuleIds.filter((id) => {
-          const hashedId = murmurhash3(id).toString()
-          return excludedGranuleIds.indexOf(hashedId) === -1
-        })
-      } else {
-        granuleIds = difference(allGranuleIds, excludedGranuleIds)
-      }
-      nonExcludedGranules = { byId: {} }
-      granuleIds.forEach((granuleId) => {
-        nonExcludedGranules.byId[granuleId] = granules.byId[granuleId]
-      })
-    }
+    // if (focusedCollection && collections[focusedCollection]) {
+    //   const { excludedGranuleIds = [], granules } = collections[focusedCollection]
+    //   const { allIds, isCwic } = granules
+    //   const allGranuleIds = allIds
+    //   nonExcludedGranules = granules
+    //   let granuleIds
+    //   if (isCwic) {
+    //     granuleIds = allGranuleIds.filter((id) => {
+    //       const hashedId = murmurhash3(id).toString()
+    //       return excludedGranuleIds.indexOf(hashedId) === -1
+    //     })
+    //   } else {
+    //     granuleIds = difference(allGranuleIds, excludedGranuleIds)
+    //   }
+    //   nonExcludedGranules = { byId: {} }
+    //   granuleIds.forEach((granuleId) => {
+    //     nonExcludedGranules.byId[granuleId] = granules.byId[granuleId]
+    //   })
+    // }
 
     if (this.mapRef) this.mapRef.leafletElement.options.crs = crsProjections[projection]
 
@@ -358,7 +358,7 @@ export class MapContainer extends Component {
           </Overlay>
         </LayersControl>
         <GranuleGridLayer
-          collections={collections}
+          collectionsMetadata={collectionsMetadata}
           focusedCollection={focusedCollection}
           focusedGranule={focusedGranule}
           isProjectPage={isProjectPage}
@@ -402,7 +402,7 @@ MapContainer.defaultProps = {
 
 MapContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  collections: PropTypes.shape({}).isRequired,
+  collectionsMetadata: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
   map: PropTypes.shape({}),

@@ -11,9 +11,9 @@ import './GranuleFiltersItem.scss'
  * @param {Node} props.children - The granule filter form element.
  */
 export const GranuleFiltersItem = ({
+  children,
   description,
-  heading,
-  children
+  heading
 }) => (
   <li className="granule-filters-item">
     <header className="granule-filters-item__header">

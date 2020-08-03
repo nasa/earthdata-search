@@ -7,9 +7,10 @@ import PropTypes from 'prop-types'
 import actions from '../../actions'
 import { metricsMap, metricsSpatialEdit } from '../../middleware/metrics/actions'
 
-import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
-import { getFocusedCollectionObject } from '../../util/focusedCollection'
 import { isPath } from '../../util/isPath'
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
+
+import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
 
 const mapDispathToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
@@ -22,8 +23,7 @@ const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
-  collections: state.metadata.collections,
-  focusedCollection: state.focusedCollection,
+  collectionMetadata: getFocusedCollectionMetadata(state),
   lineSearch: state.query.collection.spatial.line,
   router: state.router,
   pointSearch: state.query.collection.spatial.point,
@@ -35,8 +35,7 @@ export const SpatialSelectionContainer = (props) => {
     advancedSearch,
     boundingBoxSearch,
     circleSearch,
-    collections,
-    focusedCollection,
+    collectionMetadata,
     lineSearch,
     mapRef,
     onChangeQuery,
@@ -52,8 +51,7 @@ export const SpatialSelectionContainer = (props) => {
   const { pathname } = location
   const isProjectPage = isPath(pathname, '/projects')
 
-  const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
-  const { isCwic = false } = focusedCollectionObject
+  const { isCwic = false } = collectionMetadata
 
   const { leafletElement } = mapRef
 
@@ -90,8 +88,7 @@ SpatialSelectionContainer.defaultProps = {
 
 SpatialSelectionContainer.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
-  collections: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.string,
   circleSearch: PropTypes.string,
   lineSearch: PropTypes.string,

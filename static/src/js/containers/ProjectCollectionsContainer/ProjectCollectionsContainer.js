@@ -3,9 +3,13 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
+
 import { metricsDataAccess } from '../../middleware/metrics/actions'
-import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
+
 import { viewCollectionGranules, viewCollectionDetails } from '../../actions/focusedCollection'
+import { getProjectCollectionsMetadata, getProjectCollectionsIds } from '../../selectors/project'
+
+import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
 const mapDispatchToProps = dispatch => ({
   onRemoveCollectionFromProject:
@@ -31,73 +35,77 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
-  collectionSearch: state.query.collection,
+  collectionsQuery: state.query.collection,
   mapProjection: state.map.projection,
-  project: state.project,
   panels: state.panels,
+  project: state.project,
+  projectCollectionIds: getProjectCollectionsIds(state),
+  projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   savedProject: state.savedProject
 })
 
 export const ProjectCollectionsContainer = (props) => {
   const {
-    collections,
-    collectionSearch,
+    collectionsQuery,
     mapProjection,
-    project,
-    panels,
-    savedProject,
     onMetricsDataAccess,
     onRemoveCollectionFromProject,
-    onToggleCollectionVisibility,
-    onUpdateFocusedCollection,
     onSetActivePanel,
-    onTogglePanels,
     onSetActivePanelSection,
+    onToggleCollectionVisibility,
+    onTogglePanels,
+    onUpdateFocusedCollection,
     onUpdateProjectName,
     onViewCollectionDetails,
-    onViewCollectionGranules
+    onViewCollectionGranules,
+    panels,
+    project,
+    projectCollectionsIds,
+    projectCollectionsMetadata,
+    savedProject
   } = props
 
   return (
     <ProjectCollections
-      collections={collections}
-      collectionSearch={collectionSearch}
+      collectionsQuery={collectionsQuery}
       mapProjection={mapProjection}
-      project={project}
-      panels={panels}
-      savedProject={savedProject}
       onMetricsDataAccess={onMetricsDataAccess}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-      onToggleCollectionVisibility={onToggleCollectionVisibility}
-      onUpdateFocusedCollection={onUpdateFocusedCollection}
       onSetActivePanel={onSetActivePanel}
-      onTogglePanels={onTogglePanels}
       onSetActivePanelSection={onSetActivePanelSection}
+      onToggleCollectionVisibility={onToggleCollectionVisibility}
+      onTogglePanels={onTogglePanels}
+      onUpdateFocusedCollection={onUpdateFocusedCollection}
       onUpdateProjectName={onUpdateProjectName}
       onViewCollectionDetails={onViewCollectionDetails}
       onViewCollectionGranules={onViewCollectionGranules}
+      panels={panels}
+      project={project}
+      projectCollectionsIds={projectCollectionsIds}
+      projectCollectionsMetadata={projectCollectionsMetadata}
+      savedProject={savedProject}
     />
   )
 }
 
 ProjectCollectionsContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired,
+  collectionsQuery: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
-  project: PropTypes.shape({}).isRequired,
-  panels: PropTypes.shape({}).isRequired,
-  savedProject: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired,
-  onUpdateFocusedCollection: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
+  onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onTogglePanels: PropTypes.func.isRequired,
+  onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired
+  onViewCollectionGranules: PropTypes.func.isRequired,
+  panels: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired,
+  projectCollectionsIds: PropTypes.shape({}).isRequired,
+  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
+  savedProject: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCollectionsContainer)

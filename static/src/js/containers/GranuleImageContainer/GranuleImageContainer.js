@@ -4,30 +4,27 @@ import PropTypes from 'prop-types'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
-import getFocusedGranuleObject from '../../util/focusedGranule'
+
+import { getFocusedGranuleId } from '../../selectors/focusedGranule'
+import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleImage from '../../components/GranuleImage/GranuleImage'
-import { getFocusedCollectionObject } from '../../util/focusedCollection'
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
-  focusedCollection: state.focusedCollection,
-  focusedGranule: state.focusedGranule
+  focusedGranuleId: getFocusedGranuleId(state),
+  granuleMetadata: getFocusedGranuleMetadata(state)
 })
 
 export const GranuleImageContainer = ({
-  collections,
-  focusedCollection,
-  focusedGranule
+  focusedGranuleId,
+  granuleMetadata
 }) => {
-  const collection = getFocusedCollectionObject(focusedCollection, collections)
-  const { granules } = collection
-  const focusedGranuleResult = getFocusedGranuleObject(focusedGranule, granules)
+  const { browseFlag } = granuleMetadata
 
   let imageSrc = ''
 
-  if (focusedGranuleResult && focusedGranuleResult.browse_flag) {
-    imageSrc = `${getEarthdataConfig(cmrEnv()).cmrHost}/browse-scaler/browse_images/granules/${focusedGranule}?h=512&w=512`
+  if (browseFlag) {
+    imageSrc = `${getEarthdataConfig(cmrEnv()).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=512&w=512`
   }
 
   return (
@@ -36,9 +33,8 @@ export const GranuleImageContainer = ({
 }
 
 GranuleImageContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired
+  focusedGranuleId: PropTypes.string.isRequired,
+  granuleMetadata: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, null)(GranuleImageContainer)

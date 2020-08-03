@@ -68,10 +68,10 @@ class GranuleImage extends Component {
 
   render() {
     const {
-      isOpen,
+      isErrored,
       isLoaded,
       isLoading,
-      isErrored
+      isOpen
     } = this.state
 
     const { imageSrc } = this.props

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { Col, Form, Row } from 'react-bootstrap'
 import classNames from 'classnames'
 
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { collectionResultsTotal } from './skeleton'
 import { commafy } from '../../util/commafy'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
-import { collectionResultsTotal } from './skeleton'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './CollectionResultsHeader.scss'
@@ -71,7 +71,9 @@ const CollectionResultsHeader = ({
 
   const { hasGranulesOrCwic = false, tagKey } = collectionQuery
   const isHasGranulesChecked = hasGranulesOrCwic
-  const isNonEosdisChecked = tagKey !== getApplicationConfig().eosdisTagKey
+
+  const { eosdisTagKey } = getApplicationConfig()
+  const isNonEosdisChecked = tagKey !== eosdisTagKey
 
   const viewButtonListClasses = classNames([
     'collection-results-header__view-button',
@@ -183,7 +185,7 @@ const CollectionResultsHeader = ({
               />
             )
           }
-          {!initialLoading && `Showing ${commafy(collectionResultCount)} of ${commafy(collectionHits)} matching ${pluralize('collection', parseInt(collectionHits, 10))}`}
+          {!initialLoading && `Showing ${commafy(collectionResultCount)} of ${commafy(collectionHits)} matching ${pluralize('collection', collectionHits)}`}
         </span>
         <span className="collection-results-header__view">
           <Button

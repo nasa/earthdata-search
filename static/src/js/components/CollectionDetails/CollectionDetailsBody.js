@@ -80,8 +80,7 @@ const buildDoiLink = (doi) => {
 
   if (doi.doiLink) {
     return (
-      // eslint-disable-next-line react/jsx-no-target-blank
-      <a className="collection-details-body__doi" href={doi.doiLink} target="_blank">
+      <a className="collection-details-body__doi" href={doi.doiLink} target="_blank" rel="noopener noreferrer">
         {DoiBadge}
       </a>
     )
@@ -113,6 +112,7 @@ export const CollectionDetailsBody = ({
   const {
     dataCenters,
     doi,
+    hasAllMetadata,
     gibsLayers,
     nativeFormats,
     relatedUrls,
@@ -124,7 +124,8 @@ export const CollectionDetailsBody = ({
     urls
   } = collectionMetadata
 
-  if (!Object.keys(collectionMetadata).length) {
+  // TODO: Implement and use a focused collection loading state
+  if (!hasAllMetadata) {
     return (
       <div className="collection-details-body">
         <div className="collection-details-body__content">
@@ -386,12 +387,8 @@ export const CollectionDetailsBody = ({
   )
 }
 
-CollectionDetailsBody.defaultProps = {
-  collectionMetadata: {}
-}
-
 CollectionDetailsBody.propTypes = {
-  collectionMetadata: PropTypes.shape({}),
+  collectionMetadata: PropTypes.shape({}).isRequired,
   isActive: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

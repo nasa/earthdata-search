@@ -1,18 +1,18 @@
 import {
-  getFocusedCollectionObject,
+  getCollectionMetadata,
   getFocusedCollectionMetadata
 } from '../focusedCollection'
 
-describe('getFocusedCollectionObject', () => {
+describe('getCollectionMetadata', () => {
   describe('when no collections are provided', () => {
     test('returns undefined', () => {
-      expect(getFocusedCollectionObject('TEST')).toEqual(undefined)
+      expect(getCollectionMetadata('TEST')).toEqual(undefined)
     })
   })
 
   describe('when collections is an empty object', () => {
     test('returns undefined', () => {
-      expect(getFocusedCollectionObject('TEST', {})).toEqual(undefined)
+      expect(getCollectionMetadata('TEST', {})).toEqual(undefined)
     })
   })
 
@@ -25,7 +25,7 @@ describe('getFocusedCollectionObject', () => {
           }
         }
       }
-      expect(getFocusedCollectionObject('TEST', collections)).toEqual({})
+      expect(getCollectionMetadata('TEST', collections)).toEqual({})
     })
   })
 
@@ -37,7 +37,7 @@ describe('getFocusedCollectionObject', () => {
           TEST: obj
         }
       }
-      expect(getFocusedCollectionObject('TEST', collections)).toEqual(obj)
+      expect(getCollectionMetadata('TEST', collections)).toEqual(obj)
     })
   })
 })

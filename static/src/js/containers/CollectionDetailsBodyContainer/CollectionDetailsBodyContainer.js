@@ -6,9 +6,8 @@ import {
 } from 'react-router-dom'
 
 import actions from '../../actions/index'
-import {
-  getFocusedCollectionMetadata
-} from '../../util/focusedCollection'
+
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import CollectionDetailsBody from '../../components/CollectionDetails/CollectionDetailsBody'
 
@@ -18,30 +17,23 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
-  focusedCollection: state.focusedCollection
+  collectionMetadata: getFocusedCollectionMetadata(state)
 })
 
 export const CollectionDetailsBodyContainer = ({
-  collections,
-  focusedCollection,
+  collectionMetadata,
   isActive,
   onToggleRelatedUrlsModal
-}) => {
-  const collectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
-
-  return (
-    <CollectionDetailsBody
-      collectionMetadata={collectionMetadata}
-      isActive={isActive}
-      onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
-    />
-  )
-}
+}) => (
+  <CollectionDetailsBody
+    collectionMetadata={collectionMetadata}
+    isActive={isActive}
+    onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
+  />
+)
 
 CollectionDetailsBodyContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
   isActive: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

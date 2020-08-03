@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import isPath from '../../util/isPath'
+import { isPath } from '../../util/isPath'
 
-import ConnectedTimelineContainer from '../TimelineContainer/TimelineContainer'
+import TimelineContainer from '../TimelineContainer/TimelineContainer'
 import { FooterLink } from '../../components/FooterLink/FooterLink'
 
 import './FooterContainer.scss'
@@ -108,7 +108,7 @@ export class FooterContainer extends Component {
 
     return (
       <React.Fragment>
-        <ConnectedTimelineContainer />
+        <TimelineContainer />
         <footer className="footer">
           <span className="footer__info footer__info--left">
             <span className="footer__ver-pill">

@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
+import actions from '../../actions'
+
+import { getProjectCollectionsRequiringChunking } from '../../selectors/project'
+
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SecondaryToolbarContainer
@@ -13,13 +17,12 @@ import ProjectPanelsContainer
   from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
 import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
-import ConnectedEdscMapContainer
+import EdscMapContainer
   from '../../containers/MapContainer/MapContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
-
-import actions from '../../actions'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
+
 
 const mapDispatchToProps = dispatch => ({
   onSubmitRetrieval:
@@ -29,7 +32,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  project: state.project
+  projectCollectionsRequiringChunking: getProjectCollectionsRequiringChunking(state)
 })
 
 export class Project extends Component {
@@ -39,14 +42,16 @@ export class Project extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-
   handleSubmit(event) {
     event.preventDefault()
 
-    const { onSubmitRetrieval, onToggleChunkedOrderModal, project } = this.props
-    const { collectionsRequiringChunking } = project
+    const {
+      onSubmitRetrieval,
+      onToggleChunkedOrderModal,
+      projectCollectionsRequiringChunking
+    } = this.props
 
-    if (collectionsRequiringChunking.length > 0) {
+    if (Object.keys(projectCollectionsRequiringChunking).length > 1) {
       onToggleChunkedOrderModal(true)
     } else {
       onSubmitRetrieval()
@@ -103,7 +108,7 @@ export class Project extends Component {
           </div>
           <OverrideTemporalModalContainer />
         </form>
-        <ConnectedEdscMapContainer />
+        <EdscMapContainer />
       </AuthRequiredContainer>
     )
   }
@@ -112,7 +117,7 @@ export class Project extends Component {
 Project.propTypes = {
   location: PropTypes.shape({}).isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
-  project: PropTypes.shape({}).isRequired,
+  projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }
 

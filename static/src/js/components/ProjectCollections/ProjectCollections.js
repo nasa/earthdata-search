@@ -13,7 +13,7 @@ import './ProjectCollections.scss'
 /**
  * Renders ProjectCollections.
  * @param {Object} collections - List of collections passed from redux store.
- * @param {String} collectionSearch - The collection search.
+ * @param {String} collectionsQuery - The collection search.
  * @param {String} mapProjection - The current map projection.
  * @param {Function} onMetricsDataAccess - Callback to log metrics events.
  * @param {Function} onRemoveCollectionFromProject - Callback to remove the current collection from the project.
@@ -53,8 +53,11 @@ export class ProjectCollections extends Component {
 
   sendDataAccessMetrics() {
     const { project, onMetricsDataAccess } = this.props
-    const projectCollectionIds = project.collectionIds
-    projectCollectionIds.forEach((id) => {
+
+    const { collections } = project
+    const { allIds } = collections
+
+    allIds.forEach((id) => {
       onMetricsDataAccess({
         type: 'data_access_init',
         collections: [{
@@ -68,8 +71,8 @@ export class ProjectCollections extends Component {
 
   render() {
     const {
-      collections,
-      collectionSearch,
+      projectCollectionsMetadata,
+      collectionsQuery,
       mapProjection,
       onMetricsDataAccess,
       onRemoveCollectionFromProject,
@@ -90,30 +93,31 @@ export class ProjectCollections extends Component {
       valid: isValid,
       noGranules,
       tooManyGranules
-    } = isProjectValid(project, collections)
+    } = isProjectValid(project, projectCollectionsMetadata)
 
     const { isSubmitting } = project
 
-    // TODO: Use a loading state instead of relying on metadata keys
-    const isLoading = collections.allIds.every((collectionId) => {
-      const { byId } = collections
-      const collection = byId[collectionId]
-      const { granules = {} } = collection
+    // TODO: RYAN [] should be replaced with project collections
+    const isLoading = [].every((collectionId) => {
+      const { byId } = collectionsQuery
+      const { [collectionId]: collectionSearch } = byId
+      const { granules } = collectionSearch
+      const { isLoading } = granules
 
-      return Object.keys(granules).length === 0
+      return isLoading
     })
 
     return (
       <section className="project-collections">
         <ProjectHeader
-          collections={collections}
+          collectionsQuery={collectionsQuery}
           project={project}
           savedProject={savedProject}
           onUpdateProjectName={onUpdateProjectName}
         />
         <ProjectCollectionsList
-          collections={collections}
-          collectionSearch={collectionSearch}
+          collectionsMetadata={projectCollectionsMetadata}
+          collectionsQuery={collectionsQuery}
           mapProjection={mapProjection}
           onMetricsDataAccess={onMetricsDataAccess}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
@@ -182,21 +186,21 @@ export class ProjectCollections extends Component {
 }
 
 ProjectCollections.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired,
+  collectionsQuery: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
+  onSetActivePanelSection: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
+  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }
 

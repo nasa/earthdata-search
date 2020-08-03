@@ -14,6 +14,7 @@ import {
   isClockwise,
   getlprojection
 } from '../../util/map/granules'
+
 import buildLayer, {
   isCartesian,
   getPolygons,
@@ -21,17 +22,18 @@ import buildLayer, {
   getPoints,
   getRectangles
 } from '../../util/map/layers'
-import { panBoundsToCenter } from '../../util/map/actions/panBoundsToCenter'
-import { dividePolygon } from '../../util/map/geo'
-import projectPath from '../../util/map/interpolation'
-import { getColorByIndex } from '../../util/colors'
 
+import { dividePolygon } from '../../util/map/geo'
 import { eventEmitter } from '../../events/events'
+import { getColorByIndex } from '../../util/colors'
 import { getTemporal } from '../../util/edscDate'
+import { panBoundsToCenter } from '../../util/map/actions/panBoundsToCenter'
+import { tagName } from '../../../../../sharedUtils/tags'
+
+import projections from '../../util/map/projections'
+import projectPath from '../../util/map/interpolation'
 
 import './GranuleGridLayer.scss'
-import projections from '../../util/map/projections'
-import { tagName } from '../../../../../sharedUtils/tags'
 
 const config = {
   // debug: true,
@@ -49,21 +51,23 @@ class GranuleGridLayerExtended extends L.GridLayer {
   initialize(props) {
     const {
       collectionId,
-      metadata,
-      granules,
       color,
-      lightColor,
       focusedCollection,
       focusedGranule,
-      projection,
-      project,
+      granules,
+      isProjectPage,
+      lightColor,
+      metadata,
       onChangeFocusedGranule,
       onExcludeGranule,
       onMetricsMap,
-      isProjectPage
+      project,
+      projection
     } = props
 
-    const projectCollection = project.byId[collectionId] || {}
+    const { collections: projectCollections = {} } = project
+    const { byId: projectCollectionsById = {} } = projectCollections
+    const { [collectionId]: projectCollection = {} } = projectCollectionsById
 
     this.collectionId = collectionId
     this.projection = projection
@@ -1036,7 +1040,7 @@ export class GranuleGridLayer extends MapLayer {
    */
   getLayerData(props) {
     const {
-      collections,
+      collectionsMetadata,
       focusedCollection,
       isProjectPage,
       project
@@ -1046,10 +1050,11 @@ export class GranuleGridLayer extends MapLayer {
 
     if (isProjectPage) {
       // If we are on the project page, return data for each project collection
-      const { collectionIds: projectIds } = project
+      const { collections: projectCollections } = project
+      const { allIds: projectIds } = projectCollections
+
       projectIds.forEach((collectionId, index) => {
-        const { byId } = collections
-        const { [collectionId]: iterationCollection = {} } = byId
+        const { [collectionId]: iterationCollection = {} } = collectionsMetadata
         const {
           granules: collectionGranules,
           isVisible,
@@ -1069,17 +1074,15 @@ export class GranuleGridLayer extends MapLayer {
       })
     } else if (focusedCollection && focusedCollection !== '') {
       // If we aren't on the project page, return data for focusedCollection if it exists
-      const { byId } = collections
-      const { [focusedCollection]: focusedCollectionObject = {} } = byId
-      const { metadata = {}, granules } = focusedCollectionObject
+      const { [focusedCollection]: focusedCollectionMetadata = {} } = collectionsMetadata
 
       layers[focusedCollection] = {
         collectionId: focusedCollection,
         color: getColorByIndex(0),
         lightColor: getColorByIndex(0, true),
         isVisible: true,
-        metadata,
-        granules
+        focusedCollectionMetadata,
+        granules: {}
       }
     }
 
@@ -1209,8 +1212,15 @@ export class GranuleGridLayer extends MapLayer {
         granules = {}
       } = layerData[id]
 
-      const oldProjectCollection = fromProps.project.byId[collectionId]
-      const projectCollection = project.byId[collectionId]
+      const { project: fromPropsProject } = fromProps
+      const { collections: fromPropsProjectCollections = {} } = fromPropsProject
+      const { byId: fromPropsProjectCollectionsById = {} } = fromPropsProjectCollections
+      const { [collectionId]: oldProjectCollection = {} } = fromPropsProjectCollectionsById
+
+      const { collections: projectCollections = {} } = project
+      const { byId: projectCollectionsById = {} } = projectCollections
+      const { [collectionId]: projectCollection = {} } = projectCollectionsById
+
       let oldAddedGranuleIds
       let oldRemovedGranuleIds
       let addedGranuleIds

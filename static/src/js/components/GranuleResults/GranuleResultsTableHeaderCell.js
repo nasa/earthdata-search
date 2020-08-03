@@ -42,6 +42,7 @@ const GranuleResultsTableHeaderCell = (props) => {
     let granuleId = id
 
     if (isCwic) granuleId = murmurhash3(id).toString()
+
     onExcludeGranule({
       collectionId,
       granuleId

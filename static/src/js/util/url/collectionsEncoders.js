@@ -1,5 +1,8 @@
 import isNumber from '../isNumber'
+
 import { encodeGranuleFilters, decodeGranuleFilters } from './granuleFiltersEncoders'
+import { initialGranuleState as initialProjectCollectionGranuleState } from '../../reducers/project'
+import { initialGranuleState as initialCollectionGranuleQueryState } from '../../reducers/query'
 
 /**
  * Encode a list of Granule IDs
@@ -25,7 +28,7 @@ const encodeGranules = (isCwic, granuleIds) => {
 
 /**
  * Decode a string of Granule IDs
- * @param {string} excludedGranules Encoded Granule IDs
+ * @param {String} excludedGranules Encoded Granule IDs
  */
 const decodedGranules = (key, granules) => {
   const keys = Object.keys(granules)
@@ -35,8 +38,9 @@ const decodedGranules = (key, granules) => {
     granuleIds: []
   }
 
-  if (keys.indexOf(key) !== -1) {
+  if (keys.indexOf(key) > -1) {
     const { [key]: decodedGranules } = granules
+
     const granulesList = decodedGranules.split('!')
     const provider = granulesList.pop()
     const granuleIds = granulesList.map(granuleId => `G${granuleId}-${provider}`)
@@ -46,7 +50,8 @@ const decodedGranules = (key, granules) => {
       granuleIds
     }
   }
-  if (keys.indexOf(`c${key}`) !== -1) {
+
+  if (keys.indexOf(`c${key}`) > -1) {
     const { [`c${key}`]: decodedGranules } = granules
     const granuleIds = decodedGranules.split('!')
 
@@ -55,6 +60,7 @@ const decodedGranules = (key, granules) => {
       granuleIds
     }
   }
+
   return result
 }
 
@@ -98,25 +104,19 @@ const encodeOutputFormat = (projectCollection) => {
   return selectedOutputFormat
 }
 
-const encodeAddedGranules = (isCwic, projectCollection) => {
-  if (!projectCollection) return null
-
-  const {
-    addedGranuleIds = []
-  } = projectCollection
-
+const encodeAddedGranules = (isCwic, addedGranuleIds) => {
   if (!addedGranuleIds.length) return null
 
   return encodeGranules(isCwic, addedGranuleIds)
 }
 
-const encodeRemovedGranules = (isCwic, projectCollection) => {
-  if (!projectCollection) return null
+const encodeExcludedGranules = (isCwic, excludedGranuleIds) => {
+  if (!excludedGranuleIds.length) return null
 
-  const {
-    removedGranuleIds = []
-  } = projectCollection
+  return encodeGranules(isCwic, excludedGranuleIds)
+}
 
+const encodeRemovedGranules = (isCwic, removedGranuleIds) => {
   if (!removedGranuleIds.length) return null
 
   return encodeGranules(isCwic, removedGranuleIds)
@@ -138,22 +138,24 @@ const decodedOutputFormat = (pgParam) => {
 
 /**
  * Encodes a Collections object into an object
- * @param {object} collections Collections object
- * @param {string} focusedCollection Focused Collection ID
- * @return {string} An object with encoded Collections
+ * @param {Object} collectionsMetadata Collections object
+ * @param {String} focusedCollection Focused Collection ID
+ * @return {String} An object with encoded Collections
  */
 export const encodeCollections = (props) => {
   const {
-    collections = {},
+    collectionsMetadata = {},
     focusedCollection,
-    project = {}
+    project = {},
+    query = {}
   } = props
 
-  const { byId } = collections
+  const { collections: projectCollections } = project
+
   const {
     byId: projectById = {},
-    collectionIds: projectIds = []
-  } = project
+    allIds: projectIds = []
+  } = projectCollections
 
   // pParameter - focusedCollection!projectCollection1!projectCollection2
   const pParameter = [
@@ -161,90 +163,97 @@ export const encodeCollections = (props) => {
     ...projectIds
   ].join('!')
 
-  // If there isn't a focusedCollection or any projectIds, we don't see to continue
+  const projectExists = projectIds.length > 0
+
+  const ids = projectExists ? projectIds : [focusedCollection]
+
+  // If there isn't a focusedCollection or any projectIds, we don't need to continue
   if (pParameter === '') return ''
 
   // pgParameter - excluded granules and granule filters based on pParameter collections
   const pgParameter = []
-  if (byId) {
-    pParameter.split('!').forEach((collectionId, index) => {
-      let pg = {}
 
-      // if the focusedCollection is also in projectIds, don't encode the focusedCollection
-      if (index === 0 && projectIds.indexOf(focusedCollection) !== -1) {
-        pgParameter[index] = pg
-        return
-      }
+  ids.forEach((collectionId, index) => {
+    // Compensate for the fact that we've already pulled
+    // off the first element above to determine the focused collection
+    const collectionListIndex = index + (projectExists ? 1 : 0)
 
-      const collection = byId[collectionId]
-      if (!collection) {
-        pgParameter[index] = pg
-        return
-      }
+    let pg = {}
 
-      const projectCollection = projectById[collectionId]
+    const { [collectionId]: collectionMetadata } = collectionsMetadata
 
-      // excludedGranules
-      let encodedExcludedGranules
-      const {
-        excludedGranuleIds = [],
-        granules,
-        granuleFilters,
-        isVisible,
-        isCwic
-      } = collection
+    // Ignore this collection if we have no metadata for it
+    if (!collectionMetadata) {
+      pgParameter[collectionListIndex] = pg
 
-      const excludedKey = isCwic ? 'cx' : 'x'
+      return
+    }
 
-      if (granules && excludedGranuleIds.length > 0) {
-        encodedExcludedGranules = encodeGranules(isCwic, excludedGranuleIds)
-      }
+    const {
+      isCwic
+    } = collectionMetadata
 
-      if (encodedExcludedGranules) pg[excludedKey] = encodedExcludedGranules
+    const { [collectionId]: projectCollection = {} } = projectById
+    const {
+      granules: projectCollectionGranules = {},
+      isVisible
+    } = projectCollection
 
-      let encodedAddedGranules
-      let encodedRemovedGranules
-      const addedKey = isCwic ? 'ca' : 'a'
-      const removedKey = isCwic ? 'cr' : 'r'
+    // excludedGranules
+    let encodedExcludedGranules
+    const excludedKey = isCwic ? 'cx' : 'x'
 
-      // Encode granules added to the current project
-      if (
-        projectCollection
-        && projectCollection.addedGranuleIds
-        && projectCollection.addedGranuleIds.length > 0
-      ) {
-        encodedAddedGranules = encodeAddedGranules(isCwic, projectCollection)
-      }
+    const { collection: collectionsQuery = {} } = query
+    const { byId: collectionQueryById = {} } = collectionsQuery
+    const { [collectionId]: collectionQuery = {} } = collectionQueryById
+    const { granules: granuleQuery = {} } = collectionQuery
+    const { excludedGranuleIds = [] } = granuleQuery
 
-      // Encode granules removed from the current project
-      if (
-        projectCollection
-        && projectCollection.removedGranuleIds
-        && projectCollection.removedGranuleIds.length > 0
-      ) {
-        encodedRemovedGranules = encodeRemovedGranules(isCwic, projectCollection)
-      }
+    if (excludedGranuleIds.length > 0) {
+      encodedExcludedGranules = encodeExcludedGranules(isCwic, excludedGranuleIds)
+    }
 
-      if (encodedAddedGranules) pg[addedKey] = encodedAddedGranules
-      if (encodedRemovedGranules) pg[removedKey] = encodedRemovedGranules
+    if (encodedExcludedGranules) pg[excludedKey] = encodedExcludedGranules
 
-      // Collection visible, don't encode the focusedCollection
-      if (index !== 0 && isVisible) pg.v = 't'
+    let encodedAddedGranules
+    let encodedRemovedGranules
+    const addedKey = isCwic ? 'ca' : 'a'
+    const removedKey = isCwic ? 'cr' : 'r'
 
-      // Add the granule encoded granule filters
-      if (granuleFilters) {
-        pg = { ...pg, ...encodeGranuleFilters(granuleFilters) }
-      }
+    // Encode granules added to the current project
+    const {
+      addedGranuleIds = [],
+      removedGranuleIds = []
+    } = projectCollectionGranules
 
-      // Encode selected variables
-      pg.uv = encodeSelectedVariables(projectCollection)
+    if (addedGranuleIds.length > 0) {
+      encodedAddedGranules = encodeAddedGranules(isCwic, addedGranuleIds)
+    }
 
-      // Encode selected output format
-      pg.of = encodeOutputFormat(projectCollection)
+    // Encode granules removed from the current project
+    if (removedGranuleIds.length > 0) {
+      encodedRemovedGranules = encodeRemovedGranules(isCwic, removedGranuleIds)
+    }
 
-      pgParameter[index] = pg
-    })
-  }
+    if (encodedAddedGranules) pg[addedKey] = encodedAddedGranules
+    if (encodedRemovedGranules) pg[removedKey] = encodedRemovedGranules
+
+    // Collection visible, don't encode the focusedCollection
+    if (isVisible) pg.v = 't'
+
+    // Add the granule encoded granule filters
+    if (granuleQuery) {
+      pg = { ...pg, ...encodeGranuleFilters(granuleQuery) }
+    }
+
+    // Encode selected variables
+    pg.uv = encodeSelectedVariables(projectCollection)
+
+    // Encode selected output format
+    pg.of = encodeOutputFormat(projectCollection)
+
+    pgParameter[collectionListIndex] = pg
+  })
 
   const encoded = {
     p: pParameter,
@@ -254,124 +263,180 @@ export const encodeCollections = (props) => {
   return encoded
 }
 
-
 /**
  * Decodes a parameter object into a Collections object
- * @param {object} params URL parameter object from parsing the URL parameter string
- * @return {object} Collections object
+ * @param {Object} params URL parameter object from parsing the URL parameter string
+ * @return {Object} Collections object
  */
 export const decodeCollections = (params) => {
   if (Object.keys(params).length === 0) return {}
 
   const { p, pg } = params
+
   if (!p && !pg) return {}
 
-  let focusedCollection = ''
   let collections
   let project
-  const allIds = []
-  const byId = {}
+
+  const collectionMetadata = {}
+
   const projectIds = []
   const projectById = {}
 
-  p.split('!').forEach((collectionId, index) => {
-    // If there is no collectionId, move on to the next index
-    // i.e. there is no focusedCollection
-    if (collectionId === '') return
+  const collectionGranuleQueryById = {}
 
-    // Add collectionId to correct allIds and projectIds
-    if (allIds.indexOf(collectionId) === -1) allIds.push(collectionId)
-    if (index > 0) projectIds.push(collectionId)
+  // Destructure the collection list defining the focused collection and project collections
+  const [
+    focusedCollection,
+    ...projectCollectionIds
+  ] = p.split('!')
 
-    // Set the focusedCollection
-    if (index === 0) focusedCollection = collectionId
+  const projectExists = projectCollectionIds.length > 0
 
-    let excludedGranuleIds = []
-    let addedGranuleIds = []
-    let removedGranuleIds = []
-    let granuleFilters = {}
-    let selectedOutputFormat
+  const ids = projectExists ? projectCollectionIds : [focusedCollection]
+
+  ids.forEach((collectionId, index) => {
+    // Compensate for the fact that we've already pulled
+    // off the first element above to determine the focused collection
+    const collectionListIndex = index + (projectExists ? 1 : 0)
+
+    // Metadata
     let isCwic
-    let excludedIsCwic
+
+    // Project
+    let addedGranuleIds = []
     let addedIsCwic
-    let removedIsCwic
     let isVisible = false
-
+    let removedGranuleIds = []
+    let removedIsCwic
+    let selectedOutputFormat
     let variableIds
-    if (pg && pg[index]) {
-      // Excluded Granules
-      ({ isCwic: excludedIsCwic, granuleIds: excludedGranuleIds } = decodedGranules('x', pg[index]));
 
-      ({ isCwic: addedIsCwic, granuleIds: addedGranuleIds = [] } = decodedGranules('a', pg[index]));
+    // Search
+    let excludedIsCwic
+    let excludedGranuleIds = []
 
-      ({ isCwic: removedIsCwic, granuleIds: removedGranuleIds = [] } = decodedGranules('r', pg[index]))
+    if (pg) {
+      const { [collectionListIndex]: pCollection } = pg;
 
-      isCwic = excludedIsCwic || addedIsCwic || removedIsCwic
+      // Granules added by way of additive model
+      ({
+        isCwic: addedIsCwic,
+        granuleIds: addedGranuleIds = []
+      } = decodedGranules('a', pCollection));
 
-      // Collection visible
-      const { v: visible = '' } = pg[index]
-      if (visible === 't') isVisible = true
+      // Granules removed by way of additive model
+      ({
+        isCwic: removedIsCwic,
+        granuleIds: removedGranuleIds = []
+      } = decodedGranules('r', pCollection));
 
-      // Decode selected variables
-      variableIds = decodedSelectedVariables(pg[index])
+      // Granules removed by way of terciary filter
+      ({
+        isCwic: excludedIsCwic,
+        granuleIds: excludedGranuleIds = []
+      } = decodedGranules('x', pCollection))
 
-      // Decode granule filters
-      granuleFilters = decodeGranuleFilters(pg[index])
-
-      // Decode output format
-      selectedOutputFormat = decodedOutputFormat(pg[index])
-    }
-
-    // Populate the collection object for the redux store
-    byId[collectionId] = {
-      excludedGranuleIds,
-      granules: {},
-      granuleFilters,
-      isCwic,
-      isVisible,
-      metadata: {}
-    }
-
-    if (index > 0) {
-      projectById[collectionId] = {}
-    }
-
-    if (variableIds || selectedOutputFormat) {
-      projectById[collectionId] = {
-        accessMethods: {
-          opendap: {
-            selectedVariables: variableIds,
-            selectedOutputFormat
-          }
+      // If `pg` exists we need to ensure that we initialize the granule
+      // search state for each collection in it because pg defines granule level search filters
+      collectionGranuleQueryById[collectionId] = {
+        granules: {
+          ...initialCollectionGranuleQueryState
         }
       }
-    }
 
-    if (addedGranuleIds.length && projectById[collectionId]) {
-      projectById[collectionId].addedGranuleIds = addedGranuleIds
-    }
+      // Decode granule filters
+      const { [collectionId]: collectionGranuleQuery } = collectionGranuleQueryById
+      const { granules: granuleQuery } = collectionGranuleQuery
 
-    if (removedGranuleIds.length && projectById[collectionId]) {
-      projectById[collectionId].removedGranuleIds = removedGranuleIds
+      const newGranulQuery = {
+        ...granuleQuery,
+        ...decodeGranuleFilters(pCollection)
+      }
+
+      if (excludedGranuleIds.length > 0) {
+        newGranulQuery.excludedGranuleIds = excludedGranuleIds
+      }
+
+      collectionGranuleQueryById[collectionId] = {
+        ...collectionGranuleQuery,
+        granules: newGranulQuery
+      }
+
+      if (projectExists) {
+        // If the collection is not already in the project ids, add it
+        if (projectIds.indexOf(collectionId) === -1) {
+          projectIds.push(collectionId)
+        }
+
+        projectById[collectionId] = {
+          isVisible,
+          granules: initialProjectCollectionGranuleState
+        }
+
+        if (variableIds || selectedOutputFormat) {
+          projectById[collectionId] = {
+            accessMethods: {
+              opendap: {
+                selectedVariables: variableIds,
+                selectedOutputFormat
+              }
+            }
+          }
+        }
+
+        if (addedGranuleIds.length && projectById[collectionId]) {
+          projectById[collectionId].granules.addedGranuleIds = addedGranuleIds
+        }
+
+        if (removedGranuleIds.length && projectById[collectionId]) {
+          projectById[collectionId].granules.removedGranuleIds = removedGranuleIds
+        }
+      }
+
+      // Collection visibility on the project page
+      const { v: visible = '' } = pCollection
+      isVisible = (visible === 't')
+
+      // Decode selected variables
+      variableIds = decodedSelectedVariables(pCollection)
+
+      // Decode output format
+      selectedOutputFormat = decodedOutputFormat(pCollection)
+
+      // Determine if the collection is a CWIC collection
+      isCwic = excludedIsCwic || addedIsCwic || removedIsCwic
+
+      // Populate the collection object for the redux store
+      collectionMetadata[collectionId] = {
+        id: collectionId,
+        isCwic
+      }
     }
   })
 
-  // if no decoded collections information exists, return undfined for collections
-  if (pg || projectIds.length > 0) {
-    collections = {
-      allIds,
-      byId
-    }
-
+  // if no decoded collections information exists, return undefined for collections
+  if (projectIds.length > 0) {
     project = {
-      byId: projectById,
-      collectionIds: projectIds
+      collections: {
+        byId: {
+          ...projectById
+        },
+        allIds: projectIds
+      }
     }
   }
 
   return {
     collections,
     focusedCollection,
-    project
+    project,
+    query: {
+      collection: {
+        byId: {
+          ...collectionGranuleQueryById
+        }
+      }
+    }
   }
 }

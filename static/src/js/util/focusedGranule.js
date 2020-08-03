@@ -7,9 +7,8 @@ import { isEmpty } from 'lodash'
  */
 export const getFocusedGranuleObject = (granuleId, granules) => {
   if (isEmpty(granules)) return undefined
-  const { byId = {} } = granules
 
-  return byId[granuleId] || {}
+  return granules[granuleId] || {}
 }
 
 export default getFocusedGranuleObject

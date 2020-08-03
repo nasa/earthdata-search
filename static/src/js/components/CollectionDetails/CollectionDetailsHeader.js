@@ -13,12 +13,13 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 /**
  * Renders CollectionDetailsHeader.
- * @param {object} props - The props passed into the component.
- * @param {object} props.focusedCollectionMetadata - Focused collection passed from redux store.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.collectionMetadata - Focused collection passed from redux store.
  */
 export const CollectionDetailsHeader = ({
-  collectionSearch,
-  focusedCollectionMetadata,
+  collectionQuery,
+  collectionsSearch,
+  collectionMetadata,
   location,
   mapProjection
 }) => {
@@ -26,9 +27,14 @@ export const CollectionDetailsHeader = ({
     shortName,
     title,
     versionId
-  } = focusedCollectionMetadata
+  } = collectionMetadata
 
-  const handoffLinks = generateHandoffs(focusedCollectionMetadata, collectionSearch, mapProjection)
+  const {
+    isLoaded,
+    isLoading
+  } = collectionsSearch
+
+  const handoffLinks = generateHandoffs(collectionMetadata, collectionQuery, mapProjection)
 
   return (
     <div className="collection-details-header">
@@ -37,7 +43,7 @@ export const CollectionDetailsHeader = ({
           <div className="col align-self-start">
             <div className="collection-details-header__title-wrap">
               {
-                !title && (
+                isLoading && (
                   <Skeleton
                     className="order-status__item-skeleton"
                     containerStyle={{ display: 'inline-block', height: '1.375rem', width: '100%' }}
@@ -46,7 +52,7 @@ export const CollectionDetailsHeader = ({
                 )
               }
               {
-                title && (
+                isLoaded && (
                   <>
                     <h2 className="collection-details-header__title">{title}</h2>
                     <PortalLinkContainer
@@ -75,13 +81,10 @@ export const CollectionDetailsHeader = ({
   )
 }
 
-CollectionDetailsHeader.defaultProps = {
-  focusedCollectionMetadata: {}
-}
-
 CollectionDetailsHeader.propTypes = {
-  collectionSearch: PropTypes.shape({}).isRequired,
-  focusedCollectionMetadata: PropTypes.shape({}),
+  collectionQuery: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired
 }

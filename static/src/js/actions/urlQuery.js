@@ -1,12 +1,18 @@
 import { replace, push } from 'connected-react-router'
 import { parse } from 'qs'
 
-import { isPath } from '../util/isPath'
-import { decodeUrlParams, isSavedProjectsPage, urlPathsWithoutUrlParams } from '../util/url/url'
 import actions from './index'
-import ProjectRequest from '../util/request/projectRequest'
+
+import { isPath } from '../util/isPath'
+import {
+  decodeUrlParams,
+  isSavedProjectsPage,
+  urlPathsWithoutUrlParams
+} from '../util/url/url'
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 import { parseError } from '../../../../sharedUtils/parseError'
+
+import ProjectRequest from '../util/request/projectRequest'
 
 const restoreFromUrl = payload => ({
   type: RESTORE_FROM_URL,
@@ -54,33 +60,40 @@ export const updateStore = ({
       timeline
     }))
 
-    let requestAddedGranules = true
-
     // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
     // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
     // other cases, getGranules will be requested using the granule search query params.
     if ((pathname.includes('/search') && !newPathname) || (newPathname && newPathname.includes('/search'))) {
-      requestAddedGranules = false
-      dispatch(actions.getCollections())
-      dispatch(actions.getFocusedCollection())
+      await dispatch(actions.getCollections())
+
+      // Granules Search
+      if (pathname === '/search/granules') {
+        await dispatch(actions.getFocusedCollection())
+      }
+
+      // Collection Details
+      if (pathname === '/search/granules/collection-details') {
+        await dispatch(actions.getFocusedCollection())
+      }
+
+      // Granule Details
+      if (pathname === '/search/granules/granule-details') {
+        await dispatch(actions.getFocusedCollection())
+
+        dispatch(actions.getFocusedGranule())
+      }
     }
 
     // Fetch collections in the project
-    const { collectionIds = [] } = project || {}
+    const { collections: projectCollections = {} } = project
+    const { allIds = [] } = projectCollections
 
-    // Create a unique list of collections to fetch and remove any empty values [.filter(Boolean)]
-    const uniqueCollectionList = [...new Set([
-      ...collectionIds,
-      focusedCollection
-    ])].filter(Boolean)
-
-    if (uniqueCollectionList.length > 0) {
+    if (allIds.length > 0) {
       try {
-        await dispatch(actions.getProjectCollections(uniqueCollectionList))
-        dispatch(actions.fetchAccessMethods(uniqueCollectionList))
-        dispatch(actions.getGranules(uniqueCollectionList, {
-          requestAddedGranules
-        }))
+        await dispatch(actions.getProjectCollections())
+
+        dispatch(actions.fetchAccessMethods(allIds))
+        dispatch(actions.getProjectGranules())
       } catch (e) {
         parseError(e)
       }
