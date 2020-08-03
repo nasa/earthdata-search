@@ -29,7 +29,6 @@ export const GranuleResultsListItem = memo(({
 
   const {
     collectionId,
-    focusedGranule,
     granules,
     isCollectionInProject,
     isGranuleInProject,
@@ -45,6 +44,7 @@ export const GranuleResultsListItem = memo(({
     setRowHeight,
     windowWidth
   } = data
+
   const { remInPixels } = useRemsToPixels()
 
   // Calculate the index of the list item
@@ -97,12 +97,10 @@ export const GranuleResultsListItem = memo(({
   return (
     <li className="granule-results-list-item" style={customStyle}>
       <GranuleResultsItem
-        ref={element}
         collectionId={collectionId}
-        focusedGranule={focusedGranule}
         granule={granules[index]}
-        isGranuleInProject={isGranuleInProject}
         isCollectionInProject={isCollectionInProject}
+        isGranuleInProject={isGranuleInProject}
         location={location}
         onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
         onExcludeGranule={onExcludeGranule}
@@ -110,6 +108,7 @@ export const GranuleResultsListItem = memo(({
         onMetricsDataAccess={onMetricsDataAccess}
         onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
         portal={portal}
+        ref={element}
       />
     </li>
   )

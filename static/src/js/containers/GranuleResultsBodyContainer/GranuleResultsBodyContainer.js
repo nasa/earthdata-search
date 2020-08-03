@@ -9,7 +9,10 @@ import { metricsDataAccess } from '../../middleware/metrics/actions'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
+import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
+import { getFocusedGranuleId } from '../../selectors/focusedGranule'
+import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
@@ -30,11 +33,11 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
-  focusedCollection: state.focusedCollection,
-  focusedGranule: state.focusedGranule,
+  focusedCollectionId: getFocusedCollectionId(state),
+  focusedGranuleId: getFocusedGranuleId(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
-  granulesMetadata: state.metadata.granules,
+  granulesMetadata: getGranulesMetadata(state),
   portal: state.portal,
   project: state.project
 })
@@ -42,8 +45,8 @@ const mapStateToProps = state => ({
 export const GranuleResultsBodyContainer = (props) => {
   const {
     collectionMetadata,
-    focusedCollection,
-    focusedGranule,
+    focusedCollectionId,
+    focusedGranuleId,
     granuleQuery,
     granuleSearchResults,
     granulesMetadata,
@@ -69,15 +72,15 @@ export const GranuleResultsBodyContainer = (props) => {
 
   const loadNextPage = () => {
     onChangeGranulePageNum({
-      collectionId: focusedCollection,
+      collectionId: focusedCollectionId,
       pageNum: pageNum + 1
     })
   }
 
   return (
     <GranuleResultsBody
-      collectionId={focusedCollection}
-      focusedGranule={focusedGranule}
+      collectionId={focusedCollectionId}
+      focusedGranuleId={focusedGranuleId}
       granuleQuery={granuleQuery}
       granuleSearchResults={granuleSearchResults}
       granulesMetadata={granulesMetadata}
@@ -98,8 +101,8 @@ export const GranuleResultsBodyContainer = (props) => {
 
 GranuleResultsBodyContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired,
+  focusedCollectionId: PropTypes.string.isRequired,
+  focusedGranuleId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,

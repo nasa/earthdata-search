@@ -12,7 +12,7 @@ import './GranuleResultsTable.scss'
  * Renders GranuleResultsTable.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
- * @param {String} props.focusedGranule - The focused granule ID.
+ * @param {String} props.focusedGranuleId - The focused granule ID.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.hasBrowseImagery - Designates if the collection has browse imagery.
  * @param {Function} props.isGranuleInProject - Function to detirmine if the granule is in the project.
@@ -32,7 +32,7 @@ import './GranuleResultsTable.scss'
 
 export const GranuleResultsTable = ({
   collectionId,
-  focusedGranule,
+  focusedGranuleId,
   granules,
   hasBrowseImagery,
   isGranuleInProject,
@@ -122,7 +122,7 @@ export const GranuleResultsTable = ({
     isFocusedGranule,
     isInProject,
     isCollectionInProject
-  }), [focusedGranule])
+  }), [focusedGranuleId])
 
   const rowClassNamesFromRowState = useMemo(() => ({
     isFocusedGranule,
@@ -204,7 +204,7 @@ GranuleResultsTable.defaultProps = {
 
 GranuleResultsTable.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired,
+  focusedGranuleId: PropTypes.string.isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape).isRequired,
   hasBrowseImagery: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,

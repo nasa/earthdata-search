@@ -74,13 +74,13 @@ export class GranuleFiltersPanelContainer extends Component {
     } = this.props
 
     handleReset()
-
     // Set each of the values to an empty string to avoid wiping
     // out ALL granule filters (e.g. sort key)
     const emptyObject = {}
     Object.keys(values).forEach((key) => {
       emptyObject[key] = ''
     })
+
     onApplyGranuleFilters(emptyObject)
   }
 

@@ -55,7 +55,6 @@ innerElementType.propTypes = {
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
- * @param {String} props.focusedGranule - The focused granule ID.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Number} props.height - The height of the container provided by AutoSizer.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
@@ -78,7 +77,6 @@ innerElementType.propTypes = {
 export const GranuleResultsListBody = ({
   collectionId,
   excludedGranuleIds,
-  focusedGranule,
   granules,
   height,
   isCollectionInProject,
@@ -190,7 +188,6 @@ export const GranuleResultsListBody = ({
             itemData={{
               collectionId,
               excludedGranuleIds,
-              focusedGranule,
               getRowHeight,
               granules,
               isCollectionInProject,
@@ -244,7 +241,6 @@ GranuleResultsListBody.defaultProps = {
 GranuleResultsListBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
