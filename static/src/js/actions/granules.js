@@ -35,14 +35,8 @@ import {
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { mbr } from '../util/map/mbr'
-// import { getCollectionMetadata } from '../util/focusedCollection'
-// import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { prepareGranuleAccessParams } from '../../../../sharedUtils/prepareGranuleAccessParams'
-// import { buildPromise } from '../util/buildPromise'
-// import { getGranuleCount } from '../util/collectionMetadata/granuleCount'
-// import { updateGranuleSearchQuery } from './search'
 import { toggleSpatialPolygonWarning } from './ui'
-// import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import {
   startProjectGranulesTimer,
   projectGranulesLoading,
@@ -57,8 +51,6 @@ import {
   getCollectionsMetadata,
   getFocusedCollectionMetadata
 } from '../selectors/collectionMetadata'
-
-// const { defaultGranulesPerOrder } = getApplicationConfig()
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -144,15 +136,6 @@ export const initializeCollectionGranulesResults = payload => ({
   type: INITIALIZE_COLLECTION_GRANULES_RESULTS,
   payload
 })
-
-export const excludeGranule = data => (dispatch) => {
-  const { collectionId, granuleId } = data
-
-  dispatch(onExcludeGranule({
-    collectionId,
-    granuleId
-  }))
-}
 
 /**
  * Fetch all relevant links to the granules that are part of the provided collection
@@ -353,12 +336,6 @@ export const searchGranules = () => (dispatch, getState) => {
   dispatch(startGranulesTimer(collectionId))
 
   dispatch(onGranulesLoading(collectionId))
-
-  // The params are different, save the new params and continue fetching granules
-  // dispatch(updateGranuleSearchQuery({
-  //   collectionId,
-  //   ...granuleParams
-  // }))
 
   dispatch(toggleSpatialPolygonWarning(false))
 
@@ -572,22 +549,31 @@ export const applyGranuleFilters = (
   granuleFilters,
   closePanel = false
 ) => (dispatch) => {
-  // Apply granule filters, ensuring to reset the page number to one as this results in a new search
+  // Apply granule filters, ensuring to reset the page number to 1 as this results in a new search
   dispatch(actions.updateFocusedCollectionGranuleFilters({ pageNum: 1, ...granuleFilters }))
 
   dispatch(searchGranules()).then(() => {
     if (closePanel) dispatch(actions.toggleSecondaryOverlayPanel(false))
-
-    // If the collection is in the project, we need to update access methods after fetching new granules
-    // const state = getState()
-
-    // const focusedCollectionId = getFocusedCollectionId(state)
-
-    // const { project = {} } = state
-    // const { collections: projectCollections } = project
-    // const { allIds } = projectCollections
-    // if (allIds.includes(focusedCollectionId)) {
-    //   dispatch(actions.fetchAccessMethods([focusedCollectionId]))
-    // }
   })
+}
+
+/**
+ * Excludes a single granule from search results and requests granules again
+ * @param {Object} data Object containing the granule id and the collection that the granule belongs to
+ */
+export const excludeGranule = data => (dispatch) => {
+  const { collectionId, granuleId } = data
+
+  dispatch(onExcludeGranule({
+    collectionId,
+    granuleId
+  }))
+
+
+  // dispatch(UPDATE_GRANULE_SEARCH_QUERY({
+  //   collectionId,
+  //   pageNum: 1
+  // }))
+
+  dispatch(searchGranules())
 }

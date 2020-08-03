@@ -15,7 +15,7 @@ import './GranuleResultsBody.scss'
  * Renders GranuleResultsBody.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The focused collection ID.
- * @param {String} props.focusedGranule - The focused granule ID.
+ * @param {String} props.focusedGranuleId - The focused granule ID.
  * @param {Object} props.granuleSearchResults - Granules passed from redux store.
  * @param {Object} props.isCwic - Flag set if the focused collection is a CWIC collection.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
@@ -28,7 +28,7 @@ import './GranuleResultsBody.scss'
  */
 const GranuleResultsBody = ({
   collectionId,
-  focusedGranule,
+  focusedGranuleId,
   granuleQuery,
   granuleSearchResults,
   granulesMetadata,
@@ -113,10 +113,10 @@ const GranuleResultsBody = ({
   const result = useMemo(() => formatGranulesList(
     granuleIds,
     granulesMetadata,
-    focusedGranule,
+    focusedGranuleId,
     isGranuleInProject,
     isCollectionInProject
-  ), [granuleIds, granulesMetadata, focusedGranule, excludedGranuleIds])
+  ), [granuleIds, granulesMetadata, focusedGranuleId, excludedGranuleIds])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
 
@@ -163,23 +163,22 @@ const GranuleResultsBody = ({
         <GranuleResultsList
           collectionId={collectionId}
           excludedGranuleIds={excludedGranuleIds}
-          focusedGranule={focusedGranule}
           granules={granulesList}
+          isCollectionInProject={isCollectionInProject}
           isCwic={isCwic}
-          itemCount={itemCount}
+          isGranuleInProject={isGranuleInProject}
           isItemLoaded={isItemLoaded}
-          location={location}
+          itemCount={itemCount}
           loadMoreItems={loadMoreItems}
+          location={location}
+          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
-          portal={portal}
-          visibleMiddleIndex={visibleMiddleIndex}
-          setVisibleMiddleIndex={setVisibleMiddleIndex}
-          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
           onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
-          isGranuleInProject={isGranuleInProject}
-          isCollectionInProject={isCollectionInProject}
+          portal={portal}
+          setVisibleMiddleIndex={setVisibleMiddleIndex}
+          visibleMiddleIndex={visibleMiddleIndex}
         />
       </CSSTransition>
       <CSSTransition
@@ -191,7 +190,7 @@ const GranuleResultsBody = ({
         <GranuleResultsTable
           collectionId={collectionId}
           excludedGranuleIds={excludedGranuleIds}
-          focusedGranule={focusedGranule}
+          focusedGranuleId={focusedGranuleId}
           granules={granulesList}
           hasBrowseImagery={hasBrowseImagery}
           isCwic={isCwic}
@@ -239,7 +238,7 @@ const GranuleResultsBody = ({
 
 GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired,
+  focusedGranuleId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,

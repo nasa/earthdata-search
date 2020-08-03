@@ -11,7 +11,6 @@ import './GranuleResultsList.scss'
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
- * @param {String} props.focusedGranule - The focused granule ID.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.isCwic - Flag designating CWIC collections.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
@@ -32,7 +31,6 @@ import './GranuleResultsList.scss'
 export const GranuleResultsList = ({
   collectionId,
   excludedGranuleIds,
-  focusedGranule,
   granules,
   isCollectionInProject,
   isCwic,
@@ -57,7 +55,6 @@ export const GranuleResultsList = ({
           <GranuleResultsListBody
             collectionId={collectionId}
             excludedGranuleIds={excludedGranuleIds}
-            focusedGranule={focusedGranule}
             granules={granules}
             height={height}
             isCollectionInProject={isCollectionInProject}
@@ -91,7 +88,6 @@ GranuleResultsList.defaultProps = {
 GranuleResultsList.propTypes = {
   collectionId: PropTypes.string.isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   isCwic: PropTypes.bool.isRequired,
