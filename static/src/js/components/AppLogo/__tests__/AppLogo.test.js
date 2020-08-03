@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import AppLogo from '../AppLogo'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -21,8 +22,16 @@ function setup(overrideProps) {
   }
 }
 
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.restoreAllMocks()
+})
+
 describe('AppLogo component', () => {
   test('should render the site AppLogo', () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      defaultPortal: 'edsc'
+    }))
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find('.app-logo__site-meatball').props().href).toEqual('/')
