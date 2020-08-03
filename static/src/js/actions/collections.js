@@ -1,8 +1,6 @@
 import { isCancel } from 'axios'
 import { isPlainObject } from 'lodash'
 
-import actions from './index'
-
 import CollectionRequest from '../util/request/collectionRequest'
 import {
   buildCollectionSearchParams,
@@ -12,25 +10,32 @@ import { updateAuthTokenFromHeaders } from './authToken'
 import { handleError } from './errors'
 
 import {
+  ADD_COLLECTION_SEARCH_METADATA,
   ADD_MORE_COLLECTION_RESULTS,
+  ERRORED_COLLECTIONS,
+  ERRORED_FACETS,
+  FINISHED_COLLECTIONS_TIMER,
+  LOADED_COLLECTIONS,
+  LOADED_FACETS,
+  LOADING_COLLECTIONS,
+  LOADING_FACETS,
+  STARTED_COLLECTIONS_TIMER,
+  UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_COLLECTION_METADATA,
   UPDATE_COLLECTION_RESULTS,
-  LOADING_COLLECTIONS,
-  LOADED_COLLECTIONS,
-  ERRORED_COLLECTIONS,
-  LOADING_FACETS,
-  LOADED_FACETS,
-  UPDATE_FACETS,
-  ERRORED_FACETS,
-  STARTED_COLLECTIONS_TIMER,
-  FINISHED_COLLECTIONS_TIMER,
-  RESTORE_COLLECTIONS,
-  UPDATE_COLLECTION_GRANULE_FILTERS
+  UPDATE_FACETS
 } from '../constants/actionTypes'
-import { parseError } from '../../../../sharedUtils/parseError'
+
+import { getFocusedCollectionGranuleQuery } from '../selectors/query'
+import { getFocusedCollectionId } from '../selectors/focusedCollection'
 
 export const addMoreCollectionResults = payload => ({
   type: ADD_MORE_COLLECTION_RESULTS,
+  payload
+})
+
+export const addCollectionSearchMetadata = payload => ({
+  type: ADD_COLLECTION_SEARCH_METADATA,
   payload
 })
 
@@ -83,40 +88,20 @@ export const finishCollectionsTimer = () => ({
   type: FINISHED_COLLECTIONS_TIMER
 })
 
-export const restoreCollections = payload => async (dispatch, getState) => {
-  dispatch({
-    type: RESTORE_COLLECTIONS,
-    payload
-  })
-
-  const { metadata } = getState()
-  const { collections } = metadata
-  const { allIds = [] } = collections
-
-  try {
-    await dispatch(actions.getProjectCollections(allIds))
-
-    dispatch(actions.getGranules(allIds))
-  } catch (e) {
-    parseError(e)
-  }
-}
-
 /**
  * Update the granule filters for the collection. Here we prune off any values that are not truthy,
  * as well as any objects that contain only falsy values.
  * @param {String} id - The id for the collection to update.
  * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
  */
-export const updateCollectionGranuleFilters = (id, granuleFilters) => (dispatch, getState) => {
-  const { metadata = {} } = getState()
-  const { collections = {} } = metadata
-  const { byId = {} } = collections
-  const { [id]: collectionMetadata = {} } = byId
-  const { granuleFilters: existingGranuleFilters = {} } = collectionMetadata
+export const updateFocusedCollectionGranuleFilters = granuleFilters => (dispatch, getState) => {
+  const state = getState()
+
+  const granuleQuery = getFocusedCollectionGranuleQuery(state)
+  const focusedCollectionId = getFocusedCollectionId(state)
 
   const allGranuleFilters = {
-    ...existingGranuleFilters,
+    ...granuleQuery,
     ...granuleFilters
   }
 
@@ -138,10 +123,10 @@ export const updateCollectionGranuleFilters = (id, granuleFilters) => (dispatch,
   }, {})
 
   dispatch({
-    type: UPDATE_COLLECTION_GRANULE_FILTERS,
+    type: UPDATE_GRANULE_SEARCH_QUERY,
     payload: {
-      id,
-      granuleFilters: prunedFilters
+      collectionId: focusedCollectionId,
+      ...prunedFilters
     }
   })
 }
@@ -151,8 +136,8 @@ let cancelToken
 
 /**
  * Perform a collections request based on the current redux state.
- * @param {function} dispatch - A dispatch function provided by redux.
- * @param {function} getState - A function that returns the current state provided by redux.
+ * @param {Function} dispatch - A dispatch function provided by redux.
+ * @param {Function} getState - A function that returns the current state provided by redux.
  */
 export const getCollections = () => (dispatch, getState) => {
   // If cancel token is set, cancel the previous request(s)
@@ -185,31 +170,40 @@ export const getCollections = () => (dispatch, getState) => {
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
     .then((response) => {
       const payload = {}
-      const { 'cmr-hits': cmrHits } = response.headers
 
-      const { data } = response
-      const { feed } = data
+      const { data, headers } = response
+
+      const cmrHits = parseInt(response.headers['cmr-hits'], 10)
+
+      const { feed = {} } = data
       const { facets = {} } = feed
       const { children = [] } = facets
 
       payload.facets = children
       payload.hits = cmrHits
       payload.keyword = keyword
-      payload.results = response.data.feed.entry
+
+      const { entry = [] } = feed
+      payload.results = entry
 
       dispatch(finishCollectionsTimer())
-      dispatch(updateAuthTokenFromHeaders(response.headers))
-      dispatch(onCollectionsLoaded({
-        loaded: true
-      }))
-      dispatch(onFacetsLoaded({
-        loaded: true
-      }))
+      dispatch(updateAuthTokenFromHeaders(headers))
+      dispatch(addCollectionSearchMetadata(entry))
+
       if (pageNum === 1) {
         dispatch(updateCollectionResults(payload))
       } else {
         dispatch(addMoreCollectionResults(payload))
       }
+
+      dispatch(onCollectionsLoaded({
+        loaded: true
+      }))
+
+      dispatch(onFacetsLoaded({
+        loaded: true
+      }))
+
       dispatch(updateFacets(payload))
     })
     .catch((error) => {

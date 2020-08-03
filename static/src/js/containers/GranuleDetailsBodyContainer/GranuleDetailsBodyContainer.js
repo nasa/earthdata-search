@@ -3,41 +3,28 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
-import getFocusedGranuleObject from '../../util/focusedGranule'
+import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleDetailsBody from '../../components/GranuleDetails/GranuleDetailsBody'
 
 const mapStateToProps = state => ({
   authToken: state.authToken,
-  focusedGranule: state.focusedGranule,
-  granules: state.metadata.granules
+  granuleMetadata: getFocusedGranuleMetadata(state)
 })
 
 export const GranuleDetailsBodyContainer = ({
   authToken,
-  focusedGranule,
-  granules
-}) => {
-  const focusedGranuleMetadata = getFocusedGranuleObject(focusedGranule, granules)
-
-  const {
-    ummJson,
-    metadataUrls
-  } = focusedGranuleMetadata
-
-  return (
-    <GranuleDetailsBody
-      authToken={authToken}
-      metadataUrls={metadataUrls}
-      ummJson={ummJson}
-    />
-  )
-}
+  granuleMetadata
+}) => (
+  <GranuleDetailsBody
+    authToken={authToken}
+    granuleMetadata={granuleMetadata}
+  />
+)
 
 GranuleDetailsBodyContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired
+  granuleMetadata: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

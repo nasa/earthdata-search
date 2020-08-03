@@ -24,7 +24,7 @@ import './CollectionResultsTable.scss'
  * @param {String} props.visibleMiddleIndex - The current middle item.
  */
 export const CollectionResultsTable = ({
-  collections,
+  collectionsMetadata,
   isItemLoaded,
   itemCount,
   loadMoreItems,
@@ -122,7 +122,7 @@ export const CollectionResultsTable = ({
         rowTestId="collection-results-table__item"
         visibleMiddleIndex={visibleMiddleIndex}
         columns={columns}
-        data={collections}
+        data={collectionsMetadata}
         itemCount={itemCount}
         loadMoreItems={loadMoreItems}
         isItemLoaded={isItemLoaded}
@@ -139,7 +139,7 @@ CollectionResultsTable.defaultProps = {
 }
 
 CollectionResultsTable.propTypes = {
-  collections: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  collectionsMetadata: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,

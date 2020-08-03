@@ -26,22 +26,24 @@ export const updateRetrieval = retrievalData => ({
  */
 export const submitRetrieval = () => (dispatch, getState) => {
   const state = getState()
-  const orderParams = prepareRetrievalParams(state)
-  const { authToken } = orderParams
+
+  const {
+    authToken,
+    project
+  } = state
 
   const requestObject = new RetrievalRequest(authToken)
 
-  const { project } = state
+  const { collections: projectCollections } = project
   const {
-    collectionIds: projectCollectionIds = [],
-    byId: collectionsById = {}
-  } = project
-  const metricsCollections = projectCollectionIds.map((id) => {
-    const projectCollection = collectionsById[id]
-    const { selectedAccessMethod = '' } = projectCollection
+    allIds: projectCollectionsIds,
+    byId: projectCollectionsById
+  } = projectCollections
 
-    const { accessMethods } = projectCollection
-    const selectedMethod = accessMethods[selectedAccessMethod]
+  const metricsCollections = projectCollectionsIds.map((id) => {
+    const { [id]: projectCollection } = projectCollectionsById
+    const { accessMethods, selectedAccessMethod = '' } = projectCollection
+    const { [selectedAccessMethod]: selectedMethod } = accessMethods
     const { type } = selectedMethod
 
     let selectedService
@@ -78,6 +80,8 @@ export const submitRetrieval = () => (dispatch, getState) => {
   }))
 
   dispatch(submittingProject())
+
+  const orderParams = prepareRetrievalParams(state)
 
   const response = requestObject.submit(orderParams)
     .then((response) => {

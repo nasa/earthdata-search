@@ -53,6 +53,8 @@ export default class GranuleRequest extends CmrRequest {
 
   nonIndexedKeys() {
     return [
+      'concept_id',
+      'exclude',
       'readable_granule_name',
       'sort_key'
     ]

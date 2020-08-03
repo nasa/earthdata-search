@@ -5,7 +5,6 @@ import { convertSize } from './project'
 import { encodeGridCoords } from './url/gridEncoders'
 import { encodeTemporal } from './url/temporalEncoders'
 import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
-import { getFocusedCollectionObject } from './focusedCollection'
 import { hasTag } from '../../../../sharedUtils/tags'
 
 /**
@@ -82,59 +81,26 @@ export const populateGranuleResults = ({
 }
 
 /**
- * Prepare parameters used in getGranules() based on current Redux State,
- * or provided project collection
+ * Extract granule parameters specific to the users search session
  * @param {Object} state Current Redux State
- * @param {String} projectCollectionId Optional: CollectionId of a Project collection
- * @returns {Object} Parameters used in Granules request
+ * @param {String} collectionId The collection id the use has requested to view granules for
  */
-export const prepareGranuleParams = (state, projectCollectionId) => {
+export const extractGranuleSearchParams = (state, collectionId) => {
   const {
     advancedSearch = {},
-    authToken,
-    metadata = {},
-    focusedCollection: focusedCollectionId,
     query = {}
   } = state
-  const { collections } = metadata
-
-  const collectionId = projectCollectionId || focusedCollectionId
-
-  // If we don't have a focusedCollection or projectCollectionId, bail out!
-  if (!collectionId) {
-    return null
-  }
-
-  const focusedCollectionObject = getFocusedCollectionObject(collectionId, collections)
-  if (!focusedCollectionObject) return null
 
   const {
-    excludedGranuleIds = [],
-    granuleFilters = {},
-    metadata: collectionMetadata = {}
-  } = focusedCollectionObject
-  const exclude = {}
-  if (excludedGranuleIds.length > 0) {
-    exclude.concept_id = []
-    exclude.concept_id.push(...excludedGranuleIds)
-  }
-
-  const {
-    collection: collectionQuery,
-    granule: granuleQuery
+    collection: collectionsQuery
   } = query
 
   const {
+    byId: collectionQueryById = {},
     spatial = {},
     overrideTemporal = {},
-    temporal = {},
-    gridName = ''
-  } = collectionQuery
-
-  const {
-    gridCoords = '',
-    pageNum
-  } = granuleQuery
+    temporal = {}
+  } = collectionsQuery
 
   const {
     boundingBox,
@@ -144,26 +110,147 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     line
   } = spatial
 
-  const { tags } = collectionMetadata
+  const { [collectionId]: collectionQuery = {} } = collectionQueryById
+  const { granules: collectionGranuleQuery = {} } = collectionQuery
+
   const {
     browseOnly,
     cloudCover,
     dayNightFlag,
     equatorCrossingDate = {},
     equatorCrossingLongitude,
+    excludedGranuleIds = [],
+    gridCoords,
     onlineOnly,
     orbitNumber,
+    pageNum = 1,
     readableGranuleName,
     sortKey,
-    temporal: filterTemporal = {}
-  } = granuleFilters
+    temporal: granuleTemporal = {}
+  } = collectionGranuleQuery
+
+  const granuleParams = {
+    boundingBox,
+    browseOnly,
+    circle,
+    cloudCover,
+    collectionId,
+    dayNightFlag,
+    equatorCrossingDate,
+    equatorCrossingLongitude,
+    excludedGranuleIds,
+    granuleTemporal,
+    gridCoords,
+    line,
+    onlineOnly,
+    orbitNumber,
+    overrideTemporal,
+    pageNum,
+    point,
+    polygon,
+    readableGranuleName,
+    sortKey,
+    temporal
+  }
+
+  // Apply any overrides for advanced search
+  const paramsWithAdvancedSearch = withAdvancedSearch(granuleParams, advancedSearch)
+
+  return paramsWithAdvancedSearch
+}
+
+/**
+ * Extract granule parameters specific to the users current project
+ * @param {Object} state Current Redux State
+ * @param {String} collectionId The collection id the use has requested to view granules for
+ */
+export const extractProjectCollectionGranuleParams = (state, collectionId) => {
+  const {
+    project
+  } = state
+
+  const { collections } = project
+  const { byId } = collections
+  const { [collectionId]: projectCollection } = byId
+  const { granules } = projectCollection
+  const { addedGranuleIds, params, removedGranuleIds } = granules
+  const { pageNum } = params
+
+  return {
+    // Ensure that the `generic` search params are also included
+    ...extractGranuleSearchParams(state, collectionId),
+    addedGranuleIds,
+    excludedGranuleIds: [], // Excluded granules should not be taken into account for project granule requests
+    pageNum,
+    removedGranuleIds
+  }
+}
+
+/**
+ * Prepare parameters used in retrieving granules based on current Redux State,
+ * or provided project collection
+ * @param {Object} state Current Redux State
+ * @param {String} projectCollectionId Optional: CollectionId of a Project collection
+ * @returns {Object} Parameters used in Granules request
+ */
+export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
+  // Metadata to help determine if and how to make our granule request
+  const {
+    hasGranules,
+    tags
+  } = collectionMetadata
+
+  // Default added and removed granuld ids because they will only be provided for project granule requests
+  const {
+    addedGranuleIds = [],
+    boundingBox,
+    browseOnly,
+    circle,
+    cloudCover,
+    collectionId,
+    dayNightFlag,
+    equatorCrossingDate,
+    equatorCrossingLongitude,
+    excludedGranuleIds = [],
+    granuleTemporal,
+    gridCoords,
+    gridName,
+    line,
+    onlineOnly,
+    orbitNumber,
+    overrideTemporal,
+    pageNum,
+    point,
+    polygon,
+    readableGranuleName,
+    removedGranuleIds = [],
+    sortKey,
+    temporal
+  } = granuleParams
+
+  const exclude = {}
+  if (excludedGranuleIds.length > 0 || removedGranuleIds.length > 0) {
+    // Concatenate both lists of concept ids that designate granlues to be excluded
+    const granulesToExclude = [
+      ...excludedGranuleIds,
+      ...removedGranuleIds
+    ]
+    exclude.concept_id = []
+    exclude.concept_id.push(...granulesToExclude)
+  }
+
+  const conceptId = []
+  if (addedGranuleIds.length > 0) {
+    conceptId.push(...addedGranuleIds)
+  }
 
   // If we have an overrideTemporal use it, if not use temporal
   let temporalString
   const {
     endDate: filterEnd,
     startDate: filterStart
-  } = filterTemporal
+  } = granuleTemporal
+
   const {
     endDate: overrideEnd,
     startDate: overrideStart
@@ -173,29 +260,30 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     if (val.min || val.max) {
       return `${val.min || ''},${val.max || ''}`
     }
+
     return ''
   }
 
   const cloudCoverString = encodeCloudCover(cloudCover)
 
   if (filterStart || filterEnd) {
-    temporalString = encodeTemporal(filterTemporal)
+    temporalString = encodeTemporal(granuleTemporal)
   } else if (overrideEnd || overrideStart) {
     temporalString = encodeTemporal(overrideTemporal)
   } else {
     temporalString = encodeTemporal(temporal)
   }
 
-  const isCwicCollection = collectionMetadata.hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
+  const isCwicCollection = hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
 
   const options = {}
   if (readableGranuleName) {
     options.readableGranuleName = { pattern: true }
   }
 
-  const granuleParams = {
-    authToken,
+  return {
     boundingBox,
+    conceptId,
     circle,
     browseOnly,
     cloudCover: cloudCoverString,
@@ -203,6 +291,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     dayNightFlag,
     equatorCrossingDate: encodeTemporal(equatorCrossingDate),
     equatorCrossingLongitude,
+    exclude,
     gridCoords: encodeGridCoords(gridCoords),
     gridName,
     isCwicCollection,
@@ -217,11 +306,6 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     sortKey,
     temporalString
   }
-
-  // Apply any overrides for advanced search
-  const paramsWithAdvancedSearch = withAdvancedSearch(granuleParams, advancedSearch)
-
-  return paramsWithAdvancedSearch
 }
 
 /**
@@ -231,13 +315,13 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
  * @param {Object} opts - An optional options object.
  * @returns {Object} Parameters to be provided to the Granules request with camel cased keys
  */
-export const buildGranuleSearchParams = (params, opts = {}) => {
+export const buildGranuleSearchParams = (params) => {
   const { defaultCmrPageSize } = getApplicationConfig()
 
   const {
-    conceptId,
     boundingBox,
     circle,
+    conceptId,
     browseOnly,
     cloudCover,
     collectionId,
@@ -268,16 +352,10 @@ export const buildGranuleSearchParams = (params, opts = {}) => {
     if (gridCoords) twoDCoordinateSystem.coordinates = gridCoords
   }
 
-  // If forceConceptId is set, omit all other properties.
-  if (opts.forceConceptId && conceptId) {
-    return {
-      conceptId
-    }
-  }
-
   const granuleParams = {
     boundingBox,
     circle,
+    conceptId,
     browseOnly,
     cloudCover,
     dayNightFlag,
@@ -297,14 +375,6 @@ export const buildGranuleSearchParams = (params, opts = {}) => {
     sortKey,
     temporal: temporalString,
     twoDCoordinateSystem
-  }
-
-  // If includeConceptId is set, add the conceptId property to the granule params.
-  if (opts.includeConceptId && conceptId) {
-    return {
-      ...granuleParams,
-      conceptId
-    }
   }
 
   return granuleParams

@@ -32,7 +32,7 @@ export const pageAllCmrResults = async ({
     // all of the results
     const { cmrHost } = getEarthdataConfig(cmrEnvironment)
 
-    const cmrResponse = await request.post({
+    const response = await request.post({
       uri: `${cmrHost}/${path}`,
       form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
       headers: {
@@ -47,11 +47,11 @@ export const pageAllCmrResults = async ({
 
     // Initialize the array that will contain all of the results from CMR with the
     // body from the first request
-    const allResults = readCmrResults(path, cmrResponse)
+    const allResults = readCmrResults(path, response)
 
     // Stats to determine how many total pages we'll need to loop through to
     // retrieve all the results from CMR
-    const totalCmrHits = cmrResponse.headers['cmr-hits']
+    const totalCmrHits = parseInt(response.headers['cmr-hits'], 10)
 
     const totalPages = Math.ceil(totalCmrHits / cmrParams.page_size)
 

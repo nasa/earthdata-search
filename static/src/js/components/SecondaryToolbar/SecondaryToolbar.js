@@ -92,7 +92,7 @@ class SecondaryToolbar extends Component {
     const { projectDropdownOpen, projectName } = this.state
     const {
       authToken,
-      projectIds,
+      projectCollectionIds,
       location,
       portal,
       onChangePath
@@ -288,7 +288,7 @@ class SecondaryToolbar extends Component {
         <PortalFeatureContainer authentication>
           <>
             {
-              (!isPath(location.pathname, ['/projects', '/downloads']) && projectIds.length > 0) && projectLink
+              (!isPath(location.pathname, ['/projects', '/downloads']) && projectCollectionIds.length > 0) && projectLink
             }
             {
               pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
@@ -305,7 +305,7 @@ class SecondaryToolbar extends Component {
 
 SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
-  projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   location: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,

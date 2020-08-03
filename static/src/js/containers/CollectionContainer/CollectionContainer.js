@@ -71,7 +71,7 @@ export class CollectionContainer extends Component {
     // Pull the retrieval collection from the store
     const { id } = params
 
-    const { collections } = retrieval
+    const { collections = {} } = retrieval
     const { byId = {} } = collections
     const { [id]: retrievalCollection = {} } = byId
 

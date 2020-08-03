@@ -6,31 +6,31 @@ import { parseError } from '../../../../sharedUtils/parseError'
  * @param {Array} projectIds Array of collection ids that are added to the project
  * @param {Object} browser browser object from the store
  */
-export const formatCollectionList = (collections, projectIds, browser) => {
+export const formatCollectionList = (collections, metadata, projectIds = [], browser = {}) => {
   const { allIds: collectionIds } = collections
 
   return collectionIds.map((collectionId, index) => {
-    const collection = collections.byId[collectionId]
+    const { [collectionId]: collectionMetadata = {} } = metadata
 
     const {
-      dataset_id: datasetId = null,
-      granule_count: granuleCount = 0,
-      has_formats: hasFormats = false,
-      has_spatial_subsetting: hasSpatialSubsetting = false,
-      has_temporal_subsetting: hasTemporalSubsetting = false,
-      has_transforms: hasTransforms = false,
-      has_variables: hasVariables = false,
-      has_map_imagery: hasMapImagery = false,
-      is_cwic: isCwic = false,
-      is_nrt: isNrt = false,
+      datasetId = null,
+      granuleCount = 0,
+      hasFormats = false,
+      hasSpatialSubsetting = false,
+      hasTemporalSubsetting = false,
+      hasTransforms = false,
+      hasVariables = false,
+      hasMapImagery = false,
+      isCwic = false,
+      isNrt = false,
       organizations = [],
-      short_name: shortName,
+      shortName,
       summary = '',
       thumbnail = null,
-      time_end: timeEnd = null,
-      time_start: timeStart = null,
-      version_id: versionId
-    } = collection
+      timeEnd = null,
+      timeStart = null,
+      versionId
+    } = collectionMetadata
 
     const {
       name: browserName

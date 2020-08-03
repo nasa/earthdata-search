@@ -1,8 +1,13 @@
 import actions from './index'
+
 import { UPDATE_FOCUSED_GRANULE } from '../constants/actionTypes'
-import GranuleConceptRequest from '../util/request/granuleConceptRequest'
+
 import { createEcho10MetadataUrls } from '../util/granules'
 import { updateAuthTokenFromHeaders } from './authToken'
+import { portalPathFromState } from '../../../../sharedUtils/portalPath'
+import { updateGranuleMetadata } from './granules'
+
+import GraphQlRequest from '../util/request/graphQlRequest'
 
 export const updateFocusedGranule = payload => ({
   type: UPDATE_FOCUSED_GRANULE,
@@ -16,28 +21,131 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   const {
     authToken,
     focusedGranule,
-    metadata
+    metadata,
+    router
   } = getState()
-  if (focusedGranule === '') return null
 
-  const { granules } = metadata
-  const { allIds } = granules
-  if (allIds.indexOf(focusedGranule) !== -1) return null
 
-  const requestObject = new GranuleConceptRequest(authToken)
-  const response = requestObject.search(focusedGranule, 'umm_json', { pretty: true })
-    .then((response) => {
-      const { data } = response
+  if (focusedGranule === '') {
+    dispatch(updateGranuleMetadata([]))
 
-      const payload = {
-        [focusedGranule]: {
-          ummJson: data,
-          metadataUrls: createEcho10MetadataUrls(focusedGranule)
-        }
+    return null
+  }
+  const { granules: granuleMetadata = {} } = metadata
+  const { [focusedGranule]: focusedGranuleMetadata = {} } = granuleMetadata
+  const {
+    hasAllMetadata = false,
+    isCwic = false
+  } = focusedGranuleMetadata
+
+  // If this is a cwic granule, we've already retrieved everything we can from the search
+  if (isCwic) return null
+
+  // If we already have the metadata for the focusedGranule, don't fetch it again
+  if (hasAllMetadata) {
+    return null
+  }
+
+  const graphRequestObject = new GraphQlRequest(authToken)
+
+  const graphQuery = `
+    query GetGranule(
+      $id: String!
+    ) {
+      granule(
+        conceptId: $id
+      ) {
+        granuleUr
+        granuleSize
+        title
+        onlineAccessFlag
+        dayNightFlag
+        timeStart
+        timeEnd
+        dataCenter
+        originalFormat
+        conceptId
+        collectionConceptId
+        spatialExtent
+        temporalExtent
+        relatedUrls
+        dataGranule
+        measuredParameters
+        providerDates
       }
+    }`
 
-      dispatch(updateAuthTokenFromHeaders(response.headers))
-      dispatch(actions.updateGranuleMetadata(payload))
+  const response = graphRequestObject.search(graphQuery, {
+    id: focusedGranule
+  })
+    .then((response) => {
+      const payload = []
+
+      const {
+        data: responseData,
+        headers
+      } = response
+      const { data } = responseData
+      const { granule } = data
+
+      if (granule) {
+        const {
+          collectionConceptId,
+          conceptId,
+          dataCenter,
+          dataGranule,
+          dayNightFlag,
+          granuleSize,
+          granuleUr,
+          measuredParameters,
+          onlineAccessFlag,
+          originalFormat,
+          providerDates,
+          relatedUrls,
+          spatialExtent,
+          temporalExtent,
+          timeEnd,
+          timeStart,
+          title
+        } = granule
+
+        payload.push({
+          collectionConceptId,
+          conceptId,
+          dataCenter,
+          dataGranule,
+          dayNightFlag,
+          granuleSize,
+          granuleUr,
+          id: conceptId,
+          measuredParameters,
+          metadataUrls: createEcho10MetadataUrls(focusedGranule),
+          onlineAccessFlag,
+          originalFormat,
+          providerDates,
+          relatedUrls,
+          spatialExtent,
+          temporalExtent,
+          timeEnd,
+          timeStart,
+          title
+        })
+
+        dispatch(updateAuthTokenFromHeaders(headers))
+
+        dispatch(actions.updateGranuleMetadata(payload))
+      } else {
+        // If no data was returned, clear the focused granule and redirect the user back to the search page
+        dispatch(actions.updateFocusedGranule(''))
+
+        const { location } = router
+        const { search } = location
+
+        dispatch(actions.changeUrl({
+          pathname: `${portalPathFromState(getState())}/search`,
+          search
+        }))
+      }
     })
     .catch((error) => {
       dispatch(updateFocusedGranule(''))
@@ -46,7 +154,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
         error,
         action: 'getFocusedGranule',
         resource: 'granule',
-        requestObject
+        requestObject: graphRequestObject
       }))
     })
 
@@ -55,9 +163,10 @@ export const getFocusedGranule = () => (dispatch, getState) => {
 
 /**
  * Change the focusedGranule, and download that granule metadata
- * @param {string} granuleId
+ * @param {String} granuleId
  */
 export const changeFocusedGranule = granuleId => (dispatch) => {
   dispatch(updateFocusedGranule(granuleId))
+
   dispatch(actions.getFocusedGranule())
 }

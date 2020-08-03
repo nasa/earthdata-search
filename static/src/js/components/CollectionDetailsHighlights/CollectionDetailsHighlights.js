@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { isEmpty } from 'lodash'
-import { Button } from '../Button/Button'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import Skeleton from '../Skeleton/Skeleton'
 
 import { collectionDetailsParagraph, collectionDetailsRow } from './skeleton'
+
+import Button from '../Button/Button'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import Skeleton from '../Skeleton/Skeleton'
 
 import './CollectionDetailsHighlights.scss'
 
@@ -15,30 +15,28 @@ const granuleListTotalStyle = {
 }
 
 export const CollectionDetailsHighlights = ({
-  collection,
-  isLoaded,
-  isLoading,
+  collectionMetadata,
+  collectionsSearch,
   location,
   onToggleRelatedUrlsModal
 }) => {
   const {
-    metadata = {}
-  } = collection
-
-  // Don't attempt to render if the metadata isnt available
-  if (isEmpty(metadata)) return null
-
-  const {
     doi = {},
+    hasAllMetadata,
     summary,
     temporal,
     versionId
-  } = metadata
+  } = collectionMetadata
+
+  const {
+    isLoaded,
+    isLoading
+  } = collectionsSearch
 
   const { doiText } = doi
 
   let truncatedAbstract = summary
-  if (summary.length > 300) {
+  if (summary && summary.length > 300) {
     truncatedAbstract = `${summary.substr(0, 300)}...`
   }
 
@@ -70,32 +68,26 @@ export const CollectionDetailsHighlights = ({
           </div>
         </div>
 
-        {
-          Object.keys(doi).length > 0 && (
-            <>
-              <header className="collection-details-highlights__item-header">
-                <h4 className="collection-details-highlights__item-title">
-                  DOI
-                </h4>
-              </header>
-              <div className="collection-details-highlights__item-body">
-                <div className="collection-details-highlights__item-value collection-details-highlights__item-value--doi">
-                  {
-                    (isLoading && !isLoaded) ? (
-                      <Skeleton
-                        shapes={collectionDetailsRow}
-                        containerStyle={granuleListTotalStyle}
-                        variant="dark"
-                      />
-                    ) : (
-                      doiText
-                    )
-                  }
-                </div>
-              </div>
-            </>
-          )
-        }
+        <header className="collection-details-highlights__item-header">
+          <h4 className="collection-details-highlights__item-title">
+            DOI
+          </h4>
+        </header>
+        <div className="collection-details-highlights__item-body">
+          <div className="collection-details-highlights__item-value collection-details-highlights__item-value--doi">
+            {
+              ((isLoading && !isLoaded) || !hasAllMetadata) ? (
+                <Skeleton
+                  shapes={collectionDetailsRow}
+                  containerStyle={granuleListTotalStyle}
+                  variant="dark"
+                />
+              ) : (
+                doiText
+              )
+            }
+          </div>
+        </div>
 
         <header className="collection-details-highlights__item-header">
           <h4 className="collection-details-highlights__item-title">
@@ -185,9 +177,8 @@ export const CollectionDetailsHighlights = ({
 }
 
 CollectionDetailsHighlights.propTypes = {
-  collection: PropTypes.shape({}).isRequired,
-  isLoaded: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

@@ -19,8 +19,8 @@ import './ProjectCollectionsList.scss'
  */
 export const ProjectCollectionsList = (props) => {
   const {
-    collections,
-    collectionSearch,
+    collectionsMetadata,
+    collectionsQuery,
     location,
     mapProjection,
     onRemoveCollectionFromProject,
@@ -35,11 +35,11 @@ export const ProjectCollectionsList = (props) => {
     project
   } = props
 
-  const { byId } = collections
+  const { collections: projectCollections } = project
   const {
-    collectionIds: projectIds,
+    allIds: projectIds,
     byId: projectById
-  } = project
+  } = projectCollections
 
   const projectIsEmpty = !projectIds.length
 
@@ -52,13 +52,17 @@ export const ProjectCollectionsList = (props) => {
   const collectionsList = projectIds.map((collectionId, index) => {
     const isPanelActive = activePanelGroup === index.toString()
     const color = getColorByIndex(index)
+
+    const { [collectionId]: projectCollectionMetadata = {} } = collectionsMetadata
+    const { [collectionId]: projectCollection = {} } = projectById
+
     return (
       <ProjectCollectionItem
         activePanelSection={activePanelSection}
-        collection={byId[collectionId]}
+        collectionMetadata={projectCollectionMetadata}
         collectionCount={projectIds.length}
         collectionId={collectionId}
-        collectionSearch={collectionSearch}
+        collectionsQuery={collectionsQuery}
         color={color}
         index={index}
         isPanelActive={isPanelActive}
@@ -72,7 +76,7 @@ export const ProjectCollectionsList = (props) => {
         onUpdateFocusedCollection={onUpdateFocusedCollection}
         onViewCollectionDetails={onViewCollectionDetails}
         onViewCollectionGranules={onViewCollectionGranules}
-        projectCollection={projectById[collectionId]}
+        projectCollection={projectCollection}
       />
     )
   })
@@ -105,8 +109,8 @@ export const ProjectCollectionsList = (props) => {
 }
 
 ProjectCollectionsList.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired,
+  collectionsMetadata: PropTypes.shape({}).isRequired,
+  collectionsQuery: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

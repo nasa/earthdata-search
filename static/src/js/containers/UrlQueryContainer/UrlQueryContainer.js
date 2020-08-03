@@ -17,13 +17,12 @@ const mapStateToProps = state => ({
   autocompleteSelected: state.autocomplete.selected,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
-  collections: state.metadata.collections,
-  granuleDataFormatFacets: state.facetsParams.cmr.granule_data_format_h,
-  gridName: state.query.collection.gridName,
-  gridCoords: state.query.granule.gridCoords,
+  collectionsMetadata: state.metadata.collections,
   featureFacets: state.facetsParams.feature,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
+  granuleDataFormatFacets: state.facetsParams.cmr.granule_data_format_h,
+  gridName: state.query.collection.gridName,
   hasGranulesOrCwic: state.query.collection.hasGranulesOrCwic,
   instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.collection.keyword,
@@ -38,6 +37,7 @@ const mapStateToProps = state => ({
   processingLevelFacets: state.facetsParams.cmr.processing_level_id_h,
   project: state.project,
   projectFacets: state.facetsParams.cmr.project_h,
+  query: state.query,
   scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
   search: state.router.location.search,
   shapefileId: state.shapefile.shapefileId,
@@ -65,17 +65,26 @@ export class UrlQueryContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { search: nextSearch } = nextProps
     const {
+      collectionsMetadata: nextCollectionsMetadata,
+      search: nextSearch
+    } = nextProps
+
+    const {
+      collectionsMetadata,
       onChangeUrl,
       search
     } = this.props
+
     const { currentPath } = this.state
 
     // The only time the search prop changes is after the URL has been updated
     // So we only need to worry about encoding the query and updating the URL
     // if the previous search and next search are the same
-    if (search === nextSearch) {
+    if (
+      search === nextSearch
+      || collectionsMetadata === nextCollectionsMetadata
+    ) {
       const nextPath = encodeUrlQuery(nextProps)
       if (currentPath !== nextPath) {
         this.setState({
@@ -104,10 +113,11 @@ UrlQueryContainer.defaultProps = {
 
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
+  collectionsMetadata: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
-  search: PropTypes.string,
-  project: PropTypes.shape({}).isRequired
+  project: PropTypes.shape({}).isRequired,
+  search: PropTypes.string
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UrlQueryContainer)

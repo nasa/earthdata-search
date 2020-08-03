@@ -6,18 +6,21 @@ import { isAccessMethodValid, validAccessMethod } from './accessMethods'
  * @param {Object} collections - Collections object from the redux store
  * @return {Object}
  */
-export const isProjectValid = (project, collections) => {
-  const { byId: projectById, collectionIds } = project
-  const { byId: collectionById } = collections
+export const isProjectValid = (project, collectionsMetadata) => {
+  const { collections: projectCollections = {} } = project
+  const {
+    byId: projectCollectionsById = {},
+    allIds = []
+  } = projectCollections
 
-  if (collectionIds.length === 0) return { valid: false }
+  if (allIds.length === 0) return { valid: false }
 
   // Default valid state
   const valid = { ...validAccessMethod }
 
-  collectionIds.forEach((collectionId) => {
-    const projectCollection = projectById[collectionId]
-    const collection = collectionById[collectionId]
+  allIds.forEach((collectionId) => {
+    const projectCollection = projectCollectionsById[collectionId]
+    const collection = collectionsMetadata[collectionId]
 
     const newValid = isAccessMethodValid(projectCollection, collection)
 

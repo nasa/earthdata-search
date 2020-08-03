@@ -4,48 +4,61 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { isEmpty, min } from 'lodash'
 
-import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/GranuleResultsHighlights'
+import { getFocusedCollectionGranuleMetadata } from '../../selectors/collectionResults'
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getGranuleIds } from '../../util/getGranuleIds'
-import { getFocusedCollectionObject } from '../../util/focusedCollection'
+
+import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
-  focusedCollection: state.focusedCollection
+  collectionsQuery: state.query.collection,
+  collectionsSearch: state.searchResults.collections,
+  focusedCollection: state.focusedCollection,
+  focusedCollectionMetadata: getFocusedCollectionMetadata(state),
+  focusedCollectionGranuleMetadata: getFocusedCollectionGranuleMetadata(state)
 })
 
 export const GranuleResultsHighlightsContainer = ({
-  collections,
+  collectionsQuery,
+  collectionsSearch,
   focusedCollection,
+  focusedCollectionGranuleMetadata,
+  focusedCollectionMetadata,
   location
 }) => {
-  const collectionObject = getFocusedCollectionObject(focusedCollection, collections)
-
   const {
-    excludedGranuleIds = [],
-    granules,
     isCwic
-  } = collectionObject
+  } = focusedCollectionMetadata
 
-  if (isEmpty(granules) || granules == null) return null
+  const { byId: collectionSearchById = {} } = collectionsSearch
+  const { [focusedCollection]: collectionSearchResults = {} } = collectionSearchById
+  const { granules: collectionGranuleSearch = {} } = collectionSearchResults
+
+  const { [focusedCollection]: collectionQueryResults = {} } = collectionsQuery
+  const { granules: collectionGranuleQuery = {} } = collectionQueryResults
+  const { excludedGranuleIds = [] } = collectionGranuleQuery
+
   const {
-    byId,
+    allIds,
     hits,
     isLoading,
     isLoaded
-  } = granules
+  } = collectionGranuleSearch
+
+  if (isEmpty(allIds) || allIds == null) return null
 
   // Limit the number of granules shown
   const limit = min([5, hits])
 
   const granuleIds = getGranuleIds({
-    granules,
+    allIds,
     excludedGranuleIds,
     isCwic,
     limit
   })
 
   const granuleList = granuleIds.map(granuleId => (
-    byId[granuleId]
+    focusedCollectionGranuleMetadata[granuleId]
   ))
 
   const visibleGranules = granuleIds.length ? granuleIds.length : 0
@@ -53,19 +66,22 @@ export const GranuleResultsHighlightsContainer = ({
 
   return (
     <GranuleResultsHighlights
-      granules={granuleList}
       granuleCount={granuleCount}
-      visibleGranules={visibleGranules}
-      location={location}
-      isLoading={isLoading}
+      granules={granuleList}
       isLoaded={isLoaded}
+      isLoading={isLoading}
+      location={location}
+      visibleGranules={visibleGranules}
     />
   )
 }
 
 GranuleResultsHighlightsContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
+  collectionsQuery: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
+  focusedCollectionGranuleMetadata: PropTypes.shape({}).isRequired,
+  focusedCollectionMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired
 }
 

@@ -67,7 +67,7 @@ const generateCollectionCapabilityTags = async (input) => {
   const { cmrHost } = getEarthdataConfig(cmrEnv())
   const collectionSearchUrl = `${cmrHost}/search/collections.json`
 
-  const cmrCollectionResponse = await request.post({
+  const response = await request.post({
     uri: collectionSearchUrl,
     form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {
@@ -79,12 +79,12 @@ const generateCollectionCapabilityTags = async (input) => {
     resolveWithFullResponse: true
   })
 
-  const { 'cmr-hits': cmrHits = 0 } = cmrCollectionResponse.headers
+  const cmrHits = parseInt(response.headers['cmr-hits'], 10)
 
   console.log(`CMR returned ${cmrHits} collections. Current page number is ${pageNumber}, tagging ${pageSize} collections.`)
 
   // All of the collections requested
-  const collections = readCmrResults(collectionSearchUrl, cmrCollectionResponse)
+  const collections = readCmrResults(collectionSearchUrl, response)
 
   // Filter out collections that dont have any granules
   const collectionsWithGranules = collections.filter(collection => collection.granule_count > 0)

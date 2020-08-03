@@ -79,10 +79,17 @@ const decodeHelp = (params, paramName) => {
  * @return {Object} An object of values that match the redux store
  */
 export const decodeUrlParams = (paramString) => {
-  // decode the paramString
+  // Decode the paramString
   const params = qs.parse(paramString, { ignoreQueryPrefix: true, parseArrays: false })
 
-  // build the param object based on the structure in the redux store
+  const {
+    metadata,
+    focusedCollection,
+    project = {},
+    query = {}
+  } = decodeCollections(params)
+
+  // Build the param object based on the structure in the redux store
   // e.g. map is store separately from query
   const focusedGranule = decodeHelp(params, 'focusedGranule')
 
@@ -95,8 +102,12 @@ export const decodeUrlParams = (paramString) => {
   spatial.line = decodeHelp(params, 'lineSearch')
   spatial.circle = decodeHelp(params, 'circleSearch')
 
-  const collectionQuery = { pageNum: 1 }
-  const granuleQuery = { pageNum: 1 }
+  // Initialize the collection query
+  const { collection = {} } = query
+  const collectionQuery = {
+    ...collection,
+    pageNum: 1
+  }
   collectionQuery.spatial = spatial
   collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
   collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
@@ -104,11 +115,27 @@ export const decodeUrlParams = (paramString) => {
   collectionQuery.gridName = decodeHelp(params, 'gridName')
   collectionQuery.tagKey = decodeHelp(params, 'tagKey')
   collectionQuery.hasGranulesOrCwic = decodeHelp(params, 'hasGranulesOrCwic')
-  granuleQuery.gridCoords = decodeHelp(params, 'gridCoords')
 
-  const query = {
-    collection: collectionQuery,
-    granule: granuleQuery
+  // Initialize the collection granule query
+  const granuleQuery = {
+    pageNum: 1
+  }
+
+  if (focusedCollection) {
+    const { byId = {} } = collectionQuery
+    const { [focusedCollection]: focusedCollectionQuery = {} } = byId
+    const { granules: focusedCollectionGranuleQuery = {} } = focusedCollectionQuery
+
+    collectionQuery.byId = {
+      ...collectionQuery.byId,
+      [focusedCollection]: {
+        ...focusedCollectionQuery,
+        granules: {
+          ...focusedCollectionGranuleQuery,
+          ...granuleQuery
+        }
+      }
+    }
   }
 
   const timeline = decodeTimeline(params)
@@ -121,12 +148,6 @@ export const decodeUrlParams = (paramString) => {
   const processingLevels = decodeHelp(params, 'processingLevelFacets')
   const projects = decodeHelp(params, 'projectFacets')
   const scienceKeywords = decodeScienceKeywords(params)
-
-  const {
-    collections,
-    focusedCollection,
-    project
-  } = decodeCollections(params)
 
   const cmrFacets = {
     data_center_h: organizations,
@@ -150,13 +171,16 @@ export const decodeUrlParams = (paramString) => {
     advancedSearch,
     autocompleteSelected,
     cmrFacets,
-    collections,
+    metadata,
     featureFacets,
     focusedCollection,
     focusedGranule,
     map,
     project,
-    query,
+    query: {
+      ...query,
+      collection: collectionQuery
+    },
     shapefile,
     timeline
   }
@@ -192,9 +216,10 @@ export const encodeUrlQuery = (props) => {
 
   const paramString = stringify(encodedQuery)
 
-  // return the full pathname + paramString
+  // Return the full pathname + paramString
   const { pathname } = props
   const fullPath = pathname + paramString
+
   return fullPath
 }
 

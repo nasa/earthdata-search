@@ -5,14 +5,14 @@ import './GranuleDetailsInfo.scss'
 
 import Spinner from '../Spinner/Spinner'
 
-export const GranuleDetailsInfo = ({ ummJson }) => (
+export const GranuleDetailsInfo = ({ granuleMetadata }) => (
   <div className="granule-details-info">
     <div className="granule-details-info__content">
       {
-        ummJson && JSON.stringify(ummJson, null, 2)
+        granuleMetadata && JSON.stringify(granuleMetadata, null, 2)
       }
       {
-        !ummJson && (
+        !granuleMetadata && (
           <Spinner
             className="granule-details-info__spinner"
             type="dots"
@@ -24,12 +24,8 @@ export const GranuleDetailsInfo = ({ ummJson }) => (
   </div>
 )
 
-GranuleDetailsInfo.defaultProps = {
-  ummJson: null
-}
-
 GranuleDetailsInfo.propTypes = {
-  ummJson: PropTypes.shape({})
+  granuleMetadata: PropTypes.shape({}).isRequired
 }
 
 export default GranuleDetailsInfo

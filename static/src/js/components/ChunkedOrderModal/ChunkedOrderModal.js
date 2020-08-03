@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 
+import { calculateOrderCount } from '../../util/orderCount'
+import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { stringify } from '../../util/url/url'
-import { commafy } from '../../util/commafy'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -33,21 +34,14 @@ export class ChunkedOrderModal extends Component {
 
   render() {
     const {
+      isOpen,
       location,
-      collectionMetdata,
       onToggleChunkedOrderModal,
-      project,
-      isOpen
+      projectCollectionsMetadata,
+      projectCollectionsRequiringChunking
     } = this.props
 
-    const {
-      byId,
-      collectionsRequiringChunking
-    } = project
-
     const { defaultGranulesPerOrder } = getApplicationConfig()
-
-    const { byId: metadataById } = collectionMetdata
 
     // Remove focused collection from back button params
     const params = parse(location.search, { ignoreQueryPrefix: true })
@@ -83,16 +77,15 @@ export class ChunkedOrderModal extends Component {
           You will receive a set of emails for each order placed.
         </p>
         {
-          collectionsRequiringChunking.length > 0 && (
-            collectionsRequiringChunking.map((collection, i) => {
+          Object.keys(projectCollectionsRequiringChunking).length > 0 && (
+            Object.keys(projectCollectionsRequiringChunking).map((collectionId, i) => {
               const key = `chunked_order_message-${i}`
 
-              const { [collection]: chunkedCollection } = byId
-              const { orderCount } = chunkedCollection
+              const { [collectionId]: projectCollection } = projectCollectionsRequiringChunking
+              const orderCount = calculateOrderCount(projectCollection)
 
-              const { [collection]: allMetadata } = metadataById
-              const { metadata: jsonMetadata } = allMetadata
-              const { title } = jsonMetadata
+              const { [collectionId]: projectCollectionMetadata } = projectCollectionsMetadata
+              const { title } = projectCollectionMetadata
 
               return (
                 <p key={key}>
@@ -132,12 +125,12 @@ export class ChunkedOrderModal extends Component {
 }
 
 ChunkedOrderModal.propTypes = {
-  collectionMetdata: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
+  location: PropTypes.shape({}).isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired,
-  onToggleChunkedOrderModal: PropTypes.func.isRequired
+  onToggleChunkedOrderModal: PropTypes.func.isRequired,
+  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
+  projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired
 }
 
 export default ChunkedOrderModal

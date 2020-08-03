@@ -17,34 +17,33 @@ import { createDataLinks } from './granules'
  * @returns {GranuleListInfo} - The return object
  */
 export const formatGranulesList = (
-  granules,
   granuleIds,
+  granulesMetadata,
   focusedGranule,
   isGranuleInProject,
   isCollectionInProject
 ) => {
   let hasBrowseImagery = false
-
   const granulesList = granuleIds.map((granuleId) => {
-    const granule = granules.byId[granuleId]
+    const granule = granulesMetadata[granuleId]
 
     const original = granule
 
     const isFocused = focusedGranule === granuleId
 
     const {
-      browse_flag: browseFlag,
-      browse_url: browseUrl,
-      collection_concept_id: collectionId,
-      day_night_flag: dayNightFlag,
-      formatted_temporal: formattedTemporal,
+      browseFlag,
+      browseUrl,
+      collectionId,
+      dayNightFlag,
+      formattedTemporal,
       id,
       links,
-      online_access_flag: onlineAccessFlag,
-      original_format: originalFormat,
-      producer_granule_id: producerGranuleId,
-      thumbnail: granuleThumbnail,
-      title: granuleTitle
+      onlineAccessFlag,
+      originalFormat,
+      producerGranuleId,
+      granuleThumbnail,
+      granuleTitle
     } = granule
 
     if (browseFlag && !hasBrowseImagery) hasBrowseImagery = true

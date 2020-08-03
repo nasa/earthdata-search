@@ -5,13 +5,19 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
+import {
+  getProjectCollectionsMetadata,
+  getProjectCollectionsRequiringChunking
+} from '../../selectors/project'
+
 import ChunkedOrderModal from '../../components/ChunkedOrderModal/ChunkedOrderModal'
 
 const mapStateToProps = state => ({
-  collectionMetdata: state.metadata.collections,
+  isOpen: state.ui.chunkedOrderModal.isOpen,
   location: state.router.location,
   project: state.project,
-  isOpen: state.ui.chunkedOrderModal.isOpen
+  projectCollectionsMetadata: getProjectCollectionsMetadata(state),
+  projectCollectionsRequiringChunking: getProjectCollectionsRequiringChunking(state)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -22,30 +28,30 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export const ChunkedOrderModalContainer = ({
-  collectionMetdata,
-  location,
-  project,
   isOpen,
+  location,
   onSubmitRetrieval,
-  onToggleChunkedOrderModal
+  onToggleChunkedOrderModal,
+  projectCollectionsMetadata,
+  projectCollectionsRequiringChunking
 }) => (
   <ChunkedOrderModal
-    collectionMetdata={collectionMetdata}
-    location={location}
-    project={project}
     isOpen={isOpen}
+    location={location}
     onSubmitRetrieval={onSubmitRetrieval}
     onToggleChunkedOrderModal={onToggleChunkedOrderModal}
+    projectCollectionsMetadata={projectCollectionsMetadata}
+    projectCollectionsRequiringChunking={projectCollectionsRequiringChunking}
   />
 )
 
 ChunkedOrderModalContainer.propTypes = {
-  collectionMetdata: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
+  location: PropTypes.shape({}).isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired,
-  onToggleChunkedOrderModal: PropTypes.func.isRequired
+  onToggleChunkedOrderModal: PropTypes.func.isRequired,
+  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
+  projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

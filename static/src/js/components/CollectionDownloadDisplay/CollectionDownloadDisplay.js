@@ -3,9 +3,12 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
-import { Button } from '../Button/Button'
+
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
 import { generateDownloadScript } from '../../util/files/generateDownloadScript'
+
+import Button from '../Button/Button'
+
 import './CollectionDownloadDisplay.scss'
 
 const mapStateToProps = state => ({

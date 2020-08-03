@@ -77,7 +77,7 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
 
       payload.selectedCategory = collectionParams.viewAllFacetsCategory
       payload.facets = response.data.feed.facets.children || []
-      payload.hits = response.headers['cmr-hits']
+      payload.hits = parseInt(response.headers['cmr-hits'], 10)
 
       dispatch(updateAuthTokenFromHeaders(response.headers))
       dispatch(onViewAllFacetsLoaded({

@@ -26,8 +26,8 @@ let cancelToken
 
 /**
  * Perform a timeline request based on the current redux state.
- * @param {function} dispatch - A dispatch function provided by redux.
- * @param {function} getState - A function that returns the current state provided by redux.
+ * @param {Function} dispatch - A dispatch function provided by redux.
+ * @param {Function} getState - A function that returns the current state provided by redux.
  */
 export const getTimeline = () => (dispatch, getState) => {
   // If cancel token is set, cancel the previous request(s)
@@ -41,6 +41,7 @@ export const getTimeline = () => (dispatch, getState) => {
     dispatch(updateTimelineIntervals({
       results: []
     }))
+
     return null
   }
 
@@ -56,6 +57,7 @@ export const getTimeline = () => (dispatch, getState) => {
   } = timelineParams
 
   const requestObject = new TimelineRequest(authToken)
+
   cancelToken = requestObject.getCancelToken()
 
   const response = requestObject.search({

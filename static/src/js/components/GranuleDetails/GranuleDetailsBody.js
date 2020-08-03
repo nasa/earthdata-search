@@ -11,39 +11,39 @@ import './GranuleDetailsBody.scss'
 /**
  * Renders GranuleDetailsBody.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.metadataUrls - Granule metadata links
- * @param {Object} props.ummJson - The raw UMM JSON for the selected granule.
+ * @param {String} props.authToken - The authToken for the logged in user
+ * @param {Object} props.granuleMetadata - The formatted metadata from CMR
  */
 const GranuleDetailsBody = ({
   authToken,
-  metadataUrls,
-  ummJson
-}) => (
-  <div className="granule-details-body">
-    <Tabs defaultActiveKey="information">
-      <Tab eventKey="information" title="Information">
-        <GranuleDetailsInfo ummJson={ummJson} />
-      </Tab>
-      <Tab eventKey="metadata" title="Metadata">
-        <GranuleDetailsMetadata
-          authToken={authToken}
-          metadataUrls={metadataUrls}
-        />
-      </Tab>
-    </Tabs>
-  </div>
-)
+  granuleMetadata
+}) => {
+  const { metadataUrls } = granuleMetadata
+
+  return (
+    <div className="granule-details-body">
+      <Tabs defaultActiveKey="information">
+        <Tab eventKey="information" title="Information">
+          <GranuleDetailsInfo granuleMetadata={granuleMetadata} />
+        </Tab>
+        <Tab eventKey="metadata" title="Metadata">
+          <GranuleDetailsMetadata
+            authToken={authToken}
+            metadataUrls={metadataUrls}
+          />
+        </Tab>
+      </Tabs>
+    </div>
+  )
+}
 
 GranuleDetailsBody.defaultProps = {
-  authToken: null,
-  metadataUrls: null,
-  ummJson: null
+  authToken: null
 }
 
 GranuleDetailsBody.propTypes = {
   authToken: PropTypes.string,
-  metadataUrls: PropTypes.shape({}),
-  ummJson: PropTypes.shape({})
+  granuleMetadata: PropTypes.shape({}).isRequired
 }
 
 export default GranuleDetailsBody

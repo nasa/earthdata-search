@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import commafy from '../../util/commafy'
-import pluralize from '../../util/pluralize'
-import Skeleton from '../Skeleton/Skeleton'
-
+import { commafy } from '../../util/commafy'
 import { granuleListItem, granuleListTotal } from './skeleton'
+import { pluralize } from '../../util/pluralize'
+
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import Skeleton from '../Skeleton/Skeleton'
 
 import './GranuleResultsHighlights.scss'
 
@@ -19,12 +19,12 @@ const granuleListTotalStyle = {
 }
 
 export const GranuleResultsHighlights = ({
-  granules,
   granuleCount,
-  visibleGranules,
-  location,
+  granules,
+  isLoaded,
   isLoading,
-  isLoaded
+  location,
+  visibleGranules
 }) => (
   <div className="granule-results-highlights">
     <div className="granule-results-highlights__count">
@@ -73,13 +73,15 @@ export const GranuleResultsHighlights = ({
               granules.map((granule, i) => {
                 const {
                   id,
-                  producer_granule_id: granuleId,
+                  producerGranuleId: granuleId,
                   title: granuleTitle,
-                  formatted_temporal: formattedTemporal
+                  formattedTemporal
                 } = granule
 
-                const timeStart = formattedTemporal[0]
-                const timeEnd = formattedTemporal[1]
+                const [
+                  timeStart,
+                  timeEnd
+                ] = formattedTemporal
 
                 const title = granuleId || granuleTitle
 
@@ -128,12 +130,12 @@ export const GranuleResultsHighlights = ({
 )
 
 GranuleResultsHighlights.propTypes = {
-  granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   granuleCount: PropTypes.number.isRequired,
-  visibleGranules: PropTypes.number.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  isLoaded: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  isLoaded: PropTypes.bool.isRequired
+  location: PropTypes.shape({}).isRequired,
+  visibleGranules: PropTypes.number.isRequired
 }
 
 export default GranuleResultsHighlights

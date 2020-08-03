@@ -22,6 +22,7 @@ export const CollectionResultsListItem = memo(({
   style
 }) => {
   const element = useRef()
+
   const {
     collections,
     isItemLoaded,
@@ -53,13 +54,13 @@ export const CollectionResultsListItem = memo(({
   return (
     <li className="collection-results-list-item" style={style}>
       <CollectionResultsItem
-        ref={element}
-        collection={collections[index]}
+        collectionMetadata={collections[index]}
+        loadMoreItems={loadMoreItems}
         onAddProjectCollection={onAddProjectCollection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-        onViewCollectionGranules={onViewCollectionGranules}
         onViewCollectionDetails={onViewCollectionDetails}
-        loadMoreItems={loadMoreItems}
+        onViewCollectionGranules={onViewCollectionGranules}
+        ref={element}
       />
     </li>
   )

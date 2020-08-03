@@ -10,7 +10,7 @@ import {
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import pluralize from '../../util/pluralize'
-import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
+// import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 import { convertSize } from '../../util/project'
 
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
@@ -32,14 +32,14 @@ import './ProjectCollectionsItem.scss'
  * @param {Function} props.onSetActivePanelSection - Callback to set the active panel.
  * @param {Function} props.onUpdateFocusedCollection - Callback to set the focused collection ID.
  * @param {Object} props.projectCollection - Collection from project.byId
- * @param {Object} props.collectionSearch - Search values from query.collection
+ * @param {Object} props.collectionsQuery - Search values from query.collection
  */
 const ProjectCollectionItem = ({
   activePanelSection,
-  collection,
+  collectionMetadata,
   collectionCount,
   collectionId,
-  collectionSearch,
+  collectionsQuery,
   color,
   index,
   isPanelActive,
@@ -59,29 +59,26 @@ const ProjectCollectionItem = ({
     event.preventDefault()
   }
 
-  if (!collection) return null
-
   const {
     granules,
-    isVisible,
-    metadata,
-    isCwic
-  } = collection
+    isVisible
+  } = projectCollection
 
   const {
+    isCwic,
     title,
-    conceptId
-  } = metadata
+    id: conceptId
+  } = collectionMetadata
 
-  const { isLoaded, singleGranuleSize } = granules
+  const { hits: granuleCount, isLoaded, singleGranuleSize } = granules
 
-  const granuleCount = getGranuleCount(collection, projectCollection)
+  // const granuleCount = getGranuleCount(collectionMetadata, projectCollection)
 
   const totalSize = convertSize(granuleCount * singleGranuleSize)
 
   const { size = '', unit = '' } = totalSize
 
-  const { valid: isValid } = isAccessMethodValid(projectCollection, collection)
+  const { valid: isValid } = isAccessMethodValid(projectCollection, collectionMetadata)
 
   const className = classNames([
     'project-collections-item',
@@ -91,7 +88,7 @@ const ProjectCollectionItem = ({
     }
   ])
 
-  const handoffLinks = generateHandoffs(metadata, collectionSearch, mapProjection)
+  const handoffLinks = generateHandoffs(collectionMetadata, collectionsQuery, mapProjection)
 
   return (
     <li style={{ borderLeftColor: color }} className={className}>
@@ -228,16 +225,12 @@ const ProjectCollectionItem = ({
   )
 }
 
-ProjectCollectionItem.defaultProps = {
-  collection: undefined
-}
-
 ProjectCollectionItem.propTypes = {
   activePanelSection: PropTypes.string.isRequired,
-  collection: PropTypes.shape({}),
+  collectionMetadata: PropTypes.shape({}).isRequired,
   collectionCount: PropTypes.number.isRequired,
   collectionId: PropTypes.string.isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired,
+  collectionsQuery: PropTypes.shape({}).isRequired,
   color: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,

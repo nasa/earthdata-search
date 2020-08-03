@@ -8,7 +8,6 @@ import SpatialDisplay from '../../components/SpatialDisplay/SpatialDisplay'
 
 const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onGranuleGridCoords: coords => dispatch(actions.changeGranuleGridCoords(coords)),
   onRemoveGridFilter: () => dispatch(actions.removeGridFilter()),
   onRemoveSpatialFilter: () => dispatch(actions.removeSpatialFilter())
 })
@@ -18,7 +17,6 @@ const mapStateToProps = state => ({
   circleSearch: state.query.collection.spatial.circle,
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer,
-  gridCoords: state.query.granule.gridCoords,
   gridName: state.query.collection.gridName,
   lineSearch: state.query.collection.spatial.line,
   pointSearch: state.query.collection.spatial.point,
@@ -34,10 +32,8 @@ export const SpatialDisplayContainer = (props) => {
     displaySpatialPolygonWarning,
     drawingNewLayer,
     gridName,
-    gridCoords,
     lineSearch,
     onChangeQuery,
-    onGranuleGridCoords,
     onRemoveGridFilter,
     onRemoveSpatialFilter,
     pointSearch,
@@ -53,10 +49,8 @@ export const SpatialDisplayContainer = (props) => {
       displaySpatialPolygonWarning={displaySpatialPolygonWarning}
       drawingNewLayer={drawingNewLayer}
       gridName={gridName}
-      gridCoords={gridCoords}
       lineSearch={lineSearch}
       onChangeQuery={onChangeQuery}
-      onGranuleGridCoords={onGranuleGridCoords}
       onRemoveGridFilter={onRemoveGridFilter}
       onRemoveSpatialFilter={onRemoveSpatialFilter}
       pointSearch={pointSearch}
@@ -71,7 +65,6 @@ SpatialDisplayContainer.defaultProps = {
   boundingBoxSearch: '',
   circleSearch: '',
   gridName: '',
-  gridCoords: '',
   lineSearch: '',
   pointSearch: '',
   polygonSearch: '',
@@ -87,10 +80,9 @@ SpatialDisplayContainer.propTypes = {
     PropTypes.bool
   ]).isRequired,
   gridName: PropTypes.string,
-  gridCoords: PropTypes.string,
+  // gridCoords: PropTypes.string,
   lineSearch: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
-  onGranuleGridCoords: PropTypes.func.isRequired,
   onRemoveGridFilter: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   pointSearch: PropTypes.string,

@@ -131,8 +131,8 @@ GranuleResultsDataLinksButton.defaultProps = {
 }
 
 GranuleResultsDataLinksButton.propTypes = {
-  collectionId: PropTypes.string.isRequired,
   buttonVariant: PropTypes.string,
+  collectionId: PropTypes.string.isRequired,
   dataLinks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired
 }

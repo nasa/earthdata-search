@@ -11,10 +11,12 @@ import './GranuleDetailsHeader.scss'
 /**
  * Renders GranuleDetailsHeader.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.ummJson - The focused granule metadata.
+ * @param {Object} props.granuleMetadata - The focused granule granuleMetadata.
+ * @param {Object} props.location - Location passed from react router.
  */
-const GranuleDetailsHeader = ({ ummJson, location }) => {
-  const { GranuleUR: granuleUr } = ummJson
+const GranuleDetailsHeader = ({ granuleMetadata, location }) => {
+  // TODO: Implement and use a focused granule loading state
+  const { title } = granuleMetadata
 
   return (
     <div className="granule-details-header">
@@ -23,10 +25,10 @@ const GranuleDetailsHeader = ({ ummJson, location }) => {
           <div className="col align-self-start">
             <div className="granule-details-header__title-wrap">
               {
-                granuleUr
+                title
                   ? (
                     <>
-                      <h2 className="granule-details-header__title">{granuleUr}</h2>
+                      <h2 className="granule-details-header__title">{title}</h2>
                       <PortalLinkContainer
                         className="collection-details-header__title-link"
                         to={{
@@ -56,8 +58,8 @@ const GranuleDetailsHeader = ({ ummJson, location }) => {
 }
 
 GranuleDetailsHeader.propTypes = {
-  location: PropTypes.shape({}).isRequired,
-  ummJson: PropTypes.shape({}).isRequired
+  granuleMetadata: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired
 }
 
 export default GranuleDetailsHeader

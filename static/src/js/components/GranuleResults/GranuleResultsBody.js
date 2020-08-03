@@ -15,12 +15,11 @@ import './GranuleResultsBody.scss'
  * Renders GranuleResultsBody.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The focused collection ID.
- * @param {Array} props.excludedGranuleIds - An array of excluded granule IDs.
  * @param {String} props.focusedGranule - The focused granule ID.
- * @param {Object} props.granules - Granules passed from redux store.
+ * @param {Object} props.granuleSearchResults - Granules passed from redux store.
  * @param {Object} props.isCwic - Flag set if the focused collection is a CWIC collection.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
- * @param {Object} props.location - Location passed from react-router.
+ * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onExcludeGranule - Callback exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
@@ -29,9 +28,10 @@ import './GranuleResultsBody.scss'
  */
 const GranuleResultsBody = ({
   collectionId,
-  excludedGranuleIds,
   focusedGranule,
-  granules,
+  granuleQuery,
+  granuleSearchResults,
+  granulesMetadata,
   isCwic,
   loadNextPage,
   location,
@@ -49,32 +49,46 @@ const GranuleResultsBody = ({
     loadTime,
     isLoaded,
     isLoading,
-    allIds: allGranuleIds
-  } = granules
+    allIds
+  } = granuleSearchResults
+
+  const {
+    excludedGranuleIds = []
+  } = granuleQuery
 
   const granuleIds = getGranuleIds({
-    granules,
+    allIds,
     excludedGranuleIds,
     isCwic,
     limit: false
   })
 
+  const { collections: projectCollections } = project
+
   const {
     byId: projectCollectionsById = {},
-    collectionIds: projectCollectionIds = []
-  } = project
+    allIds: projectCollectionIds = []
+  } = projectCollections
+
+  const { [collectionId]: projectCollection = {} } = projectCollectionsById
+  const { granules: projectCollectionGranules = {} } = projectCollection
+  const {
+    addedGranuleIds = [],
+    removedGranuleIds = []
+  } = projectCollectionGranules
 
   let isCollectionInProject = false
   let allGranulesInProject = false
 
-  if (projectCollectionIds.indexOf(collectionId) > -1 && projectCollectionsById[collectionId]) {
-    const {
-      addedGranuleIds = [],
-      removedGranuleIds = []
-    } = projectCollectionsById[collectionId]
-
+  // If the collection is in the project
+  if (projectCollectionIds.indexOf(collectionId) > -1 && projectCollection) {
     isCollectionInProject = true
-    if (!addedGranuleIds.length && !removedGranuleIds.length) allGranulesInProject = true
+
+    if (!addedGranuleIds.length && !removedGranuleIds.length) {
+      // If there are no added granules and no removed granule, then the
+      // user has chosen to add the entire collection to the project
+      allGranulesInProject = true
+    }
   }
 
   /**
@@ -83,30 +97,26 @@ const GranuleResultsBody = ({
   * @returns {Boolean}
   */
   const isGranuleInProject = (granuleId) => {
-    const projectCollection = projectCollectionsById[collectionId] || {}
-    const {
-      addedGranuleIds = [],
-      removedGranuleIds = []
-    } = projectCollection
-
+    // If the collection is in the project and the user has removed granules
     if (isCollectionInProject && removedGranuleIds.length) {
+      // Check to see if the granuleId provided has been specifically removed
       return removedGranuleIds.indexOf(granuleId) === -1
     }
-    return allGranulesInProject || addedGranuleIds.indexOf(granuleId) !== -1
+
+    // Otherwise, check to see if all granules are in project or that the granuleId
+    // provided has been specifically added
+    return allGranulesInProject || addedGranuleIds.indexOf(granuleId) > -1
   }
 
   const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
-  // eslint-disable-next-line arrow-body-style
-  const result = useMemo(() => {
-    return formatGranulesList(
-      granules,
-      granuleIds,
-      focusedGranule,
-      isGranuleInProject,
-      isCollectionInProject
-    )
-  }, [granules, granuleIds, focusedGranule, excludedGranuleIds])
+  const result = useMemo(() => formatGranulesList(
+    granuleIds,
+    granulesMetadata,
+    focusedGranule,
+    isGranuleInProject,
+    isCollectionInProject
+  ), [granuleIds, granulesMetadata, focusedGranule, excludedGranuleIds])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
 
@@ -116,22 +126,22 @@ const GranuleResultsBody = ({
   // or if we have no collections and collections are loading. This controls whether or not the
   // "collections loading" item or the skeleton is displayed.
   const moreGranulesToLoad = !!(
-    allGranuleIds
-    && allGranuleIds.length
-    && allGranuleIds.length < granuleHits
+    allIds
+    && allIds.length
+    && allIds.length < granuleHits
   )
 
   // When the focused collection info is loading, a request has not been made
   // so we need to force the skeleton
-  const noGranuleRequestStarted = !isLoading && !isLoaded
+  // const noGranuleRequestStarted = !isLoading && !isLoaded
 
   // Show a skeleton while a request is happening
-  const isGranulesLoading = isLoading && granulesList.length === 0
+  const loadingFirstGranules = isLoading && granulesList.length === 0
 
-  const loadingFirstGranules = noGranuleRequestStarted || isGranulesLoading
+  // const loadingFirstGranules = isGranulesLoading
 
   // Show a skeleton when items are loading
-  const hasNextPage = moreGranulesToLoad || loadingFirstGranules
+  const hasNextPage = moreGranulesToLoad
 
   // If a next page is available, add an empty item to the lists for the loading indicator.
   const itemCount = hasNextPage ? granulesList.length + 1 : granulesList.length
@@ -205,20 +215,21 @@ const GranuleResultsBody = ({
         <span className="granule-results-body__floating-footer-item">
           Search Time:
           {' '}
-          {isGranulesLoading || loadTimeInSeconds === 'NaN'
-            ? (
-              <span className="granule-results-body__search-time-value">
-                <Spinner
-                  type="dots"
-                  size="x-tiny"
-                />
-              </span>
-            )
-            : (
-              <span className="granule-results-body__search-time-value">
-                {`${loadTimeInSeconds}s`}
-              </span>
-            )
+          {
+            isLoading && !isLoaded
+              ? (
+                <span className="granule-results-body__search-time-value">
+                  <Spinner
+                    type="dots"
+                    size="x-tiny"
+                  />
+                </span>
+              )
+              : (
+                <span className="granule-results-body__search-time-value">
+                  {`${loadTimeInSeconds}s`}
+                </span>
+              )
           }
         </span>
       </div>
@@ -228,9 +239,10 @@ const GranuleResultsBody = ({
 
 GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   focusedGranule: PropTypes.string.isRequired,
-  granules: PropTypes.shape({}).isRequired,
+  granuleQuery: PropTypes.shape({}).isRequired,
+  granuleSearchResults: PropTypes.shape({}).isRequired,
+  granulesMetadata: PropTypes.shape({}).isRequired,
   isCwic: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   loadNextPage: PropTypes.func.isRequired,

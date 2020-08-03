@@ -51,10 +51,13 @@ const GranuleResultsItem = forwardRef(({
     const { is_cwic: isCwic } = granule
 
     if (isCwic) id = murmurhash3(id).toString()
+
     onExcludeGranule({
       collectionId,
       granuleId: id
     })
+
+    // call actions.searchGranules
   }
 
   const handleClickGranuleDetails = (granuleId) => {
@@ -151,15 +154,15 @@ const GranuleResultsItem = forwardRef(({
 
   return (
     <div
-      ref={ref}
       className={granuleResultsItemClasses}
-      tabIndex={0}
-      role="button"
+      onClick={enhancedHandleOnClick}
+      onKeyPress={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseUp={enhancedOnRowMouseUp}
-      onKeyPress={handleClick}
-      onClick={enhancedHandleOnClick}
+      ref={ref}
+      role="button"
+      tabIndex={0}
       {...itemTitle}
     >
       <header

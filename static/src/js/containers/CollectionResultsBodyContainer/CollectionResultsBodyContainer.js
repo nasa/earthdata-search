@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {
-  withRouter
-} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
 
@@ -11,9 +9,10 @@ import CollectionResultsBody from '../../components/CollectionResults/Collection
 
 const mapStateToProps = state => ({
   browser: state.browser,
-  collections: state.searchResults.collections,
+  collectionsSearch: state.searchResults.collections,
+  collectionsMetadata: state.metadata.collections,
   portal: state.portal,
-  project: state.project,
+  projectCollectionIds: state.project.collections.allIds,
   query: state.query.collection
 })
 
@@ -33,11 +32,12 @@ const mapDispatchToProps = dispatch => ({
 export const CollectionResultsBodyContainer = (props) => {
   const {
     browser,
-    collections,
+    collectionsSearch,
     query,
     location,
+    collectionsMetadata,
     portal,
-    project,
+    projectCollectionIds,
     onAddProjectCollection,
     onRemoveCollectionFromProject,
     onViewCollectionGranules,
@@ -46,19 +46,19 @@ export const CollectionResultsBodyContainer = (props) => {
     panelView
   } = props
 
-  const { collectionIds: projectIds } = project
-
   const loadNextPage = () => {
     const { pageNum } = query
+
     onChangeCollectionPageNum(pageNum + 1)
   }
 
   return (
     <CollectionResultsBody
       browser={browser}
-      collections={collections}
+      collectionsSearch={collectionsSearch}
+      collectionsMetadata={collectionsMetadata}
       portal={portal}
-      projectIds={projectIds}
+      projectCollectionIds={projectCollectionIds}
       location={location}
       onAddProjectCollection={onAddProjectCollection}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
@@ -72,11 +72,12 @@ export const CollectionResultsBodyContainer = (props) => {
 
 CollectionResultsBodyContainer.propTypes = {
   browser: PropTypes.shape({}).isRequired,
-  collections: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
   query: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  collectionsMetadata: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
+  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,

@@ -10,9 +10,9 @@ import { VariableSizeGrid as Grid } from 'react-window'
 import InfiniteLoader from 'react-window-infinite-loader'
 import { isEmpty } from 'lodash'
 
-import { useRemsToPixels } from '../../hooks/useRemsToPixels'
 import { getActivePanelSize } from '../../util/getActivePanelSize'
 import { itemToRowColumnIndicies } from '../../util/itemToRowColumnIndicies'
+import { useRemsToPixels } from '../../hooks/useRemsToPixels'
 
 import GranuleResultsListItem from './GranuleResultsListItem'
 
@@ -64,7 +64,7 @@ innerElementType.propTypes = {
  * @param {Function} props.isItemLoaded - Callback to detirmine if a granule has been loaded.
  * @param {Number} props.itemCount - Number of total granule list itmes.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
- * @param {Object} props.location - The location provided by react-router.
+ * @param {Object} props.location - Location passed from react router.
  * @param { Function } props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.

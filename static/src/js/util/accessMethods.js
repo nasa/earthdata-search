@@ -1,5 +1,4 @@
 import { getGranuleLimit } from './collectionMetadata/granuleLimit'
-import { getGranuleCount } from './collectionMetadata/granuleCount'
 
 /**
  * Helper object for what properties a valid collection access method has
@@ -11,22 +10,23 @@ export const validAccessMethod = {
 }
 
 /**
- * Determine if the selected access method for a give project collection is valid
+ * Determine if the selected access method for a given project collection is valid
  * @param {Object} projectCollection Project collection config object, as saved in the redux store
  * @param {Object} collection Collection object, as saved in the redux store
  */
-export const isAccessMethodValid = (projectCollection, collection) => {
-  if (!projectCollection || !collection) {
+export const isAccessMethodValid = (projectCollection, collectionMetadata) => {
+  if (!projectCollection || !collectionMetadata) {
     return {
       ...validAccessMethod,
       valid: false
     }
   }
 
-  // check the granule count and granule limit
-  const { metadata } = collection
-  const granuleLimit = getGranuleLimit(metadata)
-  const granuleCount = getGranuleCount(collection, projectCollection)
+  // Check the granule count and granule limit
+  const granuleLimit = getGranuleLimit(collectionMetadata)
+
+  const { granules: projectCollectionGranules } = projectCollection
+  const { hits: granuleCount } = projectCollectionGranules
 
   if (granuleCount <= 0) {
     return {

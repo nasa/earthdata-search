@@ -87,11 +87,11 @@ class Timeline extends Component {
 
     const {
       collectionMetadata: nextCollectionMetadata,
+      onToggleOverrideTemporalModal,
       pathname: nextPathname,
       showOverrideModal,
       temporalSearch: nextTemporalSearch,
-      timeline: nextTimeline,
-      onToggleOverrideTemporalModal
+      timeline: nextTimeline
     } = nextProps
 
     const {
@@ -125,6 +125,7 @@ class Timeline extends Component {
       end: nextFocusEnd,
       start: nextFocusStart
     } = nextTimelineQuery
+
     if (nextFocusEnd
       && nextFocusStart
       && (oldFocusEnd !== nextFocusEnd || oldFocusStart !== nextFocusStart)) {
@@ -141,7 +142,9 @@ class Timeline extends Component {
 
       Object.keys(nextCollectionMetadata).forEach((collectionId) => {
         if (!nextCollectionMetadata[collectionId]) return
-        const { metadata = {} } = nextCollectionMetadata[collectionId]
+
+        const metadata = nextCollectionMetadata[collectionId]
+
         if (Object.keys(metadata).length === 0) return
 
         const {
@@ -169,27 +172,32 @@ class Timeline extends Component {
         this.$el.timeline('rows', timelineRows)
       }
     }
+
     if (Object.keys(nextCollectionMetadata).length === 0) {
       this.rows = {}
       this.clearTimelineData()
     }
 
-
     // For each collection in collectionMetadata, update the timeline data
     Object.keys(nextTimeline.intervals).forEach((collectionId) => {
       const intervals = nextTimeline.intervals[collectionId]
+
       if (!nextCollectionMetadata[collectionId]) return
-      const { metadata = {} } = nextCollectionMetadata[collectionId]
+
+      const metadata = nextCollectionMetadata[collectionId]
+
       if (Object.keys(metadata).length === 0) return
 
       // if the collection already exists in the state, compare the new values
       if (Object.keys(this.rows).indexOf(collectionId) !== -1) {
         const oldIntervals = this.rows[collectionId]
+
         if (oldIntervals !== intervals) {
           this.rows = {
             ...this.rows,
             [collectionId]: intervals
           }
+
           this.setTimelineData(collectionId, nextTimeline, getColorByIndex(Object.keys(this.rows)
             .indexOf(collectionId)))
         }
@@ -199,6 +207,7 @@ class Timeline extends Component {
           ...this.rows,
           [collectionId]: intervals
         }
+
         this.setTimelineData(collectionId, nextTimeline, getColorByIndex(Object.keys(this.rows)
           .indexOf(collectionId)))
       }
@@ -281,10 +290,10 @@ class Timeline extends Component {
   }
 
   /**
- * Set row specific temporal values in the timeline, causes the orange 'fenceposts' to appear. This will override the
- * global temporal range for the focused collection
- * @param {Object} temporalSearch - An object containing dates with the shape { startDate, endDate }
- */
+   * Set row specific temporal values in the timeline, causes the orange 'fenceposts' to appear. This will override the
+   * global temporal range for the focused collection
+   * @param {Object} temporalSearch - An object containing dates with the shape { startDate, endDate }
+   */
   setTimelineRowTemporal(id, temporalSearch) {
     const { endDate, startDate } = temporalSearch
 
@@ -297,7 +306,6 @@ class Timeline extends Component {
       this.$el.timeline('setRowTemporal', id, [])
     }
   }
-
 
   /**
    * Sets the rows (collections) and data (intervals or granules) in the timeline
@@ -339,7 +347,6 @@ class Timeline extends Component {
     }
   }
 
-
   /**
    * Set the zoom level on the timeline. Reads a english value for the zoom level, sets the value with an integer.
    * Mapping can be found in timelineIntervals
@@ -356,7 +363,6 @@ class Timeline extends Component {
       }
     }
   }
-
 
   /**
    * Sets the timeline focus.
@@ -379,14 +385,12 @@ class Timeline extends Component {
     return Math.round(this.$el.timeline('center') / 1000) || undefined
   }
 
-
   /**
    * Removes the rows (collections) from the timeline
    */
   clearTimelineData() {
     this.$el.timeline('rows', [])
   }
-
 
   /**
    * Handles the timeline moving, either panning or zooming. Updates the Redux store with the values
@@ -421,7 +425,6 @@ class Timeline extends Component {
 
     onChangeTimelineQuery(query)
   }
-
 
   /**
    * Handles creating a temporal constraint with the timeline, updates the Redux store with values
@@ -570,13 +573,13 @@ class Timeline extends Component {
   }
 }
 
-Timeline.defaultProps = {
-  collectionMetadata: {}
-}
+// Timeline.defaultProps = {
+//   collectionMetadata: {}
+// }
 
 Timeline.propTypes = {
   browser: PropTypes.shape({}).isRequired,
-  collectionMetadata: PropTypes.shape({}),
+  collectionMetadata: PropTypes.shape({}).isRequired,
   pathname: PropTypes.string.isRequired,
   showOverrideModal: PropTypes.bool.isRequired,
   temporalSearch: PropTypes.shape({}).isRequired,

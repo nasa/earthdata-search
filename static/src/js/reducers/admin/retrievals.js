@@ -30,8 +30,10 @@ const initialState = {
 const processResults = (results) => {
   const byId = {}
   const allIds = []
+
   results.forEach((result) => {
     const { obfuscated_id: obfuscatedId } = result
+
     byId[obfuscatedId] = result
     allIds.push(obfuscatedId)
   })

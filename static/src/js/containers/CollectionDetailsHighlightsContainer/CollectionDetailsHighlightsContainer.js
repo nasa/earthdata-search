@@ -6,12 +6,12 @@ import { withRouter } from 'react-router-dom'
 import actions from '../../actions'
 
 import CollectionDetailsHighlights from '../../components/CollectionDetailsHighlights/CollectionDetailsHighlights'
-import { getFocusedCollectionObject } from '../../util/focusedCollection'
+
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
-  focusedCollection: state.focusedCollection,
-  collectionSearch: state.searchResults.collections
+  collectionMetadata: getFocusedCollectionMetadata(state),
+  collectionsSearch: state.searchResults.collections
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -20,34 +20,22 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export const CollectionDetailsHighlightsContainer = ({
-  collections,
-  collectionSearch,
-  focusedCollection,
+  collectionMetadata,
+  collectionsSearch,
   location,
   onToggleRelatedUrlsModal
-}) => {
-  const collectionObject = getFocusedCollectionObject(focusedCollection, collections)
-
-  const {
-    isLoaded,
-    isLoading
-  } = collectionSearch
-
-  return (
-    <CollectionDetailsHighlights
-      collection={collectionObject}
-      isLoading={isLoading}
-      isLoaded={isLoaded}
-      location={location}
-      onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
-    />
-  )
-}
+}) => (
+  <CollectionDetailsHighlights
+    collectionMetadata={collectionMetadata}
+    collectionsSearch={collectionsSearch}
+    location={location}
+    onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
+  />
+)
 
 CollectionDetailsHighlightsContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

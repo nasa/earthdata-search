@@ -4,7 +4,10 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
-import { getFocusedCollectionObject } from '../../util/focusedCollection'
+
+import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
+import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 
 import GranuleResultsHeader from '../../components/GranuleResults/GranuleResultsHeader'
 
@@ -22,44 +25,50 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
-  collectionSearch: state.query.collection,
+  collectionMetadata: getFocusedCollectionMetadata(state),
+  collectionQuery: state.query.collection,
+  collectionsSearch: state.searchResults.collections,
   focusedCollection: state.focusedCollection,
-  granuleSearch: state.query.granule,
+  granuleQuery: getFocusedCollectionGranuleQuery(state),
+  granuleSearchResults: getFocusedCollectionGranuleResults(state),
   mapProjection: state.map.projection,
   secondaryOverlayPanel: state.ui.secondaryOverlayPanel
 })
 
 export const GranuleResultsHeaderContainer = (props) => {
   const {
-    collections,
-    collectionSearch,
+    collectionMetadata,
+    collectionQuery,
+    collectionsSearch,
     focusedCollection,
-    granuleSearch,
+    granuleQuery,
+    granuleSearchResults,
     location,
     mapProjection,
-    secondaryOverlayPanel,
     onApplyGranuleFilters,
     onChangePanelView,
     onToggleAboutCwicModal,
     onToggleSecondaryOverlayPanel,
     onUndoExcludeGranule,
-    panelView
+    panelView,
+    secondaryOverlayPanel
   } = props
 
-  const focusedCollectionObject = getFocusedCollectionObject(focusedCollection, collections)
-
-  const { pageNum } = granuleSearch
+  const {
+    pageNum = 1
+  } = granuleQuery
 
   return (
     <>
       <GranuleResultsHeader
-        collectionSearch={collectionSearch}
-        focusedCollectionId={focusedCollection}
-        focusedCollectionObject={focusedCollectionObject}
+        collectionMetadata={collectionMetadata}
+        collectionQuery={collectionQuery}
+        collectionsSearch={collectionsSearch}
+        focusedCollection={focusedCollection}
+        granuleQuery={granuleQuery}
+        granuleSearchResults={granuleSearchResults}
         location={location}
         mapProjection={mapProjection}
-        secondaryOverlayPanel={secondaryOverlayPanel}
         onApplyGranuleFilters={onApplyGranuleFilters}
         onChangePanelView={onChangePanelView}
         onToggleAboutCwicModal={onToggleAboutCwicModal}
@@ -67,25 +76,28 @@ export const GranuleResultsHeaderContainer = (props) => {
         onUndoExcludeGranule={onUndoExcludeGranule}
         pageNum={pageNum}
         panelView={panelView}
+        secondaryOverlayPanel={secondaryOverlayPanel}
       />
     </>
   )
 }
 
 GranuleResultsHeaderContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionQuery: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
-  granuleSearch: PropTypes.shape({}).isRequired,
+  granuleQuery: PropTypes.shape({}).isRequired,
+  granuleSearchResults: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
-  secondaryOverlayPanel: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onChangePanelView: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
-  panelView: PropTypes.string.isRequired
+  panelView: PropTypes.string.isRequired,
+  secondaryOverlayPanel: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

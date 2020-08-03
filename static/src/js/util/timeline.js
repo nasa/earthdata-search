@@ -29,9 +29,12 @@ export const prepareTimelineParams = (state) => {
   const isProjectPage = pathname.startsWith('/project')
 
   let conceptIds = []
+
   // If we are on the project page, we want to query the projectIds
   if (isProjectPage) {
-    const { collectionIds: projectIds } = project
+    const { collections: projectCollections } = project
+    const { allIds: projectIds } = projectCollections
+
     conceptIds = projectIds
   } else if (focusedCollection !== '') {
     // if we aren't on the project page, we want to query the focusedCollection

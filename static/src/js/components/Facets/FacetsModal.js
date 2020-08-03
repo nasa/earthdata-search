@@ -105,7 +105,7 @@ FacetsModal.defaultProps = {
 }
 
 FacetsModal.propTypes = {
-  collectionHits: PropTypes.string,
+  collectionHits: PropTypes.number,
   viewAllFacets: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onApplyViewAllFacets: PropTypes.func.isRequired,

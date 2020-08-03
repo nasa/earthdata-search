@@ -9,21 +9,21 @@ import './GranuleFiltersHeader.scss'
  * @param {Object} props.datasetId - The title of the focused collection.
  */
 export const GranuleFiltersHeader = ({
-  datasetId
+  title
 }) => (
   <div className="granule-filters-header">
     <i className="fa fa-filter" />
     <h2 className="granule-filters-header__primary">Granule Filters</h2>
-    <span className="granule-filters-header__secondary">{datasetId}</span>
+    <span className="granule-filters-header__secondary">{title}</span>
   </div>
 )
 
 GranuleFiltersHeader.defaultProps = {
-  datasetId: ''
+  title: ''
 }
 
 GranuleFiltersHeader.propTypes = {
-  datasetId: PropTypes.string
+  title: PropTypes.string
 }
 
 export default GranuleFiltersHeader

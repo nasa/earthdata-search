@@ -15,11 +15,12 @@ import { buildNativeFormat } from './collectionMetadata/nativeFormat'
  * @param {String} collectionId Focused collection id
  * @param {Object} collections collections from the metadata store
  */
-export const getFocusedCollectionObject = (collectionId, collections) => {
+export const getCollectionMetadata = (collectionId, collections) => {
   if (isEmpty(collections)) return undefined
-  const { byId = {} } = collections
 
-  return byId[collectionId] || {}
+  const { [collectionId]: collectionMetadata = {} } = collections
+
+  return collectionMetadata
 }
 
 /**
@@ -28,7 +29,7 @@ export const getFocusedCollectionObject = (collectionId, collections) => {
  * @param {Object} collections collections from the metadata store
  */
 export const getFocusedCollectionMetadata = (collectionId, collections) => {
-  const collection = getFocusedCollectionObject(collectionId, collections)
+  const collection = getCollectionMetadata(collectionId, collections)
   if (isEmpty(collection)) return undefined
   const { metadata = {} } = collection
 

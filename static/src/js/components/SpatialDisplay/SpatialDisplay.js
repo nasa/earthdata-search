@@ -32,7 +32,6 @@ class SpatialDisplay extends Component {
       circleSearch: '',
       lineSearch: '',
       gridName: '',
-      gridCoords: '',
       manuallyEntering: false,
       pointSearch: '',
       polygonSearch: '',
@@ -40,10 +39,8 @@ class SpatialDisplay extends Component {
     }
 
     this.onChangeGridType = this.onChangeGridType.bind(this)
-    this.onChangeGridCoords = this.onChangeGridCoords.bind(this)
     this.onGridRemove = this.onGridRemove.bind(this)
     this.onSpatialRemove = this.onSpatialRemove.bind(this)
-    this.onSubmitGridCoords = this.onSubmitGridCoords.bind(this)
     this.onChangePointSearch = this.onChangePointSearch.bind(this)
     this.onSubmitPointSearch = this.onSubmitPointSearch.bind(this)
     this.onChangeBoundingBoxSearch = this.onChangeBoundingBoxSearch.bind(this)
@@ -59,7 +56,6 @@ class SpatialDisplay extends Component {
       boundingBoxSearch,
       circleSearch,
       gridName,
-      gridCoords,
       pointSearch,
       polygonSearch,
       shapefile
@@ -70,7 +66,6 @@ class SpatialDisplay extends Component {
       boundingBoxSearch: this.transformBoundingBoxCoordinates(boundingBoxSearch),
       circleSearch: this.transformCircleCoordinates(circleSearch),
       gridName,
-      gridCoords,
       pointSearch,
       polygonSearch,
       shapefile
@@ -83,7 +78,6 @@ class SpatialDisplay extends Component {
       circleSearch,
       lineSearch,
       gridName,
-      gridCoords,
       pointSearch,
       polygonSearch,
       shapefile
@@ -143,12 +137,6 @@ class SpatialDisplay extends Component {
       state.gridName = nextProps.gridName
     }
 
-    if (gridCoords !== nextProps.gridCoords) {
-      shouldUpdateState = true
-
-      state.gridCoords = nextProps.gridCoords
-    }
-
     if (!isEqual(shapefile, nextProps.shapefile)) {
       shouldUpdateState = true
 
@@ -169,12 +157,6 @@ class SpatialDisplay extends Component {
     e.preventDefault()
   }
 
-  onChangeGridCoords(e) {
-    this.setState({
-      gridCoords: e.target.value
-    })
-  }
-
   onGridRemove() {
     const {
       onRemoveGridFilter
@@ -193,15 +175,6 @@ class SpatialDisplay extends Component {
     })
 
     onRemoveSpatialFilter()
-  }
-
-  onSubmitGridCoords(e) {
-    const { onGranuleGridCoords } = this.props
-    if (e.type === 'blur' || e.key === 'Enter') {
-      onGranuleGridCoords(e.target.value)
-    }
-
-    e.preventDefault()
   }
 
   onChangePointSearch(e) {
@@ -475,7 +448,6 @@ class SpatialDisplay extends Component {
       circleSearch,
       lineSearch,
       gridName,
-      gridCoords,
       manuallyEntering,
       pointSearch,
       polygonSearch,
@@ -524,21 +496,6 @@ class SpatialDisplay extends Component {
                   ))
                 }
               </Form.Control>
-            </Form.Group>
-            <Form.Group className="spatial-display__form-group spatial-display__form-group--coords">
-              <Form.Label srOnly>
-                Coordinates
-              </Form.Label>
-              <Form.Control
-                className="spatial-display__text-input"
-                type="text"
-                placeholder="Coordinates..."
-                size="sm"
-                value={gridCoords}
-                onChange={this.onChangeGridCoords}
-                onBlur={this.onSubmitGridCoords}
-                onKeyUp={this.onSubmitGridCoords}
-              />
             </Form.Group>
           </Form.Row>
         </SpatialDisplayEntry>
@@ -884,10 +841,8 @@ SpatialDisplay.propTypes = {
     PropTypes.bool
   ]).isRequired,
   gridName: PropTypes.string.isRequired,
-  gridCoords: PropTypes.string.isRequired,
   lineSearch: PropTypes.string.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
-  onGranuleGridCoords: PropTypes.func.isRequired,
   onRemoveGridFilter: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   pointSearch: PropTypes.string.isRequired,

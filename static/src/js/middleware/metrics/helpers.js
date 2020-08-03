@@ -67,9 +67,10 @@ export const computeCollectionsViewed = (state) => {
 */
 export const computeCollectionsAdded = (state) => {
   const { project } = state
-  const { collectionIds = [] } = project
+  const { collections: projectCollections } = project
+  const { allIds } = projectCollections
 
-  if (collectionIds.length) return collectionIds[collectionIds.length - 1]
+  if (allIds.length) return allIds[allIds.length - 1]
   return null
 }
 

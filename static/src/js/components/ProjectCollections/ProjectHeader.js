@@ -5,11 +5,11 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import abbreviate from 'number-abbreviate'
 import classNames from 'classnames'
 
-import { projectHeader } from './skeleton'
-import { convertSizeToMB, convertSize } from '../../util/project'
 import { commafy } from '../../util/commafy'
+import { convertSizeToMB, convertSize } from '../../util/project'
 import { pluralize } from '../../util/pluralize'
-import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
+import { projectHeader } from './skeleton'
+// import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 
 import Skeleton from '../Skeleton/Skeleton'
 
@@ -125,32 +125,42 @@ export class ProjectHeader extends Component {
 
   render() {
     const { isEditingName, projectName } = this.state
-    const { collections, project } = this.props
-    const { byId } = collections
+
     const {
-      collectionIds: projectIds,
-      byId: projectById
-    } = project
+      project
+    } = this.props
+
+    const { collections: projectCollections } = project
+
+    const {
+      allIds: projectCollectionIds,
+      byId: projectCollectionById
+    } = projectCollections
 
     let totalGranules = 0
     let size = 0
 
     const granuleLoadingStates = []
 
-    projectIds.forEach((collectionId) => {
-      const collection = byId[collectionId]
-      if (!collection) return
-      const { granules } = collection
+    projectCollectionIds.forEach((collectionId) => {
+      // const collection = projectCollectionsMetadata[collectionId]
+      // const { byId: collectionsQueryById } = collectionsQuery
+      // const { [collectionId]: collectionQuery } = collectionsQueryById
+      // const { granules: granuleQuery } = collectionQuery
 
-      const { isLoaded, singleGranuleSize } = granules
+      const { [collectionId]: projectCollection = {} } = projectCollectionById
+      const { granules = {} } = projectCollection
+      const {
+        hits: granulesCount,
+        isLoaded,
+        singleGranuleSize
+      } = granules
+
       granuleLoadingStates.push(isLoaded)
 
-      const totalCollectionGranules = getGranuleCount(collection, projectById[collectionId])
+      totalGranules += granulesCount
 
-      // If added granules exist use that value, otherwise subtract any excluded granule from the total
-      totalGranules += totalCollectionGranules
-
-      const granuleSize = totalCollectionGranules * singleGranuleSize
+      const granuleSize = granulesCount * singleGranuleSize
 
       const convertedSize = convertSizeToMB({
         size: granuleSize,
@@ -245,9 +255,9 @@ export class ProjectHeader extends Component {
                   className="project-header__stats-item project-header__stats-item--collections"
                 >
                   <span className="project-header__stats-val">
-                    {`${commafy(projectIds.length)} `}
+                    {`${commafy(projectCollectionIds.length)} `}
                   </span>
-                  {pluralize('Collection', projectIds.length)}
+                  {pluralize('Collection', projectCollectionIds.length)}
                 </li>
                 <li
                   className="project-header__stats-item project-header__stats-item--size"
@@ -293,7 +303,7 @@ export class ProjectHeader extends Component {
 }
 
 ProjectHeader.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
+  collectionsQuery: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   onUpdateProjectName: PropTypes.func.isRequired

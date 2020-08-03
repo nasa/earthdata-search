@@ -3,11 +3,14 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
+
 import { metricsTimeline } from '../../middleware/metrics/actions'
 
-import Timeline from '../../components/Timeline/Timeline'
-import { getFocusedCollectionObject } from '../../util/focusedCollection'
 import isPath from '../../util/isPath'
+
+import { getProjectCollectionsIds } from '../../selectors/project'
+
+import Timeline from '../../components/Timeline/Timeline'
 
 const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
@@ -21,10 +24,10 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   browser: state.browser,
-  collections: state.metadata.collections,
+  collectionsMetadata: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   pathname: state.router.location.pathname,
-  project: state.project,
+  projectCollectionsIds: getProjectCollectionsIds(state),
   temporalSearch: state.query.collection.temporal,
   timeline: state.timeline
 })
@@ -32,10 +35,10 @@ const mapStateToProps = state => ({
 export const TimelineContainer = (props) => {
   const {
     browser,
-    collections,
+    collectionsMetadata,
     focusedCollection,
     pathname,
-    project,
+    projectCollectionsIds,
     temporalSearch,
     timeline,
     onChangeQuery,
@@ -46,26 +49,32 @@ export const TimelineContainer = (props) => {
   } = props
 
   let changeQueryMethod = onChangeQuery
+
   // Determine the collectionMetadata the timeline should be displaying
   const isProjectPage = isPath(pathname, ['/projects'])
   const isGranulesPage = isPath(pathname, ['/search/granules'])
+
   const collectionMetadata = {}
+  const collectionsToRender = []
 
   if (isProjectPage) {
-    const { byId } = collections
-    const { collectionIds: projectIds } = project
-    projectIds.forEach((collectionId, index) => {
-      if (index > 2) return // only take the first 3 collections
-      collectionMetadata[collectionId] = byId[collectionId]
-    })
+    collectionsToRender.push(...projectCollectionsIds.slice(0, 3))
 
+    // Call a specific changeQuery action to ensure the correct update are madd
     changeQueryMethod = onChangeProjectQuery
   } else if (isGranulesPage && focusedCollection !== '') {
-    const metadata = getFocusedCollectionObject(focusedCollection, collections)
-    collectionMetadata[focusedCollection] = metadata
+    collectionsToRender.push(focusedCollection)
   }
 
-  if (Object.keys(collectionMetadata).length === 0) return null
+  // Retrieve metadata for each collection we're displaying
+  collectionsToRender.slice(0, 3).forEach((collectionId) => {
+    const { [collectionId]: visibleCollectionMetadata = {} } = collectionsMetadata
+
+    collectionMetadata[collectionId] = visibleCollectionMetadata
+  })
+
+  // Prevent the timeline from rendering if there are no collections to display
+  if (collectionsToRender.length === 0) return null
 
   return (
     <Timeline
@@ -89,10 +98,10 @@ TimelineContainer.defaultProps = {
 
 TimelineContainer.propTypes = {
   browser: PropTypes.shape({}).isRequired,
-  collections: PropTypes.shape({}).isRequired,
+  collectionsMetadata: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   pathname: PropTypes.string.isRequired,
-  project: PropTypes.shape({}).isRequired,
+  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   temporalSearch: PropTypes.shape({}),
   timeline: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,

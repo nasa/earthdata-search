@@ -2,42 +2,33 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import GranuleFiltersHeader from '../../components/GranuleFilters/GranuleFiltersHeader'
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
-  focusedCollection: state.focusedCollection
+  collectionMetatadata: getFocusedCollectionMetadata(state)
 })
-
 
 /**
  * Renders GranuleFiltersHeaderContainer.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.collections - The collections.
- * @param {String} props.focusedCollection - The focused collection id.
+ * @param {String} props.collectionMetatadata - The focused collection id.
  */
 export const GranuleFiltersHeaderContainer = ({
-  collections,
-  focusedCollection
+  collectionMetatadata
 }) => {
-  const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
-
-  if (!focusedCollectionMetadata) return null
-
-  const { dataset_id: datasetId } = focusedCollectionMetadata
+  const { title } = collectionMetatadata
 
   return (
     <GranuleFiltersHeader
-      datasetId={datasetId}
+      title={title}
     />
   )
 }
 
 GranuleFiltersHeaderContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired
+  collectionMetatadata: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, null)(GranuleFiltersHeaderContainer)

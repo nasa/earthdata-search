@@ -9,13 +9,13 @@ import murmurhash3 from './murmurhash3'
  * @param {Integer} limit Optional, limit the number of granule IDs returned
  */
 export const getGranuleIds = ({
-  granules,
+  allIds,
   excludedGranuleIds,
   isCwic,
   limit
 }) => {
-  const { allIds } = granules
   const allGranuleIds = allIds
+
   let granuleIds
 
   if (isCwic) {
@@ -27,6 +27,7 @@ export const getGranuleIds = ({
     granuleIds = difference(allGranuleIds, excludedGranuleIds)
   }
 
+  // TODO: This value should always be a number
   if (limit) {
     return granuleIds.slice(0, limit)
   }
