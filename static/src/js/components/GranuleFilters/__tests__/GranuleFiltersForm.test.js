@@ -19,8 +19,8 @@ function setup(overrideProps) {
     errors: {},
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
-    metadata: {},
-    portal: {},
+    collectionMetadata: {},
+    collectionQuery: {},
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
     touched: {},
@@ -146,7 +146,7 @@ describe('GranuleFiltersForm component', () => {
     describe('Day/Night section', () => {
       test('defaults to an empty value', () => {
         const { enzymeWrapper } = setup({
-          metadata: {
+          collectionMetadata: {
             is_cwic: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
@@ -162,7 +162,7 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays selected item', () => {
         const { enzymeWrapper } = setup({
-          metadata: {
+          collectionMetadata: {
             is_cwic: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
@@ -181,7 +181,7 @@ describe('GranuleFiltersForm component', () => {
 
       test('calls handleChange on change', () => {
         const { enzymeWrapper, props } = setup({
-          metadata: {
+          collectionMetadata: {
             is_cwic: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
@@ -267,7 +267,7 @@ describe('GranuleFiltersForm component', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -283,7 +283,7 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -303,7 +303,7 @@ describe('GranuleFiltersForm component', () => {
       describe('Max', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -319,7 +319,7 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -341,7 +341,7 @@ describe('GranuleFiltersForm component', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -357,7 +357,7 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -377,7 +377,7 @@ describe('GranuleFiltersForm component', () => {
       describe('Max', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -393,7 +393,7 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -415,7 +415,7 @@ describe('GranuleFiltersForm component', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -431,7 +431,7 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -451,7 +451,7 @@ describe('GranuleFiltersForm component', () => {
       describe('Max', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -467,7 +467,7 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
-            metadata: {
+            collectionMetadata: {
               is_cwic: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
@@ -490,7 +490,7 @@ describe('GranuleFiltersForm component', () => {
     describe('displays equator crossing date', () => {
       test('displays correctly when only start date is set', () => {
         const { enzymeWrapper } = setup({
-          metadata: {
+          collectionMetadata: {
             is_cwic: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
@@ -511,7 +511,7 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays correctly when only end date is set', () => {
         const { enzymeWrapper } = setup({
-          metadata: {
+          collectionMetadata: {
             is_cwic: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
@@ -533,7 +533,7 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays correctly when both dates are set', () => {
         const { enzymeWrapper } = setup({
-          metadata: {
+          collectionMetadata: {
             is_cwic: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
@@ -556,7 +556,7 @@ describe('GranuleFiltersForm component', () => {
 
       test('calls the correct callbacks on startDate submit', () => {
         const { enzymeWrapper, props } = setup({
-          metadata: {
+          collectionMetadata: {
             is_cwic: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
@@ -582,7 +582,7 @@ describe('GranuleFiltersForm component', () => {
 
       test('calls the correct callbacks on endDate submit', () => {
         const { enzymeWrapper, props } = setup({
-          metadata: {
+          collectionMetadata: {
             is_cwic: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
@@ -605,6 +605,39 @@ describe('GranuleFiltersForm component', () => {
         expect(props.setFieldValue).toHaveBeenCalledTimes(1)
         expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2019-08-14T23:59:59:999Z')
       })
+    })
+  })
+
+  describe('Grid Coordinates section', () => {
+    test('does not render if no gridName is applied', () => {
+      const { enzymeWrapper } = setup()
+
+      const firstSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+      expect(firstSection.props().heading).not.toEqual('Grid Coordinates')
+    })
+
+    test('defaults to an empty value', () => {
+      const { enzymeWrapper } = setup({
+        collectionQuery: {
+          gridName: 'CALIPSO'
+        }
+      })
+
+      const gridCoordsSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+      expect(gridCoordsSection.find(Form.Control).at(0).prop('value')).toEqual('')
+    })
+
+    test('calls handleChange on change', () => {
+      const { enzymeWrapper, props } = setup({
+        collectionQuery: {
+          gridName: 'CALIPSO'
+        }
+      })
+
+      const gridCoordsSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+      gridCoordsSection.find(Form.Control).prop('onChange')({ event: 'test' })
+      expect(props.handleChange).toHaveBeenCalledTimes(1)
+      expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
     })
   })
 })

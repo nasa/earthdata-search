@@ -9,7 +9,6 @@ import { decodeString, encodeString } from './stringEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
 import { decodeCollections, encodeCollections } from './collectionsEncoders'
-import { decodeGridCoords, encodeGridCoords } from './gridEncoders'
 import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesOrCwicEncoders'
 import { isPath } from '../isPath'
 import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEncoders'
@@ -56,7 +55,6 @@ const urlDefs = {
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
   granuleDataFormatFacets: { shortKey: 'gdf', encode: encodeFacets, decode: decodeFacets },
   gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
-  gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords },
   shapefileId: { shortKey: 'sf', encode: encodeString, decode: encodeString },
   tagKey: { shortKey: 'tag_key', encode: encodeString, decode: decodeString },
   hasGranulesOrCwic: { shortKey: 'ac', encode: encodeHasGranulesOrCwic, decode: decodeHasGranulesOrCwic },

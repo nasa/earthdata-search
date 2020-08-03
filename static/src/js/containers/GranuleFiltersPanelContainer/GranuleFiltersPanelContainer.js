@@ -15,7 +15,7 @@ import {
   startBeforeEnd
 } from '../../util/validation'
 
-import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
+import { getFocusedCollectionGranuleQuery, getCollectionsQuery } from '../../selectors/query'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import GranuleFiltersActions
@@ -31,6 +31,7 @@ import SecondaryOverlayPanelContainer
 
 const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
+  collectionQuery: getCollectionsQuery(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   temporal: state.query.collection.temporal
 })
@@ -86,6 +87,7 @@ export class GranuleFiltersPanelContainer extends Component {
   render() {
     const {
       collectionMetadata,
+      collectionQuery,
       errors,
       handleBlur,
       handleChange,
@@ -105,6 +107,7 @@ export class GranuleFiltersPanelContainer extends Component {
             granuleFiltersForm={(
               <GranuleFiltersForm
                 collectionMetadata={collectionMetadata}
+                collectionQuery={collectionQuery}
                 values={values}
                 touched={touched}
                 errors={errors}
@@ -176,6 +179,7 @@ const ValidationSchema = (props) => {
   }
 
   return Yup.object().shape({
+    gridCoords: Yup.string,
     cloudCover: Yup.object().shape({
       min: Yup.number()
         .label('Minimum')
@@ -279,14 +283,15 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
     } = props
 
     const {
-      dayNightFlag = '',
       browseOnly = false,
-      onlineOnly = false,
       cloudCover = {},
-      temporal = {},
-      orbitNumber = {},
+      dayNightFlag = '',
+      equatorCrossingDate = {},
       equatorCrossingLongitude = {},
-      equatorCrossingDate = {}
+      gridCoords,
+      onlineOnly = false,
+      orbitNumber = {},
+      temporal = {}
     } = granuleQuery
 
     const {
@@ -318,6 +323,7 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
     } = temporal
 
     return {
+      gridCoords,
       dayNightFlag: dayNightFlag || '',
       browseOnly: browseOnly || false,
       onlineOnly: onlineOnly || false,
@@ -358,6 +364,7 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
 
 GranuleFiltersPanelContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionQuery: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   errors: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,
