@@ -7,6 +7,7 @@ import moment from 'moment'
 
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { getTemporalDateFormat } from '../../util/edscDate'
+import { findGridByName } from '../../util/grid'
 
 import GranuleFiltersItem from './GranuleFiltersItem'
 import GranuleFiltersList from './GranuleFiltersList'
@@ -15,37 +16,52 @@ import TemporalSelection from '../TemporalSelection/TemporalSelection'
 /**
  * Renders GranuleFiltersForm.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
- * @param {Object} props.metadata - The focused collection metadata.
- * @param {Object} props.values - Form values provided by Formik.
- * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
+ * @param {Function} props.setFieldValue - Callback function provided by Formik.
+ * @param {Object} props.collectionMetadata - The focused collection metadata.
+ * @param {Object} props.collectionQuery - The collection query.
+ * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
+ * @param {Object} props.values - Form values provided by Formik.
  */
 export const GranuleFiltersForm = (props) => {
   const {
+    collectionMetadata,
+    collectionQuery,
     errors,
     handleBlur,
     handleChange,
-    collectionMetadata,
-    values,
-    setFieldValue,
     setFieldTouched,
-    touched
+    setFieldValue,
+    touched,
+    values
   } = props
 
   const {
-    temporal = {},
     browseOnly = false,
-    onlineOnly = false,
-    dayNightFlag = '',
     cloudCover = {},
-    orbitNumber = {},
+    dayNightFlag = '',
+    equatorCrossingDate = {},
     equatorCrossingLongitude = {},
-    equatorCrossingDate = {}
+    gridCoords = '',
+    onlineOnly = false,
+    orbitNumber = {},
+    temporal = {}
   } = values
+
+  const { gridName = '' } = collectionQuery
+  let gridHint
+  if (gridName) {
+    const selectedGrid = findGridByName(gridName)
+    const {
+      axis0label,
+      axis1label
+    } = selectedGrid
+
+    gridHint = `Enter ${axis0label} and ${axis1label} coordinates separated by spaces, e.g. "2,3 5,7 8,8"`
+  }
 
   const { isRecurring } = temporal
 
@@ -105,6 +121,32 @@ export const GranuleFiltersForm = (props) => {
       <Row>
         <Col sm={9}>
           <GranuleFiltersList>
+            {
+              gridName && (
+                <GranuleFiltersItem heading="Grid Coordinates">
+                  <Form.Group controlId="granule-filters_grid-coordinates">
+                    <Form.Label column sm={3}>
+                      {gridName}
+                      {' '}
+                      Coordinates
+                    </Form.Label>
+                    <Col sm={9}>
+                      <Form.Control
+                        name="gridCoords"
+                        type="text"
+                        placeholder="Coordinates..."
+                        value={gridCoords}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      <Form.Text muted>
+                        {gridHint}
+                      </Form.Text>
+                    </Col>
+                  </Form.Group>
+                </GranuleFiltersItem>
+              )
+            }
             <GranuleFiltersItem
               heading="Temporal"
             >
@@ -488,6 +530,7 @@ GranuleFiltersForm.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionQuery: PropTypes.shape({}).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,

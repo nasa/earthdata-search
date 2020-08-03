@@ -1,4 +1,5 @@
 import { encodeTemporal, decodeTemporal } from './temporalEncoders'
+import { encodeGridCoords, decodeGridCoords } from './gridEncoders'
 
 /**
  * Encodes a granule filters object into an object.
@@ -6,19 +7,34 @@ import { encodeTemporal, decodeTemporal } from './temporalEncoders'
  * @return {String} An object with encoded granule filters.
  */
 export const encodeGranuleFilters = (granuleFilters) => {
+  const {
+    browseOnly,
+    cloudCover,
+    dayNightFlag,
+    equatorCrossingDate,
+    equatorCrossingLongitude,
+    gridCoords,
+    onlineOnly,
+    orbitNumber,
+    readableGranuleName,
+    sortKey,
+    temporal
+  } = granuleFilters
+
   const pg = {}
-  if (granuleFilters.temporal) pg.qt = encodeTemporal(granuleFilters.temporal)
-  if (granuleFilters.dayNightFlag) pg.dnf = granuleFilters.dayNightFlag
-  if (granuleFilters.browseOnly) pg.bo = granuleFilters.browseOnly
-  if (granuleFilters.onlineOnly) pg.oo = granuleFilters.onlineOnly
-  if (granuleFilters.cloudCover) pg.cc = granuleFilters.cloudCover
-  if (granuleFilters.orbitNumber) pg.on = granuleFilters.orbitNumber
-  if (granuleFilters.equatorCrossingLongitude) pg.ecl = granuleFilters.equatorCrossingLongitude
-  if (granuleFilters.readableGranuleName) pg.id = granuleFilters.readableGranuleName.join('!')
-  if (granuleFilters.equatorCrossingDate) {
+  if (temporal) pg.qt = encodeTemporal(temporal)
+  if (dayNightFlag) pg.dnf = dayNightFlag
+  if (browseOnly) pg.bo = browseOnly
+  if (onlineOnly) pg.oo = onlineOnly
+  if (cloudCover) pg.cc = cloudCover
+  if (orbitNumber) pg.on = orbitNumber
+  if (equatorCrossingLongitude) pg.ecl = equatorCrossingLongitude
+  if (readableGranuleName) pg.id = readableGranuleName.join('!')
+  if (equatorCrossingDate) {
     pg.ecd = encodeTemporal(granuleFilters.equatorCrossingDate)
   }
-  if (granuleFilters.sortKey) pg.gsk = granuleFilters.sortKey
+  if (sortKey) pg.gsk = sortKey
+  if (gridCoords) pg.gc = encodeGridCoords(gridCoords)
 
   return pg
 }
@@ -29,17 +45,32 @@ export const encodeGranuleFilters = (granuleFilters) => {
  * @return {Object} A granule filters object
  */
 export const decodeGranuleFilters = (params = {}) => {
+  const {
+    bo: browseOnly,
+    cc: cloudCover,
+    dnf: dayNightFlag,
+    ecd: equatorCrossingDate,
+    ecl: equatorCrossingLongitude,
+    gc: gridCoords,
+    gsk: sortKey,
+    id: readableGranuleName,
+    on: orbitNumber,
+    oo: onlineOnly,
+    qt: temporal
+  } = params
+
   const granuleFilters = {}
-  if (params.qt) granuleFilters.temporal = decodeTemporal(params.qt)
-  if (params.dnf) granuleFilters.dayNightFlag = params.dnf
-  if (params.bo) granuleFilters.browseOnly = params.bo === 'true'
-  if (params.oo) granuleFilters.onlineOnly = params.oo === 'true'
-  if (params.cc) granuleFilters.cloudCover = params.cc
-  if (params.on) granuleFilters.orbitNumber = params.on
-  if (params.ecl) granuleFilters.equatorCrossingLongitude = params.ecl
-  if (params.id) granuleFilters.readableGranuleName = params.id.split('!')
-  if (params.ecd) granuleFilters.equatorCrossingDate = decodeTemporal(params.ecd)
-  if (params.gsk) granuleFilters.sortKey = params.gsk
+  if (temporal) granuleFilters.temporal = decodeTemporal(temporal)
+  if (dayNightFlag) granuleFilters.dayNightFlag = dayNightFlag
+  if (browseOnly) granuleFilters.browseOnly = browseOnly === 'true'
+  if (onlineOnly) granuleFilters.onlineOnly = onlineOnly === 'true'
+  if (cloudCover) granuleFilters.cloudCover = cloudCover
+  if (orbitNumber) granuleFilters.orbitNumber = orbitNumber
+  if (equatorCrossingLongitude) granuleFilters.equatorCrossingLongitude = equatorCrossingLongitude
+  if (readableGranuleName) granuleFilters.readableGranuleName = readableGranuleName.split('!')
+  if (equatorCrossingDate) granuleFilters.equatorCrossingDate = decodeTemporal(equatorCrossingDate)
+  if (sortKey) granuleFilters.sortKey = sortKey
+  if (gridCoords) granuleFilters.gridCoords = decodeGridCoords(gridCoords)
 
   return granuleFilters
 }

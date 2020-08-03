@@ -9,7 +9,7 @@ import {
   Spinner
 } from 'react-bootstrap'
 
-import { availableSystems, findGridByName } from '../../util/grid'
+import { availableSystems } from '../../util/grid'
 
 import FilterStackItem from '../FilterStack/FilterStackItem'
 import FilterStackContents from '../FilterStack/FilterStackContents'
@@ -508,24 +508,12 @@ class SpatialDisplay extends Component {
         />
       )
 
-      let hint = 'Select a coordinate system'
-
-      if (gridName) {
-        const selectedGrid = findGridByName(gridName)
-        const {
-          axis0label,
-          axis1label
-        } = selectedGrid
-
-        hint = `Enter ${axis0label} and ${axis1label} coordinates separated by spaces, e.g. "2,3 5,7 8,8"`
-      }
-
       items.push((
         <FilterStackItem
           key="item__grid"
           icon="edsc-globe"
           title="Grid"
-          hint={hint}
+          hint="Apply grid coordinates in Granule Filters"
           onRemove={this.onGridRemove}
         >
           {gridContents}
