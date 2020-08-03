@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import * as EventEmitter from '../../../events/events'
 import CollectionDetails from '../CollectionDetails'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -187,6 +188,9 @@ describe('CollectionDetails component', () => {
     })
 
     test('sets the location', () => {
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        defaultPortal: 'edsc'
+      }))
       const { enzymeWrapper } = setup()
 
       const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)

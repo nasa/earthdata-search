@@ -1,4 +1,11 @@
 import { portalPath, portalPathFromState } from '../portalPath'
+import * as getApplicationConfig from '../config'
+
+beforeEach(() => {
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    defaultPortal: 'edsc'
+  }))
+})
 
 describe('portalPath', () => {
   test('returns no portal prefix when no portalId is present', () => {

@@ -13,6 +13,8 @@ import {
   deleteRetrieval
 } from '../retrieval'
 
+import * as getApplicationConfig from '../../../../../sharedUtils/config'
+
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
@@ -20,6 +22,12 @@ beforeEach(() => {
 })
 
 describe('submitRetrieval', () => {
+  beforeEach(() => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      defaultPortal: 'edsc'
+    }))
+  })
+
   test('calls lambda to submit an order', async () => {
     nock(/localhost/)
       .post(/retrievals/)

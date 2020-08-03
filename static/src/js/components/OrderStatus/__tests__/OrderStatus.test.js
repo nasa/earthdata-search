@@ -8,7 +8,7 @@ import { Well } from '../../Well/Well'
 import { OrderStatus } from '../OrderStatus'
 import configureStore from '../../../store/configureStore'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
-import * as getEnvironmentConfig from '../../../../../../sharedUtils/config'
+import * as config from '../../../../../../sharedUtils/config'
 
 const store = configureStore()
 
@@ -60,7 +60,10 @@ describe('OrderStatus component', () => {
 
   describe('introduction', () => {
     beforeEach(() => {
-      jest.spyOn(getEnvironmentConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
+      jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
+      jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+        defaultPortal: 'edsc'
+      }))
     })
 
     test('displays the correct text', () => {

@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { Link } from 'react-router-dom'
 
 import { PortalLinkContainer } from '../PortalLinkContainer'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -36,6 +37,12 @@ function setup(overrideProps) {
 }
 
 describe('PortalLinkContainer component', () => {
+  beforeEach(() => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      defaultPortal: 'edsc'
+    }))
+  })
+
   test('should return a link with the default portal provided', () => {
     const { enzymeWrapper } = setup()
 

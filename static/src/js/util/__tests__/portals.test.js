@@ -7,9 +7,11 @@ beforeEach(() => {
 })
 
 describe('isDefaultPortal', () => {
-  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-    defaultPortal: 'edsc'
-  }))
+  beforeEach(() => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      defaultPortal: 'edsc'
+    }))
+  })
 
   test('returns true if the portalId matches the defaultPortal', () => {
     expect(isDefaultPortal('edsc')).toBeTruthy()
