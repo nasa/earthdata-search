@@ -11,8 +11,8 @@ const AppLogo = ({
   const {
     portalId,
     logo = {},
-    org = 'Earthdata',
-    title = 'Search'
+    org,
+    title
   } = portal
 
   let portalLink = '/'
