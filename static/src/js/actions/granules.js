@@ -51,6 +51,7 @@ import {
   getCollectionsMetadata,
   getFocusedCollectionMetadata
 } from '../selectors/collectionMetadata'
+import { updateGranuleSearchQuery } from './search'
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -569,11 +570,11 @@ export const excludeGranule = data => (dispatch) => {
     granuleId
   }))
 
-
-  // dispatch(UPDATE_GRANULE_SEARCH_QUERY({
-  //   collectionId,
-  //   pageNum: 1
-  // }))
+  // Reset the page number to 1 to update the UI
+  dispatch(updateGranuleSearchQuery({
+    collectionId,
+    pageNum: 1
+  }))
 
   dispatch(searchGranules())
 }

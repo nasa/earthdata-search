@@ -13,11 +13,7 @@ function setup() {
       regionSearch: {}
     },
     boundingBoxSearch: 'Test value',
-    collections: {
-      allIds: [],
-      byId: {}
-    },
-    focusedCollection: '',
+    collectionMetadata: {},
     mapRef: {
       leafletElement: {}
     },

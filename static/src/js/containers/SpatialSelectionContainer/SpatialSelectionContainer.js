@@ -88,18 +88,18 @@ SpatialSelectionContainer.defaultProps = {
 
 SpatialSelectionContainer.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
-  collectionMetadata: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.string,
   circleSearch: PropTypes.string,
+  collectionMetadata: PropTypes.shape({}).isRequired,
   lineSearch: PropTypes.string,
   mapRef: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired,
+  onMetricsMap: PropTypes.func.isRequired,
+  onMetricsSpatialEdit: PropTypes.func.isRequired,
+  onToggleDrawingNewLayer: PropTypes.func.isRequired,
   pointSearch: PropTypes.string,
   polygonSearch: PropTypes.string,
-  router: PropTypes.shape({}).isRequired,
-  onToggleDrawingNewLayer: PropTypes.func.isRequired,
-  onMetricsMap: PropTypes.func.isRequired,
-  onMetricsSpatialEdit: PropTypes.func.isRequired
+  router: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispathToProps)(SpatialSelectionContainer)

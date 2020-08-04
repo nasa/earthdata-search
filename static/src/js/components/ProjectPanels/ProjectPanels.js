@@ -21,10 +21,9 @@ import './ProjectPanels.scss'
 
 /**
  * Renders ProjectPanels.
- * @param {Object} collections - The collections from the store.
  * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
- * @param {String} focusedCollection - The focused collection ID.
- * @param {String} focusedGranule - The focused granule ID.
+ * @param {String} focusedCollectionId - The focused collection ID.
+ * @param {String} focusedGranuleId - The focused granule ID.
  * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
  * @param {Object} location - The location from the store.
@@ -70,7 +69,7 @@ class ProjectPanels extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const {
-      focusedCollection,
+      focusedCollectionId,
       onSetActivePanelGroup,
       onTogglePanels,
       panels
@@ -78,7 +77,7 @@ class ProjectPanels extends PureComponent {
 
     const {
       project: nextProject,
-      focusedCollection: nextFocusedCollection
+      focusedCollectionId: nextFocusedCollection
     } = nextProps
 
     const { collections: nextProjectCollections } = nextProject
@@ -112,7 +111,7 @@ class ProjectPanels extends PureComponent {
     ) {
       onSetActivePanelGroup(nextFocusedCollectionIndex)
       onTogglePanels(true)
-    } else if (focusedCollection !== nextFocusedCollection && nextFocusedCollection === '') {
+    } else if (focusedCollectionId !== nextFocusedCollection && nextFocusedCollection === '') {
       onTogglePanels(false)
     }
 
@@ -268,7 +267,7 @@ class ProjectPanels extends PureComponent {
   render() {
     const {
       dataQualitySummaries,
-      focusedGranule,
+      focusedGranuleId,
       granulesMetadata,
       location,
       onChangePath,
@@ -536,7 +535,7 @@ class ProjectPanels extends PureComponent {
           <PanelItem scrollable={false}>
             <CollectionDetails
               collectionId={collectionId}
-              focusedGranule={focusedGranule}
+              focusedGranuleId={focusedGranuleId}
               granulesMetadata={granulesMetadata}
               location={location}
               onChangeProjectGranulePageNum={onChangeProjectGranulePageNum}
@@ -578,10 +577,9 @@ ProjectPanels.defaultProps = {
 }
 
 ProjectPanels.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
   dataQualitySummaries: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired,
+  focusedCollectionId: PropTypes.string.isRequired,
+  focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,

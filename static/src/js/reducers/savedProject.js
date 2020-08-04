@@ -1,6 +1,13 @@
-import { UPDATE_SAVED_PROJECT, LOCATION_CHANGE } from '../constants/actionTypes'
-import isPath from '../util/isPath'
-import { urlPathsWithoutUrlParams, isSavedProjectsPage } from '../util/url/url'
+import {
+  UPDATE_SAVED_PROJECT,
+  LOCATION_CHANGE
+} from '../constants/actionTypes'
+
+import { isPath } from '../util/isPath'
+import {
+  urlPathsWithoutUrlParams,
+  isSavedProjectsPage
+} from '../util/url/url'
 
 const initialState = {
   projectId: null,

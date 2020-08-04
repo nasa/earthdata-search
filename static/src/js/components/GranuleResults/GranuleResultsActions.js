@@ -15,7 +15,7 @@ import './GranuleResultsActions.scss'
 
 /**
  * Renders GranuleResultsActions.
- * @param {String} collectionId - The collection ID.
+ * @param {String} focusedCollectionId - The collection ID.
  * @param {Number} granuleCount - The granule count.
  * @param {Number} granuleLimit - The granule limit.
  * @param {Boolean} initialLoading - Flag designating the inital loading state.
@@ -27,7 +27,7 @@ import './GranuleResultsActions.scss'
  * @param {Function} onSetActivePanelSection - Callback to set the active panel section on the project page.
  */
 const GranuleResultsActions = ({
-  collectionId,
+  focusedCollectionId,
   granuleCount,
   granuleLimit,
   initialLoading,
@@ -42,7 +42,7 @@ const GranuleResultsActions = ({
   const addToProjectButton = (
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--add"
-      onClick={() => onAddProjectCollection(collectionId)}
+      onClick={() => onAddProjectCollection(focusedCollectionId)}
       variant="link"
       bootstrapVariant="link"
       icon="plus-circle"
@@ -56,7 +56,7 @@ const GranuleResultsActions = ({
   const removeFromProjectButton = (
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--remove"
-      onClick={() => onRemoveCollectionFromProject(collectionId)}
+      onClick={() => onRemoveCollectionFromProject(focusedCollectionId)}
       variant="link"
       bootstrapVariant="link"
       icon="times-circle"
@@ -73,7 +73,7 @@ const GranuleResultsActions = ({
 
   const downloadButton = (
     <GranuleDownloadButton
-      collectionId={collectionId}
+      focusedCollectionId={focusedCollectionId}
       projectCollection={focusedProjectCollection}
       granuleCount={granuleCount}
       granuleLimit={granuleLimit}
@@ -146,7 +146,8 @@ GranuleResultsActions.defaultProps = {
 }
 
 GranuleResultsActions.propTypes = {
-  collectionId: PropTypes.string.isRequired,
+  focusedCollectionId: PropTypes.string.isRequired,
+  focusedProjectCollection: PropTypes.shape({}).isRequired,
   granuleCount: PropTypes.number,
   granuleLimit: PropTypes.number,
   initialLoading: PropTypes.bool.isRequired,
@@ -155,8 +156,7 @@ GranuleResultsActions.propTypes = {
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
-  focusedProjectCollection: PropTypes.shape({}).isRequired
+  onSetActivePanelSection: PropTypes.func.isRequired
 }
 
 export default GranuleResultsActions

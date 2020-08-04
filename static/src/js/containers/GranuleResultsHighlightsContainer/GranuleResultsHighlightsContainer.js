@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { isEmpty, min } from 'lodash'
 
 import { getFocusedCollectionGranuleMetadata } from '../../selectors/collectionResults'
+import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getGranuleIds } from '../../util/getGranuleIds'
 
@@ -13,16 +14,16 @@ import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/
 const mapStateToProps = state => ({
   collectionsQuery: state.query.collection,
   collectionsSearch: state.searchResults.collections,
-  focusedCollection: state.focusedCollection,
-  focusedCollectionMetadata: getFocusedCollectionMetadata(state),
-  focusedCollectionGranuleMetadata: getFocusedCollectionGranuleMetadata(state)
+  focusedCollectionGranuleMetadata: getFocusedCollectionGranuleMetadata(state),
+  focusedCollectionId: getFocusedCollectionId(state),
+  focusedCollectionMetadata: getFocusedCollectionMetadata(state)
 })
 
 export const GranuleResultsHighlightsContainer = ({
   collectionsQuery,
   collectionsSearch,
-  focusedCollection,
   focusedCollectionGranuleMetadata,
+  focusedCollectionId,
   focusedCollectionMetadata,
   location
 }) => {
@@ -31,10 +32,10 @@ export const GranuleResultsHighlightsContainer = ({
   } = focusedCollectionMetadata
 
   const { byId: collectionSearchById = {} } = collectionsSearch
-  const { [focusedCollection]: collectionSearchResults = {} } = collectionSearchById
+  const { [focusedCollectionId]: collectionSearchResults = {} } = collectionSearchById
   const { granules: collectionGranuleSearch = {} } = collectionSearchResults
 
-  const { [focusedCollection]: collectionQueryResults = {} } = collectionsQuery
+  const { [focusedCollectionId]: collectionQueryResults = {} } = collectionsQuery
   const { granules: collectionGranuleQuery = {} } = collectionQueryResults
   const { excludedGranuleIds = [] } = collectionGranuleQuery
 
@@ -79,8 +80,8 @@ export const GranuleResultsHighlightsContainer = ({
 GranuleResultsHighlightsContainer.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
   focusedCollectionGranuleMetadata: PropTypes.shape({}).isRequired,
+  focusedCollectionId: PropTypes.string.isRequired,
   focusedCollectionMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { GranuleResultsActionsContainer } from '../GranuleResultsActionsContainer'
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
 
@@ -8,27 +9,60 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    location: { search: 'value' },
-    collections: {
-      allIds: ['focusedCollection'],
-      byId: {
-        focusedCollection: {
-          excludedGranuleIds: [],
-          granules: { hits: 100 },
-          metadata: {
-            mock: 'data'
-          }
-        }
+    location: {
+      search: 'value'
+    },
+    collectionMetadata: {
+      mock: 'data'
+    },
+    focusedCollectionId: 'focusedCollection',
+    focusedProjectCollection: {
+      accessMethods: {},
+      selectedAccessMethod: '',
+      granules: {
+        params: {
+          pageNum: 1
+        },
+        isLoaded: true,
+        isLoading: false,
+        hits: 100,
+        totalSize: '',
+        allIds: [],
+        addedIds: [],
+        removedIds: []
       }
     },
-    focusedCollection: 'focusedCollection',
     granuleQuery: {
       pageNum: 1
     },
+    granuleSearchResults: {
+      isLoaded: true,
+      isLoading: false,
+      hits: 100,
+      allIds: [],
+      excludledGranuleIds: []
+    },
     project: {
-      collectionIds: ['focusedCollection'],
-      byId: {
-        focusedCollection: {}
+      collections: {
+        allIds: ['focusedCollection'],
+        byId: {
+          focusedCollection: {
+            accessMethods: {},
+            selectedAccessMethod: '',
+            granules: {
+              params: {
+                pageNum: 1
+              },
+              isLoaded: true,
+              isLoading: false,
+              hits: 100,
+              totalSize: '',
+              allIds: [],
+              addedIds: [],
+              removedIds: []
+            }
+          }
+        }
       }
     },
     onAddProjectCollection: jest.fn(),
@@ -50,9 +84,10 @@ describe('GranuleResultsActionsContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsActions).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsActions).props().collectionId).toEqual('focusedCollection')
+    expect(enzymeWrapper.find(GranuleResultsActions).props().focusedCollectionId).toEqual('focusedCollection')
     expect(enzymeWrapper.find(GranuleResultsActions).props().granuleCount).toEqual(100)
     expect(enzymeWrapper.find(GranuleResultsActions).props().isCollectionInProject).toEqual(true)
+
     expect(typeof enzymeWrapper.find(GranuleResultsActions).props().onAddProjectCollection).toEqual('function')
     expect(typeof enzymeWrapper.find(GranuleResultsActions).props().onRemoveCollectionFromProject).toEqual('function')
   })

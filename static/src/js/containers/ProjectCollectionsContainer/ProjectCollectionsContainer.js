@@ -103,7 +103,7 @@ ProjectCollectionsContainer.propTypes = {
   onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectCollectionsIds: PropTypes.shape({}).isRequired,
+  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }

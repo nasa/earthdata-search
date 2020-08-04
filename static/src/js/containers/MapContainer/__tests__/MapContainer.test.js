@@ -29,9 +29,9 @@ const store = configureStore()
 function setup() {
   const props = {
     authToken: '',
-    collections: {},
-    focusedCollection: '',
-    focusedGranule: '',
+    collectionsMetadata: {},
+    focusedCollectionId: '',
+    focusedGranuleId: '',
     granules: {},
     router: {
       location: {

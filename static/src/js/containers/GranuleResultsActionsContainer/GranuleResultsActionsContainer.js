@@ -82,7 +82,7 @@ export const GranuleResultsActionsContainer = (props) => {
   return (
     <>
       <GranuleResultsActions
-        collectionId={focusedCollectionId}
+        focusedCollectionId={focusedCollectionId}
         focusedProjectCollection={focusedProjectCollection}
         granuleCount={hits}
         granuleLimit={granuleLimit}
@@ -100,9 +100,9 @@ export const GranuleResultsActionsContainer = (props) => {
 }
 
 GranuleResultsActionsContainer.propTypes = {
-  focusedProjectCollection: PropTypes.shape({}).isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
+  focusedProjectCollection: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,

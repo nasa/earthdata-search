@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
 
+import { getProjectCollectionsIds } from '../../selectors/project'
+
 import CollectionResultsBody from '../../components/CollectionResults/CollectionResultsBody'
 
 const mapStateToProps = state => ({
@@ -12,7 +14,7 @@ const mapStateToProps = state => ({
   collectionsSearch: state.searchResults.collections,
   collectionsMetadata: state.metadata.collections,
   portal: state.portal,
-  projectCollectionIds: state.project.collections.allIds,
+  projectCollectionIds: getProjectCollectionsIds(state),
   query: state.query.collection
 })
 
@@ -32,18 +34,18 @@ const mapDispatchToProps = dispatch => ({
 export const CollectionResultsBodyContainer = (props) => {
   const {
     browser,
-    collectionsSearch,
-    query,
-    location,
     collectionsMetadata,
+    collectionsSearch,
+    location,
+    onAddProjectCollection,
+    onChangeCollectionPageNum,
+    onRemoveCollectionFromProject,
+    onViewCollectionDetails,
+    onViewCollectionGranules,
+    panelView,
     portal,
     projectCollectionIds,
-    onAddProjectCollection,
-    onRemoveCollectionFromProject,
-    onViewCollectionGranules,
-    onViewCollectionDetails,
-    onChangeCollectionPageNum,
-    panelView
+    query
   } = props
 
   const loadNextPage = () => {
@@ -55,35 +57,35 @@ export const CollectionResultsBodyContainer = (props) => {
   return (
     <CollectionResultsBody
       browser={browser}
-      collectionsSearch={collectionsSearch}
       collectionsMetadata={collectionsMetadata}
-      portal={portal}
-      projectCollectionIds={projectCollectionIds}
+      collectionsSearch={collectionsSearch}
+      loadNextPage={loadNextPage}
       location={location}
       onAddProjectCollection={onAddProjectCollection}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-      onViewCollectionGranules={onViewCollectionGranules}
       onViewCollectionDetails={onViewCollectionDetails}
-      loadNextPage={loadNextPage}
+      onViewCollectionGranules={onViewCollectionGranules}
       panelView={panelView}
+      portal={portal}
+      projectCollectionIds={projectCollectionIds}
     />
   )
 }
 
 CollectionResultsBodyContainer.propTypes = {
   browser: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({}).isRequired,
-  query: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
+  onAddProjectCollection: PropTypes.func.isRequired,
+  onChangeCollectionPageNum: PropTypes.func.isRequired,
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
+  panelView: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onAddProjectCollection: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onChangeCollectionPageNum: PropTypes.func.isRequired,
-  panelView: PropTypes.string.isRequired
+  query: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

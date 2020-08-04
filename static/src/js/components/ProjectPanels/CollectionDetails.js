@@ -16,7 +16,7 @@ import './CollectionDetails.scss'
  * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
  * @param {Object} granuleQuery - The granule query from the store.
- * @param {String} focusedGranule - The focused granule ID.
+ * @param {String} focusedGranuleId - The focused granule ID.
  * @param {Object} location - The location from the store.
  * @param {Object} portal - The portal from the store.
  * @param {Object} projectCollection - The project collection.
@@ -26,7 +26,7 @@ import './CollectionDetails.scss'
  */
 export const CollectionDetails = ({
   collectionId,
-  focusedGranule,
+  focusedGranuleId,
   granulesMetadata,
   location,
   portal,
@@ -74,7 +74,7 @@ export const CollectionDetails = ({
               const itemClassName = classNames([
                 'collection-details__item',
                 {
-                  'collection-details__item--focused': id === focusedGranule
+                  'collection-details__item--focused': id === focusedGranuleId
                 }
               ])
 
@@ -91,7 +91,7 @@ export const CollectionDetails = ({
                       eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: null })
                     }}
                     onClick={() => {
-                      const newGranule = id === focusedGranule
+                      const newGranule = id === focusedGranuleId
                         ? { granule: null }
                         : { granuleMetadata }
                       eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, newGranule)
@@ -172,7 +172,7 @@ export const CollectionDetails = ({
 
 CollectionDetails.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired,
+  focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,

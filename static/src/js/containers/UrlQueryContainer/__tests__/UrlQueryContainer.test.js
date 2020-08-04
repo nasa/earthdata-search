@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     boundingBoxSearch: '',
-    collections: {},
+    collectionsMetadata: {},
     gridName: '',
     gridCoords: '',
     featureFacets: {},
@@ -83,7 +83,6 @@ describe('UrlQueryContainer', () => {
       })
 
       expect(props.onChangeUrl.mock.calls.length).toBe(0)
-      // expect(props.onChangeUrl.mock.calls[0]).toEqual(['?p=C00001-EDSC'])
     })
   })
 })

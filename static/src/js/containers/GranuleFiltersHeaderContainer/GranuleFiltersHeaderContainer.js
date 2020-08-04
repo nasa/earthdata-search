@@ -7,18 +7,18 @@ import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata
 import GranuleFiltersHeader from '../../components/GranuleFilters/GranuleFiltersHeader'
 
 const mapStateToProps = state => ({
-  collectionMetatadata: getFocusedCollectionMetadata(state)
+  collectionMetadata: getFocusedCollectionMetadata(state)
 })
 
 /**
  * Renders GranuleFiltersHeaderContainer.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.collectionMetatadata - The focused collection id.
+ * @param {String} props.collectionMetadata - The focused collection id.
  */
 export const GranuleFiltersHeaderContainer = ({
-  collectionMetatadata
+  collectionMetadata
 }) => {
-  const { title } = collectionMetatadata
+  const { title } = collectionMetadata
 
   return (
     <GranuleFiltersHeader
@@ -28,7 +28,7 @@ export const GranuleFiltersHeaderContainer = ({
 }
 
 GranuleFiltersHeaderContainer.propTypes = {
-  collectionMetatadata: PropTypes.shape({}).isRequired
+  collectionMetadata: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, null)(GranuleFiltersHeaderContainer)

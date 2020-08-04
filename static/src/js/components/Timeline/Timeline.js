@@ -573,10 +573,6 @@ class Timeline extends Component {
   }
 }
 
-// Timeline.defaultProps = {
-//   collectionMetadata: {}
-// }
-
 Timeline.propTypes = {
   browser: PropTypes.shape({}).isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,

@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { CollectionDetailsBodyContainer } from '../CollectionDetailsBodyContainer'
 import CollectionDetailsBody from '../../../components/CollectionDetails/CollectionDetailsBody'
 
@@ -8,18 +9,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      allIds: ['focusedCollection'],
-      byId: {
-        focusedCollection: {
-          excludedGranuleIds: [],
-          metadata: {
-            test: 'metadata'
-          }
-        }
-      }
+    collectionMetadata: {
+      test: 'metadata'
     },
-    focusedCollection: 'focusedCollection',
     isActive: true,
     onToggleRelatedUrlsModal: jest.fn()
   }
@@ -39,6 +31,7 @@ describe('CollectionDetailsBodyContainer component', () => {
     expect(enzymeWrapper.find(CollectionDetailsBody).length).toBe(1)
     expect(enzymeWrapper.find(CollectionDetailsBody).props().collectionMetadata).toEqual({ test: 'metadata' })
     expect(enzymeWrapper.find(CollectionDetailsBody).props().isActive).toEqual(true)
+
     expect(typeof enzymeWrapper.find(CollectionDetailsBody).props().onToggleRelatedUrlsModal).toEqual('function')
   })
 })

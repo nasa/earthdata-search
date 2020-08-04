@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { GranuleResultsBodyContainer } from '../GranuleResultsBodyContainer'
 import GranuleResultsBody from '../../../components/GranuleResults/GranuleResultsBody'
 
@@ -8,20 +9,12 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collections: {
-      allIds: ['focusedCollection'],
-      byId: {
-        focusedCollection: {
-          excludedGranuleIds: ['id1'],
-          granules: { value: 'granules' },
-          metadata: {}
-        }
-      }
-    },
-    focusedCollection: 'focusedCollection',
-    focusedGranule: '',
+    collectionMetadata: {},
+    focusedCollectionId: 'focusedCollection',
+    focusedGranuleId: '',
     granuleQuery: { pageNum: 1 },
-    isActive: true,
+    granuleSearchResults: {},
+    granulesMetadata: {},
     location: { search: 'value' },
     onAddGranuleToProjectCollection: jest.fn(),
     onChangeGranulePageNum: jest.fn(),
@@ -49,9 +42,15 @@ describe('GranuleResultsBodyContainer component', () => {
 
     expect(enzymeWrapper.find(GranuleResultsBody).length).toBe(1)
     expect(enzymeWrapper.find(GranuleResultsBody).props().collectionId).toEqual('focusedCollection')
-    expect(enzymeWrapper.find(GranuleResultsBody).props().excludedGranuleIds).toEqual(['id1'])
+    expect(enzymeWrapper.find(GranuleResultsBody).props().focusedGranuleId).toEqual('')
+    expect(enzymeWrapper.find(GranuleResultsBody).props().granuleQuery).toEqual({
+      pageNum: 1
+    })
+    expect(enzymeWrapper.find(GranuleResultsBody).props().granulesMetadata).toEqual({})
+    expect(enzymeWrapper.find(GranuleResultsBody).props().granuleSearchResults).toEqual({})
     expect(enzymeWrapper.find(GranuleResultsBody).props().isCwic).toEqual(false)
-    expect(enzymeWrapper.find(GranuleResultsBody).props().focusedGranule).toEqual('')
+    expect(enzymeWrapper.find(GranuleResultsBody).props().portal).toEqual({})
+    expect(enzymeWrapper.find(GranuleResultsBody).props().project).toEqual({})
   })
 
   test('loadNextPage calls onChangeGranulePageNum', () => {
