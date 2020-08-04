@@ -10,7 +10,7 @@ const AppLogo = ({
 }) => {
   const {
     portalId,
-    logo,
+    logo = {},
     org = 'Earthdata',
     title = 'Search'
   } = portal
@@ -21,7 +21,7 @@ const AppLogo = ({
   }
 
   const portalLogo = () => {
-    if (!logo) return null
+    if (!Object.keys(logo).length) return null
 
     const {
       id,

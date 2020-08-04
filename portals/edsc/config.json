@@ -31,10 +31,8 @@
   },
   "hasScripts": false,
   "hasStyles": false,
-  "logo": {},
   "org": "Earthdata",
   "pageTitle": "Earthdata Search",
-  "query": {},
   "title": "Search",
   "ui": {
     "showOnlyGranulesCheckbox": true,
