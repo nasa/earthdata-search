@@ -7,7 +7,7 @@ import { startCase } from 'lodash'
 
 import actions from '../../actions/index'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { isDefaultPortal } from '../../util/portals'
+import { isDefaultPortal, getPortalConfig } from '../../util/portals'
 
 const mapDispatchToProps = dispatch => ({
   onLoadPortalConfig:
@@ -37,12 +37,21 @@ export class PortalContainer extends Component {
     const { env } = getApplicationConfig()
     const titleEnv = env.toUpperCase() === 'PROD' ? '' : `[${env.toUpperCase()}] `
 
+    const defaultConfig = getPortalConfig(getApplicationConfig().defaultPortal)
+
+    // Use the default portal org and title for the page title
+    const {
+      org: defaultOrg,
+      title: defaultTitle
+    } = defaultConfig
 
     return (
       <Helmet>
         <title>
           {titleEnv}
-          Earthdata Search
+          {defaultOrg}
+          {' '}
+          {defaultTitle}
           {portalTitle}
         </title>
       </Helmet>
