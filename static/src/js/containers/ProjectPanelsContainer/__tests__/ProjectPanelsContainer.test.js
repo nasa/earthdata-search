@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { ProjectPanelsContainer } from '../ProjectPanelsContainer'
 import ProjectPanels from '../../../components/ProjectPanels/ProjectPanels'
 
@@ -8,24 +9,17 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
-        }
-      }
-    },
     dataQualitySummaries: {},
-    focusedCollection: '',
-    focusedGranule: '',
+    focusedCollectionId: '',
+    focusedGranuleId: '',
     granuleQuery: {},
+    granulesMetadata: {},
     portal: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
-    onChangeGranulePageNum: jest.fn(),
+    onChangeProjectGranulePageNum: jest.fn(),
     onSetActivePanelGroup: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),
     onAddGranuleToProjectCollection: jest.fn(),
@@ -36,7 +30,14 @@ function setup() {
     },
     onChangePath: jest.fn(),
     project: {
-      collectionIds: ['collectionId']
+      collections: {
+        allIds: ['collectionId']
+      }
+    },
+    projectCollectionsMetadata: {
+      collectionId: {
+        mock: 'data'
+      }
     },
     panels: {
       activePanel: '0.0.0',
@@ -58,16 +59,15 @@ describe('ProjectPanelsContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(ProjectPanels).length).toBe(1)
-    expect(enzymeWrapper.find(ProjectPanels).props().collections).toEqual({
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
-        }
+    expect(enzymeWrapper.find(ProjectPanels).props().projectCollectionsMetadata).toEqual({
+      collectionId: {
+        mock: 'data'
       }
     })
     expect(enzymeWrapper.find(ProjectPanels).props().project).toEqual({
-      collectionIds: ['collectionId']
+      collections: {
+        allIds: ['collectionId']
+      }
     })
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onSetActivePanel).toEqual('function')
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onTogglePanels).toEqual('function')

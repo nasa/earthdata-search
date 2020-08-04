@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { SpatialDisplayContainer } from '../SpatialDisplayContainer'
 import SpatialDisplay from '../../../components/SpatialDisplay/SpatialDisplay'
 
@@ -13,10 +14,8 @@ function setup() {
     displaySpatialPolygonWarning: false,
     drawingNewLayer: false,
     gridName: 'Test Grid',
-    gridCoords: 'Test Grid Coords',
     lineSearch: 'Test Line',
     onChangeQuery: jest.fn(),
-    onGranuleGridCoords: jest.fn(),
     onRemoveGridFilter: jest.fn(),
     onRemoveSpatialFilter: jest.fn(),
     pointSearch: 'Test Point Search',
@@ -44,10 +43,8 @@ describe('SpatialDisplayContainer component', () => {
       displaySpatialPolygonWarning: false,
       drawingNewLayer: false,
       gridName: 'Test Grid',
-      gridCoords: 'Test Grid Coords',
       lineSearch: 'Test Line',
       onChangeQuery: props.onChangeQuery,
-      onGranuleGridCoords: props.onGranuleGridCoords,
       onRemoveGridFilter: props.onRemoveGridFilter,
       onRemoveSpatialFilter: props.onRemoveSpatialFilter,
       pointSearch: 'Test Point Search',

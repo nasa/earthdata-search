@@ -2,26 +2,33 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+import projections from '../../../util/map/projections'
+
 import { ProjectCollectionsContainer } from '../ProjectCollectionsContainer'
 import ProjectCollections from '../../../components/ProjectCollections/ProjectCollections'
-import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
+    collectionsQuery: {},
+    mapProjection: projections.geographic,
+    project: {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            accessMethods: {},
+            selectedAccessMethod: ''
+          }
         }
       }
     },
-    collectionSearch: {},
-    mapProjection: projections.geographic,
-    project: {
-      collectionIds: ['collectionId']
+    projectCollectionsIds: ['collectionId'],
+    projectCollectionsMetadata: {
+      collectionId: {
+        mock: 'data'
+      }
     },
     panels: {
       activePanel: '0.0.0',
@@ -53,17 +60,26 @@ describe('ProjectCollectionsContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(ProjectCollections).length).toBe(1)
-    expect(enzymeWrapper.find(ProjectCollections).props().collections).toEqual({
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          mock: 'data'
+    expect(enzymeWrapper.find(ProjectCollections).props().collectionsQuery).toEqual({})
+    expect(enzymeWrapper.find(ProjectCollections).props().project).toEqual({
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            accessMethods: {},
+            selectedAccessMethod: ''
+          }
         }
       }
     })
-    expect(enzymeWrapper.find(ProjectCollections).props().project).toEqual({
-      collectionIds: ['collectionId']
+    expect(enzymeWrapper.find(ProjectCollections).props().projectCollectionsMetadata).toEqual({
+      collectionId: {
+        mock: 'data'
+      }
     })
+    expect(enzymeWrapper.find(ProjectCollections).props().projectCollectionsIds).toEqual(
+      ['collectionId']
+    )
     expect(typeof enzymeWrapper.find(ProjectCollections).props().onRemoveCollectionFromProject).toEqual('function')
   })
 })

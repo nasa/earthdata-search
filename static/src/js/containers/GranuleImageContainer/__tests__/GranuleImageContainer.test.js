@@ -1,31 +1,20 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
+import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
+
 import { GranuleImageContainer } from '../GranuleImageContainer'
 import GranuleImage from '../../../components/GranuleImage/GranuleImage'
-import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          granules: {
-            allIds: ['focusedGranule'],
-            byId: {
-              focusedGranule: {
-                browse_flag: true
-              }
-            }
-          }
-        }
-      }
-    },
-    focusedCollection: 'collectionId',
-    focusedGranule: 'focusedGranule'
+    focusedGranuleId: 'focusedGranule',
+    granuleMetadata: {
+      browseFlag: true
+    }
   }
 
   const enzymeWrapper = shallow(<GranuleImageContainer {...props} />)

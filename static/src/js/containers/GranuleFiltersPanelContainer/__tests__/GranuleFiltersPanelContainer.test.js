@@ -2,25 +2,21 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+import { GranuleFiltersHeaderContainer } from '../../GranuleFiltersHeaderContainer/GranuleFiltersHeaderContainer'
 import { GranuleFiltersPanelContainer } from '../GranuleFiltersPanelContainer'
-import SecondaryOverlayPanelContainer from '../../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
-import GranuleFiltersHeaderContainer from '../../GranuleFiltersHeaderContainer/GranuleFiltersHeaderContainer'
-import { GranuleFiltersBody } from '../../../components/GranuleFilters/GranuleFiltersBody'
-import { GranuleFiltersActions } from '../../../components/GranuleFilters/GranuleFiltersActions'
+import { SecondaryOverlayPanelContainer } from '../../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
+import GranuleFiltersActions from '../../../components/GranuleFilters/GranuleFiltersActions'
+import GranuleFiltersBody from '../../../components/GranuleFilters/GranuleFiltersBody'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      byId: {
-        collectionId: {
-          metadata: {
-            dataset_id: 'Test Collection'
-          }
-        }
-      }
+    collectionMetadata: {
+      title: 'Test Collection'
     },
+    collectionQuery: {},
+    granuleQuery: {},
     errors: {},
     focusedCollection: 'collectionId',
     handleBlur: jest.fn(),
@@ -64,7 +60,7 @@ describe('GranuleFiltersPanelContainer component', () => {
 
       expect(enzymeWrapper.find(SecondaryOverlayPanelContainer).length).toEqual(1)
       expect(enzymeWrapper.find(SecondaryOverlayPanelContainer).prop('body').type).toEqual(GranuleFiltersBody)
-      expect(granuleFiltersFormProps.metadata).toEqual(props.collections.byId.collectionId.metadata)
+
       expect(granuleFiltersFormProps.values).toEqual(props.values)
       expect(granuleFiltersFormProps.touched).toEqual(props.touched)
       expect(granuleFiltersFormProps.errors).toEqual(props.errors)
@@ -108,7 +104,7 @@ describe('GranuleFiltersPanelContainer component', () => {
       expect(props.handleReset).toHaveBeenCalledTimes(1)
       expect(props.handleReset).toHaveBeenCalledWith()
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
-      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', {})
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith({})
     })
   })
 })

@@ -6,9 +6,9 @@ import actions from '../../actions/index'
 
 import { metricsTimeline } from '../../middleware/metrics/actions'
 
-import isPath from '../../util/isPath'
-
+import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getProjectCollectionsIds } from '../../selectors/project'
+import { isPath } from '../../util/isPath'
 
 import Timeline from '../../components/Timeline/Timeline'
 
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   browser: state.browser,
   collectionsMetadata: state.metadata.collections,
-  focusedCollection: state.focusedCollection,
+  focusedCollectionId: getFocusedCollectionId(state),
   pathname: state.router.location.pathname,
   projectCollectionsIds: getProjectCollectionsIds(state),
   temporalSearch: state.query.collection.temporal,
@@ -36,7 +36,7 @@ export const TimelineContainer = (props) => {
   const {
     browser,
     collectionsMetadata,
-    focusedCollection,
+    focusedCollectionId,
     pathname,
     projectCollectionsIds,
     temporalSearch,
@@ -62,8 +62,8 @@ export const TimelineContainer = (props) => {
 
     // Call a specific changeQuery action to ensure the correct update are madd
     changeQueryMethod = onChangeProjectQuery
-  } else if (isGranulesPage && focusedCollection !== '') {
-    collectionsToRender.push(focusedCollection)
+  } else if (isGranulesPage && focusedCollectionId !== '') {
+    collectionsToRender.push(focusedCollectionId)
   }
 
   // Retrieve metadata for each collection we're displaying
@@ -99,16 +99,16 @@ TimelineContainer.defaultProps = {
 TimelineContainer.propTypes = {
   browser: PropTypes.shape({}).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
+  focusedCollectionId: PropTypes.string.isRequired,
+  onChangeProjectQuery: PropTypes.func.isRequired,
+  onChangeQuery: PropTypes.func.isRequired,
+  onChangeTimelineQuery: PropTypes.func.isRequired,
+  onMetricsTimeline: PropTypes.func.isRequired,
+  onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   temporalSearch: PropTypes.shape({}),
-  timeline: PropTypes.shape({}).isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
-  onChangeProjectQuery: PropTypes.func.isRequired,
-  onChangeTimelineQuery: PropTypes.func.isRequired,
-  onToggleOverrideTemporalModal: PropTypes.func.isRequired,
-  onMetricsTimeline: PropTypes.func.isRequired
+  timeline: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineContainer)

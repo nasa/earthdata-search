@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { GranuleResultsHighlightsContainer } from '../GranuleResultsHighlightsContainer'
 import GranuleResultsHighlights from '../../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
@@ -8,28 +9,33 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collections: {
+    collectionsQuery: {},
+    collectionsSearch: {
       allIds: ['focusedCollection'],
+      hits: 1,
+      isLoaded: true,
+      isLoading: false,
       byId: {
         focusedCollection: {
-          excludedGranuleIds: [],
           granules: {
             allIds: ['id1'],
-            byId: {
-              id1: {
-                mock: 'data'
-              }
-            },
             hits: 1,
-            isLoading: false,
-            isLoaded: true
-          },
-          metadata: {}
+            isLoaded: true,
+            isLoading: false
+          }
         }
       }
     },
-    focusedCollection: 'focusedCollection',
-    location: { search: '' },
+    focusedCollectionId: 'focusedCollection',
+    focusedCollectionGranuleMetadata: {
+      id1: {
+        mock: 'data'
+      }
+    },
+    focusedCollectionMetadata: {},
+    location: {
+      search: ''
+    },
     ...overrideProps
   }
 

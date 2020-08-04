@@ -2,32 +2,26 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+import projections from '../../../util/map/projections'
+
 import { GranuleResultsHeaderContainer } from '../GranuleResultsHeaderContainer'
 import GranuleResultsHeader from '../../../components/GranuleResults/GranuleResultsHeader'
-import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          excludedGranuleIds: [],
-          metadata: {
-            mock: 'here'
-          }
-        }
-      },
-      projectIds: []
+    collectionMetadata: {
+      mock: 'here'
     },
-    collectionSearch: {},
-    focusedCollection: 'collectionId',
+    collectionQuery: {},
+    collectionsSearch: {},
+    focusedCollectionId: 'collectionId',
     granules: {
       hits: 1
     },
-    granuleSearch: {
+    granuleSearchResults: {},
+    granuleQuery: {
       pageNum: 1
     },
     location: { value: 'location' },
@@ -51,16 +45,13 @@ function setup() {
 
 describe('GranuleResultsHeaderContainer component', () => {
   test('passes its props and renders a single GranuleResultsHeader component', () => {
-    const { enzymeWrapper, props } = setup()
+    const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsHeader).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsHeader).props().focusedCollectionObject).toEqual({
-      excludedGranuleIds: [],
-      metadata: { mock: 'here' }
-    })
     expect(enzymeWrapper.find(GranuleResultsHeader).props().location).toEqual({ value: 'location' })
+
     expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onApplyGranuleFilters).toEqual('function')
-    expect(enzymeWrapper.find(GranuleResultsHeader).props().onChangePanelView).toEqual(props.onChangePanelView)
-    expect(enzymeWrapper.find(GranuleResultsHeader).props().panelView).toEqual(props.panelView)
+    expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onChangePanelView).toEqual('function')
+    expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onApplyGranuleFilters).toEqual('function')
   })
 })

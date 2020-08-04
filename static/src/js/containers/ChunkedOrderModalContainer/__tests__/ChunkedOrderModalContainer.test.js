@@ -1,14 +1,16 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { ChunkedOrderModalContainer } from '../ChunkedOrderModalContainer'
-import { ChunkedOrderModal } from '../../../components/ChunkedOrderModal/ChunkedOrderModal'
+import ChunkedOrderModal from '../../../components/ChunkedOrderModal/ChunkedOrderModal'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collectionMetdata: {},
+    projectCollectionsMetadata: {},
+    projectCollectionsRequiringChunking: {},
     location: {},
     project: {},
     isOpen: true,

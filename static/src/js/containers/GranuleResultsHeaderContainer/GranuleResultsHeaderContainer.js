@@ -6,8 +6,9 @@ import { withRouter } from 'react-router-dom'
 import actions from '../../actions'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
-import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
+import { getFocusedCollectionId } from '../../selectors/focusedCollection'
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import GranuleResultsHeader from '../../components/GranuleResults/GranuleResultsHeader'
 
@@ -19,16 +20,14 @@ const mapDispatchToProps = dispatch => ({
   onUndoExcludeGranule:
     collectionId => dispatch(actions.undoExcludeGranule(collectionId)),
   onApplyGranuleFilters:
-    (focusedCollection, values) => dispatch(
-      actions.applyGranuleFilters(focusedCollection, values)
-    )
+    values => dispatch(actions.applyGranuleFilters(values))
 })
 
 const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionQuery: state.query.collection,
   collectionsSearch: state.searchResults.collections,
-  focusedCollection: state.focusedCollection,
+  focusedCollectionId: getFocusedCollectionId(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   mapProjection: state.map.projection,
@@ -40,7 +39,7 @@ export const GranuleResultsHeaderContainer = (props) => {
     collectionMetadata,
     collectionQuery,
     collectionsSearch,
-    focusedCollection,
+    focusedCollectionId,
     granuleQuery,
     granuleSearchResults,
     location,
@@ -64,7 +63,7 @@ export const GranuleResultsHeaderContainer = (props) => {
         collectionMetadata={collectionMetadata}
         collectionQuery={collectionQuery}
         collectionsSearch={collectionsSearch}
-        focusedCollection={focusedCollection}
+        focusedCollectionId={focusedCollectionId}
         granuleQuery={granuleQuery}
         granuleSearchResults={granuleSearchResults}
         location={location}
@@ -86,7 +85,7 @@ GranuleResultsHeaderContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
+  focusedCollectionId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,

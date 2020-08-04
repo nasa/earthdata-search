@@ -10,31 +10,27 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-// import { difference } from 'lodash'
 
-import isPath from '../../util/isPath'
+import actions from '../../actions/index'
+
 import { metricsMap } from '../../middleware/metrics/actions'
-
-import LayerBuilder
-  from '../../components/Map/LayerBuilder'
-import ConnectedSpatialSelectionContainer
-  from '../SpatialSelectionContainer/SpatialSelectionContainer'
-import GranuleGridLayer
-  from '../../components/Map/GranuleGridLayer'
-import ZoomHome
-  from '../../components/Map/ZoomHome'
-import ProjectionSwitcher
-  from '../../components/Map/ProjectionSwitcher'
-import GranuleImageContainer
-  from '../GranuleImageContainer/GranuleImageContainer'
-import ShapefileLayer from '../../components/Map/ShapefileLayer'
-import MouseEventsLayer from '../../components/Map/MouseEventsLayer'
 
 import crsProjections from '../../util/map/crs'
 import projections from '../../util/map/projections'
 // import murmurhash3 from '../../util/murmurhash3'
 
-import actions from '../../actions/index'
+import { getFocusedCollectionId } from '../../selectors/focusedCollection'
+import { getFocusedGranuleId } from '../../selectors/focusedGranule'
+import { isPath } from '../../util/isPath'
+
+import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
+import GranuleGridLayer from '../../components/Map/GranuleGridLayer'
+import GranuleImageContainer from '../GranuleImageContainer/GranuleImageContainer'
+import LayerBuilder from '../../components/Map/LayerBuilder'
+import MouseEventsLayer from '../../components/Map/MouseEventsLayer'
+import ProjectionSwitcher from '../../components/Map/ProjectionSwitcher'
+import ShapefileLayer from '../../components/Map/ShapefileLayer'
+import ZoomHome from '../../components/Map/ZoomHome'
 
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
@@ -57,12 +53,12 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   authToken: state.authToken,
   collectionsMetadata: state.metadata.collections,
-  focusedCollection: state.focusedCollection,
-  focusedGranule: state.focusedGranule,
+  focusedCollectionId: getFocusedCollectionId(state),
+  focusedGranuleId: getFocusedGranuleId(state),
   map: state.map,
+  project: state.project,
   router: state.router,
-  shapefile: state.shapefile,
-  project: state.project
+  shapefile: state.shapefile
 })
 
 export class MapContainer extends Component {
@@ -213,8 +209,8 @@ export class MapContainer extends Component {
       authToken,
       map,
       collectionsMetadata,
-      focusedCollection,
-      focusedGranule,
+      focusedCollectionId,
+      focusedGranuleId,
       project,
       router,
       shapefile,
@@ -244,8 +240,8 @@ export class MapContainer extends Component {
     const maxZoom = projection === projections.geographic ? 7 : 4
 
     let nonExcludedGranules
-    // if (focusedCollection && collections[focusedCollection]) {
-    //   const { excludedGranuleIds = [], granules } = collections[focusedCollection]
+    // if (focusedCollectionId && collections[focusedCollectionId]) {
+    //   const { excludedGranuleIds = [], granules } = collections[focusedCollectionId]
     //   const { allIds, isCwic } = granules
     //   const allGranuleIds = allIds
     //   nonExcludedGranules = granules
@@ -359,8 +355,8 @@ export class MapContainer extends Component {
         </LayersControl>
         <GranuleGridLayer
           collectionsMetadata={collectionsMetadata}
-          focusedCollection={focusedCollection}
-          focusedGranule={focusedGranule}
+          focusedCollectionId={focusedCollectionId}
+          focusedGranuleId={focusedGranuleId}
           isProjectPage={isProjectPage}
           granules={nonExcludedGranules}
           project={project}
@@ -403,8 +399,8 @@ MapContainer.defaultProps = {
 MapContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired,
+  focusedCollectionId: PropTypes.string.isRequired,
+  focusedGranuleId: PropTypes.string.isRequired,
   map: PropTypes.shape({}),
   project: PropTypes.shape({}).isRequired,
   router: PropTypes.shape({}).isRequired,

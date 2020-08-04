@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { SecondaryToolbarContainer } from '../SecondaryToolbarContainer'
 import SecondaryToolbar from '../../../components/SecondaryToolbar/SecondaryToolbar'
 
@@ -13,7 +14,7 @@ function setup() {
     portal: {
       portalId: 'edsc'
     },
-    projectIds: [],
+    projectCollectionIds: [],
     savedProject: {},
     onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),

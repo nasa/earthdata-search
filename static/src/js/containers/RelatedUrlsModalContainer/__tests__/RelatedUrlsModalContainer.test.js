@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { RelatedUrlsModalContainer } from '../RelatedUrlsModalContainer'
 import { RelatedUrlsModal } from '../../../components/CollectionDetails/RelatedUrlsModal'
 
@@ -8,18 +9,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      allIds: ['focusedCollection'],
-      byId: {
-        focusedCollection: {
-          excludedGranuleIds: [],
-          metadata: {
-            some: 'metadata'
-          }
-        }
-      }
+    collectionMetadata: {
+      some: 'metadata'
     },
-    focusedCollection: 'focusedCollection',
     isOpen: true,
     onToggleRelatedUrlsModal: jest.fn()
   }
@@ -37,11 +29,8 @@ describe('RelatedUrlsModalContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(RelatedUrlsModal).length).toBe(1)
-    expect(enzymeWrapper.find(RelatedUrlsModal).props().focusedCollectionObject).toEqual({
-      excludedGranuleIds: [],
-      metadata: {
-        some: 'metadata'
-      }
+    expect(enzymeWrapper.find(RelatedUrlsModal).props().collectionMetadata).toEqual({
+      some: 'metadata'
     })
     expect(enzymeWrapper.find(RelatedUrlsModal).props().isOpen).toEqual(true)
     expect(typeof enzymeWrapper.find(RelatedUrlsModal).props().onToggleRelatedUrlsModal).toEqual('function')

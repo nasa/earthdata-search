@@ -17,7 +17,6 @@ const mapStateToProps = state => ({
   autocompleteSelected: state.autocomplete.selected,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
-  collectionsMetadata: state.metadata.collections,
   featureFacets: state.facetsParams.feature,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
@@ -66,12 +65,10 @@ export class UrlQueryContainer extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const {
-      collectionsMetadata: nextCollectionsMetadata,
       search: nextSearch
     } = nextProps
 
     const {
-      collectionsMetadata,
       onChangeUrl,
       search
     } = this.props
@@ -83,7 +80,6 @@ export class UrlQueryContainer extends PureComponent {
     // if the previous search and next search are the same
     if (
       search === nextSearch
-      || collectionsMetadata === nextCollectionsMetadata
     ) {
       const nextPath = encodeUrlQuery(nextProps)
       if (currentPath !== nextPath) {
@@ -113,7 +109,6 @@ UrlQueryContainer.defaultProps = {
 
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  collectionsMetadata: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
   project: PropTypes.shape({}).isRequired,

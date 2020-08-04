@@ -1,30 +1,39 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { TimelineContainer } from '../TimelineContainer'
 import Timeline from '../../../components/Timeline/Timeline'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     browser: {
       name: 'browser name'
     },
-    collections: {
-      allIds: [],
-      byId: {}
+    collectionsMetadata: {
+      projectCollectionId: {
+        title: 'project'
+      },
+      focusedCollectionId: {
+        title: 'focused'
+      }
     },
-    focusedCollection: '',
-    pathname: '/search',
-    project: {},
-    temporalSearch: {},
-    timeline: { query: {}, state: {} },
+    projectCollectionsIds: ['projectCollectionId'],
+    focusedCollectionId: 'focusedCollectionId',
     onChangeProjectQuery: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
+    onMetricsTimeline: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
-    onMetricsTimeline: jest.fn()
+    pathname: '/search',
+    temporalSearch: {},
+    timeline: {
+      query: {},
+      state: {}
+    },
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<TimelineContainer {...props} />)
@@ -43,82 +52,28 @@ describe('TimelineContainer component', () => {
   })
 
   test('passes its props and renders a single Timeline component on the search page', () => {
-    const { enzymeWrapper, props } = setup()
-
-    enzymeWrapper.setProps({
-      browser: {
-        name: 'browser name'
-      },
-      collections: {
-        allIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            metadata: {
-              mock: 'data'
-            }
-          }
-        }
-      },
-      focusedCollection: 'collectionId',
+    const { enzymeWrapper } = setup({
       pathname: '/search/granules'
     })
 
     expect(enzymeWrapper.find(Timeline).length).toBe(1)
-    expect(enzymeWrapper.find(Timeline).props()).toEqual({
-      ...props,
-      focusedCollection: undefined,
-      onChangeProjectQuery: undefined,
-      collections: undefined,
-      pathname: '/search/granules',
-      project: undefined,
-      collectionMetadata: {
-        collectionId: {
-          metadata: {
-            mock: 'data'
-          }
-        }
-      },
-      showOverrideModal: false
+    expect(enzymeWrapper.find(Timeline).props().collectionMetadata).toEqual({
+      focusedCollectionId: {
+        title: 'focused'
+      }
     })
   })
 
   test('passes its props and renders a single Timeline component on the project page', () => {
-    const { enzymeWrapper, props } = setup()
-
-    enzymeWrapper.setProps({
-      browser: {
-        name: 'browser name'
-      },
-      collections: {
-        allIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            mock: 'data'
-          }
-        }
-      },
-      focusedCollection: 'collectionId',
-      pathname: '/projects',
-      project: {
-        collectionIds: ['collectionId']
-      }
+    const { enzymeWrapper } = setup({
+      pathname: '/projects'
     })
 
     expect(enzymeWrapper.find(Timeline).length).toBe(1)
-    expect(enzymeWrapper.find(Timeline).props()).toEqual({
-      ...props,
-      focusedCollection: undefined,
-      onChangeProjectQuery: undefined,
-      onChangeQuery: props.onChangeProjectQuery,
-      collections: undefined,
-      pathname: '/projects',
-      project: undefined,
-      collectionMetadata: {
-        collectionId: {
-          mock: 'data'
-        }
-      },
-      showOverrideModal: true
+    expect(enzymeWrapper.find(Timeline).props().collectionMetadata).toEqual({
+      projectCollectionId: {
+        title: 'project'
+      }
     })
   })
 })

@@ -19,7 +19,7 @@ import './GranuleResultsHeader.scss'
 /**
  * Renders GranuleResultsHeader.
   * @param {Object} props.collectionsSearch - The collection search object.
-  * @param {String} props.focusedCollection - The focused collection ID.
+  * @param {String} props.focusedCollectionId - The focused collection ID.
   * @param {Object} props.collectionMetadata - Focused collection passed from redux storee.
   * @param {Object} props.location - Location passed from react router.
   * @param {Object} props.mapProjection - Map projection passed from redux store.
@@ -126,11 +126,11 @@ class GranuleResultsHeader extends Component {
 
   handleUndoExcludeGranule() {
     const {
-      focusedCollection,
+      focusedCollectionId,
       onUndoExcludeGranule
     } = this.props
 
-    onUndoExcludeGranule(focusedCollection)
+    onUndoExcludeGranule(focusedCollectionId)
   }
 
   render() {
@@ -464,7 +464,7 @@ GranuleResultsHeader.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
+  focusedCollectionId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,

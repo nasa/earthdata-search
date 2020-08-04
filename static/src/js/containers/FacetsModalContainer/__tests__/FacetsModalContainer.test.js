@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collectionHits: '1',
+    collectionHits: 1,
     isOpen: true,
     onApplyViewAllFacets: jest.fn(),
     onChangeViewAllFacet: jest.fn(),
@@ -29,11 +29,13 @@ describe('FacetsModalContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(FacetsModal).length).toBe(1)
-    expect(enzymeWrapper.find(FacetsModal).props().collectionHits).toEqual('1')
+    expect(enzymeWrapper.find(FacetsModal).props().collectionHits).toEqual(1)
     expect(enzymeWrapper.find(FacetsModal).props().isOpen).toEqual(true)
+
     expect(typeof enzymeWrapper.find(FacetsModal).props().onApplyViewAllFacets).toEqual('function')
     expect(typeof enzymeWrapper.find(FacetsModal).props().onChangeViewAllFacet).toEqual('function')
     expect(typeof enzymeWrapper.find(FacetsModal).props().onToggleFacetsModal).toEqual('function')
+
     expect(enzymeWrapper.find(FacetsModal).props().viewAllFacets).toEqual({ value: 'viewAllFacets' })
   })
 })

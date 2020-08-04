@@ -9,16 +9,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      byId: {
-        collectionId: {
-          metadata: {
-            dataset_id: 'Test Collection'
-          }
-        }
-      }
-    },
-    focusedCollection: 'collectionId'
+    collectionMetadata: {
+      title: 'Test Collection'
+    }
   }
 
   const enzymeWrapper = shallow(<GranuleFiltersHeaderContainer {...props} />)
@@ -40,6 +33,6 @@ describe('GranuleFiltersHeaderContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleFiltersHeader).length).toEqual(1)
-    expect(enzymeWrapper.find(GranuleFiltersHeader).prop('datasetId')).toEqual('Test Collection')
+    expect(enzymeWrapper.find(GranuleFiltersHeader).prop('title')).toEqual('Test Collection')
   })
 })

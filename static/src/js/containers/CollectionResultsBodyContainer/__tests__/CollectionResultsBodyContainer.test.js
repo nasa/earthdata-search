@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { CollectionResultsBodyContainer } from '../CollectionResultsBodyContainer'
 import CollectionResultsBody from '../../../components/CollectionResults/CollectionResultsBody'
 
@@ -11,19 +12,32 @@ function setup() {
     browser: {
       name: 'browser name'
     },
-    collections: { value: 'collections' },
+    collectionsMetadata: {
+      id1: {
+        title: 'collection 1 title'
+      },
+      id2: {
+        title: 'collection 2 title'
+      }
+    },
+    collectionsSearch: {},
     portal: {},
     project: {
       collectionIds: []
     },
-    query: { pageNum: 1 },
-    location: { value: 'location' },
+    location: {
+      value: 'location'
+    },
     onAddProjectCollection: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onChangeCollectionPageNum: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn(),
-    panelView: 'list'
+    panelView: 'list',
+    projectCollectionIds: [],
+    query: {
+      pageNum: 1
+    }
   }
 
   const enzymeWrapper = shallow(<CollectionResultsBodyContainer {...props} />)
@@ -39,14 +53,28 @@ describe('CollectionResultsBodyContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(CollectionResultsBody).length).toBe(1)
-    expect(enzymeWrapper.find(CollectionResultsBody).props().browser).toEqual({ name: 'browser name' })
-    expect(enzymeWrapper.find(CollectionResultsBody).props().collections).toEqual({ value: 'collections' })
-    expect(enzymeWrapper.find(CollectionResultsBody).props().projectIds).toEqual([])
-    expect(enzymeWrapper.find(CollectionResultsBody).props().location).toEqual({ value: 'location' })
+    expect(enzymeWrapper.find(CollectionResultsBody).props().browser).toEqual({
+      name: 'browser name'
+    })
+    expect(enzymeWrapper.find(CollectionResultsBody).props().collectionsMetadata).toEqual({
+      id1: {
+        title: 'collection 1 title'
+      },
+      id2: {
+        title: 'collection 2 title'
+      }
+    })
+    expect(enzymeWrapper.find(CollectionResultsBody).props().projectCollectionIds).toEqual([])
+    expect(enzymeWrapper.find(CollectionResultsBody).props().location).toEqual({
+      value: 'location'
+    })
+
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onAddProjectCollection).toEqual('function')
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onRemoveCollectionFromProject).toEqual('function')
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionGranules).toEqual('function')
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionDetails).toEqual('function')
+
+    expect(enzymeWrapper.find(CollectionResultsBody).props().projectCollectionIds).toEqual([])
   })
 
   test('loadNextPage calls onChangeCollectionPageNum', () => {

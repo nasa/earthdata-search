@@ -3,20 +3,23 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
-import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
+
+import { getFocusedCollectionId } from '../../selectors/focusedCollection'
+import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getProjectCollectionsMetadata } from '../../selectors/project'
 
+import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
+
 const mapStateToProps = state => ({
-  collections: state.metadata.collections,
   dataQualitySummaries: state.dataQualitySummaries,
-  projectCollectionsMetadata: getProjectCollectionsMetadata(state),
-  focusedCollection: state.focusedCollection,
-  focusedGranule: state.focusedGranule,
+  focusedCollectionId: getFocusedCollectionId(state),
+  focusedGranuleId: getFocusedGranuleId(state),
   granulesMetadata: state.metadata.granules,
   location: state.router.location,
   panels: state.panels,
   portal: state.portal,
   project: state.project,
+  projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   shapefileId: state.shapefile.shapefileId,
   spatial: state.query.collection.spatial
 })
@@ -49,41 +52,38 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export const ProjectPanelsContainer = ({
-  collections,
   dataQualitySummaries,
-  projectCollectionsMetadata,
-  focusedCollection,
-  focusedGranule,
+  focusedCollectionId,
+  focusedGranuleId,
   granulesMetadata,
   location,
-  portal,
-  project,
-  panels,
-  shapefileId,
-  spatial,
-  onChangeProjectGranulePageNum,
+  onAddGranuleToProjectCollection,
   onChangePath,
+  onChangeProjectGranulePageNum,
+  onFocusedGranuleChange,
+  onRemoveGranuleFromProjectCollection,
   onSelectAccessMethod,
-  onTogglePanels,
   onSetActivePanel,
   onSetActivePanelGroup,
+  onTogglePanels,
   onUpdateAccessMethod,
   onUpdateFocusedCollection,
-  onAddGranuleToProjectCollection,
-  onRemoveGranuleFromProjectCollection,
-  onFocusedGranuleChange
+  panels,
+  portal,
+  project,
+  projectCollectionsMetadata,
+  shapefileId,
+  spatial
 }) => (
   <ProjectPanels
-    collections={collections}
     dataQualitySummaries={dataQualitySummaries}
-    projectCollectionsMetadata={projectCollectionsMetadata}
-    focusedCollection={focusedCollection}
-    focusedGranule={focusedGranule}
+    focusedCollectionId={focusedCollectionId}
+    focusedGranuleId={focusedGranuleId}
     granulesMetadata={granulesMetadata}
     location={location}
     onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
-    onChangeProjectGranulePageNum={onChangeProjectGranulePageNum}
     onChangePath={onChangePath}
+    onChangeProjectGranulePageNum={onChangeProjectGranulePageNum}
     onFocusedGranuleChange={onFocusedGranuleChange}
     onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
     onSelectAccessMethod={onSelectAccessMethod}
@@ -95,6 +95,7 @@ export const ProjectPanelsContainer = ({
     panels={panels}
     portal={portal}
     project={project}
+    projectCollectionsMetadata={projectCollectionsMetadata}
     shapefileId={shapefileId}
     spatial={spatial}
   />
@@ -105,15 +106,14 @@ ProjectPanelsContainer.defaultProps = {
 }
 
 ProjectPanelsContainer.propTypes = {
-  collections: PropTypes.shape({}).isRequired,
   dataQualitySummaries: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
-  focusedGranule: PropTypes.string.isRequired,
+  focusedCollectionId: PropTypes.string.isRequired,
+  focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
-  onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
+  onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
@@ -129,6 +129,5 @@ ProjectPanelsContainer.propTypes = {
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectPanelsContainer)

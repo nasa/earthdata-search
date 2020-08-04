@@ -5,9 +5,9 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
-import CollectionDetailsHighlights from '../../components/CollectionDetailsHighlights/CollectionDetailsHighlights'
-
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
+
+import CollectionDetailsHighlights from '../../components/CollectionDetailsHighlights/CollectionDetailsHighlights'
 
 const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),

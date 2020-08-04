@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { GranuleDetailsHeaderContainer } from '../GranuleDetailsHeaderContainer'
 import GranuleDetailsHeader from '../../../components/GranuleDetails/GranuleDetailsHeader'
 
@@ -8,21 +9,14 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    granules: {
-      allIds: ['focusedGranule'],
-      byId: {
-        focusedGranule: {
-          ummJson: {
-            Granule: {}
-          },
-          metadataUrls: {
-            atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'
-          }
-        }
+    granuleMetadata: {
+      metadataUrls: {
+        atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'
       }
     },
-    focusedGranule: 'focusedGranule',
-    location: { data: 'data' }
+    location: {
+      data: 'data'
+    }
   }
 
   const enzymeWrapper = shallow(<GranuleDetailsHeaderContainer {...props} />)
@@ -38,9 +32,13 @@ describe('GranuleDetailsHeaderContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleDetailsHeader).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleDetailsHeader).props().ummJson).toEqual({
-      Granule: {}
+    expect(enzymeWrapper.find(GranuleDetailsHeader).props().granuleMetadata).toEqual({
+      metadataUrls: {
+        atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'
+      }
     })
-    expect(enzymeWrapper.find(GranuleDetailsHeader).props().location).toEqual({ data: 'data' })
+    expect(enzymeWrapper.find(GranuleDetailsHeader).props().location).toEqual({
+      data: 'data'
+    })
   })
 })

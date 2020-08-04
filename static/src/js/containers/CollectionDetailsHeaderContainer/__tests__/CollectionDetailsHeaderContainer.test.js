@@ -2,28 +2,23 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+import projections from '../../../util/map/projections'
+
 import { CollectionDetailsHeaderContainer } from '../CollectionDetailsHeaderContainer'
 import CollectionDetailsHeader from '../../../components/CollectionDetails/CollectionDetailsHeader'
-import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      allIds: ['focusedCollection'],
-      byId: {
-        focusedCollection: {
-          excludedGranuleIds: [],
-          metadata: {
-            some: 'metadata'
-          }
-        }
-      }
+    collectionQuery: {},
+    collectionsSearch: {},
+    collectionMetadata: {
+      some: 'metadata'
     },
-    focusedCollection: 'focusedCollection',
-    location: { search: '' },
-    collectionSearch: {},
+    location: {
+      search: ''
+    },
     mapProjection: projections.geographic
   }
 
@@ -40,11 +35,8 @@ describe('CollectionDetailsHeaderContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(CollectionDetailsHeader).length).toBe(1)
-    expect(enzymeWrapper.find(CollectionDetailsHeader).props('focusedCollectionMetadata')).toEqual({
-      collectionSearch: {},
-      focusedCollectionMetadata: { some: 'metadata' },
-      location: { search: '' },
-      mapProjection: projections.geographic
+    expect(enzymeWrapper.find(CollectionDetailsHeader).props().collectionMetadata).toEqual({
+      some: 'metadata'
     })
   })
 })
