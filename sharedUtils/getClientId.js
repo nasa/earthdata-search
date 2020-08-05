@@ -2,7 +2,8 @@ import { getApplicationConfig } from './config'
 
 /**
  * Replaces ENV and PORTAL in a clientId string
- * @param {String} clientId
+ * @param {String} clientId - clientId to replace ENV and PORTAL
+ * @param {String} envOverride - Optional, override the actual env with supplied value
  */
 const replaceClientIdEnvPortal = (clientId, envOverride) => (
   clientId
