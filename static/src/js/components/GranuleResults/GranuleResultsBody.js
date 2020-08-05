@@ -74,7 +74,7 @@ const GranuleResultsBody = ({
   const { granules: projectCollectionGranules = {} } = projectCollection
   const {
     addedGranuleIds = [],
-    isLoading: isProjectGranulesLoading,
+    isLoading: isProjectGranulesLoading = true,
     removedGranuleIds = []
   } = projectCollectionGranules
 
