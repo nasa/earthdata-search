@@ -22,8 +22,6 @@ export const updateRegionQuery = payload => ({
 })
 
 export const changeQuery = (queryOptions = {}) => async (dispatch, getState) => {
-  console.log('changeQuery', queryOptions)
-
   const {
     focusedCollection,
     query
@@ -111,7 +109,7 @@ export const changeGranulePageNum = ({ collectionId, pageNum }) => (dispatch, ge
     }))
 
     // Fetch the next page of granules
-    dispatch(actions.searchGranules(collectionId))
+    dispatch(actions.searchGranules())
   }
 }
 

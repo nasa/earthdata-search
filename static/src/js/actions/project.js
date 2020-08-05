@@ -349,7 +349,7 @@ export const addGranuleToProjectCollection = payload => (dispatch, getState) => 
 }
 
 /**
- * Removes a single single granule from a project. If the collection would not have any granules
+ * Removes a single granule from a project. If the collection would not have any granules
  * after removal, the collection is removed from the project.
 */
 export const removeGranuleFromProjectCollection = payload => (dispatch, getState) => {
@@ -357,9 +357,9 @@ export const removeGranuleFromProjectCollection = payload => (dispatch, getState
 
   const { project } = getState()
 
-  const { collections: projectCollections } = project
-  const { byId: projectCollectionsById } = projectCollections
-  const { [collectionId]: projectCollection } = projectCollectionsById
+  const { collections: projectCollections = {} } = project
+  const { byId: projectCollectionsById = {} } = projectCollections
+  const { [collectionId]: projectCollection = {} } = projectCollectionsById
   const { granules: projectCollectionGranules } = projectCollection
 
   const {
