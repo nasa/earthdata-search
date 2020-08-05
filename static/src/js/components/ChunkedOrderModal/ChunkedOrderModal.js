@@ -84,7 +84,7 @@ export class ChunkedOrderModal extends Component {
               const { [collectionId]: projectCollection } = projectCollectionsRequiringChunking
               const orderCount = calculateOrderCount(projectCollection)
 
-              const { [collectionId]: projectCollectionMetadata } = projectCollectionsMetadata
+              const { [collectionId]: projectCollectionMetadata = {} } = projectCollectionsMetadata
               const { title } = projectCollectionMetadata
 
               return (

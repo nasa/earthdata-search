@@ -1,23 +1,23 @@
-import queryReducer from '../query'
+import queryReducer, { initialGranuleState } from '../query'
 import {
-  UPDATE_COLLECTION_QUERY,
-  UPDATE_GRANULE_QUERY,
-  RESTORE_FROM_URL,
   CLEAR_FILTERS,
+  EXCLUDE_GRANULE_ID,
+  RESTORE_FROM_URL,
+  UNDO_EXCLUDE_GRANULE_ID,
+  UPDATE_COLLECTION_QUERY,
+  UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_REGION_QUERY
 } from '../../constants/actionTypes'
 
 const initialState = {
   collection: {
+    byId: {},
     gridName: '',
+    keyword: '',
+    hasGranulesOrCwic: true,
     pageNum: 1,
     spatial: {},
-    temporal: {},
-    hasGranulesOrCwic: true
-  },
-  granule: {
-    gridCoords: '',
-    pageNum: 1
+    temporal: {}
   },
   region: {
     exact: false
@@ -51,11 +51,8 @@ describe('UPDATE_COLLECTION_QUERY', () => {
     const expectedState = {
       collection: {
         ...payload,
+        byId: {},
         hasGranulesOrCwic: true
-      },
-      granule: {
-        gridCoords: '',
-        pageNum: 1
       },
       region: {
         exact: false
@@ -67,8 +64,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
 
   test('does not overwrite existing values', () => {
     const initialState = {
-      collection: { keyword: 'old keyword' },
-      granule: { pageNum: 1 }
+      collection: { keyword: 'old keyword' }
     }
     const payload = {
       spatial: {
@@ -85,60 +81,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
         spatial: {
           point: '0,0'
         }
-      },
-      granule: { pageNum: 1 }
-    }
-
-    expect(queryReducer(initialState, action)).toEqual(expectedState)
-  })
-})
-
-
-describe('UPDATE_GRANULE_QUERY', () => {
-  test('returns the correct state', () => {
-    const payload = {
-      gridCoords: '',
-      pageNum: 1
-    }
-    const action = {
-      type: UPDATE_GRANULE_QUERY,
-      payload
-    }
-
-    const expectedState = {
-      collection: {
-        gridName: '',
-        pageNum: 1,
-        spatial: {},
-        temporal: {},
-        hasGranulesOrCwic: true
-      },
-      granule: payload,
-      region: {
-        exact: false
       }
-    }
-
-    expect(queryReducer(undefined, action)).toEqual(expectedState)
-  })
-
-  test('does not overwrite existing values', () => {
-    const initialState = {
-      collection: { keyword: 'old keyword' },
-      granule: { pageNum: 1 }
-    }
-    const payload = {
-      pageNum: 2
-    }
-    const action = {
-      type: UPDATE_GRANULE_QUERY,
-      payload
-    }
-    const expectedState = {
-      collection: {
-        keyword: 'old keyword'
-      },
-      granule: { pageNum: 2 }
     }
 
     expect(queryReducer(initialState, action)).toEqual(expectedState)
@@ -196,5 +139,116 @@ describe('CLEAR_FILTERS', () => {
     const action = { type: CLEAR_FILTERS }
 
     expect(queryReducer(undefined, action)).toEqual(initialState)
+  })
+})
+
+describe('EXCLUDE_GRANULE_ID', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: EXCLUDE_GRANULE_ID,
+      payload: {
+        collectionId: 'collectionId',
+        granuleId: 'granuleId'
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              excludedGranuleIds: ['granuleId']
+            }
+          }
+        }
+      }
+    }
+
+    expect(queryReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('UNDO_EXCLUDE_GRANULE_ID', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UNDO_EXCLUDE_GRANULE_ID,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              excludedGranuleIds: ['granuleId']
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              excludedGranuleIds: []
+            }
+          }
+        }
+      }
+    }
+
+    expect(queryReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_GRANULE_SEARCH_QUERY', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_GRANULE_SEARCH_QUERY,
+      payload: {
+        collectionId: 'collectionId',
+        pageNum: 2
+      }
+    }
+
+    const initial = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              collectionId: 'collectionId',
+              pageNum: 2
+            }
+          }
+        }
+      }
+    }
+
+    expect(queryReducer(initial, action)).toEqual(expectedState)
   })
 })

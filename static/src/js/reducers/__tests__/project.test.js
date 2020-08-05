@@ -1,21 +1,30 @@
-import projectReducer from '../project'
+import projectReducer, { initialGranuleState } from '../project'
 import {
   ADD_ACCESS_METHODS,
   ADD_COLLECTION_TO_PROJECT,
   ADD_GRANULE_TO_PROJECT_COLLECTION,
+  ADD_MORE_PROJECT_GRANULE_RESULTS,
+  ERRORED_PROJECT_GRANULES,
+  FINISHED_PROJECT_GRANULES_TIMER,
+  PROJECT_GRANULES_LOADED,
+  PROJECT_GRANULES_LOADING,
   REMOVE_COLLECTION_FROM_PROJECT,
   REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
-  SELECT_ACCESS_METHOD,
-  UPDATE_ACCESS_METHOD,
   RESTORE_FROM_URL,
+  SELECT_ACCESS_METHOD,
+  STARTED_PROJECT_GRANULES_TIMER,
+  SUBMITTED_PROJECT,
   SUBMITTING_PROJECT,
-  SUBMITTED_PROJECT
+  UPDATE_ACCESS_METHOD,
+  UPDATE_PROJECT_GRANULE_RESULTS,
+  UPDATE_PROJECT_GRANULE_PARAMS
 } from '../../constants/actionTypes'
 
 const initialState = {
-  byId: {},
-  collectionIds: [],
-  collectionsRequiringChunking: [],
+  collections: {
+    allIds: [],
+    byId: {}
+  },
   isSubmitted: false,
   isSubmitting: false
 }
@@ -37,21 +46,60 @@ describe('ADD_COLLECTION_TO_PROJECT', () => {
       payload: collectionId
     }
 
+    const expectedState = {
+      ...initialState,
+      collections: {
+        allIds: [collectionId],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState
+            }
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(undefined, action)).toEqual(expectedState)
+  })
+
+  test('returns the correct state if the collection is already in the project', () => {
+    const collectionId = 'collectionId'
+
+    const action = {
+      type: ADD_COLLECTION_TO_PROJECT,
+      payload: collectionId
+    }
+
     const initial = {
       ...initialState,
-      collectionIds: ['existingCollectionId']
+      collections: {
+        allIds: [collectionId],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState
+            }
+          }
+        }
+      }
     }
 
     const expectedState = {
-      ...initial,
-      byId: {
-        collectionId: {}
-      },
-      collectionIds: ['existingCollectionId', collectionId]
+      ...initialState,
+      collections: {
+        allIds: [collectionId],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState
+            }
+          }
+        }
+      }
     }
 
-    const res = projectReducer(initial, action)
-    expect(res).toEqual(expectedState)
+    expect(projectReducer(initial, action)).toEqual(expectedState)
   })
 })
 
@@ -62,30 +110,37 @@ describe('ADD_GRANULE_TO_PROJECT_COLLECTION', () => {
         type: ADD_GRANULE_TO_PROJECT_COLLECTION,
         payload: {
           collectionId: 'collectionId',
-          granuleId: 'GRAN-ID'
+          granuleId: 'granuleId'
         }
       }
 
       const initial = {
         ...initialState,
-        byId: {
-          collectionId: {}
-        },
-        collectionIds: ['collectionId']
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {}
+            }
+          }
+        }
       }
 
       const expectedState = {
         ...initial,
-        byId: {
-          collectionId: {
-            addedGranuleIds: ['GRAN-ID']
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                addedGranuleIds: ['granuleId']
+              }
+            }
           }
-        },
-        collectionIds: ['collectionId']
+        }
       }
 
-      const res = projectReducer(initial, action)
-      expect(res).toEqual(expectedState)
+      expect(projectReducer(initial, action)).toEqual(expectedState)
     })
   })
 
@@ -95,32 +150,39 @@ describe('ADD_GRANULE_TO_PROJECT_COLLECTION', () => {
         type: ADD_GRANULE_TO_PROJECT_COLLECTION,
         payload: {
           collectionId: 'collectionId',
-          granuleId: 'GRAN-ID1'
+          granuleId: 'granuleId1'
         }
       }
 
       const initial = {
         ...initialState,
-        byId: {
-          collectionId: {
-            removedGranuleIds: ['GRAN-ID1', 'GRAN-ID2']
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                removedGranuleIds: ['granuleId1', 'granuleId2']
+              }
+            }
           }
-        },
-        collectionIds: ['collectionId']
+        }
       }
 
       const expectedState = {
         ...initial,
-        byId: {
-          collectionId: {
-            removedGranuleIds: ['GRAN-ID2']
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                removedGranuleIds: ['granuleId2']
+              }
+            }
           }
-        },
-        collectionIds: ['collectionId']
+        }
       }
 
-      const res = projectReducer(initial, action)
-      expect(res).toEqual(expectedState)
+      expect(projectReducer(initial, action)).toEqual(expectedState)
     })
   })
 
@@ -130,51 +192,60 @@ describe('ADD_GRANULE_TO_PROJECT_COLLECTION', () => {
         type: ADD_GRANULE_TO_PROJECT_COLLECTION,
         payload: {
           collectionId: 'collectionId',
-          granuleId: 'GRAN-ID2'
+          granuleId: 'granuleId'
         }
       }
 
       const initial = {
         ...initialState,
-        byId: {
-          collectionId: {
-            addedGranuleIds: ['GRAN-ID2']
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                addedGranuleIds: ['granuleId']
+              }
+            }
           }
-        },
-        collectionIds: ['collectionId']
+        }
       }
 
       const expectedState = {
         ...initial,
-        byId: {
-          collectionId: {
-            addedGranuleIds: ['GRAN-ID2']
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                addedGranuleIds: ['granuleId']
+              }
+            }
           }
-        },
-        collectionIds: ['collectionId']
+        }
       }
 
-      const res = projectReducer(initial, action)
-      expect(res).toEqual(expectedState)
+      expect(projectReducer(initial, action)).toEqual(expectedState)
     })
   })
 
-  test('returns the correct state if collection is already a project collection', () => {
+  test('returns the correct state if collection is not a project collection', () => {
     const collectionId = 'collectionId'
 
     const action = {
-      type: ADD_COLLECTION_TO_PROJECT,
+      type: ADD_GRANULE_TO_PROJECT_COLLECTION,
       payload: collectionId
     }
 
     const initial = {
       ...initialState,
-      collectionIds: [collectionId]
+      collections: {
+        allIds: [],
+        byId: {}
+      }
     }
 
     const expectedState = {
-      ...initial,
-      collectionIds: [collectionId]
+      ...initial
     }
 
     expect(projectReducer(initial, action)).toEqual(expectedState)
@@ -188,24 +259,25 @@ describe('REMOVE_GRANULE_FROM_PROJECT_COLLECTION', () => {
         type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
         payload: {
           collectionId: 'collectionId2',
-          granuleId: 'GRAN-ID'
+          granuleId: 'granuleId'
         }
       }
 
       const initial = {
         ...initialState,
-        byId: {
-          collectionId: {}
-        },
-        collectionIds: ['collectionId']
+        collections: {
+          allIds: ['collectionId1'],
+          byId: {
+            collectionId1: {}
+          }
+        }
       }
 
       const expectedState = {
         ...initial
       }
 
-      const res = projectReducer(initial, action)
-      expect(res).toEqual(expectedState)
+      expect(projectReducer(initial, action)).toEqual(expectedState)
     })
   })
 
@@ -215,30 +287,37 @@ describe('REMOVE_GRANULE_FROM_PROJECT_COLLECTION', () => {
         type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
         payload: {
           collectionId: 'collectionId',
-          granuleId: 'GRAN-ID'
+          granuleId: 'granuleId'
         }
       }
 
       const initial = {
         ...initialState,
-        byId: {
-          collectionId: {}
-        },
-        collectionIds: ['collectionId']
-      }
-
-      const expectedState = {
-        ...initial,
-        collectionIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            removedGranuleIds: ['GRAN-ID']
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {}
+            }
           }
         }
       }
 
-      const res = projectReducer(initial, action)
-      expect(res).toEqual(expectedState)
+      const expectedState = {
+        ...initial,
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                removedGranuleIds: ['granuleId']
+              }
+            }
+          }
+        }
+      }
+
+      expect(projectReducer(initial, action)).toEqual(expectedState)
     })
   })
 
@@ -248,82 +327,182 @@ describe('REMOVE_GRANULE_FROM_PROJECT_COLLECTION', () => {
         type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
         payload: {
           collectionId: 'collectionId',
-          granuleId: 'GRAN-ID1'
+          granuleId: 'granuleId1'
         }
       }
 
       const initial = {
         ...initialState,
-        byId: {
-          collectionId: {
-            addedGranuleIds: ['GRAN-ID1', 'GRAN-ID2']
-          }
-        },
-        collectionIds: ['collectionId']
-      }
-
-      const expectedState = {
-        ...initial,
-        collectionIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            addedGranuleIds: ['GRAN-ID2']
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                addedGranuleIds: ['granuleId1', 'granuleId2']
+              }
+            }
           }
         }
       }
 
-      const res = projectReducer(initial, action)
-      expect(res).toEqual(expectedState)
+      const expectedState = {
+        ...initial,
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                addedGranuleIds: ['granuleId2']
+              }
+            }
+          }
+        }
+      }
+
+      expect(projectReducer(initial, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('when the granule has already been removed', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
+        payload: {
+          collectionId: 'collectionId',
+          granuleId: 'granuleId2'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                removedGranuleIds: ['granuleId1', 'granuleId2']
+              }
+            }
+          }
+        }
+      }
+
+      const expectedState = {
+        ...initial,
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                removedGranuleIds: ['granuleId1', 'granuleId2']
+              }
+            }
+          }
+        }
+      }
+
+      expect(projectReducer(initial, action)).toEqual(expectedState)
     })
   })
 })
 
 describe('REMOVE_COLLECTION_FROM_PROJECT', () => {
-  test('returns the correct state', () => {
-    const collectionId = 'collectionId'
+  describe('when the collection is in the project', () => {
+    test('returns the correct state', () => {
+      const collectionId = 'collectionId'
 
-    const action = {
-      type: REMOVE_COLLECTION_FROM_PROJECT,
-      payload: collectionId
-    }
+      const action = {
+        type: REMOVE_COLLECTION_FROM_PROJECT,
+        payload: collectionId
+      }
 
-    const initial = {
-      ...initialState,
-      collectionIds: ['existingCollectionId', collectionId, 'anotherExistingCollectionId']
-    }
+      const initial = {
+        ...initialState,
+        collections: {
+          allIds: ['existingCollectionId', collectionId, 'anotherExistingCollectionId'],
+          byId: {
+            existingCollectionId: {},
+            collectionId: {},
+            anotherExistingCollectionId: {}
+          }
+        }
+      }
 
-    const expectedState = {
-      ...initial,
-      collectionIds: ['existingCollectionId', 'anotherExistingCollectionId']
-    }
+      const expectedState = {
+        ...initial,
+        collections: {
+          allIds: ['existingCollectionId', 'anotherExistingCollectionId'],
+          byId: {
+            existingCollectionId: {},
+            anotherExistingCollectionId: {}
+          }
+        }
+      }
 
-    expect(projectReducer(initial, action)).toEqual(expectedState)
+      expect(projectReducer(initial, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('when the collection is not in the project', () => {
+    test('returns the correct state', () => {
+      const collectionId = 'collectionId'
+
+      const action = {
+        type: REMOVE_COLLECTION_FROM_PROJECT,
+        payload: collectionId
+      }
+
+      const initial = {
+        ...initialState,
+        collections: {
+          allIds: ['existingCollectionId', 'anotherExistingCollectionId'],
+          byId: {
+            existingCollectionId: {},
+            anotherExistingCollectionId: {}
+          }
+        }
+      }
+
+      const expectedState = {
+        ...initial,
+        collections: {
+          allIds: ['existingCollectionId', 'anotherExistingCollectionId'],
+          byId: {
+            existingCollectionId: {},
+            anotherExistingCollectionId: {}
+          }
+        }
+      }
+
+      expect(projectReducer(initial, action)).toEqual(expectedState)
+    })
   })
 })
 
 describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
-    const collectionIds = ['collectionId']
-
     const action = {
       type: RESTORE_FROM_URL,
       payload: {
         project: {
-          byId: {
-            collectionId: {}
-          },
-          collectionIds
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {}
+            }
+          }
         }
       }
     }
 
     const expectedState = {
       ...initialState,
-      byId: {
-        collectionId: {}
-      },
-      collectionIds: ['collectionId'],
-      collectionsRequiringChunking: []
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {}
+        }
+      }
     }
 
     expect(projectReducer(undefined, action)).toEqual(expectedState)
@@ -332,38 +511,45 @@ describe('RESTORE_FROM_URL', () => {
 
 describe('SELECT_ACCESS_METHOD', () => {
   test('returns the correct state', () => {
-    const collectionId = 'collectionId'
-
     const action = {
       type: SELECT_ACCESS_METHOD,
       payload: {
-        collectionId,
+        collectionId: 'collectionId',
         selectedAccessMethod: 'download'
       }
     }
 
-    const expectedState = {
-      ...initialState,
-      byId: {
-        collectionId: {
-          selectedAccessMethod: 'download'
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {}
         }
-      },
-      collectionsRequiringChunking: []
+      }
     }
 
-    expect(projectReducer(undefined, action)).toEqual(expectedState)
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            selectedAccessMethod: 'download'
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
   })
 })
 
 describe('ADD_ACCESS_METHODS', () => {
   test('returns the correct state', () => {
-    const collectionId = 'collectionId'
-
     const action = {
       type: ADD_ACCESS_METHODS,
       payload: {
-        collectionId,
+        collectionId: 'collectionId',
         methods: {
           download: {
             type: 'download'
@@ -372,21 +558,75 @@ describe('ADD_ACCESS_METHODS', () => {
       }
     }
 
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {}
+        }
+      }
+    }
+
     const expectedState = {
-      ...initialState,
-      byId: {
-        collectionId: {
-          accessMethods: {
-            download: {
-              type: 'download'
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            accessMethods: {
+              download: {
+                type: 'download'
+              }
             }
           }
         }
-      },
-      collectionsRequiringChunking: []
+      }
     }
 
-    expect(projectReducer(undefined, action)).toEqual(expectedState)
+    expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+
+  test('returns the correct state when there is a selectedAccessMethod', () => {
+    const action = {
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId',
+        methods: {
+          download: {
+            type: 'download'
+          }
+        },
+        selectedAccessMethod: 'download'
+      }
+    }
+
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {}
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            accessMethods: {
+              download: {
+                type: 'download'
+              }
+            },
+            selectedAccessMethod: 'download'
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
   })
 })
 
@@ -407,71 +647,411 @@ describe('UPDATE_ACCESS_METHOD', () => {
     }
 
     const initial = {
-      byId: {
-        collectionId: {
-          accessMethods: {
-            echoOrder: {
-              type: 'ECHO ORDERS'
+      ...initialState,
+      collections: {
+        allIds: [collectionId],
+        byId: {
+          collectionId: {
+            accessMethods: {
+              echoOrder: {
+                type: 'ECHO ORDERS'
+              }
             }
           }
         }
-      },
-      collectionIds: [collectionId],
-      collectionsRequiringChunking: [],
-      isSubmitted: false,
-      isSubmitting: false
+      }
     }
 
     const expectedState = {
       ...initialState,
-      byId: {
-        collectionId: {
-          accessMethods: {
-            echoOrder: {
-              type: 'ECHO ORDERS',
-              model: 'form model'
+      collections: {
+        allIds: [collectionId],
+        byId: {
+          collectionId: {
+            accessMethods: {
+              echoOrder: {
+                type: 'ECHO ORDERS',
+                model: 'form model'
+              }
             }
           }
         }
-      },
-      collectionIds: [collectionId],
-      collectionsRequiringChunking: []
+      }
     }
 
     expect(projectReducer(initial, action)).toEqual(expectedState)
   })
+})
 
-  describe('SUBMITTING_PROJECT', () => {
-    test('returns the correct state', () => {
-      const action = {
-        type: SUBMITTING_PROJECT
-      }
+describe('SUBMITTING_PROJECT', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: SUBMITTING_PROJECT
+    }
 
-      const expectedState = {
-        ...initialState,
-        collectionsRequiringChunking: [],
-        isSubmitted: false,
-        isSubmitting: true
-      }
+    const expectedState = {
+      ...initialState,
+      isSubmitted: false,
+      isSubmitting: true
+    }
 
-      expect(projectReducer(undefined, action)).toEqual(expectedState)
-    })
+    expect(projectReducer(undefined, action)).toEqual(expectedState)
   })
+})
 
-  describe('SUBMITTED_PROJECT', () => {
-    test('returns the correct state', () => {
-      const action = {
-        type: SUBMITTED_PROJECT
+describe('SUBMITTED_PROJECT', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: SUBMITTED_PROJECT
+    }
+
+    const expectedState = {
+      ...initialState,
+      isSubmitted: true,
+      isSubmitting: false
+    }
+
+    expect(projectReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('STARTED_PROJECT_GRANULES_TIMER', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: STARTED_PROJECT_GRANULES_TIMER,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {}
+        }
       }
+    }
 
-      const expectedState = {
-        ...initialState,
-        collectionsRequiringChunking: [],
-        isSubmitted: true,
-        isSubmitting: false
+    jest.spyOn(Date, 'now').mockImplementation(() => 5)
+
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              timerStart: 5
+            }
+          }
+        }
       }
+    }
 
-      expect(projectReducer(undefined, action)).toEqual(expectedState)
-    })
+    expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('ERRORED_PROJECT_GRANULES', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: ERRORED_PROJECT_GRANULES,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {}
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              isErrored: true,
+              isLoaded: true
+            }
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('FINISHED_PROJECT_GRANULES_TIMER', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: FINISHED_PROJECT_GRANULES_TIMER,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              timerStart: 5
+            }
+          }
+        }
+      }
+    }
+
+    jest.spyOn(Date, 'now').mockImplementation(() => 7)
+
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              timerStart: null,
+              loadTime: 2
+            }
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('PROJECT_GRANULES_LOADED', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: PROJECT_GRANULES_LOADED,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              isLoaded: true
+            }
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('PROJECT_GRANULES_LOADING', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: PROJECT_GRANULES_LOADING,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              isLoading: true
+            }
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('ADD_MORE_PROJECT_GRANULE_RESULTS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: ADD_MORE_PROJECT_GRANULE_RESULTS,
+      payload: {
+        collectionId: 'collectionId',
+        results: [{
+          id: 'granuleId2'
+        }]
+      }
+    }
+
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              allIds: ['granuleId1']
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              allIds: ['granuleId1', 'granuleId2']
+            }
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_PROJECT_GRANULE_RESULTS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_PROJECT_GRANULE_RESULTS,
+      payload: {
+        collectionId: 'collectionId',
+        results: [{
+          id: 'granuleId'
+        }],
+        isCwic: false,
+        hits: 1,
+        totalSize: {
+          size: '42',
+          units: 'MB'
+        },
+        singleGranuleSize: 42
+      }
+    }
+
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              allIds: ['granuleId'],
+              isCwic: false,
+              hits: 1,
+              totalSize: {
+                size: '42',
+                units: 'MB'
+              },
+              singleGranuleSize: 42
+            }
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_PROJECT_GRANULE_PARAMS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_PROJECT_GRANULE_PARAMS,
+      payload: {
+        collectionId: 'collectionId',
+        pageNum: 1
+      }
+    }
+
+    const initial = {
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              params: {
+                pageNum: 1
+              }
+            }
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
   })
 })
