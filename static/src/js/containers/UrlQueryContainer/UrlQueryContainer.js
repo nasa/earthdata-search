@@ -7,6 +7,7 @@ import actions from '../../actions/index'
 import { encodeUrlQuery } from '../../util/url/url'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
+import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 
 const mapDispatchToProps = dispatch => ({
   onChangePath:
@@ -20,6 +21,7 @@ const mapStateToProps = state => ({
   autocompleteSelected: state.autocomplete.selected,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
+  collectionsMetadata: getCollectionsMetadata(state),
   featureFacets: state.facetsParams.feature,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),

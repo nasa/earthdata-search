@@ -3,7 +3,6 @@ import {
   ADD_COLLECTION_TO_PROJECT,
   ADD_GRANULE_TO_PROJECT_COLLECTION,
   ADD_MORE_PROJECT_GRANULE_RESULTS,
-  CLEAR_REMOVED_GRANULE_ID,
   ERRORED_PROJECT_GRANULES,
   FINISHED_PROJECT_GRANULES_TIMER,
   PROJECT_GRANULES_LOADED,
@@ -111,10 +110,11 @@ const projectReducer = (state = initialState, action) => {
     case FINISHED_PROJECT_GRANULES_TIMER: {
       const collectionId = action.payload
 
-      const { collections, timerStart } = state
+      const { collections } = state
       const { byId: projectCollectionsById = {} } = collections
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
       const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+      const { timerStart } = projectCollectionGranules
 
       return {
         ...state,
@@ -196,8 +196,9 @@ const projectReducer = (state = initialState, action) => {
 
       const newIds = processResults(results)
 
-      const { byId = {} } = state
-      const { [collectionId]: projectCollection = {} } = byId
+      const { collections = {} } = state
+      const { byId: projectCollectionsById = {} } = collections
+      const { [collectionId]: projectCollection = {} } = projectCollectionsById
       const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
       const { allIds } = projectCollectionGranules
 
@@ -428,24 +429,6 @@ const projectReducer = (state = initialState, action) => {
       }
 
       return state
-    }
-    case CLEAR_REMOVED_GRANULE_ID: {
-      const { collections: projectCollections = {} } = state
-      const { allIds, byId } = projectCollections
-
-      allIds.forEach((collectionId) => {
-        if ('removedGranuleIds' in byId[collectionId]) {
-          byId[collectionId].removedGranuleIds = []
-        }
-      })
-
-      return {
-        ...state,
-        collections: {
-          ...projectCollections,
-          byId
-        }
-      }
     }
     case ADD_COLLECTION_TO_PROJECT: {
       const collectionId = action.payload

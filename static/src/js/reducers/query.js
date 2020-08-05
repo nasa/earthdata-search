@@ -1,5 +1,4 @@
 import {
-  CLEAR_EXCLUDE_GRANULE_ID,
   CLEAR_FILTERS,
   EXCLUDE_GRANULE_ID,
   RESTORE_FROM_URL,
@@ -125,33 +124,6 @@ const queryReducer = (state = initialState, action) => {
               }
             }
           }
-        }
-      }
-    }
-    case CLEAR_EXCLUDE_GRANULE_ID: {
-      const { collection = {} } = state
-      const { byId = {} } = collection
-
-      const byIdWithNoExcludedGranuleIds = {}
-
-      Object.keys(byId).forEach((id) => {
-        const { [id]: focusedCollection = {} } = byId
-        const { granules = {} } = focusedCollection
-
-        byIdWithNoExcludedGranuleIds[id] = {
-          ...focusedCollection,
-          granules: {
-            ...granules,
-            excludedGranuleIds: []
-          }
-        }
-      })
-
-      return {
-        ...state,
-        collection: {
-          ...collection,
-          byId: byIdWithNoExcludedGranuleIds
         }
       }
     }
