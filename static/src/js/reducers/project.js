@@ -233,16 +233,21 @@ const projectReducer = (state = initialState, action) => {
 
       const allIds = processResults(results)
 
+      const { collections: projectCollections = {} } = state
+      const { byId: projectCollectionsById = {} } = projectCollections
+      const { [collectionId]: projectCollection = {} } = projectCollectionsById
+      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+
       return {
         ...state,
         collections: {
-          ...state.collections,
+          ...projectCollections,
           byId: {
-            ...state.collections.byId,
+            ...projectCollectionsById,
             [collectionId]: {
-              ...state.collections.byId[collectionId],
+              ...projectCollection,
               granules: {
-                ...state.collections.byId[collectionId].granules,
+                ...projectCollectionGranules,
                 allIds,
                 hits,
                 isCwic,
@@ -257,16 +262,21 @@ const projectReducer = (state = initialState, action) => {
     case UPDATE_PROJECT_GRANULE_PARAMS: {
       const { collectionId, pageNum } = action.payload
 
+      const { collections: projectCollections = {} } = state
+      const { byId: projectCollectionsById = {} } = projectCollections
+      const { [collectionId]: projectCollection = {} } = projectCollectionsById
+      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+
       return {
         ...state,
         collections: {
-          ...state.collections,
+          ...projectCollections,
           byId: {
-            ...state.collections.byId,
+            ...projectCollectionsById,
             [collectionId]: {
-              ...state.collections.byId[collectionId],
+              ...projectCollection,
               granules: {
-                ...state.collections.byId[collectionId].granules,
+                ...projectCollectionGranules,
                 params: {
                   pageNum
                 }
