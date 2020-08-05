@@ -32,6 +32,7 @@ export const GranuleResultsListItem = memo(({
     granules,
     isCollectionInProject,
     isGranuleInProject,
+    isProjectGranulesLoading,
     isItemLoaded,
     location,
     numColumns,
@@ -100,6 +101,7 @@ export const GranuleResultsListItem = memo(({
         collectionId={collectionId}
         granule={granules[index]}
         isCollectionInProject={isCollectionInProject}
+        isProjectGranulesLoading={isProjectGranulesLoading}
         isGranuleInProject={isGranuleInProject}
         location={location}
         onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}

@@ -337,7 +337,7 @@ export const addGranuleToProjectCollection = payload => (dispatch, getState) => 
     dispatch(addProjectCollection(collectionId))
   }
 
-  // Add the granule to the project collection.c
+  // Add the granule to the project collection.
   dispatch({
     type: ADD_GRANULE_TO_PROJECT_COLLECTION,
     payload
@@ -369,7 +369,7 @@ export const removeGranuleFromProjectCollection = payload => (dispatch, getState
 
   const indexInRemovedGranulesArray = removedGranuleIds.indexOf(granuleId)
 
-  // If the granule does not exist in the removed granules array and the
+  // If the granule does not exist in the removed granules array and
   // removing the granule would result in 0 granules in the project, remove
   // the current collection from the project.
   if (

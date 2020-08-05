@@ -36,6 +36,7 @@ export const GranuleResultsTable = ({
   granules,
   hasBrowseImagery,
   isGranuleInProject,
+  isProjectGranulesLoading,
   isItemLoaded,
   itemCount,
   loadMoreItems,
@@ -60,6 +61,8 @@ export const GranuleResultsTable = ({
         cellClassName: 'granule-results-table__cell--granule',
         collectionId,
         isGranuleInProject,
+        isProjectGranulesLoading,
+        GranuleResultsTableHeaderCell,
         location,
         onAddGranuleToProjectCollection,
         onExcludeGranule,
@@ -184,6 +187,7 @@ export const GranuleResultsTable = ({
         itemCount={itemCount}
         loadMoreItems={loadMoreItems}
         isItemLoaded={isItemLoaded}
+        isProjectGranulesLoading={isProjectGranulesLoading}
         setVisibleMiddleIndex={setVisibleMiddleIndex}
         striped
         initialRowStateAccessor={initialRowStateAccessor}
@@ -209,6 +213,7 @@ GranuleResultsTable.propTypes = {
   hasBrowseImagery: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
+  isProjectGranulesLoading: PropTypes.bool.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
   location: PropTypes.shape({}).isRequired,
