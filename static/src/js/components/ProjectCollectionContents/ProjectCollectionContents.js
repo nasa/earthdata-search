@@ -15,7 +15,6 @@ const ProjectCollectionContents = ({
   const { granules: projectCollectionGranules } = projectCollection
   const {
     hits: granuleCount,
-    isLoaded,
     addedGranuleIds,
     removedGranuleIds
   } = projectCollectionGranules
@@ -36,10 +35,10 @@ const ProjectCollectionContents = ({
     >
       <i className="fa fa-folder granule-results-actions__project-pill-icon" />
       {
-        (isLoaded && !addedGranuleIds.length && !removedGranuleIds.length) && <span title="All granules in project">All Granules</span>
+        (!addedGranuleIds.length && !removedGranuleIds.length) && <span title="All granules in project">All Granules</span>
       }
       {
-        isLoaded && (addedGranuleIds.length > 0 || removedGranuleIds.length > 0) && (
+        (addedGranuleIds.length > 0 || removedGranuleIds.length > 0) && (
           <span
             title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
           >

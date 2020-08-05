@@ -218,19 +218,17 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
  * @param {String} collectionId The collection the user has requested to focus
  */
 export const changeFocusedCollection = collectionId => (dispatch, getState) => {
-  const state = getState()
-
   const {
     router
   } = getState()
 
-  const focusedCollectionId = getFocusedCollectionId(state)
+  dispatch(updateFocusedCollection(collectionId))
 
   if (collectionId === '') {
     // If clearing the focused collection, also clear the focused granule
     dispatch(actions.changeFocusedGranule(''))
 
-    eventEmitter.emit(`map.layer.${focusedCollectionId}.stickygranule`, { granule: null })
+    eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: null })
 
     const { location } = router
     const { search } = location
@@ -240,13 +238,11 @@ export const changeFocusedCollection = collectionId => (dispatch, getState) => {
       pathname: `${portalPathFromState(getState())}/search`,
       search
     }))
+  } else {
+    dispatch(actions.getFocusedCollection())
+
+    dispatch(actions.getTimeline())
   }
-
-  dispatch(updateFocusedCollection(collectionId))
-
-  dispatch(actions.getTimeline())
-
-  dispatch(actions.getFocusedCollection())
 }
 
 /**
