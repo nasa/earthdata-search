@@ -95,7 +95,6 @@ export const finishCollectionsTimer = () => ({
 export const updateFocusedCollectionGranuleFilters = granuleFilters => (dispatch, getState) => {
   const state = getState()
 
-  // const granuleQuery = getFocusedCollectionGranuleQuery(state)
   const focusedCollectionId = getFocusedCollectionId(state)
 
   dispatch({

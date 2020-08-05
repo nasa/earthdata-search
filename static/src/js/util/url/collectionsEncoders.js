@@ -139,13 +139,13 @@ const decodedOutputFormat = (pgParam) => {
 /**
  * Encodes a Collections object into an object
  * @param {Object} collectionsMetadata Collections object
- * @param {String} focusedCollection Focused Collection ID
+ * @param {String} focusedCollectionId Focused Collection ID
  * @return {String} An object with encoded Collections
  */
 export const encodeCollections = (props) => {
   const {
     collectionsMetadata = {},
-    focusedCollection,
+    focusedCollectionId,
     project = {},
     query = {}
   } = props
@@ -159,13 +159,13 @@ export const encodeCollections = (props) => {
 
   // pParameter - focusedCollection!projectCollection1!projectCollection2
   const pParameter = [
-    focusedCollection,
+    focusedCollectionId,
     ...projectIds
   ].join('!')
 
   const projectExists = projectIds.length > 0
 
-  const ids = projectExists ? projectIds : [focusedCollection]
+  const ids = projectExists ? projectIds : [focusedCollectionId]
 
   // If there isn't a focusedCollection or any projectIds, we don't need to continue
   if (pParameter === '') return ''
@@ -363,37 +363,6 @@ export const decodeCollections = (params) => {
         granules: newGranulQuery
       }
 
-      if (projectExists) {
-        // If the collection is not already in the project ids, add it
-        if (projectIds.indexOf(collectionId) === -1) {
-          projectIds.push(collectionId)
-        }
-
-        projectById[collectionId] = {
-          isVisible,
-          granules: initialProjectCollectionGranuleState
-        }
-
-        if (variableIds || selectedOutputFormat) {
-          projectById[collectionId] = {
-            accessMethods: {
-              opendap: {
-                selectedVariables: variableIds,
-                selectedOutputFormat
-              }
-            }
-          }
-        }
-
-        if (addedGranuleIds.length && projectById[collectionId]) {
-          projectById[collectionId].granules.addedGranuleIds = addedGranuleIds
-        }
-
-        if (removedGranuleIds.length && projectById[collectionId]) {
-          projectById[collectionId].granules.removedGranuleIds = removedGranuleIds
-        }
-      }
-
       // Collection visibility on the project page
       const { v: visible = '' } = pCollection
       isVisible = (visible === 't')
@@ -411,6 +380,37 @@ export const decodeCollections = (params) => {
       collectionMetadata[collectionId] = {
         id: collectionId,
         isCwic
+      }
+    }
+
+    if (projectExists) {
+      // If the collection is not already in the project ids, add it
+      if (projectIds.indexOf(collectionId) === -1) {
+        projectIds.push(collectionId)
+      }
+
+      projectById[collectionId] = {
+        isVisible,
+        granules: initialProjectCollectionGranuleState
+      }
+
+      if (variableIds || selectedOutputFormat) {
+        projectById[collectionId] = {
+          accessMethods: {
+            opendap: {
+              selectedVariables: variableIds,
+              selectedOutputFormat
+            }
+          }
+        }
+      }
+
+      if (addedGranuleIds.length && projectById[collectionId]) {
+        projectById[collectionId].granules.addedGranuleIds = addedGranuleIds
+      }
+
+      if (removedGranuleIds.length && projectById[collectionId]) {
+        projectById[collectionId].granules.removedGranuleIds = removedGranuleIds
       }
     }
   })

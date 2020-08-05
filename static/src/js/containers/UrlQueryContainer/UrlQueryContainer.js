@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
+
 import { encodeUrlQuery } from '../../util/url/url'
+import { getFocusedCollectionId } from '../../selectors/focusedCollection'
+import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 
 const mapDispatchToProps = dispatch => ({
   onChangePath:
@@ -18,8 +21,8 @@ const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
   featureFacets: state.facetsParams.feature,
-  focusedCollection: state.focusedCollection,
-  focusedGranule: state.focusedGranule,
+  focusedCollectionId: getFocusedCollectionId(state),
+  focusedGranuleId: getFocusedGranuleId(state),
   granuleDataFormatFacets: state.facetsParams.cmr.granule_data_format_h,
   gridName: state.query.collection.gridName,
   hasGranulesOrCwic: state.query.collection.hasGranulesOrCwic,

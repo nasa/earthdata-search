@@ -166,6 +166,7 @@ export const getProjectCollections = () => (dispatch, getState) => {
   }
 
   const collectionParams = prepareCollectionParams(getState())
+
   const searchParams = buildCollectionSearchParams(collectionParams)
 
   const {

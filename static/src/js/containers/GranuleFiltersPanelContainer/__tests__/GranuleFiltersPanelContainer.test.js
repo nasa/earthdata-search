@@ -2,9 +2,9 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { GranuleFiltersHeaderContainer } from '../../GranuleFiltersHeaderContainer/GranuleFiltersHeaderContainer'
+import GranuleFiltersHeaderContainer from '../../GranuleFiltersHeaderContainer/GranuleFiltersHeaderContainer'
 import { GranuleFiltersPanelContainer } from '../GranuleFiltersPanelContainer'
-import { SecondaryOverlayPanelContainer } from '../../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
+import SecondaryOverlayPanelContainer from '../../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
 import GranuleFiltersActions from '../../../components/GranuleFilters/GranuleFiltersActions'
 import GranuleFiltersBody from '../../../components/GranuleFilters/GranuleFiltersBody'
 
@@ -18,7 +18,6 @@ function setup() {
     collectionQuery: {},
     granuleQuery: {},
     errors: {},
-    focusedCollection: 'collectionId',
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
     handleReset: jest.fn(),
@@ -56,6 +55,7 @@ describe('GranuleFiltersPanelContainer component', () => {
 
     test('renders with the correct body prop and passes the correct props', () => {
       const { enzymeWrapper, props } = setup()
+
       const granuleFiltersFormProps = enzymeWrapper.find(SecondaryOverlayPanelContainer).prop('body').props.granuleFiltersForm.props
 
       expect(enzymeWrapper.find(SecondaryOverlayPanelContainer).length).toEqual(1)
@@ -73,6 +73,7 @@ describe('GranuleFiltersPanelContainer component', () => {
 
     test('renders with the correct footer prop and passes the correct props', () => {
       const { enzymeWrapper, props } = setup()
+
       const granuleFiltersActionsProps = enzymeWrapper.find(SecondaryOverlayPanelContainer).prop('footer').props
 
       expect(enzymeWrapper.find(SecondaryOverlayPanelContainer).length).toEqual(1)
@@ -87,6 +88,7 @@ describe('GranuleFiltersPanelContainer component', () => {
   describe('onApplyClick', () => {
     test('calls the correct functions', () => {
       const { enzymeWrapper, props } = setup()
+
       const granuleFiltersActionsProps = enzymeWrapper.find(SecondaryOverlayPanelContainer).prop('footer').props
 
       granuleFiltersActionsProps.onApplyClick()
@@ -98,6 +100,7 @@ describe('GranuleFiltersPanelContainer component', () => {
   describe('onClearClick', () => {
     test('calls the correct functions', () => {
       const { enzymeWrapper, props } = setup()
+
       const granuleFiltersActionsProps = enzymeWrapper.find(SecondaryOverlayPanelContainer).prop('footer').props
 
       granuleFiltersActionsProps.onClearClick()
