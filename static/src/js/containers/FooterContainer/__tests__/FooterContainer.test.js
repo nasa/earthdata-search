@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import * as config from '../../../../../../sharedUtils/config'
 
 import { FooterContainer } from '../FooterContainer'
+import { FooterLink } from '../../../components/FooterLink/FooterLink'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -83,15 +84,16 @@ describe('FooterContainer component', () => {
   test('displays primary links', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.footer__info-link').first().props().href).toEqual('http://primary.example.com')
-    expect(enzymeWrapper.find('.footer__info-link').first().text()).toEqual('Primary Example')
+    expect(enzymeWrapper.find(FooterLink).first().props().href).toEqual('http://primary.example.com')
+    expect(enzymeWrapper.find(FooterLink).first().props().title).toEqual('Primary Example')
   })
 
   test('displays secondary links', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.footer__info-link').last().props().href).toEqual('http://secondary.example.com')
-    expect(enzymeWrapper.find('.footer__info-link').last().text()).toEqual('Secondary Example')
+    expect(enzymeWrapper.find(FooterLink).last().props().href).toEqual('http://secondary.example.com')
+    expect(enzymeWrapper.find(FooterLink).last().props().title).toEqual('Secondary Example')
+    expect(enzymeWrapper.find(FooterLink).last().props().secondary).toBeTruthy()
   })
 
   describe('when in the prod environment', () => {

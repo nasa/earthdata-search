@@ -37,7 +37,6 @@
     }
   }
 
-
   &__ver-pill {
     display: inline-block;
     padding: 0 0.5rem;
@@ -45,55 +44,6 @@
     background: $color__brand--blue-dark;
     border-radius: 0.124rem;
     vertical-align: middle;
-  }
-
-  &__info-bit {
-    margin-left: 0.55rem;
-    color: $color__brand--blue-light;
-    vertical-align: middle;
-
-    &:before {
-      display: inline-block;
-      transform: translate(-0.275rem,-.165rem) scale(0.5);
-      content: '\f111';
-      font-family: 'FontAwesome';
-      color: $color__white;
-      font-size: 3px;
-    }
-  }
-
-  &__info-bit--clean {
-    margin-left: 0;
-
-    &:before {
-      display: none;
-    }
-  }
-
-  &__info-bit--emph {
-    color: $color__white;
-  }
-
-  &__info-link {
-    white-space:nowrap;
-    color: $color__brand--blue-light;
-
-    &__info-bit--emph & {
-      color: $color__white;
-    }
-
-    &:hover {
-      color: $color__brand--blue-light;
-      text-decoration: none;
-
-      &__info-bit--emph & {
-        color: $color__white;
-      }
-    }
-  }
-
-  &__info-link--underline {
-    text-decoration: underline;
   }
 
   &__env {

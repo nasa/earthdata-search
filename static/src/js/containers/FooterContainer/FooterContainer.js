@@ -8,6 +8,7 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import isPath from '../../util/isPath'
 
 import ConnectedTimelineContainer from '../TimelineContainer/TimelineContainer'
+import { FooterLink } from '../../components/FooterLink/FooterLink'
 
 import './FooterContainer.scss'
 
@@ -85,28 +86,23 @@ export class FooterContainer extends Component {
     const primaryLinks = () => primaryLinksArray.map((link) => {
       const { href, title } = link
       return (
-        <span key={title} className="footer__info-bit">
-          <a
-            className="footer__info-link"
-            href={href}
-          >
-            {title}
-          </a>
-        </span>
+        <FooterLink
+          key={href}
+          href={href}
+          title={title}
+        />
       )
     })
 
     const secondaryLinks = () => secondaryLinksArray.map((link) => {
       const { href, title } = link
       return (
-        <span key={title} className="footer__info-bit footer__info-bit--clean footer__info-bit--emph">
-          <a
-            className="footer__info-link footer__info-link--underline"
-            href={href}
-          >
-            {title}
-          </a>
-        </span>
+        <FooterLink
+          key={href}
+          href={href}
+          title={title}
+          secondary
+        />
       )
     })
 
