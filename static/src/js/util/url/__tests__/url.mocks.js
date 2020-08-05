@@ -14,8 +14,8 @@ export const emptyDecodedResult = {
     mapImagery: false,
     nearRealTime: false
   },
-  focusedCollection: undefined,
-  focusedGranule: undefined,
+  focusedCollectionId: undefined,
+  focusedGranuleId: undefined,
   map: {},
   project: undefined,
   query: {

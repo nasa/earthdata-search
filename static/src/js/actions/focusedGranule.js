@@ -5,7 +5,6 @@ import { UPDATE_FOCUSED_GRANULE } from '../constants/actionTypes'
 import { createEcho10MetadataUrls } from '../util/granules'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
-import { updateGranuleMetadata } from './granules'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -25,12 +24,6 @@ export const getFocusedGranule = () => (dispatch, getState) => {
     router
   } = getState()
 
-
-  if (focusedGranule === '') {
-    dispatch(updateGranuleMetadata([]))
-
-    return null
-  }
   const { granules: granuleMetadata = {} } = metadata
   const { [focusedGranule]: focusedGranuleMetadata = {} } = granuleMetadata
   const {
@@ -136,7 +129,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
         dispatch(actions.updateGranuleMetadata(payload))
       } else {
         // If no data was returned, clear the focused granule and redirect the user back to the search page
-        dispatch(actions.updateFocusedGranule(''))
+        dispatch(updateFocusedGranule(''))
 
         const { location } = router
         const { search } = location

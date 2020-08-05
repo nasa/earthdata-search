@@ -935,10 +935,10 @@ class GranuleGridLayerExtended extends L.GridLayer {
       this._stickied = granule
       this.stickyId = granule != null ? granule.id : undefined // Ugly hack for testing
 
-      let focusedGranuleIdId = ''
-      if (granule != null) focusedGranuleIdId = granule.id
+      let focusedGranuleId = ''
+      if (granule != null) focusedGranuleId = granule.id
 
-      this.onChangeFocusedGranule(focusedGranuleIdId)
+      this.onChangeFocusedGranule(focusedGranuleId)
 
       this._granuleStickyLayer = this._stickyLayer(granule, true)
 

@@ -22,9 +22,7 @@ function setup() {
     },
     collectionsSearch: {},
     portal: {},
-    project: {
-      collectionIds: []
-    },
+    projectCollectionsIds: [],
     location: {
       value: 'location'
     },
@@ -34,7 +32,6 @@ function setup() {
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn(),
     panelView: 'list',
-    projectCollectionIds: [],
     query: {
       pageNum: 1
     }
@@ -64,17 +61,14 @@ describe('CollectionResultsBodyContainer component', () => {
         title: 'collection 2 title'
       }
     })
-    expect(enzymeWrapper.find(CollectionResultsBody).props().projectCollectionIds).toEqual([])
+    expect(enzymeWrapper.find(CollectionResultsBody).props().projectCollectionsIds).toEqual([])
     expect(enzymeWrapper.find(CollectionResultsBody).props().location).toEqual({
       value: 'location'
     })
-
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onAddProjectCollection).toEqual('function')
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onRemoveCollectionFromProject).toEqual('function')
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionGranules).toEqual('function')
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionDetails).toEqual('function')
-
-    expect(enzymeWrapper.find(CollectionResultsBody).props().projectCollectionIds).toEqual([])
   })
 
   test('loadNextPage calls onChangeCollectionPageNum', () => {

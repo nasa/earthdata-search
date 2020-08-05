@@ -1,5 +1,4 @@
 import { isCancel } from 'axios'
-// import { difference, isEqual } from 'lodash'
 
 import actions from './index'
 import {
@@ -52,6 +51,7 @@ import {
   getFocusedCollectionMetadata
 } from '../selectors/collectionMetadata'
 import { updateGranuleSearchQuery } from './search'
+import { getFocusedCollectionId } from '../selectors/focusedCollection'
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -300,7 +300,6 @@ export const clearRemovedGranules = () => (dispatch) => {
   dispatch(onClearRemovedGranules())
 }
 
-
 // Cancel token to cancel pending search requests
 const granuleSearchCancelTokens = {}
 
@@ -311,9 +310,10 @@ export const searchGranules = () => (dispatch, getState) => {
   const state = getState()
 
   const {
-    authToken,
-    focusedCollection: collectionId
+    authToken
   } = state
+
+  const collectionId = getFocusedCollectionId(state)
 
   // Extract granule search parameters from redux specific to the focused collection
   const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)

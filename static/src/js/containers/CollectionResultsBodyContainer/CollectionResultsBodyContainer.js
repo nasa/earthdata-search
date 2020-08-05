@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
   collectionsSearch: state.searchResults.collections,
   collectionsMetadata: state.metadata.collections,
   portal: state.portal,
-  projectCollectionIds: getProjectCollectionsIds(state),
+  projectCollectionsIds: getProjectCollectionsIds(state),
   query: state.query.collection
 })
 
@@ -44,7 +44,7 @@ export const CollectionResultsBodyContainer = (props) => {
     onViewCollectionGranules,
     panelView,
     portal,
-    projectCollectionIds,
+    projectCollectionsIds,
     query
   } = props
 
@@ -67,7 +67,7 @@ export const CollectionResultsBodyContainer = (props) => {
       onViewCollectionGranules={onViewCollectionGranules}
       panelView={panelView}
       portal={portal}
-      projectCollectionIds={projectCollectionIds}
+      projectCollectionsIds={projectCollectionsIds}
     />
   )
 }
@@ -84,7 +84,7 @@ CollectionResultsBodyContainer.propTypes = {
   onViewCollectionGranules: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
-  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   query: PropTypes.shape({}).isRequired
 }
 

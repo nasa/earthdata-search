@@ -25,7 +25,7 @@ const CollectionResultsBody = ({
   browser,
   collectionsSearch,
   collectionsMetadata,
-  projectCollectionIds,
+  projectCollectionsIds,
   loadNextPage,
   panelView,
   onAddProjectCollection,
@@ -40,8 +40,8 @@ const CollectionResultsBody = ({
   } = collectionsSearch
 
   const collectionList = useMemo(() => formatCollectionList(
-    collectionsSearch, collectionsMetadata, projectCollectionIds, browser
-  ), [isLoading, collectionsMetadata, collectionIds, projectCollectionIds])
+    collectionsSearch, collectionsMetadata, projectCollectionsIds, browser
+  ), [isLoading, collectionsMetadata, collectionIds, projectCollectionsIds])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
 
@@ -95,17 +95,17 @@ const CollectionResultsBody = ({
         unmountOnExit
       >
         <CollectionResultsTable
-          visibleMiddleIndex={visibleMiddleIndex}
           collectionsMetadata={collectionList}
-          onViewCollectionGranules={onViewCollectionGranules}
+          isItemLoaded={isItemLoaded}
+          itemCount={itemCount}
+          loadMoreItems={loadMoreItems}
+          loadNextPage={loadNextPage}
           onAddProjectCollection={onAddProjectCollection}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onViewCollectionDetails={onViewCollectionDetails}
-          loadNextPage={loadNextPage}
+          onViewCollectionGranules={onViewCollectionGranules}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
-          itemCount={itemCount}
-          loadMoreItems={loadMoreItems}
-          isItemLoaded={isItemLoaded}
+          visibleMiddleIndex={visibleMiddleIndex}
         />
       </CSSTransition>
     </div>
@@ -123,7 +123,7 @@ CollectionResultsBody.propTypes = {
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
-  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired
+  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default CollectionResultsBody

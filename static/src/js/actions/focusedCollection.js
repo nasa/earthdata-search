@@ -6,6 +6,7 @@ import {
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { eventEmitter } from '../events/events'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { hasTag } from '../../../../sharedUtils/tags'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { updateAuthTokenFromHeaders } from './authToken'
@@ -22,23 +23,19 @@ export const updateFocusedCollection = payload => ({
  * Perform a collection request based on the focusedCollection from the store.
  */
 export const getFocusedCollection = () => async (dispatch, getState) => {
+  const state = getState()
   const {
     authToken,
-    focusedCollection,
     metadata,
     query,
     router,
     searchResults
-  } = getState()
+  } = state
 
-  if (focusedCollection === '') {
-    dispatch(updateCollectionMetadata([]))
-
-    return null
-  }
+  const focusedCollectionId = getFocusedCollectionId(state)
 
   const { collections: collectionMetadata = {} } = metadata
-  const { [focusedCollection]: focusedCollectionMetadata = {} } = collectionMetadata
+  const { [focusedCollectionId]: focusedCollectionMetadata = {} } = collectionMetadata
   const {
     hasAllMetadata = false,
     isCwic = false
@@ -59,10 +56,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   const { collections } = searchResults
   const {
     byId = {}
-    // isLoaded: isCollectionLoaded,
-    // isLoading: isCollectionLoading
   } = collections
-  const { [focusedCollection]: focusedCollectionSearchResults = {} } = byId
+  const { [focusedCollectionId]: focusedCollectionSearchResults = {} } = byId
 
   const { granules = {} } = focusedCollectionSearchResults
   const {
@@ -80,11 +75,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
     return null
   }
-
-  // TODO: Implement and use a focused collection loading state
-  // if (!isCollectionLoaded && !isCollectionLoading) {
-  //   dispatch(actions.initializeCollectionGranulesResults(focusedCollection))
-  // }
 
   const { defaultCmrSearchTags } = getApplicationConfig()
 
@@ -140,7 +130,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     }`
 
   const response = graphRequestObject.search(graphQuery, {
-    id: focusedCollection,
+    id: focusedCollectionId,
     includeHasGranules: true,
     includeTags: defaultCmrSearchTags.join(',')
   })
@@ -228,16 +218,19 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
  * @param {String} collectionId The collection the user has requested to focus
  */
 export const changeFocusedCollection = collectionId => (dispatch, getState) => {
+  const state = getState()
+
   const {
-    focusedCollection: currentFocusedCollection,
     router
   } = getState()
+
+  const focusedCollectionId = getFocusedCollectionId(state)
 
   if (collectionId === '') {
     // If clearing the focused collection, also clear the focused granule
     dispatch(actions.changeFocusedGranule(''))
 
-    eventEmitter.emit(`map.layer.${currentFocusedCollection}.stickygranule`, { granule: null })
+    eventEmitter.emit(`map.layer.${focusedCollectionId}.stickygranule`, { granule: null })
 
     const { location } = router
     const { search } = location

@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
   mapProjection: state.map.projection,
   panels: state.panels,
   project: state.project,
-  projectCollectionIds: getProjectCollectionsIds(state),
+  projectCollectionsIds: getProjectCollectionsIds(state),
   projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   savedProject: state.savedProject
 })

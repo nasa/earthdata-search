@@ -71,7 +71,6 @@ export class ProjectCollections extends Component {
 
   render() {
     const {
-      projectCollectionsMetadata,
       collectionsQuery,
       mapProjection,
       onMetricsDataAccess,
@@ -86,6 +85,8 @@ export class ProjectCollections extends Component {
       onViewCollectionGranules,
       panels,
       project,
+      projectCollectionsIds,
+      projectCollectionsMetadata,
       savedProject
     } = this.props
 
@@ -97,11 +98,10 @@ export class ProjectCollections extends Component {
 
     const { isSubmitting } = project
 
-    // TODO: RYAN [] should be replaced with project collections
-    const isLoading = [].every((collectionId) => {
-      const { byId } = collectionsQuery
-      const { [collectionId]: collectionSearch } = byId
-      const { granules } = collectionSearch
+    const isLoading = projectCollectionsIds.every((collectionId) => {
+      const { byId = {} } = collectionsQuery
+      const { [collectionId]: collectionSearch = {} } = byId
+      const { granules = {} } = collectionSearch
       const { isLoading } = granules
 
       return isLoading
@@ -201,6 +201,7 @@ ProjectCollections.propTypes = {
   panels: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
+  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }
 
