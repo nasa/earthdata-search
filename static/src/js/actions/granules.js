@@ -30,7 +30,8 @@ import {
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_METADATA,
-  UPDATE_GRANULE_RESULTS
+  UPDATE_GRANULE_RESULTS,
+  INITIALIZE_COLLECTION_GRANULES_QUERY
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { mbr } from '../util/map/mbr'
@@ -135,6 +136,11 @@ export const setGranuleLinksLoaded = () => ({
 
 export const initializeCollectionGranulesResults = payload => ({
   type: INITIALIZE_COLLECTION_GRANULES_RESULTS,
+  payload
+})
+
+export const initializeCollectionGranulesQuery = payload => ({
+  type: INITIALIZE_COLLECTION_GRANULES_QUERY,
   payload
 })
 

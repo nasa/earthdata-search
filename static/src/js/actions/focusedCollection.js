@@ -239,6 +239,10 @@ export const changeFocusedCollection = collectionId => (dispatch, getState) => {
       search
     }))
   } else {
+    dispatch(actions.initializeCollectionGranulesQuery(collectionId))
+
+    dispatch(actions.initializeCollectionGranulesResults(collectionId))
+
     dispatch(actions.getFocusedCollection())
 
     dispatch(actions.getTimeline())

@@ -5,7 +5,6 @@ import { parse } from 'qs'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 
 import { commafy } from '../../util/commafy'
-import { pluralize } from '../../util/pluralize'
 import { stringify } from '../../util/url/url'
 
 import Button from '../Button/Button'
@@ -13,39 +12,17 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 export const GranuleDownloadButton = (props) => {
   const {
+    badge,
+    buttonText,
     focusedCollectionId,
-    granuleCount: searchGranuleCount,
+    granuleCount,
     granuleLimit,
     initialLoading,
     isCollectionInProject,
     location,
     onAddProjectCollection,
-    projectCollection,
     tooManyGranules
   } = props
-
-  const { granules: projectCollectionGranules = {} } = projectCollection
-  const {
-    hits: projectGranuleCount,
-    addedGranuleIds,
-    removedGranuleIds
-  } = projectCollectionGranules
-
-  // When the collection has yet to be added to a project the granule count
-  // should reflect the search results
-  const granuleCount = projectGranuleCount || searchGranuleCount
-
-  let buttonText = 'Download All'
-
-  const badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
-
-  if (
-    isCollectionInProject
-    && (!addedGranuleIds.length && !removedGranuleIds.length)
-    && granuleCount > 0
-  ) {
-    buttonText = 'Download'
-  }
 
   if (tooManyGranules) {
     return (
@@ -137,11 +114,14 @@ export const GranuleDownloadButton = (props) => {
 }
 
 GranuleDownloadButton.defaultProps = {
+  badge: null,
   granuleCount: 0,
   granuleLimit: undefined
 }
 
 GranuleDownloadButton.propTypes = {
+  badge: PropTypes.string,
+  buttonText: PropTypes.string.isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   granuleCount: PropTypes.number,
   granuleLimit: PropTypes.number,

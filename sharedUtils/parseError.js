@@ -17,8 +17,6 @@ export const parseError = (errorObj, {
     statusCode = 500
   } = errorObj
 
-  console.log(errorObj)
-
   let errorArray = []
 
   if (error) {
