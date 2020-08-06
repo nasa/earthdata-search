@@ -66,7 +66,7 @@ export const GranuleResultsActionsContainer = (props) => {
   const isCollectionInProject = projectCollectionIds.indexOf(focusedCollectionId) > -1
 
   const {
-    hits,
+    hits: searchGranuleCount,
     isLoaded,
     isLoading
   } = granuleSearchResults
@@ -79,21 +79,31 @@ export const GranuleResultsActionsContainer = (props) => {
 
   const granuleLimit = getGranuleLimit(collectionMetadata)
 
+  const { granules: projectCollectionGranules = {} } = focusedProjectCollection
+  const {
+    hits: projectGranuleCount,
+    addedGranuleIds = [],
+    removedGranuleIds = []
+  } = projectCollectionGranules
+
   return (
     <>
       <GranuleResultsActions
+        addedGranuleIds={addedGranuleIds}
         focusedCollectionId={focusedCollectionId}
         focusedProjectCollection={focusedProjectCollection}
-        granuleCount={hits}
         granuleLimit={granuleLimit}
         initialLoading={initialLoading}
         isCollectionInProject={isCollectionInProject}
         location={location}
-        projectCollectionIds={projectCollectionIds}
         onAddProjectCollection={onAddProjectCollection}
         onChangePath={onChangePath}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onSetActivePanelSection={onSetActivePanelSection}
+        projectCollectionIds={projectCollectionIds}
+        projectGranuleCount={projectGranuleCount}
+        removedGranuleIds={removedGranuleIds}
+        searchGranuleCount={searchGranuleCount}
       />
     </>
   )

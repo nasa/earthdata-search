@@ -7,9 +7,10 @@ import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'
 import GranuleDownloadButton from './GranuleDownloadButton'
-import ProjectCollectionContents from '../ProjectCollectionContents/ProjectCollectionContents'
 import Skeleton from '../Skeleton/Skeleton'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './GranuleResultsActions.scss'
 
@@ -27,8 +28,9 @@ import './GranuleResultsActions.scss'
  * @param {Function} onSetActivePanelSection - Callback to set the active panel section on the project page.
  */
 const GranuleResultsActions = ({
+  addedGranuleIds,
   focusedCollectionId,
-  granuleCount,
+  focusedProjectCollection,
   granuleLimit,
   initialLoading,
   isCollectionInProject,
@@ -37,7 +39,9 @@ const GranuleResultsActions = ({
   onChangePath,
   onRemoveCollectionFromProject,
   onSetActivePanelSection,
-  focusedProjectCollection
+  projectGranuleCount,
+  removedGranuleIds,
+  searchGranuleCount
 }) => {
   const addToProjectButton = (
     <Button
@@ -67,20 +71,38 @@ const GranuleResultsActions = ({
     </Button>
   )
 
+  // When the collection has yet to be added to a project the granule count
+  // should reflect the search results
+  const granuleCount = projectGranuleCount || searchGranuleCount
+
   const tooManyGranules = granuleLimit && granuleCount > granuleLimit
 
   // TODO: Implement maxOrderSizeReached modal that currently exists in master @critical
 
+  let buttonText = 'Download All'
+
+  if (
+    isCollectionInProject
+    && (!addedGranuleIds.length && !removedGranuleIds.length)
+    && granuleCount > 0
+  ) {
+    buttonText = 'Download'
+  }
+
+  const badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
+
   const downloadButton = (
     <GranuleDownloadButton
+      badge={badge}
+      buttonText={buttonText}
       focusedCollectionId={focusedCollectionId}
-      projectCollection={focusedProjectCollection}
       granuleCount={granuleCount}
       granuleLimit={granuleLimit}
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
       location={location}
       onAddProjectCollection={onAddProjectCollection}
+      projectCollection={focusedProjectCollection}
       tooManyGranules={tooManyGranules}
     />
   )
@@ -103,19 +125,40 @@ const GranuleResultsActions = ({
               <div className="granule-results-actions__granule-count-wrapper">
                 <span className="granule-results-actions__granule-count">
                   <span className="granule-results-actions__granule-num">
-                    {`${commafy(granuleCount)} `}
+                    {`${commafy(searchGranuleCount)} `}
                   </span>
-                  {`${pluralize('Granule', granuleCount)}`}
+                  {`${pluralize('Granule', searchGranuleCount)}`}
                 </span>
                 <PortalFeatureContainer authentication>
                   {
                     isCollectionInProject && (
-                      <ProjectCollectionContents
-                        projectCollection={focusedProjectCollection}
-                        onChangePath={onChangePath}
-                        onSetActivePanelSection={onSetActivePanelSection}
-                        location={location}
-                      />
+                      <PortalLinkContainer
+                        type="button"
+                        className="granule-results-actions__project-pill"
+                        label="View granules in project"
+                        onClick={() => {
+                          onSetActivePanelSection('1')
+                          onChangePath(`/projects${location.search}`)
+                        }}
+                        to={{
+                          pathname: '/projects',
+                          search: location.search
+                        }}
+                      >
+                        <i className="fa fa-folder granule-results-actions__project-pill-icon" />
+                        {
+                          (!addedGranuleIds.length && !removedGranuleIds.length) && <span title="All granules in project">All Granules</span>
+                        }
+                        {
+                          (addedGranuleIds.length > 0 || removedGranuleIds.length > 0) && (
+                            <span
+                              title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
+                            >
+                              {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
+                            </span>
+                          )
+                        }
+                      </PortalLinkContainer>
                     )
                   }
                 </PortalFeatureContainer>
@@ -141,14 +184,15 @@ const GranuleResultsActions = ({
 }
 
 GranuleResultsActions.defaultProps = {
-  granuleCount: 0,
+  projectGranuleCount: 0,
+  searchGranuleCount: 0,
   granuleLimit: undefined
 }
 
 GranuleResultsActions.propTypes = {
+  addedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedProjectCollection: PropTypes.shape({}).isRequired,
-  granuleCount: PropTypes.number,
   granuleLimit: PropTypes.number,
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
@@ -156,7 +200,10 @@ GranuleResultsActions.propTypes = {
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired
+  onSetActivePanelSection: PropTypes.func.isRequired,
+  projectGranuleCount: PropTypes.number,
+  removedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  searchGranuleCount: PropTypes.number
 }
 
 export default GranuleResultsActions

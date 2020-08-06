@@ -24,6 +24,7 @@ export const formatGranulesList = (
   isCollectionInProject
 ) => {
   let hasBrowseImagery = false
+
   const granulesList = granuleIds.map((granuleId) => {
     const granule = granulesMetadata[granuleId]
 
@@ -43,7 +44,7 @@ export const formatGranulesList = (
       originalFormat,
       producerGranuleId,
       granuleThumbnail,
-      granuleTitle
+      title: granuleTitle
     } = granule
 
     if (browseFlag && !hasBrowseImagery) hasBrowseImagery = true

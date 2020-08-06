@@ -1,6 +1,7 @@
 import {
   CLEAR_FILTERS,
   EXCLUDE_GRANULE_ID,
+  INITIALIZE_COLLECTION_GRANULES_QUERY,
   RESTORE_FROM_URL,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_QUERY,
@@ -38,6 +39,28 @@ const queryReducer = (state = initialState, action) => {
         collection: {
           ...state.collection,
           ...action.payload
+        }
+      }
+    }
+    case INITIALIZE_COLLECTION_GRANULES_QUERY: {
+      const collectionId = action.payload
+
+      const { collection = {} } = state
+      const { byId = {} } = collection
+      const { [collectionId]: focusedCollection = {} } = byId
+
+      return {
+        ...state,
+        collection: {
+          ...state.collection,
+          byId: {
+            ...state.collection.byId,
+            [collectionId]: {
+              ...focusedCollection,
+              granules: initialGranuleState
+            }
+          }
+
         }
       }
     }
