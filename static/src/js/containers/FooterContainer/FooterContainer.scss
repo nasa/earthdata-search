@@ -46,6 +46,25 @@
     vertical-align: middle;
   }
 
+  &__info-bit {
+    margin-left: 0.55rem;
+    color: $color__brand--blue-light;
+    vertical-align: middle;
+
+    &:before {
+      display: inline-block;
+      transform: translate(-0.275rem,-.165rem) scale(0.5);
+      content: '\f111';
+      font-family: 'FontAwesome';
+      color: $color__white;
+      font-size: 3px;
+    }
+  }
+
+  &__info-bit--emph {
+    color: $color__white;
+  }
+
   &__env {
     margin-right: 0.25rem;
     padding-right: 0.25rem;
