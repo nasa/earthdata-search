@@ -1,25 +1,28 @@
 export const emptyDecodedResult = {
   advancedSearch: undefined,
+  autocompleteSelected: undefined,
   cmrFacets: {
     data_center_h: undefined,
+    granule_data_format_h: undefined,
     instrument_h: undefined,
     platform_h: undefined,
     processing_level_id_h: undefined,
     project_h: undefined,
     science_keywords_h: undefined
   },
-  collections: undefined,
   featureFacets: {
     customizable: false,
     mapImagery: false,
     nearRealTime: false
   },
-  focusedCollectionId: undefined,
-  focusedGranuleId: undefined,
+  focusedCollection: undefined,
+  focusedGranule: undefined,
   map: {},
-  project: undefined,
+  metadata: undefined,
+  project: {},
   query: {
     collection: {
+      byId: {},
       pageNum: 1,
       gridName: undefined,
       keyword: undefined,
@@ -27,15 +30,13 @@ export const emptyDecodedResult = {
       spatial: {
         boundingBox: undefined,
         circle: undefined,
+        line: undefined,
         point: undefined,
         polygon: undefined
       },
+      tagKey: undefined,
       temporal: {},
       hasGranulesOrCwic: true
-    },
-    granule: {
-      pageNum: 1,
-      gridCoords: undefined
     }
   },
   shapefile: {

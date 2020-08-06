@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
   circleSearch: state.query.collection.spatial.circle,
   collectionsMetadata: getCollectionsMetadata(state),
   featureFacets: state.facetsParams.feature,
-  focusedCollectionId: getFocusedCollectionId(state),
+  focusedCollection: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granuleDataFormatFacets: state.facetsParams.cmr.granule_data_format_h,
   gridName: state.query.collection.gridName,

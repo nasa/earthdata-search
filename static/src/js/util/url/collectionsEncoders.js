@@ -1,8 +1,6 @@
 import isNumber from '../isNumber'
 
 import { encodeGranuleFilters, decodeGranuleFilters } from './granuleFiltersEncoders'
-import { initialGranuleState as initialProjectCollectionGranuleState } from '../../reducers/project'
-import { initialGranuleState as initialCollectionGranuleQueryState } from '../../reducers/query'
 
 /**
  * Encode a list of Granule IDs
@@ -139,18 +137,18 @@ const decodedOutputFormat = (pgParam) => {
 /**
  * Encodes a Collections object into an object
  * @param {Object} collectionsMetadata Collections object
- * @param {String} focusedCollectionId Focused Collection ID
+ * @param {String} focusedCollection Focused Collection ID
  * @return {String} An object with encoded Collections
  */
 export const encodeCollections = (props) => {
   const {
     collectionsMetadata = {},
-    focusedCollectionId,
+    focusedCollection,
     project = {},
     query = {}
   } = props
 
-  const { collections: projectCollections } = project
+  const { collections: projectCollections = {} } = project
 
   const {
     byId: projectById = {},
@@ -159,13 +157,13 @@ export const encodeCollections = (props) => {
 
   // pParameter - focusedCollection!projectCollection1!projectCollection2
   const pParameter = [
-    focusedCollectionId,
+    focusedCollection,
     ...projectIds
   ].join('!')
 
   const projectExists = projectIds.length > 0
 
-  const ids = projectExists ? projectIds : [focusedCollectionId]
+  const ids = projectExists ? projectIds : [focusedCollection]
 
   // If there isn't a focusedCollection or any projectIds, we don't need to continue
   if (pParameter === '') return ''
@@ -317,7 +315,7 @@ export const decodeCollections = (params) => {
     let excludedGranuleIds = []
 
     if (pg) {
-      const { [collectionListIndex]: pCollection } = pg;
+      const { [collectionListIndex]: pCollection = {} } = pg;
 
       // Granules added by way of additive model
       ({
@@ -340,27 +338,25 @@ export const decodeCollections = (params) => {
       // If `pg` exists we need to ensure that we initialize the granule
       // search state for each collection in it because pg defines granule level search filters
       collectionGranuleQueryById[collectionId] = {
-        granules: {
-          ...initialCollectionGranuleQueryState
-        }
+        granules: {}
       }
 
       // Decode granule filters
       const { [collectionId]: collectionGranuleQuery } = collectionGranuleQueryById
       const { granules: granuleQuery } = collectionGranuleQuery
 
-      const newGranulQuery = {
+      const newGranuleQuery = {
         ...granuleQuery,
         ...decodeGranuleFilters(pCollection)
       }
 
       if (excludedGranuleIds.length > 0) {
-        newGranulQuery.excludedGranuleIds = excludedGranuleIds
+        newGranuleQuery.excludedGranuleIds = excludedGranuleIds
       }
 
       collectionGranuleQueryById[collectionId] = {
         ...collectionGranuleQuery,
-        granules: newGranulQuery
+        granules: newGranuleQuery
       }
 
       // Collection visibility on the project page
@@ -391,16 +387,14 @@ export const decodeCollections = (params) => {
 
       projectById[collectionId] = {
         isVisible,
-        granules: initialProjectCollectionGranuleState
+        granules: {}
       }
 
       if (variableIds || selectedOutputFormat) {
-        projectById[collectionId] = {
-          accessMethods: {
-            opendap: {
-              selectedVariables: variableIds,
-              selectedOutputFormat
-            }
+        projectById[collectionId].accessMethods = {
+          opendap: {
+            selectedVariables: variableIds,
+            selectedOutputFormat
           }
         }
       }

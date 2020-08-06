@@ -173,7 +173,7 @@ export const extractProjectCollectionGranuleParams = (state, collectionId) => {
   const { byId } = collections
   const { [collectionId]: projectCollection } = byId
   const { granules } = projectCollection
-  const { addedGranuleIds, params, removedGranuleIds } = granules
+  const { addedGranuleIds, params = {}, removedGranuleIds } = granules
   const { pageNum } = params
 
   return {

@@ -200,7 +200,7 @@ const projectReducer = (state = initialState, action) => {
       const { byId: projectCollectionsById = {} } = collections
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
       const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
-      const { allIds } = projectCollectionGranules
+      const { allIds = [] } = projectCollectionGranules
 
       return {
         ...state,

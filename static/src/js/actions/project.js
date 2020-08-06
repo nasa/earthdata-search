@@ -126,11 +126,12 @@ export const updateProjectGranuleParams = payload => ({
  * @param {String} collectionId Single collection to lookup, if null then all collections in the project will be retrieved
  */
 export const getProjectCollections = () => (dispatch, getState) => {
+  const state = getState()
   const {
     authToken,
     metadata,
     project
-  } = getState()
+  } = state
 
   const { collections: collectionsMetadata = {} } = metadata
 
@@ -165,7 +166,7 @@ export const getProjectCollections = () => (dispatch, getState) => {
     return buildPromise(null)
   }
 
-  const collectionParams = prepareCollectionParams(getState())
+  const collectionParams = prepareCollectionParams(state)
 
   const searchParams = buildCollectionSearchParams(collectionParams)
 

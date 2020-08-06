@@ -6,34 +6,21 @@ describe('url#decodeUrlParams', () => {
   test('decodes project collections correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            excludedGranuleIds: [],
-            isVisible: false,
-            isCwic: undefined,
-            granules: {},
-            granuleFilters: {},
-            metadata: {}
-          },
-          collectionId2: {
-            excludedGranuleIds: [],
-            isVisible: false,
-            isCwic: undefined,
-            granules: {},
-            granuleFilters: {},
-            metadata: {}
-          }
-        }
-      },
       focusedCollection: '',
       project: {
-        byId: {
-          collectionId1: {},
-          collectionId2: {}
-        },
-        collectionIds: ['collectionId1', 'collectionId2']
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              granules: {},
+              isVisible: false
+            },
+            collectionId2: {
+              granules: {},
+              isVisible: false
+            }
+          }
+        }
       }
     }
     expect(decodeUrlParams('?p=!collectionId1!collectionId2')).toEqual(expectedResult)
@@ -42,34 +29,33 @@ describe('url#decodeUrlParams', () => {
   test('decodes focusedCollection and project collections correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            excludedGranuleIds: [],
-            isCwic: undefined,
-            isVisible: false,
-            granules: {},
-            granuleFilters: {},
-            metadata: {}
-          },
-          collectionId2: {
-            excludedGranuleIds: [],
-            isCwic: undefined,
-            isVisible: false,
-            granules: {},
-            granuleFilters: {},
-            metadata: {}
+      focusedCollection: 'collectionId1',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              granules: {},
+              isVisible: false
+            },
+            collectionId2: {
+              granules: {},
+              isVisible: false
+            }
           }
         }
       },
-      focusedCollection: 'collectionId1',
-      project: {
-        byId: {
-          collectionId1: {},
-          collectionId2: {}
-        },
-        collectionIds: ['collectionId1', 'collectionId2']
+      query: {
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          byId: {
+            collectionId1: {
+              granules: {
+                pageNum: 1
+              }
+            }
+          }
+        }
       }
     }
     expect(decodeUrlParams('?p=collectionId1!collectionId1!collectionId2')).toEqual(expectedResult)
@@ -78,33 +64,34 @@ describe('url#decodeUrlParams', () => {
   test('decodes project collections visibility correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            excludedGranuleIds: [],
-            isVisible: false,
-            granules: {},
-            granuleFilters: {},
-            metadata: {}
-          },
-          collectionId2: {
-            excludedGranuleIds: [],
-            isCwic: false,
-            isVisible: true,
-            granules: {},
-            granuleFilters: {},
-            metadata: {}
+      focusedCollection: '',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              granules: {},
+              isVisible: false
+            },
+            collectionId2: {
+              granules: {},
+              isVisible: true
+            }
           }
         }
       },
-      focusedCollection: '',
-      project: {
-        byId: {
-          collectionId1: {},
-          collectionId2: {}
-        },
-        collectionIds: ['collectionId1', 'collectionId2']
+      query: {
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          byId: {
+            collectionId1: {
+              granules: {}
+            },
+            collectionId2: {
+              granules: {}
+            }
+          }
+        }
       }
     }
     expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[2][v]=t')).toEqual(expectedResult)
@@ -113,40 +100,40 @@ describe('url#decodeUrlParams', () => {
   test('decodes selected variables correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            excludedGranuleIds: [],
-            isCwic: false,
-            isVisible: false,
-            granules: {},
-            granuleFilters: {},
-            metadata: {}
-          },
-          collectionId2: {
-            excludedGranuleIds: [],
-            isCwic: undefined,
-            isVisible: false,
-            granules: {},
-            granuleFilters: {},
-            metadata: {}
+      focusedCollection: '',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              granules: {},
+              isVisible: false,
+              accessMethods: {
+                opendap: {
+                  selectedOutputFormat: undefined,
+                  selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
+                }
+              }
+            },
+            collectionId2: {
+              granules: {},
+              isVisible: false
+            }
           }
         }
       },
-      focusedCollection: '',
-      project: {
-        byId: {
-          collectionId1: {
-            accessMethods: {
-              opendap: {
-                selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
-              }
+      query: {
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          byId: {
+            collectionId1: {
+              granules: {}
+            },
+            collectionId2: {
+              granules: {}
             }
-          },
-          collectionId2: {}
-        },
-        collectionIds: ['collectionId1', 'collectionId2']
+          }
+        }
       }
     }
     expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][uv]=V123456-EDSC!V987654-EDSC')).toEqual(expectedResult)
@@ -164,7 +151,10 @@ describe('url#encodeUrlQuery', () => {
       },
       focusedCollection: '',
       project: {
-        collectionIds: []
+        collections: {
+          allIds: [],
+          byId: {}
+        }
       }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here')
@@ -180,7 +170,10 @@ describe('url#encodeUrlQuery', () => {
       },
       focusedCollection: '',
       project: {
-        collectionIds: ['collectionId1', 'collectionId2']
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {}
+        }
       }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2')
@@ -190,13 +183,12 @@ describe('url#encodeUrlQuery', () => {
     const props = {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {}
-      },
       focusedCollection: 'collectionId1',
       project: {
-        collectionIds: ['collectionId1', 'collectionId2']
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {}
+        }
       }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId1!collectionId1!collectionId2')
@@ -204,24 +196,25 @@ describe('url#encodeUrlQuery', () => {
 
   test('correctly encodes project collections visibility', () => {
     const props = {
+      collectionsMetadata: {
+        collectionId1: {},
+        collectionId2: {}
+      },
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            isVisible: false,
-            metadata: {}
-          },
-          collectionId2: {
-            isVisible: true,
-            metadata: {}
-          }
-        }
-      },
       focusedCollection: '',
       project: {
-        collectionIds: ['collectionId1', 'collectionId2']
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              isVisible: false
+            },
+            collectionId2: {
+              isVisible: true
+            }
+          }
+        }
       }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[2][v]=t')
@@ -229,35 +222,28 @@ describe('url#encodeUrlQuery', () => {
 
   test('correctly encodes selected variables', () => {
     const props = {
+      collectionsMetadata: {
+        collectionId1: {},
+        collectionId2: {}
+      },
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            isVisible: false,
-            metadata: {}
-          },
-          collectionId2: {
-            isVisible: false,
-            metadata: {}
-          }
-        }
-      },
       focusedCollection: '',
       project: {
-        byId: {
-          collectionId1: {
-            accessMethods: {
-              opendap: {
-                selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
-              }
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              accessMethods: {
+                opendap: {
+                  selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
+                }
+              },
+              selectedAccessMethod: 'opendap'
             },
-            selectedAccessMethod: 'opendap'
-          },
-          collectionId2: {}
-        },
-        collectionIds: ['collectionId1', 'collectionId2']
+            collectionId2: {}
+          }
+        }
       }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][uv]=V123456-EDSC!V987654-EDSC')
