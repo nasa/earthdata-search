@@ -103,6 +103,7 @@ export const decodeUrlParams = (paramString) => {
   // Initialize the collection query
   const { collection = {} } = query
   const collectionQuery = {
+    byId: {},
     ...collection,
     pageNum: 1
   }

@@ -3,60 +3,68 @@ import { decodeUrlParams, encodeUrlQuery } from '../url'
 import { emptyDecodedResult } from './url.mocks'
 
 describe('url#decodeUrlParams', () => {
-  describe('project collection added granules', () => {
-    test('decodes added CMR granules correctly', () => {
+  describe('project collection removed granules', () => {
+    test('decodes removed CMR granules correctly', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              excludedGranuleIds: [],
-              isCwic: false,
-              isVisible: false,
-              granules: {},
-              granuleFilters: {},
-              metadata: {}
+        focusedCollection: 'collectionId',
+        project: {
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {
+                  removedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
+                },
+                isVisible: false
+              }
             }
           }
         },
-        focusedCollection: 'collectionId',
-        project: {
-          byId: {
-            collectionId: {
-              removedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId: {
+                granules: {
+                  pageNum: 1
+                }
+              }
             }
-          },
-          collectionIds: ['collectionId']
+          }
         }
       }
       expect(decodeUrlParams('?p=collectionId!collectionId&pg[1][r]=12345!56789!MOCK')).toEqual(expectedResult)
     })
 
-    test('decodes added CWIC granules correctly', () => {
+    test('decodes removed CWIC granules correctly', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              excludedGranuleIds: [],
-              isCwic: true,
-              isVisible: false,
-              granules: {},
-              granuleFilters: {},
-              metadata: {}
+        focusedCollection: 'collectionId',
+        project: {
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {
+                  removedGranuleIds: ['12345', '56789']
+                },
+                isVisible: false
+              }
             }
           }
         },
-        focusedCollection: 'collectionId',
-        project: {
-          byId: {
-            collectionId: {
-              removedGranuleIds: ['12345', '56789']
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId: {
+                granules: {
+                  pageNum: 1
+                }
+              }
             }
-          },
-          collectionIds: ['collectionId']
+          }
         }
       }
       const decodedRes = decodeUrlParams('?p=collectionId!collectionId&pg[1][cr]=12345!56789')
@@ -70,14 +78,7 @@ describe('url#encodeUrlQuery', () => {
     const props = {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      collections: {
-        allIds: [],
-        byId: {}
-      },
-      focusedCollection: 'collectionId',
-      project: {
-        collectionIds: []
-      }
+      focusedCollection: 'collectionId'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
   })
@@ -86,69 +87,41 @@ describe('url#encodeUrlQuery', () => {
     const props = {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      collections: {
-        allIds: [],
-        byId: {}
-      },
-      focusedCollection: '',
-      project: {
-        collectionIds: []
-      }
+      focusedCollection: ''
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here')
   })
 
-  describe('focusedCollection added granules', () => {
-    describe('CMR added granules', () => {
-      test('does not encode added granules if no added granules exist', () => {
+  describe('focusedCollection removed granules', () => {
+    describe('CMR removed granules', () => {
+      test('does not encode removed granules if no removed granules exist', () => {
         const props = {
           hasGranulesOrCwic: true,
           pathname: '/path/here',
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                excludedGranuleIds: [],
-                granules: {},
-                isCwic: false,
-                metadata: { mock: 'data' }
-              }
-            }
-          },
-          focusedCollection: 'collectionId',
-          project: {
-            collectionIds: [],
-            byId: {
-              collectionId: {
-                addedGranules: []
-              }
-            }
-          }
+          focusedCollection: 'collectionId'
         }
         expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
       })
 
-      test('encodes added granules correctly', () => {
+      test('encodes removed granules correctly', () => {
         const props = {
-          hasGranulesOrCwic: true,
-          pathname: '/path/here',
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                excludedGranuleIds: [],
-                granules: {},
-                isCwic: false,
-                metadata: { mock: 'data' }
-              }
+          collectionsMetadata: {
+            collectionId: {
+              isCwic: false
             }
           },
+          hasGranulesOrCwic: true,
+          pathname: '/path/here',
           focusedCollection: 'collectionId',
           project: {
-            collectionIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                removedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  granules: {
+                    removedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
+                  }
+                }
               }
             }
           }
@@ -157,51 +130,35 @@ describe('url#encodeUrlQuery', () => {
       })
     })
 
-    describe('CWIC added granules', () => {
-      test('does not encode added granules if no added granules exist', () => {
+    describe('CWIC removed granules', () => {
+      test('does not encode removed granules if no removed granules exist', () => {
         const props = {
           hasGranulesOrCwic: true,
           pathname: '/path/here',
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                excludedGranuleIds: [],
-                granules: {},
-                isCwic: true,
-                metadata: { mock: 'data' }
-              }
-            }
-          },
-          focusedCollection: 'collectionId',
-          project: {
-            collectionIds: []
-          }
+          focusedCollection: 'collectionId'
         }
         expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
       })
 
-      test('encodes added granules correctly', () => {
+      test('encodes removed granules correctly', () => {
         const props = {
-          hasGranulesOrCwic: true,
-          pathname: '/path/here',
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                excludedGranuleIds: [],
-                granules: {},
-                isCwic: true,
-                metadata: { mock: 'data' }
-              }
+          collectionsMetadata: {
+            collectionId: {
+              isCwic: true
             }
           },
+          hasGranulesOrCwic: true,
+          pathname: '/path/here',
           focusedCollection: 'collectionId',
           project: {
-            collectionIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                removedGranuleIds: ['12345', '56789']
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  granules: {
+                    removedGranuleIds: ['12345', '56789']
+                  }
+                }
               }
             }
           }
@@ -211,58 +168,54 @@ describe('url#encodeUrlQuery', () => {
     })
   })
 
-  describe('project collection added granules', () => {
-    test('encodes added granules correctly', () => {
+  describe('project collection removed granules', () => {
+    test('encodes removed granules correctly', () => {
       const props = {
-        hasGranulesOrCwic: true,
-        pathname: '/path/here',
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              excludedGranuleIds: [],
-              granules: {},
-              isCwic: false,
-              metadata: { mock: 'data' }
-            }
+        collectionsMetadata: {
+          collectionId: {
+            isCwic: false
           }
         },
-        focusedCollection: 'collectionId',
+        hasGranulesOrCwic: true,
+        pathname: '/path/here',
+        focusedCollection: '',
         project: {
-          collectionIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              removedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {
+                  removedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
+                }
+              }
             }
           }
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId!collectionId&pg[1][r]=12345!56789!MOCK')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId&pg[1][r]=12345!56789!MOCK')
     })
   })
 
-  describe('focused project collection added granules', () => {
-    test('encodes added granules correctly', () => {
+  describe('focused project collection removed granules', () => {
+    test('encodes removed granules correctly', () => {
       const props = {
-        hasGranulesOrCwic: true,
-        pathname: '/path/here',
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              excludedGranuleIds: [],
-              granules: {},
-              isCwic: false,
-              metadata: { mock: 'data' }
-            }
+        collectionsMetadata: {
+          collectionId: {
+            isCwic: false
           }
         },
+        hasGranulesOrCwic: true,
+        pathname: '/path/here',
         focusedCollection: 'collectionId',
         project: {
-          collectionIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              removedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {
+                  removedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
+                }
+              }
             }
           }
         }
