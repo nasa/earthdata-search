@@ -30,12 +30,10 @@ describe('getCollectionMetadata', () => {
   })
 
   describe('when passed a matching collection', () => {
-    test('returns an empty object', () => {
+    test('returns the collection metadata', () => {
       const obj = { test: 'test' }
       const collections = {
-        byId: {
-          TEST: obj
-        }
+        TEST: obj
       }
       expect(getCollectionMetadata('TEST', collections)).toEqual(obj)
     })
@@ -69,13 +67,11 @@ describe('getFocusedCollectionMetadata', () => {
   })
 
   describe('when passed a matching collection', () => {
-    test('returns an empty object', () => {
+    test('returns the collection metadata', () => {
       const metadata = { test: 'test' }
       const collections = {
-        byId: {
-          TEST: {
-            metadata
-          }
+        TEST: {
+          metadata
         }
       }
       expect(getFocusedCollectionMetadata('TEST', collections)).toEqual(metadata)

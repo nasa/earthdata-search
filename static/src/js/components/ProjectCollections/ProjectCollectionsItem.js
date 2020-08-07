@@ -10,7 +10,6 @@ import {
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import pluralize from '../../util/pluralize'
-// import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 import { convertSize } from '../../util/project'
 
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
@@ -71,8 +70,6 @@ const ProjectCollectionItem = ({
   } = collectionMetadata
 
   const { hits: granuleCount, isLoaded, singleGranuleSize } = granules
-
-  // const granuleCount = getGranuleCount(collectionMetadata, projectCollection)
 
   const totalSize = convertSize(granuleCount * singleGranuleSize)
 

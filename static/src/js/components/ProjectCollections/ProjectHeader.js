@@ -9,7 +9,6 @@ import { commafy } from '../../util/commafy'
 import { convertSizeToMB, convertSize } from '../../util/project'
 import { pluralize } from '../../util/pluralize'
 import { projectHeader } from './skeleton'
-// import { getGranuleCount } from '../../util/collectionMetadata/granuleCount'
 
 import Skeleton from '../Skeleton/Skeleton'
 
