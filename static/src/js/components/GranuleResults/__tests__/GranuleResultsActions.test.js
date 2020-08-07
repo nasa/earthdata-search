@@ -4,14 +4,24 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import GranuleResultsActions from '../GranuleResultsActions'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import GranuleDownloadButton from '../GranuleDownloadButton'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    addedGranuleIds: [],
+    focusedProjectCollection: {
+      granules: {
+        allIds: ['granuleId'],
+        hits: 1
+      }
+    },
+    removedGranuleIds: [],
     allGranulesInProject: false,
-    collectionId: 'collectionId',
-    granuleCount: 5000,
+    focusedCollectionId: 'collectionId',
+    granuleLimit: 10000000,
+    searchGranuleCount: 5000,
     initialLoading: false,
     isCollectionInProject: false,
     location: {
@@ -33,33 +43,29 @@ function setup(overrideProps) {
 }
 
 describe('GranuleResultsActions component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.type()).toBe('div')
-  })
-
   describe('when no granules are in the project', () => {
     test('renders a Download All button', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().children).toEqual('Download All')
-      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().badge).toEqual('5,000 Granules')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download All')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge).toEqual('5,000 Granules')
     })
   })
 
   describe('when some granules are in the project', () => {
     test('renders a Download button', () => {
       const { enzymeWrapper } = setup({
-        granuleCount: 1,
+        addedGranuleIds: ['one'],
+        projectGranuleCount: 1,
         isCollectionInProject: true
       })
-      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().children).toEqual('Download')
-      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().badge).toEqual('1 Granule')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge).toEqual('1 Granule')
     })
 
     test('renders a project indicator', () => {
       const { enzymeWrapper } = setup({
-        granuleCount: 1,
+        addedGranuleIds: ['one'],
+        projectGranuleCount: 1,
         isCollectionInProject: true
       })
 
@@ -71,7 +77,7 @@ describe('GranuleResultsActions component', () => {
   describe('when the project indicator is clicked', () => {
     test('sets the panel section', () => {
       const { enzymeWrapper, props } = setup({
-        granuleCount: 1,
+        projectGranuleCount: 1,
         isCollectionInProject: true
       })
 
@@ -84,7 +90,7 @@ describe('GranuleResultsActions component', () => {
 
     test('changes the path', () => {
       const { enzymeWrapper, props } = setup({
-        granuleCount: 1,
+        projectGranuleCount: 1,
         isCollectionInProject: true
       })
 
@@ -99,12 +105,11 @@ describe('GranuleResultsActions component', () => {
   describe('when all granules are in the project', () => {
     test('renders a Download All button', () => {
       const { enzymeWrapper } = setup({
-        allGranulesInProject: true,
-        granuleCount: 5000,
+        projectGranuleCount: 5000,
         isCollectionInProject: true
       })
-      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().children).toEqual('Download All')
-      expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().badge).toEqual('5,000 Granules')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download All')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge).toEqual('5,000 Granules')
     })
   })
 
@@ -116,8 +121,8 @@ describe('GranuleResultsActions component', () => {
 
   test('renders a Download All button', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().children).toEqual('Download All')
-    expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().badge).toEqual('5,000 Granules')
+    expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download All')
+    expect(enzymeWrapper.find(GranuleDownloadButton).props().badge).toEqual('5,000 Granules')
   })
 
   test('renders a link to add the collection to the project', () => {
@@ -171,48 +176,10 @@ describe('GranuleResultsActions component', () => {
   })
 
   describe('downloadAllButton', () => {
-    test('calls onAddProjectCollection', () => {
-      const { enzymeWrapper, props } = setup()
-
-      const button = enzymeWrapper.find('.granule-results-actions__download-all')
-
-      button.simulate('click')
-      expect(props.onAddProjectCollection).toHaveBeenCalledTimes(1)
-      expect(props.onAddProjectCollection).toHaveBeenCalledWith('collectionId')
-    })
-
-    test('correctly adjusts pg parameter when collection isn\'t in the project with one collection', () => {
-      const { enzymeWrapper } = setup({
-        location: {
-          search: 'p=C1443528505-LAADS&pg[0][id]=MYD04_3K.A2019284.2350.061.2019285153056.hdf&ff=Customizable&tl=1555429846!4!!'
-        }
-      })
-
-      expect(enzymeWrapper.find('.granule-results-actions__download-all').props().to).toEqual({
-        pathname: '/projects',
-        search:
-          '?p=C1443528505-LAADS!collectionId&pg[1][id]=MYD04_3K.A2019284.2350.061.2019285153056.hdf&ff=Customizable&tl=1555429846!4!!'
-      })
-    })
-
-    test('correctly adjusts pg parameter when collection isn\'t in the project multiple collections', () => {
-      const { enzymeWrapper } = setup({
-        location: {
-          search: 'p=C1443528505-LAADS!C197265171-LPDAAC_ECS!C107705237-LPDAAC_ECS&pg[0][id]=MYD04_3K.A2019284.2350.061.2019285153056.hdf&pg[2][v]=t&g=G1645942017-LAADS&ff=Customizable&tl=1555434821!4!!'
-        }
-      })
-
-      expect(enzymeWrapper.find('.granule-results-actions__download-all').props().to).toEqual({
-        pathname: '/projects',
-        search:
-          '?p=C1443528505-LAADS!C197265171-LPDAAC_ECS!C107705237-LPDAAC_ECS!collectionId&pg[2][id]=MYD04_3K.A2019284.2350.061.2019285153056.hdf&g=G1645942017-LAADS&ff=Customizable&tl=1555434821!4!!'
-      })
-    })
-
     test('hides the granule count badge when loading', () => {
-      const { enzymeWrapper } = setup({ granuleCount: null })
+      const { enzymeWrapper } = setup({ searchGranuleCount: null })
 
-      const button = enzymeWrapper.find('.granule-results-actions__download-all-button')
+      const button = enzymeWrapper.find(GranuleDownloadButton)
 
       expect(button.props().badge).toBeNull()
     })
@@ -222,7 +189,7 @@ describe('GranuleResultsActions component', () => {
 
       const button = enzymeWrapper
         .find(PortalFeatureContainer)
-        .find('.granule-results-actions__download-all-button')
+        .find(GranuleDownloadButton)
       const portalFeatureContainer = button.parents(PortalFeatureContainer)
 
       expect(button.exists()).toBeTruthy()

@@ -83,7 +83,7 @@ const GranuleResultsActions = ({
 
   if (
     isCollectionInProject
-    && (!addedGranuleIds.length && !removedGranuleIds.length)
+    && (addedGranuleIds.length || removedGranuleIds.length)
     && granuleCount > 0
   ) {
     buttonText = 'Download'

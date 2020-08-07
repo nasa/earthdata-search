@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    ummJson: null,
+    granuleMetadata: null,
     ...overrideProps
   }
 
@@ -35,7 +35,7 @@ describe('GranuleDetailsInfo component', () => {
   describe('when the metadata has been provided', () => {
     test('renders the info', () => {
       const { enzymeWrapper } = setup({
-        ummJson: granuleResultsBodyProps.ummJson
+        granuleMetadata: granuleResultsBodyProps.granuleMetadata
       })
 
       expect(enzymeWrapper.type()).toBe('div')
@@ -45,11 +45,11 @@ describe('GranuleDetailsInfo component', () => {
 
     test('renders formatted granule details correctly', () => {
       const { enzymeWrapper } = setup({
-        ummJson: granuleResultsBodyProps.ummJson
+        granuleMetadata: granuleResultsBodyProps.granuleMetadata
       })
 
       expect(enzymeWrapper.find('.granule-details-info__content').text())
-        .toEqual(JSON.stringify(granuleResultsBodyProps.ummJson, null, 2))
+        .toEqual(JSON.stringify(granuleResultsBodyProps.granuleMetadata, null, 2))
     })
   })
 })

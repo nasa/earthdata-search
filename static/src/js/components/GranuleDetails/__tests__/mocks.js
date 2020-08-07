@@ -1,13 +1,13 @@
 export const granuleResultsBodyProps = {
   authToken: '',
-  ummJson: {
+  granuleMetadata: {
     TemporalExtent: {
       RangeDateTime: {
         BeginningDateTime: '1860-01-01T00:00:00.000Z',
         EndingDateTime: '2050-12-31T00:00:00.000Z'
       }
     },
-    GranuleUR: '1860_1993_2050_NITROGEN.N-deposition1860.tfw',
+    title: '1860_1993_2050_NITROGEN.N-deposition1860.tfw',
     MeasuredParameters: [
       {
         ParameterName: 'NITROGEN OXIDES'
@@ -109,28 +109,28 @@ export const granuleResultsBodyProps = {
       URL: 'https://cdn.earthdata.nasa.gov/umm/granule/v1.6',
       Name: 'UMM-G',
       Version: '1.6'
-    }
-  },
-  metadataUrls: {
-    atom: {
-      title: 'ATOM',
-      href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC.atom'
     },
-    echo10: {
-      title: 'ECHO 10',
-      href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC.echo10'
-    },
-    iso19115: {
-      title: 'ISO 19115',
-      href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC.iso19115'
-    },
-    native: {
-      title: 'Native',
-      href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC'
-    },
-    umm_json: {
-      title: 'UMM-G',
-      href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC.umm_json'
+    metadataUrls: {
+      atom: {
+        title: 'ATOM',
+        href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC.atom'
+      },
+      echo10: {
+        title: 'ECHO 10',
+        href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC.echo10'
+      },
+      iso19115: {
+        title: 'ISO 19115',
+        href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC.iso19115'
+      },
+      native: {
+        title: 'Native',
+        href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC'
+      },
+      umm_json: {
+        title: 'UMM-G',
+        href: 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC.umm_json'
+      }
     }
   }
 }

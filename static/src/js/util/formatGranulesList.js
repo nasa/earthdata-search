@@ -9,20 +9,20 @@ import { createDataLinks } from './granules'
 
 /**
  * Formats granule results
- * @param {String} focusedGranule - The focused granule.
+ * @param {String} focusedGranuleId - The focused granule.
  * @param {Object} granules - The granules from the redux store.
  * @param {Array} granuleIds - Granule IDs to return in the list.
  * @param {Function} isGranuleInProject - Returns a boolean to designate if a granule is in the project.
  * @param {Boolean} isCollectionInProject - Boolean to designate if a collection is in the project.
  * @returns {GranuleListInfo} - The return object
  */
-export const formatGranulesList = (
+export const formatGranulesList = ({
   granuleIds,
   granulesMetadata,
-  focusedGranule,
+  focusedGranuleId,
   isGranuleInProject,
   isCollectionInProject
-) => {
+}) => {
   let hasBrowseImagery = false
 
   const granulesList = granuleIds.map((granuleId) => {
@@ -30,7 +30,7 @@ export const formatGranulesList = (
 
     const original = granule
 
-    const isFocused = focusedGranule === granuleId
+    const isFocused = focusedGranuleId === granuleId
 
     const {
       browseFlag,
@@ -53,12 +53,12 @@ export const formatGranulesList = (
     const thumbnail = browseFlag ? granuleThumbnail : false
 
     const dataLinks = createDataLinks(links)
-    const isFocusedGranule = isFocused || focusedGranule === id
+    const isFocusedGranule = isFocused || focusedGranuleId === id
     const isInProject = isGranuleInProject(id)
 
     const handleClick = () => {
       let stickyGranule = original
-      if (id === focusedGranule) stickyGranule = null
+      if (id === focusedGranuleId) stickyGranule = null
       eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: stickyGranule })
     }
 

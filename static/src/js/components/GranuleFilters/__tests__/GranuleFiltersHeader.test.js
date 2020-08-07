@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    datasetId: 'Collection ID'
+    title: 'Collection ID'
   }
 
   const enzymeWrapper = shallow(<GranuleFiltersHeader {...props} />)
@@ -20,12 +20,6 @@ function setup() {
 }
 
 describe('GranuleFiltersHeader component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.type()).toBe('div')
-  })
-
   test('sets the dataset ID correctly', () => {
     const { enzymeWrapper } = setup()
 

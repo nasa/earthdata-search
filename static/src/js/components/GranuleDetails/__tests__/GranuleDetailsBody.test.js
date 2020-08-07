@@ -52,8 +52,8 @@ describe('GranuleDetailsBody component', () => {
       expect(infoTab.props().eventKey).toEqual('information')
       expect(infoTab.props().title).toEqual('Information')
       expect(infoTab.find(GranuleDetailsInfo).length).toEqual(1)
-      expect(infoTab.find(GranuleDetailsInfo).props().ummJson)
-        .toEqual(granuleResultsBodyProps.ummJson)
+      expect(infoTab.find(GranuleDetailsInfo).props().granuleMetadata)
+        .toEqual(granuleResultsBodyProps.granuleMetadata)
 
       // Metadata tab
       const metaTab = enzymeWrapper.find(Tab).at(1)
@@ -61,7 +61,7 @@ describe('GranuleDetailsBody component', () => {
       expect(metaTab.props().title).toEqual('Metadata')
       expect(metaTab.find(GranuleDetailsMetadata).length).toEqual(1)
       expect(metaTab.find(GranuleDetailsMetadata).props().metadataUrls)
-        .toEqual(granuleResultsBodyProps.metadataUrls)
+        .toEqual(granuleResultsBodyProps.granuleMetadata.metadataUrls)
     })
   })
 })

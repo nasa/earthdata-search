@@ -17,50 +17,50 @@ function setup(options = {
 }, overrideProps) {
   const props = {
     collectionId: 'collectionId',
-    excludedGranuleIds: [],
-    focusedGranule: '',
-    granules: {
-      allIds: ['one', 'two'],
-      byId: {
-        one: {
-          id: 'two',
-          browse_flag: true,
-          online_access_flag: true,
-          day_night_flag: 'DAY',
-          formatted_temporal: [
-            '2019-04-28 00:00:00',
-            '2019-04-29 23:59:59'
-          ],
-          thumbnail: '/fake/path/image.jpg',
-          title: 'Granule title one',
-          links: [
-            {
-              rel: 'http://linkrel/data#',
-              title: 'linktitle',
-              href: 'http://linkhref'
-            }
-          ]
-        },
-        two: {
-          id: 'two',
-          browse_flag: true,
-          online_access_flag: true,
-          day_night_flag: 'DAY',
-          formatted_temporal: [
-            '2019-04-28 00:00:00',
-            '2019-04-29 23:59:59'
-          ],
-          thumbnail: '/fake/path/image.jpg',
-          title: 'Granule title two',
-          links: [
-            {
-              rel: 'http://linkrel/data#',
-              title: 'linktitle',
-              href: 'http://linkhref'
-            }
-          ]
-        }
+    focusedGranuleId: '',
+    granulesMetadata: {
+      one: {
+        id: 'two',
+        browseFlag: true,
+        onlineAccessFlag: true,
+        dayNightFlag: 'DAY',
+        formattedTemporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        thumbnail: '/fake/path/image.jpg',
+        title: 'Granule title one',
+        links: [
+          {
+            rel: 'http://linkrel/data#',
+            title: 'linktitle',
+            href: 'http://linkhref'
+          }
+        ]
       },
+      two: {
+        id: 'two',
+        browseFlag: true,
+        onlineAccessFlag: true,
+        dayNightFlag: 'DAY',
+        formattedTemporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        thumbnail: '/fake/path/image.jpg',
+        title: 'Granule title two',
+        links: [
+          {
+            rel: 'http://linkrel/data#',
+            title: 'linktitle',
+            href: 'http://linkhref'
+          }
+        ]
+      }
+    },
+    granuleQuery: {},
+    granuleSearchResults: {
+      allIds: ['one', 'two'],
       hits: '2',
       isLoaded: true,
       isLoading: false,
@@ -151,9 +151,8 @@ describe('GranuleResultsBody component', () => {
 
   test('adds a dummy item when the first granules are loading', () => {
     const { enzymeWrapper, props } = setup(true, {
-      granules: {
+      granuleSearchResults: {
         allIds: [],
-        byId: {},
         isLoading: true
       }
     })
@@ -162,7 +161,7 @@ describe('GranuleResultsBody component', () => {
 
     expect(resultsList.props()).toEqual(expect.objectContaining({
       granules: [],
-      itemCount: 1
+      itemCount: 0
     }))
 
     resultsList.props().loadMoreItems()
@@ -186,33 +185,34 @@ describe('GranuleResultsBody component', () => {
 
   test('does not add a dummy item when all collections are loaded', () => {
     const { enzymeWrapper, props } = setup(true, {
-      granules: {
+      granulesMetadata: {
+        one: {
+          id: 'two',
+          browseFlag: true,
+          onlineAccessFlag: true,
+          dayNightFlag: 'DAY',
+          formattedTemporal: [
+            '2019-04-28 00:00:00',
+            '2019-04-29 23:59:59'
+          ],
+          thumbnail: '/fake/path/image.jpg',
+          title: 'Granule title one',
+          links: [
+            {
+              rel: 'http://linkrel/data#',
+              title: 'linktitle',
+              href: 'http://linkhref'
+            }
+          ]
+        }
+      },
+      granuleQuery: {},
+      granuleSearchResults: {
         allIds: ['one'],
-        byId: {
-          one: {
-            id: 'two',
-            browse_flag: true,
-            online_access_flag: true,
-            day_night_flag: 'DAY',
-            formatted_temporal: [
-              '2019-04-28 00:00:00',
-              '2019-04-29 23:59:59'
-            ],
-            thumbnail: '/fake/path/image.jpg',
-            title: 'Granule title one',
-            links: [
-              {
-                rel: 'http://linkrel/data#',
-                title: 'linktitle',
-                href: 'http://linkhref'
-              }
-            ]
-          }
-        },
         hits: '1',
-        isLoading: false,
         isLoaded: true,
-        loadTime: 1150,
+        isLoading: false,
+        loadTime: 1123,
         timerStart: null
       }
     })
@@ -254,28 +254,7 @@ describe('GranuleResultsBody component', () => {
   })
 
   test('renders the correct search time', () => {
-    const { enzymeWrapper } = setup({
-      focusedCollectionObject: {
-        granules: {
-          hits: 23,
-          loadTime: 1524,
-          isLoading: false,
-          isLoaded: true,
-          allIds: [
-            123,
-            456
-          ],
-          byId: {
-            123: {
-              title: '123'
-            },
-            456: {
-              title: '456'
-            }
-          }
-        }
-      }
-    })
+    const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('1.1s')
   })
@@ -284,29 +263,29 @@ describe('GranuleResultsBody component', () => {
     describe('when there is no next page', () => {
       test('returns true', () => {
         const { enzymeWrapper } = setup(true, {
-          granules: {
+          granulesMetadata: {
+            one: {
+              id: 'one',
+              browseFlag: true,
+              onlineAccessFlag: true,
+              dayNightFlag: 'DAY',
+              formattedTemporal: [
+                '2019-04-28 00:00:00',
+                '2019-04-29 23:59:59'
+              ],
+              thumbnail: '/fake/path/image.jpg',
+              title: 'Granule title one',
+              links: [
+                {
+                  rel: 'http://linkrel/data#',
+                  title: 'linktitle',
+                  href: 'http://linkhref'
+                }
+              ]
+            }
+          },
+          granuleSearchResults: {
             allIds: ['one'],
-            byId: {
-              one: {
-                id: 'two',
-                browse_flag: true,
-                online_access_flag: true,
-                day_night_flag: 'DAY',
-                formatted_temporal: [
-                  '2019-04-28 00:00:00',
-                  '2019-04-29 23:59:59'
-                ],
-                thumbnail: '/fake/path/image.jpg',
-                title: 'Granule title one',
-                links: [
-                  {
-                    rel: 'http://linkrel/data#',
-                    title: 'linktitle',
-                    href: 'http://linkhref'
-                  }
-                ]
-              }
-            },
             hits: '1',
             isLoading: false,
             isLoaded: true,
@@ -317,36 +296,36 @@ describe('GranuleResultsBody component', () => {
 
         const resultsList = enzymeWrapper.find(GranuleResultsList)
 
-        expect(resultsList.props().isItemLoaded()).toEqual(true)
+        expect(resultsList.props().isItemLoaded(1)).toEqual(true)
       })
     })
 
     describe('when there is a next page and the item is loaded', () => {
       test('returns false', () => {
         const { enzymeWrapper } = setup(true, {
-          granules: {
+          granulesMetadata: {
+            one: {
+              id: 'one',
+              browseFlag: true,
+              onlineAccessFlag: true,
+              dayNightFlag: 'DAY',
+              formattedTemporal: [
+                '2019-04-28 00:00:00',
+                '2019-04-29 23:59:59'
+              ],
+              thumbnail: '/fake/path/image.jpg',
+              title: 'Granule title one',
+              links: [
+                {
+                  rel: 'http://linkrel/data#',
+                  title: 'linktitle',
+                  href: 'http://linkhref'
+                }
+              ]
+            }
+          },
+          granuleSearchResults: {
             allIds: ['one'],
-            byId: {
-              one: {
-                id: 'two',
-                browse_flag: true,
-                online_access_flag: true,
-                day_night_flag: 'DAY',
-                formatted_temporal: [
-                  '2019-04-28 00:00:00',
-                  '2019-04-29 23:59:59'
-                ],
-                thumbnail: '/fake/path/image.jpg',
-                title: 'Granule title one',
-                links: [
-                  {
-                    rel: 'http://linkrel/data#',
-                    title: 'linktitle',
-                    href: 'http://linkhref'
-                  }
-                ]
-              }
-            },
             hits: '2',
             isLoading: false,
             isLoaded: true,
@@ -366,10 +345,14 @@ describe('GranuleResultsBody component', () => {
     test('when the granule is added to the project', () => {
       const { enzymeWrapper } = setup({}, {
         project: {
-          collectionIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              addedGranuleIds: ['one']
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {
+                  addedGranuleIds: ['one']
+                }
+              }
             }
           }
         }
@@ -383,9 +366,11 @@ describe('GranuleResultsBody component', () => {
     test('when all granules are added to the project', () => {
       const { enzymeWrapper } = setup({}, {
         project: {
-          collectionIds: ['collectionId'],
-          byId: {
-            collectionId: {}
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {}
+            }
           }
         }
       })
@@ -398,10 +383,14 @@ describe('GranuleResultsBody component', () => {
     test('when granules are removed from the project', () => {
       const { enzymeWrapper } = setup({}, {
         project: {
-          collectionIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              removedGranuleIds: ['one']
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {
+                  removedGranuleIds: ['one']
+                }
+              }
             }
           }
         }

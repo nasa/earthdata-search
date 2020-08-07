@@ -63,11 +63,11 @@ const GranuleResultsBody = ({
     limit: false
   })
 
-  const { collections: projectCollections } = project
+  const { collections: projectCollections = {} } = project
 
   const {
-    byId: projectCollectionsById,
-    allIds: projectCollectionIds
+    byId: projectCollectionsById = {},
+    allIds: projectCollectionIds = []
   } = projectCollections
 
   // If the collection isnt in the project yet the store will not be initialized
@@ -111,13 +111,13 @@ const GranuleResultsBody = ({
 
   const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
-  const result = useMemo(() => formatGranulesList(
+  const result = useMemo(() => formatGranulesList({
     granuleIds,
     granulesMetadata,
     focusedGranuleId,
     isGranuleInProject,
     isCollectionInProject
-  ), [granuleIds, granulesMetadata, focusedGranuleId])
+  }), [granuleIds, granulesMetadata, focusedGranuleId])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
 
