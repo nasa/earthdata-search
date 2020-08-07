@@ -12,7 +12,8 @@ import {
 } from './advancedSearch'
 import {
   getCollections,
-  updateFocusedCollectionGranuleFilters
+  updateFocusedCollectionGranuleFilters,
+  updateCollectionMetadata
 } from './collections'
 import {
   changeFocusedCollection,
@@ -33,7 +34,11 @@ import {
   updateGranuleResults,
   updateGranuleMetadata
 } from './granules'
-import { logout, updateAuthToken } from './authToken'
+import {
+  logout,
+  updateAuthToken,
+  updateAuthTokenFromHeaders
+} from './authToken'
 import {
   changeTimelineQuery,
   getTimeline
@@ -86,7 +91,8 @@ import {
 } from './viewAllFacets'
 import {
   changeFocusedGranule,
-  getFocusedGranule
+  getFocusedGranule,
+  updateFocusedGranule
 } from './focusedGranule'
 import {
   togglePanels,
@@ -256,11 +262,14 @@ const actions = {
   updateAdminRetrievalsSortKey,
   updateAdvancedSearch,
   updateAuthToken,
+  updateAuthTokenFromHeaders,
   updateBrowserVersion,
   updateCmrFacet,
+  updateCollectionMetadata,
   updateFeatureFacet,
   updateFocusedCollection,
   updateFocusedCollectionGranuleFilters,
+  updateFocusedGranule,
   updateGranuleMetadata,
   updateGranuleResults,
   updateNotificationLevel,

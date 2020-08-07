@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import actions from '../index'
-import { updateCollectionQuery, updateGranuleQuery } from '../search'
+import { updateCollectionQuery } from '../search'
 import {
   CLEAR_COLLECTION_GRANULES,
   CLEAR_EXCLUDE_GRANULE_ID,
@@ -36,19 +36,6 @@ describe('updateCollectionQuery', () => {
       payload
     }
     expect(updateCollectionQuery(payload)).toEqual(expectedAction)
-  })
-})
-
-describe('updateGranuleQuery', () => {
-  test('should create an action to update the search query', () => {
-    const payload = {
-      pageNum: 1
-    }
-    const expectedAction = {
-      type: UPDATE_GRANULE_QUERY,
-      payload
-    }
-    expect(updateGranuleQuery(payload)).toEqual(expectedAction)
   })
 })
 
@@ -255,9 +242,9 @@ describe('changeGranulePageNum', () => {
     const collectionId = 'collectionId'
     const pageNum = 2
 
-    // mock getGranules
-    const getGranulesMock = jest.spyOn(actions, 'getGranules')
-    getGranulesMock.mockImplementation(() => jest.fn())
+    // mock searchGranules
+    const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
+    searchGranulesMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const store = mockStore({
@@ -293,16 +280,16 @@ describe('changeGranulePageNum', () => {
     })
 
     // was getCollections called
-    expect(getGranulesMock).toHaveBeenCalledTimes(1)
+    expect(searchGranulesMock).toHaveBeenCalledTimes(1)
   })
 
   test('should not update the collection query and call getCollections if there are no more granules', () => {
     const collectionId = 'collectionId'
     const pageNum = 2
 
-    // mock getGranules
-    const getGranulesMock = jest.spyOn(actions, 'getGranules')
-    getGranulesMock.mockImplementation(() => jest.fn())
+    // mock searchGranules
+    const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
+    searchGranulesMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const store = mockStore({
@@ -332,7 +319,7 @@ describe('changeGranulePageNum', () => {
     const storeActions = store.getActions()
     expect(storeActions.length).toBe(0)
 
-    expect(getGranulesMock).toHaveBeenCalledTimes(0)
+    expect(searchGranulesMock).toHaveBeenCalledTimes(0)
   })
 })
 
@@ -340,9 +327,9 @@ describe('changeGranuleGridCoords', () => {
   test('should update the collection query and call getCollections', () => {
     const coords = 'Test Grid Coords'
 
-    // mock getGranules
-    const getGranulesMock = jest.spyOn(actions, 'getGranules')
-    getGranulesMock.mockImplementation(() => jest.fn())
+    // mock searchGranules
+    const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
+    searchGranulesMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const store = mockStore({
@@ -365,7 +352,7 @@ describe('changeGranuleGridCoords', () => {
     })
 
     // was getCollections called
-    expect(getGranulesMock).toHaveBeenCalledTimes(1)
+    expect(searchGranulesMock).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -567,10 +554,13 @@ describe('clearFilters', () => {
     // mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
+
     const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
     getProjectCollectionsMock.mockImplementation(() => jest.fn())
-    const getGranulesMock = jest.spyOn(actions, 'getGranules')
-    getGranulesMock.mockImplementation(() => jest.fn())
+
+    const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
+    searchGranulesMock.mockImplementation(() => jest.fn())
+
     const getTimelineMock = jest.spyOn(actions, 'getTimeline')
     getTimelineMock.mockImplementation(() => jest.fn())
 
@@ -585,7 +575,7 @@ describe('clearFilters', () => {
     // was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
-    expect(getGranulesMock).toHaveBeenCalledTimes(1)
+    expect(searchGranulesMock).toHaveBeenCalledTimes(1)
     expect(getTimelineMock).toHaveBeenCalledTimes(1)
   })
 })

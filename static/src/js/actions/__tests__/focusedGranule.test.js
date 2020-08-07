@@ -3,13 +3,19 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import actions from '../index'
-import { updateFocusedGranule } from '../focusedGranule'
+
 import {
-  UPDATE_FOCUSED_GRANULE,
+  getFocusedGranule,
+  updateFocusedGranule
+} from '../focusedGranule'
+
+import {
   UPDATE_GRANULE_METADATA,
-  UPDATE_AUTH
+  UPDATE_FOCUSED_GRANULE
 } from '../../constants/actionTypes'
 
+import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
+import * as getClientId from '../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
@@ -21,186 +27,212 @@ beforeEach(() => {
 
 describe('updateFocusedGranule', () => {
   test('should create an action to update the focused collection', () => {
-    const payload = 'granuleId'
+    const payload = 'newCollectionId'
     const expectedAction = {
       type: UPDATE_FOCUSED_GRANULE,
       payload
     }
+
     expect(updateFocusedGranule(payload)).toEqual(expectedAction)
-  })
-})
-
-describe('changeFocusedGranule', () => {
-  test('it should update the focusedGranule and call getFocusedGranule', () => {
-    const granuleId = 'granuleId'
-
-    // mock getFocusedGranule
-    const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule')
-    getFocusedGranuleMock.mockImplementation(() => jest.fn())
-
-    // mockStore with initialState
-    const store = mockStore({
-      focusedGranule: ''
-    })
-
-    // call the dispatch
-    store.dispatch(actions.changeFocusedGranule(granuleId))
-
-    // Is updateFocusedGranule called with the right payload
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_FOCUSED_GRANULE,
-      payload: granuleId
-    })
-
-    // was getCollections called
-    expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
   })
 })
 
 describe('getFocusedGranule', () => {
   beforeEach(() => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
+    jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
   })
-  const granulePayload = {
-    granuleId: {
-      ummJson: {
-        MockGranule: 'Data'
-      },
-      metadataUrls: {
-        atom: {
-          href: 'http://cmr.example.com/search/concepts/granuleId.atom',
-          title: 'ATOM'
-        },
-        echo10: {
-          href: 'http://cmr.example.com/search/concepts/granuleId.echo10',
-          title: 'ECHO 10'
-        },
-        iso19115: {
-          href: 'http://cmr.example.com/search/concepts/granuleId.iso19115',
-          title: 'ISO 19115'
-        },
-        native: {
-          href: 'http://cmr.example.com/search/concepts/granuleId',
-          title: 'Native'
-        },
-        umm_json: {
-          href: 'http://cmr.example.com/search/concepts/granuleId.umm_json',
-          title: 'UMM-G'
-        }
-      }
-    }
-  }
 
-  test('should update the granule metadata', async () => {
-    const metadata = { MockGranule: 'Data' }
+  describe('when metdata has already been retrieved from graphql', () => {
+    test('should take no action', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+      jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
-    nock(/cmr/)
-      .get(/concepts/)
-      .reply(200, metadata)
+      const store = mockStore({
+        authToken: '',
+        focusedCollection: 'C10000000000-EDSC',
+        focusedGranule: 'G10000000000-EDSC',
+        metadata: {
+          collections: {
+            'C10000000000-EDSC': {
+              hasAllMetadata: true
+            }
+          },
+          granules: {
+            'G10000000000-EDSC': {
+              hasAllMetadata: true
+            }
+          }
+        },
+        query: {
+          collection: {
+            spatial: {}
+          }
+        },
+        searchResults: {}
+      })
 
-    const granuleId = 'granuleId'
+      await store.dispatch(getFocusedGranule())
 
-    // mockStore with initialState
-    const store = mockStore({
-      authToken: '',
-      focusedGranule: granuleId,
-      metadata: {
-        granules: {
-          allIds: [],
-          byId: {}
-        }
-      }
+      // TODO: Mock `GraphQlRequest` and ensure that it does not get called
+    })
+  })
+
+  describe('when no metadata exists in the store for the collection from graphql', () => {
+    describe('when graphql returns metadata for the requested collection', () => {
+      test('should update the focusedGranule and fetch metadata from graphql', async () => {
+        jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+          cmrHost: 'https://cmr.example.com',
+          graphQlHost: 'https://graphql.example.com',
+          opensearchRoot: 'https://cmr.example.com'
+        }))
+        jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
+
+        nock(/graph/)
+          .post(/api/)
+          .reply(200, {
+            data: {
+              granule: {
+                conceptId: 'G10000000000-EDSC'
+              }
+            }
+          })
+
+        const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
+        updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
+
+        // mockStore with initialState
+        const store = mockStore({
+          authToken: '',
+          focusedCollection: 'C10000000000-EDSC',
+          focusedGranule: 'G10000000000-EDSC',
+          metadata: {
+            collections: {},
+            granules: {}
+          },
+          searchResults: {}
+        })
+
+        // call the dispatch
+        await store.dispatch(getFocusedGranule()).then(() => {
+          const storeActions = store.getActions()
+          expect(storeActions[0]).toEqual({
+            type: UPDATE_GRANULE_METADATA,
+            payload: [
+              expect.objectContaining({
+                id: 'G10000000000-EDSC'
+              })
+            ]
+          })
+        })
+
+        expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
+      })
+
+      describe('when the requested granule is cwic and a polygon search is active', () => {
+        test('take no action', async () => {
+          jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+            cmrHost: 'https://cmr.example.com',
+            graphQlHost: 'https://graphql.example.com',
+            opensearchRoot: 'https://cmr.example.com'
+          }))
+          jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
+
+          const store = mockStore({
+            authToken: '',
+            focusedCollection: 'C10000000000-EDSC',
+            focusedGranule: 'G10000000000-EDSC',
+            metadata: {
+              collections: {
+                'C10000000000-EDSC': {
+                  isCwic: true
+                }
+              },
+              granules: {
+                'G10000000000-EDSC': {
+                  isCwic: true
+                }
+              }
+            },
+            searchResults: {}
+          })
+
+          await store.dispatch(getFocusedGranule())
+
+          // TODO: Mock `GraphQlRequest` and ensure that it does not get called
+        })
+      })
     })
 
-    // call the dispatch
-    await store.dispatch(actions.getFocusedGranule()).then(() => {
-      const storeActions = store.getActions()
+    describe('when graphql returns no metadata for the requested collection', () => {
+      test('should clear the focusedGranule', async () => {
+        jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+          cmrHost: 'https://cmr.example.com',
+          graphQlHost: 'https://graphql.example.com',
+          opensearchRoot: 'https://cmr.example.com'
+        }))
+        jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
-      // updateGranuleMetadata
-      expect(storeActions[0]).toEqual({
-        type: UPDATE_GRANULE_METADATA,
-        payload: granulePayload
+        nock(/graph/)
+          .post(/api/)
+          .reply(200, {
+            data: {
+              granule: null
+            }
+          })
+
+        const changeUrlMock = jest.spyOn(actions, 'changeUrl')
+        changeUrlMock.mockImplementationOnce(() => jest.fn())
+
+        const store = mockStore({
+          authToken: '',
+          focusedCollection: 'C10000000000-EDSC',
+          focusedGranule: 'G10000000000-EDSC',
+          metadata: {
+            collections: {},
+            granules: {
+              'G10000000000-EDSC': {}
+            }
+          },
+          router: {
+            location: {
+              search: '?some=testparams',
+              pathname: '/search/granules'
+            }
+          }
+        })
+
+        // call the dispatch
+        await store.dispatch(getFocusedGranule()).then(() => {
+          const storeActions = store.getActions()
+
+          expect(storeActions[0]).toEqual({
+            type: 'UPDATE_FOCUSED_GRANULE',
+            payload: ''
+          })
+        })
+
+        expect(changeUrlMock).toHaveBeenCalledTimes(1)
       })
     })
   })
 
-  test('should update the authenticated granule metadata', async () => {
-    const metadata = { MockGranule: 'Data' }
+  test('does not call updateFocusedGranule when graphql throws an http error', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com',
+      opensearchRoot: 'https://cmr.example.com'
+    }))
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
-    nock(/localhost/)
-      .get(/concepts/)
-      .reply(200, metadata, { 'jwt-token': 'token' })
+    const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
+    searchGranulesMock.mockImplementationOnce(() => jest.fn())
 
-    const granuleId = 'granuleId'
-
-    // mockStore with initialState
-    const store = mockStore({
-      authToken: 'token',
-      focusedGranule: granuleId,
-      metadata: {
-        granules: {
-          allIds: [],
-          byId: {}
-        }
-      }
-    })
-
-    // call the dispatch
-    await store.dispatch(actions.getFocusedGranule()).then(() => {
-      const storeActions = store.getActions()
-
-      // updateGranuleMetadata
-      expect(storeActions[0]).toEqual({
-        type: UPDATE_AUTH,
-        payload: 'token'
-      })
-      expect(storeActions[1]).toEqual({
-        type: UPDATE_GRANULE_METADATA,
-        payload: granulePayload
-      })
-    })
-  })
-
-  test('should not call updateGranuleMetadata if granule already exists', () => {
-    const granuleId = 'granuleId'
-
-    // mockStore with initialState
-    const granules = {
-      allIds: ['granuleId'],
-      byId: {
-        granuleId: {
-          mock: 'data'
-        }
-      }
-    }
-    const store = mockStore({
-      focusedGranule: granuleId,
-      metadata: {
-        granules
-      }
-    })
-
-    // call the dispatch
-    store.dispatch(actions.getFocusedGranule())
-    const storeActions = store.getActions()
-    expect(storeActions.length).toBe(0)
-  })
-
-  test('returns no result if there is no focusedGranule', () => {
-    const store = mockStore({
-      focusedGranule: ''
-    })
-
-    store.dispatch(actions.getFocusedGranule())
-    const storeActions = store.getActions()
-
-    expect(storeActions.length).toBe(0)
-  })
-
-  test('does not call updateGranuleMetadata on error', async () => {
-    nock(/cmr/)
-      .get(/concepts/)
+    nock(/graph/)
+      .post(/api/)
       .reply(500)
 
     nock(/localhost/)
@@ -208,11 +240,12 @@ describe('getFocusedGranule', () => {
       .reply(200)
 
     const store = mockStore({
-      focusedGranule: 'granuleId',
-      metadata: {
-        granules: {
-          allIds: [],
-          byId: {}
+      authToken: '',
+      focusedCollection: 'C10000000000-EDSC',
+      focusedGranule: 'G10000000000-EDSC',
+      query: {
+        collection: {
+          spatial: {}
         }
       }
     })
@@ -221,6 +254,54 @@ describe('getFocusedGranule', () => {
 
     await store.dispatch(actions.getFocusedGranule()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
+    })
+  })
+})
+
+describe('changeFocusedGranule', () => {
+  describe('when a collection id is provided', () => {
+    test('updates the focusedGranule and calls getFocusedGranule', () => {
+      const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule')
+      getFocusedGranuleMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({})
+
+      const collectionId = 'C1000000000-EDSC'
+
+      store.dispatch(actions.changeFocusedGranule(collectionId))
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_FOCUSED_GRANULE,
+        payload: collectionId
+      })
+
+      expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when a collection id is not provided', () => {
+    test('should clear the focusedGranule', () => {
+      const changeUrlMock = jest.spyOn(actions, 'changeUrl')
+      changeUrlMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        router: {
+          location: {
+            search: '?some=testparams',
+            pathname: '/search/granules'
+          }
+        }
+      })
+
+      // call the dispatch
+      store.dispatch(actions.changeFocusedGranule(''))
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_FOCUSED_GRANULE,
+        payload: ''
+      })
     })
   })
 })
