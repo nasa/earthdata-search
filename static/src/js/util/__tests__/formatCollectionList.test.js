@@ -3,28 +3,28 @@ import { formatCollectionList } from '../formatCollectionList'
 describe('formatCollectionList', () => {
   test('formats good metadata', () => {
     const collections = {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          id: 'collectionId',
-          dataset_id: 'test dataset id',
-          summary: 'test summary',
-          granule_count: 42,
-          has_formats: false,
-          has_spatial_subsetting: false,
-          has_temporal_subsetting: false,
-          has_transforms: false,
-          has_variables: false,
-          has_map_imagery: false,
-          is_cwic: false,
-          is_nrt: false,
-          organizations: ['test/org'],
-          short_name: 'test_short_name',
-          thumbnail: 'http://some.test.com/thumbnail/url.jpg',
-          time_end: '2019-01-15T00:00:00.000Z',
-          time_start: '2019-01-14T00:00:00.000Z',
-          version_id: 2
-        }
+      allIds: ['collectionId']
+    }
+    const metadata = {
+      collectionId: {
+        id: 'collectionId',
+        datasetId: 'test dataset id',
+        summary: 'test summary',
+        granuleCount: 42,
+        hasFormats: false,
+        hasSpatialSubsetting: false,
+        hasTemporalSubsetting: false,
+        hasTransforms: false,
+        hasVariables: false,
+        hasMapImagery: false,
+        isCwic: false,
+        isNrt: false,
+        organizations: ['test/org'],
+        shortName: 'test_short_name',
+        thumbnail: 'http://some.test.com/thumbnail/url.jpg',
+        timeEnd: '2019-01-15T00:00:00.000Z',
+        timeStart: '2019-01-14T00:00:00.000Z',
+        versionId: 2
       }
     }
     const projectIds = []
@@ -54,16 +54,16 @@ describe('formatCollectionList', () => {
       versionId: 2
     }
 
-    expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(expectedResult)
+    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(expectedResult)
   })
 
   test('formats missing metadata', () => {
     const collections = {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          id: 'collectionId'
-        }
+      allIds: ['collectionId']
+    }
+    const metadata = {
+      collectionId: {
+        id: 'collectionId'
       }
     }
     const projectIds = []
@@ -93,17 +93,17 @@ describe('formatCollectionList', () => {
       versionId: undefined
     }
 
-    expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(expectedResult)
+    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(expectedResult)
   })
 
   test('formats temporal with start and without end', () => {
     const collections = {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          id: 'collectionId',
-          time_start: '2019-01-14T00:00:00.000Z'
-        }
+      allIds: ['collectionId']
+    }
+    const metadata = {
+      collectionId: {
+        id: 'collectionId',
+        timeStart: '2019-01-14T00:00:00.000Z'
       }
     }
     const projectIds = []
@@ -115,19 +115,19 @@ describe('formatCollectionList', () => {
       temporalStart: '2019-01-14'
     }
 
-    expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(
+    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
       expect.objectContaining(expectedResult)
     )
   })
 
   test('formats temporal with end and without start', () => {
     const collections = {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          id: 'collectionId',
-          time_end: '2019-01-15T00:00:00.000Z'
-        }
+      allIds: ['collectionId']
+    }
+    const metadata = {
+      collectionId: {
+        id: 'collectionId',
+        timeEnd: '2019-01-15T00:00:00.000Z'
       }
     }
     const projectIds = []
@@ -139,7 +139,7 @@ describe('formatCollectionList', () => {
       temporalStart: ''
     }
 
-    expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(
+    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
       expect.objectContaining(expectedResult)
     )
   })
@@ -147,13 +147,13 @@ describe('formatCollectionList', () => {
   describe('when dates are provided with bad formats', () => {
     test('recovers when time_start is provided with a bad format', () => {
       const collections = {
-        allIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            id: 'collectionId',
-            time_start: '-3700-01-01T00:00:00.000Z',
-            time_end: '2019-01-14T00:00:00.000Z'
-          }
+        allIds: ['collectionId']
+      }
+      const metadata = {
+        collectionId: {
+          id: 'collectionId',
+          timeStart: '-3700-01-01T00:00:00.000Z',
+          timeEnd: '2019-01-14T00:00:00.000Z'
         }
       }
       const projectIds = []
@@ -165,20 +165,20 @@ describe('formatCollectionList', () => {
         temporalStart: ''
       }
 
-      expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(
+      expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
         expect.objectContaining(expectedResult)
       )
     })
 
     test('recovers when time_end is provided with a bad format', () => {
       const collections = {
-        allIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            id: 'collectionId',
-            time_start: '2019-01-14T00:00:00.000Z',
-            time_end: '-2000-12-31T00:00:00.000Z'
-          }
+        allIds: ['collectionId']
+      }
+      const metadata = {
+        collectionId: {
+          id: 'collectionId',
+          timeStart: '2019-01-14T00:00:00.000Z',
+          timeEnd: '-2000-12-31T00:00:00.000Z'
         }
       }
       const projectIds = []
@@ -190,20 +190,20 @@ describe('formatCollectionList', () => {
         temporalStart: '2019-01-14'
       }
 
-      expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(
+      expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
         expect.objectContaining(expectedResult)
       )
     })
 
     test('recovers when time_start and time_end are provided with bad formats', () => {
       const collections = {
-        allIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            id: 'collectionId',
-            time_start: '-3700-01-01T00:00:00.000Z',
-            time_end: '-2000-12-31T00:00:00.000Z'
-          }
+        allIds: ['collectionId']
+      }
+      const metadata = {
+        collectionId: {
+          id: 'collectionId',
+          timeStart: '-3700-01-01T00:00:00.000Z',
+          timeEnd: '-2000-12-31T00:00:00.000Z'
         }
       }
       const projectIds = []
@@ -215,7 +215,7 @@ describe('formatCollectionList', () => {
         temporalStart: ''
       }
 
-      expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(
+      expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
         expect.objectContaining(expectedResult)
       )
     })
@@ -223,12 +223,12 @@ describe('formatCollectionList', () => {
 
   test('formats the description in IE', () => {
     const collections = {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          id: 'collectionId',
-          summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        }
+      allIds: ['collectionId']
+    }
+    const metadata = {
+      collectionId: {
+        id: 'collectionId',
+        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       }
     }
     const projectIds = []
@@ -238,7 +238,7 @@ describe('formatCollectionList', () => {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt...'
     }
 
-    expect(formatCollectionList(collections, projectIds, browser)[0]).toEqual(
+    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
       expect.objectContaining(expectedResult)
     )
   })

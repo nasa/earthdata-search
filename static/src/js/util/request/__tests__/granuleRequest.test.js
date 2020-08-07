@@ -64,6 +64,8 @@ describe('GranuleRequest#nonIndexedKeys', () => {
     const request = new GranuleRequest()
 
     expect(request.nonIndexedKeys()).toEqual([
+      'concept_id',
+      'exclude',
       'readable_granule_name',
       'sort_key'
     ])

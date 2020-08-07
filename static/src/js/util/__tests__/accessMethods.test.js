@@ -2,12 +2,7 @@ import { isAccessMethodValid, validAccessMethod } from '../accessMethods'
 
 describe('isAccessMethodValid', () => {
   const collection = {
-    granules: {
-      hits: 150
-    },
-    metadata: {
-      tags: {}
-    }
+    tags: {}
   }
 
   test('returns true is selected method is valid', () => {
@@ -17,6 +12,9 @@ describe('isAccessMethodValid', () => {
           isValid: true,
           type: 'download'
         }
+      },
+      granules: {
+        hits: 150
       },
       selectedAccessMethod: 'download'
     }
@@ -35,6 +33,9 @@ describe('isAccessMethodValid', () => {
           type: 'download'
         }
       },
+      granules: {
+        hits: 150
+      },
       selectedAccessMethod: 'download'
     }
 
@@ -50,6 +51,9 @@ describe('isAccessMethodValid', () => {
         download: {
           type: 'download'
         }
+      },
+      granules: {
+        hits: 150
       },
       selectedAccessMethod: 'download'
     }
@@ -67,6 +71,9 @@ describe('isAccessMethodValid', () => {
           isValid: true,
           type: 'download'
         }
+      },
+      granules: {
+        hits: 150
       }
     }
 
@@ -93,19 +100,17 @@ describe('isAccessMethodValid', () => {
           type: 'download'
         }
       },
+      granules: {
+        hits: 1
+      },
       selectedAccessMethod: 'download'
     }
 
     const collection = {
-      granules: {
-        hits: 1
-      },
-      metadata: {
-        tags: {
-          'edsc.limited_collections': {
-            data: {
-              limit: 200
-            }
+      tags: {
+        'edsc.limited_collections': {
+          data: {
+            limit: 200
           }
         }
       }
@@ -125,6 +130,9 @@ describe('isAccessMethodValid', () => {
           type: 'download'
         }
       },
+      granules: {
+        hits: 150
+      },
       selectedAccessMethod: 'download'
     }
 
@@ -142,19 +150,17 @@ describe('isAccessMethodValid', () => {
           type: 'download'
         }
       },
+      granules: {
+        hits: 150
+      },
       selectedAccessMethod: 'download'
     }
 
     const collection = {
-      granules: {
-        hits: 150
-      },
-      metadata: {
-        tags: {
-          'edsc.limited_collections': {
-            data: {
-              limit: 100
-            }
+      tags: {
+        'edsc.limited_collections': {
+          data: {
+            limit: 100
           }
         }
       }
@@ -175,17 +181,17 @@ describe('isAccessMethodValid', () => {
           type: 'download'
         }
       },
+      granules: {
+        hits: 0
+      },
       selectedAccessMethod: 'download'
     }
 
     const collection = {
-      granules: {},
-      metadata: {
-        tags: {
-          'edsc.limited_collections': {
-            data: {
-              limit: 100
-            }
+      tags: {
+        'edsc.limited_collections': {
+          data: {
+            limit: 100
           }
         }
       }
@@ -208,19 +214,17 @@ describe('isAccessMethodValid', () => {
             type: 'download'
           }
         },
+        granules: {
+          hits: 1
+        },
         selectedAccessMethod: 'download'
       }
 
       const collection = {
-        granules: {
-          hits: 150
-        },
-        metadata: {
-          tags: {
-            'edsc.limited_collections': {
-              data: {
-                limit: 2
-              }
+        tags: {
+          'edsc.limited_collections': {
+            data: {
+              limit: 2
             }
           }
         }
@@ -238,19 +242,17 @@ describe('isAccessMethodValid', () => {
             type: 'download'
           }
         },
+        granules: {
+          hits: 150
+        },
         selectedAccessMethod: 'download'
       }
 
       const collection = {
-        granules: {
-          hits: 150
-        },
-        metadata: {
-          tags: {
-            'edsc.limited_collections': {
-              data: {
-                limit: 2
-              }
+        tags: {
+          'edsc.limited_collections': {
+            data: {
+              limit: 2
             }
           }
         }
@@ -274,19 +276,17 @@ describe('isAccessMethodValid', () => {
             type: 'download'
           }
         },
+        granules: {
+          hits: 140
+        },
         selectedAccessMethod: 'download'
       }
 
       const collection = {
-        granules: {
-          hits: 151
-        },
-        metadata: {
-          tags: {
-            'edsc.limited_collections': {
-              data: {
-                limit: 150
-              }
+        tags: {
+          'edsc.limited_collections': {
+            data: {
+              limit: 150
             }
           }
         }
@@ -304,19 +304,17 @@ describe('isAccessMethodValid', () => {
             type: 'download'
           }
         },
+        granules: {
+          hits: 153
+        },
         selectedAccessMethod: 'download'
       }
 
       const collection = {
-        granules: {
-          hits: 153
-        },
-        metadata: {
-          tags: {
-            'edsc.limited_collections': {
-              data: {
-                limit: 150
-              }
+        tags: {
+          'edsc.limited_collections': {
+            data: {
+              limit: 150
             }
           }
         }
