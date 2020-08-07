@@ -318,7 +318,6 @@ class ProjectPanels extends PureComponent {
 
       const {
         accessMethods,
-        granules,
         selectedAccessMethod
       } = projectCollection
 
@@ -479,7 +478,7 @@ class ProjectPanels extends PureComponent {
               accessMethods={accessMethods}
               index={index}
               metadata={collectionMetadata}
-              granuleMetadata={granules}
+              granuleMetadata={granulesMetadata}
               shapefileId={shapefileId}
               spatial={spatial}
               onSelectAccessMethod={onSelectAccessMethod}

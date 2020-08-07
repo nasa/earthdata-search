@@ -69,7 +69,7 @@ export const CollectionDetails = ({
             granulesToDisplay.map((id) => {
               const { [id]: granuleMetadata } = granulesMetadata
 
-              const { producerGranuleId } = granuleMetadata
+              const { title } = granuleMetadata
 
               const itemClassName = classNames([
                 'collection-details__item',
@@ -101,7 +101,7 @@ export const CollectionDetails = ({
                     }}
                   >
                     <span className="collection-details__item-title">
-                      {producerGranuleId}
+                      {title}
                     </span>
                     <span className="collection-details__item-actions">
                       <PortalLinkContainer

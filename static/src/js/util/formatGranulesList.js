@@ -42,14 +42,12 @@ export const formatGranulesList = (
       links,
       onlineAccessFlag,
       originalFormat,
-      producerGranuleId,
       granuleThumbnail,
-      title: granuleTitle
+      title
     } = granule
 
     if (browseFlag && !hasBrowseImagery) hasBrowseImagery = true
 
-    const title = producerGranuleId || granuleTitle
     const temporal = formattedTemporal
     const [timeStart, timeEnd] = temporal
     const thumbnail = browseFlag ? granuleThumbnail : false
@@ -83,7 +81,6 @@ export const formatGranulesList = (
       onlineAccessFlag,
       original,
       originalFormat,
-      producerGranuleId,
       granuleThumbnail,
       title,
       temporal,
