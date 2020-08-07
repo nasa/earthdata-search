@@ -8,9 +8,9 @@ import { getFocusedCollectionId } from './focusedCollection'
  */
 export const getCollectionsQuery = (state) => {
   const { query = {} } = state
-  const { collections = {} } = query
+  const { collection = {} } = query
 
-  return collections
+  return collection
 }
 
 /**
