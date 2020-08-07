@@ -19,6 +19,7 @@ function setup(type, overrideProps) {
     isGranuleInProject: jest.fn(() => false),
     isFocused: false,
     isLast: false,
+    isProjectGranulesLoading: false,
     location: { search: 'location' },
     onAddGranuleToProjectCollection: jest.fn(),
     onExcludeGranule: jest.fn(),
@@ -172,7 +173,7 @@ function setup(type, overrideProps) {
         timeStart: '2019-04-28 00:00:00',
         timeEnd: '2019-04-29 23:59:59',
         title: 'Granule title',
-        is_cwic: true,
+        isCwic: true,
         granuleThumbnail: '/fake/path/image.jpg',
         dataLinks: [
           {

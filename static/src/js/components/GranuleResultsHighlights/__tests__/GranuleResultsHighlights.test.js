@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import GranuleResultsHighlights from '../GranuleResultsHighlights'
 import Skeleton from '../../Skeleton/Skeleton'
 
@@ -9,8 +10,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     granules: [{
-      producer_granule_id: 'producer_granule_id_1',
-      formatted_temporal: [
+      title: 'producer_granule_id_1',
+      formattedTemporal: [
         '2020-03-04 19:30:00',
         '2020-03-04 19:35:00'
       ]

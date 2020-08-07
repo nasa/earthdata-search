@@ -12,30 +12,30 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collectionSearch: {},
-    focusedCollectionId: 'collectionId',
-    focusedCollectionObject: {
-      granules: {
-        hits: null,
-        loadTime: null,
-        isLoading: true,
-        isLoaded: false,
-        allIds: [],
-        byId: {}
-      },
-      granuleFilters: {
-        readableGranuleName: ['searchValue'],
-        sortKey: '-start_date'
-      },
-      metadata: {
-        title: 'Title',
-        concept_id: 'collectionId'
-      }
+    collectionMetadata: {
+      title: 'Title',
+      concept_id: 'collectionId'
     },
+    collectionQuery: {},
+    collectionsSearch: {
+      isLoaded: true
+    },
+    focusedCollectionId: 'collectionId',
     location: {
       search: '?test=search-value'
     },
-    granuleSearch: {},
+    granuleQuery: {
+      readableGranuleName: ['searchValue'],
+      sortKey: '-start_date'
+    },
+    granuleSearchResults: {
+      hits: null,
+      loadTime: null,
+      isLoading: true,
+      isLoaded: false,
+      allIds: [],
+      byId: {}
+    },
     mapProjection: projections.geographic,
     secondaryOverlayPanel: {
       isOpen: false
@@ -69,16 +69,16 @@ describe('GranuleResultsHeader component', () => {
     describe('while loading', () => {
       test('renders the correct Skeleton elements', () => {
         const { enzymeWrapper } = setup({
-          focusedCollectionObject: {
-            excludedGranuleIds: [],
-            granules: {
-              hits: null,
-              loadTime: null,
-              isLoading: true,
-              isLoaded: false,
-              allIds: [],
-              byId: {}
-            }
+          granuleQuery: {
+            excludedGranuleIds: []
+          },
+          granuleSearchResults: {
+            hits: null,
+            loadTime: null,
+            isLoading: true,
+            isLoaded: false,
+            allIds: [],
+            byId: {}
           }
         })
 
@@ -89,24 +89,24 @@ describe('GranuleResultsHeader component', () => {
     describe('when loaded', () => {
       test('renders the correct visible granules and hits', () => {
         const { enzymeWrapper } = setup({
-          focusedCollectionObject: {
-            excludedGranuleIds: [],
-            granules: {
-              hits: 23,
-              loadTime: 1524,
-              isLoading: false,
-              isLoaded: true,
-              allIds: [
-                123,
-                456
-              ],
-              byId: {
-                123: {
-                  title: '123'
-                },
-                456: {
-                  title: '456'
-                }
+          granuleQuery: {
+            excludedGranuleIds: []
+          },
+          granuleSearchResults: {
+            hits: 23,
+            loadTime: 1524,
+            isLoading: false,
+            isLoaded: true,
+            allIds: [
+              123,
+              456
+            ],
+            byId: {
+              123: {
+                title: '123'
+              },
+              456: {
+                title: '456'
               }
             }
           }
@@ -172,7 +172,7 @@ describe('GranuleResultsHeader component', () => {
       enzymeWrapper.find('#input__sort-granules').simulate('change', mockEvent)
 
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
-      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', { sortKey: 'start_date_oldest_first' })
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith({ sortKey: 'start_date_oldest_first' })
     })
   })
 
@@ -208,7 +208,7 @@ describe('GranuleResultsHeader component', () => {
       enzymeWrapper.find('#input__granule-search').simulate('blur')
 
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
-      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', { readableGranuleName: ['Some-new-value'] })
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith({ readableGranuleName: ['Some-new-value'] })
     })
 
     test('removes the parameter if the input is empty', () => {
@@ -222,7 +222,7 @@ describe('GranuleResultsHeader component', () => {
       enzymeWrapper.find('#input__granule-search').simulate('blur')
 
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
-      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', {
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith({
         readableGranuleName: null
       })
     })
@@ -235,12 +235,12 @@ describe('handleUndoExcludeGranule', () => {
 
     // Exclude a granule to test undo button
     enzymeWrapper.setProps({
-      focusedCollectionObject: {
-        excludedGranuleIds: ['granuleId1', 'granuleId2'],
-        metadata: {
-          title: 'Title',
-          concept_id: 'collectionId'
-        }
+      granuleQuery: {
+        excludedGranuleIds: ['granuleId1', 'granuleId2']
+      },
+      collectionMetadata: {
+        title: 'Title',
+        concept_id: 'collectionId'
       }
     })
 

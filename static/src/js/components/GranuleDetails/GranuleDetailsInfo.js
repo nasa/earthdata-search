@@ -24,8 +24,12 @@ export const GranuleDetailsInfo = ({ granuleMetadata }) => (
   </div>
 )
 
+GranuleDetailsInfo.defaultProps = {
+  granuleMetadata: null
+}
+
 GranuleDetailsInfo.propTypes = {
-  granuleMetadata: PropTypes.shape({}).isRequired
+  granuleMetadata: PropTypes.shape({})
 }
 
 export default GranuleDetailsInfo

@@ -10,10 +10,12 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    focusedGranuleId: 'one',
     granules: granuleData,
     collectionId: 'collectionId',
     isItemLoaded: jest.fn(),
     isGranuleInProject: jest.fn(),
+    isProjectGranulesLoading: false,
     itemCount: 1,
     focusedGranule: 'one',
     hasBrowseImagery: false,

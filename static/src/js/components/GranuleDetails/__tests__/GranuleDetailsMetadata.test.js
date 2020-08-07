@@ -36,7 +36,7 @@ describe('GranuleDetailsMetadata component', () => {
   describe('when the metadata has been provided', () => {
     test('renders itself correctly', () => {
       const { enzymeWrapper } = setup({
-        metadataUrls: granuleResultsBodyProps.metadataUrls
+        metadataUrls: granuleResultsBodyProps.granuleMetadata.metadataUrls
       })
 
       expect(enzymeWrapper.type()).toBe('div')
@@ -47,7 +47,7 @@ describe('GranuleDetailsMetadata component', () => {
     describe('Metadata URL list', () => {
       test('renders the unauthenticated links correctly', () => {
         const { enzymeWrapper } = setup({
-          metadataUrls: granuleResultsBodyProps.metadataUrls
+          metadataUrls: granuleResultsBodyProps.granuleMetadata.metadataUrls
         })
 
         expect(enzymeWrapper.find('li > a').length).toEqual(5)
@@ -66,7 +66,7 @@ describe('GranuleDetailsMetadata component', () => {
       test('renders the authenticated links correctly', () => {
         const { enzymeWrapper } = setup({
           authToken: 'token',
-          metadataUrls: granuleResultsBodyProps.metadataUrls
+          metadataUrls: granuleResultsBodyProps.granuleMetadata.metadataUrls
         })
 
         const baseUrl = 'http://localhost:3000/concepts/metadata?url='

@@ -45,6 +45,7 @@ function setup(type) {
       isCwic: false,
       isCollectionInProject: true,
       isGranuleInProject: jest.fn(),
+      isProjectGranulesLoading: false,
       location: { search: 'value' },
       onAddGranuleToProjectCollection: jest.fn(),
       onExcludeGranule: jest.fn(),

@@ -89,7 +89,7 @@ describe('FacetsModal component', () => {
     test('the modal renders correctly', () => {
       const { enzymeWrapper } = setup()
       enzymeWrapper.setProps({
-        collectionHits: '100',
+        collectionHits: 100,
         viewAllFacets: {
           allIds: ['Test Category'],
           byId: {
@@ -127,7 +127,7 @@ describe('FacetsModal component', () => {
     test('the callback fires correctly', () => {
       const { enzymeWrapper, props } = setup()
       enzymeWrapper.setProps({
-        collectionHits: '100',
+        collectionHits: 100,
         viewAllFacets: {
           allIds: ['Test Category'],
           byId: {
@@ -161,7 +161,7 @@ describe('FacetsModal component', () => {
     test('the callback fires correctly', () => {
       const { enzymeWrapper, props } = setup()
       enzymeWrapper.setProps({
-        collectionHits: '100',
+        collectionHits: 100,
         viewAllFacets: {
           allIds: ['Test Category'],
           byId: {
@@ -194,7 +194,7 @@ describe('FacetsModal component', () => {
     test('the callback fires correctly', () => {
       const { enzymeWrapper, props } = setup()
       enzymeWrapper.setProps({
-        collectionHits: '100',
+        collectionHits: 100,
         viewAllFacets: {
           allIds: ['Test Category'],
           byId: {
