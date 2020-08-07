@@ -1,5 +1,5 @@
 export const collectionListItemProps = {
-  collection: {
+  collectionMetadata: {
     collectionId: 'collectionId1',
     datasetId: 'Test Collection',
     description: 'This is a short summary.',

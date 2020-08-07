@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import CollectionDetailsHighlights from '../CollectionDetailsHighlights'
 import Skeleton from '../../Skeleton/Skeleton'
 
@@ -8,21 +9,22 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collection: {
-      metadata: {
-        doi: {
-          doiLink: 'https://dx.doi.org/ADFD/DS456SD',
-          doiText: 'ADFD/DS456SD'
-        },
-        temporal: [
-          '1860-01-01 to 2050-12-31'
-        ],
-        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.',
-        versionId: '5'
-      }
+    collectionMetadata: {
+      hasAllMetadata: true,
+      doi: {
+        doiLink: 'https://dx.doi.org/ADFD/DS456SD',
+        doiText: 'ADFD/DS456SD'
+      },
+      temporal: [
+        '1860-01-01 to 2050-12-31'
+      ],
+      summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.',
+      versionId: '5'
     },
-    isLoaded: false,
-    isLoading: true,
+    collectionsSearch: {
+      isLoaded: false,
+      isLoading: true
+    },
     location: {
       search: ''
     },
@@ -56,8 +58,10 @@ describe('CollectionDetailsHighlights component', () => {
     describe('when collection is loaded', () => {
       test('shows the version', () => {
         const { enzymeWrapper } = setup({
-          isLoading: false,
-          isLoaded: true
+          collectionsSearch: {
+            isLoading: false,
+            isLoaded: true
+          }
         })
         expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(0).text()).toEqual('5')
       })
@@ -73,10 +77,12 @@ describe('CollectionDetailsHighlights component', () => {
     })
 
     describe('when collection is loaded', () => {
-      test('shows the version', () => {
+      test('shows the doi', () => {
         const { enzymeWrapper } = setup({
-          isLoading: false,
-          isLoaded: true
+          collectionsSearch: {
+            isLoading: false,
+            isLoaded: true
+          }
         })
         expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(1).text()).toEqual('ADFD/DS456SD')
       })
@@ -94,8 +100,10 @@ describe('CollectionDetailsHighlights component', () => {
     describe('when collection is loaded', () => {
       test('shows the temporal extent', () => {
         const { enzymeWrapper } = setup({
-          isLoading: false,
-          isLoaded: true
+          collectionsSearch: {
+            isLoading: false,
+            isLoaded: true
+          }
         })
         expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(3).text()).toEqual('1860-01-01 to 2050-12-31')
       })
@@ -113,8 +121,10 @@ describe('CollectionDetailsHighlights component', () => {
     describe('when collection is loaded', () => {
       test('shows the summary', () => {
         const { enzymeWrapper } = setup({
-          isLoading: false,
-          isLoaded: true
+          collectionsSearch: {
+            isLoading: false,
+            isLoaded: true
+          }
         })
         expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(4).text())
           .toEqual('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.')

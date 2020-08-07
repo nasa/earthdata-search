@@ -20,6 +20,7 @@ function setup(overrides) {
   const props = {
     isActive: true,
     collectionMetadata: {
+      hasAllMetadata: true,
       dataCenters: [],
       scienceKeywords: [],
       nativeFormats: [],
@@ -126,6 +127,7 @@ describe('CollectionDetails component', () => {
         }
       })
       expect(enzymeWrapper.find(CollectionDetailsMinimap).props().metadata).toEqual({
+        hasAllMetadata: true,
         boxes: [
           '-90 -180 90 180'
         ],

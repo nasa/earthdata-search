@@ -42,7 +42,7 @@ innerElementType.propTypes = {
 /**
  * Renders CollectionResultsList.
  * @param {Object} props - The props passed into the component.
- * @param {Array} props.collections - Collections passed from redux store.
+ * @param {Array} props.collectionsMetadata - Collections passed from redux store.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
@@ -54,7 +54,7 @@ innerElementType.propTypes = {
  * @param {String} props.visibleMiddleIndex - The current middle item.
 */
 export const CollectionResultsList = ({
-  collections,
+  collectionsMetadata,
   isItemLoaded,
   itemCount,
   loadMoreItems,
@@ -120,7 +120,7 @@ export const CollectionResultsList = ({
                     itemData={{
                       windowHeight: height,
                       windowWidth: width,
-                      collections,
+                      collectionsMetadata,
                       onAddProjectCollection,
                       onRemoveCollectionFromProject,
                       onViewCollectionGranules,
@@ -161,7 +161,7 @@ CollectionResultsList.defaultProps = {
 }
 
 CollectionResultsList.propTypes = {
-  collections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  collectionsMetadata: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,

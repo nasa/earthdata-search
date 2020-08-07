@@ -104,7 +104,7 @@ describe('CollectionResultsList component', () => {
   describe('collection description', () => {
     test('renders a cwic collection correctly', () => {
       const { enzymeWrapper } = setup({
-        collection: {
+        collectionMetadata: {
           ...collectionListItemProps.collection,
           isCwic: true
         }
@@ -115,7 +115,7 @@ describe('CollectionResultsList component', () => {
 
     test('renders single granule correctly', () => {
       const { enzymeWrapper } = setup({
-        collection: {
+        collectionMetadata: {
           ...collectionListItemProps.collection,
           granuleCount: 1
         }
@@ -126,7 +126,7 @@ describe('CollectionResultsList component', () => {
 
     test('renders no granules correctly', () => {
       const { enzymeWrapper } = setup({
-        collection: {
+        collectionMetadata: {
           ...collectionListItemProps.collection,
           granuleCount: 0
         }
@@ -144,7 +144,7 @@ describe('CollectionResultsList component', () => {
 
       test('with no end time', () => {
         const { enzymeWrapper } = setup({
-          collection: {
+          collectionMetadata: {
             ...collectionListItemProps.collection,
             temporalRange: '2010-10-10 ongoing'
           }
@@ -155,7 +155,7 @@ describe('CollectionResultsList component', () => {
 
       test('with no start time', () => {
         const { enzymeWrapper } = setup({
-          collection: {
+          collectionMetadata: {
             ...collectionListItemProps.collection,
             temporalRange: 'Up to 2011-10-10'
           }
@@ -201,7 +201,7 @@ describe('CollectionResultsList component', () => {
       describe('renders correctly when set', () => {
         test('renders the badge correctly', () => {
           const { enzymeWrapper } = setup({
-            collection: {
+            collectionMetadata: {
               ...collectionListItemProps.collection,
               isCwic: true
             }
@@ -212,7 +212,7 @@ describe('CollectionResultsList component', () => {
 
         test('renders a tooltip correctly', () => {
           const { enzymeWrapper } = setup({
-            collection: {
+            collectionMetadata: {
               ...collectionListItemProps.collection,
               isCwic: true
             }
@@ -234,7 +234,7 @@ describe('CollectionResultsList component', () => {
       describe('renders correctly when set', () => {
         test('renders the badge correctly', () => {
           const { enzymeWrapper } = setup({
-            collection: {
+            collectionMetadata: {
               ...collectionListItemProps.collection,
               hasMapImagery: true
             }
@@ -245,7 +245,7 @@ describe('CollectionResultsList component', () => {
 
         test('renders a tooltip correctly', () => {
           const { enzymeWrapper } = setup({
-            collection: {
+            collectionMetadata: {
               ...collectionListItemProps.collection,
               hasMapImagery: true
             }
@@ -267,7 +267,7 @@ describe('CollectionResultsList component', () => {
       describe('renders correctly when set', () => {
         test('renders the badge correctly', () => {
           const { enzymeWrapper } = setup({
-            collection: {
+            collectionMetadata: {
               ...collectionListItemProps.collection,
               isNrt: true
             }
@@ -279,7 +279,7 @@ describe('CollectionResultsList component', () => {
 
       test('renders a tooltip correctly', () => {
         const { enzymeWrapper } = setup({
-          collection: {
+          collectionMetadata: {
             ...collectionListItemProps.collection,
             isNrt: true
           }
@@ -301,7 +301,7 @@ describe('CollectionResultsList component', () => {
 
       describe('spatial subsetting icon', () => {
         const { enzymeWrapper } = setup({
-          collection: {
+          collectionMetadata: {
             ...collectionListItemProps.collection,
             hasSpatialSubsetting: true
           }
@@ -324,7 +324,7 @@ describe('CollectionResultsList component', () => {
 
       describe('variables icon', () => {
         const { enzymeWrapper } = setup({
-          collection: {
+          collectionMetadata: {
             ...collectionListItemProps.collection,
             hasVariables: true
           }
@@ -347,7 +347,7 @@ describe('CollectionResultsList component', () => {
 
       describe('transforms icon', () => {
         const { enzymeWrapper } = setup({
-          collection: {
+          collectionMetadata: {
             ...collectionListItemProps.collection,
             hasTransforms: true
           }
@@ -370,7 +370,7 @@ describe('CollectionResultsList component', () => {
 
       describe('formats icon', () => {
         const { enzymeWrapper } = setup({
-          collection: {
+          collectionMetadata: {
             ...collectionListItemProps.collection,
             hasFormats: true
           }
@@ -393,7 +393,7 @@ describe('CollectionResultsList component', () => {
 
       describe('temporal subsetting icon', () => {
         const { enzymeWrapper } = setup({
-          collection: {
+          collectionMetadata: {
             ...collectionListItemProps.collection,
             hasTemporalSubsetting: true
           }
@@ -436,7 +436,7 @@ describe('CollectionResultsList component', () => {
   describe('removeFromProjectButton', () => {
     test('shows the remove button when the collection is in the project', () => {
       const { enzymeWrapper } = setup({
-        collection: {
+        collectionMetadata: {
           ...collectionListItemProps.collection,
           isCollectionInProject: true
         }
@@ -447,7 +447,7 @@ describe('CollectionResultsList component', () => {
 
     test('clicking the button removes the collection from the project', () => {
       const { enzymeWrapper, props } = setup({
-        collection: {
+        collectionMetadata: {
           ...collectionListItemProps.collection,
           isCollectionInProject: true
         }
