@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collections: collectionData,
+    collectionsMetadata: collectionData,
     isItemLoaded: jest.fn(),
     itemCount: 1,
     loadMoreItems: jest.fn(),

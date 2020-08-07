@@ -85,7 +85,6 @@ describe('GranuleResultsActionsContainer component', () => {
 
     expect(enzymeWrapper.find(GranuleResultsActions).length).toBe(1)
     expect(enzymeWrapper.find(GranuleResultsActions).props().focusedCollectionId).toEqual('focusedCollection')
-    expect(enzymeWrapper.find(GranuleResultsActions).props().granuleCount).toEqual(100)
     expect(enzymeWrapper.find(GranuleResultsActions).props().isCollectionInProject).toEqual(true)
 
     expect(typeof enzymeWrapper.find(GranuleResultsActions).props().onAddProjectCollection).toEqual('function')

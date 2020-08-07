@@ -54,7 +54,7 @@ describe('CollectionResultsHeader component', () => {
       const { enzymeWrapper } = setup({
         collections: {
           allIds: ['ID1', 'ID2'],
-          hits: '2',
+          hits: 2,
           isLoading: false,
           isLoaded: true
         }

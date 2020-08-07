@@ -13,7 +13,11 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collectionSearch: {},
+    collectionQuery: {},
+    collectionsSearch: {
+      isLoaded: true
+    },
+    collectionMetadata: {},
     location: {
       search: ''
     },
@@ -30,9 +34,14 @@ function setup(overrideProps) {
 }
 
 describe('CollectionDetails component', () => {
-  describe('when no metadata is provided', () => {
+  describe('when the metadata is loading', () => {
     test('renders correctly', () => {
-      const { enzymeWrapper } = setup()
+      const { enzymeWrapper } = setup({
+        collectionsSearch: {
+          isLoaded: false,
+          isLoading: true
+        }
+      })
       expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
     })
   })
@@ -40,7 +49,7 @@ describe('CollectionDetails component', () => {
   describe('when metadata is provided', () => {
     test('renders itself correctly with focused collection metadata', () => {
       const { enzymeWrapper } = setup({
-        focusedCollectionMetadata: {
+        collectionMetadata: {
           shortName: '1860_1993_2050_NITROGEN_830',
           title: 'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050',
           versionId: '1'

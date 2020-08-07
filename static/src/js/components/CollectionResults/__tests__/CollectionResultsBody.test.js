@@ -18,30 +18,30 @@ function setup(overrideProps) {
     browser: {
       name: 'browser name'
     },
-    collections: {
+    collectionsMetadata: {
+      collectionId: {
+        id: 'collectionId',
+        datasetId: 'test dataset id',
+        summary: 'test summary',
+        granuleCount: 42,
+        hasFormats: false,
+        hasSpatialSubsetting: false,
+        hasTemporalSubsetting: false,
+        hasTransforms: false,
+        hasVariables: false,
+        hasMapImagery: false,
+        isCwic: false,
+        isNrt: false,
+        organizations: ['test/org'],
+        shortName: 'test_short_name',
+        thumbnail: 'http://some.test.com/thumbnail/url.jpg',
+        timeEnd: '2019-01-15T00:00:00.000Z',
+        timeStart: '2019-01-14T00:00:00.000Z',
+        versionId: 2
+      }
+    },
+    collectionsSearch: {
       allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          id: 'collectionId',
-          dataset_id: 'test dataset id',
-          summary: 'test summary',
-          granule_count: 42,
-          has_formats: false,
-          has_spatial_subsetting: false,
-          has_temporal_subsetting: false,
-          has_transforms: false,
-          has_variables: false,
-          has_map_imagery: false,
-          is_cwic: false,
-          is_nrt: false,
-          organizations: ['test/org'],
-          short_name: 'test_short_name',
-          thumbnail: 'http://some.test.com/thumbnail/url.jpg',
-          time_end: '2019-01-15T00:00:00.000Z',
-          time_start: '2019-01-14T00:00:00.000Z',
-          version_id: 2
-        }
-      },
       hits: '181',
       isLoaded: true,
       isLoading: false,
@@ -53,7 +53,7 @@ function setup(overrideProps) {
     portal: {
       portalId: 'edsc'
     },
-    projectIds: [],
+    projectCollectionsIds: [],
     location: {
       pathname: '/test'
     },
@@ -89,7 +89,7 @@ describe('CollectionResultsBody component', () => {
 
     expect(resultsList.props()).toEqual(expect.objectContaining({
       browser,
-      collections: [{
+      collectionsMetadata: [{
         ...collectionResultsBodyData
       }],
       itemCount: 2,
@@ -118,7 +118,7 @@ describe('CollectionResultsBody component', () => {
     const resultsTable = enzymeWrapper.find(CollectionResultsTable)
 
     expect(resultsTable.props()).toEqual(expect.objectContaining({
-      collections: [{
+      collectionsMetadata: [{
         ...collectionResultsBodyData
       }],
       itemCount: 2,
@@ -133,7 +133,7 @@ describe('CollectionResultsBody component', () => {
 
   test('adds a dummy item when the first collections are loading', () => {
     const { enzymeWrapper, props } = setup({
-      collections: {
+      collectionsSearch: {
         allIds: [],
         byId: {},
         isLoading: true
@@ -143,7 +143,7 @@ describe('CollectionResultsBody component', () => {
     const resultsList = enzymeWrapper.find(CollectionResultsList)
 
     expect(resultsList.props()).toEqual(expect.objectContaining({
-      collections: [],
+      collectionsMetadata: [],
       itemCount: 1
     }))
 
@@ -168,30 +168,30 @@ describe('CollectionResultsBody component', () => {
 
   test('does not add a dummy item when all collections are loaded', () => {
     const { enzymeWrapper, props } = setup({
-      collections: {
+      collectionsMetadata: {
+        collectionId: {
+          id: 'collectionId',
+          datasetId: 'test dataset id',
+          summary: 'test summary',
+          granuleCount: 42,
+          hasFormats: false,
+          hasSpatialSubsetting: false,
+          hasTemporalSubsetting: false,
+          hasTransforms: false,
+          hasVariables: false,
+          hasMapImagery: false,
+          isCwic: false,
+          isNrt: false,
+          organizations: ['test/org'],
+          shortName: 'test_short_name',
+          thumbnail: 'http://some.test.com/thumbnail/url.jpg',
+          timeEnd: '2019-01-15T00:00:00.000Z',
+          timeStart: '2019-01-14T00:00:00.000Z',
+          versionId: 2
+        }
+      },
+      collectionsSearch: {
         allIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            id: 'collectionId',
-            dataset_id: 'test dataset id',
-            summary: 'test summary',
-            granule_count: 42,
-            has_formats: false,
-            has_spatial_subsetting: false,
-            has_temporal_subsetting: false,
-            has_transforms: false,
-            has_variables: false,
-            has_map_imagery: false,
-            is_cwic: false,
-            is_nrt: false,
-            organizations: ['test/org'],
-            short_name: 'test_short_name',
-            thumbnail: 'http://some.test.com/thumbnail/url.jpg',
-            time_end: '2019-01-15T00:00:00.000Z',
-            time_start: '2019-01-14T00:00:00.000Z',
-            version_id: 2
-          }
-        },
         hits: '1',
         isLoaded: true,
         isLoading: false,
@@ -215,30 +215,30 @@ describe('CollectionResultsBody component', () => {
     describe('when there is no next page', () => {
       test('returns true', () => {
         const { enzymeWrapper } = setup({
-          collections: {
+          collectionsMetadata: {
+            collectionId: {
+              id: 'collectionId',
+              datasetId: 'test dataset id',
+              summary: 'test summary',
+              granuleCount: 42,
+              hasFormats: false,
+              hasSpatialSubsetting: false,
+              hasTemporalSubsetting: false,
+              hasTransforms: false,
+              hasVariables: false,
+              hasMapImagery: false,
+              isCwic: false,
+              isNrt: false,
+              organizations: ['test/org'],
+              shortName: 'test_short_name',
+              thumbnail: 'http://some.test.com/thumbnail/url.jpg',
+              timeEnd: '2019-01-15T00:00:00.000Z',
+              timeStart: '2019-01-14T00:00:00.000Z',
+              versionId: 2
+            }
+          },
+          collectionsSearch: {
             allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                id: 'collectionId',
-                dataset_id: 'test dataset id',
-                summary: 'test summary',
-                granule_count: 42,
-                has_formats: false,
-                has_spatial_subsetting: false,
-                has_temporal_subsetting: false,
-                has_transforms: false,
-                has_variables: false,
-                has_map_imagery: false,
-                is_cwic: false,
-                is_nrt: false,
-                organizations: ['test/org'],
-                short_name: 'test_short_name',
-                thumbnail: 'http://some.test.com/thumbnail/url.jpg',
-                time_end: '2019-01-15T00:00:00.000Z',
-                time_start: '2019-01-14T00:00:00.000Z',
-                version_id: 2
-              }
-            },
             hits: '1',
             isLoaded: true,
             isLoading: false,
@@ -256,30 +256,30 @@ describe('CollectionResultsBody component', () => {
     describe('when there is a next page and the item is loaded', () => {
       test('returns false', () => {
         const { enzymeWrapper } = setup({
-          collections: {
+          collectionsMetadata: {
+            collectionId: {
+              id: 'collectionId',
+              datasetId: 'test dataset id',
+              summary: 'test summary',
+              granuleCount: 42,
+              hasFormats: false,
+              hasSpatialSubsetting: false,
+              hasTemporalSubsetting: false,
+              hasTransforms: false,
+              hasVariables: false,
+              hasMapImagery: false,
+              isCwic: false,
+              isNrt: false,
+              organizations: ['test/org'],
+              shortName: 'test_short_name',
+              thumbnail: 'http://some.test.com/thumbnail/url.jpg',
+              timeEnd: '2019-01-15T00:00:00.000Z',
+              timeStart: '2019-01-14T00:00:00.000Z',
+              versionId: 2
+            }
+          },
+          collectionsSearch: {
             allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                id: 'collectionId',
-                dataset_id: 'test dataset id',
-                summary: 'test summary',
-                granule_count: 42,
-                has_formats: false,
-                has_spatial_subsetting: false,
-                has_temporal_subsetting: false,
-                has_transforms: false,
-                has_variables: false,
-                has_map_imagery: false,
-                is_cwic: false,
-                is_nrt: false,
-                organizations: ['test/org'],
-                short_name: 'test_short_name',
-                thumbnail: 'http://some.test.com/thumbnail/url.jpg',
-                time_end: '2019-01-15T00:00:00.000Z',
-                time_start: '2019-01-14T00:00:00.000Z',
-                version_id: 2
-              }
-            },
             hits: '2',
             isLoaded: true,
             isLoading: false,

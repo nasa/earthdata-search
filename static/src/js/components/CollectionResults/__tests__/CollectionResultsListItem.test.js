@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 const defaultProps = {
   data: {
-    collections: [{
+    collectionsMetadata: [{
       collectionId: 'collectionId1',
       datasetId: 'Test Collection',
       description: 'This is a short summary.',
@@ -110,7 +110,7 @@ describe('CollectionResultsList component', () => {
       const { enzymeWrapper } = setup(shallow, {
         data: {
           ...defaultProps.data,
-          collections: [],
+          collectionsMetadata: [],
           isItemLoaded: jest.fn(() => false)
         },
         index: 1

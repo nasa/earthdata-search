@@ -29,7 +29,7 @@ afterEach(() => {
 })
 
 const defaultProps = {
-  collections: [{
+  collectionsMetadata: [{
     datasetId: 'Collection Title 1',
     collectionId: 'collectionId1'
   }, {
@@ -87,7 +87,7 @@ describe('CollectionResultsList component', () => {
         .mockReturnValueOnce(false)
 
       const { enzymeWrapper } = setup({
-        collections: [],
+        collectionsMetadata: [],
         itemCount: 1
       })
 

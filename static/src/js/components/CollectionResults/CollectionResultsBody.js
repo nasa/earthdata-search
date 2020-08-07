@@ -76,7 +76,7 @@ const CollectionResultsBody = ({
         <CollectionResultsList
           visibleMiddleIndex={visibleMiddleIndex}
           browser={browser}
-          collections={collectionList}
+          collectionsMetadata={collectionList}
           onAddProjectCollection={onAddProjectCollection}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onViewCollectionGranules={onViewCollectionGranules}

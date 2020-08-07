@@ -9,25 +9,20 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collectionMetdata: {
-      byId: {
-        'C100005-EDSC': {
-          metadata: {
-            title: 'collection title'
-          }
+    isOpen: false,
+    location: {},
+    projectCollectionsMetadata: {
+      'C100005-EDSC': {
+        title: 'collection title'
+      }
+    },
+    projectCollectionsRequiringChunking: {
+      'C100005-EDSC': {
+        granules: {
+          hits: 9001
         }
       }
     },
-    location: {},
-    project: {
-      byId: {
-        'C100005-EDSC': {
-          orderCount: 4
-        }
-      },
-      collectionsRequiringChunking: ['C100005-EDSC']
-    },
-    isOpen: false,
     onSubmitRetrieval: jest.fn(),
     onToggleChunkedOrderModal: jest.fn()
   }
