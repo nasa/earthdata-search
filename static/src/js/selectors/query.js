@@ -2,19 +2,20 @@ import { createSelector } from 'reselect'
 
 import { getFocusedCollectionId } from './focusedCollection'
 
-export const getCollectionsQuery = state => state.query.collection
+/**
+ * Retrieve current collection query information from Redux
+ * @param {Object} state Current state of Redux
+ */
+export const getCollectionsQuery = (state) => {
+  const { query = {} } = state
+  const { collections = {} } = query
 
-export const getCollectionGranuleQuery = collectionId => createSelector(
-  getCollectionsQuery,
-  (collectionsQuery) => {
-    const { byId: collectionsQueryById = {} } = collectionsQuery
-    const { [collectionId]: collectionQuery = {} } = collectionsQueryById
-    const { granules: collectionGranuleQuery = {} } = collectionQuery
+  return collections
+}
 
-    return collectionGranuleQuery
-  }
-)
-
+/**
+ * Retrieve query information from Redux pertaining to the focused collection id
+ */
 export const getFocusedCollectionGranuleQuery = createSelector(
   [getFocusedCollectionId, getCollectionsQuery],
   (focusedCollectionId, collectionsQuery) => {

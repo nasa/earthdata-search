@@ -79,7 +79,7 @@ describe('toggleCollectionVisibility', () => {
 describe('restoreProject', () => {
   test('should create an action to restore project collections', () => {
     const payload = {
-      collectionIds: ['collectionId1', 'collectionId2']
+      allIds: ['collectionId1', 'collectionId2']
     }
     const expectedAction = {
       type: RESTORE_PROJECT,
@@ -138,26 +138,18 @@ describe('selectAccessMethod', () => {
     const store = mockStore({
       metadata: {
         collections: {
-          byId: {
-            collectionId: {
-              granules: {
-                hits: 1,
-                byId: {
-                  'GRAN-1': {}
-                },
-                allIds: ['GRAN-1']
-              }
-            }
-          }
+          'GRAN-1': {}
         }
       },
       project: {
-        byId: {
-          collectionId: {
-            orderCount: 1
-          }
-        },
-        collectionIds: ['collectionId']
+        collections: {
+          byId: {
+            collectionId: {
+              orderCount: 1
+            }
+          },
+          allIds: ['collectionId']
+        }
       }
     })
 
@@ -201,32 +193,24 @@ describe('selectAccessMethod', () => {
     // mockStore with initialState
     const store = mockStore({
       metadata: {
-        collections: {
-          byId: {
-            collectionId: {
-              granules: {
-                hits: 1,
-                byId: {
-                  'GRAN-1': {}
-                },
-                allIds: ['GRAN-1']
-              }
-            }
-          }
+        granules: {
+          'GRAN-1': {}
         }
       },
       project: {
-        byId: {
-          collectionId: {
-            accessMethods: {
-              download: {
-                type: 'download'
-              }
-            },
-            selectAccessMethod: 'mock'
-          }
-        },
-        collectionIds: ['collectionId']
+        collections: {
+          byId: {
+            collectionId: {
+              accessMethods: {
+                download: {
+                  type: 'download'
+                }
+              },
+              selectAccessMethod: 'mock'
+            }
+          },
+          allIds: ['collectionId']
+        }
       }
     })
 
@@ -304,14 +288,13 @@ describe('getProjectCollections', () => {
     const store = mockStore({
       authToken: 'token',
       metadata: {
-        collections: {
-          allIds: [],
-          byId: {}
-        }
+        collections: {}
       },
       focusedCollection: '',
       project: {
-        collectionIds: ['collectionId1', 'collectionId2']
+        collections: {
+          allIds: ['collectionId1', 'collectionId2']
+        }
       },
       providers: [
         {
@@ -366,15 +349,14 @@ describe('getProjectCollections', () => {
     const store = mockStore({
       authToken: 'token',
       metadata: {
+        collections: {}
+      },
+      focusedCollection: '',
+      project: {
         collections: {
           allIds: [],
           byId: {}
         }
-      },
-      focusedCollection: '',
-      project: {
-        collectionIds: [],
-        byId: {}
       },
       query: {
         collection: {}
@@ -397,7 +379,7 @@ describe('getProjectCollections', () => {
 
     const fetchAccessMethods = jest.spyOn(actions, 'fetchAccessMethods')
       .mockImplementationOnce(() => jest.fn())
-    const getGranules = jest.spyOn(actions, 'getGranules')
+    const getProjectGranules = jest.spyOn(actions, 'getProjectGranules')
       .mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
@@ -441,7 +423,7 @@ describe('getProjectCollections', () => {
 
     expect(fetchAccessMethods).toBeCalledTimes(0)
 
-    expect(getGranules).toBeCalledTimes(0)
+    expect(getProjectGranules).toBeCalledTimes(0)
   })
 })
 
@@ -453,7 +435,7 @@ describe('addProjectCollection', () => {
       .mockImplementationOnce(() => jest.fn())
     const fetchAccessMethods = jest.spyOn(actions, 'fetchAccessMethods')
       .mockImplementationOnce(() => jest.fn())
-    const getGranules = jest.spyOn(actions, 'getGranules')
+    const getProjectGranules = jest.spyOn(actions, 'getProjectGranules')
       .mockImplementationOnce(() => jest.fn())
 
 
@@ -473,12 +455,10 @@ describe('addProjectCollection', () => {
     })
 
     expect(getProjectCollectionsMock).toBeCalledTimes(1)
-    expect(getProjectCollectionsMock).toBeCalledWith([collectionId])
 
     expect(fetchAccessMethods).toBeCalledTimes(1)
     expect(fetchAccessMethods).toBeCalledWith([collectionId])
 
-    expect(getGranules).toBeCalledTimes(1)
-    expect(getGranules).toBeCalledWith([collectionId])
+    expect(getProjectGranules).toBeCalledTimes(1)
   })
 })
