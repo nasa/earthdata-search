@@ -73,8 +73,7 @@ export const GranuleResultsHighlights = ({
               granules.map((granule, i) => {
                 const {
                   id,
-                  producerGranuleId: granuleId,
-                  title: granuleTitle,
+                  title,
                   formattedTemporal
                 } = granule
 
@@ -82,8 +81,6 @@ export const GranuleResultsHighlights = ({
                   timeStart,
                   timeEnd
                 ] = formattedTemporal
-
-                const title = granuleId || granuleTitle
 
                 const key = `${id}_${i}`
 

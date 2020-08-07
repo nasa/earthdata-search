@@ -219,7 +219,7 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     onlineOnly,
     orbitNumber,
     overrideTemporal,
-    pageNum,
+    pageNum = 1,
     point,
     polygon,
     readableGranuleName,
