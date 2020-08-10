@@ -13,63 +13,66 @@ beforeEach(() => {
 
 const opendapProps = {
   project: {
-    byId: {
-      collectionId: {
-        accessMethods: {
-          opendap: {
-            variables: {
-              variableId1: {
-                meta: {},
-                umm: {},
-                associations: {}
-              },
-              variableId2: {
-                meta: {},
-                umm: {},
-                associations: {}
-              }
-            },
-            selectedVariables: []
-          }
-        },
-        selectedAccessMethod: 'opendap'
-      }
-    },
-    collectionIds: ['collectionId']
-  }
-}
-
-function setup(overrideProps) {
-  const props = {
     collections: {
       allIds: ['collectionId'],
       byId: {
         collectionId: {
           granules: {},
-          metadata: {
-            dataset_id: 'test dataset id'
-          }
+          accessMethods: {
+            opendap: {
+              variables: {
+                variableId1: {
+                  meta: {},
+                  umm: {},
+                  associations: {}
+                },
+                variableId2: {
+                  meta: {},
+                  umm: {},
+                  associations: {}
+                }
+              },
+              selectedVariables: []
+            }
+          },
+          selectedAccessMethod: 'opendap'
+        }
+      }
+    }
+  }
+}
+
+function setup(overrideProps) {
+  const props = {
+    projectCollectionsMetadata: {
+      byId: {
+        collectionId: {
+          dataset_id: 'test dataset id'
         }
       }
     },
     dataQualitySummaries: {},
-    focusedCollection: '',
-    focusedGranule: '',
+    focusedCollectionId: '',
+    focusedGranuleId: '',
+    granulesMetadata: {},
     granuleQuery: {},
     portal: {},
     project: {
-      byId: {
-        collectionId: {
-          accessMethods: {
-            download: {
-              isValid: true,
-              type: 'download'
-            }
-          },
-          selectedAccessMethod: 'download'
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {},
+            accessMethods: {
+              download: {
+                isValid: true,
+                type: 'download'
+              }
+            },
+            selectedAccessMethod: 'download'
+          }
         }
-      },
-      collectionIds: ['collectionId']
+      }
     },
     location: {
       search: ''
@@ -91,6 +94,7 @@ function setup(overrideProps) {
     onAddGranuleToProjectCollection: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
+    onChangeProjectGranulePageNum: jest.fn(),
     ...overrideProps
   }
 
@@ -109,16 +113,19 @@ describe('ProjectPanels component', () => {
 
       enzymeWrapper.setProps({
         project: {
-          byId: {
-            collectionId: {
-              accessMethods: {
-                opendap: {
-                  selectedVariables: ['variableId1']
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {},
+                accessMethods: {
+                  opendap: {
+                    selectedVariables: ['variableId1']
+                  }
                 }
               }
             }
-          },
-          collectionIds: ['collectionId']
+          }
         }
       })
 
@@ -500,18 +507,21 @@ describe('ProjectPanels component', () => {
   test('resetForm calls onUpdateAccessMethod', () => {
     const { enzymeWrapper, props } = setup({
       project: {
-        byId: {
-          collectionId: {
-            accessMethods: {
-              esi0: {
-                model: 'mock model',
-                rawModel: 'mock rawModel'
-              }
-            },
-            selectedAccessMethod: 'esi0'
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {},
+              accessMethods: {
+                esi0: {
+                  model: 'mock model',
+                  rawModel: 'mock rawModel'
+                }
+              },
+              selectedAccessMethod: 'esi0'
+            }
           }
-        },
-        collectionIds: ['collectionId']
+        }
       }
     })
 
