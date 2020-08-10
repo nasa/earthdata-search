@@ -11,10 +11,12 @@ import {
   onFacetsLoaded,
   onFacetsLoading,
   updateCollectionResults,
-  updateFacets,
-  updateCollectionGranuleFilters
+  updateFacets
 } from '../collections'
+
 import {
+  ADD_COLLECTION_SEARCH_METADATA,
+  ADD_MORE_COLLECTION_RESULTS,
   ERRORED_COLLECTIONS,
   ERRORED_FACETS,
   FINISHED_COLLECTIONS_TIMER,
@@ -23,11 +25,9 @@ import {
   LOADING_COLLECTIONS,
   LOADING_FACETS,
   STARTED_COLLECTIONS_TIMER,
-  UPDATE_COLLECTION_RESULTS,
-  UPDATE_FACETS,
   UPDATE_AUTH,
-  ADD_MORE_COLLECTION_RESULTS,
-  UPDATE_COLLECTION_GRANULE_FILTERS
+  UPDATE_COLLECTION_RESULTS,
+  UPDATE_FACETS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -116,101 +116,6 @@ describe('onFacetsErrored', () => {
   })
 })
 
-describe('updateCollectionGranuleFilters', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  test('should create an action to update the search query', async () => {
-    const store = mockStore({
-      metadata: {
-        collections: {
-          byId: {
-            collectionId: {
-              granuleFilters: {
-                sortKey: '-start_date'
-              }
-            }
-          }
-        }
-      }
-    })
-
-    store.dispatch(updateCollectionGranuleFilters('collectionId', { cloudCover: true }))
-
-    const storeActions = store.getActions()
-
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_COLLECTION_GRANULE_FILTERS,
-      payload: {
-        granuleFilters: {
-          cloudCover: true,
-          sortKey: '-start_date'
-        },
-        id: 'collectionId'
-      }
-    })
-  })
-
-  test('should add truthy values to the action payload', async () => {
-    const store = mockStore({})
-
-    store.dispatch(updateCollectionGranuleFilters('collectionId', {
-      cloudCover: true,
-      dayNightFlag: '',
-      onlineOnly: false,
-      temporal: {}
-    }))
-
-    const storeActions = store.getActions()
-
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_COLLECTION_GRANULE_FILTERS,
-      payload: {
-        granuleFilters: {
-          cloudCover: true
-        },
-        id: 'collectionId'
-      }
-    })
-  })
-
-  test('should allow only objects with truthy properties', async () => {
-    const store = mockStore({})
-
-    store.dispatch(updateCollectionGranuleFilters('collectionId', {
-      temporal: {},
-      cloudCover: {
-        max: 0,
-        min: 1
-      },
-      equatorCrossingLongitude: {
-        min: -45,
-        max: 45
-      }
-    }))
-
-    const storeActions = store.getActions()
-
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_COLLECTION_GRANULE_FILTERS,
-      payload: {
-        granuleFilters: {
-          cloudCover: {
-            max: 0,
-            min: 1
-          },
-          equatorCrossingLongitude: {
-            min: -45,
-            max: 45
-          }
-        },
-        id: 'collectionId'
-      }
-    })
-  })
-})
-
 describe('getCollections', () => {
   test('calls the API to get collections', async () => {
     nock(/cmr/)
@@ -268,14 +173,12 @@ describe('getCollections', () => {
       expect(storeActions[3]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
       expect(storeActions[4]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
       expect(storeActions[5]).toEqual({
-        type: LOADED_COLLECTIONS,
-        payload: { loaded: true }
+        type: ADD_COLLECTION_SEARCH_METADATA,
+        payload: [{
+          mockCollectionData: 'goes here'
+        }]
       })
       expect(storeActions[6]).toEqual({
-        type: LOADED_FACETS,
-        payload: { loaded: true }
-      })
-      expect(storeActions[7]).toEqual({
         type: UPDATE_COLLECTION_RESULTS,
         payload: {
           keyword: 'search keyword',
@@ -283,8 +186,16 @@ describe('getCollections', () => {
             mockCollectionData: 'goes here'
           }],
           facets: [],
-          hits: '1'
+          hits: 1
         }
+      })
+      expect(storeActions[7]).toEqual({
+        type: LOADED_COLLECTIONS,
+        payload: { loaded: true }
+      })
+      expect(storeActions[8]).toEqual({
+        type: LOADED_FACETS,
+        payload: { loaded: true }
       })
     })
   })
@@ -343,14 +254,12 @@ describe('getCollections', () => {
         payload: 'token'
       })
       expect(storeActions[5]).toEqual({
-        type: LOADED_COLLECTIONS,
-        payload: { loaded: true }
+        type: ADD_COLLECTION_SEARCH_METADATA,
+        payload: [{
+          mockCollectionData: 'goes here'
+        }]
       })
       expect(storeActions[6]).toEqual({
-        type: LOADED_FACETS,
-        payload: { loaded: true }
-      })
-      expect(storeActions[7]).toEqual({
         type: ADD_MORE_COLLECTION_RESULTS,
         payload: {
           keyword: 'search keyword',
@@ -358,8 +267,16 @@ describe('getCollections', () => {
             mockCollectionData: 'goes here'
           }],
           facets: [],
-          hits: '1'
+          hits: 1
         }
+      })
+      expect(storeActions[7]).toEqual({
+        type: LOADED_COLLECTIONS,
+        payload: { loaded: true }
+      })
+      expect(storeActions[8]).toEqual({
+        type: LOADED_FACETS,
+        payload: { loaded: true }
       })
     })
   })

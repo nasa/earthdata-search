@@ -15,8 +15,6 @@ import CwicGranuleRequest from '../util/request/cwicGranuleRequest'
 import {
   ADD_GRANULE_METADATA,
   ADD_MORE_GRANULE_RESULTS,
-  CLEAR_EXCLUDE_GRANULE_ID,
-  CLEAR_REMOVED_GRANULE_ID,
   ERRORED_GRANULES,
   EXCLUDE_GRANULE_ID,
   FINISHED_GRANULES_TIMER,
@@ -51,7 +49,7 @@ import {
   getCollectionsMetadata,
   getFocusedCollectionMetadata
 } from '../selectors/collectionMetadata'
-import { updateGranuleSearchQuery } from './search'
+
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 
 export const addMoreGranuleResults = payload => ({
@@ -111,14 +109,6 @@ export const onExcludeGranule = payload => ({
 export const onUndoExcludeGranule = payload => ({
   type: UNDO_EXCLUDE_GRANULE_ID,
   payload
-})
-
-export const onClearExcludedGranules = () => ({
-  type: CLEAR_EXCLUDE_GRANULE_ID
-})
-
-export const onClearRemovedGranules = () => ({
-  type: CLEAR_REMOVED_GRANULE_ID
 })
 
 export const updateGranuleLinks = payload => ({
@@ -298,35 +288,27 @@ export const undoExcludeGranule = collectionId => (dispatch) => {
   dispatch(onUndoExcludeGranule(collectionId))
 }
 
-export const clearExcludedGranules = () => (dispatch) => {
-  dispatch(onClearExcludedGranules())
-}
-
-export const clearRemovedGranules = () => (dispatch) => {
-  dispatch(onClearRemovedGranules())
-}
-
 // Cancel token to cancel pending search requests
 const granuleSearchCancelTokens = {}
 
 /**
  * Perform a granules request based on the focused collection.
  */
-export const searchGranules = () => (dispatch, getState) => {
+export const getSearchGranules = () => (dispatch, getState) => {
   const state = getState()
 
   const {
     authToken
   } = state
 
+  // Retrieve data from Redux using selectors
   const collectionId = getFocusedCollectionId(state)
+  const collectionMetadata = getFocusedCollectionMetadata(state)
 
   // Extract granule search parameters from redux specific to the focused collection
   const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
 
-  // Fetch the collection metadata from redux for the focused collection
-  const collectionMetadata = getFocusedCollectionMetadata(state)
-
+  // Format and structure data from Redux to be sent to CMR
   const granuleParams = prepareGranuleParams(collectionMetadata, extractedGranuleParams)
 
   // If cancel token is set, cancel the previous request(s)
@@ -336,7 +318,7 @@ export const searchGranules = () => (dispatch, getState) => {
   }
 
   const {
-    isCwicCollection,
+    isCwic,
     pageNum
   } = granuleParams
 
@@ -350,7 +332,7 @@ export const searchGranules = () => (dispatch, getState) => {
 
   let requestObject = null
 
-  if (isCwicCollection) {
+  if (isCwic) {
     requestObject = new CwicGranuleRequest(authToken)
 
     const { polygon } = searchParams
@@ -380,7 +362,7 @@ export const searchGranules = () => (dispatch, getState) => {
     .then((response) => {
       const payload = populateGranuleResults({
         collectionId,
-        isCwic: isCwicCollection,
+        isCwic,
         response
       })
 
@@ -414,7 +396,7 @@ export const searchGranules = () => (dispatch, getState) => {
 
       dispatch(actions.handleError({
         error,
-        action: 'searchGranules',
+        action: 'getSearchGranules',
         resource: 'granules',
         requestObject
       }))
@@ -440,6 +422,8 @@ export const getProjectGranules = () => (dispatch, getState) => {
   // Get a redux selector to fetch collection metadata from the store
   const collectionsMetadata = getCollectionsMetadata(state)
 
+  if (Object.keys(collectionsMetadata).length === 0) return null
+
   const { collections } = project
   const { allIds } = collections
 
@@ -450,6 +434,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
     // Fetch the collection metadata from redux for this project collection
     const collectionMetadata = getCollectionMetadata(collectionId, collectionsMetadata)
 
+    // Format and structure data from Redux to be sent to CMR
     const granuleParams = prepareGranuleParams(collectionMetadata, extractedGranuleParams)
 
     // If cancel token is set, cancel the previous request(s)
@@ -459,7 +444,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
     }
 
     const {
-      isCwicCollection,
+      isCwic,
       pageNum
     } = granuleParams
 
@@ -473,7 +458,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
     let requestObject = null
 
-    if (isCwicCollection) {
+    if (isCwic) {
       requestObject = new CwicGranuleRequest(authToken)
 
       const { polygon } = searchParams
@@ -505,7 +490,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
       .then((response) => {
         const payload = populateGranuleResults({
           collectionId,
-          isCwic: isCwicCollection,
+          isCwic,
           response
         })
 
@@ -559,7 +544,7 @@ export const applyGranuleFilters = (
   // Apply granule filters, ensuring to reset the page number to 1 as this results in a new search
   dispatch(actions.updateFocusedCollectionGranuleFilters({ pageNum: 1, ...granuleFilters }))
 
-  dispatch(searchGranules()).then(() => {
+  dispatch(getSearchGranules()).then(() => {
     if (closePanel) dispatch(actions.toggleSecondaryOverlayPanel(false))
   })
 }
@@ -571,16 +556,16 @@ export const applyGranuleFilters = (
 export const excludeGranule = data => (dispatch) => {
   const { collectionId, granuleId } = data
 
-  dispatch(onExcludeGranule({
+  dispatch(actions.onExcludeGranule({
     collectionId,
     granuleId
   }))
 
   // Reset the page number to 1 to update the UI
-  dispatch(updateGranuleSearchQuery({
+  dispatch(actions.updateGranuleSearchQuery({
     collectionId,
     pageNum: 1
   }))
 
-  dispatch(searchGranules())
+  dispatch(actions.getSearchGranules())
 }

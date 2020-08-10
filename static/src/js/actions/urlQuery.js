@@ -9,8 +9,8 @@ import {
   isSavedProjectsPage,
   urlPathsWithoutUrlParams
 } from '../util/url/url'
+
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
-import { parseError } from '../../../../sharedUtils/parseError'
 
 import ProjectRequest from '../util/request/projectRequest'
 
@@ -64,21 +64,21 @@ export const updateStore = ({
     // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
     // other cases, getGranules will be requested using the granule search query params.
     if ((pathname.includes('/search') && !newPathname) || (newPathname && newPathname.includes('/search'))) {
-      await dispatch(actions.getCollections())
+      dispatch(actions.getCollections())
 
       // Granules Search
       if (pathname === '/search/granules') {
-        await dispatch(actions.getFocusedCollection())
+        dispatch(actions.getFocusedCollection())
       }
 
       // Collection Details
       if (pathname === '/search/granules/collection-details') {
-        await dispatch(actions.getFocusedCollection())
+        dispatch(actions.getFocusedCollection())
       }
 
       // Granule Details
       if (pathname === '/search/granules/granule-details') {
-        await dispatch(actions.getFocusedCollection())
+        dispatch(actions.getFocusedCollection())
 
         dispatch(actions.getFocusedGranule())
       }
@@ -89,14 +89,12 @@ export const updateStore = ({
     const { allIds = [] } = projectCollections
 
     if (allIds.length > 0) {
-      try {
-        await dispatch(actions.getProjectCollections())
+      // Project collection metadata needs to exist before calling retrieving access methods
+      await dispatch(actions.getProjectCollections())
 
-        dispatch(actions.fetchAccessMethods(allIds))
-        dispatch(actions.getProjectGranules())
-      } catch (e) {
-        parseError(e)
-      }
+      dispatch(actions.fetchAccessMethods(allIds))
+
+      dispatch(actions.getProjectGranules())
     }
 
     dispatch(actions.getTimeline())

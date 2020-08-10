@@ -192,7 +192,7 @@ describe('CollectionResultsBody component', () => {
       },
       collectionsSearch: {
         allIds: ['collectionId'],
-        hits: '1',
+        hits: 1,
         isLoaded: true,
         isLoading: false,
         loadTime: 1150,
@@ -239,7 +239,7 @@ describe('CollectionResultsBody component', () => {
           },
           collectionsSearch: {
             allIds: ['collectionId'],
-            hits: '1',
+            hits: 1,
             isLoaded: true,
             isLoading: false,
             loadTime: 1150,

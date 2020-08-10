@@ -65,7 +65,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   // If we already have the metadata for the focusedCollection, don't fetch it again
   if (hasAllMetadata) {
     // Ensure the granules have been retrieved
-    dispatch(actions.searchGranules())
+    dispatch(actions.getSearchGranules())
 
     return null
   }
@@ -185,7 +185,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         dispatch(actions.updateCollectionMetadata(payload))
 
         // Query CMR for granules belonging to the focused collection
-        dispatch(actions.searchGranules())
+        dispatch(actions.getSearchGranules())
       } else {
         // If no data was returned, clear the focused collection and redirect the user back to the search page
         dispatch(actions.updateFocusedCollection(''))

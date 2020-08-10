@@ -25,14 +25,15 @@ import {
 import {
   applyGranuleFilters,
   excludeGranule,
+  fetchRetrievalCollectionGranuleLinks,
   getProjectGranules,
+  getSearchGranules,
   initializeCollectionGranulesQuery,
   initializeCollectionGranulesResults,
-  searchGranules,
+  onExcludeGranule,
   undoExcludeGranule,
-  fetchRetrievalCollectionGranuleLinks,
-  updateGranuleResults,
-  updateGranuleMetadata
+  updateGranuleMetadata,
+  updateGranuleResults
 } from './granules'
 import {
   logout,
@@ -53,6 +54,7 @@ import {
   removeGridFilter,
   removeSpatialFilter,
   removeTemporalFilter,
+  updateGranuleSearchQuery,
   updateRegionQuery
 } from './search'
 import { changeMap } from './map'
@@ -211,6 +213,7 @@ const actions = {
   getProjectCollections,
   getProjectGranules,
   getRegions,
+  getSearchGranules,
   getTimeline,
   getViewAllFacets,
   handleError,
@@ -218,6 +221,7 @@ const actions = {
   initializeCollectionGranulesResults,
   loadPortalConfig,
   logout,
+  onExcludeGranule,
   removeAutocompleteValue,
   removeCmrFacet,
   removeCollectionFromProject,
@@ -228,7 +232,6 @@ const actions = {
   removeTemporalFilter,
   restoreProject,
   saveShapefile,
-  searchGranules,
   selectAccessMethod,
   selectAutocompleteSuggestion,
   setActivePanel,
@@ -272,6 +275,7 @@ const actions = {
   updateFocusedGranule,
   updateGranuleMetadata,
   updateGranuleResults,
+  updateGranuleSearchQuery,
   updateNotificationLevel,
   updatePreferences,
   updateProjectGranuleParams,

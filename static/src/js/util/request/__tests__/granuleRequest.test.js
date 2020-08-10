@@ -106,7 +106,7 @@ describe('GranuleRequest#transformResponse', () => {
             time_start: '2000-01-01T00:00:00.000Z',
             thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId?h=85&w=85',
             formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
-            is_cwic: false
+            isCwic: false
           }
         ]
       }
@@ -146,7 +146,7 @@ describe('GranuleRequest#transformResponse', () => {
               time_start: '2000-01-01T00:00:00.000Z',
               thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId?h=85&w=85',
               formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
-              is_cwic: false
+              isCwic: false
             }
           ]
         }
@@ -191,7 +191,7 @@ describe('GranuleRequest#transformResponse', () => {
               time_start: '2000-01-01T00:00:00.000Z',
               thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId?h=85&w=85',
               formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
-              is_cwic: false,
+              isCwic: false,
               links: [
                 {
                   rel: '#browse',
@@ -250,7 +250,7 @@ describe('GranuleRequest#transformResponse', () => {
               time_start: '2000-01-01T00:00:00.000Z',
               thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId?h=85&w=85',
               formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
-              is_cwic: false,
+              isCwic: false,
               links: [
                 {
                   rel: '#data',

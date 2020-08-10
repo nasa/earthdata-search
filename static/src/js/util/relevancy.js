@@ -7,14 +7,14 @@ export const exactMatch = (metadata, keyword) => {
   if (!keyword) return false
 
   const {
-    dataset_id: datasetId = '',
     id = '',
     short_name: shortName = '',
+    title = '',
     version_id: versionId = ''
   } = metadata
 
   switch (keyword.toLowerCase()) {
-    case datasetId.toLowerCase():
+    case title.toLowerCase():
       return true
     case id.toLowerCase():
       return true

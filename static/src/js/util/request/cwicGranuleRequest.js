@@ -69,18 +69,31 @@ export default class CwicGranuleRequest extends Request {
       granuleResults.map((granule) => {
         const updatedGranule = granule
 
-        updatedGranule.is_cwic = true
+        updatedGranule.isCwic = true
 
-        const [timeStart, timeEnd] = granule['dc:date'].split('/')
-        updatedGranule.time_start = timeStart
-        updatedGranule.time_end = timeEnd
+        const {
+          'dc:date': temporal,
+          'georss:box': boundingBox
+        } = granule
 
-        updatedGranule.formatted_temporal = getTemporal(timeStart, timeEnd)
+        if (temporal) {
+          const [timeStart, timeEnd] = granule['dc:date'].split('/')
+          updatedGranule.time_start = timeStart
+          updatedGranule.time_end = timeEnd
 
-        // Both keys are the same format
-        updatedGranule.boxes = [
-          granule['georss:box']
-        ]
+          const formattedTemporal = getTemporal(updatedGranule.time_start, updatedGranule.time_end)
+
+          if (formattedTemporal.filter(Boolean).length > 0) {
+            updatedGranule.formatted_temporal = formattedTemporal
+          }
+        }
+
+        if (boundingBox) {
+          // Both keys are the same format
+          updatedGranule.boxes = [
+            granule['georss:box']
+          ]
+        }
 
         // Default `browse_flag` to false
         updatedGranule.browse_flag = false
@@ -89,7 +102,7 @@ export default class CwicGranuleRequest extends Request {
 
         let browseUrl
 
-        granuleLinks.forEach((link) => {
+        granuleLinks.filter(Boolean).forEach((link) => {
           if (link.rel === 'icon') {
             updatedGranule.thumbnail = link.href
 

@@ -228,8 +228,8 @@ describe('getFocusedGranule', () => {
     }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
-    const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
-    searchGranulesMock.mockImplementationOnce(() => jest.fn())
+    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+    getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
     nock(/graph/)
       .post(/api/)

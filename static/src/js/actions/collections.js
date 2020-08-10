@@ -144,25 +144,28 @@ export const getCollections = () => (dispatch, getState) => {
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
     .then((response) => {
-      const payload = {}
-
       const { data, headers } = response
 
-      const cmrHits = parseInt(response.headers['cmr-hits'], 10)
+      const cmrHits = parseInt(headers['cmr-hits'], 10)
 
       const { feed = {} } = data
-      const { facets = {} } = feed
+      const {
+        entry = [],
+        facets = {}
+      } = feed
       const { children = [] } = facets
 
-      payload.facets = children
-      payload.hits = cmrHits
-      payload.keyword = keyword
-
-      const { entry = [] } = feed
-      payload.results = entry
+      const payload = {
+        facets: children,
+        hits: cmrHits,
+        keyword,
+        results: entry
+      }
 
       dispatch(finishCollectionsTimer())
+
       dispatch(updateAuthTokenFromHeaders(headers))
+
       dispatch(addCollectionSearchMetadata(entry))
 
       if (pageNum === 1) {

@@ -24,19 +24,6 @@ export const getCollectionMetadata = (collectionId, collections) => {
 }
 
 /**
- * Returns the json metadata from the store for the provided collectionId
- * @param {String} collectionId Focused collection id
- * @param {Object} collections collections from the metadata store
- */
-export const getFocusedCollectionMetadata = (collectionId, collections) => {
-  const collection = getCollectionMetadata(collectionId, collections)
-  if (isEmpty(collection)) return undefined
-  const { metadata = {} } = collection
-
-  return metadata
-}
-
-/**
  * Format fetched metadata for the UI
  * @param {Object} metadata Collection metadata
  * @param {String} authToken The authenticated users' JWT token
