@@ -6,7 +6,7 @@ import SimpleBar from 'simplebar-react'
 
 import { getColorByIndex } from '../../util/colors'
 
-import ProjectCollectionItem from './ProjectCollectionsItem'
+import ProjectCollectionItem from './ProjectCollectionItem'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ProjectCollectionsList.scss'

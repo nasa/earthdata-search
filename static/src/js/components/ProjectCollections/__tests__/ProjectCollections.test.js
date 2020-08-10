@@ -11,34 +11,39 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      allIds: ['collectionId1', 'collectionId2'],
-      byId: {
-        collectionId1: {
-          granules: {
-            hits: 1
-          }
-        },
-        collectionId2: {
-          granules: {
-            hits: 1
+    collectionSearch: {},
+    collectionsQuery: {
+      pageNum: 1
+    },
+    mapProjection: projections.geographic,
+    project: {
+      collections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            isValid: false,
+            granules: {
+              hits: 1
+            }
+          },
+          collectionId2: {
+            isValid: false,
+            granules: {
+              hits: 1
+            }
           }
         }
       }
     },
-    collectionSearch: {},
-    mapProjection: projections.geographic,
-    project: {
-      byId: {
-        collectionId1: {
-          isValid: false
-        },
-        collectionId2: {
-          isValid: false
-        }
+    projectCollectionsMetadata: {
+      collectionId1: {
+        mock: 'data 1'
       },
-      collectionIds: ['collectionId1', 'collectionId2']
+      collectionId2: {
+        mock: 'data 2'
+      }
     },
+    projectCollectionsIds: [],
     panels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -72,31 +77,25 @@ describe('ProjectCollectionsList component', () => {
     const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(ProjectHeader).length).toBe(1)
-    expect(enzymeWrapper.find(ProjectHeader).props().collections).toEqual({
-      allIds: ['collectionId1', 'collectionId2'],
-      byId: {
-        collectionId1: {
-          granules: {
-            hits: 1
-          }
-        },
-        collectionId2: {
-          granules: {
-            hits: 1
+    expect(enzymeWrapper.find(ProjectHeader).props().collectionsQuery).toEqual({ pageNum: 1 })
+    expect(enzymeWrapper.find(ProjectHeader).props().project).toEqual({
+      collections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            isValid: false,
+            granules: {
+              hits: 1
+            }
+          },
+          collectionId2: {
+            isValid: false,
+            granules: {
+              hits: 1
+            }
           }
         }
       }
-    })
-    expect(enzymeWrapper.find(ProjectHeader).props().project).toEqual({
-      byId: {
-        collectionId1: {
-          isValid: false
-        },
-        collectionId2: {
-          isValid: false
-        }
-      },
-      collectionIds: ['collectionId1', 'collectionId2']
     })
     expect(enzymeWrapper.find(ProjectHeader).props().savedProject).toEqual({
       projectId: 1,
@@ -104,31 +103,32 @@ describe('ProjectCollectionsList component', () => {
     })
 
     expect(enzymeWrapper.find(ProjectCollectionsList).length).toBe(1)
-    expect(enzymeWrapper.find(ProjectCollectionsList).props().collections).toEqual({
-      allIds: ['collectionId1', 'collectionId2'],
-      byId: {
-        collectionId1: {
-          granules: {
-            hits: 1
-          }
-        },
-        collectionId2: {
-          granules: {
-            hits: 1
-          }
-        }
+    expect(enzymeWrapper.find(ProjectCollectionsList).props().collectionsMetadata).toEqual({
+      collectionId1: {
+        mock: 'data 1'
+      },
+      collectionId2: {
+        mock: 'data 2'
       }
     })
     expect(enzymeWrapper.find(ProjectCollectionsList).props().project).toEqual({
-      byId: {
-        collectionId1: {
-          isValid: false
-        },
-        collectionId2: {
-          isValid: false
+      collections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            isValid: false,
+            granules: {
+              hits: 1
+            }
+          },
+          collectionId2: {
+            isValid: false,
+            granules: {
+              hits: 1
+            }
+          }
         }
-      },
-      collectionIds: ['collectionId1', 'collectionId2']
+      }
     })
 
     expect(enzymeWrapper.find(ProjectCollectionsList).props().onMetricsDataAccess)

@@ -1,5 +1,4 @@
 export const encodeGridCoords = (gridCoords) => {
-  console.log('encodeGridCoords -> gridCoords', gridCoords)
   if (!gridCoords) return ''
 
   const encodedCoords = gridCoords

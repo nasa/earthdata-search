@@ -123,9 +123,9 @@ const GranuleResultsBody = ({
 
   const { granulesList, hasBrowseImagery } = result
 
-  // Determine if another page is available by checking if there are more collections to load,
-  // or if we have no collections and collections are loading. This controls whether or not the
-  // "collections loading" item or the skeleton is displayed.
+  // Determine if another page is available by checking if there are more granules to load,
+  // or if we have no granules and granules are loading. This controls whether or not the
+  // "granules loading" item or the skeleton is displayed.
   const moreGranulesToLoad = !!(
     allIds
     && allIds.length
@@ -147,10 +147,10 @@ const GranuleResultsBody = ({
   // If a next page is available, add an empty item to the lists for the loading indicator.
   const itemCount = hasNextPage ? granulesList.length + 1 : granulesList.length
 
-  // If collections are currently loading, pass an empty function, otherwise load more collections.
+  // If granules are currently loading, pass an empty function, otherwise load more granules.
   const loadMoreItems = isLoading || loadingFirstGranules ? () => {} : loadNextPage
 
-  // Callback to check if a particular collection has loaded.
+  // Callback to check if a particular granule has loaded.
   const isItemLoaded = index => !hasNextPage || index < granulesList.length
 
   return (
