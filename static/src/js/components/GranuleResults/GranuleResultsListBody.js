@@ -157,6 +157,7 @@ export const GranuleResultsListBody = ({
   // that value is used as a default here.
   const getRowHeight = useCallback((rowIndex) => {
     if (isEmpty(sizeMap.current) || !sizeMap.current[rowIndex]) return 127
+
     const height = Math.max(...sizeMap.current[rowIndex])
 
     if (rowIndex === itemCount - 1) {
@@ -171,6 +172,7 @@ export const GranuleResultsListBody = ({
       isItemLoaded={isItemLoaded}
       itemCount={itemCount}
       loadMoreItems={loadMoreItems}
+      threshold={4}
     >
       {
         ({ onItemsRendered, ref }) => (

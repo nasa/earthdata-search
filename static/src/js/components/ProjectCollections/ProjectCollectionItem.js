@@ -17,7 +17,7 @@ import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownI
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
 
-import './ProjectCollectionsItem.scss'
+import './ProjectCollectionItem.scss'
 
 /**
  * Renders ProjectCollectionItem.

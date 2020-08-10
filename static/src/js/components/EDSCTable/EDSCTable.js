@@ -377,6 +377,7 @@ const EDSCTable = ({
                 isItemLoaded={isItemLoaded}
                 itemCount={itemCount}
                 loadMoreItems={loadMoreItems}
+                threshold={5}
               >
                 {
                   ({ onItemsRendered, ref }) => (

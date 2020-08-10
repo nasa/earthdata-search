@@ -3,24 +3,22 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import { ProjectCollectionsList } from '../ProjectCollectionsList'
-import ProjectCollectionsItem from '../ProjectCollectionsItem'
+import ProjectCollectionItem from '../ProjectCollectionItem'
 import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: {
-      allIds: ['collectionId1', 'collectionId2'],
-      byId: {
-        collectionId1: {
-          mock: 'data 1'
-        },
-        collectionId2: {
-          mock: 'data 2'
-        }
+    collectionsMetadata: {
+      collectionId1: {
+        mock: 'data 1'
+      },
+      collectionId2: {
+        mock: 'data 2'
       }
     },
+    collectionsQuery: {},
     location: {},
     mapProjection: projections.geographic,
     onRemoveCollectionFromProject: jest.fn(),
@@ -32,15 +30,17 @@ function setup() {
     onSetActivePanelSection: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),
     project: {
-      byId: {
-        collectionId1: {
-          isValid: false
-        },
-        collectionId2: {
-          isValid: false
+      collections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            isValid: false
+          },
+          collectionId2: {
+            isValid: false
+          }
         }
-      },
-      collectionIds: ['collectionId1', 'collectionId2']
+      }
     },
     panels: {
       activePanel: '0.0.0',
@@ -60,17 +60,17 @@ function setup() {
 describe('ProjectCollectionsList component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find(ProjectCollectionsItem).length).toBe(2)
-    expect(enzymeWrapper.find(ProjectCollectionsItem).first().props().collectionId).toEqual('collectionId1')
-    expect(enzymeWrapper.find(ProjectCollectionsItem).first().props().collection).toEqual({
+    expect(enzymeWrapper.find(ProjectCollectionItem).length).toBe(2)
+    expect(enzymeWrapper.find(ProjectCollectionItem).first().props().collectionId).toEqual('collectionId1')
+    expect(enzymeWrapper.find(ProjectCollectionItem).first().props().collectionMetadata).toEqual({
       mock: 'data 1'
     })
-    expect(typeof enzymeWrapper.find(ProjectCollectionsItem).first().props().onRemoveCollectionFromProject).toEqual('function')
+    expect(typeof enzymeWrapper.find(ProjectCollectionItem).first().props().onRemoveCollectionFromProject).toEqual('function')
 
-    expect(enzymeWrapper.find(ProjectCollectionsItem).last().props().collectionId).toEqual('collectionId2')
-    expect(enzymeWrapper.find(ProjectCollectionsItem).last().props().collection).toEqual({
+    expect(enzymeWrapper.find(ProjectCollectionItem).last().props().collectionId).toEqual('collectionId2')
+    expect(enzymeWrapper.find(ProjectCollectionItem).last().props().collectionMetadata).toEqual({
       mock: 'data 2'
     })
-    expect(typeof enzymeWrapper.find(ProjectCollectionsItem).last().props().onRemoveCollectionFromProject).toEqual('function')
+    expect(typeof enzymeWrapper.find(ProjectCollectionItem).last().props().onRemoveCollectionFromProject).toEqual('function')
   })
 })

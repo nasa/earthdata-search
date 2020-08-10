@@ -7,29 +7,25 @@ import ProjectHeader from '../ProjectHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(overrideProps) {
+function setup(overrideProps = {}) {
   const props = {
-    collections: {
-      allIds: ['collectionId1'],
-      byId: {
-        collectionId1: {
-          granules: {
-            isLoading: false,
-            isLoaded: true,
-            hits: 1,
-            totalSize: { size: '4.0', unit: 'MB' },
-            singleGranuleSize: 4
-          },
-          metadata: {
-            mock: 'data 1'
-          }
-        }
-      }
+    collectionsQuery: {
+      pageNum: 1
     },
     project: {
-      collectionIds: ['collectionId1'],
-      byId: {
-        collectionId1: {}
+      collections: {
+        allIds: ['collectionId1'],
+        byId: {
+          collectionId1: {
+            granules: {
+              isLoading: false,
+              isLoaded: true,
+              hits: 1,
+              totalSize: { size: '4.0', unit: 'MB' },
+              singleGranuleSize: 4
+            }
+          }
+        }
       }
     },
     savedProject: {
@@ -57,18 +53,14 @@ describe('ProjectHeader component', () => {
   describe('when the collections are loading', () => {
     test('renders project metadata loading state', () => {
       const { enzymeWrapper } = setup({
-        collections: {
-          allIds: ['collectionId1'],
-          byId: {
-            collectionId1: {
-              granules: {}
-            }
-          }
-        },
         project: {
-          collectionIds: ['collectionId1'],
-          byId: {
-            collectionId1: {}
+          collections: {
+            allIds: ['collectionId1'],
+            byId: {
+              collectionId1: {
+                granules: {}
+              }
+            }
           }
         }
       })
@@ -90,50 +82,36 @@ describe('ProjectHeader component', () => {
   })
 
   describe('with multiple collections', () => {
-    const { enzymeWrapper } = setup({
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 1,
-              totalSize: { size: '4.0', unit: 'MB' },
-              singleGranuleSize: 4
-            },
-            metadata: {
-              mock: 'data 1'
-            }
-          },
-          collectionId2: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 5,
-              totalSize: { size: '5.0', unit: 'MB' },
-              singleGranuleSize: 5
-            },
-            metadata: {
-              mock: 'data 2'
+    test('renders collection count and size correctly', () => {
+      const { enzymeWrapper } = setup({
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 1,
+                  totalSize: { size: '4.0', unit: 'MB' },
+                  singleGranuleSize: 4
+                }
+              },
+              collectionId2: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 5,
+                  totalSize: { size: '5.0', unit: 'MB' },
+                  singleGranuleSize: 5
+                }
+              }
             }
           }
         }
-      },
-      project: {
-        collectionIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {},
-          collectionId2: {}
-        }
-      }
-    })
+      })
 
-    test('renders collection count correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--collections').text()).toEqual('2 Collections')
-    })
-
-    test('renders collection size correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--size').text().indexOf('9.0 MB') > -1).toEqual(true)
     })
   })
@@ -146,297 +124,240 @@ describe('ProjectHeader component', () => {
   })
 
   describe('with multiple granules', () => {
-    const { enzymeWrapper } = setup({
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 1,
-              totalSize: { size: '4.0', unit: 'MB' },
-              singleGranuleSize: 4
-            },
-            metadata: {
-              mock: 'data 1'
-            }
-          },
-          collectionId2: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 5,
-              totalSize: { size: '5.0', unit: 'MB' },
-              singleGranuleSize: 5
-            },
-            metadata: {
-              mock: 'data 2'
+    test('renders granule count correctly', () => {
+      const { enzymeWrapper } = setup({
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 1,
+                  totalSize: { size: '4.0', unit: 'MB' },
+                  singleGranuleSize: 4
+                }
+              },
+              collectionId2: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 5,
+                  totalSize: { size: '5.0', unit: 'MB' },
+                  singleGranuleSize: 5
+                }
+              }
             }
           }
         }
-      },
-      project: {
-        collectionIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {},
-          collectionId2: {}
-        }
-      }
-    })
+      })
 
-    test('renders granule count correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('6 Granules')
     })
   })
 
   describe('with added granules', () => {
-    const { enzymeWrapper } = setup({
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 1,
-              totalSize: { size: '4.0', unit: 'MB' },
-              singleGranuleSize: 4
-            },
-            metadata: {
-              mock: 'data 1'
-            }
-          },
-          collectionId2: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 5,
-              totalSize: { size: '5.0', unit: 'MB' },
-              singleGranuleSize: 5
-            },
-            metadata: {
-              mock: 'data 2'
+    test('renders granule count and size correctly', () => {
+      const { enzymeWrapper } = setup({
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 1,
+                  totalSize: { size: '4.0', unit: 'MB' },
+                  singleGranuleSize: 4
+                }
+              },
+              collectionId2: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 3,
+                  totalSize: { size: '5.0', unit: 'MB' },
+                  singleGranuleSize: 5,
+                  addedGranuleIds: [1, 2, 3]
+                }
+              }
             }
           }
         }
-      },
-      project: {
-        collectionIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {},
-          collectionId2: {
-            addedGranuleIds: [1, 2, 3]
-          }
-        }
-      }
-    })
+      })
 
-    test('renders granule count correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
-    })
-
-    test('renders granule size correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--size').text()).toEqual('19.0 MB') // 3 * 5MB + 1 * 4MB
     })
   })
 
   describe('with excluded granules', () => {
-    const { enzymeWrapper } = setup({
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 1,
-              totalSize: { size: '4.0', unit: 'MB' },
-              singleGranuleSize: 4
-            },
-            metadata: {
-              mock: 'data 1'
+    test('renders granule count and size correctly', () => {
+      const { enzymeWrapper } = setup({
+        collectionsQuery: {
+          byId: {
+            collectionId2: {
+              excludedGranuleIds: [1, 2]
             }
-          },
-          collectionId2: {
-            excludedGranuleIds: [1, 2],
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 5,
-              totalSize: { size: '5.0', unit: 'MB' },
-              singleGranuleSize: 5
-            },
-            metadata: {
-              mock: 'data 2'
+          }
+        },
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 1,
+                  totalSize: { size: '4.0', unit: 'MB' },
+                  singleGranuleSize: 4
+                }
+              },
+              collectionId2: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 3,
+                  totalSize: { size: '5.0', unit: 'MB' },
+                  singleGranuleSize: 5
+                }
+              }
             }
           }
         }
-      },
-      project: {
-        collectionIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {},
-          collectionId2: {}
-        }
-      }
-    })
+      })
 
-    test('renders granule count correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
-    })
-
-    test('renders granule size correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--size').text()).toEqual('19.0 MB') // 3 * 5MB + 1 * 4MB
     })
   })
 
   describe('with excluded and removed granules', () => {
-    const { enzymeWrapper } = setup({
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 1,
-              totalSize: { size: '4.0', unit: 'MB' },
-              singleGranuleSize: 4
-            },
-            metadata: {
-              mock: 'data 1'
+    test('renders granule count and size correctly', () => {
+      const { enzymeWrapper } = setup({
+        collectionsQuery: {
+          byId: {
+            collectionId2: {
+              excludedGranuleIds: [1]
             }
-          },
-          collectionId2: {
-            excludedGranuleIds: [1],
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 5,
-              totalSize: { size: '5.0', unit: 'MB' },
-              singleGranuleSize: 5
-            },
-            metadata: {
-              mock: 'data 2'
+          }
+        },
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 1,
+                  totalSize: { size: '4.0', unit: 'MB' },
+                  singleGranuleSize: 4
+                }
+              },
+              collectionId2: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 3,
+                  totalSize: { size: '5.0', unit: 'MB' },
+                  singleGranuleSize: 5,
+                  removedGranuleIds: [2]
+                }
+              }
             }
           }
         }
-      },
-      project: {
-        collectionIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {},
-          collectionId2: {
-            removedGranuleIds: [2]
-          }
-        }
-      }
-    })
+      })
 
-    test('renders granule count correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
-    })
-
-    test('renders granule size correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--size').text()).toEqual('19.0 MB') // 3 * 5MB + 1 * 4MB
     })
   })
 
   describe('with duplicate excluded and removed granules', () => {
-    const { enzymeWrapper } = setup({
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 1,
-              totalSize: { size: '4.0', unit: 'MB' },
-              singleGranuleSize: 4
-            },
-            metadata: {
-              mock: 'data 1'
+    test('renders granule count and size correctly', () => {
+      const { enzymeWrapper } = setup({
+        collectionsQuery: {
+          byId: {
+            collectionId2: {
+              excludedGranuleIds: [1]
             }
-          },
-          collectionId2: {
-            excludedGranuleIds: [1],
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 5,
-              totalSize: { size: '5.0', unit: 'MB' },
-              singleGranuleSize: 5
-            },
-            metadata: {
-              mock: 'data 2'
+          }
+        },
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 1,
+                  totalSize: { size: '4.0', unit: 'MB' },
+                  singleGranuleSize: 4
+                }
+              },
+              collectionId2: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 3,
+                  totalSize: { size: '5.0', unit: 'MB' },
+                  singleGranuleSize: 5,
+                  removedGranuleIds: [1, 2]
+                }
+              }
             }
           }
         }
-      },
-      project: {
-        collectionIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {},
-          collectionId2: {
-            removedGranuleIds: [1, 2]
-          }
-        }
-      }
-    })
+      })
 
-    test('renders granule count correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
-    })
-
-    test('renders granule size correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--size').text()).toEqual('19.0 MB') // 3 * 5MB + 1 * 4MB
     })
   })
 
   describe('with multiple granule, some of which being excluded', () => {
-    const { enzymeWrapper } = setup({
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 1,
-              totalSize: { size: '4.0', unit: 'MB' },
-              singleGranuleSize: 4
-            },
-            metadata: {
-              mock: 'data 1'
+    test('renders granule count correctly', () => {
+      const { enzymeWrapper } = setup({
+        collectionsQuery: {
+          byId: {
+            collectionId2: {
+              excludedGranuleIds: ['G10000001-EDSC', 'G10000002-EDSC']
             }
-          },
-          collectionId2: {
-            excludedGranuleIds: ['G10000001-EDSC', 'G10000002-EDSC'],
-            granules: {
-              isLoading: false,
-              isLoaded: true,
-              hits: 5,
-              totalSize: { size: '5.0', unit: 'MB' },
-              singleGranuleSize: 5
-            },
-            metadata: {
-              mock: 'data 2'
+          }
+        },
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 1,
+                  totalSize: { size: '4.0', unit: 'MB' },
+                  singleGranuleSize: 4
+                }
+              },
+              collectionId2: {
+                granules: {
+                  isLoading: false,
+                  isLoaded: true,
+                  hits: 3,
+                  totalSize: { size: '5.0', unit: 'MB' },
+                  singleGranuleSize: 5
+                }
+              }
             }
           }
         }
-      },
-      project: {
-        collectionIds: ['collectionId1', 'collectionId2'],
-        byId: {
-          collectionId1: {},
-          collectionId2: {}
-        }
-      }
-    })
+      })
 
-    test('renders granule count correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
     })
   })
