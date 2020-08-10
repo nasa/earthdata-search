@@ -16,7 +16,7 @@ function setup(state, overrideProps) {
     portal: {
       portalId: 'edsc'
     },
-    projectIds: [],
+    projectCollectionIds: [],
     savedProject: {},
     onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),
@@ -101,7 +101,7 @@ describe('SecondaryToolbar component', () => {
   })
 
   describe('My Project button', () => {
-    describe('when there are no projectIds', () => {
+    describe('when there are no projectCollectionIds', () => {
       test('does not display the My Project button', () => {
         const { enzymeWrapper } = setup()
 
@@ -109,11 +109,11 @@ describe('SecondaryToolbar component', () => {
       })
     })
 
-    describe('when there are projectIds', () => {
+    describe('when there are projectCollectionIds', () => {
       test('dispalys the My Project button', () => {
         const { enzymeWrapper } = setup()
 
-        enzymeWrapper.setProps({ projectIds: ['123'] })
+        enzymeWrapper.setProps({ projectCollectionIds: ['123'] })
 
         expect(enzymeWrapper.exists('.secondary-toolbar__project')).toBeTruthy()
       })

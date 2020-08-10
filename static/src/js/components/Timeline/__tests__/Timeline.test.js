@@ -328,7 +328,7 @@ describe('Timeline component', () => {
       enzymeWrapper.setProps({
         collectionMetadata: {
           [metadata.id]: {
-            metadata
+            ...metadata
           }
         },
         timeline: {
@@ -383,7 +383,7 @@ describe('Timeline component', () => {
       enzymeWrapper.setProps({
         collectionMetadata: {
           [metadata.id]: {
-            metadata
+            ...metadata
           }
         },
         timeline: {

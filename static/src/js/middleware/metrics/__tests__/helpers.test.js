@@ -184,7 +184,7 @@ describe('helpers', () => {
       const state = {
         project: {
           collections: {
-            allIds: undefined
+            allIds: []
           }
         }
       }

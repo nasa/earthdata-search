@@ -18,9 +18,7 @@ function setup() {
     pointSearch: '',
     polygonSearch: '',
     gridName: '',
-    gridCoords: '',
     onChangeQuery: jest.fn(),
-    onGranuleGridCoords: jest.fn(),
     onRemoveGridFilter: jest.fn(),
     onRemoveSpatialFilter: jest.fn(),
     selectingNewGrid: false,
@@ -265,8 +263,7 @@ describe('SpatialDisplay component', () => {
     test('should render the spatial info', () => {
       const { enzymeWrapper } = setup()
       const gridName = 'WRS-1'
-      const gridCoords = 'test coords'
-      enzymeWrapper.setProps({ gridCoords, gridName })
+      enzymeWrapper.setProps({ gridName })
 
       const filterStackItem = enzymeWrapper.find(FilterStackItem)
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -275,17 +272,11 @@ describe('SpatialDisplay component', () => {
       expect(filterStackItem.props().icon).toEqual('edsc-globe')
       expect(filterStackContents.props().title).toEqual('Grid')
 
-      const gridNameSelect = filterStackContents.props().body.props.children.props.children[0]
+      const gridNameSelect = filterStackContents.props().body.props.children.props.children
       const gridNameSelectLabel = gridNameSelect.props.children[0]
       const gridNameSelectInput = gridNameSelect.props.children[1]
       expect(gridNameSelectLabel.props.children).toEqual('Coordinate System')
       expect(gridNameSelectInput.props.value).toEqual(gridName)
-
-      const gridCoordsInput = filterStackContents.props().body.props.children.props.children[1]
-      const gridCoordsInputLabel = gridCoordsInput.props.children[0]
-      const gridCoordsInputInput = gridCoordsInput.props.children[1]
-      expect(gridCoordsInputLabel.props.children).toEqual('Coordinates')
-      expect(gridCoordsInputInput.props.value).toEqual(gridCoords)
     })
   })
 
@@ -315,83 +306,6 @@ describe('SpatialDisplay component', () => {
         collection: {
           gridName: 'test'
         }
-      })
-    })
-
-    test('calls preventDefault', () => {
-      const { enzymeWrapper } = setup()
-
-      const preventDefaultMock = jest.fn()
-      enzymeWrapper.instance().onChangeGridType({
-        target: {
-          value: 'test'
-        },
-        preventDefault: preventDefaultMock
-      })
-      expect(preventDefaultMock).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  describe('#onChangeGridCoords', () => {
-    test('calls onChangeQuery', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.instance().onChangeGridCoords({
-        target: {
-          value: 'test coords'
-        }
-      })
-
-      expect(enzymeWrapper.state()).toEqual({
-        error: '',
-        boundingBoxSearch: ['', ''],
-        circleSearch: ['', '', ''],
-        gridCoords: 'test coords',
-        gridName: '',
-        lineSearch: '',
-        manuallyEntering: false,
-        pointSearch: '',
-        polygonSearch: '',
-        shapefile: {}
-      })
-    })
-  })
-
-  describe('#onSubmitGridCoords', () => {
-    describe('when blurred', () => {
-      test('calls onChangeQuery', () => {
-        const { enzymeWrapper, props } = setup()
-
-        const preventDefaultMock = jest.fn()
-        enzymeWrapper.instance().onSubmitGridCoords({
-          type: 'blur',
-          target: {
-            value: 'test'
-          },
-          preventDefault: preventDefaultMock
-        })
-
-        expect(props.onGranuleGridCoords).toHaveBeenCalledTimes(1)
-        expect(props.onGranuleGridCoords).toHaveBeenCalledWith('test')
-      })
-    })
-
-    describe('when enter key pressed', () => {
-      test('calls onChangeQuery', () => {
-        const { enzymeWrapper, props } = setup()
-
-        const preventDefaultMock = jest.fn()
-        enzymeWrapper.instance().onSubmitGridCoords({
-          type: 'keyUp',
-          key: 'Enter',
-          target: {
-            value: 'test'
-          },
-          preventDefault: preventDefaultMock
-        })
-
-        expect(props.onGranuleGridCoords).toHaveBeenCalledTimes(1)
-        expect(props.onGranuleGridCoords).toHaveBeenCalledWith('test')
       })
     })
 

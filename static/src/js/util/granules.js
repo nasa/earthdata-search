@@ -97,6 +97,7 @@ export const extractGranuleSearchParams = (state, collectionId) => {
 
   const {
     byId: collectionQueryById = {},
+    gridName,
     spatial = {},
     overrideTemporal = {},
     temporal = {}
@@ -141,6 +142,7 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     excludedGranuleIds,
     granuleTemporal,
     gridCoords,
+    gridName,
     line,
     onlineOnly,
     orbitNumber,

@@ -1,4 +1,5 @@
 import { isCancel } from 'axios'
+import { isPlainObject } from 'lodash'
 
 import CollectionRequest from '../util/request/collectionRequest'
 import {
@@ -97,11 +98,40 @@ export const updateFocusedCollectionGranuleFilters = granuleFilters => (dispatch
 
   const focusedCollectionId = getFocusedCollectionId(state)
 
+  const { query = {} } = state
+  const { collection = {} } = query
+  const { byId = {} } = collection
+  const { [focusedCollectionId]: focusedCollectionQuery = {} } = byId
+  const { granules: existingGranuleFilters = {} } = focusedCollectionQuery
+
+  const allGranuleFilters = {
+    ...existingGranuleFilters,
+    ...granuleFilters
+  }
+
+  // Prune empty filters before sending to the store
+  const prunedFilters = Object.keys(allGranuleFilters).reduce((obj, key) => {
+    const newObj = obj
+
+    // If the value is not an object, only add the key if the value is truthy. This removes
+    // any unset values
+    if (!isPlainObject(allGranuleFilters[key])) {
+      if (allGranuleFilters[key]) {
+        newObj[key] = allGranuleFilters[key]
+      }
+    } else if (Object.values(allGranuleFilters[key]).some(key => !!key)) {
+      // Otherwise, only add an object if it contains at least one truthy value
+      newObj[key] = allGranuleFilters[key]
+    }
+
+    return newObj
+  }, {})
+
   dispatch({
     type: UPDATE_GRANULE_SEARCH_QUERY,
     payload: {
       collectionId: focusedCollectionId,
-      ...granuleFilters
+      ...prunedFilters
     }
   })
 }
