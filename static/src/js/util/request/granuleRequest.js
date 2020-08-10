@@ -74,9 +74,13 @@ export default class GranuleRequest extends CmrRequest {
     entry.map((granule) => {
       const updatedGranule = granule
 
-      updatedGranule.is_cwic = false
+      updatedGranule.isCwic = false
 
-      updatedGranule.formatted_temporal = getTemporal(granule.time_start, granule.time_end)
+      const formattedTemporal = getTemporal(granule.time_start, granule.time_end)
+
+      if (formattedTemporal.filter(Boolean).length > 0) {
+        updatedGranule.formatted_temporal = formattedTemporal
+      }
 
       const h = getApplicationConfig().thumbnailSize.height
       const w = getApplicationConfig().thumbnailSize.width

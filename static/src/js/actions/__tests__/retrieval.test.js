@@ -62,17 +62,22 @@ describe('submitRetrieval', () => {
         portalId: 'edsc'
       },
       project: {
-        byId: {
-          collectionId: {
-            accessMethods: {
-              download: {
-                type: 'download'
+        collections: {
+          byId: {
+            collectionId: {
+              accessMethods: {
+                download: {
+                  type: 'download'
+                }
+              },
+              selectedAccessMethod: 'download',
+              granules: {
+                hits: 84
               }
-            },
-            selectedAccessMethod: 'download'
-          }
-        },
-        collectionIds: ['collectionId']
+            }
+          },
+          allIds: ['collectionId']
+        }
       },
       router: {
         location: {
@@ -131,39 +136,36 @@ describe('submitRetrieval', () => {
       authToken: 'mockToken',
       metadata: {
         collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              granules: {},
-              metadata: {}
-            }
-          }
-        }
+          collectionId: {}
+        },
+        granules: {}
       },
       query: {
         collection: {
           pageNum: 1,
           keyword: 'search keyword'
-        },
-        granule: {
-          pageNum: 1
         }
       },
       portal: {
         portalId: 'edsc'
       },
       project: {
-        byId: {
-          collectionId: {
-            accessMethods: {
-              download: {
-                type: 'download'
+        collections: {
+          byId: {
+            collectionId: {
+              accessMethods: {
+                download: {
+                  type: 'download'
+                }
+              },
+              selectedAccessMethod: 'download',
+              granules: {
+                hits: 84
               }
-            },
-            selectedAccessMethod: 'download'
-          }
-        },
-        collectionIds: ['collectionId']
+            }
+          },
+          allIds: ['collectionId']
+        }
       },
       router: {
         location: {
@@ -293,7 +295,7 @@ describe('fetchRetrieval', () => {
             selectedAccessMethod: 'download'
           }
         },
-        collectionIds: ['collectionId']
+        allIds: ['collectionId']
       },
       router: {
         location: {
@@ -434,7 +436,7 @@ describe('fetchRetrieval', () => {
             selectedAccessMethod: 'download'
           }
         },
-        collectionIds: ['collectionId']
+        allIds: ['collectionId']
       },
       router: {
         location: {

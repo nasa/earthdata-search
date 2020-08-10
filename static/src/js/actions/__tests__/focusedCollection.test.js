@@ -50,7 +50,7 @@ describe('getFocusedCollection', () => {
   })
 
   describe('when metdata has already been retrieved from graphql', () => {
-    test('should update the focusedCollection and call searchGranules', async () => {
+    test('should update the focusedCollection and call getSearchGranules', async () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com',
@@ -61,10 +61,9 @@ describe('getFocusedCollection', () => {
       const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
       relevancyMock.mockImplementationOnce(() => jest.fn())
 
-      const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
-      searchGranulesMock.mockImplementationOnce(() => jest.fn())
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
-      // mockStore with initialState
       const store = mockStore({
         authToken: '',
         focusedCollection: 'C10000000000-EDSC',
@@ -83,7 +82,6 @@ describe('getFocusedCollection', () => {
         searchResults: {}
       })
 
-      // call the dispatch
       await store.dispatch(getFocusedCollection()).then(() => {
         const storeActions = store.getActions()
         expect(storeActions[0]).toEqual({
@@ -93,13 +91,13 @@ describe('getFocusedCollection', () => {
       })
 
       expect(relevancyMock).toHaveBeenCalledTimes(1)
-      expect(searchGranulesMock).toHaveBeenCalledTimes(1)
+      expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('when no metadata exists in the store for the collection from graphql', () => {
     describe('when graphql returns metadata for the requested collection', () => {
-      test('should update the focusedCollection, fetch metadata from graphql and call searchGranules', async () => {
+      test('should update the focusedCollection, fetch metadata from graphql and call getSearchGranules', async () => {
         jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
           cmrHost: 'https://cmr.example.com',
           graphQlHost: 'https://graphql.example.com',
@@ -125,10 +123,9 @@ describe('getFocusedCollection', () => {
         const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
         updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
 
-        const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
-        searchGranulesMock.mockImplementationOnce(() => jest.fn())
+        const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+        getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
-        // mockStore with initialState
         const store = mockStore({
           authToken: '',
           focusedCollection: 'C10000000000-EDSC',
@@ -143,7 +140,6 @@ describe('getFocusedCollection', () => {
           searchResults: {}
         })
 
-        // call the dispatch
         await store.dispatch(getFocusedCollection()).then(() => {
           const storeActions = store.getActions()
           expect(storeActions[0]).toEqual({
@@ -162,11 +158,11 @@ describe('getFocusedCollection', () => {
 
         expect(relevancyMock).toHaveBeenCalledTimes(1)
         expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
-        expect(searchGranulesMock).toHaveBeenCalledTimes(1)
+        expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
       })
 
       describe('when the requested collection is cwic and a polygon search is active', () => {
-        test('should toggle the polygon warning, update the focusedCollection and call searchGranules', async () => {
+        test('should toggle the polygon warning, update the focusedCollection and call getSearchGranules', async () => {
           jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
             cmrHost: 'https://cmr.example.com',
             graphQlHost: 'https://graphql.example.com',
@@ -196,10 +192,9 @@ describe('getFocusedCollection', () => {
           const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
           updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
 
-          const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
-          searchGranulesMock.mockImplementationOnce(() => jest.fn())
+          const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+          getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
-          // mockStore with initialState
           const store = mockStore({
             authToken: '',
             focusedCollection: 'C10000000000-EDSC',
@@ -220,7 +215,6 @@ describe('getFocusedCollection', () => {
             searchResults: {}
           })
 
-          // call the dispatch
           await store.dispatch(getFocusedCollection()).then(() => {
             const storeActions = store.getActions()
             expect(storeActions[0]).toEqual({
@@ -239,7 +233,7 @@ describe('getFocusedCollection', () => {
 
           expect(relevancyMock).toHaveBeenCalledTimes(1)
           expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
-          expect(searchGranulesMock).toHaveBeenCalledTimes(1)
+          expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
         })
       })
     })
@@ -264,8 +258,8 @@ describe('getFocusedCollection', () => {
         const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
         relevancyMock.mockImplementationOnce(() => jest.fn())
 
-        const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
-        searchGranulesMock.mockImplementationOnce(() => jest.fn())
+        const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+        getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
         const changeUrlMock = jest.spyOn(actions, 'changeUrl')
         changeUrlMock.mockImplementationOnce(() => jest.fn())
@@ -292,7 +286,6 @@ describe('getFocusedCollection', () => {
           }
         })
 
-        // call the dispatch
         await store.dispatch(getFocusedCollection()).then(() => {
           const storeActions = store.getActions()
 
@@ -306,7 +299,7 @@ describe('getFocusedCollection', () => {
           })
         })
 
-        expect(searchGranulesMock).toHaveBeenCalledTimes(0)
+        expect(getSearchGranulesMock).toHaveBeenCalledTimes(0)
         expect(relevancyMock).toHaveBeenCalledTimes(1)
         expect(changeUrlMock).toHaveBeenCalledTimes(1)
       })
@@ -321,8 +314,8 @@ describe('getFocusedCollection', () => {
     }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
-    const searchGranulesMock = jest.spyOn(actions, 'searchGranules')
-    searchGranulesMock.mockImplementationOnce(() => jest.fn())
+    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+    getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
     nock(/graph/)
       .post(/api/)
@@ -403,7 +396,6 @@ describe('changeFocusedCollection', () => {
         }
       })
 
-      // call the dispatch
       store.dispatch(actions.changeFocusedCollection(''))
 
       const storeActions = store.getActions()

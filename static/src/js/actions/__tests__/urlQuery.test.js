@@ -3,8 +3,13 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import actions from '../index'
+
+import {
+  UPDATE_SAVED_PROJECT,
+  RESTORE_FROM_URL
+} from '../../constants/actionTypes'
+
 import * as urlQuery from '../urlQuery'
-import { UPDATE_SAVED_PROJECT, RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -20,22 +25,24 @@ describe('updateStore', () => {
       featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
       focusedCollection: 'C00001-EDSC',
       map: {},
+      project: {
+        collections: {
+          allIds: [],
+          byId: {}
+        }
+      },
       query: {
         collection: {
           overrideTemporal: {},
           pageNum: 1,
           spatial: {},
           temporal: {}
-        },
-        granule: { pageNum: 1 }
+        }
       },
       shapefile: {}
     }
 
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-    const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
-      .mockImplementation(() => new Promise(resolve => resolve(null)))
     const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
     const store = mockStore({
@@ -54,8 +61,6 @@ describe('updateStore', () => {
     })
 
     expect(getCollectionsMock).toBeCalledTimes(1)
-    expect(getFocusedCollectionMock).toBeCalledTimes(1)
-    expect(getProjectCollectionsMock).toBeCalledTimes(1)
     expect(getTimelineMock).toBeCalledTimes(1)
   })
 
@@ -66,6 +71,12 @@ describe('updateStore', () => {
         featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
         focusedCollection: 'C00001-EDSC',
         map: {},
+        project: {
+          collections: {
+            allIds: ['C00001-EDSC'],
+            byId: {}
+          }
+        },
         query: {
           collection: {
             overrideTemporal: {},
@@ -80,7 +91,7 @@ describe('updateStore', () => {
 
       jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
       jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
-      const getGranulesMock = jest.spyOn(actions, 'getGranules').mockImplementation(() => jest.fn())
+      const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules').mockImplementation(() => jest.fn())
       jest.spyOn(actions, 'getProjectCollections')
         .mockImplementation(() => jest.fn())
       jest.spyOn(actions, 'fetchAccessMethods').mockImplementation(() => jest.fn())
@@ -101,10 +112,8 @@ describe('updateStore', () => {
         type: RESTORE_FROM_URL
       })
 
-      expect(getGranulesMock).toBeCalledTimes(1)
-      expect(getGranulesMock).toBeCalledWith(['C00001-EDSC'], {
-        requestAddedGranules: true
-      })
+      expect(getProjectGranulesMock).toBeCalledTimes(1)
+      expect(getProjectGranulesMock).toBeCalledWith()
     })
   })
 })
@@ -123,6 +132,16 @@ describe('changePath', () => {
     const newPath = '/search?projectId=1'
 
     const store = mockStore({
+      metadata: {
+        collections: {},
+        granules: {}
+      },
+      project: {
+        collections: {
+          allIds: ['C00001-EDSC'],
+          byId: {}
+        }
+      },
       router: {
         location: {
           pathname: '/search'
@@ -142,25 +161,32 @@ describe('changePath', () => {
       })
 
       expect(updateStoreMock).toBeCalledTimes(1)
-      expect(updateStoreMock).toBeCalledWith({
-        cmrFacets: {},
-        featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
-        focusedCollection: 'C00001-EDSC',
-        map: {},
-        query: {
-          collection: {
-            hasGranulesOrCwic: true,
-            overrideTemporal: {},
-            pageNum: 1,
-            spatial: {},
-            temporal: {}
+      expect(updateStoreMock).toBeCalledWith(
+        expect.objectContaining({
+          featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
+          focusedCollection: 'C00001-EDSC',
+          map: {},
+          query: {
+            collection: {
+              byId: {
+                'C00001-EDSC': {
+                  granules: {
+                    pageNum: 1
+                  }
+                }
+              },
+              hasGranulesOrCwic: true,
+              overrideTemporal: {},
+              pageNum: 1,
+              spatial: {},
+              temporal: {}
+            }
           },
-          granule: { pageNum: 1 }
-        },
-        shapefile: {
-          shapefileId: ''
-        }
-      })
+          shapefile: {
+            shapefileId: ''
+          }
+        })
+      )
     })
   })
 
@@ -180,25 +206,32 @@ describe('changePath', () => {
     store.dispatch(urlQuery.changePath(newPath))
 
     expect(updateStoreMock).toBeCalledTimes(1)
-    expect(updateStoreMock).toBeCalledWith({
-      cmrFacets: {},
-      featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
-      focusedCollection: 'C00001-EDSC',
-      map: {},
-      query: {
-        collection: {
-          hasGranulesOrCwic: true,
-          overrideTemporal: {},
-          pageNum: 1,
-          spatial: {},
-          temporal: {}
+    expect(updateStoreMock).toBeCalledWith(
+      expect.objectContaining({
+        featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
+        focusedCollection: 'C00001-EDSC',
+        map: {},
+        query: {
+          collection: {
+            byId: {
+              'C00001-EDSC': {
+                granules: {
+                  pageNum: 1
+                }
+              }
+            },
+            hasGranulesOrCwic: true,
+            overrideTemporal: {},
+            pageNum: 1,
+            spatial: {},
+            temporal: {}
+          }
         },
-        granule: { pageNum: 1 }
-      },
-      shapefile: {
-        shapefileId: ''
-      }
-    }, '/search')
+        shapefile: {
+          shapefileId: ''
+        }
+      }), '/search'
+    )
   })
 })
 

@@ -2,8 +2,6 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import actions from '../index'
-import * as getEarthdataConfig from '../../../../../sharedUtils/config'
-import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 
 import {
   ADD_ERROR,
@@ -33,6 +31,9 @@ import {
   submittingProject,
   submittedProject
 } from '../project'
+
+import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 
 const mockStore = configureMockStore([thunk])
 
@@ -134,7 +135,6 @@ describe('selectAccessMethod', () => {
       selectedAccessMethod: 'download'
     }
 
-    // mockStore with initialState
     const store = mockStore({
       metadata: {
         collections: {
@@ -143,24 +143,20 @@ describe('selectAccessMethod', () => {
       },
       project: {
         collections: {
+          allIds: ['collectionId'],
           byId: {
-            collectionId: {
-              orderCount: 1
-            }
-          },
-          allIds: ['collectionId']
+            collectionId: {}
+          }
         }
       }
     })
 
-    // call the dispatch
     store.dispatch(selectAccessMethod(payload))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: SELECT_ACCESS_METHOD,
       payload: {
         collectionId: 'collectionId',
-        orderCount: 0,
         selectedAccessMethod: 'download'
       }
     })
@@ -190,7 +186,6 @@ describe('selectAccessMethod', () => {
       selectedAccessMethod: 'download'
     }
 
-    // mockStore with initialState
     const store = mockStore({
       metadata: {
         granules: {
@@ -214,7 +209,6 @@ describe('selectAccessMethod', () => {
       }
     })
 
-    // call the dispatch
     store.dispatch(selectAccessMethod(payload))
     const storeActions = store.getActions()
     expect(storeActions.length).toBe(1)
@@ -222,7 +216,6 @@ describe('selectAccessMethod', () => {
       type: SELECT_ACCESS_METHOD,
       payload: {
         collectionId: 'collectionId',
-        orderCount: 0,
         selectedAccessMethod: 'download'
       }
     })
@@ -284,7 +277,6 @@ describe('getProjectCollections', () => {
         'cmr-hits': 1
       })
 
-    // mockStore with initialState
     const store = mockStore({
       authToken: 'token',
       metadata: {
@@ -316,8 +308,7 @@ describe('getProjectCollections', () => {
       }
     })
 
-    // call the dispatch
-    await store.dispatch(actions.getProjectCollections(['collectionId1', 'collectionId2']))
+    await store.dispatch(actions.getProjectCollections())
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
@@ -327,20 +318,12 @@ describe('getProjectCollections', () => {
     expect(storeActions[1]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
-        {
-          collectionId1: expect.objectContaining({
-            metadata: expect.objectContaining({
-              conceptId: 'collectionId1'
-            })
-          })
-        },
-        {
-          collectionId2: expect.objectContaining({
-            metadata: expect.objectContaining({
-              conceptId: 'collectionId2'
-            })
-          })
-        }
+        expect.objectContaining({
+          id: 'collectionId1'
+        }),
+        expect.objectContaining({
+          id: 'collectionId2'
+        })
       ]
     })
   })
@@ -363,7 +346,7 @@ describe('getProjectCollections', () => {
       }
     })
 
-    expect(store.dispatch(getProjectCollections([]))).toEqual(
+    expect(store.dispatch(getProjectCollections())).toEqual(
       new Promise(resolve => resolve(null))
     )
   })
@@ -376,11 +359,6 @@ describe('getProjectCollections', () => {
     }))
 
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
-    const fetchAccessMethods = jest.spyOn(actions, 'fetchAccessMethods')
-      .mockImplementationOnce(() => jest.fn())
-    const getProjectGranules = jest.spyOn(actions, 'getProjectGranules')
-      .mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
       .post(/graphql/)
@@ -395,20 +373,23 @@ describe('getProjectCollections', () => {
       .post(/error_logger/)
       .reply(200)
 
-    // mockStore with initialState
     const store = mockStore({
       authToken: 'token',
       metadata: {
         collections: {},
         granules: {}
+      },
+      project: {
+        collections: {
+          allIds: ['C10000000000-EDSC'],
+          byId: {}
+        }
       }
     })
 
-    // call the dispatch
     await store.dispatch(addProjectCollection(collectionId))
 
     const storeActions = store.getActions()
-
     expect(storeActions[0]).toEqual({
       type: ADD_COLLECTION_TO_PROJECT,
       payload: 'collectionId'
@@ -420,10 +401,6 @@ describe('getProjectCollections', () => {
         message: 'There was a problem completing the request'
       })
     })
-
-    expect(fetchAccessMethods).toBeCalledTimes(0)
-
-    expect(getProjectGranules).toBeCalledTimes(0)
   })
 })
 
@@ -439,12 +416,10 @@ describe('addProjectCollection', () => {
       .mockImplementationOnce(() => jest.fn())
 
 
-    // mockStore with initialState
     const store = mockStore({
       authToken: 'token'
     })
 
-    // call the dispatch
     await store.dispatch(addProjectCollection(collectionId))
 
     const storeActions = store.getActions()

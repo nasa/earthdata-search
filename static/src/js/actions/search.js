@@ -52,7 +52,7 @@ export const changeQuery = (queryOptions = {}) => async (dispatch, getState) => 
         pageNum: 1
       }))
 
-      dispatch(actions.searchGranules())
+      dispatch(actions.getSearchGranules())
     }
   }
 }
@@ -109,7 +109,7 @@ export const changeGranulePageNum = ({ collectionId, pageNum }) => (dispatch, ge
     }))
 
     // Fetch the next page of granules
-    dispatch(actions.searchGranules())
+    dispatch(actions.getSearchGranules())
   }
 }
 
@@ -149,6 +149,6 @@ export const clearFilters = () => (dispatch) => {
 
   dispatch(actions.getCollections())
   dispatch(actions.getProjectCollections())
-  dispatch(actions.searchGranules())
+  dispatch(actions.getSearchGranules())
   dispatch(actions.getTimeline())
 }

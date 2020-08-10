@@ -19,20 +19,22 @@ describe('collectionRelevancyMetrics', () => {
 
     const store = mockStore({
       focusedCollection: 'collection2',
+      metadata: {
+        collections: {
+          collection1: {
+            id: 'collection1'
+          },
+          collection2: {
+            id: 'collection2'
+          }
+        }
+      },
       query: {
         collection: {}
       },
       searchResults: {
         collections: {
           allIds: ['collection1', 'collection2'],
-          byId: {
-            collection1: {
-              mock: 'data'
-            },
-            collection2: {
-              mock: 'data'
-            }
-          },
           keyword: 'test'
         }
       }

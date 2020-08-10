@@ -209,7 +209,7 @@ describe('GranuleResultsBody component', () => {
       granuleQuery: {},
       granuleSearchResults: {
         allIds: ['one'],
-        hits: '1',
+        hits: 1,
         isLoaded: true,
         isLoading: false,
         loadTime: 1123,
@@ -286,7 +286,7 @@ describe('GranuleResultsBody component', () => {
           },
           granuleSearchResults: {
             allIds: ['one'],
-            hits: '1',
+            hits: 1,
             isLoading: false,
             isLoaded: true,
             loadTime: 1150,

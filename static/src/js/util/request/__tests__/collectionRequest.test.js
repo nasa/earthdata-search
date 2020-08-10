@@ -130,7 +130,7 @@ describe('CollectionRequest#transformResponse', () => {
           id: 'collectionId',
           tags: {},
           has_map_imagery: false,
-          is_cwic: false,
+          isCwic: false,
           thumbnail: 'test-file-stub'
         }]
       }
@@ -139,7 +139,7 @@ describe('CollectionRequest#transformResponse', () => {
     expect(result).toEqual(expectedResult)
   })
 
-  test('return data with is_cwic flag correctly', () => {
+  test('return data with isCwic flag correctly', () => {
     const request = new CollectionRequest()
 
     const data = {
@@ -169,7 +169,7 @@ describe('CollectionRequest#transformResponse', () => {
           tags: {
             'org.ceos.wgiss.cwic.granules.prod': 'stuff here'
           },
-          is_cwic: true,
+          isCwic: true,
           thumbnail: 'test-file-stub'
         }]
       }
@@ -210,7 +210,7 @@ describe('CollectionRequest#transformResponse', () => {
             browse_flag: true,
             has_granules: false,
             has_map_imagery: true,
-            is_cwic: false,
+            isCwic: false,
             tags: {
               'edsc.extra.serverless.gibs': 'stuff here'
             },
@@ -249,7 +249,7 @@ describe('CollectionRequest#transformResponse', () => {
             has_granules: false,
             has_map_imagery: false,
             id: 'collectionId',
-            is_cwic: false,
+            isCwic: false,
             tags: {},
             thumbnail: 'test-file-stub'
           }]

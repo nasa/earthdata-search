@@ -1,6 +1,5 @@
 import {
-  getCollectionMetadata,
-  getFocusedCollectionMetadata
+  getCollectionMetadata
 } from '../focusedCollection'
 
 describe('getCollectionMetadata', () => {
@@ -36,45 +35,6 @@ describe('getCollectionMetadata', () => {
         TEST: obj
       }
       expect(getCollectionMetadata('TEST', collections)).toEqual(obj)
-    })
-  })
-})
-
-describe('getFocusedCollectionMetadata', () => {
-  describe('when no collections are provided', () => {
-    test('returns undefined', () => {
-      expect(getFocusedCollectionMetadata('TEST')).toEqual(undefined)
-    })
-  })
-
-  describe('when collections is an empty object', () => {
-    test('returns undefined', () => {
-      expect(getFocusedCollectionMetadata('TEST', {})).toEqual(undefined)
-    })
-  })
-
-  describe('when passed a non-matching collection', () => {
-    test('returns an empty object', () => {
-      const collections = {
-        byId: {
-          TEST2: {
-            test: 'test'
-          }
-        }
-      }
-      expect(getFocusedCollectionMetadata('TEST', collections)).toEqual(undefined)
-    })
-  })
-
-  describe('when passed a matching collection', () => {
-    test('returns the collection metadata', () => {
-      const metadata = { test: 'test' }
-      const collections = {
-        TEST: {
-          metadata
-        }
-      }
-      expect(getFocusedCollectionMetadata('TEST', collections)).toEqual(metadata)
     })
   })
 })

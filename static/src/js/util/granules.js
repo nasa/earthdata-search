@@ -274,7 +274,7 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     temporalString = encodeTemporal(temporal)
   }
 
-  const isCwicCollection = hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
+  const isCwic = hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
 
   const options = {}
   if (readableGranuleName) {
@@ -294,7 +294,7 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     exclude,
     gridCoords: encodeGridCoords(gridCoords),
     gridName,
-    isCwicCollection,
+    isCwic,
     line,
     onlineOnly,
     options,

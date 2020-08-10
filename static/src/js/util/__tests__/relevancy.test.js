@@ -3,7 +3,7 @@ import exactMatch from '../relevancy'
 describe('exactMatch', () => {
   test('return false if no keyword is provided', () => {
     const metadata = {
-      dataset_id: 'test'
+      title: 'test'
     }
 
     expect(exactMatch(metadata, undefined)).toBeFalsy()
@@ -11,7 +11,7 @@ describe('exactMatch', () => {
 
   test('return false with no match', () => {
     const metadata = {
-      dataset_id: 'test'
+      title: 'test'
     }
 
     const keyword = 'no match'
@@ -19,9 +19,9 @@ describe('exactMatch', () => {
     expect(exactMatch(metadata, keyword)).toBeFalsy()
   })
 
-  test('matches dataset id', () => {
+  test('matches title', () => {
     const metadata = {
-      dataset_id: 'test'
+      title: 'test'
     }
 
     const keyword = 'test'
