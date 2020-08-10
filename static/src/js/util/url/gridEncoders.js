@@ -1,4 +1,5 @@
 export const encodeGridCoords = (gridCoords) => {
+  console.log('encodeGridCoords -> gridCoords', gridCoords)
   if (!gridCoords) return ''
 
   const encodedCoords = gridCoords
@@ -8,6 +9,7 @@ export const encodeGridCoords = (gridCoords) => {
     .replace(/(^|,)(\d+)($|:)/g, '$1$2-$2$3')
     .replace(/(^|:)(\d+)($|,)/g, '$1$2-$2$3')
 
+  console.log('encodeGridCoords -> encodedCoords', encodedCoords)
   return encodedCoords
 }
 
