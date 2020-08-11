@@ -8,7 +8,6 @@ export const encodeGridCoords = (gridCoords) => {
     .replace(/(^|,)(\d+)($|:)/g, '$1$2-$2$3')
     .replace(/(^|:)(\d+)($|,)/g, '$1$2-$2$3')
 
-  console.log('encodeGridCoords -> encodedCoords', encodedCoords)
   return encodedCoords
 }
 

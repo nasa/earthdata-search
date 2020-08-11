@@ -13,27 +13,26 @@ import './CollectionDetails.scss'
 
 /**
  * Renders CollectionDetails.
- * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
- * @param {Object} granuleQuery - The granule query from the store.
  * @param {String} focusedGranuleId - The focused granule ID.
+ * @param {Object} granulesMetadata - The metadata in the store for granules.
  * @param {Object} location - The location from the store.
- * @param {Object} portal - The portal from the store.
- * @param {Object} projectCollection - The project collection.
  * @param {Function} onChangeProjectGranulePageNum - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - The callback to change the focused granule.
  * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
+ * @param {Object} portal - The portal from the store.
+ * @param {Object} projectCollection - The project collection.
  */
 export const CollectionDetails = ({
   collectionId,
   focusedGranuleId,
   granulesMetadata,
   location,
-  portal,
-  projectCollection,
   onChangeProjectGranulePageNum,
   onFocusedGranuleChange,
-  onRemoveGranuleFromProjectCollection
+  onRemoveGranuleFromProjectCollection,
+  portal,
+  projectCollection
 }) => {
   const {
     granules: projectCollectionGranules = {}
@@ -48,6 +47,7 @@ export const CollectionDetails = ({
 
   const { params: projectCollectionGranulesParams } = projectCollectionGranules
 
+  // TODO: Should be able to remove the checks here and just show allIds
   let granulesToDisplay = granulesAllIds
 
   if (addedGranuleIds.length) {
@@ -67,7 +67,7 @@ export const CollectionDetails = ({
         <ul className="collection-details__list">
           {
             granulesToDisplay.map((id) => {
-              const { [id]: granuleMetadata } = granulesMetadata
+              const { [id]: granuleMetadata = {} } = granulesMetadata
 
               const { title } = granuleMetadata
 

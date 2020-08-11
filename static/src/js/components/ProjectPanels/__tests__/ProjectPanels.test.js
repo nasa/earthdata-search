@@ -95,6 +95,7 @@ function setup(overrideProps) {
     onRemoveGranuleFromProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onChangeProjectGranulePageNum: jest.fn(),
+    onViewCollectionGranules: jest.fn(),
     ...overrideProps
   }
 

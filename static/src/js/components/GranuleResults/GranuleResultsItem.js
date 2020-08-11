@@ -36,7 +36,6 @@ const thumbnailWidth = getApplicationConfig().thumbnailSize.width
 const GranuleResultsItem = forwardRef(({
   collectionId,
   granule,
-  isProjectGranulesLoading,
   isCollectionInProject,
   isGranuleInProject,
   location,
@@ -221,7 +220,6 @@ const GranuleResultsItem = forwardRef(({
                           className="button granule-results-item__button granule-results-item__button--add"
                           label="Add granule"
                           title="Add granule"
-                          disabled={isProjectGranulesLoading}
                           onClick={(e) => {
                             onAddGranuleToProjectCollection({
                               collectionId,
@@ -240,7 +238,6 @@ const GranuleResultsItem = forwardRef(({
                           className="button granule-results-item__button granule-results-item__button--remove"
                           label="Remove granule"
                           title="Remove granule"
-                          disabled={isProjectGranulesLoading}
                           onClick={(e) => {
                             onRemoveGranuleFromProjectCollection({
                               collectionId,
@@ -279,7 +276,6 @@ GranuleResultsItem.propTypes = {
   granule: PropTypes.shape({}).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
-  isProjectGranulesLoading: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,

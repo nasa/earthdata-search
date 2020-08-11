@@ -104,6 +104,7 @@ import {
 } from './panels'
 import {
   addAccessMethods,
+  addCollectionToProject,
   addGranuleToProjectCollection,
   addProjectCollection,
   getProjectCollections,
@@ -165,6 +166,7 @@ import {
 const actions = {
   addAccessMethods,
   addCmrFacet,
+  addCollectionToProject,
   addGranuleToProjectCollection,
   addProjectCollection,
   adminIsAuthorized,

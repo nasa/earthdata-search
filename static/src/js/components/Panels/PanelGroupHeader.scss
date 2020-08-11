@@ -40,8 +40,14 @@
     position: relative;
     display: inline;
     white-space: nowrap;
+    padding: 0;
     font-size: 0.875rem;
     vertical-align: middle;
+    color: $color__brand--blue;
+  }
+
+  &__heading-primary-link:hover {
+    color: $color__brand--blue;
   }
 
   &__heading-wrap {

@@ -1,7 +1,6 @@
 import camelCaseKeys from 'camelcase-keys'
 
 import {
-  ADD_COLLECTION_SEARCH_METADATA,
   RESTORE_FROM_URL,
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_COLLECTION_METADATA
@@ -30,12 +29,6 @@ const processResults = (results) => {
 
 const collectionMetadataReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_COLLECTION_SEARCH_METADATA: {
-      return {
-        ...state,
-        ...processResults(action.payload)
-      }
-    }
     case UPDATE_COLLECTION_METADATA: {
       const newState = {}
 

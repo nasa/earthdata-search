@@ -15,7 +15,6 @@ import {
 } from '../collections'
 
 import {
-  ADD_COLLECTION_SEARCH_METADATA,
   ADD_MORE_COLLECTION_RESULTS,
   ERRORED_COLLECTIONS,
   ERRORED_FACETS,
@@ -26,6 +25,7 @@ import {
   LOADING_FACETS,
   STARTED_COLLECTIONS_TIMER,
   UPDATE_AUTH,
+  UPDATE_COLLECTION_METADATA,
   UPDATE_COLLECTION_RESULTS,
   UPDATE_FACETS
 } from '../../constants/actionTypes'
@@ -173,7 +173,7 @@ describe('getCollections', () => {
       expect(storeActions[3]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
       expect(storeActions[4]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
       expect(storeActions[5]).toEqual({
-        type: ADD_COLLECTION_SEARCH_METADATA,
+        type: UPDATE_COLLECTION_METADATA,
         payload: [{
           mockCollectionData: 'goes here'
         }]
@@ -254,7 +254,7 @@ describe('getCollections', () => {
         payload: 'token'
       })
       expect(storeActions[5]).toEqual({
-        type: ADD_COLLECTION_SEARCH_METADATA,
+        type: UPDATE_COLLECTION_METADATA,
         payload: [{
           mockCollectionData: 'goes here'
         }]

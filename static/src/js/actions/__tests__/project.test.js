@@ -21,7 +21,6 @@ import {
 import {
   addCollectionToProject,
   addProjectCollection,
-  getProjectCollections,
   removeCollectionFromProject,
   toggleCollectionVisibility,
   restoreProject,
@@ -346,19 +345,19 @@ describe('getProjectCollections', () => {
       }
     })
 
-    expect(store.dispatch(getProjectCollections())).toEqual(
+    expect(store.dispatch(actions.getProjectCollections())).toEqual(
       new Promise(resolve => resolve(null))
     )
   })
 
   test('does not call updateCollectionMetadata on error', async () => {
-    const collectionId = 'collectionId'
-
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))
 
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
       .post(/graphql/)
@@ -387,20 +386,18 @@ describe('getProjectCollections', () => {
       }
     })
 
-    await store.dispatch(addProjectCollection(collectionId))
+    await store.dispatch(actions.getProjectCollections())
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: ADD_COLLECTION_TO_PROJECT,
-      payload: 'collectionId'
-    })
-    expect(storeActions[1]).toEqual({
       type: ADD_ERROR,
       payload: expect.objectContaining({
-        title: 'Error retrieving collections',
+        title: 'Error retrieving project collections',
         message: 'There was a problem completing the request'
       })
     })
+
+    expect(consoleMock).toBeCalledTimes(1)
   })
 })
 
@@ -408,13 +405,8 @@ describe('addProjectCollection', () => {
   test('calls the correct actions to add the collection to the project', async () => {
     const collectionId = 'collectionId'
 
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
-      .mockImplementationOnce(() => jest.fn())
-    const fetchAccessMethods = jest.spyOn(actions, 'fetchAccessMethods')
-      .mockImplementationOnce(() => jest.fn())
     const getProjectGranules = jest.spyOn(actions, 'getProjectGranules')
       .mockImplementationOnce(() => jest.fn())
-
 
     const store = mockStore({
       authToken: 'token'
@@ -428,11 +420,6 @@ describe('addProjectCollection', () => {
       type: ADD_COLLECTION_TO_PROJECT,
       payload: collectionId
     })
-
-    expect(getProjectCollectionsMock).toBeCalledTimes(1)
-
-    expect(fetchAccessMethods).toBeCalledTimes(1)
-    expect(fetchAccessMethods).toBeCalledWith([collectionId])
 
     expect(getProjectGranules).toBeCalledTimes(1)
   })

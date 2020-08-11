@@ -15,7 +15,6 @@ import VariableDetailsPanel from './VariableDetailsPanel'
 import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
 
 import { isAccessMethodValid } from '../../util/accessMethods'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ProjectPanels.scss'
 
@@ -270,13 +269,13 @@ class ProjectPanels extends PureComponent {
       focusedGranuleId,
       granulesMetadata,
       location,
-      onChangePath,
+      onChangeProjectGranulePageNum,
       onFocusedGranuleChange,
       onRemoveGranuleFromProjectCollection,
       onSelectAccessMethod,
       onSetActivePanel,
       onUpdateAccessMethod,
-      onChangeProjectGranulePageNum,
+      onViewCollectionGranules,
       panels,
       portal,
       project,
@@ -446,17 +445,14 @@ class ProjectPanels extends PureComponent {
       )
 
       const projectHeadingLink = (
-        <PortalLinkContainer
+        <Button
           className="panel-group-header__heading-primary-link"
-          to={{
-            pathname: '/search/granules',
-            search: location.search
-          }}
-          onClick={() => { onChangePath(`/search/granules${location.search}`) }}
+          label="View Granules"
+          onClick={() => { onViewCollectionGranules(collectionId) }}
         >
           <i className="fa fa-map" />
           {' View Granules'}
-        </PortalLinkContainer>
+        </Button>
       )
 
       // Panels are controlled using the onSetActivePanel action. The parameters are
@@ -581,7 +577,6 @@ ProjectPanels.propTypes = {
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
-  onChangePath: PropTypes.func.isRequired,
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
@@ -591,6 +586,7 @@ ProjectPanels.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,

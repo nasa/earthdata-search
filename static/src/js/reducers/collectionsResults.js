@@ -20,7 +20,6 @@ const initialState = {
   hits: null,
   isLoaded: false,
   isLoading: false,
-  keyword: false,
   loadTime: 0,
   timerStart: null
 }

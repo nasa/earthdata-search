@@ -15,52 +15,43 @@ beforeEach(() => {
 
 const granules = [
   {
-    concept_id: 'GRAN-1-PROV',
-    collection_concept_id: 'COLL-1',
-    producer_granule_id: 'GRAN-1.hdf'
+    conceptId: 'GRAN-1-PROV',
+    collectionConceptId: 'COLL-1',
+    title: 'GRAN-1.hdf'
   },
   {
-    concept_id: 'GRAN-2-PROV',
-    collection_concept_id: 'COLL-1',
-    producer_granule_id: 'GRAN-2.hdf'
+    conceptId: 'GRAN-2-PROV',
+    collectionConceptId: 'COLL-1',
+    title: 'GRAN-2.hdf'
   }
 ]
 
 function setup(overrideProps) {
   const props = {
-    granules: {
-      hits: 2,
-      allIds: ['GRAN-1-PROV', 'GRAN-2-PROV'],
-      byId: {
-        'GRAN-1-PROV': granules[0],
-        'GRAN-2-PROV': granules[1]
-      }
-    },
-    collection: {
-      granules: {
-        hits: 2,
-        allIds: ['GRAN-1-PROV', 'GRAN-2-PROV'],
-        byId: {
-          'GRAN-1-PROV': granules[0],
-          'GRAN-2-PROV': granules[1]
-        }
-      }
-    },
     collectionId: 'COLL-1',
-    granuleQuery: {
-      pageNum: 1
+    focusedGranuleId: '',
+    granulesMetadata: {
+      'GRAN-1-PROV': granules[0],
+      'GRAN-2-PROV': granules[1]
     },
-    focusedGranule: '',
     location: {
       search: '?=test_search=test'
     },
+    onChangeProjectGranulePageNum: jest.fn(),
+    onFocusedGranuleChange: jest.fn(),
+    onRemoveGranuleFromProjectCollection: jest.fn(),
     portal: {
       portalId: 'edsc'
     },
-    projectCollection: {},
-    onChangeGranulePageNum: jest.fn(),
-    onFocusedGranuleChange: jest.fn(),
-    onRemoveGranuleFromProjectCollection: jest.fn(),
+    projectCollection: {
+      granules: {
+        allIds: ['GRAN-1-PROV', 'GRAN-2-PROV'],
+        hits: 2,
+        params: {
+          pageNum: 1
+        }
+      }
+    },
     ...overrideProps
   }
 
@@ -99,7 +90,7 @@ describe('CollectionDetails component', () => {
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'map.layer.COLL-1.focusgranule',
         {
-          granule: granules[0]
+          granuleMetadata: granules[0]
         }
       )
     })
@@ -131,7 +122,7 @@ describe('CollectionDetails component', () => {
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'map.layer.COLL-1.stickygranule',
         {
-          granule: granules[0]
+          granuleMetadata: granules[0]
         }
       )
     })
@@ -147,7 +138,7 @@ describe('CollectionDetails component', () => {
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'map.layer.COLL-1.stickygranule',
         {
-          granule: granules[0]
+          granuleMetadata: granules[0]
         }
       )
     })
@@ -206,7 +197,11 @@ describe('CollectionDetails component', () => {
   describe('when added granules are provided', () => {
     const { enzymeWrapper } = setup({
       projectCollection: {
-        addedGranuleIds: ['GRAN-1-PROV']
+        granules: {
+          allIds: ['GRAN-1-PROV'],
+          hits: 1,
+          addedGranuleIds: ['GRAN-1-PROV']
+        }
       }
     })
 
@@ -224,7 +219,11 @@ describe('CollectionDetails component', () => {
   describe('when removed granules are provided', () => {
     const { enzymeWrapper } = setup({
       projectCollection: {
-        removedGranuleIds: ['GRAN-1-PROV']
+        granules: {
+          allIds: ['GRAN-2-PROV'],
+          hits: 1,
+          removedGranuleIds: ['GRAN-1-PROV']
+        }
       }
     })
 
@@ -241,19 +240,15 @@ describe('CollectionDetails component', () => {
 
   describe('when all granules have not loaded', () => {
     const { enzymeWrapper } = setup({
-      granules: {
-        hits: 2,
-        allIds: ['GRAN-1-PROV'],
-        byId: {
-          'GRAN-1-PROV': granules[0]
-        }
+      granulesMetadata: {
+        'GRAN-1-PROV': granules[0]
       },
-      collection: {
+      projectCollection: {
         granules: {
-          hits: 2,
           allIds: ['GRAN-1-PROV'],
-          byId: {
-            'GRAN-1-PROV': granules[0]
+          hits: 2,
+          params: {
+            pageNum: 1
           }
         }
       }
@@ -267,19 +262,15 @@ describe('CollectionDetails component', () => {
   describe('Load more granules button', () => {
     test('renders the load more granules button', () => {
       const { enzymeWrapper, props } = setup({
-        granules: {
-          hits: 2,
-          allIds: ['GRAN-1-PROV'],
-          byId: {
-            'GRAN-1-PROV': granules[0]
-          }
+        granulesMetadata: {
+          'GRAN-1-PROV': granules[0]
         },
-        collection: {
+        projectCollection: {
           granules: {
-            hits: 2,
             allIds: ['GRAN-1-PROV'],
-            byId: {
-              'GRAN-1-PROV': granules[0]
+            hits: 2,
+            params: {
+              pageNum: 1
             }
           }
         }
@@ -288,8 +279,8 @@ describe('CollectionDetails component', () => {
       const button = enzymeWrapper.find('.collection-details__more-granules-button')
       button.props().onClick()
 
-      expect(props.onChangeGranulePageNum).toHaveBeenCalledTimes(1)
-      expect(props.onChangeGranulePageNum).toHaveBeenCalledWith({ collectionId: 'COLL-1', pageNum: 2 })
+      expect(props.onChangeProjectGranulePageNum).toHaveBeenCalledTimes(1)
+      expect(props.onChangeProjectGranulePageNum).toHaveBeenCalledWith({ collectionId: 'COLL-1', pageNum: 2 })
     })
   })
 })
