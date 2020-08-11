@@ -42,9 +42,6 @@ describe('updateStore', () => {
       shapefile: {}
     }
 
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-    const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
-
     const store = mockStore({
       router: {
         location: {
@@ -52,6 +49,7 @@ describe('updateStore', () => {
         }
       }
     })
+
     store.dispatch(urlQuery.updateStore(params))
 
     const storeActions = store.getActions()
@@ -59,9 +57,6 @@ describe('updateStore', () => {
       payload: params,
       type: RESTORE_FROM_URL
     })
-
-    expect(getCollectionsMock).toBeCalledTimes(1)
-    expect(getTimelineMock).toBeCalledTimes(1)
   })
 
   describe('on the projects page', () => {
@@ -89,12 +84,6 @@ describe('updateStore', () => {
         shapefile: {}
       }
 
-      jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-      jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
-      const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules').mockImplementation(() => jest.fn())
-      jest.spyOn(actions, 'getProjectCollections')
-        .mockImplementation(() => jest.fn())
-      jest.spyOn(actions, 'fetchAccessMethods').mockImplementation(() => jest.fn())
       jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
       const store = mockStore({
@@ -111,9 +100,6 @@ describe('updateStore', () => {
         payload: params,
         type: RESTORE_FROM_URL
       })
-
-      expect(getProjectGranulesMock).toBeCalledTimes(1)
-      expect(getProjectGranulesMock).toBeCalledWith()
     })
   })
 })
@@ -192,14 +178,29 @@ describe('changePath', () => {
 
   test('updates the store if there is not a projectId', () => {
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
+    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
 
     const newPath = '/search?p=C00001-EDSC'
 
     const store = mockStore({
+      project: {
+        collections: {
+          allIds: [],
+          byId: {}
+        }
+      },
+      query: {
+        collection: {
+          spatial: {}
+        }
+      },
       router: {
         location: {
           pathname: '/search'
         }
+      },
+      timeline: {
+        query: {}
       }
     })
 
@@ -232,6 +233,8 @@ describe('changePath', () => {
         }
       }), '/search'
     )
+
+    expect(getCollectionsMock).toBeCalledTimes(1)
   })
 })
 

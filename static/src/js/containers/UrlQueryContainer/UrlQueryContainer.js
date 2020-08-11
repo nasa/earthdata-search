@@ -31,6 +31,7 @@ const mapStateToProps = state => ({
   instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.collection.keyword,
   lineSearch: state.query.collection.spatial.line,
+  location: state.router.location,
   map: state.map,
   organizationFacets: state.facetsParams.cmr.data_center_h,
   overrideTemporalSearch: state.query.collection.overrideTemporal,
@@ -43,7 +44,6 @@ const mapStateToProps = state => ({
   projectFacets: state.facetsParams.cmr.project_h,
   query: state.query,
   scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
-  search: state.router.location.search,
   shapefileId: state.shapefile.shapefileId,
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal,
@@ -62,23 +62,31 @@ export class UrlQueryContainer extends PureComponent {
   componentDidMount() {
     const {
       onChangePath,
-      search
+      location
     } = this.props
 
-    onChangePath(search)
+    const {
+      pathname,
+      search
+    } = location
+
+    onChangePath([pathname, search].filter(Boolean).join(''))
   }
 
   componentWillReceiveProps(nextProps) {
     const {
-      search: nextSearch
+      location: nextLocation
     } = nextProps
 
     const {
       onChangeUrl,
-      search
+      location
     } = this.props
 
+    const { search } = location
     const { currentPath } = this.state
+
+    const { search: nextSearch } = nextLocation
 
     // The only time the search prop changes is after the URL has been updated
     // So we only need to worry about encoding the query and updating the URL
@@ -108,16 +116,12 @@ export class UrlQueryContainer extends PureComponent {
   }
 }
 
-UrlQueryContainer.defaultProps = {
-  search: ''
-}
-
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
+  location: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
-  project: PropTypes.shape({}).isRequired,
-  search: PropTypes.string
+  project: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UrlQueryContainer)

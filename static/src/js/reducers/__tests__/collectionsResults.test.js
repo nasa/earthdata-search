@@ -4,7 +4,6 @@ import {
   ADD_MORE_GRANULE_RESULTS,
   FINISHED_COLLECTIONS_TIMER,
   FINISHED_GRANULES_TIMER,
-  INITIALIZE_COLLECTION_GRANULES_RESULTS,
   LOADED_COLLECTIONS,
   LOADED_GRANULES,
   LOADING_COLLECTIONS,
@@ -17,7 +16,6 @@ import {
 } from '../../constants/actionTypes'
 
 const initialState = {
-  keyword: false,
   hits: null,
   allIds: [],
   isLoading: false,
@@ -84,14 +82,12 @@ describe('UPDATE_COLLECTION_RESULTS', () => {
           id: 'mockCollectionId',
           mockCollectionData: 'goes here'
         }],
-        hits: 0,
-        keyword: 'search keyword'
+        hits: 0
       }
     }
 
     const expectedState = {
       ...initialState,
-      keyword: 'search keyword',
       hits: 0,
       allIds: ['mockCollectionId']
     }
@@ -109,8 +105,7 @@ describe('ADD_MORE_COLLECTION_RESULTS', () => {
           id: 'mockCollectionId2',
           mockCollectionData: 'goes here 2'
         }],
-        hits: 0,
-        keyword: 'search keyword'
+        hits: 0
       }
     }
 
@@ -174,7 +169,6 @@ describe('LOADED_COLLECTIONS', () => {
 //           mockCollectionData: 'goes here 2'
 //         }],
 //         hits: 0,
-//         keyword: 'search keyword'
 //       }
 //     }
 

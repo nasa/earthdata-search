@@ -1,6 +1,5 @@
 import collectionMetadataReducer from '../collectionMetadata'
 import {
-  ADD_COLLECTION_SEARCH_METADATA,
   RESTORE_FROM_URL,
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_COLLECTION_METADATA
@@ -13,29 +12,6 @@ describe('INITIAL_STATE', () => {
     const action = { type: 'dummy_action' }
 
     expect(collectionMetadataReducer(undefined, action)).toEqual(initialState)
-  })
-})
-
-describe('ADD_COLLECTION_SEARCH_METADATA', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: ADD_COLLECTION_SEARCH_METADATA,
-      payload: [{
-        id: 'collectionId',
-        mock: 'metadata'
-      }]
-    }
-
-    const expectedState = {
-      ...initialState,
-      collectionId: {
-        id: 'collectionId',
-        conceptId: 'collectionId',
-        mock: 'metadata'
-      }
-    }
-
-    expect(collectionMetadataReducer(undefined, action)).toEqual(expectedState)
   })
 })
 

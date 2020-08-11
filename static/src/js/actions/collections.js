@@ -10,7 +10,6 @@ import { updateAuthTokenFromHeaders } from './authToken'
 import { handleError } from './errors'
 
 import {
-  ADD_COLLECTION_SEARCH_METADATA,
   ADD_MORE_COLLECTION_RESULTS,
   ERRORED_COLLECTIONS,
   ERRORED_FACETS,
@@ -30,11 +29,6 @@ import { getFocusedCollectionId } from '../selectors/focusedCollection'
 
 export const addMoreCollectionResults = payload => ({
   type: ADD_MORE_COLLECTION_RESULTS,
-  payload
-})
-
-export const addCollectionSearchMetadata = payload => ({
-  type: ADD_COLLECTION_SEARCH_METADATA,
   payload
 })
 
@@ -196,7 +190,7 @@ export const getCollections = () => (dispatch, getState) => {
 
       dispatch(updateAuthTokenFromHeaders(headers))
 
-      dispatch(addCollectionSearchMetadata(entry))
+      dispatch(updateCollectionMetadata(entry))
 
       if (pageNum === 1) {
         dispatch(updateCollectionResults(payload))

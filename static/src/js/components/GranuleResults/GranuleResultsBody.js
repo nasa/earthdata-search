@@ -76,7 +76,6 @@ const GranuleResultsBody = ({
   const { granules: projectCollectionGranules = {} } = projectCollection
   const {
     addedGranuleIds = [],
-    isLoading: isProjectGranulesLoading = false,
     removedGranuleIds = []
   } = projectCollectionGranules
 
@@ -169,7 +168,6 @@ const GranuleResultsBody = ({
           isCwic={isCwic}
           isGranuleInProject={isGranuleInProject}
           isItemLoaded={isItemLoaded}
-          isProjectGranulesLoading={isProjectGranulesLoading}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
           location={location}
@@ -197,7 +195,6 @@ const GranuleResultsBody = ({
           hasBrowseImagery={hasBrowseImagery}
           isCwic={isCwic}
           itemCount={itemCount}
-          isProjectGranulesLoading={isProjectGranulesLoading}
           isItemLoaded={isItemLoaded}
           location={location}
           loadMoreItems={loadMoreItems}

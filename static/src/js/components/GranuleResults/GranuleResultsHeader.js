@@ -170,6 +170,7 @@ class GranuleResultsHeader extends Component {
     } = granuleSearchResults
 
     const {
+      hasAllMetadata = false,
       isCwic,
       title
     } = collectionMetadata
@@ -199,7 +200,7 @@ class GranuleResultsHeader extends Component {
             <div className="col">
               <div className="granule-results-header__title-wrap">
                 {
-                  !collectionSearchIsLoaded && (
+                  (!collectionSearchIsLoaded && hasAllMetadata === false) && (
                     <Skeleton
                       className="granule-results-header__title"
                       containerStyle={{

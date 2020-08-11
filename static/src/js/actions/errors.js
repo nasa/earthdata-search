@@ -32,8 +32,8 @@ export const handleError = ({
 
     requestId = existingRequestId
   }
-
   if (displayBanner) {
+    console.log('asdfasdfasd')
     dispatch(addError({
       id: requestId,
       title: `Error ${verb} ${resource}`,

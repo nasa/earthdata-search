@@ -59,49 +59,10 @@ export const updateStore = ({
       shapefile,
       timeline
     }))
-
-    // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
-    // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
-    // other cases, getGranules will be requested using the granule search query params.
-    if ((pathname.includes('/search') && !newPathname) || (newPathname && newPathname.includes('/search'))) {
-      dispatch(actions.getCollections())
-
-      // Granules Search
-      if (pathname === '/search/granules') {
-        dispatch(actions.getFocusedCollection())
-      }
-
-      // Collection Details
-      if (pathname === '/search/granules/collection-details') {
-        dispatch(actions.getFocusedCollection())
-      }
-
-      // Granule Details
-      if (pathname === '/search/granules/granule-details') {
-        dispatch(actions.getFocusedCollection())
-
-        dispatch(actions.getFocusedGranule())
-      }
-    }
-
-    // Fetch collections in the project
-    const { collections: projectCollections = {} } = project
-    const { allIds = [] } = projectCollections
-
-    if (allIds.length > 0) {
-      // Project collection metadata needs to exist before calling retrieving access methods
-      await dispatch(actions.getProjectCollections())
-
-      dispatch(actions.fetchAccessMethods(allIds))
-
-      dispatch(actions.getProjectGranules())
-    }
-
-    dispatch(actions.getTimeline())
   }
 }
 
-export const changePath = (path = '') => (dispatch) => {
+export const changePath = (path = '') => async (dispatch, getState) => {
   const [pathname, queryString] = path.split('?')
 
   // If query string is a projectId, call getProject
@@ -126,6 +87,7 @@ export const changePath = (path = '') => (dispatch) => {
           name,
           projectId
         }))
+
         dispatch(actions.updateStore(decodeUrlParams(projectQueryString)))
       })
       .catch((error) => {
@@ -141,7 +103,53 @@ export const changePath = (path = '') => (dispatch) => {
     return projectResponse
   }
 
-  dispatch(actions.updateStore(decodeUrlParams(queryString), pathname))
+  const decodedParams = decodeUrlParams(queryString)
+
+  dispatch(actions.updateStore(decodedParams, pathname))
+
+  const state = getState()
+
+  // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
+  // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
+  // other cases, getGranules will be requested using the granule search query params.
+  // if ((pathname.includes('/search') && !newPathname) || (newPathname && newPathname.includes('/search'))) {
+  if (pathname.includes('/search')) {
+    dispatch(actions.getCollections())
+
+    // Granules Search
+    if (pathname === '/search/granules') {
+      dispatch(actions.getFocusedCollection())
+    }
+
+    // Collection Details
+    if (pathname === '/search/granules/collection-details') {
+      dispatch(actions.getFocusedCollection())
+    }
+
+    // Granule Details
+    if (pathname === '/search/granules/granule-details') {
+      dispatch(actions.getFocusedCollection())
+
+      dispatch(actions.getFocusedGranule())
+    }
+  }
+
+  // Fetch collections in the project
+  const { project } = state
+  const { collections: projectCollections = {} } = project
+  const { allIds = [] } = projectCollections
+
+  if (allIds.length > 0) {
+    // Project collection metadata needs to exist before calling retrieving access methods
+    await dispatch(actions.getProjectCollections())
+
+    dispatch(actions.fetchAccessMethods(allIds))
+
+    dispatch(actions.getProjectGranules())
+  }
+
+  dispatch(actions.getTimeline())
+
   return null
 }
 

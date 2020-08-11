@@ -25,6 +25,7 @@ function setup() {
     onAddGranuleToProjectCollection: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
+    onViewCollectionGranules: jest.fn(),
     location: {
       search: ''
     },

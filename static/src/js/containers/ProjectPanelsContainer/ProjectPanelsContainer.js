@@ -48,7 +48,9 @@ const mapDispatchToProps = dispatch => ({
   onFocusedGranuleChange:
     granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
   onChangeProjectGranulePageNum:
-    data => dispatch(actions.changeProjectGranulePageNum(data))
+    data => dispatch(actions.changeProjectGranulePageNum(data)),
+  onViewCollectionGranules:
+    collectionId => dispatch(actions.viewCollectionGranules(collectionId))
 })
 
 export const ProjectPanelsContainer = ({
@@ -68,6 +70,7 @@ export const ProjectPanelsContainer = ({
   onTogglePanels,
   onUpdateAccessMethod,
   onUpdateFocusedCollection,
+  onViewCollectionGranules,
   panels,
   portal,
   project,
@@ -92,6 +95,7 @@ export const ProjectPanelsContainer = ({
     onTogglePanels={onTogglePanels}
     onUpdateAccessMethod={onUpdateAccessMethod}
     onUpdateFocusedCollection={onUpdateFocusedCollection}
+    onViewCollectionGranules={onViewCollectionGranules}
     panels={panels}
     portal={portal}
     project={project}
@@ -122,6 +126,7 @@ ProjectPanelsContainer.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,

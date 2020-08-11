@@ -25,7 +25,6 @@ const GranuleResultsTableHeaderCell = (props) => {
   const {
     collectionId,
     isGranuleInProject,
-    isProjectGranulesLoading,
     location,
     onAddGranuleToProjectCollection,
     onExcludeGranule,
@@ -69,7 +68,6 @@ const GranuleResultsTableHeaderCell = (props) => {
                     type="button"
                     label="Add granule"
                     title="Add granule"
-                    diabled={isProjectGranulesLoading}
                     onClick={(e) => {
                       onAddGranuleToProjectCollection({
                         collectionId,
@@ -89,7 +87,6 @@ const GranuleResultsTableHeaderCell = (props) => {
                     type="button"
                     label="Remove granule"
                     title="Remove granule"
-                    diabled={isProjectGranulesLoading}
                     onClick={(e) => {
                       onRemoveGranuleFromProjectCollection({
                         collectionId,

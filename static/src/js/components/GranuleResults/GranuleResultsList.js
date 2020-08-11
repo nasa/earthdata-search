@@ -35,7 +35,6 @@ export const GranuleResultsList = ({
   isCollectionInProject,
   isCwic,
   isGranuleInProject,
-  isProjectGranulesLoading,
   isItemLoaded,
   itemCount,
   loadMoreItems,
@@ -61,7 +60,6 @@ export const GranuleResultsList = ({
             isCollectionInProject={isCollectionInProject}
             isCwic={isCwic}
             isGranuleInProject={isGranuleInProject}
-            isProjectGranulesLoading={isProjectGranulesLoading}
             isItemLoaded={isItemLoaded}
             itemCount={itemCount}
             loadMoreItems={loadMoreItems}
@@ -94,7 +92,6 @@ GranuleResultsList.propTypes = {
   isCollectionInProject: PropTypes.bool.isRequired,
   isCwic: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
-  isProjectGranulesLoading: PropTypes.bool.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,

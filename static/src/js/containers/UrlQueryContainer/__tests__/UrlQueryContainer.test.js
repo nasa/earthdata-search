@@ -29,8 +29,10 @@ function setup() {
     processingLevelFacets: {},
     project: {},
     projectFacets: {},
+    location: {
+      search: '?p=C00001-EDSC'
+    },
     scienceKeywordFacets: {},
-    search: '?p=C00001-EDSC',
     temporalSearch: {},
     timeline: {},
     onChangePath: jest.fn(),
@@ -79,7 +81,9 @@ describe('UrlQueryContainer', () => {
 
       enzymeWrapper.setProps({
         ...props,
-        search: '?p=C00001-EDSC&q=test'
+        location: {
+          search: '?p=C00001-EDSC&q=test'
+        }
       })
 
       expect(props.onChangeUrl.mock.calls.length).toBe(0)

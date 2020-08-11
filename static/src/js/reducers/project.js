@@ -110,8 +110,18 @@ const projectReducer = (state = initialState, action) => {
     case FINISHED_PROJECT_GRANULES_TIMER: {
       const collectionId = action.payload
 
-      const { collections } = state
-      const { byId: projectCollectionsById = {} } = collections
+      const { collections: projectCollections = {} } = state
+      const {
+        allIds: projectCollectionsIds,
+        byId: projectCollectionsById = {}
+      } = projectCollections
+
+      // In the event that a collection (or the last granule added for a collection)
+      // is removed before this action is concluded, we want to ensure we're not adding
+      // unwanted state to redux. If the collection isn't in `allIds` return the current
+      // state effectivly ignoring this abandoned request
+      if (projectCollectionsIds.indexOf(collectionId) === -1) return state
+
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
       const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
       const { timerStart } = projectCollectionGranules
@@ -137,8 +147,18 @@ const projectReducer = (state = initialState, action) => {
     case PROJECT_GRANULES_LOADED: {
       const collectionId = action.payload
 
-      const { collections = {} } = state
-      const { byId: projectCollectionsById = {} } = collections
+      const { collections: projectCollections = {} } = state
+      const {
+        allIds: projectCollectionsIds,
+        byId: projectCollectionsById = {}
+      } = projectCollections
+
+      // In the event that a collection (or the last granule added for a collection)
+      // is removed before this action is concluded, we want to ensure we're not adding
+      // unwanted state to redux. If the collection isn't in `allIds` return the current
+      // state effectivly ignoring this abandoned request
+      if (projectCollectionsIds.indexOf(collectionId) === -1) return state
+
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
       const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
 
@@ -196,8 +216,18 @@ const projectReducer = (state = initialState, action) => {
 
       const newIds = processResults(results)
 
-      const { collections = {} } = state
-      const { byId: projectCollectionsById = {} } = collections
+      const { collections: projectCollections = {} } = state
+      const {
+        allIds: projectCollectionsIds,
+        byId: projectCollectionsById = {}
+      } = projectCollections
+
+      // In the event that a collection (or the last granule added for a collection)
+      // is removed before this action is concluded, we want to ensure we're not adding
+      // unwanted state to redux. If the collection isn't in `allIds` return the current
+      // state effectivly ignoring this abandoned request
+      if (projectCollectionsIds.indexOf(collectionId) === -1) return state
+
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
       const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
       const { allIds = [] } = projectCollectionGranules
@@ -235,7 +265,17 @@ const projectReducer = (state = initialState, action) => {
       const allIds = processResults(results)
 
       const { collections: projectCollections = {} } = state
-      const { byId: projectCollectionsById = {} } = projectCollections
+      const {
+        allIds: projectCollectionsIds,
+        byId: projectCollectionsById = {}
+      } = projectCollections
+
+      // In the event that a collection (or the last granule added for a collection)
+      // is removed before this action is concluded, we want to ensure we're not adding
+      // unwanted state to redux. If the collection isn't in `allIds` return the current
+      // state effectivly ignoring this abandoned request
+      if (projectCollectionsIds.indexOf(collectionId) === -1) return state
+
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
       const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
 

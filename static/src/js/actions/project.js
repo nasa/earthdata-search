@@ -1,5 +1,6 @@
 import { isEmpty, intersection } from 'lodash'
 import actions from './index'
+
 import {
   ADD_ACCESS_METHODS,
   ADD_COLLECTION_TO_PROJECT,
@@ -26,12 +27,8 @@ import { buildCollectionSearchParams, prepareCollectionParams } from '../util/co
 import { buildPromise } from '../util/buildPromise'
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
-import { getProjectGranules } from './granules'
 import { hasTag } from '../../../../sharedUtils/tags'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
-import { parseError } from '../../../../sharedUtils/parseError'
-import { updateAuthTokenFromHeaders } from './authToken'
-import { updateCollectionMetadata } from './collections'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -125,7 +122,7 @@ export const updateProjectGranuleParams = payload => ({
  * Retrieve collection metadata for the collections provided
  * @param {String} collectionId Single collection to lookup, if null then all collections in the project will be retrieved
  */
-export const getProjectCollections = () => (dispatch, getState) => {
+export const getProjectCollections = () => async (dispatch, getState) => {
   const state = getState()
   const {
     authToken,
@@ -289,16 +286,16 @@ export const getProjectCollections = () => (dispatch, getState) => {
       })
 
       // A users authToken will come back with an authenticated request if a valid token was used
-      dispatch(updateAuthTokenFromHeaders(headers))
+      dispatch(actions.updateAuthTokenFromHeaders(headers))
 
       // Update metadata in the store
-      dispatch(updateCollectionMetadata(payload))
+      dispatch(actions.updateCollectionMetadata(payload))
     })
     .catch((error) => {
       dispatch(actions.handleError({
         error,
         action: 'getProjectCollections',
-        resource: 'collections'
+        resource: 'project collections'
       }))
     })
 
@@ -310,16 +307,9 @@ export const getProjectCollections = () => (dispatch, getState) => {
  * @param {String} collectionId The CMR concept id of the collection to add to the project
  */
 export const addProjectCollection = collectionId => async (dispatch) => {
-  dispatch(addCollectionToProject(collectionId))
+  dispatch(actions.addCollectionToProject(collectionId))
 
-  try {
-    await dispatch(actions.getProjectCollections())
-
-    dispatch(actions.fetchAccessMethods([collectionId]))
-    dispatch(actions.getProjectGranules())
-  } catch (error) {
-    parseError(error)
-  }
+  dispatch(actions.getProjectGranules())
 }
 
 /**
@@ -335,7 +325,7 @@ export const addGranuleToProjectCollection = payload => (dispatch, getState) => 
 
   // If the current collection is not in the project, add it.
   if (allIds.indexOf(collectionId) === -1) {
-    dispatch(addProjectCollection(collectionId))
+    dispatch(actions.addCollectionToProject(collectionId))
   }
 
   // Add the granule to the project collection.
@@ -364,30 +354,30 @@ export const removeGranuleFromProjectCollection = payload => (dispatch, getState
   const { granules: projectCollectionGranules } = projectCollection
 
   const {
-    hits: granuleCount,
-    removedGranuleIds = []
+    addedGranuleIds = []
   } = projectCollectionGranules
 
-  const indexInRemovedGranulesArray = removedGranuleIds.indexOf(granuleId)
+  const indexInAddedGranulesArray = addedGranuleIds.indexOf(granuleId)
 
-  // If the granule does not exist in the removed granules array and
-  // removing the granule would result in 0 granules in the project, remove
-  // the current collection from the project.
+  // If the granule is the last granule in the added granules array
   if (
-    indexInRemovedGranulesArray === -1
-    && granuleCount === 1
+    indexInAddedGranulesArray === 0
+    && addedGranuleIds.length === 1
   ) {
-    dispatch(removeCollectionFromProject(collectionId))
+    dispatch(actions.removeCollectionFromProject(collectionId))
+  } else {
+    dispatch({
+      type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
+      payload
+    })
+
+    // Updates the project collection granule query resetting the page number
+    // to one for the subsequent request
+    dispatch(actions.updateProjectGranuleParams({ collectionId, pageNum: 1 }))
+
+    // Request granules with the updated parameters
+    dispatch(actions.getProjectGranules())
   }
-
-  dispatch({
-    type: REMOVE_GRANULE_FROM_PROJECT_COLLECTION,
-    payload
-  })
-
-  dispatch(actions.updateProjectGranuleParams({ collectionId, pageNum: 1 }))
-
-  dispatch(actions.getProjectGranules())
 }
 
 export const changeProjectGranulePageNum = ({ collectionId, pageNum }) => (dispatch, getState) => {
@@ -415,12 +405,12 @@ export const changeProjectGranulePageNum = ({ collectionId, pageNum }) => (dispa
   // and the granules loaded is less than the total granules
   if (allIds.length > 0 && allIds.length < hits) {
     // Update the collection specific granule query params
-    dispatch(updateProjectGranuleParams({
+    dispatch(actions.updateProjectGranuleParams({
       collectionId,
       pageNum
     }))
 
     // Fetch the next page of granules
-    dispatch(getProjectGranules())
+    dispatch(actions.getProjectGranules())
   }
 }
