@@ -136,8 +136,8 @@ export const changePath = (path = '') => async (dispatch, getState) => {
 
   // Fetch collections in the project
   const { project } = state
-  const { collections: projectCollections = {} } = project
-  const { allIds = [] } = projectCollections
+  const { collections: projectCollections } = project
+  const { allIds } = projectCollections
 
   if (allIds.length > 0) {
     // Project collection metadata needs to exist before calling retrieving access methods

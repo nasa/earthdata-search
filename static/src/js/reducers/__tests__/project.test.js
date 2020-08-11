@@ -763,7 +763,11 @@ describe('ERRORED_PROJECT_GRANULES', () => {
       collections: {
         allIds: ['collectionId'],
         byId: {
-          collectionId: {}
+          collectionId: {
+            granules: {
+              ...initialGranuleState
+            }
+          }
         }
       }
     }
