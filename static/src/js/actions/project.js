@@ -381,11 +381,11 @@ export const removeGranuleFromProjectCollection = payload => (dispatch, getState
 }
 
 export const changeProjectGranulePageNum = ({ collectionId, pageNum }) => (dispatch, getState) => {
-  const { projectCollectionGranules } = getState()
+  const { project } = getState()
 
   const {
     collections: projectCollections
-  } = projectCollectionGranules
+  } = project
 
   const {
     byId: projectCollectionsById

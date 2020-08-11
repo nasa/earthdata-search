@@ -28,18 +28,6 @@ const initialState = {
   isSubmitting: false
 }
 
-const processResults = (results) => {
-  const allIds = []
-
-  results.forEach((result) => {
-    const { id } = result
-
-    allIds.push(id)
-  })
-
-  return allIds
-}
-
 export const initialGranuleState = {
   addedGranuleIds: [],
   allIds: [],
@@ -53,6 +41,18 @@ export const initialGranuleState = {
   removedGranuleIds: []
 }
 
+const processResults = (results) => {
+  const allIds = []
+
+  results.forEach((result) => {
+    const { id } = result
+
+    allIds.push(id)
+  })
+
+  return allIds
+}
+
 const projectReducer = (state = initialState, action) => {
   switch (action.type) {
     case STARTED_PROJECT_GRANULES_TIMER: {
@@ -61,7 +61,7 @@ const projectReducer = (state = initialState, action) => {
       const { collections: projectCollections = {} } = state
       const { byId: projectCollectionsById = {} } = projectCollections
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
-      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+      const { granules: projectCollectionGranules } = projectCollection
 
       return {
         ...state,
@@ -72,6 +72,7 @@ const projectReducer = (state = initialState, action) => {
             [collectionId]: {
               ...projectCollection,
               granules: {
+                ...initialGranuleState,
                 ...projectCollectionGranules,
                 timerStart: Date.now()
               }
@@ -86,7 +87,7 @@ const projectReducer = (state = initialState, action) => {
       const { collections = {} } = state
       const { byId: projectCollectionsById = {} } = collections
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
-      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+      const { granules: projectCollectionGranules } = projectCollection
 
       return {
         ...state,
@@ -123,7 +124,7 @@ const projectReducer = (state = initialState, action) => {
       if (projectCollectionsIds.indexOf(collectionId) === -1) return state
 
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
-      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+      const { granules: projectCollectionGranules } = projectCollection
       const { timerStart } = projectCollectionGranules
 
       return {
@@ -160,7 +161,7 @@ const projectReducer = (state = initialState, action) => {
       if (projectCollectionsIds.indexOf(collectionId) === -1) return state
 
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
-      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+      const { granules: projectCollectionGranules } = projectCollection
 
       return {
         ...state,
@@ -187,7 +188,7 @@ const projectReducer = (state = initialState, action) => {
       const { collections = {} } = state
       const { byId: projectCollectionsById = {} } = collections
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
-      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+      const { granules: projectCollectionGranules } = projectCollection
 
       return {
         ...state,
@@ -229,7 +230,7 @@ const projectReducer = (state = initialState, action) => {
       if (projectCollectionsIds.indexOf(collectionId) === -1) return state
 
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
-      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+      const { granules: projectCollectionGranules } = projectCollection
       const { allIds = [] } = projectCollectionGranules
 
       return {
@@ -277,7 +278,7 @@ const projectReducer = (state = initialState, action) => {
       if (projectCollectionsIds.indexOf(collectionId) === -1) return state
 
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
-      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+      const { granules: projectCollectionGranules } = projectCollection
 
       return {
         ...state,
@@ -306,7 +307,7 @@ const projectReducer = (state = initialState, action) => {
       const { collections: projectCollections = {} } = state
       const { byId: projectCollectionsById = {} } = projectCollections
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
-      const { granules: projectCollectionGranules = initialGranuleState } = projectCollection
+      const { granules: projectCollectionGranules } = projectCollection
 
       return {
         ...state,

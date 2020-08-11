@@ -146,7 +146,7 @@ export const GranuleResultsListBody = ({
       ...sizeMap.current[rowIndex]
     ]
 
-    sizeMap.current[rowIndex][columnIndex] = size
+    sizeMap.current[rowIndex][columnIndex] = size || 127
 
     // Reset the items after the index of the item.
     listRef.current.resetAfterIndices({ rowIndex, columnIndex: 0 }, true)
