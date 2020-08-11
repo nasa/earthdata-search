@@ -113,7 +113,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
   // other cases, getGranules will be requested using the granule search query params.
   // if ((pathname.includes('/search') && !newPathname) || (newPathname && newPathname.includes('/search'))) {
-  if (pathname.includes('/search')) {
+  if (pathname === '/' || pathname.includes('/search')) {
     dispatch(actions.getCollections())
 
     // Granules Search
