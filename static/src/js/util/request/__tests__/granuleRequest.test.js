@@ -64,8 +64,13 @@ describe('GranuleRequest#nonIndexedKeys', () => {
     const request = new GranuleRequest()
 
     expect(request.nonIndexedKeys()).toEqual([
+      'bounding_box',
+      'circle',
       'concept_id',
       'exclude',
+      'line',
+      'point',
+      'polygon',
       'readable_granule_name',
       'sort_key'
     ])

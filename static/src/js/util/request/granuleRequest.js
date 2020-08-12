@@ -53,8 +53,13 @@ export default class GranuleRequest extends CmrRequest {
 
   nonIndexedKeys() {
     return [
+      'bounding_box',
+      'circle',
       'concept_id',
       'exclude',
+      'line',
+      'point',
+      'polygon',
       'readable_granule_name',
       'sort_key'
     ]

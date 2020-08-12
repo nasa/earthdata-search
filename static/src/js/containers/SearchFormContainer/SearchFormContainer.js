@@ -29,6 +29,7 @@ const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   autocomplete: state.autocomplete,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  circleSearch: state.query.collection.spatial.circle,
   drawingNewLayer: state.ui.map.drawingNewLayer,
   gridName: state.query.collection.gridName,
   keywordSearch: state.query.collection.keyword,
@@ -47,6 +48,7 @@ export const SearchFormContainer = (props) => {
     advancedSearch,
     autocomplete,
     boundingBoxSearch,
+    circleSearch,
     drawingNewLayer,
     gridName,
     lineSearch,
@@ -83,6 +85,7 @@ export const SearchFormContainer = (props) => {
   let showFilterStackToggle = [
     regionSearch,
     boundingBoxSearch,
+    circleSearch,
     drawingNewLayer,
     gridName,
     lineSearch,
@@ -125,11 +128,12 @@ export const SearchFormContainer = (props) => {
 SearchFormContainer.defaultProps = {
   advancedSearch: {},
   keywordSearch: '',
-  boundingBoxSearch: '',
+  boundingBoxSearch: [],
+  circleSearch: [],
   gridName: '',
-  lineSearch: '',
-  pointSearch: '',
-  polygonSearch: '',
+  lineSearch: [],
+  pointSearch: [],
+  polygonSearch: [],
   shapefile: {},
   temporalSearch: {}
 }
@@ -137,13 +141,14 @@ SearchFormContainer.defaultProps = {
 SearchFormContainer.propTypes = {
   advancedSearch: PropTypes.shape({}),
   autocomplete: PropTypes.shape({}).isRequired,
-  boundingBoxSearch: PropTypes.string,
+  boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
+  circleSearch: PropTypes.arrayOf(PropTypes.string),
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool
   ]).isRequired,
   gridName: PropTypes.string,
-  lineSearch: PropTypes.string,
+  lineSearch: PropTypes.arrayOf(PropTypes.string),
   keywordSearch: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
@@ -153,8 +158,8 @@ SearchFormContainer.propTypes = {
   onClearAutocompleteSuggestions: PropTypes.func.isRequired,
   onFetchAutocomplete: PropTypes.func.isRequired,
   onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
-  pointSearch: PropTypes.string,
-  polygonSearch: PropTypes.string,
+  pointSearch: PropTypes.arrayOf(PropTypes.string),
+  polygonSearch: PropTypes.arrayOf(PropTypes.string),
   selectingNewGrid: PropTypes.bool.isRequired,
   shapefile: PropTypes.shape({}),
   temporalSearch: PropTypes.shape({})

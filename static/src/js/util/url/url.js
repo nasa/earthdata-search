@@ -13,6 +13,7 @@ import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesO
 import { isPath } from '../isPath'
 import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEncoders'
 import { encodeAutocomplete, decodeAutocomplete } from './autocompleteEncoders'
+import { encodeArray, decodeArray } from './arrayEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -39,11 +40,11 @@ export const stringify = params => qs.stringify(
 const urlDefs = {
   focusedGranule: { shortKey: 'g', encode: encodeString, decode: decodeString },
   keywordSearch: { shortKey: 'q', encode: encodeString, decode: decodeString },
-  pointSearch: { shortKey: 'sp', encode: encodeString, decode: decodeString },
-  boundingBoxSearch: { shortKey: 'sb', encode: encodeString, decode: decodeString },
-  polygonSearch: { shortKey: 'polygon', encode: encodeString, decode: decodeString },
-  lineSearch: { shortKey: 'line', encode: encodeString, decode: decodeString },
-  circleSearch: { shortKey: 'circle', encode: encodeString, decode: decodeString },
+  pointSearch: { shortKey: 'sp', encode: encodeArray, decode: decodeArray },
+  boundingBoxSearch: { shortKey: 'sb', encode: encodeArray, decode: decodeArray },
+  polygonSearch: { shortKey: 'polygon', encode: encodeArray, decode: decodeArray },
+  lineSearch: { shortKey: 'line', encode: encodeArray, decode: decodeArray },
+  circleSearch: { shortKey: 'circle', encode: encodeArray, decode: decodeArray },
   map: { shortKey: 'm', encode: encodeMap, decode: decodeMap },
   temporalSearch: { shortKey: 'qt', encode: encodeTemporal, decode: decodeTemporal },
   overrideTemporalSearch: { shortKey: 'ot', encode: encodeTemporal, decode: decodeTemporal },
