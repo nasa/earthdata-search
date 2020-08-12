@@ -22,17 +22,17 @@ const defaultProps = {
   advancedSearch: {
     regionSearch: {}
   },
-  boundingBoxSearch: '',
-  circleSearch: '',
+  boundingBoxSearch: [],
+  circleSearch: [],
   isCwic: false,
   isProjectPage: false,
-  lineSearch: '',
+  lineSearch: [],
   mapRef: {
     leafletElement: {},
     props: {}
   },
-  pointSearch: '',
-  polygonSearch: '',
+  pointSearch: [],
+  polygonSearch: [],
   onChangeQuery: jest.fn(),
   onChangeMap: jest.fn(),
   onToggleDrawingNewLayer: jest.fn(),
@@ -99,7 +99,7 @@ describe('SpatialSelection component', () => {
         drawnLayer,
         drawnPoints: ''
       })
-      enzymeWrapper.setProps({ pointSearch: '0,0' })
+      enzymeWrapper.setProps({ pointSearch: ['0,0'] })
 
       expect(mockRemoveLayer).toHaveBeenCalledTimes(2)
       expect(enzymeWrapper.instance().renderShape.mock.calls.length).toBe(1)
@@ -124,7 +124,7 @@ describe('SpatialSelection component', () => {
         drawnPoints: '0,0'
       })
 
-      enzymeWrapper.setProps({ pointSearch: '0,0' })
+      enzymeWrapper.setProps({ pointSearch: ['0,0'] })
 
       expect(enzymeWrapper.instance().renderShape.mock.calls.length).toBe(0)
     })
@@ -207,7 +207,7 @@ describe('SpatialSelection component', () => {
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            point: '10,20'
+            point: ['10,20']
           }
         }
       }])
@@ -236,7 +236,7 @@ describe('SpatialSelection component', () => {
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            boundingBox: '10,20,30,40'
+            boundingBox: ['10,20,30,40']
           }
         }
       }])
@@ -264,7 +264,7 @@ describe('SpatialSelection component', () => {
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            polygon: '10,0,20,10,5,15'
+            polygon: ['10,0,20,10,5,15']
           }
         }
       }])
@@ -292,7 +292,7 @@ describe('SpatialSelection component', () => {
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            polygon: '10,0,20,10,5,15'
+            polygon: ['10,0,20,10,5,15']
           }
         }
       }])
@@ -319,7 +319,7 @@ describe('SpatialSelection component', () => {
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            line: '10,20,30,40'
+            line: ['10,20,30,40']
           }
         }
       }])
@@ -345,7 +345,7 @@ describe('SpatialSelection component', () => {
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {
-            circle: '0,0,20000'
+            circle: ['0,0,20000']
           }
         }
       }])
@@ -373,7 +373,7 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderPoint = jest.fn()
       enzymeWrapper.instance().featureGroupRef = { leafletElement: jest.fn() }
 
-      enzymeWrapper.instance().renderShape({ ...props, pointSearch: '0,10' })
+      enzymeWrapper.instance().renderShape({ ...props, pointSearch: ['0,10'] })
 
       expect(enzymeWrapper.instance().renderPoint.mock.calls.length).toBe(1)
       expect(enzymeWrapper.instance().renderPoint.mock.calls[0][0]).toEqual([{ lat: 10, lng: 0 }])
@@ -386,7 +386,7 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderBoundingBox = jest.fn()
       enzymeWrapper.instance().featureGroupRef = { leafletElement: jest.fn() }
 
-      enzymeWrapper.instance().renderShape({ ...props, boundingBoxSearch: '10,20,30,40' })
+      enzymeWrapper.instance().renderShape({ ...props, boundingBoxSearch: ['10,20,30,40'] })
 
       expect(enzymeWrapper.instance().renderBoundingBox.mock.calls.length).toBe(1)
       expect(enzymeWrapper.instance().renderBoundingBox.mock.calls[0][0]).toEqual([
@@ -402,7 +402,7 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderPolygon = jest.fn()
       enzymeWrapper.instance().featureGroupRef = { leafletElement: jest.fn() }
 
-      enzymeWrapper.instance().renderShape({ ...props, polygonSearch: '10,0,20,10,5,15,10,0' })
+      enzymeWrapper.instance().renderShape({ ...props, polygonSearch: ['10,0,20,10,5,15,10,0'] })
 
       expect(enzymeWrapper.instance().renderPolygon.mock.calls.length).toBe(1)
       expect(enzymeWrapper.instance().renderPolygon.mock.calls[0][0]).toEqual([
@@ -420,7 +420,7 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderLine = jest.fn()
       enzymeWrapper.instance().featureGroupRef = { leafletElement: jest.fn() }
 
-      enzymeWrapper.instance().renderShape({ ...props, lineSearch: '10,0,20,10,5,15,10,0' })
+      enzymeWrapper.instance().renderShape({ ...props, lineSearch: ['10,0,20,10,5,15,10,0'] })
 
       expect(enzymeWrapper.instance().renderLine.mock.calls.length).toBe(1)
       expect(enzymeWrapper.instance().renderLine.mock.calls[0][0]).toEqual([
@@ -438,7 +438,7 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderCircle = jest.fn()
       enzymeWrapper.instance().featureGroupRef = { leafletElement: jest.fn() }
 
-      enzymeWrapper.instance().renderShape({ ...props, circleSearch: '0,0,20000' })
+      enzymeWrapper.instance().renderShape({ ...props, circleSearch: ['0,0,20000'] })
 
       expect(enzymeWrapper.instance().renderCircle.mock.calls.length).toBe(1)
       expect(enzymeWrapper.instance().renderCircle.mock.calls[0][0]).toEqual([

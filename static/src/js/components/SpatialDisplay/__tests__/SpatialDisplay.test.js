@@ -10,13 +10,13 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    boundingBoxSearch: '',
-    circleSearch: '',
+    boundingBoxSearch: [],
+    circleSearch: [],
     displaySpatialPolygonWarning: false,
     drawingNewLayer: false,
-    lineSearch: '',
-    pointSearch: '',
-    polygonSearch: '',
+    lineSearch: [],
+    pointSearch: [],
+    polygonSearch: [],
     gridName: '',
     onChangeQuery: jest.fn(),
     onRemoveGridFilter: jest.fn(),
@@ -45,7 +45,7 @@ describe('SpatialDisplay component', () => {
     test('should render the spatial info', () => {
       const { enzymeWrapper } = setup()
       const newPoint = '-77.0418825,38.805869' // Lon,Lat
-      enzymeWrapper.setProps({ pointSearch: newPoint })
+      enzymeWrapper.setProps({ pointSearch: [newPoint] })
 
       const filterStackItem = enzymeWrapper.find(FilterStackItem)
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -64,7 +64,7 @@ describe('SpatialDisplay component', () => {
     test('should render the spatial info', () => {
       const { enzymeWrapper } = setup()
       const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
-      enzymeWrapper.setProps({ boundingBoxSearch: newBoundingBox })
+      enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
 
       const filterStackItem = enzymeWrapper.find(FilterStackItem)
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -91,7 +91,7 @@ describe('SpatialDisplay component', () => {
     test('should render the spatial info', () => {
       const { enzymeWrapper } = setup()
       const newCircle = '-77.119759,38.791645,20000'
-      enzymeWrapper.setProps({ circleSearch: newCircle })
+      enzymeWrapper.setProps({ circleSearch: [newCircle] })
 
       const filterStackItem = enzymeWrapper.find(FilterStackItem)
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -122,7 +122,7 @@ describe('SpatialDisplay component', () => {
         + '-76.89415168762207,38.902629947921575,'
         + '-77.04444122314453,38.99228142151045'
 
-      enzymeWrapper.setProps({ polygonSearch: newPolygon })
+      enzymeWrapper.setProps({ polygonSearch: [newPolygon] })
 
       const filterStackItem = enzymeWrapper.find(FilterStackItem)
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -147,7 +147,7 @@ describe('SpatialDisplay component', () => {
 
       enzymeWrapper.setProps({
         displaySpatialPolygonWarning: true,
-        polygonSearch: newPolygon
+        polygonSearch: [newPolygon]
       })
 
       const filterStackItem = enzymeWrapper.find(FilterStackItem)
@@ -171,7 +171,7 @@ describe('SpatialDisplay component', () => {
         + '-77.01992797851562,38.79166886339155,'
         + '-76.89415168762207,38.902629947921575'
 
-      enzymeWrapper.setProps({ lineSearch: line })
+      enzymeWrapper.setProps({ lineSearch: [line] })
 
       const filterStackItem = enzymeWrapper.find(FilterStackItem)
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -226,7 +226,7 @@ describe('SpatialDisplay component', () => {
         + '-77.04444122314453,38.99228142151045'
 
       enzymeWrapper.setProps({
-        polygonSearch: newPolygon,
+        polygonSearch: [newPolygon],
         shapefile: {
           shapefileName: 'test file',
           shapefileSize: '42 KB',
@@ -283,9 +283,9 @@ describe('SpatialDisplay component', () => {
   test('componentWillReceiveProps sets the state', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.state().pointSearch).toEqual('')
+    expect(enzymeWrapper.state().pointSearch).toEqual(undefined)
     const newPoint = '0,0'
-    enzymeWrapper.setProps({ pointSearch: newPoint })
+    enzymeWrapper.setProps({ pointSearch: [newPoint] })
     expect(enzymeWrapper.state().pointSearch).toEqual(newPoint)
   })
 
@@ -370,7 +370,7 @@ describe('SpatialDisplay component', () => {
       })
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { point: '-77,38' } } })
+      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { point: ['-77,38'] } } })
     })
 
     test('changing bounding box search updates the state', () => {
@@ -402,7 +402,7 @@ describe('SpatialDisplay component', () => {
       })
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: '20,10,40,30' } } })
+      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: ['20,10,40,30'] } } })
     })
 
     test('changing circle search updates the state', () => {
@@ -434,7 +434,7 @@ describe('SpatialDisplay component', () => {
       })
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { circle: '-77,38,10000' } } })
+      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { circle: ['-77,38,10000'] } } })
     })
   })
 })

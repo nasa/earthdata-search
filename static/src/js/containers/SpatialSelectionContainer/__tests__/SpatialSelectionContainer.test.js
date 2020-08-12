@@ -12,7 +12,8 @@ function setup() {
     advancedSearch: {
       regionSearch: {}
     },
-    boundingBoxSearch: 'Test value',
+    boundingBoxSearch: ['Test value'],
+    circleSearch: ['Test value'],
     collectionMetadata: {},
     mapRef: {
       leafletElement: {}
@@ -24,8 +25,8 @@ function setup() {
         pathname: '/search'
       }
     },
-    pointSearch: 'Test value',
-    polygonSearch: 'Test value',
+    pointSearch: ['Test value'],
+    polygonSearch: ['Test value'],
     onMetricsMap: jest.fn(),
     onMetricsSpatialEdit: jest.fn()
   }
@@ -43,11 +44,12 @@ describe('SpatialSelectionContainer component', () => {
     const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(SpatialSelection).length).toBe(1)
-    expect(enzymeWrapper.find(SpatialSelection).props().boundingBoxSearch).toEqual('Test value')
+    expect(enzymeWrapper.find(SpatialSelection).props().boundingBoxSearch).toEqual(['Test value'])
+    expect(enzymeWrapper.find(SpatialSelection).props().circleSearch).toEqual(['Test value'])
     expect(enzymeWrapper.find(SpatialSelection).props().isCwic).toEqual(false)
     expect(enzymeWrapper.find(SpatialSelection).props().isProjectPage).toEqual(false)
-    expect(enzymeWrapper.find(SpatialSelection).props().pointSearch).toEqual('Test value')
-    expect(enzymeWrapper.find(SpatialSelection).props().polygonSearch).toEqual('Test value')
+    expect(enzymeWrapper.find(SpatialSelection).props().pointSearch).toEqual(['Test value'])
+    expect(enzymeWrapper.find(SpatialSelection).props().polygonSearch).toEqual(['Test value'])
     expect(enzymeWrapper.find(SpatialSelection).props().onChangeQuery).toEqual(props.onChangeQuery)
     expect(enzymeWrapper.find(SpatialSelection).props().onToggleDrawingNewLayer)
       .toEqual(props.onToggleDrawingNewLayer)

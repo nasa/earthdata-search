@@ -63,11 +63,11 @@ class SpatialDisplay extends Component {
 
     this.setState({
       error: '',
-      boundingBoxSearch: this.transformBoundingBoxCoordinates(boundingBoxSearch),
-      circleSearch: this.transformCircleCoordinates(circleSearch),
+      boundingBoxSearch: this.transformBoundingBoxCoordinates(boundingBoxSearch[0]),
+      circleSearch: this.transformCircleCoordinates(circleSearch[0]),
       gridName,
-      pointSearch,
-      polygonSearch,
+      pointSearch: pointSearch[0],
+      polygonSearch: polygonSearch[0],
       shapefile
     })
   }
@@ -89,19 +89,19 @@ class SpatialDisplay extends Component {
       error: ''
     }
 
-    if (pointSearch !== nextProps.pointSearch) {
-      shouldUpdateState = true
+    if (pointSearch[0] !== nextProps.pointSearch[0]) {
+      shouldUpdateState = true;
 
-      state.pointSearch = nextProps.pointSearch
+      ([state.pointSearch] = nextProps.pointSearch)
       state.error = this.validateCoordinate(
-        this.transformSingleCoordinate(nextProps.pointSearch)
+        this.transformSingleCoordinate(nextProps.pointSearch[0])
       )
     }
 
-    if (boundingBoxSearch !== nextProps.boundingBoxSearch) {
+    if (boundingBoxSearch[0] !== nextProps.boundingBoxSearch[0]) {
       shouldUpdateState = true
 
-      const points = this.transformBoundingBoxCoordinates(nextProps.boundingBoxSearch)
+      const points = this.transformBoundingBoxCoordinates(nextProps.boundingBoxSearch[0])
 
       state.boundingBoxSearch = points
 
@@ -112,22 +112,22 @@ class SpatialDisplay extends Component {
       }
     }
 
-    if (polygonSearch !== nextProps.polygonSearch) {
-      shouldUpdateState = true
+    if (polygonSearch[0] !== nextProps.polygonSearch[0]) {
+      shouldUpdateState = true;
 
-      state.polygonSearch = nextProps.polygonSearch
+      ([state.polygonSearch] = nextProps.polygonSearch)
     }
 
-    if (lineSearch !== nextProps.lineSearch) {
-      shouldUpdateState = true
+    if (lineSearch[0] !== nextProps.lineSearch[0]) {
+      shouldUpdateState = true;
 
-      state.lineSearch = nextProps.lineSearch
+      ([state.lineSearch] = nextProps.lineSearch)
     }
 
-    if (circleSearch !== nextProps.circleSearch) {
+    if (circleSearch[0] !== nextProps.circleSearch[0]) {
       shouldUpdateState = true
 
-      const points = this.transformCircleCoordinates(nextProps.circleSearch)
+      const points = this.transformCircleCoordinates(nextProps.circleSearch[0])
       state.circleSearch = points
     }
 
@@ -203,7 +203,7 @@ class SpatialDisplay extends Component {
         onChangeQuery({
           collection: {
             spatial: {
-              point: pointSearch.replace(/\s/g, '')
+              point: [pointSearch.replace(/\s/g, '')]
             }
           }
         })
@@ -262,7 +262,7 @@ class SpatialDisplay extends Component {
           onChangeQuery({
             collection: {
               spatial: {
-                boundingBox: this.transformBoundingBoxCoordinates(boundingBoxSearch.join(',')).join(',')
+                boundingBox: [this.transformBoundingBoxCoordinates(boundingBoxSearch.join(',')).join(',')]
               }
             }
           })
@@ -322,7 +322,7 @@ class SpatialDisplay extends Component {
           onChangeQuery({
             collection: {
               spatial: {
-                circle: [this.transformCircleCoordinates(circleSearch.join(','))].join(',')
+                circle: [[this.transformCircleCoordinates(circleSearch.join(','))].join(',')]
               }
             }
           })
@@ -398,6 +398,8 @@ class SpatialDisplay extends Component {
    * @param {String} coordinateString A single coordinate representing a point on a map
    */
   transformSingleCoordinate(coordinateString) {
+    if (!coordinateString) return ''
+
     return coordinateString.split(',').reverse().join(',').replace(/\s/g, '')
   }
 
@@ -419,6 +421,8 @@ class SpatialDisplay extends Component {
    * @param {String} circleCoordinates A center point and radius
    */
   transformCircleCoordinates(circleCoordinates) {
+    if (!circleCoordinates) return ['', '', '']
+
     const points = circleCoordinates.split(',')
 
     const [
@@ -449,8 +453,8 @@ class SpatialDisplay extends Component {
       lineSearch,
       gridName,
       manuallyEntering,
-      pointSearch,
-      polygonSearch,
+      pointSearch = '',
+      polygonSearch = '',
       shapefile
     } = this.state
 
@@ -821,20 +825,20 @@ class SpatialDisplay extends Component {
 }
 
 SpatialDisplay.propTypes = {
-  boundingBoxSearch: PropTypes.string.isRequired,
-  circleSearch: PropTypes.string.isRequired,
+  boundingBoxSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
+  circleSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   displaySpatialPolygonWarning: PropTypes.bool.isRequired,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool
   ]).isRequired,
   gridName: PropTypes.string.isRequired,
-  lineSearch: PropTypes.string.isRequired,
+  lineSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onRemoveGridFilter: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
-  pointSearch: PropTypes.string.isRequired,
-  polygonSearch: PropTypes.string.isRequired,
+  pointSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
+  polygonSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectingNewGrid: PropTypes.bool.isRequired,
   shapefile: PropTypes.shape({}).isRequired
 }

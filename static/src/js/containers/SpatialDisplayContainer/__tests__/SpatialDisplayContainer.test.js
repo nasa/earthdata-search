@@ -9,17 +9,17 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    boundingBoxSearch: 'Test Bounding Box',
-    circleSearch: 'Test Circle',
+    boundingBoxSearch: ['Test Bounding Box'],
+    circleSearch: ['Test Circle'],
     displaySpatialPolygonWarning: false,
     drawingNewLayer: false,
     gridName: 'Test Grid',
-    lineSearch: 'Test Line',
+    lineSearch: ['Test Line'],
     onChangeQuery: jest.fn(),
     onRemoveGridFilter: jest.fn(),
     onRemoveSpatialFilter: jest.fn(),
-    pointSearch: 'Test Point Search',
-    polygonSearch: 'Test Polygon Search',
+    pointSearch: ['Test Point Search'],
+    polygonSearch: ['Test Polygon Search'],
     selectingNewGrid: false,
     shapefile: {}
   }
@@ -38,17 +38,17 @@ describe('SpatialDisplayContainer component', () => {
 
     expect(enzymeWrapper.find(SpatialDisplay).length).toBe(1)
     expect(enzymeWrapper.find(SpatialDisplay).props()).toEqual({
-      boundingBoxSearch: 'Test Bounding Box',
-      circleSearch: 'Test Circle',
+      boundingBoxSearch: ['Test Bounding Box'],
+      circleSearch: ['Test Circle'],
       displaySpatialPolygonWarning: false,
       drawingNewLayer: false,
       gridName: 'Test Grid',
-      lineSearch: 'Test Line',
+      lineSearch: ['Test Line'],
       onChangeQuery: props.onChangeQuery,
       onRemoveGridFilter: props.onRemoveGridFilter,
       onRemoveSpatialFilter: props.onRemoveSpatialFilter,
-      pointSearch: 'Test Point Search',
-      polygonSearch: 'Test Polygon Search',
+      pointSearch: ['Test Point Search'],
+      polygonSearch: ['Test Polygon Search'],
       selectingNewGrid: false,
       shapefile: {}
     })

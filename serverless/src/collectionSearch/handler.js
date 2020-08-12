@@ -62,15 +62,20 @@ const collectionSearch = async (event) => {
   ]
 
   const nonIndexedKeys = [
+    'bounding_box',
+    'circle',
     'collection_data_type',
     'concept_id',
     'data_center_h',
-    'granule_data_format',
     'granule_data_format_h',
-    'instrument',
+    'granule_data_format',
     'instrument_h',
-    'platform',
+    'instrument',
+    'line',
     'platform_h',
+    'platform',
+    'point',
+    'polygon',
     'processing_level_id_h',
     'project_h',
     'provider',

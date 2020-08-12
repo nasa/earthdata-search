@@ -155,17 +155,17 @@ class SpatialSelection extends Component {
     const { selectedRegion: nextSelectedRegion = {} } = nextRegionSearch
     const { spatial: nextRegionSpatial } = nextSelectedRegion
 
-    const newDrawing = nextProps.pointSearch
-      || nextProps.boundingBoxSearch
-      || nextProps.polygonSearch
-      || nextProps.lineSearch
-      || nextProps.circleSearch
+    const newDrawing = nextProps.pointSearch[0]
+      || nextProps.boundingBoxSearch[0]
+      || nextProps.polygonSearch[0]
+      || nextProps.lineSearch[0]
+      || nextProps.circleSearch[0]
       || nextRegionSpatial
-    const oldDrawing = pointSearch
-    || boundingBoxSearch
-    || polygonSearch
-    || lineSearch
-    || circleSearch
+    const oldDrawing = pointSearch[0]
+    || boundingBoxSearch[0]
+    || polygonSearch[0]
+    || lineSearch[0]
+    || circleSearch[0]
     || regionSpatial
 
     const { featureGroupRef = {} } = this
@@ -190,11 +190,11 @@ class SpatialSelection extends Component {
     // to CWIC as their spatial
     if (!nextProps.isProjectPage) {
       if (
-        (nextProps.polygonSearch !== '')
+        (nextProps.polygonSearch[0] !== '')
         && drawnMbr === null
         && nextProps.isCwic
       ) {
-        this.renderMbr(nextProps.polygonSearch)
+        this.renderMbr(nextProps.polygonSearch[0])
       } else if (drawnMbr !== null && !nextProps.isCwic) {
         if (leafletElement.removeLayer) {
           leafletElement.removeLayer(drawnMbr)
@@ -413,7 +413,7 @@ class SpatialSelection extends Component {
     onChangeQuery({
       collection: {
         spatial: {
-          [type]: latLngsAntiMeridian.join()
+          [type]: [latLngsAntiMeridian.join()]
         }
       }
     })
@@ -462,24 +462,24 @@ class SpatialSelection extends Component {
       this.setState({ drawnPoints: selectedRegion.spatial })
       const points = splitListOfPoints(selectedRegion.spatial)
       this.renderPolygon(getShape(points), featureGroup, shouldCenter)
-    } else if (pointSearch) {
-      this.setState({ drawnPoints: pointSearch })
-      this.renderPoint(getShape([pointSearch]), featureGroup, shouldCenter)
-    } else if (boundingBoxSearch) {
-      this.setState({ drawnPoints: boundingBoxSearch })
-      const points = splitListOfPoints(boundingBoxSearch)
+    } else if (pointSearch[0]) {
+      this.setState({ drawnPoints: pointSearch[0] })
+      this.renderPoint(getShape([pointSearch[0]]), featureGroup, shouldCenter)
+    } else if (boundingBoxSearch[0]) {
+      this.setState({ drawnPoints: boundingBoxSearch[0] })
+      const points = splitListOfPoints(boundingBoxSearch[0])
       this.renderBoundingBox(getShape(points), featureGroup, shouldCenter)
-    } else if (polygonSearch) {
-      this.setState({ drawnPoints: polygonSearch })
-      const points = splitListOfPoints(polygonSearch)
+    } else if (polygonSearch[0]) {
+      this.setState({ drawnPoints: polygonSearch[0] })
+      const points = splitListOfPoints(polygonSearch[0])
       this.renderPolygon(getShape(points), featureGroup, shouldCenter)
-    } else if (lineSearch) {
-      this.setState({ drawnPoints: lineSearch })
-      const points = splitListOfPoints(lineSearch)
+    } else if (lineSearch[0]) {
+      this.setState({ drawnPoints: lineSearch[0] })
+      const points = splitListOfPoints(lineSearch[0])
       this.renderLine(points, featureGroup, shouldCenter)
-    } else if (circleSearch) {
-      this.setState({ drawnPoints: circleSearch })
-      const points = circleSearch.split(',')
+    } else if (circleSearch[0]) {
+      this.setState({ drawnPoints: circleSearch[0] })
+      const points = circleSearch[0].split(',')
       this.renderCircle(points, featureGroup, shouldCenter)
     }
   }
@@ -676,25 +676,25 @@ class SpatialSelection extends Component {
 }
 
 SpatialSelection.defaultProps = {
-  boundingBoxSearch: '',
-  circleSearch: '',
-  lineSearch: '',
+  boundingBoxSearch: [],
+  circleSearch: [],
+  lineSearch: [],
   mapRef: {},
-  pointSearch: '',
-  polygonSearch: ''
+  pointSearch: [],
+  polygonSearch: []
 }
 
 SpatialSelection.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
-  boundingBoxSearch: PropTypes.string,
-  circleSearch: PropTypes.string,
+  boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
+  circleSearch: PropTypes.arrayOf(PropTypes.string),
   isCwic: PropTypes.bool.isRequired,
   isProjectPage: PropTypes.bool.isRequired,
   mapRef: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired,
-  pointSearch: PropTypes.string,
-  polygonSearch: PropTypes.string,
-  lineSearch: PropTypes.string,
+  pointSearch: PropTypes.arrayOf(PropTypes.string),
+  polygonSearch: PropTypes.arrayOf(PropTypes.string),
+  lineSearch: PropTypes.arrayOf(PropTypes.string),
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onMetricsSpatialEdit: PropTypes.func.isRequired

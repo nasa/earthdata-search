@@ -62,31 +62,30 @@ export const SpatialDisplayContainer = (props) => {
 }
 
 SpatialDisplayContainer.defaultProps = {
-  boundingBoxSearch: '',
-  circleSearch: '',
+  boundingBoxSearch: [],
+  circleSearch: [],
   gridName: '',
-  lineSearch: '',
-  pointSearch: '',
-  polygonSearch: '',
+  lineSearch: [],
+  pointSearch: [],
+  polygonSearch: [],
   shapefile: {}
 }
 
 SpatialDisplayContainer.propTypes = {
-  boundingBoxSearch: PropTypes.string,
-  circleSearch: PropTypes.string,
+  boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
+  circleSearch: PropTypes.arrayOf(PropTypes.string),
   displaySpatialPolygonWarning: PropTypes.bool.isRequired,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool
   ]).isRequired,
   gridName: PropTypes.string,
-  // gridCoords: PropTypes.string,
-  lineSearch: PropTypes.string,
+  lineSearch: PropTypes.arrayOf(PropTypes.string),
   onChangeQuery: PropTypes.func.isRequired,
   onRemoveGridFilter: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
-  pointSearch: PropTypes.string,
-  polygonSearch: PropTypes.string,
+  pointSearch: PropTypes.arrayOf(PropTypes.string),
+  polygonSearch: PropTypes.arrayOf(PropTypes.string),
   selectingNewGrid: PropTypes.bool.isRequired,
   shapefile: PropTypes.shape({})
 }

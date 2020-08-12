@@ -78,27 +78,27 @@ export const SpatialSelectionContainer = (props) => {
 }
 
 SpatialSelectionContainer.defaultProps = {
-  boundingBoxSearch: '',
-  circleSearch: '',
-  lineSearch: '',
+  boundingBoxSearch: [],
+  circleSearch: [],
+  lineSearch: [],
   mapRef: {},
-  pointSearch: '',
-  polygonSearch: ''
+  pointSearch: [],
+  polygonSearch: []
 }
 
 SpatialSelectionContainer.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
-  boundingBoxSearch: PropTypes.string,
-  circleSearch: PropTypes.string,
+  boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
+  circleSearch: PropTypes.arrayOf(PropTypes.string),
   collectionMetadata: PropTypes.shape({}).isRequired,
-  lineSearch: PropTypes.string,
+  lineSearch: PropTypes.arrayOf(PropTypes.string),
   mapRef: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onMetricsSpatialEdit: PropTypes.func.isRequired,
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
-  pointSearch: PropTypes.string,
-  polygonSearch: PropTypes.string,
+  pointSearch: PropTypes.arrayOf(PropTypes.string),
+  polygonSearch: PropTypes.arrayOf(PropTypes.string),
   router: PropTypes.shape({}).isRequired
 }
 
