@@ -146,7 +146,7 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case PROJECT_GRANULES_LOADED: {
-      const collectionId = action.payload
+      const { collectionId, loaded } = action.payload
 
       const { collections: projectCollections = {} } = state
       const {
@@ -174,7 +174,7 @@ const projectReducer = (state = initialState, action) => {
               granules: {
                 ...projectCollectionGranules,
                 isErrored: false,
-                isLoaded: true,
+                isLoaded: loaded,
                 isLoading: false
               }
             }
