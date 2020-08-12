@@ -1,9 +1,11 @@
-import collectionsResultsReducer from '../collectionsResults'
+import collectionsResultsReducer, { initialGranuleState } from '../collectionsResults'
+
 import {
   ADD_MORE_COLLECTION_RESULTS,
   ADD_MORE_GRANULE_RESULTS,
   FINISHED_COLLECTIONS_TIMER,
   FINISHED_GRANULES_TIMER,
+  INITIALIZE_COLLECTION_GRANULES_RESULTS,
   LOADED_COLLECTIONS,
   LOADED_GRANULES,
   LOADING_COLLECTIONS,
@@ -158,33 +160,30 @@ describe('LOADED_COLLECTIONS', () => {
   })
 })
 
-// TODO: Is this action type used?
-// describe('INITIALIZE_COLLECTION_GRANULES_RESULTS', () => {
-//   test('returns the correct state', () => {
-//     const action = {
-//       type: INITIALIZE_COLLECTION_GRANULES_RESULTS,
-//       payload: {
-//         results: [{
-//           id: 'mockCollectionId2',
-//           mockCollectionData: 'goes here 2'
-//         }],
-//         hits: 0,
-//       }
-//     }
-
-//     const initial = {
-//       ...initialState,
-//       allIds: ['mockCollectionId1']
-//     }
-
-//     const expectedState = {
-//       ...initialState,
-//       allIds: ['mockCollectionId1', 'mockCollectionId2']
-//     }
-
-//     expect(collectionsResultsReducer(initial, action)).toEqual(expectedState)
-//   })
-// })
+describe('INITIALIZE_COLLECTION_GRANULES_RESULTS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: INITIALIZE_COLLECTION_GRANULES_RESULTS,
+      payload: 'mockCollectionId1'
+    }
+    const initial = {
+      ...initialState,
+      allIds: ['mockCollectionId1']
+    }
+    const expectedState = {
+      ...initialState,
+      allIds: ['mockCollectionId1'],
+      byId: {
+        mockCollectionId1: {
+          granules: {
+            ...initialGranuleState
+          }
+        }
+      }
+    }
+    expect(collectionsResultsReducer(initial, action)).toEqual(expectedState)
+  })
+})
 
 describe('STARTED_GRANULES_TIMER', () => {
   test('returns the correct state', () => {

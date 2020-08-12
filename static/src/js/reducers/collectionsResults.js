@@ -24,7 +24,7 @@ const initialState = {
   timerStart: null
 }
 
-const initialGranuleState = {
+export const initialGranuleState = {
   allIds: [],
   excludedGranuleIds: [],
   hits: null,
