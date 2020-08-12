@@ -21,6 +21,7 @@ export const GranuleDownloadButton = (props) => {
     isCollectionInProject,
     location,
     onAddProjectCollection,
+    onChangePath,
     tooManyGranules
   } = props
 
@@ -88,7 +89,14 @@ export const GranuleDownloadButton = (props) => {
   return (
     <PortalLinkContainer
       className="granule-results-actions__download-all"
-      onClick={() => onAddProjectCollection(focusedCollectionId)}
+      onClick={() => {
+        onAddProjectCollection(focusedCollectionId)
+        onChangePath(`/projects${stringify({
+          ...params,
+          p,
+          pg
+        })}`)
+      }}
       to={{
         pathname: '/projects',
         search: stringify({
@@ -129,6 +137,7 @@ GranuleDownloadButton.propTypes = {
   isCollectionInProject: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({}).isRequired,
   tooManyGranules: PropTypes.bool.isRequired
 }

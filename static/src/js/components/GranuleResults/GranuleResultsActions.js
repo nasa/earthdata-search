@@ -102,6 +102,7 @@ const GranuleResultsActions = ({
       isCollectionInProject={isCollectionInProject}
       location={location}
       onAddProjectCollection={onAddProjectCollection}
+      onChangePath={onChangePath}
       projectCollection={focusedProjectCollection}
       tooManyGranules={tooManyGranules}
     />
@@ -131,7 +132,7 @@ const GranuleResultsActions = ({
                 </span>
                 <PortalFeatureContainer authentication>
                   {
-                    isCollectionInProject && (
+                    projectGranuleCount > 0 && isCollectionInProject && (
                       <PortalLinkContainer
                         type="button"
                         className="granule-results-actions__project-pill"
@@ -150,7 +151,7 @@ const GranuleResultsActions = ({
                           (!addedGranuleIds.length && !removedGranuleIds.length) && <span title="All granules in project">All Granules</span>
                         }
                         {
-                          (addedGranuleIds.length > 0 || removedGranuleIds.length > 0) && (
+                          projectGranuleCount > 0 && (
                             <span
                               title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
                             >

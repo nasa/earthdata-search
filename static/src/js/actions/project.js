@@ -354,16 +354,18 @@ export const removeGranuleFromProjectCollection = payload => (dispatch, getState
   const { granules: projectCollectionGranules } = projectCollection
 
   const {
-    addedGranuleIds = []
+    addedGranuleIds = [],
+    hits: granuleCount
   } = projectCollectionGranules
 
   const indexInAddedGranulesArray = addedGranuleIds.indexOf(granuleId)
 
-  // If the granule is the last granule in the added granules array
+  // If the granule is the last granule in the added granules array or the granule count is 1
   if (
-    indexInAddedGranulesArray === 0
-    && addedGranuleIds.length === 1
+    (indexInAddedGranulesArray === 0 && addedGranuleIds.length === 1)
+    || granuleCount === 1
   ) {
+    // Remove the collection from the project
     dispatch(actions.removeCollectionFromProject(collectionId))
   } else {
     dispatch({

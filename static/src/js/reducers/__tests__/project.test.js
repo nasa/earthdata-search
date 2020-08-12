@@ -839,7 +839,10 @@ describe('PROJECT_GRANULES_LOADED', () => {
   test('returns the correct state', () => {
     const action = {
       type: PROJECT_GRANULES_LOADED,
-      payload: 'collectionId'
+      payload: {
+        collectionId: 'collectionId',
+        loaded: true
+      }
     }
 
     const initial = {

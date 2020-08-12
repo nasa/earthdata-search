@@ -422,8 +422,6 @@ export const getProjectGranules = () => (dispatch, getState) => {
   // Get a redux selector to fetch collection metadata from the store
   const collectionsMetadata = getCollectionsMetadata(state)
 
-  if (Object.keys(collectionsMetadata).length === 0) return null
-
   const { collections } = project
   const { allIds } = collections
 
@@ -502,7 +500,10 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
         dispatch(updateAuthTokenFromHeaders(headers))
 
-        dispatch(projectGranulesLoaded(collectionId))
+        dispatch(projectGranulesLoaded({
+          collectionId,
+          loaded: true
+        }))
 
         dispatch(addGranuleMetadata(entry))
 
