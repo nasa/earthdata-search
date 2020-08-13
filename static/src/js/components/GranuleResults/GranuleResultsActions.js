@@ -151,7 +151,8 @@ const GranuleResultsActions = ({
                           (!addedGranuleIds.length && !removedGranuleIds.length) && <span title="All granules in project">All Granules</span>
                         }
                         {
-                          projectGranuleCount > 0 && (
+                          (projectGranuleCount > 0
+                            && (addedGranuleIds.length > 0 || removedGranuleIds.length > 0)) && (
                             <span
                               title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
                             >

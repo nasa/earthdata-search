@@ -6,6 +6,10 @@ import {
   CLEAR_FILTERS
 } from '../constants/actionTypes'
 
+import { getFocusedCollectionGranuleQuery } from '../selectors/query'
+import { getFocusedCollectionId } from '../selectors/focusedCollection'
+import { getProjectCollectionsIds } from '../selectors/project'
+
 export const updateCollectionQuery = payload => ({
   type: UPDATE_COLLECTION_QUERY,
   payload
@@ -22,17 +26,14 @@ export const updateRegionQuery = payload => ({
 })
 
 export const changeQuery = (queryOptions = {}) => async (dispatch, getState) => {
-  const {
-    focusedCollection,
-    query
-  } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const focusedCollectionGranuleQuery = getFocusedCollectionGranuleQuery(state)
+  const focusedCollectionId = getFocusedCollectionId(state)
+  const projectCollectionsIds = getProjectCollectionsIds(state)
 
   const newQuery = queryOptions
-
-  const { collection: collectionQuery = {} } = query
-  const {
-    byId: collectionQueryById
-  } = collectionQuery
 
   if (newQuery.collection) {
     dispatch(updateCollectionQuery({
@@ -42,17 +43,21 @@ export const changeQuery = (queryOptions = {}) => async (dispatch, getState) => 
 
     dispatch(actions.getCollections())
 
-    if (focusedCollection) {
-      const { [focusedCollection]: focusedCollectionCollectionQuery } = collectionQueryById
-      const { granules: focusedCollectionGranuleQuery } = focusedCollectionCollectionQuery
-
+    // If there is a focused collection, update it's granule search params
+    // and request it's granules started with page one
+    if (focusedCollectionId) {
       dispatch(updateGranuleSearchQuery({
-        collectionId: focusedCollection,
+        collectionId: focusedCollectionId,
         ...focusedCollectionGranuleQuery,
         pageNum: 1
       }))
 
       dispatch(actions.getSearchGranules())
+    }
+
+    // If there are collections in the project, update their respective granule results
+    if (projectCollectionsIds.length > 0) {
+      dispatch(actions.getProjectGranules())
     }
   }
 }
