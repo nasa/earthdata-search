@@ -22,7 +22,6 @@ function setup(overrideProps) {
     },
     projectCollectionsIds: ['projectCollectionId'],
     focusedCollectionId: 'focusedCollectionId',
-    onChangeProjectQuery: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
     onMetricsTimeline: jest.fn(),

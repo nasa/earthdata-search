@@ -7,6 +7,7 @@ import {
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { eventEmitter } from '../events/events'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { getCollectionsQuery } from '../selectors/query'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { hasTag } from '../../../../sharedUtils/tags'
@@ -31,7 +32,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   const {
     authToken,
-    query,
     router
   } = state
 
@@ -39,6 +39,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   dispatch(actions.collectionRelevancyMetrics())
 
   // Retrieve data from Redux using selectors
+  const collectionsQuery = getCollectionsQuery(state)
   const focusedCollectionId = getFocusedCollectionId(state)
   const focusedCollectionMetadata = getFocusedCollectionMetadata(state)
 
@@ -50,8 +51,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   } = focusedCollectionMetadata
 
   // Determine if the user has searched using a polygon
-  const { collection: collectionQuery } = query
-  const { spatial } = collectionQuery
+  const { spatial } = collectionsQuery
   const { polygon } = spatial
 
   // CWIC does not support polygon search, if this is a CWIC collection

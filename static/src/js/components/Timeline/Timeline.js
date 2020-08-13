@@ -20,16 +20,16 @@ class Timeline extends Component {
     this.rows = {}
     this.panTimeout = null
 
-    this.handleTemporalSet = this.handleTemporalSet.bind(this)
-    this.handleRangeChange = this.handleRangeChange.bind(this)
-    this.handleFocusChange = this.handleFocusChange.bind(this)
-    this.handleButtonZoom = this.handleButtonZoom.bind(this)
     this.handleArrowPan = this.handleArrowPan.bind(this)
+    this.handleButtonZoom = this.handleButtonZoom.bind(this)
     this.handleClickLabel = this.handleClickLabel.bind(this)
     this.handleCreatedTemporal = this.handleCreatedTemporal.bind(this)
-    this.handleScrollZoom = this.handleScrollZoom.bind(this)
-    this.handleScrollPan = this.handleScrollPan.bind(this)
     this.handleDraggingPan = this.handleDraggingPan.bind(this)
+    this.handleFocusChange = this.handleFocusChange.bind(this)
+    this.handleRangeChange = this.handleRangeChange.bind(this)
+    this.handleScrollPan = this.handleScrollPan.bind(this)
+    this.handleScrollZoom = this.handleScrollZoom.bind(this)
+    this.handleTemporalSet = this.handleTemporalSet.bind(this)
   }
 
   componentDidMount() {
@@ -59,17 +59,17 @@ class Timeline extends Component {
     this.setTimelineTemporal(temporalSearch)
     this.setTimelineFocus(start, end)
 
-    this.$el.on('temporalchange.timeline', this.handleTemporalSet)
-    this.$el.on('rangechange.timeline', this.handleRangeChange)
-    this.$el.on('focuschange.timeline', this.handleFocusChange)
-    this.$el.on('rowtemporalchange.timeline', this.handleRowTemporalChange)
-    this.$el.on('buttonzoom.timeline', this.handleButtonZoom)
     this.$el.on('arrowpan.timeline', this.handleArrowPan)
+    this.$el.on('buttonzoom.timeline', this.handleButtonZoom)
     this.$el.on('clicklabel.timeline', this.handleClickLabel)
     this.$el.on('createdtemporal.timeline', this.handleCreatedTemporal)
-    this.$el.on('scrollzoom.timeline', this.handleScrollZoom)
-    this.$el.on('scrollpan.timeline', this.handleScrollPan)
     this.$el.on('draggingpan.timeline', this.handleDraggingPan)
+    this.$el.on('focuschange.timeline', this.handleFocusChange)
+    this.$el.on('rangechange.timeline', this.handleRangeChange)
+    this.$el.on('rowtemporalchange.timeline', this.handleRowTemporalChange)
+    this.$el.on('scrollpan.timeline', this.handleScrollPan)
+    this.$el.on('scrollzoom.timeline', this.handleScrollZoom)
+    this.$el.on('temporalchange.timeline', this.handleTemporalSet)
 
     this.$el.trigger('rangechange.timeline')
 

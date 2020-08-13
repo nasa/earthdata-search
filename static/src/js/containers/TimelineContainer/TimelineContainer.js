@@ -6,6 +6,7 @@ import actions from '../../actions/index'
 
 import { metricsTimeline } from '../../middleware/metrics/actions'
 
+import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getProjectCollectionsIds } from '../../selectors/project'
 import { isPath } from '../../util/isPath'
@@ -14,7 +15,6 @@ import Timeline from '../../components/Timeline/Timeline'
 
 const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onChangeProjectQuery: query => dispatch(actions.changeProjectQuery(query)),
   onChangeTimelineQuery: query => dispatch(actions.changeTimelineQuery(query)),
   onToggleOverrideTemporalModal:
     open => dispatch(actions.toggleOverrideTemporalModal(open)),
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   browser: state.browser,
-  collectionsMetadata: state.metadata.collections,
+  collectionsMetadata: getCollectionsMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
   pathname: state.router.location.pathname,
   projectCollectionsIds: getProjectCollectionsIds(state),
@@ -42,13 +42,10 @@ export const TimelineContainer = (props) => {
     temporalSearch,
     timeline,
     onChangeQuery,
-    onChangeProjectQuery,
     onChangeTimelineQuery,
     onToggleOverrideTemporalModal,
     onMetricsTimeline
   } = props
-
-  let changeQueryMethod = onChangeQuery
 
   // Determine the collectionMetadata the timeline should be displaying
   const isProjectPage = isPath(pathname, ['/projects'])
@@ -59,9 +56,6 @@ export const TimelineContainer = (props) => {
 
   if (isProjectPage) {
     collectionsToRender.push(...projectCollectionsIds.slice(0, 3))
-
-    // Call a specific changeQuery action to ensure the correct update are madd
-    changeQueryMethod = onChangeProjectQuery
   } else if (isGranulesPage && focusedCollectionId !== '') {
     collectionsToRender.push(focusedCollectionId)
   }
@@ -84,7 +78,7 @@ export const TimelineContainer = (props) => {
       showOverrideModal={isProjectPage}
       temporalSearch={temporalSearch}
       timeline={timeline}
-      onChangeQuery={changeQueryMethod}
+      onChangeQuery={onChangeQuery}
       onChangeTimelineQuery={onChangeTimelineQuery}
       onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
       onMetricsTimeline={onMetricsTimeline}
@@ -100,7 +94,6 @@ TimelineContainer.propTypes = {
   browser: PropTypes.shape({}).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
-  onChangeProjectQuery: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,
   onMetricsTimeline: PropTypes.func.isRequired,
