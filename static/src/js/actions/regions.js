@@ -10,8 +10,7 @@ import {
   LOADED_REGIONS,
   STARTED_REGIONS_TIMER,
   FINISHED_REGIONS_TIMER,
-  ERRORED_REGIONS,
-  RESTORE_REGIONS
+  ERRORED_REGIONS
 } from '../constants/actionTypes'
 
 export const updateRegionResults = payload => ({
@@ -40,13 +39,6 @@ export const startRegionsTimer = () => ({
 export const finishRegionsTimer = () => ({
   type: FINISHED_REGIONS_TIMER
 })
-
-export const restoreRegions = payload => (dispatch) => {
-  dispatch({
-    type: RESTORE_REGIONS,
-    payload
-  })
-}
 
 /**
  * Perform a collections request based on the current redux state.
