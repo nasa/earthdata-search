@@ -55,6 +55,10 @@ describe('fetchAccessMethods', () => {
       metadata: {
         collections: {
           collectionId: {
+            services: {
+              count: 0,
+              items: null
+            },
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -114,6 +118,17 @@ describe('fetchAccessMethods', () => {
       metadata: {
         collections: {
           collectionId: {
+            services: {
+              count: 1,
+              items: [{
+                conceptId: 'umm-s-record-1',
+                type: 'ECHO ORDERS',
+                url: {
+                  description: 'EOSDIS ECHO ORDERS Service Implementation',
+                  urlValue: 'http://echo-order-endpoint.com'
+                }
+              }]
+            },
             tags: {
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
@@ -184,6 +199,10 @@ describe('fetchAccessMethods', () => {
       metadata: {
         collections: {
           collectionId: {
+            services: {
+              count: 0,
+              items: null
+            },
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -273,9 +292,21 @@ describe('fetchAccessMethods', () => {
       metadata: {
         collections: {
           collectionId: {
+            services: {
+              count: 1,
+              items: [{
+                conceptId: 'umm-s-record-1',
+                type: 'ECHO ORDERS',
+                url: {
+                  description: 'EOSDIS ECHO ORDERS Service Implementation',
+                  urlValue: 'http://echo-order-endpoint.com'
+                }
+              }]
+            },
             tags: {
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
+                  id: 'umm-s-record-1',
                   option_definitions: [
                     {
                       id: 'option_definition_guid',

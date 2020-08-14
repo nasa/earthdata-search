@@ -208,7 +208,10 @@ export const getProjectCollections = () => async (dispatch, getState) => {
             count
             items {
               conceptId
+              longName
+              name
               type
+              url
               supportedOutputFormats
               supportedReformattings
             }
