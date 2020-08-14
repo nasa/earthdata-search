@@ -55,12 +55,12 @@
       "dbHost": "127.0.0.1",
       "dbName": "edsc_dev",
       "dbPort": 5432,
-      "apiHost": "http://localhost:3001",
+      "apiHost": "http://localhost:3001/lab",
       "edscHost": "http://localhost:8080",
       "includeNtPageTag": false
     },
     "production": {
-      "apiHost": "http://localhost:3001",
+      "apiHost": "http://localhost:3001/lab",
       "edscHost": "http://localhost:8080",
       "includeNtPageTag": true
     }

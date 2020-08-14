@@ -56,9 +56,11 @@ const ServerlessWebpackConfig = {
     new CleanWebpackPlugin([path.resolve(__dirname, 'serverless/dist')]),
     ConditionalPlugin(
       (config => config.webpack.includeMigrations),
-      new CopyPlugin([
-        { from: 'migrations', to: 'migrations' }
-      ])
+      new CopyPlugin({
+        patterns: [
+          { from: 'migrations', to: 'migrations' }
+        ]
+      })
     )
   ]
 }
