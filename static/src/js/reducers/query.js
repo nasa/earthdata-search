@@ -48,6 +48,7 @@ const queryReducer = (state = initialState, action) => {
       const { collection = {} } = state
       const { byId = {} } = collection
       const { [collectionId]: focusedCollection = {} } = byId
+      const { granules: focusedCollectionGranules = {} } = focusedCollection
 
       return {
         ...state,
@@ -57,7 +58,10 @@ const queryReducer = (state = initialState, action) => {
             ...state.collection.byId,
             [collectionId]: {
               ...focusedCollection,
-              granules: initialGranuleState
+              granules: {
+                ...initialGranuleState,
+                ...focusedCollectionGranules
+              }
             }
           }
 
@@ -70,8 +74,7 @@ const queryReducer = (state = initialState, action) => {
         collectionId
       } = payload
 
-      const { query = {} } = state
-      const { collection = {} } = query
+      const { collection = {} } = state
       const { byId: collectionQueryById = {} } = collection
       const { [collectionId]: currentCollection = {} } = collectionQueryById
       const { granules = {} } = currentCollection

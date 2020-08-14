@@ -33,6 +33,8 @@ function setup() {
     focusedCollectionId: '',
     focusedGranuleId: '',
     granules: {},
+    granulesMetadata: {},
+    granuleSearchResults: {},
     router: {
       location: {
         pathname: '/search'

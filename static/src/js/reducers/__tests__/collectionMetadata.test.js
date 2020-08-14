@@ -1,7 +1,6 @@
 import collectionMetadataReducer from '../collectionMetadata'
 import {
   RESTORE_FROM_URL,
-  TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_COLLECTION_METADATA
 } from '../../constants/actionTypes'
 
@@ -69,34 +68,5 @@ describe('RESTORE_FROM_URL', () => {
     }
 
     expect(collectionMetadataReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('TOGGLE_COLLECTION_VISIBILITY', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: TOGGLE_COLLECTION_VISIBILITY,
-      payload: 'collectionId'
-    }
-
-    const initial = {
-      ...initialState,
-      byId: {
-        collectionId: {
-          isVisible: true
-        }
-      }
-    }
-
-    const expectedState = {
-      ...initialState,
-      byId: {
-        collectionId: {
-          isVisible: false
-        }
-      }
-    }
-
-    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
   })
 })

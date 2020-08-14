@@ -10,6 +10,7 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
+import { difference } from 'lodash'
 
 import actions from '../../actions/index'
 
@@ -17,10 +18,12 @@ import { metricsMap } from '../../middleware/metrics/actions'
 
 import crsProjections from '../../util/map/crs'
 import projections from '../../util/map/projections'
-// import murmurhash3 from '../../util/murmurhash3'
+import murmurhash3 from '../../util/murmurhash3'
 
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
+import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
+import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 import { isPath } from '../../util/isPath'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
@@ -55,6 +58,8 @@ const mapStateToProps = state => ({
   collectionsMetadata: state.metadata.collections,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
+  granuleSearchResults: getFocusedCollectionGranuleResults(state),
+  granulesMetadata: getGranulesMetadata(state),
   map: state.map,
   project: state.project,
   router: state.router,
@@ -211,6 +216,8 @@ export class MapContainer extends Component {
       collectionsMetadata,
       focusedCollectionId,
       focusedGranuleId,
+      granuleSearchResults,
+      granulesMetadata,
       project,
       router,
       shapefile,
@@ -240,25 +247,25 @@ export class MapContainer extends Component {
     const maxZoom = projection === projections.geographic ? 7 : 4
 
     let nonExcludedGranules
-    // if (focusedCollectionId && collections[focusedCollectionId]) {
-    //   const { excludedGranuleIds = [], granules } = collections[focusedCollectionId]
-    //   const { allIds, isCwic } = granules
-    //   const allGranuleIds = allIds
-    //   nonExcludedGranules = granules
-    //   let granuleIds
-    //   if (isCwic) {
-    //     granuleIds = allGranuleIds.filter((id) => {
-    //       const hashedId = murmurhash3(id).toString()
-    //       return excludedGranuleIds.indexOf(hashedId) === -1
-    //     })
-    //   } else {
-    //     granuleIds = difference(allGranuleIds, excludedGranuleIds)
-    //   }
-    //   nonExcludedGranules = { byId: {} }
-    //   granuleIds.forEach((granuleId) => {
-    //     nonExcludedGranules.byId[granuleId] = granules.byId[granuleId]
-    //   })
-    // }
+    if (focusedCollectionId && granuleSearchResults) {
+      const { allIds, excludedGranuleIds, isCwic } = granuleSearchResults
+      const allGranuleIds = allIds
+
+      let granuleIds
+      if (isCwic) {
+        granuleIds = allGranuleIds.filter((id) => {
+          const hashedId = murmurhash3(id).toString()
+          return excludedGranuleIds.indexOf(hashedId) === -1
+        })
+      } else {
+        granuleIds = difference(allGranuleIds, excludedGranuleIds)
+      }
+
+      nonExcludedGranules = { byId: {} }
+      granuleIds.forEach((granuleId) => {
+        nonExcludedGranules.byId[granuleId] = granulesMetadata[granuleId]
+      })
+    }
 
     if (this.mapRef) this.mapRef.leafletElement.options.crs = crsProjections[projection]
 
@@ -357,6 +364,7 @@ export class MapContainer extends Component {
           collectionsMetadata={collectionsMetadata}
           focusedCollectionId={focusedCollectionId}
           focusedGranuleId={focusedGranuleId}
+          granulesMetadata={granulesMetadata}
           isProjectPage={isProjectPage}
           granules={nonExcludedGranules}
           project={project}
@@ -401,6 +409,8 @@ MapContainer.propTypes = {
   collectionsMetadata: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
+  granuleSearchResults: PropTypes.shape({}).isRequired,
+  granulesMetadata: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}),
   project: PropTypes.shape({}).isRequired,
   router: PropTypes.shape({}).isRequired,

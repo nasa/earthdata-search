@@ -16,7 +16,8 @@ import {
   SUBMITTING_PROJECT,
   UPDATE_ACCESS_METHOD,
   UPDATE_PROJECT_GRANULE_RESULTS,
-  UPDATE_PROJECT_GRANULE_PARAMS
+  UPDATE_PROJECT_GRANULE_PARAMS,
+  TOGGLE_COLLECTION_VISIBILITY
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -640,6 +641,23 @@ const projectReducer = (state = initialState, action) => {
         ...state,
         isSubmitted: true,
         isSubmitting: false
+      }
+    }
+    case TOGGLE_COLLECTION_VISIBILITY: {
+      console.log('projectReducer -> state', state)
+      return {
+        ...state,
+        collections: {
+          ...state.collections,
+          byId: {
+            ...state.collections.byId,
+            [action.payload]: {
+              ...state.collections.byId[action.payload],
+              isVisible: !state.collections.byId[action.payload].isVisible
+            }
+          }
+
+        }
       }
     }
     default:

@@ -85,7 +85,7 @@ export const CollectionDetails = ({
                     role="button"
                     tabIndex="0"
                     onMouseEnter={() => {
-                      eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granuleMetadata })
+                      eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: granuleMetadata })
                     }}
                     onMouseLeave={() => {
                       eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: null })
@@ -93,11 +93,11 @@ export const CollectionDetails = ({
                     onClick={() => {
                       const newGranule = id === focusedGranuleId
                         ? { granule: null }
-                        : { granuleMetadata }
+                        : { granule: granuleMetadata }
                       eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, newGranule)
                     }}
                     onKeyPress={() => {
-                      eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granuleMetadata })
+                      eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: granuleMetadata })
                     }}
                   >
                     <span className="collection-details__item-title">

@@ -120,6 +120,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
           dayNightFlag,
           granuleSize,
           granuleUr,
+          hasAllMetadata: true,
           id: conceptId,
           measuredParameters,
           metadataUrls: createEcho10MetadataUrls(focusedGranuleId),

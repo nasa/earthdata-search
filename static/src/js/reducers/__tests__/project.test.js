@@ -15,9 +15,10 @@ import {
   STARTED_PROJECT_GRANULES_TIMER,
   SUBMITTED_PROJECT,
   SUBMITTING_PROJECT,
+  TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
-  UPDATE_PROJECT_GRANULE_RESULTS,
-  UPDATE_PROJECT_GRANULE_PARAMS
+  UPDATE_PROJECT_GRANULE_PARAMS,
+  UPDATE_PROJECT_GRANULE_RESULTS
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -1054,6 +1055,39 @@ describe('UPDATE_PROJECT_GRANULE_PARAMS', () => {
                 pageNum: 1
               }
             }
+          }
+        }
+      }
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_COLLECTION_VISIBILITY', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_COLLECTION_VISIBILITY,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      ...initialState,
+      collections: {
+        byId: {
+          collectionId: {
+            isVisible: true
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      collections: {
+        byId: {
+          collectionId: {
+            isVisible: false
           }
         }
       }
