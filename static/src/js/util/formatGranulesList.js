@@ -35,7 +35,7 @@ export const formatGranulesList = ({
     const {
       browseFlag,
       browseUrl,
-      collectionId,
+      collectionConceptId,
       dayNightFlag,
       formattedTemporal,
       id,
@@ -59,15 +59,15 @@ export const formatGranulesList = ({
     const handleClick = () => {
       let stickyGranule = original
       if (id === focusedGranuleId) stickyGranule = null
-      eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: stickyGranule })
+      eventEmitter.emit(`map.layer.${collectionConceptId}.stickygranule`, { granule: stickyGranule })
     }
 
     const handleMouseEnter = () => {
-      eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: original })
+      eventEmitter.emit(`map.layer.${collectionConceptId}.focusgranule`, { granule: original })
     }
 
     const handleMouseLeave = () => {
-      eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: null })
+      eventEmitter.emit(`map.layer.${collectionConceptId}.focusgranule`, { granule: null })
     }
 
     return {

@@ -2,7 +2,6 @@ import camelCaseKeys from 'camelcase-keys'
 
 import {
   RESTORE_FROM_URL,
-  TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_COLLECTION_METADATA
 } from '../constants/actionTypes'
 
@@ -55,18 +54,6 @@ const collectionMetadataReducer = (state = initialState, action) => {
       return {
         ...state,
         ...collections
-      }
-    }
-    case TOGGLE_COLLECTION_VISIBILITY: {
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [action.payload]: {
-            ...state.byId[action.payload],
-            isVisible: !state.byId[action.payload].isVisible
-          }
-        }
       }
     }
     default:

@@ -2,6 +2,7 @@ import queryReducer, { initialGranuleState } from '../query'
 import {
   CLEAR_FILTERS,
   EXCLUDE_GRANULE_ID,
+  INITIALIZE_COLLECTION_GRANULES_QUERY,
   RESTORE_FROM_URL,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_QUERY,
@@ -243,6 +244,42 @@ describe('UPDATE_GRANULE_SEARCH_QUERY', () => {
               ...initialGranuleState,
               collectionId: 'collectionId',
               pageNum: 2
+            }
+          }
+        }
+      }
+    }
+
+    expect(queryReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('INITIALIZE_COLLECTION_GRANULES_QUERY', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: INITIALIZE_COLLECTION_GRANULES_QUERY,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {}
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              pageNum: 1
             }
           }
         }

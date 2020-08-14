@@ -42,7 +42,7 @@ describe('getFocusedGranule', () => {
     jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
   })
 
-  describe('when metdata has already been retrieved from graphql', () => {
+  describe('when metadata has already been retrieved from graphql', () => {
     test('should take no action', async () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
         cmrHost: 'https://cmr.example.com',
@@ -75,9 +75,10 @@ describe('getFocusedGranule', () => {
         searchResults: {}
       })
 
-      await store.dispatch(getFocusedGranule())
+      store.dispatch(getFocusedGranule())
 
-      // TODO: Mock `GraphQlRequest` and ensure that it does not get called
+      const storeActions = store.getActions()
+      expect(storeActions.length).toBe(0)
     })
   })
 
@@ -123,7 +124,8 @@ describe('getFocusedGranule', () => {
             type: UPDATE_GRANULE_METADATA,
             payload: [
               expect.objectContaining({
-                id: 'G10000000000-EDSC'
+                id: 'G10000000000-EDSC',
+                hasAllMetadata: true
               })
             ]
           })
@@ -160,9 +162,10 @@ describe('getFocusedGranule', () => {
             searchResults: {}
           })
 
-          await store.dispatch(getFocusedGranule())
+          store.dispatch(getFocusedGranule())
 
-          // TODO: Mock `GraphQlRequest` and ensure that it does not get called
+          const storeActions = store.getActions()
+          expect(storeActions.length).toBe(0)
         })
       })
     })

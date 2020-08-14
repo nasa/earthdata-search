@@ -51,6 +51,7 @@ import {
 } from '../selectors/collectionMetadata'
 
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
+import { eventEmitter } from '../events/events'
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -284,10 +285,6 @@ export const fetchRetrievalCollectionGranuleLinks = data => (dispatch) => {
   }
 }
 
-export const undoExcludeGranule = collectionId => (dispatch) => {
-  dispatch(onUndoExcludeGranule(collectionId))
-}
-
 // Cancel token to cancel pending search requests
 const granuleSearchCancelTokens = {}
 
@@ -403,6 +400,11 @@ export const getSearchGranules = () => (dispatch, getState) => {
     })
 
   return response
+}
+
+export const undoExcludeGranule = collectionId => (dispatch) => {
+  dispatch(onUndoExcludeGranule(collectionId))
+  dispatch(actions.getSearchGranules())
 }
 
 // Cancel token to cancel pending project granule requests
@@ -556,6 +558,9 @@ export const applyGranuleFilters = (
  */
 export const excludeGranule = data => (dispatch) => {
   const { collectionId, granuleId } = data
+
+  // Unfocus the granule on the map
+  eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: null })
 
   dispatch(actions.onExcludeGranule({
     collectionId,

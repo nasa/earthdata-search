@@ -90,7 +90,7 @@ describe('CollectionDetails component', () => {
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'map.layer.COLL-1.focusgranule',
         {
-          granuleMetadata: granules[0]
+          granule: granules[0]
         }
       )
     })
@@ -122,7 +122,7 @@ describe('CollectionDetails component', () => {
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'map.layer.COLL-1.stickygranule',
         {
-          granuleMetadata: granules[0]
+          granule: granules[0]
         }
       )
     })
@@ -138,7 +138,7 @@ describe('CollectionDetails component', () => {
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'map.layer.COLL-1.stickygranule',
         {
-          granuleMetadata: granules[0]
+          granule: granules[0]
         }
       )
     })

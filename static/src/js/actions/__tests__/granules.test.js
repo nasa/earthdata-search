@@ -35,6 +35,7 @@ import {
 } from '../../constants/actionTypes'
 
 import CwicGranuleRequest from '../../util/request/cwicGranuleRequest'
+import * as EventEmitter from '../../events/events'
 
 const mockStore = configureMockStore([thunk])
 
@@ -749,6 +750,8 @@ describe('excludeGranule', () => {
   test('should create an action to update the collection', () => {
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+    eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
     const payload = {
       collectionId: 'collectionId',
@@ -774,20 +777,27 @@ describe('excludeGranule', () => {
     expect(storeActions[0]).toEqual(expectedAction)
 
     expect(getSearchGranulesMock).toBeCalledTimes(1)
+    expect(eventEmitterEmitMock).toBeCalledTimes(1)
   })
 })
 
 describe('undoExcludeGranule', () => {
   test('should create an action to update the collection', () => {
+    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+    getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
     const payload = 'collectionId'
     const expectedAction = {
       type: UNDO_EXCLUDE_GRANULE_ID,
       payload
     }
+
     const store = mockStore()
     store.dispatch(undoExcludeGranule(payload))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual(expectedAction)
+
+    expect(getSearchGranulesMock).toBeCalledTimes(1)
   })
 })
 

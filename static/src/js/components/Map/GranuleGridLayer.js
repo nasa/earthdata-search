@@ -2,6 +2,7 @@
 
 import L from 'leaflet'
 import { capitalize, difference, isEqual } from 'lodash'
+import camelcaseKeys from 'camelcase-keys'
 import $ from 'jquery'
 
 import {
@@ -28,7 +29,7 @@ import { eventEmitter } from '../../events/events'
 import { getColorByIndex } from '../../util/colors'
 import { getTemporal } from '../../util/edscDate'
 import { panBoundsToCenter } from '../../util/map/actions/panBoundsToCenter'
-import { tagName } from '../../../../../sharedUtils/tags'
+import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import projections from '../../util/map/projections'
 import projectPath from '../../util/map/interpolation'
@@ -68,6 +69,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const { collections: projectCollections = {} } = project
     const { byId: projectCollectionsById = {} } = projectCollections
     const { [collectionId]: projectCollection = {} } = projectCollectionsById
+    const { granules: projectCollectionGranules = {} } = projectCollection
 
     this.collectionId = collectionId
     this.projection = projection
@@ -79,7 +81,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const {
       addedGranuleIds = [],
       removedGranuleIds = []
-    } = projectCollection
+    } = projectCollectionGranules
 
     this.isProjectPage = isProjectPage
     this.addedGranuleIds = addedGranuleIds
@@ -221,8 +223,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   getTileUrl(tilePoint, granule) {
-    if (!this.multiOptions) { return null }
-    const date = granule.time_start != null ? granule.time_start.substring(0, 10) : undefined
+    if (!this.multiOptions) return null
+    const date = granule.timeStart != null ? granule.timeStart.substring(0, 10) : undefined
 
     let matched = false
     this.multiOptions.forEach((optionSet) => {
@@ -235,13 +237,13 @@ class GranuleGridLayerExtended extends L.GridLayer {
         // Set resolution to {projection}_resolution if it exists and if the layer exists within newOptionSet
         if ((this.projection === projections.geographic) && newOptionSet.geographic) {
           matched = true
-          newResolution = newOptionSet.geographic_resolution
+          newResolution = newOptionSet.geographicResolution
         } else if ((this.projection === projections.arctic) && newOptionSet.arctic) {
           matched = true
-          newResolution = newOptionSet.arctic_resolution
+          newResolution = newOptionSet.arcticResolution
         } else if ((this.projection === projections.antarctic) && newOptionSet.antarctic) {
           matched = true
-          newResolution = newOptionSet.antarctic_resolution
+          newResolution = newOptionSet.antarcticResolution
         }
 
         // Use default resolution unless newResolution exists
@@ -258,7 +260,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     if (this.options.granule) {
       this._originalUrl = this._originalUrl || this._url
       this._url = config.gibsGranuleUrl || this._originalUrl
-      this.options.time = granule.time_start.replace(/\.\d{3}Z$/, 'Z')
+      this.options.time = granule.timeStart.replace(/\.\d{3}Z$/, 'Z')
     } else {
       this._url = this._originalUrl || this._url || config.gibsUrl
     }
@@ -757,11 +759,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       const { tags } = metadata
 
       if (tags) {
-        // TODO: Use getTagValue below.
-        const gibsTag = tags[tagName('gibs')] || {}
-        const { data } = gibsTag
-
-        this.multiOptions = data
+        this.multiOptions = camelcaseKeys(getValueForTag('gibs', tags), { deep: true })
       }
     }
 
@@ -993,7 +991,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       opacity: 1
     }, granule)
 
-    const temporal = getTemporal(granule.time_start, granule.time_end)
+    const temporal = getTemporal(granule.timeStart, granule.timeEnd)
 
     if (temporal[0] && temporal[1]) {
       temporalLabel = `<p>${temporal[0]}</p><p>${temporal[1]}</p>`
@@ -1042,6 +1040,8 @@ export class GranuleGridLayer extends MapLayer {
     const {
       collectionsMetadata,
       focusedCollectionId,
+      granules,
+      granulesMetadata,
       isProjectPage,
       project
     } = props
@@ -1051,17 +1051,24 @@ export class GranuleGridLayer extends MapLayer {
     if (isProjectPage) {
       // If we are on the project page, return data for each project collection
       const { collections: projectCollections } = project
-      const { allIds: projectIds } = projectCollections
+      const {
+        allIds: projectIds,
+        byId: projectById
+      } = projectCollections
 
       projectIds.forEach((collectionId, index) => {
-        const { [collectionId]: iterationCollection = {} } = collectionsMetadata
-        const {
-          granules: collectionGranules,
-          isVisible,
-          metadata
-        } = iterationCollection
+        const { granules, isVisible } = projectById[collectionId]
+        const { [collectionId]: metadata = {} } = collectionsMetadata
 
-        if (!collectionGranules) return
+        if (!granules) return
+        granules.byId = {}
+
+        const { allIds = [] } = granules
+        allIds.forEach((granuleId) => {
+          if (granulesMetadata[granuleId]) {
+            granules.byId[granuleId] = granulesMetadata[granuleId]
+          }
+        })
 
         layers[collectionId] = {
           collectionId,
@@ -1069,7 +1076,7 @@ export class GranuleGridLayer extends MapLayer {
           lightColor: getColorByIndex(index, true),
           metadata,
           isVisible,
-          granules: collectionGranules
+          granules
         }
       })
     } else if (focusedCollectionId && focusedCollectionId !== '') {
@@ -1081,8 +1088,8 @@ export class GranuleGridLayer extends MapLayer {
         color: getColorByIndex(0),
         lightColor: getColorByIndex(0, true),
         isVisible: true,
-        focusedCollectionIdMetadata,
-        granules: {}
+        metadata: focusedCollectionIdMetadata,
+        granules
       }
     }
 
@@ -1216,33 +1223,34 @@ export class GranuleGridLayer extends MapLayer {
       const { collections: fromPropsProjectCollections = {} } = fromPropsProject
       const { byId: fromPropsProjectCollectionsById = {} } = fromPropsProjectCollections
       const { [collectionId]: oldProjectCollection = {} } = fromPropsProjectCollectionsById
+      const { granules: oldProjectGranules = {} } = oldProjectCollection
 
       const { collections: projectCollections = {} } = project
       const { byId: projectCollectionsById = {} } = projectCollections
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
+      const { granules: newGranules = {} } = projectCollection
 
       let oldAddedGranuleIds
       let oldRemovedGranuleIds
       let addedGranuleIds
       let removedGranuleIds
 
-      if (oldProjectCollection) {
+      if (oldProjectGranules) {
         ({
           addedGranuleIds: oldAddedGranuleIds,
           removedGranuleIds: oldRemovedGranuleIds
-        } = oldProjectCollection)
+        } = oldProjectGranules)
       }
 
-      if (projectCollection) {
+      if (newGranules) {
         ({
           addedGranuleIds,
           removedGranuleIds
-        } = projectCollection)
+        } = newGranules)
       }
 
       // If there are no granules, bail out
       const { byId: granulesById = {} } = granules
-      if (Object.keys(granulesById).length === 0) return
 
       // If no granules were changed, bail out
       const oldCollection = oldLayerData[collectionId]
