@@ -3,7 +3,7 @@ import actions from './index'
 
 import { buildPromise } from '../util/buildPromise'
 import { findProvider } from '../util/findProvider'
-import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
+import { getValueForTag } from '../../../../sharedUtils/tags'
 import { parseError } from '../../../../sharedUtils/parseError'
 
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
@@ -48,14 +48,9 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
 
       const collectionProvider = findProvider(getState(), dataCenter)
 
-      // If the collection has tag data, retrieve the access methods from lambda
-      const hasEchoOrders = hasTag(collectionMetadata, 'subset_service.echo_orders')
-      const hasEsi = hasTag(collectionMetadata, 'subset_service.esi')
-      const hasOpendap = hasTag(collectionMetadata, 'subset_service.opendap')
-      const capabilitiesData = getValueForTag('collection_capabilities', tags)
-      const { granule_online_access_flag: downloadable } = capabilitiesData || {}
+      const { count: servicesCount } = services
 
-      if (hasEchoOrders || hasEsi || hasOpendap) {
+      if (servicesCount > 0) {
         const requestObject = new AccessMethodsRequest(authToken)
 
         const response = requestObject.search({
@@ -91,6 +86,10 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
 
         return response
       }
+
+      // If the collection has tag data, retrieve the access methods from lambda
+      const capabilitiesData = getValueForTag('collection_capabilities', tags)
+      const { granule_online_access_flag: downloadable } = capabilitiesData || {}
 
       // If the collection is online downloadable, add the download method
       if (downloadable) {

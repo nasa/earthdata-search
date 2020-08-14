@@ -106,7 +106,10 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           count
           items {
             conceptId
+            longName
+            name
             type
+            url
             supportedOutputFormats
             supportedReformattings
           }

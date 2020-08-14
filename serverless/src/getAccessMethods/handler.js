@@ -38,10 +38,29 @@ const getAccessMethods = async (event, context) => {
     const jwtToken = getJwtToken(event)
 
     const { id: userId } = getVerifiedJwtToken(jwtToken)
+    const { count: servicesCount } = associatedServices
 
-    const hasEchoOrders = hasTag({ tags }, 'subset_service.echo_orders')
-    const hasEsi = hasTag({ tags }, 'subset_service.esi')
-    const hasOpendap = hasTag({ tags }, 'subset_service.opendap')
+    let items = []
+    if (servicesCount > 0) {
+      ({ items } = associatedServices)
+    }
+
+    // Fetch UMM-S records with type 'ECHO ORDERS'
+    const echoOrderServices = items.filter(service => service.type === 'ECHO ORDERS')
+
+    // Ensure that we have both a UMM-S record and a matching tag because the tag contains echo form ids that UMM-S lacks
+    const hasEchoOrders = echoOrderServices.length > 0 && hasTag({ tags }, 'subset_service.echo_orders')
+
+    // Fetch UMM-S records with type 'ESI'
+    const esiServices = items.filter(service => service.type === 'ESI')
+
+    // Ensure that we have both a UMM-S record and a matching tag because the tag contains echo form ids that UMM-S lacks
+    const hasEsi = esiServices.length > 0 && hasTag({ tags }, 'subset_service.esi')
+
+    // Fetch UMM-S records with type 'OPeNDAP'
+    const opendapServices = items.filter(service => service.type === 'OPeNDAP')
+    const hasOpendap = opendapServices.length > 0
+
     const capabilitiesData = getValueForTag('collection_capabilities', tags)
     const { granule_online_access_flag: downloadable } = capabilitiesData || {}
 
@@ -59,6 +78,7 @@ const getAccessMethods = async (event, context) => {
       const { option_definitions: optionDefinitions } = echoOrderData
 
       if (optionDefinitions) {
+        // Fetch the option definitions (echo forms) from Legacy Services
         const forms = await getOptionDefinitions(
           collectionProvider,
           optionDefinitions,
@@ -67,9 +87,21 @@ const getAccessMethods = async (event, context) => {
 
         forms.forEach((form) => {
           const [key] = Object.keys(form)
-          accessMethods[key] = {
-            ...echoOrderData,
-            ...form[key]
+
+          // Extract the correct UMM-S record from the metadata
+          const ummRecord = echoOrderServices.find(
+            service => service.conceptId === echoOrderData.id
+          )
+
+          if (ummRecord) {
+            const { type, url } = ummRecord
+            const { urlValue } = url
+
+            accessMethods[key] = {
+              type,
+              url: urlValue,
+              ...form[key]
+            }
           }
         })
       }
@@ -80,6 +112,7 @@ const getAccessMethods = async (event, context) => {
       const { service_option_definitions: serviceOptionDefinitions } = esiData
 
       if (serviceOptionDefinitions) {
+        // Fetch the option definitions (echo forms) from Legacy Services
         const forms = await getServiceOptionDefinitions(
           collectionProvider,
           serviceOptionDefinitions,
@@ -88,37 +121,54 @@ const getAccessMethods = async (event, context) => {
 
         forms.forEach((form) => {
           const [key] = Object.keys(form)
-          accessMethods[key] = {
-            ...esiData,
-            ...form[key]
+
+          // Extract the correct UMM-S record from the metadata
+          const ummRecord = esiServices.find(
+            service => service.conceptId === esiData.id
+          )
+
+          if (ummRecord) {
+            const { type, url } = ummRecord
+            const { urlValue } = url
+
+            accessMethods[key] = {
+              type,
+              url: urlValue,
+              ...form[key]
+            }
           }
         })
       }
     }
 
     if (hasOpendap) {
-      const opendapData = getValueForTag('subset_service.opendap', tags)
+      // EDSC only supports one OPeNDAP service right now
+      const [fullServiceObject] = opendapServices
 
-      const { id: serviceId } = opendapData
+      const {
+        conceptId,
+        longName,
+        name,
+        type
+      } = fullServiceObject
 
       const { keywordMappings, variables } = getVariables(associatedVariables)
 
       let supportedOutputFormats = null
-
-      const { items = [] } = associatedServices || {}
-
-      const fullServiceObject = items.find(service => service.conceptId === serviceId)
 
       if (fullServiceObject) {
         ({ supportedOutputFormats } = fullServiceObject)
       }
 
       accessMethods.opendap = {
-        ...opendapData,
+        id: conceptId,
         isValid: true,
         keywordMappings,
-        variables,
-        supportedOutputFormats
+        longName,
+        name,
+        supportedOutputFormats,
+        type,
+        variables
       }
     }
 

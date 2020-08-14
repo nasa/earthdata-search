@@ -47,6 +47,10 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         params: {
           collectionId: 'collectionId',
+          services: {
+            count: 0,
+            items: null
+          },
           tags: {
             'edsc.extra.serverless.collection_capabilities': {
               data: {
@@ -110,9 +114,21 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         params: {
           collectionId: 'collectionId',
+          services: {
+            count: 1,
+            items: [{
+              conceptId: 'umm-s-record-1',
+              type: 'ECHO ORDERS',
+              url: {
+                description: 'EOSDIS ECHO ORDERS Service Implementation',
+                urlValue: 'http://echo-order-endpoint.com'
+              }
+            }]
+          },
           tags: {
             'edsc.extra.serverless.subset_service.echo_orders': {
               data: {
+                id: 'umm-s-record-1',
                 option_definitions: [{
                   id: 'option_def_guid',
                   name: 'Option Definition'
@@ -132,6 +148,7 @@ describe('getAccessMethods', () => {
         accessMethods: {
           echoOrder0: {
             type: 'ECHO ORDERS',
+            url: 'http://echo-order-endpoint.com',
             form: 'mock echo form',
             option_definition: {
               id: 'option_def_guid',
@@ -182,9 +199,21 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         params: {
           collectionId: 'collectionId',
+          services: {
+            count: 1,
+            items: [{
+              conceptId: 'umm-s-record-1',
+              type: 'ESI',
+              url: {
+                description: 'EOSDIS ESI Service Implementation',
+                urlValue: 'http://esi-endpoint.com'
+              }
+            }]
+          },
           tags: {
             'edsc.extra.serverless.subset_service.esi': {
               data: {
+                id: 'umm-s-record-1',
                 service_option_definitions: [{
                   id: 'service_option_def_guid',
                   name: 'Option Option'
@@ -204,6 +233,7 @@ describe('getAccessMethods', () => {
         accessMethods: {
           esi0: {
             type: 'ESI',
+            url: 'http://esi-endpoint.com',
             form: 'mock echo form',
             service_option_definition: {
               id: 'service_option_def_guid',
@@ -254,9 +284,22 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         params: {
           collectionId: 'collectionId',
+          services: {
+            count: 1,
+            items: [{
+              conceptId: 'umm-s-record-1',
+              type: 'ESI',
+              url: {
+                description: 'EOSDIS ESI Service Implementation',
+                urlValue: 'http://esi-endpoint.com'
+              }
+            }]
+          },
           tags: {
             'edsc.extra.serverless.subset_service.esi': {
               data: {
+                id: 'umm-s-record-1',
+                url: 'http://esi-endpoint.com',
                 service_option_definitions: [{
                   id: 'service_option_def_guid',
                   name: 'Option Option'
@@ -276,6 +319,7 @@ describe('getAccessMethods', () => {
         accessMethods: {
           esi0: {
             type: 'ESI',
+            url: 'http://esi-endpoint.com',
             form: '<?xml version="1.0" encoding="UTF-8"?><form xmlns="http://echo.nasa.gov/v9/echoforms" xmlns:forms="http://echo.nasa.gov/v9/echoforms" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://ecs.nasa.gov/options" xsi:schemaLocation="http://echo.nasa.gov/v9/echoforms http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd"><!-- ECHO Service/Order form for DataSet "MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V006" (MOD13Q1.6): --><model><instance><ecs:request xmlns:ecs="http://ecs.nasa.gov/options"><!--NOTE: elements in caps losely match the ESI API, those in lowercase are helper elements --><ecs:requestInfo><ecs:email>test@edsc.com</ecs:email></ecs:requestInfo><!--Dataset ID will be injected by Reverb--><ecs:CLIENT>ESI</ecs:CLIENT><!--First SubsetAgent in the input capabilities XML is used as the default.--><ecs:SUBAGENT_ID><ecs:value>HEG</ecs:value></ecs:SUBAGENT_ID></ecs:request></instance></model></form>',
             service_option_definition: {
               id: 'service_option_def_guid',
@@ -330,6 +374,7 @@ describe('getAccessMethods', () => {
             count: 1,
             items: [{
               conceptId: 'S1000000-EDSC',
+              type: 'OPeNDAP',
               supportedOutputFormats: [
                 'HDF4',
                 'NETCDF-3',
@@ -358,17 +403,17 @@ describe('getAccessMethods', () => {
         accessMethods: {
           opendap: {
             id: 'S1000000-EDSC',
-            type: 'OPeNDAP',
             isValid: true,
             keywordMappings,
-            variables,
             supportedOutputFormats: [
               'HDF4',
               'NETCDF-3',
               'NETCDF-4',
               'BINARY',
               'ASCII'
-            ]
+            ],
+            type: 'OPeNDAP',
+            variables
           }
         },
         selectedAccessMethod: 'opendap'
@@ -414,6 +459,17 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            services: {
+              count: 1,
+              items: [{
+                conceptId: 'umm-s-record-1',
+                type: 'ECHO ORDERS',
+                url: {
+                  description: 'EOSDIS ECHO ORDERS Service Implementation',
+                  urlValue: 'http://echo-order-endpoint.com'
+                }
+              }]
+            },
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -422,6 +478,8 @@ describe('getAccessMethods', () => {
               },
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
+                  id: 'umm-s-record-1',
+                  url: 'http://echo-order-endpoint.com',
                   option_definitions: [{
                     id: 'option_def_guid',
                     name: 'Option Definition'
@@ -445,6 +503,7 @@ describe('getAccessMethods', () => {
             },
             echoOrder0: {
               type: 'ECHO ORDERS',
+              url: 'http://echo-order-endpoint.com',
               form: 'mock echo form',
               option_definition: {
                 id: 'option_def_guid',
@@ -486,6 +545,17 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            services: {
+              count: 1,
+              items: [{
+                conceptId: 'umm-s-record-1',
+                type: 'ECHO ORDERS',
+                url: {
+                  description: 'EOSDIS ECHO ORDERS Service Implementation',
+                  urlValue: 'http://echo-order-endpoint.com'
+                }
+              }]
+            },
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -536,6 +606,17 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            services: {
+              count: 1,
+              items: [{
+                conceptId: 'umm-s-record-1',
+                type: 'ECHO ORDERS',
+                url: {
+                  description: 'EOSDIS ECHO ORDERS Service Implementation',
+                  urlValue: 'http://echo-order-endpoint.com'
+                }
+              }]
+            },
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -594,6 +675,17 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            services: {
+              count: 1,
+              items: [{
+                conceptId: 'umm-s-record-1',
+                type: 'ECHO ORDERS',
+                url: {
+                  description: 'EOSDIS ECHO ORDERS Service Implementation',
+                  urlValue: 'http://echo-order-endpoint.com'
+                }
+              }]
+            },
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -602,6 +694,7 @@ describe('getAccessMethods', () => {
               },
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
+                  id: 'umm-s-record-1',
                   option_definitions: [{
                     id: 'option_def_guid',
                     name: 'Option Definition'
@@ -625,6 +718,7 @@ describe('getAccessMethods', () => {
             },
             echoOrder0: {
               type: 'ECHO ORDERS',
+              url: 'http://echo-order-endpoint.com',
               form: '<form>echo form</form>',
               option_definition: {
                 id: 'option_def_guid',
@@ -690,6 +784,17 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            services: {
+              count: 1,
+              items: [{
+                conceptId: 'umm-s-record-1',
+                type: 'ECHO ORDERS',
+                url: {
+                  description: 'EOSDIS ECHO ORDERS Service Implementation',
+                  urlValue: 'http://echo-order-endpoint.com'
+                }
+              }]
+            },
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -698,6 +803,7 @@ describe('getAccessMethods', () => {
               },
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
+                  id: 'umm-s-record-1',
                   option_definitions: [{
                     id: 'option_def_guid',
                     name: 'Option Definition'
@@ -721,6 +827,7 @@ describe('getAccessMethods', () => {
             },
             echoOrder0: {
               type: 'ECHO ORDERS',
+              url: 'http://echo-order-endpoint.com',
               form: '<form>echo form</form>',
               option_definition: {
                 id: 'option_def_guid',
@@ -781,6 +888,17 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            services: {
+              count: 1,
+              items: [{
+                conceptId: 'umm-s-record-1',
+                type: 'ECHO ORDERS',
+                url: {
+                  description: 'EOSDIS ECHO ORDERS Service Implementation',
+                  urlValue: 'http://echo-order-endpoint.com'
+                }
+              }]
+            },
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: {
@@ -789,6 +907,7 @@ describe('getAccessMethods', () => {
               },
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
+                  id: 'umm-s-record-1',
                   option_definitions: [{
                     id: 'option_def_guid',
                     name: 'Option Definition'
@@ -812,6 +931,7 @@ describe('getAccessMethods', () => {
             },
             echoOrder0: {
               type: 'ECHO ORDERS',
+              url: 'http://echo-order-endpoint.com',
               form: '<form>echo form</form>',
               option_definition: {
                 id: 'option_def_guid',
