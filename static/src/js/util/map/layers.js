@@ -1,9 +1,10 @@
+/* eslint-disable no-underscore-dangle, new-cap */
 import L from 'leaflet'
 import { castArray } from 'lodash'
 
 // Is the granule coordinate system cartesian?
 export function isCartesian(metadata = {}) {
-  return metadata.coordinate_system === 'CARTESIAN'
+  return metadata.coordinateSystem === 'CARTESIAN'
 }
 
 // Parse a spatial string into an array of LatLng points
@@ -27,7 +28,6 @@ export function parseSpatial(str) {
 // Pull points out of metadata
 export function getPoints(metadata = {}) {
   let points = []
-  // eslint-disable-next-line no-underscore-dangle
   if ((metadata._points == null) && (metadata.points != null)) {
     const merged = []
     points = merged.concat(...metadata.points.map(parseSpatial))
@@ -49,7 +49,6 @@ export function getPolygons(metadata = {}) {
 // Pull lines out of metadata
 export function getLines(metadata = {}) {
   let lines = []
-  // eslint-disable-next-line no-underscore-dangle
   if ((metadata._lines == null) && (metadata.lines != null)) {
     lines = metadata.lines.map(parseSpatial)
   }
@@ -59,7 +58,6 @@ export function getLines(metadata = {}) {
 // Pull rectangles out of metadata
 export function getRectangles(metadata = {}) {
   const rects = []
-  // eslint-disable-next-line no-underscore-dangle
   if ((metadata._rects == null) && (metadata.boxes != null)) {
     const { boxes = [] } = metadata
 
@@ -95,21 +93,20 @@ export const buildLayer = (options, metadata) => {
   const rectangles = getRectangles(metadata)
   const cartesian = isCartesian(metadata)
 
-  if (points) {
+  if (points.length) {
     castArray(points).forEach((point) => {
       layer.addLayer(L.circleMarker(point, options))
     })
   }
 
-  if (polygons) {
+  if (polygons.length) {
     castArray(polygons).forEach((polygon) => {
       let polyLayer
       if (cartesian) {
-        polyLayer = L.polygon(polygon)
-        // eslint-disable-next-line no-underscore-dangle
+        polyLayer = new L.sphericalPolygon(polygon)
         polyLayer._interpolationFn = 'cartesian'
       } else {
-        polyLayer = L.polygon(polygon, options)
+        polyLayer = new L.sphericalPolygon(polygon, options)
       }
       layer.addLayer(polyLayer)
 
@@ -123,19 +120,17 @@ export const buildLayer = (options, metadata) => {
     })
   }
 
-  if (lines) {
+  if (lines.length) {
     castArray(lines).forEach((line) => {
       const lineLayer = L.polyline(line, options)
-      // eslint-disable-next-line no-underscore-dangle
       if (cartesian) lineLayer._interpolationFn = 'cartesian'
       layer.addLayer(lineLayer)
     })
   }
 
-  if (rectangles) {
+  if (rectangles.length) {
     castArray(rectangles).forEach((rect) => {
-      const shape = L.polygon(rect, options)
-      // eslint-disable-next-line no-underscore-dangle
+      const shape = new L.sphericalPolygon(rect, options)
       shape._interpolationFn = 'cartesian'
       layer.addLayer(shape)
 

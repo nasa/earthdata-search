@@ -36,11 +36,11 @@ describe('granules#isClockwise', () => {
 
 describe('granules#isCartesian', () => {
   test('returns true if coordinate system is cartesian', () => {
-    expect(isCartesian({ coordinate_system: 'CARTESIAN' })).toBeTruthy()
+    expect(isCartesian({ coordinateSystem: 'CARTESIAN' })).toBeTruthy()
   })
 
   test('returns false if coordinate system is not cartesian', () => {
-    expect(isCartesian({ coordinate_system: 'GEODETIC' })).toBeFalsy()
+    expect(isCartesian({ coordinateSystem: 'GEODETIC' })).toBeFalsy()
   })
 })
 

@@ -3,7 +3,6 @@ import L from 'leaflet'
 import 'leaflet-draw'
 import {
   dividePolygon,
-  gcInterpolate,
   makeCounterClockwise
 } from './geo'
 
@@ -111,26 +110,3 @@ L.EditToolbar.Delete.prototype._removeLayer = function removeLayer(e) {
   if (e.target != null ? e.target._boundaries : undefined) { e.layer = e.target }
   return originalRemove.call(this, e)
 }
-
-L.Draw.Polygon = L.Draw.Polygon.extend({
-  Poly: L.SphericalPolygon,
-
-  addHooks() {
-    L.Draw.Polyline.prototype.addHooks.call(this)
-    if (this._map) {
-      this._poly = new L.SphericalPolygon([], this.options.shapeOptions)
-      this._poly.drawing = true
-    }
-  },
-
-  removeHooks() {
-    this._poly.drawing = false
-    return L.Draw.Polyline.prototype.removeHooks.call(this)
-  }
-})
-
-L.Edit.Poly = L.Edit.Poly.extend({
-  _getMiddleLatLng(marker1, marker2) {
-    return gcInterpolate(marker1.getLatLng(), marker2.getLatLng())
-  }
-})

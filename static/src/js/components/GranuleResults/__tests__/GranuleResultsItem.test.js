@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { LinkContainer } from 'react-router-bootstrap'
+
 import Button from '../../Button/Button'
 import GranuleResultsItem from '../GranuleResultsItem'
 import GranuleResultsDataLinksButton from '../GranuleResultsDataLinksButton'
@@ -447,53 +448,6 @@ describe('GranuleResultsItem component', () => {
       expect(downloadButton.length).toEqual(0)
     })
   })
-
-  // describe('granule map events', () => {
-  //   test('hovering over a granule highlights the granule on the map', () => {
-  //     const { enzymeWrapper, props } = setup('cmr')
-
-  //     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-  //     eventEmitterEmitMock.mockImplementation(() => jest.fn())
-
-  //     const item = enzymeWrapper.find('.granule-results-item')
-  //     item.simulate('mouseenter')
-
-  //     expect(eventEmitterEmitMock).toBeCalledTimes(1)
-  //     expect(eventEmitterEmitMock).toBeCalledWith('map.focusgranule', { granule: props.granule })
-
-  //     jest.clearAllMocks()
-  //     item.simulate('mouseleave')
-
-  //     expect(eventEmitterEmitMock).toBeCalledTimes(1)
-  //     expect(eventEmitterEmitMock).toBeCalledWith('map.focusgranule', { granule: null })
-  //   })
-
-  //   test('clicking on a granule sets that granule as sticky on the map', () => {
-  //     const { enzymeWrapper, props } = setup('cmr')
-
-  //     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-  //     eventEmitterEmitMock.mockImplementation(() => jest.fn())
-
-  //     const itemHeader = enzymeWrapper.find('.granule-results-item__header')
-  //     itemHeader.simulate('click')
-
-  //     expect(eventEmitterEmitMock).toBeCalledTimes(1)
-  //     expect(eventEmitterEmitMock).toBeCalledWith('map.stickygranule', { granule: props.granule })
-  //   })
-
-  //   test('clicking on a focused granule removes that granule as sticky on the map', () => {
-  //     const { enzymeWrapper } = setup('focusedGranule')
-
-  //     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-  //     eventEmitterEmitMock.mockImplementation(() => jest.fn())
-
-  //     const itemHeader = enzymeWrapper.find('.granule-results-item__header')
-  //     itemHeader.simulate('click')
-
-  //     expect(eventEmitterEmitMock).toBeCalledTimes(1)
-  //     expect(eventEmitterEmitMock).toBeCalledWith('map.stickygranule', { granule: null })
-  //   })
-  // })
 
   describe('without an granuleThumbnail', () => {
     test('does not render an granuleThumbnail', () => {
