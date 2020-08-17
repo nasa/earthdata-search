@@ -35,6 +35,8 @@ import ProjectionSwitcher from '../../components/Map/ProjectionSwitcher'
 import ShapefileLayer from '../../components/Map/ShapefileLayer'
 import ZoomHome from '../../components/Map/ZoomHome'
 
+import '../../util/map/sphericalPolygon'
+
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 
