@@ -85,6 +85,11 @@ export function getRectangles(metadata = {}) {
   return rects
 }
 
+/**
+ * Builds a feature group containing a spatial layer based on the the provided metadata
+ * @param {Object} options Leaflet layer options
+ * @param {Object} metadata Collection or granule metadata
+ */
 export const buildLayer = (options, metadata) => {
   const layer = new L.FeatureGroup()
   const points = getPoints(metadata)
@@ -146,5 +151,3 @@ export const buildLayer = (options, metadata) => {
 
   return layer
 }
-
-export default buildLayer

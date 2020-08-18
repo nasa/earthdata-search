@@ -16,7 +16,8 @@ import {
   getlprojection
 } from '../../util/map/granules'
 
-import buildLayer, {
+import {
+  buildLayer,
   isCartesian,
   getPolygons,
   getLines,
@@ -1141,8 +1142,6 @@ export class GranuleGridLayer extends MapLayer {
         onExcludeGranule,
         onMetricsMap,
         isProjectPage
-      }, {
-        noWrap: true
       })
 
       // Set the ZIndex for the layer
