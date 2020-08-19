@@ -36,16 +36,32 @@ export const fetchOpenAltimetryHandoffUrl = (
   }
 
   if (spatial) {
+    const {
+      boundingBox = [],
+      circle = [],
+      point = [],
+      polygon = []
+    } = spatial
     // Find the minimum bounding rectangle to use for spatial
-    const spatialMbr = mbr(spatial)
+    const spatialMbr = mbr({
+      boundingBox: boundingBox[0],
+      circle: circle[0],
+      point: point[0],
+      polygon: polygon[0]
+    })
 
     if (spatialMbr) {
-      const [miny, minx, maxy, maxx] = spatialMbr
+      const {
+        swLat,
+        swLng,
+        neLat,
+        neLng
+      } = spatialMbr
 
-      params.minx = minx
-      params.miny = miny
-      params.maxx = maxx
-      params.maxy = maxy
+      params.minx = swLng
+      params.miny = swLat
+      params.maxx = neLng
+      params.maxy = neLat
     }
   }
 

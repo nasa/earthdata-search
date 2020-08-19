@@ -126,7 +126,12 @@ export const mergeMbrs = (mbrs) => {
     }
   })
 
-  return [minLat, minLng, maxLat, maxLng]
+  return {
+    swLat: minLat,
+    swLng: minLng,
+    neLat: maxLat,
+    neLng: maxLng
+  }
 }
 
 export const divideMbr = (mbr) => {
@@ -141,19 +146,73 @@ export const divideMbr = (mbr) => {
 }
 
 const EPSILON = 0.00000001
+const CIRCUMFERENCE = 40075017
 
+// Find the MBR of a circle:
+// https://github.com/emartinez-usgs/Leaflet/commit/b2542b6470dfc3576387331bfeb57f0dbdab970c?branch=b2542b6470dfc3576387331bfeb57f0dbdab970c&diff=unified#diff-e63d205690b47d6a456c0d77565b55c5R37
+// Earth circumference (40075017m) is hardcoded in this formula which isn't good for leaflet, but works for EDSC
+
+// Find the difference in latitude for the circle radius
+const getLatRadius = radius => (radius / CIRCUMFERENCE) * 360
+
+// Find the difference in longitude for the circle radius
+const getLngRadius = (lat, radius) => getLatRadius(radius) / Math.cos((Math.PI / 180) * lat)
+
+/**
+ * Finds the minimum bounding rectangle for the given spatial coordinates
+ * @param {Object} spatial Spatial object containing boundingBox, circle, point or polygon spatial
+ * @returns {Object} { swLat, swLng, neLat, neLng }
+ */
 export const mbr = (spatial) => {
-  const { point, boundingBox, polygon } = spatial
+  const {
+    boundingBox,
+    circle,
+    point,
+    polygon
+  } = spatial
 
   if (point) {
     const { lat, lng } = getShape([point])[0]
-    return [lat - EPSILON, lng - EPSILON, lat + EPSILON, lng + EPSILON]
+    return {
+      swLat: lat - EPSILON,
+      swLng: lng - EPSILON,
+      neLat: lat + EPSILON,
+      neLng: lng + EPSILON
+    }
+  }
+
+  if (circle) {
+    const [lng, lat, radius] = circle.split(',').map(num => parseFloat(num, 10))
+
+    // Find the difference in the lat and lng
+    const lngRadius = getLngRadius(lat, radius)
+    const latRadius = (radius / CIRCUMFERENCE) * 360
+
+    // Subtract the lat/lng difference from the center point to get the southwest point
+    const swLat = lat - latRadius
+    const swLng = lng - lngRadius
+
+    // Add the lat/lng difference from the center point to get the northeast point
+    const neLat = lat + latRadius
+    const neLng = lng + lngRadius
+
+    return {
+      swLat,
+      swLng,
+      neLat,
+      neLng
+    }
   }
 
   if (boundingBox) {
     const points = splitListOfPoints(boundingBox)
-    const [ll, ur] = getShape(points)
-    return [ll.lat, ll.lng, ur.lat, ur.lng]
+    const [sw, ne] = getShape(points)
+    return {
+      swLat: sw.lat,
+      swLng: sw.lng,
+      neLat: ne.lat,
+      neLng: ne.lng
+    }
   }
 
   if (polygon) {

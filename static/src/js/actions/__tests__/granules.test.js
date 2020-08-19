@@ -36,6 +36,7 @@ import {
 
 import CwicGranuleRequest from '../../util/request/cwicGranuleRequest'
 import * as EventEmitter from '../../events/events'
+import * as mbr from '../../util/map/mbr'
 
 const mockStore = configureMockStore([thunk])
 
@@ -269,7 +270,7 @@ describe('getSearchGranules', () => {
         collection: {
           temporal: {},
           spatial: {
-            polygon: '-77,38,-77,38,-76,38,-77,38'
+            polygon: ['-77,38,-77,38,-76,38,-77,38']
           }
         }
       },
@@ -920,6 +921,8 @@ describe('fetchLinks', () => {
 })
 
 describe('fetchOpendapLinks', () => {
+  const mbrSpy = jest.spyOn(mbr, 'mbr')
+
   beforeEach(() => {
     jest.clearAllMocks()
   })
@@ -963,7 +966,7 @@ describe('fetchOpendapLinks', () => {
       collection_metadata: {},
       granule_params: {
         echo_collection_id: 'C10000005-EDSC',
-        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
       granule_count: 3
     }
@@ -981,6 +984,8 @@ describe('fetchOpendapLinks', () => {
       },
       type: UPDATE_GRANULE_LINKS
     })
+
+    expect(mbrSpy).toBeCalledTimes(1)
   })
 
   test('calls lambda to get links from opendap with excluded granules', async () => {
@@ -1024,7 +1029,7 @@ describe('fetchOpendapLinks', () => {
       collection_metadata: {},
       granule_params: {
         echo_collection_id: 'C10000005-EDSC',
-        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'],
         exclude: {
           concept_id: ['G10000404-EDSC']
         }
@@ -1045,6 +1050,8 @@ describe('fetchOpendapLinks', () => {
       },
       type: UPDATE_GRANULE_LINKS
     })
+
+    expect(mbrSpy).toBeCalledTimes(1)
   })
 
   test('calls lambda to get links from opendap when using additive model', async () => {
@@ -1086,7 +1093,7 @@ describe('fetchOpendapLinks', () => {
       granule_params: {
         concept_id: ['G10000003-EDSC'],
         echo_collection_id: 'C10000005-EDSC',
-        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
       granule_count: 1
     }
@@ -1102,5 +1109,7 @@ describe('fetchOpendapLinks', () => {
       },
       type: UPDATE_GRANULE_LINKS
     })
+
+    expect(mbrSpy).toBeCalledTimes(1)
   })
 })

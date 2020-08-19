@@ -38,7 +38,7 @@ describe('EchoForm component', () => {
   test('renders an EDSCEchoform with spatial prepopulated', () => {
     const { enzymeWrapper } = setup({
       spatial: {
-        polygon: '-77,38,-77,38,-76,38,-77,38'
+        polygon: ['-77,38,-77,38,-76,38,-77,38']
       }
     })
 

@@ -113,7 +113,7 @@ describe('handoffs#openAltimetry', () => {
 
     const collectionSearch = {
       spatial: {
-        boundingBox: '-90.32766723632812,41.63677044970652,-82.2337646484375,48.34205200181264'
+        boundingBox: ['-90.32766723632812,41.63677044970652,-82.2337646484375,48.34205200181264']
       }
     }
 
@@ -130,7 +130,7 @@ describe('handoffs#openAltimetry', () => {
 
     const collectionSearch = {
       spatial: {
-        polygon: '-77,38,-77,38,-76,38,-77,38'
+        polygon: ['-77,38,-77,38,-76,38,-77,38']
       }
     }
 
@@ -147,7 +147,7 @@ describe('handoffs#openAltimetry', () => {
 
     const collectionSearch = {
       spatial: {
-        boundingBox: '-90.32766723632812,41.63677044970652,-82.2337646484375,48.34205200181264'
+        boundingBox: ['-90.32766723632812,41.63677044970652,-82.2337646484375,48.34205200181264']
       },
       temporal: {
         startDate: '1984-07-02 05:23:00',
