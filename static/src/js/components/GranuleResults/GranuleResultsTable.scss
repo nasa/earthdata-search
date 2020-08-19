@@ -91,7 +91,7 @@
       }
     }
 
-    &--selected {
+    &--active {
       z-index: 5;
 
       &:after {
@@ -170,7 +170,7 @@
     cursor: pointer;
     word-break: break-word;
 
-    .granule-results-table__tr--selected & {
+    .granule-results-table__tr--active & {
       color: $color__black--800;
     }
 

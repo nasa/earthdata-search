@@ -19,6 +19,7 @@ import { createDataLinks } from './granules'
 export const formatGranulesList = ({
   granuleIds,
   granulesMetadata,
+  hoveredGranuleId,
   focusedGranuleId,
   isGranuleInProject,
   isCollectionInProject
@@ -54,6 +55,7 @@ export const formatGranulesList = ({
 
     const dataLinks = createDataLinks(links)
     const isFocusedGranule = isFocused || focusedGranuleId === id
+    const isHoveredGranule = hoveredGranuleId === id
     const isInProject = isGranuleInProject(id)
 
     const handleClick = () => {
@@ -87,6 +89,7 @@ export const formatGranulesList = ({
       timeStart,
       timeEnd,
       thumbnail,
+      isHoveredGranule,
       isFocusedGranule,
       isInProject,
       isCollectionInProject,

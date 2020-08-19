@@ -117,21 +117,24 @@ export const GranuleResultsTable = ({
 
   const initialRowStateAccessor = useMemo(() => ({
     isFocusedGranule,
+    isHoveredGranule,
     isInProject,
     isCollectionInProject
   }) => ({
     isFocusedGranule,
+    isHoveredGranule,
     isInProject,
     isCollectionInProject
   }), [focusedGranuleId])
 
   const rowClassNamesFromRowState = useMemo(() => ({
     isFocusedGranule,
+    isHoveredGranule,
     isCollectionInProject,
     isInProject
   }) => {
     const classNames = ['granule-results-table__tr']
-    if (isFocusedGranule) classNames.push('granule-results-table__tr--selected')
+    if (isFocusedGranule || isHoveredGranule) classNames.push('granule-results-table__tr--active')
     if (isCollectionInProject && isInProject) classNames.push('granule-results-table__tr--emphisized')
     if (isCollectionInProject && !isInProject) classNames.push('granule-results-table__tr--deemphisized')
     return classNames

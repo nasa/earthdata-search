@@ -67,6 +67,7 @@ function setup(overrides) {
     }
   }
   const focusedGranuleId = ''
+  const hoveredGranuleId = null
   const isGranuleInProject = jest.fn()
   const isCollectionInProject = false
 
@@ -74,6 +75,7 @@ function setup(overrides) {
     granuleIds,
     granulesMetadata,
     focusedGranuleId,
+    hoveredGranuleId,
     isGranuleInProject,
     isCollectionInProject,
     ...overrides
@@ -109,6 +111,20 @@ describe('granule map events', () => {
     granule.handleMouseLeave()
     expect(eventEmitterEmitMock).toBeCalledTimes(1)
     expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.focusgranule', { granule: null })
+  })
+
+  test('sets isHoveredGranule for the correct granule', () => {
+    const {
+      granulesList,
+      granulesMetadata
+    } = setup({
+      hoveredGranuleId: 'G1924512983-LANCEMODIS'
+    })
+
+    const [granule] = granulesList
+    const { isHoveredGranule } = granule
+
+    expect(isHoveredGranule).toEqual(true)
   })
 
   test('clicking on a granule sets that granule as sticky on the map', () => {
