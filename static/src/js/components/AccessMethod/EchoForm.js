@@ -37,17 +37,33 @@ export const EchoForm = ({
   }
 
   const getMbr = (spatial) => {
-    // if there is no spatial, return undefined
-    const { point, boundingBox, polygon } = spatial
-    if (!point && !boundingBox && !polygon) return undefined
+    const {
+      boundingBox = [],
+      circle = [],
+      point = [],
+      polygon = []
+    } = spatial
 
-    const [south, west, north, east] = mbr(spatial)
+    // if there is no spatial, return undefined
+    if (!point[0] && !boundingBox[0] && !polygon[0] && !circle[0]) return undefined
+
+    const {
+      swLat,
+      swLng,
+      neLat,
+      neLng
+    } = mbr({
+      boundingBox: boundingBox[0],
+      circle: circle[0],
+      point: point[0],
+      polygon: polygon[0]
+    })
 
     return {
-      BBOX_SOUTH: south,
-      BBOX_WEST: west,
-      BBOX_NORTH: north,
-      BBOX_EAST: east
+      BBOX_SOUTH: swLat,
+      BBOX_WEST: swLng,
+      BBOX_NORTH: neLat,
+      BBOX_EAST: neLng
     }
   }
 

@@ -64,7 +64,7 @@ const GranuleResultsBody = ({
     loadTime,
     isLoaded,
     isLoading,
-    allIds
+    allIds = []
   } = granuleSearchResults
 
   const {

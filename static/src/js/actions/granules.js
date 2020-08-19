@@ -212,10 +212,13 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   } = retrievalCollectionData
 
   const {
-    concept_id: conceptId,
-    temporal,
-    bounding_box: boundingBox,
-    exclude = {}
+    bounding_box: boundingBox = [],
+    circle = [],
+    concept_id: conceptId = [],
+    exclude = {},
+    point = [],
+    polygon = [],
+    temporal
   } = granuleParams
 
   const {
@@ -230,13 +233,26 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   }
 
   // If conceptId is truthy, send those granules explictly.
-  if (conceptId) {
+  if (conceptId.length) {
     ousPayload.granules = conceptId
   }
 
   const { concept_id: excludedGranuleIds = [] } = exclude
 
-  ousPayload.bounding_box = boundingBox
+  const {
+    swLat,
+    swLng,
+    neLat,
+    neLng
+  } = mbr({
+    boundingBox: boundingBox[0],
+    circle: circle[0],
+    point: point[0],
+    polygon: polygon[0]
+  })
+
+  ousPayload.bounding_box = [swLng, swLat, neLng, neLat].join(',')
+
   ousPayload.temporal = temporal
 
   // OUS has a slightly different syntax for excluding params
@@ -338,15 +354,15 @@ export const getSearchGranules = () => (dispatch, getState) => {
     if (polygon) {
       dispatch(toggleSpatialPolygonWarning(true))
 
-      const [
-        llLat,
-        llLng,
-        urLat,
-        urLng
-      ] = mbr({ polygon })
+      const {
+        swLat,
+        swLng,
+        neLat,
+        neLng
+      } = mbr({ polygon: polygon[0] })
 
       // Construct a string with points in the order expected by OpenSearch
-      searchParams.boundingBox = [llLng, llLat, urLng, urLat].join(',')
+      searchParams.boundingBox = [swLng, swLat, neLng, neLat].join(',')
 
       // Remove the unsupported polygon parameter
       delete searchParams.polygon
@@ -467,15 +483,15 @@ export const getProjectGranules = () => (dispatch, getState) => {
       if (polygon) {
         dispatch(toggleSpatialPolygonWarning(true))
 
-        const [
-          llLat,
-          llLng,
-          urLat,
-          urLng
-        ] = mbr({ polygon })
+        const {
+          swLat,
+          swLng,
+          neLat,
+          neLng
+        } = mbr({ polygon })
 
         // Construct a string with points in the order expected by OpenSearch
-        searchParams.boundingBox = [llLng, llLat, urLng, urLat].join(',')
+        searchParams.boundingBox = [swLng, swLat, neLng, neLat].join(',')
 
         // Remove the unsupported polygon parameter
         delete searchParams.polygon
