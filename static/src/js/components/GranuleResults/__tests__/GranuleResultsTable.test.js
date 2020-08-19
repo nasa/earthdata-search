@@ -169,7 +169,25 @@ describe('GranuleResultsTable component', () => {
 
         expect(result).toEqual([
           'granule-results-table__tr',
-          'granule-results-table__tr--selected'
+          'granule-results-table__tr--active'
+        ])
+      })
+    })
+
+    describe('when the granule is hovered', () => {
+      test('fires the callback with the correct values', () => {
+        const {
+          enzymeWrapper
+        } = setup()
+        const table = enzymeWrapper.find(EDSCTable)
+
+        const result = table.props().rowClassNamesFromRowState({
+          isHoveredGranule: true
+        })
+
+        expect(result).toEqual([
+          'granule-results-table__tr',
+          'granule-results-table__tr--active'
         ])
       })
     })

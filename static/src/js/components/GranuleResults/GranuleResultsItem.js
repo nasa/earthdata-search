@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -14,7 +14,6 @@ import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownI
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './GranuleResultsItem.scss'
-import { eventEmitter } from '../../events/events'
 
 const thumbnailHeight = getApplicationConfig().thumbnailSize.height
 const thumbnailWidth = getApplicationConfig().thumbnailSize.width
@@ -47,20 +46,6 @@ const GranuleResultsItem = forwardRef(({
   onRemoveGranuleFromProjectCollection,
   portal
 }, ref) => {
-  const [isGranuleHovered, setIsGranuleHovered] = useState(false)
-
-  eventEmitter.on(`map.layer.${collectionId}.focusgranule`, (data) => {
-    const { granule: focusedGranule } = data
-    if (focusedGranule) {
-      const { id: focusedId } = focusedGranule
-      const { id } = granule
-      setIsGranuleHovered(focusedId === id)
-      return
-    }
-
-    setIsGranuleHovered(false)
-  })
-
   const handleFilterClick = () => {
     let { id } = granule
 
@@ -87,6 +72,7 @@ const GranuleResultsItem = forwardRef(({
     handleMouseEnter,
     handleMouseLeave,
     id,
+    isHoveredGranule,
     isFocusedGranule,
     onlineAccessFlag,
     timeEnd,
@@ -160,8 +146,7 @@ const GranuleResultsItem = forwardRef(({
   const granuleResultsItemClasses = classNames([
     'granule-results-item',
     {
-      'granule-results-item--hovered': isGranuleHovered,
-      'granule-results-item--selected': isFocusedGranule,
+      'granule-results-item--active': isFocusedGranule || isHoveredGranule,
       'granule-results-item--emphisized': isCollectionInProject && isInProject,
       'granule-results-item--deemphisized': isCollectionInProject && !isInProject
     }

@@ -87,7 +87,7 @@ function setup(type, overrideProps) {
     }
   }
 
-  if (type === 'focusedGranule') {
+  if (type === 'focused-granule') {
     props = {
       ...defaultProps,
       focusedGranule: 'granuleId',
@@ -98,6 +98,8 @@ function setup(type, overrideProps) {
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
+        isFocusedGranule: true,
+        isHoveredGranule: false,
         timeStart: '2019-04-28 00:00:00',
         timeEnd: '2019-04-29 23:59:59',
         granuleThumbnail: '/fake/path/image.jpg',
@@ -109,6 +111,32 @@ function setup(type, overrideProps) {
             href: 'http://linkhref'
           }
         ]
+      }
+    }
+  }
+
+  if (type === 'hovered-granule') {
+    props = {
+      ...defaultProps,
+      focusedGranule: 'granuleId',
+      granule: {
+        id: 'granuleId',
+        browseFlag: true,
+        formattedTemporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        isFocusedGranule: false,
+        isHoveredGranule: true,
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
+        granuleThumbnail: '/fake/path/image.jpg',
+        title: 'Granule title',
+        dataLinks: [{
+          rel: 'http://linkrel',
+          title: 'linktitle',
+          href: 'http://linkhref'
+        }]
       }
     }
   }
@@ -271,6 +299,28 @@ describe('GranuleResultsItem component', () => {
 
     expect(button.exists()).toBeTruthy()
     expect(portalFeatureContainer.props().authentication).toBeTruthy()
+  })
+
+  describe('when passed a focused granule', () => {
+    test('adds the correct classname', () => {
+      const {
+        enzymeWrapper
+      } = setup('focused-granule')
+
+      expect(enzymeWrapper.props().className).toContain('granule-results-item--active')
+
+    })
+  })
+
+  describe('when passed a hovered granule', () => {
+    test('adds the correct classname', () => {
+      const {
+        enzymeWrapper
+      } = setup('hovered-granule')
+
+      expect(enzymeWrapper.props().className).toContain('granule-results-item--active')
+
+    })
   })
 
   describe('when passed a CMR granule', () => {
