@@ -64,7 +64,7 @@ const GranuleResultsBody = ({
     loadTime,
     isLoaded,
     isLoading,
-    allIds = []
+    allIds
   } = granuleSearchResults
 
   const {
@@ -147,17 +147,17 @@ const GranuleResultsBody = ({
     && allIds.length < granuleHits
   )
 
-  // When the focused collection info is loading, a request has not been made
+  // When the focused granule info is loading, a request has not been made
   // so we need to force the skeleton
-  // const noGranuleRequestStarted = !isLoading && !isLoaded
+  const noGranuleRequestStarted = !isLoading && !isLoaded
 
   // Show a skeleton while a request is happening
-  const loadingFirstGranules = isLoading && granulesList.length === 0
+  const isGranulesLoading = isLoading && granulesList.length === 0
 
-  // const loadingFirstGranules = isGranulesLoading
+  const loadingFirstGranules = noGranuleRequestStarted || isGranulesLoading
 
   // Show a skeleton when items are loading
-  const hasNextPage = moreGranulesToLoad
+  const hasNextPage = moreGranulesToLoad || loadingFirstGranules
 
   // If a next page is available, add an empty item to the lists for the loading indicator.
   const itemCount = hasNextPage ? granulesList.length + 1 : granulesList.length
