@@ -190,11 +190,11 @@ class SpatialSelection extends Component {
     // to CWIC as their spatial
     if (!nextProps.isProjectPage) {
       if (
-        (nextProps.circleSearch[0] && nextProps.circleSearch[0] !== '')
+        (nextProps.polygonSearch[0] && nextProps.polygonSearch[0] !== '')
         && drawnMbr === null
         && nextProps.isCwic
       ) {
-        this.renderMbr(nextProps.circleSearch[0])
+        this.renderMbr(nextProps.polygonSearch[0])
       } else if (drawnMbr !== null && !nextProps.isCwic) {
         if (leafletElement.removeLayer) {
           leafletElement.removeLayer(drawnMbr)
@@ -541,7 +541,7 @@ class SpatialSelection extends Component {
         swLng,
         neLat,
         neLng
-      } = mbr({ circle: drawnPoints })
+      } = mbr({ polygon: drawnPoints })
 
       const sw = new L.LatLng(swLat, swLng)
       const ne = new L.LatLng(neLat, neLng)
