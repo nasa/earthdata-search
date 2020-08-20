@@ -161,7 +161,7 @@ describe('GranuleResultsBody component', () => {
 
     expect(resultsList.props()).toEqual(expect.objectContaining({
       granules: [],
-      itemCount: 0
+      itemCount: 1
     }))
 
     resultsList.props().loadMoreItems()
