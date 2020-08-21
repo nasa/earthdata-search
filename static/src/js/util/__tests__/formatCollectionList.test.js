@@ -7,7 +7,7 @@ describe('formatCollectionList', () => {
     }
     const metadata = {
       collectionId: {
-        abstract: 'test abstract',
+        summary: 'test summary',
         datasetId: 'test dataset id',
         granuleCount: 42,
         hasFormats: false,
@@ -31,7 +31,7 @@ describe('formatCollectionList', () => {
     const browser = { name: 'chrome' }
 
     const expectedResult = {
-      abstract: 'test abstract',
+      summary: 'test summary',
       collectionId: 'collectionId',
       datasetId: 'test dataset id',
       displayOrganization: 'test/org',
@@ -71,7 +71,7 @@ describe('formatCollectionList', () => {
     const browser = { name: 'chrome' }
 
     const expectedResult = {
-      abstract: '',
+      summary: '',
       collectionId: 'collectionId',
       datasetId: null,
       displayOrganization: '',
@@ -223,21 +223,21 @@ describe('formatCollectionList', () => {
     })
   })
 
-  test('formats the abstract in IE', () => {
+  test('formats the summary in IE', () => {
     const collections = {
       allIds: ['collectionId']
     }
     const metadata = {
       collectionId: {
         id: 'collectionId',
-        abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       }
     }
     const projectIds = []
     const browser = { name: 'ie' }
 
     const expectedResult = {
-      abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt...'
+      summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt...'
     }
 
     expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(

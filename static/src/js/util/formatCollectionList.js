@@ -13,7 +13,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
     const { [collectionId]: collectionMetadata = {} } = metadata
 
     const {
-      abstract = '',
+      summary = '',
       datasetId = null,
       granuleCount = 0,
       hasFormats = false,
@@ -82,15 +82,15 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       }
     }
 
-    let truncatedAbstract = abstract
-    if (browserName === 'ie') truncatedAbstract = `${abstract.substring(0, 280)}...`
+    let truncatedAbstract = summary
+    if (browserName === 'ie') truncatedAbstract = `${summary.substring(0, 280)}...`
 
     const isCollectionInProject = projectIds.indexOf(collectionId) !== -1
 
     const isLast = index === collectionIds.length - 1
 
     return {
-      abstract: truncatedAbstract,
+      summary: truncatedAbstract,
       collectionId,
       datasetId,
       displayOrganization,

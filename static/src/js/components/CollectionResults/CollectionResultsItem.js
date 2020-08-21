@@ -31,7 +31,7 @@ export const CollectionResultsItem = forwardRef(({
   const {
     collectionId,
     datasetId,
-    description,
+    summary,
     displayOrganization,
     granuleCount,
     hasFormats,
@@ -244,7 +244,7 @@ export const CollectionResultsItem = forwardRef(({
                     </>
                   )
                 }
-                {description}
+                {summary}
               </p>
             </div>
             <div className="collection-results-item__actions">
