@@ -188,6 +188,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         limit: $pageSize
       ) {
         items {
+          abstract
           archiveAndDistributionInformation
           boxes
           conceptId
@@ -199,7 +200,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           scienceKeywords
           shortName
           spatialExtent
-          summary
           tags
           temporalExtents
           title
@@ -251,6 +251,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
 
       items.forEach((metadata) => {
         const {
+          abstract,
           archiveAndDistributionInformation,
           boxes,
           conceptId,
@@ -258,7 +259,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           hasGranules,
           services,
           shortName,
-          summary,
           tags,
           title,
           variables,
@@ -268,6 +268,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         const focusedMetadata = createFocusedCollectionMetadata(metadata, authToken)
 
         payload.push({
+          abstract,
           archiveAndDistributionInformation,
           boxes,
           id: conceptId,
@@ -276,7 +277,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           hasGranules,
           services,
           shortName,
-          summary,
           tags,
           title,
           variables,

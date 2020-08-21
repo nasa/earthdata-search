@@ -21,9 +21,9 @@ export const CollectionDetailsHighlights = ({
   onToggleRelatedUrlsModal
 }) => {
   const {
+    abstract,
     doi = {},
     hasAllMetadata,
-    summary,
     temporal,
     versionId
   } = collectionMetadata
@@ -35,9 +35,9 @@ export const CollectionDetailsHighlights = ({
 
   const { doiText } = doi
 
-  let truncatedAbstract = summary
-  if (summary && summary.length > 300) {
-    truncatedAbstract = `${summary.substr(0, 300)}...`
+  let truncatedAbstract = abstract
+  if (abstract && abstract.length > 300) {
+    truncatedAbstract = `${abstract.substr(0, 300)}...`
   }
 
   return (
@@ -134,7 +134,7 @@ export const CollectionDetailsHighlights = ({
         </div>
 
         {
-          summary && (
+          abstract && (
             <>
               <header className="collection-details-highlights__item-header">
                 <h4 className="collection-details-highlights__item-title">

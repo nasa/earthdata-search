@@ -7,16 +7,16 @@ describe('formatCollectionList', () => {
     }
     const metadata = {
       collectionId: {
-        id: 'collectionId',
+        abstract: 'test abstract',
         datasetId: 'test dataset id',
-        summary: 'test summary',
         granuleCount: 42,
         hasFormats: false,
+        hasMapImagery: false,
         hasSpatialSubsetting: false,
         hasTemporalSubsetting: false,
         hasTransforms: false,
         hasVariables: false,
-        hasMapImagery: false,
+        id: 'collectionId',
         isCwic: false,
         isNrt: false,
         organizations: ['test/org'],
@@ -31,9 +31,9 @@ describe('formatCollectionList', () => {
     const browser = { name: 'chrome' }
 
     const expectedResult = {
+      abstract: 'test abstract',
       collectionId: 'collectionId',
       datasetId: 'test dataset id',
-      description: 'test summary',
       displayOrganization: 'test/org',
       granuleCount: 42,
       hasFormats: false,
@@ -54,7 +54,8 @@ describe('formatCollectionList', () => {
       versionId: 2
     }
 
-    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(expectedResult)
+    expect(formatCollectionList(collections, metadata, projectIds, browser)[0])
+      .toEqual(expectedResult)
   })
 
   test('formats missing metadata', () => {
@@ -70,9 +71,9 @@ describe('formatCollectionList', () => {
     const browser = { name: 'chrome' }
 
     const expectedResult = {
+      abstract: '',
       collectionId: 'collectionId',
       datasetId: null,
-      description: '',
       displayOrganization: '',
       granuleCount: 0,
       hasFormats: false,
@@ -93,7 +94,8 @@ describe('formatCollectionList', () => {
       versionId: undefined
     }
 
-    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(expectedResult)
+    expect(formatCollectionList(collections, metadata, projectIds, browser)[0])
+      .toEqual(expectedResult)
   })
 
   test('formats temporal with start and without end', () => {
@@ -221,21 +223,21 @@ describe('formatCollectionList', () => {
     })
   })
 
-  test('formats the description in IE', () => {
+  test('formats the abstract in IE', () => {
     const collections = {
       allIds: ['collectionId']
     }
     const metadata = {
       collectionId: {
         id: 'collectionId',
-        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+        abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       }
     }
     const projectIds = []
     const browser = { name: 'ie' }
 
     const expectedResult = {
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt...'
+      abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt...'
     }
 
     expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(

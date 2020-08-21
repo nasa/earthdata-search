@@ -86,6 +86,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         includeHasGranules: $includeHasGranules
         includeTags: $includeTags
       ) {
+        abstract
         archiveAndDistributionInformation
         boxes
         conceptId
@@ -97,7 +98,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         scienceKeywords
         shortName
         spatialExtent
-        summary
         tags
         temporalExtents
         title
@@ -146,6 +146,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       // If no results were returned, graphql will return `null`
       if (collection) {
         const {
+          abstract,
           archiveAndDistributionInformation,
           boxes,
           conceptId,
@@ -153,7 +154,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           hasGranules,
           services,
           shortName,
-          summary,
           tags,
           title,
           variables,
@@ -164,6 +164,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         const focusedMetadata = createFocusedCollectionMetadata(collection, authToken)
 
         payload.push({
+          abstract,
           archiveAndDistributionInformation,
           boxes,
           id: conceptId,
@@ -172,7 +173,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           hasGranules,
           services,
           shortName,
-          summary,
           tags,
           title,
           variables,

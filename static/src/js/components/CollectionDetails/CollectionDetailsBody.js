@@ -110,6 +110,7 @@ export const CollectionDetailsBody = ({
   onToggleRelatedUrlsModal
 }) => {
   const {
+    abstract,
     dataCenters,
     doi,
     hasAllMetadata,
@@ -119,7 +120,6 @@ export const CollectionDetailsBody = ({
     services,
     scienceKeywords,
     spatial,
-    summary,
     temporal,
     urls
   } = collectionMetadata
@@ -330,8 +330,8 @@ export const CollectionDetailsBody = ({
             </div>
           </div>
           <div className="row collection-details-body__row">
-            <div className="col collection-details-body__summary">
-              {summary}
+            <div className="col collection-details-body__abstract">
+              {abstract}
             </div>
           </div>
           <div className="row collection-details-body__row">
