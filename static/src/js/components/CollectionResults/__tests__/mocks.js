@@ -1,8 +1,8 @@
 export const collectionListItemProps = {
   collectionMetadata: {
+    abstract: 'This is a short summary.',
     collectionId: 'collectionId1',
     datasetId: 'Test Collection',
-    description: 'This is a short summary.',
     displayOrganization: 'TESTORG',
     granuleCount: 10,
     hasFormats: false,
@@ -15,8 +15,8 @@ export const collectionListItemProps = {
     isLast: false,
     isNrt: false,
     shortName: 'cId1',
-    thumbnail: 'http://some.test.com/thumbnail/url.jpg',
     temporalRange: '2010-10-10 to 2011-10-10',
+    thumbnail: 'http://some.test.com/thumbnail/url.jpg',
     versionId: '2'
   },
   onAddProjectCollection: jest.fn(),
@@ -28,9 +28,9 @@ export const collectionListItemProps = {
 export const longSummary = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 
 export const collectionResultsBodyData = {
+  abstract: 'test abstract',
   collectionId: 'collectionId',
   datasetId: 'test dataset id',
-  description: 'test summary',
   displayOrganization: 'test/org',
   granuleCount: 42,
   hasFormats: false,
@@ -52,9 +52,9 @@ export const collectionResultsBodyData = {
 }
 
 export const collectionData = [{
+  abstract: 'This is a short summary.',
   collectionId: 'collectionId1',
   datasetId: 'Test Collection',
-  description: 'This is a short summary.',
   displayOrganization: 'TESTORG',
   granuleCount: 10,
   hasFormats: false,
@@ -67,7 +67,7 @@ export const collectionData = [{
   isLast: true,
   isNrt: false,
   shortName: 'cId1',
-  thumbnail: 'http://some.test.com/thumbnail/url.jpg',
   temporalRange: '2010-10-10 to 2011-10-10',
+  thumbnail: 'http://some.test.com/thumbnail/url.jpg',
   versionId: '2'
 }]

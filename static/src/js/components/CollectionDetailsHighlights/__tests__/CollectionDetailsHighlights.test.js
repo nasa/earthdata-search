@@ -18,7 +18,7 @@ function setup(overrideProps) {
       temporal: [
         '1860-01-01 to 2050-12-31'
       ],
-      summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.',
+      abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.',
       versionId: '5'
     },
     collectionsSearch: {
@@ -110,7 +110,7 @@ describe('CollectionDetailsHighlights component', () => {
     })
   })
 
-  describe('summary', () => {
+  describe('abstract', () => {
     describe('when collection is loading', () => {
       test('shows the loading state', () => {
         const { enzymeWrapper } = setup()
@@ -119,7 +119,7 @@ describe('CollectionDetailsHighlights component', () => {
     })
 
     describe('when collection is loaded', () => {
-      test('shows the summary', () => {
+      test('shows the abstract', () => {
         const { enzymeWrapper } = setup({
           collectionsSearch: {
             isLoading: false,
