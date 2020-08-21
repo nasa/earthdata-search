@@ -20,7 +20,7 @@ function setup(overrideProps) {
     },
     collectionsMetadata: {
       collectionId: {
-        abstract: 'test abstract',
+        summary: 'test summary',
         datasetId: 'test dataset id',
         granuleCount: 42,
         hasFormats: false,
@@ -170,7 +170,7 @@ describe('CollectionResultsBody component', () => {
     const { enzymeWrapper, props } = setup({
       collectionsMetadata: {
         collectionId: {
-          abstract: 'test abstract',
+          summary: 'test summary',
           datasetId: 'test dataset id',
           granuleCount: 42,
           hasFormats: false,
@@ -217,7 +217,7 @@ describe('CollectionResultsBody component', () => {
         const { enzymeWrapper } = setup({
           collectionsMetadata: {
             collectionId: {
-              abstract: 'test abstract',
+              summary: 'test summary',
               datasetId: 'test dataset id',
               granuleCount: 42,
               hasFormats: false,
@@ -258,7 +258,7 @@ describe('CollectionResultsBody component', () => {
         const { enzymeWrapper } = setup({
           collectionsMetadata: {
             collectionId: {
-              abstract: 'test abstract',
+              summary: 'test summary',
               datasetId: 'test dataset id',
               granuleCount: 42,
               hasFormats: false,
