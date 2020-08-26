@@ -57,6 +57,7 @@ const urlDefs = {
   granuleDataFormatFacets: { shortKey: 'gdf', encode: encodeFacets, decode: decodeFacets },
   gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
   shapefileId: { shortKey: 'sf', encode: encodeString, decode: encodeString },
+  selectedFeatures: { shortKey: 'sfs', encode: encodeArray, decode: decodeArray },
   tagKey: { shortKey: 'tag_key', encode: encodeString, decode: decodeString },
   hasGranulesOrCwic: { shortKey: 'ac', encode: encodeHasGranulesOrCwic, decode: decodeHasGranulesOrCwic },
   autocompleteSelected: { shortKey: 'as', encode: encodeAutocomplete, decode: decodeAutocomplete }
@@ -160,7 +161,8 @@ export const decodeUrlParams = (paramString) => {
   }
 
   const shapefile = {
-    shapefileId: decodeHelp(params, 'shapefileId')
+    shapefileId: decodeHelp(params, 'shapefileId'),
+    selectedFeatures: decodeHelp(params, 'selectedFeatures')
   }
 
   const advancedSearch = decodeAdvancedSearch(params)

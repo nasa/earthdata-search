@@ -105,12 +105,20 @@ export class EDSCModalContainer extends Component {
 
     const addPropsToChildren = (el) => {
       if (el) {
-        return cloneElement(el, {
-          setModalOverlay: (overlay) => {
-            this.onSetOverlayModalContent(overlay)
-          },
-          modalInnerRef: this.modalInner
-        })
+        let returnObj = null
+
+        // If the element's type is a function then the element is a custom component, not a dom element
+        // We can't add these props to dom elements
+        // This prevents usage of setModalOverlay and modealInnerRef on dom elements
+        if (typeof el.type === 'function') {
+          returnObj = {
+            setModalOverlay: (overlay) => {
+              this.onSetOverlayModalContent(overlay)
+            },
+            modalInnerRef: this.modalInner
+          }
+        }
+        return cloneElement(el, returnObj)
       }
       return null
     }

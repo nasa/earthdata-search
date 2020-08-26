@@ -64,4 +64,27 @@ export const saveShapefile = data => (dispatch) => {
   return response
 }
 
+/**
+ * Retrieves a shapefile from lambda
+ * @param {String} shapefileId Shapefile ID to retrieve
+ */
+export const fetchShapefile = shapefileId => (dispatch) => {
+  const requestObject = new ShapefileRequest()
+
+  const response = requestObject.fetch(shapefileId)
+    .then((response) => {
+      dispatch(updateShapefile(response.data))
+    })
+    .catch((error) => {
+      dispatch(handleError({
+        error,
+        action: 'fetchShapefile',
+        resource: 'shapefile',
+        requestObject
+      }))
+    })
+
+  return response
+}
+
 export default saveShapefile

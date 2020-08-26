@@ -1,6 +1,8 @@
 import 'array-foreach-async'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
+import forge from 'node-forge'
+
 import { getEnvironmentConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
@@ -21,6 +23,7 @@ import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { parseError } from '../../../sharedUtils/parseError'
 import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { createLimitedShapefile } from '../util/createLimitedShapefile'
 
 /**
  * Submits an order to Catalog Rest (ESI)
@@ -62,6 +65,7 @@ const submitCatalogRestOrder = async (event, context) => {
       .first(
         'retrievals.id',
         'retrievals.jsondata',
+        'retrievals.user_id',
         'retrieval_collections.access_method',
         'retrieval_orders.granule_params'
       )
@@ -74,12 +78,14 @@ const submitCatalogRestOrder = async (event, context) => {
     const {
       id: retrievalId,
       jsondata,
+      user_id: userId,
       access_method: accessMethod,
       granule_params: granuleParams
     } = retrievalRecord
     const {
       portalId = getApplicationConfig().defaultPortal,
-      shapefileId
+      shapefileId,
+      selectedFeatures
     } = jsondata
 
     const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
@@ -116,9 +122,42 @@ const submitCatalogRestOrder = async (event, context) => {
       )
 
       const shapefileRecord = await dbConnection('shapefiles')
-        .first('file')
+        .first('file', 'filename')
         .where({ id: deobfuscatedShapefileId })
-      const { file } = shapefileRecord
+      let { file } = shapefileRecord
+
+      // If selectedFeatures exists, build a new shapefile out of those features and use the new shapefile to submit order
+      if (selectedFeatures) {
+        // Create a new shapefile
+        const newFile = createLimitedShapefile(file, selectedFeatures)
+        file = newFile
+
+        const fileHash = forge.md.md5.create()
+        fileHash.update(JSON.stringify(file))
+
+        // If the user already used this file, don't save the file again
+        const existingShapefileRecord = await dbConnection('shapefiles')
+          .first('id')
+          .where({
+            file_hash: fileHash,
+            user_id: userId
+          })
+
+        if (!existingShapefileRecord) {
+          const { filename } = shapefileRecord
+
+          // Save new shapefile into database, adding the parent_shapefile_id
+          await dbConnection('shapefiles')
+            .insert({
+              file_hash: fileHash.digest().toHex(),
+              file,
+              filename: `Limited-${filename}`,
+              parent_shapefile_id: deobfuscatedShapefileId,
+              selected_features: selectedFeatures,
+              user_id: userId
+            })
+        }
+      }
 
       shapefileParam = getShapefile(model, file)
     }

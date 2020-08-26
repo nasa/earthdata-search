@@ -61,10 +61,12 @@ function setup() {
     onChangeFocusedGranule: jest.fn(),
     onChangeMap: jest.fn(),
     onExcludeGranule: jest.fn(),
+    onFetchShapefile: jest.fn(),
     onSaveShapefile: jest.fn(),
     onShapefileErrored: jest.fn(),
     onMetricsMap: jest.fn(),
-    onToggleTooManyPointsModal: jest.fn()
+    onToggleTooManyPointsModal: jest.fn(),
+    onUpdateShapefile: jest.fn()
   }
 
   // Mount is required here so we can have access to the mapRef

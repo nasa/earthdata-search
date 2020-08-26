@@ -4,9 +4,10 @@ import thunk from 'redux-thunk'
 
 import {
   clearShapefile,
+  fetchShapefile,
   saveShapefile,
-  shapefileLoading,
   shapefileErrored,
+  shapefileLoading,
   updateShapefile
 } from '../shapefiles'
 
@@ -71,9 +72,8 @@ describe('shapefileLoading', () => {
   })
 })
 
-
 describe('saveShapefile', () => {
-  test('calls the API to get collections', async () => {
+  test('calls the API to save the shapefile', async () => {
     nock(/localhost/)
       .post(/shapefiles/)
       .reply(200, {
@@ -158,6 +158,67 @@ describe('saveShapefile', () => {
         }
       })
       expect(consoleMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('fetchShapefile', () => {
+    test('calls the API to retrieve the shapefile', async () => {
+      nock(/localhost/)
+        .get(/shapefiles/)
+        .reply(200, {
+          file: 'mock shapefile',
+          filename: 'MockShapefile.geojson',
+          selectedFeatures: []
+        })
+
+      // mockStore with initialState
+      const store = mockStore({
+        query: {
+          collection: {
+            pageNum: 1,
+            spatial: {}
+          }
+        },
+        router: {
+          location: {
+            pathname: ''
+          }
+        },
+        timeline: {
+          query: {}
+        }
+      })
+
+      // call the dispatch
+      await store.dispatch(fetchShapefile('1')).then(() => {
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          type: UPDATE_SHAPEFILE,
+          payload: {
+            file: 'mock shapefile',
+            filename: 'MockShapefile.geojson',
+            selectedFeatures: []
+          }
+        })
+      })
+    })
+
+    test('does not call updateCollectionResults on error', async () => {
+      nock(/localhost/)
+        .get(/shapefiles/)
+        .reply(500)
+
+      nock(/localhost/)
+        .post(/error_logger/)
+        .reply(200)
+
+      const store = mockStore({})
+
+      const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+      await store.dispatch(fetchShapefile('1')).then(() => {
+        expect(consoleMock).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })
