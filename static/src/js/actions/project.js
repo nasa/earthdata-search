@@ -212,7 +212,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               name
               type
               url
-              supportedOutputFormats
               supportedReformattings
             }
           }

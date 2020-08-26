@@ -149,16 +149,20 @@ const getAccessMethods = async (event, context) => {
         conceptId,
         longName,
         name,
+        supportedReformattings,
         type
       } = fullServiceObject
 
       const { keywordMappings, variables } = getVariables(associatedVariables)
 
-      let supportedOutputFormats = null
+      const outputFormats = []
 
-      if (fullServiceObject) {
-        ({ supportedOutputFormats } = fullServiceObject)
-      }
+      supportedReformattings.forEach((reformatting) => {
+        const { supportedOutputFormats } = reformatting
+
+        // Collect all supported output formats from each mapping
+        outputFormats.push(...supportedOutputFormats)
+      })
 
       accessMethods.opendap = {
         id: conceptId,
@@ -166,7 +170,7 @@ const getAccessMethods = async (event, context) => {
         keywordMappings,
         longName,
         name,
-        supportedOutputFormats,
+        supportedOutputFormats: outputFormats,
         type,
         variables
       }

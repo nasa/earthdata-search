@@ -375,13 +375,15 @@ describe('getAccessMethods', () => {
             items: [{
               conceptId: 'S1000000-EDSC',
               type: 'OPeNDAP',
-              supportedOutputFormats: [
-                'HDF4',
-                'NETCDF-3',
-                'NETCDF-4',
-                'BINARY',
-                'ASCII'
-              ]
+              supportedReformattings: [{
+                supportedOutputFormats: [
+                  'HDF4',
+                  'NETCDF-3',
+                  'NETCDF-4',
+                  'BINARY',
+                  'ASCII'
+                ]
+              }]
             }]
           },
           tags: {
