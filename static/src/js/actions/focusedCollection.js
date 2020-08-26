@@ -110,7 +110,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             name
             type
             url
-            supportedOutputFormats
             supportedReformattings
           }
         }

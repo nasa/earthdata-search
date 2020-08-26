@@ -406,24 +406,25 @@ describe('CollectionDetails component', () => {
             items: [
               {
                 type: 'ECHO ORDERS',
-                supportedOutputFormats: null,
                 supportedReformattings: null
               },
               {
                 type: 'ESI',
-                supportedOutputFormats: [
-                  'ASCII',
-                  'GEOTIFF',
-                  'HDF-EOS5',
-                  'KML',
-                  'NETCDF-3',
-                  'NETCDF-4'
-                ],
-                supportedReformattings: null
+                supportedReformattings: [
+                  {
+                    supportedOutputFormats: [
+                      'ASCII',
+                      'GEOTIFF',
+                      'HDF-EOS5',
+                      'KML',
+                      'NETCDF-3',
+                      'NETCDF-4'
+                    ]
+                  }
+                ]
               },
               {
                 type: 'NOT PROVIDED',
-                supportedOutputFormats: null,
                 supportedReformattings: null
               }
             ]

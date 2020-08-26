@@ -135,7 +135,6 @@ export const CollectionDetailsBody = ({
     )
   }
 
-  const outputFormats = []
   const reformattings = []
 
   if (services) {
@@ -144,13 +143,8 @@ export const CollectionDetailsBody = ({
     if (items) {
       items.forEach((service) => {
         const {
-          supportedOutputFormats,
           supportedReformattings: supportedReformattingsList
         } = service
-
-        if (supportedOutputFormats) {
-          outputFormats.push(...supportedOutputFormats)
-        }
 
         if (supportedReformattingsList) {
           reformattings.push(...supportedReformattingsList)
@@ -232,16 +226,6 @@ export const CollectionDetailsBody = ({
                         {
                           nativeFormats.length > 0 && buildNativeFormatList(nativeFormats)
                         }
-                      </dd>
-                    </>
-                  )
-                }
-                {
-                  outputFormats.length > 0 && (
-                    <>
-                      <dt>{`Output ${pluralize('Format', outputFormats.length)}`}</dt>
-                      <dd>
-                        {outputFormats.join(', ')}
                       </dd>
                     </>
                   )
