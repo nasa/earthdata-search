@@ -170,7 +170,7 @@ const getAccessMethods = async (event, context) => {
         keywordMappings,
         longName,
         name,
-        supportedOutputFormats: outputFormats,
+        supportedOutputFormats: [...new Set(outputFormats)],
         type,
         variables
       }
