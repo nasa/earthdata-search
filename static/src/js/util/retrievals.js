@@ -60,14 +60,15 @@ export const prepareRetrievalParams = (state) => {
   })
 
   const { search } = router.location
-  const { shapefileId } = shapefile
+  const { shapefileId, selectedFeatures } = shapefile
 
   const { portalId } = portal
 
   const jsonData = {
     portalId,
     source: search,
-    shapefileId
+    shapefileId,
+    selectedFeatures
   }
 
   return {

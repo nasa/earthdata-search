@@ -134,6 +134,7 @@ import {
 } from './accessMethods'
 import {
   clearShapefile,
+  fetchShapefile,
   saveShapefile,
   shapefileErrored,
   shapefileLoading,
@@ -211,6 +212,7 @@ const actions = {
   fetchRetrievalCollectionGranuleLinks,
   fetchRetrievalHistory,
   fetchSavedProjects,
+  fetchShapefile,
   getCollections,
   getFocusedCollection,
   getFocusedGranule,

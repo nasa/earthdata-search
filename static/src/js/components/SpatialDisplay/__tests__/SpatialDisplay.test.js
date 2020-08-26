@@ -257,6 +257,30 @@ describe('SpatialDisplay component', () => {
         expect(fileSize).toEqual('(42 KB)')
       })
     })
+
+    describe('when the shapfile has selected shapes', () => {
+      test('should render a hint with number of shapes selected', () => {
+        const { enzymeWrapper } = setup()
+        const newPolygon = '-77.04444122314453,38.99228142151045,'
+          + '-77.01992797851562,38.79166886339155,'
+          + '-76.89415168762207,38.902629947921575,'
+          + '-77.04444122314453,38.99228142151045'
+
+        enzymeWrapper.setProps({
+          polygonSearch: [newPolygon],
+          shapefile: {
+            shapefileName: 'test file',
+            shapefileSize: '42 KB',
+            isLoaded: true,
+            isLoading: false,
+            selectedFeatures: ['1']
+          }
+        })
+
+        const filterStackContents = enzymeWrapper.find(FilterStackContents)
+        expect(filterStackContents.props().hint).toEqual('1 shape selected')
+      })
+    })
   })
 
   describe('with grid', () => {

@@ -182,8 +182,8 @@ class SpatialSelection extends Component {
         }
       }
 
-      // Draw the new shape
-      this.renderShape(nextProps, true)
+      // Draw the new shape unless a shapefile was added
+      if (!nextProps.shapefileId) this.renderShape(nextProps, true)
     }
 
     // If a polygon is drawn for a CWIC collection, render the MBR to show the user what is being sent
@@ -443,11 +443,11 @@ class SpatialSelection extends Component {
 
     const {
       advancedSearch = {},
-      pointSearch,
       boundingBoxSearch,
+      circleSearch,
       lineSearch,
-      polygonSearch,
-      circleSearch
+      pointSearch,
+      polygonSearch
     } = props
 
     const {
@@ -572,7 +572,6 @@ class SpatialSelection extends Component {
         colorOptions
       )
       const poly = new L.Polygon(polygon, options)
-
       poly.type = 'polygon'
       poly.addTo(featureGroup)
 
@@ -686,7 +685,8 @@ SpatialSelection.defaultProps = {
   lineSearch: [],
   mapRef: {},
   pointSearch: [],
-  polygonSearch: []
+  polygonSearch: [],
+  shapefileId: null
 }
 
 SpatialSelection.propTypes = {
@@ -695,11 +695,12 @@ SpatialSelection.propTypes = {
   circleSearch: PropTypes.arrayOf(PropTypes.string),
   isCwic: PropTypes.bool.isRequired,
   isProjectPage: PropTypes.bool.isRequired,
+  lineSearch: PropTypes.arrayOf(PropTypes.string),
   mapRef: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
-  lineSearch: PropTypes.arrayOf(PropTypes.string),
+  shapefileId: PropTypes.string,
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onMetricsSpatialEdit: PropTypes.func.isRequired

@@ -17,6 +17,7 @@ const defaultOptions = {
 
 class ShapefileLayerExtended extends L.Layer {
   initialize(props) {
+    this.props = props
     this.onRemovedFile = this.onRemovedFile.bind(this)
     this.onSuccess = this.onSuccess.bind(this)
     this.clickLayer = this.clickLayer.bind(this)
@@ -28,6 +29,8 @@ class ShapefileLayerExtended extends L.Layer {
       selection: L.extend({}, defaultOptions.selection, colorOptions)
     }
 
+    this.selectedLayers = []
+
     eventEmitter.on('shapefile.success', (file, resp) => {
       this.onSuccess(file, resp)
     })
@@ -35,6 +38,17 @@ class ShapefileLayerExtended extends L.Layer {
     eventEmitter.on('shapefile.removedfile', () => {
       this.onRemovedFile()
     })
+
+    const { shapefile, onFetchShapefile } = props
+    const { isLoaded, shapefileId } = shapefile
+
+    if (shapefileId && !isLoaded) {
+      onFetchShapefile(shapefileId)
+    }
+  }
+
+  drawNewShapefile(shapefile) {
+    this.onSuccess({}, shapefile, false)
   }
 
   onAdd(map) {
@@ -105,9 +119,21 @@ class ShapefileLayerExtended extends L.Layer {
     })
   }
 
-  onSuccess(file, response) {
+  onSuccess(file, response, panMap = true) {
     // look through response and separate all MultiPolygon types into their own polygon
     this.separateMultiPolygons(response)
+
+    // Add an id field to each feature unless it already has one
+    response.features.map((feature, index) => {
+      const newFeature = feature
+      const { id } = feature
+
+      if (!id) {
+        newFeature.id = index.toString()
+      }
+
+      return newFeature
+    })
 
     const newIcon = new L.Icon.Default()
     newIcon.options.className = 'geojson-icon'
@@ -134,7 +160,7 @@ class ShapefileLayerExtended extends L.Layer {
     jsonLayer.on('click', this.clickLayer)
     this.jsonLayer = jsonLayer
     this.jsonLayer.addTo(this.map)
-    this.map.flyToBounds(jsonLayer.getBounds())
+    if (panMap) this.map.flyToBounds(jsonLayer.getBounds())
     this.onMetricsMap('Added Shapefile')
 
     const children = jsonLayer.getLayers()
@@ -144,8 +170,40 @@ class ShapefileLayerExtended extends L.Layer {
     }
   }
 
-  clickLayer(e) {
-    this.setConstraint(e.layer)
+  // Fired when a shapefile layer, or selected shape layer is clicked
+  clickLayer(event) {
+    const { onUpdateShapefile } = this.props
+
+    let { layer } = event
+    if (!layer) {
+      layer = event.target
+    }
+    const { feature } = layer
+    const { id: layerId } = feature
+
+    const layerIndex = this.selectedLayers.indexOf(layerId)
+    // If the layerId is currently a selectedLayer
+    if (layerIndex > -1) {
+      // Remove the layerId from this.selectedLayers
+      this.selectedLayers.splice(layerIndex, 1)
+
+      // Update selectedFeatures in the store
+      onUpdateShapefile({ selectedFeatures: [] })
+
+      // Remove the drawing from the map (also removes the spatial search)
+      const { map } = this
+      map.fire('draw:deleted')
+    } else {
+      // Add the layerId to this.selectedLayers
+      this.selectedLayers.push(layerId)
+
+      // Add the new constraint to the map
+      this.setConstraint(layer)
+
+      // Update selectedFeatures in the store
+      // TODO: EDSC-2823 this will need to be able to add more selectedFeatures, not replace all selectedFeatures
+      onUpdateShapefile({ selectedFeatures: [layerId] })
+    }
   }
 
   setConstraint(sourceLayer) {
@@ -179,8 +237,11 @@ class ShapefileLayerExtended extends L.Layer {
       layer = L.marker(sourceLayer.getLatLng())
       layerType = 'marker'
     }
+    // TODO: probably have to draw circles here for EDSC-2823
 
     if (layer != null) {
+      layer.feature = feature
+      layer.on('click', this.clickLayer)
       const { map } = this
       map.fire('draw:drawstart', { layerType: 'shapefile' })
       map.fire('draw:created', {
@@ -236,8 +297,20 @@ class ShapefileLayer extends MapLayer {
   updateLeafletElement(fromProps, toProps) {
     const element = this.leafletElement
 
-    const { shapefile } = toProps
-    const { shapefileId, shapefileName } = shapefile
+    const { shapefile: fromShapefile } = fromProps
+    const { shapefile: toShapefile } = toProps
+
+    const { file: fromFile } = fromShapefile
+    const {
+      file: toFile,
+      shapefileId,
+      shapefileName
+    } = toShapefile
+
+    if (toFile && fromFile !== toFile) {
+      element.drawNewShapefile(toFile)
+    }
+
     if (!shapefileId && !shapefileName) {
       element.onRemovedFile()
     }

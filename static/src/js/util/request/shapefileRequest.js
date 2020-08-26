@@ -7,6 +7,10 @@ export default class ShapefileRequest extends Request {
     this.lambda = true
   }
 
+  fetch(shapefileId) {
+    return this.get(`shapefiles/${shapefileId}`)
+  }
+
   save(params) {
     return this.post('shapefiles', params)
   }

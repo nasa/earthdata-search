@@ -19,6 +19,10 @@
     align-items: center;
     margin: 0;
 
+    &--system {
+      margin-left: $spacer/4;
+    }
+
     &:not(:last-child) {
       margin-bottom: $spacer/2;
     }
