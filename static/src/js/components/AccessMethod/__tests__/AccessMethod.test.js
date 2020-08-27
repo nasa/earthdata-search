@@ -160,6 +160,21 @@ describe('AccessMethod component', () => {
 
       expect(enzymeWrapper.find(Radio).props().value).toEqual('opendap')
     })
+
+    test('renders a radio button for harmony', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setProps({
+        accessMethods: {
+          harmony0: {
+            isValid: true,
+            type: 'Harmony'
+          }
+        }
+      })
+
+      expect(enzymeWrapper.find(Radio).props().value).toEqual('harmony0')
+    })
   })
 
   describe('when the selected access method has an echoform', () => {

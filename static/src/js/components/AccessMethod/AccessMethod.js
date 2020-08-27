@@ -123,6 +123,32 @@ const opendapButton = (collectionId, methodKey) => (
   </Radio>
 )
 
+const harmonyButton = (collectionId, methodKey) => (
+  <Radio
+    id={`${collectionId}_access-method__harmony_${methodKey}`}
+    dataTestId={`${collectionId}_access-method__harmony_${methodKey}`}
+    name={`${collectionId}_access-method__harmony_${methodKey}`}
+    key={`${collectionId}_access-method__harmony_${methodKey}`}
+    value={methodKey}
+  >
+    Customize (Harmony)
+    <OverlayTrigger
+      placement="right"
+      overlay={(
+        <Tooltip
+          className="tooltip--large tooltip--ta-left"
+        >
+          Select options like variables, transformations, and output formats to customize your data.
+          The desired data files will be made available in a variety of ways, allowing you to choose
+          your preferred method for using the data.
+        </Tooltip>
+      )}
+    >
+      <i className="access-method__radio-tooltip fa fa-info-circle" />
+    </OverlayTrigger>
+  </Radio>
+)
+
 const formatMapping = {
   'NETCDF-3': 'nc',
   'NETCDF-4': 'nc4',
@@ -150,6 +176,7 @@ export class AccessMethod extends Component {
       accessMethods,
       selectedAccessMethod
     } = props
+
     const selectedMethod = accessMethods[selectedAccessMethod]
     const {
       selectedOutputFormat = ''
@@ -168,7 +195,7 @@ export class AccessMethod extends Component {
       selectedAccessMethod
     } = nextProps
 
-    if (selectedAccessMethod === 'opendap') {
+    if (['opendap', 'harmony'].includes(selectedAccessMethod)) {
       const selectedMethod = accessMethods[selectedAccessMethod]
       const {
         selectedOutputFormat: nextSelectedOutputFormat,
@@ -204,7 +231,7 @@ export class AccessMethod extends Component {
   }
 
   handleOutputFormatSelection(event) {
-    const { metadata, onUpdateAccessMethod } = this.props
+    const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
     const { conceptId: collectionId } = metadata
 
     const { target } = event
@@ -215,7 +242,7 @@ export class AccessMethod extends Component {
     onUpdateAccessMethod({
       collectionId,
       method: {
-        opendap: {
+        [selectedAccessMethod]: {
           selectedOutputFormat: value
         }
       }
@@ -257,6 +284,9 @@ export class AccessMethod extends Component {
         case 'OPeNDAP':
           radioList.push(opendapButton(collectionId, methodKey))
           break
+        case 'Harmony':
+          radioList.push(harmonyButton(collectionId, methodKey))
+          break
         default:
           break
       }
@@ -289,23 +319,26 @@ export class AccessMethod extends Component {
       form,
       rawModel = null,
       selectedVariables = [],
-      supportedOutputFormats = []
+      supportedOutputFormats = [],
+      supportsVariableSubsetting = false
     } = selectedMethod || {}
 
     const isOpendap = (selectedAccessMethod === 'opendap')
 
-    let supportedOutputFormatOptions
+    // Default supportedOutputFormat
+    let supportedOutputFormatOptions = supportedOutputFormats
+
     if (isOpendap) {
       // Filter the supportedOutputFormats to only those formats CMR supports
-      const cmrSupportedFormats = supportedOutputFormats.filter(
+      supportedOutputFormatOptions = supportedOutputFormats.filter(
         format => formatMapping[format] !== undefined
       )
-
-      // Build options for supportedOutputFormats
-      supportedOutputFormatOptions = cmrSupportedFormats.map(format => (
-        <option key={format} value={formatMapping[format]}>{format}</option>
-      ))
     }
+
+    // Build options for supportedOutputFormats
+    supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
+      <option key={format} value={formatMapping[format]}>{format}</option>
+    ))
 
     const echoFormFallback = (
       <div className="access-method__echoform-loading">
@@ -349,7 +382,7 @@ export class AccessMethod extends Component {
           )
         }
         {
-          isOpendap && (
+          supportsVariableSubsetting && (
             <>
               <ProjectPanelSection heading="Variable Selection">
                 <p className="access-method__section-intro">
@@ -386,6 +419,12 @@ export class AccessMethod extends Component {
                   Edit Variables
                 </Button>
               </ProjectPanelSection>
+            </>
+          )
+        }
+        {
+          supportedOutputFormats.length > 0 && (
+            <>
               <ProjectPanelSection heading="Output Format Selection">
                 <p className="access-method__section-intro">
                   Choose from output format options like GeoTIFF, NETCDF, and other file types.

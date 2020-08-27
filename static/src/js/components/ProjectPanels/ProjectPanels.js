@@ -265,6 +265,7 @@ class ProjectPanels extends PureComponent {
       onSetActivePanel,
       onTogglePanels,
       onUpdateAccessMethod,
+      onTogglePanels,
       onViewCollectionGranules,
       panels,
       portal,
@@ -434,16 +435,16 @@ class ProjectPanels extends PureComponent {
           >
             <AccessMethod
               accessMethods={accessMethods}
+              granuleMetadata={granulesMetadata}
               index={index}
               metadata={collectionMetadata}
-              granuleMetadata={granulesMetadata}
-              shapefileId={shapefileId}
-              spatial={spatial}
               onSelectAccessMethod={onSelectAccessMethod}
               onSetActivePanel={onSetActivePanel}
               onTogglePanels={onTogglePanels}
               onUpdateAccessMethod={onUpdateAccessMethod}
               selectedAccessMethod={selectedAccessMethod}
+              shapefileId={shapefileId}
+              spatial={spatial}
             />
           </PanelItem>
           <PanelItem

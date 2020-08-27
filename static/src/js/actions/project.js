@@ -196,6 +196,9 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           dataCenters
           doi
           hasGranules
+          lines
+          points
+          polygons
           relatedUrls
           scienceKeywords
           shortName
@@ -212,6 +215,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               name
               type
               url
+              serviceOptions
               supportedReformattings
             }
           }
