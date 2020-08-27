@@ -1,16 +1,17 @@
 import parser from 'fast-xml-parser'
 
-import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { generateFormDigest } from '../util/generateFormDigest'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getDbConnection } from '../util/database/getDbConnection'
+import { getJwtToken } from '../util/getJwtToken'
 import { getOptionDefinitions } from './getOptionDefinitions'
 import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
-import { getJwtToken } from '../util/getJwtToken'
-import { getDbConnection } from '../util/database/getDbConnection'
-import { generateFormDigest } from '../util/generateFormDigest'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 import { getVariables } from './getVariables'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
+import { supportsVariableSubsetting } from './supportsVariableSubsetting'
 
 /**
  * Retrieve access methods for a provided collection
@@ -60,6 +61,10 @@ const getAccessMethods = async (event, context) => {
     // Fetch UMM-S records with type 'OPeNDAP'
     const opendapServices = items.filter(service => service.type === 'OPeNDAP')
     const hasOpendap = opendapServices.length > 0
+
+    // Fetch UMM-S records with type 'Harmony'
+    const harmonyServices = items.filter(service => service.type === 'Harmony')
+    const hasHarmony = harmonyServices.length > 0
 
     const capabilitiesData = getValueForTag('collection_capabilities', tags)
     const { granule_online_access_flag: downloadable } = capabilitiesData || {}
@@ -157,12 +162,14 @@ const getAccessMethods = async (event, context) => {
 
       const outputFormats = []
 
-      supportedReformattings.forEach((reformatting) => {
-        const { supportedOutputFormats } = reformatting
+      if (supportedReformattings) {
+        supportedReformattings.forEach((reformatting) => {
+          const { supportedOutputFormats } = reformatting
 
-        // Collect all supported output formats from each mapping
-        outputFormats.push(...supportedOutputFormats)
-      })
+          // Collect all supported output formats from each mapping
+          outputFormats.push(...supportedOutputFormats)
+        })
+      }
 
       accessMethods.opendap = {
         id: conceptId,
@@ -171,9 +178,47 @@ const getAccessMethods = async (event, context) => {
         longName,
         name,
         supportedOutputFormats: [...new Set(outputFormats)],
+        supportsVariableSubsetting: supportsVariableSubsetting(fullServiceObject),
         type,
         variables
       }
+    }
+
+    if (hasHarmony) {
+      const { keywordMappings, variables } = getVariables(associatedVariables)
+
+      harmonyServices.forEach((serviceObject, index) => {
+        const {
+          conceptId,
+          longName,
+          name,
+          supportedReformattings,
+          type
+        } = serviceObject
+
+        const outputFormats = []
+
+        if (supportedReformattings) {
+          supportedReformattings.forEach((reformatting) => {
+            const { supportedOutputFormats } = reformatting
+
+            // Collect all supported output formats from each mapping
+            outputFormats.push(...supportedOutputFormats)
+          })
+        }
+
+        accessMethods[`harmony${index}`] = {
+          id: conceptId,
+          isValid: true,
+          keywordMappings,
+          longName,
+          name,
+          supportedOutputFormats: [...new Set(outputFormats)],
+          supportsVariableSubsetting: supportsVariableSubsetting(serviceObject),
+          type,
+          variables
+        }
+      })
     }
 
     // Retrive a connection to the database
@@ -199,7 +244,7 @@ const getAccessMethods = async (event, context) => {
       if (accessConfigRecord) {
         const { access_method: savedAccessConfig } = accessConfigRecord
 
-        if (method.type === savedAccessConfig.type && ['download', 'OPeNDAP'].includes(method.type)) {
+        if (method.type === savedAccessConfig.type && ['download', 'Harmony', 'OPeNDAP'].includes(method.type)) {
           selectedAccessMethod = methodName
 
           return

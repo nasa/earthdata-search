@@ -358,11 +358,6 @@ export const CollectionDetailsBody = ({
             <ul className="collection-details-body__dev-list">
               {urls.granuleDatasource && buildForDeveloperLink(urls.granuleDatasource)}
               {urls.osdd && buildForDeveloperLink(urls.osdd)}
-              {
-                // TODO: GIBS
-                // TODO: Opendap
-                // TODO: Modaps
-              }
             </ul>
           </div>
         </div>

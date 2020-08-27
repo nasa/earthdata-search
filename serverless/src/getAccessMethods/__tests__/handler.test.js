@@ -83,6 +83,52 @@ describe('getAccessMethods', () => {
       statusCode: 200
     })
   })
+  test('populates a harmony method', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([])
+    })
+
+    const event = {
+      body: JSON.stringify({
+        params: {
+          collectionId: 'collectionId',
+          services: {
+            count: 1,
+            items: [{
+              conceptId: 'umm-s-record-1',
+              type: 'Harmony'
+            }]
+          }
+        }
+      })
+    }
+
+    const result = await getAccessMethods(event, {})
+
+    expect(result).toEqual({
+      body: JSON.stringify({
+        accessMethods: {
+          harmony0: {
+            id: 'umm-s-record-1',
+            isValid: true,
+            keywordMappings: {},
+            supportedOutputFormats: [],
+            supportsVariableSubsetting: true,
+            type: 'Harmony',
+            variables: {}
+          }
+        },
+        selectedAccessMethod: 'harmony0'
+      }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      isBase64Encoded: false,
+      statusCode: 200
+    })
+  })
 
   test('populates a echoOrder method', async () => {
     dbTracker.on('query', (query, step) => {
@@ -414,6 +460,7 @@ describe('getAccessMethods', () => {
               'BINARY',
               'ASCII'
             ],
+            supportsVariableSubsetting: true,
             type: 'OPeNDAP',
             variables
           }

@@ -94,6 +94,9 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         dataCenters
         doi
         hasGranules
+        lines
+        points
+        polygons
         relatedUrls
         scienceKeywords
         shortName
@@ -110,6 +113,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             name
             type
             url
+            serviceOptions
             supportedReformattings
           }
         }
