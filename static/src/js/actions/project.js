@@ -192,6 +192,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation
           boxes
           conceptId
+          coordinateSystem
           dataCenter
           dataCenters
           doi
