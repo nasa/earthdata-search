@@ -90,6 +90,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         archiveAndDistributionInformation
         boxes
         conceptId
+        coordinateSystem
         dataCenter
         dataCenters
         doi
