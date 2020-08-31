@@ -3,6 +3,7 @@ import {
   withLeaflet,
   MapLayer
 } from 'react-leaflet'
+import forge from 'node-forge'
 
 import { eventEmitter } from '../../events/events'
 import { colorOptions } from '../SpatialSelection/SpatialSelection'
@@ -18,11 +19,13 @@ const defaultOptions = {
 class ShapefileLayerExtended extends L.Layer {
   initialize(props) {
     this.props = props
+    this.onAdd = this.onAdd.bind(this)
     this.onRemovedFile = this.onRemovedFile.bind(this)
     this.onSuccess = this.onSuccess.bind(this)
     this.clickLayer = this.clickLayer.bind(this)
     this.authToken = props.authToken
     this.onMetricsMap = props.onMetricsMap
+    this.isProjectPage = props.isProjectPage
     this.onToggleTooManyPointsModal = props.onToggleTooManyPointsModal
 
     this.options = {
@@ -40,19 +43,32 @@ class ShapefileLayerExtended extends L.Layer {
     })
 
     const { shapefile, onFetchShapefile } = props
-    const { isLoaded, shapefileId } = shapefile
+    const {
+      file,
+      shapefileId
+    } = shapefile
 
-    if (shapefileId && !isLoaded) {
+    if (shapefileId && !file) {
       onFetchShapefile(shapefileId)
     }
   }
 
-  drawNewShapefile(shapefile) {
-    this.onSuccess({}, shapefile, false)
+  drawNewShapefile(shapefile, selectedFeatures = []) {
+    this.onSuccess({}, shapefile, false, selectedFeatures)
   }
 
   onAdd(map) {
     this.map = map
+
+    const { shapefile } = this.props
+    const {
+      file,
+      selectedFeatures
+    } = shapefile
+
+    if (file) {
+      this.onSuccess({}, file, false, selectedFeatures)
+    }
   }
 
   onRemove() {
@@ -74,6 +90,7 @@ class ShapefileLayerExtended extends L.Layer {
   separateMultiPolygons(geojson) {
     const featureIndexesToRemove = []
     const { features } = geojson
+    const newFeaturesToAdd = []
 
     features.forEach((feature, featureIndex) => {
       const { geometry } = feature
@@ -81,18 +98,31 @@ class ShapefileLayerExtended extends L.Layer {
 
       // KML type file
       if (type === 'GeometryCollection') {
+        // Remove the entire GeometryCollection
+        featureIndexesToRemove.push(featureIndex)
         const { geometries } = geometry
 
-        geometries.forEach((nestedGeometry, index) => {
+        geometries.forEach((nestedGeometry) => {
           if (nestedGeometry.type === 'MultiPolygon') {
             // If we see a MultiPolygon, separate into Polygons
             nestedGeometry.coordinates.forEach((polygon) => {
-              const newPolygon = { type: 'Polygon', coordinates: polygon }
-              geometries.push(newPolygon)
-            })
+              const newPolygon = {
+                type: 'Feature',
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: polygon
+                }
+              }
 
-            // remove the MultiPolygon from the list of geometries
-            geometries.splice(index, 1)
+              // Add the polygon into the new features to pull up to the top level features array
+              newFeaturesToAdd.push(newPolygon)
+            })
+          } else {
+            // Add all over shapes to the top level features array
+            newFeaturesToAdd.push({
+              type: 'Feature',
+              geometry: nestedGeometry
+            })
           }
         })
       }
@@ -117,19 +147,32 @@ class ShapefileLayerExtended extends L.Layer {
     featureIndexesToRemove.reverse().forEach((index) => {
       geojson.features.splice(index, 1)
     })
+
+    // eslint-disable-next-line no-param-reassign
+    geojson.features = [
+      ...geojson.features,
+      ...newFeaturesToAdd
+    ]
   }
 
-  onSuccess(file, response, panMap = true) {
+  onSuccess(file, response, panMap = true, selectedFeatures = []) {
+    if (!this.map) return
+
+    const newHash = forge.md.md5.create()
+    newHash.update(JSON.stringify(response))
+    if (this.fileHash === newHash.digest().toHex()) return
+
+    this.selectedLayers = selectedFeatures
     // look through response and separate all MultiPolygon types into their own polygon
     this.separateMultiPolygons(response)
 
     // Add an id field to each feature unless it already has one
-    response.features.map((feature, index) => {
+    response.features.map((feature, featureIndex) => {
       const newFeature = feature
-      const { id } = feature
+      const { edscId } = newFeature
 
-      if (!id) {
-        newFeature.id = index.toString()
+      if (!edscId) {
+        newFeature.edscId = featureIndex.toString()
       }
 
       return newFeature
@@ -137,6 +180,8 @@ class ShapefileLayerExtended extends L.Layer {
 
     const newIcon = new L.Icon.Default()
     newIcon.options.className = 'geojson-icon'
+
+    const layersToSelect = []
     // eslint-disable-next-line new-cap
     const jsonLayer = new L.geoJson(response, {
       className: 'geojson-svg',
@@ -154,10 +199,16 @@ class ShapefileLayerExtended extends L.Layer {
             addIconClasses(layer)
           })
         }
+
+        const { edscId } = feature
+
+        if (selectedFeatures.includes(edscId)) {
+          layersToSelect.push(featureLayer)
+        }
       }
     })
 
-    jsonLayer.on('click', this.clickLayer)
+    if (!this.isProjectPage) jsonLayer.on('click', this.clickLayer)
     this.jsonLayer = jsonLayer
     this.jsonLayer.addTo(this.map)
     if (panMap) this.map.flyToBounds(jsonLayer.getBounds())
@@ -166,12 +217,26 @@ class ShapefileLayerExtended extends L.Layer {
     const children = jsonLayer.getLayers()
 
     if (children.length === 1) {
+      const { feature } = children[0]
+      const { edscId } = feature
+      this.selectedLayers = [edscId]
+      const { onUpdateShapefile } = this.props
+      onUpdateShapefile({ selectedFeatures: [edscId] })
+
       this.setConstraint(children[0])
     }
+
+    layersToSelect.forEach(layer => this.setConstraint(layer))
+
+    const fileHash = forge.md.md5.create()
+    fileHash.update(JSON.stringify(response))
+    this.fileHash = fileHash.digest().toHex()
   }
 
   // Fired when a shapefile layer, or selected shape layer is clicked
   clickLayer(event) {
+    if (this.isProjectPage) return
+
     const { onUpdateShapefile } = this.props
 
     let { layer } = event
@@ -179,7 +244,7 @@ class ShapefileLayerExtended extends L.Layer {
       layer = event.target
     }
     const { feature } = layer
-    const { id: layerId } = feature
+    const { edscId: layerId } = feature
 
     const layerIndex = this.selectedLayers.indexOf(layerId)
     // If the layerId is currently a selectedLayer
@@ -241,7 +306,7 @@ class ShapefileLayerExtended extends L.Layer {
 
     if (layer != null) {
       layer.feature = feature
-      layer.on('click', this.clickLayer)
+      if (!this.isProjectPage) layer.on('click', this.clickLayer)
       const { map } = this
       map.fire('draw:drawstart', { layerType: 'shapefile' })
       map.fire('draw:created', {
@@ -298,20 +363,30 @@ class ShapefileLayer extends MapLayer {
     const element = this.leafletElement
 
     const { shapefile: fromShapefile } = fromProps
-    const { shapefile: toShapefile } = toProps
+    const {
+      isProjectPage: toIsProjectPage,
+      leaflet: toLeaflet,
+      shapefile: toShapefile
+    } = toProps
+
+    const { map } = toLeaflet
+
+    element.map = map
+    element.isProjectPage = toIsProjectPage
 
     const { file: fromFile } = fromShapefile
     const {
       file: toFile,
-      shapefileId,
-      shapefileName
+      shapefileId: toShapefileId,
+      shapefileName,
+      selectedFeatures
     } = toShapefile
 
     if (toFile && fromFile !== toFile) {
-      element.drawNewShapefile(toFile)
+      element.drawNewShapefile(toFile, selectedFeatures)
     }
 
-    if (!shapefileId && !shapefileName) {
+    if (!toShapefileId && !shapefileName) {
       element.onRemovedFile()
     }
   }

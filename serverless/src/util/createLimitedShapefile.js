@@ -6,9 +6,9 @@
 export const createLimitedShapefile = (file, selectedFeatures) => {
   const newFile = file
   const newFeatures = newFile.features.filter((feature) => {
-    const { id } = feature
+    const { edscId } = feature
 
-    return selectedFeatures.includes(id)
+    return selectedFeatures.includes(edscId)
   })
 
   newFile.features = newFeatures

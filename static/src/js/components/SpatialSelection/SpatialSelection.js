@@ -104,7 +104,11 @@ class SpatialSelection extends Component {
   }
 
   componentDidMount() {
-    const { mapRef } = this.props
+    const {
+      isProjectPage,
+      mapRef,
+      shapefileId
+    } = this.props
     const {
       leafletElement: map,
       props: mapProps
@@ -113,7 +117,8 @@ class SpatialSelection extends Component {
       return
     }
 
-    this.renderShape(this.props)
+    // Draw the shape unless a shapefile is present
+    if (!shapefileId || isProjectPage) this.renderShape(this.props)
 
     const { center = [] } = mapProps
 
@@ -183,7 +188,7 @@ class SpatialSelection extends Component {
       }
 
       // Draw the new shape unless a shapefile was added
-      if (!nextProps.shapefileId) this.renderShape(nextProps, true)
+      if (!nextProps.shapefileId || nextProps.isProjectPage) this.renderShape(nextProps, true)
     }
 
     // If a polygon is drawn for a CWIC collection, render the MBR to show the user what is being sent

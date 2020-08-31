@@ -9,6 +9,7 @@ import {
 import { getFocusedCollectionGranuleQuery } from '../selectors/query'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getProjectCollectionsIds } from '../selectors/project'
+import isPath from '../util/isPath'
 
 export const updateCollectionQuery = payload => ({
   type: UPDATE_COLLECTION_QUERY,
@@ -149,11 +150,20 @@ export const removeTemporalFilter = () => (dispatch) => {
   }))
 }
 
-export const clearFilters = () => (dispatch) => {
+export const clearFilters = () => (dispatch, getState) => {
   dispatch({ type: CLEAR_FILTERS })
 
   dispatch(actions.getCollections())
   dispatch(actions.getProjectCollections())
-  dispatch(actions.getSearchGranules())
-  dispatch(actions.getTimeline())
+
+  const state = getState()
+  const { router } = state
+  const { location } = router
+  const { pathname } = location
+
+  // Don't request granules unless we are viewing granules
+  if (isPath(pathname, ['/search/granules'])) {
+    dispatch(actions.getSearchGranules())
+    dispatch(actions.getTimeline())
+  }
 }

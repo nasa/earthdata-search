@@ -35,10 +35,11 @@ export const saveShapefile = data => (dispatch) => {
 
   const {
     filename: shapefileName,
-    size: shapefileSize
+    size: shapefileSize,
+    file
   } = data
 
-  dispatch(updateShapefile({ shapefileName, shapefileSize }))
+  dispatch(updateShapefile({ file, shapefileName, shapefileSize }))
 
   const response = requestObject.save(data)
     .then((response) => {
