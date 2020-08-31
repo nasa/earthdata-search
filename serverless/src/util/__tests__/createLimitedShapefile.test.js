@@ -6,21 +6,21 @@ describe('createLimitedShapefile', () => {
       type: 'FeatureCollection',
       features: [
         {
-          id: 0,
+          edscId: 0,
           type: 'Feature',
           geometry: {
             mock: 'feature0'
           }
         },
         {
-          id: 1,
+          edscId: 1,
           type: 'Feature',
           geometry: {
             mock: 'feature1'
           }
         },
         {
-          id: 2,
+          edscId: 2,
           type: 'Feature',
           geometry: {
             mock: 'feature2'
@@ -33,7 +33,7 @@ describe('createLimitedShapefile', () => {
       type: 'FeatureCollection',
       features: [
         {
-          id: 1,
+          edscId: 1,
           type: 'Feature',
           geometry: {
             mock: 'feature1'

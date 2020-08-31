@@ -735,6 +735,10 @@ class SpatialDisplay extends Component {
         </SpatialDisplayEntry>
       )
 
+      if (shapefileLoaded && !selectedFeatures.length) {
+        hint = 'Select a shape to filter results'
+      }
+
       if (selectedFeatures.length) {
         hint = `${selectedFeatures.length} ${pluralize('shape', selectedFeatures.length)} selected`
       }

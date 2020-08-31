@@ -388,20 +388,17 @@ export class MapContainer extends Component {
         }
         <ScaleControl position="bottomright" />
         <ConnectedSpatialSelectionContainer mapRef={this.mapRef} />
-        {
-          !isProjectPage && (
-          <ShapefileLayer
-            authToken={authToken}
-            shapefile={shapefile}
-            onFetchShapefile={onFetchShapefile}
-            onSaveShapefile={onSaveShapefile}
-            onShapefileErrored={onShapefileErrored}
-            onMetricsMap={onMetricsMap}
-            onToggleTooManyPointsModal={onToggleTooManyPointsModal}
-            onUpdateShapefile={onUpdateShapefile}
-          />
-          )
-        }
+        <ShapefileLayer
+          authToken={authToken}
+          isProjectPage={isProjectPage}
+          shapefile={shapefile}
+          onFetchShapefile={onFetchShapefile}
+          onSaveShapefile={onSaveShapefile}
+          onShapefileErrored={onShapefileErrored}
+          onMetricsMap={onMetricsMap}
+          onToggleTooManyPointsModal={onToggleTooManyPointsModal}
+          onUpdateShapefile={onUpdateShapefile}
+        />
         <GranuleImageContainer />
       </Map>
     )
