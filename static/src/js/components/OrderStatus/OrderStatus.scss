@@ -30,9 +30,10 @@
   }
 
   .well__footer {
+    margin-top: 1rem;
     background-color: $color__green;
     color: $color__white;
-    border-top: 5px solid $color__green--dark
+    border-radius: $border-radius;
   }
 
   &__footer-link-list {

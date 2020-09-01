@@ -77,7 +77,7 @@ export class SavedProjects extends Component {
             <Spinner
               className="saved-projects__spinner"
               type="dots"
-              color="white"
+              color="gray"
               size="small"
             />
           )
@@ -85,13 +85,13 @@ export class SavedProjects extends Component {
         {
           savedProjectsIsLoaded && (
             savedProjects.length > 0 ? (
-              <Table className="saved-projects-table" striped variant="dark">
+              <Table className="saved-projects-table">
                 <thead>
                   <tr>
-                    <th>Project Name</th>
-                    <th>Contents</th>
-                    <th>Created</th>
-                    <th>Actions</th>
+                    <th className="saved-projects-table__project-name-heading">Project Name</th>
+                    <th className="saved-projects-table__contents-heading">Contents</th>
+                    <th className="saved-projects-table__created-heading">Created</th>
+                    <th className="saved-projects-table__actions-heading">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -112,7 +112,7 @@ export class SavedProjects extends Component {
 
                       return (
                         <tr key={id}>
-                          <td>
+                          <td className="saved-projects-table__project-name">
                             <PortalLinkContainer
                               to={projectPath}
                               onClick={() => { onChangePath(projectPath) }}
@@ -120,13 +120,13 @@ export class SavedProjects extends Component {
                               {projectName}
                             </PortalLinkContainer>
                           </td>
-                          <td>
+                          <td className="saved-projects-table__contents">
                             {this.projectContents(path)}
                           </td>
                           <td className="saved-projects-table__ago">
                             <TimeAgo date={createdAt} />
                           </td>
-                          <td>
+                          <td className="saved-projects-table__actions">
                             <div>
                               <OverlayTrigger
                                 trigger="click"

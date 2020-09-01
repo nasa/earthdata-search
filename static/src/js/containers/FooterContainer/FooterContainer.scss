@@ -5,7 +5,7 @@
   align-items: center;
   flex-basis: auto;
   padding: 0 1rem;
-  background: $color__brand--blue;
+  background: $color__blue;
   z-index: 1;
   color: $color__white;
   font-size: 0.7rem;
@@ -41,14 +41,14 @@
     display: inline-block;
     padding: 0 0.5rem;
     height: 1.125rem;
-    background: $color__brand--blue-dark;
+    background: $color__blue--dark;
     border-radius: 0.124rem;
     vertical-align: middle;
   }
 
   &__info-bit {
     margin-left: 0.55rem;
-    color: $color__brand--blue-light;
+    color: $color__blue--light;
     vertical-align: middle;
 
     &:before {

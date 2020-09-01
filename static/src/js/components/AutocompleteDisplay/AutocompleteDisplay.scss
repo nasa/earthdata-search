@@ -30,7 +30,7 @@
     font-size: 0.625rem;
     line-height: 1.25rem;
     font-weight: 700;
-    background-color: $color__brand--blue;
+    background-color: $color__blue;
   }
 
   &__button {
@@ -44,7 +44,7 @@
     padding: 0.125rem;
     padding-right: 0.25rem;
     font-size: 0.725rem;
-    background-color: $color__brand--blue;
+    background-color: $color__blue;
     border-radius: 0;
     align-items: center;
     color: rgba($color__black, 0.7);
@@ -57,7 +57,7 @@
     }
 
     &:hover {
-      background-color: darken($color__brand--blue-dark, 1);
+      background-color: darken($color__blue--dark, 1);
       color: rgba($color__black, 0.7);
     }
   }

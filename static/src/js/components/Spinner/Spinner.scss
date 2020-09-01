@@ -20,6 +20,10 @@
       background-color: $color__white;
     }
 
+    .spinner--gray & {
+      background-color: $color__black--200;
+    }
+
     .spinner--small & {
       width: 0.65rem;
       height: 0.65rem;
