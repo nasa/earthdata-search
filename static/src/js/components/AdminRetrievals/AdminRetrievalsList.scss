@@ -30,8 +30,8 @@
     display: inline-block;
 
     .rc-pagination-item-active {
-      background-color: $color__brand--blue;
-      border-color: $color__brand--blue-dark;
+      background-color: $color__blue;
+      border-color: $color__blue--dark;
       color: $color__white;
     }
 
@@ -71,8 +71,8 @@
         color: $color__black--500;
 
         &.rc-pagination-item-active {
-          background-color: $color__brand--blue-dark;
-          border-color: $color__brand--blue-dark;
+          background-color: $color__blue--dark;
+          border-color: $color__blue--dark;
           color: $color__white;
 
           a {

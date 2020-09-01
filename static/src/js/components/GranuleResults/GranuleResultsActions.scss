@@ -93,13 +93,13 @@
     outline: 0;
     border: 0;
     font-size: 0.65rem;
-    background-color: $color__brand--blue;
+    background-color: $color__blue;
     color: $color__white;
     text-align: center;
 
     &:hover {
       color: rgba($color__white, 0.8);
-      background-color: $color__brand--blue-dark;
+      background-color: $color__blue--dark;
     }
   }
 

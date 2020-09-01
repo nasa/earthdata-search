@@ -14,8 +14,8 @@
   }
 
   &__button {
-    margin-right: $spacer/2;
-    color: $color__white;
+    margin: 0 $spacer/2;
+    color: $color__black--300;
 
     &--share {
       i {
@@ -25,23 +25,34 @@
     }
 
     &:hover {
-      color: $color__black--300;
+      color: $color__black--600;
     }
   }
 }
 
 .saved-projects-table {
   a {
-    color: $color__black--100;
+    color: $color__blue;
 
     &:hover,
     &:active {
-      color: $color__black--300;
+      color: $color__blue--dark;
     }
+  }
+
+  &__actions,
+  &__actions-heading {
+    text-align: center;
   }
 
   &__ago {
     white-space: nowrap;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
