@@ -317,31 +317,46 @@ export class AccessMethod extends Component {
 
     const { conceptId: collectionId } = metadata
 
-    const radioList = []
+    const accessMethodsByType = {
+      download: [],
+      'ECHO ORDERS': [],
+      ESI: [],
+      OPeNDAP: [],
+      Harmony: []
+    }
+
     Object.keys(accessMethods).forEach((methodKey) => {
       const accessMethod = accessMethods[methodKey]
       const { type } = accessMethod
 
       switch (type) {
         case 'download':
-          radioList.push(downloadButton(collectionId))
+          accessMethodsByType[type].push(downloadButton(collectionId))
           break
         case 'ECHO ORDERS':
-          radioList.push(echoOrderButton(collectionId, methodKey))
+          accessMethodsByType[type].push(echoOrderButton(collectionId, methodKey))
           break
         case 'ESI':
-          radioList.push(esiButton(collectionId, methodKey))
+          accessMethodsByType[type].push(esiButton(collectionId, methodKey))
           break
         case 'OPeNDAP':
-          radioList.push(opendapButton(collectionId, methodKey))
+          accessMethodsByType[type].push(opendapButton(collectionId, methodKey))
           break
         case 'Harmony':
-          radioList.push(harmonyButton(collectionId, methodKey))
+          accessMethodsByType[type].push(harmonyButton(collectionId, methodKey))
           break
         default:
           break
       }
     })
+
+    const radioList = [
+      ...accessMethodsByType.Harmony,
+      ...accessMethodsByType.OPeNDAP,
+      ...accessMethodsByType.ESI,
+      ...accessMethodsByType['ECHO ORDERS'],
+      ...accessMethodsByType.download
+    ]
 
     const skeleton = [1, 2, 3].map((skeleton, i) => {
       const key = `skeleton_${i}`
@@ -419,9 +434,17 @@ export class AccessMethod extends Component {
       </div>
     )
 
+    const isCustomizationAvailable = supportsVariableSubsetting
+      || supportedOutputFormats.length > 0
+      || (form && isActive)
+
     return (
       <div className="access-method">
-        <ProjectPanelSection heading="Select Data Access Method">
+        <ProjectPanelSection
+          heading="Select a data access method"
+          intro="The selected access method will determine which customization and output options are available."
+          step={1}
+        >
           <div className="access-method__radio-list">
             {
               radioList.length === 0
@@ -437,104 +460,124 @@ export class AccessMethod extends Component {
             }
           </div>
         </ProjectPanelSection>
-        {
-          form && isActive && (
-            <ProjectPanelSection>
-              <Suspense fallback={echoFormFallback}>
-                <EchoForm
-                  collectionId={collectionId}
-                  form={form}
-                  methodKey={selectedAccessMethod}
-                  onUpdateAccessMethod={onUpdateAccessMethod}
-                  rawModel={rawModel}
-                  shapefileId={shapefileId}
-                  spatial={spatial}
-                />
-              </Suspense>
-            </ProjectPanelSection>
-          )
-        }
-        {
-          supportsVariableSubsetting && (
-            <>
-              <ProjectPanelSection heading="Variable Selection">
-                <p className="access-method__section-intro">
-                  Use science keywords to subset your collection
-                  granules by measurements and variables.
-                </p>
-
+        <ProjectPanelSection
+          heading="Configure data customization options"
+          intro="Edit the options below to configure the customization and output options for the selected data product."
+          step={2}
+          faded={!selectedAccessMethod}
+        >
+          {
+            isCustomizationAvailable && (
+              <>
                 {
-                  selectedVariables.length > 0 && (
-                    <p className="access-method__section-status">
-                      {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
-                    </p>
+                  form && isActive && (
+                    <ProjectPanelSection nested>
+                      <Suspense fallback={echoFormFallback}>
+                        <EchoForm
+                          collectionId={collectionId}
+                          form={form}
+                          methodKey={selectedAccessMethod}
+                          rawModel={rawModel}
+                          shapefileId={shapefileId}
+                          spatial={spatial}
+                          onUpdateAccessMethod={onUpdateAccessMethod}
+                        />
+                      </Suspense>
+                    </ProjectPanelSection>
                   )
                 }
-
                 {
-                  selectedVariables.length === 0 && (
-                    <p className="access-method__section-status">
-                      No variables selected. All variables will be included in download.
-                    </p>
+                  supportsVariableSubsetting && (
+                    <>
+                      <ProjectPanelSection
+                        customHeadingTag="h4"
+                        heading="Variables"
+                        intro="Use science keywords to subset your collection granules by measurements and variables."
+                        nested
+                      >
+                        {
+                          selectedVariables.length > 0 && (
+                            <p className="access-method__section-status">
+                              {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
+                            </p>
+                          )
+                        }
+
+                        {
+                          selectedVariables.length === 0 && (
+                            <p className="access-method__section-status">
+                              No variables selected. All variables will be included in download.
+                            </p>
+                          )
+                        }
+                        <Button
+                          type="button"
+                          bootstrapVariant="primary"
+                          label="Edit Variables"
+                          bootstrapSize="sm"
+                          onClick={() => {
+                            onSetActivePanel(`0.${index}.1`)
+                            onTogglePanels(true)
+                          }}
+                        >
+                          Edit Variables
+                        </Button>
+                      </ProjectPanelSection>
+                    </>
                   )
                 }
+                {
+                  supportedOutputFormats.length > 0 && (
+                    <>
+                      <ProjectPanelSection
+                        customHeadingTag="h4"
+                        heading="Output Format"
+                        intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
+                        nested
+                      >
+                        <select
+                          id="input__output-format"
+                          className="form-control form-control-sm"
+                          onChange={this.handleOutputFormatSelection}
+                          value={selectedOutputFormat}
+                        >
+                          {supportedOutputFormatOptions}
+                        </select>
+                      </ProjectPanelSection>
+                    </>
+                  )
+                }
+                {
+                  supportedOutputProjections.length > 0 && (
+                    <>
+                      <ProjectPanelSection heading="Output Projection Selection">
+                        <p className="access-method__section-intro">
+                          Choose from output projection options.
+                        </p>
 
-                <Button
-                  type="button"
-                  bootstrapVariant="primary"
-                  label="Edit Variables"
-                  bootstrapSize="sm"
-                  onClick={() => {
-                    onSetActivePanel(`0.${index}.1`)
-                    onTogglePanels(true)
-                  }}
-                >
-                  Edit Variables
-                </Button>
+                        <select
+                          id="input__output-projection"
+                          className="form-control form-control-sm"
+                          onChange={this.handleOutputProjectionSelection}
+                          value={selectedOutputProjection}
+                        >
+                          {supportedOutputProjectionOptions}
+                        </select>
+                      </ProjectPanelSection>
+                    </>
+                  )
+                }
+              </>
+            )
+          }
+          {
+            (!isCustomizationAvailable && selectedAccessMethod) && (
+              <ProjectPanelSection nested>
+                No customization options are available for the selected access method.
               </ProjectPanelSection>
-            </>
-          )
-        }
-        {
-          supportedOutputFormats.length > 0 && (
-            <>
-              <ProjectPanelSection heading="Output Format Selection">
-                <p className="access-method__section-intro">
-                  Choose from output format options like GeoTIFF, NETCDF, and other file types.
-                </p>
-
-                <select
-                  id="input__output-format"
-                  className="form-control form-control-sm"
-                  onChange={this.handleOutputFormatSelection}
-                  value={selectedOutputFormat}
-                >
-                  {supportedOutputFormatOptions}
-                </select>
-              </ProjectPanelSection>
-            </>
-          )
-        }
-        {
-          supportedOutputProjections.length > 0 && (
-            <>
-              <ProjectPanelSection heading="Output Projection Selection">
-                <p className="access-method__section-intro">
-                  Choose from output projection options.
-                </p>
-
-                <select
-                  id="input__output-projection"
-                  className="form-control form-control-sm"
-                  onChange={this.handleOutputProjectionSelection}
-                  value={selectedOutputProjection}
-                >
-                  {supportedOutputProjectionOptions}
-                </select>
-              </ProjectPanelSection>
-            </>
-          )
-        }
+            )
+          }
+        </ProjectPanelSection>
       </div>
     )
   }

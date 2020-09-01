@@ -4,6 +4,8 @@ import EDSCEchoform from '@edsc/echoforms'
 
 import { mbr } from '../../util/map/mbr'
 
+import './EchoForm.scss'
+
 export const EchoForm = ({
   collectionId,
   form,

@@ -9,3 +9,19 @@
     }
   }
 }
+
+.echoform {
+  .card {
+    background-color: transparent;
+  }
+
+  & > .card {
+    border: 0;
+    background-color: transparent;
+  }
+
+  .form__body {
+    border: 0;
+    padding: 0;
+  }
+}
