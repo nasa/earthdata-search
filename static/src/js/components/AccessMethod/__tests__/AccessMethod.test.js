@@ -200,7 +200,8 @@ describe('AccessMethod component', () => {
 
       enzymeWrapper.update()
 
-      const echoFormWrapper = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
       const suspenseComponent = echoFormWrapper.childAt(0)
       const echoForm = suspenseComponent.childAt(0)
 
@@ -230,7 +231,8 @@ describe('AccessMethod component', () => {
 
       enzymeWrapper.update()
 
-      const echoFormWrapper = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
       const suspenseComponent = echoFormWrapper.childAt(0)
       const echoForm = suspenseComponent.childAt(0)
 
@@ -263,7 +265,8 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      const echoFormWrapper = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
       const suspenseComponent = echoFormWrapper.childAt(0)
       const echoForm = suspenseComponent.childAt(0)
 
