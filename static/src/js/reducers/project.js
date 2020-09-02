@@ -502,7 +502,10 @@ const projectReducer = (state = initialState, action) => {
       const collectionId = action.payload
 
       const { collections: projectCollection } = state
-      const { allIds, byId } = projectCollection
+      const {
+        allIds,
+        byId: oldById
+      } = projectCollection
 
       const collectionIndex = allIds.indexOf(collectionId)
 
@@ -510,6 +513,7 @@ const projectReducer = (state = initialState, action) => {
       if (collectionIndex === -1) return state
 
       // Delete the collection from byId
+      const byId = { ...oldById }
       delete byId[collectionId]
 
       return {
@@ -644,7 +648,6 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case TOGGLE_COLLECTION_VISIBILITY: {
-      console.log('projectReducer -> state', state)
       return {
         ...state,
         collections: {
