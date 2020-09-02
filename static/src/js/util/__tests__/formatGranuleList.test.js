@@ -114,10 +114,7 @@ describe('granule map events', () => {
   })
 
   test('sets isHoveredGranule for the correct granule', () => {
-    const {
-      granulesList,
-      granulesMetadata
-    } = setup({
+    const { granulesList } = setup({
       hoveredGranuleId: 'G1924512983-LANCEMODIS'
     })
 
@@ -153,5 +150,76 @@ describe('granule map events', () => {
 
     expect(eventEmitterEmitMock).toBeCalledTimes(1)
     expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.stickygranule', { granule: null })
+  })
+})
+
+describe('granule metadata', () => {
+  test('returns the producerGranuleId as title', () => {
+    const { granulesList, granulesMetadata } = setup()
+
+    expect(granulesList[0].title).toEqual(granulesMetadata['G1924512983-LANCEMODIS'].producerGranuleId)
+  })
+
+  test('returns the title as title if producerGranuleId does not exist', () => {
+    const granuleIds = ['http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc']
+    const granulesMetadata = {
+      'http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc': {
+        title: 'C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc',
+        id: 'http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc',
+        'dc:identifier': 'http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc',
+        updated: '2018-12-07',
+        author: {
+          name: 'DOC/NOAA/NESDIS/NCEI &gt; National Centers for Environmental Information, NESDIS, NOAA, U.S. Department of Commerce - TECHNICAL CONTACT - ;  ,  ;  - Email: NODC.DataOfficer@noaa.gov - Phone: 301-713-3272 - FAX:',
+          email: 'NODC.DataOfficer@noaa.gov'
+        },
+        'georss:box': '-32.597469329833984 14.689370155334473 5.937497138977051 51.89847946166992',
+        'georss:polygon': '-32.597469329833984 14.689370155334473 5.937497138977051 14.689370155334473 5.937497138977051 51.89847946166992 -32.597469329833984 51.89847946166992 -32.597469329833984 14.689370155334473',
+        'dc:date': '2018-12-01/2018-12-01',
+        link: [
+          {
+            title: 'HTTPS',
+            rel: 'enclosure',
+            type: 'application/octet-stream',
+            href: 'https://data.nodc.noaa.gov/ghrsst/L2P/VIIRS_N20/OSPO/2018/335/20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc'
+          },
+          {
+            title: 'FTP',
+            rel: 'enclosure',
+            type: 'application/octet-stream',
+            href: 'ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/VIIRS_N20/OSPO/2018/335/20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc'
+          },
+          {
+            title: 'THREDDS OPeNDAP',
+            rel: 'enclosure',
+            type: 'application/octet-stream',
+            href: 'https://data.nodc.noaa.gov/thredds/dodsC/ghrsst/L2P/VIIRS_N20/OSPO/2018/335/20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc.html'
+          },
+          {
+            title: 'THREDDS(TDS)',
+            rel: 'enclosure',
+            type: 'application/octet-stream',
+            href: 'https://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/VIIRS_N20/OSPO/2018/335/catalog.html?dataset=ghrsst/L2P/VIIRS_N20/OSPO/2018/335/20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc'
+          }
+        ],
+        summary: {
+          '#text': 'Granule metadata for C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc',
+          type: 'text'
+        },
+        isCwic: true,
+        timeStart: '2018-12-01',
+        timeEnd: '2018-12-01',
+        formattedTemporal: [
+          '2018-12-01 05:00:00',
+          null
+        ],
+        boxes: [
+          '-32.597469329833984 14.689370155334473 5.937497138977051 51.89847946166992'
+        ],
+        browseFlag: false
+      }
+    }
+    const { granulesList } = setup({ granuleIds, granulesMetadata })
+
+    expect(granulesList[0].title).toEqual(granulesMetadata['http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc'].title)
   })
 })
