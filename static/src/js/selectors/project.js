@@ -62,7 +62,7 @@ export const getProjectCollectionsRequiringChunking = createSelector(
     .filter((key) => {
       const { [key]: projectCollection } = projectCollections
 
-      return calculateOrderCount(projectCollection) > 0
+      return calculateOrderCount(projectCollection) > 1
     })
     .reduce((obj, key) => ({
       ...obj,
