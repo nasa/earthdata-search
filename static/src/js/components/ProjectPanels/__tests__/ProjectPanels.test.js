@@ -301,41 +301,6 @@ describe('ProjectPanels component', () => {
     })
   })
 
-  test('onSaveVariables calls onUpdateAccessMethod and onUpdateFocusedCollection', () => {
-    const { enzymeWrapper, props } = setup(opendapProps)
-
-    enzymeWrapper.instance().onSaveVariables('collectionId', 0)
-
-    expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-    expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-      collectionId: 'collectionId',
-      method: {
-        opendap: {
-          selectedVariables: undefined,
-          variables: {
-            variableId1: {
-              associations: {},
-              meta: {},
-              umm: {}
-            },
-            variableId2: {
-              associations: {},
-              meta: {},
-              umm: {}
-            }
-          }
-        }
-      }
-    })
-
-    expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
-    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
-    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
-    expect(props.onTogglePanels).toHaveBeenCalledWith(true)
-    expect(props.onUpdateFocusedCollection).toHaveBeenCalledTimes(1)
-    expect(props.onUpdateFocusedCollection).toHaveBeenCalledWith('collectionId')
-  })
-
   test('onViewDetails sets the state and calls onChangePanel', () => {
     const { enzymeWrapper, props } = setup(opendapProps)
 
@@ -352,7 +317,7 @@ describe('ProjectPanels component', () => {
     })
 
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
-    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.1.3')
+    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.1.2')
 
     expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
     expect(props.onTogglePanels).toHaveBeenCalledWith(true)
@@ -362,7 +327,6 @@ describe('ProjectPanels component', () => {
     const { enzymeWrapper } = setup(opendapProps)
 
     enzymeWrapper.setState({
-      selectedKeyword: 'test keyword',
       variables: {
         variableId1: {
           meta: {},
@@ -374,61 +338,7 @@ describe('ProjectPanels component', () => {
 
     enzymeWrapper.instance().backToOptions()
 
-    expect(enzymeWrapper.state().selectedKeyword).toEqual(null)
     expect(enzymeWrapper.state().variables).toEqual(null)
-  })
-
-  test('selectKeyword sets the state and calls onChangePanel', () => {
-    const { enzymeWrapper, props } = setup(opendapProps)
-
-    enzymeWrapper.instance().selectKeyword('test keyword', {
-      variableId1: {
-        meta: {},
-        umm: {},
-        associations: {}
-      }
-    }, 0)
-
-    expect(enzymeWrapper.state().selectedKeyword).toEqual('test keyword')
-    expect(enzymeWrapper.state().variables).toEqual({
-      variableId1: {
-        meta: {},
-        umm: {},
-        associations: {}
-      }
-    })
-
-    expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
-    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.2')
-
-    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
-    expect(props.onTogglePanels).toHaveBeenCalledWith(true)
-  })
-
-  test('clearSelectedKeyword sets the state and calls onChangePanel', () => {
-    const { enzymeWrapper, props } = setup(opendapProps)
-
-    enzymeWrapper.setState({
-      selectedKeyword: 'test keyword',
-      variables: {
-        variableId1: {
-          meta: {},
-          umm: {},
-          associations: {}
-        }
-      }
-    })
-
-    enzymeWrapper.instance().clearSelectedKeyword('0.0.1')
-
-    expect(enzymeWrapper.state().selectedKeyword).toEqual(null)
-    expect(enzymeWrapper.state().variables).toEqual(null)
-
-    expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
-    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
-
-    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
-    expect(props.onTogglePanels).toHaveBeenCalledWith(true)
   })
 
   test('clearSelectedVariable sets the state and calls onChangePanel', () => {

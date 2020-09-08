@@ -1542,299 +1542,828 @@ export const variablesResponse = {
   ]
 }
 
-export const mockKeywordMappings = {
-  'AIR TEMPERATURE': [
-    'V1200279053-E2E_18_4'
-  ],
-  'ATMOSPHERIC HEATING': [
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'ATMOSPHERIC TEMPERATURE INDICES': [
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'BRIGHTNESS TEMPERATURE': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4'
-  ],
-  'CARBON MONOXIDE': [
-    'V1200279053-E2E_18_4'
-  ],
-  'CLOUD HEIGHT': [
-    'V1200279053-E2E_18_4'
-  ],
-  'CLOUD LIQUID WATER/ICE': [
-    'V1200279053-E2E_18_4'
-  ],
-  'CLOUD TOP PRESSURE': [
-    'V1200279053-E2E_18_4'
-  ],
-  'CLOUD TOP TEMPERATURE': [
-    'V1200279060-E2E_18_4',
-    'V1200279056-E2E_18_4',
-    'V1200279053-E2E_18_4'
-  ],
-  'CLOUD VERTICAL DISTRIBUTION': [
-    'V1200279053-E2E_18_4'
-  ],
-  'COMMON SENSE CLIMATE INDEX': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'COOLING DEGREE DAYS': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  EMISSIVITY: [
-    'V1200279053-E2E_18_4'
-  ],
-  'FREEZING INDEX': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'GEOPOTENTIAL HEIGHT': [
-    'V1200279053-E2E_18_4'
-  ],
-  'GROWING DEGREE DAYS': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'HEAT INDEX': [
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'HEATING DEGREE DAYS': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'HIGHER MAXIMUM DAYTIME TEMPERATURES': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'HIGHER MINIMUM NIGHTIME TEMPERATURES': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  HUMIDITY: [
-    'V1200279053-E2E_18_4'
-  ],
-  'INDICATOR SPECIES': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4'
-  ],
-  METHANE: [
-    'V1200279053-E2E_18_4'
-  ],
-  'OUTGOING LONGWAVE RADIATION': [
-    'V1200279053-E2E_18_4'
-  ],
-  OZONE: [
-    'V1200279053-E2E_18_4'
-  ],
-  'POINT BAR': [
-    'V1200279069-E2E_18_4',
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'RESIDENTIAL ENERGY DEMAND TEMPERATURE INDEX': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'SEA SURFACE TEMPERATURE': [
-    'V1200279053-E2E_18_4'
-  ],
-  'SKIN TEMPERATURE': [
-    'V1200279060-E2E_18_4',
-    'V1200279056-E2E_18_4',
-    'V1200279053-E2E_18_4'
-  ],
-  'STRATOSPHERIC TEMPERATURE ANOMALIES': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'SURFACE PRESSURE': [
-    'V1200279053-E2E_18_4'
-  ],
-  'TEMPERATURE ANOMALIES': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TEMPERATURE CONCENTRATION INDEX': [
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TEMPERATURE CONCENTRATION INDEX (TCI)': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TEMPERATURE GRADIENT': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TEMPERATURE INDICATORS': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TEMPERATURE INDICES': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TEMPERATURE PROFILES': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TEMPERATURE TENDENCY': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TEMPERATURE TRENDS': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TEMPERATURE VARIABILITY': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'THAWING INDEX': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'TOTAL PRECIPITABLE WATER': [
-    'V1200279053-E2E_18_4'
-  ],
-  TROPOPAUSE: [
-    'V1200279053-E2E_18_4'
-  ],
-  'TROPOSPHERIC TEMPERATURE ANOMALIES': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4',
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ],
-  'UPPER AIR TEMPERATURE': [
-    'V1200279053-E2E_18_4'
-  ],
-  'VOLCANIC DEPOSITS': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4'
-  ],
-  'VOLCANIC ERUPTIONS': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4'
-  ],
-  'VOLCANIC FORCING': [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4'
-  ],
-  VOLCANO: [
-    'V1200279065-E2E_18_4',
-    'V1200279049-E2E_18_4',
-    'V1200279073-E2E_18_4'
-  ],
-  'WATER VAPOR': [
-    'V1200279053-E2E_18_4'
-  ],
-  'WATER VAPOR PROFILES': [
-    'V1200279053-E2E_18_4'
-  ],
-  'WIND CHILL INDEX': [
-    'V1200279057-E2E_18_4',
-    'V1200279061-E2E_18_4',
-    'V1200279039-E2E_18_4'
-  ]
-}
+export const mockKeywordMappings = [
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'AIR TEMPERATURE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'ATMOSPHERIC HEATING'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'ATMOSPHERIC TEMPERATURE INDICES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      }
+    ],
+    label: 'BRIGHTNESS TEMPERATURE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'CARBON MONOXIDE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'CLOUD HEIGHT'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'CLOUD LIQUID WATER/ICE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'CLOUD TOP PRESSURE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279060-E2E_18_4'
+      },
+      {
+        id: 'V1200279056-E2E_18_4'
+      },
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'CLOUD TOP TEMPERATURE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'CLOUD VERTICAL DISTRIBUTION'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'COMMON SENSE CLIMATE INDEX'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'COOLING DEGREE DAYS'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'EMISSIVITY'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'FREEZING INDEX'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'GEOPOTENTIAL HEIGHT'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'GROWING DEGREE DAYS'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'HEAT INDEX'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'HEATING DEGREE DAYS'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'HIGHER MAXIMUM DAYTIME TEMPERATURES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'HIGHER MINIMUM NIGHTIME TEMPERATURES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'HUMIDITY'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      }
+    ],
+    label: 'INDICATOR SPECIES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'METHANE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'OUTGOING LONGWAVE RADIATION'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'OZONE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279069-E2E_18_4'
+      },
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'POINT BAR'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'RESIDENTIAL ENERGY DEMAND TEMPERATURE INDEX'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'SEA SURFACE TEMPERATURE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279060-E2E_18_4'
+      },
+      {
+        id: 'V1200279056-E2E_18_4'
+      },
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'SKIN TEMPERATURE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'STRATOSPHERIC TEMPERATURE ANOMALIES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'SURFACE PRESSURE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE ANOMALIES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE CONCENTRATION INDEX'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE CONCENTRATION INDEX (TCI)'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE GRADIENT'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE INDICATORS'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE INDICES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE PROFILES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE TENDENCY'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE TRENDS'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE VARIABILITY'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'THAWING INDEX'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'TOTAL PRECIPITABLE WATER'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'TROPOPAUSE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      },
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'TROPOSPHERIC TEMPERATURE ANOMALIES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'UPPER AIR TEMPERATURE'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      }
+    ],
+    label: 'VOLCANIC DEPOSITS'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      }
+    ],
+    label: 'VOLCANIC ERUPTIONS'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      }
+    ],
+    label: 'VOLCANIC FORCING'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      },
+      {
+        id: 'V1200279049-E2E_18_4'
+      },
+      {
+        id: 'V1200279073-E2E_18_4'
+      }
+    ],
+    label: 'VOLCANO'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'WATER VAPOR'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279053-E2E_18_4'
+      }
+    ],
+    label: 'WATER VAPOR PROFILES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279057-E2E_18_4'
+      },
+      {
+        id: 'V1200279061-E2E_18_4'
+      },
+      {
+        id: 'V1200279039-E2E_18_4'
+      }
+    ],
+    label: 'WIND CHILL INDEX'
+  }
+]
 
 export const mockVariables = {
   'V1200279069-E2E_18_4': {
