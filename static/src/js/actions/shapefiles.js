@@ -35,10 +35,11 @@ export const saveShapefile = data => (dispatch) => {
 
   const {
     filename: shapefileName,
-    size: shapefileSize
+    size: shapefileSize,
+    file
   } = data
 
-  dispatch(updateShapefile({ shapefileName, shapefileSize }))
+  dispatch(updateShapefile({ file, shapefileName, shapefileSize }))
 
   const response = requestObject.save(data)
     .then((response) => {
@@ -56,6 +57,29 @@ export const saveShapefile = data => (dispatch) => {
       dispatch(handleError({
         error,
         action: 'saveShapefile',
+        resource: 'shapefile',
+        requestObject
+      }))
+    })
+
+  return response
+}
+
+/**
+ * Retrieves a shapefile from lambda
+ * @param {String} shapefileId Shapefile ID to retrieve
+ */
+export const fetchShapefile = shapefileId => (dispatch) => {
+  const requestObject = new ShapefileRequest()
+
+  const response = requestObject.fetch(shapefileId)
+    .then((response) => {
+      dispatch(updateShapefile(response.data))
+    })
+    .catch((error) => {
+      dispatch(handleError({
+        error,
+        action: 'fetchShapefile',
         resource: 'shapefile',
         requestObject
       }))

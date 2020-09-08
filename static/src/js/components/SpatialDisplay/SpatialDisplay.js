@@ -469,6 +469,7 @@ class SpatialDisplay extends Component {
       isErrored: shapefileError,
       isLoading: shapefileLoading,
       isLoaded: shapefileLoaded,
+      selectedFeatures = [],
       shapefileName,
       shapefileId,
       shapefileSize
@@ -734,6 +735,14 @@ class SpatialDisplay extends Component {
         </SpatialDisplayEntry>
       )
 
+      if (shapefileLoaded && !selectedFeatures.length) {
+        hint = 'Select a shape to filter results'
+      }
+
+      if (selectedFeatures.length) {
+        hint = `${selectedFeatures.length} ${pluralize('shape', selectedFeatures.length)} selected`
+      }
+
       if (shapefileError) {
         const { type } = shapefileError
 
@@ -749,6 +758,7 @@ class SpatialDisplay extends Component {
           key="filter__shapefile"
           body={entry}
           title="Shape File"
+          hint={hint}
         />
       ))
     } else if ((polygonSearch && !drawingNewLayer) || drawingNewLayer === 'polygon') {

@@ -417,7 +417,13 @@ describe('changeRegionQuery', () => {
 describe('clearFilters', () => {
   test('clears the query and calls getCollections', () => {
     // mockStore with initialState
-    const store = mockStore({})
+    const store = mockStore({
+      router: {
+        location: {
+          pathname: '/search/granules'
+        }
+      }
+    })
 
     // mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
@@ -445,5 +451,43 @@ describe('clearFilters', () => {
     expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
     expect(getTimelineMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('does not call getGranules on the collections page', () => {
+    // mockStore with initialState
+    const store = mockStore({
+      router: {
+        location: {
+          pathname: '/search'
+        }
+      }
+    })
+
+    // mock getCollections
+    const getCollectionsMock = jest.spyOn(actions, 'getCollections')
+    getCollectionsMock.mockImplementation(() => jest.fn())
+
+    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
+    getProjectCollectionsMock.mockImplementation(() => jest.fn())
+
+    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+    getSearchGranulesMock.mockImplementation(() => jest.fn())
+
+    const getTimelineMock = jest.spyOn(actions, 'getTimeline')
+    getTimelineMock.mockImplementation(() => jest.fn())
+
+    // call the dispatch
+    store.dispatch(actions.clearFilters())
+    const storeActions = store.getActions()
+
+    expect(storeActions[0]).toEqual({
+      type: CLEAR_FILTERS
+    })
+
+    // was getCollections called
+    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getSearchGranulesMock).toHaveBeenCalledTimes(0)
+    expect(getTimelineMock).toHaveBeenCalledTimes(0)
   })
 })

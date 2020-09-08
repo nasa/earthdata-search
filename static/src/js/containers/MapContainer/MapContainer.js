@@ -48,11 +48,13 @@ const mapDispatchToProps = dispatch => ({
   onChangeMap: query => dispatch(actions.changeMap(query)),
   onExcludeGranule:
     data => dispatch(actions.excludeGranule(data)),
+  onFetchShapefile: id => dispatch(actions.fetchShapefile(id)),
   onSaveShapefile: data => dispatch(actions.saveShapefile(data)),
   onShapefileErrored: data => dispatch(actions.shapefileErrored(data)),
   onMetricsMap: type => dispatch(metricsMap(type)),
   onToggleTooManyPointsModal:
-    state => dispatch(actions.toggleTooManyPointsModal(state))
+    state => dispatch(actions.toggleTooManyPointsModal(state)),
+  onUpdateShapefile: data => dispatch(actions.updateShapefile(data))
 })
 
 const mapStateToProps = state => ({
@@ -225,10 +227,12 @@ export class MapContainer extends Component {
       shapefile,
       onChangeFocusedGranule,
       onExcludeGranule,
+      onFetchShapefile,
       onSaveShapefile,
       onShapefileErrored,
       onMetricsMap,
-      onToggleTooManyPointsModal
+      onToggleTooManyPointsModal,
+      onUpdateShapefile
     } = this.props
 
     const {
@@ -384,18 +388,17 @@ export class MapContainer extends Component {
         }
         <ScaleControl position="bottomright" />
         <ConnectedSpatialSelectionContainer mapRef={this.mapRef} />
-        {
-          !isProjectPage && (
-          <ShapefileLayer
-            authToken={authToken}
-            shapefile={shapefile}
-            onSaveShapefile={onSaveShapefile}
-            onShapefileErrored={onShapefileErrored}
-            onMetricsMap={onMetricsMap}
-            onToggleTooManyPointsModal={onToggleTooManyPointsModal}
-          />
-          )
-        }
+        <ShapefileLayer
+          authToken={authToken}
+          isProjectPage={isProjectPage}
+          shapefile={shapefile}
+          onFetchShapefile={onFetchShapefile}
+          onSaveShapefile={onSaveShapefile}
+          onShapefileErrored={onShapefileErrored}
+          onMetricsMap={onMetricsMap}
+          onToggleTooManyPointsModal={onToggleTooManyPointsModal}
+          onUpdateShapefile={onUpdateShapefile}
+        />
         <GranuleImageContainer />
       </Map>
     )
@@ -420,10 +423,12 @@ MapContainer.propTypes = {
   onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
+  onFetchShapefile: PropTypes.func.isRequired,
   onSaveShapefile: PropTypes.func.isRequired,
   onShapefileErrored: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
-  onToggleTooManyPointsModal: PropTypes.func.isRequired
+  onToggleTooManyPointsModal: PropTypes.func.isRequired,
+  onUpdateShapefile: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

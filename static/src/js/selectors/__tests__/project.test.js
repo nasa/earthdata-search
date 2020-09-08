@@ -93,6 +93,25 @@ describe('getProjectCollectionsRequiringChunking selector', () => {
     })
   })
 
+  test('returns an empty object when the granule count is less than the chunk limit', () => {
+    const state = {
+      project: {
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                hits: 500
+              }
+            }
+          }
+        }
+      }
+    }
+
+    expect(getProjectCollectionsRequiringChunking(state)).toEqual({})
+  })
+
   test('returns an empty object when there are no project collections', () => {
     const state = {
       project: {}

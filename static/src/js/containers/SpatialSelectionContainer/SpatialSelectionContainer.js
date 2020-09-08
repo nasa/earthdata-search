@@ -27,7 +27,8 @@ const mapStateToProps = state => ({
   lineSearch: state.query.collection.spatial.line,
   router: state.router,
   pointSearch: state.query.collection.spatial.point,
-  polygonSearch: state.query.collection.spatial.polygon
+  polygonSearch: state.query.collection.spatial.polygon,
+  shapefileId: state.shapefile.shapefileId
 })
 
 export const SpatialSelectionContainer = (props) => {
@@ -42,6 +43,7 @@ export const SpatialSelectionContainer = (props) => {
     pointSearch,
     polygonSearch,
     router,
+    shapefileId,
     onToggleDrawingNewLayer,
     onMetricsMap,
     onMetricsSpatialEdit
@@ -70,6 +72,7 @@ export const SpatialSelectionContainer = (props) => {
       onChangeQuery={onChangeQuery}
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
+      shapefileId={shapefileId}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
       onMetricsMap={onMetricsMap}
       onMetricsSpatialEdit={onMetricsSpatialEdit}
@@ -83,7 +86,8 @@ SpatialSelectionContainer.defaultProps = {
   lineSearch: [],
   mapRef: {},
   pointSearch: [],
-  polygonSearch: []
+  polygonSearch: [],
+  shapefileId: null
 }
 
 SpatialSelectionContainer.propTypes = {
@@ -99,7 +103,8 @@ SpatialSelectionContainer.propTypes = {
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
-  router: PropTypes.shape({}).isRequired
+  router: PropTypes.shape({}).isRequired,
+  shapefileId: PropTypes.string
 }
 
 export default connect(mapStateToProps, mapDispathToProps)(SpatialSelectionContainer)

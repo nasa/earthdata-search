@@ -117,7 +117,7 @@
     "@edsc/echoforms": "^1.1.7",
     "@googlemaps/google-maps-services-js": "^2.3.1",
     "@hot-loader/react-dom": "^16.12.0",
-    "ajv": "^6.12.0",
+    "ajv": "^6.12.3",
     "array-foreach-async": "^1.0.1",
     "axios": "^0.19.0",
     "browser-detect": "^0.2.28",
@@ -132,13 +132,13 @@
     "formik": "^1.5.8",
     "history": "^4.7.2",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.19.3",
+    "knex": "^0.19.5",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "moment": "^2.24.0",
-    "node-forge": "^0.8.5",
-    "node-pg-migrate": "^4.5.0",
+    "node-forge": "^0.10.0",
+    "node-pg-migrate": "^4.5.1",
     "node-pre-gyp": "^0.12.0",
     "number-abbreviate": "^2.0.0",
     "pg": "^7.10.0",
@@ -192,7 +192,7 @@
     "uuid": "^3.3.3",
     "xmldom": "^0.1.27",
     "xpath": "0.0.27",
-    "yup": "^0.27.0"
+    "yup": "^0.28.2"
   },
   "engines": {
     "yarn": "YARN NO LONGER USED - use npm instead."

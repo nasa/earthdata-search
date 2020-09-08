@@ -247,6 +247,15 @@
           cors: true
           path: shapefiles
 
+  getShapefile:
+    handler: serverless/src/getShapefile/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    events:
+      - http:
+          method: get
+          cors: true
+          path: shapefiles/{id}
+
   saveProject:
     handler: serverless/src/saveProject/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
