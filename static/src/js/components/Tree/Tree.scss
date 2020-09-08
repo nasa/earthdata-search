@@ -1,0 +1,41 @@
+.tree {
+  &__filter-clear-button {
+    &.btn-outline-secondary {
+      border-color: $gray-400;
+    }
+  }
+
+  &__list-wrapper {
+    overflow-y: scroll;
+    position: relative;
+  }
+
+  &__list {
+    position: relative;
+    left: -0.125rem;
+    padding-top: 0.5rem;
+    padding-left: 1.75rem;
+    margin-bottom: 1rem;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: -0.75rem;
+      left: 0.625rem;
+      height: calc(100% + 0.125rem);
+      border-left: 1px solid $gray-400;
+      z-index: 0;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: -0.25rem;
+      left: 0.625rem;
+      height: 0.5rem;
+      width: 1px;
+      z-index: 1;
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%)
+    }
+  }
+}

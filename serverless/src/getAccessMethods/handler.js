@@ -153,7 +153,11 @@ const getAccessMethods = async (event, context) => {
         type
       } = fullServiceObject
 
-      const { keywordMappings, variables } = getVariables(associatedVariables)
+      const {
+        hierarchyMappings,
+        keywordMappings,
+        variables
+      } = getVariables(associatedVariables)
 
       const outputFormats = []
 
@@ -167,6 +171,7 @@ const getAccessMethods = async (event, context) => {
       accessMethods.opendap = {
         id: conceptId,
         isValid: true,
+        hierarchyMappings,
         keywordMappings,
         longName,
         name,
