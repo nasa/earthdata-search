@@ -26,15 +26,13 @@ export const TreeItem = ({
     expanded,
     fullValue,
     isParent,
-    label,
     level,
     value,
     variable = {}
   } = item
 
   const {
-    longName,
-    name
+    longName
   } = variable
   const checkboxElement = useRef(null)
   const [isExpanded, setIsExpanded] = useState(expanded)
@@ -164,7 +162,7 @@ export const TreeItem = ({
           htmlFor={fullValue}
         >
           <div className="tree-item__label-name">
-            {name || label}
+            {item.getName()}
             {
               item.isLeaf && (
                 <button

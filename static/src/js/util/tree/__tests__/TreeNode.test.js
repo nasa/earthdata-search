@@ -41,7 +41,7 @@ const variables = {
 }
 
 describe('TreeNode', () => {
-  it('sets up allItems', () => {
+  test('sets up allItems', () => {
     const selectedVariables = ['item1', 'item2']
 
     const treeNode = new TreeNode({
@@ -50,7 +50,6 @@ describe('TreeNode', () => {
       variables
     })
 
-    console.log('treeNode.allItems', treeNode.allItems)
     expect(treeNode.allItems['Parent 1'].checked).toEqual(true)
     expect(treeNode.allItems['Parent 1'].expanded).toEqual(false)
     expect(treeNode.allItems['Parent 1'].level).toEqual(1)
@@ -77,7 +76,7 @@ describe('TreeNode', () => {
     expect(treeNode.allItems['Parent 2/item3'].value).toEqual('item3')
   })
 
-  it('updateNode updates allItems', () => {
+  test('updateNode updates allItems', () => {
     const selectedVariables = ['item1', 'item2']
 
     const treeNode = new TreeNode({
@@ -115,7 +114,7 @@ describe('TreeNode', () => {
     expect(treeNode.allItems['Parent 2/item3'].value).toEqual('item3')
   })
 
-  it('selecting an indeterminateparents selects all children', () => {
+  test('selecting an indeterminateparents selects all children', () => {
     const selectedVariables = ['item1', 'item2']
 
     const treeNode = new TreeNode({
@@ -131,8 +130,7 @@ describe('TreeNode', () => {
     expect(treeNode.allItems['Parent 2/item3'].checked).toEqual(true)
   })
 
-  it('updates the expanded property', () => {
-
+  test('updates the expanded property', () => {
     const treeNode = new TreeNode({
       items: { children: items },
       selectedVariables: [],
@@ -146,7 +144,7 @@ describe('TreeNode', () => {
     expect(treeNode.allItems['Parent 1'].expanded).toEqual(true)
   })
 
-  it('returns the seralized data', () => {
+  test('returns the seralized data', () => {
     const selectedVariables = ['item1', 'item2']
 
     const treeNode = new TreeNode({
@@ -158,7 +156,7 @@ describe('TreeNode', () => {
     expect(treeNode.seralize()).toEqual(selectedVariables)
   })
 
-  it('checks all leaf nodes with the same value', () => {
+  test('checks all leaf nodes with the same value', () => {
     const treeNode = new TreeNode({
       items: { children: items },
       selectedVariables: [],
@@ -171,5 +169,57 @@ describe('TreeNode', () => {
 
     expect(treeNode.allItems['Parent 1/item1'].checked).toEqual(true)
     expect(treeNode.allItems['Parent 2/item1'].checked).toEqual(true)
+  })
+
+  describe('getKey', () => {
+    test('returns the value as the key', () => {
+      const selectedVariables = ['item1', 'item2']
+
+      const treeNode = new TreeNode({
+        items: { children: items },
+        selectedVariables,
+        variables
+      })
+
+      expect(treeNode.allItems['Parent 1'].getKey()).toEqual('tree-Parent 1')
+    })
+
+    test('returns the value concatenated with the parent key', () => {
+      const selectedVariables = ['item1', 'item2']
+
+      const treeNode = new TreeNode({
+        items: { children: items },
+        selectedVariables,
+        variables
+      })
+
+      expect(treeNode.allItems['Parent 1/item1'].getKey()).toEqual('tree-Parent 1-item1')
+    })
+  })
+
+  describe('getName', () => {
+    test('returns the name', () => {
+      const selectedVariables = ['item1', 'item2']
+
+      const treeNode = new TreeNode({
+        items: { children: items },
+        selectedVariables,
+        variables
+      })
+
+      expect(treeNode.allItems['Parent 1'].getName()).toEqual('Parent 1')
+    })
+
+    test('returns the truncated name for a leaf node', () => {
+      const selectedVariables = ['item1', 'item2']
+
+      const treeNode = new TreeNode({
+        items: { children: items },
+        selectedVariables,
+        variables
+      })
+
+      expect(treeNode.allItems['Parent 1/item1'].getName()).toEqual('Item1_Name')
+    })
   })
 })

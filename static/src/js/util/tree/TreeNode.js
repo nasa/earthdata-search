@@ -254,4 +254,18 @@ export class TreeNode {
 
     return this.value
   }
+
+  /**
+   * Returns the name of the item. If the item is a leaf node, returns the last portion of the name
+   */
+  getName() {
+    const { variable = {} } = this
+    const { name } = variable
+
+    if (!this.isLeaf) {
+      return name || this.label
+    }
+
+    return name.split('/').pop()
+  }
 }
