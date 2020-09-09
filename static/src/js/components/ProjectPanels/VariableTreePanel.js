@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { pure } from 'recompose'
 
@@ -68,19 +67,21 @@ export const VariableTreePanel = (props) => {
   return (
     <>
       <ProjectPanelSection heading="Variable Selection" />
-      {
-        keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy
-      }
-      <Tree
-        key={treeView}
-        collectionId={collectionId}
-        index={index}
-        items={items}
-        selectedVariables={selectedVariables}
-        variables={variables}
-        onUpdateSelectedVariables={onUpdateSelectedVariables}
-        onViewDetails={onViewDetails}
-      />
+      <ProjectPanelSection>
+        {
+          keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy
+        }
+        <Tree
+          key={treeView}
+          collectionId={collectionId}
+          index={index}
+          items={items}
+          selectedVariables={selectedVariables}
+          variables={variables}
+          onUpdateSelectedVariables={onUpdateSelectedVariables}
+          onViewDetails={onViewDetails}
+        />
+      </ProjectPanelSection>
     </>
   )
 }

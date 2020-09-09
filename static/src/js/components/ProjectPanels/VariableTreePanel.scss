@@ -1,25 +1,28 @@
 .variable-tree-panel {
   &__tree-switcher {
     display: flex;
+    margin-left: 0.5rem;
+    margin-bottom: 1rem;
     align-items: center;
-    font-size: 0.75rem;
-    padding-left: 0.5rem;
+    font-size: 0.875rem;
 
     &__buttons {
-      background-color: $gray-400;
+      background-color: $color__black--200;
       margin-left: 0.5rem;
       border-radius: .125rem;
     }
 
     &__button {
-      font-size: 0.75rem;
-      color: $gray-600;
       text-align: left;
-      background-color: $gray-400;
+      background-color: transparent;
       margin: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      color: $color__black--500;
 
       &:disabled {
-        background-color: $gray-100;
+        background-color: $color__black--100;
+        color: $color__black--700;
         opacity: 1;
         cursor: pointer;
       }
@@ -40,8 +43,6 @@
       background-color: $color__black--100;
     }
   }
-
-  &__button
 
   &__selected-count {
     position: absolute;
