@@ -18,6 +18,7 @@ const defaultItem = {
     value: 'Child1',
     variable: { mock: 'variable' },
     getKey: jest.fn(),
+    getName: jest.fn(),
     setChecked: jest.fn(),
     setExpanded: jest.fn()
   }],
@@ -29,11 +30,14 @@ const defaultItem = {
   level: 1,
   value: 'Parent1',
   getKey: jest.fn(),
+  getName: jest.fn(),
   setChecked: jest.fn(),
   setExpanded: jest.fn()
 }
 
 function setup(overrideProps) {
+  defaultItem.getName.mockReturnValue('Parent 1')
+
   const props = {
     collectionId: 'collectionId',
     item: {

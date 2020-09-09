@@ -19,12 +19,14 @@ export const VariableDetailsPanel = (props) => {
     name
   } = variable
 
+  const formattedName = name.split('/').pop()
+
   return (
     <div className="variable-details-panel">
       <ProjectPanelSection>
         <header className="variable-details-panel__header">
           <h2 className="variable-details-panel__heading">
-            {name}
+            {formattedName}
           </h2>
         </header>
         <dl>

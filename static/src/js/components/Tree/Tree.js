@@ -40,7 +40,6 @@ export const Tree = ({
 
   // Initial render - setup TreeNode object to drive the tree data
   useEffect(() => {
-    console.log('useEffect calling useEffect to setup TreeNode')
     treeModel.current = new TreeNode({
       items: { children: items },
       selectedVariables,

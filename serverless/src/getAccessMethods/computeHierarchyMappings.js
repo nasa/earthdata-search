@@ -1,7 +1,7 @@
 import { isArray, isEmpty } from 'lodash'
 
 /**
- * Returns variable ids grouped by their scienceKeywords
+ * Returns variable ids grouped by their hierarchical names
  * @param {Array} variables Array of UMM V Objects
  */
 export const computeHierarchyMappings = (variables) => {
@@ -75,7 +75,7 @@ export const computeHierarchyMappings = (variables) => {
             workingObject = workingObject.children[workingObject.children.length - 1]
           } else {
             // If the next name is found, set the working object to the foundIndex of the current workingObject.children
-            workingObject = workingObject.children[foundIndex]
+            workingObject = workingObject.children[nextFound]
           }
         }
       }
@@ -84,7 +84,6 @@ export const computeHierarchyMappings = (variables) => {
     // If new object ended up with any values, add it to calculatedMappings
     if (!isEmpty(newObject)) calculatedMappings.push(newObject)
   })
-
 
   return calculatedMappings
 }
