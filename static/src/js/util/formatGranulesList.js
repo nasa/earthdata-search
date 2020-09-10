@@ -38,7 +38,7 @@ export const formatGranulesList = ({
       browseUrl,
       collectionConceptId,
       dayNightFlag,
-      formattedTemporal,
+      formattedTemporal = [],
       id,
       links,
       onlineAccessFlag,

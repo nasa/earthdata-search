@@ -222,4 +222,19 @@ describe('granule metadata', () => {
 
     expect(granulesList[0].title).toEqual(granulesMetadata['http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc'].title)
   })
+
+  test('defaults the formattedTemporal', () => {
+    const { granulesList } = setup({
+      granuleIds: ['G10000-EDSC'],
+      granulesMetadata: {
+        'G10000-EDSC': {
+          formattedTemporal: undefined
+        }
+      }
+    })
+
+    // Doesn't cause an error
+    expect(granulesList[0].timeEnd).toEqual(undefined)
+    expect(granulesList[0].timeStart).toEqual(undefined)
+  })
 })
