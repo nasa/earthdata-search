@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
@@ -6,7 +7,7 @@ import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
-import Radio from '../FormFields/Radio/Radio'
+import AccessMethodRadio from '../FormFields/Radio/AccessMethodRadio'
 import RadioList from '../FormFields/Radio/RadioList'
 import Skeleton from '../Skeleton/Skeleton'
 import Spinner from '../Spinner/Spinner'
@@ -18,140 +19,6 @@ import {
 } from '../../../../../sharedUtils/outputFormatMaps'
 
 const EchoForm = lazy(() => import('./EchoForm'))
-
-const downloadButton = collectionId => (
-  <Radio
-    id={`${collectionId}_access-method__direct-download`}
-    dataTestId={`${collectionId}_access-method__direct-download`}
-    name={`${collectionId}_access-method__direct-download`}
-    key={`${collectionId}_access-method__direct-download`}
-    value="download"
-  >
-    Direct Download
-    <OverlayTrigger
-      placement="right"
-      overlay={(
-        <Tooltip
-          className="tooltip--large tooltip--ta-left"
-        >
-          Direct download of all data associated with the selected granules.
-          The desired data will be available for download immediately.
-          Files will be accessed from a list of links displayed in the
-          browser or by using a download script.
-        </Tooltip>
-      )}
-    >
-      <i className="access-method__radio-tooltip fa fa-info-circle" />
-    </OverlayTrigger>
-  </Radio>
-)
-
-const echoOrderButton = (collectionId, methodKey) => (
-  <Radio
-    id={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
-    dataTestId={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
-    name={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
-    key={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
-    value={methodKey}
-  >
-    Stage For Delivery
-    <OverlayTrigger
-      placement="right"
-      overlay={(
-        <Tooltip
-          className="tooltip--large tooltip--ta-left"
-        >
-          Submit a request for data to be staged for delivery. Data files will be
-          compressed in zip format and stored for retrieval via HTTP. You will
-          receive an email from the data provider when your files are ready to download.
-        </Tooltip>
-      )}
-    >
-      <i className="access-method__radio-tooltip fa fa-info-circle" />
-    </OverlayTrigger>
-  </Radio>
-)
-
-const esiButton = (collectionId, methodKey) => (
-  <Radio
-    id={`${collectionId}_access-method__customize_${methodKey}`}
-    dataTestId={`${collectionId}_access-method__customize_${methodKey}`}
-    name={`${collectionId}_access-method__customize_${methodKey}`}
-    key={`${collectionId}_access-method__customize_${methodKey}`}
-    value={methodKey}
-  >
-    Customize
-    <OverlayTrigger
-      placement="right"
-      overlay={(
-        <Tooltip
-          className="tooltip--large tooltip--ta-left"
-        >
-          Select options like variables, transformations, and output formats to
-          customize your data. The desired data files will be made available for
-          access after the data provider has finished processing your request.
-          You will receive an email from the data provider when your
-          files are ready to download.
-        </Tooltip>
-      )}
-    >
-      <i className="access-method__radio-tooltip fa fa-info-circle" />
-    </OverlayTrigger>
-  </Radio>
-)
-
-const opendapButton = (collectionId, methodKey) => (
-  <Radio
-    id={`${collectionId}_access-method__opendap_${methodKey}`}
-    dataTestId={`${collectionId}_access-method__opendap_${methodKey}`}
-    name={`${collectionId}_access-method__opendap_${methodKey}`}
-    key={`${collectionId}_access-method__opendap_${methodKey}`}
-    value={methodKey}
-  >
-    Customize (Subset)
-    <OverlayTrigger
-      placement="right"
-      overlay={(
-        <Tooltip
-          className="tooltip--large tooltip--ta-left"
-        >
-          Select options like variables, transformations, and output formats to customize
-          your data. The desired data files will be made available for access immediately.
-          Files will be accessed from a list of links in the browser or by using a
-          download script.
-        </Tooltip>
-      )}
-    >
-      <i className="access-method__radio-tooltip fa fa-info-circle" />
-    </OverlayTrigger>
-  </Radio>
-)
-
-const harmonyButton = (collectionId, methodKey) => (
-  <Radio
-    id={`${collectionId}_access-method__harmony_${methodKey}`}
-    dataTestId={`${collectionId}_access-method__harmony_${methodKey}`}
-    name={`${collectionId}_access-method__harmony_${methodKey}`}
-    key={`${collectionId}_access-method__harmony_${methodKey}`}
-    value={methodKey}
-  >
-    Customize (Harmony)
-    <OverlayTrigger
-      placement="right"
-      overlay={(
-        <Tooltip
-          className="tooltip--large tooltip--ta-left"
-        >
-          Select options like variables, transformations, and output formats to customize your data.
-          The desired data files will be made available in a variety of ways, allowing you to choose
-          your preferred method for using the data.
-        </Tooltip>
-      )}
-    >
-      <i className="access-method__radio-tooltip fa fa-info-circle" />
-    </OverlayTrigger>
-  </Radio>
-)
 
 /**
  * Renders AccessMethod.
@@ -327,27 +194,76 @@ export class AccessMethod extends Component {
 
     Object.keys(accessMethods).forEach((methodKey) => {
       const accessMethod = accessMethods[methodKey]
-      const { type } = accessMethod
+
+      const { type, name } = accessMethod
+
+      let id = null
+      let title = null
+      let subtitle = null
+      let description = null
+      let details = null
 
       switch (type) {
-        case 'download':
-          accessMethodsByType[type].push(downloadButton(collectionId))
+        case 'download': {
+          id = `${collectionId}_access-method__direct-download`
+          title = 'Direct Download'
+          description = 'Direct download of all data associated with the selected granules.'
+          details = 'The requested data files will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script.'
+
           break
-        case 'ECHO ORDERS':
-          accessMethodsByType[type].push(echoOrderButton(collectionId, methodKey))
+        }
+        case 'ECHO ORDERS': {
+          id = `${collectionId}_access-method__customize_${methodKey}`
+          title = 'Stage For Delivery'
+          subtitle = 'ECHO Orders'
+          description = 'Submit a request for data to be staged for delivery.'
+          details = 'The requested data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download.'
+
           break
-        case 'ESI':
-          accessMethodsByType[type].push(esiButton(collectionId, methodKey))
+        }
+        case 'ESI': {
+          id = `${collectionId}_access-method__customize_${methodKey}`
+          title = 'Customize'
+          subtitle = 'ESI'
+          description = 'Select options like variables, transformations, and output formats for access via the data provider.'
+          details = 'The requested data files will be made available for access after the data provider has finished processing your request. You will receive an email from the data provider when your files are ready to download.'
+
           break
-        case 'OPeNDAP':
-          accessMethodsByType[type].push(opendapButton(collectionId, methodKey))
+        }
+        case 'OPeNDAP': {
+          id = `${collectionId}_access-method__opendap_${methodKey}`
+          title = 'Customize'
+          subtitle = 'OPeNDAP'
+          description = 'Select options like variables, transformations, and output formats for direct access via link or script.'
+          details = 'The requested data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.'
+
           break
-        case 'Harmony':
-          accessMethodsByType[type].push(harmonyButton(collectionId, methodKey))
+        }
+        case 'Harmony': {
+          id = `${collectionId}_access-method__harmony_${methodKey}`
+          title = 'Customize'
+          subtitle = 'Harmony'
+          description = 'Select options like variables, transformations, and output formats for in-region cloud access.'
+          details = 'The requested data will be processed using the Harmony service and stored in the cloud for analysis.'
+
           break
+        }
         default:
           break
       }
+
+      accessMethodsByType[type].push(
+        <AccessMethodRadio
+          key={id}
+          id={id}
+          value={methodKey}
+          title={title}
+          subtitle={subtitle}
+          serviceName={name}
+          description={description}
+          details={details}
+        />
+      )
     })
 
     const radioList = [
