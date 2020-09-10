@@ -2,6 +2,7 @@ import React, { Component, Children } from 'react'
 import PropTypes from 'prop-types'
 
 import Radio from './Radio'
+import AccessMethodRadio from './AccessMethodRadio'
 
 export class RadioList extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ export class RadioList extends Component {
     const { children } = this.props
     const { selected } = this.state
     const radios = Children.map(children, (child) => {
-      if (child.type !== Radio) return null
+      if (child.type !== Radio && child.type !== AccessMethodRadio) return null
       const { props } = child
       return React.cloneElement(child,
         { onChange: this.onChange, checked: selected === props.value })

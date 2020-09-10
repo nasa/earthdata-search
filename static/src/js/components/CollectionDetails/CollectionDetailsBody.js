@@ -267,14 +267,19 @@ export const CollectionDetailsBody = ({
                       </dt>
                       <dd>
                         {
+<<<<<<< HEAD
                           Object.keys(reformattings).map((supportedInputFormat) => {
+=======
+                          reformattings.map((supportedReformatting, i) => {
+>>>>>>> EDSC-2834: Cleaning up access method selection on project page
                             const {
                               [supportedInputFormat]: supportedOutputFormats
                             } = reformattings
 
+                            const key = `input-format__${supportedInputFormat}-${i}`
                             return (
                               <dl
-                                key={`input-format__${supportedInputFormat}`}
+                                key={key}
                                 className="collection-details-body__reformatting-item"
                               >
                                 <dt className="collection-details-body__reformatting-item-heading">
