@@ -1,18 +1,19 @@
 import { computeHierarchyMappings } from '../computeHierarchyMappings'
 
-// '/gt1r/bckgrd_atlas/bckgrd_counts'
-// '/gt1r/geolocation/altitude_sc'
-// '/gt1r/geolocation/ph_index_beg'
-// '/gt1r/geolocation/reference_photon_lat'
-// '/gt1r/geolocation/reference_photon_lon'
-// '/gt1r/geophys_corr/geoid'
-// '/gt1r/heights/h_ph'
-// '/gt1r/heights/lat_ph'
-// '/gt1r/heights/lon_ph',
-// '/gt1r/signal_find_output/ocean/bckgrd_mean'
-// '/orbit_info/orbit_number'
 describe('computeHierarchyMappings', () => {
-  test.only('correctly returns mapped hierarchy', () => {
+  test('correctly returns mapped hierarchy', () => {
+  // '/gt1r/bckgrd_atlas/bckgrd_counts'
+  // '/gt1r/geolocation/altitude_sc'
+  // '/gt1r/geolocation/ph_index_beg'
+  // '/gt1r/geolocation/reference_photon_lat'
+  // '/gt1r/geolocation/reference_photon_lon'
+  // '/gt1r/geophys_corr/geoid'
+  // '/gt1r/heights/h_ph'
+  // '/gt1r/heights/lat_ph'
+  // '/gt1r/heights/lon_ph',
+  // '/gt1r/signal_find_output/ocean/bckgrd_mean'
+  // '/orbit_info/orbit_number'
+
     const items = [
       {
         conceptId: 'V1237329971-EEDTEST',
@@ -27,7 +28,7 @@ describe('computeHierarchyMappings', () => {
       {
         conceptId: 'V1237332705-EEDTEST',
         longName: 'Photon Index Begin',
-        name: '/gt1r/geolocation/ph_index_beg'
+        name: 'gt1r/geolocation/ph_index_beg' // leading slash missing on purpose
       },
       {
         conceptId: 'V1237332539-EEDTEST',
@@ -152,17 +153,58 @@ describe('computeHierarchyMappings', () => {
     expect(hierarchyMappings).toEqual(expectedResult)
   })
 
-  test('correctly returns mapped hierarchy when no hierarchical names exist', () => {
-    const emptyKeywordResponse = [
+  test('correctly returns mapped hierarchy when names are not hierarchical', () => {
+    const items = [
       {
-        conceptId: 'V1200279034-E2E_18_4',
-        name: 'Dust_Score_A',
-        longName: 'Dust_Score_A'
+        conceptId: 'V1237329971-EEDTEST',
+        longName: 'ATLAS 50-shot background count',
+        name: 'bckgrd_counts'
+      },
+      {
+        conceptId: 'V1237329747-EEDTEST',
+        longName: 'Altitude',
+        name: 'gt1r/geolocation/altitude_sc'
+      },
+      {
+        conceptId: 'V1237332705-EEDTEST',
+        longName: 'Photon Index Begin',
+        name: 'ph_index_beg'
+      },
+      {
+        conceptId: 'V1237332539-EEDTEST',
+        longName: 'Segment latitude',
+        name: 'reference_photon_lat'
       }
     ]
 
-    const hierarchyMappings = computeHierarchyMappings(emptyKeywordResponse)
+    const expectedResult = [
+      {
+        id: 'V1237329971-EEDTEST'
+      },
+      {
+        label: 'gt1r',
+        children: [
+          {
+            label: 'geolocation',
+            children: [
+              {
+                id: 'V1237329747-EEDTEST'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'V1237332705-EEDTEST'
+      },
+      {
+        id: 'V1237332539-EEDTEST'
+      }
+    ]
 
-    expect(hierarchyMappings).toEqual([])
+
+    const hierarchyMappings = computeHierarchyMappings(items)
+
+    expect(hierarchyMappings).toEqual(expectedResult)
   })
 })
