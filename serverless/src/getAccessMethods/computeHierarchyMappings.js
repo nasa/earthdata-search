@@ -11,8 +11,11 @@ export const computeHierarchyMappings = (variables) => {
   variables.forEach((variable) => {
     const { conceptId: variableId, name } = variable
 
-    // If the name isn't hierarchical, don't process it
-    if (!name.includes('/')) return
+    // If the name isn't hierarchical, push the variableId onto calculatedMappings
+    if (!name.includes('/')) {
+      calculatedMappings.push({ id: variableId })
+      return
+    }
 
     const nameParts = name.split('/').filter(Boolean)
 
@@ -40,6 +43,9 @@ export const computeHierarchyMappings = (variables) => {
       // If a name was not found
       if (foundIndex === -1) {
         workingObject.label = name
+
+        // If at the end - 1 of the name parts loop, the children needs to be the variableId.
+        // end - 1 because the last name isn't important, the client-side gets that info from the variable
         if (nameIndex === nameParts.length - 2) {
           if (workingObject.children) {
             workingObject.children = workingObject.children.concat({ id: variableId })
@@ -47,7 +53,9 @@ export const computeHierarchyMappings = (variables) => {
             workingObject.children = [{ id: variableId }]
           }
         } else {
+          // Push an empty object to the workingObject children array, and set the new workingObject to that new object
           if (!isArray(workingObject.children)) workingObject.children = []
+
           workingObject.children.push({})
           workingObject = workingObject.children[workingObject.children.length - 1]
         }
@@ -74,7 +82,7 @@ export const computeHierarchyMappings = (variables) => {
             workingObject.children.push({})
             workingObject = workingObject.children[workingObject.children.length - 1]
           } else {
-            // If the next name is found, set the working object to the foundIndex of the current workingObject.children
+            // If the next name is found, set the working object to the nextFound of the current workingObject.children
             workingObject = workingObject.children[nextFound]
           }
         }

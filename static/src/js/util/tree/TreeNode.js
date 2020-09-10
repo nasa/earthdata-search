@@ -16,14 +16,9 @@ export class TreeNode {
     this.allItems = {}
     this.checked = false
     this.children = []
-    this.disabled = false
-    // this.expanded = this.level === 1
     this.expanded = false
 
     // Properties derived from element attributes, default to undefined for caching
-    this.relevantAttribute = undefined
-    this.requiredAttribute = undefined
-    this.totalLeafNodes = undefined
     this.value = undefined
 
     // Build remaining node properties

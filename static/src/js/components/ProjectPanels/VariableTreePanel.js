@@ -57,7 +57,6 @@ export const VariableTreePanel = (props) => {
     </div>
   )
 
-  // eslint-disable-next-line prefer-const
   let items = treeView === 'hierarchy' ? hierarchyMappings : keywordMappings
 
   // If keywordMappings or hierarchyMappings don't exist, default items to the one that does exist
@@ -66,8 +65,7 @@ export const VariableTreePanel = (props) => {
 
   return (
     <>
-      <ProjectPanelSection heading="Variable Selection" />
-      <ProjectPanelSection>
+      <ProjectPanelSection heading="Variable Selection">
         {
           keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy
         }
