@@ -51,7 +51,6 @@ provider:
     Fn::ImportValue: ${self:provider.stage}-EDSCServerlessAppRole
 
 plugins:
-  - serverless-jetpack
   - serverless-finch
   - serverless-offline
   - serverless-webpack
@@ -113,7 +112,9 @@ custom:
   # Serverless Webpack configurations
   webpack:
     webpackConfig: 'serverless.webpack.config.js'
-    includeModules: true
+    includeModules:
+      forceExclude:
+        - aws-sdk
     packager: 'npm'
     excludeFiles: src/**/*.test.js
 
