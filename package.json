@@ -184,7 +184,6 @@
     "sanitize-html": "^1.20.1",
     "scatter-swap": "^0.1.0",
     "serverless": "^1.55.1",
-    "serverless-jetpack": "^0.10.7",
     "serverless-plugin-log-subscription": "^1.2.0",
     "simple-oauth2": "^2.2.1",
     "simplebar": "^4.2.2",
