@@ -51,6 +51,7 @@ provider:
     Fn::ImportValue: ${self:provider.stage}-EDSCServerlessAppRole
 
 plugins:
+  - serverless-jetpack
   - serverless-finch
   - serverless-offline
   - serverless-webpack
@@ -76,7 +77,7 @@ stepFunctions: ${file(./serverless-configs/${self:provider.name}-step-functions.
 # Package each lambda into individual zip files. This reduces the size of
 # each lambda but increases the complexity of the compilation process slightly
 package:
-  individually: false
+  individually: true
 
 custom:
   siteName: earthdata-search-${self:provider.stage}
