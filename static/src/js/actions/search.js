@@ -119,16 +119,6 @@ export const changeGranulePageNum = ({ collectionId, pageNum }) => (dispatch, ge
   }
 }
 
-export const removeGridFilter = () => (dispatch) => {
-  dispatch(changeQuery({
-    collection: {
-      gridName: ''
-    }
-  }))
-
-  dispatch(actions.toggleSelectingNewGrid(false))
-}
-
 export const removeSpatialFilter = () => (dispatch) => {
   dispatch(changeQuery({
     collection: {

@@ -58,7 +58,7 @@ const collectionSearch = async (event) => {
     'spatial_keyword',
     'tag_key',
     'temporal',
-    'two_d_coordinate_system'
+    'two_d_coordinate_system_name'
   ]
 
   const nonIndexedKeys = [
@@ -81,7 +81,8 @@ const collectionSearch = async (event) => {
     'provider',
     'sort_key',
     'spatial_keyword',
-    'tag_key'
+    'tag_key',
+    'two_d_coordinate_system_name'
   ]
 
   try {

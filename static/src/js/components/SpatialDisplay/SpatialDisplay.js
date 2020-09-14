@@ -9,7 +9,7 @@ import {
   Spinner
 } from 'react-bootstrap'
 
-import { availableSystems } from '../../util/grid'
+// import { availableSystems } from '../../util/grid'
 
 import FilterStackItem from '../FilterStack/FilterStackItem'
 import FilterStackContents from '../FilterStack/FilterStackContents'
@@ -31,15 +31,15 @@ class SpatialDisplay extends Component {
       boundingBoxSearch: '',
       circleSearch: '',
       lineSearch: '',
-      gridName: '',
+      // gridName: '',
       manuallyEntering: false,
       pointSearch: '',
       polygonSearch: '',
       shapefile: {}
     }
 
-    this.onChangeGridType = this.onChangeGridType.bind(this)
-    this.onGridRemove = this.onGridRemove.bind(this)
+    // this.onChangeGridType = this.onChangeGridType.bind(this)
+    // this.onGridRemove = this.onGridRemove.bind(this)
     this.onSpatialRemove = this.onSpatialRemove.bind(this)
     this.onChangePointSearch = this.onChangePointSearch.bind(this)
     this.onSubmitPointSearch = this.onSubmitPointSearch.bind(this)
@@ -55,7 +55,7 @@ class SpatialDisplay extends Component {
     const {
       boundingBoxSearch,
       circleSearch,
-      gridName,
+      // gridName,
       pointSearch,
       polygonSearch,
       shapefile
@@ -65,7 +65,7 @@ class SpatialDisplay extends Component {
       error: '',
       boundingBoxSearch: this.transformBoundingBoxCoordinates(boundingBoxSearch[0]),
       circleSearch: this.transformCircleCoordinates(circleSearch[0]),
-      gridName,
+      // gridName,
       pointSearch: pointSearch[0],
       polygonSearch: polygonSearch[0],
       shapefile
@@ -77,7 +77,7 @@ class SpatialDisplay extends Component {
       boundingBoxSearch,
       circleSearch,
       lineSearch,
-      gridName,
+      // gridName,
       pointSearch,
       polygonSearch,
       shapefile
@@ -131,11 +131,11 @@ class SpatialDisplay extends Component {
       state.circleSearch = points
     }
 
-    if (gridName !== nextProps.gridName) {
-      shouldUpdateState = true
+    // if (gridName !== nextProps.gridName) {
+    //   shouldUpdateState = true
 
-      state.gridName = nextProps.gridName
-    }
+    //   state.gridName = nextProps.gridName
+    // }
 
     if (!isEqual(shapefile, nextProps.shapefile)) {
       shouldUpdateState = true
@@ -147,23 +147,23 @@ class SpatialDisplay extends Component {
     if (shouldUpdateState) this.setState(state)
   }
 
-  onChangeGridType(e) {
-    const { onChangeQuery } = this.props
-    onChangeQuery({
-      collection: {
-        gridName: e.target.value
-      }
-    })
-    e.preventDefault()
-  }
+  // onChangeGridType(e) {
+  //   const { onChangeQuery } = this.props
+  //   onChangeQuery({
+  //     collection: {
+  //       gridName: e.target.value
+  //     }
+  //   })
+  //   e.preventDefault()
+  // }
 
-  onGridRemove() {
-    const {
-      onRemoveGridFilter
-    } = this.props
+  // onGridRemove() {
+  //   const {
+  //     onRemoveGridFilter
+  //   } = this.props
 
-    onRemoveGridFilter()
-  }
+  //   onRemoveGridFilter()
+  // }
 
   onSpatialRemove() {
     const {
@@ -442,8 +442,8 @@ class SpatialDisplay extends Component {
   render() {
     const {
       displaySpatialPolygonWarning,
-      drawingNewLayer,
-      selectingNewGrid
+      drawingNewLayer
+      // selectingNewGrid
     } = this.props
 
     const {
@@ -451,7 +451,7 @@ class SpatialDisplay extends Component {
       boundingBoxSearch,
       circleSearch,
       lineSearch,
-      gridName,
+      // gridName,
       manuallyEntering,
       pointSearch = '',
       polygonSearch = '',
@@ -475,56 +475,56 @@ class SpatialDisplay extends Component {
       shapefileSize
     } = shapefile
 
-    if (selectingNewGrid || gridName) {
-      const entry = (
-        <SpatialDisplayEntry>
-          <Form.Row className="spatial-display__form-row">
-            <Form.Group className="spatial-display__form-group spatial-display__form-group--system">
-              <Form.Label srOnly>
-                Coordinate System
-              </Form.Label>
-              <Form.Control
-                as="select"
-                onChange={this.onChangeGridType}
-                size="sm"
-                value={gridName}
-              >
-                <option value="">Coordinate System...</option>
-                {
-                  availableSystems.map(system => (
-                    <option
-                      key={system.name}
-                      value={system.name}
-                    >
-                      {system.label}
-                    </option>
-                  ))
-                }
-              </Form.Control>
-            </Form.Group>
-          </Form.Row>
-        </SpatialDisplayEntry>
-      )
-      const gridContents = (
-        <FilterStackContents
-          key="filter__grid"
-          body={entry}
-          title="Grid"
-        />
-      )
+    // if (selectingNewGrid || gridName) {
+    //   const entry = (
+    //     <SpatialDisplayEntry>
+    //       <Form.Row className="spatial-display__form-row">
+    //         <Form.Group className="spatial-display__form-group spatial-display__form-group--system">
+    //           <Form.Label srOnly>
+    //             Coordinate System
+    //           </Form.Label>
+    //           <Form.Control
+    //             as="select"
+    //             onChange={this.onChangeGridType}
+    //             size="sm"
+    //             value={gridName}
+    //           >
+    //             <option value="">Coordinate System...</option>
+    //             {
+    //               availableSystems.map(system => (
+    //                 <option
+    //                   key={system.name}
+    //                   value={system.name}
+    //                 >
+    //                   {system.label}
+    //                 </option>
+    //               ))
+    //             }
+    //           </Form.Control>
+    //         </Form.Group>
+    //       </Form.Row>
+    //     </SpatialDisplayEntry>
+    //   )
+    //   const gridContents = (
+    //     <FilterStackContents
+    //       key="filter__grid"
+    //       body={entry}
+    //       title="Grid"
+    //     />
+    //   )
 
-      items.push((
-        <FilterStackItem
-          key="item__grid"
-          icon="edsc-globe"
-          title="Grid"
-          hint="Apply grid coordinates in Granule Filters"
-          onRemove={this.onGridRemove}
-        >
-          {gridContents}
-        </FilterStackItem>
-      ))
-    }
+    //   items.push((
+    //     <FilterStackItem
+    //       key="item__grid"
+    //       icon="edsc-globe"
+    //       title="Grid"
+    //       hint="Apply grid coordinates in Granule Filters"
+    //       onRemove={this.onGridRemove}
+    //     >
+    //       {gridContents}
+    //     </FilterStackItem>
+    //   ))
+    // }
 
     let hint = ''
 
@@ -842,14 +842,14 @@ SpatialDisplay.propTypes = {
     PropTypes.string,
     PropTypes.bool
   ]).isRequired,
-  gridName: PropTypes.string.isRequired,
+  // gridName: PropTypes.string.isRequired,
   lineSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
-  onRemoveGridFilter: PropTypes.func.isRequired,
+  // onRemoveGridFilter: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   polygonSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectingNewGrid: PropTypes.bool.isRequired,
+  // selectingNewGrid: PropTypes.bool.isRequired,
   shapefile: PropTypes.shape({}).isRequired
 }
 
