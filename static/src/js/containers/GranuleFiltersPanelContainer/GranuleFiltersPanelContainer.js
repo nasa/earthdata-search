@@ -15,7 +15,8 @@ import {
   startBeforeEnd
 } from '../../util/validation'
 
-import { getFocusedCollectionGranuleQuery, getCollectionsQuery } from '../../selectors/query'
+import { getCmrFacetParams } from '../../selectors/facetParams'
+import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import GranuleFiltersActions
@@ -30,8 +31,8 @@ import SecondaryOverlayPanelContainer
   from '../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
 
 const mapStateToProps = state => ({
+  cmrFacetParams: getCmrFacetParams(state),
   collectionMetadata: getFocusedCollectionMetadata(state),
-  collectionQuery: getCollectionsQuery(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   temporal: state.query.collection.temporal
 })
@@ -87,14 +88,14 @@ export class GranuleFiltersPanelContainer extends Component {
   render() {
     const {
       collectionMetadata,
-      collectionQuery,
       errors,
+      cmrFacetParams,
       handleBlur,
       handleChange,
       handleSubmit,
       isValid,
-      setFieldValue,
       setFieldTouched,
+      setFieldValue,
       touched,
       values
     } = this.props
@@ -107,7 +108,7 @@ export class GranuleFiltersPanelContainer extends Component {
             granuleFiltersForm={(
               <GranuleFiltersForm
                 collectionMetadata={collectionMetadata}
-                collectionQuery={collectionQuery}
+                cmrFacetParams={cmrFacetParams}
                 values={values}
                 touched={touched}
                 errors={errors}
@@ -358,7 +359,7 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
 
 GranuleFiltersPanelContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
-  collectionQuery: PropTypes.shape({}).isRequired,
+  cmrFacetParams: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   errors: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,

@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
   circleSearch: state.query.collection.spatial.circle,
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer,
-  gridName: state.query.collection.gridName,
+  // gridName: state.query.collection.gridName,
   lineSearch: state.query.collection.spatial.line,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
@@ -31,7 +31,7 @@ export const SpatialDisplayContainer = (props) => {
     circleSearch,
     displaySpatialPolygonWarning,
     drawingNewLayer,
-    gridName,
+    // gridName,
     lineSearch,
     onChangeQuery,
     onRemoveGridFilter,
@@ -48,7 +48,7 @@ export const SpatialDisplayContainer = (props) => {
       circleSearch={circleSearch}
       displaySpatialPolygonWarning={displaySpatialPolygonWarning}
       drawingNewLayer={drawingNewLayer}
-      gridName={gridName}
+      // gridName={gridName}
       lineSearch={lineSearch}
       onChangeQuery={onChangeQuery}
       onRemoveGridFilter={onRemoveGridFilter}
@@ -64,7 +64,7 @@ export const SpatialDisplayContainer = (props) => {
 SpatialDisplayContainer.defaultProps = {
   boundingBoxSearch: [],
   circleSearch: [],
-  gridName: '',
+  // gridName: '',
   lineSearch: [],
   pointSearch: [],
   polygonSearch: [],
@@ -79,7 +79,7 @@ SpatialDisplayContainer.propTypes = {
     PropTypes.string,
     PropTypes.bool
   ]).isRequired,
-  gridName: PropTypes.string,
+  // gridName: PropTypes.string,
   lineSearch: PropTypes.arrayOf(PropTypes.string),
   onChangeQuery: PropTypes.func.isRequired,
   onRemoveGridFilter: PropTypes.func.isRequired,

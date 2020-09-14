@@ -50,12 +50,12 @@ const urlDefs = {
   overrideTemporalSearch: { shortKey: 'ot', encode: encodeTemporal, decode: decodeTemporal },
   featureFacets: { shortKey: 'ff', encode: encodeFeatures, decode: decodeFeatures },
   platformFacets: { shortKey: 'fp', encode: encodeFacets, decode: decodeFacets },
+  twoDCoordinateSystemNameFacets: { shortKey: 's2n', encode: encodeFacets, decode: decodeFacets },
   instrumentFacets: { shortKey: 'fi', encode: encodeFacets, decode: decodeFacets },
   organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
   granuleDataFormatFacets: { shortKey: 'gdf', encode: encodeFacets, decode: decodeFacets },
-  gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
   shapefileId: { shortKey: 'sf', encode: encodeString, decode: encodeString },
   selectedFeatures: { shortKey: 'sfs', encode: encodeArray, decode: decodeArray },
   tagKey: { shortKey: 'tag_key', encode: encodeString, decode: decodeString },
@@ -113,7 +113,6 @@ export const decodeUrlParams = (paramString) => {
   collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
   collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
   collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
-  collectionQuery.gridName = decodeHelp(params, 'gridName')
   collectionQuery.tagKey = decodeHelp(params, 'tagKey')
   collectionQuery.hasGranulesOrCwic = decodeHelp(params, 'hasGranulesOrCwic')
 
@@ -148,6 +147,7 @@ export const decodeUrlParams = (paramString) => {
   const platforms = decodeHelp(params, 'platformFacets')
   const processingLevels = decodeHelp(params, 'processingLevelFacets')
   const projects = decodeHelp(params, 'projectFacets')
+  const twoDCoordinateSystemName = decodeHelp(params, 'twoDCoordinateSystemNameFacets')
   const scienceKeywords = decodeScienceKeywords(params)
 
   const cmrFacets = {
@@ -157,7 +157,8 @@ export const decodeUrlParams = (paramString) => {
     platform_h: platforms,
     processing_level_id_h: processingLevels,
     project_h: projects,
-    science_keywords_h: scienceKeywords
+    science_keywords_h: scienceKeywords,
+    two_d_coordinate_system_name: twoDCoordinateSystemName
   }
 
   const shapefile = {

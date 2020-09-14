@@ -8,5 +8,6 @@ export const facetCategoryAbbreviationsMap = {
   platform: 'Plat.',
   processing_level_id: 'Proc. Lvl.',
   project: 'Proj.',
-  science_keywords: 'Kwd.'
+  science_keywords: 'Kwd.',
+  two_d_coordinate_system_name: '2D Coord.'
 }
