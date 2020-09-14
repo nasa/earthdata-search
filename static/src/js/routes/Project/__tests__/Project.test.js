@@ -35,13 +35,28 @@ describe('Project component', () => {
     expect(enzymeWrapper.exists()).toBeTruthy()
   })
 
-  test('handleSubmit calls onSubmitRetrieval', () => {
-    const { enzymeWrapper, props } = setup()
+  describe('handleSubmit', () => {
+    test('calls onSubmitRetrieval', () => {
+      const { enzymeWrapper, props } = setup()
 
-    const form = enzymeWrapper.find('form')
+      const form = enzymeWrapper.find('form')
 
-    form.simulate('submit', { preventDefault: jest.fn() })
-    expect(props.onSubmitRetrieval.mock.calls.length).toBe(1)
+      form.simulate('submit', { preventDefault: jest.fn() })
+      expect(props.onSubmitRetrieval.mock.calls.length).toBe(1)
+    })
+
+    test('calls onToggleChunkedOrderModal when any collections require chunking', () => {
+      const { enzymeWrapper, props } = setup({
+        projectCollectionsRequiringChunking: {
+          collectionId: {}
+        }
+      })
+
+      const form = enzymeWrapper.find('form')
+
+      form.simulate('submit', { preventDefault: jest.fn() })
+      expect(props.onToggleChunkedOrderModal.mock.calls.length).toBe(1)
+    })
   })
 
   describe('Saved projects page', () => {

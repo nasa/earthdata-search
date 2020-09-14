@@ -22,6 +22,8 @@ import EdscMapContainer
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
+import { locationPropType } from '../../util/propTypes/location'
+import { projectCollectionPropType } from '../../util/propTypes/projectCollection'
 
 
 const mapDispatchToProps = dispatch => ({
@@ -51,7 +53,7 @@ export class Project extends Component {
       projectCollectionsRequiringChunking
     } = this.props
 
-    if (Object.keys(projectCollectionsRequiringChunking).length > 1) {
+    if (Object.keys(projectCollectionsRequiringChunking).length > 0) {
       onToggleChunkedOrderModal(true)
     } else {
       onSubmitRetrieval()
@@ -115,9 +117,9 @@ export class Project extends Component {
 }
 
 Project.propTypes = {
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
+  projectCollectionsRequiringChunking: projectCollectionPropType.isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
-  projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }
 
