@@ -1,0 +1,157 @@
+.tree-item {
+  position: relative;
+  margin-left: 1.5rem;
+  margin-bottom: 0.325rem;
+
+  &__header {
+    vertical-align: middle;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.325rem;
+
+    .tree-item--is-first > & {
+      &:after {
+        content: '';
+        position: absolute;
+        top: -0.5rem;
+        left: -1.2rem;
+        height: 0.5rem;
+        width: 1px;
+        z-index: 1;
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%)
+      }
+    }
+
+    .tree-item--has-blocker > & {
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0.8125rem;
+        left: -1.2rem;
+        z-index: 1;
+        width: 3px;
+        height: calc(100% - 1.25rem);
+        min-height: 0.5rem;;
+        background: white;
+      }
+    }
+
+    .tree-item--is-not-relevant & {
+      cursor: not-allowed;
+
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0.75rem;
+    left: -1.125rem;
+    width: 0.75rem;
+    border-bottom: 1px solid $gray-400;
+  }
+
+  &--is-parent {
+    &:after {
+      content: '';
+      position: absolute;
+      top: 1.5rem;
+      left: 0.3rem;
+      height: calc(100% - 1.925rem);
+      border-left: 1px solid $gray-400;
+    }
+  }
+
+  &--child-1 {
+    margin-left: 0;
+  }
+
+  &--is-not-relevant {
+    color: $gray-600;
+  }
+
+  &__parent-button {
+    position: relative;
+    right: 0.2rem;
+    border: none;
+    background: none;
+    padding: 0;
+
+    svg {
+      fill: #fff981;
+    }
+
+    path {
+      stroke-width: 35;
+      stroke: #ebd604;
+    }
+  }
+
+  &__info-button {
+    margin-left: 0.25rem;
+    border: none;
+    background: none;
+    padding: 0;
+
+    svg {
+      fill: $color__black--300;
+    }
+
+    &:hover {
+      svg {
+        fill: $color__black--400;
+      }
+    }
+  }
+
+  &__checkbox {
+    display: inline-block;
+    margin-top: 0.325rem;
+    margin-right: 0.5rem;
+    transform: scale(0.925);
+
+    .tree-item--is-not-relevant & {
+      cursor: not-allowed;
+
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+
+    .tree-item--is-parent > .tree-item__header > & {
+      margin-left: 0.325rem;
+    }
+  }
+
+  &__label {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 0;
+    margin-left: 0.1rem;
+    margin-top: 0.125rem;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    line-height: 1.375;
+    flex-direction: column;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &__label-name {
+    width: 100%;
+  }
+
+  &__label-long-name  {
+    margin-top: 0.125rem;
+    color: $color__black--400;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+}

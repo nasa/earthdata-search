@@ -1,4 +1,5 @@
 import { computeKeywordMappings } from './computeKeywordMappings'
+import { computeHierarchyMappings } from './computeHierarchyMappings'
 
 /**
  * Given the items result from a CMR variable search, returns the variables in an object with the key being the concept id
@@ -25,8 +26,9 @@ const computeVariables = (items) => {
 export const getVariables = (data) => {
   const { items = [] } = data || {}
 
+  const hierarchyMappings = computeHierarchyMappings(items)
   const keywordMappings = computeKeywordMappings(items)
   const variables = computeVariables(items)
 
-  return { keywordMappings, variables }
+  return { hierarchyMappings, keywordMappings, variables }
 }

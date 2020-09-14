@@ -76,7 +76,7 @@ stepFunctions: ${file(./serverless-configs/${self:provider.name}-step-functions.
 # Package each lambda into individual zip files. This reduces the size of
 # each lambda but increases the complexity of the compilation process slightly
 package:
-  individually: false
+  individually: true
 
 custom:
   siteName: earthdata-search-${self:provider.stage}
@@ -119,7 +119,9 @@ custom:
   # Serverless Webpack configurations
   webpack:
     webpackConfig: 'serverless.webpack.config.js'
-    includeModules: true
+    includeModules:
+      forceExclude:
+        - aws-sdk
     packager: 'npm'
     excludeFiles: src/**/*.test.js
 

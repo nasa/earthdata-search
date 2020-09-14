@@ -4,9 +4,9 @@ import { mockKeywordMappings, variablesResponse } from './mocks'
 describe('computeKeywordMappings', () => {
   test('correctly returns mapped keywords', () => {
     const { items } = variablesResponse
-    const forms = computeKeywordMappings(items)
+    const keywordMappings = computeKeywordMappings(items)
 
-    expect(forms).toEqual(mockKeywordMappings)
+    expect(keywordMappings).toEqual(mockKeywordMappings)
   })
 
   test('correctly returns mapped keywords when no science keywords exist', () => {
@@ -58,8 +58,8 @@ describe('computeKeywordMappings', () => {
       }
     ]
 
-    const forms = computeKeywordMappings(emptyKeywordResponse)
+    const keywordMappings = computeKeywordMappings(emptyKeywordResponse)
 
-    expect(forms).toEqual({})
+    expect(keywordMappings).toEqual([])
   })
 })

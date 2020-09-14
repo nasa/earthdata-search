@@ -23,9 +23,14 @@ export const computeKeywordMappings = (items) => {
     })
   })
 
-  const orderedKeywords = {}
+  const orderedKeywords = []
   Object.keys(calculatedMappings).sort().forEach((key) => {
-    orderedKeywords[key] = calculatedMappings[key]
+    const variableIds = calculatedMappings[key]
+
+    orderedKeywords.push({
+      children: variableIds.map(id => ({ id })),
+      label: key
+    })
   })
 
   return orderedKeywords
