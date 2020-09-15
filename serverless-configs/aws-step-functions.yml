@@ -19,6 +19,9 @@ stateMachines:
             - Variable: '$.orderType'
               StringEquals: 'ECHO ORDERS'
               Next: FetchLegacyServicesOrderStatus
+            - Variable: '$.orderType'
+              StringEquals: 'Harmony'
+              Next: FetchHarmonyOrderStatus
         FetchCatalogRestOrderStatus:
           Type: Task
           Resource:
@@ -31,6 +34,13 @@ stateMachines:
           Resource:
             Fn::GetAtt:
               - FetchLegacyServicesOrderLambdaFunction
+              - Arn
+          Next: CheckOrderStatus
+        FetchHarmonyOrderStatus:
+          Type: Task
+          Resource:
+            Fn::GetAtt:
+              - FetchHarmonyOrderLambdaFunction
               - Arn
           Next: CheckOrderStatus
         CheckOrderStatus:
