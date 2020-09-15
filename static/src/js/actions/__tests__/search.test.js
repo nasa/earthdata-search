@@ -262,46 +262,6 @@ describe('changeGranulePageNum', () => {
   })
 })
 
-describe('removeGridFilter', () => {
-  test('should remove the grid query', () => {
-    // mockStore with initialState
-    const store = mockStore({
-      query: {
-        collection: {
-          spatial: {},
-          temporal: {},
-          gridName: 'mock grid'
-        }
-      },
-      project: {},
-      router: {
-        location: {
-          pathname: ''
-        }
-      },
-      timeline: {
-        query: {}
-      }
-    })
-
-    // call the dispatch
-    store.dispatch(actions.removeGridFilter())
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_COLLECTION_QUERY,
-      payload: {
-        gridName: '',
-        pageNum: 1
-      }
-    })
-    expect(storeActions[1]).toEqual({
-      type: TOGGLE_SELECTING_NEW_GRID,
-      payload: false
-    })
-  })
-})
-
 describe('removeSpatialFilter', () => {
   test('should remove the spatial query', () => {
     // mockStore with initialState

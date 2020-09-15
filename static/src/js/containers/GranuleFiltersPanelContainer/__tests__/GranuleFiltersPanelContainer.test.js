@@ -12,6 +12,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    cmrFacetParams: {},
     collectionMetadata: {
       title: 'Test Collection'
     },

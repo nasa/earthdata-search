@@ -181,8 +181,6 @@ export const buildCollectionSearchParams = (params) => {
     viewAllFacetsCategory
   } = params
 
-  console.log(params)
-
   let facetsToSend = { ...cmrFacets }
 
   // If viewAllFacets has any keys, we know that the view all facets modal is active and we want to
