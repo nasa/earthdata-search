@@ -144,6 +144,9 @@
   fetchLegacyServicesOrder:
     handler: serverless/src/fetchLegacyServicesOrder/handler.default
 
+  fetchHarmonyOrder:
+    handler: serverless/src/fetchHarmonyOrder/handler.default
+
   #
   # Scheduled Lambdas
   #
