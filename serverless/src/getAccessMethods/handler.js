@@ -1,5 +1,7 @@
 import parser from 'fast-xml-parser'
 
+import { isEmpty } from 'lodash'
+
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getApplicationConfig } from '../../../sharedUtils/config'
@@ -10,6 +12,7 @@ import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
 import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 import { getVariables } from './getVariables'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { harmonyFormatMapping, ousFormatMapping } from '../../../sharedUtils/outputFormatMaps'
 import { parseError } from '../../../sharedUtils/parseError'
 import { supportsVariableSubsetting } from './supportsVariableSubsetting'
 
@@ -175,6 +178,11 @@ const getAccessMethods = async (event, context) => {
         })
       }
 
+      // Default the selected output format to the first item in the supported list
+      let [selectedOutputFormat] = outputFormats;
+
+      ({ [selectedOutputFormat]: selectedOutputFormat } = ousFormatMapping)
+
       accessMethods.opendap = {
         id: conceptId,
         isValid: true,
@@ -182,7 +190,8 @@ const getAccessMethods = async (event, context) => {
         keywordMappings,
         longName,
         name,
-        supportedOutputFormats: [...new Set(outputFormats)],
+        selectedOutputFormat,
+        supportedOutputFormats: outputFormats,
         supportsVariableSubsetting: supportsVariableSubsetting(fullServiceObject),
         type,
         variables
@@ -197,9 +206,22 @@ const getAccessMethods = async (event, context) => {
           conceptId,
           longName,
           name,
+          serviceOptions,
+          supportedOutputProjections,
           supportedReformattings,
-          type
+          type,
+          url
         } = serviceObject
+
+        const { subset = {} } = serviceOptions
+        const { spatialSubset = {} } = subset
+        const {
+          boundingBox = {},
+          shapefile = {}
+        } = spatialSubset
+
+        const supportsBoundingBoxSubsetting = !isEmpty(boundingBox)
+        const supportsShapefileSubsetting = !isEmpty(shapefile)
 
         const outputFormats = []
 
@@ -212,15 +234,44 @@ const getAccessMethods = async (event, context) => {
           })
         }
 
+        // Default the selected output format to the first item in the supported list
+        let [selectedOutputFormat] = outputFormats;
+
+        ({ [selectedOutputFormat]: selectedOutputFormat } = harmonyFormatMapping)
+
+        const { urlValue } = url
+
+        let outputProjections = []
+        if (supportedOutputProjections) {
+          outputProjections = supportedOutputProjections.filter((projection) => {
+            const { projectionAuthority } = projection
+
+            return projectionAuthority != null
+          }).map((projection) => {
+            const { projectionAuthority } = projection
+
+            return projectionAuthority
+          })
+        }
+
+        // Default the selected output projection to the first item in the supported list
+        const [selectedOutputProjection] = outputProjections
+
         accessMethods[`harmony${index}`] = {
           id: conceptId,
           isValid: true,
           keywordMappings,
           longName,
           name,
-          supportedOutputFormats: [...new Set(outputFormats)],
+          selectedOutputFormat,
+          selectedOutputProjection,
+          supportedOutputFormats: outputFormats,
+          supportedOutputProjections: outputProjections,
+          supportsBoundingBoxSubsetting,
+          supportsShapefileSubsetting,
           supportsVariableSubsetting: supportsVariableSubsetting(serviceObject),
           type,
+          url: urlValue,
           variables
         }
       })
@@ -249,44 +300,69 @@ const getAccessMethods = async (event, context) => {
       if (accessConfigRecord) {
         const { access_method: savedAccessConfig } = accessConfigRecord
 
-        if (method.type === savedAccessConfig.type && ['download', 'Harmony', 'OPeNDAP'].includes(method.type)) {
-          selectedAccessMethod = methodName
-
-          return
-        }
-
         if (method.type === savedAccessConfig.type) {
-          const { form_digest: formDigest } = savedAccessConfig
-          const methodFormDigest = generateFormDigest(method.form)
-
-          // Ensure the saved EchoForm is the same form as the current EchoForm
-          if (formDigest === methodFormDigest) {
+          if (['download'].includes(method.type)) {
             selectedAccessMethod = methodName
 
-            // Pull out values from the saved access method that would not have changed
-            const {
-              form = '',
-              model = '',
-              rawModel = '',
-              form_digest: formDigest
-            } = savedAccessConfig
+            return
+          }
 
-            // Parse the savedAccessConfig values and if it is not valid XML, don't use it
-            if (parser.validate(form) === true
-              && parser.validate(model) === true
-              && parser.validate(rawModel) === true
-            ) {
-              // Only override values that the user configured
+          if (method.id === savedAccessConfig.id) {
+            if (['Harmony', 'OPeNDAP'].includes(method.type)) {
+              selectedAccessMethod = methodName
+
+              // Pull out values from the saved access method that would not have changed
+              const {
+                selectedOutputFormat,
+                selectedOutputProjection,
+                selectedVariables
+              } = savedAccessConfig
+
               accessMethods[methodName] = {
                 ...accessMethods[methodName],
-                form,
-                model,
-                rawModel,
-                form_digest: formDigest
+                selectedOutputFormat,
+                selectedOutputProjection,
+                selectedVariables
               }
-            } else {
-              console.log('There was a problem parsing the savedAccessConfig values, using the default form instead.')
+
               return
+            }
+
+            if (['ESI', 'ECHO ORDERS'].includes(method.type)) {
+              const { form_digest: formDigest } = savedAccessConfig
+              const methodFormDigest = generateFormDigest(method.form)
+
+              // Ensure the saved EchoForm is the same form as the current EchoForm
+              if (formDigest === methodFormDigest) {
+                selectedAccessMethod = methodName
+
+                // Pull out values from the saved access method that would not have changed
+                const {
+                  form = '',
+                  model = '',
+                  rawModel = '',
+                  form_digest: formDigest
+                } = savedAccessConfig
+
+                // Parse the savedAccessConfig values and if it is not valid XML, don't use it
+                if (parser.validate(form) === true
+                  && parser.validate(model) === true
+                  && parser.validate(rawModel) === true
+                ) {
+                  // Only override values that the user configured
+                  accessMethods[methodName] = {
+                    ...accessMethods[methodName],
+                    form,
+                    model,
+                    rawModel,
+                    form_digest: formDigest
+                  }
+                } else {
+                  console.log('There was a problem parsing the savedAccessConfig values, using the default form instead.')
+
+                  return
+                }
+              }
             }
           }
         }

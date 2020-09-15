@@ -126,6 +126,18 @@
     environment:
       updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
 
+  submitHarmonyOrder:
+    handler: serverless/src/submitHarmonyOrder/handler.default
+    timeout: 600
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - HarmonyOrderQueue
+              - Arn
+    environment:
+      updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
+
   fetchCatalogRestOrder:
     handler: serverless/src/fetchCatalogRestOrder/handler.default
 

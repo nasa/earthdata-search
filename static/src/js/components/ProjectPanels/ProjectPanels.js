@@ -264,7 +264,6 @@ class ProjectPanels extends PureComponent {
       onSetActivePanel,
       onTogglePanels,
       onUpdateAccessMethod,
-      onTogglePanels,
       onViewCollectionGranules,
       panels,
       portal,

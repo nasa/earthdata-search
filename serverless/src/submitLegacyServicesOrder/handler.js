@@ -1,14 +1,15 @@
 import 'array-foreach-async'
 import request from 'request-promise'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { getDbConnection } from '../util/database/getDbConnection'
+
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
-import { getEdlConfig } from '../util/configUtil'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
-import { parseError } from '../../../sharedUtils/parseError'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getDbConnection } from '../util/database/getDbConnection'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEdlConfig } from '../util/configUtil'
+import { parseError } from '../../../sharedUtils/parseError'
+import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 
 /**
  * Submits an order to Legacy Services (CMR)

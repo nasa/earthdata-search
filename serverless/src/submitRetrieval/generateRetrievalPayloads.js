@@ -1,8 +1,9 @@
 import 'array-foreach-async'
-import { hasTag } from '../../../sharedUtils/tags'
+
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { limitedCollectionSize } from '../../../sharedUtils/limitedCollectionSize'
 import { getGranuleLimit } from '../../../static/src/js/util/collectionMetadata/granuleLimit'
+import { hasTag } from '../../../sharedUtils/tags'
+import { limitedCollectionSize } from '../../../sharedUtils/limitedCollectionSize'
 
 /**
  * Determine if the provided collection is limited by the provider
@@ -43,6 +44,10 @@ const adjustedGranuleCount = (collectionMetadata, granuleCount) => {
   return Math.min(...consideredSizes)
 }
 
+/**
+ * Generate a chunked array of objects ready to send to CMR
+ * @param {Object} retrievalCollection Retrieval Collection response from the database
+ */
 export async function generateRetrievalPayloads(retrievalCollection) {
   const {
     collection_metadata: collectionMetadata = {},

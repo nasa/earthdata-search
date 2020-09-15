@@ -1,7 +1,7 @@
 /**
  * Encodes a Temporal object into a string
- * @param {object} temporal Temporal object
- * @return {string} A `,` delimited string of the temporal values
+ * @param {Object} temporal Temporal object
+ * @return {String} A `,` delimited string of the temporal values
  */
 export const encodeTemporal = (temporal) => {
   if (!temporal) return undefined
@@ -23,18 +23,17 @@ export const encodeTemporal = (temporal) => {
     valuesToEncode.push(...[recurringDayStart, recurringDayEnd])
   }
 
-  const encodedString = valuesToEncode.filter(Boolean).join(',')
+  if (valuesToEncode.filter(Boolean).length === 0) return undefined
 
-  // TODO: Strip empty elements then join
-  if (encodedString === '') return undefined
+  const encodedString = valuesToEncode.join(',')
 
   return encodedString
 }
 
 /**
  * Decodes a Temporal parameter string into an object
- * @param {string} string A `,` delimited string of the temporal values
- * @return {object} Temporal object
+ * @param {String} string A `,` delimited string of the temporal values
+ * @return {Object} Temporal object
  */
 export const decodeTemporal = (string) => {
   if (!string) {

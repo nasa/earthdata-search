@@ -216,6 +216,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               type
               url
               serviceOptions
+              supportedOutputProjections
               supportedReformattings
             }
           }

@@ -12,6 +12,10 @@ import Skeleton from '../Skeleton/Skeleton'
 import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
+import {
+  ousFormatMapping,
+  harmonyFormatMapping
+} from '../../../../../sharedUtils/outputFormatMaps'
 
 const EchoForm = lazy(() => import('./EchoForm'))
 
@@ -149,24 +153,17 @@ const harmonyButton = (collectionId, methodKey) => (
   </Radio>
 )
 
-const formatMapping = {
-  'NETCDF-3': 'nc',
-  'NETCDF-4': 'nc4',
-  BINARY: 'dods',
-  ASCII: 'ascii'
-}
-
 /**
  * Renders AccessMethod.
- * @param {object} props - The props passed into the component.
- * @param {object} props.accessMethods - The accessMethods of the current collection.
- * @param {number} props.index - The index of the current collection.
- * @param {object} props.metadata - The metadata of the current collection.
- * @param {string} props.selectedAccessMethod - The selected access method of the current collection.
- * @param {string} props.shapefileId - The shapefile id of the uploaded shapefile.
- * @param {function} props.onSelectAccessMethod - Selects an access method.
- * @param {function} props.onSetActivePanel - Switches the currently active panel.
- * @param {function} props.onUpdateAccessMethod - Updates an access method.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.accessMethods - The accessMethods of the current collection.
+ * @param {Number} props.index - The index of the current collection.
+ * @param {Object} props.metadata - The metadata of the current collection.
+ * @param {String} props.selectedAccessMethod - The selected access method of the current collection.
+ * @param {String} props.shapefileId - The shapefile id of the uploaded shapefile.
+ * @param {Function} props.onSelectAccessMethod - Selects an access method.
+ * @param {Function} props.onSetActivePanel - Switches the currently active panel.
+ * @param {Function} props.onUpdateAccessMethod - Updates an access method.
  */
 export class AccessMethod extends Component {
   constructor(props) {
@@ -179,41 +176,76 @@ export class AccessMethod extends Component {
 
     const selectedMethod = accessMethods[selectedAccessMethod]
     const {
-      selectedOutputFormat = ''
+      selectedOutputFormat = '',
+      selectedOutputProjection = '',
+      supportedOutputFormats = [],
+      supportedOutputProjections = []
     } = selectedMethod || {}
 
-    this.state = { selectedOutputFormat }
+    this.state = {
+      selectedOutputFormat: selectedOutputFormat || supportedOutputFormats[0],
+      selectedOutputProjection: selectedOutputProjection || supportedOutputProjections[0]
+    }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
     this.handleOutputFormatSelection = this.handleOutputFormatSelection.bind(this)
+    this.handleOutputProjectionSelection = this.handleOutputProjectionSelection.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
-    const { selectedOutputFormat } = this.state
+    const { selectedOutputFormat, selectedOutputProjection } = this.state
     const {
       accessMethods,
       selectedAccessMethod
     } = nextProps
 
-    if (['opendap', 'harmony'].includes(selectedAccessMethod)) {
+    if (
+      selectedAccessMethod
+      && (selectedAccessMethod === 'opendap'
+      || selectedAccessMethod.includes('harmony'))
+    ) {
       const selectedMethod = accessMethods[selectedAccessMethod]
       const {
         selectedOutputFormat: nextSelectedOutputFormat,
-        supportedOutputFormats = []
+        selectedOutputProjection: nextSelectedOutputProjection,
+        supportedOutputFormats = [],
+        supportedOutputProjections = []
       } = selectedMethod || {}
 
       // If there is no selected option, select the first option
       if (nextSelectedOutputFormat !== selectedOutputFormat) {
         if (!nextSelectedOutputFormat) {
-          // Filter the supportedOutputFormats to only those formats CMR supports
-          const cmrSupportedFormats = supportedOutputFormats.filter(
-            format => formatMapping[format] !== undefined
-          )
+          let defaultSelectedOutputFormat
 
-          const defaultSelectedOutputFormat = formatMapping[cmrSupportedFormats[0]]
+          if (selectedAccessMethod === 'opendap') {
+            // Pull out the ext value from formatMappings
+            const ousSupportedFormats = supportedOutputFormats.filter(
+              format => ousFormatMapping[format] !== undefined
+            )
+
+            defaultSelectedOutputFormat = ousFormatMapping[ousSupportedFormats[0]]
+          } else if (selectedAccessMethod.includes('harmony')) {
+            // Pull out the ext value from formatMappings
+            const harmonySupportedFormats = supportedOutputFormats.filter(
+              format => harmonyFormatMapping[format] !== undefined
+            )
+
+            defaultSelectedOutputFormat = harmonyFormatMapping[harmonySupportedFormats[0]]
+          }
+
           this.setState({ selectedOutputFormat: defaultSelectedOutputFormat })
         } else {
           this.setState({ selectedOutputFormat: nextSelectedOutputFormat })
+        }
+      }
+
+      // If there is no selected option, select the first option
+      if (nextSelectedOutputProjection !== selectedOutputProjection) {
+        if (!nextSelectedOutputProjection) {
+          const defaultSelectedOutputProjection = supportedOutputProjections[0]
+          this.setState({ selectedOutputProjection: defaultSelectedOutputProjection })
+        } else {
+          this.setState({ selectedOutputProjection: nextSelectedOutputProjection })
         }
       }
     }
@@ -249,19 +281,38 @@ export class AccessMethod extends Component {
     })
   }
 
+  handleOutputProjectionSelection(event) {
+    const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
+    const { conceptId: collectionId } = metadata
+
+    const { target } = event
+    const { value } = target
+
+    this.setState({ selectedOutputProjection: value })
+
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          selectedOutputProjection: value
+        }
+      }
+    })
+  }
+
   render() {
-    const { selectedOutputFormat } = this.state
+    const { selectedOutputFormat, selectedOutputProjection } = this.state
     const {
       accessMethods,
       index,
       isActive,
       metadata,
-      selectedAccessMethod,
-      shapefileId,
-      spatial,
       onSetActivePanel,
       onTogglePanels,
-      onUpdateAccessMethod
+      onUpdateAccessMethod,
+      selectedAccessMethod,
+      shapefileId,
+      spatial
     } = this.props
 
     const { conceptId: collectionId } = metadata
@@ -320,10 +371,14 @@ export class AccessMethod extends Component {
       rawModel = null,
       selectedVariables = [],
       supportedOutputFormats = [],
+      supportedOutputProjections = [],
       supportsVariableSubsetting = false
     } = selectedMethod || {}
 
-    const isOpendap = (selectedAccessMethod === 'opendap')
+    const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
+
+    // Harmony access methods are postfixed with an index given that there can be more than one
+    const isHarmony = (selectedAccessMethod && selectedAccessMethod.includes('harmony'))
 
     // Default supportedOutputFormat
     let supportedOutputFormatOptions = supportedOutputFormats
@@ -331,14 +386,32 @@ export class AccessMethod extends Component {
     if (isOpendap) {
       // Filter the supportedOutputFormats to only those formats CMR supports
       supportedOutputFormatOptions = supportedOutputFormats.filter(
-        format => formatMapping[format] !== undefined
+        format => ousFormatMapping[format] !== undefined
       )
+
+      // Build options for supportedOutputFormats
+      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
+        <option key={format} value={ousFormatMapping[format]}>{format}</option>
+      ))
     }
 
-    // Build options for supportedOutputFormats
-    supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
-      <option key={format} value={formatMapping[format]}>{format}</option>
-    ))
+    let supportedOutputProjectionOptions
+    if (isHarmony) {
+      // Filter the supportedOutputFormats to only those formats Harmony supports
+      supportedOutputFormatOptions = supportedOutputFormats.filter(
+        format => harmonyFormatMapping[format] !== undefined
+      )
+
+      // Build options for supportedOutputFormats
+      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
+        <option key={format} value={harmonyFormatMapping[format]}>{format}</option>
+      ))
+
+      // Build options for supportedOutputFormats
+      supportedOutputProjectionOptions = supportedOutputProjections.map(format => (
+        <option key={format} value={format}>{format}</option>
+      ))
+    }
 
     const echoFormFallback = (
       <div className="access-method__echoform-loading">
@@ -372,10 +445,10 @@ export class AccessMethod extends Component {
                   collectionId={collectionId}
                   form={form}
                   methodKey={selectedAccessMethod}
+                  onUpdateAccessMethod={onUpdateAccessMethod}
                   rawModel={rawModel}
                   shapefileId={shapefileId}
                   spatial={spatial}
-                  onUpdateAccessMethod={onUpdateAccessMethod}
                 />
               </Suspense>
             </ProjectPanelSection>
@@ -442,6 +515,26 @@ export class AccessMethod extends Component {
             </>
           )
         }
+        {
+          supportedOutputProjections.length > 0 && (
+            <>
+              <ProjectPanelSection heading="Output Projection Selection">
+                <p className="access-method__section-intro">
+                  Choose from output projection options.
+                </p>
+
+                <select
+                  id="input__output-projection"
+                  className="form-control form-control-sm"
+                  onChange={this.handleOutputProjectionSelection}
+                  value={selectedOutputProjection}
+                >
+                  {supportedOutputProjectionOptions}
+                </select>
+              </ProjectPanelSection>
+            </>
+          )
+        }
       </div>
     )
   }
@@ -452,11 +545,11 @@ AccessMethod.defaultProps = {
   index: null,
   isActive: false,
   metadata: {},
-  shapefileId: null,
-  spatial: {},
   onSetActivePanel: null,
   onTogglePanels: null,
-  selectedAccessMethod: null
+  selectedAccessMethod: null,
+  shapefileId: null,
+  spatial: {}
 }
 
 AccessMethod.propTypes = {
@@ -464,13 +557,13 @@ AccessMethod.propTypes = {
   index: PropTypes.number,
   isActive: PropTypes.bool,
   metadata: PropTypes.shape({}),
-  shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({}),
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
   onTogglePanels: PropTypes.func,
   onUpdateAccessMethod: PropTypes.func.isRequired,
-  selectedAccessMethod: PropTypes.string
+  selectedAccessMethod: PropTypes.string,
+  shapefileId: PropTypes.string,
+  spatial: PropTypes.shape({})
 }
 
 export default AccessMethod
