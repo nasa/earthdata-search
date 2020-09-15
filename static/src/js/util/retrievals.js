@@ -11,6 +11,7 @@ import {
   getProjectCollectionsMetadata
 } from '../selectors/project'
 import { mbr } from './map/mbr'
+import { getCmrFacetParams } from '../selectors/facetParams'
 
 /**
  * Prepare parameters used in submitRetrieval() based on current Redux State
@@ -51,8 +52,13 @@ export const prepareRetrievalParams = (state) => {
     returnValue.collection_metadata = collectionMetadata
 
     const extractedGranuleParams = extractProjectCollectionGranuleParams(state, collectionId)
+    const cmrFacetParams = getCmrFacetParams(state)
 
-    const preparedParams = prepareGranuleParams(collectionsMetadata, extractedGranuleParams)
+    const preparedParams = prepareGranuleParams(
+      collectionsMetadata,
+      extractedGranuleParams,
+      cmrFacetParams
+    )
 
     const params = buildGranuleSearchParams(preparedParams)
 
