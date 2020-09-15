@@ -5,6 +5,7 @@ import {
   withRouter
 } from 'react-router-dom'
 
+import { locationPropType } from '../../util/propTypes/location'
 import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleDetailsHeader from '../../components/GranuleDetails/GranuleDetailsHeader'
@@ -22,7 +23,7 @@ export const GranuleDetailsHeaderContainer = ({
 
 GranuleDetailsHeaderContainer.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired
+  location: locationPropType.isRequired
 }
 
 export default withRouter(

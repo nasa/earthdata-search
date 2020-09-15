@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
+import { locationPropType } from '../../util/propTypes/location'
+
 import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
 
 const mapDispatchToProps = dispatch => ({
@@ -49,7 +51,7 @@ SecondaryToolbarContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,

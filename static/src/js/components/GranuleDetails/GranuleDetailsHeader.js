@@ -5,6 +5,7 @@ import { granuleTitle } from './skeleton'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
+import { locationPropType } from '../../util/propTypes/location'
 
 import './GranuleDetailsHeader.scss'
 
@@ -59,7 +60,7 @@ const GranuleDetailsHeader = ({ granuleMetadata, location }) => {
 
 GranuleDetailsHeader.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired
+  location: locationPropType.isRequired
 }
 
 export default GranuleDetailsHeader

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 
 import { encodeUrlQuery } from '../../util/url/url'
+import { locationPropType } from '../../util/propTypes/location'
+
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
@@ -119,7 +121,7 @@ export class UrlQueryContainer extends PureComponent {
 
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
   project: PropTypes.shape({}).isRequired

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { commafy } from '../../util/commafy'
 import { granuleTotalCount } from './skeleton'
 import { pluralize } from '../../util/pluralize'
+import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import GranuleDownloadButton from './GranuleDownloadButton'
@@ -198,7 +199,7 @@ GranuleResultsActions.propTypes = {
   granuleLimit: PropTypes.number,
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

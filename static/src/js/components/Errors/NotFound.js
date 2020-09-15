@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import uuidv4 from 'uuid/v4'
 
 import { eventEmitter } from '../../events/events'
 import LoggerRequest from '../../util/request/loggerRequest'
+import { locationPropType } from '../../util/propTypes/location'
 
 class NotFound extends Component {
   componentWillMount() {
@@ -56,7 +56,7 @@ class NotFound extends Component {
 }
 
 NotFound.propTypes = {
-  location: PropTypes.shape({}).isRequired
+  location: locationPropType.isRequired
 }
 
 export default NotFound

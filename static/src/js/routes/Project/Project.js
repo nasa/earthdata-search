@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
+import { locationPropType } from '../../util/propTypes/location'
 import { getProjectCollectionsRequiringChunking } from '../../selectors/project'
 
 import SidebarContainer
@@ -22,8 +23,6 @@ import EdscMapContainer
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
-import { locationPropType } from '../../util/propTypes/location'
-import { projectCollectionPropType } from '../../util/propTypes/projectCollection'
 
 
 const mapDispatchToProps = dispatch => ({
@@ -118,7 +117,7 @@ export class Project extends Component {
 
 Project.propTypes = {
   location: locationPropType.isRequired,
-  projectCollectionsRequiringChunking: projectCollectionPropType.isRequired,
+  projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }

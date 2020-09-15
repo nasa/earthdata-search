@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import { getGranuleIds } from '../../util/getGranuleIds'
 import { formatGranulesList } from '../../util/formatGranulesList'
 import { eventEmitter } from '../../events/events'
+import { locationPropType } from '../../util/propTypes/location'
 
 import Spinner from '../Spinner/Spinner'
 import GranuleResultsList from './GranuleResultsList'
@@ -280,7 +281,7 @@ GranuleResultsBody.propTypes = {
     })
   ).isRequired,
   isCwic: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   loadNextPage: PropTypes.func.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,

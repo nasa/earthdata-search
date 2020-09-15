@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
+import { locationPropType } from '../../util/propTypes/location'
 
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
@@ -36,7 +37,7 @@ export const CollectionDetailsHighlightsContainer = ({
 CollectionDetailsHighlightsContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 

@@ -9,6 +9,7 @@ import { stringify } from '../../util/url/url'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import { locationPropType } from '../../util/propTypes/location'
 
 import './ChunkedOrderModal.scss'
 
@@ -126,7 +127,7 @@ export class ChunkedOrderModal extends Component {
 
 ChunkedOrderModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,

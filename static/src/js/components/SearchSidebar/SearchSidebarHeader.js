@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
+import { locationPropType } from '../../util/propTypes/location'
+
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
@@ -48,7 +50,7 @@ export class SearchSidebarHeader extends PureComponent {
 }
 
 SearchSidebarHeader.propTypes = {
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired
 }
 

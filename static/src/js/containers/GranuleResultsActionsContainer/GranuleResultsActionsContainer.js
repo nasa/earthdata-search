@@ -13,6 +13,7 @@ import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getFocusedProjectCollection } from '../../selectors/project'
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
+import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
 
@@ -115,7 +116,7 @@ GranuleResultsActionsContainer.propTypes = {
   focusedProjectCollection: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
