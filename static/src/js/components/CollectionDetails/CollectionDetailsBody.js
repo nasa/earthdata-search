@@ -100,9 +100,9 @@ const buildForDeveloperLink = (linkData, token) => {
 
 /**
  * Renders CollectionDetailsBody.
- * @param {object} props - The props passed into the component.
- * @param {object} props  collectionMetadata - Focused collection passed from redux store.
- * @param {function} props.onToggleRelatedUrlsModal - Toggles the state of the Related URLs modal
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props  collectionMetadata - Focused collection passed from redux store.
+ * @param {Function} props.onToggleRelatedUrlsModal - Toggles the state of the Related URLs modal
  */
 export const CollectionDetailsBody = ({
   collectionMetadata,
@@ -135,7 +135,7 @@ export const CollectionDetailsBody = ({
     )
   }
 
-  const reformattings = []
+  const reformattings = {}
 
   if (services) {
     const { items } = services
@@ -147,7 +147,19 @@ export const CollectionDetailsBody = ({
         } = service
 
         if (supportedReformattingsList) {
-          reformattings.push(...supportedReformattingsList)
+          supportedReformattingsList.forEach((supportedReformatting) => {
+            const {
+              supportedInputFormat,
+              supportedOutputFormats
+            } = supportedReformatting
+
+            const { [supportedInputFormat]: existingReformatting = [] } = reformattings
+
+            reformattings[supportedInputFormat] = [
+              ...existingReformatting,
+              ...supportedOutputFormats
+            ]
+          })
         }
       })
     }
@@ -231,7 +243,7 @@ export const CollectionDetailsBody = ({
                   )
                 }
                 {
-                  reformattings.length > 0 && (
+                  Object.keys(reformattings).length > 0 && (
                     <>
                       <dt>
                         Reformatting Options
@@ -255,11 +267,10 @@ export const CollectionDetailsBody = ({
                       </dt>
                       <dd>
                         {
-                          reformattings.map((supportedReformatting) => {
+                          Object.keys(reformattings).map((supportedInputFormat) => {
                             const {
-                              supportedInputFormat,
-                              supportedOutputFormats
-                            } = supportedReformatting
+                              [supportedInputFormat]: supportedOutputFormats
+                            } = reformattings
 
                             return (
                               <dl

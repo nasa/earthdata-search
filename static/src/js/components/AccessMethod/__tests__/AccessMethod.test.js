@@ -309,4 +309,166 @@ describe('AccessMethod component', () => {
       })
     })
   })
+
+  describe('when the selected access method is harmony', () => {
+    describe('when supportedOutputFormats does not exist', () => {
+      test('displays outputFormat field', () => {
+        const { enzymeWrapper } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony'
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        expect(enzymeWrapper.find('#input__output-format').exists()).toBeFalsy()
+      })
+    })
+
+    describe('when supportedOutputFormats exist', () => {
+      test('displays outputFormat field', () => {
+        const { enzymeWrapper } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony',
+              supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        expect(enzymeWrapper.find('#input__output-format').exists()).toBeTruthy()
+      })
+
+      test('selecting a output format calls onUpdateAccessMethod', () => {
+        const { enzymeWrapper, props } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony',
+              supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        const outputFormat = enzymeWrapper.find('#input__output-format')
+        outputFormat.simulate('change', { target: { value: 'nc4' } })
+
+        expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
+        expect(props.onUpdateAccessMethod).toBeCalledWith({
+          collectionId: 'collectionId',
+          method: {
+            harmony0: {
+              selectedOutputFormat: 'nc4'
+            }
+          }
+        })
+      })
+    })
+
+    describe('when supportedOutputProjections does not exist', () => {
+      test('displays outputFormat field', () => {
+        const { enzymeWrapper } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony'
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        expect(enzymeWrapper.find('#input__output-projection').exists()).toBeFalsy()
+      })
+    })
+
+    describe('when supportedOutputProjections exist', () => {
+      test('displays outputProjection field', () => {
+        const { enzymeWrapper } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony',
+              supportedOutputProjections: ['EPSG:4326']
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        expect(enzymeWrapper.find('#input__output-projection').exists()).toBeTruthy()
+      })
+
+      test('selecting a output projection calls onUpdateAccessMethod', () => {
+        const { enzymeWrapper, props } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony',
+              supportedOutputProjections: ['EPSG:4326']
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        const outputFormat = enzymeWrapper.find('#input__output-projection')
+        outputFormat.simulate('change', { target: { value: 'EPSG:4326' } })
+
+        expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
+        expect(props.onUpdateAccessMethod).toBeCalledWith({
+          collectionId: 'collectionId',
+          method: {
+            harmony0: {
+              selectedOutputProjection: 'EPSG:4326'
+            }
+          }
+        })
+      })
+    })
+  })
 })

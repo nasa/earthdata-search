@@ -82,6 +82,7 @@ const submitCatalogRestOrder = async (event, context) => {
       access_method: accessMethod,
       granule_params: granuleParams
     } = retrievalRecord
+
     const {
       portalId = getApplicationConfig().defaultPortal,
       shapefileId,

@@ -398,46 +398,6 @@ describe('CollectionDetails component', () => {
     })
   })
 
-  describe('Supported Output Formats', () => {
-    test('renders correctly', () => {
-      const { enzymeWrapper } = setup({
-        overrideMetadata: {
-          services: {
-            items: [
-              {
-                type: 'ECHO ORDERS',
-                supportedReformattings: null
-              },
-              {
-                type: 'ESI',
-                supportedReformattings: [
-                  {
-                    supportedOutputFormats: [
-                      'ASCII',
-                      'GEOTIFF',
-                      'HDF-EOS5',
-                      'KML',
-                      'NETCDF-3',
-                      'NETCDF-4'
-                    ]
-                  }
-                ]
-              },
-              {
-                type: 'NOT PROVIDED',
-                supportedReformattings: null
-              }
-            ]
-          }
-        }
-      })
-
-      expect(enzymeWrapper.find('.collection-details-body__info').find('dd').at(1).text()).toEqual(
-        'ASCII, GEOTIFF, HDF-EOS5, KML, NETCDF-3, NETCDF-4'
-      )
-    })
-  })
-
   describe('Supported Reformatting', () => {
     test('renders correctly', () => {
       const { enzymeWrapper } = setup({
@@ -459,6 +419,10 @@ describe('CollectionDetails component', () => {
                   {
                     supportedInputFormat: 'HDF-EOS5',
                     supportedOutputFormats: ['PNG', 'JPEG']
+                  },
+                  {
+                    supportedInputFormat: 'HDF-EOS5',
+                    supportedOutputFormats: ['TIFF']
                   }
                 ]
               },
@@ -481,7 +445,7 @@ describe('CollectionDetails component', () => {
       expect(format2.find('dt').text()).toEqual('HDF-EOS5')
 
       expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
-      expect(format2.find('dd').text()).toEqual('PNG, JPEG')
+      expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')
     })
   })
 

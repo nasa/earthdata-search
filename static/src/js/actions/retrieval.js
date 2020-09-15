@@ -1,16 +1,18 @@
 import { push } from 'connected-react-router'
-import prepareRetrievalParams from '../util/retrievals'
-import RetrievalRequest from '../util/request/retrievalRequest'
 
 import {
   SET_RETRIEVAL_LOADING,
   UPDATE_RETRIEVAL
 } from '../constants/actionTypes'
+
+import RetrievalRequest from '../util/request/retrievalRequest'
+
+import { handleError } from './errors'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
+import { prepareRetrievalParams } from '../util/retrievals'
 import { removeRetrievalHistory } from './retrievalHistory'
 import { submittingProject, submittedProject } from './project'
-import { handleError } from './errors'
 
 export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING

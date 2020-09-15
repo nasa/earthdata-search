@@ -83,7 +83,7 @@ export const populateGranuleResults = ({
 /**
  * Extract granule parameters specific to the users search session
  * @param {Object} state Current Redux State
- * @param {String} collectionId The collection id the use has requested to view granules for
+ * @param {String} collectionId The collection id the user has requested to view granules for
  */
 export const extractGranuleSearchParams = (state, collectionId) => {
   const {
@@ -164,7 +164,7 @@ export const extractGranuleSearchParams = (state, collectionId) => {
 /**
  * Extract granule parameters specific to the users current project
  * @param {Object} state Current Redux State
- * @param {String} collectionId The collection id the use has requested to view granules for
+ * @param {String} collectionId The collection id the user has requested to view granules for
  */
 export const extractProjectCollectionGranuleParams = (state, collectionId) => {
   const {

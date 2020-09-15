@@ -55,7 +55,6 @@ export const validateToken = async (jwtToken) => {
       const [mostRecentToken] = existingUserTokens
 
       const {
-        id: tokenId,
         access_token: accessToken,
         refresh_token: refreshToken,
         expires_at: expiresAt
@@ -70,9 +69,9 @@ export const validateToken = async (jwtToken) => {
 
       if (oauthToken.expired()) {
         try {
-          // Remove the expired token
+          // Remove all tokens for this user in the current environment
           await dbConnection('user_tokens')
-            .where({ id: tokenId, environment: cmrEnvironment })
+            .where({ user_id: userId, environment: cmrEnvironment })
             .del()
 
           const refreshedToken = await oauthToken.refresh()

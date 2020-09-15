@@ -49,19 +49,219 @@ describe('parseError', () => {
   })
 
   describe('http errors', () => {
+    describe('request library', () => {
+      describe('with shouldLog is set to true', () => {
+        describe('with no options', () => {
+          test('it logs the errors', () => {
+            const consoleMock = jest.spyOn(console, 'log')
+
+            const response = parseError({
+              response: {
+                body: {
+                  errors: [
+                    '400 Bad Request'
+                  ]
+                },
+                statusCode: 400
+              },
+              name: 'HTTP Error'
+            })
+
+            expect(consoleMock).toBeCalledTimes(1)
+            expect(consoleMock.mock.calls[0]).toEqual(['HTTP Error (400): 400 Bad Request'])
+
+            expect(response).toEqual({
+              statusCode: 400,
+              body: JSON.stringify({
+                statusCode: 400,
+                errors: [
+                  '400 Bad Request'
+                ]
+              })
+            })
+          })
+
+          describe('with no error name', () => {
+            test('defaults the error name to `Error`', () => {
+              const consoleMock = jest.spyOn(console, 'log')
+
+              const response = parseError({
+                response: {
+                  body: {
+                    errors: [
+                      '400 Bad Request'
+                    ]
+                  },
+                  statusCode: 400
+                }
+              })
+
+              expect(consoleMock).toBeCalledTimes(1)
+              expect(consoleMock.mock.calls[0]).toEqual(['Error (400): 400 Bad Request'])
+
+              expect(response).toEqual({
+                statusCode: 400,
+                body: JSON.stringify({
+                  statusCode: 400,
+                  errors: [
+                    '400 Bad Request'
+                  ]
+                })
+              })
+            })
+          })
+
+          describe('with no errors array', () => {
+            test('defaults to an array containing `Unknown Error`', () => {
+              const consoleMock = jest.spyOn(console, 'log')
+
+              const response = parseError({
+                response: {
+                  body: {
+                    nonErrorsKey: 'will be ignored'
+                  },
+                  statusCode: 400
+                },
+                name: 'HTTP Error'
+              })
+
+              expect(consoleMock).toBeCalledTimes(1)
+              expect(consoleMock.mock.calls[0]).toEqual(['HTTP Error (400): Unknown Error'])
+
+              expect(response).toEqual({
+                statusCode: 400,
+                body: JSON.stringify({
+                  statusCode: 400,
+                  errors: [
+                    'Unknown Error'
+                  ]
+                })
+              })
+            })
+          })
+        })
+
+        describe('with asJSON set to false', () => {
+          test('returns the errors array', () => {
+            const consoleMock = jest.spyOn(console, 'log')
+
+            const response = parseError({
+              response: {
+                body: {
+                  errors: [
+                    '400 Bad Request'
+                  ]
+                },
+                statusCode: 400
+              },
+              name: 'HTTP Error'
+            }, {
+              asJSON: false
+            })
+
+            expect(consoleMock).toBeCalledTimes(1)
+            expect(consoleMock.mock.calls[0]).toEqual(['HTTP Error (400): 400 Bad Request'])
+
+            expect(response).toEqual([
+              '400 Bad Request'
+            ])
+          })
+        })
+
+        describe('with reThrowError set to true', () => {
+          test('rethrows the error provided', () => {
+            const consoleMock = jest.spyOn(console, 'log')
+
+            expect(() => parseError({
+              response: {
+                body: {
+                  errors: [
+                    '400 Bad Request'
+                  ]
+                },
+                statusCode: 400
+              },
+              name: 'HTTP Error'
+            }, {
+              reThrowError: true
+            })).toThrow()
+
+            expect(consoleMock).toBeCalledTimes(1)
+            expect(consoleMock.mock.calls[0]).toEqual(['HTTP Error (400): 400 Bad Request'])
+          })
+        })
+      })
+
+      describe('with shouldLog set to false', () => {
+        describe('with asJSON set to false', () => {
+          test('returns the errors array', () => {
+            const consoleMock = jest.spyOn(console, 'log')
+
+            const response = parseError({
+              response: {
+                body: {
+                  errors: [
+                    '400 Bad Request'
+                  ]
+                },
+                statusCode: 400
+              },
+              name: 'HTTP Error'
+            }, {
+              asJSON: false,
+              shouldLog: false
+            })
+
+            expect(consoleMock).toBeCalledTimes(0)
+
+            expect(response).toEqual([
+              '400 Bad Request'
+            ])
+          })
+        })
+
+        describe('with reThrowError set to true', () => {
+          test('rethrows the error provided', () => {
+            const consoleMock = jest.spyOn(console, 'log')
+
+            expect(() => parseError({
+              response: {
+                body: {
+                  errors: [
+                    '400 Bad Request'
+                  ]
+                },
+                statusCode: 400
+              },
+              name: 'HTTP Error'
+            }, {
+              reThrowError: true,
+              shouldLog: false
+            })).toThrow()
+
+            expect(consoleMock).toBeCalledTimes(0)
+          })
+        })
+      })
+    })
+  })
+
+  describe('axios library', () => {
     describe('with shouldLog is set to true', () => {
       describe('with no options', () => {
         test('it logs the errors', () => {
           const consoleMock = jest.spyOn(console, 'log')
 
           const response = parseError({
-            error: {
-              errors: [
-                '400 Bad Request'
-              ]
+            response: {
+              data: {
+                errors: [
+                  '400 Bad Request'
+                ]
+              },
+              status: 400
             },
-            name: 'HTTP Error',
-            statusCode: 400
+            name: 'HTTP Error'
           })
 
           expect(consoleMock).toBeCalledTimes(1)
@@ -83,12 +283,14 @@ describe('parseError', () => {
             const consoleMock = jest.spyOn(console, 'log')
 
             const response = parseError({
-              error: {
-                errors: [
-                  '400 Bad Request'
-                ]
-              },
-              statusCode: 400
+              response: {
+                data: {
+                  errors: [
+                    '400 Bad Request'
+                  ]
+                },
+                status: 400
+              }
             })
 
             expect(consoleMock).toBeCalledTimes(1)
@@ -111,11 +313,13 @@ describe('parseError', () => {
             const consoleMock = jest.spyOn(console, 'log')
 
             const response = parseError({
-              error: {
-                nonErrorsKey: 'will be ignored'
+              response: {
+                data: {
+                  nonErrorsKey: 'will be ignored'
+                },
+                status: 400
               },
-              name: 'HTTP Error',
-              statusCode: 400
+              name: 'HTTP Error'
             })
 
             expect(consoleMock).toBeCalledTimes(1)
@@ -139,13 +343,15 @@ describe('parseError', () => {
           const consoleMock = jest.spyOn(console, 'log')
 
           const response = parseError({
-            error: {
-              errors: [
-                '400 Bad Request'
-              ]
+            response: {
+              data: {
+                errors: [
+                  '400 Bad Request'
+                ]
+              },
+              status: 400
             },
-            name: 'HTTP Error',
-            statusCode: 400
+            name: 'HTTP Error'
           }, {
             asJSON: false
           })
@@ -164,13 +370,15 @@ describe('parseError', () => {
           const consoleMock = jest.spyOn(console, 'log')
 
           expect(() => parseError({
-            error: {
-              errors: [
-                '400 Bad Request'
-              ]
+            response: {
+              data: {
+                errors: [
+                  '400 Bad Request'
+                ]
+              },
+              status: 400
             },
-            name: 'HTTP Error',
-            statusCode: 400
+            name: 'HTTP Error'
           }, {
             reThrowError: true
           })).toThrow()
@@ -187,13 +395,15 @@ describe('parseError', () => {
           const consoleMock = jest.spyOn(console, 'log')
 
           const response = parseError({
-            error: {
-              errors: [
-                '400 Bad Request'
-              ]
+            response: {
+              data: {
+                errors: [
+                  '400 Bad Request'
+                ]
+              },
+              status: 400
             },
-            name: 'HTTP Error',
-            statusCode: 400
+            name: 'HTTP Error'
           }, {
             asJSON: false,
             shouldLog: false
@@ -212,13 +422,15 @@ describe('parseError', () => {
           const consoleMock = jest.spyOn(console, 'log')
 
           expect(() => parseError({
-            error: {
-              errors: [
-                '400 Bad Request'
-              ]
+            response: {
+              data: {
+                errors: [
+                  '400 Bad Request'
+                ]
+              },
+              status: 400
             },
-            name: 'HTTP Error',
-            statusCode: 400
+            name: 'HTTP Error'
           }, {
             reThrowError: true,
             shouldLog: false

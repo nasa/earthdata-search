@@ -114,6 +114,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             type
             url
             serviceOptions
+            supportedOutputProjections
             supportedReformattings
           }
         }
@@ -219,7 +220,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
 /**
  * Change the focusedCollection, and get the focusedCollection metadata.
- * @param {String} collectionId The collection the user has requested to focus
+ * @param {String} collectionId The collection id the user has requested to focus
  */
 export const changeFocusedCollection = collectionId => (dispatch, getState) => {
   dispatch(actions.updateFocusedCollection(collectionId))
@@ -274,7 +275,7 @@ export const viewCollectionDetails = collectionId => (dispatch, getState) => {
 
 /**
  * Changes the focused collection and redirects the user to the collection granules route
- * @param {String} collectionId The collection id the use has requested to view granules for
+ * @param {String} collectionId The collection id the user has requested to view granules for
  */
 export const viewCollectionGranules = collectionId => (dispatch, getState) => {
   // Update the focused collection in redux and retrieve its metadata

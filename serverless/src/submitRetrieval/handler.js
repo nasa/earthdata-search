@@ -117,7 +117,7 @@ const submitRetrieval = async (event, context) => {
       // need to be submitted to
       const { type } = accessMethod
 
-      if (['ESI', 'ECHO ORDERS'].includes(type)) {
+      if (['ESI', 'ECHO ORDERS', 'Harmony'].includes(type)) {
         // The insert above returns an array but we've only added a single row
         // so we will always take the first result
         const [retrievalCollection] = newRetrievalCollection
@@ -138,6 +138,9 @@ const submitRetrieval = async (event, context) => {
           // Submits to Legacy Services (CMR) and is often referred to as an
           // echo order -- this is presenting in EDSC as the 'Stage For Delivery' access method
           queueUrl = process.env.legacyServicesQueueUrl
+        } else if (type === 'Harmony') {
+          // Submits to Harmony
+          queueUrl = process.env.harmonyQueueUrl
         }
 
         // Initialize the array we'll send to sqs
