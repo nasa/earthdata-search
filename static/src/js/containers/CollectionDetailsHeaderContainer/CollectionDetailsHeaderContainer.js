@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
+import { locationPropType } from '../../util/propTypes/location'
+
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import CollectionDetailsHeader from '../../components/CollectionDetails/CollectionDetailsHeader'
@@ -34,7 +36,7 @@ CollectionDetailsHeaderContainer.propTypes = {
   collectionQuery: PropTypes.shape({}).isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   mapProjection: PropTypes.string.isRequired
 }
 

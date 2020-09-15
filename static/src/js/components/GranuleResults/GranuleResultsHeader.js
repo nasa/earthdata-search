@@ -7,6 +7,7 @@ import { collectionTitle, granuleListTotal } from './skeleton'
 import { commafy } from '../../util/commafy'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { pluralize } from '../../util/pluralize'
+import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import GranuleResultsActionsContainer from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
@@ -468,7 +469,7 @@ GranuleResultsHeader.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   mapProjection: PropTypes.string.isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onChangePanelView: PropTypes.func.isRequired,

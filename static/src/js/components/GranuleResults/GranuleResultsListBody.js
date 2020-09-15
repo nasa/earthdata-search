@@ -13,6 +13,7 @@ import { isEmpty } from 'lodash'
 import { getActivePanelSize } from '../../util/getActivePanelSize'
 import { itemToRowColumnIndicies } from '../../util/itemToRowColumnIndicies'
 import { useRemsToPixels } from '../../hooks/useRemsToPixels'
+import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsListItem from './GranuleResultsListItem'
 
@@ -251,7 +252,7 @@ GranuleResultsListBody.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
+import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
 import { getProjectCollectionsIds } from '../../selectors/project'
@@ -76,7 +77,7 @@ CollectionResultsBodyContainer.propTypes = {
   browser: PropTypes.shape({}).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangeCollectionPageNum: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

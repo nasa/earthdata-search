@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
+import { locationPropType } from '../../util/propTypes/location'
+
 import actions from '../../actions'
 
 import {
@@ -47,7 +49,7 @@ export const ChunkedOrderModalContainer = ({
 
 ChunkedOrderModalContainer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,

@@ -6,7 +6,6 @@ import CollectionResultsList from './CollectionResultsList'
 import CollectionResultsTable from './CollectionResultsTable'
 import { formatCollectionList } from '../../util/formatCollectionList'
 
-
 import './CollectionResultsBody.scss'
 
 /**
@@ -117,7 +116,6 @@ CollectionResultsBody.propTypes = {
   collectionsSearch: PropTypes.shape({}).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
   loadNextPage: PropTypes.func.isRequired,
-  location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,

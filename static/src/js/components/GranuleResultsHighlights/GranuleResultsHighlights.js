@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { commafy } from '../../util/commafy'
 import { granuleListItem, granuleListTotal } from './skeleton'
 import { pluralize } from '../../util/pluralize'
+import { locationPropType } from '../../util/propTypes/location'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
@@ -131,7 +132,7 @@ GranuleResultsHighlights.propTypes = {
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isLoaded: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   visibleGranules: PropTypes.number.isRequired
 }
 

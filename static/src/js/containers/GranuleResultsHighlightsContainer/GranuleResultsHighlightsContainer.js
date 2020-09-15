@@ -8,6 +8,7 @@ import { getFocusedCollectionGranuleMetadata } from '../../selectors/collectionR
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getGranuleIds } from '../../util/getGranuleIds'
+import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
@@ -83,7 +84,7 @@ GranuleResultsHighlightsContainer.propTypes = {
   focusedCollectionGranuleMetadata: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedCollectionMetadata: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired
+  location: locationPropType.isRequired
 }
 
 export default withRouter(

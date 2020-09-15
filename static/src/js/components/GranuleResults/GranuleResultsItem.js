@@ -6,6 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import murmurhash3 from '../../util/murmurhash3'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
+import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
@@ -277,7 +278,7 @@ GranuleResultsItem.propTypes = {
   granule: PropTypes.shape({}).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,

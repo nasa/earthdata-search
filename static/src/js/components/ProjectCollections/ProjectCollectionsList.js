@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import SimpleBar from 'simplebar-react'
 
 import { getColorByIndex } from '../../util/colors'
+import { locationPropType } from '../../util/propTypes/location'
 
 import ProjectCollectionItem from './ProjectCollectionItem'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -111,7 +112,7 @@ export const ProjectCollectionsList = (props) => {
 ProjectCollectionsList.propTypes = {
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsQuery: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   mapProjection: PropTypes.string.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
