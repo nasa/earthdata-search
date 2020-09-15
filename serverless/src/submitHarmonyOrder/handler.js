@@ -1,14 +1,12 @@
 import 'array-foreach-async'
 import axios from 'axios'
-import forge from 'node-forge'
 
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructOrderUrl } from './constructOrderUrl'
-import { createLimitedShapefile } from '../util/createLimitedShapefile'
-import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEdlConfig } from '../util/configUtil'
 import { parseError } from '../../../sharedUtils/parseError'
+import { processPartialShapefile } from '../util/processPartialShapefile'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 
 /**
@@ -77,52 +75,17 @@ const submitHarmonyOrder = async (event, context) => {
       selectedFeatures
     } = jsondata
 
-    // Retrieve the shapefile if one was provided
-    let file
+    let shapefile
+
     if (shapefileId) {
-      const deobfuscatedShapefileId = deobfuscateId(
+      // Retrieve a shapefile if one was provided, and create a partial shapefile if the
+      // user selected individual features from a file
+      shapefile = processPartialShapefile(
+        dbConnection,
+        userId,
         shapefileId,
-        process.env.obfuscationSpinShapefiles
+        selectedFeatures
       )
-
-      const shapefileRecord = await dbConnection('shapefiles')
-        .first('file', 'filename')
-        .where({ id: deobfuscatedShapefileId });
-
-      ({ file } = shapefileRecord)
-
-      // If selectedFeatures exists, build a new shapefile out of those features and use the new shapefile to submit order
-      if (selectedFeatures) {
-        // Create a new shapefile
-        const newFile = createLimitedShapefile(file, selectedFeatures)
-        file = newFile
-
-        const fileHash = forge.md.md5.create()
-        fileHash.update(JSON.stringify(file))
-
-        // If the user already used this file, don't save the file again
-        const existingShapefileRecord = await dbConnection('shapefiles')
-          .first('id')
-          .where({
-            file_hash: fileHash,
-            user_id: userId
-          })
-
-        if (!existingShapefileRecord) {
-          const { filename } = shapefileRecord
-
-          // Save new shapefile into database, adding the parent_shapefile_id
-          await dbConnection('shapefiles')
-            .insert({
-              file_hash: fileHash.digest().toHex(),
-              file,
-              filename: `Limited-${filename}`,
-              parent_shapefile_id: deobfuscatedShapefileId,
-              selected_features: selectedFeatures,
-              user_id: userId
-            })
-        }
-      }
     }
 
     try {
@@ -132,7 +95,7 @@ const submitHarmonyOrder = async (event, context) => {
         accessMethod,
         granuleParams,
         accessTokenWithClient,
-        shapefile: file
+        shapefile
       })
 
       const orderResponse = await axios({
