@@ -16,11 +16,12 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    cmrFacetParams: {},
+    collectionMetadata: {},
+    collectionQuery: {},
     errors: {},
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
-    collectionMetadata: {},
-    collectionQuery: {},
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
     touched: {},
@@ -618,8 +619,23 @@ describe('GranuleFiltersForm component', () => {
 
     test('defaults to an empty value', () => {
       const { enzymeWrapper } = setup({
-        collectionQuery: {
-          gridName: 'CALIPSO'
+        cmrFacetParams: {
+          two_d_coordinate_system_name: ['MISR']
+        },
+        collectionMetadata: {
+          tilingIdentificationSystems: [
+            {
+              tilingIdentificationSystemName: 'MISR',
+              coordinate1: {
+                minimumValue: 1,
+                maximumValue: 233
+              },
+              coordinate2: {
+                minimumValue: 1,
+                maximumValue: 180
+              }
+            }
+          ]
         }
       })
 
@@ -629,8 +645,23 @@ describe('GranuleFiltersForm component', () => {
 
     test('calls handleChange on change', () => {
       const { enzymeWrapper, props } = setup({
-        collectionQuery: {
-          gridName: 'CALIPSO'
+        cmrFacetParams: {
+          two_d_coordinate_system_name: ['MISR']
+        },
+        collectionMetadata: {
+          tilingIdentificationSystems: [
+            {
+              tilingIdentificationSystemName: 'MISR',
+              coordinate1: {
+                minimumValue: 1,
+                maximumValue: 233
+              },
+              coordinate2: {
+                minimumValue: 1,
+                maximumValue: 180
+              }
+            }
+          ]
         }
       })
 
