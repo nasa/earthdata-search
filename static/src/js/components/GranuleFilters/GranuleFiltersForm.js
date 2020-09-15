@@ -28,9 +28,9 @@ import TemporalSelection from '../TemporalSelection/TemporalSelection'
  */
 export const GranuleFiltersForm = (props) => {
   const {
+    cmrFacetParams,
     collectionMetadata,
     errors,
-    cmrFacetParams,
     handleBlur,
     handleChange,
     setFieldTouched,
@@ -51,7 +51,7 @@ export const GranuleFiltersForm = (props) => {
     temporal = {}
   } = values
 
-  const { two_d_coordinate_system_name: twoDCoordinateSystemName = '' } = cmrFacetParams
+  const { two_d_coordinate_system_name: twoDCoordinateSystemName = [] } = cmrFacetParams
 
   const { isRecurring } = temporal
 
@@ -76,7 +76,7 @@ export const GranuleFiltersForm = (props) => {
   const {
     isCwic,
     tags,
-    tilingIdentificationSystems
+    tilingIdentificationSystems = []
   } = collectionMetadata
 
   const capabilities = getValueForTag('collection_capabilities', tags)

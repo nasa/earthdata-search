@@ -1,7 +1,7 @@
 {
   "application": {
     "version": "dev",
-    "env": "sit",
+    "env": "dev",
     "defaultPortal": "default",
     "feedbackApp": "",
     "analytics": {
@@ -71,7 +71,7 @@
       "cmrHost": "https://cmr.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
-      "graphQlHost": "http://localhost:3003/dev",
+      "graphQlHost": "https://graphql.earthdata.nasa.gov",
       "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
@@ -80,7 +80,7 @@
       "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
-      "graphQlHost": "http://localhost:3003/dev",
+      "graphQlHost": "https://graphql.sit.earthdata.nasa.gov",
       "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
@@ -89,7 +89,7 @@
       "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://uat.urs.earthdata.nasa.gov",
-      "graphQlHost": "http://localhost:3003/dev",
+      "graphQlHost": "https://graphql.uat.earthdata.nasa.gov",
       "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
@@ -98,7 +98,7 @@
       "cmrHost": "https://cmr.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
-      "graphQlHost": "http://localhost:3003/dev",
+      "graphQlHost": "https://graphql.earthdata.nasa.gov",
       "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"

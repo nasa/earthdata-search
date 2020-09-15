@@ -54,7 +54,7 @@ describe('GranuleRequest#permittedCmrKeys', () => {
       'readable_granule_name',
       'sort_key',
       'temporal',
-      'two_d_coordinate_system'
+      'two_d_coordinate_system_name'
     ])
   })
 })

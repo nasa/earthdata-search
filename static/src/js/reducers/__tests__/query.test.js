@@ -13,7 +13,6 @@ import {
 const initialState = {
   collection: {
     byId: {},
-    gridName: '',
     keyword: '',
     hasGranulesOrCwic: true,
     pageNum: 1,

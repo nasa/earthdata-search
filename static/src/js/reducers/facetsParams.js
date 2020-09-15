@@ -42,7 +42,6 @@ export const cmrFacetsReducer = (state = initialCmrState, action) => {
     }
     case ADD_CMR_FACET: {
       const [key] = Object.keys(payload)
-      // const previousValues = state[key] || []
 
       return {
         ...state,
