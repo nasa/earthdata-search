@@ -64,7 +64,10 @@ export const constructOrderPayload = async ({
       try {
         writeFileSync('/tmp/shapefile.geojson', JSON.stringify(shapefile))
 
-        orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), { filename: 'polygon.geojson', contentType: 'application/geo+json' })
+        orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), {
+          filename: 'shapefile.geojson',
+          contentType: 'application/geo+json'
+        })
       } catch (e) {
         parseError(e, { reThrowError: true })
       }
@@ -88,7 +91,10 @@ export const constructOrderPayload = async ({
         try {
           writeFileSync('/tmp/shapefile.geojson', JSON.stringify(constructedShapefile))
 
-          orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), { filename: 'polygon.geojson', contentType: 'application/geo+json' })
+          orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), {
+            filename: 'point.geojson',
+            contentType: 'application/geo+json'
+          })
         } catch (e) {
           parseError(e, { reThrowError: true })
         }
@@ -105,7 +111,10 @@ export const constructOrderPayload = async ({
         try {
           writeFileSync('/tmp/shapefile.geojson', JSON.stringify(constructedShapefile))
 
-          orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), { filename: 'polygon.geojson', contentType: 'application/geo+json' })
+          orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), {
+            filename: 'bbox.geojson',
+            contentType: 'application/geo+json'
+          })
         } catch (e) {
           parseError(e, { reThrowError: true })
         }
@@ -121,7 +130,10 @@ export const constructOrderPayload = async ({
         try {
           writeFileSync('/tmp/shapefile.geojson', JSON.stringify(constructedShapefile))
 
-          orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), { filename: 'polygon.geojson', contentType: 'application/geo+json' })
+          orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), {
+            filename: 'circle.geojson',
+            contentType: 'application/geo+json'
+          })
         } catch (e) {
           parseError(e, { reThrowError: true })
         }
@@ -137,7 +149,10 @@ export const constructOrderPayload = async ({
         try {
           writeFileSync('/tmp/shapefile.geojson', JSON.stringify(constructedShapefile))
 
-          orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), { filename: 'polygon.geojson', contentType: 'application/geo+json' })
+          orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), {
+            filename: 'polygon.geojson',
+            contentType: 'application/geo+json'
+          })
         } catch (e) {
           parseError(e, { reThrowError: true })
         }
