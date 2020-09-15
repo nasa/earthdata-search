@@ -251,6 +251,49 @@ describe('UPDATE_GRANULE_SEARCH_QUERY', () => {
 
     expect(queryReducer(initial, action)).toEqual(expectedState)
   })
+
+  test('returns the correct state when removing values', () => {
+    const action = {
+      type: UPDATE_GRANULE_SEARCH_QUERY,
+      payload: {
+        collectionId: 'collectionId',
+        pageNum: 2
+      }
+    }
+
+    const initial = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              browseOnly: true
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              collectionId: 'collectionId',
+              pageNum: 2
+            }
+          }
+        }
+      }
+    }
+
+    expect(queryReducer(initial, action)).toEqual(expectedState)
+  })
 })
 
 describe('INITIALIZE_COLLECTION_GRANULES_QUERY', () => {
