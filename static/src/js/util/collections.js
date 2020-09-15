@@ -54,7 +54,6 @@ export const prepareCollectionParams = (state) => {
   const { collection: collectionQuery } = query
 
   const {
-    // gridName = '',
     hasGranulesOrCwic,
     keyword,
     overrideTemporal = {},
@@ -110,7 +109,6 @@ export const prepareCollectionParams = (state) => {
     circle,
     cmrFacets,
     featureFacets,
-    // gridName,
     hasGranulesOrCwic,
     keyword,
     line,

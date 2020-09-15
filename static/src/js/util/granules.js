@@ -195,12 +195,26 @@ export const extractProjectCollectionGranuleParams = (state, collectionId) => {
  * @param {String} projectCollectionId Optional: CollectionId of a Project collection
  * @returns {Object} Parameters used in Granules request
  */
-export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
+export const prepareGranuleParams = (collectionMetadata, granuleParams, cmrFacetParams) => {
   // Metadata to help determine if and how to make our granule request
   const {
     hasGranules,
-    tags
+    tags,
+    tilingIdentificationSystems = []
   } = collectionMetadata
+
+  const { two_d_coordinate_system_name: twoDCoordinateSystemName = [] } = cmrFacetParams
+
+  let gridName
+  if (twoDCoordinateSystemName.length > 0) {
+    twoDCoordinateSystemName.forEach((coordinateSystem) => {
+      const systemFromMetadata = tilingIdentificationSystems.find(system => (
+        system.tilingIdentificationSystemName === coordinateSystem
+      ));
+
+      ({ tilingIdentificationSystemName: gridName } = systemFromMetadata)
+    })
+  }
 
   // Default added and removed granuld ids because they will only be provided for project granule requests
   const {
@@ -216,7 +230,6 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     excludedGranuleIds = [],
     granuleTemporal,
     gridCoords,
-    gridName,
     line,
     onlineOnly,
     orbitNumber,
