@@ -570,7 +570,6 @@ export const applyGranuleFilters = (
   granuleFilters,
   closePanel = false
 ) => (dispatch) => {
-  console.log('getProjectGranules -> granuleFilters', granuleFilters)
   // Apply granule filters, ensuring to reset the page number to 1 as this results in a new search
   dispatch(actions.updateFocusedCollectionGranuleFilters({ pageNum: 1, ...granuleFilters }))
 
