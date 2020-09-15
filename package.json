@@ -99,6 +99,7 @@
     "serverless-plugin-split-stacks": "^1.9.1",
     "serverless-step-functions": "^2.22.1",
     "serverless-webpack": "^5.3.1",
+    "snyk": "^1.396.0",
     "start-server-and-test": "^1.10.6",
     "style-loader": "^1.0.0",
     "terser-webpack-plugin": "^4.1.0",
