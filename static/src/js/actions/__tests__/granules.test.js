@@ -1112,4 +1112,61 @@ describe('fetchOpendapLinks', () => {
 
     expect(mbrSpy).toBeCalledTimes(1)
   })
+
+  test('calls lambda to get links from opendap without spatial params added', async () => {
+    nock(/localhost/)
+      .post(/ous/, (body) => {
+        const { params } = body
+
+        delete params.requestId
+
+        // Ensure that the payload we're sending OUS is correct
+        return JSON.stringify(params) === JSON.stringify({
+          echo_collection_id: 'C10000005-EDSC',
+          format: 'nc4',
+          variables: ['V1000004-EDSC']
+        })
+      })
+      .reply(200, {
+        items: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'OPeNDAP',
+        selectedVariables: ['V1000004-EDSC'],
+        selectedOutputFormat: 'nc4'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC'
+      },
+      granule_count: 3
+    }
+
+    await store.dispatch(fetchOpendapLinks(params))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: {
+        id: 3,
+        links: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+  })
 })

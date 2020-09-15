@@ -239,19 +239,26 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
 
   const { concept_id: excludedGranuleIds = [] } = exclude
 
-  const {
-    swLat,
-    swLng,
-    neLat,
-    neLng
-  } = mbr({
-    boundingBox: boundingBox[0],
-    circle: circle[0],
-    point: point[0],
-    polygon: polygon[0]
-  })
+  if (
+    boundingBox.length
+    || circle.length
+    || point.length
+    || polygon.length
+  ) {
+    const {
+      swLat,
+      swLng,
+      neLat,
+      neLng
+    } = mbr({
+      boundingBox: boundingBox[0],
+      circle: circle[0],
+      point: point[0],
+      polygon: polygon[0]
+    })
 
-  ousPayload.bounding_box = [swLng, swLat, neLng, neLat].join(',')
+    ousPayload.bounding_box = [swLng, swLat, neLng, neLat].join(',')
+  }
 
   ousPayload.temporal = temporal
 
