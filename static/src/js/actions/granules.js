@@ -240,10 +240,10 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   const { concept_id: excludedGranuleIds = [] } = exclude
 
   if (
-    boundingBox.length
-    || circle.length
-    || point.length
-    || polygon.length
+    boundingBox.length > 0
+    || circle.length > 0
+    || point.length > 0
+    || polygon.length > 0
   ) {
     const {
       swLat,
