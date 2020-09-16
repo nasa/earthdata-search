@@ -19,7 +19,6 @@ function setup() {
     onRemoveSpatialFilter: jest.fn(),
     pointSearch: ['Test Point Search'],
     polygonSearch: ['Test Polygon Search'],
-    selectingNewGrid: false,
     shapefile: {}
   }
 
@@ -47,7 +46,6 @@ describe('SpatialDisplayContainer component', () => {
       onRemoveSpatialFilter: props.onRemoveSpatialFilter,
       pointSearch: ['Test Point Search'],
       polygonSearch: ['Test Polygon Search'],
-      selectingNewGrid: false,
       shapefile: {}
     })
   })

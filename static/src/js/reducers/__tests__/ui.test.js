@@ -20,9 +20,6 @@ const initialState = {
     sortOrder: '-start_date',
     searchValue: ''
   },
-  grid: {
-    selectingNewGrid: false
-  },
   map: {
     drawingNewLayer: false
   },
