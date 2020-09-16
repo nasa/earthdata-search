@@ -117,7 +117,7 @@ const submitCatalogRestOrder = async (event, context) => {
     if (shapefileId) {
       // Retrieve a shapefile if one was provided, and create a partial shapefile if the
       // user selected individual features from a file
-      const shapefile = processPartialShapefile(
+      const shapefile = await processPartialShapefile(
         dbConnection,
         userId,
         shapefileId,
