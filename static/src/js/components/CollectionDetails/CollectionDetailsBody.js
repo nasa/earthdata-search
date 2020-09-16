@@ -267,11 +267,7 @@ export const CollectionDetailsBody = ({
                       </dt>
                       <dd>
                         {
-<<<<<<< HEAD
-                          Object.keys(reformattings).map((supportedInputFormat) => {
-=======
-                          reformattings.map((supportedReformatting, i) => {
->>>>>>> EDSC-2834: Cleaning up access method selection on project page
+                          Object.keys(reformattings).map((supportedInputFormat, i) => {
                             const {
                               [supportedInputFormat]: supportedOutputFormats
                             } = reformattings
