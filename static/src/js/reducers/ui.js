@@ -3,7 +3,6 @@ import {
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
-  TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
@@ -29,9 +28,6 @@ const initialState = {
   },
   map: {
     drawingNewLayer: false
-  },
-  grid: {
-    selectingNewGrid: false
   },
   secondaryOverlayPanel: {
     isOpen: false
@@ -97,16 +93,6 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         secondaryOverlayPanel: {
           isOpen: action.payload
-        }
-      }
-    }
-    case TOGGLE_SELECTING_NEW_GRID: {
-      const { grid } = state
-      return {
-        ...state,
-        grid: {
-          ...grid,
-          selectingNewGrid: action.payload
         }
       }
     }

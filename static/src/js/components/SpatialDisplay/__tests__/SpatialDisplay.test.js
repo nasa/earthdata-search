@@ -17,10 +17,8 @@ function setup() {
     lineSearch: [],
     pointSearch: [],
     polygonSearch: [],
-    gridName: '',
     onChangeQuery: jest.fn(),
     onRemoveSpatialFilter: jest.fn(),
-    selectingNewGrid: false,
     shapefile: {}
   }
 

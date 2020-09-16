@@ -20,7 +20,6 @@ const mapStateToProps = state => ({
   lineSearch: state.query.collection.spatial.line,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
-  selectingNewGrid: state.ui.grid.selectingNewGrid,
   shapefile: state.shapefile
 })
 
@@ -36,7 +35,6 @@ export const SpatialDisplayContainer = (props) => {
     onRemoveSpatialFilter,
     pointSearch,
     polygonSearch,
-    selectingNewGrid,
     shapefile
   } = props
 
@@ -52,7 +50,6 @@ export const SpatialDisplayContainer = (props) => {
       onRemoveSpatialFilter={onRemoveSpatialFilter}
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
-      selectingNewGrid={selectingNewGrid}
       shapefile={shapefile}
     />
   )
@@ -81,7 +78,6 @@ SpatialDisplayContainer.propTypes = {
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
-  selectingNewGrid: PropTypes.bool.isRequired,
   shapefile: PropTypes.shape({})
 }
 

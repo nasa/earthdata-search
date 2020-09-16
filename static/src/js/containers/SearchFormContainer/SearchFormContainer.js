@@ -35,7 +35,6 @@ const mapStateToProps = state => ({
   lineSearch: state.query.collection.spatial.line,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
-  selectingNewGrid: state.ui.grid.selectingNewGrid,
   shapefile: state.shapefile,
   temporalSearch: state.query.collection.temporal
 })
@@ -53,7 +52,6 @@ export const SearchFormContainer = (props) => {
     pointSearch,
     keywordSearch,
     polygonSearch,
-    selectingNewGrid,
     shapefile,
     temporalSearch,
     onCancelAutocomplete,
@@ -88,7 +86,6 @@ export const SearchFormContainer = (props) => {
     lineSearch,
     pointSearch,
     polygonSearch,
-    selectingNewGrid,
     shapefileError,
     shapefileLoading,
     shapefileLoaded,
@@ -155,7 +152,6 @@ SearchFormContainer.propTypes = {
   onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
-  selectingNewGrid: PropTypes.bool.isRequired,
   shapefile: PropTypes.shape({}),
   temporalSearch: PropTypes.shape({})
 }
