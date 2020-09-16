@@ -17,8 +17,10 @@ export const processPartialShapefile = async (
   shapefileId,
   selectedFeatures
 ) => {
+  // Default the response to an undefined object
   let file
 
+  // Deobfuscate the provided shapefile id
   const deobfuscatedShapefileId = deobfuscateId(
     shapefileId,
     process.env.obfuscationSpinShapefiles
@@ -31,9 +33,10 @@ export const processPartialShapefile = async (
   ({ file } = shapefileRecord)
 
   // If selectedFeatures exists, build a new shapefile out of those features and use the new shapefile to submit order
-  if (selectedFeatures) {
+  if (selectedFeatures && selectedFeatures.length > 0) {
     // Create a new shapefile
     const newFile = createLimitedShapefile(file, selectedFeatures)
+
     file = newFile
 
     const fileHash = forge.md.md5.create()
