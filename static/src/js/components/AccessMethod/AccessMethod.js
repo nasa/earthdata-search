@@ -7,8 +7,8 @@ import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
-import AccessMethodRadio from '../FormFields/Radio/AccessMethodRadio'
-import RadioList from '../FormFields/Radio/RadioList'
+import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
+import RadioList from '../FormFields/RadioList/RadioList'
 import Skeleton from '../Skeleton/Skeleton'
 import Spinner from '../Spinner/Spinner'
 

@@ -1,7 +1,9 @@
 export const retrievalStatusProps = {
   authToken: 'testToken',
+  granuleDownload: {},
   onFetchRetrieval: jest.fn(),
   onFetchRetrievalCollection: jest.fn(),
+  onFetchRetrievalCollectionGranuleLinks: jest.fn(),
   match: {
     search: {
       id: 7

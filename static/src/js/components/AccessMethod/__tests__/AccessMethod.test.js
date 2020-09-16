@@ -3,8 +3,8 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import { AccessMethod } from '../AccessMethod'
-import Radio from '../../FormFields/Radio/Radio'
-import RadioList from '../../FormFields/Radio/RadioList'
+import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
+import RadioList from '../../FormFields/RadioList/RadioList'
 import ProjectPanelSection from '../../ProjectPanels/ProjectPanelSection'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -113,7 +113,7 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Radio).props().value).toEqual('download')
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('download')
     })
 
     test('renders a radio button for echo orders', () => {
@@ -128,7 +128,7 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Radio).props().value).toEqual('echoOrder0')
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('echoOrder0')
     })
 
     test('renders a radio button for esi', () => {
@@ -143,7 +143,7 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Radio).props().value).toEqual('esi')
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('esi')
     })
 
     test('renders a radio button for opendap', () => {
@@ -158,7 +158,7 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Radio).props().value).toEqual('opendap')
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('opendap')
     })
 
     test('renders a radio button for harmony', () => {
@@ -173,7 +173,7 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Radio).props().value).toEqual('harmony0')
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('harmony0')
     })
   })
 

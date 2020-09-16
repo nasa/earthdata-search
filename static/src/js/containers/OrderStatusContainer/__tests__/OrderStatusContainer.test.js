@@ -20,7 +20,7 @@ describe('OrderStatusContainer component', () => {
     test('passes its props and renders a single OrderStatus component', () => {
       const { enzymeWrapper, props } = setup({
         authToken: 'testToken',
-        onFetchRetrieval: jest.fn(),
+        granuleDownload: {},
         match: {
           search: {
             id: 7
@@ -28,7 +28,9 @@ describe('OrderStatusContainer component', () => {
         },
         portal: {},
         onChangePath: jest.fn(),
+        onFetchRetrieval: jest.fn(),
         onFetchRetrievalCollection: jest.fn(),
+        onFetchRetrievalCollectionGranuleLinks: jest.fn(),
         retrieval: {
           id: 7,
           collections: {

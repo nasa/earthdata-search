@@ -34,11 +34,14 @@ export class OrderStatus extends Component {
 
   render() {
     const {
+      granuleDownload,
       match,
       portal,
       retrieval = {},
       onChangePath,
-      onFetchRetrievalCollection
+      onFetchRetrieval,
+      onFetchRetrievalCollection,
+      onFetchRetrievalCollectionGranuleLinks
     } = this.props
     const { jsondata = {}, links = [] } = retrieval
     const { source } = jsondata
@@ -49,13 +52,16 @@ export class OrderStatus extends Component {
       isLoading,
       isLoaded
     } = retrieval
+
     const { byId = {} } = collections
+    const { [id]: retrievalCollection = {} } = byId
 
     let {
       download: downloads = [],
       opendap: opendapOrders = [],
       echo_orders: echoOrders = [],
-      esi: esiOrders = []
+      esi: esiOrders = [],
+      harmony: harmonyOrders = []
     } = collections
 
     const collectionsById = Object.values(byId)
@@ -64,12 +70,7 @@ export class OrderStatus extends Component {
     opendapOrders = collectionsById.filter(collection => opendapOrders.includes(collection.id))
     echoOrders = collectionsById.filter(collection => echoOrders.includes(collection.id))
     esiOrders = collectionsById.filter(collection => esiOrders.includes(collection.id))
-
-    // Combine the two types of orders that are direct download into a single heading
-    const downloadableOrders = [
-      ...downloads,
-      ...opendapOrders
-    ]
+    harmonyOrders = collectionsById.filter(collection => harmonyOrders.includes(collection.id))
 
     const { edscHost } = getEnvironmentConfig()
 
@@ -84,6 +85,16 @@ export class OrderStatus extends Component {
         {' page.'}
       </p>
     )
+
+    const allOrders = [
+      ...downloads,
+      ...opendapOrders,
+      ...echoOrders,
+      ...esiOrders,
+      ...harmonyOrders
+    ]
+
+    console.log('allOrders', allOrders)
 
     return (
       <div className="order-status">
@@ -102,47 +113,16 @@ export class OrderStatus extends Component {
             }
             {
               isLoaded && (
-                <Well.Section>
-                  {
-                    downloadableOrders.length > 0 && (
-                      <OrderStatusList
-                        heading="Direct Download"
-                        introduction={'Click the "View/Download Data Links" button to view or download a file containing links to your data.'}
-                        collections={downloadableOrders}
-                        type="download"
-                        match={match}
-                        onChangePath={onChangePath}
-                        onFetchRetrievalCollection={onFetchRetrievalCollection}
-                      />
-                    )
-                  }
-                  {
-                    echoOrders.length > 0 && (
-                      <OrderStatusList
-                        heading="Stage For Delivery"
-                        introduction={"When the data for the following orders becomes available, an email containing download links will be sent to the address you've provided."}
-                        collections={echoOrders}
-                        type="echo_orders"
-                        match={match}
-                        onChangePath={onChangePath}
-                        onFetchRetrievalCollection={onFetchRetrievalCollection}
-                      />
-                    )
-                  }
-                  {
-                    esiOrders.length > 0 && (
-                      <OrderStatusList
-                        heading="Customize Product"
-                        introduction={"When the data for the following orders become available, links will be displayed below and sent to the email address you've provided."}
-                        collections={esiOrders}
-                        type="esi"
-                        match={match}
-                        onChangePath={onChangePath}
-                        onFetchRetrievalCollection={onFetchRetrievalCollection}
-                      />
-                    )
-                  }
-                </Well.Section>
+                <OrderStatusList
+                  orders={allOrders}
+                  match={match}
+                  granuleDownload={granuleDownload}
+                  retrievalCollection={retrievalCollection}
+                  onChangePath={onChangePath}
+                  onFetchRetrieval={onFetchRetrieval}
+                  onFetchRetrievalCollection={onFetchRetrievalCollection}
+                  onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+                />
               )
             }
             <Well.Heading>Additional Resources and Documentation</Well.Heading>
@@ -249,12 +229,14 @@ export class OrderStatus extends Component {
 
 OrderStatus.propTypes = {
   authToken: PropTypes.string.isRequired,
-  onFetchRetrieval: PropTypes.func.isRequired,
+  granuleDownload: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onFetchRetrievalCollection: PropTypes.func.isRequired
+  onFetchRetrieval: PropTypes.func.isRequired,
+  onFetchRetrievalCollection: PropTypes.func.isRequired,
+  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired
 }
 
 export default OrderStatus
