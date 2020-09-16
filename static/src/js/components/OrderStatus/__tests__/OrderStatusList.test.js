@@ -15,7 +15,8 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.echo_orders),
+    orders: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.echo_orders),
+    granuleDownload: {},
     heading: 'Stage For Delivery',
     introduction: 'When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.',
     type: 'echo_orders',
@@ -27,7 +28,9 @@ function setup() {
       path: '/downloads/2/collections/1'
     },
     onChangePath: jest.fn(),
-    onFetchRetrievalCollection: jest.fn()
+    onFetchRetrieval: jest.fn(),
+    onFetchRetrievalCollection: jest.fn(),
+    onFetchRetrievalCollectionGranuleLinks: jest.fn()
   }
 
   const enzymeWrapper = shallow(<OrderStatusList {...props} />)
@@ -45,26 +48,16 @@ describe('OrderStatus component', () => {
     expect(enzymeWrapper.hasClass('order-status-list')).toEqual(true)
   })
 
-  describe('heading', () => {
-    test('renders correctly', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.order-status-list__heading').at(0).text()).toEqual('Stage For Delivery')
-    })
-  })
-
-  describe('introduction', () => {
-    test('renders correctly', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.order-status-list__introduction').at(0).text()).toEqual('When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.')
-    })
-  })
-
   describe('list', () => {
     test('renders correctly', () => {
       const { enzymeWrapper, props } = setup()
+      console.log('enzymeWrapper', enzymeWrapper.debug())
       expect(enzymeWrapper.find(OrderStatusItem).length).toEqual(1)
       expect(enzymeWrapper.find(OrderStatusItem).at(0).props()).toEqual({
-        collection: {
+        collectionId: 'TEST_COLLECTION_111',
+        defaultOpen: true,
+        granuleDownload: {},
+        order: {
           collection_id: 'TEST_COLLECTION_111',
           collection_metadata: {
             id: 'C10000001-EDSC',
@@ -110,8 +103,9 @@ describe('OrderStatus component', () => {
           path: '/downloads/2/collections/1'
         },
         onChangePath: props.onChangePath,
+        onFetchRetrieval: props.onFetchRetrieval,
         onFetchRetrievalCollection: props.onFetchRetrievalCollection,
-        type: 'echo_orders'
+        onFetchRetrievalCollectionGranuleLinks: props.onFetchRetrievalCollectionGranuleLinks
       })
     })
   })

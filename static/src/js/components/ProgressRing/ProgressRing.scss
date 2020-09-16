@@ -1,0 +1,20 @@
+.progress-ring {
+  &__ring {
+    position: relative;
+  }
+
+  &__progress {
+    z-index: 1;
+    position: relative;
+    stroke: $color__green;
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%,
+  }
+
+  &__circle-back {
+    z-index: 0;
+    position: relative;
+    stroke: $color__black--200;
+  }
+}

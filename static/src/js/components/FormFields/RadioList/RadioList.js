@@ -1,8 +1,8 @@
 import React, { Component, Children } from 'react'
 import PropTypes from 'prop-types'
 
-import Radio from './Radio'
-import AccessMethodRadio from './AccessMethodRadio'
+import Radio from '../Radio/Radio'
+import AccessMethodRadio from '../AccessMethodRadio/AccessMethodRadio'
 
 export class RadioList extends Component {
   constructor(props) {
