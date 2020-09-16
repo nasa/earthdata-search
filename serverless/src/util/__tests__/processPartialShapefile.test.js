@@ -25,7 +25,7 @@ afterEach(() => {
 })
 
 describe('processPartialShapefile', () => {
-  describe('with no selected features', () => {
+  describe('when no features were selected', () => {
     test('returns the original shapefile', async () => {
       const dbCon = knex({
         client: 'pg',
@@ -59,92 +59,96 @@ describe('processPartialShapefile', () => {
   })
 
   describe('with selected features', () => {
-    test('with an existing shapefile', async () => {
-      const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
-        .mockImplementation(() => ('limited mock shapefile'))
+    describe('when existing shapefile is found in the database', () => {
+      test('returns the existing records instead of inserting another', async () => {
+        const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
+          .mockImplementation(() => ('limited mock shapefile'))
 
-      const dbCon = knex({
-        client: 'pg',
-        debug: false
+        const dbCon = knex({
+          client: 'pg',
+          debug: false
+        })
+
+        // Mock the db connection
+        mockKnex.mock(dbCon)
+
+        dbTracker.on('query', (query, step) => {
+          if (step === 1) {
+            query.response({
+              file: 'mock shapefile',
+              filename: 'MockFile.geojson'
+            })
+          } else if (step === 2) {
+            query.response({
+              file: 'limited mock shapefile',
+              filename: 'Limited-ockFile.geojson'
+            })
+          } else {
+            query.response([])
+          }
+        })
+
+        const shapefile = await processPartialShapefile(dbCon, 1, 1, ['1'])
+
+        const { queries } = dbTracker.queries
+
+        expect(queries.length).toEqual(2)
+
+        expect(queries[0].method).toEqual('first') // shapefiles
+        expect(queries[1].method).toEqual('first') // shapefiles (limited shapefile query)
+
+        expect(shapefile).toEqual('limited mock shapefile')
+
+        expect(createLimitedShapefileMock).toHaveBeenCalledTimes(1)
       })
-
-      // Mock the db connection
-      mockKnex.mock(dbCon)
-
-      dbTracker.on('query', (query, step) => {
-        if (step === 1) {
-          query.response({
-            file: 'mock shapefile',
-            filename: 'MockFile.geojson'
-          })
-        } else if (step === 2) {
-          query.response({
-            file: 'limited mock shapefile',
-            filename: 'Limited-ockFile.geojson'
-          })
-        } else {
-          query.response([])
-        }
-      })
-
-      const shapefile = await processPartialShapefile(dbCon, 1, 1, ['1'])
-
-      const { queries } = dbTracker.queries
-
-      expect(queries.length).toEqual(2)
-
-      expect(queries[0].method).toEqual('first') // shapefiles
-      expect(queries[1].method).toEqual('first') // shapefiles (limited shapefile query)
-
-      expect(shapefile).toEqual('limited mock shapefile')
-
-      expect(createLimitedShapefileMock).toHaveBeenCalledTimes(1)
     })
 
-    test('with no existing shapefile', async () => {
-      const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
-        .mockImplementation(() => ('limited mock shapefile'))
+    describe('when no existing shapefile found in the database', () => {
+      test('stores the limited shapefile in the database', async () => {
+        const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
+          .mockImplementation(() => ('limited mock shapefile'))
 
-      const dbCon = knex({
-        client: 'pg',
-        debug: false
+        const dbCon = knex({
+          client: 'pg',
+          debug: false
+        })
+
+        // Mock the db connection
+        mockKnex.mock(dbCon)
+
+        dbTracker.on('query', (query, step) => {
+          if (step === 1) {
+            query.response({
+              file: 'mock shapefile',
+              filename: 'MockFile.geojson'
+            })
+          } else {
+            query.response([])
+          }
+        })
+
+        const shapefile = await processPartialShapefile(dbCon, 1, 1, ['1'])
+
+        const { queries } = dbTracker.queries
+
+        expect(queries.length).toEqual(3)
+
+        expect(queries[0].method).toEqual('first') // shapefiles
+        expect(queries[1].method).toEqual('first') // shapefiles (limited shapefile query)
+        expect(queries[2].method).toEqual('insert') // save limited shapefile
+        expect(queries[2].bindings).toEqual([
+          'limited mock shapefile', // new file
+          '959220857ddbb3b2398ac31a58765df6', // file_hash
+          'Limited-MockFile.geojson', // filename
+          1084815579, // parent_shapefile_id
+          ['1'], // selectedFeatures
+          1 // user_id
+        ])
+
+        expect(shapefile).toEqual('limited mock shapefile')
+
+        expect(createLimitedShapefileMock).toHaveBeenCalledTimes(1)
       })
-
-      // Mock the db connection
-      mockKnex.mock(dbCon)
-
-      dbTracker.on('query', (query, step) => {
-        if (step === 1) {
-          query.response({
-            file: 'mock shapefile',
-            filename: 'MockFile.geojson'
-          })
-        } else {
-          query.response([])
-        }
-      })
-
-      const shapefile = await processPartialShapefile(dbCon, 1, 1, ['1'])
-
-      const { queries } = dbTracker.queries
-
-      expect(queries.length).toEqual(3)
-
-      expect(queries[0].method).toEqual('first') // shapefiles
-      expect(queries[1].method).toEqual('first') // shapefiles (limited shapefile query)
-      expect(queries[2].method).toEqual('insert') // save limited shapefile
-      expect(queries[2].bindings).toEqual([
-        'limited mock shapefile', // new file
-        '959220857ddbb3b2398ac31a58765df6', // file_hash
-        'Limited-MockFile.geojson', // filename
-        1084815579, // parent_shapefile_id
-        ['1'], // selectedFeatures
-        1 // user_id
-      ])
-
-      expect(shapefile).toEqual('limited mock shapefile')
-
-      expect(createLimitedShapefileMock).toHaveBeenCalledTimes(1)
     })
   })
 })
