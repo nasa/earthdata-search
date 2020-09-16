@@ -40,7 +40,6 @@ describe('UPDATE_COLLECTION_QUERY', () => {
       spatial: {
         point: '0,0'
       },
-      gridName: '',
       temporal: {}
     }
     const action = {

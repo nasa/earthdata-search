@@ -6,7 +6,6 @@ import {
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
-  TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_SPATIAL_POLYGON_WARNING,
   TOGGLE_TOO_MANY_POINTS_MODAL,
@@ -35,11 +34,6 @@ export const toggleDrawingNewLayer = state => ({
 
 export const toggleSecondaryOverlayPanel = state => ({
   type: TOGGLE_SECONDARY_OVERLAY_PANEL,
-  payload: state
-})
-
-export const toggleSelectingNewGrid = state => ({
-  type: TOGGLE_SELECTING_NEW_GRID,
   payload: state
 })
 
