@@ -110,15 +110,15 @@ const submitHarmonyOrder = async (event, context) => {
       })
 
       const { data } = orderResponse
-      const { jobID: orderId } = data
+      const { jobID: orderId, progress } = data
+
+      await dbConnection('retrieval_orders').update({
+        order_number: orderId,
+        state: progress === 100 ? 'complete' : 'initialized',
+        order_information: data
+      }).where({ id })
 
       if (orderId) {
-        await dbConnection('retrieval_orders').update({
-          order_number: orderId,
-          state: 'initialized',
-          order_information: data
-        }).where({ id })
-
         // Start the order status check workflow
         await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
       }

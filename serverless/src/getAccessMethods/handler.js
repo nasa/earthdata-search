@@ -184,9 +184,9 @@ const getAccessMethods = async (event, context) => {
       ({ [selectedOutputFormat]: selectedOutputFormat } = ousFormatMapping)
 
       accessMethods.opendap = {
+        hierarchyMappings,
         id: conceptId,
         isValid: true,
-        hierarchyMappings,
         keywordMappings,
         longName,
         name,
@@ -199,7 +199,11 @@ const getAccessMethods = async (event, context) => {
     }
 
     if (hasHarmony) {
-      const { keywordMappings, variables } = getVariables(associatedVariables)
+      const {
+        hierarchyMappings,
+        keywordMappings,
+        variables
+      } = getVariables(associatedVariables)
 
       harmonyServices.forEach((serviceObject, index) => {
         const {
@@ -258,6 +262,7 @@ const getAccessMethods = async (event, context) => {
         const [selectedOutputProjection] = outputProjections
 
         accessMethods[`harmony${index}`] = {
+          hierarchyMappings,
           id: conceptId,
           isValid: true,
           keywordMappings,

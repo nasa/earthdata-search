@@ -45,7 +45,10 @@ export const isAccessMethodValid = (projectCollection, collectionMetadata) => {
   }
 
   // check the access method isValid flag
-  const { accessMethods, selectedAccessMethod } = projectCollection
+  const {
+    accessMethods = {},
+    selectedAccessMethod
+  } = projectCollection
 
   if (!selectedAccessMethod) {
     return {
@@ -54,7 +57,7 @@ export const isAccessMethodValid = (projectCollection, collectionMetadata) => {
     }
   }
 
-  const selectedMethod = accessMethods[selectedAccessMethod]
+  const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
 
   const { isValid = false } = selectedMethod
 

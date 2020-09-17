@@ -28,7 +28,7 @@ describe('constructOrderUrl', () => {
         }
       })
 
-      expect(response).toEqual('https://harmony.earthdata.nasa.gov/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var,test_var_2/coverage/rangeset')
+      expect(response).toEqual('https://harmony.earthdata.nasa.gov/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
     })
   })
 
