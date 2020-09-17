@@ -34,9 +34,9 @@ export const VariableTreePanel = (props) => {
   const browseBy = (
     <div className="variable-tree-panel__tree-switcher">
       <span>Browse by:</span>
-      <div className="variable-tree-panel__tree-switcher__buttons">
+      <div className="variable-tree-panel__tree-switcher-buttons">
         <Button
-          className="variable-tree-panel__tree-switcher__button"
+          className="variable-tree-panel__tree-switcher-button"
           disabled={treeView === 'hierarchy'}
           label="Hierarchy"
           type="button"
@@ -45,7 +45,7 @@ export const VariableTreePanel = (props) => {
           Hierarchy
         </Button>
         <Button
-          className="variable-tree-panel__tree-switcher__button"
+          className="variable-tree-panel__tree-switcher-button"
           disabled={treeView === 'scienceKeyword'}
           label="Science Keyword"
           type="button"

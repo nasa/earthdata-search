@@ -86,15 +86,18 @@ class ProjectPanels extends PureComponent {
     const selectedVariables = {}
 
     allIds.forEach((collectionId) => {
-      const { accessMethods = {} } = byId[collectionId]
-      const { opendap } = accessMethods
+      const { accessMethods = {}, selectedAccessMethod } = byId[collectionId]
 
-      if (!opendap) return
+      if (selectedAccessMethod) {
+        const { [selectedAccessMethod]: accessMethod = {} } = accessMethods
 
-      const { selectedVariables: nextSelectedVariables = [] } = opendap
+        const {
+          selectedVariables: nextSelectedVariables = []
+        } = accessMethod
 
-      if (nextSelectedVariables.length > 0) {
-        selectedVariables[collectionId] = nextSelectedVariables
+        if (nextSelectedVariables.length > 0) {
+          selectedVariables[collectionId] = nextSelectedVariables
+        }
       }
     })
 

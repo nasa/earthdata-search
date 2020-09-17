@@ -23,7 +23,7 @@ export const constructOrderUrl = (collectionId, accessMethod) => {
 
   let variableParameter = 'all'
   if (selectedVariableNames.length > 0) {
-    variableParameter = selectedVariableNames.join(',')
+    variableParameter = encodeURIComponent(selectedVariableNames.join(','))
   }
 
   // Harmony's coverage api url is a bit verbose, construct all of the pieces to be joined below

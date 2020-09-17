@@ -193,7 +193,7 @@ export class AccessMethod extends Component {
     }
 
     Object.keys(accessMethods).forEach((methodKey) => {
-      const accessMethod = accessMethods[methodKey]
+      const { [methodKey]: accessMethod = {} } = accessMethods
 
       const { type, name } = accessMethod
 
@@ -252,18 +252,20 @@ export class AccessMethod extends Component {
           break
       }
 
-      accessMethodsByType[type].push(
-        <AccessMethodRadio
-          key={id}
-          id={id}
-          value={methodKey}
-          title={title}
-          subtitle={subtitle}
-          serviceName={name}
-          description={description}
-          details={details}
-        />
-      )
+      if (type) {
+        accessMethodsByType[type].push(
+          <AccessMethodRadio
+            key={id}
+            id={id}
+            value={methodKey}
+            title={title}
+            subtitle={subtitle}
+            serviceName={name}
+            description={description}
+            details={details}
+          />
+        )
+      }
     })
 
     const radioList = [
@@ -296,7 +298,8 @@ export class AccessMethod extends Component {
       )
     })
 
-    const selectedMethod = accessMethods[selectedAccessMethod]
+    const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
+
     const {
       form,
       rawModel = null,
@@ -352,6 +355,7 @@ export class AccessMethod extends Component {
 
     const isCustomizationAvailable = supportsVariableSubsetting
       || supportedOutputFormats.length > 0
+      || supportedOutputProjections.length > 0
       || (form && isActive)
 
     return (

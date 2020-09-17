@@ -200,7 +200,9 @@ export class OrderStatusItem extends PureComponent {
         isLoading: granuleLinksIsLoading
       } = granuleDownload
 
-      if (granuleLinks.length === 0 && !granuleLinksIsLoading) onFetchRetrievalCollectionGranuleLinks(order)
+      if (granuleLinks.length === 0 && !granuleLinksIsLoading) {
+        onFetchRetrievalCollectionGranuleLinks(order)
+      }
     }
   }
 
@@ -289,7 +291,11 @@ export class OrderStatusItem extends PureComponent {
           browseFlag,
           title
         } = collectionMetadata)
-      } else if (collectionsMetadata && collectionsMetadata[collectionId] && collectionsMetadata[collectionId].title) {
+      } else if (
+        collectionsMetadata
+        && collectionsMetadata[collectionId]
+        && collectionsMetadata[collectionId].title
+      ) {
         collectionMetadata = collectionsMetadata[collectionId];
 
         ({
@@ -434,8 +440,8 @@ export class OrderStatusItem extends PureComponent {
             const { order_information: orderInformation } = order
 
             const {
-              progress,
-              links,
+              progress = 0,
+              links = [],
               status
             } = orderInformation
 
@@ -480,7 +486,7 @@ export class OrderStatusItem extends PureComponent {
                       }
                     </span>
                     {
-                      actualPercentage >= 0 && (
+                      (actualPercentage != null && actualPercentage >= 0) && (
                         <span className="order-status-item__percentage">
                           {
                             `(${actualPercentage}%)`
@@ -524,7 +530,7 @@ export class OrderStatusItem extends PureComponent {
                       }
                     </span>
                     {
-                      actualPercentage >= 0 && (
+                      (actualPercentage != null && actualPercentage >= 0) && (
                         <span className="order-status-item__percentage">
                           {
                             `(${actualPercentage}%)`
@@ -577,7 +583,9 @@ export class OrderStatusItem extends PureComponent {
                       isOpendap={isOpendap}
                       isHarmony={isHarmony}
                       onFetchRetrieval={onFetchRetrieval}
-                      onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+                      onFetchRetrievalCollectionGranuleLinks={
+                        onFetchRetrievalCollectionGranuleLinks
+                      }
                       retrievalId={retrievalId}
                       retrievalCollection={order}
                     />
@@ -597,7 +605,9 @@ export class OrderStatusItem extends PureComponent {
                       isDownload={isDownload}
                       isOpendap={isOpendap}
                       onFetchRetrieval={onFetchRetrieval}
-                      onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+                      onFetchRetrievalCollectionGranuleLinks={
+                        onFetchRetrievalCollectionGranuleLinks
+                      }
                       retrievalId={retrievalId}
                       retrievalCollection={order}
                       totalLinks={granuleCount}

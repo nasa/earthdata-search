@@ -59,7 +59,7 @@ describe('submitHarmonyOrder', () => {
       })
 
     nock('https://harmony.earthdata.nasa.gov')
-      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var,test_var_2/coverage/rangeset')
+      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
       .reply(201, {
         username: 'rabbott',
         status: 'running',
@@ -68,7 +68,7 @@ describe('submitHarmonyOrder', () => {
         createdAt: '2020-07-21T15:34:37.487Z',
         updatedAt: '2020-07-21T15:34:37.487Z',
         links: [],
-        request: 'https://harmony.earthdata.nasa.gov/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var,test_var_2/coverage/rangeset',
+        request: 'https://harmony.earthdata.nasa.gov/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset',
         jobID: '3e0d745b-adcf-4d33-9810-d81f38a5bd5a'
       })
 
@@ -149,7 +149,7 @@ describe('submitHarmonyOrder', () => {
       })
 
     nock('https://harmony.earthdata.nasa.gov')
-      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var,test_var_2/coverage/rangeset')
+      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
       .reply(201, {
         username: 'rabbott',
         status: 'running',
@@ -158,7 +158,7 @@ describe('submitHarmonyOrder', () => {
         createdAt: '2020-07-21T15:34:37.487Z',
         updatedAt: '2020-07-21T15:34:37.487Z',
         links: [],
-        request: 'https://harmony.earthdata.nasa.gov/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var,test_var_2/coverage/rangeset',
+        request: 'https://harmony.earthdata.nasa.gov/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset',
         jobID: '3e0d745b-adcf-4d33-9810-d81f38a5bd5a'
       })
 
@@ -249,7 +249,7 @@ describe('submitHarmonyOrder', () => {
       })
 
     nock('https://harmony.earthdata.nasa.gov')
-      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var,test_var_2/coverage/rangeset')
+      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
       .reply(403, {
         code: 'harmony.ForbiddenError',
         description: 'Error: You are not authorized to access the requested resource'
