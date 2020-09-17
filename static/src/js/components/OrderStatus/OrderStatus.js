@@ -94,8 +94,6 @@ export class OrderStatus extends Component {
       ...harmonyOrders
     ]
 
-    console.log('allOrders', allOrders)
-
     return (
       <div className="order-status">
         <Well className="order-status">

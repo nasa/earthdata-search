@@ -45,10 +45,8 @@ const opendapProps = {
 function setup(overrideProps) {
   const props = {
     projectCollectionsMetadata: {
-      byId: {
-        collectionId: {
-          dataset_id: 'test dataset id'
-        }
+      collectionId: {
+        dataset_id: 'test dataset id'
       }
     },
     dataQualitySummaries: {},
@@ -123,7 +121,8 @@ describe('ProjectPanels component', () => {
                   opendap: {
                     selectedVariables: ['variableId1']
                   }
-                }
+                },
+                selectedAccessMethod: 'opendap'
               }
             }
           }

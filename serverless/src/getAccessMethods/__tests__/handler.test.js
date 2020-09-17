@@ -127,6 +127,7 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         accessMethods: {
           harmony0: {
+            hierarchyMappings: [],
             id: 'umm-s-record-1',
             isValid: true,
             keywordMappings: [],
