@@ -15,21 +15,35 @@ export const OrderProgressItem = ({
   const {
     order_number: orderId,
     state: orderStatus,
-    order_information: orderInformation
+    order_information: orderInformation,
+    type
   } = order
 
-  const { requestStatus } = orderInformation
-
-  const {
-    totalNumber = 0,
-    numberProcessed = 0
-  } = requestStatus
-
+  let numGranulesProccessed
+  let totalGranulesInOrder
   let totalPercentProcessed
-  if (totalNumber === 0) {
-    totalPercentProcessed = 0
-  } else {
-    totalPercentProcessed = Math.floor(numberProcessed / totalNumber * 100)
+
+  if (type === 'Harmony') {
+    const { progress = 0 } = orderInformation
+    totalPercentProcessed = progress
+  }
+
+  if (type === 'ESI') {
+    const { requestStatus } = orderInformation
+
+    const {
+      totalNumber = 0,
+      numberProcessed = 0
+    } = requestStatus
+
+    numGranulesProccessed = numberProcessed
+    totalGranulesInOrder = totalNumber
+
+    if (totalGranulesInOrder === 0) {
+      totalPercentProcessed = 0
+    } else {
+      totalPercentProcessed = Math.floor(numGranulesProccessed / totalGranulesInOrder * 100)
+    }
   }
 
   const badgeClass = classNames(
@@ -44,19 +58,32 @@ export const OrderProgressItem = ({
       className="order-progress-item"
     >
       <header className="order-progress-item__header">
-        <h5 className="order-progress-item__title">
-          {'Order ID: '}
-          <span>{orderId}</span>
-        </h5>
-        <div className="order-progress-item__info">
-          <span className="order-progress-item__processed">
-            {`${numberProcessed} of ${totalNumber} granule(s) processed (${totalPercentProcessed}%)`}
-          </span>
+        <div className="order-progress-item__header-primary">
+          <h5 className="order-progress-item__title">
+            {'Order ID: '}
+            {
+              orderId || 'Not provided'
+            }
+          </h5>
           <Badge
             className={badgeClass}
           >
             {formatOrderStatus(orderStatus)}
           </Badge>
+        </div>
+        <div className="order-progress-item__info">
+          <span className="order-progress-item__processed">
+            {
+              (numGranulesProccessed && totalGranulesInOrder) && (
+                `${numGranulesProccessed} of ${totalGranulesInOrder} granule(s) processed `
+              )
+            }
+            {
+              totalPercentProcessed != null && (
+                `(${totalPercentProcessed}%)`
+              )
+            }
+          </span>
         </div>
       </header>
       <ProgressBar

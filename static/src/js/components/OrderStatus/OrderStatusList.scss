@@ -1,12 +1,8 @@
 .order-status-list {
   margin-bottom: $spacer*2;
 
-  &__heading {
-    font-size: 1.125rem;
-    font-weight: 700;
-  }
-
   &__list {
+    position: relative;
     margin: 0;
     padding: 0;
     list-style: none;
