@@ -34,6 +34,10 @@ describe('AccessMethodRadio component', () => {
     expect(enzymeWrapper.type()).toBe('label')
   })
 
+  test('has a test id', () => {
+    expect(enzymeWrapper.props()['data-test-id']).toBe('test-id')
+  })
+
   test('adds an htmlFor prop using the id', () => {
     expect(enzymeWrapper.props().htmlFor).toBe('test-id')
   })
@@ -63,10 +67,6 @@ describe('AccessMethodRadio component', () => {
   })
 
   describe('input element', () => {
-    test('has a test id', () => {
-      expect(enzymeWrapper.find('input').props()['data-test-id']).toBe('test-id')
-    })
-
     test('has a name property', () => {
       expect(enzymeWrapper.find('input').props().name).toBe('test-id')
     })

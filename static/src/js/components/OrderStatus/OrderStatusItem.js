@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -21,7 +20,7 @@ import ProgressRing from '../ProgressRing/ProgressRing'
 
 import './OrderStatusItem.scss'
 
-const DownloadLinksPanel = ({
+export const DownloadLinksPanel = ({
   accessMethodType,
   granuleLinks,
   retrievalId,
@@ -29,112 +28,117 @@ const DownloadLinksPanel = ({
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
 
-  return (
+  return granuleLinks.length > 0 ? (
     <>
-      {
-        granuleLinks.length > 0 ? (
-          <>
-            <p className="order-status-item__tab-intro">
-              <span className="order-status-item__status-text">
-                {`(${granuleLinks.length} of ${totalLinks} links retrieved)`}
-              </span>
-            </p>
-            <TextWindowActions
-              id={`links-${retrievalId}`}
-              fileContents={granuleLinks.join('\n')}
-              fileName={downloadFileName}
-              clipboardContents={granuleLinks.join('\n')}
-              modalTitle="Download Links"
-            >
-              <ul className="download-links-panel__list">
-                {
-                granuleLinks.map((link, i) => {
-                  const key = `link_${i}`
-                  return (
-                    <li key={key}>
-                      <a href={link}>{link}</a>
-                    </li>
-                  )
-                })
-              }
-              </ul>
-            </TextWindowActions>
-          </>
-        )
-          : (
-            <p className="order-status-item__tab-intro">
-              The download links will become available once the order has finished processing
-            </p>
-          )
-      }
+      <p className="order-status-item__tab-intro">
+        <span className="order-status-item__status-text">
+          {`(${granuleLinks.length} of ${totalLinks} links retrieved)`}
+        </span>
+      </p>
+      <TextWindowActions
+        id={`links-${retrievalId}`}
+        fileContents={granuleLinks.join('\n')}
+        fileName={downloadFileName}
+        clipboardContents={granuleLinks.join('\n')}
+        modalTitle="Download Links"
+      >
+        <ul className="download-links-panel__list">
+          {
+          granuleLinks.map((link, i) => {
+            const key = `link_${i}`
+            return (
+              <li key={key}>
+                <a href={link}>{link}</a>
+              </li>
+            )
+          })
+        }
+        </ul>
+      </TextWindowActions>
     </>
   )
+    : (
+      <p className="order-status-item__tab-intro">
+        The download links will become available once the order has finished processing
+      </p>
+    )
 }
 
-const DownloadScriptPanel = ({
+DownloadLinksPanel.propTypes = {
+  accessMethodType: PropTypes.string.isRequired,
+  granuleLinks: PropTypes.arrayOf(
+    PropTypes.string
+  ).isRequired,
+  retrievalId: PropTypes.string.isRequired,
+  totalLinks: PropTypes.number.isRequired
+}
+
+export const DownloadScriptPanel = ({
   accessMethodType,
   granuleLinks,
   retrievalCollection,
   retrievalId,
   totalLinks
 }) => {
-  // TODO: Should this account for duplicate accessmethods on a retrieval
   const downloadFileName = `${retrievalId}-${accessMethodType}.sh`
 
-  return (
-    <>
-      {
-        granuleLinks.length > 0
-          ? (
-            <>
-              <div className="order-status-item__tab-intro">
-                <span className="order-status-item__status-text">
-                  {` (${granuleLinks.length} of ${totalLinks} links retrieved)`}
-                </span>
-                <h5 className="mt-2">How to use this script</h5>
-                <p className="collection-download-display__intro">
-                  <strong>Linux: </strong>
-                  { 'You must first make the script an executable by running the line \'chmod 777 download.sh\' from the command line. After that is complete, the file can be executed by typing \'./download.sh\'. ' }
-                  { 'For a detailed walk through of this process, please reference this ' }
-                  <a href="https://wiki.earthdata.nasa.gov/display/EDSC/How+To%3A+Use+the+Download+Access+Script">How To guide</a>
-                  { '.' }
-                </p>
-                <p>
-                  <strong>Windows: </strong>
-                  {
-                    'The file can be executed within Windows by first installing a Unix-like command line utility such as '
-                  }
-                  <a href="https://www.cygwin.com/">Cygwin</a>
-                  {
-                    '. After installing Cygwin (or a similar utility), run the line \'chmod 777 download.sh\' from the utility\'s command line, and then execute by typing \'./download.sh\'.'
-                  }
-                </p>
-              </div>
-              <TextWindowActions
-                id={`script-${retrievalId}`}
-                fileContents={generateDownloadScript(granuleLinks, retrievalCollection)}
-                fileName={downloadFileName}
-                clipboardContents={generateDownloadScript(granuleLinks, retrievalCollection)}
-                modalTitle="Download Script"
-              >
-                <pre className="download-links-panel__pre">
-                  {
-                    generateDownloadScript(granuleLinks, retrievalCollection)
-                  }
-                </pre>
-              </TextWindowActions>
-            </>
-          )
-          : (
-            <p className="order-status-item__tab-intro">
-                The download script will become available once the order has finished processing
-            </p>
-          )
-      }
-    </>
-  )
+  return granuleLinks.length > 0
+    ? (
+      <>
+        <div className="order-status-item__tab-intro">
+          <span className="order-status-item__status-text">
+            {`(${granuleLinks.length} of ${totalLinks} links retrieved)`}
+          </span>
+          <h5 className="mt-2">How to use this script</h5>
+          <p className="collection-download-display__intro">
+            <strong>Linux: </strong>
+            { 'You must first make the script an executable by running the line \'chmod 777 download.sh\' from the command line. After that is complete, the file can be executed by typing \'./download.sh\'. ' }
+            { 'For a detailed walk through of this process, please reference this ' }
+            <a href="https://wiki.earthdata.nasa.gov/display/EDSC/How+To%3A+Use+the+Download+Access+Script">How To guide</a>
+            { '.' }
+          </p>
+          <p>
+            <strong>Windows: </strong>
+            {
+              'The file can be executed within Windows by first installing a Unix-like command line utility such as '
+            }
+            <a href="https://www.cygwin.com/">Cygwin</a>
+            {
+              '. After installing Cygwin (or a similar utility), run the line \'chmod 777 download.sh\' from the utility\'s command line, and then execute by typing \'./download.sh\'.'
+            }
+          </p>
+        </div>
+        <TextWindowActions
+          id={`script-${retrievalId}`}
+          fileContents={generateDownloadScript(granuleLinks, retrievalCollection)}
+          fileName={downloadFileName}
+          clipboardContents={generateDownloadScript(granuleLinks, retrievalCollection)}
+          modalTitle="Download Script"
+        >
+          <pre className="download-links-panel__pre">
+            {
+              generateDownloadScript(granuleLinks, retrievalCollection)
+            }
+          </pre>
+        </TextWindowActions>
+      </>
+    )
+    : (
+      <p className="order-status-item__tab-intro">
+          The download script will become available once the order has finished processing
+      </p>
+    )
 }
 
+DownloadScriptPanel.propTypes = {
+  accessMethodType: PropTypes.string.isRequired,
+  granuleLinks: PropTypes.arrayOf(
+    PropTypes.string
+  ).isRequired,
+  retrievalCollection: PropTypes.shape({}).isRequired,
+  retrievalId: PropTypes.string.isRequired,
+  totalLinks: PropTypes.number.isRequired
+}
 
 export class OrderStatusItem extends PureComponent {
   constructor(props) {
@@ -156,17 +160,17 @@ export class OrderStatusItem extends PureComponent {
       granuleDownload,
       onFetchRetrievalCollection,
       onFetchRetrievalCollectionGranuleLinks,
-      order
+      collection
     } = this.props
 
-    const { access_method: accessMethod } = order
+    const { access_method: accessMethod } = collection
     const { type: accessMethodType } = accessMethod
 
     // TODO: Add a second value and refresh at different intervals for the different types of orders
     const { orderStatusRefreshTime } = getApplicationConfig()
 
-    if (order && !['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
-      const { id } = order
+    if (collection && !['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
+      const { id } = collection
 
       if (id) {
         // Fetch the retrieval collection before waiting for the interval
@@ -174,24 +178,20 @@ export class OrderStatusItem extends PureComponent {
 
         // Start refreshing the retrieval collection
         this.intervalId = setInterval(() => {
-          try {
-            this.shouldRefresh()
-          } catch (e) {
-            console.log(e)
-          }
+          this.shouldRefresh()
         }, orderStatusRefreshTime)
       }
     }
 
-    if (order && ['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
-      const { id } = order
+    if (collection && ['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
+      const { id } = collection
       const {
         [id]: granuleLinks = [],
         isLoading: granuleLinksIsLoading
       } = granuleDownload
 
       if (granuleLinks.length === 0 && !granuleLinksIsLoading) {
-        onFetchRetrievalCollectionGranuleLinks(order)
+        onFetchRetrievalCollectionGranuleLinks(collection)
       }
     }
   }
@@ -211,14 +211,14 @@ export class OrderStatusItem extends PureComponent {
 
   shouldRefresh() {
     const {
-      order,
+      collection,
       onFetchRetrievalCollection
     } = this.props
 
     const {
       id,
       orders = []
-    } = order
+    } = collection
 
     const orderStatus = aggregatedOrderStatus(orders)
 
@@ -236,25 +236,20 @@ export class OrderStatusItem extends PureComponent {
     } = this.state
 
     const {
-      collectionId,
       granuleDownload,
       onChangePath,
-      onFetchRetrieval,
-      onFetchRetrievalCollectionGranuleLinks,
-      order
+      collection
     } = this.props
-
-    let collectionMetadata
 
     const {
       access_method: accessMethod,
-      collection_metadata: collectionsMetadata,
+      collection_metadata: collectionMetadata,
       granule_count: granuleCount,
       orders = [],
       id,
       isLoaded,
       retrieval_id: retrievalId
-    } = order
+    } = collection
 
     const { type: accessMethodType } = accessMethod
 
@@ -266,28 +261,10 @@ export class OrderStatusItem extends PureComponent {
     const hasStatus = !['download', 'opendap'].includes(accessMethodType.toLowerCase())
 
     if (isLoaded) {
-      let browseFlag
-      let title
-
-      if (collectionsMetadata && collectionsMetadata.title) {
-        collectionMetadata = collectionsMetadata;
-
-        ({
-          browseFlag,
-          title
-        } = collectionMetadata)
-      } else if (
-        collectionsMetadata
-        && collectionsMetadata[collectionId]
-        && collectionsMetadata[collectionId].title
-      ) {
-        collectionMetadata = collectionsMetadata[collectionId];
-
-        ({
-          browseFlag,
-          title
-        } = collectionMetadata)
-      }
+      const {
+        browseFlag,
+        title
+      } = collectionMetadata
 
       const orderStatus = aggregatedOrderStatus(orders)
       const stateFromOrderStatus = getStateFromOrderStatus(orderStatus)
@@ -322,18 +299,18 @@ export class OrderStatusItem extends PureComponent {
 
       if (isDownload) {
         progressPercentage = 100
-        orderInfo = 'Download your data directly from the links below, or use the provided download script. '
-        if (granuleLinks.length > 1) downloadUrls = [...granuleLinks]
+        orderInfo = 'Download your data directly from the links below, or use the provided download script.'
+        if (granuleLinks.length > 0) downloadUrls = [...granuleLinks]
       }
 
       if (isOpendap) {
         progressPercentage = 100
-        orderInfo = 'Download your data directly from the links below, or use the provided download script. '
-        if (granuleLinks.length > 1) downloadUrls = [...granuleLinks]
+        orderInfo = 'Download your data directly from the links below, or use the provided download script.'
+        if (granuleLinks.length > 0) downloadUrls = [...granuleLinks]
       }
 
       if (isEchoOrders) {
-        if (stateFromOrderStatus === 'creating') {
+        if (stateFromOrderStatus === 'creating' || stateFromOrderStatus === 'in_progress') {
           progressPercentage = 0
           orderInfo = 'Your order has been created and sent to the data provider. You will recieve an email when your order is processed and ready to download.'
         }
@@ -395,11 +372,12 @@ export class OrderStatusItem extends PureComponent {
               totalNumber: currentTotalNumber = 0
             } = requestStatus
 
-            if (currentStatus === 'complete') {
+            if (currentStatus === 'complete' || currentStatus === 'failed') {
               totalCompleteOrders += 1
             }
 
-            downloadUrls.push(...currentDownloadUrls)
+            // The XML Parser seems to add an extra, empty string to the end of download urls -- filter falsey data
+            downloadUrls.push(...currentDownloadUrls.filter(Boolean))
             totalNumber += currentTotalNumber
             totalProcessed += currentNumberProcessed
             totalOrders += 1
@@ -426,7 +404,7 @@ export class OrderStatusItem extends PureComponent {
               jobId = false
             } = orderInformation
 
-            if (status === 'successful') {
+            if (status === 'successful' || status === 'failed') {
               totalCompleteOrders += 1
             }
 
@@ -443,7 +421,14 @@ export class OrderStatusItem extends PureComponent {
               .filter(({ rel }) => rel === 'data')
               .map(({ href }) => href))
 
-            totalProgress += progress
+            if (status === 'failed') {
+              // If the order failed, Harmony will tell us its something less
+              // than 100% complete, overwrite that here to consider this order complete
+              totalProgress += 100
+            } else {
+              totalProgress += progress
+            }
+
             totalOrders += 1
           })
 
@@ -486,10 +471,10 @@ export class OrderStatusItem extends PureComponent {
                       )
                     }
                   </span>
-                  <span className="order-status-item__meta-column">
+                  <span className="order-status-item__meta-column order-status-item__meta-column--access-method">
                     {upperFirst(accessMethodType)}
                   </span>
-                  <span className="order-status-item__meta-column">
+                  <span className="order-status-item__meta-column order-status-item__meta-column--granules">
                     {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
                   </span>
                 </>
@@ -504,9 +489,9 @@ export class OrderStatusItem extends PureComponent {
               onClick={this.onOpenClick}
             />
           </header>
-          <div className="order-status-item__body">
-            {
-              opened && (
+          {
+            opened && (
+              <div className="order-status-item__body">
                 <div className="order-status-item__body-header">
                   <div className="order-status-item__body-header-primary">
                     <div className="order-status-item__meta-row">
@@ -556,7 +541,7 @@ export class OrderStatusItem extends PureComponent {
                       </div>
                       <div className="order-status-item__meta">
                         <h4 className="order-status-item__meta-heading">Granules</h4>
-                        <div className="order-status-item__meta-body order-status-item__meta-body--access-method">
+                        <div className="order-status-item__meta-body order-status-item__meta-body--granules">
                           {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
                         </div>
                       </div>
@@ -591,119 +576,107 @@ export class OrderStatusItem extends PureComponent {
                     }
                   </div>
                 </div>
-              )
-            }
-            <EDSCTabs className="order-status-item__tabs">
-              {
-                (
-                  isDownload
-                  || isOpendap
-                  || isEsi
-                  || isHarmony
-                ) && (
-                  <Tab
-                    className={processingComplete ? '' : 'order-status-item__tab-status'}
-                    title="Download Links"
-                    eventKey="download-links"
-                  >
-                    <DownloadLinksPanel
-                      accessMethodType={accessMethodType}
-                      totalLinks={granuleCount}
-                      granuleLinks={downloadUrls}
-                      isEsi={isEsi}
-                      isDownload={isDownload}
-                      isOpendap={isOpendap}
-                      isHarmony={isHarmony}
-                      onFetchRetrieval={onFetchRetrieval}
-                      onFetchRetrievalCollectionGranuleLinks={
-                        onFetchRetrievalCollectionGranuleLinks
-                      }
-                      retrievalId={retrievalId}
-                      retrievalCollection={order}
-                    />
-                  </Tab>
-                )
-              }
-              {
-                (isDownload || isOpendap) && (
-                  <Tab
-                    className={processingComplete ? '' : 'order-status-item__tab-status'}
-                    title="Download Script"
-                    eventKey="download-script"
-                  >
-                    <DownloadScriptPanel
-                      accessMethodType={accessMethodType}
-                      granuleLinks={granuleLinks}
-                      isEsi={isEsi}
-                      isDownload={isDownload}
-                      isOpendap={isOpendap}
-                      onFetchRetrieval={onFetchRetrieval}
-                      onFetchRetrievalCollectionGranuleLinks={
-                        onFetchRetrievalCollectionGranuleLinks
-                      }
-                      retrievalId={retrievalId}
-                      retrievalCollection={order}
-                      totalLinks={granuleCount}
-                    />
-                  </Tab>
-                )
-              }
-              {
-                (
-                  (isEchoOrders && browseFlag)
-                  || (isEsi && browseFlag)
-                ) && (
-                  <Tab
-                    title="Imagery"
-                    eventKey="browse-imagery"
-                  >
-                    <PortalLinkContainer
-                      className="order-status-item__button order-status-item__button--browse-links"
-                      to={{
-                        pathname: `/granules/download/${id}`,
-                        search: '?browse=true'
-                      }}
-                      onClick={() => onChangePath(`/granules/download/${id}?browse=true`)}
-                    >
-                      <Button
-                        bootstrapVariant="primary"
-                        bootstrapSize="sm"
-                        label="View Browse Image Links"
-                        tooltip="View clickable browse image links in the browser"
-                        tooltipPlacement="bottom"
-                        tooltipId="tooltip__download-links"
+                <EDSCTabs className="order-status-item__tabs">
+                  {
+                    (
+                      isDownload
+                      || isOpendap
+                      || isEsi
+                      || isHarmony
+                    ) && (
+                      <Tab
+                        className={(isHarmony || processingComplete) ? '' : 'order-status-item__tab-status'}
+                        title="Download Links"
+                        eventKey="download-links"
                       >
-                        View Browse Image Links
-                      </Button>
-                    </PortalLinkContainer>
-                  </Tab>
-                )
-              }
-              {
-                ((isHarmony || isEsi) && orders.length) && (
-                  <Tab
-                    title="Order Status"
-                    eventKey="order-status"
-                  >
-                    <p className="order-status-item__tab-intro">
-                      Due to the number of granules included in the request, it has been split into multiple orders. The data for each order will become available as they are processed.
-                    </p>
-                    {
-                      (contactName && contactEmail) && (
-                        <p className="order-status-item-body__contact">
-                          {`For assistance, please contact ${contactName} at `}
-                          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                        </p>
-                      )
-                    }
-                    <OrderProgressList
-                      orders={orders}
-                    />
-                  </Tab>
-                )
-              }
-            </EDSCTabs>
-          </div>
+                        <DownloadLinksPanel
+                          accessMethodType={accessMethodType}
+                          granuleLinks={downloadUrls}
+                          retrievalId={retrievalId}
+                          totalLinks={granuleCount}
+                        />
+                      </Tab>
+                    )
+                  }
+                  {
+                    (isDownload || isOpendap) && (
+                      <Tab
+                        className={processingComplete ? '' : 'order-status-item__tab-status'}
+                        title="Download Script"
+                        eventKey="download-script"
+                      >
+                        <DownloadScriptPanel
+                          accessMethodType={accessMethodType}
+                          granuleLinks={granuleLinks}
+                          retrievalCollection={collection}
+                          retrievalId={retrievalId}
+                          totalLinks={granuleCount}
+                        />
+                      </Tab>
+                    )
+                  }
+                  {
+                    (
+                      (isEchoOrders && browseFlag)
+                      || (isEsi && browseFlag)
+                    ) && (
+                      <Tab
+                        title="Imagery"
+                        eventKey="browse-imagery"
+                      >
+                        <PortalLinkContainer
+                          className="order-status-item__button order-status-item__button--browse-links"
+                          to={{
+                            pathname: `/granules/download/${id}`,
+                            search: '?browse=true'
+                          }}
+                          onClick={() => onChangePath(`/granules/download/${id}?browse=true`)}
+                        >
+                          <Button
+                            bootstrapVariant="primary"
+                            bootstrapSize="sm"
+                            label="View Browse Image Links"
+                            tooltip="View clickable browse image links in the browser"
+                            tooltipPlacement="bottom"
+                            tooltipId="tooltip__download-links"
+                          >
+                            View Browse Image Links
+                          </Button>
+                        </PortalLinkContainer>
+                      </Tab>
+                    )
+                  }
+                  {
+                    (isEsi && orders.length > 0) && (
+                      <Tab
+                        title="Order Status"
+                        eventKey="order-status"
+                      >
+                        {
+                          orders.length > 1 && (
+                            <p className="order-status-item__tab-intro">
+                              {'Due to the number of granules included in the request, it has been split into multiple orders. The data for each order will become available as they are processed.'}
+                            </p>
+                          )
+                        }
+                        {
+                          (contactName && contactEmail) && (
+                            <p className="order-status-item-body__contact">
+                              {`For assistance, please contact ${contactName} at `}
+                              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                            </p>
+                          )
+                        }
+                        <OrderProgressList
+                          orders={orders}
+                        />
+                      </Tab>
+                    )
+                  }
+                </EDSCTabs>
+              </div>
+            )
+          }
         </li>
       )
     }
@@ -720,10 +693,9 @@ OrderStatusItem.defaultProps = {
 OrderStatusItem.propTypes = {
   defaultOpen: PropTypes.bool,
   granuleDownload: PropTypes.shape({}).isRequired,
-  order: PropTypes.shape({}).isRequired,
+  collection: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired
 }

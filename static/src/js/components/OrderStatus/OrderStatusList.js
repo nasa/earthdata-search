@@ -12,12 +12,12 @@ export const OrderStatusList = ({
   onFetchRetrieval,
   onFetchRetrievalCollection,
   onFetchRetrievalCollectionGranuleLinks,
-  orders
+  collections
 }) => (
   <div className="order-status-list">
     <ul className="order-status-list__list">
       {
-        orders && orders.map((order) => {
+        collections && collections.map((order) => {
           const {
             collection_id: collectionId,
             id
@@ -26,9 +26,8 @@ export const OrderStatusList = ({
           return (
             <OrderStatusItem
               key={id + collectionId}
-              collectionId={collectionId}
-              order={order}
-              defaultOpen={orders.length === 1}
+              collection={order}
+              defaultOpen={collections.length === 1}
               match={match}
               granuleDownload={granuleDownload}
               onChangePath={onChangePath}
@@ -44,7 +43,7 @@ export const OrderStatusList = ({
 )
 
 OrderStatusList.defaultProps = {
-  orders: []
+  collections: []
 }
 
 OrderStatusList.propTypes = {
@@ -54,7 +53,7 @@ OrderStatusList.propTypes = {
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
-  orders: PropTypes.arrayOf(PropTypes.shape({}))
+  collections: PropTypes.arrayOf(PropTypes.shape({}))
 }
 
 export default OrderStatusList
