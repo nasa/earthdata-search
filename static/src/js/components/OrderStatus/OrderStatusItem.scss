@@ -1,19 +1,27 @@
 $item-height: 3rem;
 
 .order-status-item {
-  padding: 0 $spacer;
-  border-top: 1px solid $color__black--300;
-  border-left: 0;
-  border-right: 0;
+  position: relative;
+  margin-bottom: 0.5rem;
+  border: 1px solid $color__black--300;
+  z-index: 0;
+  background: $color__white;
+  border-radius: $border-radius;
 
   &:last-child {
     border-bottom: 1px solid $color__black--300;
+  }
+
+  &--is-opened {
+    box-shadow: 0 0 0.75rem -0.125rem rgba($color__black, 0.15);
+    z-index: 1;
   }
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 $spacer;
   }
 
   &__heading {
@@ -31,9 +39,7 @@ $item-height: 3rem;
     white-space: nowrap;
 
     .order-status-item--is-opened & {
-      text-overflow: clip;
-      overflow: visible;
-      white-space: wrap;
+      width: auto;
     }
   }
 
@@ -51,23 +57,68 @@ $item-height: 3rem;
     }
   }
 
-  &__meta {
+  &__meta-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5*$spacer;
+  }
+
+  &__meta {
+    min-width: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: $spacer;
     width: auto;
     font-size: 0.775rem;
     color: $color__black--600;
   }
 
-  &__body-header {
+  &__meta-heading {
+    margin-bottom: 0.125*$spacer;
+    font-size: 0.775rem;
+    color: $color__black--400;
+  }
+
+  &__meta-body {
+    &--progress {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__progress-meta {
     display: flex;
+    flex-direction: column;
+  }
+
+  &__body-header {
+    padding-top: 0;
+  }
+
+  &__body-header-primary {
+    display: flex;
+    flex-direction: column;
+    padding: $spacer;
+    padding-bottom: 0.875rem;
+    padding-top: 0;
   }
 
   &__progress-ring {
     margin-right: $spacer/4;
+
+    .progress-ring__circle-back {
+      animation: pulse 1s alternate infinite;
+    }
+
+    .order-status-item--in_progress &,
+    .order-status-item--complete &,
+    .order-status-item--failed & {
+      .progress-ring__circle-back {
+        animation: none;
+      }
+    }
+
     .order-status-item &,
     .order-status-item--in_progress & {
       .progress-ring__progress {
@@ -99,7 +150,7 @@ $item-height: 3rem;
 
   &__stats {
     display: inline-block;
-  margin: 0;
+    margin: 0;
     padding: 0;
     font-weight: 700;
     font-size: 1rem;
@@ -120,17 +171,48 @@ $item-height: 3rem;
 
   &__orders-processed {
     display: inline-block;
-    margin-left: $spacer/4;
     font-size: 0.725rem;
     line-height: 1rem;
     font-weight: 300;
     color: $color__black--500;
   }
 
+  &__additional-info {
+    background-color: $color__black--200;
+  }
+
+  &__order-info {
+    font-size: 0.775rem;
+  }
+
+  &__message {
+    padding: 0.875rem $spacer;
+    background-color: $color__pale-yellow;
+    border: 1px solid $color__pale-yellow--dark;
+    border-left: 0;
+    border-right: 0;
+
+    &--is-error {
+      background-color: $color__pale-red;
+      border-color: $color__pale-red--dark;
+    }
+  }
+
+  &__message-heading {
+    margin-bottom: $spacer*0.25;
+    font-size: 0.775rem;
+    color: rgba($color__black, 0.5);
+  }
+
+  &__message-body {
+    margin-bottom: 0;
+    font-size: 0.775rem;
+    color: rgba($color__black, 0.7);
+  }
+
   &__body {
     display: none;
     flex-direction: column;
-    margin-bottom: $spacer;
 
     .order-status-item--is-opened & {
       display: block;
@@ -138,6 +220,9 @@ $item-height: 3rem;
   }
 
   &__tabs {
+    border-top: 1px solid $color__black--300;
+    background-color: $color__black--200;
+
     .tab-content {
       display: flex;
       flex-direction: column;
@@ -152,7 +237,11 @@ $item-height: 3rem;
       flex-direction: column;
 
       &.active {
-        display: flex;
+        &.order-status-item__tab-status {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
     }
   }
@@ -160,20 +249,19 @@ $item-height: 3rem;
   &__tab-intro {
     flex-grow: 0;
     flex-shrink: 0;
+
+    .order-status-item__tab-status & {
+      font-size: 1.125rem;
+      color: $color__black--500;
+      max-width: 30rem;
+      text-align: center;
+    }
   }
 
   &__status-text {
     font-style: italic;
     font-size: 0.825rem;
     color: $color__black--500;
-  }
-
-  &__order-info {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    padding-top: 0;
-    border-bottom: 1px solid $color__black--200;
   }
 
   .text-window-actions {
@@ -206,5 +294,15 @@ $item-height: 3rem;
   &__pre {
     margin: 0;
     padding: 0;
+  }
+}
+
+@keyframes pulse {
+  from {
+    stroke: $color__black--300;
+  }
+
+  to {
+    stroke: $color__black--500;
   }
 }

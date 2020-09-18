@@ -1,6 +1,8 @@
 
 .edsc-tabs {
   &__tabs {
+    border-bottom: 1px solid $color__black--300;
+
     .nav-link {
       border-radius: 0;
       background-color: transparent;
@@ -15,16 +17,13 @@
 
     > .nav-link.active {
       border: 0;
-      border-bottom: 4px solid $color__blue;
+      border-bottom: 4px solid $color__blue--dark;
       background-color: transparent;
       color: $color__black--700;
     }
   }
 
   .tab-content {
-    margin-bottom: $spacer;
     padding: $spacer;
-    background-color: $color__black--200;
-    border: 1px solid $color__black--200;
   }
 }

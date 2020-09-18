@@ -14,7 +14,7 @@ export const ousFormatMapping = {
  * this is a map between UMM-S values and their respective mimetypes
  */
 export const harmonyFormatMapping = {
-  'NETCDF-4': 'application/netcdf',
+  'NETCDF-4': 'application/x-netcdf4',
   GEOTIFF: 'image/tiff',
   GIF: 'image/gif',
   PNG: 'image/png',
