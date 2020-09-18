@@ -72,12 +72,11 @@ const encodeSelectedVariables = (projectCollection) => {
 
   if (!accessMethods || !selectedAccessMethod) return null
 
-  const selectedMethod = accessMethods[selectedAccessMethod]
-  const {
-    selectedVariables
-  } = selectedMethod
+  const { [selectedAccessMethod]: selectedAccessMethodObj = {} } = accessMethods
 
-  if (!selectedVariables) return null
+  const { selectedVariables = [] } = selectedAccessMethodObj
+
+  if (selectedVariables.length === 0) return null
 
   return selectedVariables.join('!')
 }
