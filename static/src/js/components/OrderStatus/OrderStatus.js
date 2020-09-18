@@ -86,7 +86,7 @@ export class OrderStatus extends Component {
       </p>
     )
 
-    const allOrders = [
+    const allCollections = [
       ...downloads,
       ...opendapOrders,
       ...echoOrders,
@@ -112,7 +112,7 @@ export class OrderStatus extends Component {
             {
               isLoaded && (
                 <OrderStatusList
-                  orders={allOrders}
+                  collections={allCollections}
                   match={match}
                   granuleDownload={granuleDownload}
                   retrievalCollection={retrievalCollection}
