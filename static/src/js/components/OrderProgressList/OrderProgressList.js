@@ -13,6 +13,8 @@ export const OrderProgressList = ({
       orders.map((order) => {
         const { order_number: orderNumber } = order
 
+        if (orderNumber == null) return null
+
         return (
           <OrderProgressItem
             key={orderNumber}

@@ -52,6 +52,7 @@ export const OrderProgressItem = ({
       [`order-progress-item__badge--${kebabCase(getStateFromOrderStatus(orderStatus))}`]: getStateFromOrderStatus(orderStatus)
     }
   )
+
   return (
     <li
       key={orderId}

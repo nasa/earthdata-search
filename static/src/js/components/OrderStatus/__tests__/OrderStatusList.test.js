@@ -15,7 +15,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    orders: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.echo_orders),
+    collections: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.echo_orders),
     granuleDownload: {},
     heading: 'Stage For Delivery',
     introduction: 'When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.',
@@ -51,13 +51,12 @@ describe('OrderStatus component', () => {
   describe('list', () => {
     test('renders correctly', () => {
       const { enzymeWrapper, props } = setup()
-      console.log('enzymeWrapper', enzymeWrapper.debug())
+
       expect(enzymeWrapper.find(OrderStatusItem).length).toEqual(1)
       expect(enzymeWrapper.find(OrderStatusItem).at(0).props()).toEqual({
-        collectionId: 'TEST_COLLECTION_111',
         defaultOpen: true,
         granuleDownload: {},
-        order: {
+        collection: {
           collection_id: 'TEST_COLLECTION_111',
           collection_metadata: {
             id: 'C10000001-EDSC',
@@ -68,6 +67,7 @@ describe('OrderStatus component', () => {
           },
           orders: [
             {
+              type: 'ECHO ORDERS',
               order_number: '92567A0B-D146-B396-583B-D8C3487CE087',
               state: 'PROCESSING',
               order_information: {
