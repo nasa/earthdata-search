@@ -44,7 +44,7 @@ export const formatGranulesList = ({
       onlineAccessFlag,
       originalFormat,
       producerGranuleId,
-      granuleThumbnail,
+      thumbnail: granuleThumbnail,
       title
     } = granule
 
