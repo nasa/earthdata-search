@@ -267,6 +267,8 @@ export const CollectionDetailsBody = ({
                       </dt>
                       <dd>
                         {
+                          // Using an array index in a key to prevent any duplicate keys when
+                          // there are duplicate supported input formats
                           Object.keys(reformattings).map((supportedInputFormat, i) => {
                             const {
                               [supportedInputFormat]: supportedOutputFormats

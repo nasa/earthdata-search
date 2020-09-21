@@ -6,11 +6,13 @@
     align-items: center;
     font-size: 0.875rem;
   }
+
   &__tree-switcher-buttons {
     background-color: $color__black--200;
     margin-left: 0.5rem;
     border-radius: .125rem;
   }
+
   &__tree-switcher-button {
     text-align: left;
     background-color: transparent;
@@ -25,11 +27,13 @@
       cursor: pointer;
     }
   }
+
   &__list {
     margin: 0;
     padding: 0;
     list-style: none;
   }
+
   &__list-item {
     position: relative;
     display: flex;
@@ -37,6 +41,7 @@
       background-color: $color__black--100;
     }
   }
+
   &__selected-count {
     position: absolute;
     top: 50%;
