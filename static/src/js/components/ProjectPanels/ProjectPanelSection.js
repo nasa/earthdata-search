@@ -6,13 +6,13 @@ import './ProjectPanelSection.scss'
 
 /**
  * Renders ProjectPanelSection.
- * @param {object} props - The props passed into the component.
- * @param {node} props.children - The section children.
- * @param {object} props.heading - The text to be used for the section heading.
- * @param {object} props.headingLevel - A custom heading level. Defaults to 'h3'
- * @param {object} props.intro - A custom heading level. Defaults to 'h3'
- * @param {object} props.nested - Displays the component as a nested section.
- * @param {object} props.step - Adds a step to the heading of the component.
+ * @param {Objectf} props - The props passed into the component.
+ * @param {Node} props.children - The section children.
+ * @param {String} props.heading - The text to be used for the section heading.
+ * @param {String} props.headingLevel - A custom heading level. Defaults to 'h3'
+ * @param {String} props.intro - Custom intro text.
+ * @param {Boolean} props.nested - Displays the component as a nested section.
+ * @param {Number} props.step - Adds a step to the heading of the component.
  */
 export const ProjectPanelSection = ({
   children,
@@ -42,9 +42,7 @@ export const ProjectPanelSection = ({
             {
               step && (
                 <span className="project-panel-section__step">
-                  {
-                    step.toString()
-                  }
+                  {step.toString()}
                 </span>
               )
             }

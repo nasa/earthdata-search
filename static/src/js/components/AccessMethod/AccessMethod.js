@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, { Component, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { pluralize } from '../../util/pluralize'
 

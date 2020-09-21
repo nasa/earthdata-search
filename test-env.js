@@ -1,5 +1,3 @@
-// import { JSDOM } from 'jsdom'
-
 /**
  * Set up globals
  */
