@@ -60,6 +60,11 @@
     description: Iterate over all CMR collections adding tags specific to EDSC
     timeout: 600
 
+  fixRetrievalCollectionMetadata:
+    handler: serverless/src/fixRetrievalCollectionMetadata/handler.default
+    description: Fixes retrieval collection metadata that was improperly written
+    timeout: 900
+
   #
   # SQS Lambdas
   #
