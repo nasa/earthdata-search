@@ -19,10 +19,10 @@ export const ProgressRing = ({
   // Calculate the radius for the current width and stroke width
   const radius = (width / 2) - strokeWidth
 
-  const circumference = radius * 2 * Math.PI
+  const circumference = (radius * 2) * Math.PI
 
   // Calculate the offset to be used on the stroke
-  const offset = circumference - progress / 100 * circumference
+  const offset = circumference - ((progress / 100) * circumference)
 
   // Set the styles for the progress circle
   const circleStyles = {

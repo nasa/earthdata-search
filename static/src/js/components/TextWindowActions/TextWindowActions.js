@@ -43,7 +43,6 @@ export const TextWindowActions = ({
   const copyToClipboard = () => {
     if (textareaElRef.current) {
       textareaElRef.current.select()
-      textareaElRef.current.select()
       document.execCommand('copy')
       setCopySuccess(true)
     }
