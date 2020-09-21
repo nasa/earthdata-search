@@ -18,7 +18,7 @@ function setup(overrides) {
       id: 'G1924512983-LANCEMODIS',
       originalFormat: 'ECHO10',
       granuleSize: '5.89015102386475',
-      browseFlag: false,
+      browseFlag: true,
       polygons: [
         [
           '49.9154 -179.9921 49.916 -171.1374 52.3227 -170.9023 52.3246 179.7724 49.9154 -179.9921'
@@ -158,6 +158,7 @@ describe('granule metadata', () => {
     const { granulesList, granulesMetadata } = setup()
 
     expect(granulesList[0].title).toEqual(granulesMetadata['G1924512983-LANCEMODIS'].producerGranuleId)
+    expect(granulesList[0].thumbnail).toEqual(granulesMetadata['G1924512983-LANCEMODIS'].thumbnail)
   })
 
   test('returns the title as title if producerGranuleId does not exist', () => {
