@@ -1170,3 +1170,99 @@ describe('fetchOpendapLinks', () => {
     })
   })
 })
+
+describe('applyGranuleFilters', () => {
+  describe('when the focused collection is not in the project', () => {
+    test('it does not request project granules', () => {
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
+      getProjectGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        authToken: 'token',
+        focusedCollection: 'C100000-EDSC',
+        query: {
+          collection: {
+            byId: {
+              'C100000-EDSC': {
+                granules: {
+                  pageNum: 1
+                }
+              }
+            }
+          }
+        }
+      })
+
+      store.dispatch(actions.applyGranuleFilters({ pageNum: 2 }))
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: 'UPDATE_GRANULE_SEARCH_QUERY',
+        payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
+      })
+
+      expect(getSearchGranulesMock).toBeCalledTimes(1)
+      expect(getProjectGranulesMock).toBeCalledTimes(0)
+    })
+  })
+
+  describe('when the focused collection is in the project', () => {
+    test('it also requests project granules', () => {
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
+      getProjectGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        authToken: 'token',
+        focusedCollection: 'C100000-EDSC',
+        metadata: {
+          collections: {
+            'C100000-EDSC': {
+              hasGranules: true
+            }
+          }
+        },
+        project: {
+          collections: {
+            allIds: ['C100000-EDSC'],
+            byId: {
+              'C100000-EDSC': {
+                granules: {
+                  addedGranuleIds: [],
+                  removedGranuleIds: []
+                }
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            byId: {
+              'C100000-EDSC': {
+                granules: {
+                  pageNum: 1
+                }
+              }
+            }
+          }
+        }
+      })
+
+      store.dispatch(actions.applyGranuleFilters({ pageNum: 2 }))
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: 'UPDATE_GRANULE_SEARCH_QUERY',
+        payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
+      })
+
+      expect(getSearchGranulesMock).toBeCalledTimes(1)
+      expect(getProjectGranulesMock).toBeCalledTimes(1)
+    })
+  })
+})
