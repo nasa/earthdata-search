@@ -662,7 +662,7 @@ export class OrderStatusItem extends PureComponent {
                     )
                   }
                   {
-                    (isEsi && orders.length > 0) && (
+                    ((isEsi || isHarmony) && orders.length > 0) && (
                       <Tab
                         title="Order Status"
                         eventKey="order-status"
