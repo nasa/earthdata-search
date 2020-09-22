@@ -528,7 +528,70 @@ class SpatialDisplay extends Component {
 
     let hint = ''
 
-    if ((pointSearch && !drawingNewLayer) || drawingNewLayer === 'marker' || manuallyEntering === 'marker') {
+    if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
+      && !drawingNewLayer)
+      || drawingNewLayer === 'shapefile') {
+      // if (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
+      // render the shapefile display
+      entry = (
+        <SpatialDisplayEntry>
+          <Row className="spatial-display__form-row">
+            {
+              shapefileName && (
+                <>
+                  <span className="spatial-display__text-primary">{shapefileName}</span>
+                  {
+                    shapefileSize && (
+                      <span className="spatial-display__text-secondary">{`(${shapefileSize})`}</span>
+                    )
+                  }
+                  {
+                    shapefileLoading && (
+                      <span className="spatial-display__loading">
+                        <Spinner
+                          className="spatial-display__loading-icon"
+                          animation="border"
+                          variant="light"
+                          size="sm"
+                        />
+                        Loading...
+                      </span>
+                    )
+                  }
+                </>
+              )
+            }
+          </Row>
+        </SpatialDisplayEntry>
+      )
+
+      if (shapefileLoaded && !selectedFeatures.length) {
+        hint = 'Select a shape to filter results'
+      }
+
+      if (selectedFeatures.length) {
+        hint = `${selectedFeatures.length} ${pluralize('shape', selectedFeatures.length)} selected`
+      }
+
+      if (shapefileError) {
+        const { type } = shapefileError
+
+        if (type === 'upload_shape') {
+          spatialError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+        }
+      }
+
+      secondaryTitle = 'Shape File'
+
+      contents.push((
+        <FilterStackContents
+          key="filter__shapefile"
+          body={entry}
+          title="Shape File"
+          hint={hint}
+        />
+      ))
+    } else if ((pointSearch && !drawingNewLayer) || drawingNewLayer === 'marker' || manuallyEntering === 'marker') {
       entry = (
         <SpatialDisplayEntry>
           <Form.Row className="spatial-display__form-row">
@@ -696,69 +759,6 @@ class SpatialDisplay extends Component {
           body={entry}
           title="Circle"
           variant="block"
-        />
-      ))
-    } else if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
-      && !drawingNewLayer)
-      || drawingNewLayer === 'shapefile') {
-      // if (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
-      // render the shapefile display
-      entry = (
-        <SpatialDisplayEntry>
-          <Row className="spatial-display__form-row">
-            {
-              shapefileName && (
-                <>
-                  <span className="spatial-display__text-primary">{shapefileName}</span>
-                  {
-                    shapefileSize && (
-                      <span className="spatial-display__text-secondary">{`(${shapefileSize})`}</span>
-                    )
-                  }
-                  {
-                    shapefileLoading && (
-                      <span className="spatial-display__loading">
-                        <Spinner
-                          className="spatial-display__loading-icon"
-                          animation="border"
-                          variant="light"
-                          size="sm"
-                        />
-                        Loading...
-                      </span>
-                    )
-                  }
-                </>
-              )
-            }
-          </Row>
-        </SpatialDisplayEntry>
-      )
-
-      if (shapefileLoaded && !selectedFeatures.length) {
-        hint = 'Select a shape to filter results'
-      }
-
-      if (selectedFeatures.length) {
-        hint = `${selectedFeatures.length} ${pluralize('shape', selectedFeatures.length)} selected`
-      }
-
-      if (shapefileError) {
-        const { type } = shapefileError
-
-        if (type === 'upload_shape') {
-          spatialError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
-        }
-      }
-
-      secondaryTitle = 'Shape File'
-
-      contents.push((
-        <FilterStackContents
-          key="filter__shapefile"
-          body={entry}
-          title="Shape File"
-          hint={hint}
         />
       ))
     } else if ((polygonSearch && !drawingNewLayer) || drawingNewLayer === 'polygon') {

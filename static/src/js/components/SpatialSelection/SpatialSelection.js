@@ -2,8 +2,7 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { startCase } from 'lodash'
-
+import { difference, startCase, uniq } from 'lodash'
 import { FeatureGroup } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 import L from 'leaflet'
@@ -82,10 +81,7 @@ class SpatialSelection extends Component {
     super(props)
 
     this.state = {
-      drawnLayer: null,
-      drawnLayerType: null,
-      drawnMbr: null,
-      drawnPoints: null
+      drawnLayers: []
     }
 
     this.onCreated = this.onCreated.bind(this)
@@ -99,8 +95,10 @@ class SpatialSelection extends Component {
     this.onSpatialDropdownClick = this.onSpatialDropdownClick.bind(this)
     this.onDrawCancel = this.onDrawCancel.bind(this)
     this.updateStateAndQuery = this.updateStateAndQuery.bind(this)
+    this.getExistingSearch = this.getExistingSearch.bind(this)
 
     this.drawControl = null
+    this.layers = []
   }
 
   componentDidMount() {
@@ -142,9 +140,7 @@ class SpatialSelection extends Component {
       polygonSearch
     } = this.props
     const {
-      drawnLayer,
-      drawnMbr,
-      drawnPoints
+      drawnLayers = []
     } = this.state
 
     const { leafletElement: map } = mapRef
@@ -176,14 +172,24 @@ class SpatialSelection extends Component {
     const { featureGroupRef = {} } = this
     const { leafletElement = {} } = featureGroupRef
 
-    if (oldDrawing !== newDrawing && newDrawing !== drawnPoints) {
-      if (drawnLayer) {
+    const newDrawingFound = drawnLayers.some(layer => layer.layerPoints === newDrawing)
+
+    if (oldDrawing !== newDrawing && !newDrawingFound) {
+      if (drawnLayers.length > 0) {
         if (leafletElement.removeLayer) {
-          leafletElement.removeLayer(drawnLayer)
-          leafletElement.removeLayer(drawnMbr)
-          this.setState({
-            drawnMbr: null
+          // remove all drawn layers
+          drawnLayers.forEach((drawnLayer) => {
+            const { layer, layerMbr } = drawnLayer
+            leafletElement.removeLayer(layer)
+            leafletElement.removeLayer(layerMbr)
           })
+
+          this.setState(prevState => ({
+            ...prevState,
+            drawnLayers: [
+              { ...prevState.drawnLayers[0], layerMbr: null }
+            ]
+          }))
         }
       }
 
@@ -191,29 +197,42 @@ class SpatialSelection extends Component {
       if (!nextProps.shapefileId || nextProps.isProjectPage) this.renderShape(nextProps, true)
     }
 
+    const drawnMbrFound = drawnLayers.filter(layer => layer.layerMbr != null)
+
     // If a polygon is drawn for a CWIC collection, render the MBR to show the user what is being sent
     // to CWIC as their spatial
     if (!nextProps.isProjectPage) {
       if (
         (nextProps.polygonSearch[0] && nextProps.polygonSearch[0] !== '')
-        && drawnMbr === null
+        && drawnMbrFound.length === 0
         && nextProps.isCwic
       ) {
         this.renderMbr(nextProps.polygonSearch[0])
-      } else if (drawnMbr !== null && !nextProps.isCwic) {
+      } else if (drawnMbrFound.length > 0 && !nextProps.isCwic) {
         if (leafletElement.removeLayer) {
-          leafletElement.removeLayer(drawnMbr)
-          this.setState({
-            drawnMbr: null
-          })
+          drawnMbrFound.forEach(drawnMbr => leafletElement.removeLayer(drawnMbr.layerMbr))
+          if (drawnLayers.length > 0) {
+            // remove the layerMbr from all drawnLayers
+            this.setState(prevState => ({
+              ...prevState,
+              drawnLayers: prevState.drawnLayers.map(layer => ({
+                ...layer,
+                layerMbr: null
+              }))
+            }))
+          }
         }
       }
-    } else if (drawnMbr !== null) {
+    } else if (drawnMbrFound.length > 0) {
       if (leafletElement.removeLayer) {
-        leafletElement.removeLayer(drawnMbr)
-        this.setState({
-          drawnMbr: null
-        })
+        drawnMbrFound.forEach(drawnMbr => leafletElement.removeLayer(drawnMbr.layerMbr))
+
+        this.setState(prevState => ({
+          ...prevState,
+          drawnLayers: [
+            { ...prevState.drawnLayers[0], layerMbr: null }
+          ]
+        }))
       }
     }
   }
@@ -225,23 +244,21 @@ class SpatialSelection extends Component {
 
   // Callback from EditControl, called when clicking the draw shape button
   onDrawStart(e) {
-    const { drawnLayer, drawnMbr } = this.state
-
-    if (drawnLayer) {
-      const { featureGroupRef } = this
-      const { leafletElement } = featureGroupRef
-      leafletElement.removeLayer(drawnLayer)
-      leafletElement.removeLayer(drawnMbr)
-
-      this.setState({
-        drawnLayer: null,
-        drawnLayerType: null,
-        drawnMbr: null
-      })
-    }
-
     let { layerType } = e
     const { onToggleDrawingNewLayer, onMetricsMap } = this.props
+    const { drawnLayers } = this.state
+
+    if (layerType !== 'shapefile' && drawnLayers.length > 0) {
+      const { featureGroupRef } = this
+      const { leafletElement } = featureGroupRef
+      drawnLayers.forEach((drawnLayer) => {
+        const { layer, layerMbr } = drawnLayer
+        leafletElement.removeLayer(layer)
+        leafletElement.removeLayer(layerMbr)
+      })
+
+      this.setState({ drawnLayers: [] })
+    }
 
     if (layerType === 'shapefile') layerType = 'Shape File'
 
@@ -282,18 +299,19 @@ class SpatialSelection extends Component {
   }
 
   onEditStart() {
-    this.preEditBounds = this.boundsToPoints(this.layer)
+    this.preEditBounds = this.boundsToPoints(this.layers[0])
   }
 
   onEditStop() {
-    const { type: layerType } = this.layer
+    const { type: layerType } = this.layers[0]
     const { onMetricsSpatialEdit } = this.props
-    const postEditBounds = this.boundsToPoints(this.layer)
+    const postEditBounds = this.boundsToPoints(this.layers[0])
 
     let distanceSum = 0
 
     this.preEditBounds.forEach((p0, i) => {
       const p1 = postEditBounds[i]
+      console.log('SpatialSelection -> onEditStop -> p0', p0)
       distanceSum += p0.distanceTo(p1)
     })
 
@@ -305,13 +323,18 @@ class SpatialSelection extends Component {
 
   // Callback from EditControl, called when the layer is edited
   onEdited() {
-    const { drawnLayer, drawnLayerType } = this.state
+    const { drawnLayers } = this.state
+    const [firstLayer = {}] = drawnLayers
+    const {
+      layer: drawnLayer,
+      layerType: drawnLayerType
+    } = firstLayer
     this.updateStateAndQuery(drawnLayer, drawnLayerType)
   }
 
   // Callback from EditControl, contains the layer that was just drawn
   onCreated(e) {
-    const { layer, layerType } = e
+    const { isShapefile, layer, layerType } = e
 
     let type
     if (layerType === 'marker') {
@@ -324,47 +347,116 @@ class SpatialSelection extends Component {
       type = layerType
     }
 
-    this.updateStateAndQuery(layer, type)
+    this.updateStateAndQuery(layer, type, isShapefile)
 
     // Assign the type to the layer, and then the layer so that it's available when editing
     layer.type = layerType
-    this.layer = layer
-  }
-
-  // Callback from EditControl, called when the layer is deleted
-  onDeleted() {
-    const { onChangeQuery } = this.props
-    onChangeQuery({
-      collection: {
-        spatial: {}
-      }
-    })
-
-    this.setState({
-      drawnLayer: null,
-      drawnLayerType: null,
-      drawnPoints: null
-    })
-  }
-
-  setLayer(layer, shouldCenter) {
-    this.layer = layer
-
-    const { mapRef } = this.props
-    const map = mapRef.leafletElement
-
-    const { featureGroupRef = {} } = this
-    const { leafletElement: featureGroup = null } = featureGroupRef
-
-    if (shouldCenter && featureGroup) {
-      panFeatureGroupToCenter(map, featureGroup)
+    if (isShapefile) {
+      this.layers.push(layer)
+    } else {
+      this.layers = [layer]
     }
   }
 
-  // Determine the latLngs from the layer and type, then update the component state and the query
-  updateStateAndQuery(layer, type) {
-    const { onChangeQuery } = this.props
+  // Callback from EditControl, called when the layer is deleted
+  onDeleted(e) {
+    const { isShapefile, layerId } = e
+    const {
+      boundingBoxSearch,
+      circleSearch,
+      lineSearch,
+      pointSearch,
+      polygonSearch,
+      onChangeQuery
+    } = this.props
 
+    // only remove selected spatial
+    if (isShapefile) {
+      // Find the layer that needs to be removed
+      const { drawnLayers } = this.state
+      const layerIndex = drawnLayers.findIndex(layer => layer.layer.feature.edscId === layerId)
+
+      const drawnLayer = drawnLayers[layerIndex]
+      const {
+        layer,
+        layerType
+      } = drawnLayer
+
+      const points = this.getLayerLatLngs(layer, layerType)
+      const { featureGroupRef } = this
+      const { leafletElement } = featureGroupRef
+      leafletElement.removeLayer(layer)
+
+      this.setState(prevState => ({
+        ...prevState,
+        drawnLayers: [
+          ...prevState.drawnLayers.slice(0, layerIndex),
+          ...prevState.drawnLayers.slice(layerIndex + 1)
+        ]
+      }))
+
+      const existingSearch = this.getExistingSearch(layerType)
+
+      onChangeQuery({
+        collection: {
+          spatial: {
+            boundingBox: this.spatialSearchOrUndefined(boundingBoxSearch),
+            circle: this.spatialSearchOrUndefined(circleSearch),
+            line: this.spatialSearchOrUndefined(lineSearch),
+            point: this.spatialSearchOrUndefined(pointSearch),
+            polygon: this.spatialSearchOrUndefined(polygonSearch),
+            [layerType]: this.spatialSearchOrUndefined(difference(existingSearch, [points]))
+          }
+        }
+      })
+    } else {
+      onChangeQuery({
+        collection: {
+          spatial: {}
+        }
+      })
+
+      this.setState({ drawnLayers: [] })
+    }
+  }
+
+  // Return the matching spatial search for the given type
+  getExistingSearch(type) {
+    const {
+      boundingBoxSearch,
+      circleSearch,
+      lineSearch,
+      pointSearch,
+      polygonSearch
+    } = this.props
+
+    let existingSearch
+
+    switch (type) {
+      case 'boundingBox':
+        existingSearch = boundingBoxSearch
+        break
+      case 'circle':
+        existingSearch = circleSearch
+        break
+      case 'line':
+        existingSearch = lineSearch
+        break
+      case 'point':
+        existingSearch = pointSearch
+        break
+      case 'polygon':
+        existingSearch = polygonSearch
+        break
+      default:
+        break
+    }
+
+    return existingSearch
+  }
+
+  // Return the latLngs from the given layer
+  getLayerLatLngs(layer, type) {
     let originalLatLngs
     let latLngs
     switch (type) {
@@ -389,7 +481,7 @@ class SpatialSelection extends Component {
         break
       }
       default:
-        return
+        return null
     }
 
     let latLngsAntiMeridian = []
@@ -409,19 +501,92 @@ class SpatialSelection extends Component {
       })
     }
 
-    this.setState({
-      drawnLayer: layer,
-      drawnLayerType: type,
-      drawnPoints: latLngsAntiMeridian.join()
-    })
+    return latLngsAntiMeridian.join()
+  }
 
-    onChangeQuery({
-      collection: {
-        spatial: {
-          [type]: [latLngsAntiMeridian.join()]
+  setLayer(layer, shouldCenter, isShapefile) {
+    if (isShapefile) {
+      this.layers.push(layer)
+    } else {
+      this.layers = [layer]
+    }
+
+    const { mapRef } = this.props
+    const map = mapRef.leafletElement
+
+    const { featureGroupRef = {} } = this
+    const { leafletElement: featureGroup = null } = featureGroupRef
+
+    if (shouldCenter && featureGroup) {
+      panFeatureGroupToCenter(map, featureGroup)
+    }
+  }
+
+  spatialSearchOrUndefined(search) {
+    if (search.length > 0) return search
+
+    return undefined
+  }
+
+  // Determine the latLngs from the layer and type, then update the component state and the query
+  updateStateAndQuery(layer, type, isShapefile) {
+    const {
+      boundingBoxSearch,
+      circleSearch,
+      lineSearch,
+      pointSearch,
+      polygonSearch,
+      onChangeQuery
+    } = this.props
+
+    const points = this.getLayerLatLngs(layer, type)
+
+    // If no points exist (invalid shape type), return without updating state or query
+    if (!points) return
+
+    const newDrawnLayer = {
+      layer,
+      layerType: type,
+      layerPoints: points
+    }
+    if (isShapefile) {
+      this.setState(prevState => ({
+        ...prevState,
+        drawnLayers: [
+          ...prevState.drawnLayers,
+          newDrawnLayer
+        ]
+      }))
+
+      // Add new selected shape to any existing spatial, keep existing spatial of different types as well
+      const existingSearch = this.getExistingSearch(type)
+
+      onChangeQuery({
+        collection: {
+          spatial: {
+            boundingBox: this.spatialSearchOrUndefined(boundingBoxSearch),
+            circle: this.spatialSearchOrUndefined(circleSearch),
+            line: this.spatialSearchOrUndefined(lineSearch),
+            point: this.spatialSearchOrUndefined(pointSearch),
+            polygon: this.spatialSearchOrUndefined(polygonSearch),
+            [type]: this.spatialSearchOrUndefined(uniq([...existingSearch, points]))
+          }
         }
-      }
-    })
+      })
+    } else {
+      // console.log('not shapefile updating')
+      this.setState({
+        drawnLayers: [newDrawnLayer]
+      })
+
+      onChangeQuery({
+        collection: {
+          spatial: {
+            [type]: [points]
+          }
+        }
+      })
+    }
   }
 
   boundsToPoints(layer) {
@@ -464,33 +629,62 @@ class SpatialSelection extends Component {
     } = regionSearch
 
     if (selectedRegion && selectedRegion.spatial) {
-      this.setState({ drawnPoints: selectedRegion.spatial })
       const points = splitListOfPoints(selectedRegion.spatial)
-      this.renderPolygon(getShape(points), featureGroup, shouldCenter)
+      this.renderPolygon({
+        polygon: getShape(points),
+        featureGroup,
+        layerPoints: selectedRegion.spatial,
+        shouldCenter
+      })
     } else if (pointSearch[0]) {
-      this.setState({ drawnPoints: pointSearch[0] })
-      this.renderPoint(getShape([pointSearch[0]]), featureGroup, shouldCenter)
+      this.renderPoint({
+        point: getShape([pointSearch[0]]),
+        featureGroup,
+        layerPoints: pointSearch[0],
+        shouldCenter
+      })
     } else if (boundingBoxSearch[0]) {
-      this.setState({ drawnPoints: boundingBoxSearch[0] })
       const points = splitListOfPoints(boundingBoxSearch[0])
-      this.renderBoundingBox(getShape(points), featureGroup, shouldCenter)
+      this.renderBoundingBox({
+        rectangle: getShape(points),
+        featureGroup,
+        layerPoints: boundingBoxSearch[0],
+        shouldCenter
+      })
     } else if (polygonSearch[0]) {
-      this.setState({ drawnPoints: polygonSearch[0] })
       const points = splitListOfPoints(polygonSearch[0])
-      this.renderPolygon(getShape(points), featureGroup, shouldCenter)
+      this.renderPolygon({
+        polygon: getShape(points),
+        featureGroup,
+        layerPoints: polygonSearch[0],
+        shouldCenter
+      })
     } else if (lineSearch[0]) {
-      this.setState({ drawnPoints: lineSearch[0] })
       const points = splitListOfPoints(lineSearch[0])
-      this.renderLine(points, featureGroup, shouldCenter)
+      this.renderLine({
+        points,
+        featureGroup,
+        layerPoints: lineSearch[0],
+        shouldCenter
+      })
     } else if (circleSearch[0]) {
-      this.setState({ drawnPoints: circleSearch[0] })
       const points = circleSearch[0].split(',')
-      this.renderCircle(points, featureGroup, shouldCenter)
+      this.renderCircle({
+        points,
+        featureGroup,
+        layerPoints: circleSearch[0],
+        shouldCenter
+      })
     }
   }
 
   // Draws a leaflet Marker
-  renderPoint(point, featureGroup, shouldCenter) {
+  renderPoint({
+    point,
+    featureGroup,
+    layerPoints,
+    shouldCenter
+  }) {
     if (featureGroup) {
       const marker = new L.Marker(point[0], {
         icon: L.Draw.Marker.prototype.options.icon
@@ -500,15 +694,23 @@ class SpatialSelection extends Component {
       marker.addTo(featureGroup)
 
       this.setState({
-        drawnLayer: marker,
-        drawnLayerType: 'point'
+        drawnLayers: [{
+          layer: marker,
+          layerPoints,
+          layerType: 'point'
+        }]
       })
       this.setLayer(marker, shouldCenter)
     }
   }
 
   // Draws a leaflet Rectangle
-  renderBoundingBox(rectangle, featureGroup, shouldCenter) {
+  renderBoundingBox({
+    rectangle,
+    featureGroup,
+    layerPoints,
+    shouldCenter
+  }) {
     if (featureGroup) {
       const shape = rectangle
       // southwest longitude should not be greater than northeast
@@ -528,14 +730,18 @@ class SpatialSelection extends Component {
       rect.addTo(featureGroup)
 
       this.setState({
-        drawnLayer: rect,
-        drawnLayerType: 'boundingBox'
+        drawnLayers: [{
+          layer: rect,
+          layerPoints,
+          layerType: 'boundingBox'
+        }]
       })
       this.setLayer(rect, shouldCenter)
     }
   }
 
   renderMbr(drawnPoints) {
+    const { drawnLayers } = this.state
     const { featureGroupRef = {} } = this
     if (featureGroupRef === null) return
     const { leafletElement: featureGroup = null } = featureGroupRef
@@ -562,14 +768,26 @@ class SpatialSelection extends Component {
       const rect = new L.Rectangle([bounds], options)
 
       rect.addTo(featureGroup)
-      this.setState({
-        drawnMbr: rect
-      })
+
+      const foundLayerIndex = drawnLayers.findIndex(layer => layer.layerPoints === drawnPoints)
+      this.setState(prevState => ({
+        ...prevState,
+        drawnLayers: [
+          ...prevState.drawnLayers.slice(0, foundLayerIndex),
+          { ...prevState.drawnLayers[foundLayerIndex], layerMbr: rect },
+          ...prevState.drawnLayers.slice(foundLayerIndex + 1)
+        ]
+      }))
     }
   }
 
   // Draws a leaflet Polygon
-  renderPolygon(polygon, featureGroup, shouldCenter) {
+  renderPolygon({
+    polygon,
+    featureGroup,
+    layerPoints,
+    shouldCenter
+  }) {
     if (featureGroup) {
       const options = L.extend(
         {},
@@ -581,14 +799,22 @@ class SpatialSelection extends Component {
       poly.addTo(featureGroup)
 
       this.setState({
-        drawnLayer: poly,
-        drawnLayerType: 'polygon'
+        drawnLayers: [{
+          layer: poly,
+          layerPoints,
+          layerType: 'polygon'
+        }]
       })
       this.setLayer(poly, shouldCenter)
     }
   }
 
-  renderLine(points, featureGroup, shouldCenter) {
+  renderLine({
+    points,
+    featureGroup,
+    layerPoints,
+    shouldCenter
+  }) {
     if (featureGroup) {
       const options = L.extend(
         {},
@@ -605,14 +831,22 @@ class SpatialSelection extends Component {
       line.addTo(featureGroup)
 
       this.setState({
-        drawnLayer: line,
-        drawnLayerType: 'line'
+        drawnLayers: [{
+          layer: line,
+          layerPoints,
+          layerType: 'line'
+        }]
       })
       this.setLayer(line, shouldCenter)
     }
   }
 
-  renderCircle(points, featureGroup, shouldCenter) {
+  renderCircle({
+    points,
+    featureGroup,
+    layerPoints,
+    shouldCenter
+  }) {
     if (featureGroup) {
       const [
         lat,
@@ -630,8 +864,11 @@ class SpatialSelection extends Component {
       circle.addTo(featureGroup)
 
       this.setState({
-        drawnLayer: circle,
-        drawnLayerType: 'circle'
+        drawnLayers: [{
+          layer: circle,
+          layerPoints,
+          layerType: 'circle'
+        }]
       })
       this.setLayer(circle, shouldCenter)
     }
