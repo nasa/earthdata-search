@@ -25,7 +25,6 @@ export const emptyDecodedResult = {
     collection: {
       byId: {},
       pageNum: 1,
-      gridName: undefined,
       keyword: undefined,
       overrideTemporal: {},
       spatial: {

@@ -11,7 +11,6 @@ function setup() {
   const props = {
     boundingBoxSearch: '',
     collectionsMetadata: {},
-    gridName: '',
     gridCoords: '',
     featureFacets: {},
     focusedCollection: '',
@@ -35,6 +34,7 @@ function setup() {
     scienceKeywordFacets: {},
     temporalSearch: {},
     timeline: {},
+    twoDCoordinateSystemNameFacets: [],
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
   }
