@@ -1,0 +1,20 @@
+{
+  "hasStyles": true,
+  "hideCollectionFilters": true,
+  "logo": {
+    "id": "SCAR-logo",
+    "link": "https://www.scar.org/",
+    "title": "SCAR Metadata Search"
+  },
+  "org": "SCAR",
+  "pageTitle": "The Scientific Committee on Antarctic Research",
+  "parentConfig": "edsc",
+  "query": {
+    "tagKey": "org.scar",
+    "hasGranulesOrCwic": null
+  },
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
+  }
+}
