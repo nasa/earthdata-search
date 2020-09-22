@@ -127,6 +127,9 @@ export const GranuleFiltersForm = (props) => {
                   system.tilingIdentificationSystemName === coordinateSystem
                 ))
 
+                // Don't render these fields if no tiling system is found
+                if (!systemFromMetadata) return null
+
                 const {
                   coordinate1,
                   coordinate2
