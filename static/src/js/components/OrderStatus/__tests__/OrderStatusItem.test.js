@@ -28,7 +28,10 @@ function setup(overrideProps, mockRefresh) {
   const props = {
     collection: retrievalStatusProps.retrieval.collections.download[1],
     defaultOpen: false,
-    granuleDownload: {},
+    granuleDownload: {
+      isLoading: false,
+      TEST_COLLECTION_111: []
+    },
     key: 'TEST_COLLECTION_111',
     match: {
       params: {
@@ -64,7 +67,8 @@ describe('DownloadLinksPanel', () => {
           accessMethodType="download"
           granuleLinks={[]}
           retrievalId="1"
-          totalLinks={100}
+          granuleCount={100}
+          granuleLinksIsLoading={false}
         />
       )
 
@@ -80,11 +84,12 @@ describe('DownloadLinksPanel', () => {
           accessMethodType="download"
           granuleLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalId="1"
-          totalLinks={10}
+          granuleCount={10}
+          granuleLinksIsLoading
         />
       )
 
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('(2 of 10 links retrieved)')
+      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('Retrieving links for 10 granules...')
 
       const windowActions = enzymeWrapper.find(TextWindowActions)
       expect(windowActions.props().id).toEqual('links-1')
@@ -105,7 +110,8 @@ describe('DownloadScriptPanel', () => {
           granuleLinks={[]}
           retrievalCollection={{}}
           retrievalId="1"
-          totalLinks={100}
+          granuleCount={100}
+          granuleLinksIsLoading={false}
         />
       )
 
@@ -124,11 +130,12 @@ describe('DownloadScriptPanel', () => {
           granuleLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalCollection={{}}
           retrievalId="1"
-          totalLinks={10}
+          granuleCount={10}
+          granuleLinksIsLoading
         />
       )
 
-      expect(enzymeWrapper.find('.order-status-item__status-text').text()).toEqual('(2 of 10 links retrieved)')
+      expect(enzymeWrapper.find('.order-status-item__status-text').text()).toEqual('Retrieving links for 10 granules...')
 
       const windowActions = enzymeWrapper.find(TextWindowActions)
       expect(windowActions.props().id).toEqual('script-1')
@@ -374,12 +381,12 @@ describe('OrderStatusItem', () => {
 
       const linksTab = tabs.childAt(0)
       expect(linksTab.props().title).toEqual('Download Links')
-      expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+      expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
       expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
-      expect(scriptTab.childAt(0).props().totalLinks).toEqual(100)
+      expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
       expect(scriptTab.childAt(0).props().granuleLinks).toEqual([])
     })
   })
@@ -445,12 +452,12 @@ describe('OrderStatusItem', () => {
 
       const linksTab = tabs.childAt(0)
       expect(linksTab.props().title).toEqual('Download Links')
-      expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+      expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
       expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
-      expect(scriptTab.childAt(0).props().totalLinks).toEqual(100)
+      expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
       expect(scriptTab.childAt(0).props().granuleLinks).toEqual([])
     })
   })
@@ -518,7 +525,7 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
 
         const statusTab = tabs.childAt(1)
@@ -588,7 +595,7 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
 
         const statusTab = tabs.childAt(1)
@@ -683,7 +690,7 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
 
         const statusTab = tabs.childAt(1)
@@ -784,8 +791,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
+
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([
           'https://e4ftl01.cr.usgs.gov/ops/esir/50250.html',
           'https://e4ftl01.cr.usgs.gov/ops/esir/50250.zip'
@@ -884,7 +892,7 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
 
         const statusTab = tabs.childAt(1)
@@ -1336,7 +1344,7 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
       })
     })
@@ -1420,7 +1428,7 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
       })
     })
@@ -1526,7 +1534,7 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
@@ -1633,8 +1641,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(1)
 
         const linksTab = tabs.childAt(0)
+
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
@@ -1720,7 +1729,7 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
-        expect(linksTab.childAt(0).props().totalLinks).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
       })
     })

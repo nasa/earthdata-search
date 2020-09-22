@@ -24,7 +24,8 @@ export const DownloadLinksPanel = ({
   accessMethodType,
   granuleLinks,
   retrievalId,
-  totalLinks
+  granuleCount,
+  granuleLinksIsLoading
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
 
@@ -32,7 +33,11 @@ export const DownloadLinksPanel = ({
     <>
       <p className="order-status-item__tab-intro">
         <span className="order-status-item__status-text">
-          {`(${granuleLinks.length} of ${totalLinks} links retrieved)`}
+          {
+            granuleLinksIsLoading
+              ? `Retrieving links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
+              : `Retrieved ${granuleLinks.length} links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}.`
+          }
         </span>
       </p>
       <TextWindowActions
@@ -70,7 +75,8 @@ DownloadLinksPanel.propTypes = {
     PropTypes.string
   ).isRequired,
   retrievalId: PropTypes.string.isRequired,
-  totalLinks: PropTypes.number.isRequired
+  granuleCount: PropTypes.number.isRequired,
+  granuleLinksIsLoading: PropTypes.bool.isRequired
 }
 
 export const DownloadScriptPanel = ({
@@ -78,7 +84,8 @@ export const DownloadScriptPanel = ({
   granuleLinks,
   retrievalCollection,
   retrievalId,
-  totalLinks
+  granuleCount,
+  granuleLinksIsLoading
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.sh`
 
@@ -87,7 +94,11 @@ export const DownloadScriptPanel = ({
       <>
         <div className="order-status-item__tab-intro">
           <span className="order-status-item__status-text">
-            {`(${granuleLinks.length} of ${totalLinks} links retrieved)`}
+            {
+              granuleLinksIsLoading
+                ? `Retrieving links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
+                : `Retrieved ${granuleLinks.length} links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}.`
+            }
           </span>
           <h5 className="mt-2">How to use this script</h5>
           <p className="collection-download-display__intro">
@@ -137,7 +148,8 @@ DownloadScriptPanel.propTypes = {
   ).isRequired,
   retrievalCollection: PropTypes.shape({}).isRequired,
   retrievalId: PropTypes.string.isRequired,
-  totalLinks: PropTypes.number.isRequired
+  granuleCount: PropTypes.number.isRequired,
+  granuleLinksIsLoading: PropTypes.bool.isRequired
 }
 
 export class OrderStatusItem extends PureComponent {
@@ -254,7 +266,8 @@ export class OrderStatusItem extends PureComponent {
     const { type: accessMethodType } = accessMethod
 
     const {
-      [id]: granuleLinks = []
+      [id]: granuleLinks = [],
+      isLoading: granuleLinksIsLoading
     } = granuleDownload
 
     // Downloadable orders dont maintain a status
@@ -593,7 +606,8 @@ export class OrderStatusItem extends PureComponent {
                           accessMethodType={accessMethodType}
                           granuleLinks={downloadUrls}
                           retrievalId={retrievalId}
-                          totalLinks={granuleCount}
+                          granuleCount={granuleCount}
+                          granuleLinksIsLoading={granuleLinksIsLoading}
                         />
                       </Tab>
                     )
@@ -607,10 +621,11 @@ export class OrderStatusItem extends PureComponent {
                       >
                         <DownloadScriptPanel
                           accessMethodType={accessMethodType}
-                          granuleLinks={granuleLinks}
+                          granuleLinks={downloadUrls}
                           retrievalCollection={collection}
                           retrievalId={retrievalId}
-                          totalLinks={granuleCount}
+                          granuleCount={granuleCount}
+                          granuleLinksIsLoading={granuleLinksIsLoading}
                         />
                       </Tab>
                     )
