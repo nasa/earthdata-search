@@ -200,19 +200,21 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams, cmrFacet
   const {
     hasGranules,
     tags,
-    tilingIdentificationSystems = []
+    tilingIdentificationSystems
   } = collectionMetadata
 
   const { two_d_coordinate_system_name: twoDCoordinateSystemName = [] } = cmrFacetParams
 
   let gridName
-  if (twoDCoordinateSystemName.length > 0) {
+  if (tilingIdentificationSystems && twoDCoordinateSystemName.length > 0) {
     twoDCoordinateSystemName.forEach((coordinateSystem) => {
       const systemFromMetadata = tilingIdentificationSystems.find(system => (
         system.tilingIdentificationSystemName === coordinateSystem
-      ));
+      ))
 
-      ({ tilingIdentificationSystemName: gridName } = systemFromMetadata)
+      if (systemFromMetadata) {
+        ({ tilingIdentificationSystemName: gridName } = systemFromMetadata)
+      }
     })
   }
 
