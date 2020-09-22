@@ -1284,7 +1284,7 @@ describe('OrderStatusItem', () => {
   describe('Harmony', () => {
     describe('when the order created', () => {
       test('renders creating state', () => {
-        const { enzymeWrapper } = setup({
+        const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
             id: 1,
@@ -1340,18 +1340,22 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(1)
+        expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+
+        const orderStatusTab = tabs.childAt(1)
+        expect(orderStatusTab.props().title).toEqual('Order Status')
+        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
     })
 
     describe('when the order is submitted', () => {
       test('renders in progress state', () => {
-        const { enzymeWrapper } = setup({
+        const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
             id: 1,
@@ -1424,18 +1428,22 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(1)
+        expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+
+        const orderStatusTab = tabs.childAt(1)
+        expect(orderStatusTab.props().title).toEqual('Order Status')
+        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
     })
 
     describe('when the order is in progress', () => {
       test('renders an updated progress state', () => {
-        const { enzymeWrapper } = setup({
+        const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
             id: 1,
@@ -1530,7 +1538,7 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(1)
+        expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
@@ -1538,12 +1546,16 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
+
+        const orderStatusTab = tabs.childAt(1)
+        expect(orderStatusTab.props().title).toEqual('Order Status')
+        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
     })
 
     describe('when the order is in complete', () => {
       test('renders an updated progress state', () => {
-        const { enzymeWrapper } = setup({
+        const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
             id: 1,
@@ -1638,7 +1650,7 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:CMR query identified 51 granules.')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(1)
+        expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
 
@@ -1647,12 +1659,16 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
+
+        const orderStatusTab = tabs.childAt(1)
+        expect(orderStatusTab.props().title).toEqual('Order Status')
+        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
     })
 
     describe('when the order failed', () => {
       test('renders an updated progress state', () => {
-        const { enzymeWrapper } = setup({
+        const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
             id: 1,
@@ -1725,12 +1741,16 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:Variable subsetting failed with error: HTTP Error 400: Bad Request.')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(1)
+        expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+
+        const orderStatusTab = tabs.childAt(1)
+        expect(orderStatusTab.props().title).toEqual('Order Status')
+        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
     })
   })
