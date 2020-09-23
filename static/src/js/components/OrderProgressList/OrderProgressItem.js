@@ -15,7 +15,7 @@ export const OrderProgressItem = ({
   const {
     order_number: orderId,
     state: orderStatus,
-    order_information: orderInformation,
+    order_information: orderInformation = {},
     type
   } = order
 
@@ -29,7 +29,7 @@ export const OrderProgressItem = ({
   }
 
   if (type === 'ESI') {
-    const { requestStatus } = orderInformation
+    const { requestStatus = {} } = orderInformation
 
     const {
       totalNumber = 0,
@@ -75,7 +75,7 @@ export const OrderProgressItem = ({
         <div className="order-progress-item__info">
           <span className="order-progress-item__processed">
             {
-              (numGranulesProccessed && totalGranulesInOrder) && (
+              !!(numGranulesProccessed && totalGranulesInOrder) && (
                 `${numGranulesProccessed} of ${totalGranulesInOrder} granule(s) processed `
               )
             }

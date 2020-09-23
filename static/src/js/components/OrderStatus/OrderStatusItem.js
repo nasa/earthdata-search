@@ -370,7 +370,7 @@ export class OrderStatusItem extends PureComponent {
           }
 
           orders.forEach((order) => {
-            const { order_information: orderInformation } = order
+            const { order_information: orderInformation = {} } = order
 
             const {
               downloadUrls: currentDownloadUrlsObject = {},
