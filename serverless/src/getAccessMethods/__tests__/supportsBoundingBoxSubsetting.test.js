@@ -1,14 +1,16 @@
-import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
+import { supportsBoundingBoxSubsetting } from '../supportsBoundingBoxSubsetting'
 
-describe('supportsVariableSubsetting', () => {
+describe('supportsBoundingBoxSubsetting', () => {
   describe('when variable subsetting is supported', () => {
     test('returns true', () => {
-      const response = supportsVariableSubsetting({
+      const response = supportsBoundingBoxSubsetting({
         conceptId: 'S100000-EDSC',
         serviceOptions: {
           subset: {
-            variableSubset: {
-              allowMultipleValues: true
+            spatialSubset: {
+              boundingBox: {
+                allowMultipleValues: true
+              }
             }
           }
         }
@@ -20,9 +22,11 @@ describe('supportsVariableSubsetting', () => {
 
   describe('when variable subsetting is not supported', () => {
     test('returns false', () => {
-      const response = supportsVariableSubsetting({
+      const response = supportsBoundingBoxSubsetting({
         conceptId: 'S100000-EDSC',
-        serviceOptions: null
+        serviceOptions: {
+          supportedReformattings: {}
+        }
       })
 
       expect(response).toBeFalsy()

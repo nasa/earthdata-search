@@ -322,9 +322,12 @@ export class AccessMethod extends Component {
       )
 
       // Build options for supportedOutputFormats
-      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
-        <option key={format} value={ousFormatMapping[format]}>{format}</option>
-      ))
+      supportedOutputFormatOptions = [
+        <option key={null} value={null}>None</option>,
+        ...supportedOutputFormatOptions.map(format => (
+          <option key={format} value={ousFormatMapping[format]}>{format}</option>
+        ))
+      ]
     }
 
     let supportedOutputProjectionOptions
@@ -335,14 +338,20 @@ export class AccessMethod extends Component {
       )
 
       // Build options for supportedOutputFormats
-      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
-        <option key={format} value={harmonyFormatMapping[format]}>{format}</option>
-      ))
+      supportedOutputFormatOptions = [
+        <option key={null} value={null}>None</option>,
+        ...supportedOutputFormatOptions.map(format => (
+          <option key={format} value={harmonyFormatMapping[format]}>{format}</option>
+        ))
+      ]
 
       // Build options for supportedOutputFormats
-      supportedOutputProjectionOptions = supportedOutputProjections.map(format => (
-        <option key={format} value={format}>{format}</option>
-      ))
+      supportedOutputProjectionOptions = [
+        <option key={null} value={null}>None</option>,
+        ...supportedOutputProjections.map(format => (
+          <option key={format} value={format}>{format}</option>
+        ))
+      ]
     }
 
     const echoFormFallback = (

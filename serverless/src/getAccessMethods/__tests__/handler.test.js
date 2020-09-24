@@ -131,8 +131,6 @@ describe('getAccessMethods', () => {
             id: 'umm-s-record-1',
             isValid: true,
             keywordMappings: [],
-            selectedOutputFormat: 'image/tiff',
-            selectedOutputProjection: 'EPSG:4326',
             supportedOutputFormats: [
               'GEOTIFF',
               'PNG',
@@ -143,7 +141,7 @@ describe('getAccessMethods', () => {
             ],
             supportsBoundingBoxSubsetting: false,
             supportsShapefileSubsetting: false,
-            supportsVariableSubsetting: true,
+            supportsVariableSubsetting: false,
             type: 'Harmony',
             url: 'https://harmony.earthdata.nas.gov',
             variables: {}
@@ -483,14 +481,13 @@ describe('getAccessMethods', () => {
             id: 'S1000000-EDSC',
             isValid: true,
             keywordMappings,
-            selectedOutputFormat: 'nc',
             supportedOutputFormats: [
               'NETCDF-3',
               'NETCDF-4',
               'BINARY',
               'ASCII'
             ],
-            supportsVariableSubsetting: true,
+            supportsVariableSubsetting: false,
             type: 'OPeNDAP',
             variables
           }

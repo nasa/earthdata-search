@@ -1,14 +1,16 @@
-import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
+import { supportsShapefileSubsetting } from '../supportsShapefileSubsetting'
 
-describe('supportsVariableSubsetting', () => {
+describe('supportsShapefileSubsetting', () => {
   describe('when variable subsetting is supported', () => {
     test('returns true', () => {
-      const response = supportsVariableSubsetting({
+      const response = supportsShapefileSubsetting({
         conceptId: 'S100000-EDSC',
         serviceOptions: {
           subset: {
-            variableSubset: {
-              allowMultipleValues: true
+            spatialSubset: {
+              shapefile: {
+                allowMultipleValues: true
+              }
             }
           }
         }
@@ -20,7 +22,7 @@ describe('supportsVariableSubsetting', () => {
 
   describe('when variable subsetting is not supported', () => {
     test('returns false', () => {
-      const response = supportsVariableSubsetting({
+      const response = supportsShapefileSubsetting({
         conceptId: 'S100000-EDSC',
         serviceOptions: null
       })
