@@ -123,7 +123,7 @@ describe('submitHarmonyOrder', () => {
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('update')
-    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token:clientId', 'Harmony')
+    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'Harmony')
   })
 
   test('creates a limited shapefile if the shapefile was limited by the user', async () => {
@@ -227,7 +227,7 @@ describe('submitHarmonyOrder', () => {
     expect(queries[4].method).toEqual('update') // update retrieval orders
 
     expect(createLimitedShapefileMock).toHaveBeenCalledTimes(1)
-    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token:clientId', 'Harmony')
+    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'Harmony')
   })
 
   test('stores returned error message when order creation fails', async () => {
