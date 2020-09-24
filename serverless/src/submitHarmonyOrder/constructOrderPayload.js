@@ -49,7 +49,7 @@ export const constructOrderPayload = async ({
   const orderPayload = new FormData()
 
   orderPayload.append('forceAsync', 'true')
-  orderPayload.append('granuleIds', granuleIds)
+  orderPayload.append('granuleId', granuleIds)
 
   const {
     bounding_box: boundingBox = [],

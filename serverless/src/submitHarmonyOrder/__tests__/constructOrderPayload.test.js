@@ -96,6 +96,34 @@ describe('constructOrderPayload', () => {
     })
   })
 
+  describe('granules', () => {
+    test('constructs a payload with granule ids', async () => {
+      nock(/cmr/)
+        .get(/search\/granules/)
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'G10000001-EDSC'
+            }, {
+              id: 'G10000005-EDSC'
+            }]
+          }
+        })
+
+      const accessMethod = {}
+      const granuleParams = {}
+      const accessTokenWithClient = ''
+
+      const response = await constructOrderPayload({
+        accessMethod,
+        granuleParams,
+        accessTokenWithClient
+      })
+
+      expect(response.get('granuleId')).toEqual('G10000001-EDSC,G10000005-EDSC')
+    })
+  })
+
   describe('temporal', () => {
     describe('with a start and end date', () => {
       test('constructs a payload with a start and end subsetting', async () => {
