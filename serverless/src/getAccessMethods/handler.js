@@ -1,7 +1,5 @@
 import parser from 'fast-xml-parser'
 
-import { isEmpty } from 'lodash'
-
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getApplicationConfig } from '../../../sharedUtils/config'
@@ -12,8 +10,9 @@ import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
 import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 import { getVariables } from './getVariables'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { harmonyFormatMapping, ousFormatMapping } from '../../../sharedUtils/outputFormatMaps'
 import { parseError } from '../../../sharedUtils/parseError'
+import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
+import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
 import { supportsVariableSubsetting } from './supportsVariableSubsetting'
 
 /**
@@ -178,11 +177,6 @@ const getAccessMethods = async (event, context) => {
         })
       }
 
-      // Default the selected output format to the first item in the supported list
-      let [selectedOutputFormat] = outputFormats;
-
-      ({ [selectedOutputFormat]: selectedOutputFormat } = ousFormatMapping)
-
       accessMethods.opendap = {
         hierarchyMappings,
         id: conceptId,
@@ -190,7 +184,6 @@ const getAccessMethods = async (event, context) => {
         keywordMappings,
         longName,
         name,
-        selectedOutputFormat,
         supportedOutputFormats: outputFormats,
         supportsVariableSubsetting: supportsVariableSubsetting(fullServiceObject),
         type,
@@ -210,22 +203,11 @@ const getAccessMethods = async (event, context) => {
           conceptId,
           longName,
           name,
-          serviceOptions,
           supportedOutputProjections,
           supportedReformattings,
           type,
           url
         } = serviceObject
-
-        const { subset = {} } = serviceOptions
-        const { spatialSubset = {} } = subset
-        const {
-          boundingBox = {},
-          shapefile = {}
-        } = spatialSubset
-
-        const supportsBoundingBoxSubsetting = !isEmpty(boundingBox)
-        const supportsShapefileSubsetting = !isEmpty(shapefile)
 
         const outputFormats = []
 
@@ -237,11 +219,6 @@ const getAccessMethods = async (event, context) => {
             outputFormats.push(...supportedOutputFormats)
           })
         }
-
-        // Default the selected output format to the first item in the supported list
-        let [selectedOutputFormat] = outputFormats;
-
-        ({ [selectedOutputFormat]: selectedOutputFormat } = harmonyFormatMapping)
 
         const { urlValue } = url
 
@@ -258,9 +235,6 @@ const getAccessMethods = async (event, context) => {
           })
         }
 
-        // Default the selected output projection to the first item in the supported list
-        const [selectedOutputProjection] = outputProjections
-
         accessMethods[`harmony${index}`] = {
           hierarchyMappings,
           id: conceptId,
@@ -268,12 +242,10 @@ const getAccessMethods = async (event, context) => {
           keywordMappings,
           longName,
           name,
-          selectedOutputFormat,
-          selectedOutputProjection,
           supportedOutputFormats: outputFormats,
           supportedOutputProjections: outputProjections,
-          supportsBoundingBoxSubsetting,
-          supportsShapefileSubsetting,
+          supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceObject),
+          supportsShapefileSubsetting: supportsShapefileSubsetting(serviceObject),
           supportsVariableSubsetting: supportsVariableSubsetting(serviceObject),
           type,
           url: urlValue,
