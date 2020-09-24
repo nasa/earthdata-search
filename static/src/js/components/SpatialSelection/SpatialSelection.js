@@ -103,9 +103,7 @@ class SpatialSelection extends Component {
 
   componentDidMount() {
     const {
-      isProjectPage,
-      mapRef,
-      shapefileId
+      mapRef
     } = this.props
     const {
       leafletElement: map,
@@ -115,8 +113,8 @@ class SpatialSelection extends Component {
       return
     }
 
-    // Draw the shape unless a shapefile is present
-    if (!shapefileId || isProjectPage) this.renderShape(this.props)
+    // Draw the shape
+    this.renderShape(this.props)
 
     const { center = [] } = mapProps
 
@@ -184,17 +182,19 @@ class SpatialSelection extends Component {
             leafletElement.removeLayer(layerMbr)
           })
 
+          // remove the layerMbr from all drawnLayers
           this.setState(prevState => ({
             ...prevState,
-            drawnLayers: [
-              { ...prevState.drawnLayers[0], layerMbr: null }
-            ]
+            drawnLayers: prevState.drawnLayers.map(layer => ({
+              ...layer,
+              layerMbr: null
+            }))
           }))
         }
       }
 
-      // Draw the new shape unless a shapefile was added
-      if (!nextProps.shapefileId || nextProps.isProjectPage) this.renderShape(nextProps, true)
+      // Draw the new shape
+      this.renderShape(nextProps, true)
     }
 
     const drawnMbrFound = drawnLayers.filter(layer => layer.layerMbr != null)
@@ -227,11 +227,13 @@ class SpatialSelection extends Component {
       if (leafletElement.removeLayer) {
         drawnMbrFound.forEach(drawnMbr => leafletElement.removeLayer(drawnMbr.layerMbr))
 
+        // remove the layerMbr from all drawnLayers
         this.setState(prevState => ({
           ...prevState,
-          drawnLayers: [
-            { ...prevState.drawnLayers[0], layerMbr: null }
-          ]
+          drawnLayers: prevState.drawnLayers.map(layer => ({
+            ...layer,
+            layerMbr: null
+          }))
         }))
       }
     }
@@ -245,7 +247,11 @@ class SpatialSelection extends Component {
   // Callback from EditControl, called when clicking the draw shape button
   onDrawStart(e) {
     let { layerType } = e
-    const { onToggleDrawingNewLayer, onMetricsMap } = this.props
+    const {
+      onToggleDrawingNewLayer,
+      onMetricsMap,
+      onRemoveSpatialFilter
+    } = this.props
     const { drawnLayers } = this.state
 
     if (layerType !== 'shapefile' && drawnLayers.length > 0) {
@@ -258,6 +264,9 @@ class SpatialSelection extends Component {
       })
 
       this.setState({ drawnLayers: [] })
+
+      // Remove existing spatial from the store
+      onRemoveSpatialFilter()
     }
 
     if (layerType === 'shapefile') layerType = 'Shape File'
@@ -299,25 +308,26 @@ class SpatialSelection extends Component {
   }
 
   onEditStart() {
-    this.preEditBounds = this.boundsToPoints(this.layers[0])
+    this.preEditBounds = this.layers.map(layer => this.boundsToPoints(layer))
   }
 
   onEditStop() {
-    const { type: layerType } = this.layers[0]
     const { onMetricsSpatialEdit } = this.props
-    const postEditBounds = this.boundsToPoints(this.layers[0])
+    const postEditBounds = this.layers.map(layer => this.boundsToPoints(layer))
 
-    let distanceSum = 0
+    this.preEditBounds.forEach((bounds, index) => {
+      const { type: layerType } = this.layers[index]
+      let distanceSum = 0
 
-    this.preEditBounds.forEach((p0, i) => {
-      const p1 = postEditBounds[i]
-      console.log('SpatialSelection -> onEditStop -> p0', p0)
-      distanceSum += p0.distanceTo(p1)
-    })
+      bounds.forEach((p0, i) => {
+        const p1 = postEditBounds[index][i]
+        distanceSum += p0.distanceTo(p1)
+      })
 
-    onMetricsSpatialEdit({
-      type: layerType,
-      distanceSum
+      onMetricsSpatialEdit({
+        type: layerType,
+        distanceSum
+      })
     })
   }
 
@@ -334,7 +344,11 @@ class SpatialSelection extends Component {
 
   // Callback from EditControl, contains the layer that was just drawn
   onCreated(e) {
-    const { isShapefile, layer, layerType } = e
+    const {
+      isShapefile,
+      layer,
+      layerType
+    } = e
 
     let type
     if (layerType === 'marker') {
@@ -379,13 +393,15 @@ class SpatialSelection extends Component {
       const drawnLayer = drawnLayers[layerIndex]
       const {
         layer,
-        layerType
+        layerType,
+        layerMbr
       } = drawnLayer
 
       const points = this.getLayerLatLngs(layer, layerType)
       const { featureGroupRef } = this
       const { leafletElement } = featureGroupRef
       leafletElement.removeLayer(layer)
+      leafletElement.removeLayer(layerMbr)
 
       this.setState(prevState => ({
         ...prevState,
@@ -397,6 +413,8 @@ class SpatialSelection extends Component {
 
       const existingSearch = this.getExistingSearch(layerType)
 
+      // Save existing spatial params for all types, while removing only the currently deselected points from layerType
+      // Set types to undefined if no spatial search exists, to remove that value from the redux store
       onChangeQuery({
         collection: {
           spatial: {
@@ -522,6 +540,7 @@ class SpatialSelection extends Component {
     }
   }
 
+  // Returns the search param if at least 1 set of points exist. If it is an empty array return undefined
   spatialSearchOrUndefined(search) {
     if (search.length > 0) return search
 
@@ -561,6 +580,8 @@ class SpatialSelection extends Component {
       // Add new selected shape to any existing spatial, keep existing spatial of different types as well
       const existingSearch = this.getExistingSearch(type)
 
+      // Save existing spatial params for all types, while adding the currently selected points from layerType
+      // Set types to undefined if no spatial search exists, to remove that value from the redux store
       onChangeQuery({
         collection: {
           spatial: {
@@ -574,7 +595,6 @@ class SpatialSelection extends Component {
         }
       })
     } else {
-      // console.log('not shapefile updating')
       this.setState({
         drawnLayers: [newDrawnLayer]
       })
@@ -617,8 +637,12 @@ class SpatialSelection extends Component {
       circleSearch,
       lineSearch,
       pointSearch,
-      polygonSearch
+      polygonSearch,
+      shapefileId
     } = props
+
+    // Don't draw a shape if a shapefile is present. ShapefileLayer.js will draw it
+    if (shapefileId) return
 
     const {
       regionSearch = {}
@@ -877,6 +901,42 @@ class SpatialSelection extends Component {
   render() {
     const { isProjectPage } = this.props
 
+    let draw = {
+      circle: {
+        drawError: errorOptions,
+        shapeOptions: colorOptions
+      },
+      circlemarker: false,
+      polygon: {
+        drawError: errorOptions,
+        shapeOptions: colorOptions
+      },
+      polyline: false,
+      rectangle: {
+        drawError: errorOptions,
+        shapeOptions: colorOptions
+      }
+    }
+    let edit = {
+      selectedPathOptions: {
+        opacity: 0.6,
+        dashArray: '10, 10',
+        maintainColor: true
+      }
+    }
+
+    if (isProjectPage) {
+      draw = {
+        circle: false,
+        circlemarker: false,
+        marker: false,
+        polygon: false,
+        polyline: false,
+        rectangle: false
+      }
+      edit = undefined
+    }
+
     const controls = (
       <EditControl
         position="bottomright"
@@ -888,34 +948,13 @@ class SpatialSelection extends Component {
         onEdited={this.onEdited}
         onEditStart={this.onEditStart}
         onEditStop={this.onEditStop}
-        draw={{
-          circle: {
-            drawError: errorOptions,
-            shapeOptions: colorOptions
-          },
-          circlemarker: false,
-          polygon: {
-            drawError: errorOptions,
-            shapeOptions: colorOptions
-          },
-          polyline: false,
-          rectangle: {
-            drawError: errorOptions,
-            shapeOptions: colorOptions
-          }
-        }}
-        edit={{
-          selectedPathOptions: {
-            opacity: 0.6,
-            dashArray: '10, 10',
-            maintainColor: true
-          }
-        }}
+        draw={draw}
+        edit={edit}
       />
     )
     return (
       <FeatureGroup ref={(ref) => { this.featureGroupRef = ref }}>
-        { !isProjectPage && controls }
+        {controls}
       </FeatureGroup>
     )
   }
@@ -927,8 +966,7 @@ SpatialSelection.defaultProps = {
   lineSearch: [],
   mapRef: {},
   pointSearch: [],
-  polygonSearch: [],
-  shapefileId: null
+  polygonSearch: []
 }
 
 SpatialSelection.propTypes = {
@@ -942,10 +980,10 @@ SpatialSelection.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
-  shapefileId: PropTypes.string,
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
-  onMetricsSpatialEdit: PropTypes.func.isRequired
+  onMetricsSpatialEdit: PropTypes.func.isRequired,
+  onRemoveSpatialFilter: PropTypes.func.isRequired
 }
 
 export default SpatialSelection

@@ -28,7 +28,8 @@ function setup() {
     pointSearch: ['Test value'],
     polygonSearch: ['Test value'],
     onMetricsMap: jest.fn(),
-    onMetricsSpatialEdit: jest.fn()
+    onMetricsSpatialEdit: jest.fn(),
+    onRemoveSpatialFilter: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SpatialSelectionContainer {...props} />)

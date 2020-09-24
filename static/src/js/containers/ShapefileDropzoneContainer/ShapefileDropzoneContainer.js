@@ -8,11 +8,12 @@ import { eventEmitter } from '../../events/events'
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
 const mapDispatchToProps = dispatch => ({
-  onShapefileLoading: file => dispatch(actions.shapefileLoading(file)),
-  onShapefileErrored: options => dispatch(actions.shapefileErrored(options)),
+  onRemoveSpatialFilter: () => dispatch(actions.removeSpatialFilter()),
   onSaveShapefile: options => dispatch(actions.saveShapefile(options)),
-  onUpdateShapefile: options => dispatch(actions.updateShapefile(options)),
-  onToggleShapefileUploadModal: state => dispatch(actions.toggleShapefileUploadModal(state))
+  onShapefileErrored: options => dispatch(actions.shapefileErrored(options)),
+  onShapefileLoading: file => dispatch(actions.shapefileLoading(file)),
+  onToggleShapefileUploadModal: state => dispatch(actions.toggleShapefileUploadModal(state)),
+  onUpdateShapefile: options => dispatch(actions.updateShapefile(options))
 })
 
 const mapStateToProps = state => ({
@@ -40,6 +41,7 @@ const dropzoneOptions = {
 
 export const ShapefileDropzoneContainer = ({
   authToken,
+  onRemoveSpatialFilter,
   onShapefileErrored,
   onShapefileLoading,
   onSaveShapefile,
@@ -49,6 +51,9 @@ export const ShapefileDropzoneContainer = ({
     dropzoneOptions={dropzoneOptions}
     eventScope="shapefile"
     onSending={(file) => {
+      // Remove existing spatial from the store
+      onRemoveSpatialFilter()
+
       onShapefileLoading(file)
     }}
     onSuccess={(file, resp, dropzoneEl) => {
@@ -88,6 +93,7 @@ ShapefileDropzoneContainer.propTypes = {
   onShapefileErrored: PropTypes.func.isRequired,
   onShapefileLoading: PropTypes.func.isRequired,
   onSaveShapefile: PropTypes.func.isRequired,
+  onRemoveSpatialFilter: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }
 
