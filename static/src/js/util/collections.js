@@ -211,6 +211,9 @@ export const buildCollectionSearchParams = (params) => {
       science_keywords_h: {
         or: true
       },
+      spatial: {
+        or: true
+      },
       temporal: {
         limit_to_granules: true
       }
@@ -218,13 +221,6 @@ export const buildCollectionSearchParams = (params) => {
     pageSize: defaultCmrPageSize,
     sortKey: ['has_granules_or_cwic', ...selectedSortKey]
   }
-
-  // If we are sending more than one spatial param, add the param to OR that spatial type
-  if (boundingBox && boundingBox.length > 0) defaultParams.options.bounding_box = { or: true }
-  if (circle && circle.length > 0) defaultParams.options.circle = { or: true }
-  if (line && line.length > 0) defaultParams.options.line = { or: true }
-  if (point && point.length > 0) defaultParams.options.point = { or: true }
-  if (polygon && polygon.length > 0) defaultParams.options.polygon = { or: true }
 
   return {
     ...defaultParams,

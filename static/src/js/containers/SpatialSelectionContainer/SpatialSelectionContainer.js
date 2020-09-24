@@ -14,9 +14,10 @@ import SpatialSelection from '../../components/SpatialSelection/SpatialSelection
 
 const mapDispathToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onToggleDrawingNewLayer: state => dispatch(actions.toggleDrawingNewLayer(state)),
   onMetricsMap: type => dispatch(metricsMap(type)),
-  onMetricsSpatialEdit: data => dispatch(metricsSpatialEdit(data))
+  onMetricsSpatialEdit: data => dispatch(metricsSpatialEdit(data)),
+  onRemoveSpatialFilter: () => dispatch(actions.removeSpatialFilter()),
+  onToggleDrawingNewLayer: state => dispatch(actions.toggleDrawingNewLayer(state))
 })
 
 const mapStateToProps = state => ({
@@ -46,7 +47,8 @@ export const SpatialSelectionContainer = (props) => {
     shapefileId,
     onToggleDrawingNewLayer,
     onMetricsMap,
-    onMetricsSpatialEdit
+    onMetricsSpatialEdit,
+    onRemoveSpatialFilter
   } = props
 
   const { location } = router
@@ -76,6 +78,7 @@ export const SpatialSelectionContainer = (props) => {
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
       onMetricsMap={onMetricsMap}
       onMetricsSpatialEdit={onMetricsSpatialEdit}
+      onRemoveSpatialFilter={onRemoveSpatialFilter}
     />
   )
 }
@@ -104,7 +107,8 @@ SpatialSelectionContainer.propTypes = {
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
   router: PropTypes.shape({}).isRequired,
-  shapefileId: PropTypes.string
+  shapefileId: PropTypes.string,
+  onRemoveSpatialFilter: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispathToProps)(SpatialSelectionContainer)

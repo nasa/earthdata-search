@@ -39,7 +39,8 @@ const defaultProps = {
   onChangeMap: jest.fn(),
   onToggleDrawingNewLayer: jest.fn(),
   onMetricsMap: jest.fn(),
-  onMetricsSpatialEdit: jest.fn()
+  onMetricsSpatialEdit: jest.fn(),
+  onRemoveSpatialFilter: jest.fn()
 }
 
 beforeEach(() => {
@@ -54,7 +55,7 @@ describe('SpatialSelection component', () => {
     const editControl = enzymeWrapper.find(EditControl)
 
     expect(editControl.length).toBe(1)
-    expect(editControl.prop('draw')).toEqual({
+    expect(editControl.props().draw).toEqual({
       polygon: {
         drawError: errorOptions,
         shapeOptions: colorOptions
@@ -70,6 +71,13 @@ describe('SpatialSelection component', () => {
         shapeOptions: colorOptions
       }
     })
+    expect(editControl.props().edit).toEqual({
+      selectedPathOptions: {
+        opacity: 0.6,
+        dashArray: '10, 10',
+        maintainColor: true
+      }
+    })
   })
 
   test('should not render controls on project page', () => {
@@ -81,7 +89,15 @@ describe('SpatialSelection component', () => {
 
     const editControl = enzymeWrapper.find(EditControl)
 
-    expect(editControl.length).toBe(0)
+    expect(editControl.props().draw).toEqual({
+      circle: false,
+      circlemarker: false,
+      marker: false,
+      polygon: false,
+      polyline: false,
+      rectangle: false
+    })
+    expect(editControl.props().edit).toEqual(undefined)
   })
 
   describe('componentWillReceiveProps', () => {
@@ -605,7 +621,7 @@ describe('SpatialSelection component', () => {
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onDeleted')({ isShapefile: true, layerId: 0 })
 
-      expect(mockRemoveLayer.mock.calls.length).toBe(1)
+      expect(mockRemoveLayer.mock.calls.length).toBe(2)
       expect(enzymeWrapper.state().drawnLayers).toHaveLength(0)
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{

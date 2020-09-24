@@ -14,7 +14,8 @@ function setup() {
     onShapefileErrored: jest.fn(),
     onSaveShapefile: jest.fn(),
     onToggleShapefileUploadModal: jest.fn(),
-    onShapefileLoading: jest.fn()
+    onShapefileLoading: jest.fn(),
+    onRemoveSpatialFilter: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ShapefileDropzoneContainer {...props} />)

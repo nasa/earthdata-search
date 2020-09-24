@@ -323,6 +323,7 @@ class ShapefileLayerExtended extends L.Layer {
     if (layer != null) {
       layer.feature = feature
       if (!this.isProjectPage) layer.on('click', this.clickLayer)
+
       const { map } = this
       map.fire('draw:drawstart', { layerType: 'shapefile' })
       map.fire('draw:created', {
@@ -379,7 +380,6 @@ class ShapefileLayer extends MapLayer {
   updateLeafletElement(fromProps, toProps) {
     const element = this.leafletElement
 
-    const { shapefile: fromShapefile } = fromProps
     const {
       isProjectPage: toIsProjectPage,
       leaflet: toLeaflet,
@@ -391,7 +391,6 @@ class ShapefileLayer extends MapLayer {
     element.map = map
     element.isProjectPage = toIsProjectPage
 
-    const { file: fromFile } = fromShapefile
     const {
       file: toFile,
       shapefileId: toShapefileId,
@@ -399,7 +398,7 @@ class ShapefileLayer extends MapLayer {
       selectedFeatures
     } = toShapefile
 
-    if (toFile && fromFile !== toFile) {
+    if (toFile) {
       element.drawNewShapefile(toFile, selectedFeatures)
     }
 
