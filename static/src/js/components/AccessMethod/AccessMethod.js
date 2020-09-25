@@ -312,8 +312,8 @@ export class AccessMethod extends Component {
     // Harmony access methods are postfixed with an index given that there can be more than one
     const isHarmony = (selectedAccessMethod && selectedAccessMethod.includes('harmony'))
 
-    // Default supportedOutputFormat
-    let supportedOutputFormatOptions = supportedOutputFormats
+    // Default supportedOutputFormatOptions
+    let supportedOutputFormatOptions = []
 
     if (isOpendap) {
       // Filter the supportedOutputFormats to only those formats CMR supports
@@ -322,15 +322,14 @@ export class AccessMethod extends Component {
       )
 
       // Build options for supportedOutputFormats
-      supportedOutputFormatOptions = [
-        <option key={null} value={null}>None</option>,
-        ...supportedOutputFormatOptions.map(format => (
-          <option key={format} value={ousFormatMapping[format]}>{format}</option>
-        ))
-      ]
+      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
+        <option key={format} value={ousFormatMapping[format]}>{format}</option>
+      ))
     }
 
-    let supportedOutputProjectionOptions
+    // Default supportedOutputProjectionOptions
+    let supportedOutputProjectionOptions = []
+
     if (isHarmony) {
       // Filter the supportedOutputFormats to only those formats Harmony supports
       supportedOutputFormatOptions = supportedOutputFormats.filter(
@@ -338,20 +337,14 @@ export class AccessMethod extends Component {
       )
 
       // Build options for supportedOutputFormats
-      supportedOutputFormatOptions = [
-        <option key={null} value={null}>None</option>,
-        ...supportedOutputFormatOptions.map(format => (
-          <option key={format} value={harmonyFormatMapping[format]}>{format}</option>
-        ))
-      ]
+      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
+        <option key={format} value={harmonyFormatMapping[format]}>{format}</option>
+      ))
 
       // Build options for supportedOutputFormats
-      supportedOutputProjectionOptions = [
-        <option key={null} value={null}>None</option>,
-        ...supportedOutputProjections.map(format => (
-          <option key={format} value={format}>{format}</option>
-        ))
-      ]
+      supportedOutputProjectionOptions = supportedOutputProjections.map(format => (
+        <option key={format} value={format}>{format}</option>
+      ))
     }
 
     const echoFormFallback = (
@@ -361,8 +354,8 @@ export class AccessMethod extends Component {
     )
 
     const isCustomizationAvailable = supportsVariableSubsetting
-      || supportedOutputFormats.length > 0
-      || supportedOutputProjections.length > 0
+      || supportedOutputFormatOptions.length > 0
+      || supportedOutputProjectionOptions.length > 0
       || (form && isActive)
 
     return (
@@ -454,7 +447,7 @@ export class AccessMethod extends Component {
                   )
                 }
                 {
-                  supportedOutputFormats.length > 0 && (
+                  supportedOutputFormatOptions.length > 0 && (
                     <>
                       <ProjectPanelSection
                         customHeadingTag="h4"
@@ -468,14 +461,17 @@ export class AccessMethod extends Component {
                           onChange={this.handleOutputFormatSelection}
                           value={selectedOutputFormat}
                         >
-                          {supportedOutputFormatOptions}
+                          {[
+                            <option key={null} value={null}>None</option>,
+                            ...supportedOutputFormatOptions
+                          ]}
                         </select>
                       </ProjectPanelSection>
                     </>
                   )
                 }
                 {
-                  supportedOutputProjections.length > 0 && (
+                  supportedOutputProjectionOptions.length > 0 && (
                     <>
                       <ProjectPanelSection heading="Output Projection Selection">
                         <p className="access-method__section-intro">
@@ -488,7 +484,10 @@ export class AccessMethod extends Component {
                           onChange={this.handleOutputProjectionSelection}
                           value={selectedOutputProjection}
                         >
-                          {supportedOutputProjectionOptions}
+                          {[
+                            <option key={null} value={null}>None</option>,
+                            ...supportedOutputProjectionOptions
+                          ]}
                         </select>
                       </ProjectPanelSection>
                     </>

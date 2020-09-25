@@ -121,7 +121,7 @@ export const TextWindowActions = ({
       }
       <EDSCModalContainer
         id={`order-status-links-modal__${id}`}
-        modalClassNames="order-status-links-modal"
+        className="order-status-links-modal"
         onClose={handleClose}
         isOpen={showModal}
         size="lg"

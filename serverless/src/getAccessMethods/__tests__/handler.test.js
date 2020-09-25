@@ -83,6 +83,7 @@ describe('getAccessMethods', () => {
       statusCode: 200
     })
   })
+
   test('populates a harmony method', async () => {
     dbTracker.on('query', (query) => {
       query.response([])
@@ -115,6 +116,10 @@ describe('getAccessMethods', () => {
                 urlValue: 'https://harmony.earthdata.nas.gov'
               }
             }]
+          },
+          variables: {
+            count: 0,
+            items: null
           }
         }
       })

@@ -1,5 +1,3 @@
-import { isEmpty } from 'lodash'
-
 /**
  * Determine whether or not the provided UMM S record supports shapefile subsetting
  * @param {Object} service UMM S record to parse
@@ -13,8 +11,8 @@ export const supportsShapefileSubsetting = (service) => {
   const { subset = {} } = serviceOptions
   const { spatialSubset = {} } = subset
   const {
-    shapefile = {}
+    shapefile = []
   } = spatialSubset
 
-  return !isEmpty(shapefile)
+  return shapefile.find(shapefile => shapefile.format === 'GeoJSON') != null
 }

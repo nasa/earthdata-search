@@ -18,6 +18,6 @@ export const harmonyFormatMapping = {
   GEOTIFF: 'image/tiff',
   GIF: 'image/gif',
   PNG: 'image/png',
-  Shapefile: 'application/shapefile+zip',
+  'Shapefile+zip': 'application/shapefile+zip',
   ZARR: 'application/x-zarr'
 }

@@ -24,7 +24,15 @@ const computeVariables = (items) => {
  * @param {String} jwtToken JWT returned from edlAuthorizer
  */
 export const getVariables = (data) => {
-  const { items = [] } = data || {}
+  const { count } = data
+
+  // Default items to an empty array
+  let items = []
+
+  // If variables exist, pull them from the response
+  if (count > 0) {
+    ({ items } = data)
+  }
 
   const hierarchyMappings = computeHierarchyMappings(items)
   const keywordMappings = computeKeywordMappings(items)
