@@ -48,6 +48,7 @@ const submitHarmonyOrder = async (event, context) => {
       .first(
         'retrievals.id',
         'retrievals.jsondata',
+        'retrievals.user_id',
         'retrieval_collections.access_method',
         'retrieval_collections.collection_id',
         'retrieval_orders.granule_params'
