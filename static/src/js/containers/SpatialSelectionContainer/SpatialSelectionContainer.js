@@ -29,7 +29,7 @@ const mapStateToProps = state => ({
   router: state.router,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
-  shapefileId: state.shapefile.shapefileId
+  shapefile: state.shapefile
 })
 
 export const SpatialSelectionContainer = (props) => {
@@ -44,7 +44,7 @@ export const SpatialSelectionContainer = (props) => {
     pointSearch,
     polygonSearch,
     router,
-    shapefileId,
+    shapefile,
     onToggleDrawingNewLayer,
     onMetricsMap,
     onMetricsSpatialEdit,
@@ -74,7 +74,7 @@ export const SpatialSelectionContainer = (props) => {
       onChangeQuery={onChangeQuery}
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
-      shapefileId={shapefileId}
+      shapefile={shapefile}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
       onMetricsMap={onMetricsMap}
       onMetricsSpatialEdit={onMetricsSpatialEdit}
@@ -90,7 +90,7 @@ SpatialSelectionContainer.defaultProps = {
   mapRef: {},
   pointSearch: [],
   polygonSearch: [],
-  shapefileId: null
+  shapefile: {}
 }
 
 SpatialSelectionContainer.propTypes = {
@@ -107,7 +107,7 @@ SpatialSelectionContainer.propTypes = {
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
   router: PropTypes.shape({}).isRequired,
-  shapefileId: PropTypes.string,
+  shapefile: PropTypes.shape({}),
   onRemoveSpatialFilter: PropTypes.func.isRequired
 }
 

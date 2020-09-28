@@ -35,6 +35,7 @@ const defaultProps = {
   },
   pointSearch: [],
   polygonSearch: [],
+  shapefile: {},
   onChangeQuery: jest.fn(),
   onChangeMap: jest.fn(),
   onToggleDrawingNewLayer: jest.fn(),
@@ -89,15 +90,18 @@ describe('SpatialSelection component', () => {
 
     const editControl = enzymeWrapper.find(EditControl)
 
-    expect(editControl.props().draw).toEqual({
+    expect(editControl.props().draw).toEqual(expect.objectContaining({
       circle: false,
       circlemarker: false,
       marker: false,
       polygon: false,
       polyline: false,
       rectangle: false
+    }))
+    expect(editControl.props().edit).toEqual({
+      edit: false,
+      remove: false
     })
-    expect(editControl.props().edit).toEqual(undefined)
   })
 
   describe('componentWillReceiveProps', () => {
@@ -214,11 +218,16 @@ describe('SpatialSelection component', () => {
     test('sets the State and calls onToggleDrawingNewLayer', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
+      enzymeWrapper.instance().featureGroupRef = {
+        leafletElement: {
+          removeLayer: jest.fn()
+        }
+      }
+
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onDrawStart')({
         layerType: 'marker'
       })
-
 
       expect(enzymeWrapper.state().drawnLayers).toHaveLength(0)
       expect(props.onToggleDrawingNewLayer.mock.calls.length).toBe(1)
@@ -227,6 +236,12 @@ describe('SpatialSelection component', () => {
 
     test('sends the metricsMap event', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
+
+      enzymeWrapper.instance().featureGroupRef = {
+        leafletElement: {
+          removeLayer: jest.fn()
+        }
+      }
 
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onDrawStart')({
@@ -579,6 +594,20 @@ describe('SpatialSelection component', () => {
           ]
         })
       )
+    })
+
+    test('does not render a shape if there is a shapefile', () => {
+      const { enzymeWrapper, props } = setup({
+        ...defaultProps,
+        shapefile: {
+          shapefileId: '1234'
+        }
+      })
+      enzymeWrapper.instance().renderCircle = jest.fn()
+
+      enzymeWrapper.instance().renderShape({ ...props, circleSearch: ['0,0,20000'] })
+
+      expect(enzymeWrapper.instance().renderCircle).toHaveBeenCalledTimes(0)
     })
   })
 
