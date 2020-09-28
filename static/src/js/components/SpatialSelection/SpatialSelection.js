@@ -2,7 +2,12 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { difference, startCase, uniq } from 'lodash'
+import {
+  difference,
+  isEqual,
+  startCase,
+  uniq
+} from 'lodash'
 import { FeatureGroup } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 import L from 'leaflet'
@@ -10,6 +15,7 @@ import L from 'leaflet'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import icon from 'leaflet-draw/dist/images/marker-icon.png'
 import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
+
 
 import { eventEmitter } from '../../events/events'
 import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
@@ -135,7 +141,8 @@ class SpatialSelection extends Component {
       lineSearch,
       mapRef,
       pointSearch,
-      polygonSearch
+      polygonSearch,
+      shapefile
     } = this.props
     const {
       drawnLayers = []
@@ -166,6 +173,15 @@ class SpatialSelection extends Component {
     || lineSearch[0]
     || circleSearch[0]
     || regionSpatial
+
+    const { shapefile: nextShapefile } = nextProps
+    const { file: nextFile } = nextShapefile
+
+    const { file } = shapefile
+    // If the shapefile changed, clear the drawnLayers
+    if (!isEqual(file, nextFile)) {
+      this.setState({ drawnLayers: [] })
+    }
 
     const { featureGroupRef = {} } = this
     const { leafletElement = {} } = featureGroupRef
@@ -254,7 +270,7 @@ class SpatialSelection extends Component {
     } = this.props
     const { drawnLayers } = this.state
 
-    if (layerType !== 'shapefile' && drawnLayers.length > 0) {
+    if (layerType !== 'shapefile') {
       const { featureGroupRef } = this
       const { leafletElement } = featureGroupRef
       drawnLayers.forEach((drawnLayer) => {
@@ -263,13 +279,27 @@ class SpatialSelection extends Component {
         leafletElement.removeLayer(layerMbr)
       })
 
-      this.setState({ drawnLayers: [] })
-
       // Remove existing spatial from the store
       onRemoveSpatialFilter()
+
+      this.setState({ drawnLayers: [] })
     }
 
-    if (layerType === 'shapefile') layerType = 'Shape File'
+    if (layerType === 'shapefile') {
+      layerType = 'Shape File'
+
+      // Clear any drawnLayers that aren't shapefiles
+      this.setState(prevState => ({
+        ...prevState,
+        drawnLayers: prevState.drawnLayers.filter((drawnLayer) => {
+          const { layer } = drawnLayer
+          const { feature = {} } = layer
+          const { edscId } = feature
+
+          return edscId !== undefined
+        })
+      }))
+    }
 
     onMetricsMap(`Spatial: ${startCase(layerType)}`)
     onToggleDrawingNewLayer(layerType)
@@ -334,11 +364,14 @@ class SpatialSelection extends Component {
   // Callback from EditControl, called when the layer is edited
   onEdited() {
     const { drawnLayers } = this.state
+
+    // Editing is disabled for shapefiles, only edit the first drawnLayer
     const [firstLayer = {}] = drawnLayers
     const {
       layer: drawnLayer,
       layerType: drawnLayerType
     } = firstLayer
+
     this.updateStateAndQuery(drawnLayer, drawnLayerType)
   }
 
@@ -638,10 +671,11 @@ class SpatialSelection extends Component {
       lineSearch,
       pointSearch,
       polygonSearch,
-      shapefileId
+      shapefile
     } = props
 
     // Don't draw a shape if a shapefile is present. ShapefileLayer.js will draw it
+    const { shapefileId } = shapefile
     if (shapefileId) return
 
     const {
@@ -899,7 +933,8 @@ class SpatialSelection extends Component {
   }
 
   render() {
-    const { isProjectPage } = this.props
+    const { isProjectPage, shapefile } = this.props
+    const { shapefileId } = shapefile
 
     let draw = {
       circle: {
@@ -934,7 +969,13 @@ class SpatialSelection extends Component {
         polyline: false,
         rectangle: false
       }
-      edit = undefined
+    }
+
+    if (isProjectPage || shapefileId) {
+      edit = {
+        edit: false,
+        remove: false
+      }
     }
 
     const controls = (
@@ -966,7 +1007,8 @@ SpatialSelection.defaultProps = {
   lineSearch: [],
   mapRef: {},
   pointSearch: [],
-  polygonSearch: []
+  polygonSearch: [],
+  shapefile: {}
 }
 
 SpatialSelection.propTypes = {
@@ -980,6 +1022,10 @@ SpatialSelection.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
+  shapefile: PropTypes.shape({
+    file: PropTypes.shape({}),
+    shapefileId: PropTypes.string
+  }),
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onMetricsSpatialEdit: PropTypes.func.isRequired,
