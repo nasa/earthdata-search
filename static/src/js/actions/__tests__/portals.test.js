@@ -42,8 +42,7 @@ describe('loadPortalConfig', () => {
           showMapImagery: true,
           showNearRealTime: true,
           showCustomizable: true
-        },
-        includeNtPageTag: true
+        }
       },
       footer: {
         displayVersion: true,
