@@ -163,12 +163,13 @@ export const constructOrderPayload = async ({
   if (supportsBoundingBoxSubsetting) {
     if (boundingBox.length > 0) {
       const [swCoord, neCoord] = pointStringToLatLng(boundingBox[0])
+      console.log('pointStringToLatLng', pointStringToLatLng(boundingBox[0]))
 
       const [swLat, swLng] = swCoord
       const [neLat, neLng] = neCoord
 
-      orderPayload.append('subset', `lat(${[parseFloat(swLat), parseFloat(neLat)].sort().join(':')})`)
-      orderPayload.append('subset', `lon(${[parseFloat(swLng), parseFloat(neLng)].sort().join(':')})`)
+      orderPayload.append('subset', `lat(${[parseFloat(swLat), parseFloat(neLat)].join(':')})`)
+      orderPayload.append('subset', `lon(${[parseFloat(swLng), parseFloat(neLng)].join(':')})`)
     } else if (mbr) {
       const {
         swLat,
@@ -177,8 +178,8 @@ export const constructOrderPayload = async ({
         neLng
       } = mbr
 
-      orderPayload.append('subset', `lat(${[parseFloat(swLat), parseFloat(neLat)].sort().join(':')})`)
-      orderPayload.append('subset', `lon(${[parseFloat(swLng), parseFloat(neLng)].sort().join(':')})`)
+      orderPayload.append('subset', `lat(${[parseFloat(swLat), parseFloat(neLat)].join(':')})`)
+      orderPayload.append('subset', `lon(${[parseFloat(swLng), parseFloat(neLng)].join(':')})`)
     }
   }
 

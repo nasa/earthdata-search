@@ -20,20 +20,34 @@ describe('pointStringToLatLng', () => {
     })
   })
 
-  describe('when the provided string contains more than 3 values', () => {
-    test('returns an array of coordinates', () => {
+  describe('when the provided string contains 4 values (2 points)', () => {
+    test('returns an array of coordinates represnting a bounding box', () => {
       expect(pointStringToLatLng('5, 10, 15, 20')).toEqual([
-        [20, 15],
-        [10, 5]
+        [10, 5],
+        [20, 15]
       ])
     })
+  })
 
-    test('returns an array of coordinates', () => {
-      expect(pointStringToLatLng('5, 10, 15, 20, 25, 30')).toEqual([
-        [30, 25],
-        [20, 15],
-        [10, 5]
-      ])
+  describe('when the provided string contains more than 4 values (3 or more points)', () => {
+    describe('when drawn clockwise', () => {
+      test('returns an array of coordinates counter clockwise', () => {
+        expect(pointStringToLatLng('5, 10, 5, 30, 25, 30')).toEqual([
+          [10, 5],
+          [30, 5],
+          [30, 25]
+        ])
+      })
+    })
+
+    describe('when drawn counter clockwise', () => {
+      test('returns an array of coordinates counter clockwise', () => {
+        expect(pointStringToLatLng('5, 10, 25, 30, 5, 30')).toEqual([
+          [30, 5],
+          [30, 25],
+          [10, 5]
+        ])
+      })
     })
   })
 })

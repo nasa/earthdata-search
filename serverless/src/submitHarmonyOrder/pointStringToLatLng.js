@@ -1,3 +1,5 @@
+import { isClockwiseLatLng } from '../../../static/src/js/util/map/granules'
+
 /**
  * Convert a comma separated string into an object representing a shape
  * @param {String} pointString A comma separated string representing a list of points
@@ -24,10 +26,27 @@ export const pointStringToLatLng = (pointString) => {
     return point
   }
 
-  const result = pointString.match(/[^,]+,[^,]+/g)
+  let result = pointString.match(/[^,]+,[^,]+/g)
 
-  // OGC requires the parameters be reversed
-  return result.reverse().map((point) => {
+  // If the point string contains more than 4 values, its a polygon and we
+  // need to consider the direction of the points because OGC requires the
+  // parameters to be counter clockwise
+  if (pointParts.length > 4) {
+    const latLngs = result.map((point) => {
+      const [lngString, latString] = point.split(',')
+      return {
+        lat: parseFloat(latString),
+        lng: parseFloat(lngString)
+      }
+    })
+
+    // If the polygon was drawn clockwise, we need to reverse
+    if (isClockwiseLatLng(latLngs)) {
+      result = result.reverse()
+    }
+  }
+
+  return result.map((point) => {
     const [lngString, latString] = point.split(',')
 
     return [
