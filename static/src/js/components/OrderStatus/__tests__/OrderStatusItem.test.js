@@ -1340,14 +1340,18 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
 
-        const orderStatusTab = tabs.childAt(1)
+        const stacLinksTab = tabs.childAt(1)
+        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
+
+        const orderStatusTab = tabs.childAt(2)
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
@@ -1428,14 +1432,18 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
 
-        const orderStatusTab = tabs.childAt(1)
+        const stacLinksTab = tabs.childAt(1)
+        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
+
+        const orderStatusTab = tabs.childAt(2)
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
@@ -1538,7 +1546,7 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
@@ -1547,7 +1555,13 @@ describe('OrderStatusItem', () => {
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
 
-        const orderStatusTab = tabs.childAt(1)
+        const stacLinksTab = tabs.childAt(1)
+        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([
+          'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/'
+        ])
+
+        const orderStatusTab = tabs.childAt(2)
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
@@ -1650,7 +1664,7 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:CMR query identified 51 granules.')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
 
@@ -1660,7 +1674,13 @@ describe('OrderStatusItem', () => {
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
 
-        const orderStatusTab = tabs.childAt(1)
+        const stacLinksTab = tabs.childAt(1)
+        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([
+          'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/'
+        ])
+
+        const orderStatusTab = tabs.childAt(2)
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
@@ -1741,14 +1761,18 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:Variable subsetting failed with error: HTTP Error 400: Bad Request.')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
 
-        const orderStatusTab = tabs.childAt(1)
+        const stacLinksTab = tabs.childAt(1)
+        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
+
+        const orderStatusTab = tabs.childAt(2)
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })

@@ -178,6 +178,8 @@ $item-height: 3rem;
   }
 
   &__additional-info {
+    max-height: 7rem;
+    overflow-y: scroll;
     background-color: $color__black--200;
   }
 
@@ -269,12 +271,6 @@ $item-height: 3rem;
     flex-grow: 1;
     flex-shrink: 1;
     min-height: 20rem;
-  }
-}
-
-.order-status-links-modal {
-  .edsc-modal__body {
-    padding-top: 2.5*$spacer;
   }
 }
 

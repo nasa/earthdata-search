@@ -475,7 +475,7 @@ export class AccessMethod extends Component {
                     <>
                       <ProjectPanelSection heading="Output Projection Selection">
                         <p className="access-method__section-intro">
-                          Choose from output projection options.
+                          Choose a desired output projection from supported EPSG Codes.
                         </p>
 
                         <select

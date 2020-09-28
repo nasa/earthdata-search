@@ -20,6 +20,65 @@ import ProgressRing from '../ProgressRing/ProgressRing'
 
 import './OrderStatusItem.scss'
 
+export const STACJsonPanel = ({
+  accessMethodType,
+  stacLinks,
+  retrievalId,
+  granuleCount,
+  stacLinksIsLoading
+}) => {
+  const downloadFileName = `${retrievalId}-${accessMethodType}-STAC.txt`
+
+  return stacLinks.length > 0 ? (
+    <>
+      <p className="order-status-item__tab-intro">
+        <span className="order-status-item__status-text">
+          {
+            stacLinksIsLoading
+              ? `Retrieving STAC links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
+              : `Retrieved ${stacLinks.length} STAC ${pluralize('link', stacLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}.`
+          }
+        </span>
+      </p>
+      <TextWindowActions
+        id={`links-${retrievalId}`}
+        fileContents={stacLinks.join('\n')}
+        fileName={downloadFileName}
+        clipboardContents={stacLinks.join('\n')}
+        modalTitle="STAC Links"
+      >
+        <ul className="download-links-panel__list">
+          {
+            stacLinks.map((link, i) => {
+              const key = `link_${i}`
+              return (
+                <li key={key}>
+                  <a href={link}>{link}</a>
+                </li>
+              )
+            })
+        }
+        </ul>
+      </TextWindowActions>
+    </>
+  )
+    : (
+      <p className="order-status-item__tab-intro">
+        STAC links will become available once the order has finished processing
+      </p>
+    )
+}
+
+STACJsonPanel.propTypes = {
+  accessMethodType: PropTypes.string.isRequired,
+  stacLinks: PropTypes.arrayOf(
+    PropTypes.string
+  ).isRequired,
+  retrievalId: PropTypes.string.isRequired,
+  granuleCount: PropTypes.number.isRequired,
+  stacLinksIsLoading: PropTypes.bool.isRequired
+}
+
 export const DownloadLinksPanel = ({
   accessMethodType,
   granuleLinks,
@@ -36,7 +95,7 @@ export const DownloadLinksPanel = ({
           {
             granuleLinksIsLoading
               ? `Retrieving links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
-              : `Retrieved ${granuleLinks.length} links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}.`
+              : `Retrieved ${granuleLinks.length} ${pluralize('link', granuleLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}.`
           }
         </span>
       </p>
@@ -251,6 +310,7 @@ export class OrderStatusItem extends PureComponent {
       granuleDownload,
       onChangePath,
       collection
+      // index
     } = this.props
 
     const {
@@ -309,6 +369,8 @@ export class OrderStatusItem extends PureComponent {
       let progressPercentage = 0
       let contactName = null
       let contactEmail = null
+      let stacLinksIsLoading = false
+      let stacLinks = []
 
       if (isDownload) {
         progressPercentage = 100
@@ -450,6 +512,25 @@ export class OrderStatusItem extends PureComponent {
           if (currentPercentProcessed) {
             progressPercentage = Math.floor(totalProgress / (totalOrders * 100) * 100)
           }
+
+          // Look at each order and pull the STAC catalog link
+          if (orders.length) {
+            stacLinks = orders.map((order) => {
+              const { order_information: orderInformation = {} } = order
+              const { links = [] } = orderInformation
+
+              const stacLink = links.find(({ rel }) => rel === 'stac-catalog-json')
+
+              if (stacLink) {
+                const { href = '' } = stacLink
+                return href
+              }
+              return false
+            }).filter(Boolean)
+          }
+
+          // If all orders are complete, all STAC links have finished loading
+          stacLinksIsLoading = orders.length !== totalCompleteOrders
         }
       }
 
@@ -598,7 +679,7 @@ export class OrderStatusItem extends PureComponent {
                       || isHarmony
                     ) && (
                       <Tab
-                        className={(isHarmony || processingComplete) ? '' : 'order-status-item__tab-status'}
+                        className={processingComplete ? '' : 'order-status-item__tab-status'}
                         title="Download Links"
                         eventKey="download-links"
                       >
@@ -608,6 +689,23 @@ export class OrderStatusItem extends PureComponent {
                           retrievalId={retrievalId}
                           granuleCount={granuleCount}
                           granuleLinksIsLoading={granuleLinksIsLoading}
+                        />
+                      </Tab>
+                    )
+                  }
+                  {
+                    isHarmony && (
+                      <Tab
+                        className={processingComplete ? '' : 'order-status-item__tab-status'}
+                        title="STAC Links"
+                        eventKey="stac-links"
+                      >
+                        <STACJsonPanel
+                          accessMethodType={accessMethodType}
+                          stacLinks={stacLinks}
+                          retrievalId={retrievalId}
+                          granuleCount={granuleCount}
+                          stacLinksIsLoading={stacLinksIsLoading}
                         />
                       </Tab>
                     )
