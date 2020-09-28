@@ -416,7 +416,7 @@ describe('constructOrderPayload', () => {
 
           expect(response.getAll('subset')).toEqual([
             'lat(33.99999999:34.00000001)',
-            'lon(-76.99999999:-77.00000001)'
+            'lon(-77.00000001:-76.99999999)'
           ])
         })
       })
@@ -439,7 +439,7 @@ describe('constructOrderPayload', () => {
             supportsBoundingBoxSubsetting: true
           }
           const granuleParams = {
-            bounding_box: ['0,5,10,15']
+            bounding_box: ['5,0,15,10']
           }
           const accessTokenWithClient = ''
 
@@ -450,8 +450,8 @@ describe('constructOrderPayload', () => {
           })
 
           expect(response.getAll('subset')).toEqual([
-            'lat(15:5)',
-            'lon(0:10)'
+            'lat(0:10)',
+            'lon(5:15)'
           ])
         })
       })
@@ -492,7 +492,7 @@ describe('constructOrderPayload', () => {
 
           expect(response.getAll('subset')).toEqual([
             'lat(33.8203369445857:34.1796630554143)',
-            'lon(-76.78328719787622:-77.21671280212378)'
+            'lon(-77.21671280212378:-76.78328719787622)'
           ])
         })
       })
