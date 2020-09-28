@@ -283,6 +283,8 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     options.readableGranuleName = { pattern: true }
   }
 
+  options.spatial = { or: true }
+
   return {
     boundingBox,
     conceptId,
