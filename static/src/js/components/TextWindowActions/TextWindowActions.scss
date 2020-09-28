@@ -34,8 +34,14 @@
     left: 0;
     right: 0;
     bottom: 0;
+    display: flex;
     padding: $spacer;
     padding-top: $spacer*3.5;
     overflow-y: scroll;
+  }
+
+  &__modal-body {
+    padding: $spacer;
+    padding-top: $spacer*3.5;
   }
 }
