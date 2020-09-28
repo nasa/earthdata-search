@@ -310,7 +310,6 @@ export class OrderStatusItem extends PureComponent {
       granuleDownload,
       onChangePath,
       collection
-      // index
     } = this.props
 
     const {
