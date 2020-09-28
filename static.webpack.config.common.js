@@ -167,14 +167,6 @@ const StaticCommonConfig = {
           gtmPropertyId: analytics.gtmPropertyId,
           showTophat: ui.showTophat
         }
-      },
-      {
-        path: path.join(__dirname, './static/src/partials/ntpagetag.html'),
-        location: 'body',
-        options: {
-          environment: process.env.NODE_ENV,
-          includeNtPageTag: portalConfig.features.includeNtPageTag
-        }
       }]),
     new webpack.HashedModuleIdsPlugin(),
     new CopyWebpackPlugin({
