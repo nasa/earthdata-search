@@ -289,7 +289,7 @@ class SecondaryToolbar extends Component {
         <PortalFeatureContainer authentication>
           <>
             {
-              (!isPath(location.pathname, ['/projects', '/downloads']) && projectCollectionIds.length > 0) && projectLink
+              (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && projectCollectionIds.length > 0) && projectLink
             }
             {
               pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
