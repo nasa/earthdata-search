@@ -84,7 +84,8 @@ export const DownloadLinksPanel = ({
   granuleLinks,
   retrievalId,
   granuleCount,
-  granuleLinksIsLoading
+  granuleLinksIsLoading,
+  showTextWindowActions
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
 
@@ -105,18 +106,20 @@ export const DownloadLinksPanel = ({
         fileName={downloadFileName}
         clipboardContents={granuleLinks.join('\n')}
         modalTitle="Download Links"
+        disableCopy={!showTextWindowActions}
+        disableSave={!showTextWindowActions}
       >
         <ul className="download-links-panel__list">
           {
-          granuleLinks.map((link, i) => {
-            const key = `link_${i}`
-            return (
-              <li key={key}>
-                <a href={link}>{link}</a>
-              </li>
-            )
-          })
-        }
+            granuleLinks.map((link, i) => {
+              const key = `link_${i}`
+              return (
+                <li key={key}>
+                  <a href={link}>{link}</a>
+                </li>
+              )
+            })
+          }
         </ul>
       </TextWindowActions>
     </>
@@ -128,6 +131,10 @@ export const DownloadLinksPanel = ({
     )
 }
 
+DownloadLinksPanel.defaultProps = {
+  showTextWindowActions: true
+}
+
 DownloadLinksPanel.propTypes = {
   accessMethodType: PropTypes.string.isRequired,
   granuleLinks: PropTypes.arrayOf(
@@ -135,8 +142,10 @@ DownloadLinksPanel.propTypes = {
   ).isRequired,
   retrievalId: PropTypes.string.isRequired,
   granuleCount: PropTypes.number.isRequired,
-  granuleLinksIsLoading: PropTypes.bool.isRequired
+  granuleLinksIsLoading: PropTypes.bool.isRequired,
+  showTextWindowActions: PropTypes.bool
 }
+
 
 export const DownloadScriptPanel = ({
   accessMethodType,
@@ -688,6 +697,7 @@ export class OrderStatusItem extends PureComponent {
                           retrievalId={retrievalId}
                           granuleCount={granuleCount}
                           granuleLinksIsLoading={granuleLinksIsLoading}
+                          showTextWindowActions={!isEsi}
                         />
                       </Tab>
                     )

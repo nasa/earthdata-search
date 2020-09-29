@@ -18,10 +18,14 @@ import './TextWindowActions.scss'
  * @param {String} fileName - An optional string to to set the name for the file saved to the users computer.
  * @param {String} id - The id to use for the boostrap modal.
  * @param {String} modalTitle - The title for the modal.
+ * @param {Boolean} disableCopy - Disables the copy functionality.
+ * @param {Boolean} disableSave - Disables the save functionality.
  */
 export const TextWindowActions = ({
   children,
   clipboardContents,
+  disableCopy,
+  disableSave,
   fileContents,
   fileName,
   id,
@@ -52,7 +56,7 @@ export const TextWindowActions = ({
     <div className="text-window-actions">
       <header className="text-window-actions__actions">
         {
-          supportsClipboard && (
+          (!disableCopy && supportsClipboard) && (
             <Button
               className="text-window-actions__action text-window-actions__action--copy"
               bootstrapSize="sm"
@@ -65,7 +69,7 @@ export const TextWindowActions = ({
           )
         }
         {
-          (fileContents && fileName) && (
+          (!disableSave && (fileContents && fileName)) && (
             <Button
               className="text-window-actions__action text-window-actions__action--save"
               bootstrapSize="sm"
@@ -101,7 +105,7 @@ export const TextWindowActions = ({
         {children}
       </div>
       {
-        supportsClipboard && (
+        (!disableCopy && supportsClipboard) && (
           <form
             style={{
               position: 'absolute',
@@ -128,38 +132,42 @@ export const TextWindowActions = ({
         title={modalTitle}
         body={(
           <>
-            <header className="text-window-actions__actions">
-              {
-                supportsClipboard && (
-                  <Button
-                    className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--copy"
-                    bootstrapSize="sm"
-                    icon="copy"
-                    onClick={copyToClipboard}
-                    label="Copy"
-                  >
-                    Copy
-                  </Button>
-                )
-              }
-              {
-                (fileContents && fileName) && (
-                  <Button
-                    className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--save"
-                    bootstrapSize="sm"
-                    label="Save"
-                    icon="save"
-                    onClick={(e) => {
-                      constructDownloadableFile(fileContents, fileName)
-                      e.stopPropagation()
-                    }}
-                  >
-                    Save
-                  </Button>
-                )
-              }
-            </header>
-            <div className="text-window-actions__modal-body">
+            {
+              !(disableCopy && disableSave) && (
+                <header className="text-window-actions__actions">
+                  {
+                    (!disableCopy && supportsClipboard) && (
+                      <Button
+                        className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--copy"
+                        bootstrapSize="sm"
+                        icon="copy"
+                        onClick={copyToClipboard}
+                        label="Copy"
+                      >
+                        Copy
+                      </Button>
+                    )
+                  }
+                  {
+                    (!disableSave && (fileContents && fileName)) && (
+                      <Button
+                        className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--save"
+                        bootstrapSize="sm"
+                        label="Save"
+                        icon="save"
+                        onClick={(e) => {
+                          constructDownloadableFile(fileContents, fileName)
+                          e.stopPropagation()
+                        }}
+                      >
+                        Save
+                      </Button>
+                    )
+                  }
+                </header>
+              )
+            }
+            <div className={`text-window-actions__modal-body ${disableCopy && disableSave ? 'text-window-actions__modal-body--no-actions' : ''}`}>
               {children}
             </div>
           </>
@@ -171,6 +179,8 @@ export const TextWindowActions = ({
 
 TextWindowActions.defaultProps = {
   children: null,
+  disableCopy: false,
+  disableSave: false,
   clipboardContents: '',
   fileContents: null,
   fileName: null,
@@ -181,6 +191,8 @@ TextWindowActions.defaultProps = {
 TextWindowActions.propTypes = {
   children: PropTypes.node,
   clipboardContents: PropTypes.string,
+  disableCopy: PropTypes.bool,
+  disableSave: PropTypes.bool,
   fileContents: PropTypes.string,
   fileName: PropTypes.string,
   id: PropTypes.string,

@@ -99,6 +99,26 @@ describe('DownloadLinksPanel', () => {
       expect(windowActions.props().modalTitle).toEqual('Download Links')
     })
   })
+
+  describe('when the text window actions are disabled', () => {
+    test('hides the copy and save buttons', () => {
+      const enzymeWrapper = shallow(
+        <DownloadLinksPanel
+          accessMethodType="ESI"
+          granuleLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
+          retrievalCollection={{}}
+          retrievalId="1"
+          granuleCount={10}
+          granuleLinksIsLoading
+          showTextWindowActions={false}
+        />
+      )
+
+      const windowActions = enzymeWrapper.find(TextWindowActions)
+      expect(windowActions.props().disableCopy).toEqual(true)
+      expect(windowActions.props().disableSave).toEqual(true)
+    })
+  })
 })
 
 describe('DownloadScriptPanel', () => {
@@ -524,9 +544,11 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
+
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
         expect(statusTab.props().title).toEqual('Order Status')
@@ -597,6 +619,7 @@ describe('OrderStatusItem', () => {
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
         expect(statusTab.props().title).toEqual('Order Status')
@@ -692,6 +715,7 @@ describe('OrderStatusItem', () => {
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
         expect(statusTab.props().title).toEqual('Order Status')
@@ -798,6 +822,7 @@ describe('OrderStatusItem', () => {
           'https://e4ftl01.cr.usgs.gov/ops/esir/50250.html',
           'https://e4ftl01.cr.usgs.gov/ops/esir/50250.zip'
         ])
+        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
         expect(statusTab.props().title).toEqual('Order Status')
@@ -894,6 +919,7 @@ describe('OrderStatusItem', () => {
         expect(linksTab.props().title).toEqual('Download Links')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
         expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
         expect(statusTab.props().title).toEqual('Order Status')
