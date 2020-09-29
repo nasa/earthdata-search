@@ -338,9 +338,6 @@ export class OrderStatusItem extends PureComponent {
       isLoading: granuleLinksIsLoading
     } = granuleDownload
 
-    // Downloadable orders dont maintain a status
-    const hasStatus = !['download', 'opendap'].includes(accessMethodType.toLowerCase())
-
     if (isLoaded) {
       const {
         browseFlag,
@@ -349,6 +346,9 @@ export class OrderStatusItem extends PureComponent {
 
       const orderStatus = aggregatedOrderStatus(orders)
       const stateFromOrderStatus = getStateFromOrderStatus(orderStatus)
+
+      // Download and Opendap do not have a status, so hasStatus will be set to false
+      const hasStatus = !['download', 'opendap'].includes(accessMethodType.toLowerCase())
 
       const className = classNames(
         'order-status-item',
@@ -542,8 +542,6 @@ export class OrderStatusItem extends PureComponent {
         }
       }
 
-      const processingComplete = !hasStatus || orderStatus === 'complete'
-
       return (
         <li className={className}>
           <header className="order-status-item__header">
@@ -687,7 +685,7 @@ export class OrderStatusItem extends PureComponent {
                       || isHarmony
                     ) && (
                       <Tab
-                        className={processingComplete ? '' : 'order-status-item__tab-status'}
+                        className={downloadUrls.length > 0 ? '' : 'order-status-item__tab-status'}
                         title="Download Links"
                         eventKey="download-links"
                       >
@@ -705,7 +703,7 @@ export class OrderStatusItem extends PureComponent {
                   {
                     isHarmony && (
                       <Tab
-                        className={processingComplete ? '' : 'order-status-item__tab-status'}
+                        className={stacLinks.length > 0 ? '' : 'order-status-item__tab-status'}
                         title="STAC Links"
                         eventKey="stac-links"
                       >
@@ -722,7 +720,7 @@ export class OrderStatusItem extends PureComponent {
                   {
                     (isDownload || isOpendap) && (
                       <Tab
-                        className={processingComplete ? '' : 'order-status-item__tab-status'}
+                        className={downloadUrls.length > 0 ? '' : 'order-status-item__tab-status'}
                         title="Download Script"
                         eventKey="download-script"
                       >
