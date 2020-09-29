@@ -473,11 +473,11 @@ export class AccessMethod extends Component {
                 {
                   supportedOutputProjectionOptions.length > 0 && (
                     <>
-                      <ProjectPanelSection heading="Output Projection Selection">
-                        <p className="access-method__section-intro">
-                          Choose a desired output projection from supported EPSG Codes.
-                        </p>
-
+                      <ProjectPanelSection
+                        heading="Output Projection Selection"
+                        intro="Choose a desired output projection from supported EPSG Codes."
+                        nested
+                      >
                         <select
                           id="input__output-projection"
                           className="form-control form-control-sm"
