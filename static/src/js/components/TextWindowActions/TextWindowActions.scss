@@ -43,5 +43,9 @@
   &__modal-body {
     padding: $spacer;
     padding-top: $spacer*3.5;
+
+    &--no-actions {
+      padding-top: $spacer*1.5;
+    }
   }
 }

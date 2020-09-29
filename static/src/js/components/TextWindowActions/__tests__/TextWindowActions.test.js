@@ -240,5 +240,49 @@ describe('TextWindowActions component', () => {
       // Reset the queryCommandSupported function
       global.document.queryCommandSupported = queryCommandSupportedMock
     })
+
+    describe('when disabling the copy button', () => {
+      const { enzymeWrapper } = setup({
+        disableCopy: true
+      })
+
+      test('hides the copy button', () => {
+        expect(enzymeWrapper.find('.text-window-actions__action--copy').length).toEqual(0)
+      })
+
+      describe('when the modal is open', () => {
+        const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
+        expandButton.simulate('click')
+
+        const modal = enzymeWrapper.find(EDSCModalContainer)
+        expect(modal.props().isOpen).toEqual(true)
+
+        test('hides the copy button', () => {
+          expect(enzymeWrapper.find('.text-window-actions__modal-action--copy').length).toEqual(0)
+        })
+      })
+    })
+
+    describe('when disabling the save button', () => {
+      const { enzymeWrapper } = setup({
+        disableSave: true
+      })
+
+      test('hides the save button', () => {
+        expect(enzymeWrapper.find('.text-window-actions__action--save').length).toEqual(0)
+      })
+
+      describe('when the modal is open', () => {
+        const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
+        expandButton.simulate('click')
+
+        const modal = enzymeWrapper.find(EDSCModalContainer)
+        expect(modal.props().isOpen).toEqual(true)
+
+        test('hides the save button', () => {
+          expect(enzymeWrapper.find('.text-window-actions__modal-action--save').length).toEqual(0)
+        })
+      })
+    })
   })
 })
