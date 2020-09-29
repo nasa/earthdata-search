@@ -8,7 +8,9 @@ import { cmrUrl } from '../util/cmr/cmrUrl'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { parseError } from '../../../sharedUtils/parseError'
 import { pointStringToLatLng } from './pointStringToLatLng'
+import { bboxToPolygon } from './bboxToPolygon'
 import { readCmrResults } from '../util/cmr/readCmrResults'
+import { ccwShapefile } from './ccwShapefile'
 
 /**
  * Construct the payload that we'll send to Harmony to create this order
@@ -62,7 +64,8 @@ export const constructOrderPayload = async ({
   if (supportsShapefileSubsetting) {
     if (shapefile) {
       try {
-        writeFileSync('/tmp/shapefile.geojson', JSON.stringify(shapefile))
+        // GeoJSON polygon points must be in CCW order, so we need to make sure that is true before sending the shapefile
+        writeFileSync('/tmp/shapefile.geojson', JSON.stringify(ccwShapefile(shapefile)))
 
         orderPayload.append('shapefile', createReadStream('/tmp/shapefile.geojson'), {
           filename: 'shapefile.geojson',
@@ -83,7 +86,7 @@ export const constructOrderPayload = async ({
       }
 
       if (point.length > 0) {
-        const constructedShapefile = GeoJSON.parse(pointStringToLatLng(point[0]), {
+        const constructedShapefile = GeoJSON.parse([pointStringToLatLng(point[0])], {
           Point: ['lat', 'lng'],
           extraGlobal: globalProperties
         })
@@ -103,9 +106,11 @@ export const constructOrderPayload = async ({
       // Only create a shapefile for bounding box if bounding box subsetting is not supported. Subsetting by bounding
       // should be more efficient all around and should be favored over a shapefile
       if (boundingBox.length > 0 && !supportsBoundingBoxSubsetting) {
-        const constructedShapefile = GeoJSON.parse({ bbox: pointStringToLatLng(boundingBox[0]) }, {
+        const constructedShapefile = GeoJSON.parse([{
+          bbox: bboxToPolygon(pointStringToLatLng(boundingBox[0]))
+        }], {
           Polygon: 'bbox',
-          globalExtra: globalProperties
+          extraGlobal: globalProperties
         })
 
         try {
@@ -121,7 +126,7 @@ export const constructOrderPayload = async ({
       }
 
       if (circle.length > 0) {
-        const constructedShapefile = GeoJSON.parse(pointStringToLatLng(circle[0]), {
+        const constructedShapefile = GeoJSON.parse([pointStringToLatLng(circle[0])], {
           Point: ['lat', 'lng'],
           include: ['radius'],
           extraGlobal: globalProperties
@@ -146,6 +151,7 @@ export const constructOrderPayload = async ({
           Polygon: 'polygon',
           extraGlobal: globalProperties
         })
+
         try {
           writeFileSync('/tmp/shapefile.geojson', JSON.stringify(constructedShapefile))
 
@@ -164,8 +170,8 @@ export const constructOrderPayload = async ({
     if (boundingBox.length > 0) {
       const [swCoord, neCoord] = pointStringToLatLng(boundingBox[0])
 
-      const [swLat, swLng] = swCoord
-      const [neLat, neLng] = neCoord
+      const [swLng, swLat] = swCoord
+      const [neLng, neLat] = neCoord
 
       orderPayload.append('subset', `lat(${parseFloat(swLat)}:${parseFloat(neLat)})`)
       orderPayload.append('subset', `lon(${parseFloat(swLng)}:${parseFloat(neLng)})`)

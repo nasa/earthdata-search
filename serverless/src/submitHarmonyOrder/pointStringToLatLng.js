@@ -50,8 +50,8 @@ export const pointStringToLatLng = (pointString) => {
     const [lngString, latString] = point.split(',')
 
     return [
-      parseFloat(latString.trim()),
-      parseFloat(lngString.trim())
+      parseFloat(lngString.trim()),
+      parseFloat(latString.trim())
     ]
   })
 }

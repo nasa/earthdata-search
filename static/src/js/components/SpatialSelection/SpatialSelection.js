@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
   difference,
-  isEqual,
   startCase,
   uniq
 } from 'lodash'
@@ -141,8 +140,7 @@ class SpatialSelection extends Component {
       lineSearch,
       mapRef,
       pointSearch,
-      polygonSearch,
-      shapefile
+      polygonSearch
     } = this.props
     const {
       drawnLayers = []
@@ -173,15 +171,6 @@ class SpatialSelection extends Component {
     || lineSearch[0]
     || circleSearch[0]
     || regionSpatial
-
-    const { shapefile: nextShapefile } = nextProps
-    const { file: nextFile } = nextShapefile
-
-    const { file } = shapefile
-    // If the shapefile changed, clear the drawnLayers
-    if (!isEqual(file, nextFile)) {
-      this.setState({ drawnLayers: [] })
-    }
 
     const { featureGroupRef = {} } = this
     const { leafletElement = {} } = featureGroupRef
