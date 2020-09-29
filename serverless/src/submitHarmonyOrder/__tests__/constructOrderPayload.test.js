@@ -2,6 +2,7 @@ import nock from 'nock'
 import { ReadStream } from 'fs'
 
 import { constructOrderPayload } from '../constructOrderPayload'
+import { mockCcwShapefile } from './mocks'
 
 describe('constructOrderPayload', () => {
   describe('format', () => {
@@ -237,7 +238,7 @@ describe('constructOrderPayload', () => {
           }
           const granuleParams = {}
           const accessTokenWithClient = ''
-          const shapefile = '{}'
+          const shapefile = mockCcwShapefile
 
           const response = await constructOrderPayload({
             accessMethod,

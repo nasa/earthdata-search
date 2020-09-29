@@ -23,8 +23,8 @@ describe('pointStringToLatLng', () => {
   describe('when the provided string contains 4 values (2 points)', () => {
     test('returns an array of coordinates represnting a bounding box', () => {
       expect(pointStringToLatLng('5, 10, 15, 20')).toEqual([
-        [10, 5],
-        [20, 15]
+        [5, 10],
+        [15, 20]
       ])
     })
   })
@@ -33,19 +33,19 @@ describe('pointStringToLatLng', () => {
     describe('when drawn clockwise', () => {
       test('returns an array of coordinates counter clockwise', () => {
         expect(pointStringToLatLng('5, 10, 5, 30, 25, 30')).toEqual([
-          [10, 5],
-          [30, 5],
-          [30, 25]
+          [25, 30],
+          [5, 30],
+          [5, 10]
         ])
       })
     })
 
     describe('when drawn counter clockwise', () => {
       test('returns an array of coordinates counter clockwise', () => {
-        expect(pointStringToLatLng('5, 10, 25, 30, 5, 30')).toEqual([
-          [30, 5],
-          [30, 25],
-          [10, 5]
+        expect(pointStringToLatLng('5, 10, 5, 30, 25, 30')).toEqual([
+          [25, 30],
+          [5, 30],
+          [5, 10]
         ])
       })
     })

@@ -23,7 +23,7 @@ export function isClockwise(path) {
 export function isClockwiseLatLng(path) {
   let sum = 0
   pairs(path).forEach(([p0, p1]) => {
-    sum += (p1.lat - p0.lat) * (p1.lng + p0.lng)
+    sum += (p1.lng - p0.lng) * (p1.lat + p0.lat)
   })
   return sum > 0
 }
