@@ -21,7 +21,6 @@ import TemporalSelection from '../TemporalSelection/TemporalSelection'
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Object} props.collectionMetadata - The focused collection metadata.
- * @param {Object} props.cmrFacetParams - The collection query.
  * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
@@ -91,6 +90,7 @@ export const GranuleFiltersForm = (props) => {
 
   const {
     cloudCover: cloudCoverError = {},
+    gridCoords: gridCoordsError = '',
     orbitNumber: orbitNumberError = {},
     equatorCrossingLongitude: equatorCrossingLongitudeError = {},
     equatorCrossingDate: equatorCrossingDateError = {},
@@ -99,6 +99,7 @@ export const GranuleFiltersForm = (props) => {
 
   const {
     cloudCover: cloudCoverTouched = {},
+    gridCoords: gridCoordsTouched = false,
     orbitNumber: orbitNumberTouched = {},
     equatorCrossingLongitude: equatorCrossingLongitudeTouched = {},
     equatorCrossingDate: equatorCrossingDateTouched = {},
@@ -114,7 +115,7 @@ export const GranuleFiltersForm = (props) => {
   let coordinateOneLimits
   let coordinateTwoLimits
 
-  // If there are selected values from the facets
+  // If the collection supports tiling identification systems
   if (tilingIdentificationSystems.length > 0) {
     tilingIdentificationSystems.forEach((system) => {
       const { tilingIdentificationSystemName } = system
@@ -185,7 +186,7 @@ export const GranuleFiltersForm = (props) => {
                       }}
                     >
                       {[
-                        <option key={null} value="">None</option>,
+                        <option key="tiling-system-none" value="">None</option>,
                         ...tilingSystemOptions
                       ]}
                     </Form.Control>
@@ -200,7 +201,17 @@ export const GranuleFiltersForm = (props) => {
                           value={gridCoords}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          isInvalid={gridCoordsTouched && gridCoordsError}
                         />
+                        {
+                          gridCoordsTouched && (
+                            <>
+                              <Form.Control.Feedback type="invalid">
+                                {gridCoordsError}
+                              </Form.Control.Feedback>
+                            </>
+                          )
+                        }
                         <Form.Text muted>
                           {`Enter ${axis0label} ${coordinateOneLimits} and ${axis1label} ${coordinateTwoLimits} coordinates separated by spaces, e.g. "2,3 5,7"`}
                         </Form.Text>
@@ -590,7 +601,6 @@ export const GranuleFiltersForm = (props) => {
 GranuleFiltersForm.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   errors: PropTypes.shape({}).isRequired,
-  cmrFacetParams: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
