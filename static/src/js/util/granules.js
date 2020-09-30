@@ -126,7 +126,8 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     pageNum = 1,
     readableGranuleName,
     sortKey,
-    temporal: granuleTemporal = {}
+    temporal: granuleTemporal = {},
+    tilingSystem
   } = collectionGranuleQuery
 
   const granuleParams = {
@@ -150,7 +151,8 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     polygon,
     readableGranuleName,
     sortKey,
-    temporal
+    temporal,
+    tilingSystem
   }
 
   // Apply any overrides for advanced search
@@ -193,28 +195,12 @@ export const extractProjectCollectionGranuleParams = (state, collectionId) => {
  * @param {String} projectCollectionId Optional: CollectionId of a Project collection
  * @returns {Object} Parameters used in Granules request
  */
-export const prepareGranuleParams = (collectionMetadata, granuleParams, cmrFacetParams) => {
+export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
   // Metadata to help determine if and how to make our granule request
   const {
     hasGranules,
-    tags,
-    tilingIdentificationSystems
+    tags
   } = collectionMetadata
-
-  const { two_d_coordinate_system_name: twoDCoordinateSystemName = [] } = cmrFacetParams
-
-  let gridName
-  if (tilingIdentificationSystems && twoDCoordinateSystemName.length > 0) {
-    twoDCoordinateSystemName.forEach((coordinateSystem) => {
-      const systemFromMetadata = tilingIdentificationSystems.find(system => (
-        system.tilingIdentificationSystemName === coordinateSystem
-      ))
-
-      if (systemFromMetadata) {
-        ({ tilingIdentificationSystemName: gridName } = systemFromMetadata)
-      }
-    })
-  }
 
   // Default added and removed granuld ids because they will only be provided for project granule requests
   const {
@@ -240,7 +226,8 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams, cmrFacet
     readableGranuleName,
     removedGranuleIds = [],
     sortKey,
-    temporal
+    temporal,
+    tilingSystem
   } = granuleParams
 
   const exclude = {}
@@ -310,7 +297,6 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams, cmrFacet
     equatorCrossingLongitude,
     exclude,
     gridCoords: encodeGridCoords(gridCoords),
-    gridName,
     isCwic,
     line,
     onlineOnly,
@@ -321,7 +307,8 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams, cmrFacet
     polygon,
     readableGranuleName,
     sortKey,
-    temporalString
+    temporalString,
+    tilingSystem
   }
 }
 
@@ -346,7 +333,6 @@ export const buildGranuleSearchParams = (params) => {
     equatorCrossingDate,
     equatorCrossingLongitude,
     exclude,
-    gridName,
     gridCoords,
     line,
     onlineOnly,
@@ -357,14 +343,15 @@ export const buildGranuleSearchParams = (params) => {
     polygon,
     readableGranuleName,
     sortKey,
-    temporalString
+    temporalString,
+    tilingSystem
   } = params
 
   let twoDCoordinateSystem = {}
 
-  if (gridName) {
+  if (tilingSystem) {
     twoDCoordinateSystem = {}
-    twoDCoordinateSystem.name = gridName
+    twoDCoordinateSystem.name = tilingSystem
 
     if (gridCoords) twoDCoordinateSystem.coordinates = gridCoords
   }
