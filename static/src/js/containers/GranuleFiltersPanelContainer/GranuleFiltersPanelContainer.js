@@ -180,7 +180,12 @@ const ValidationSchema = (props) => {
   }
 
   return Yup.object().shape({
-    gridCoords: Yup.string,
+    tilingSystem: Yup.string(),
+    gridCoords: Yup.string()
+      .when('tilingSystem', {
+        is: tilingSystemValue => tilingSystemValue.length > 0,
+        then: Yup.string().required('Field is required')
+      }),
     cloudCover: Yup.object().shape({
       min: Yup.number()
         .label('Minimum')
@@ -285,7 +290,8 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
       gridCoords = '',
       onlineOnly = false,
       orbitNumber = {},
-      temporal = {}
+      temporal = {},
+      tilingSystem = ''
     } = granuleQuery
 
     const {
@@ -318,6 +324,7 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
 
     return {
       gridCoords: gridCoords || '',
+      tilingSystem: tilingSystem || '',
       dayNightFlag: dayNightFlag || '',
       browseOnly: browseOnly || false,
       onlineOnly: onlineOnly || false,
