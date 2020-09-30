@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import SearchSidebarHeader from '../../components/SearchSidebar/SearchSidebarHeader'
 
 import actions from '../../actions/index'
+import { locationPropType } from '../../util/propTypes/location'
 
 const mapDispatchToProps = dispatch => ({
   onFocusedCollectionChange:
@@ -19,7 +20,7 @@ export const SearchSidebarHeaderContainer = ({ location, onFocusedCollectionChan
   />
 )
 SearchSidebarHeaderContainer.propTypes = {
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired
 }
 

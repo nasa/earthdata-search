@@ -84,6 +84,86 @@ describe('getAccessMethods', () => {
     })
   })
 
+  test('populates a harmony method', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([])
+    })
+
+    const event = {
+      body: JSON.stringify({
+        params: {
+          collectionId: 'collectionId',
+          services: {
+            count: 1,
+            items: [{
+              conceptId: 'umm-s-record-1',
+              type: 'Harmony',
+              serviceOptions: {},
+              supportedReformattings: [
+                {
+                  supportedInputFormat: 'NETCDF-4',
+                  supportedOutputFormats: [
+                    'GEOTIFF',
+                    'PNG',
+                    'GIF'
+                  ]
+                }
+              ],
+              supportedOutputProjections: [{
+                projectionAuthority: 'EPSG:4326'
+              }],
+              url: {
+                urlValue: 'https://harmony.earthdata.nas.gov'
+              }
+            }]
+          },
+          variables: {
+            count: 0,
+            items: null
+          }
+        }
+      })
+    }
+
+    const result = await getAccessMethods(event, {})
+
+
+    expect(result).toEqual({
+      body: JSON.stringify({
+        accessMethods: {
+          harmony0: {
+            hierarchyMappings: [],
+            id: 'umm-s-record-1',
+            isValid: true,
+            keywordMappings: [],
+            supportedOutputFormats: [
+              'GEOTIFF',
+              'PNG',
+              'GIF'
+            ],
+            supportedOutputProjections: [
+              'EPSG:4326'
+            ],
+            supportsBoundingBoxSubsetting: false,
+            supportsShapefileSubsetting: false,
+            supportsVariableSubsetting: false,
+            type: 'Harmony',
+            url: 'https://harmony.earthdata.nas.gov',
+            variables: {}
+          }
+        },
+        selectedAccessMethod: 'harmony0'
+      }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      isBase64Encoded: false,
+      statusCode: 200
+    })
+  })
+
   test('populates a echoOrder method', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
@@ -377,7 +457,6 @@ describe('getAccessMethods', () => {
               type: 'OPeNDAP',
               supportedReformattings: [{
                 supportedOutputFormats: [
-                  'HDF4',
                   'NETCDF-3',
                   'NETCDF-4',
                   'BINARY',
@@ -408,12 +487,12 @@ describe('getAccessMethods', () => {
             isValid: true,
             keywordMappings,
             supportedOutputFormats: [
-              'HDF4',
               'NETCDF-3',
               'NETCDF-4',
               'BINARY',
               'ASCII'
             ],
+            supportsVariableSubsetting: false,
             type: 'OPeNDAP',
             variables
           }

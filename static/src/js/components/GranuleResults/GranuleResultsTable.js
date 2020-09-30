@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
+import { locationPropType } from '../../util/propTypes/location'
+
 import Cell from '../EDSCTable/EDSCTableCell'
 import GranuleResultsTableHeaderCell from './GranuleResultsTableHeaderCell'
 import GranuleResultsBrowseImageCell from './GranuleResultsBrowseImageCell'
@@ -215,7 +217,7 @@ GranuleResultsTable.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,

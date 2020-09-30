@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import { getGranuleIds } from '../../util/getGranuleIds'
 import { formatGranulesList } from '../../util/formatGranulesList'
 import { eventEmitter } from '../../events/events'
+import { locationPropType } from '../../util/propTypes/location'
 
 import Spinner from '../Spinner/Spinner'
 import GranuleResultsList from './GranuleResultsList'
@@ -257,9 +258,30 @@ GranuleResultsBody.propTypes = {
   focusedGranuleId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
-  granulesMetadata: PropTypes.shape({}).isRequired,
+  granulesMetadata: PropTypes.objectOf(
+    PropTypes.shape({
+      browseFlag: PropTypes.bool,
+      browseUrl: PropTypes.string,
+      collectionConceptId: PropTypes.string,
+      dayNightFlag: PropTypes.string,
+      formattedTemporal: PropTypes.arrayOf(PropTypes.string).isRequired,
+      granuleThumbnail: PropTypes.string,
+      id: PropTypes.string.isRequired,
+      links: PropTypes.arrayOf(
+        PropTypes.shape({
+          href: PropTypes.string.isRequired,
+          inherited: PropTypes.bool,
+          rel: PropTypes.string.isRequired
+        })
+      ),
+      onlineAccessFlag: PropTypes.bool,
+      originalFormat: PropTypes.string,
+      producerGranuleId: PropTypes.string,
+      title: PropTypes.string.isRequired
+    })
+  ).isRequired,
   isCwic: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   loadNextPage: PropTypes.func.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,

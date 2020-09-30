@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
+import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
@@ -88,7 +89,7 @@ GranuleResultsHeaderContainer.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   mapProjection: PropTypes.string.isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onChangePanelView: PropTypes.func.isRequired,

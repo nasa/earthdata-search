@@ -2,8 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
-import Button from '../../components/Button/Button'
+
 import { portalPath } from '../../../../../sharedUtils/portalPath'
+import { locationPropType } from '../../util/propTypes/location'
+
+import Button from '../../components/Button/Button'
 
 const mapStateToProps = state => ({
   portal: state.portal
@@ -96,7 +99,7 @@ PortalLinkContainer.defaultProps = {
 PortalLinkContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   match: PropTypes.shape({}).isRequired,
   staticContext: PropTypes.shape({}),
   children: PropTypes.node,

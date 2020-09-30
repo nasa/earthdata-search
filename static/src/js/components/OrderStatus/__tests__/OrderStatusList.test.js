@@ -16,6 +16,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     collections: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.echo_orders),
+    granuleDownload: {},
     heading: 'Stage For Delivery',
     introduction: 'When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.',
     type: 'echo_orders',
@@ -27,7 +28,9 @@ function setup() {
       path: '/downloads/2/collections/1'
     },
     onChangePath: jest.fn(),
-    onFetchRetrievalCollection: jest.fn()
+    onFetchRetrieval: jest.fn(),
+    onFetchRetrievalCollection: jest.fn(),
+    onFetchRetrievalCollectionGranuleLinks: jest.fn()
   }
 
   const enzymeWrapper = shallow(<OrderStatusList {...props} />)
@@ -45,25 +48,14 @@ describe('OrderStatus component', () => {
     expect(enzymeWrapper.hasClass('order-status-list')).toEqual(true)
   })
 
-  describe('heading', () => {
-    test('renders correctly', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.order-status-list__heading').at(0).text()).toEqual('Stage For Delivery')
-    })
-  })
-
-  describe('introduction', () => {
-    test('renders correctly', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.order-status-list__introduction').at(0).text()).toEqual('When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.')
-    })
-  })
-
   describe('list', () => {
     test('renders correctly', () => {
       const { enzymeWrapper, props } = setup()
+
       expect(enzymeWrapper.find(OrderStatusItem).length).toEqual(1)
       expect(enzymeWrapper.find(OrderStatusItem).at(0).props()).toEqual({
+        defaultOpen: true,
+        granuleDownload: {},
         collection: {
           collection_id: 'TEST_COLLECTION_111',
           collection_metadata: {
@@ -75,6 +67,7 @@ describe('OrderStatus component', () => {
           },
           orders: [
             {
+              type: 'ECHO ORDERS',
               order_number: '92567A0B-D146-B396-583B-D8C3487CE087',
               state: 'PROCESSING',
               order_information: {
@@ -110,8 +103,9 @@ describe('OrderStatus component', () => {
           path: '/downloads/2/collections/1'
         },
         onChangePath: props.onChangePath,
+        onFetchRetrieval: props.onFetchRetrieval,
         onFetchRetrievalCollection: props.onFetchRetrievalCollection,
-        type: 'echo_orders'
+        onFetchRetrievalCollectionGranuleLinks: props.onFetchRetrievalCollectionGranuleLinks
       })
     })
   })

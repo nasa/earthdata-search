@@ -6,6 +6,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 
 import { commafy } from '../../util/commafy'
 import { stringify } from '../../util/url/url'
+import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -135,7 +136,7 @@ GranuleDownloadButton.propTypes = {
   granuleLimit: PropTypes.number,
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({}).isRequired,

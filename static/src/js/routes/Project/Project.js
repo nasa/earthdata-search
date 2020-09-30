@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
+import { locationPropType } from '../../util/propTypes/location'
 import { getProjectCollectionsRequiringChunking } from '../../selectors/project'
 
 import SidebarContainer
@@ -51,7 +52,7 @@ export class Project extends Component {
       projectCollectionsRequiringChunking
     } = this.props
 
-    if (Object.keys(projectCollectionsRequiringChunking).length > 1) {
+    if (Object.keys(projectCollectionsRequiringChunking).length > 0) {
       onToggleChunkedOrderModal(true)
     } else {
       onSubmitRetrieval()
@@ -115,9 +116,9 @@ export class Project extends Component {
 }
 
 Project.propTypes = {
-  location: PropTypes.shape({}).isRequired,
-  onToggleChunkedOrderModal: PropTypes.func.isRequired,
+  location: locationPropType.isRequired,
   projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired,
+  onToggleChunkedOrderModal: PropTypes.func.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }
 

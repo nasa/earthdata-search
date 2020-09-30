@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
@@ -114,7 +115,7 @@ ProjectPanelsContainer.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,

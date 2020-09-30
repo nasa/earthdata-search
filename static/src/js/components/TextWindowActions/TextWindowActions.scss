@@ -1,0 +1,51 @@
+.text-window-actions {
+  position: relative;
+  background-color: $color__black--100;
+  border: 1px solid $color__black--200;
+  padding: $spacer;
+  padding-top: 3*$spacer;
+  overflow: hidden;
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: $spacer/2;
+    border-bottom: 1px solid $color__black--200;
+    background-color: $color__black--100;
+    z-index: 1;
+  }
+
+  &__action {
+    margin-left: $spacer/4;
+    background-color: $color__black--200;
+  }
+
+  &__copied-success {
+    display: none;
+  }
+
+  &__body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    padding: $spacer;
+    padding-top: $spacer*3.5;
+    overflow-y: scroll;
+  }
+
+  &__modal-body {
+    padding: $spacer;
+    padding-top: $spacer*3.5;
+
+    &--no-actions {
+      padding-top: $spacer*1.5;
+    }
+  }
+}

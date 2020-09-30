@@ -14,9 +14,10 @@ import SpatialSelection from '../../components/SpatialSelection/SpatialSelection
 
 const mapDispathToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onToggleDrawingNewLayer: state => dispatch(actions.toggleDrawingNewLayer(state)),
   onMetricsMap: type => dispatch(metricsMap(type)),
-  onMetricsSpatialEdit: data => dispatch(metricsSpatialEdit(data))
+  onMetricsSpatialEdit: data => dispatch(metricsSpatialEdit(data)),
+  onRemoveSpatialFilter: () => dispatch(actions.removeSpatialFilter()),
+  onToggleDrawingNewLayer: state => dispatch(actions.toggleDrawingNewLayer(state))
 })
 
 const mapStateToProps = state => ({
@@ -28,7 +29,7 @@ const mapStateToProps = state => ({
   router: state.router,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
-  shapefileId: state.shapefile.shapefileId
+  shapefile: state.shapefile
 })
 
 export const SpatialSelectionContainer = (props) => {
@@ -43,10 +44,11 @@ export const SpatialSelectionContainer = (props) => {
     pointSearch,
     polygonSearch,
     router,
-    shapefileId,
+    shapefile,
     onToggleDrawingNewLayer,
     onMetricsMap,
-    onMetricsSpatialEdit
+    onMetricsSpatialEdit,
+    onRemoveSpatialFilter
   } = props
 
   const { location } = router
@@ -72,10 +74,11 @@ export const SpatialSelectionContainer = (props) => {
       onChangeQuery={onChangeQuery}
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
-      shapefileId={shapefileId}
+      shapefile={shapefile}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
       onMetricsMap={onMetricsMap}
       onMetricsSpatialEdit={onMetricsSpatialEdit}
+      onRemoveSpatialFilter={onRemoveSpatialFilter}
     />
   )
 }
@@ -87,7 +90,7 @@ SpatialSelectionContainer.defaultProps = {
   mapRef: {},
   pointSearch: [],
   polygonSearch: [],
-  shapefileId: null
+  shapefile: {}
 }
 
 SpatialSelectionContainer.propTypes = {
@@ -104,7 +107,8 @@ SpatialSelectionContainer.propTypes = {
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
   router: PropTypes.shape({}).isRequired,
-  shapefileId: PropTypes.string
+  shapefile: PropTypes.shape({}),
+  onRemoveSpatialFilter: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispathToProps)(SpatialSelectionContainer)

@@ -48,7 +48,6 @@
     "test": {
       "apiHost": "http://localhost:3000",
       "edscHost": "http://localhost:8080",
-      "includeNtPageTag": false,
       "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3Nn0.f867w-UMt4je4Ey86soRPP1KPcBxofPGmqyTljzcgWU"
     },
     "development": {
@@ -56,13 +55,11 @@
       "dbName": "edsc_dev",
       "dbPort": 5432,
       "apiHost": "http://localhost:3001/lab",
-      "edscHost": "http://localhost:8080",
-      "includeNtPageTag": false
+      "edscHost": "http://localhost:8080"
     },
     "production": {
       "apiHost": "http://localhost:3001/lab",
-      "edscHost": "http://localhost:8080",
-      "includeNtPageTag": true
+      "edscHost": "http://localhost:8080"
     }
   },
   "earthdata": {

@@ -1,8 +1,4 @@
 .access-method {
-  &__radio-list {
-    width: 300px;
-  }
-
   &__radio-tooltip.fa {
     margin-left: $spacer/4;
     font-size: 0.875rem;
@@ -24,7 +20,7 @@
     height: 10rem;
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 }

@@ -2,6 +2,8 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
+import { locationPropType } from '../../util/propTypes/location'
+
 import GranuleResultsListBody from './GranuleResultsListBody'
 
 import './GranuleResultsList.scss'
@@ -95,7 +97,7 @@ GranuleResultsList.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,

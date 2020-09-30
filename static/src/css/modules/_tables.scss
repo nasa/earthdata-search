@@ -1,18 +1,19 @@
-.table-dark {
-  background-color: transparent;
-  color: inherit;
-
-  thead th {
-    border-top: none;
-    border-bottom: 1px solid $color__black--700;
+.table {
+  thead {
+    th {
+      font-size: 0.825rem;
+      color: $color__black--500;
+      border-bottom: 0;
+      border-top: 0;
+    }
   }
 
   td {
-    border-top: 1px solid $color__black--700;
+    vertical-align: middle;
   }
 
   td,
   th {
-    padding: .5rem .75em;
+    padding: .625rem 1rem;
   }
 }

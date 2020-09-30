@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
+import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
 import { metricsDataAccess } from '../../middleware/metrics/actions'
@@ -106,7 +107,7 @@ GranuleResultsBodyContainer.propTypes = {
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,

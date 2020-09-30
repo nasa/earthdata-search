@@ -24,21 +24,23 @@ provider:
       Ref: LegacyServicesOrderQueue
     catalogRestQueueUrl:
       Ref: CatalogRestOrderQueue
+    harmonyQueueUrl:
+      Ref: HarmonyOrderQueue
     optionDefinitionQueueUrl:
       Ref: OptionDefinitionsQueue
     userDataQueueUrl:
       Ref: UserDataQueue
 
-    obfuscationSpin: ${env:OBFUSCATION_SPIN}
-    obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES}
+    obfuscationSpin: ${self:custom.variables.obfuscationSpin}
+    obfuscationSpinShapefiles: ${self:custom.variables.obfuscationSpinShapefiles}
 
     configSecretId:
       Fn::ImportValue: ${self:provider.stage}-DbPasswordSecret
 
     collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
 
-    geocodingService: ${env:GEOCODING_SERVICE}
-    geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS}
+    geocodingService: ${self:custom.variables.geocodingService}
+    geocodingIncludePolygons: ${self:custom.variables.geocodingIncludePolygons}
 
   vpc:
     securityGroupIds:
@@ -82,6 +84,13 @@ custom:
   siteName: earthdata-search-${self:provider.stage}
 
   infrastructureStackName: earthdata-search-infrastructure-${self:provider.stage}
+
+  variables:
+    # Default values for environment variables used to set environment variables
+    obfuscationSpin: ${env:OBFUSCATION_SPIN, ''}
+    obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES, ''}
+    geocodingService: ${env:GEOCODING_SERVICE, 'nominatim'}
+    geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS, 'false'}
 
   # Finch (S3 sync plugin)
   client:

@@ -40,6 +40,7 @@ export const emptyDecodedResult = {
     }
   },
   shapefile: {
+    selectedFeatures: undefined,
     shapefileId: ''
   },
   timeline: undefined

@@ -10,6 +10,7 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { stringify } from '../../util/url/url'
+import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
@@ -288,7 +289,7 @@ class SecondaryToolbar extends Component {
         <PortalFeatureContainer authentication>
           <>
             {
-              (!isPath(location.pathname, ['/projects', '/downloads']) && projectCollectionIds.length > 0) && projectLink
+              (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && projectCollectionIds.length > 0) && projectLink
             }
             {
               pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
@@ -306,7 +307,7 @@ class SecondaryToolbar extends Component {
 SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   portal: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   onLogout: PropTypes.func.isRequired,

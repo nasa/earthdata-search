@@ -1,24 +1,151 @@
+$item-height: 3rem;
+
 .order-status-item {
-  margin-bottom: $spacer;
-  padding: $spacer;
+  position: relative;
+  margin-bottom: 0.5rem;
   border: 1px solid $color__black--300;
+  z-index: 0;
+  background: $color__white;
   border-radius: $border-radius;
 
-  &--in_progress {
-    border-left: 4px solid $color__indigo;
+  &:last-child {
+    border-bottom: 1px solid $color__black--300;
   }
 
-  &--complete {
-    border-left: 4px solid $color__green;
+  &--is-opened {
+    box-shadow: 0 0 0.75rem -0.125rem rgba($color__black, 0.15);
+    z-index: 1;
   }
 
-  &--failed {
-    border-left: 4px solid $color__red;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 $spacer;
   }
 
   &__heading {
+    line-height: $item-height;
+    padding-right: $spacer;
+    align-items: center;
+    height: $item-height;
+    width: 50%;
+    margin: 0;
+    padding: 0;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.875rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    .order-status-item--is-opened & {
+      width: auto;
+    }
+  }
+
+  &__meta-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5*$spacer;
+    width: 15%;
+    font-size: 0.775rem;
+    color: $color__black--600;
+
+    &--progress {
+      justify-content: flex-start;
+    }
+  }
+
+  &__meta-row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__meta {
+    min-width: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: $spacer;
+    width: auto;
+    font-size: 0.775rem;
+    color: $color__black--600;
+  }
+
+  &__meta-heading {
+    margin-bottom: 0.125*$spacer;
+    font-size: 0.775rem;
+    color: $color__black--400;
+  }
+
+  &__meta-body {
+    &--progress {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__progress-meta {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__body-header {
+    padding-top: 0;
+  }
+
+  &__body-header-primary {
+    display: flex;
+    flex-direction: column;
+    padding: $spacer;
+    padding-bottom: 0.875rem;
+    padding-top: 0;
+  }
+
+  &__progress-ring {
+    margin-right: $spacer/4;
+
+    .progress-ring__circle-back {
+      animation: pulse 1s alternate infinite;
+    }
+
+    .order-status-item--in_progress &,
+    .order-status-item--complete &,
+    .order-status-item--failed & {
+      .progress-ring__circle-back {
+        animation: none;
+      }
+    }
+
+    .order-status-item &,
+    .order-status-item--in_progress & {
+      .progress-ring__progress {
+        stroke: $color__indigo;
+      }
+    }
+
+    .order-status-item--complete & {
+      .progress-ring__progress {
+        stroke: $color__green;
+      }
+    }
+
+    .order-status-item--failed & {
+      .progress-ring__progress {
+        stroke: $color__red;
+      }
+    }
+  }
+
+  &__button {
+    width: 5%;
+    color: $color__black--400;
+
+    &:hover {
+      color: $color__black--500;
+    }
   }
 
   &__stats {
@@ -29,14 +156,149 @@
     font-size: 1rem;
   }
 
+  &__status {
+    line-height: 1rem;
+  }
+
   &__percentage {
     display: inline-block;
-    margin-left: $spacer/2;
+    margin-left: $spacer/4;
     font-weight: 300;
+    font-size: 0.725rem;
+    line-height: 1rem;
+    color: $color__black--500;
+  }
+
+  &__orders-processed {
+    display: inline-block;
+    font-size: 0.725rem;
+    line-height: 1rem;
+    font-weight: 300;
+    color: $color__black--500;
+  }
+
+  &__additional-info {
+    max-height: 7rem;
+    overflow-y: scroll;
+    background-color: $color__black--200;
+  }
+
+  &__order-info {
+    font-size: 0.775rem;
+  }
+
+  &__message {
+    padding: 0.875rem $spacer;
+    background-color: $color__pale-yellow;
+    border: 1px solid $color__pale-yellow--dark;
+    border-left: 0;
+    border-right: 0;
+
+    &--is-error {
+      background-color: $color__pale-red;
+      border-color: $color__pale-red--dark;
+    }
+  }
+
+  &__message-heading {
+    margin-bottom: $spacer*0.25;
+    font-size: 0.775rem;
+    color: rgba($color__black, 0.5);
+  }
+
+  &__message-body {
+    margin-bottom: 0;
+    font-size: 0.775rem;
+    color: rgba($color__black, 0.7);
   }
 
   &__body {
-    display: flex;
+    display: none;
     flex-direction: column;
+
+    .order-status-item--is-opened & {
+      display: block;
+    }
+  }
+
+  &__tabs {
+    border-top: 1px solid $color__black--300;
+    background-color: $color__black--200;
+
+    .tab-content {
+      display: flex;
+      flex-direction: column;
+      height: 25rem;
+      min-height: 25rem;
+      max-height: 25rem;
+      overflow-y: scroll;
+    }
+
+    .tab-pane {
+      flex: 1;
+      flex-direction: column;
+
+      &.active {
+        &.order-status-item__tab-status {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  &__tab-intro {
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    .order-status-item__tab-status & {
+      font-size: 1.125rem;
+      color: $color__black--500;
+      max-width: 30rem;
+      text-align: center;
+    }
+  }
+
+  &__status-text {
+    font-style: italic;
+    font-size: 0.825rem;
+    color: $color__black--500;
+  }
+
+  .text-window-actions {
+    overflow-y: scroll;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 20rem;
+  }
+}
+
+.download-links-panel {
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+
+  &__pre {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@keyframes pulse {
+  from {
+    stroke: $color__black--300;
+  }
+
+  to {
+    stroke: $color__black--500;
   }
 }

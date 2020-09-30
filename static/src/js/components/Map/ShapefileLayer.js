@@ -185,6 +185,19 @@ class ShapefileLayerExtended extends L.Layer {
     // eslint-disable-next-line new-cap
     const jsonLayer = new L.geoJson(response, {
       className: 'geojson-svg',
+      pointToLayer: (feature, latlng) => {
+        // If the feature is a point with a radius property, drawn a circle layer
+        const { properties = {} } = feature
+        const { radius } = properties
+        if (radius) {
+          return new L.Circle(latlng, {
+            radius,
+            className: 'geojson-svg'
+          })
+        }
+
+        return new L.Marker(latlng)
+      },
       onEachFeature(feature, featureLayer) {
         const addIconClasses = (layer) => {
           const { options = {} } = layer
@@ -252,29 +265,26 @@ class ShapefileLayerExtended extends L.Layer {
       // Remove the layerId from this.selectedLayers
       this.selectedLayers.splice(layerIndex, 1)
 
-      // Update selectedFeatures in the store
-      onUpdateShapefile({ selectedFeatures: [] })
-
       // Remove the drawing from the map (also removes the spatial search)
       const { map } = this
-      map.fire('draw:deleted')
+      map.fire('draw:deleted', { isShapefile: true, layerId })
     } else {
       // Add the layerId to this.selectedLayers
       this.selectedLayers.push(layerId)
 
       // Add the new constraint to the map
       this.setConstraint(layer)
-
-      // Update selectedFeatures in the store
-      // TODO: EDSC-2823 this will need to be able to add more selectedFeatures, not replace all selectedFeatures
-      onUpdateShapefile({ selectedFeatures: [layerId] })
     }
+
+    // Update selectedFeatures in the store
+    onUpdateShapefile({ selectedFeatures: this.selectedLayers })
   }
 
   setConstraint(sourceLayer) {
     const { feature = {} } = sourceLayer
-    const { geometry = {} } = feature
+    const { geometry = {}, properties = {} } = feature
     const { type = '' } = geometry
+    const { radius } = properties
 
     let layer
     let layerType
@@ -297,19 +307,27 @@ class ShapefileLayerExtended extends L.Layer {
 
       layer = L.polygon(latlngs, this.options.selection)
       layerType = 'polygon'
+    } else if (type === 'Point' && radius) {
+      // Circle
+      layer = new L.Circle(sourceLayer.getLatLng(), {
+        radius,
+        ...this.options.selection
+      })
+      layerType = 'circle'
     } else if (sourceLayer.getLatLng != null) {
       // Point
       layer = L.marker(sourceLayer.getLatLng())
       layerType = 'marker'
     }
-    // TODO: probably have to draw circles here for EDSC-2823
 
     if (layer != null) {
       layer.feature = feature
       if (!this.isProjectPage) layer.on('click', this.clickLayer)
+
       const { map } = this
       map.fire('draw:drawstart', { layerType: 'shapefile' })
       map.fire('draw:created', {
+        isShapefile: true,
         target: map,
         layer,
         layerType
@@ -362,7 +380,6 @@ class ShapefileLayer extends MapLayer {
   updateLeafletElement(fromProps, toProps) {
     const element = this.leafletElement
 
-    const { shapefile: fromShapefile } = fromProps
     const {
       isProjectPage: toIsProjectPage,
       leaflet: toLeaflet,
@@ -374,7 +391,6 @@ class ShapefileLayer extends MapLayer {
     element.map = map
     element.isProjectPage = toIsProjectPage
 
-    const { file: fromFile } = fromShapefile
     const {
       file: toFile,
       shapefileId: toShapefileId,
@@ -382,7 +398,7 @@ class ShapefileLayer extends MapLayer {
       selectedFeatures
     } = toShapefile
 
-    if (toFile && fromFile !== toFile) {
+    if (toFile) {
       element.drawNewShapefile(toFile, selectedFeatures)
     }
 

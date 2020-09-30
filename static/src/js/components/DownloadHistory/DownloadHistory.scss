@@ -6,11 +6,11 @@
 
 .order-status-table {
   a {
-    color: $color__black--100;
+    color: $color__blue;
 
     &:hover,
     &:active {
-      color: $color__black--300;
+      color: $color__blue--dark;
     }
   }
 
@@ -19,11 +19,11 @@
   }
 
   &__remove {
-    color: $color__white;
+    color: $color__black--300;
 
     &:hover,
     &:active {
-      color: $color__black--300;
+      color: $color__black--600;
     }
   }
 }

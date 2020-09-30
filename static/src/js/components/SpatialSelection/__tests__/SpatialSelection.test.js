@@ -4,8 +4,10 @@ import Adapter from 'enzyme-adapter-react-16'
 import {
   EditControl
 } from 'react-leaflet-draw'
+import L from 'leaflet'
 
 import SpatialSelection, { colorOptions, errorOptions } from '../SpatialSelection'
+import * as panFeatureGroupToCenter from '../../../util/map/actions/panFeatureGroupToCenter'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -33,11 +35,13 @@ const defaultProps = {
   },
   pointSearch: [],
   polygonSearch: [],
+  shapefile: {},
   onChangeQuery: jest.fn(),
   onChangeMap: jest.fn(),
   onToggleDrawingNewLayer: jest.fn(),
   onMetricsMap: jest.fn(),
-  onMetricsSpatialEdit: jest.fn()
+  onMetricsSpatialEdit: jest.fn(),
+  onRemoveSpatialFilter: jest.fn()
 }
 
 beforeEach(() => {
@@ -52,7 +56,7 @@ describe('SpatialSelection component', () => {
     const editControl = enzymeWrapper.find(EditControl)
 
     expect(editControl.length).toBe(1)
-    expect(editControl.prop('draw')).toEqual({
+    expect(editControl.props().draw).toEqual({
       polygon: {
         drawError: errorOptions,
         shapeOptions: colorOptions
@@ -68,6 +72,13 @@ describe('SpatialSelection component', () => {
         shapeOptions: colorOptions
       }
     })
+    expect(editControl.props().edit).toEqual({
+      selectedPathOptions: {
+        opacity: 0.6,
+        dashArray: '10, 10',
+        maintainColor: true
+      }
+    })
   })
 
   test('should not render controls on project page', () => {
@@ -79,7 +90,18 @@ describe('SpatialSelection component', () => {
 
     const editControl = enzymeWrapper.find(EditControl)
 
-    expect(editControl.length).toBe(0)
+    expect(editControl.props().draw).toEqual(expect.objectContaining({
+      circle: false,
+      circlemarker: false,
+      marker: false,
+      polygon: false,
+      polyline: false,
+      rectangle: false
+    }))
+    expect(editControl.props().edit).toEqual({
+      edit: false,
+      remove: false
+    })
   })
 
   describe('componentWillReceiveProps', () => {
@@ -96,8 +118,10 @@ describe('SpatialSelection component', () => {
       const drawnLayer = { remove: jest.fn() }
 
       enzymeWrapper.setState({
-        drawnLayer,
-        drawnPoints: ''
+        drawnLayers: [{
+          layer: drawnLayer,
+          layerPoints: ''
+        }]
       })
       enzymeWrapper.setProps({ pointSearch: ['0,0'] })
 
@@ -120,8 +144,10 @@ describe('SpatialSelection component', () => {
 
       const drawnLayer = { remove: jest.fn() }
       enzymeWrapper.setState({
-        drawnLayer,
-        drawnPoints: '0,0'
+        drawnLayers: [{
+          layer: drawnLayer,
+          layerPoints: '0,0'
+        }]
       })
 
       enzymeWrapper.setProps({ pointSearch: ['0,0'] })
@@ -130,22 +156,92 @@ describe('SpatialSelection component', () => {
     })
   })
 
+  describe('onDrawCancel', () => {
+    test('disables the drawControl', () => {
+      const disableMock = jest.fn()
+      const { enzymeWrapper } = setup(defaultProps)
+
+      enzymeWrapper.instance().drawControl = {
+        _toolbars: {
+          draw: {
+            _modes: {
+              circle: {
+                handler: {
+                  disable: disableMock
+                }
+              },
+              rectangle: {
+                handler: {
+                  disable: disableMock
+                }
+              },
+              marker: {
+                handler: {
+                  disable: disableMock
+                }
+              }
+            }
+          }
+        }
+      }
+      enzymeWrapper.instance().onDrawCancel()
+
+      expect(disableMock).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  describe('onSpatialDropdownClick', () => {
+    test('enables the drawControl for the selected type', () => {
+      const enableMock = jest.fn()
+      const { enzymeWrapper } = setup(defaultProps)
+
+      enzymeWrapper.instance().drawControl = {
+        _toolbars: {
+          draw: {
+            _modes: {
+              circle: {
+                handler: {
+                  enable: enableMock
+                }
+              }
+            }
+          }
+        }
+      }
+      enzymeWrapper.instance().onSpatialDropdownClick({ type: 'circle' })
+
+      expect(enableMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
   describe('onDrawStart', () => {
     test('sets the State and calls onToggleDrawingNewLayer', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
+
+      enzymeWrapper.instance().featureGroupRef = {
+        leafletElement: {
+          removeLayer: jest.fn()
+        }
+      }
 
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onDrawStart')({
         layerType: 'marker'
       })
 
-      expect(enzymeWrapper.state().drawnLayer).toEqual(null)
+      expect(enzymeWrapper.state().drawnLayers).toHaveLength(0)
       expect(props.onToggleDrawingNewLayer.mock.calls.length).toBe(1)
       expect(props.onToggleDrawingNewLayer.mock.calls[0]).toEqual(['marker'])
     })
 
     test('sends the metricsMap event', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
+
+      enzymeWrapper.instance().featureGroupRef = {
+        leafletElement: {
+          removeLayer: jest.fn()
+        }
+      }
 
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onDrawStart')({
@@ -165,7 +261,14 @@ describe('SpatialSelection component', () => {
         }
       }
 
-      enzymeWrapper.setState({ drawnLayer: {} })
+      enzymeWrapper.setState({
+        drawnLayers: [
+          {
+            layer: {},
+            layerMbr: {}
+          }
+        ]
+      })
 
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onDrawStart')({ layerType: 'marker' })
@@ -202,7 +305,7 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('10,20')
+      expect(enzymeWrapper.state().drawnLayers[0].layerPoints).toEqual('10,20')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
@@ -231,7 +334,7 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('10,20,30,40')
+      expect(enzymeWrapper.state().drawnLayers[0].layerPoints).toEqual('10,20,30,40')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
@@ -259,7 +362,7 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15')
+      expect(enzymeWrapper.state().drawnLayers[0].layerPoints).toEqual('10,0,20,10,5,15')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
@@ -287,7 +390,7 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15')
+      expect(enzymeWrapper.state().drawnLayers[0].layerPoints).toEqual('10,0,20,10,5,15')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
@@ -314,7 +417,7 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('10,20,30,40')
+      expect(enzymeWrapper.state().drawnLayers[0].layerPoints).toEqual('10,20,30,40')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
@@ -340,7 +443,7 @@ describe('SpatialSelection component', () => {
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual('0,0,20000')
+      expect(enzymeWrapper.state().drawnLayers[0].layerPoints).toEqual('0,0,20000')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
@@ -356,14 +459,42 @@ describe('SpatialSelection component', () => {
 
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onCreated')({
+        isShapefile: false,
         layerType: 'circleMarker',
         layer: {
           remove: jest.fn()
         }
       })
 
-      expect(enzymeWrapper.state().drawnPoints).toEqual(null)
+      expect(enzymeWrapper.state().drawnLayers).toHaveLength(0)
       expect(props.onChangeQuery.mock.calls.length).toBe(0)
+    })
+
+    test('with shapefile sets the state and calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+
+      const editControl = enzymeWrapper.find(EditControl)
+      const latLngResponse = { lng: 0, lat: 0 }
+      const radiusResponse = 20000
+      editControl.prop('onCreated')({
+        isShapefile: true,
+        layerType: 'circle',
+        layer: {
+          getLatLng: jest.fn(() => latLngResponse),
+          getRadius: jest.fn(() => radiusResponse),
+          remove: jest.fn()
+        }
+      })
+
+      expect(enzymeWrapper.state().drawnLayers[0].layerPoints).toEqual('0,0,20000')
+      expect(props.onChangeQuery.mock.calls.length).toBe(1)
+      expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+        collection: {
+          spatial: {
+            circle: ['0,0,20000']
+          }
+        }
+      }])
     })
   })
 
@@ -376,9 +507,12 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderShape({ ...props, pointSearch: ['0,10'] })
 
       expect(enzymeWrapper.instance().renderPoint.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().renderPoint.mock.calls[0][0]).toEqual([{ lat: 10, lng: 0 }])
-      expect(enzymeWrapper.instance().renderPoint.mock.calls[0][1])
-        .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
+      expect(enzymeWrapper.instance().renderPoint.mock.calls[0][0]).toEqual(
+        expect.objectContaining({
+          featureGroup: enzymeWrapper.instance().featureGroupRef.leafletElement,
+          point: [{ lat: 10, lng: 0 }]
+        })
+      )
     })
 
     test('with boundingBox spatial it calls renderBoundingBox', () => {
@@ -389,12 +523,15 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderShape({ ...props, boundingBoxSearch: ['10,20,30,40'] })
 
       expect(enzymeWrapper.instance().renderBoundingBox.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().renderBoundingBox.mock.calls[0][0]).toEqual([
-        { lat: 20, lng: 10 },
-        { lat: 40, lng: 30 }
-      ])
-      expect(enzymeWrapper.instance().renderBoundingBox.mock.calls[0][1])
-        .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
+      expect(enzymeWrapper.instance().renderBoundingBox.mock.calls[0][0]).toEqual(
+        expect.objectContaining({
+          featureGroup: enzymeWrapper.instance().featureGroupRef.leafletElement,
+          rectangle: [
+            { lat: 20, lng: 10 },
+            { lat: 40, lng: 30 }
+          ]
+        })
+      )
     })
 
     test('with polygon spatial it calls renderPolygon', () => {
@@ -405,14 +542,17 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderShape({ ...props, polygonSearch: ['10,0,20,10,5,15,10,0'] })
 
       expect(enzymeWrapper.instance().renderPolygon.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().renderPolygon.mock.calls[0][0]).toEqual([
-        { lat: 0, lng: 10 },
-        { lat: 10, lng: 20 },
-        { lat: 15, lng: 5 },
-        { lat: 0, lng: 10 }
-      ])
-      expect(enzymeWrapper.instance().renderPolygon.mock.calls[0][1])
-        .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
+      expect(enzymeWrapper.instance().renderPolygon.mock.calls[0][0]).toEqual(
+        expect.objectContaining({
+          featureGroup: enzymeWrapper.instance().featureGroupRef.leafletElement,
+          polygon: [
+            { lat: 0, lng: 10 },
+            { lat: 10, lng: 20 },
+            { lat: 15, lng: 5 },
+            { lat: 0, lng: 10 }
+          ]
+        })
+      )
     })
 
     test('with line spatial it calls renderLine', () => {
@@ -423,14 +563,17 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderShape({ ...props, lineSearch: ['10,0,20,10,5,15,10,0'] })
 
       expect(enzymeWrapper.instance().renderLine.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().renderLine.mock.calls[0][0]).toEqual([
-        '10,0',
-        '20,10',
-        '5,15',
-        '10,0'
-      ])
-      expect(enzymeWrapper.instance().renderLine.mock.calls[0][1])
-        .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
+      expect(enzymeWrapper.instance().renderLine.mock.calls[0][0]).toEqual(
+        expect.objectContaining({
+          featureGroup: enzymeWrapper.instance().featureGroupRef.leafletElement,
+          points: [
+            '10,0',
+            '20,10',
+            '5,15',
+            '10,0'
+          ]
+        })
+      )
     })
 
     test('with circle spatial it calls renderCircle', () => {
@@ -441,13 +584,30 @@ describe('SpatialSelection component', () => {
       enzymeWrapper.instance().renderShape({ ...props, circleSearch: ['0,0,20000'] })
 
       expect(enzymeWrapper.instance().renderCircle.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().renderCircle.mock.calls[0][0]).toEqual([
-        '0',
-        '0',
-        '20000'
-      ])
-      expect(enzymeWrapper.instance().renderCircle.mock.calls[0][1])
-        .toBe(enzymeWrapper.instance().featureGroupRef.leafletElement)
+      expect(enzymeWrapper.instance().renderCircle.mock.calls[0][0]).toEqual(
+        expect.objectContaining({
+          featureGroup: enzymeWrapper.instance().featureGroupRef.leafletElement,
+          points: [
+            '0',
+            '0',
+            '20000'
+          ]
+        })
+      )
+    })
+
+    test('does not render a shape if there is a shapefile', () => {
+      const { enzymeWrapper, props } = setup({
+        ...defaultProps,
+        shapefile: {
+          shapefileId: '1234'
+        }
+      })
+      enzymeWrapper.instance().renderCircle = jest.fn()
+
+      enzymeWrapper.instance().renderShape({ ...props, circleSearch: ['0,0,20000'] })
+
+      expect(enzymeWrapper.instance().renderCircle).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -456,15 +616,299 @@ describe('SpatialSelection component', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
       const editControl = enzymeWrapper.find(EditControl)
-      editControl.prop('onDeleted')()
+      editControl.prop('onDeleted')({ isShapefile: false, layerId: undefined })
 
-      expect(enzymeWrapper.state().drawnLayer).toEqual(null)
+      expect(enzymeWrapper.state().drawnLayers).toHaveLength(0)
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
         collection: {
           spatial: {}
         }
       }])
+    })
+
+    test('with shapefile sets the State and calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+      const mockRemoveLayer = jest.fn()
+      enzymeWrapper.instance().featureGroupRef = {
+        leafletElement: {
+          removeLayer: mockRemoveLayer
+        }
+      }
+      enzymeWrapper.setState({
+        drawnLayers: [{
+          layer: {
+            feature: {
+              edscId: 0
+            },
+            getLatLng: () => ({ lat: 10, lng: 5 })
+          },
+          layerType: 'point'
+        }]
+      })
+
+      const editControl = enzymeWrapper.find(EditControl)
+      editControl.prop('onDeleted')({ isShapefile: true, layerId: 0 })
+
+      expect(mockRemoveLayer.mock.calls.length).toBe(2)
+      expect(enzymeWrapper.state().drawnLayers).toHaveLength(0)
+      expect(props.onChangeQuery.mock.calls.length).toBe(1)
+      expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+        collection: {
+          spatial: {}
+        }
+      }])
+    })
+  })
+
+  describe('onEditStop', () => {
+    test('saves metrics for distance changed', () => {
+      const mockResult = [
+        new L.Point(0, 0),
+        new L.Point(10, 10)
+      ]
+      const latLngToLayerPointMock = jest.fn()
+        .mockImplementationOnce(() => mockResult[0])
+        .mockImplementationOnce(() => mockResult[1])
+      const { enzymeWrapper, props } = setup({
+        ...defaultProps,
+        mapRef: {
+          leafletElement: {
+            latLngToLayerPoint: latLngToLayerPointMock
+          },
+          props: {}
+        }
+      })
+
+      enzymeWrapper.instance().layers = [{
+        getLatLng: () => ([[
+          {
+            lat: 0,
+            lng: 0
+          }
+        ]]),
+        type: 'marker'
+      }]
+      enzymeWrapper.instance().onEditStart()
+
+      enzymeWrapper.instance().layers = [{
+        getLatLng: () => ([[
+          {
+            lat: 10,
+            lng: 10
+          }
+        ]]),
+        type: 'marker'
+      }]
+      enzymeWrapper.instance().onEditStop()
+
+      expect(props.onMetricsSpatialEdit).toHaveBeenCalledTimes(1)
+      expect(props.onMetricsSpatialEdit).toHaveBeenCalledWith({
+        distanceSum: 14.142135623730951,
+        type: 'marker'
+      })
+    })
+  })
+
+  describe('onEdited', () => {
+    test('sets the State and calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+
+      enzymeWrapper.setState({
+        drawnLayers: [{
+          layer: {
+            getLatLng: () => ({ lat: 10, lng: 5 })
+          },
+          layerType: 'point'
+        }]
+      })
+
+      const editControl = enzymeWrapper.find(EditControl)
+      editControl.prop('onEdited')()
+
+      expect(enzymeWrapper.state().drawnLayers).toHaveLength(1)
+      expect(props.onChangeQuery.mock.calls.length).toBe(1)
+      expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+        collection: {
+          spatial: {
+            point: ['5,10']
+          }
+        }
+      }])
+    })
+  })
+
+  describe('getExistingSearch', () => {
+    test('returns existing boundingBox search', () => {
+      const { enzymeWrapper } = setup({
+        ...defaultProps,
+        boundingBoxSearch: ['1,2,3,4']
+      })
+
+      const result = enzymeWrapper.instance().getExistingSearch('boundingBox')
+
+      expect(result).toEqual(['1,2,3,4'])
+    })
+
+    test('returns existing circle search', () => {
+      const { enzymeWrapper } = setup({
+        ...defaultProps,
+        circleSearch: ['1,2,3']
+      })
+
+      const result = enzymeWrapper.instance().getExistingSearch('circle')
+
+      expect(result).toEqual(['1,2,3'])
+    })
+
+    test('returns existing line search', () => {
+      const { enzymeWrapper } = setup({
+        ...defaultProps,
+        lineSearch: ['1,2,3,4,5,6']
+      })
+
+      const result = enzymeWrapper.instance().getExistingSearch('line')
+
+      expect(result).toEqual(['1,2,3,4,5,6'])
+    })
+
+    test('returns existing point search', () => {
+      const { enzymeWrapper } = setup({
+        ...defaultProps,
+        pointSearch: ['1,2']
+      })
+
+      const result = enzymeWrapper.instance().getExistingSearch('point')
+
+      expect(result).toEqual(['1,2'])
+    })
+
+    test('returns existing polygon search', () => {
+      const { enzymeWrapper } = setup({
+        ...defaultProps,
+        polygonSearch: ['1,2,3,4,5,6,7,8']
+      })
+
+      const result = enzymeWrapper.instance().getExistingSearch('polygon')
+
+      expect(result).toEqual(['1,2,3,4,5,6,7,8'])
+    })
+
+    test('returns undefined as default', () => {
+      const { enzymeWrapper } = setup(defaultProps)
+
+      const result = enzymeWrapper.instance().getExistingSearch('')
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  describe('setLayer', () => {
+    test('adds the layer and pans the map', () => {
+      const layer = { mock: 'layer' }
+      const { enzymeWrapper } = setup(defaultProps)
+
+      const panFeatureMock = jest.spyOn(panFeatureGroupToCenter, 'panFeatureGroupToCenter').mockImplementation(() => jest.fn())
+      enzymeWrapper.instance().featureGroupRef = {
+        leafletElement: jest.fn()
+      }
+
+      enzymeWrapper.instance().setLayer(layer, true, false)
+
+      expect(enzymeWrapper.instance().layers).toEqual([layer])
+      expect(panFeatureMock).toHaveBeenCalledTimes(1)
+    })
+
+    test('with a shapefile adds the layer and pans the map', () => {
+      const layer = { mock: 'layer' }
+      const { enzymeWrapper } = setup(defaultProps)
+
+      const panFeatureMock = jest.spyOn(panFeatureGroupToCenter, 'panFeatureGroupToCenter').mockImplementation(() => jest.fn())
+      enzymeWrapper.instance().featureGroupRef = {
+        leafletElement: jest.fn()
+      }
+
+      enzymeWrapper.instance().setLayer(layer, false, true)
+
+      expect(enzymeWrapper.instance().layers).toEqual([layer])
+      expect(panFeatureMock).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('boundsToPoints', () => {
+    test('converts the circle layer bounds to an array of points', () => {
+      const mockResult = [{ x: 0, y: 15 }]
+      const latLngToLayerPointMock = jest.fn().mockImplementation(() => mockResult[0])
+      const layer = {
+        getLatLng: () => ({
+          lat: 10,
+          lng: 5
+        }),
+        type: 'circle'
+      }
+      const { enzymeWrapper } = setup({
+        ...defaultProps,
+        mapRef: {
+          leafletElement: {
+            latLngToLayerPoint: latLngToLayerPointMock
+          },
+          props: {}
+        }
+      })
+
+      const result = enzymeWrapper.instance().boundsToPoints(layer)
+
+      expect(latLngToLayerPointMock).toHaveBeenCalledTimes(1)
+      expect(result).toEqual(mockResult)
+    })
+
+    test('converts the polygon layer bounds to an array of points', () => {
+      const mockResult = [
+        { x: 0, y: 15 },
+        { x: 10, y: 20 },
+        { x: 5, y: 20 },
+        { x: 0, y: 15 }
+      ]
+      const latLngToLayerPointMock = jest.fn()
+        .mockImplementationOnce(() => mockResult[0])
+        .mockImplementationOnce(() => mockResult[1])
+        .mockImplementationOnce(() => mockResult[2])
+        .mockImplementationOnce(() => mockResult[3])
+      const layer = {
+        getLatLngs: () => ([[
+          {
+            lat: 10,
+            lng: 5
+          },
+          {
+            lat: 15,
+            lng: 20
+          },
+          {
+            lat: 0,
+            lng: 20
+          },
+          {
+            lat: 10,
+            lng: 5
+          }
+        ]]),
+        type: 'polygon'
+      }
+      const { enzymeWrapper } = setup({
+        ...defaultProps,
+        mapRef: {
+          leafletElement: {
+            latLngToLayerPoint: latLngToLayerPointMock
+          },
+          props: {}
+        }
+      })
+
+      const result = enzymeWrapper.instance().boundsToPoints(layer)
+
+      expect(latLngToLayerPointMock).toHaveBeenCalledTimes(4)
+      expect(result).toEqual(mockResult)
     })
   })
 })

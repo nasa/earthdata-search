@@ -77,7 +77,7 @@ export class DownloadHistory extends Component {
         {
           retrievalHistoryLoaded && (
             retrievalHistory.length > 0 ? (
-              <Table className="order-status-table" striped variant="dark">
+              <Table className="order-status-table">
                 <thead>
                   <tr>
                     <th />

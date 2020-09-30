@@ -6,6 +6,7 @@ import classNames from 'classnames'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { isPath } from '../../util/isPath'
+import { locationPropType } from '../../util/propTypes/location'
 
 import TimelineContainer from '../TimelineContainer/TimelineContainer'
 import { FooterLink } from '../../components/FooterLink/FooterLink'
@@ -140,7 +141,7 @@ FooterContainer.defaultProps = {
 
 FooterContainer.propTypes = {
   loadTime: PropTypes.number,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   portal: PropTypes.shape({}).isRequired
 }
 

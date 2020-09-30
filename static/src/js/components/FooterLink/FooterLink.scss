@@ -1,7 +1,7 @@
 .footer-link {
   &__info-bit {
     margin-left: 0.55rem;
-    color: $color__brand--blue-light;
+    color: $color__blue--light;
     vertical-align: middle;
 
     &:before {
@@ -28,14 +28,14 @@
 
   &__info-link {
     white-space:nowrap;
-    color: $color__brand--blue-light;
+    color: $color__blue--light;
 
     &__info-bit--emph & {
       color: $color__white;
     }
 
     &:hover {
-      color: $color__brand--blue-light;
+      color: $color__blue--light;
       text-decoration: none;
 
       &__info-bit--emph & {

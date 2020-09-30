@@ -1,146 +1,34 @@
 import React, { Component, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
-import Radio from '../FormFields/Radio/Radio'
-import RadioList from '../FormFields/Radio/RadioList'
+import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
+import RadioList from '../FormFields/RadioList/RadioList'
 import Skeleton from '../Skeleton/Skeleton'
 import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
+import {
+  ousFormatMapping,
+  harmonyFormatMapping
+} from '../../../../../sharedUtils/outputFormatMaps'
 
 const EchoForm = lazy(() => import('./EchoForm'))
 
-const downloadButton = collectionId => (
-  <Radio
-    id={`${collectionId}_access-method__direct-download`}
-    dataTestId={`${collectionId}_access-method__direct-download`}
-    name={`${collectionId}_access-method__direct-download`}
-    key={`${collectionId}_access-method__direct-download`}
-    value="download"
-  >
-    Direct Download
-    <OverlayTrigger
-      placement="right"
-      overlay={(
-        <Tooltip
-          className="tooltip--large tooltip--ta-left"
-        >
-          Direct download of all data associated with the selected granules.
-          The desired data will be available for download immediately.
-          Files will be accessed from a list of links displayed in the
-          browser or by using a download script.
-        </Tooltip>
-      )}
-    >
-      <i className="access-method__radio-tooltip fa fa-info-circle" />
-    </OverlayTrigger>
-  </Radio>
-)
-
-const echoOrderButton = (collectionId, methodKey) => (
-  <Radio
-    id={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
-    dataTestId={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
-    name={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
-    key={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
-    value={methodKey}
-  >
-    Stage For Delivery
-    <OverlayTrigger
-      placement="right"
-      overlay={(
-        <Tooltip
-          className="tooltip--large tooltip--ta-left"
-        >
-          Submit a request for data to be staged for delivery. Data files will be
-          compressed in zip format and stored for retrieval via HTTP. You will
-          receive an email from the data provider when your files are ready to download.
-        </Tooltip>
-      )}
-    >
-      <i className="access-method__radio-tooltip fa fa-info-circle" />
-    </OverlayTrigger>
-  </Radio>
-)
-
-const esiButton = (collectionId, methodKey) => (
-  <Radio
-    id={`${collectionId}_access-method__customize_${methodKey}`}
-    dataTestId={`${collectionId}_access-method__customize_${methodKey}`}
-    name={`${collectionId}_access-method__customize_${methodKey}`}
-    key={`${collectionId}_access-method__customize_${methodKey}`}
-    value={methodKey}
-  >
-    Customize
-    <OverlayTrigger
-      placement="right"
-      overlay={(
-        <Tooltip
-          className="tooltip--large tooltip--ta-left"
-        >
-          Select options like variables, transformations, and output formats to
-          customize your data. The desired data files will be made available for
-          access after the data provider has finished processing your request.
-          You will receive an email from the data provider when your
-          files are ready to download.
-        </Tooltip>
-      )}
-    >
-      <i className="access-method__radio-tooltip fa fa-info-circle" />
-    </OverlayTrigger>
-  </Radio>
-)
-
-const opendapButton = (collectionId, methodKey) => (
-  <Radio
-    id={`${collectionId}_access-method__opendap_${methodKey}`}
-    dataTestId={`${collectionId}_access-method__opendap_${methodKey}`}
-    name={`${collectionId}_access-method__opendap_${methodKey}`}
-    key={`${collectionId}_access-method__opendap_${methodKey}`}
-    value={methodKey}
-  >
-    Customize (Subset)
-    <OverlayTrigger
-      placement="right"
-      overlay={(
-        <Tooltip
-          className="tooltip--large tooltip--ta-left"
-        >
-          Select options like variables, transformations, and output formats to customize
-          your data. The desired data files will be made available for access immediately.
-          Files will be accessed from a list of links in the browser or by using a
-          download script.
-        </Tooltip>
-      )}
-    >
-      <i className="access-method__radio-tooltip fa fa-info-circle" />
-    </OverlayTrigger>
-  </Radio>
-)
-
-const formatMapping = {
-  'NETCDF-3': 'nc',
-  'NETCDF-4': 'nc4',
-  BINARY: 'dods',
-  ASCII: 'ascii'
-}
-
 /**
  * Renders AccessMethod.
- * @param {object} props - The props passed into the component.
- * @param {object} props.accessMethods - The accessMethods of the current collection.
- * @param {number} props.index - The index of the current collection.
- * @param {object} props.metadata - The metadata of the current collection.
- * @param {string} props.selectedAccessMethod - The selected access method of the current collection.
- * @param {string} props.shapefileId - The shapefile id of the uploaded shapefile.
- * @param {function} props.onSelectAccessMethod - Selects an access method.
- * @param {function} props.onSetActivePanel - Switches the currently active panel.
- * @param {function} props.onUpdateAccessMethod - Updates an access method.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.accessMethods - The accessMethods of the current collection.
+ * @param {Number} props.index - The index of the current collection.
+ * @param {Object} props.metadata - The metadata of the current collection.
+ * @param {String} props.selectedAccessMethod - The selected access method of the current collection.
+ * @param {String} props.shapefileId - The shapefile id of the uploaded shapefile.
+ * @param {Function} props.onSelectAccessMethod - Selects an access method.
+ * @param {Function} props.onSetActivePanel - Switches the currently active panel.
+ * @param {Function} props.onUpdateAccessMethod - Updates an access method.
  */
 export class AccessMethod extends Component {
   constructor(props) {
@@ -150,43 +38,79 @@ export class AccessMethod extends Component {
       accessMethods,
       selectedAccessMethod
     } = props
+
     const selectedMethod = accessMethods[selectedAccessMethod]
     const {
-      selectedOutputFormat = ''
+      selectedOutputFormat = '',
+      selectedOutputProjection = '',
+      supportedOutputFormats = [],
+      supportedOutputProjections = []
     } = selectedMethod || {}
 
-    this.state = { selectedOutputFormat }
+    this.state = {
+      selectedOutputFormat: selectedOutputFormat || supportedOutputFormats[0],
+      selectedOutputProjection: selectedOutputProjection || supportedOutputProjections[0]
+    }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
     this.handleOutputFormatSelection = this.handleOutputFormatSelection.bind(this)
+    this.handleOutputProjectionSelection = this.handleOutputProjectionSelection.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
-    const { selectedOutputFormat } = this.state
+    const { selectedOutputFormat, selectedOutputProjection } = this.state
     const {
       accessMethods,
       selectedAccessMethod
     } = nextProps
 
-    if (selectedAccessMethod === 'opendap') {
+    if (
+      selectedAccessMethod
+      && (selectedAccessMethod === 'opendap'
+      || selectedAccessMethod.includes('harmony'))
+    ) {
       const selectedMethod = accessMethods[selectedAccessMethod]
       const {
         selectedOutputFormat: nextSelectedOutputFormat,
-        supportedOutputFormats = []
+        selectedOutputProjection: nextSelectedOutputProjection,
+        supportedOutputFormats = [],
+        supportedOutputProjections = []
       } = selectedMethod || {}
 
       // If there is no selected option, select the first option
       if (nextSelectedOutputFormat !== selectedOutputFormat) {
         if (!nextSelectedOutputFormat) {
-          // Filter the supportedOutputFormats to only those formats CMR supports
-          const cmrSupportedFormats = supportedOutputFormats.filter(
-            format => formatMapping[format] !== undefined
-          )
+          let defaultSelectedOutputFormat
 
-          const defaultSelectedOutputFormat = formatMapping[cmrSupportedFormats[0]]
+          if (selectedAccessMethod === 'opendap') {
+            // Pull out the ext value from formatMappings
+            const ousSupportedFormats = supportedOutputFormats.filter(
+              format => ousFormatMapping[format] !== undefined
+            )
+
+            defaultSelectedOutputFormat = ousFormatMapping[ousSupportedFormats[0]]
+          } else if (selectedAccessMethod.includes('harmony')) {
+            // Pull out the ext value from formatMappings
+            const harmonySupportedFormats = supportedOutputFormats.filter(
+              format => harmonyFormatMapping[format] !== undefined
+            )
+
+            defaultSelectedOutputFormat = harmonyFormatMapping[harmonySupportedFormats[0]]
+          }
+
           this.setState({ selectedOutputFormat: defaultSelectedOutputFormat })
         } else {
           this.setState({ selectedOutputFormat: nextSelectedOutputFormat })
+        }
+      }
+
+      // If there is no selected option, select the first option
+      if (nextSelectedOutputProjection !== selectedOutputProjection) {
+        if (!nextSelectedOutputProjection) {
+          const defaultSelectedOutputProjection = supportedOutputProjections[0]
+          this.setState({ selectedOutputProjection: defaultSelectedOutputProjection })
+        } else {
+          this.setState({ selectedOutputProjection: nextSelectedOutputProjection })
         }
       }
     }
@@ -204,7 +128,7 @@ export class AccessMethod extends Component {
   }
 
   handleOutputFormatSelection(event) {
-    const { metadata, onUpdateAccessMethod } = this.props
+    const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
     const { conceptId: collectionId } = metadata
 
     const { target } = event
@@ -215,52 +139,140 @@ export class AccessMethod extends Component {
     onUpdateAccessMethod({
       collectionId,
       method: {
-        opendap: {
+        [selectedAccessMethod]: {
           selectedOutputFormat: value
         }
       }
     })
   }
 
+  handleOutputProjectionSelection(event) {
+    const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
+    const { conceptId: collectionId } = metadata
+
+    const { target } = event
+    const { value } = target
+
+    this.setState({ selectedOutputProjection: value })
+
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          selectedOutputProjection: value
+        }
+      }
+    })
+  }
+
   render() {
-    const { selectedOutputFormat } = this.state
+    const { selectedOutputFormat, selectedOutputProjection } = this.state
     const {
       accessMethods,
       index,
       isActive,
       metadata,
-      selectedAccessMethod,
-      shapefileId,
-      spatial,
       onSetActivePanel,
       onTogglePanels,
-      onUpdateAccessMethod
+      onUpdateAccessMethod,
+      selectedAccessMethod,
+      shapefileId,
+      spatial
     } = this.props
 
     const { conceptId: collectionId } = metadata
 
-    const radioList = []
+    const accessMethodsByType = {
+      download: [],
+      'ECHO ORDERS': [],
+      ESI: [],
+      OPeNDAP: [],
+      Harmony: []
+    }
+
     Object.keys(accessMethods).forEach((methodKey) => {
-      const accessMethod = accessMethods[methodKey]
-      const { type } = accessMethod
+      const { [methodKey]: accessMethod = {} } = accessMethods
+
+      const { type, name } = accessMethod
+
+      let id = null
+      let title = null
+      let subtitle = null
+      let description = null
+      let details = null
 
       switch (type) {
-        case 'download':
-          radioList.push(downloadButton(collectionId))
+        case 'download': {
+          id = `${collectionId}_access-method__direct-download`
+          title = 'Direct Download'
+          description = 'Direct download of all data associated with the selected granules.'
+          details = 'The requested data files will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script.'
+
           break
-        case 'ECHO ORDERS':
-          radioList.push(echoOrderButton(collectionId, methodKey))
+        }
+        case 'ECHO ORDERS': {
+          id = `${collectionId}_access-method__customize_${methodKey}`
+          title = 'Stage For Delivery'
+          subtitle = 'ECHO Orders'
+          description = 'Submit a request for data to be staged for delivery.'
+          details = 'The requested data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download.'
+
           break
-        case 'ESI':
-          radioList.push(esiButton(collectionId, methodKey))
+        }
+        case 'ESI': {
+          id = `${collectionId}_access-method__customize_${methodKey}`
+          title = 'Customize'
+          subtitle = 'ESI'
+          description = 'Select options like variables, transformations, and output formats for access via the data provider.'
+          details = 'The requested data files will be made available for access after the data provider has finished processing your request. You will receive an email from the data provider when your files are ready to download.'
+
           break
-        case 'OPeNDAP':
-          radioList.push(opendapButton(collectionId, methodKey))
+        }
+        case 'OPeNDAP': {
+          id = `${collectionId}_access-method__opendap_${methodKey}`
+          title = 'Customize'
+          subtitle = 'OPeNDAP'
+          description = 'Select options like variables, transformations, and output formats for direct access via link or script.'
+          details = 'The requested data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.'
+
           break
+        }
+        case 'Harmony': {
+          id = `${collectionId}_access-method__harmony_${methodKey}`
+          title = 'Customize'
+          subtitle = 'Harmony'
+          description = 'Select options like variables, transformations, and output formats for in-region cloud access.'
+          details = 'The requested data will be processed using the Harmony service and stored in the cloud for analysis.'
+
+          break
+        }
         default:
           break
       }
+
+      if (type) {
+        accessMethodsByType[type].push(
+          <AccessMethodRadio
+            key={id}
+            id={id}
+            value={methodKey}
+            title={title}
+            subtitle={subtitle}
+            serviceName={name}
+            description={description}
+            details={details}
+          />
+        )
+      }
     })
+
+    const radioList = [
+      ...accessMethodsByType.Harmony,
+      ...accessMethodsByType.OPeNDAP,
+      ...accessMethodsByType.ESI,
+      ...accessMethodsByType['ECHO ORDERS'],
+      ...accessMethodsByType.download
+    ]
 
     const skeleton = [1, 2, 3].map((skeleton, i) => {
       const key = `skeleton_${i}`
@@ -284,26 +296,54 @@ export class AccessMethod extends Component {
       )
     })
 
-    const selectedMethod = accessMethods[selectedAccessMethod]
+    const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
+
     const {
       form,
       rawModel = null,
       selectedVariables = [],
-      supportedOutputFormats = []
+      supportedOutputFormats = [],
+      supportedOutputProjections = [],
+      supportsVariableSubsetting = false
     } = selectedMethod || {}
 
-    const isOpendap = (selectedAccessMethod === 'opendap')
+    const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
-    let supportedOutputFormatOptions
+    // Harmony access methods are postfixed with an index given that there can be more than one
+    const isHarmony = (selectedAccessMethod && selectedAccessMethod.includes('harmony'))
+
+    // Default supportedOutputFormatOptions
+    let supportedOutputFormatOptions = []
+
     if (isOpendap) {
       // Filter the supportedOutputFormats to only those formats CMR supports
-      const cmrSupportedFormats = supportedOutputFormats.filter(
-        format => formatMapping[format] !== undefined
+      supportedOutputFormatOptions = supportedOutputFormats.filter(
+        format => ousFormatMapping[format] !== undefined
       )
 
       // Build options for supportedOutputFormats
-      supportedOutputFormatOptions = cmrSupportedFormats.map(format => (
-        <option key={format} value={formatMapping[format]}>{format}</option>
+      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
+        <option key={format} value={ousFormatMapping[format]}>{format}</option>
+      ))
+    }
+
+    // Default supportedOutputProjectionOptions
+    let supportedOutputProjectionOptions = []
+
+    if (isHarmony) {
+      // Filter the supportedOutputFormats to only those formats Harmony supports
+      supportedOutputFormatOptions = supportedOutputFormats.filter(
+        format => harmonyFormatMapping[format] !== undefined
+      )
+
+      // Build options for supportedOutputFormats
+      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
+        <option key={format} value={harmonyFormatMapping[format]}>{format}</option>
+      ))
+
+      // Build options for supportedOutputFormats
+      supportedOutputProjectionOptions = supportedOutputProjections.map(format => (
+        <option key={format} value={format}>{format}</option>
       ))
     }
 
@@ -313,9 +353,18 @@ export class AccessMethod extends Component {
       </div>
     )
 
+    const isCustomizationAvailable = supportsVariableSubsetting
+      || supportedOutputFormatOptions.length > 0
+      || supportedOutputProjectionOptions.length > 0
+      || (form && isActive)
+
     return (
       <div className="access-method">
-        <ProjectPanelSection heading="Select Data Access Method">
+        <ProjectPanelSection
+          heading="Select a data access method"
+          intro="The selected access method will determine which customization and output options are available."
+          step={1}
+        >
           <div className="access-method__radio-list">
             {
               radioList.length === 0
@@ -331,78 +380,130 @@ export class AccessMethod extends Component {
             }
           </div>
         </ProjectPanelSection>
-        {
-          form && isActive && (
-            <ProjectPanelSection>
-              <Suspense fallback={echoFormFallback}>
-                <EchoForm
-                  collectionId={collectionId}
-                  form={form}
-                  methodKey={selectedAccessMethod}
-                  rawModel={rawModel}
-                  shapefileId={shapefileId}
-                  spatial={spatial}
-                  onUpdateAccessMethod={onUpdateAccessMethod}
-                />
-              </Suspense>
-            </ProjectPanelSection>
-          )
-        }
-        {
-          isOpendap && (
-            <>
-              <ProjectPanelSection heading="Variable Selection">
-                <p className="access-method__section-intro">
-                  Use science keywords to subset your collection
-                  granules by measurements and variables.
-                </p>
-
+        <ProjectPanelSection
+          heading="Configure data customization options"
+          intro="Edit the options below to configure the customization and output options for the selected data product."
+          step={2}
+          faded={!selectedAccessMethod}
+        >
+          {
+            isCustomizationAvailable && (
+              <>
                 {
-                  selectedVariables.length > 0 && (
-                    <p className="access-method__section-status">
-                      {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
-                    </p>
+                  form && isActive && (
+                    <ProjectPanelSection nested>
+                      <Suspense fallback={echoFormFallback}>
+                        <EchoForm
+                          collectionId={collectionId}
+                          form={form}
+                          methodKey={selectedAccessMethod}
+                          rawModel={rawModel}
+                          shapefileId={shapefileId}
+                          spatial={spatial}
+                          onUpdateAccessMethod={onUpdateAccessMethod}
+                        />
+                      </Suspense>
+                    </ProjectPanelSection>
                   )
                 }
-
                 {
-                  selectedVariables.length === 0 && (
-                    <p className="access-method__section-status">
-                      No variables selected. All variables will be included in download.
-                    </p>
+                  supportsVariableSubsetting && (
+                    <>
+                      <ProjectPanelSection
+                        customHeadingTag="h4"
+                        heading="Variables"
+                        intro="Use science keywords to subset your collection granules by measurements and variables."
+                        nested
+                      >
+                        {
+                          selectedVariables.length > 0 && (
+                            <p className="access-method__section-status">
+                              {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
+                            </p>
+                          )
+                        }
+
+                        {
+                          selectedVariables.length === 0 && (
+                            <p className="access-method__section-status">
+                              No variables selected. All variables will be included in download.
+                            </p>
+                          )
+                        }
+                        <Button
+                          type="button"
+                          bootstrapVariant="primary"
+                          label="Edit Variables"
+                          bootstrapSize="sm"
+                          onClick={() => {
+                            onSetActivePanel(`0.${index}.1`)
+                            onTogglePanels(true)
+                          }}
+                        >
+                          Edit Variables
+                        </Button>
+                      </ProjectPanelSection>
+                    </>
                   )
                 }
-
-                <Button
-                  type="button"
-                  bootstrapVariant="primary"
-                  label="Edit Variables"
-                  bootstrapSize="sm"
-                  onClick={() => {
-                    onSetActivePanel(`0.${index}.1`)
-                    onTogglePanels(true)
-                  }}
-                >
-                  Edit Variables
-                </Button>
+                {
+                  supportedOutputFormatOptions.length > 0 && (
+                    <>
+                      <ProjectPanelSection
+                        customHeadingTag="h4"
+                        heading="Output Format"
+                        intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
+                        nested
+                      >
+                        <select
+                          id="input__output-format"
+                          className="form-control form-control-sm"
+                          onChange={this.handleOutputFormatSelection}
+                          value={selectedOutputFormat}
+                        >
+                          {[
+                            <option key={null} value={null}>None</option>,
+                            ...supportedOutputFormatOptions
+                          ]}
+                        </select>
+                      </ProjectPanelSection>
+                    </>
+                  )
+                }
+                {
+                  supportedOutputProjectionOptions.length > 0 && (
+                    <>
+                      <ProjectPanelSection
+                        heading="Output Projection Selection"
+                        intro="Choose a desired output projection from supported EPSG Codes."
+                        nested
+                      >
+                        <select
+                          id="input__output-projection"
+                          className="form-control form-control-sm"
+                          onChange={this.handleOutputProjectionSelection}
+                          value={selectedOutputProjection}
+                        >
+                          {[
+                            <option key={null} value={null}>None</option>,
+                            ...supportedOutputProjectionOptions
+                          ]}
+                        </select>
+                      </ProjectPanelSection>
+                    </>
+                  )
+                }
+              </>
+            )
+          }
+          {
+            (!isCustomizationAvailable && selectedAccessMethod) && (
+              <ProjectPanelSection nested>
+                No customization options are available for the selected access method.
               </ProjectPanelSection>
-              <ProjectPanelSection heading="Output Format Selection">
-                <p className="access-method__section-intro">
-                  Choose from output format options like GeoTIFF, NETCDF, and other file types.
-                </p>
-
-                <select
-                  id="input__output-format"
-                  className="form-control form-control-sm"
-                  onChange={this.handleOutputFormatSelection}
-                  value={selectedOutputFormat}
-                >
-                  {supportedOutputFormatOptions}
-                </select>
-              </ProjectPanelSection>
-            </>
-          )
-        }
+            )
+          }
+        </ProjectPanelSection>
       </div>
     )
   }
@@ -413,11 +514,11 @@ AccessMethod.defaultProps = {
   index: null,
   isActive: false,
   metadata: {},
-  shapefileId: null,
-  spatial: {},
   onSetActivePanel: null,
   onTogglePanels: null,
-  selectedAccessMethod: null
+  selectedAccessMethod: null,
+  shapefileId: null,
+  spatial: {}
 }
 
 AccessMethod.propTypes = {
@@ -425,13 +526,13 @@ AccessMethod.propTypes = {
   index: PropTypes.number,
   isActive: PropTypes.bool,
   metadata: PropTypes.shape({}),
-  shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({}),
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
   onTogglePanels: PropTypes.func,
   onUpdateAccessMethod: PropTypes.func.isRequired,
-  selectedAccessMethod: PropTypes.string
+  selectedAccessMethod: PropTypes.string,
+  shapefileId: PropTypes.string,
+  spatial: PropTypes.shape({})
 }
 
 export default AccessMethod

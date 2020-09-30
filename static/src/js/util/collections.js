@@ -200,6 +200,9 @@ export const buildCollectionSearchParams = (params) => {
       science_keywords_h: {
         or: true
       },
+      spatial: {
+        or: true
+      },
       temporal: {
         limit_to_granules: true
       }

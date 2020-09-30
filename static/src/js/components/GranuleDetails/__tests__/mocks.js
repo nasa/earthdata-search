@@ -1,115 +1,110 @@
 export const granuleResultsBodyProps = {
   authToken: '',
   granuleMetadata: {
-    TemporalExtent: {
-      RangeDateTime: {
-        BeginningDateTime: '1860-01-01T00:00:00.000Z',
-        EndingDateTime: '2050-12-31T00:00:00.000Z'
-      }
-    },
+    boxes: [
+      '-90 -180 90 180'
+    ],
+    timeStart: '1860-01-01T00:00:00.000Z',
+    updated: '2006-04-14T00:00:00.000Z',
+    datasetId: 'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050',
+    dataCenter: 'ORNL_DAAC',
     title: '1860_1993_2050_NITROGEN.N-deposition1860.tfw',
-    MeasuredParameters: [
+    coordinateSystem: 'CARTESIAN',
+    dayNightFlag: 'BOTH',
+    timeEnd: '2050-12-31T00:00:00.000Z',
+    id: 'G1422858365-ORNL_DAAC',
+    originalFormat: 'ECHO10',
+    granuleSize: '2.0E-4',
+    browseFlag: false,
+    collectionConceptId: 'C179003620-ORNL_DAAC',
+    onlineAccessFlag: true,
+    links: [
       {
-        ParameterName: 'NITROGEN OXIDES'
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+        title: 'This link provides direct download access to the granule.',
+        hreflang: 'en-US',
+        href: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/N-deposition1860.tfw'
       },
       {
-        ParameterName: 'NITROGEN COMPOUNDS'
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+        title: 'ORNL DAAC Data Set Documentation (USERS GUIDE)',
+        hreflang: 'en-US',
+        href: 'https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html'
+      },
+      {
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+        title: 'Data set Landing Page DOI URL (DATA SET LANDING PAGE)',
+        hreflang: 'en-US',
+        href: 'https://dx.doi.org/doi:10.3334/ORNLDAAC/830'
+      },
+      {
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+        title: 'Data Set Documentation (GENERAL DOCUMENTATION)',
+        hreflang: 'en-US',
+        href: 'https:/daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg'
+      },
+      {
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+        title: 'Data Set Documentation (GENERAL DOCUMENTATION)',
+        hreflang: 'en-US',
+        href: 'https:/daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf'
+      },
+      {
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+        title: 'Data Set Documentation (GENERAL DOCUMENTATION)',
+        hreflang: 'en-US',
+        href: 'https:/daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf'
+      },
+      {
+        inherited: true,
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+        hreflang: 'en-US',
+        href: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/'
+      },
+      {
+        inherited: true,
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+        hreflang: 'en-US',
+        href: 'https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html'
+      },
+      {
+        inherited: true,
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+        hreflang: 'en-US',
+        href: 'https://doi.org/10.3334/ORNLDAAC/830'
+      },
+      {
+        inherited: true,
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+        hreflang: 'en-US',
+        href: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg'
+      },
+      {
+        inherited: true,
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+        hreflang: 'en-US',
+        href: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf'
+      },
+      {
+        inherited: true,
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+        hreflang: 'en-US',
+        href: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf'
+      },
+      {
+        inherited: true,
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+        type: 'application/gml+xml',
+        hreflang: 'en-US',
+        href: 'https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830'
       }
     ],
-    SpatialExtent: {
-      HorizontalSpatialDomain: {
-        Geometry: {
-          BoundingRectangles: [
-            {
-              WestBoundingCoordinate: -180,
-              EastBoundingCoordinate: 180,
-              NorthBoundingCoordinate: 90,
-              SouthBoundingCoordinate: -90
-            }
-          ]
-        }
-      }
-    },
-    ProviderDates: [
-      {
-        Date: '2006-04-14T00:00:00.000Z',
-        Type: 'Insert'
-      },
-      {
-        Date: '2006-04-14T00:00:00.000Z',
-        Type: 'Update'
-      }
+    isCwic: false,
+    formattedTemporal: [
+      '1860-01-01 00:00:00',
+      '2050-12-31 00:00:00'
     ],
-    CollectionReference: {
-      ShortName: '1860_1993_2050_NITROGEN_830',
-      Version: '1'
-    },
-    RelatedUrls: [
-      {
-        URL: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/N-deposition1860.tfw',
-        Type: 'GET DATA',
-        Description: 'This link provides direct download access to the granule.'
-      },
-      {
-        URL: 'https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html',
-        Type: 'VIEW RELATED INFORMATION',
-        Description: 'ORNL DAAC Data Set Documentation'
-      },
-      {
-        URL: 'https://dx.doi.org/doi:10.3334/ORNLDAAC/830',
-        Type: 'VIEW RELATED INFORMATION',
-        Description: 'Data set Landing Page DOI URL'
-      },
-      {
-        URL: 'https:/daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg',
-        Type: 'VIEW RELATED INFORMATION',
-        Description: 'Data Set Documentation'
-      },
-      {
-        URL: 'https:/daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf',
-        Type: 'VIEW RELATED INFORMATION',
-        Description: 'Data Set Documentation'
-      },
-      {
-        URL: 'https:/daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf',
-        Type: 'VIEW RELATED INFORMATION',
-        Description: 'Data Set Documentation'
-      }
-    ],
-    Projects: [
-      {
-        ShortName: 'Not provided',
-        Campaigns: [
-          'climate'
-        ]
-      }
-    ],
-    DataGranule: {
-      DayNightFlag: 'Both',
-      ProductionDateTime: '2006-04-14T00:00:00.000Z',
-      ArchiveAndDistributionInformation: [
-        {
-          Name: 'Not provided',
-          Size: 0.0002,
-          SizeUnit: 'MB'
-        }
-      ]
-    },
-    Platforms: [
-      {
-        ShortName: 'NOT APPLICABLE',
-        Instruments: [
-          {
-            ShortName: 'NOT APPLICABLE'
-          }
-        ]
-      }
-    ],
-    MetadataSpecification: {
-      URL: 'https://cdn.earthdata.nasa.gov/umm/granule/v1.6',
-      Name: 'UMM-G',
-      Version: '1.6'
-    },
+    thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G1422858365-ORNL_DAAC?h=85&w=85',
     metadataUrls: {
       atom: {
         title: 'ATOM',

@@ -60,6 +60,11 @@
     description: Iterate over all CMR collections adding tags specific to EDSC
     timeout: 600
 
+  fixRetrievalCollectionMetadata:
+    handler: serverless/src/fixRetrievalCollectionMetadata/handler.default
+    description: Fixes retrieval collection metadata that was improperly written
+    timeout: 900
+
   #
   # SQS Lambdas
   #
@@ -126,11 +131,26 @@
     environment:
       updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
 
+  submitHarmonyOrder:
+    handler: serverless/src/submitHarmonyOrder/handler.default
+    timeout: 600
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - HarmonyOrderQueue
+              - Arn
+    environment:
+      updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
+
   fetchCatalogRestOrder:
     handler: serverless/src/fetchCatalogRestOrder/handler.default
 
   fetchLegacyServicesOrder:
     handler: serverless/src/fetchLegacyServicesOrder/handler.default
+
+  fetchHarmonyOrder:
+    handler: serverless/src/fetchHarmonyOrder/handler.default
 
   #
   # Scheduled Lambdas

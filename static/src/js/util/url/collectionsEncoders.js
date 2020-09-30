@@ -72,12 +72,11 @@ const encodeSelectedVariables = (projectCollection) => {
 
   if (!accessMethods || !selectedAccessMethod) return null
 
-  const selectedMethod = accessMethods[selectedAccessMethod]
-  const {
-    selectedVariables
-  } = selectedMethod
+  const { [selectedAccessMethod]: selectedAccessMethodObj = {} } = accessMethods
 
-  if (!selectedVariables) return null
+  const { selectedVariables = [] } = selectedAccessMethodObj
+
+  if (selectedVariables.length === 0) return null
 
   return selectedVariables.join('!')
 }
@@ -100,6 +99,26 @@ const encodeOutputFormat = (projectCollection) => {
   if (!selectedOutputFormat) return null
 
   return selectedOutputFormat
+}
+
+const encodeOutputProjection = (projectCollection) => {
+  if (!projectCollection) return null
+
+  const {
+    accessMethods,
+    selectedAccessMethod
+  } = projectCollection
+
+  if (!accessMethods || !selectedAccessMethod) return null
+
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const {
+    selectedOutputProjection
+  } = selectedMethod
+
+  if (!selectedOutputProjection) return null
+
+  return selectedOutputProjection
 }
 
 const encodeAddedGranules = (isCwic, addedGranuleIds) => {
@@ -128,10 +147,24 @@ const decodedSelectedVariables = (pgParam) => {
   return variableIds.split('!')
 }
 
+const decodedSelectedAccessMethod = (pgParam) => {
+  const { m: accessMethod } = pgParam
+
+  if (!accessMethod) return undefined
+
+  return accessMethod
+}
+
 const decodedOutputFormat = (pgParam) => {
   const { of: outputFormat } = pgParam
 
   return outputFormat
+}
+
+const decodedOutputProjection = (pgParam) => {
+  const { op: outputProjection } = pgParam
+
+  return outputProjection
 }
 
 /**
@@ -194,7 +227,8 @@ export const encodeCollections = (props) => {
     const { [collectionId]: projectCollection = {} } = projectById
     const {
       granules: projectCollectionGranules = {},
-      isVisible
+      isVisible,
+      selectedAccessMethod
     } = projectCollection
 
     // excludedGranules
@@ -244,11 +278,17 @@ export const encodeCollections = (props) => {
       pg = { ...pg, ...encodeGranuleFilters(granuleQuery) }
     }
 
+    // Encode selected access method
+    pg.m = selectedAccessMethod
+
     // Encode selected variables
     pg.uv = encodeSelectedVariables(projectCollection)
 
     // Encode selected output format
     pg.of = encodeOutputFormat(projectCollection)
+
+    // Encode selected output projection
+    pg.of = encodeOutputProjection(projectCollection)
 
     pgParameter[collectionListIndex] = pg
   })
@@ -307,7 +347,9 @@ export const decodeCollections = (params) => {
     let isVisible = false
     let removedGranuleIds = []
     let removedIsCwic
+    let selectedAccessMethod
     let selectedOutputFormat
+    let selectedOutputProjection
     let variableIds
 
     // Search
@@ -366,8 +408,14 @@ export const decodeCollections = (params) => {
       // Decode selected variables
       variableIds = decodedSelectedVariables(pCollection)
 
+      // Decode selected access method
+      selectedAccessMethod = decodedSelectedAccessMethod(pCollection)
+
       // Decode output format
       selectedOutputFormat = decodedOutputFormat(pCollection)
+
+      // Decode output projection
+      selectedOutputProjection = decodedOutputProjection(pCollection)
 
       // Determine if the collection is a CWIC collection
       isCwic = excludedIsCwic || addedIsCwic || removedIsCwic
@@ -387,14 +435,18 @@ export const decodeCollections = (params) => {
 
       projectById[collectionId] = {
         isVisible,
+        selectedAccessMethod,
         granules: {}
       }
 
-      if (variableIds || selectedOutputFormat) {
-        projectById[collectionId].accessMethods = {
-          opendap: {
-            selectedVariables: variableIds,
-            selectedOutputFormat
+      if (selectedAccessMethod) {
+        if (variableIds || selectedOutputFormat || selectedOutputProjection) {
+          projectById[collectionId].accessMethods = {
+            [selectedAccessMethod]: {
+              selectedOutputFormat,
+              selectedOutputProjection,
+              selectedVariables: variableIds
+            }
           }
         }
       }

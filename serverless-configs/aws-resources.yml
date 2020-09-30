@@ -45,6 +45,23 @@ Resources:
       QueueName: ${self:custom.siteName}-CatalogRestOrderDeadLetterQueue
       MessageRetentionPeriod: 1209600
 
+  HarmonyOrderQueue:
+    Type: 'AWS::SQS::Queue'
+    Properties:
+      VisibilityTimeout: 600 # Give orders a full day to complete
+      RedrivePolicy:
+        deadLetterTargetArn:
+          Fn::GetAtt:
+            - HarmonyOrderDeadLetterQueue
+            - Arn
+        maxReceiveCount: 2 # Number of times a message will be tried before being dumped to the DLQ
+
+  HarmonyOrderDeadLetterQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: ${self:custom.siteName}-HarmonyOrderDeadLetterQueue
+      MessageRetentionPeriod: 1209600
+
   OptionDefinitionsQueue:
     Type: 'AWS::SQS::Queue'
     Properties:

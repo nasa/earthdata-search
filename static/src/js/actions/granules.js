@@ -49,6 +49,7 @@ import {
   getCollectionsMetadata,
   getFocusedCollectionMetadata
 } from '../selectors/collectionMetadata'
+import { getProjectCollectionsIds } from '../selectors/project'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { eventEmitter } from '../events/events'
 
@@ -238,19 +239,26 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
 
   const { concept_id: excludedGranuleIds = [] } = exclude
 
-  const {
-    swLat,
-    swLng,
-    neLat,
-    neLng
-  } = mbr({
-    boundingBox: boundingBox[0],
-    circle: circle[0],
-    point: point[0],
-    polygon: polygon[0]
-  })
+  if (
+    boundingBox.length > 0
+    || circle.length > 0
+    || point.length > 0
+    || polygon.length > 0
+  ) {
+    const {
+      swLat,
+      swLng,
+      neLat,
+      neLng
+    } = mbr({
+      boundingBox: boundingBox[0],
+      circle: circle[0],
+      point: point[0],
+      polygon: polygon[0]
+    })
 
-  ousPayload.bounding_box = [swLng, swLat, neLng, neLat].join(',')
+    ousPayload.bounding_box = [swLng, swLat, neLng, neLat].join(',')
+  }
 
   ousPayload.temporal = temporal
 
@@ -564,13 +572,24 @@ export const getProjectGranules = () => (dispatch, getState) => {
 export const applyGranuleFilters = (
   granuleFilters,
   closePanel = false
-) => (dispatch) => {
+) => (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const focusedCollectionId = getFocusedCollectionId(state)
+  const projectCollectionsIds = getProjectCollectionsIds(state)
+
   // Apply granule filters, ensuring to reset the page number to 1 as this results in a new search
   dispatch(actions.updateFocusedCollectionGranuleFilters({ pageNum: 1, ...granuleFilters }))
 
-  dispatch(getSearchGranules()).then(() => {
-    if (closePanel) dispatch(actions.toggleSecondaryOverlayPanel(false))
-  })
+  // If there is a focused collection, and it is in the project also update the project granules
+  if (focusedCollectionId && projectCollectionsIds.includes(focusedCollectionId)) {
+    dispatch(actions.getProjectGranules())
+  }
+
+  dispatch(actions.getSearchGranules())
+
+  if (closePanel) dispatch(actions.toggleSecondaryOverlayPanel(false))
 }
 
 /**

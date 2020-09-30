@@ -100,9 +100,9 @@ const buildForDeveloperLink = (linkData, token) => {
 
 /**
  * Renders CollectionDetailsBody.
- * @param {object} props - The props passed into the component.
- * @param {object} props  collectionMetadata - Focused collection passed from redux store.
- * @param {function} props.onToggleRelatedUrlsModal - Toggles the state of the Related URLs modal
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props  collectionMetadata - Focused collection passed from redux store.
+ * @param {Function} props.onToggleRelatedUrlsModal - Toggles the state of the Related URLs modal
  */
 export const CollectionDetailsBody = ({
   collectionMetadata,
@@ -135,7 +135,7 @@ export const CollectionDetailsBody = ({
     )
   }
 
-  const reformattings = []
+  const reformattings = {}
 
   if (services) {
     const { items } = services
@@ -147,7 +147,19 @@ export const CollectionDetailsBody = ({
         } = service
 
         if (supportedReformattingsList) {
-          reformattings.push(...supportedReformattingsList)
+          supportedReformattingsList.forEach((supportedReformatting) => {
+            const {
+              supportedInputFormat,
+              supportedOutputFormats
+            } = supportedReformatting
+
+            const { [supportedInputFormat]: existingReformatting = [] } = reformattings
+
+            reformattings[supportedInputFormat] = [
+              ...existingReformatting,
+              ...supportedOutputFormats
+            ]
+          })
         }
       })
     }
@@ -231,7 +243,7 @@ export const CollectionDetailsBody = ({
                   )
                 }
                 {
-                  reformattings.length > 0 && (
+                  Object.keys(reformattings).length > 0 && (
                     <>
                       <dt>
                         Reformatting Options
@@ -255,15 +267,17 @@ export const CollectionDetailsBody = ({
                       </dt>
                       <dd>
                         {
-                          reformattings.map((supportedReformatting) => {
+                          // Using an array index in a key to prevent any duplicate keys when
+                          // there are duplicate supported input formats
+                          Object.keys(reformattings).map((supportedInputFormat, i) => {
                             const {
-                              supportedInputFormat,
-                              supportedOutputFormats
-                            } = supportedReformatting
+                              [supportedInputFormat]: supportedOutputFormats
+                            } = reformattings
 
+                            const key = `input-format__${supportedInputFormat}-${i}`
                             return (
                               <dl
-                                key={`input-format__${supportedInputFormat}`}
+                                key={key}
                                 className="collection-details-body__reformatting-item"
                               >
                                 <dt className="collection-details-body__reformatting-item-heading">
@@ -358,11 +372,6 @@ export const CollectionDetailsBody = ({
             <ul className="collection-details-body__dev-list">
               {urls.granuleDatasource && buildForDeveloperLink(urls.granuleDatasource)}
               {urls.osdd && buildForDeveloperLink(urls.osdd)}
-              {
-                // TODO: GIBS
-                // TODO: Opendap
-                // TODO: Modaps
-              }
             </ul>
           </div>
         </div>

@@ -19,6 +19,15 @@ export function isClockwise(path) {
   return sum > 0
 }
 
+// Is a given path clockwise?
+export function isClockwiseLatLng(path) {
+  let sum = 0
+  pairs(path).forEach(([p0, p1]) => {
+    sum += (p1.lng - p0.lng) * (p1.lat + p0.lat)
+  })
+  return sum > 0
+}
+
 export function addPath(ctx, path) {
   let { poly } = path
   const { line } = path

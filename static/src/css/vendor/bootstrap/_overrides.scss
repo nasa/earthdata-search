@@ -1,6 +1,9 @@
 /*
-* Custom Colors
+* Custom Variables
 */
+
+// Font
+$font-size-base: 0.875rem;
 
 // Body
 $body-bg: #000;
@@ -20,8 +23,8 @@ $border-color: $color__black--200;
 $btn-border-radius: 0.125rem;
 
 // Links
-$link-color: $color__brand--blue;
-$link-hover-color: $color__brand--blue;
+$color__link: $color__blue;
+$link-hover-color: $color__blue--dark;
 $link-decoration: none;
 $link-hover-decoration: none;
 

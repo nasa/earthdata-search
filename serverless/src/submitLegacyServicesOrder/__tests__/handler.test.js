@@ -171,6 +171,6 @@ describe('submitLegacyServicesOrder', () => {
 
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('update')
-    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'asdfasdf:clientId', 'ECHO ORDERS')
+    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token:clientId', 'ECHO ORDERS')
   })
 })

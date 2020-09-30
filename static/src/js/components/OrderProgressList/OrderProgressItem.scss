@@ -1,5 +1,16 @@
 .order-progress-item {
-  margin-top: $spacer;
+  margin-bottom: $spacer*1.5;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__header-primary {
+    display: flex;
+    align-items: center;
+  }
 
   &__processed {
     margin-right: $spacer/4;
@@ -13,7 +24,7 @@
   &__title {
     margin-bottom: 0;
     font-size: 0.825rem;
-    color: $color__black--400;
+    color: $color__black--500;
   }
 
   &__bar {
@@ -21,10 +32,12 @@
 
     .progress-bar {
       background-color: $color__indigo;
+      border: 1px solid darken($color__indigo, 20)
     }
   }
 
   &__badge {
+    margin-left: $spacer/2;
     color: $color__white;
     background-color: $color__indigo;
 

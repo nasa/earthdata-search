@@ -3,8 +3,8 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import { AccessMethod } from '../AccessMethod'
-import Radio from '../../FormFields/Radio/Radio'
-import RadioList from '../../FormFields/Radio/RadioList'
+import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
+import RadioList from '../../FormFields/RadioList/RadioList'
 import ProjectPanelSection from '../../ProjectPanels/ProjectPanelSection'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -113,7 +113,7 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Radio).props().value).toEqual('download')
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('download')
     })
 
     test('renders a radio button for echo orders', () => {
@@ -128,7 +128,7 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Radio).props().value).toEqual('echoOrder0')
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('echoOrder0')
     })
 
     test('renders a radio button for esi', () => {
@@ -143,7 +143,7 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Radio).props().value).toEqual('esi')
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('esi')
     })
 
     test('renders a radio button for opendap', () => {
@@ -158,7 +158,22 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(Radio).props().value).toEqual('opendap')
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('opendap')
+    })
+
+    test('renders a radio button for harmony', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setProps({
+        accessMethods: {
+          harmony0: {
+            isValid: true,
+            type: 'Harmony'
+          }
+        }
+      })
+
+      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('harmony0')
     })
   })
 
@@ -185,7 +200,8 @@ describe('AccessMethod component', () => {
 
       enzymeWrapper.update()
 
-      const echoFormWrapper = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
       const suspenseComponent = echoFormWrapper.childAt(0)
       const echoForm = suspenseComponent.childAt(0)
 
@@ -215,7 +231,8 @@ describe('AccessMethod component', () => {
 
       enzymeWrapper.update()
 
-      const echoFormWrapper = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
       const suspenseComponent = echoFormWrapper.childAt(0)
       const echoForm = suspenseComponent.childAt(0)
 
@@ -248,7 +265,8 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      const echoFormWrapper = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
+      const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
       const suspenseComponent = echoFormWrapper.childAt(0)
       const echoForm = suspenseComponent.childAt(0)
 
@@ -291,6 +309,168 @@ describe('AccessMethod component', () => {
             selectedOutputFormat: 'nc4'
           }
         }
+      })
+    })
+  })
+
+  describe('when the selected access method is harmony', () => {
+    describe('when supportedOutputFormats does not exist', () => {
+      test('displays outputFormat field', () => {
+        const { enzymeWrapper } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony'
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        expect(enzymeWrapper.find('#input__output-format').exists()).toBeFalsy()
+      })
+    })
+
+    describe('when supportedOutputFormats exist', () => {
+      test('displays outputFormat field', () => {
+        const { enzymeWrapper } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony',
+              supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        expect(enzymeWrapper.find('#input__output-format').exists()).toBeTruthy()
+      })
+
+      test('selecting a output format calls onUpdateAccessMethod', () => {
+        const { enzymeWrapper, props } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony',
+              supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        const outputFormat = enzymeWrapper.find('#input__output-format')
+        outputFormat.simulate('change', { target: { value: 'nc4' } })
+
+        expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
+        expect(props.onUpdateAccessMethod).toBeCalledWith({
+          collectionId: 'collectionId',
+          method: {
+            harmony0: {
+              selectedOutputFormat: 'nc4'
+            }
+          }
+        })
+      })
+    })
+
+    describe('when supportedOutputProjections does not exist', () => {
+      test('displays outputFormat field', () => {
+        const { enzymeWrapper } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony'
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        expect(enzymeWrapper.find('#input__output-projection').exists()).toBeFalsy()
+      })
+    })
+
+    describe('when supportedOutputProjections exist', () => {
+      test('displays outputProjection field', () => {
+        const { enzymeWrapper } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony',
+              supportedOutputProjections: ['EPSG:4326']
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        expect(enzymeWrapper.find('#input__output-projection').exists()).toBeTruthy()
+      })
+
+      test('selecting a output projection calls onUpdateAccessMethod', () => {
+        const { enzymeWrapper, props } = setup()
+
+        const collectionId = 'collectionId'
+
+        enzymeWrapper.setProps({
+          accessMethods: {
+            harmony0: {
+              isValid: true,
+              type: 'Harmony',
+              supportedOutputProjections: ['EPSG:4326']
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'harmony0'
+        })
+
+        const outputFormat = enzymeWrapper.find('#input__output-projection')
+        outputFormat.simulate('change', { target: { value: 'EPSG:4326' } })
+
+        expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
+        expect(props.onUpdateAccessMethod).toBeCalledWith({
+          collectionId: 'collectionId',
+          method: {
+            harmony0: {
+              selectedOutputProjection: 'EPSG:4326'
+            }
+          }
+        })
       })
     })
   })

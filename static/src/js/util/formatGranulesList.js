@@ -38,13 +38,13 @@ export const formatGranulesList = ({
       browseUrl,
       collectionConceptId,
       dayNightFlag,
-      formattedTemporal,
+      formattedTemporal = [],
       id,
       links,
       onlineAccessFlag,
       originalFormat,
       producerGranuleId,
-      granuleThumbnail,
+      thumbnail: granuleThumbnail,
       title
     } = granule
 

@@ -6,6 +6,10 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+
+    .route-wrapper--content-page & {
+      padding-top: 1rem;
+    }
   }
 
   &__site-meatball {
@@ -84,7 +88,7 @@
     color: white;
     padding: 0.2rem 0.3rem;
     font-size: 0.625rem;
-    background: $color__brand--blue;
+    background: $color__blue;
     border-radius: 0 0 0 0.125rem;
   }
 

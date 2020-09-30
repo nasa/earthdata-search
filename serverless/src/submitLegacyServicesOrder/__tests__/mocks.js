@@ -1,7 +1,7 @@
 export const mockLegacyServicesOrder = {
   Records: [{
     body: JSON.stringify({
-      accessToken: 'asdfasdf',
+      accessToken: 'access-token',
       id: 12,
       granule_params: {
         echo_collection_id: 'C10000005-EDSC',

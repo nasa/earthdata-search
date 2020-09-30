@@ -14,6 +14,7 @@ import VariableDetailsPanel from './VariableDetailsPanel'
 import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
 
 import { isAccessMethodValid } from '../../util/accessMethods'
+import { locationPropType } from '../../util/propTypes/location'
 
 import './ProjectPanels.scss'
 
@@ -85,15 +86,18 @@ class ProjectPanels extends PureComponent {
     const selectedVariables = {}
 
     allIds.forEach((collectionId) => {
-      const { accessMethods = {} } = byId[collectionId]
-      const { opendap } = accessMethods
+      const { accessMethods = {}, selectedAccessMethod } = byId[collectionId]
 
-      if (!opendap) return
+      if (selectedAccessMethod) {
+        const { [selectedAccessMethod]: accessMethod = {} } = accessMethods
 
-      const { selectedVariables: nextSelectedVariables = [] } = opendap
+        const {
+          selectedVariables: nextSelectedVariables = []
+        } = accessMethod
 
-      if (nextSelectedVariables.length > 0) {
-        selectedVariables[collectionId] = nextSelectedVariables
+        if (nextSelectedVariables.length > 0) {
+          selectedVariables[collectionId] = nextSelectedVariables
+        }
       }
     })
 
@@ -433,16 +437,16 @@ class ProjectPanels extends PureComponent {
           >
             <AccessMethod
               accessMethods={accessMethods}
+              granuleMetadata={granulesMetadata}
               index={index}
               metadata={collectionMetadata}
-              granuleMetadata={granulesMetadata}
-              shapefileId={shapefileId}
-              spatial={spatial}
               onSelectAccessMethod={onSelectAccessMethod}
               onSetActivePanel={onSetActivePanel}
               onTogglePanels={onTogglePanels}
               onUpdateAccessMethod={onUpdateAccessMethod}
               selectedAccessMethod={selectedAccessMethod}
+              shapefileId={shapefileId}
+              spatial={spatial}
             />
           </PanelItem>
           <PanelItem
@@ -525,7 +529,7 @@ ProjectPanels.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,

@@ -1,7 +1,9 @@
 export const retrievalStatusProps = {
   authToken: 'testToken',
+  granuleDownload: {},
   onFetchRetrieval: jest.fn(),
   onFetchRetrievalCollection: jest.fn(),
+  onFetchRetrievalCollectionGranuleLinks: jest.fn(),
   match: {
     search: {
       id: 7
@@ -26,7 +28,9 @@ export const retrievalStatusProps = {
             id: 'TEST_COLLECTION_111',
             dataset_id: 'Test Dataset ID'
           },
-          access_method: {},
+          access_method: {
+            type: 'download'
+          },
           isLoaded: true
         }
       }
@@ -94,6 +98,7 @@ export const retrievalStatusPropsEsi = {
           },
           orders: [
             {
+              type: 'ESI',
               order_number: '5000000333461',
               state: 'complete',
               order_information: {
@@ -115,6 +120,7 @@ export const retrievalStatusPropsEsi = {
               }
             },
             {
+              type: 'ESI',
               order_number: '5000000333462',
               state: 'processing',
               order_information: {
@@ -172,6 +178,7 @@ export const retrievalStatusPropsEchoOrder = {
           },
           orders: [
             {
+              type: 'ECHO ORDERS',
               order_number: '92567A0B-D146-B396-583B-D8C3487CE087',
               state: 'PROCESSING',
               order_information: {

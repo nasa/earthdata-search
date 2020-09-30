@@ -1112,4 +1112,157 @@ describe('fetchOpendapLinks', () => {
 
     expect(mbrSpy).toBeCalledTimes(1)
   })
+
+  test('calls lambda to get links from opendap without spatial params added', async () => {
+    nock(/localhost/)
+      .post(/ous/, (body) => {
+        const { params } = body
+
+        delete params.requestId
+
+        // Ensure that the payload we're sending OUS is correct
+        return JSON.stringify(params) === JSON.stringify({
+          echo_collection_id: 'C10000005-EDSC',
+          format: 'nc4',
+          variables: ['V1000004-EDSC']
+        })
+      })
+      .reply(200, {
+        items: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'OPeNDAP',
+        selectedVariables: ['V1000004-EDSC'],
+        selectedOutputFormat: 'nc4'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC'
+      },
+      granule_count: 3
+    }
+
+    await store.dispatch(fetchOpendapLinks(params))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: {
+        id: 3,
+        links: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+  })
+})
+
+describe('applyGranuleFilters', () => {
+  describe('when the focused collection is not in the project', () => {
+    test('it does not request project granules', () => {
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
+      getProjectGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        authToken: 'token',
+        focusedCollection: 'C100000-EDSC',
+        query: {
+          collection: {
+            byId: {
+              'C100000-EDSC': {
+                granules: {
+                  pageNum: 1
+                }
+              }
+            }
+          }
+        }
+      })
+
+      store.dispatch(actions.applyGranuleFilters({ pageNum: 2 }))
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: 'UPDATE_GRANULE_SEARCH_QUERY',
+        payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
+      })
+
+      expect(getSearchGranulesMock).toBeCalledTimes(1)
+      expect(getProjectGranulesMock).toBeCalledTimes(0)
+    })
+  })
+
+  describe('when the focused collection is in the project', () => {
+    test('it also requests project granules', () => {
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
+      getProjectGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        authToken: 'token',
+        focusedCollection: 'C100000-EDSC',
+        metadata: {
+          collections: {
+            'C100000-EDSC': {
+              hasGranules: true
+            }
+          }
+        },
+        project: {
+          collections: {
+            allIds: ['C100000-EDSC'],
+            byId: {
+              'C100000-EDSC': {
+                granules: {
+                  addedGranuleIds: [],
+                  removedGranuleIds: []
+                }
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            byId: {
+              'C100000-EDSC': {
+                granules: {
+                  pageNum: 1
+                }
+              }
+            }
+          }
+        }
+      })
+
+      store.dispatch(actions.applyGranuleFilters({ pageNum: 2 }))
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: 'UPDATE_GRANULE_SEARCH_QUERY',
+        payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
+      })
+
+      expect(getSearchGranulesMock).toBeCalledTimes(1)
+      expect(getProjectGranulesMock).toBeCalledTimes(1)
+    })
+  })
 })

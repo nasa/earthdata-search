@@ -3,42 +3,52 @@ import {
   buildGranuleSearchParams,
   extractProjectCollectionGranuleParams
 } from './granules'
+
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import {
+  getProjectCollections,
+  getProjectCollectionsIds,
+  getProjectCollectionsMetadata
+} from '../selectors/project'
+import { mbr } from './map/mbr'
 
 /**
  * Prepare parameters used in submitRetrieval() based on current Redux State
- * @param {object} state Current Redux State
+ * @param {Object} state Current Redux State
  * @returns Parameters used in submitRetrieval()
  */
 export const prepareRetrievalParams = (state) => {
   const {
     authToken,
-    metadata = {},
     portal,
-    project,
     router,
     shapefile
   } = state
 
-  const { collections: collectionsMetadata } = metadata
-
-  const { collections: projectCollections } = project
-  const {
-    byId: projectCollectionsById,
-    allIds: projectCollectionsIds
-  } = projectCollections
+  // Retrieve data from Redux using selectors
+  const collectionsMetadata = getProjectCollectionsMetadata(state)
+  const projectCollections = getProjectCollections(state)
+  const projectCollectionsIds = getProjectCollectionsIds(state)
 
   const retrievalCollections = []
+
   projectCollectionsIds.forEach((collectionId) => {
-    const { [collectionId]: projectCollection } = projectCollectionsById
-    const { granules } = projectCollection
+    const { [collectionId]: projectCollection } = projectCollections
+    const {
+      accessMethods,
+      granules,
+      selectedAccessMethod
+    } = projectCollection
+
     const { hits: granuleCount } = granules
+
+    const { [collectionId]: collectionMetadata } = collectionsMetadata
 
     const returnValue = {}
 
     returnValue.id = collectionId
     returnValue.granule_count = granuleCount
-    returnValue.collection_metadata = collectionsMetadata
+    returnValue.collection_metadata = collectionMetadata
 
     const extractedGranuleParams = extractProjectCollectionGranuleParams(state, collectionId)
 
@@ -47,17 +57,45 @@ export const prepareRetrievalParams = (state) => {
       extractedGranuleParams
     )
 
-    const collectionConfig = projectCollectionsById[collectionId]
-    const {
-      accessMethods,
-      selectedAccessMethod
-    } = collectionConfig
-
     const params = buildGranuleSearchParams(preparedParams)
 
     returnValue.granule_params = params
-
     returnValue.access_method = accessMethods[selectedAccessMethod]
+
+    const {
+      boundingBox = [],
+      circle = [],
+      point = [],
+      polygon = []
+    } = params
+
+    if (boundingBox.length > 0
+      || circle.length > 0
+      || point.length > 0
+      || polygon.length > 0
+    ) {
+      const {
+        swLat,
+        swLng,
+        neLat,
+        neLng
+      } = mbr({
+        boundingBox: boundingBox[0],
+        circle: circle[0],
+        point: point[0],
+        polygon: polygon[0]
+      })
+
+      if (swLat && swLng && neLat && neLng) {
+        // If an MBR was returned add it to the access method before submitting to the database
+        returnValue.access_method.mbr = {
+          swLat,
+          swLng,
+          neLat,
+          neLng
+        }
+      }
+    }
 
     retrievalCollections.push(returnValue)
   })
@@ -81,5 +119,3 @@ export const prepareRetrievalParams = (state) => {
     json_data: jsonData
   }
 }
-
-export default prepareRetrievalParams

@@ -7,9 +7,10 @@ import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
 
 import { collectionTitleSkeleton } from './skeleton'
 import generateHandoffs from '../../util/handoffs/generateHandoffs'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import { locationPropType } from '../../util/propTypes/location'
 
 import './CollectionDetailsHeader.scss'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 /**
  * Renders CollectionDetailsHeader.
@@ -85,7 +86,7 @@ CollectionDetailsHeader.propTypes = {
   collectionQuery: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   mapProjection: PropTypes.string.isRequired
 }
 

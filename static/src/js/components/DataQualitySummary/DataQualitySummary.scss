@@ -26,14 +26,23 @@
     }
 
     .collapse-panel__panel {
-      widows: 100%;
       position: absolute;
+      width: 100%;
+      max-height: 100px;
+      overflow-x: scroll;
       background-color: $color__pale-yellow;
       border-bottom: 1px solid $color__pale-yellow--dark;
       padding: $spacer/2 $spacer;
       font-size: 0.825rem;
       font-weight: 300;
-      width: 100%;
+
+      @media (min-height: 700px) {
+        max-height: 300px;
+      }
+
+      @media (min-height: 800px) {
+        max-height: 400px;
+      }
     }
   }
 }

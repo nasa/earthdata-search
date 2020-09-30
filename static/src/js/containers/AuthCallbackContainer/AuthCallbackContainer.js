@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { set } from 'tiny-cookie'
 import { connect } from 'react-redux'
 import { parse } from 'qs'
+
+import { locationPropType } from '../../util/propTypes/location'
 
 const mapStateToProps = state => ({
   location: state.router.location
@@ -41,7 +42,7 @@ export class AuthCallbackContainer extends Component {
 }
 
 AuthCallbackContainer.propTypes = {
-  location: PropTypes.shape({}).isRequired
+  location: locationPropType.isRequired
 }
 
 export default connect(mapStateToProps)(AuthCallbackContainer)

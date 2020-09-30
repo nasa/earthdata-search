@@ -18,7 +18,7 @@ function setup(overrides) {
       id: 'G1924512983-LANCEMODIS',
       originalFormat: 'ECHO10',
       granuleSize: '5.89015102386475',
-      browseFlag: false,
+      browseFlag: true,
       polygons: [
         [
           '49.9154 -179.9921 49.916 -171.1374 52.3227 -170.9023 52.3246 179.7724 49.9154 -179.9921'
@@ -158,6 +158,7 @@ describe('granule metadata', () => {
     const { granulesList, granulesMetadata } = setup()
 
     expect(granulesList[0].title).toEqual(granulesMetadata['G1924512983-LANCEMODIS'].producerGranuleId)
+    expect(granulesList[0].thumbnail).toEqual(granulesMetadata['G1924512983-LANCEMODIS'].thumbnail)
   })
 
   test('returns the title as title if producerGranuleId does not exist', () => {
@@ -221,5 +222,20 @@ describe('granule metadata', () => {
     const { granulesList } = setup({ granuleIds, granulesMetadata })
 
     expect(granulesList[0].title).toEqual(granulesMetadata['http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc'].title)
+  })
+
+  test('defaults the formattedTemporal', () => {
+    const { granulesList } = setup({
+      granuleIds: ['G10000-EDSC'],
+      granulesMetadata: {
+        'G10000-EDSC': {
+          formattedTemporal: undefined
+        }
+      }
+    })
+
+    // Doesn't cause an error
+    expect(granulesList[0].timeEnd).toEqual(undefined)
+    expect(granulesList[0].timeStart).toEqual(undefined)
   })
 })

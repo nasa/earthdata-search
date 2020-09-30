@@ -11,23 +11,43 @@ export const parseError = (errorObj, {
   reThrowError = false
 } = {}) => {
   const {
-    error,
     name = 'Error',
-    response = {},
-    statusCode = 500
+    response = {}
   } = errorObj
 
   let errorArray = []
+  let code = 500
 
-  if (error) {
-    const { body = {}, headers = {} } = response
+  if (Object.keys(response).length) {
+    const {
+      body = {},
+      data = {},
+      headers = {},
+      status,
+      statusCode
+    } = response
+
+    // The request-promise library uses `body` for the response body
+    let responseBody = body
+    if (statusCode) code = statusCode
+
+    // If that key is not set, fall back to what Axios uses, which is `data`
+    if (Object.keys(body).length === 0) {
+      responseBody = data
+      if (status) code = status
+    }
+
+    const {
+      description
+    } = responseBody
+
     const { 'content-type': contentType = '' } = headers
 
     let errors = []
 
     if (contentType.indexOf('application/opensearchdescription+xml') > -1) {
       // CWIC collections return errors in XML, ensure we capture them
-      const osddBody = parseXml(body, {
+      const osddBody = parseXml(responseBody, {
         ignoreAttributes: false,
         attributeNamePrefix: ''
       })
@@ -35,14 +55,18 @@ export const parseError = (errorObj, {
       const { Description: errorMessage } = description
 
       errors = [errorMessage]
+    } else if (description) {
+      // Harmony uses code/description object in the response
+      errors = [description]
     } else {
-      ({ errors = ['Unknown Error'] } = error)
+      // Default to CMR error response body
+      ({ errors = ['Unknown Error'] } = responseBody)
     }
 
     if (shouldLog) {
       // Log each error provided
       errors.forEach((message) => {
-        console.log(`${name} (${statusCode}): ${message}`)
+        console.log(`${name} (${code}): ${message}`)
       })
     }
 
@@ -62,9 +86,9 @@ export const parseError = (errorObj, {
 
   if (asJSON) {
     return {
-      statusCode,
+      statusCode: code,
       body: JSON.stringify({
-        statusCode,
+        statusCode: code,
         errors: errorArray
       })
     }
