@@ -462,7 +462,7 @@ export class AccessMethod extends Component {
                           value={selectedOutputFormat}
                         >
                           {[
-                            <option key={null} value={null}>None</option>,
+                            <option key="output-format-none" value="">None</option>,
                             ...supportedOutputFormatOptions
                           ]}
                         </select>
@@ -485,7 +485,7 @@ export class AccessMethod extends Component {
                           value={selectedOutputProjection}
                         >
                           {[
-                            <option key={null} value={null}>None</option>,
+                            <option key="output-projection-none" value="">None</option>,
                             ...supportedOutputProjectionOptions
                           ]}
                         </select>

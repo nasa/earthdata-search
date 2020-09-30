@@ -15,7 +15,6 @@ import {
   startBeforeEnd
 } from '../../util/validation'
 
-import { getCmrFacetParams } from '../../selectors/facetParams'
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
@@ -31,7 +30,6 @@ import SecondaryOverlayPanelContainer
   from '../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
 
 const mapStateToProps = state => ({
-  cmrFacetParams: getCmrFacetParams(state),
   collectionMetadata: getFocusedCollectionMetadata(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   temporal: state.query.collection.temporal
@@ -89,7 +87,6 @@ export class GranuleFiltersPanelContainer extends Component {
     const {
       collectionMetadata,
       errors,
-      cmrFacetParams,
       handleBlur,
       handleChange,
       handleSubmit,
@@ -108,7 +105,6 @@ export class GranuleFiltersPanelContainer extends Component {
             granuleFiltersForm={(
               <GranuleFiltersForm
                 collectionMetadata={collectionMetadata}
-                cmrFacetParams={cmrFacetParams}
                 values={values}
                 touched={touched}
                 errors={errors}
@@ -144,6 +140,9 @@ const ValidationSchema = (props) => {
       minLessThanMax: '${path} should be less than Maximum',
       // eslint-disable-next-line no-template-curly-in-string
       maxGreaterThanMin: '${path} should be greater Minimum'
+    },
+    gridCoords: {
+      required: 'Grid Coordinates are required when a Tiling System is selected'
     },
     orbitNumber: {
       invalidNumber: 'Enter a valid number',
@@ -184,7 +183,7 @@ const ValidationSchema = (props) => {
     gridCoords: Yup.string()
       .when('tilingSystem', {
         is: tilingSystemValue => tilingSystemValue.length > 0,
-        then: Yup.string().required('Field is required')
+        then: Yup.string().required(errors.gridCoords.required)
       }),
     cloudCover: Yup.object().shape({
       min: Yup.number()
@@ -366,7 +365,6 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
 
 GranuleFiltersPanelContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
-  cmrFacetParams: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   errors: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,
