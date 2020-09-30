@@ -5,9 +5,9 @@ import { Col, Form, Row } from 'react-bootstrap'
 
 import moment from 'moment'
 
-import { getValueForTag } from '../../../../../sharedUtils/tags'
-import { getTemporalDateFormat } from '../../util/edscDate'
 import { findGridByName } from '../../util/grid'
+import { getTemporalDateFormat } from '../../util/edscDate'
+import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import GranuleFiltersItem from './GranuleFiltersItem'
 import GranuleFiltersList from './GranuleFiltersList'
@@ -28,7 +28,6 @@ import TemporalSelection from '../TemporalSelection/TemporalSelection'
  */
 export const GranuleFiltersForm = (props) => {
   const {
-    cmrFacetParams,
     collectionMetadata,
     errors,
     handleBlur,
@@ -48,10 +47,9 @@ export const GranuleFiltersForm = (props) => {
     gridCoords = '',
     onlineOnly = false,
     orbitNumber = {},
+    tilingSystem = '',
     temporal = {}
   } = values
-
-  const { two_d_coordinate_system_name: twoDCoordinateSystemName = [] } = cmrFacetParams
 
   const { isRecurring } = temporal
 
@@ -107,61 +105,110 @@ export const GranuleFiltersForm = (props) => {
     temporal: temporalTouched = {}
   } = touched
 
+  // Determine the tiling system names
+  const tilingSystemOptions = []
+
+  let axis0label
+  let axis1label
+
+  let coordinateOneLimits
+  let coordinateTwoLimits
+
+  // If there are selected values from the facets
+  if (tilingIdentificationSystems.length > 0) {
+    tilingIdentificationSystems.forEach((system) => {
+      const { tilingIdentificationSystemName } = system
+
+      tilingSystemOptions.push(
+        <option key={tilingIdentificationSystemName} value={tilingIdentificationSystemName}>
+          {tilingIdentificationSystemName}
+        </option>
+      )
+    })
+
+    // If the form field for tiling system has a value
+    if (tilingSystem) {
+      // Retrieve predefined coordinate system information
+      const selectedGrid = findGridByName(tilingSystem);
+
+      ({
+        axis0label,
+        axis1label
+      } = selectedGrid)
+
+      // Find the selected tiling system within the collection metadata
+      const systemFromMetadata = tilingIdentificationSystems.find(system => (
+        system.tilingIdentificationSystemName === tilingSystem
+      ))
+
+      // Don't render these fields if no tiling system is found
+      if (!systemFromMetadata) return null
+
+      const {
+        coordinate1,
+        coordinate2
+      } = systemFromMetadata
+
+      // Fetch coordinate limits from the collection metadata
+      coordinateOneLimits = `(min: ${coordinate1.minimumValue}, max: ${coordinate1.maximumValue})`
+      coordinateTwoLimits = `(min: ${coordinate2.minimumValue}, max: ${coordinate2.maximumValue})`
+    }
+  }
+
   return (
     <FormikForm className="granule-filters-body">
       <Row>
         <Col sm={9}>
           <GranuleFiltersList>
             {
-              twoDCoordinateSystemName.length > 0
-              && twoDCoordinateSystemName.map((coordinateSystem) => {
-                // Retrieve predefined coordinate system information
-                const selectedGrid = findGridByName(coordinateSystem)
+              tilingSystemOptions.length > 0 && (
+                <GranuleFiltersItem heading="Grid Coordinates">
+                  <Form.Group controlId="granule-filters_tiling-system">
+                    <Form.Label sm="auto">
+                      Tiling System
+                    </Form.Label>
+                    <Form.Control
+                      name="tilingSystem"
+                      as="select"
+                      value={tilingSystem}
+                      onChange={(e) => {
+                        // Call the default change handler
+                        handleChange(e)
 
-                const {
-                  axis0label,
-                  axis1label
-                } = selectedGrid
+                        const { target = {} } = e
+                        const { value = '' } = target
 
-                const systemFromMetadata = tilingIdentificationSystems.find(system => (
-                  system.tilingIdentificationSystemName === coordinateSystem
-                ))
-
-                // Don't render these fields if no tiling system is found
-                if (!systemFromMetadata) return null
-
-                const {
-                  coordinate1,
-                  coordinate2
-                } = systemFromMetadata
-
-                // Fetch coordinate limits from the collection metadata
-                const coordinateOneLimits = `(min: ${coordinate1.minimumValue}, max: ${coordinate1.maximumValue})`
-                const coordinateTwoLimits = `(min: ${coordinate2.minimumValue}, max: ${coordinate2.maximumValue})`
-
-                return (
-                  <GranuleFiltersItem key="" heading="Grid Coordinates">
-                    <Form.Group controlId="granule-filters_grid-coordinates">
-                      <Form.Label sm="auto">
-                        {coordinateSystem}
-                        {' '}
-                        Coordinates
-                      </Form.Label>
-                      <Form.Control
-                        name="gridCoords"
-                        type="text"
-                        placeholder="Coordinates..."
-                        value={gridCoords}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <Form.Text muted>
-                        {`Enter ${axis0label} ${coordinateOneLimits} and ${axis1label} ${coordinateTwoLimits} coordinates separated by spaces, e.g. "2,3 5,7"`}
-                      </Form.Text>
-                    </Form.Group>
-                  </GranuleFiltersItem>
-                )
-              })
+                        // If the tiling system is empty clear the grid coordinates
+                        if (value === '') {
+                          setFieldValue('gridCoords', '')
+                        }
+                      }}
+                    >
+                      {[
+                        <option key={null} value="">None</option>,
+                        ...tilingSystemOptions
+                      ]}
+                    </Form.Control>
+                  </Form.Group>
+                  {
+                    tilingSystem && (
+                      <Form.Group controlId="granule-filters_grid-coordinates">
+                        <Form.Control
+                          name="gridCoords"
+                          type="text"
+                          placeholder="Coordinates..."
+                          value={gridCoords}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        <Form.Text muted>
+                          {`Enter ${axis0label} ${coordinateOneLimits} and ${axis1label} ${coordinateTwoLimits} coordinates separated by spaces, e.g. "2,3 5,7"`}
+                        </Form.Text>
+                      </Form.Group>
+                    )
+                  }
+                </GranuleFiltersItem>
+              )
             }
             <GranuleFiltersItem
               heading="Temporal"
@@ -383,7 +430,6 @@ export const GranuleFiltersForm = (props) => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 isInvalid={orbitNumberTouched.min && !!orbitNumberError.min}
-
                               />
                               {
                                 orbitNumberTouched.min && (

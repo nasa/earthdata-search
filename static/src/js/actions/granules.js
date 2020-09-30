@@ -50,7 +50,6 @@ import {
   getFocusedCollectionMetadata
 } from '../selectors/collectionMetadata'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
-import { getCmrFacetParams } from '../selectors/facetParams'
 import { eventEmitter } from '../events/events'
 
 export const addMoreGranuleResults = payload => ({
@@ -317,7 +316,6 @@ export const getSearchGranules = () => (dispatch, getState) => {
   // Retrieve data from Redux using selectors
   const collectionId = getFocusedCollectionId(state)
   const collectionMetadata = getFocusedCollectionMetadata(state)
-  const cmrFacetParams = getCmrFacetParams(state)
 
   // Extract granule search parameters from redux specific to the focused collection
   const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
@@ -325,8 +323,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
   // Format and structure data from Redux to be sent to CMR
   const granuleParams = prepareGranuleParams(
     collectionMetadata,
-    extractedGranuleParams,
-    cmrFacetParams
+    extractedGranuleParams
   )
 
   // If cancel token is set, cancel the previous request(s)
@@ -454,13 +451,11 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
     // Fetch the collection metadata from redux for this project collection
     const collectionMetadata = getCollectionMetadata(collectionId, collectionsMetadata)
-    const cmrFacetParams = getCmrFacetParams(state)
 
     // Format and structure data from Redux to be sent to CMR
     const granuleParams = prepareGranuleParams(
       collectionMetadata,
-      extractedGranuleParams,
-      cmrFacetParams
+      extractedGranuleParams
     )
 
     // If cancel token is set, cancel the previous request(s)

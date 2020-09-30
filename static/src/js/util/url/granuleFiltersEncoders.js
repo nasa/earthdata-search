@@ -18,7 +18,8 @@ export const encodeGranuleFilters = (granuleFilters) => {
     orbitNumber,
     readableGranuleName,
     sortKey,
-    temporal
+    temporal,
+    tilingSystem
   } = granuleFilters
 
   const pg = {}
@@ -34,7 +35,11 @@ export const encodeGranuleFilters = (granuleFilters) => {
     pg.ecd = encodeTemporal(granuleFilters.equatorCrossingDate)
   }
   if (sortKey) pg.gsk = sortKey
-  if (gridCoords) pg.gc = encodeGridCoords(gridCoords)
+  if (tilingSystem) {
+    pg.ts = tilingSystem
+
+    if (gridCoords) pg.gc = encodeGridCoords(gridCoords)
+  }
 
   return pg
 }
@@ -56,7 +61,8 @@ export const decodeGranuleFilters = (params = {}) => {
     id: readableGranuleName,
     on: orbitNumber,
     oo: onlineOnly,
-    qt: temporal
+    qt: temporal,
+    ts: tilingSystem
   } = params
 
   const granuleFilters = {}
@@ -70,7 +76,12 @@ export const decodeGranuleFilters = (params = {}) => {
   if (readableGranuleName) granuleFilters.readableGranuleName = readableGranuleName.split('!')
   if (equatorCrossingDate) granuleFilters.equatorCrossingDate = decodeTemporal(equatorCrossingDate)
   if (sortKey) granuleFilters.sortKey = sortKey
-  if (gridCoords) granuleFilters.gridCoords = decodeGridCoords(gridCoords)
+
+  if (tilingSystem) {
+    granuleFilters.tilingSystem = tilingSystem
+
+    if (gridCoords) granuleFilters.gridCoords = decodeGridCoords(gridCoords)
+  }
 
   return granuleFilters
 }
