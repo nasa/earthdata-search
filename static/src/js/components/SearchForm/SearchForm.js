@@ -140,10 +140,12 @@ class SearchForm extends Component {
   onWindowKeyDown(e) {
     const { key } = e
     const { inputRef, keyboardShortcuts } = this
-    const inputIsRendered = inputRef.current && inputRef.current.input
+    const inputIsRenderedAndNotFocused = inputRef.current
+    && inputRef.current.input
+    && inputRef.current.input !== document.activeElement
 
     // Focus the search input when the forward slash key is pressed
-    if (key === keyboardShortcuts.focusSearchInput && inputIsRendered) {
+    if (key === keyboardShortcuts.focusSearchInput && inputIsRenderedAndNotFocused) {
       inputRef.current.input.focus()
 
       e.preventDefault()
