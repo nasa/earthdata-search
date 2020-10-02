@@ -64,6 +64,10 @@ class SearchForm extends Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onWindowKeyDown)
+  }
+
   onFormSubmit(e) {
     e.preventDefault()
 
