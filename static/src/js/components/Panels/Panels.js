@@ -45,7 +45,8 @@ export class Panels extends PureComponent {
       dragging: false,
       show,
       handleToolipVisible: false,
-      handleTooltipState: 'Collapse'
+      handleTooltipState: 'Collapse',
+      willMinimize: false
     }
 
     this.onChangePanel = this.onChangePanel.bind(this)
