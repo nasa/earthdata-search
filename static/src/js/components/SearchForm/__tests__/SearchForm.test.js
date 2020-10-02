@@ -1,15 +1,33 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import { Provider } from 'react-redux'
+import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Autosuggest from 'react-autosuggest'
 
 import SearchForm from '../SearchForm'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import AdvancedSearchDisplayContainer from '../../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
+import configureStore from '../../../store/configureStore'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(overrideProps) {
+const windowEventMap = {}
+
+beforeEach(() => {
+  jest.clearAllTimers()
+  jest.clearAllMocks()
+
+  window.addEventListener = jest.fn((event, cb) => {
+    windowEventMap[event] = cb
+  })
+
+  window.removeEventListener = jest.fn()
+})
+
+const store = configureStore()
+
+// use shallowMount, unless we require instance properties like refs
+function setup(overrideProps, useShallow = true) {
   const props = {
     advancedSearch: {},
     autocomplete: {
@@ -31,10 +49,24 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<SearchForm {...props} />)
+  if (useShallow) {
+    return {
+      enzymeWrapper: shallow(<SearchForm {...props} />),
+      props
+    }
+  }
 
+  // Allow the rendered component to affect the document scope
+  const container = document.createElement('div')
+  document.body.appendChild(container)
   return {
-    enzymeWrapper,
+    enzymeWrapper: mount(
+      <Provider store={store}>
+        <SearchForm {...props} />
+      </Provider>,
+
+      { attachTo: container }
+    ),
     props
   }
 }
@@ -126,6 +158,61 @@ describe('SearchForm component', () => {
       enzymeWrapper.find('.search-form__form').simulate('submit', { preventDefault: jest.fn() })
 
       expect(props.onCancelAutocomplete).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('onWindowKeydown', () => {
+    describe('when the / key is pressed', () => {
+      test('focuses the search input', () => {
+        const preventDefaultMock = jest.fn()
+        const stopPropagationMock = jest.fn()
+
+        const { enzymeWrapper } = setup({}, false)
+
+        const { inputRef } = enzymeWrapper.find(SearchForm).instance()
+        const inputElement = inputRef.current.input
+
+        // Trigger the simulated window event
+        windowEventMap.keydown({
+          key: '/',
+          preventDefault: preventDefaultMock,
+          stopPropagation: stopPropagationMock
+        })
+
+        expect(document.activeElement).toBe(inputElement)
+        expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('when the / key is pressed twice', () => {
+      test('does not focus the input if it is already focused', () => {
+        const preventDefaultMock = jest.fn()
+        const stopPropagationMock = jest.fn()
+
+        const { enzymeWrapper } = setup({}, false)
+
+        const { inputRef } = enzymeWrapper.find(SearchForm).instance()
+        const inputElement = inputRef.current.input
+        const focusSpy = jest.spyOn(inputElement, 'focus')
+
+        // Trigger the simulated event twice
+        windowEventMap.keydown({
+          key: '/',
+          preventDefault: preventDefaultMock,
+          stopPropagation: stopPropagationMock
+        })
+
+        windowEventMap.keydown({
+          key: '/',
+          preventDefault: preventDefaultMock,
+          stopPropagation: stopPropagationMock
+        })
+
+        expect(focusSpy).toHaveBeenCalledTimes(1)
+        expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })
