@@ -101,7 +101,9 @@ class GranuleResultsHeader extends Component {
     const { searchValue, prevSearchValue } = this.state
 
     if (searchValue !== prevSearchValue) {
-      let readableGranuleName = null
+      // empty array (truthy value) necessary
+      // to override existing filter with empty input
+      let readableGranuleName = []
 
       if (searchValue) {
         readableGranuleName = searchValue.split(',')
