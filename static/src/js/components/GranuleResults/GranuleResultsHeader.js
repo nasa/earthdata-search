@@ -48,12 +48,20 @@ class GranuleResultsHeader extends Component {
       searchValue: readableGranuleName.join() || '',
       prevSearchValue: readableGranuleName.join()
     }
+    this.keyboardShortcuts = {
+      toggleGranuleFilters: 'g'
+    }
 
     this.handleUpdateSortOrder = this.handleUpdateSortOrder.bind(this)
     this.handleUpdateSearchValue = this.handleUpdateSearchValue.bind(this)
     this.handleBlurSearchValue = this.handleBlurSearchValue.bind(this)
     this.handleUndoExcludeGranule = this.handleUndoExcludeGranule.bind(this)
     this.handleSearchKeyUp = this.handleSearchKeyUp.bind(this)
+    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.onWindowKeyDown)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -69,6 +77,22 @@ class GranuleResultsHeader extends Component {
 
     if (sortKey && sortKey !== sortOrder) {
       this.setState({ sortOrder: sortKey })
+    }
+  }
+
+  onWindowKeyDown(e) {
+    const { key } = e
+    const { keyboardShortcuts } = this
+    const { onToggleSecondaryOverlayPanel, secondaryOverlayPanel } = this.props
+
+    const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
+
+    // Toggle the granule filters when the `g` character is pressed
+    if (key === keyboardShortcuts.toggleGranuleFilters) {
+      onToggleSecondaryOverlayPanel(!granuleFiltersOpen)
+
+      e.preventDefault()
+      e.stopPropagation()
     }
   }
 
