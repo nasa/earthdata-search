@@ -931,4 +931,32 @@ describe('Panels component', () => {
       })
     })
   })
+
+  describe('onWindowKeydown', () => {
+    describe('when the ] key is pressed', () => {
+      test('toggles the panel state correctly', () => {
+        const preventDefaultMock = jest.fn()
+        const stopPropagationMock = jest.fn()
+
+        const { enzymeWrapper } = setup()
+
+        // Test thats the panel starts open
+        expect(enzymeWrapper.state().show).toEqual(true)
+        expect(enzymeWrapper.state().willMinimize).toEqual(false)
+
+        // Trigger the simulated window event
+        windowEventMap.keydown({
+          key: ']',
+          preventDefault: preventDefaultMock,
+          stopPropagation: stopPropagationMock
+        })
+
+        // Test that the panel is closed and the event propagation has been prevented
+        expect(enzymeWrapper.state().show).toEqual(false)
+        expect(enzymeWrapper.state().willMinimize).toEqual(true)
+        expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+      })
+    })
+  })
 })
