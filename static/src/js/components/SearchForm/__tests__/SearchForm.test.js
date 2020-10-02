@@ -64,7 +64,6 @@ function setup(overrideProps, useShallow = true) {
       <Provider store={store}>
         <SearchForm {...props} />
       </Provider>,
-
       { attachTo: container }
     ),
     props
