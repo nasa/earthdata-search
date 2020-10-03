@@ -223,7 +223,7 @@ describe('GranuleResultsHeader component', () => {
 
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
       expect(props.onApplyGranuleFilters).toHaveBeenCalledWith({
-        readableGranuleName: null
+        readableGranuleName: []
       })
     })
   })
