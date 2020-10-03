@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import SanitizedHTML from 'react-sanitized-html'
 
 import CollapsePanel from '../CollapsePanel/CollapsePanel'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './DataQualitySummary.scss'
 
@@ -16,7 +17,7 @@ export const DataQualitySummary = ({
         className="data-quality-summary__panel"
         header={(
           <>
-            <i className="fa fa-exclamation-circle" />
+            <EDSCIcon library="fa" icon="FaExclamationCircle" />
             {' Important data quality information'}
           </>
         )}

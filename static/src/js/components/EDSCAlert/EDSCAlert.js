@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Alert } from 'react-bootstrap'
 
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 import './EDSCAlert.scss'
 
 export const EDSCAlert = ({
@@ -25,7 +27,7 @@ export const EDSCAlert = ({
     >
       {
         icon && (
-          <i className={`fa fa-${icon} edsc-alert__icon`} />
+          <EDSCIcon library="fa" icon={icon} className="edsc-alert__icon" />
         )
       }
       <div className="edsc-alert__contents">

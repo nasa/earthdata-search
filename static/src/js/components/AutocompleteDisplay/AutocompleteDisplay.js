@@ -39,7 +39,7 @@ const AutocompleteDisplay = ({ selected, onRemoveAutocompleteValue }) => {
               <Button
                 className="autocomplete-display__button"
                 label={`Remove ${value}`}
-                icon="times"
+                icon="FaTimes"
                 onClick={() => { onRemoveAutocompleteValue(item) }}
               />
             </span>

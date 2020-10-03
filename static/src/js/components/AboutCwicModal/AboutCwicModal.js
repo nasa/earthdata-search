@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 export class AboutCwicModal extends Component {
   constructor(props) {
@@ -49,21 +50,21 @@ export class AboutCwicModal extends Component {
               <a href="http://ceos.org/wp-content/uploads/2014/12/CEOSOpenSearchBestPracticeDocument-PublicComment.pdf" target="_blank" rel="noopener noreferrer">
                 CEOS OpenSearch Best Practice
                 {' '}
-                <i className="fa fa-file-pdf-o" />
+                <EDSCIcon library="fa" icon="FaRegFilePdf" />
               </a>
             </li>
             <li>
               <a href="http://ceos.org/document_management/Working_Groups/WGISS/Projects/CWIC/OpenSearch/CEOS%20Open%20Search%20Developer%20Guide.docx" target="_blank" rel="noopener noreferrer">
                 CEOS OpenSearch Developer Guide
                 {' '}
-                <i className="fa fa-file-word-o" />
+                <EDSCIcon library="fa" icon="FaRegFileWord" />
               </a>
             </li>
             <li>
               <a href="https://wiki.earthdata.nasa.gov/display/CWIC/CWIC+Open+Search+Architecture" target="_blank" rel="noopener noreferrer">
                 CWIC OpenSearch Architecture
                 {' '}
-                <i className="fa fa-external-link" />
+                <EDSCIcon library="fa" icon="FaExternalLinkAlt" />
               </a>
             </li>
           </ul>

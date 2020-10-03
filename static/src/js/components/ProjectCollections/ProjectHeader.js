@@ -11,6 +11,7 @@ import { pluralize } from '../../util/pluralize'
 import { projectHeader } from './skeleton'
 
 import Skeleton from '../Skeleton/Skeleton'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './ProjectHeader.scss'
 
@@ -221,7 +222,7 @@ export class ProjectHeader extends Component {
                 label="Submit project name"
                 onClick={this.handleNameSubmit}
               >
-                <i className="fa fa-check" />
+                <EDSCIcon library="fa" icon="FaCheck" />
               </button>
             )
           }
@@ -233,7 +234,7 @@ export class ProjectHeader extends Component {
                 label="Edit project name"
                 onClick={this.handleEditClick}
               >
-                <i className="fa fa-pencil" />
+                <EDSCIcon library="fa" icon="FaPencil" />
               </button>
             )
           }
@@ -280,7 +281,7 @@ export class ProjectHeader extends Component {
                       </Tooltip>
                     )}
                   >
-                    <i className="fa fa-info-circle project-header__stats-icon" />
+                    <EDSCIcon library="fa" icon="FaInfoCircle" className="project-header__stats-icon" />
                   </OverlayTrigger>
                 </li>
               </>

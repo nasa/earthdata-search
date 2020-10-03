@@ -321,7 +321,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-globe').length).toEqual(1)
+          expect(tooltip.find('.fa-globe-svg').length).toEqual(1)
         })
 
         test('renders a tooltip with the correct text', () => {
@@ -348,7 +348,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-tags').length).toEqual(1)
+          expect(tooltip.find('.fa-tags-svg').length).toEqual(1)
         })
 
         test('renders a tooltip with the correct text', () => {
@@ -375,7 +375,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-sliders').length).toEqual(1)
+          expect(tooltip.find('.fa-sliders-svg').length).toEqual(1)
         })
 
         test('renders a tooltip with the correct text', () => {
@@ -402,7 +402,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-file-text-o').length).toEqual(1)
+          expect(tooltip.find('.fa-file-svg').length).toEqual(1)
         })
 
         test('renders a tooltip with the correct text', () => {
@@ -429,7 +429,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-clock-o').length).toEqual(1)
+          expect(tooltip.find('.fa-clock-svg').length).toEqual(1)
         })
 
         test('renders a tooltip with the correct text', () => {

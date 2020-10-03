@@ -14,7 +14,7 @@ function setup(type) {
   }
 
   if (type === 'icon') {
-    props.icon = 'test'
+    props.icon = 'FaGlobe'
   }
 
   if (type === 'edsc-icon') {
@@ -62,7 +62,7 @@ describe('Button component', () => {
     const { enzymeWrapper } = setup('icon')
 
     expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
-    expect(enzymeWrapper.find('i').hasClass('fa fa-test')).toEqual(true)
+    expect(enzymeWrapper.find('EDSCIcon').props().icon).toEqual('FaGlobe')
   })
 
   test('should render self with an edsc-icon', () => {

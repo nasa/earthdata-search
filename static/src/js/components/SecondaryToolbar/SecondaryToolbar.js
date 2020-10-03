@@ -21,6 +21,7 @@ import { stringify } from '../../util/url/url'
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './SecondaryToolbar.scss'
 
@@ -133,7 +134,7 @@ class SecondaryToolbar extends Component {
         type="button"
         className="secondary-toolbar__back"
         bootstrapVariant="light"
-        icon="arrow-circle-o-left"
+        icon="FaArrowCircleLeft"
         label="Back to Search"
         to={{
           pathname: '/search',
@@ -186,7 +187,7 @@ class SecondaryToolbar extends Component {
         className="secondary-toolbar__login"
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        icon="lock"
+        icon="FaLock"
         label="Login"
       >
         Earthdata Login
@@ -208,7 +209,7 @@ class SecondaryToolbar extends Component {
               </span>
             )
           }
-          <i className="fa fa-user" />
+          <EDSCIcon library="fa" icon="FaUser" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
@@ -286,9 +287,10 @@ class SecondaryToolbar extends Component {
           variant="light"
           onClick={this.onToggleProjectDropdown}
           as={Button}
-          icon="floppy-o"
           label="Create a project with your current search"
         >
+          {/* TODO: Check this out */}
+          <EDSCIcon library="fa" icon="FaFloppy" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Form inline className="flex-nowrap secondary-toolbar__project-name-form">

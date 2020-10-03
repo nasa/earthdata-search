@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap'
 
 import Spinner from '../Spinner/Spinner'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './Button.scss'
 
@@ -50,18 +51,11 @@ export const Button = React.forwardRef(({
 
   let iconClasses
 
-  const buildIconClass = (icon) => {
-    if (icon.indexOf('edsc') > -1) {
-      return icon
-    }
-    return `fa fa-${icon}`
-  }
-
   if (icon) {
     iconClasses = classNames(
       'button__icon',
       children ? 'button__icon--push' : null,
-      icon ? buildIconClass(icon) : null
+      icon.includes('edsc') ? icon : null
     )
   }
 
@@ -83,6 +77,10 @@ export const Button = React.forwardRef(({
     asEl = undefined
   }
 
+  const Icon = () => (icon.includes('edsc')
+    ? <i className={iconClasses} />
+    : <EDSCIcon library="fa" icon={icon} className={iconClasses} />)
+
   const button = (
     <Btn
       ref={ref}
@@ -103,7 +101,7 @@ export const Button = React.forwardRef(({
       style={style}
       data-test-id={dataTestId}
     >
-      {(!spinner && icon) && <i className={iconClasses} />}
+      {(!spinner && icon) && <Icon />}
       <span className="button__contents">
         { spinner
           ? (

@@ -60,7 +60,7 @@ export const TextWindowActions = ({
             <Button
               className="text-window-actions__action text-window-actions__action--copy"
               bootstrapSize="sm"
-              icon="copy"
+              icon="FaCopy"
               onClick={copyToClipboard}
               label="Copy"
             >
@@ -74,7 +74,7 @@ export const TextWindowActions = ({
               className="text-window-actions__action text-window-actions__action--save"
               bootstrapSize="sm"
               label="Save"
-              icon="save"
+              icon="FaSave"
               onClick={(e) => {
                 constructDownloadableFile(fileContents, fileName)
                 e.stopPropagation()
@@ -89,7 +89,7 @@ export const TextWindowActions = ({
           bootstrapSize="sm"
           onClick={handleOpen}
           label="Expand"
-          icon="expand"
+          icon="FaExpand"
         >
           Expand
         </Button>
@@ -140,7 +140,7 @@ export const TextWindowActions = ({
                       <Button
                         className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--copy"
                         bootstrapSize="sm"
-                        icon="copy"
+                        icon="FaCopy"
                         onClick={copyToClipboard}
                         label="Copy"
                       >
@@ -154,7 +154,7 @@ export const TextWindowActions = ({
                         className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--save"
                         bootstrapSize="sm"
                         label="Save"
-                        icon="save"
+                        icon="FaSave"
                         onClick={(e) => {
                           constructDownloadableFile(fileContents, fileName)
                           e.stopPropagation()

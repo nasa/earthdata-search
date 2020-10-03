@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import Dropdown from 'react-bootstrap/Dropdown'
 
 import ButtonToggle from '../CustomToggle/ButtonToggle'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './ButtonDropdown.scss'
 
@@ -75,8 +76,8 @@ export default class ButtonDropdown extends PureComponent {
           &nbsp;
           {
             open
-              ? <i className="fa fa-chevron-up" />
-              : <i className="fa fa-chevron-down" />
+              ? <EDSCIcon library="fa" icon="FaChevronUp" />
+              : <EDSCIcon library="fa" icon="FaChevronDown" />
           }
         </Dropdown.Toggle>
         <Dropdown.Menu className="button-dropdown__menu">

@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 import './CustomToggle.scss'
 
 /**
@@ -74,7 +76,7 @@ export const CustomToggle = React.forwardRef(({
       {...buttonEventHandlers}
       {...props}
     >
-      {icon && <i className={iconClasses} />}
+      {icon && <EDSCIcon library="fa" icon={icon} className={iconClasses} />}
       {children}
     </button>
   )

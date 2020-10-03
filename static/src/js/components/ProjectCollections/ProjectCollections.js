@@ -171,7 +171,7 @@ export class ProjectCollections extends Component {
             type="submit"
             variant="full"
             bootstrapVariant="success"
-            icon="download"
+            icon="FaDownload"
             label="Download project data"
             disabled={!isValid}
             spinner={isSubmitting}
