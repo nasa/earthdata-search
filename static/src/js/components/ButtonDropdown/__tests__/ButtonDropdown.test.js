@@ -14,7 +14,7 @@ function setup(type) {
   }
 
   if (type === 'icon') {
-    props.icon = 'test'
+    props.icon = 'FaGlobe'
   }
 
   if (type === 'badge') {
@@ -63,8 +63,7 @@ describe('ButtonDropdown component', () => {
   describe('icon', () => {
     test('displays correctly by default', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.fa-chevron-down').length).toEqual(1)
-      expect(enzymeWrapper.find('.fa-chevron-up').length).toEqual(0)
+      expect(enzymeWrapper.find('EDSCIcon').props().icon).toEqual('FaChevronDown')
     })
 
     test('displays correctly when opened', () => {
@@ -73,8 +72,7 @@ describe('ButtonDropdown component', () => {
       enzymeWrapper.instance().onDropdownToggle()
       enzymeWrapper.update()
 
-      expect(enzymeWrapper.find('.fa-chevron-up').length).toEqual(1)
-      expect(enzymeWrapper.find('.fa-chevron-down').length).toEqual(0)
+      expect(enzymeWrapper.find('EDSCIcon').props().icon).toEqual('FaChevronUp')
     })
   })
 })

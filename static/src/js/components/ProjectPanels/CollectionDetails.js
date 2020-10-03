@@ -9,6 +9,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollectionDetails.scss'
 
@@ -116,7 +117,7 @@ export const CollectionDetails = ({
                           search: location.search
                         }}
                       >
-                        <i className="fa fa-info-circle" />
+                        <EDSCIcon library="fa" icon="FaInfoCircle" />
                       </PortalLinkContainer>
                       <Button
                         className="collection-details__item-action collection-details__item-action--remove"
@@ -131,7 +132,7 @@ export const CollectionDetails = ({
                           e.stopPropagation()
                         }}
                       >
-                        <i className="fa fa-minus" />
+                        <EDSCIcon library="fa" icon="FaMinus" />
                       </Button>
                     </span>
                   </div>

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { CSSTransition } from 'react-transition-group'
 
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
+
 import './AccessMethodRadio.scss'
 
 export const AccessMethodRadio = ({
@@ -47,7 +49,7 @@ export const AccessMethodRadio = ({
         onClick={onClick}
       />
       <div className="access-method-radio__radio">
-        { checked && <i className="access-method-radio__radio-icon fa fa-check" /> }
+        { checked && <EDSCIcon library="fa" icon="FaCheck" className="access-method-radio__radio-icon" /> }
       </div>
       <div className="access-method-radio__content">
         <header className="access-method-radio__header">

@@ -13,6 +13,7 @@ import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleResultsItem.scss'
 
@@ -190,12 +191,12 @@ const GranuleResultsItem = forwardRef(({
           >
             <MoreActionsDropdownItem
               title="View details"
-              icon="info-circle"
+              icon="FaInfoCircle"
             />
           </LinkContainer>
           <MoreActionsDropdownItem
             title="Filter granule"
-            icon="times-circle"
+            icon="FaTimesCircle"
             onClick={handleFilterClick}
           />
         </MoreActionsDropdown>
@@ -232,7 +233,7 @@ const GranuleResultsItem = forwardRef(({
                             e.stopPropagation()
                           }}
                         >
-                          <i className="fa fa-plus" />
+                          <EDSCIcon library="fa" icon="FaPlus" />
                         </Button>
                       )
                       : (
@@ -250,7 +251,7 @@ const GranuleResultsItem = forwardRef(({
                             e.stopPropagation()
                           }}
                         >
-                          <i className="fa fa-minus" />
+                          <EDSCIcon library="fa" icon="FaMinus" />
                         </Button>
                       )
                   }

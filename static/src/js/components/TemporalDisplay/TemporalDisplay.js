@@ -82,7 +82,7 @@ class TemporalDisplay extends PureComponent {
 
     return (
       <FilterStackItem
-        icon="calendar"
+        icon="FaCalendar"
         title="Temporal"
         onRemove={this.onTimelineRemove}
       >

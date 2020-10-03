@@ -51,11 +51,11 @@ describe('EDSCAlert component', () => {
 
   describe('when an icon is provided', () => {
     const { enzymeWrapper } = setup({
-      icon: 'question-circle'
+      icon: 'FaQuestionCircle'
     })
 
     test('should render the icon', () => {
-      expect(enzymeWrapper.find('.fa-question-circle').length).toEqual(1)
+      expect(enzymeWrapper.find('EDSCIcon').length).toEqual(1)
     })
   })
 })

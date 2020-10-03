@@ -6,7 +6,6 @@ import CustomToggle from './CustomToggle'
 
 import './MoreActionsToggle.scss'
 
-// eslint-disable-next-line react/display-name
 export const MoreActionsToggle = React.forwardRef(({
   className,
   onClick
@@ -22,10 +21,12 @@ export const MoreActionsToggle = React.forwardRef(({
       onClick={onClick}
       ref={ref}
       title="More actions"
-      icon="ellipsis-v"
+      icon="FaEllipsisV"
     />
   )
 })
+
+MoreActionsToggle.displayName = 'MoreActionsToggle'
 
 MoreActionsToggle.defaultProps = {
   className: null

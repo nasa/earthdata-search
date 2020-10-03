@@ -441,8 +441,8 @@ describe('CollectionDetails component', () => {
       const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
       const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
 
-      expect(format1.find('dt').text()).toEqual('HDF-EOS2')
-      expect(format2.find('dt').text()).toEqual('HDF-EOS5')
+      expect(format1.find('dt').text()).toEqual('HDF-EOS2<EDSCIcon />')
+      expect(format2.find('dt').text()).toEqual('HDF-EOS5<EDSCIcon />')
 
       expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
       expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')

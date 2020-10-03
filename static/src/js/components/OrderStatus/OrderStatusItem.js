@@ -606,7 +606,7 @@ export class OrderStatusItem extends PureComponent {
             <Button
               className="order-status-item__button"
               type="icon"
-              icon={opened ? 'chevron-up' : 'chevron-down'}
+              icon={opened ? 'FaChevronUp' : 'FaChevronDown'}
               label={opened ? 'Close details' : 'Show details'}
               title={opened ? 'Close details' : 'Show details'}
               onClick={this.onOpenClick}

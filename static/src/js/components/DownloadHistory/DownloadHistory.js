@@ -121,7 +121,7 @@ export class DownloadHistory extends Component {
                               className="download-history__button download-history__button--remove"
                               onClick={() => this.onHandleRemove(id)}
                               variant="naked"
-                              icon="times-circle"
+                              icon="FaTimesCircle"
                               label="Delete Download"
                             />
                           </td>

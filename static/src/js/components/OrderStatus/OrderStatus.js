@@ -11,9 +11,9 @@ import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironm
 import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { stringify } from '../../util/url/url'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './OrderStatus.scss'
-
 export class OrderStatus extends Component {
   componentDidMount() {
     const { onFetchRetrieval, match, authToken } = this.props
@@ -202,7 +202,7 @@ export class OrderStatus extends Component {
             <Well.Heading>Next Steps</Well.Heading>
             <ul className="order-status__footer-link-list">
               <li className="order-status__footer-link-item">
-                <i className="fa fa-chevron-circle-right order-status__footer-link-icon" />
+                <EDSCIcon library="fa" icon="FaChevronCircleRight" className="order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
                   to={{
@@ -215,7 +215,7 @@ export class OrderStatus extends Component {
                 </PortalLinkContainer>
               </li>
               <li className="order-status__footer-link-item">
-                <i className="fa fa-chevron-circle-right order-status__footer-link-icon" />
+                <EDSCIcon library="fa" icon="FaChevronCircleRight" className="order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
                   to={{
@@ -228,7 +228,7 @@ export class OrderStatus extends Component {
                 </PortalLinkContainer>
               </li>
               <li className="order-status__footer-link-item">
-                <i className="fa fa-chevron-circle-right order-status__footer-link-icon" />
+                <EDSCIcon library="fa" icon="FaChevronCircleRight" className="order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
                   to={{

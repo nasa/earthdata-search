@@ -6,6 +6,7 @@ import { PropTypes } from 'prop-types'
 
 import Button from '../Button/Button'
 import { getFilenameFromPath } from '../../util/getFilenameFromPath'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleResultsDataLinksButton.scss'
 
@@ -33,7 +34,7 @@ export const CustomDataLinksToggle = React.forwardRef(({
       label="Download single granule data"
       onClick={handleClick}
     >
-      <i className="fa fa-download" />
+      <EDSCIcon library="fa" icon="FaDownload" />
     </Button>
   )
 })
@@ -110,7 +111,7 @@ export const GranuleResultsDataLinksButton = ({
         label="Download single granule data"
         target="_blank"
       >
-        <i className="fa fa-download" />
+        <EDSCIcon library="fa" icon="FaDownload" />
       </Button>
     )
   }
@@ -124,7 +125,7 @@ export const GranuleResultsDataLinksButton = ({
       disabled
       onClick={e => e.preventDefault()}
     >
-      <i className="fa fa-download" />
+      <EDSCIcon library="fa" icon="FaDownload" />
     </Button>
   )
 }

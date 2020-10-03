@@ -13,7 +13,7 @@ import OrderStatusContainer from '../../containers/OrderStatusContainer/OrderSta
 import CollectionContainer from '../../containers/CollectionContainer/CollectionContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import DownloadHistoryContainer from '../../containers/DownloadHistoryContainer/DownloadHistoryContainer'
-
+import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 const mapStateToProps = state => ({
   retrieval: state.retrieval
@@ -60,7 +60,7 @@ export const Downloads = ({
                         }}
                         onClick={() => { onChangePath(`/projects/${source}`) }}
                       >
-                        <i className="fa fa-arrow-circle-o-left" />
+                        <EDSCIcon library="fa" icon="FaArrowCircleLeft" />
                         {' Back to Project'}
                       </PortalLinkContainer>
                     </nav>

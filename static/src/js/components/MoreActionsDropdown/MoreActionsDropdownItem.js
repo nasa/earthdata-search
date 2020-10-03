@@ -4,6 +4,8 @@ import classNames from 'classnames'
 
 import { Dropdown } from 'react-bootstrap'
 
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 import './MoreActionsDropdownItem.scss'
 
 export const MoreActionsDropdownItem = ({
@@ -17,12 +19,7 @@ export const MoreActionsDropdownItem = ({
     'more-actions-dropdown-item'
   )
 
-  const moreActionItemIconClasses = classNames(
-    {
-      [`fa fa-${icon}`]: icon
-    },
-    'more-actions-dropdown-item__icon'
-  )
+  const moreActionItemIconClasses = 'more-actions-dropdown-item__icon'
 
   return (
     <Dropdown.Item
@@ -30,7 +27,7 @@ export const MoreActionsDropdownItem = ({
       className={moreActionItemClasses}
       onClick={onClick}
     >
-      {icon && <i className={moreActionItemIconClasses} />}
+      {icon && <EDSCIcon library="fa" icon={icon} className={moreActionItemIconClasses} />}
       {title}
     </Dropdown.Item>
   )

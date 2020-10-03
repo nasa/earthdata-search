@@ -15,6 +15,7 @@ import Skeleton from '../Skeleton/Skeleton'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleResultsActions.scss'
 
@@ -52,22 +53,20 @@ const GranuleResultsActions = ({
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--add"
       onClick={() => onAddProjectCollection(focusedCollectionId)}
+      icon="FaFolderPlus"
       label="Add collection to the current project"
       title="Add collection to the current project"
-    >
-      <FaFolderPlus size="1rem" />
-    </Button>
+    />
   )
 
   const removeFromProjectButton = (
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--remove"
       onClick={() => onRemoveCollectionFromProject(focusedCollectionId)}
+      icon="FaFolderMinus"
       label="Remove collection from the current project"
       title="Remove collection from the current project"
-    >
-      <FaFolderMinus size="1rem" />
-    </Button>
+    />
   )
 
   // When the collection has yet to be added to a project the granule count
@@ -152,7 +151,7 @@ const GranuleResultsActions = ({
                           search: location.search
                         }}
                       >
-                        <i className="fa fa-folder granule-results-actions__project-pill-icon" />
+                        <EDSCIcon library="fa" icon="FaFolder" className="granule-results-actions__project-pill-icon" />
                         {
                           (!addedGranuleIds.length && !removedGranuleIds.length) && <span title="All granules in project">All Granules</span>
                         }

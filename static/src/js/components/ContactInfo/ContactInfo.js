@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './ContactInfo.scss'
 
@@ -103,7 +104,7 @@ class ContactInfo extends Component {
           >
             Edit Profile in Earthdata Login
             {' '}
-            <i className="fa fa-arrow-circle-right" />
+            <EDSCIcon library="fa" icon="FaArrowCircleRight" />
           </Button>
         </p>
 
