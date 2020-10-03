@@ -34,16 +34,26 @@ class SearchForm extends Component {
       selectedSuggestion: null
     }
 
+    this.inputRef = React.createRef()
+    this.keyboardShortcuts = {
+      focusSearchInput: '/'
+    }
+
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onAutoSuggestChange = this.onAutoSuggestChange.bind(this)
     this.onSearchClear = this.onSearchClear.bind(this)
     this.onToggleAdvancedSearch = this.onToggleAdvancedSearch.bind(this)
     this.onToggleFilterStack = this.onToggleFilterStack.bind(this)
     this.onSuggestionHighlighted = this.onSuggestionHighlighted.bind(this)
+    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
     this.getSuggestionValue = this.getSuggestionValue.bind(this)
     this.renderSuggestion = this.renderSuggestion.bind(this)
     this.selectSuggestion = this.selectSuggestion.bind(this)
     this.shouldRenderSuggestions = this.shouldRenderSuggestions.bind(this)
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.onWindowKeyDown)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,6 +62,10 @@ class SearchForm extends Component {
     if (keywordSearch !== nextProps.keywordSearch) {
       this.setState({ keywordSearch: nextProps.keywordSearch })
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onWindowKeyDown)
   }
 
   onFormSubmit(e) {
@@ -121,6 +135,22 @@ class SearchForm extends Component {
     } = this.props
 
     onToggleAdvancedSearchModal(true)
+  }
+
+  onWindowKeyDown(e) {
+    const { key } = e
+    const { inputRef, keyboardShortcuts } = this
+    const inputIsRenderedAndNotFocused = inputRef.current
+    && inputRef.current.input
+    && inputRef.current.input !== document.activeElement
+
+    // Focus the search input when the forward slash key is pressed
+    if (key === keyboardShortcuts.focusSearchInput && inputIsRenderedAndNotFocused) {
+      inputRef.current.input.focus()
+
+      e.preventDefault()
+      e.stopPropagation()
+    }
   }
 
   /**
@@ -270,6 +300,7 @@ class SearchForm extends Component {
         <div className="search-form__primary">
           <form className="search-form__form" onSubmit={this.onFormSubmit}>
             <Autosuggest
+              ref={this.inputRef}
               suggestions={suggestions}
               onSuggestionsFetchRequested={onFetchAutocomplete}
               onSuggestionsClearRequested={onClearAutocompleteSuggestions}
