@@ -9,6 +9,7 @@ import { collectionTitleSkeleton } from './skeleton'
 import generateHandoffs from '../../util/handoffs/generateHandoffs'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { locationPropType } from '../../util/propTypes/location'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollectionDetailsHeader.scss'
 
@@ -63,7 +64,7 @@ export const CollectionDetailsHeader = ({
                         search: location.search
                       }}
                     >
-                      <i className="fa fa-map" />
+                      <EDSCIcon library="fa" icon="FaMap" />
                       {' View Granules'}
                     </PortalLinkContainer>
                     <div className="mt-1">

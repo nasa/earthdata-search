@@ -8,6 +8,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleResultsHighlights.scss'
 
@@ -120,7 +121,7 @@ export const GranuleResultsHighlights = ({
           search: location.search
         }}
       >
-        <i className="fa fa-map" />
+        <EDSCIcon library="fa" icon="FaMap" />
         {' View Granules'}
       </PortalLinkContainer>
     </div>

@@ -14,6 +14,7 @@ import GranuleResultsActionsContainer from '../../containers/GranuleResultsActio
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleResultsHeader.scss'
 
@@ -225,7 +226,7 @@ class GranuleResultsHeader extends Component {
                     search: location.search
                   }}
                 >
-                  <i className="fa fa-info-circle" />
+                  <EDSCIcon library="fa" icon="FaInfoCircle" />
                   {' View Details'}
                 </PortalLinkContainer>
               </div>
@@ -251,7 +252,7 @@ class GranuleResultsHeader extends Component {
                           onClick={() => onToggleAboutCwicModal(true)}
                           variant="link"
                           bootstrapVariant="link"
-                          icon="question-circle"
+                          icon="FaQuestionCircle"
                           label="More details"
                         >
                           More Details
@@ -266,7 +267,7 @@ class GranuleResultsHeader extends Component {
                             onClick={() => onToggleSecondaryOverlayPanel(false)}
                             variant="link"
                             bootstrapVariant="link"
-                            icon="times"
+                            icon="FaTimes"
                             label="Close Granule Filters"
                           >
                             Granule Filters
@@ -277,7 +278,7 @@ class GranuleResultsHeader extends Component {
                             onClick={() => onToggleSecondaryOverlayPanel(true)}
                             variant="link"
                             bootstrapVariant="link"
-                            icon="filter"
+                            icon="FaFilter"
                             label="Open Granule Filters"
                           >
                             Granule Filters
@@ -372,7 +373,7 @@ class GranuleResultsHeader extends Component {
                             onClick={() => onToggleSecondaryOverlayPanel(false)}
                             variant="link"
                             bootstrapVariant="link"
-                            icon="times"
+                            icon="FaTimes"
                             title="Close filters"
                             label="Close Granule Filters"
                           >
@@ -384,7 +385,7 @@ class GranuleResultsHeader extends Component {
                             onClick={() => onToggleSecondaryOverlayPanel(true)}
                             variant="link"
                             bootstrapVariant="link"
-                            icon="filter"
+                            icon="FaFilter"
                             title="Filter granules"
                             label="Open Granule Filters"
                           >
@@ -442,7 +443,7 @@ class GranuleResultsHeader extends Component {
                 className={viewButtonListClasses}
                 dataTestId="granule-results-header__view-button--list"
                 variant="naked"
-                icon="list"
+                icon="FaList"
                 label="Switch to list view"
                 onClick={() => { onChangePanelView('list') }}
               />
@@ -450,7 +451,7 @@ class GranuleResultsHeader extends Component {
                 className={viewButtonTableClasses}
                 dataTestId="granule-results-header__view-button--table"
                 variant="naked"
-                icon="table"
+                icon="FaTable"
                 label="Switch to table view"
                 onClick={() => { onChangePanelView('table') }}
               />

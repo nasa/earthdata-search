@@ -11,6 +11,7 @@ import { pluralize } from '../../util/pluralize'
 import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollectionResultsHeader.scss'
 
@@ -152,7 +153,7 @@ const CollectionResultsHeader = ({
                   className="collection-results-header__adv-search-btn"
                   bootstrapVariant="link"
                   variant="link"
-                  icon="sliders"
+                  icon="FaSlidersH"
                   label="Advanced search"
                   onClick={() => onToggleAdvancedSearchModal(true)}
                 >
@@ -168,7 +169,7 @@ const CollectionResultsHeader = ({
               <span className="collection-results-header__tip">
                 <strong className="collection-results-header__tip-label">Tip:</strong>
                 Add
-                <i className="collection-results-header__tip-icon fa fa-plus" />
+                <EDSCIcon library="fa" icon="FaPlus" className="collection-results-header__tip-icon" />
                 collections to your project to compare and download their data.
               </span>
             </div>
@@ -192,7 +193,7 @@ const CollectionResultsHeader = ({
             className={viewButtonListClasses}
             dataTestId="collection-results-header__view-button--list"
             variant="naked"
-            icon="list"
+            icon="FaList"
             label="Switch to list view"
             onClick={() => { onChangePanelView('list') }}
           />
@@ -200,7 +201,7 @@ const CollectionResultsHeader = ({
             className={viewButtonTableClasses}
             dataTestId="collection-results-header__view-button--table"
             variant="naked"
-            icon="table"
+            icon="FaTable"
             label="Switch to table view"
             onClick={() => { onChangePanelView('table') }}
           />

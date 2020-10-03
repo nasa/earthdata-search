@@ -162,7 +162,7 @@ export class SavedProjects extends Component {
                                   type="button"
                                   label="Share project"
                                   variant="naked"
-                                  icon="share-square-o"
+                                  icon="FaShareSquare"
                                 />
                               </OverlayTrigger>
                               <Button
@@ -170,7 +170,7 @@ export class SavedProjects extends Component {
                                 className="saved-projects__button saved-projects__button--remove"
                                 label="Remove project"
                                 variant="naked"
-                                icon="times-circle"
+                                icon="FaTimesCircle"
                                 onClick={() => this.handleDeleteSavedProject(id)}
                               />
                             </div>

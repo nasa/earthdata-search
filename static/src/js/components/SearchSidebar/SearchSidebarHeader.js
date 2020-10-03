@@ -6,6 +6,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './SearchSidebarHeader.scss'
 
@@ -39,7 +40,7 @@ export class SearchSidebarHeader extends PureComponent {
             }}
             onClick={() => onFocusedCollectionChange('')}
           >
-            <i className="fa fa-chevron-left" />
+            <EDSCIcon library="fa" icon="FaChevronLeft" />
             {' Back to collections'}
           </PortalLinkContainer>
         </div>

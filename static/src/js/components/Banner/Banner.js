@@ -29,7 +29,7 @@ export const Banner = ({
         className="banner__close"
         label="close"
         onClick={onClose}
-        icon="times-circle"
+        icon="FaTimesCircle"
       />
     </div>
   )

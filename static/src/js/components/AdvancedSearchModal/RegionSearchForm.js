@@ -192,7 +192,7 @@ export class RegionSearchForm extends Component {
                     <EDSCAlert
                       variant="small"
                       bootstrapVariant="light"
-                      icon="question-circle"
+                      icon="FaQuestionCircle"
                     >
                       Find more information about Hydrological Units at
                       {' '}

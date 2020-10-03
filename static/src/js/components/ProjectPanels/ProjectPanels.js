@@ -15,6 +15,7 @@ import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
 
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { locationPropType } from '../../util/propTypes/location'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './ProjectPanels.scss'
 
@@ -329,14 +330,14 @@ class ProjectPanels extends PureComponent {
           {
             !isValid && (
               <span className="project-panels__collection-status project-panels__collection-status--invalid">
-                <i className="fa fa-exclamation-circle" />
+                <EDSCIcon library="fa" icon="FaExclamationCircle" />
               </span>
             )
           }
           {
             isValid && (
               <span className="project-panels__collection-status project-panels__collection-status--valid">
-                <i className="fa fa-check-circle" />
+                <EDSCIcon library="fa" icon="FaCheckCircle" />
               </span>
             )
           }
@@ -415,7 +416,7 @@ class ProjectPanels extends PureComponent {
           label="View Granules"
           onClick={() => { onViewCollectionGranules(collectionId) }}
         >
-          <i className="fa fa-map" />
+          <EDSCIcon library="fa" icon="FaMap" />
           {' View Granules'}
         </Button>
       )

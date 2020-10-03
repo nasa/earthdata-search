@@ -29,7 +29,7 @@ class AdvancedSearchDisplay extends PureComponent {
 
     return (
       <FilterStackItem
-        icon="sliders"
+        icon="FaSlidersH"
         title="Advanced Search"
         onRemove={() => {
           onUpdateAdvancedSearch({})

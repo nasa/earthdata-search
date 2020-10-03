@@ -37,17 +37,17 @@ describe('CollapsePanel component', () => {
     enzymeWrapper.instance().onToggleClick = jest.fn()
     const button = enzymeWrapper.find('button')
     expect(button.length).toEqual(1)
-    expect(button.text()).toEqual('test-header-text')
+    expect(button.text()).toEqual('test-header-text<EDSCIcon />')
   })
 
   test('toggles when clicked', () => {
     const { enzymeWrapper } = setup()
     const button = enzymeWrapper.find('button')
     expect(enzymeWrapper.state('open')).toEqual(false)
-    expect(enzymeWrapper.find('.fa').prop('className')).toEqual('fa fa-chevron-down')
+    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual('FaChevronCircleDown')
     button.simulate('click')
     expect(enzymeWrapper.state('open')).toEqual(true)
-    expect(enzymeWrapper.find('.fa').prop('className')).toEqual('fa fa-chevron-up')
+    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual('FaChevronCircleUp')
   })
 
   test('renders it children correctly', () => {

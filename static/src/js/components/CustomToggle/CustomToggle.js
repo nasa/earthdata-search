@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 import './CustomToggle.scss'
 
 export class CustomToggle extends Component {
@@ -35,10 +37,7 @@ export class CustomToggle extends Component {
     let iconClasses
 
     if (icon) {
-      iconClasses = classNames(
-        'custom-toggle__icon',
-        icon ? `fa fa-${icon}` : null
-      )
+      iconClasses = 'custom-toggle__icon'
     }
 
     return (
@@ -48,7 +47,7 @@ export class CustomToggle extends Component {
         title={title}
         onClick={this.handleClick}
       >
-        {icon && <i className={iconClasses} />}
+        {icon && <EDSCIcon library="fa" icon={icon} className={iconClasses} />}
         {children}
       </button>
     )

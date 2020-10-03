@@ -12,6 +12,7 @@ import Skeleton from '../Skeleton/Skeleton'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleResultsActions.scss'
 
@@ -50,7 +51,7 @@ const GranuleResultsActions = ({
       onClick={() => onAddProjectCollection(focusedCollectionId)}
       variant="link"
       bootstrapVariant="link"
-      icon="plus-circle"
+      icon="FaPlusCircle"
       label="Add collection to the current project"
       title="Add collection to the current project"
     >
@@ -64,7 +65,7 @@ const GranuleResultsActions = ({
       onClick={() => onRemoveCollectionFromProject(focusedCollectionId)}
       variant="link"
       bootstrapVariant="link"
-      icon="times-circle"
+      icon="FaTimesCircle"
       label="Remove collection from the current project"
       title="Remove collection from the current project"
     >
@@ -147,7 +148,7 @@ const GranuleResultsActions = ({
                           search: location.search
                         }}
                       >
-                        <i className="fa fa-folder granule-results-actions__project-pill-icon" />
+                        <EDSCIcon library="fa" icon="FaFolder" className="granule-results-actions__project-pill-icon" />
                         {
                           (!addedGranuleIds.length && !removedGranuleIds.length) && <span title="All granules in project">All Granules</span>
                         }

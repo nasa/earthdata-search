@@ -15,6 +15,7 @@ import { locationPropType } from '../../util/propTypes/location'
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './SecondaryToolbar.scss'
 
@@ -126,7 +127,7 @@ class SecondaryToolbar extends Component {
         <Button
           className="secondary-toolbar__back"
           bootstrapVariant="light"
-          icon="arrow-circle-o-left"
+          icon="FaArrowCircleLeft"
           label="Back to Search"
         >
           Back to Search
@@ -176,7 +177,7 @@ class SecondaryToolbar extends Component {
         className="secondary-toolbar__login"
         bootstrapVariant="light"
         href={`${apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        icon="lock"
+        icon="FaLock"
         label="Login"
       >
         Earthdata Login
@@ -189,7 +190,7 @@ class SecondaryToolbar extends Component {
           className="secondary-toolbar__user-dropdown-toggle"
           variant="light"
         >
-          <i className="fa fa-user" />
+          <EDSCIcon library="fa" icon="FaUser" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
@@ -253,7 +254,7 @@ class SecondaryToolbar extends Component {
           variant="light"
           onClick={this.onToggleProjectDropdown}
         >
-          <i className="fa fa-floppy-o" />
+          <EDSCIcon library="fa" icon="FaFloppy" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Form inline className="flex-nowrap">

@@ -4,6 +4,7 @@ import { Collapse } from 'react-bootstrap'
 import $ from 'jquery'
 
 import scrollParent from '../../util/scrollParent'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollapsePanel.scss'
 
@@ -48,7 +49,7 @@ export class CollapsePanel extends Component {
     const buttonClassNames = `collapse-panel__button ${buttonClassName}`
     const panelClassNames = `collapse-panel__panel ${panelClassName}`
 
-    const icon = <i className={`fa fa-chevron-${open ? 'up' : 'down'}`} />
+    const icon = <EDSCIcon library="fa" icon={`FaChevronCircle${open ? 'Up' : 'Down'}`} />
 
     return (
       <div className={classNames}>

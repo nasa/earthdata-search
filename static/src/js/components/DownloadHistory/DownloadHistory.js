@@ -105,7 +105,7 @@ export class DownloadHistory extends Component {
                               onClick={() => this.onHandleRemove(id)}
                               variant="link"
                               bootstrapVariant="link"
-                              icon="times-circle"
+                              icon="FaTimesCircle"
                               label="Delete Download"
                             />
                           </td>

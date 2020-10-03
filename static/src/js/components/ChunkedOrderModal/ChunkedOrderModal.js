@@ -54,7 +54,7 @@ export class ChunkedOrderModal extends Component {
         className="chunked-order-modal__action chunked-order-modal__action--secondary"
         bootstrapVariant="primary"
         type="button"
-        icon="arrow-circle-o-left"
+        icon="FaArrowCircleLeft"
         label="Refine your search"
         onClick={() => onToggleChunkedOrderModal(false)}
         to={{

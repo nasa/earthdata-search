@@ -92,7 +92,7 @@ export class PanelItem extends Component {
       backButton = (
         <Button
           className="panel-item__back-button"
-          icon="chevron-left"
+          icon="FaChevronLeft"
           label={backButtonText}
           onClick={() => {
             onChangePanel(location)

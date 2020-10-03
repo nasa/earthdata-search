@@ -94,14 +94,14 @@ class GranuleImage extends Component {
           isOpen ? (
             <Button
               className="granule-image__button granule-image__button--close"
-              icon="times"
+              icon="FaTimes"
               onClick={this.handleToggleImage}
               label="Close browse image"
             />
           ) : (
             <Button
               className="granule-image__button granule-image__button--open"
-              icon="plus"
+              icon="FaPlus"
               onClick={this.handleToggleImage}
               label="Open browse image"
             />

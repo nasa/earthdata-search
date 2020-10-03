@@ -5,6 +5,7 @@ import './ContactInfo.scss'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 /**
  * Renders the Contact Info form
@@ -102,7 +103,7 @@ class ContactInfo extends Component {
           >
             Edit Profile in Earthdata Login
             {' '}
-            <i className="fa fa-arrow-circle-right" />
+            <EDSCIcon library="fa" icon="FaArrowCircleRight" />
           </Button>
         </p>
 

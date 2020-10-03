@@ -4,6 +4,8 @@ import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
 import { Table } from 'react-bootstrap'
 
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsList.scss'
 
@@ -73,12 +75,12 @@ export const AdminRetrievalsList = ({
               User
               {
                 sortKey === '+username' && (
-                  <i className="fa fa-caret-up admin-retrievals-list__sortable-icon" />
+                  <EDSCIcon library="fa" icon="FaCaretUp" className="admin-retrievals-list__sortable-icon" />
                 )
               }
               {
                 sortKey === '-username' && (
-                  <i className="fa fa-caret-down admin-retrievals-list__sortable-icon" />
+                  <EDSCIcon library="fa" icon="FaCaretDown" className="admin-retrievals-list__sortable-icon" />
                 )
               }
             </th>
@@ -90,12 +92,12 @@ export const AdminRetrievalsList = ({
               Created
               {
                 sortKey === '+created_at' && (
-                  <i className="fa fa-caret-up admin-retrievals-list__sortable-icon" />
+                  <EDSCIcon library="fa" icon="FaCaretUp" className="admin-retrievals-list__sortable-icon" />
                 )
               }
               {
                 sortKey === '-created_at' && (
-                  <i className="fa fa-caret-down admin-retrievals-list__sortable-icon" />
+                  <EDSCIcon library="fa" icon="FaCaretDown" className="admin-retrievals-list__sortable-icon" />
                 )
               }
             </th>

@@ -38,7 +38,7 @@ export const SecondaryOverlayPanel = ({
           <Button
             className="secondary-overlay-panel__close-button"
             label="Close Panel"
-            icon="times"
+            icon="FaTimes"
             size="lg"
             onClick={() => onToggleSecondaryOverlayPanel(false)}
           />

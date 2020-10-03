@@ -810,7 +810,7 @@ class SpatialDisplay extends Component {
       items.push((
         <FilterStackItem
           key="item__spatial"
-          icon="crop"
+          icon="FaCrop"
           title="Spatial"
           secondaryTitle={secondaryTitle}
           error={drawingNewLayer ? '' : spatialError}

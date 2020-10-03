@@ -333,7 +333,7 @@ class SearchForm extends Component {
             className="search-form__button search-form__button--clear"
             label="Clear search"
             onClick={this.onSearchClear}
-            icon="eraser"
+            icon="FaEraser"
           />
           {
             showFilterStackToggle && (
@@ -347,7 +347,7 @@ class SearchForm extends Component {
                         onClick={this.onToggleFilterStack}
                         title="Close filter stack"
                         label="Close filter stack"
-                        icon="chevron-up"
+                        icon="FaChevronUp"
                       />
                     )
                     : (
@@ -357,7 +357,7 @@ class SearchForm extends Component {
                         onClick={this.onToggleFilterStack}
                         title="Open filter stack"
                         label="Open filter stack"
-                        icon="bars"
+                        icon="FaBars"
                       />
                     )
                 }
@@ -375,7 +375,7 @@ class SearchForm extends Component {
                 className="search-form__button search-form__button--dark search-form__button--advanced-search"
                 label="Advanced search"
                 onClick={this.onToggleAdvancedSearch}
-                icon="sliders"
+                icon="FaSlidersH"
               />
             </PortalFeatureContainer>
           </div>

@@ -65,7 +65,7 @@ export class RegionSearch extends Component {
             <Button
               className="region-search-results__back-button"
               variant="naked"
-              icon="chevron-left"
+              icon="FaChevronLeft"
               label="Back to Region Search"
               onClick={() => {
                 setModalOverlay(null)

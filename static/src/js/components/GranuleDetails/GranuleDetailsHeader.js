@@ -6,6 +6,7 @@ import { granuleTitle } from './skeleton'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
 import { locationPropType } from '../../util/propTypes/location'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleDetailsHeader.scss'
 
@@ -37,7 +38,7 @@ const GranuleDetailsHeader = ({ granuleMetadata, location }) => {
                           search: location.search
                         }}
                       >
-                        <i className="fa fa-map" />
+                        <EDSCIcon library="fa" icon="FaMap" />
                         {' View Granules'}
                       </PortalLinkContainer>
                     </>

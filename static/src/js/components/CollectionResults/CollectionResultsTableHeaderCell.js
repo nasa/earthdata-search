@@ -41,7 +41,7 @@ const CollectionResultsTableHeaderCell = (props) => {
       <div className="collection-results-table__collection-actions">
         <Button
           className="collection-results-table__collection-action collection-results-table__collection-action--info"
-          icon="info-circle"
+          icon="FaInfoCircle"
           variant="naked"
           label="View collection details"
           title="View collection details"
@@ -57,7 +57,7 @@ const CollectionResultsTableHeaderCell = (props) => {
                 ? (
                   <Button
                     className="collection-results-table__collection-action collection-results-table__collection-action--add"
-                    icon="plus"
+                    icon="FaPlus"
                     variant="naked"
                     label="Add collection to the current project"
                     title="Add collection to the current project"
@@ -69,7 +69,7 @@ const CollectionResultsTableHeaderCell = (props) => {
                 ) : (
                   <Button
                     className="collection-results-table__collection-action collection-results-table__collection-action--remove"
-                    icon="minus"
+                    icon="FaMinus"
                     variant="naked"
                     label="Remove collection from the current project"
                     title="Remove collection from the current project"

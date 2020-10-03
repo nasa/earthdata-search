@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import SanitizedHTML from 'react-sanitized-html'
 
-
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import CollapsePanel from '../../CollapsePanel/CollapsePanel'
 import DataQualitySummary from '../DataQualitySummary'
 
@@ -50,7 +50,7 @@ describe('DataQualitySummary component', () => {
     })
 
     expect(enzymeWrapper.find(CollapsePanel).length).toEqual(1)
-    expect(enzymeWrapper.find(CollapsePanel).prop('header').props.children[0].type).toEqual('i')
+    expect(enzymeWrapper.find(CollapsePanel).prop('header').props.children[0].type).toEqual(EDSCIcon)
     expect(enzymeWrapper.find(CollapsePanel).prop('header').props.children[1]).toEqual(' Important data quality information')
     expect(enzymeWrapper.find(CollapsePanel).html()).toContain('<div>I am a summary</div>')
   })

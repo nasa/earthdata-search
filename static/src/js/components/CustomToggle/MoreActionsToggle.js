@@ -26,7 +26,7 @@ export class ToggleMoreActions extends Component {
         className={moreActionsToggleClassNames}
         onClick={onClick}
         title="More actions"
-        icon="ellipsis-v"
+        icon="FaEllipsisV"
       />
     )
   }
