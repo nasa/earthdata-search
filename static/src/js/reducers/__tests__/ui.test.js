@@ -9,7 +9,8 @@ import {
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_TOO_MANY_POINTS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
-  TOGGLE_SPATIAL_POLYGON_WARNING
+  TOGGLE_SPATIAL_POLYGON_WARNING,
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -52,6 +53,9 @@ const initialState = {
   },
   spatialPolygonWarning: {
     isDisplayed: false
+  },
+  keyboardShortcutsModal: {
+    isOpen: false
   }
 }
 
@@ -217,6 +221,22 @@ describe('TOGGLE_SPATIAL_POLYGON_WARNING', () => {
     const expectedState = {
       ...initialState,
       spatialPolygonWarning: { isDisplayed: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_KEYBOARD_SHORTCUTS_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      keyboardShortcutsModal: { isOpen: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
