@@ -9,7 +9,8 @@ import {
   TOGGLE_TOO_MANY_POINTS_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
-  TOGGLE_SPATIAL_POLYGON_WARNING
+  TOGGLE_SPATIAL_POLYGON_WARNING,
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -49,6 +50,9 @@ const initialState = {
   },
   spatialPolygonWarning: {
     isDisplayed: false
+  },
+  keyboardShortcutsModal: {
+    isOpen: false
   }
 }
 
@@ -141,6 +145,14 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         spatialPolygonWarning: {
           isDisplayed: action.payload
+        }
+      }
+    }
+    case TOGGLE_KEYBOARD_SHORTCUTS_MODAL: {
+      return {
+        ...state,
+        keyboardShortcutsModal: {
+          isOpen: action.payload
         }
       }
     }

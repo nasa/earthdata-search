@@ -3,6 +3,7 @@ import {
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
@@ -64,5 +65,10 @@ export const toggleAboutCwicModal = state => ({
 
 export const toggleSpatialPolygonWarning = state => ({
   type: TOGGLE_SPATIAL_POLYGON_WARNING,
+  payload: state
+})
+
+export const toggleKeyboardShortcutsModal = state => ({
+  type: TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   payload: state
 })

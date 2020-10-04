@@ -8,7 +8,8 @@ import {
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
   toggleShapefileUploadModal,
-  toggleTooManyPointsModal
+  toggleTooManyPointsModal,
+  toggleKeyboardShortcutsModal
 } from '../ui'
 
 import {
@@ -18,7 +19,8 @@ import {
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_TOO_MANY_POINTS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -169,6 +171,27 @@ describe('tooManyPointModal', () => {
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: TOGGLE_TOO_MANY_POINTS_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('toggleKeyboardShortcutsModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        keyboardShortcutsModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleKeyboardShortcutsModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
       payload: true
     })
   })
