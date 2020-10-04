@@ -1,6 +1,13 @@
 import React, { Suspense } from 'react'
 import PropTypes from 'prop-types'
 
+/**
+ * Renders an icon per requested library and icon name.
+ * @param {String} [className]
+ * @param {String} [library='fa'] The library to target
+ * @param {String} icon The full icon name as it exists within the loaded library
+ * @param {ReactNodeLike} [children]
+ */
 export const EDSCIcon = ({
   className,
   library,
@@ -9,7 +16,7 @@ export const EDSCIcon = ({
 }) => {
   let IconLoader
 
-  switch (library) {
+  switch (library) { // Lazy load the requested library
     case 'fa':
     default:
       IconLoader = React.lazy(() => import('./FaLoader'))
