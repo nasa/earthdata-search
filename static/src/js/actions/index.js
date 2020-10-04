@@ -83,7 +83,8 @@ import {
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
   toggleSpatialPolygonWarning,
-  toggleTooManyPointsModal
+  toggleTooManyPointsModal,
+  toggleKeyboardShortcutsModal
 } from './ui'
 import {
   applyViewAllFacets,
@@ -256,6 +257,7 @@ const actions = {
   toggleCollectionVisibility,
   toggleDrawingNewLayer,
   toggleFacetsModal,
+  toggleKeyboardShortcutsModal,
   toggleOverrideTemporalModal,
   togglePanels,
   toggleRelatedUrlsModal,
