@@ -45,7 +45,7 @@ Earthdata Search runs on Node.js, in order to run the application you'll need to
 	brew install node
 
 ##### NPM
-npm is a separate project from Node.js, and tends to update more frequently. As a result, even if you’ve just downloaded Node.js (and therefore npm), you’ll probably need to update your npm. Luckily, npm knows how to update itself! To update your npm, type this into your terminal:
+npm is a different project from Node.js, and tends to update more frequently. As a result, even if you’ve just downloaded Node.js (and therefore npm), you’ll probably need to update your npm. Luckily, npm knows how to update itself! To update your npm, type this into your terminal:
 
     npm install -g npm@latest
 
