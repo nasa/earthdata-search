@@ -8,6 +8,8 @@ import { VariableSizeList as List } from 'react-window'
 import CollectionResultsList from '../CollectionResultsList'
 import CollectionResultsItem from '../CollectionResultsItem'
 
+import Skeleton from '../../Skeleton/Skeleton'
+
 import configureStore from '../../../store/configureStore'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -92,7 +94,7 @@ describe('CollectionResultsList component', () => {
       })
 
       expect(enzymeWrapper.find('.collection-results-list__list').children().length).toEqual(1)
-      expect(enzymeWrapper.find('.collection-results-list__list').text()).toEqual('Loading collections...')
+      expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
     })
 
     test('shows when additional items are being loaded', () => {
@@ -110,7 +112,7 @@ describe('CollectionResultsList component', () => {
       expect(enzymeWrapper.find(CollectionResultsItem).length).toEqual(2)
       expect(enzymeWrapper.find('.collection-results-list__list').text()).toContain('Collection Title 1')
       expect(enzymeWrapper.find('.collection-results-list__list').text()).toContain('Collection Title 2')
-      expect(enzymeWrapper.find('.collection-results-list__list').text()).toContain('Loading collections...')
+      expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
     })
 
     test('does not show the loading item when items are loaded', () => {
@@ -126,7 +128,7 @@ describe('CollectionResultsList component', () => {
       expect(enzymeWrapper.find(CollectionResultsItem).length).toEqual(2)
       expect(enzymeWrapper.find('.collection-results-list__list').text()).toContain('Collection Title 1')
       expect(enzymeWrapper.find('.collection-results-list__list').text()).toContain('Collection Title 2')
-      expect(enzymeWrapper.find('.collection-results-list__list').text()).not.toContain('Loading collections...')
+      expect(enzymeWrapper.find(Skeleton).length).toEqual(0)
     })
   })
 })
