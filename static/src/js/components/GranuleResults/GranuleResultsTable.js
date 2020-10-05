@@ -150,13 +150,9 @@ export const GranuleResultsTable = ({
   })
 
   const onRowClick = useCallback((e, row) => {
-    const isDownloadButtonClicked = e.target.classList.contains('granule-results-data-links-button__button')
-    // We don't triger onRowClick if the click target is download granule button.
-    if (!isDownloadButtonClicked) {
-      const { original: rowOriginal } = row
-      const { handleClick } = rowOriginal
-      if (handleClick) handleClick(e, row)
-    }
+    const { original: rowOriginal } = row
+    const { handleClick } = rowOriginal
+    if (handleClick) handleClick(e, row)
   }, [])
 
   const onRowMouseEnter = useCallback((e, row) => {
