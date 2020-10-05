@@ -16,6 +16,8 @@ function setup(overrideProps) {
     rawModel: '',
     shapefileId: null,
     spatial: {},
+    temporal: {},
+    overrideTemporal: {},
     onUpdateAccessMethod: jest.fn(),
     ...overrideProps
   }
@@ -47,6 +49,38 @@ describe('EchoForm component', () => {
       BBOX_NORTH: 38.00105844675541,
       BBOX_SOUTH: 37.99999999999998,
       BBOX_WEST: -77
+    })
+  })
+
+  test('renders an EDSCEchoform with temporal prepopulated', () => {
+    const { enzymeWrapper } = setup({
+      temporal: {
+        endDate: '2020-03-05T17:49:07.369Z',
+        startDate: '2019-12-06T07:34:12.613Z'
+      }
+    })
+
+    expect(enzymeWrapper.find(EDSCEchoform).props().prepopulateValues).toEqual({
+      TEMPORAL_START: '2019-12-06T07:34:12',
+      TEMPORAL_END: '2020-03-05T17:49:07'
+    })
+  })
+
+  test('renders an EDSCEchoform with overrideTemporal prepopulated', () => {
+    const { enzymeWrapper } = setup({
+      temporal: {
+        endDate: '2020-12-31T59:59:59.999Z',
+        startDate: '1990-01-01T00:00:00.000Z'
+      },
+      overrideTemporal: {
+        endDate: '2020-03-05T17:49:07.369Z',
+        startDate: '2019-12-06T07:34:12.613Z'
+      }
+    })
+
+    expect(enzymeWrapper.find(EDSCEchoform).props().prepopulateValues).toEqual({
+      TEMPORAL_START: '2019-12-06T07:34:12',
+      TEMPORAL_END: '2020-03-05T17:49:07'
     })
   })
 

@@ -17,6 +17,8 @@ function setup() {
     metadata: {},
     shapefileId: null,
     spatial: {},
+    temporal: {},
+    overrideTemporal: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
