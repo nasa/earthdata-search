@@ -20,6 +20,7 @@ class CustomDataLinksToggle extends Component {
 
   handleClick(e) {
     e.preventDefault()
+    e.stopPropagation()
     const { onClick } = this.props
     onClick(e)
   }
@@ -28,7 +29,7 @@ class CustomDataLinksToggle extends Component {
     return (
       <Button
         className="button granule-results-data-links-button__button"
-        type="button"
+        type="button"clear
         label="Download single granule data"
         onClick={this.handleClick}
       >
