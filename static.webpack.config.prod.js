@@ -99,10 +99,7 @@ const Config = merge.smartStrategy({
   plugins: [
     ...defaultPlugins,
     ...(debug ? debugPlugins : [])
-  ],
-  externals: {
-    'config': require('./static/src/js/components/KeyboardShortcutsModal/config.json')
-  }
+  ]
 })
 
 module.exports = Config
