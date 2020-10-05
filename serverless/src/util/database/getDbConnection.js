@@ -1,6 +1,7 @@
 import 'pg'
 import knex from 'knex'
-import { getDbConnectionConfig } from '../database'
+
+import { getDbConnectionConfig } from './getDbConnectionConfig'
 
 // Initalize a variable to be set once
 let dbConnection

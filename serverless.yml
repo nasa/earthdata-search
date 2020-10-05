@@ -2,7 +2,7 @@ service: earthdata-search
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
   versionFunctions: false
   stage: ${opt:stage, 'lab'}
   region: us-east-1

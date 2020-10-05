@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import { doSearchRequest } from '../doSearchRequest'
-import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+import * as getEdlConfig from '../../getEdlConfig'
 import * as getAccessTokenFromJwtToken from '../../urs/getAccessTokenFromJwtToken'
 
 describe('util#doSearchRequest', () => {
@@ -39,7 +39,11 @@ describe('util#doSearchRequest', () => {
     }
 
     jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => token)
-    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
+    jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+      client: {
+        id: 'clientId'
+      }
+    }))
 
     const jwtToken = '123.456.789'
     const url = 'http://example.com/search/path?param1=123&param2=abc&param3%5B%5D=987'

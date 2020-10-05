@@ -27,7 +27,9 @@ const graphQl = async (event, context) => {
   const jwtToken = getJwtToken(event)
 
   const echoToken = await getEchoToken(jwtToken)
+
   const { graphQlHost } = getEarthdataConfig(cmrEnv())
+
   const graphQlUrl = `${graphQlHost}/api`
 
   try {
@@ -44,7 +46,11 @@ const graphQl = async (event, context) => {
       }
     })
 
-    const { data: responseData, headers: responseHeaders, status } = response
+    const {
+      data: responseData,
+      headers: responseHeaders,
+      status
+    } = response
 
     return {
       isBase64Encoded: false,

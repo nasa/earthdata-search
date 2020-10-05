@@ -12,6 +12,15 @@ let dbTracker
 
 const OLD_ENV = process.env
 
+const sqsSendMessagePromise = jest.fn().mockReturnValue({
+  promise: jest.fn().mockResolvedValue()
+})
+
+AWS.SQS = jest.fn()
+  .mockImplementationOnce(() => ({
+    sendMessageBatch: sqsSendMessagePromise
+  }))
+
 beforeEach(() => {
   jest.clearAllMocks()
 
@@ -142,15 +151,6 @@ describe('submitRetrieval', () => {
         page_num: 1,
         page_size: 2000
       }])
-
-    const sqsSendMessagePromise = jest.fn().mockReturnValue({
-      promise: jest.fn().mockResolvedValue()
-    })
-
-    AWS.SQS = jest.fn()
-      .mockImplementationOnce(() => ({
-        sendMessageBatch: sqsSendMessagePromise
-      }))
 
     const orderResponse = await submitRetrieval(echoOrderPayload, {})
 

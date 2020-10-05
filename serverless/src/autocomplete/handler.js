@@ -5,7 +5,7 @@ import { Client } from '@googlemaps/google-maps-services-js'
 import { buildParams } from '../util/cmr/buildParams'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
-import { getGoogleMapsApiKey } from '../util/google/maps'
+import { getGoogleMapsApiKey } from '../util/google/getGoogleMapsApiKey'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -70,7 +70,7 @@ const nominatimGeocode = async (query) => {
   // Nominatim terms require that we provide a referrer
   const { edscHost } = getEnvironmentConfig()
 
-  const { geocodingIncludePolygons = 'false' } = process.env
+  const { geocodingIncludePolygons } = process.env
 
   // Default query parameters
   const queryParams = {

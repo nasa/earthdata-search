@@ -4,7 +4,8 @@ import simpleOAuth2 from 'simple-oauth2'
 import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
 import { getDbConnection } from '../database/getDbConnection'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
-import { getEdlConfig } from '../configUtil'
+import { getEdlConfig } from '../getEdlConfig'
+import { parseError } from '../../../../sharedUtils/parseError'
 
 /**
  * Validates a users EDL token, attempts to refresh the token if needed
@@ -36,6 +37,7 @@ export const validateToken = async (jwtToken) => {
         username
       } = decodedJwtToken
 
+
       // Retrieve the authenticated users' access tokens from the database
       const existingUserTokens = await dbConnection('user_tokens')
         .select([
@@ -61,11 +63,13 @@ export const validateToken = async (jwtToken) => {
       } = mostRecentToken
 
       const oauth2 = simpleOAuth2.create(edlConfig)
+
       const oauthToken = oauth2.accessToken.create({
         access_token: accessToken,
         refresh_token: refreshToken,
         expires_at: expiresAt
       })
+
 
       if (oauthToken.expired()) {
         try {
@@ -102,8 +106,8 @@ export const validateToken = async (jwtToken) => {
       // If successful, return the username associated with the token
       return username
     })
-  } catch (err) {
-    console.log('Authorizer error. Invalid token', err)
+  } catch (e) {
+    parseError(e)
 
     return false
   }

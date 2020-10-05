@@ -1,9 +1,11 @@
 import request from 'promise-request-retry'
+
 import { stringify } from 'qs'
-import { readCmrResults } from './readCmrResults'
-import { getEarthdataConfig } from '../../../../sharedUtils/config'
+
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import { getClientId } from '../../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../../sharedUtils/config'
+import { readCmrResults } from './readCmrResults'
 
 /**
  * Returns tags for a collection based on a single granule sample
@@ -38,7 +40,7 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     retry: 4
   })
 
-  const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)
+  const responseBody = readCmrResults('search/granules.json', cmrResponse)
 
   return responseBody[0]
 }

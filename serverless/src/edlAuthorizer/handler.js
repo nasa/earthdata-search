@@ -8,7 +8,7 @@ import { validateToken } from '../util/authorizer/validateToken'
  */
 const edlAuthorizer = async (event) => {
   const {
-    authorizationToken,
+    authorizationToken = '',
     methodArn
   } = event
 

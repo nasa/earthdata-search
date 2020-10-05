@@ -97,7 +97,7 @@ describe('regionSearch', () => {
     }))
   })
 
-  test('returns error when failure is received', async () => {
+  test('returns error when a warning is received', async () => {
     nock(/region/)
       .get(/huc/)
       .reply(200, {
@@ -120,6 +120,87 @@ describe('regionSearch', () => {
     expect(statusCode).toBe(413)
     expect(body).toBe(JSON.stringify({
       errors: ['Your query has returned 16575 results (> 100). If you\'re searching a specific HUC, use the parameter \'exact=True\'.Otherwise, refine your search to return less results, or head here: https://water.usgs.gov/GIS/huc.html to download mass HUC data.']
+    }))
+  })
+
+  test('returns error when a failure is received', async () => {
+    nock(/region/)
+      .get(/huc/)
+      .reply(500)
+
+    const regionResponse = await regionSearch({
+      queryStringParameters: {
+        endpoint: 'hucs',
+        exact: false,
+        query: '10'
+      }
+    })
+
+    const {
+      body,
+      statusCode
+    } = regionResponse
+
+    expect(statusCode).toBe(500)
+    expect(body).toBe(JSON.stringify({
+      errors: ['An unknown error has occurred']
+    }))
+  })
+
+  test('returns error when a ESOCKETTIMEDOUT is received', async () => {
+    nock(/region/)
+      .get(/huc/)
+      .replyWithError('ESOCKETTIMEDOUT')
+
+    const regionResponse = await regionSearch({
+      queryStringParameters: {
+        endpoint: 'hucs',
+        exact: false,
+        query: '10'
+      }
+    })
+
+    const {
+      body,
+      statusCode
+    } = regionResponse
+
+    expect(statusCode).toBe(504)
+    expect(body).toBe(JSON.stringify({
+      errors: ['Request to external service timed out after 20000 ms']
+    }))
+  })
+
+  test('returns region results when they exist', async () => {
+    nock(/region/)
+      .get(/regions/)
+      .reply(200, {
+        status: '200 OK',
+        hits: 0,
+        time: '5.128 ms.',
+        'search on': {
+          parameter: 'region',
+          exact: true
+        },
+        errorMessage: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam.'
+      })
+
+    const regionResponse = await regionSearch({
+      queryStringParameters: {
+        endpoint: 'regions',
+        exact: true,
+        query: 'California Region'
+      }
+    })
+
+    const {
+      body,
+      statusCode
+    } = regionResponse
+
+    expect(statusCode).toBe(500)
+    expect(body).toBe(JSON.stringify({
+      errors: ['Cras justo odio, dapibus ac facilisis in, egestas eget quam.']
     }))
   })
 })

@@ -1,12 +1,19 @@
 import nock from 'nock'
 
-import { getOptionDefinitions } from '../getOptionDefinitions'
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
+import * as getEdlConfig from '../../util/getEdlConfig'
+
+import { getOptionDefinitions } from '../getOptionDefinitions'
 
 beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
+  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+    client: {
+      id: 'clientId'
+    }
+  }))
 })
 
 describe('getOptionDefinitions', () => {

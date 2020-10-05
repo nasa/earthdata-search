@@ -1,6 +1,8 @@
 import pgMigrate from 'node-pg-migrate'
+
 import { Client } from 'pg'
-import { getDbConnectionConfig } from '../util/database'
+
+import { getDbConnectionConfig } from '../util/database/getDbConnectionConfig'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -12,12 +14,13 @@ const migrateDatabase = async (event) => {
     const dbConnectionConfig = await getDbConnectionConfig()
 
     const dbClient = new Client(dbConnectionConfig)
-
     await dbClient.connect()
+
+    const { direction = 'up' } = event
 
     const config = {
       dbClient,
-      direction: event.direction || 'up',
+      direction,
       dir: 'migrations',
       migrationsTable: 'pgmigrations'
     }

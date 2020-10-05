@@ -1,4 +1,4 @@
-import { getEdlConfig } from '../util/configUtil'
+import { getEdlConfig } from '../util/getEdlConfig'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
@@ -8,9 +8,8 @@ import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/c
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const edlLogin = async (event) => {
-  const params = event.queryStringParameters
-
-  const { state } = params
+  const { queryStringParameters } = event
+  const { state } = queryStringParameters
 
   // The client id is part of our Earthdata Login credentials
   const edlConfig = await getEdlConfig()

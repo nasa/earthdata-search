@@ -6,7 +6,7 @@ import { cmrUrl } from '../util/cmr/cmrUrl'
 import { getBoundingBox } from '../util/echoForms/getBoundingBox'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getEdlConfig } from '../util/configUtil'
+import { getEdlConfig } from '../util/getEdlConfig'
 import { getEmail } from '../util/echoForms/getEmail'
 import { getEnvironmentConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getNameValuePairsForProjections } from '../util/echoForms/getNameValuePairsForProjections'
@@ -99,7 +99,7 @@ const submitCatalogRestOrder = async (event, context) => {
       resolveWithFullResponse: true
     })
 
-    const granuleResponseBody = readCmrResults('search/granules', granuleResponse)
+    const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
 
     const { edscHost } = getEnvironmentConfig()
 

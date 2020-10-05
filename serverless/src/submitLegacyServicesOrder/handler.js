@@ -7,7 +7,7 @@ import { constructUserInformationPayload } from './constructUserInformationPaylo
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { getEdlConfig } from '../util/configUtil'
+import { getEdlConfig } from '../util/getEdlConfig'
 import { parseError } from '../../../sharedUtils/parseError'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 

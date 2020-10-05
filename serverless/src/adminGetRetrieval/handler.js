@@ -9,7 +9,7 @@ import { parseError } from '../../../sharedUtils/parseError'
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
-export default async function adminGetRetrievals(event, context) {
+const adminGetRetrieval = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
@@ -123,3 +123,5 @@ export default async function adminGetRetrievals(event, context) {
     }
   }
 }
+
+export default adminGetRetrieval
