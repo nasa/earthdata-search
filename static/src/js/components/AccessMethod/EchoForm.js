@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
+import moment from 'moment'
 
 import { mbr } from '../../util/map/mbr'
 
@@ -13,6 +14,8 @@ export const EchoForm = ({
   rawModel,
   shapefileId,
   spatial,
+  temporal,
+  overrideTemporal,
   onUpdateAccessMethod
 }) => {
   const updateAccessMethod = (data) => {
@@ -38,6 +41,7 @@ export const EchoForm = ({
     updateAccessMethod({ isValid: valid })
   }
 
+  // Get the MBR of the spatial for prepopulated values
   const getMbr = (spatial) => {
     const {
       boundingBox = [],
@@ -69,7 +73,45 @@ export const EchoForm = ({
     }
   }
 
-  const spatialMbr = getMbr(spatial)
+  // Format dates in correct format for Echoforms
+  const formatDate = date => moment.utc(date).format('YYYY-MM-DDTHH:mm:ss')
+
+  // Get the temporal prepopulated values
+  const getTemporalPrepopulateValues = (temporal, overrideTemporal) => {
+    const {
+      endDate: overrideEndDate,
+      startDate: overrideStartDate
+    } = overrideTemporal
+
+    const {
+      endDate,
+      startDate
+    } = temporal
+
+    if (overrideEndDate || overrideStartDate) {
+      return {
+        TEMPORAL_START: formatDate(overrideStartDate),
+        TEMPORAL_END: formatDate(overrideEndDate)
+      }
+    }
+
+    if (endDate || startDate) {
+      return {
+        TEMPORAL_START: formatDate(startDate),
+        TEMPORAL_END: formatDate(endDate)
+      }
+    }
+
+    return {}
+  }
+
+  const spatialPrepopulateValues = getMbr(spatial)
+  const temporalPrepopulateValues = getTemporalPrepopulateValues(temporal, overrideTemporal)
+
+  const prepopulateValues = {
+    ...spatialPrepopulateValues,
+    ...temporalPrepopulateValues
+  }
 
   // EDSCEchoforms doesn't care about the shapefileId, just is there a shapefileId or not
   const hasShapefile = !!(shapefileId)
@@ -81,7 +123,7 @@ export const EchoForm = ({
         defaultRawModel={rawModel}
         form={form}
         hasShapefile={hasShapefile}
-        prepopulateValues={spatialMbr}
+        prepopulateValues={prepopulateValues}
         onFormModelUpdated={onFormModelUpdated}
         onFormIsValidUpdated={onFormIsValidUpdated}
       />
@@ -101,6 +143,8 @@ EchoForm.propTypes = {
   rawModel: PropTypes.string,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
+  temporal: PropTypes.shape({}).isRequired,
+  overrideTemporal: PropTypes.shape({}).isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired
 }
 
