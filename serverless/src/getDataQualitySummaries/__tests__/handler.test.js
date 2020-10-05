@@ -2,15 +2,17 @@ import nock from 'nock'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
+import * as getEchoToken from '../../util/urs/getEchoToken'
 import getDataQualitySummaries from '../handler'
 
 beforeEach(() => {
   jest.clearAllMocks()
 
-  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
   jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ token: { access_token: 'access_token' } }))
-  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
   jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ echoRestRoot: 'http://echorest.example.com' }))
+  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
+  jest.spyOn(getEchoToken, 'getEchoToken').mockImplementation(() => 'accesstoken-client')
+  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
 })
 
 describe('getDataQualitySummaries', () => {

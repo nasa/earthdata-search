@@ -18,7 +18,9 @@ const generateGibsTags = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  sqs = new AWS.SQS(getSqsConfig())
+  if (sqs == null) {
+    sqs = new AWS.SQS(getSqsConfig())
+  }
 
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()

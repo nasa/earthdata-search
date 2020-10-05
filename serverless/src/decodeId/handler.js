@@ -1,6 +1,14 @@
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
-const decodeId = async (event) => {
+
+/**
+ * Decodes an obfuscated id
+ * @param {Object} event Details about the HTTP request that it received
+ */
+const decodeId = (event) => {
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   const { queryStringParameters } = event
   const {
     obfuscated_id: obfuscatedId,
@@ -10,6 +18,7 @@ const decodeId = async (event) => {
   return {
     isBase64Encoded: false,
     statusCode: 200,
+    headers: defaultResponseHeaders,
     body: JSON.stringify({
       id: deobfuscateId(obfuscatedId, spin)
     })

@@ -32,7 +32,7 @@ export const constructOrderPayload = async ({
     resolveWithFullResponse: true
   })
 
-  const granuleResponseBody = readCmrResults('search/granules', granuleResponse)
+  const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
 
   const granuleIds = granuleResponseBody.map(granuleMetadata => granuleMetadata.id).join(',')
 

@@ -1,16 +1,21 @@
 import nock from 'nock'
 
-import getProviders from '../handler'
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getEdlConfig from '../../util/getEdlConfig'
 import * as getJwtToken from '../../util/getJwtToken'
 
+import getProviders from '../handler'
 
 beforeEach(() => {
   jest.clearAllMocks()
 
+  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+    client: {
+      id: 'clientId'
+    }
+  }))
+
   jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
-  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
 })
 

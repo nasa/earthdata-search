@@ -1,11 +1,15 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 import nock from 'nock'
+
+import * as createLimitedShapefile from '../../util/createLimitedShapefile'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getEdlConfig from '../../util/getEdlConfig'
 import * as startOrderStatusUpdateWorkflow from '../../util/startOrderStatusUpdateWorkflow'
-import * as createLimitedShapefile from '../../util/createLimitedShapefile'
+
 import { mockHarmonyOrder } from './mocks'
+
 import submitHarmonyOrder from '../handler'
 
 let dbTracker
@@ -16,6 +20,12 @@ beforeEach(() => {
   jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
     clientId: 'clientId',
     secret: 'jwt-secret'
+  }))
+
+  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+    client: {
+      id: 'clientId'
+    }
   }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {

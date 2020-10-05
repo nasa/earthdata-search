@@ -1,16 +1,25 @@
 import request from 'request-promise'
-import { getEchoPreferencesData } from '../getEchoPreferencesData'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
+
 import * as getClientId from '../../../../sharedUtils/getClientId'
+import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getEdlConfig from '../../util/getEdlConfig'
+
+import { getEchoPreferencesData } from '../getEchoPreferencesData'
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+    client: {
+      id: 'clientId'
+    }
+  }))
+
+  jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ echoRestRoot: 'http://echorest.example.com' }))
 })
 
 describe('getEchoPreferencesData', () => {
   test('correctly requests a users data from urs', async () => {
-    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ echoRestRoot: 'http://echorest.example.com' }))
     jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ lambda: 'eed-edsc-test-serverless-lambda' }))
 
     const ursGetMock = jest.spyOn(request, 'get')
@@ -31,9 +40,6 @@ describe('getEchoPreferencesData', () => {
   })
 
   test('correctly returns the users data', async () => {
-    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://echorest.example.com' }))
-
     jest.spyOn(request, 'get')
       .mockImplementationOnce(() => ({
         body: {

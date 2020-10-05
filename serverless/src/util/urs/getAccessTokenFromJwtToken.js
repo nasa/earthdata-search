@@ -2,7 +2,7 @@ import { getDbConnection } from '../database/getDbConnection'
 import { getVerifiedJwtToken } from '../getVerifiedJwtToken'
 
 /**
- * Returns the decrypted urs system credentials from Secrets Manager
+ * Returns the stored access tokens for the user belonging to the jwt token
  */
 export const getAccessTokenFromJwtToken = async (jwtToken) => {
   // Retrieve a connection to the database

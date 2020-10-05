@@ -34,7 +34,7 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
     resolveWithFullResponse: true
   })
 
-  const granuleResponseBody = readCmrResults('search/granules', granuleResponse)
+  const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
 
   console.log(`Asking ECHO Rest for order information pertaining to ${JSON.stringify(granuleResponseBody.map(granule => granule.id), null, 4)}`)
 

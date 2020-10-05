@@ -20,8 +20,10 @@ export const readCmrResults = (providedPath, cmrResponse) => {
   // than other concepts as does umm_json
   if (
     (extension && !extension.includes('umm_json'))
-    || path.includes('collections')
-    || path.includes('granules')) {
+    && (
+      path.includes('collections')
+      || path.includes('granules')
+    )) {
     const { feed } = body
     const { entry } = feed
 

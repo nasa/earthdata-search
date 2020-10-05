@@ -12,8 +12,11 @@ const edlOptionalAuthorizer = async (event) => {
     methodArn,
     requestContext = {}
   } = event
+
+  const { Authorization: authorizationToken = '' } = headers
+
+  // resourcePath contains the path assigned to the lambda being requested
   const { resourcePath } = requestContext
-  const { Authorization: authorizationToken } = headers
 
   // authorizationToken comes in as `Bearer: asdf.qwer.hjkl` but we only need the actual token
   const tokenParts = authorizationToken.split(' ')

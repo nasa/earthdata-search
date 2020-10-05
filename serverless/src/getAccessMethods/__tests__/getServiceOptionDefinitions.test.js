@@ -1,14 +1,21 @@
 import nock from 'nock'
 
-import { getServiceOptionDefinitions } from '../getServiceOptionDefinitions'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
+import * as getEdlConfig from '../../util/getEdlConfig'
+
+import { getServiceOptionDefinitions } from '../getServiceOptionDefinitions'
 
 beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
   jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
+  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+    client: {
+      id: 'clientId'
+    }
+  }))
 })
 
 describe('getServiceOptionDefinitions', () => {

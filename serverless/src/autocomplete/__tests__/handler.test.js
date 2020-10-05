@@ -4,7 +4,7 @@ import * as googleClient from '@googlemaps/google-maps-services-js'
 
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getEchoToken from '../../util/urs/getEchoToken'
-import * as getGoogleMapsApiKey from '../../util/google/maps'
+import * as getGoogleMapsApiKey from '../../util/google/getGoogleMapsApiKey'
 import * as doSearchRequest from '../../util/cmr/doSearchRequest'
 import * as getEnvironmentConfig from '../../../../sharedUtils/config'
 

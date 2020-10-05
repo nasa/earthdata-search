@@ -1,46 +1,23 @@
 import 'array-foreach-async'
+
 import AWS from 'aws-sdk'
 import request from 'request-promise'
+
 import { stringify } from 'qs'
-import { getSingleGranule } from '../util/cmr/getSingleGranule'
-import { readCmrResults } from '../util/cmr/readCmrResults'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { getSystemToken } from '../util/urs/getSystemToken'
-import { getSqsConfig } from '../util/aws/getSqsConfig'
-import { tagName } from '../../../sharedUtils/tags'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getCollectionCapabilities } from './getCollectionCapabilities'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { getSystemToken } from '../util/urs/getSystemToken'
+import { readCmrResults } from '../util/cmr/readCmrResults'
+import { tagName } from '../../../sharedUtils/tags'
 
 // AWS SQS Adapter
 let sqs
 
 const pageSize = 300
-
-/**
- * Returns tags for a collection based on a single granule sample
- * @param {String} cmrToken The CMR token used to authenticate the request
- * @param {Object} collection Collection metadata
- */
-const collectionTags = async (cmrToken, collection) => {
-  const {
-    id
-  } = collection
-
-  const singleGranule = await getSingleGranule(cmrToken, id)
-  const {
-    cloud_cover: cloudCover = false,
-    day_night_flag: dayNightFlag,
-    online_access_flag: onlineAccessFlag = false,
-    orbit_calculated_spatial_domains: orbitCalculatedSpatialDomains = {}
-  } = singleGranule
-
-  return {
-    cloud_cover: cloudCover !== undefined,
-    day_night_flag: dayNightFlag && ['DAY', 'NIGHT', 'BOTH'].includes(dayNightFlag.toUpperCase()),
-    granule_online_access_flag: onlineAccessFlag,
-    orbit_calculated_spatial_domains: Object.keys(orbitCalculatedSpatialDomains).length > 0
-  }
-}
 
 /**
  * Handler to process subsetting information from UMM S associations on collections
@@ -84,7 +61,7 @@ const generateCollectionCapabilityTags = async (input) => {
   console.log(`CMR returned ${cmrHits} collections. Current page number is ${pageNumber}, tagging ${pageSize} collections.`)
 
   // All of the collections requested
-  const collections = readCmrResults(collectionSearchUrl, response)
+  const collections = readCmrResults('search/collections.json', response)
 
   // Filter out collections that dont have any granules
   const collectionsWithGranules = collections.filter(collection => collection.granule_count > 0)
@@ -96,16 +73,13 @@ const generateCollectionCapabilityTags = async (input) => {
 
   await collectionsWithGranules.forEachAsync(async (collection) => {
     const { id } = collection
-    try {
-      // Discovered CMR-5890, need to skip records throwing 500s
-      const tagData = await collectionTags(cmrToken, collection)
-      associationPayload.push({
-        'concept-id': id,
-        data: tagData
-      })
-    } catch (e) {
-      console.log(e)
-    }
+
+    const tagData = await getCollectionCapabilities(cmrToken, collection)
+
+    associationPayload.push({
+      'concept-id': id,
+      data: tagData
+    })
   })
 
   if (associationPayload.length > 0) {

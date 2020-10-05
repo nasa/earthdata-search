@@ -24,7 +24,7 @@ const regionSearch = async (event) => {
     })
   } catch (e) {
     const {
-      error,
+      error = {},
       message,
       response,
       statusCode: errorStatusCode
@@ -38,7 +38,8 @@ const regionSearch = async (event) => {
       if (errorStatusCode) {
         const { message } = error
 
-        errorMessage = message
+        if (message) errorMessage = message
+
         statusCode = errorStatusCode
 
         const { elapsedTime } = response
@@ -140,7 +141,6 @@ const regionSearch = async (event) => {
     }
 
     // TODO: Handle reformatting SWOT features
-
     filteredResponse.push({
       id,
       ...formattedResponseObject

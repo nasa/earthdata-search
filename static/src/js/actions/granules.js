@@ -490,6 +490,9 @@ export const getProjectGranules = () => (dispatch, getState) => {
     if (isCwic) {
       requestObject = new CwicGranuleRequest(authToken)
 
+      // Provide the correctly named collection id parameter
+      searchParams.echoCollectionId = collectionId
+
       const { polygon } = searchParams
 
       // CWIC does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle

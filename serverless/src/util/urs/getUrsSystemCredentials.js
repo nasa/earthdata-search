@@ -1,10 +1,10 @@
 import AWS from 'aws-sdk'
-import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
+
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
 import { getSecretsManagerConfig } from '../aws/getSecretsManagerConfig'
 
-const secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
-
+let secretsmanager
 let ursSystemCredentials
 
 /**
@@ -13,6 +13,10 @@ let ursSystemCredentials
  */
 export const getUrsSystemCredentials = async (providedCmrEnv) => {
   if (ursSystemCredentials == null) {
+    if (secretsmanager == null) {
+      secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
+    }
+
     // Use a variable here for easier find/replace until cmr_env is implemented
     const cmrEnvironment = (providedCmrEnv || cmrEnv())
 
