@@ -29,7 +29,7 @@ class CustomDataLinksToggle extends Component {
     return (
       <Button
         className="button granule-results-data-links-button__button"
-        type="button"clear
+        type="button"
         label="Download single granule data"
         onClick={this.handleClick}
       >
