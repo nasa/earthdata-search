@@ -31,9 +31,18 @@ export class AdvancedSearchModal extends Component {
   constructor(props) {
     super(props)
 
+    this.keyboardShortcuts = {
+      toggleAdvancedSearchInput: 'a'
+    }
+
     this.onApplyClick = this.onApplyClick.bind(this)
     this.onCancelClick = this.onCancelClick.bind(this)
     this.onModalClose = this.onModalClose.bind(this)
+    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.onWindowKeyDown)
   }
 
   onApplyClick(e) {
@@ -52,6 +61,23 @@ export class AdvancedSearchModal extends Component {
 
   onModalClose() {
     this.resetAndClose()
+  }
+
+  onWindowKeyDown(e) {
+    const { key } = e
+    const { keyboardShortcuts } = this
+
+    if (key === keyboardShortcuts.toggleAdvancedSearchInput) {
+      const {
+        onToggleAdvancedSearchModal,
+        isOpen
+      } = this.props
+
+      onToggleAdvancedSearchModal(!isOpen)
+
+      e.preventDefault()
+      e.stopPropagation()
+    }
   }
 
   resetAndClose() {

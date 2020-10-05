@@ -7,6 +7,8 @@ import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModal
 
 Enzyme.configure({ adapter: new Adapter() })
 
+const windowEventMap = {}
+
 function setup(overrideProps) {
   const props = {
     advancedSearch: {},
@@ -39,6 +41,10 @@ function setup(overrideProps) {
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  window.addEventListener = jest.fn((event, cb) => {
+    windowEventMap[event] = cb
+  })
 })
 
 describe('AdvancedSearchModal component', () => {
@@ -96,6 +102,50 @@ describe('AdvancedSearchModal component', () => {
 
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
+    })
+  })
+
+  describe('onWindowKeydown', () => {
+    describe('when the "a" key is pressed', () => {
+      test('opens the modal when it is closed', () => {
+        const preventDefaultMock = jest.fn()
+        const stopPropagationMock = jest.fn()
+
+        const { props } = setup({
+          isOpen: false
+        })
+
+        windowEventMap.keydown({
+          key: 'a',
+          preventDefault: preventDefaultMock,
+          stopPropagation: stopPropagationMock
+        })
+
+        expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+        expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)
+      })
+
+      test('closes the modal when it is opened', () => {
+        const preventDefaultMock = jest.fn()
+        const stopPropagationMock = jest.fn()
+
+        const { props } = setup({
+          isOpen: true
+        })
+
+        windowEventMap.keydown({
+          key: 'a',
+          preventDefault: preventDefaultMock,
+          stopPropagation: stopPropagationMock
+        })
+
+        expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+        expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
+      })
     })
   })
 })
