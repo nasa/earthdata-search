@@ -33,6 +33,7 @@ function setup(overrideProps) {
     },
     focusedCollectionId: 'collectionId',
     location: {
+      pathname: '/search/granules',
       search: '?test=search-value'
     },
     granuleQuery: {
