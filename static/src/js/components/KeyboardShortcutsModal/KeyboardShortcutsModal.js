@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Container, Row, Col } from 'react-bootstrap'
-import EDSCModal from '../EDSCModal/EDSCModal'
+import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 
 export class KeyboardShortcutsModal extends Component {
   constructor(props) {
@@ -10,7 +10,6 @@ export class KeyboardShortcutsModal extends Component {
       toggleModal: '?',
       escapeModal: 'Escape'
     }
-    this.keyboardShortcutRef = React.createRef()
     this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
   }
 
@@ -51,15 +50,12 @@ export class KeyboardShortcutsModal extends Component {
       t: 'Toggle timeline'
     }
     return (
-      <EDSCModal
-        modalClassNames=""
-        modalInner={this.keyboardShortcutRef}
+      <EDSCModalContainer
         isOpen={isOpen}
         size="md"
-        identifier="modal__keyboardShortcut_modal"
-        onModalHide={() => onToggleKeyboardShortcutsModal(false)}
-        onModalExit={() => {}}
-        bodyEl={(
+        id="keyboardShortcut"
+        onClose={() => onToggleKeyboardShortcutsModal(false)}
+        body={(
           <Container>
             {Object.entries(keyboardShortcutsList)
               .map(arr => (
