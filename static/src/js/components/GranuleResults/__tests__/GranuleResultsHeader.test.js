@@ -10,6 +10,17 @@ import Skeleton from '../../Skeleton/Skeleton'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+const windowEventMap = {}
+
+beforeEach(() => {
+  window.addEventListener = jest.fn((event, cb) => {
+    windowEventMap[event] = cb
+  })
+  window.removeEventListener = jest.fn()
+  window.requestAnimationFrame = jest.fn()
+  window.cancelAnimationFrame = jest.fn()
+})
+
 function setup(overrideProps) {
   const props = {
     collectionMetadata: {
@@ -295,4 +306,33 @@ describe('granuleFilters link', () => {
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(false)
     })
   })
+
+  describe('when the g key is pressed', () => {
+    test('toggles the granule panel state correctly', () => {
+      const preventDefaultMock = jest.fn()
+      const stopPropagationMock = jest.fn()
+  
+      const { props } = setup({
+        secondaryOverlayPanel: {
+          isOpen: true
+        }
+      })
+  
+      // Test thats the panel starts open
+      expect(props.secondaryOverlayPanel.isOpen).toEqual(true)
+  
+      // Trigger the simulated window event
+      windowEventMap.keydown({
+        key: 'g',
+        preventDefault: preventDefaultMock,
+        stopPropagation: stopPropagationMock
+      });
+  
+      // Test that the panel is toggled and the event propagation has been prevented
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(1)
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(false)
+      expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+      expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+    })
+  });
 })

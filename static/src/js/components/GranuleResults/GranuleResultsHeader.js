@@ -8,6 +8,7 @@ import { commafy } from '../../util/commafy'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { pluralize } from '../../util/pluralize'
 import { locationPropType } from '../../util/propTypes/location'
+import { pathStartsWith } from '../../util/pathStartsWith'
 
 import Button from '../Button/Button'
 import GranuleResultsActionsContainer from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
@@ -83,12 +84,12 @@ class GranuleResultsHeader extends Component {
   onWindowKeyDown(e) {
     const { key } = e
     const { keyboardShortcuts } = this
-    const { onToggleSecondaryOverlayPanel, secondaryOverlayPanel } = this.props
+    const { location, onToggleSecondaryOverlayPanel, secondaryOverlayPanel } = this.props
 
     const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
 
     // Toggle the granule filters when the `g` character is pressed
-    if (key === keyboardShortcuts.toggleGranuleFilters) {
+    if (key === keyboardShortcuts.toggleGranuleFilters && pathStartsWith(location.pathname, ['/search/granules'])) {
       onToggleSecondaryOverlayPanel(!granuleFiltersOpen)
 
       e.preventDefault()
