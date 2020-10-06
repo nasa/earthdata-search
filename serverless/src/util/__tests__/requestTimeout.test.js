@@ -1,22 +1,24 @@
 import { requestTimeout } from '../requestTimeout'
 
+const OLD_ENV = process.env
+
+beforeEach(() => {
+  // Manage resetting ENV variables
+  jest.resetModules()
+  process.env = { ...OLD_ENV }
+  delete process.env.NODE_ENV
+})
+
+afterEach(() => {
+  // Restore any ENV variables overwritten in tests
+  process.env = OLD_ENV
+})
+
 describe('requestTimeout', () => {
-  const OLD_ENV = process.env
-
-  beforeEach(() => {
-    // Manage resetting ENV variables
-    jest.resetModules()
-    process.env = { ...OLD_ENV }
-    delete process.env.NODE_ENV
-  })
-
-  afterEach(() => {
-    // Restore any ENV variables overwritten in tests
-    process.env = OLD_ENV
-  })
-
   describe('when using the default threshold', () => {
     test('returns the lambda timeout minus the requested workload threshold', () => {
+      process.env.LAMBDA_TIMEOUT = 30
+
       const response = requestTimeout()
 
       expect(response).toEqual(20000)
@@ -25,6 +27,8 @@ describe('requestTimeout', () => {
 
   describe('when providing a threshold', () => {
     test('returns the lambda timeout minus the requested workload threshold', () => {
+      process.env.LAMBDA_TIMEOUT = 30
+
       const response = requestTimeout(5)
 
       expect(response).toEqual(25000)

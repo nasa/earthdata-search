@@ -2,10 +2,22 @@ import nock from 'nock'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import regionSearch from '../handler'
 
+const OLD_ENV = process.env
+
 beforeEach(() => {
   jest.clearAllMocks()
 
+  // Manage resetting ENV variables
+  jest.resetModules()
+  process.env = { ...OLD_ENV }
+  delete process.env.NODE_ENV
+
   jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ regionHost: 'http://region.com' }))
+})
+
+afterEach(() => {
+  // Restore any ENV variables overwritten in tests
+  process.env = OLD_ENV
 })
 
 describe('regionSearch', () => {
@@ -148,6 +160,8 @@ describe('regionSearch', () => {
   })
 
   test('returns error when a ESOCKETTIMEDOUT is received', async () => {
+    process.env.LAMBDA_TIMEOUT = 30
+
     nock(/region/)
       .get(/huc/)
       .replyWithError('ESOCKETTIMEDOUT')
@@ -172,6 +186,8 @@ describe('regionSearch', () => {
   })
 
   test('returns region results when they exist', async () => {
+    process.env.LAMBDA_TIMEOUT = 30
+
     nock(/region/)
       .get(/regions/)
       .reply(200, {
