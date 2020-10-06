@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
+
 import { Dropdown } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
 
@@ -13,32 +14,29 @@ import './GranuleResultsDataLinksButton.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Function} props.onClick - The click callback.null
  */
-export class CustomDataLinksToggle extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.handleClick = this.handleClick.bind(this)
-  }
+// eslint-disable-next-line react/display-name
+const CustomDataLinksToggle = React.forwardRef(({
+  onClick
+}, ref) => {
+  const handleClick = (e) => {
+    onClick(e)
 
-  handleClick(e) {
     e.preventDefault()
     e.stopPropagation()
-    const { onClick } = this.props
-    onClick(e)
   }
 
-  render() {
-    return (
-      <Button
-        className="button granule-results-data-links-button__button"
-        type="button"
-        label="Download single granule data"
-        onClick={this.handleClick}
-      >
-        <i className="fa fa-download" />
-      </Button>
-    )
-  }
-}
+  return (
+    <Button
+      className="button granule-results-data-links-button__button"
+      type="button"
+      ref={ref}
+      label="Download single granule data"
+      onClick={handleClick}
+    >
+      <i className="fa fa-download" />
+    </Button>
+  )
+})
 
 CustomDataLinksToggle.propTypes = {
   onClick: PropTypes.func.isRequired

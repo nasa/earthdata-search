@@ -95,8 +95,7 @@ describe('PortalLinkContainer component', () => {
       }
     })
 
-    const button = enzymeWrapper.find('Button')
-    expect(button.props().className).toEqual('test-class')
+    const button = enzymeWrapper.find('.test-class')
     expect(button.props().type).toEqual('button')
     expect(button.props().children).toEqual('Click Here')
 
