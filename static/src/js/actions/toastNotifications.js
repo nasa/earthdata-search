@@ -49,17 +49,17 @@ toast.configure({
   bodyClassName: 'root'
 })
 
-const pushingNotification = notification => ({
+export const pushingNotification = notification => ({
   type: PUSHING_NOTIFICATION,
   notification
 })
 
-const notificationPushed = id => ({
+export const notificationPushed = id => ({
   type: NOTIFICATION_PUSHED,
   id
 })
 
-const notificationDismissed = id => ({
+export const notificationDismissed = id => ({
   type: NOTIFICATION_DIMISSED,
   id
 })
