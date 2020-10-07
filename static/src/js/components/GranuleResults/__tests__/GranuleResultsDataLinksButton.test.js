@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Dropdown } from 'react-bootstrap'
@@ -76,6 +77,9 @@ describe('GranuleResultsDataLinksButton component', () => {
 
   describe('with multiple granule links', () => {
     test('renders the correct element', () => {
+      // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
+      ReactDOM.createPortal = jest.fn(modal => modal);
+
       const { enzymeWrapper } = setup({
         dataLinks: [
           {
