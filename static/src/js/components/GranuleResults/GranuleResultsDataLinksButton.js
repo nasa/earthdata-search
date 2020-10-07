@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { Dropdown } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
 
@@ -61,31 +62,36 @@ export const GranuleResultsDataLinksButton = ({
     return (
       <Dropdown>
         <Dropdown.Toggle as={CustomDataLinksToggle} />
-        <Dropdown.Menu>
-          {
-            dataLinks.map((dataLink, i) => {
-              const key = `data_link_${i}`
-              let dataLinkTitle = dataLink.title
+        {
+          ReactDOM.createPortal(
+            <Dropdown.Menu>
+              {
+                dataLinks.map((dataLink, i) => {
+                  const key = `data_link_${i}`
+                  let dataLinkTitle = dataLink.title
 
-              if (!dataLinkTitle) dataLinkTitle = getFilenameFromPath(dataLink.href)
+                  if (!dataLinkTitle) dataLinkTitle = getFilenameFromPath(dataLink.href)
 
-              return (
-                <Dropdown.Item
-                  key={key}
-                  href={dataLink.href}
-                  onClick={() => onMetricsDataAccess({
-                    type: 'single_granule_download',
-                    collections: [{
-                      collectionId
-                    }]
-                  })}
-                >
-                  {dataLinkTitle}
-                </Dropdown.Item>
-              )
-            })
-          }
-        </Dropdown.Menu>
+                  return (
+                    <Dropdown.Item
+                      key={key}
+                      href={dataLink.href}
+                      onClick={() => onMetricsDataAccess({
+                        type: 'single_granule_download',
+                        collections: [{
+                          collectionId
+                        }]
+                      })}
+                    >
+                      {dataLinkTitle}
+                    </Dropdown.Item>
+                  )
+                })
+              }
+            </Dropdown.Menu>,
+            document.querySelector('#root')
+          )
+        }
       </Dropdown>
     )
   }
