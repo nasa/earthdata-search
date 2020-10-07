@@ -335,5 +335,36 @@ describe('granuleFilters link', () => {
       expect(preventDefaultMock).toHaveBeenCalledTimes(1)
       expect(stopPropagationMock).toHaveBeenCalledTimes(1)
     })
+
+    test('does not toggle granule panel', () => {
+      const preventDefaultMock = jest.fn()
+      const stopPropagationMock = jest.fn()
+  
+      const { props } = setup({
+        location: {
+          pathname: '/search'
+        },
+        secondaryOverlayPanel: {
+          isOpen: false
+        }
+      })
+  
+      // Test thats the panel starts closed
+      expect(props.secondaryOverlayPanel.isOpen).toEqual(false)
+  
+      // Trigger the simulated window event
+      windowEventMap.keydown({
+        key: 'g',
+        preventDefault: preventDefaultMock,
+        stopPropagation: stopPropagationMock
+      })
+  
+      // Test that the panel is not toggled the event propagating
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(0)
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(0)
+      expect(preventDefaultMock).toHaveBeenCalledTimes(0)
+      expect(stopPropagationMock).toHaveBeenCalledTimes(0)
+    })
+
   });
 })
