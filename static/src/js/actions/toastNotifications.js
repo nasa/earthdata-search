@@ -66,8 +66,8 @@ export const notificationDismissed = id => ({
 
 /**
  * @name addNotification
- * @param {object} param0
- * @description Call toast system render the notification.
+ * @param {object} param0 Notification object.
+ * @description Call toast system to render the notification.
  */
 const addNotification = ({
   content,
@@ -85,7 +85,7 @@ const addNotification = ({
 
 /**
  * @name pushSuccessNotification
- * @param {React..Node} content
+ * @param {React.Node} content
  * @description Generates a default success notification with
  * the content value inside the toast container.
  */
@@ -107,7 +107,7 @@ export const pushSuccessNotification = content => (dispatch) => {
 
 /**
  * @name pushWarningNotification
- * @param {React..Node} content
+ * @param {React.Node} content
  * @description Generates a default warning notification with
  * the content value inside the toast container.
  */
@@ -129,7 +129,7 @@ export const pushWarningNotification = content => (dispatch) => {
 
 /**
  * @name pushErrorNotification
- * @param {React..Node} content
+ * @param {React.Node} content
  * @description Generates a default error notification with
  * the content value inside the toast container.
  */
@@ -152,7 +152,7 @@ export const pushErrorNotification = content => (dispatch) => {
 
 /**
  * @name pushInfoNotification
- * @param {React..Node} content
+ * @param {React.Node} content
  * @description Generates a default info notification with
  * the content value inside the toast container.
  */
