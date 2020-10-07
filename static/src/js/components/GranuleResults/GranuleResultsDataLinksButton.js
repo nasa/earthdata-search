@@ -15,7 +15,7 @@ import './GranuleResultsDataLinksButton.scss'
  * @param {Function} props.onClick - The click callback.null
  */
 // eslint-disable-next-line react/display-name
-const CustomDataLinksToggle = React.forwardRef(({
+export const CustomDataLinksToggle = React.forwardRef(({
   onClick
 }, ref) => {
   const handleClick = (e) => {

@@ -1,9 +1,7 @@
-// import { cwicOsdd } from './mocks'
-
 import { renderOpenSearchTemplate } from '../renderOpenSearchTemplate'
 
 describe('renderOpenSearchTemplate', () => {
-  test('', () => {
+  test('returns a basic link when no parameters are provided', () => {
     const response = renderOpenSearchTemplate(
       'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&amp;startIndex={startIndex?}&amp;count={count?}&amp;timeStart={time:start}&amp;timeEnd={time:end}&amp;geoBox={geo:box}&amp;clientId=eed-edsc-dev',
       {}
@@ -11,7 +9,7 @@ describe('renderOpenSearchTemplate', () => {
     expect(response).toEqual('https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&count=20&clientId=eed-edsc-dev')
   })
 
-  test('pageNum', () => {
+  test('includes a page number when provided', () => {
     const response = renderOpenSearchTemplate(
       'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&amp;startIndex={startIndex?}&amp;count={count?}&amp;timeStart={time:start}&amp;timeEnd={time:end}&amp;geoBox={geo:box}&amp;clientId=eed-edsc-dev',
       {
@@ -21,7 +19,7 @@ describe('renderOpenSearchTemplate', () => {
     expect(response).toEqual('https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&startIndex=21&count=20&clientId=eed-edsc-dev')
   })
 
-  test('boundingBox', () => {
+  test('includes a bounding box when provided', () => {
     const response = renderOpenSearchTemplate(
       'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&amp;startIndex={startIndex?}&amp;count={count?}&amp;timeStart={time:start}&amp;timeEnd={time:end}&amp;geoBox={geo:box}&amp;clientId=eed-edsc-dev',
       {
@@ -36,7 +34,7 @@ describe('renderOpenSearchTemplate', () => {
     expect(response).toEqual('https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&count=20&geoBox=-92.5751953125,40.87545165175499,-81.82891845703125,49.49147977783035&clientId=eed-edsc-dev')
   })
 
-  test('point', () => {
+  test('includes an mbr when a point is provided', () => {
     const response = renderOpenSearchTemplate(
       'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&amp;startIndex={startIndex?}&amp;count={count?}&amp;timeStart={time:start}&amp;timeEnd={time:end}&amp;geoBox={geo:box}&amp;clientId=eed-edsc-dev',
       {
@@ -46,7 +44,7 @@ describe('renderOpenSearchTemplate', () => {
     expect(response).toEqual('https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&count=20&geoBox=-92.5761953125,40.874451651754995,-92.57519531250.001,40.875451651754990.001&clientId=eed-edsc-dev')
   })
 
-  test('temporal', () => {
+  test('inlcludes a start and end date when temporal values are provided', () => {
     const response = renderOpenSearchTemplate(
       'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&amp;startIndex={startIndex?}&amp;count={count?}&amp;timeStart={time:start}&amp;timeEnd={time:end}&amp;geoBox={geo:box}&amp;clientId=eed-edsc-dev',
       {
