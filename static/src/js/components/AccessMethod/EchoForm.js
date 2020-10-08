@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
 import moment from 'moment'
+import { isEqual } from 'lodash'
 
 import { mbr } from '../../util/map/mbr'
 
@@ -18,29 +19,6 @@ export const EchoForm = ({
   overrideTemporal,
   onUpdateAccessMethod
 }) => {
-  const updateAccessMethod = (data) => {
-    onUpdateAccessMethod({
-      collectionId,
-      method: {
-        [methodKey]: {
-          ...data
-        }
-      }
-    })
-  }
-
-  const onFormModelUpdated = (value) => {
-    const { model, rawModel } = value
-    updateAccessMethod({
-      model,
-      rawModel
-    })
-  }
-
-  const onFormIsValidUpdated = (valid) => {
-    updateAccessMethod({ isValid: valid })
-  }
-
   // Get the MBR of the spatial for prepopulated values
   const getMbr = (spatial) => {
     const {
@@ -102,16 +80,58 @@ export const EchoForm = ({
       }
     }
 
-    return {}
+    return {
+      TEMPORAL_START: '',
+      TEMPORAL_END: ''
+    }
   }
 
-  const spatialPrepopulateValues = getMbr(spatial)
-  const temporalPrepopulateValues = getTemporalPrepopulateValues(temporal, overrideTemporal)
+  const calculatePrepopulateValues = () => {
+    const spatialPrepopulateValues = getMbr(spatial)
+    const temporalPrepopulateValues = getTemporalPrepopulateValues(temporal, overrideTemporal)
 
-  const prepopulateValues = {
-    ...spatialPrepopulateValues,
-    ...temporalPrepopulateValues
+    const values = {
+      ...spatialPrepopulateValues,
+      ...temporalPrepopulateValues
+    }
+
+    return values
   }
+
+  const [prepopulateValues, setPrepopulateValues] = useState(calculatePrepopulateValues())
+
+  const updateAccessMethod = (data) => {
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [methodKey]: {
+          ...data
+        }
+      }
+    })
+  }
+
+  const onFormModelUpdated = (value) => {
+    const { model, rawModel: newRawModel } = value
+
+    updateAccessMethod({
+      model,
+      rawModel: newRawModel
+    })
+  }
+
+  const onFormIsValidUpdated = (valid) => {
+    updateAccessMethod({ isValid: valid })
+  }
+
+  useEffect(() => {
+    const newValues = calculatePrepopulateValues()
+
+    // If the new prepopulate values haven't changed from the previous values, don't update the state
+    if (!isEqual(newValues, prepopulateValues)) {
+      setPrepopulateValues(newValues)
+    }
+  }, [spatial, temporal, overrideTemporal])
 
   // EDSCEchoforms doesn't care about the shapefileId, just is there a shapefileId or not
   const hasShapefile = !!(shapefileId)
