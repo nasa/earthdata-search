@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom'
 import { isBrowserCompatible } from './js/util/isBrowserCompatible'
 
 import './css/main.scss'
-import 'react-toastify/dist/ReactToastify.css'
 
 import App from './js/App'
 
