@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import actions from '../../actions/index'
+import { displayNotificationType } from '../../constants/enums'
 import { Banner } from '../../components/Banner/Banner'
 
 const mapDispatchToProps = dispatch => ({
@@ -21,7 +22,8 @@ export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
   const {
     id,
     message,
-    title
+    title,
+    notificationType
   } = error
 
   const onClose = () => {
@@ -29,12 +31,17 @@ export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
   }
 
   return (
-    <Banner
-      message={message}
-      onClose={onClose}
-      title={title}
-      type="error"
-    />
+    <>
+      {notificationType === displayNotificationType.banner
+        && (
+        <Banner
+          message={message}
+          onClose={onClose}
+          title={title}
+          type="error"
+        />
+        )}
+    </>
   )
 }
 
