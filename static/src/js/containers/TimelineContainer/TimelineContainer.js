@@ -10,8 +10,6 @@ import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getProjectCollectionsIds } from '../../selectors/project'
 import { isPath } from '../../util/isPath'
-import Spinner from '../../components/Spinner/Spinner'
-import './TimelineContainer.scss'
 
 const Timeline = lazy(() => import('../../components/Timeline/Timeline'))
 
@@ -73,12 +71,7 @@ export const TimelineContainer = (props) => {
   if (collectionsToRender.length === 0) return null
 
   return (
-    <Suspense fallback={(
-      <div className="timeline-loading">
-        <Spinner type="dots" size="small" />
-      </div>
-      )}
-    >
+    <Suspense fallback={null}>
       <Timeline
         browser={browser}
         collectionMetadata={collectionMetadata}
