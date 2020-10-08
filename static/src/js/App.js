@@ -52,6 +52,7 @@ class App extends Component {
 
   componentDidMount() {
     this.shapefileDropzoneRef = React.createRef()
+    window.reactToastProvider = React.createRef()
   }
 
   portalPaths(path) {
@@ -62,7 +63,7 @@ class App extends Component {
     return (
       <ErrorBoundary>
         <Provider store={this.store}>
-          <ToastProvider>
+          <ToastProvider ref={window.reactToastProvider}>
             <ConnectedRouter history={history}>
               <MetricsEventsContainer />
               <Switch>
