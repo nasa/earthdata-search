@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { hot } from 'react-hot-loader/root'
+import { ToastProvider } from 'react-toast-notifications'
 
 import configureStore from './store/configureStore'
 import history from './util/history'
@@ -61,83 +62,85 @@ class App extends Component {
     return (
       <ErrorBoundary>
         <Provider store={this.store}>
-          <ConnectedRouter history={history}>
-            <MetricsEventsContainer />
-            <Switch>
-              <Route path={this.portalPaths('/')} component={PortalContainer} />
-            </Switch>
-            <ErrorBannerContainer />
-            <AuthTokenContainer>
-              <UrlQueryContainer>
-                <Switch>
-                  <Route
-                    path="/admin"
-                    render={() => (
-                      <AuthRequiredContainer>
-                        <Admin />
-                      </AuthRequiredContainer>
-                    )}
-                  />
-                  <Route
-                    path={this.portalPaths('/contact_info')}
-                    render={() => (
-                      <AuthRequiredContainer>
-                        <ContactInfo />
-                      </AuthRequiredContainer>
-                    )}
-                  />
-                  <Route
-                    path={this.portalPaths('/preferences')}
-                    render={() => (
-                      <AuthRequiredContainer>
-                        <Preferences />
-                      </AuthRequiredContainer>
-                    )}
-                  />
-                  <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
-                  <Redirect exact from="/data/status" to="/downloads" />
-                  <Route
-                    path={this.portalPaths('/downloads')}
-                    render={() => (
-                      <AuthRequiredContainer>
-                        <Downloads />
-                      </AuthRequiredContainer>
-                    )}
-                  />
-                  <Route path={this.portalPaths('/projects')} component={Project} />
-                  <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
-                  <Redirect exact from="/" to="/search" />
-                  <Route
-                    path={this.portalPaths('/search')}
-                    render={() => (
-                      <>
-                        <Search />
-                        <EdscMapContainer />
-                      </>
-                    )}
-                  />
-                  <Route
-                    exact
-                    path="/auth_callback"
-                    render={() => (
-                      <AuthCallbackContainer />
-                    )}
-                  />
-                  <Route component={NotFound} />
-                </Switch>
-                <FooterContainer />
-                <Switch>
-                  <Route path={this.portalPaths('/')}>
-                    <ShapefileUploadModalContainer />
-                    <ShapefileDropzoneContainer />
-                    <TooManyPointsModalContainer />
-                    <ChunkedOrderModalContainer />
-                    <AboutCwicModalContainer />
-                  </Route>
-                </Switch>
-              </UrlQueryContainer>
-            </AuthTokenContainer>
-          </ConnectedRouter>
+          <ToastProvider>
+            <ConnectedRouter history={history}>
+              <MetricsEventsContainer />
+              <Switch>
+                <Route path={this.portalPaths('/')} component={PortalContainer} />
+              </Switch>
+              <ErrorBannerContainer />
+              <AuthTokenContainer>
+                <UrlQueryContainer>
+                  <Switch>
+                    <Route
+                      path="/admin"
+                      render={() => (
+                        <AuthRequiredContainer>
+                          <Admin />
+                        </AuthRequiredContainer>
+                      )}
+                    />
+                    <Route
+                      path={this.portalPaths('/contact_info')}
+                      render={() => (
+                        <AuthRequiredContainer>
+                          <ContactInfo />
+                        </AuthRequiredContainer>
+                      )}
+                    />
+                    <Route
+                      path={this.portalPaths('/preferences')}
+                      render={() => (
+                        <AuthRequiredContainer>
+                          <Preferences />
+                        </AuthRequiredContainer>
+                      )}
+                    />
+                    <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
+                    <Redirect exact from="/data/status" to="/downloads" />
+                    <Route
+                      path={this.portalPaths('/downloads')}
+                      render={() => (
+                        <AuthRequiredContainer>
+                          <Downloads />
+                        </AuthRequiredContainer>
+                      )}
+                    />
+                    <Route path={this.portalPaths('/projects')} component={Project} />
+                    <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
+                    <Redirect exact from="/" to="/search" />
+                    <Route
+                      path={this.portalPaths('/search')}
+                      render={() => (
+                        <>
+                          <Search />
+                          <EdscMapContainer />
+                        </>
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/auth_callback"
+                      render={() => (
+                        <AuthCallbackContainer />
+                      )}
+                    />
+                    <Route component={NotFound} />
+                  </Switch>
+                  <FooterContainer />
+                  <Switch>
+                    <Route path={this.portalPaths('/')}>
+                      <ShapefileUploadModalContainer />
+                      <ShapefileDropzoneContainer />
+                      <TooManyPointsModalContainer />
+                      <ChunkedOrderModalContainer />
+                      <AboutCwicModalContainer />
+                    </Route>
+                  </Switch>
+                </UrlQueryContainer>
+              </AuthTokenContainer>
+            </ConnectedRouter>
+          </ToastProvider>
         </Provider>
       </ErrorBoundary>
     )
