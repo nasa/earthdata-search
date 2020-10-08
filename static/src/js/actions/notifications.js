@@ -7,14 +7,14 @@ import {
   NOTIFICATION_DIMISSED
 } from '../constants/actionTypes'
 
-export const ToastType = {
+export const toastType = {
   info: 'info',
   error: 'error',
   warning: 'warn',
   success: 'success'
 }
 
-export const ToastPosition = {
+export const toastPosition = {
   bottomLeft: 'bottom-left',
   bottomCenter: 'bottom-center',
   bottomRight: 'bottom-right',
@@ -24,9 +24,9 @@ export const ToastPosition = {
 }
 
 const notificationDefaults = {
-  type: ToastType.info,
+  type: toastType.info,
   autoClose: 15000,
-  position: ToastPosition.topRight,
+  position: toastPosition.topRight,
   hideProgressBar: false,
   newestOnTop: true,
   closeOnClick: true,
@@ -94,7 +94,7 @@ export const pushSuccessNotification = content => (dispatch) => {
   const notification = {
     id,
     content,
-    type: ToastType.success,
+    type: toastType.success,
     pushed: false,
     dismissed: false,
     onClose: () => dispatch(notificationDismissed(id)),
@@ -116,7 +116,7 @@ export const pushWarningNotification = content => (dispatch) => {
   const notification = {
     id,
     content,
-    type: ToastType.warning,
+    type: toastType.warning,
     pushed: false,
     dismissed: false,
     onClose: () => dispatch(notificationDismissed(id)),
@@ -138,7 +138,7 @@ export const pushErrorNotification = content => (dispatch) => {
   const notification = {
     id,
     content,
-    type: ToastType.error,
+    type: toastType.error,
     autoClose: false,
     pushed: false,
     dismissed: false,
@@ -161,7 +161,7 @@ export const pushInfoNotification = content => (dispatch) => {
   const notification = {
     id,
     content,
-    type: ToastType.info,
+    type: toastType.info,
     autoClose: false,
     pushed: false,
     dismissed: false,
