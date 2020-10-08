@@ -44,12 +44,14 @@ describe('EchoForm component', () => {
       }
     })
 
-    expect(enzymeWrapper.find(EDSCEchoform).props().prepopulateValues).toEqual({
-      BBOX_EAST: -76,
-      BBOX_NORTH: 38.00105844675541,
-      BBOX_SOUTH: 37.99999999999998,
-      BBOX_WEST: -77
-    })
+    expect(enzymeWrapper.find(EDSCEchoform).props().prepopulateValues).toEqual(
+      expect.objectContaining({
+        BBOX_EAST: -76,
+        BBOX_NORTH: 38.00105844675541,
+        BBOX_SOUTH: 37.99999999999998,
+        BBOX_WEST: -77
+      })
+    )
   })
 
   test('renders an EDSCEchoform with temporal prepopulated', () => {

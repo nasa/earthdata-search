@@ -115,7 +115,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
-    "@edsc/echoforms": "^1.1.8",
+    "@edsc/echoforms": "^1.1.9",
     "@googlemaps/google-maps-services-js": "^2.3.1",
     "@hot-loader/react-dom": "^16.12.0",
     "ajv": "^6.12.3",
