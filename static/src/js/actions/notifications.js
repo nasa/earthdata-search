@@ -1,6 +1,3 @@
-import { toast } from 'react-toastify'
-import uuid from 'uuid/v4'
-
 import {
   PUSHING_NOTIFICATION,
   NOTIFICATION_PUSHED,
@@ -10,11 +7,11 @@ import {
 export const toastType = {
   info: 'info',
   error: 'error',
-  warning: 'warn',
+  warning: 'warning',
   success: 'success'
 }
 
-export const toastPosition = {
+export const toastPlacement = {
   bottomLeft: 'bottom-left',
   bottomCenter: 'bottom-center',
   bottomRight: 'bottom-right',
@@ -24,64 +21,40 @@ export const toastPosition = {
 }
 
 const notificationDefaults = {
-  type: toastType.info,
-  autoClose: 15000,
-  position: toastPosition.topRight,
-  hideProgressBar: false,
-  newestOnTop: true,
-  closeOnClick: true,
-  closeButton: true,
-  rtl: false,
-  pauseOnVisibilityChange: true,
-  draggable: false,
-  pauseOnHover: true,
-  style: {
-    color: '#fcfcfc'
-  },
-  progressStyle: {
-    background: 'navy'
-  }
+  appearance: toastType.info,
+  autoDismiss: true,
+  autoDismissTimeout: 15000,
+  placement: toastPlacement.topRight
 }
 
-// Sets the default notification settings
-toast.configure({
-  ...notificationDefaults,
-  bodyClassName: 'root'
-})
+const addToast = (content, notification) => {
+  try {
+    const { add } = window.reactToastProvider.current
+    if (add) {
+      add(content, notification)
+      return
+    }
+  } catch (error) {
+    console.error(error)
+    return
+  }
+  console.error('Add toast method not available.')
+}
 
 export const pushingNotification = notification => ({
   type: PUSHING_NOTIFICATION,
   notification
 })
 
-export const notificationPushed = id => ({
+export const notificationPushed = notification => ({
   type: NOTIFICATION_PUSHED,
-  id
+  notification
 })
 
-export const notificationDismissed = id => ({
+export const notificationDismissed = notification => ({
   type: NOTIFICATION_DIMISSED,
-  id
+  notification
 })
-
-/**
- * @name addNotification
- * @param {object} param0 Notification object.
- * @description Call toast system to render the notification.
- */
-const addNotification = ({
-  content,
-  type,
-  autoClose,
-  position,
-  onClose
-}) => {
-  toast[type || notificationDefaults.type](content, {
-    autoClose,
-    position,
-    onClose
-  })
-}
 
 /**
  * @name pushSuccessNotification
@@ -90,19 +63,15 @@ const addNotification = ({
  * the content value inside the toast container.
  */
 export const pushSuccessNotification = content => (dispatch) => {
-  const id = uuid()
   const notification = {
-    id,
+    ...notificationDefaults,
     content,
-    type: toastType.success,
-    pushed: false,
-    dismissed: false,
-    onClose: () => dispatch(notificationDismissed(id)),
-    time: new Date()
+    appearance: toastType.success
   }
+  notification.onDismiss = () => dispatch(notificationDismissed(notification))
   dispatch(pushingNotification(notification))
-  addNotification(notification)
-  dispatch(notificationPushed(id))
+  addToast(content, notification)
+  dispatch(notificationPushed(notification))
 }
 
 /**
@@ -112,19 +81,15 @@ export const pushSuccessNotification = content => (dispatch) => {
  * the content value inside the toast container.
  */
 export const pushWarningNotification = content => (dispatch) => {
-  const id = uuid()
   const notification = {
-    id,
+    ...notificationDefaults,
     content,
-    type: toastType.warning,
-    pushed: false,
-    dismissed: false,
-    onClose: () => dispatch(notificationDismissed(id)),
-    time: new Date()
+    appearance: toastType.warning
   }
+  notification.onDismiss = () => dispatch(notificationDismissed(notification))
   dispatch(pushingNotification(notification))
-  addNotification(notification)
-  dispatch(notificationPushed(id))
+  addToast(content, notification)
+  dispatch(notificationPushed(notification))
 }
 
 /**
@@ -134,20 +99,15 @@ export const pushWarningNotification = content => (dispatch) => {
  * the content value inside the toast container.
  */
 export const pushErrorNotification = content => (dispatch) => {
-  const id = uuid()
   const notification = {
-    id,
+    ...notificationDefaults,
     content,
-    type: toastType.error,
-    autoClose: false,
-    pushed: false,
-    dismissed: false,
-    onClose: () => dispatch(notificationDismissed(id)),
-    time: new Date()
+    appearance: toastType.error
   }
+  notification.onDismiss = () => dispatch(notificationDismissed(notification))
   dispatch(pushingNotification(notification))
-  addNotification(notification)
-  dispatch(notificationPushed(id))
+  addToast(content, notification)
+  dispatch(notificationPushed(notification))
 }
 
 /**
@@ -157,55 +117,48 @@ export const pushErrorNotification = content => (dispatch) => {
  * the content value inside the toast container.
  */
 export const pushInfoNotification = content => (dispatch) => {
-  const id = uuid()
   const notification = {
-    id,
+    ...notificationDefaults,
     content,
-    type: toastType.info,
-    autoClose: false,
-    pushed: false,
-    dismissed: false,
-    onClose: () => dispatch(notificationDismissed(id)),
-    time: new Date()
+    appearance: toastType.info
   }
+  notification.onDismiss = () => dispatch(notificationDismissed(notification))
   dispatch(pushingNotification(notification))
-  addNotification(notification)
-  dispatch(notificationPushed(id))
+  addToast(content, notification)
+  dispatch(notificationPushed(notification))
 }
 
 /**
  *
  * @param {React.Node} content
- * @param {string} type
- * @param {bool | number} autoClose
- * @param {string} position
- * @param {function} onClose
+ * @param {string} appearance
+ * @param {bool} autoDimiss
+ * @param {number} autoDismissTimeout
+ * @param {string} placement
+ * @param {function} onDimiss
  * @description Generates a notification based on the
  * passed in configuration.
  */
 export const pushNotification = (
   content,
-  type,
-  autoClose,
-  position,
-  onClose
+  appearance,
+  autoDimiss,
+  autoDimissTimeout,
+  placement,
+  onDimiss
 ) => (dispatch) => {
-  const id = uuid()
   const notification = {
-    id,
     content,
-    type,
-    autoClose,
-    pushed: false,
-    dimissed: false,
-    position,
-    onClose: () => {
-      onClose()
-      dispatch(notificationDismissed(id))
-    },
-    time: new Date()
+    appearance,
+    autoDimiss,
+    autoDimissTimeout,
+    placement
+  }
+  notification.onDismiss = () => {
+    onDimiss()
+    dispatch(notificationDismissed(notification))
   }
   dispatch(pushingNotification(notification))
-  addNotification(notification)
-  dispatch(notificationPushed(id))
+  addToast(content, notification)
+  dispatch(notificationPushed(notification))
 }
