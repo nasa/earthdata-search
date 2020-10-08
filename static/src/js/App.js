@@ -33,6 +33,9 @@ import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
 
+// Required for toast notification system
+window.reactToastProvider = React.createRef()
+
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
 
@@ -52,7 +55,6 @@ class App extends Component {
 
   componentDidMount() {
     this.shapefileDropzoneRef = React.createRef()
-    window.reactToastProvider = React.createRef()
   }
 
   portalPaths(path) {
