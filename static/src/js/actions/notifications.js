@@ -1,24 +1,13 @@
 import {
   PUSHING_NOTIFICATION,
   NOTIFICATION_PUSHED,
-  NOTIFICATION_DIMISSED
+  NOTIFICATION_DISMISSED
 } from '../constants/actionTypes'
-
-export const toastType = {
-  info: 'info',
-  error: 'error',
-  warning: 'warning',
-  success: 'success'
-}
-
-export const toastPlacement = {
-  bottomLeft: 'bottom-left',
-  bottomCenter: 'bottom-center',
-  bottomRight: 'bottom-right',
-  topLeft: 'top-left',
-  topCenter: 'top-center',
-  topRight: 'top-right'
-}
+import {
+  toastPlacement,
+  toastType
+} from '../constants/enums'
+import { removeError } from './errors'
 
 const notificationDefaults = {
   appearance: toastType.info,
@@ -52,7 +41,7 @@ export const notificationPushed = notification => ({
 })
 
 export const notificationDismissed = notification => ({
-  type: NOTIFICATION_DIMISSED,
+  type: NOTIFICATION_DISMISSED,
   notification
 })
 
@@ -84,7 +73,8 @@ export const pushWarningNotification = content => (dispatch) => {
   const notification = {
     ...notificationDefaults,
     content,
-    appearance: toastType.warning
+    appearance: toastType.warning,
+    autoDismiss: false
   }
   notification.onDismiss = () => dispatch(notificationDismissed(notification))
   dispatch(pushingNotification(notification))
@@ -95,16 +85,23 @@ export const pushWarningNotification = content => (dispatch) => {
 /**
  * @name pushErrorNotification
  * @param {React.Node} content
+ * @param {string} errorId
  * @description Generates a default error notification with
  * the content value inside the toast container.
  */
-export const pushErrorNotification = content => (dispatch) => {
+export const pushErrorNotification = (content, errorId) => (dispatch) => {
   const notification = {
     ...notificationDefaults,
     content,
-    appearance: toastType.error
+    appearance: toastType.error,
+    autoDismiss: false
   }
-  notification.onDismiss = () => dispatch(notificationDismissed(notification))
+  notification.onDismiss = () => {
+    dispatch(notificationDismissed(notification))
+    if (errorId) {
+      dispatch(removeError(errorId))
+    }
+  }
   dispatch(pushingNotification(notification))
   addToast(content, notification)
   dispatch(notificationPushed(notification))
