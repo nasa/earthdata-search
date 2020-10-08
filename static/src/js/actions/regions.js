@@ -3,6 +3,7 @@ import {
   prepareRegionParams
 } from '../util/regions'
 import { handleError } from './errors'
+import { displayNotificationType } from '../constants/enums'
 
 import {
   UPDATE_REGION_RESULTS,
@@ -88,7 +89,7 @@ export const getRegions = () => (dispatch, getState) => {
         error,
         action: 'getRegions',
         resource: 'regions',
-        displayBanner: false,
+        notificationType: displayNotificationType.none,
         requestObject
       }))
     })
