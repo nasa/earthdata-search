@@ -2,8 +2,9 @@ import jwt from 'jsonwebtoken'
 
 import PreferencesRequest from '../util/request/preferencesRequest'
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../constants/actionTypes'
-import { NETWORK_ERROR_NOTIFICATION, PREFERENCES_SAVED_NOTIFICATION } from '../constants/strings'
-import { pushSuccessNotification, pushErrorNotification } from './toastNotifications'
+import { PREFERENCES_SAVED_NOTIFICATION } from '../constants/strings'
+import { displayNotificationType } from '../constants/enums'
+import { pushSuccessNotification } from './notifications'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { handleError } from './errors'
 
@@ -50,14 +51,9 @@ export const updatePreferences = data => (dispatch, getState) => {
         error,
         action: 'updatePreferences',
         resource: 'preferences',
-        requestObject
+        requestObject,
+        notificationType: displayNotificationType.toast
       }))
-
-      if (error.message === 'Network Error') {
-        dispatch(pushErrorNotification(NETWORK_ERROR_NOTIFICATION))
-      } else {
-        dispatch(pushErrorNotification((error.message)))
-      }
     })
 
   return response
