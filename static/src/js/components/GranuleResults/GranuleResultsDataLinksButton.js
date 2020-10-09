@@ -13,7 +13,7 @@ import './GranuleResultsDataLinksButton.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Function} props.onClick - The click callback.null
  */
-class CustomDataLinksToggle extends Component {
+export class CustomDataLinksToggle extends Component {
   constructor(props, context) {
     super(props, context)
     this.handleClick = this.handleClick.bind(this)
