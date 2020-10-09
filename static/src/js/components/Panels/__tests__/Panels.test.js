@@ -7,6 +7,8 @@ import PanelSection from '../PanelSection'
 import PanelGroup from '../PanelGroup'
 import PanelItem from '../PanelItem'
 
+import * as triggerKeyboardShortcut from '../../../util/triggerKeyboardShortcut'
+
 Enzyme.configure({ adapter: new Adapter() })
 
 const windowEventMap = {}
@@ -932,11 +934,13 @@ describe('Panels component', () => {
     })
   })
 
-  describe('onWindowKeydown', () => {
+  describe('onWindowKeyUp', () => {
     describe('when the ] key is pressed', () => {
       test('toggles the panel state correctly', () => {
         const preventDefaultMock = jest.fn()
         const stopPropagationMock = jest.fn()
+
+        const shortcutSpy = jest.spyOn(triggerKeyboardShortcut, 'triggerKeyboardShortcut')
 
         const { enzymeWrapper } = setup()
 
@@ -945,17 +949,20 @@ describe('Panels component', () => {
         expect(enzymeWrapper.state().willMinimize).toEqual(false)
 
         // Trigger the simulated window event
-        windowEventMap.keydown({
+        windowEventMap.keyup({
           key: ']',
+          tagName: 'body',
+          type: 'keyup',
           preventDefault: preventDefaultMock,
           stopPropagation: stopPropagationMock
         })
 
         // Test that the panel is closed and the event propagation has been prevented
-        expect(enzymeWrapper.state().show).toEqual(false)
-        expect(enzymeWrapper.state().willMinimize).toEqual(true)
+        expect(shortcutSpy).toHaveBeenCalledTimes(1)
         expect(preventDefaultMock).toHaveBeenCalledTimes(1)
         expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+        expect(enzymeWrapper.state().show).toEqual(false)
+        expect(enzymeWrapper.state().willMinimize).toEqual(true)
       })
     })
   })
