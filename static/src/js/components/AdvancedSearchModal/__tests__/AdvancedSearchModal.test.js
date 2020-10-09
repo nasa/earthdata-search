@@ -107,7 +107,7 @@ describe('AdvancedSearchModal component', () => {
     })
   })
 
-  describe('onWindowKeydown', () => {
+  describe('onWindowKeyup', () => {
     describe('when the "a" key is pressed', () => {
       test('opens the modal when it is closed', () => {
         const preventDefaultMock = jest.fn()

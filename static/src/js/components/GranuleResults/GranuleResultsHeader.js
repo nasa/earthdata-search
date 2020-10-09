@@ -9,6 +9,7 @@ import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { pluralize } from '../../util/pluralize'
 import { locationPropType } from '../../util/propTypes/location'
 import { pathStartsWith } from '../../util/pathStartsWith'
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
 import Button from '../Button/Button'
 import GranuleResultsActionsContainer from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
@@ -58,11 +59,11 @@ class GranuleResultsHeader extends Component {
     this.handleBlurSearchValue = this.handleBlurSearchValue.bind(this)
     this.handleUndoExcludeGranule = this.handleUndoExcludeGranule.bind(this)
     this.handleSearchKeyUp = this.handleSearchKeyUp.bind(this)
-    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
+    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', this.onWindowKeyDown)
+    window.addEventListener('keyup', this.onWindowKeyUp)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,19 +82,24 @@ class GranuleResultsHeader extends Component {
     }
   }
 
-  onWindowKeyDown(e) {
-    const { key } = e
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.onWindowKeyUp)
+  }
+
+  onWindowKeyUp(e) {
     const { keyboardShortcuts } = this
     const { location, onToggleSecondaryOverlayPanel, secondaryOverlayPanel } = this.props
 
     const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
 
-    // Toggle the granule filters when the `g` character is pressed
-    if (key === keyboardShortcuts.toggleGranuleFilters && pathStartsWith(location.pathname, ['/search/granules'])) {
-      onToggleSecondaryOverlayPanel(!granuleFiltersOpen)
+    const toggleModal = () => onToggleSecondaryOverlayPanel(!granuleFiltersOpen)
 
-      e.preventDefault()
-      e.stopPropagation()
+    if (pathStartsWith(location.pathname, ['/search/granules'])) {
+      triggerKeyboardShortcut({
+        event: e,
+        shortcutKey: keyboardShortcuts.toggleGranuleFilters,
+        shortcutCallback: toggleModal
+      })
     }
   }
 
