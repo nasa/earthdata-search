@@ -5,6 +5,8 @@ import AdvancedSearchForm from './AdvancedSearchForm'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import RegionSearchResults from './RegionSearchResults'
 
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+
 import './AdvancedSearchModal.scss'
 
 /**
@@ -38,11 +40,15 @@ export class AdvancedSearchModal extends Component {
     this.onApplyClick = this.onApplyClick.bind(this)
     this.onCancelClick = this.onCancelClick.bind(this)
     this.onModalClose = this.onModalClose.bind(this)
-    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
+    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', this.onWindowKeyDown)
+    window.addEventListener('keyup', this.onWindowKeyUp)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.onWindowKeyUp)
   }
 
   onApplyClick(e) {
@@ -63,21 +69,21 @@ export class AdvancedSearchModal extends Component {
     this.resetAndClose()
   }
 
-  onWindowKeyDown(e) {
-    const { key } = e
+  onWindowKeyUp(e) {
     const { keyboardShortcuts } = this
 
-    if (key === keyboardShortcuts.toggleAdvancedSearchInput) {
-      const {
-        onToggleAdvancedSearchModal,
-        isOpen
-      } = this.props
+    const {
+      onToggleAdvancedSearchModal,
+      isOpen
+    } = this.props
 
-      onToggleAdvancedSearchModal(!isOpen)
+    const toggleModal = () => onToggleAdvancedSearchModal(!isOpen)
 
-      e.preventDefault()
-      e.stopPropagation()
-    }
+    triggerKeyboardShortcut({
+      event: e,
+      shortcutKey: keyboardShortcuts.toggleAdvancedSearchInput,
+      shortcutCallback: toggleModal
+    })
   }
 
   resetAndClose() {

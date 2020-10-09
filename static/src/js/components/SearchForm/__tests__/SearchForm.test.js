@@ -8,6 +8,7 @@ import SearchForm from '../SearchForm'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import AdvancedSearchDisplayContainer from '../../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
 import configureStore from '../../../store/configureStore'
+import * as triggerKeyboardShortcut from '../../../util/triggerKeyboardShortcut'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -160,11 +161,13 @@ describe('SearchForm component', () => {
     })
   })
 
-  describe('onWindowKeydown', () => {
+  describe('onWindowKeyup', () => {
     describe('when the / key is pressed', () => {
       test('focuses the search input', () => {
         const preventDefaultMock = jest.fn()
         const stopPropagationMock = jest.fn()
+
+        const shortcutSpy = jest.spyOn(triggerKeyboardShortcut, 'triggerKeyboardShortcut')
 
         const { enzymeWrapper } = setup({}, false)
 
@@ -172,22 +175,27 @@ describe('SearchForm component', () => {
         const inputElement = inputRef.current.input
 
         // Trigger the simulated window event
-        windowEventMap.keydown({
+        windowEventMap.keyup({
           key: '/',
+          tagName: 'body',
+          type: 'keyup',
           preventDefault: preventDefaultMock,
           stopPropagation: stopPropagationMock
         })
 
+        expect(shortcutSpy).toHaveBeenCalledTimes(1)
         expect(document.activeElement).toBe(inputElement)
         expect(preventDefaultMock).toHaveBeenCalledTimes(1)
         expect(stopPropagationMock).toHaveBeenCalledTimes(1)
       })
     })
 
-    describe('when the / key is pressed twice', () => {
-      test('does not focus the input if it is already focused', () => {
+    describe('while in an input', () => {
+      test('does not focus', () => {
         const preventDefaultMock = jest.fn()
         const stopPropagationMock = jest.fn()
+
+        const shortcutSpy = jest.spyOn(triggerKeyboardShortcut, 'triggerKeyboardShortcut')
 
         const { enzymeWrapper } = setup({}, false)
 
@@ -195,19 +203,15 @@ describe('SearchForm component', () => {
         const inputElement = inputRef.current.input
         const focusSpy = jest.spyOn(inputElement, 'focus')
 
-        // Trigger the simulated event twice
-        windowEventMap.keydown({
+        windowEventMap.keyup({
           key: '/',
+          tagName: 'input',
+          type: 'keyup',
           preventDefault: preventDefaultMock,
           stopPropagation: stopPropagationMock
         })
 
-        windowEventMap.keydown({
-          key: '/',
-          preventDefault: preventDefaultMock,
-          stopPropagation: stopPropagationMock
-        })
-
+        expect(shortcutSpy).toHaveBeenCalledTimes(1)
         expect(focusSpy).toHaveBeenCalledTimes(1)
         expect(preventDefaultMock).toHaveBeenCalledTimes(1)
         expect(stopPropagationMock).toHaveBeenCalledTimes(1)

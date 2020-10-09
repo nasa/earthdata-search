@@ -9,6 +9,7 @@ import PanelGroup from './PanelGroup'
 
 import history from '../../util/history'
 import { getPanelSizeMap } from '../../util/getPanelSizeMap'
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
 import './Panels.scss'
 
@@ -56,7 +57,7 @@ export class Panels extends PureComponent {
     this.onMouseUp = this.onMouseUp.bind(this)
     this.onMouseDown = this.onMouseDown.bind(this)
     this.onWindowResize = this.onWindowResize.bind(this)
-    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
+    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
     this.onPanelHandleClickOrKeypress = this.onPanelHandleClickOrKeypress.bind(this)
     this.onPanelHandleMouseOver = this.onPanelHandleMouseOver.bind(this)
     this.onPanelHandleMouseOut = this.onPanelHandleMouseOut.bind(this)
@@ -67,7 +68,7 @@ export class Panels extends PureComponent {
 
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize)
-    window.addEventListener('keydown', this.onWindowKeyDown)
+    window.addEventListener('keyup', this.onWindowKeyUp)
     window.addEventListener('resize', this.onWindowResize)
     this.browserHistoryUnlisten = history.listen(this.onWindowResize)
 
@@ -135,7 +136,7 @@ export class Panels extends PureComponent {
   componentWillUnmount() {
     if (this.rafId) window.cancelAnimationFrame(this.rafId)
     window.removeEventListener('resize', this.onWindowResize)
-    window.removeEventListener('keydown', this.onWindowKeyDown)
+    window.removeEventListener('keyup', this.onWindowKeyUp)
     document.removeEventListener('mousemove', this.onMouseMove)
     document.removeEventListener('mouseup', this.onMouseUp)
     if (this.browserHistoryUnlisten) this.browserHistoryUnlisten()
@@ -164,21 +165,23 @@ export class Panels extends PureComponent {
     }
   }
 
-  onWindowKeyDown(e) {
+  onWindowKeyUp(e) {
     const { show } = this.state
-    const { key } = e
     const { keyboardShortcuts } = this
 
-    // Toggle the panel when the closing bracket character is pressed
-    if (key === keyboardShortcuts.togglePanel) {
+    const togglePanels = () => {
+      console.warn('calling togglePanels')
       this.setState({
         show: !show,
         willMinimize: show
       })
-
-      e.preventDefault()
-      e.stopPropagation()
     }
+
+    triggerKeyboardShortcut({
+      event: e,
+      shortcutKey: keyboardShortcuts.togglePanel,
+      shortcutCallback: togglePanels
+    })
   }
 
   onChangePanel(panelId) {

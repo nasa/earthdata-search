@@ -5,6 +5,8 @@ import Adapter from 'enzyme-adapter-react-16'
 import AdvancedSearchModal from '../AdvancedSearchModal'
 import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 
+import * as triggerKeyboardShortcut from '../../../util/triggerKeyboardShortcut'
+
 Enzyme.configure({ adapter: new Adapter() })
 
 const windowEventMap = {}
@@ -111,16 +113,21 @@ describe('AdvancedSearchModal component', () => {
         const preventDefaultMock = jest.fn()
         const stopPropagationMock = jest.fn()
 
+        const shortcutSpy = jest.spyOn(triggerKeyboardShortcut, 'triggerKeyboardShortcut')
+
         const { props } = setup({
           isOpen: false
         })
 
-        windowEventMap.keydown({
+        windowEventMap.keyup({
           key: 'a',
+          tagName: 'body',
+          type: 'keyup',
           preventDefault: preventDefaultMock,
           stopPropagation: stopPropagationMock
         })
 
+        expect(shortcutSpy).toHaveBeenCalledTimes(1)
         expect(preventDefaultMock).toHaveBeenCalledTimes(1)
         expect(stopPropagationMock).toHaveBeenCalledTimes(1)
         expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
@@ -135,8 +142,10 @@ describe('AdvancedSearchModal component', () => {
           isOpen: true
         })
 
-        windowEventMap.keydown({
+        windowEventMap.keyup({
           key: 'a',
+          tagName: 'body',
+          type: 'keyup',
           preventDefault: preventDefaultMock,
           stopPropagation: stopPropagationMock
         })

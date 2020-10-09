@@ -22,6 +22,8 @@ import Spinner from '../Spinner/Spinner'
 import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+
 import './SearchForm.scss'
 
 class SearchForm extends Component {
@@ -45,7 +47,7 @@ class SearchForm extends Component {
     this.onToggleAdvancedSearch = this.onToggleAdvancedSearch.bind(this)
     this.onToggleFilterStack = this.onToggleFilterStack.bind(this)
     this.onSuggestionHighlighted = this.onSuggestionHighlighted.bind(this)
-    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
+    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
     this.getSuggestionValue = this.getSuggestionValue.bind(this)
     this.renderSuggestion = this.renderSuggestion.bind(this)
     this.selectSuggestion = this.selectSuggestion.bind(this)
@@ -53,7 +55,7 @@ class SearchForm extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', this.onWindowKeyDown)
+    window.addEventListener('keyup', this.onWindowKeyUp)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -65,7 +67,7 @@ class SearchForm extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.onWindowKeyDown)
+    window.removeEventListener('keyup', this.onWindowKeyUp)
   }
 
   onFormSubmit(e) {
@@ -137,20 +139,16 @@ class SearchForm extends Component {
     onToggleAdvancedSearchModal(true)
   }
 
-  onWindowKeyDown(e) {
-    const { key } = e
+  onWindowKeyUp(e) {
     const { inputRef, keyboardShortcuts } = this
-    const inputIsRenderedAndNotFocused = inputRef.current
-    && inputRef.current.input
-    && inputRef.current.input !== document.activeElement
 
-    // Focus the search input when the forward slash key is pressed
-    if (key === keyboardShortcuts.focusSearchInput && inputIsRenderedAndNotFocused) {
-      inputRef.current.input.focus()
+    const focusElement = () => inputRef.current.input.focus()
 
-      e.preventDefault()
-      e.stopPropagation()
-    }
+    triggerKeyboardShortcut({
+      event: e,
+      shortcutKey: keyboardShortcuts.focusSearchInput,
+      shortcutCallback: focusElement
+    })
   }
 
   /**
