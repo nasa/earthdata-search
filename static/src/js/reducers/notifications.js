@@ -1,7 +1,7 @@
 import {
   PUSHING_NOTIFICATION,
   NOTIFICATION_PUSHED,
-  NOTIFICATION_DIMISSED
+  NOTIFICATION_DISMISSED
 } from '../constants/actionTypes'
 
 const initialState = {}
@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
       return state
     case NOTIFICATION_PUSHED:
       return state
-    case NOTIFICATION_DIMISSED:
+    case NOTIFICATION_DISMISSED:
       return state
     default:
       return state

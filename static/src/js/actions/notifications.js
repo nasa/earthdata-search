@@ -129,30 +129,32 @@ export const pushInfoNotification = content => (dispatch) => {
  *
  * @param {React.Node} content
  * @param {string} appearance
- * @param {bool} autoDimiss
+ * @param {bool} autoDismiss
  * @param {number} autoDismissTimeout
  * @param {string} placement
- * @param {function} onDimiss
+ * @param {function} onDismiss
  * @description Generates a notification based on the
  * passed in configuration.
  */
 export const pushNotification = (
   content,
   appearance,
-  autoDimiss,
-  autoDimissTimeout,
+  autoDismiss,
+  autoDismissTimeout,
   placement,
-  onDimiss
+  onDismiss
 ) => (dispatch) => {
   const notification = {
     content,
     appearance,
-    autoDimiss,
-    autoDimissTimeout,
+    autoDismiss,
+    autoDismissTimeout,
     placement
   }
   notification.onDismiss = () => {
-    onDimiss()
+    if (onDismiss) {
+      onDismiss()
+    }
     dispatch(notificationDismissed(notification))
   }
   dispatch(pushingNotification(notification))
