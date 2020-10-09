@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { Container, Row, Col } from 'react-bootstrap'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+
 export class KeyboardShortcutsModal extends Component {
   constructor(props) {
     super(props)
@@ -10,33 +12,28 @@ export class KeyboardShortcutsModal extends Component {
       toggleModal: '?',
       escapeModal: 'Escape'
     }
-    this.onWindowKeyDown = this.onWindowKeyDown.bind(this)
+    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', this.onWindowKeyDown)
+    window.addEventListener('keyup', this.onWindowKeyUp)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.onWindowKeyDown)
+    window.removeEventListener('keyup', this.onWindowKeyUp)
   }
 
-  onWindowKeyDown(e) {
-    const { key } = e
+  onWindowKeyUp(e) {
     const { keyboardShortcuts } = this
     const { isOpen, onToggleKeyboardShortcutsModal } = this.props
-    // Toggle the modal when question key pressed
-    if (key === keyboardShortcuts.toggleModal) {
-      onToggleKeyboardShortcutsModal(!isOpen)
 
-      e.preventDefault()
-      e.stopPropagation()
-    } else if (key === keyboardShortcuts.escapeModal) {
-      if (isOpen) onToggleKeyboardShortcutsModal(false)
+    const toggleModal = () => onToggleKeyboardShortcutsModal(!isOpen)
 
-      e.preventDefault()
-      e.stopPropagation()
-    }
+    triggerKeyboardShortcut({
+      event: e,
+      shortcutKey: keyboardShortcuts.toggleModal,
+      shortcutCallback: toggleModal
+    })
   }
 
   render() {

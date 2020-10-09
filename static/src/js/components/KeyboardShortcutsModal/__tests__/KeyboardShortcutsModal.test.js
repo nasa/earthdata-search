@@ -25,7 +25,7 @@ beforeEach(() => {
   document.removeEventListener = jest.fn()
 })
 
-const setupForModal = (visibility) => {
+const setup = (visibility) => {
   const props = {
     isOpen: visibility,
     onToggleKeyboardShortcutsModal: jest.fn()
@@ -41,38 +41,40 @@ const setupForModal = (visibility) => {
 
 describe('KeyboardShortcutsModal component', () => {
   test('initial state of modal', () => {
-    const { enzymeWrapper } = setupForModal(false)
+    const { enzymeWrapper } = setup(false)
     expect(enzymeWrapper.find(EDSCModal).props().isOpen).toEqual(false)
   })
 
   test('when modal is visible', () => {
-    const { enzymeWrapper } = setupForModal(true)
+    const { enzymeWrapper } = setup(true)
     expect(enzymeWrapper.find(EDSCModal).props().isOpen).toEqual(true)
   })
 
   test('modal should be centered', () => {
-    const { enzymeWrapper } = setupForModal(true)
+    const { enzymeWrapper } = setup(true)
     expect(enzymeWrapper.find(Modal).props().centered).toEqual(true)
   })
 
   test('modal shouldn\'t be empty', () => {
-    const { enzymeWrapper } = setupForModal(true)
+    const { enzymeWrapper } = setup(true)
     expect(enzymeWrapper.find('kbd').length).not.toEqual(0)
   })
 
   test('modal should have a close button', () => {
-    const { enzymeWrapper } = setupForModal(true)
+    const { enzymeWrapper } = setup(true)
     expect(enzymeWrapper.find('button').length).not.toEqual(0)
   })
 })
 
 describe('KeyboardShortcutsModal actions', () => {
   test('keyboard action for displaying the modal', () => {
-    const { props } = setupForModal(false)
+    const { props } = setup(false)
     const preventDefaultMock = jest.fn()
     const stopPropagationMock = jest.fn()
-    windowEventMap.keydown({
+    windowEventMap.keyup({
       key: '?',
+      tagName: 'input',
+      type: 'keyup',
       preventDefault: preventDefaultMock,
       stopPropagation: stopPropagationMock
     })
@@ -82,38 +84,13 @@ describe('KeyboardShortcutsModal actions', () => {
   })
 
   test('keyboard action for closing the modal by pressing ?', () => {
-    const { props } = setupForModal(true)
+    const { props } = setup(true)
     const preventDefaultMock = jest.fn()
     const stopPropagationMock = jest.fn()
-    windowEventMap.keydown({
+    windowEventMap.keyup({
       key: '?',
-      preventDefault: preventDefaultMock,
-      stopPropagation: stopPropagationMock
-    })
-
-    expect(props.onToggleKeyboardShortcutsModal).toHaveBeenCalledTimes(1)
-    expect(props.onToggleKeyboardShortcutsModal).toHaveBeenCalledWith(false)
-  })
-
-  test('modal shouldn\'t pop up by pressing Escape', () => {
-    const { props } = setupForModal(false)
-    const preventDefaultMock = jest.fn()
-    const stopPropagationMock = jest.fn()
-    windowEventMap.keydown({
-      key: 'Escape',
-      preventDefault: preventDefaultMock,
-      stopPropagation: stopPropagationMock
-    })
-
-    expect(props.onToggleKeyboardShortcutsModal).toHaveBeenCalledTimes(0)
-  })
-
-  test('closing the modal by pressing Esc', () => {
-    const { props } = setupForModal(true)
-    const preventDefaultMock = jest.fn()
-    const stopPropagationMock = jest.fn()
-    windowEventMap.keydown({
-      key: 'Escape',
+      tagName: 'input',
+      type: 'keyup',
       preventDefault: preventDefaultMock,
       stopPropagation: stopPropagationMock
     })
@@ -123,7 +100,7 @@ describe('KeyboardShortcutsModal actions', () => {
   })
 
   test('closing the modal by pressing Close button', () => {
-    const { enzymeWrapper } = setupForModal(true)
+    const { enzymeWrapper } = setup(true)
     enzymeWrapper.find('button').simulate('click')
 
     expect(enzymeWrapper.props().onToggleKeyboardShortcutsModal).toHaveBeenCalledTimes(1)

@@ -170,7 +170,6 @@ export class Panels extends PureComponent {
     const { keyboardShortcuts } = this
 
     const togglePanels = () => {
-      console.warn('calling togglePanels')
       this.setState({
         show: !show,
         willMinimize: show
