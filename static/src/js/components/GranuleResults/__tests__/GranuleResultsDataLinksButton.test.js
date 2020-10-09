@@ -4,7 +4,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Dropdown } from 'react-bootstrap'
 
-import { GranuleResultsDataLinksButton } from '../GranuleResultsDataLinksButton'
+import { GranuleResultsDataLinksButton, CustomDataLinksToggle } from '../GranuleResultsDataLinksButton'
 import Button from '../../Button/Button'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -78,7 +78,7 @@ describe('GranuleResultsDataLinksButton component', () => {
   describe('with multiple granule links', () => {
     test('renders the correct element', () => {
       // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-      ReactDOM.createPortal = jest.fn(modal => modal);
+      ReactDOM.createPortal = jest.fn(dropdown => dropdown)
 
       const { enzymeWrapper } = setup({
         dataLinks: [
@@ -95,5 +95,23 @@ describe('GranuleResultsDataLinksButton component', () => {
       })
       expect(enzymeWrapper.type()).toBe(Dropdown)
     })
+  })
+})
+
+describe('CustomDataLinksToggle component', () => {
+  test('calls expected event methods on download click', () => {
+    const mockClickEvent = {
+      stopPropagation: jest.fn(),
+      preventDefault: jest.fn()
+    }
+
+    const mockClickCallback = jest.fn()
+
+    shallow(<CustomDataLinksToggle onClick={mockClickCallback} />)
+      .simulate('click', mockClickEvent)
+
+    expect(mockClickEvent.stopPropagation).toHaveBeenCalled()
+    expect(mockClickEvent.preventDefault).toHaveBeenCalled()
+    expect(mockClickCallback).toHaveBeenCalled()
   })
 })
