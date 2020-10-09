@@ -312,23 +312,25 @@ describe('granuleFilters link', () => {
     test('toggles the granule panel state correctly', () => {
       const preventDefaultMock = jest.fn()
       const stopPropagationMock = jest.fn()
-  
+
       const { props } = setup({
         secondaryOverlayPanel: {
           isOpen: true
         }
       })
-  
+
       // Test thats the panel starts open
       expect(props.secondaryOverlayPanel.isOpen).toEqual(true)
-  
+
       // Trigger the simulated window event
-      windowEventMap.keydown({
+      windowEventMap.keyup({
         key: 'g',
+        tagName: 'body',
+        type: 'keyup',
         preventDefault: preventDefaultMock,
         stopPropagation: stopPropagationMock
-      });
-  
+      })
+
       // Test that the panel is toggled and the event propagation has been prevented
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(1)
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(false)
@@ -336,10 +338,10 @@ describe('granuleFilters link', () => {
       expect(stopPropagationMock).toHaveBeenCalledTimes(1)
     })
 
-    test('does not toggle granule panel', () => {
+    test('does not toggle granule panel when not on the granules page', () => {
       const preventDefaultMock = jest.fn()
       const stopPropagationMock = jest.fn()
-  
+
       const { props } = setup({
         location: {
           pathname: '/search'
@@ -348,17 +350,19 @@ describe('granuleFilters link', () => {
           isOpen: false
         }
       })
-  
+
       // Test thats the panel starts closed
       expect(props.secondaryOverlayPanel.isOpen).toEqual(false)
-  
+
       // Trigger the simulated window event
-      windowEventMap.keydown({
+      windowEventMap.keyup({
         key: 'g',
+        tagName: 'body',
+        type: 'keyup',
         preventDefault: preventDefaultMock,
         stopPropagation: stopPropagationMock
       })
-  
+
       // Test that the panel is not toggled the event propagating
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(0)
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(0)
