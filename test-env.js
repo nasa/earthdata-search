@@ -32,3 +32,10 @@ console.error = consoleError
 
 nock.cleanAll()
 nock.disableNetConnect()
+
+// Mock toast provider
+window.reactToastProvider = {
+  current: {
+    add: jest.fn()
+  }
+}
