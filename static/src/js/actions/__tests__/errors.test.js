@@ -1,12 +1,17 @@
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import { ADD_ERROR, REMOVE_ERROR } from '../../constants/actionTypes'
 import { addError, removeError } from '../errors'
+
+const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
 describe('addError', () => {
-  test('should create an action to update the authToken', () => {
+  test('should create an action to update the authToken', async () => {
+    const store = mockStore({})
     const payload = {
       id: 1,
       title: 'title',
@@ -18,7 +23,9 @@ describe('addError', () => {
       payload
     }
 
-    expect(addError(payload)).toEqual(expectedAction)
+    await store.dispatch(addError(payload))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual(expectedAction)
   })
 })
 
