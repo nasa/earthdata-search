@@ -1,12 +1,16 @@
 import configureMockStore from 'redux-mock-store'
-import uuid from 'uuid/v4'
 import thunk from 'redux-thunk'
 
 import {
   PUSHING_NOTIFICATION,
   NOTIFICATION_PUSHED,
-  NOTIFICATION_DIMISSED
+  NOTIFICATION_DISMISSED
 } from '../../constants/actionTypes'
+
+import {
+  toastType,
+  toastPlacement
+} from '../../constants/enums'
 
 import {
   pushingNotification,
@@ -16,68 +20,67 @@ import {
   pushSuccessNotification,
   pushInfoNotification,
   pushWarningNotification,
-  pushErrorNotification,
-  ToastPosition,
-  ToastType
-} from '../toastNotifications'
+  pushErrorNotification
+} from '../notifications'
 
 const mockStore = configureMockStore([thunk])
 
-describe('toastNotification actions', () => {
+describe('notification actions', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
   describe('pushingNotification', () => {
     test('it should create an action to update the store', () => {
-      const id = uuid()
-      const notification = {
-        id,
-        type: ToastType.info,
-        autoClose: 15000,
-        position: ToastPosition.bottomLeft,
-        hideProgressBar: false,
-        newestOnTop: true,
-        closeOnClick: true,
-        closeButton: true,
-        rtl: false,
-        pauseOnVisibilityChange: true,
-        draggable: false,
-        pauseOnHover: true,
-        style: {
-          color: '#fcfcfc'
-        },
-        progressStyle: {
-          background: 'navy'
-        }
+      const mockNotification = {
+        appearance: toastType.info,
+        autoDismissTimeout: 15000,
+        placement: toastPlacement.bottomLeft
       }
       const expectedAction = {
         type: PUSHING_NOTIFICATION,
-        notification
+        notification: mockNotification
       }
-      expect(pushingNotification(notification)).toEqual(expectedAction)
+      const action = pushingNotification(mockNotification)
+      expect(action.notification.appearance).toEqual(mockNotification.appearance)
+      expect(action.notification.autoDismissTimeout).toEqual(mockNotification.autoDismissTimeout)
+      expect(action.type).toEqual(expectedAction.type)
     })
   })
 
   describe('notificationPushed', () => {
     test('it should create an action to update the store', () => {
-      const id = uuid()
+      const mockNotification = {
+        appearance: toastType.warn,
+        autoDismissTimeout: 15000,
+        placement: toastPlacement.bottomLeft
+      }
       const expectedAction = {
         type: NOTIFICATION_PUSHED,
-        id
+        notification: mockNotification
       }
-      expect(notificationPushed(id)).toEqual(expectedAction)
+      const action = notificationPushed(mockNotification)
+      expect(action.notification.appearance).toEqual(mockNotification.appearance)
+      expect(action.notification.autoDismissTimeout).toEqual(mockNotification.autoDismissTimeout)
+      expect(action.type).toEqual(expectedAction.type)
     })
   })
 
   describe('notificationDismissed', () => {
     test('it should create an action to update the store', () => {
-      const id = uuid()
-      const expectedAction = {
-        type: NOTIFICATION_DIMISSED,
-        id
+      const mockNotification = {
+        appearance: toastType.success,
+        autoDismissTimeout: 30000,
+        placement: toastPlacement.topLeft
       }
-      expect(notificationDismissed(id)).toEqual(expectedAction)
+      const expectedAction = {
+        type: NOTIFICATION_DISMISSED,
+        notification: mockNotification
+      }
+      const action = notificationDismissed(mockNotification)
+      expect(action.notification.appearance).toEqual(mockNotification.appearance)
+      expect(action.notification.autoDismissTimeout).toEqual(mockNotification.autoDismissTimeout)
+      expect(action.type).toEqual(expectedAction.type)
     })
   })
 
@@ -85,25 +88,31 @@ describe('toastNotification actions', () => {
     test('it should dispatch actions to update the store', async () => {
       const store = mockStore({})
       const content = 'Custom notification test!'
-      const type = ToastType.warning
-      const autoClose = 1
-      const position = ToastPosition.bottomCenter
+      const appearance = toastType.warning
+      const placement = toastPlacement.bottomCenter
+      const autoDismiss = true
+      const autoDismissTimeout = 45000
+      const onDismiss = jest.fn()
       await store.dispatch(pushNotification(
         content,
-        type,
-        autoClose,
-        position
+        appearance,
+        autoDismiss,
+        autoDismissTimeout,
+        placement,
+        onDismiss
       ))
       const storeActions = store.getActions()
+      expect(storeActions.length).toEqual(2)
       expect(storeActions[0].type).toEqual(PUSHING_NOTIFICATION)
       expect(storeActions[0].notification.content).toEqual(content)
-      expect(storeActions[0].notification.type).toEqual(type)
-      expect(storeActions[0].notification.autoClose).toEqual(1)
-      expect(storeActions[0].notification.position).toEqual(position)
-      expect(storeActions[0].notification).toHaveProperty('time')
-      expect(storeActions[0].notification).toHaveProperty('id')
+      expect(storeActions[0].notification.appearance).toEqual(appearance)
+      expect(storeActions[0].notification.autoDismiss).toEqual(autoDismiss)
+      expect(storeActions[0].notification.placement).toEqual(placement)
       expect(storeActions[1].type).toEqual(NOTIFICATION_PUSHED)
-      expect(storeActions[1].id).toEqual(storeActions[0].notification.id)
+      expect(storeActions[1].notification.content).toEqual(content)
+      expect(storeActions[1].notification.appearance).toEqual(appearance)
+      expect(storeActions[1].notification.autoDismiss).toEqual(autoDismiss)
+      expect(storeActions[1].notification.placement).toEqual(placement)
     })
   })
 
