@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 import { Dropdown } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
 
@@ -12,31 +14,29 @@ import './GranuleResultsDataLinksButton.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Function} props.onClick - The click callback.null
  */
-class CustomDataLinksToggle extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick(e) {
-    e.preventDefault()
-    const { onClick } = this.props
+// eslint-disable-next-line react/display-name
+export const CustomDataLinksToggle = React.forwardRef(({
+  onClick
+}, ref) => {
+  const handleClick = (e) => {
     onClick(e)
+
+    e.preventDefault()
+    e.stopPropagation()
   }
 
-  render() {
-    return (
-      <Button
-        className="button granule-results-data-links-button__button"
-        type="button"
-        label="Download single granule data"
-        onClick={this.handleClick}
-      >
-        <i className="fa fa-download" />
-      </Button>
-    )
-  }
-}
+  return (
+    <Button
+      className="button granule-results-data-links-button__button"
+      type="button"
+      ref={ref}
+      label="Download single granule data"
+      onClick={handleClick}
+    >
+      <i className="fa fa-download" />
+    </Button>
+  )
+})
 
 CustomDataLinksToggle.propTypes = {
   onClick: PropTypes.func.isRequired
@@ -60,31 +60,36 @@ export const GranuleResultsDataLinksButton = ({
     return (
       <Dropdown>
         <Dropdown.Toggle as={CustomDataLinksToggle} />
-        <Dropdown.Menu>
-          {
-            dataLinks.map((dataLink, i) => {
-              const key = `data_link_${i}`
-              let dataLinkTitle = dataLink.title
+        {
+          ReactDOM.createPortal(
+            <Dropdown.Menu>
+              {
+                dataLinks.map((dataLink, i) => {
+                  const key = `data_link_${i}`
+                  let dataLinkTitle = dataLink.title
 
-              if (!dataLinkTitle) dataLinkTitle = getFilenameFromPath(dataLink.href)
+                  if (!dataLinkTitle) dataLinkTitle = getFilenameFromPath(dataLink.href)
 
-              return (
-                <Dropdown.Item
-                  key={key}
-                  href={dataLink.href}
-                  onClick={() => onMetricsDataAccess({
-                    type: 'single_granule_download',
-                    collections: [{
-                      collectionId
-                    }]
-                  })}
-                >
-                  {dataLinkTitle}
-                </Dropdown.Item>
-              )
-            })
-          }
-        </Dropdown.Menu>
+                  return (
+                    <Dropdown.Item
+                      key={key}
+                      href={dataLink.href}
+                      onClick={() => onMetricsDataAccess({
+                        type: 'single_granule_download',
+                        collections: [{
+                          collectionId
+                        }]
+                      })}
+                    >
+                      {dataLinkTitle}
+                    </Dropdown.Item>
+                  )
+                })
+              }
+            </Dropdown.Menu>,
+            document.querySelector('#root')
+          )
+        }
       </Dropdown>
     )
   }

@@ -192,6 +192,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation
           boxes
           conceptId
+          coordinateSystem
           dataCenter
           dataCenters
           doi
@@ -205,6 +206,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           spatialExtent
           tags
           temporalExtents
+          tilingIdentificationSystems
           title
           versionId
           services {
@@ -259,11 +261,13 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           boxes,
           conceptId,
+          coordinateSystem,
           dataCenter,
           hasGranules,
           services,
           shortName,
           tags,
+          tilingIdentificationSystems,
           title,
           variables,
           versionId
@@ -275,17 +279,19 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           abstract,
           archiveAndDistributionInformation,
           boxes,
-          id: conceptId,
+          coordinateSystem,
           dataCenter,
           hasAllMetadata: true,
           hasGranules,
+          id: conceptId,
+          isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', ''),
           services,
           shortName,
           tags,
+          tilingIdentificationSystems,
           title,
           variables,
           versionId,
-          isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', ''),
           ...focusedMetadata
         })
 

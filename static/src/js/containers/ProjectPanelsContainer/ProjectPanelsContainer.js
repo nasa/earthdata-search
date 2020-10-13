@@ -22,7 +22,9 @@ const mapStateToProps = state => ({
   project: state.project,
   projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   shapefileId: state.shapefile.shapefileId,
-  spatial: state.query.collection.spatial
+  spatial: state.query.collection.spatial,
+  temporal: state.query.collection.temporal,
+  overrideTemporal: state.query.collection.overrideTemporal
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -77,7 +79,9 @@ export const ProjectPanelsContainer = ({
   project,
   projectCollectionsMetadata,
   shapefileId,
-  spatial
+  spatial,
+  temporal,
+  overrideTemporal
 }) => (
   <ProjectPanels
     dataQualitySummaries={dataQualitySummaries}
@@ -103,11 +107,15 @@ export const ProjectPanelsContainer = ({
     projectCollectionsMetadata={projectCollectionsMetadata}
     shapefileId={shapefileId}
     spatial={spatial}
+    temporal={temporal}
+    overrideTemporal={overrideTemporal}
   />
 )
 
 ProjectPanelsContainer.defaultProps = {
-  shapefileId: null
+  shapefileId: null,
+  temporal: {},
+  overrideTemporal: {}
 }
 
 ProjectPanelsContainer.propTypes = {
@@ -133,7 +141,9 @@ ProjectPanelsContainer.propTypes = {
   project: PropTypes.shape({}).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({}).isRequired
+  spatial: PropTypes.shape({}).isRequired,
+  temporal: PropTypes.shape({}),
+  overrideTemporal: PropTypes.shape({})
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectPanelsContainer)

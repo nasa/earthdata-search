@@ -29,7 +29,7 @@ import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
-
+import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
 
@@ -133,6 +133,7 @@ class App extends Component {
                   <FooterContainer />
                   <Switch>
                     <Route path={this.portalPaths('/')}>
+                      <KeyboardShortcutsModalContainer />
                       <ShapefileUploadModalContainer />
                       <ShapefileDropzoneContainer />
                       <TooManyPointsModalContainer />

@@ -32,7 +32,7 @@ const processColorMap = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  const { Records: sqsRecords = {} } = event
+  const { Records: sqsRecords = [] } = event
 
   if (sqsRecords.length === 0) return
 
@@ -74,8 +74,13 @@ const processColorMap = async (event, context) => {
     const { ColorMap: colorMapArray = [] } = colorMaps
 
     const colorMapList = [].concat(colorMapArray)
-    await colorMapList.forEachAsync(async (colorMap) => {
-      if (colorMapsToIgnore.includes(colorMap.title)) {
+    await colorMapList.filter(Boolean).forEachAsync(async (colorMap) => {
+      const {
+        title,
+        units = ''
+      } = colorMap
+
+      if (colorMapsToIgnore.includes(title)) {
         return
       }
 
@@ -138,10 +143,10 @@ const processColorMap = async (event, context) => {
           }
 
           scaleColors.push(hexColorString)
-          scaleLabels.push(`${label} ${colorMap.units}`)
+          scaleLabels.push(`${label} ${units}`.trim())
         } else {
           classColors.push(hexColorString)
-          classLabels.push(`${label} ${colorMap.units}`)
+          classLabels.push(`${label} ${units}`.trim())
         }
       })
 

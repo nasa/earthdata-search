@@ -97,7 +97,6 @@ export const extractGranuleSearchParams = (state, collectionId) => {
 
   const {
     byId: collectionQueryById = {},
-    gridName,
     spatial = {},
     overrideTemporal = {},
     temporal = {}
@@ -127,7 +126,8 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     pageNum = 1,
     readableGranuleName,
     sortKey,
-    temporal: granuleTemporal = {}
+    temporal: granuleTemporal = {},
+    tilingSystem
   } = collectionGranuleQuery
 
   const granuleParams = {
@@ -142,7 +142,6 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     excludedGranuleIds,
     granuleTemporal,
     gridCoords,
-    gridName,
     line,
     onlineOnly,
     orbitNumber,
@@ -152,7 +151,8 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     polygon,
     readableGranuleName,
     sortKey,
-    temporal
+    temporal,
+    tilingSystem
   }
 
   // Apply any overrides for advanced search
@@ -216,7 +216,6 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     excludedGranuleIds = [],
     granuleTemporal,
     gridCoords,
-    gridName,
     line,
     onlineOnly,
     orbitNumber,
@@ -227,7 +226,8 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     readableGranuleName,
     removedGranuleIds = [],
     sortKey,
-    temporal
+    temporal,
+    tilingSystem
   } = granuleParams
 
   const exclude = {}
@@ -297,7 +297,6 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     equatorCrossingLongitude,
     exclude,
     gridCoords: encodeGridCoords(gridCoords),
-    gridName,
     isCwic,
     line,
     onlineOnly,
@@ -308,7 +307,8 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     polygon,
     readableGranuleName,
     sortKey,
-    temporalString
+    temporalString,
+    tilingSystem
   }
 }
 
@@ -333,7 +333,6 @@ export const buildGranuleSearchParams = (params) => {
     equatorCrossingDate,
     equatorCrossingLongitude,
     exclude,
-    gridName,
     gridCoords,
     line,
     onlineOnly,
@@ -344,14 +343,15 @@ export const buildGranuleSearchParams = (params) => {
     polygon,
     readableGranuleName,
     sortKey,
-    temporalString
+    temporalString,
+    tilingSystem
   } = params
 
   let twoDCoordinateSystem = {}
 
-  if (gridName) {
+  if (tilingSystem) {
     twoDCoordinateSystem = {}
-    twoDCoordinateSystem.name = gridName
+    twoDCoordinateSystem.name = tilingSystem
 
     if (gridCoords) twoDCoordinateSystem.coordinates = gridCoords
   }

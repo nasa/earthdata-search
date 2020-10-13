@@ -22,6 +22,8 @@ import Spinner from '../Spinner/Spinner'
 import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+
 import './SearchForm.scss'
 
 class SearchForm extends Component {
@@ -34,16 +36,26 @@ class SearchForm extends Component {
       selectedSuggestion: null
     }
 
+    this.inputRef = React.createRef()
+    this.keyboardShortcuts = {
+      focusSearchInput: '/'
+    }
+
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onAutoSuggestChange = this.onAutoSuggestChange.bind(this)
     this.onSearchClear = this.onSearchClear.bind(this)
     this.onToggleAdvancedSearch = this.onToggleAdvancedSearch.bind(this)
     this.onToggleFilterStack = this.onToggleFilterStack.bind(this)
     this.onSuggestionHighlighted = this.onSuggestionHighlighted.bind(this)
+    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
     this.getSuggestionValue = this.getSuggestionValue.bind(this)
     this.renderSuggestion = this.renderSuggestion.bind(this)
     this.selectSuggestion = this.selectSuggestion.bind(this)
     this.shouldRenderSuggestions = this.shouldRenderSuggestions.bind(this)
+  }
+
+  componentDidMount() {
+    window.addEventListener('keyup', this.onWindowKeyUp)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,6 +64,10 @@ class SearchForm extends Component {
     if (keywordSearch !== nextProps.keywordSearch) {
       this.setState({ keywordSearch: nextProps.keywordSearch })
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.onWindowKeyUp)
   }
 
   onFormSubmit(e) {
@@ -121,6 +137,18 @@ class SearchForm extends Component {
     } = this.props
 
     onToggleAdvancedSearchModal(true)
+  }
+
+  onWindowKeyUp(e) {
+    const { inputRef, keyboardShortcuts } = this
+
+    const focusElement = () => inputRef.current.input.focus()
+
+    triggerKeyboardShortcut({
+      event: e,
+      shortcutKey: keyboardShortcuts.focusSearchInput,
+      shortcutCallback: focusElement
+    })
   }
 
   /**
@@ -270,6 +298,7 @@ class SearchForm extends Component {
         <div className="search-form__primary">
           <form className="search-form__form" onSubmit={this.onFormSubmit}>
             <Autosuggest
+              ref={this.inputRef}
               suggestions={suggestions}
               onSuggestionsFetchRequested={onFetchAutocomplete}
               onSuggestionsClearRequested={onClearAutocompleteSuggestions}

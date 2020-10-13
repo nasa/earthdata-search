@@ -50,7 +50,6 @@ import {
   getFocusedCollectionMetadata
 } from '../selectors/collectionMetadata'
 import { getProjectCollectionsIds } from '../selectors/project'
-
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { eventEmitter } from '../events/events'
 
@@ -330,7 +329,10 @@ export const getSearchGranules = () => (dispatch, getState) => {
   const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
 
   // Format and structure data from Redux to be sent to CMR
-  const granuleParams = prepareGranuleParams(collectionMetadata, extractedGranuleParams)
+  const granuleParams = prepareGranuleParams(
+    collectionMetadata,
+    extractedGranuleParams
+  )
 
   // If cancel token is set, cancel the previous request(s)
   if (granuleSearchCancelTokens[collectionId]) {
@@ -459,7 +461,10 @@ export const getProjectGranules = () => (dispatch, getState) => {
     const collectionMetadata = getCollectionMetadata(collectionId, collectionsMetadata)
 
     // Format and structure data from Redux to be sent to CMR
-    const granuleParams = prepareGranuleParams(collectionMetadata, extractedGranuleParams)
+    const granuleParams = prepareGranuleParams(
+      collectionMetadata,
+      extractedGranuleParams
+    )
 
     // If cancel token is set, cancel the previous request(s)
     if (projectGranuleCancelTokens[collectionId]) {
@@ -484,6 +489,9 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
     if (isCwic) {
       requestObject = new CwicGranuleRequest(authToken)
+
+      // Provide the correctly named collection id parameter
+      searchParams.echoCollectionId = collectionId
 
       const { polygon } = searchParams
 

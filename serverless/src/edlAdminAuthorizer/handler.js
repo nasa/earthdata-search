@@ -1,7 +1,6 @@
-import { getAdminUsers } from '../util/configUtil'
+import { getAdminUsers } from '../util/getAdminUsers'
 import { generatePolicy } from '../util/authorizer/generatePolicy'
 import { validateToken } from '../util/authorizer/validateToken'
-
 
 /**
  * Custom authorizer for API Gateway authentication for the admin routes
@@ -13,7 +12,10 @@ const edlAdminAuthorizer = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  const { authorizationToken, methodArn } = event
+  const {
+    authorizationToken = '',
+    methodArn
+  } = event
 
   // authorizationToken comes in as `Bearer: asdf.qwer.hjkl` but we only need the actual token
   const tokenParts = authorizationToken.split(' ')
@@ -35,6 +37,7 @@ const edlAdminAuthorizer = async (event, context) => {
   }
 
   console.log(`${username} is not authorized to access the site admin.`)
+
   throw new Error('Unauthorized')
 }
 

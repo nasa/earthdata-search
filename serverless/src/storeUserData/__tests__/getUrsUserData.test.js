@@ -1,6 +1,7 @@
 import request from 'request-promise'
 import { getUrsUserData } from '../getUrsUserData'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getEdlConfig from '../../util/getEdlConfig'
 import * as getClientId from '../../../../sharedUtils/getClientId'
 
 beforeEach(() => {
@@ -12,9 +13,13 @@ describe('getUrsUserData', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       edlHost: 'http://urs.example.com'
     }))
-
+    jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+      client: {
+        id: 'clientId'
+      }
+    }))
     jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
-      clientId: 'test-clientId'
+      clientId: 'clientId'
     }))
     jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ lambda: 'eed-edsc-test-serverless-lambda' }))
 
@@ -25,7 +30,7 @@ describe('getUrsUserData', () => {
 
     expect(ursGetMock).toBeCalledTimes(1)
     expect(ursGetMock).toBeCalledWith({
-      uri: 'http://urs.example.com/api/users/test_user?client_id=test-clientId',
+      uri: 'http://urs.example.com/api/users/test_user?client_id=clientId',
       headers: {
         Authorization: 'Bearer fake.access.token',
         'Client-Id': 'eed-edsc-test-serverless-lambda'

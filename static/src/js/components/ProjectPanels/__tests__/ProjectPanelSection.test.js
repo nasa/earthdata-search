@@ -77,8 +77,6 @@ describe('ProjectPanelSelection', () => {
       nested
     })
 
-    console.log('enzymeWrapper', enzymeWrapper.debug())
-
     test('adds the modifier class', () => {
       expect(enzymeWrapper.props().className).toContain('project-panel-section--is-nested')
     })

@@ -10,6 +10,17 @@ import Skeleton from '../../Skeleton/Skeleton'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+const windowEventMap = {}
+
+beforeEach(() => {
+  window.addEventListener = jest.fn((event, cb) => {
+    windowEventMap[event] = cb
+  })
+  window.removeEventListener = jest.fn()
+  window.requestAnimationFrame = jest.fn()
+  window.cancelAnimationFrame = jest.fn()
+})
+
 function setup(overrideProps) {
   const props = {
     collectionMetadata: {
@@ -22,6 +33,7 @@ function setup(overrideProps) {
     },
     focusedCollectionId: 'collectionId',
     location: {
+      pathname: '/search/granules',
       search: '?test=search-value'
     },
     granuleQuery: {
@@ -223,7 +235,7 @@ describe('GranuleResultsHeader component', () => {
 
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
       expect(props.onApplyGranuleFilters).toHaveBeenCalledWith({
-        readableGranuleName: null
+        readableGranuleName: []
       })
     })
   })
@@ -295,4 +307,68 @@ describe('granuleFilters link', () => {
       expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(false)
     })
   })
+
+  describe('when the g key is pressed', () => {
+    test('toggles the granule panel state correctly', () => {
+      const preventDefaultMock = jest.fn()
+      const stopPropagationMock = jest.fn()
+
+      const { props } = setup({
+        secondaryOverlayPanel: {
+          isOpen: true
+        }
+      })
+
+      // Test thats the panel starts open
+      expect(props.secondaryOverlayPanel.isOpen).toEqual(true)
+
+      // Trigger the simulated window event
+      windowEventMap.keyup({
+        key: 'g',
+        tagName: 'body',
+        type: 'keyup',
+        preventDefault: preventDefaultMock,
+        stopPropagation: stopPropagationMock
+      })
+
+      // Test that the panel is toggled and the event propagation has been prevented
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(1)
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(false)
+      expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+      expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+    })
+
+    test('does not toggle granule panel when not on the granules page', () => {
+      const preventDefaultMock = jest.fn()
+      const stopPropagationMock = jest.fn()
+
+      const { props } = setup({
+        location: {
+          pathname: '/search'
+        },
+        secondaryOverlayPanel: {
+          isOpen: false
+        }
+      })
+
+      // Test thats the panel starts closed
+      expect(props.secondaryOverlayPanel.isOpen).toEqual(false)
+
+      // Trigger the simulated window event
+      windowEventMap.keyup({
+        key: 'g',
+        tagName: 'body',
+        type: 'keyup',
+        preventDefault: preventDefaultMock,
+        stopPropagation: stopPropagationMock
+      })
+
+      // Test that the panel is not toggled the event propagating
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(0)
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(0)
+      expect(preventDefaultMock).toHaveBeenCalledTimes(0)
+      expect(stopPropagationMock).toHaveBeenCalledTimes(0)
+    })
+
+  });
 })

@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { getEdlConfig } from '../util/configUtil'
+import { getEdlConfig } from '../util/getEdlConfig'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getClientId } from '../../../sharedUtils/getClientId'
 

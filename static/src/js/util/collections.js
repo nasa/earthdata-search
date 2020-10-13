@@ -54,7 +54,6 @@ export const prepareCollectionParams = (state) => {
   const { collection: collectionQuery } = query
 
   const {
-    gridName = '',
     hasGranulesOrCwic,
     keyword,
     overrideTemporal = {},
@@ -110,7 +109,6 @@ export const prepareCollectionParams = (state) => {
     circle,
     cmrFacets,
     featureFacets,
-    gridName,
     hasGranulesOrCwic,
     keyword,
     line,
@@ -163,7 +161,6 @@ export const buildCollectionSearchParams = (params) => {
     echoCollectionId,
     featureFacets,
     granuleDataFormat,
-    gridName,
     hasGranulesOrCwic,
     instrument,
     keyword,
@@ -188,14 +185,6 @@ export const buildCollectionSearchParams = (params) => {
   // detirmine the next results based on those facets.
   if (Object.keys(viewAllFacets).length) {
     facetsToSend = { ...viewAllFacets }
-  }
-
-  let twoDCoordinateSystem
-
-  if (gridName) {
-    twoDCoordinateSystem = {
-      name: gridName
-    }
   }
 
   // If there is a keyword, add the wildcard character between words and following the final character
@@ -251,7 +240,7 @@ export const buildCollectionSearchParams = (params) => {
     spatialKeyword,
     tagKey,
     temporal: temporalString,
-    twoDCoordinateSystem,
+    twoDCoordinateSystemName: facetsToSend.two_d_coordinate_system_name,
     facetsSize: viewAllFacetsCategory
       ? { [categoryNameToCMRParam(viewAllFacetsCategory)]: 10000 }
       : undefined

@@ -1,5 +1,5 @@
 import { getAccessTokenFromJwtToken } from './getAccessTokenFromJwtToken'
-import { getEdlConfig } from '../configUtil'
+import { getEdlConfig } from '../getEdlConfig'
 
 /**
  * Returns the Echo-Token header for requests to CMR

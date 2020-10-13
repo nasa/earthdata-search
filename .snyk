@@ -4,45 +4,106 @@ version: v1.14.1
 ignore:
   SNYK-JS-NODEFETCH-674311:
     - serverless > node-fetch:
-        reason: >-
-          Permissions issues in NGAP and the inability to use existing resources
-          for items automatically created by Serverless.
-        expires: '2020-10-15T12:29:15.838Z'
+        reason: NGAP Permission issues prevent upgrading.
+        expires: '2020-11-04T13:30:52.992Z'
+      formik > create-react-context > fbjs > isomorphic-fetch > node-fetch:
+        reason: Upgrade to 2.0 (major version) requires code changes
+        expires: '2020-11-04T16:17:42.208Z'
     - serverless > @serverless/enterprise-plugin > node-fetch:
         reason: >-
           Permissions issues in NGAP and the inability to use existing resources
           for items automatically created by Serverless.
         expires: '2020-10-15T12:29:15.839Z'
+      serverless > node-fetch:
+        reason: >-
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.208Z'
     - serverless > @serverless/cli > @serverless/template > @serverless/component-metrics > node-fetch:
         reason: >-
           Permissions issues in NGAP and the inability to use existing resources
           for items automatically created by Serverless.
         expires: '2020-10-15T12:29:15.839Z'
+      serverless > @serverless/enterprise-plugin > isomorphic-fetch > node-fetch:
+        reason: >-
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.209Z'
+    - serverless > @serverless/enterprise-plugin > node-fetch:
+        reason: NGAP Permission issues prevent upgrading.
+        expires: '2020-11-04T13:30:52.994Z'
+      serverless > @serverless/enterprise-plugin > @serverless/platform-sdk > isomorphic-fetch > node-fetch:
+        reason: >-
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.209Z'
+    - serverless > @serverless/cli > @serverless/template > @serverless/component-metrics > node-fetch:
+        reason: NGAP Permission issues prevent upgrading.
+        expires: '2020-11-04T13:30:52.994Z'
+      serverless > @serverless/enterprise-plugin > node-fetch:
+        reason: >-
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.209Z'
+    - recompose > fbjs > isomorphic-fetch > node-fetch:
+        reason: NGAP Permission issues prevent upgrading.
+        expires: '2020-11-04T13:30:52.995Z'
+      serverless > @serverless/cli > @serverless/template > @serverless/component-metrics > node-fetch:
+        reason: >-
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.210Z'
+    - serverless > @serverless/enterprise-plugin > isomorphic-fetch > node-fetch:
+        reason: NGAP Permission issues prevent upgrading.
+        expires: '2020-11-04T13:30:52.993Z'
+    - serverless > @serverless/enterprise-plugin > @serverless/platform-sdk > isomorphic-fetch > node-fetch:
+        reason: NGAP Permission issues prevent upgrading.
+        expires: '2020-11-04T13:30:52.994Z'
   SNYK-JS-BL-608877:
     - serverless > archiver > tar-stream > bl:
         reason: >-
-          Permissions issues in NGAP and the inability to use existing resources
-          for items automatically created by Serverless.
-        expires: '2020-10-15T12:29:15.838Z'
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.208Z'
     - serverless > download > decompress > decompress-tar > tar-stream > bl:
         reason: >-
-          Permissions issues in NGAP and the inability to use existing resources
-          for items automatically created by Serverless.
-        expires: '2020-10-15T12:29:15.838Z'
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.208Z'
     - serverless > download > decompress > decompress-tarbz2 > decompress-tar > tar-stream > bl:
         reason: >-
-          Permissions issues in NGAP and the inability to use existing resources
-          for items automatically created by Serverless.
-        expires: '2020-10-15T12:29:15.839Z'
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.208Z'
     - serverless > download > decompress > decompress-targz > decompress-tar > tar-stream > bl:
         reason: >-
-          Permissions issues in NGAP and the inability to use existing resources
-          for items automatically created by Serverless.
-        expires: '2020-10-15T12:29:15.839Z'
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.209Z'
   SNYK-JS-FLAT-596927:
     - serverless > @serverless/enterprise-plugin > flat:
         reason: >-
-          Permissions issues in NGAP and the inability to use existing resources
-          for items automatically created by Serverless.
-        expires: '2020-10-15T12:29:15.839Z'
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.209Z'
+  SNYK-JS-DECOMPRESSTAR-559095:
+    - serverless > download > decompress > decompress-tar:
+        reason: >-
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.210Z'
+    - serverless > download > decompress > decompress-tarbz2 > decompress-tar:
+        reason: >-
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.210Z'
+    - serverless > download > decompress > decompress-targz > decompress-tar:
+        reason: >-
+          Permissions issues in NGAP and the inability to use existing
+          resources.
+        expires: '2020-11-04T16:17:42.210Z'
+  SNYK-JS-UAPARSERJS-610226:
+    - formik > create-react-context > fbjs > ua-parser-js:
+        reason: Upgrade to 2.0 (major version) requires code changes
+        expires: '2020-11-04T16:17:42.208Z'
 patch: {}

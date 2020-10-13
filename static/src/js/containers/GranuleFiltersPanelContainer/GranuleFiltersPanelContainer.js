@@ -15,7 +15,7 @@ import {
   startBeforeEnd
 } from '../../util/validation'
 
-import { getFocusedCollectionGranuleQuery, getCollectionsQuery } from '../../selectors/query'
+import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import GranuleFiltersActions
@@ -31,7 +31,6 @@ import SecondaryOverlayPanelContainer
 
 const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
-  collectionQuery: getCollectionsQuery(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   temporal: state.query.collection.temporal
 })
@@ -87,14 +86,13 @@ export class GranuleFiltersPanelContainer extends Component {
   render() {
     const {
       collectionMetadata,
-      collectionQuery,
       errors,
       handleBlur,
       handleChange,
       handleSubmit,
       isValid,
-      setFieldValue,
       setFieldTouched,
+      setFieldValue,
       touched,
       values
     } = this.props
@@ -107,7 +105,6 @@ export class GranuleFiltersPanelContainer extends Component {
             granuleFiltersForm={(
               <GranuleFiltersForm
                 collectionMetadata={collectionMetadata}
-                collectionQuery={collectionQuery}
                 values={values}
                 touched={touched}
                 errors={errors}
@@ -144,6 +141,9 @@ const ValidationSchema = (props) => {
       // eslint-disable-next-line no-template-curly-in-string
       maxGreaterThanMin: '${path} should be greater Minimum'
     },
+    gridCoords: {
+      required: 'Grid Coordinates are required when a Tiling System is selected'
+    },
     orbitNumber: {
       invalidNumber: 'Enter a valid number',
       minMax: 'Value must greater than 0.0',
@@ -179,7 +179,12 @@ const ValidationSchema = (props) => {
   }
 
   return Yup.object().shape({
-    gridCoords: Yup.string,
+    tilingSystem: Yup.string(),
+    gridCoords: Yup.string()
+      .when('tilingSystem', {
+        is: tilingSystemValue => tilingSystemValue.length > 0,
+        then: Yup.string().required(errors.gridCoords.required)
+      }),
     cloudCover: Yup.object().shape({
       min: Yup.number()
         .label('Minimum')
@@ -284,7 +289,8 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
       gridCoords = '',
       onlineOnly = false,
       orbitNumber = {},
-      temporal = {}
+      temporal = {},
+      tilingSystem = ''
     } = granuleQuery
 
     const {
@@ -317,6 +323,7 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
 
     return {
       gridCoords: gridCoords || '',
+      tilingSystem: tilingSystem || '',
       dayNightFlag: dayNightFlag || '',
       browseOnly: browseOnly || false,
       onlineOnly: onlineOnly || false,
@@ -358,7 +365,6 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
 
 GranuleFiltersPanelContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
-  collectionQuery: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   errors: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,

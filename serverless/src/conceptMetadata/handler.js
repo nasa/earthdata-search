@@ -1,5 +1,5 @@
 import { parse, stringify } from 'qs'
-import { getEdlConfig } from '../util/configUtil'
+import { getEdlConfig } from '../util/getEdlConfig'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 
 /**

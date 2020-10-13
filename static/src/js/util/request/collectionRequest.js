@@ -66,7 +66,7 @@ export default class CollectionRequest extends CmrRequest {
       'spatial_keyword',
       'tag_key',
       'temporal',
-      'two_d_coordinate_system'
+      'two_d_coordinate_system_name'
     ]
   }
 
@@ -91,7 +91,8 @@ export default class CollectionRequest extends CmrRequest {
       'provider',
       'sort_key',
       'spatial_keyword',
-      'tag_key'
+      'tag_key',
+      'two_d_coordinate_system_name'
     ]
   }
 

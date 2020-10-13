@@ -34,9 +34,9 @@ const submitRetrieval = async (event, context) => {
 
   const jwtToken = getJwtToken(event)
 
-  // TODO: Determine why jest wont mock this correctly if this is wrapped
-  // in a cehck to ensure that its not already set
-  sqs = new AWS.SQS(getSqsConfig())
+  if (sqs == null) {
+    sqs = new AWS.SQS(getSqsConfig())
+  }
 
   const {
     access_token: accessToken,

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
 import classNames from 'classnames'
-import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
+import MoreActionsToggle from '../CustomToggle/MoreActionsToggle'
 
 export const MoreActionsDropdown = ({
   alignRight,
@@ -30,7 +30,7 @@ export const MoreActionsDropdown = ({
       <Dropdown className="more-actions-dropdown__dropdown">
         <Dropdown.Toggle
           className="more-actions-dropdown__toggle"
-          as={ToggleMoreActions}
+          as={MoreActionsToggle}
         />
         {
           ReactDOM.createPortal(

@@ -10,7 +10,6 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    onToggleSelectingNewGrid: jest.fn(),
     onToggleShapefileUploadModal: jest.fn()
   }
 
@@ -33,13 +32,12 @@ describe('SpatialSelectionDropdown component', () => {
 
     const dropdowns = enzymeWrapper.find(Dropdown.Item)
 
-    expect(dropdowns.length).toEqual(6)
+    expect(dropdowns.length).toEqual(5)
     expect(dropdowns.at(0).props().label).toEqual('Select Polygon')
     expect(dropdowns.at(1).props().label).toEqual('Select Rectangle')
     expect(dropdowns.at(2).props().label).toEqual('Select Point')
     expect(dropdowns.at(3).props().label).toEqual('Select Circle')
     expect(dropdowns.at(4).props().label).toEqual('Select Shapefile')
-    expect(dropdowns.at(5).props().label).toEqual('Select Grid Coordinates')
   })
 
   test('clicking the polygon dropdown emits an event', () => {
@@ -99,16 +97,5 @@ describe('SpatialSelectionDropdown component', () => {
 
     expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
     expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(true)
-  })
-
-  test('clicking the grid coordinates dropdown calls onToggleSelectingNewGrid', () => {
-    const { enzymeWrapper, props } = setup()
-
-    const dropdowns = enzymeWrapper.find(Dropdown.Item)
-
-    dropdowns.at(5).simulate('click')
-
-    expect(props.onToggleSelectingNewGrid).toHaveBeenCalledTimes(1)
-    expect(props.onToggleSelectingNewGrid).toHaveBeenCalledWith(true)
   })
 })

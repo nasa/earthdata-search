@@ -8,7 +8,7 @@ export const getLambdaConfig = () => {
   }
 
   if (process.env.IS_OFFLINE) {
-    // The endpoint should be point to the serverless offline host:port
+    // The endpoint should point to the serverless offline host:port
     return {
       ...productionConfig,
       region: 'us-east-1',

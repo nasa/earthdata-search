@@ -3,10 +3,10 @@ import {
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
-  TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_SPATIAL_POLYGON_WARNING,
   TOGGLE_TOO_MANY_POINTS_MODAL,
@@ -38,11 +38,6 @@ export const toggleSecondaryOverlayPanel = state => ({
   payload: state
 })
 
-export const toggleSelectingNewGrid = state => ({
-  type: TOGGLE_SELECTING_NEW_GRID,
-  payload: state
-})
-
 export const toggleAdvancedSearchModal = state => ({
   type: TOGGLE_ADVANCED_SEARCH_MODAL,
   payload: state
@@ -70,5 +65,10 @@ export const toggleAboutCwicModal = state => ({
 
 export const toggleSpatialPolygonWarning = state => ({
   type: TOGGLE_SPATIAL_POLYGON_WARNING,
+  payload: state
+})
+
+export const toggleKeyboardShortcutsModal = state => ({
+  type: TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   payload: state
 })

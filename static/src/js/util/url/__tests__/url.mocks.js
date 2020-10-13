@@ -8,7 +8,8 @@ export const emptyDecodedResult = {
     platform_h: undefined,
     processing_level_id_h: undefined,
     project_h: undefined,
-    science_keywords_h: undefined
+    science_keywords_h: undefined,
+    two_d_coordinate_system_name: undefined
   },
   featureFacets: {
     customizable: false,
@@ -24,7 +25,6 @@ export const emptyDecodedResult = {
     collection: {
       byId: {},
       pageNum: 1,
-      gridName: undefined,
       keyword: undefined,
       overrideTemporal: {},
       spatial: {

@@ -1,5 +1,7 @@
 import request from 'request-promise'
+
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
@@ -7,7 +9,6 @@ import { parseError } from '../../../sharedUtils/parseError'
 import { pick } from '../util/pick'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 import { prepKeysForCmr } from '../../../sharedUtils/prepKeysForCmr'
-import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Perform an authenticated CMR concept search
@@ -17,7 +18,11 @@ import { getClientId } from '../../../sharedUtils/getClientId'
 const retrieveConcept = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { headers, queryStringParameters } = event
+  const {
+    headers = {},
+    pathParameters = {},
+    queryStringParameters = {}
+  } = event
 
   // The 'Accept' header contains the UMM version
   const providedHeaders = pick(headers, ['Accept'])
@@ -28,7 +33,9 @@ const retrieveConcept = async (event) => {
   const queryParams = prepKeysForCmr(obj)
 
   const jwtToken = getJwtToken(event)
-  const path = `/search/concepts/${event.pathParameters.id}?${queryParams}`
+
+  const { id } = pathParameters
+  const path = `/search/concepts/${id}?${queryParams}`
 
   try {
     const response = await request.get({

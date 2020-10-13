@@ -115,6 +115,12 @@ const Facets = (props) => {
     autocompleteType: 'granule_data_format'
   }
 
+  const tilingSystem = {
+    ...cmrFacetDefaults,
+    title: 'Tiling System',
+    autocompleteType: 'two_d_coordinate_system_name'
+  }
+
   const facetsTemplate = [
     featuresFacet,
     keywordsFacet,
@@ -123,7 +129,8 @@ const Facets = (props) => {
     organizationsFacet,
     projectsTemplate,
     processingLevels,
-    formats
+    formats,
+    tilingSystem
   ]
 
   // If all feature facets were disabled, don't show the featuresFacet group
