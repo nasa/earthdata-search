@@ -38,7 +38,6 @@ import adminIsAuthorizedReducer from './admin/isAuthorized'
 import adminRetrievalsReducer from './admin/retrievals'
 import preferencesReducer from './preferences'
 import autocompleteReducer from './autocomplete'
-import notificationsReducer from './notifications'
 
 export default history => combineReducers({
   admin: combineReducers({
@@ -84,6 +83,5 @@ export default history => combineReducers({
   }),
   shapefile: shapefileReducer,
   timeline: timelineReducer,
-  notifications: notificationsReducer,
   ui: uiReducer
 })
