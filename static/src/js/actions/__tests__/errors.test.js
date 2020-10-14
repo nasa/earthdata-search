@@ -1,24 +1,66 @@
+jest.mock('../../util/addToast', () => jest.fn())
+
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import { ADD_ERROR, REMOVE_ERROR } from '../../constants/actionTypes'
 import { addError, removeError } from '../errors'
+import addToastMock from '../../util/addToast'
+
+const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
 describe('addError', () => {
-  test('should create an action to update the authToken', () => {
-    const payload = {
+  test('should call addToast with correct params', async () => {
+    const store = mockStore({})
+    const toastPayload = {
       id: 1,
       title: 'title',
-      message: 'message'
+      message: 'message',
+      notificationType: 'toast'
     }
 
-    const expectedAction = {
+    const bannerPayload = {
+      id: 1,
+      title: 'title',
+      message: 'Banner payload message.',
+      notificationType: 'banner'
+    }
+
+    const nonePayload = {
+      id: 1,
+      title: 'title',
+      message: 'message',
+      notificationType: 'none'
+    }
+
+    const expectedAction0 = {
       type: ADD_ERROR,
-      payload
+      payload: bannerPayload
     }
 
-    expect(addError(payload)).toEqual(expectedAction)
+    await store.dispatch(addError(toastPayload))
+    let storeActions = store.getActions()
+    // no action should be pushed
+    expect(storeActions.length).toEqual(0)
+    expect(addToastMock).toHaveBeenCalledTimes(1)
+    expect(addToastMock).toHaveBeenCalledWith(toastPayload.message, {
+      appearance: 'error',
+      autoDismiss: false
+    })
+
+    await store.dispatch(addError(bannerPayload))
+    storeActions = store.getActions()
+    // Action does get pushed
+    expect(storeActions[0]).toEqual(expectedAction0)
+    expect(storeActions[0].type).toEqual(ADD_ERROR)
+
+    await store.dispatch(addError(nonePayload))
+    storeActions = store.getActions()
+    // No new action pushed
+    expect(storeActions.length).toEqual(1)
   })
 })
 

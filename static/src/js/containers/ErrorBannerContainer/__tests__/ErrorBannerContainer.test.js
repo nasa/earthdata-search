@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import { ErrorBannerContainer } from '../ErrorBannerContainer'
 import Banner from '../../../components/Banner/Banner'
+import { displayNotificationType } from '../../../constants/enums'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -12,7 +13,8 @@ function setup(overrideProps) {
     errors: [{
       id: 1,
       title: 'title',
-      message: 'message'
+      message: 'message',
+      notificationType: displayNotificationType.banner
     }],
     onRemoveError: jest.fn(),
     ...overrideProps

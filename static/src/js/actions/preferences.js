@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken'
 
 import PreferencesRequest from '../util/request/preferencesRequest'
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../constants/actionTypes'
+import { displayNotificationType } from '../constants/enums'
+import addToast from '../util/addToast'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { handleError } from './errors'
 
@@ -39,8 +41,11 @@ export const updatePreferences = data => (dispatch, getState) => {
 
       dispatch(updateAuthTokenFromHeaders(headers))
       dispatch(setPreferences(preferences))
-
       dispatch(setIsSubmitting(false))
+      addToast('Preferences saved!', {
+        appearance: 'success',
+        autoDismiss: true
+      })
     })
     .catch((error) => {
       dispatch(setIsSubmitting(false))
@@ -48,7 +53,8 @@ export const updatePreferences = data => (dispatch, getState) => {
         error,
         action: 'updatePreferences',
         resource: 'preferences',
-        requestObject
+        requestObject,
+        notificationType: displayNotificationType.toast
       }))
     })
 
