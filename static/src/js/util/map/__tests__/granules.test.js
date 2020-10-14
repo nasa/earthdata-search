@@ -1,6 +1,5 @@
 import {
-  isClockwise,
-  getlprojection
+  isClockwise
 } from '../granules'
 
 import {
@@ -102,23 +101,5 @@ describe('granules#getRectangles', () => {
 
   test('returns an empty array if no rectangles exist', () => {
     expect(getRectangles({})).toEqual([])
-  })
-})
-
-describe('granules#getlprojection', () => {
-  test('returns epsg4326 for geo', () => {
-    expect(getlprojection({ geographic: true })).toEqual(projections.geographic)
-  })
-
-  test('returns epsg3031 for arctic', () => {
-    expect(getlprojection({ arctic: true })).toEqual(projections.arctic)
-  })
-
-  test('returns epsg3413 for antarctic', () => {
-    expect(getlprojection({ antarctic: true })).toEqual(projections.antarctic)
-  })
-
-  test('returns an empty string for anything else', () => {
-    expect(getlprojection({})).toEqual('')
   })
 })

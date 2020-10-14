@@ -192,4 +192,61 @@ export const gibsResponse = {
   }
 }
 
-export default gibsResponse
+export const capabilitiesResponse = `<Capabilities
+  xmlns="http://www.opengis.net/wmts/1.0"
+  xmlns:ows="http://www.opengis.net/ows/1.1"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd" version="1.0.0">
+  <Contents>
+      <TileMatrixSet>
+          <ows:Identifier>2km</ows:Identifier>
+          <ows:SupportedCRS>urn:ogc:def:crs:OGC:1.3:CRS84</ows:SupportedCRS>
+          <TileMatrix>
+              <ows:Identifier>0</ows:Identifier>
+              <ScaleDenominator>223632905.6114871</ScaleDenominator>
+              <TopLeftCorner>-180 90</TopLeftCorner>
+              <TileWidth>512</TileWidth>
+              <TileHeight>512</TileHeight>
+              <MatrixWidth>2</MatrixWidth>
+              <MatrixHeight>1</MatrixHeight>
+          </TileMatrix>
+          <TileMatrix>
+              <ows:Identifier>1</ows:Identifier>
+              <ScaleDenominator>111816452.8057436</ScaleDenominator>
+              <TopLeftCorner>-180 90</TopLeftCorner>
+              <TileWidth>512</TileWidth>
+              <TileHeight>512</TileHeight>
+              <MatrixWidth>3</MatrixWidth>
+              <MatrixHeight>2</MatrixHeight>
+          </TileMatrix>
+          <TileMatrix>
+              <ows:Identifier>2</ows:Identifier>
+              <ScaleDenominator>55908226.40287178</ScaleDenominator>
+              <TopLeftCorner>-180 90</TopLeftCorner>
+              <TileWidth>512</TileWidth>
+              <TileHeight>512</TileHeight>
+              <MatrixWidth>5</MatrixWidth>
+              <MatrixHeight>3</MatrixHeight>
+          </TileMatrix>
+      </TileMatrixSet>
+  </Contents>
+  <ServiceMetadataURL xlink:href="https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/1.0.0/WMTSCapabilities.xml"/>
+</Capabilities>`
+
+export const matrixLimits = {
+  '2km': {
+    0: {
+      matrixHeight: 1,
+      matrixWidth: 2
+    },
+    1: {
+      matrixHeight: 2,
+      matrixWidth: 3
+    },
+    2: {
+      matrixHeight: 3,
+      matrixWidth: 5
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { gibsResponse } from './mocks'
+import { gibsResponse, matrixLimits } from './mocks'
 import { constructLayerTagData } from '../constructLayerTagData'
 
 beforeEach(() => {
@@ -15,6 +15,7 @@ describe('constructLayerTagData', () => {
     const { [product]: productObject } = products
 
     testingLayer.product = productObject
+    testingLayer.matrixLimits = matrixLimits
 
     const response = constructLayerTagData(testingLayer)
 
@@ -28,11 +29,14 @@ describe('constructLayerTagData', () => {
         data: {
           antarctic: false,
           antarctic_resolution: null,
+          antarctic_tile_matrix_limits: null,
           arctic: false,
           arctic_resolution: null,
+          arctic_tile_matrix_limits: null,
           format: 'png',
           geographic: true,
           geographic_resolution: '2km',
+          geographic_tile_matrix_limits: matrixLimits,
           group: 'overlays',
           match: {
             day_night_flag: 'NIGHT',
@@ -57,6 +61,7 @@ describe('constructLayerTagData', () => {
     const { [product]: productObject } = products
 
     testingLayer.product = productObject
+    testingLayer.matrixLimits = matrixLimits
 
     const response = constructLayerTagData(testingLayer)
 
@@ -70,11 +75,14 @@ describe('constructLayerTagData', () => {
         data: {
           antarctic: false,
           antarctic_resolution: null,
+          antarctic_tile_matrix_limits: null,
           arctic: false,
           arctic_resolution: null,
+          arctic_tile_matrix_limits: null,
           format: 'png',
           geographic: true,
           geographic_resolution: '2km',
+          geographic_tile_matrix_limits: matrixLimits,
           group: 'overlays',
           match: {
             day_night_flag: 'NIGHT'
@@ -98,6 +106,7 @@ describe('constructLayerTagData', () => {
     const { [product]: productObject } = products
 
     testingLayer.product = productObject
+    testingLayer.matrixLimits = matrixLimits
 
     const response = constructLayerTagData(testingLayer)
 
@@ -111,11 +120,14 @@ describe('constructLayerTagData', () => {
         data: {
           antarctic: false,
           antarctic_resolution: null,
+          antarctic_tile_matrix_limits: null,
           arctic: false,
           arctic_resolution: null,
+          arctic_tile_matrix_limits: null,
           format: 'png',
           geographic: true,
           geographic_resolution: '2km',
+          geographic_tile_matrix_limits: matrixLimits,
           group: 'overlays',
           match: {
             day_night_flag: 'NIGHT',
@@ -149,6 +161,7 @@ describe('constructLayerTagData', () => {
       }
     }
     testingLayer.product = productObject
+    testingLayer.matrixLimits = matrixLimits
 
     const response = constructLayerTagData(testingLayer)
 
@@ -161,11 +174,14 @@ describe('constructLayerTagData', () => {
       data: {
         antarctic: false,
         antarctic_resolution: null,
+        antarctic_tile_matrix_limits: null,
         arctic: false,
         arctic_resolution: null,
+        arctic_tile_matrix_limits: null,
         format: 'png',
         geographic: true,
         geographic_resolution: '2km',
+        geographic_tile_matrix_limits: matrixLimits,
         group: 'overlays',
         match: {
           time_start: '>=2002-07-04T00:00:00Z',
