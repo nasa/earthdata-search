@@ -9,15 +9,15 @@ const addToast = (content, options) => {
   try {
     // the add method referenced from the ToastProvider in App.js
     const { add } = window.reactToastProvider.current
-    if (add) {
-      add(content, options)
+    if (!add) {
+      console.error('Add toast method not available.')
       return
     }
+
+    add(content, options)
   } catch (error) {
     console.error(error)
-    return
   }
-  console.error('Add toast method not available.')
 }
 
 export default addToast
