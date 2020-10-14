@@ -48,7 +48,7 @@ export const CollectionResultsListItem = memo(({
         className="collection-results-list-item collection-results-list-item--loading"
         style={style}
       >
-        <Skeleton 
+        <Skeleton
           containerStyle={{
             height: '140px',
             width: '100%',
