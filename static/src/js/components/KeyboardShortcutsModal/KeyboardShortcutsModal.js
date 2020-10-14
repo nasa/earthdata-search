@@ -44,7 +44,6 @@ export class KeyboardShortcutsModal extends Component {
       a: 'Toggle advanced search modal',
       '/': 'Focus on search input field',
       '?': 'Display all keyboard shortcuts',
-      t: 'Toggle timeline'
     }
     return (
       <EDSCModalContainer
