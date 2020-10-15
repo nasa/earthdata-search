@@ -76,7 +76,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const { granules: projectCollectionGranules = {} } = projectCollection
 
     this.collectionId = collectionId
-    this.projection = projection
     this.onChangeFocusedGranule = onChangeFocusedGranule
     this.onExcludeGranule = onExcludeGranule
     this.onMetricsMap = onMetricsMap
@@ -103,6 +102,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       isProjectPage,
       metadata,
       projectCollection,
+      projection,
       removedGranuleIds
     })
 
@@ -764,7 +764,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
       focusedCollectionId,
       addedGranuleIds = [],
       removedGranuleIds = [],
-      isProjectPage
+      isProjectPage,
+      projection
     } = props
 
     this.granules = granules
@@ -773,6 +774,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     this.isProjectPage = isProjectPage
     this.collectionId = collectionId
     this.focusedCollectionId = focusedCollectionId
+    this.projection = projection
 
     if (defaultGranules) {
       this.defaultGranules = defaultGranules
@@ -1337,6 +1339,7 @@ export class GranuleGridLayer extends MapLayer {
           lightColor,
           metadata,
           projectCollection,
+          projection,
           removedGranuleIds
         })
 
