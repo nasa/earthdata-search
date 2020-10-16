@@ -27,6 +27,6 @@ import { getJwtToken } from './getJwtToken'
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('login', () => {
-  const jwtToken = getJwtToken()
+  const jwtToken = getJwtToken('prod')
   cy.setCookie('authToken', jwtToken)
 })
