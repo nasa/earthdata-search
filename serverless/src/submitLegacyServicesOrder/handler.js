@@ -89,7 +89,7 @@ const submitLegacyServicesOrder = async (event, context) => {
 
       // 2. Add items to the orders
       const orderItemPayload = await constructOrderPayload(
-        accessMethod, granuleParams, accessTokenWithClient
+        accessMethod, granuleParams, accessTokenWithClient, environment
       )
 
       console.log(`Order Items Payload: ${JSON.stringify(orderItemPayload, null, 4)}`)

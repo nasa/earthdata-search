@@ -1,4 +1,4 @@
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 
 /**
  * Encodes the earthdata environment
@@ -9,7 +9,7 @@ export const encodeEarthdataEnvironment = (environment) => {
 
   // If the provided environment matches the deployed environment return
   // an empty string, this will prevent the parameter from being added to the URL
-  if (environment === cmrEnv()) return ''
+  if (environment === deployedEnvironment()) return ''
 
   return environment
 }
@@ -19,9 +19,9 @@ export const encodeEarthdataEnvironment = (environment) => {
  * @param {string} string A string representing an earthdata environment
  */
 export const decodeEarthdataEnvironment = (environment) => {
-  // If no value is found in the URL, fall back to the cmrEnv
+  // If no value is found in the URL, fall back to the deployedEnvironment
   if (!environment) {
-    return cmrEnv()
+    return deployedEnvironment()
   }
 
   return environment

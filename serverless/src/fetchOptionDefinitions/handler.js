@@ -6,7 +6,7 @@ import { stringify } from 'qs'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -38,7 +38,7 @@ const fetchOptionDefinitions = async (event, context) => {
     sqs = new AWS.SQS(getSqsConfig())
   }
 
-  const { echoRestRoot } = getEarthdataConfig(cmrEnv())
+  const { echoRestRoot } = getEarthdataConfig(deployedEnvironment())
 
   // Retrieve option definition data for the collections pertaining to the echo orders tag
   const optionDefinitionUrl = `${echoRestRoot}/order_information.json`

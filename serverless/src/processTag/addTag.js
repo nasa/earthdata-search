@@ -2,7 +2,7 @@ import request from 'request-promise'
 import { stringify } from 'qs'
 import { castArray } from 'lodash'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { parseError } from '../../../sharedUtils/parseError'
 import { getClientId } from '../../../sharedUtils/getClientId'
 
@@ -40,7 +40,7 @@ export async function addTag({
 
     try {
       const collectionJsonResponse = await request.post({
-        uri: `${getEarthdataConfig(cmrEnv()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
+        uri: `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
         headers: {
           'Client-Id': getClientId().background,
           'Echo-Token': cmrToken
@@ -96,7 +96,7 @@ export async function addTag({
   // After setting associationData ensure that it has content, if no content
   if (associationData) {
     try {
-      const addTagUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/tags/${tagName}/associations`
+      const addTagUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/tags/${tagName}/associations`
       await request.post({
         uri: addTagUrl,
         headers: {
@@ -117,7 +117,7 @@ export async function addTag({
   try {
     // If no tagData was provided, and granules are not required we dont need to ask CMR
     // for anything, so we'll just associate the tag with all collections that match the searchCriteria
-    const tagRemovalUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/tags/${tagName}/associations/by_query`
+    const tagRemovalUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/tags/${tagName}/associations/by_query`
 
     await request.post({
       uri: tagRemovalUrl,
