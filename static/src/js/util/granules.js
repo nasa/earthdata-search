@@ -1,6 +1,5 @@
 import { isEmpty } from 'lodash'
 
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import { convertSize } from './project'
 import { encodeGridCoords } from './url/gridEncoders'
 import { encodeTemporal } from './url/temporalEncoders'
@@ -389,7 +388,7 @@ export const buildGranuleSearchParams = (params) => {
  * @param {String} granuleId The granule ID
  * @returns {Object} An object containing the various URLs
  */
-export const createEcho10MetadataUrls = (granuleId) => {
+export const createEcho10MetadataUrls = (granuleId, earthdataEnvironment) => {
   // TODO: This should eventually support authentication by appending the token information @high
   const metadataUrlTypes = [
     { ext: 'atom', title: 'ATOM' },
@@ -401,7 +400,7 @@ export const createEcho10MetadataUrls = (granuleId) => {
 
   const metadataUrls = {}
 
-  const { cmrHost } = getEarthdataConfig(cmrEnv())
+  const { cmrHost } = getEarthdataConfig(earthdataEnvironment)
 
   // Set a key for each URL type and append the display title and href. 'native' does not
   // use an extension on the href so we omit it.

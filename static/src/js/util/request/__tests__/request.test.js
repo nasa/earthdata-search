@@ -1,5 +1,4 @@
 import Request from '../request'
-import * as cmrEnv from '../../../../../../sharedUtils/cmrEnv'
 
 const baseUrl = 'http://example.com'
 
@@ -100,9 +99,7 @@ describe('Request#handleUnauthorized', () => {
   })
 
   test('redirects if the response is unauthorized', () => {
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
-    const request = new Request(baseUrl)
+    const request = new Request(baseUrl, 'prod')
     const data = {
       statusCode: 401
     }
@@ -112,11 +109,11 @@ describe('Request#handleUnauthorized', () => {
     window.location = { href: returnPath, pathname: '' }
 
     request.handleUnauthorized(data)
-    expect(window.location.href).toEqual(`http://localhost:3000/login?cmr_env=prod&state=${encodeURIComponent(returnPath)}`)
+    expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
   })
 
   test('does not redirect if the response is valid', () => {
-    const request = new Request(baseUrl)
+    const request = new Request(baseUrl, 'prod')
 
     delete window.location
     window.location = { href: jest.fn() }

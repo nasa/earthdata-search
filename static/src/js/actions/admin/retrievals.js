@@ -11,8 +11,11 @@ import {
   UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
   UPDATE_ADMIN_RETRIEVALS_PAGE_NUM
 } from '../../constants/actionTypes'
-import { handleError } from '../errors'
+
 import actions from '../index'
+
+import { handleError } from '../errors'
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
 export const setAdminRetrieval = payload => ({
   type: SET_ADMIN_RETRIEVAL,
@@ -51,11 +54,16 @@ export const setAdminRetrievalsPagination = data => ({
  * Fetch a retrieval from the database
  */
 export const fetchAdminRetrieval = id => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
 
   dispatch(setAdminRetrievalLoading(id))
 
-  const requestObject = new RetrievalRequest(authToken)
+  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
   const response = requestObject.fetch(id)
     .then((response) => {
       const { data } = response
@@ -79,7 +87,13 @@ export const fetchAdminRetrieval = id => (dispatch, getState) => {
  * Fetch a group of retrievals from the database
  */
 export const fetchAdminRetrievals = () => (dispatch, getState) => {
-  const { admin, authToken } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { admin, authToken } = state
+
   const { retrievals } = admin
   const { sortKey, pagination } = retrievals
   const {
@@ -89,7 +103,8 @@ export const fetchAdminRetrievals = () => (dispatch, getState) => {
 
   dispatch(setAdminRetrievalsLoading())
 
-  const requestObject = new RetrievalRequest(authToken)
+  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+
   const requestOpts = {
     page_size: pageSize,
     page_num: pageNum

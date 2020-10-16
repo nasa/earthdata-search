@@ -1,14 +1,18 @@
 import AWS from 'aws-sdk'
 import simpleOAuth2 from 'simple-oauth2'
-import { stringify } from 'qs'
-import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
-import { getEdlConfig } from '../util/getEdlConfig'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { getDbConnection } from '../util/database/getDbConnection'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
-import { getSqsConfig } from '../util/aws/getSqsConfig'
-import { parseError } from '../../../sharedUtils/parseError'
+
+import { parse, stringify } from 'qs'
+
 import { createJwtToken } from '../util/createJwtToken'
+import { getDbConnection } from '../util/database/getDbConnection'
+import {
+  getEarthdataConfig,
+  getEnvironmentConfig
+} from '../../../sharedUtils/config'
+import { getEdlConfig } from '../util/getEdlConfig'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { getUsernameFromToken } from '../util/getUsernameFromToken'
+import { parseError } from '../../../sharedUtils/parseError'
 
 // AWS SQS adapter
 let sqs
@@ -30,11 +34,18 @@ const edlCallback = async (event, context) => {
     sqs = new AWS.SQS(getSqsConfig())
   }
 
-  const edlConfig = await getEdlConfig()
-
   const { code, state } = event.queryStringParameters
 
-  const { redirectUriPath } = getEarthdataConfig(cmrEnv())
+  const [, queryString] = state.split('?')
+
+  const params = parse(queryString)
+
+  const { ee: earthdataEnvironment } = params
+
+  const edlConfig = await getEdlConfig(earthdataEnvironment)
+
+  const { redirectUriPath } = getEarthdataConfig(earthdataEnvironment)
+
   const { apiHost, edscHost } = getEnvironmentConfig()
 
   const redirectUri = `${apiHost}${redirectUriPath}`
@@ -46,30 +57,34 @@ const edlCallback = async (event, context) => {
     redirect_uri: redirectUri
   }
 
-  // Retrieve the Earthdata Login token
-  const oauthToken = await oauth2.authorizationCode.getToken(tokenConfig)
-  const oauthTokenResponse = oauth2.accessToken.create(oauthToken)
-
-  const { token } = oauthTokenResponse
-
-  const {
-    access_token: accessToken,
-    refresh_token: refreshToken,
-    expires_at: expiresAt
-  } = token
-
-  const username = getUsernameFromToken(token)
-
   let jwtToken
 
   try {
+    // Retrieve the Earthdata Login token
+    const oauthToken = await oauth2.authorizationCode.getToken(tokenConfig)
+
+    const oauthTokenResponse = oauth2.accessToken.create(oauthToken)
+
+    const { token } = oauthTokenResponse
+
+    const {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      expires_at: expiresAt
+    } = token
+
+    const username = getUsernameFromToken(token)
+
     // Look for an existing user
-    let userRow = await dbConnection('users').first(['id', 'urs_id', 'site_preferences']).where({ urs_id: username, environment: cmrEnv() })
+    let userRow = await dbConnection('users').first(['id', 'urs_id', 'site_preferences']).where({
+      urs_id: username,
+      environment: earthdataEnvironment
+    })
 
     // If there is no existing user, create one
     if (!userRow) {
       [userRow] = await dbConnection('users').returning(['id', 'site_preferences']).insert({
-        environment: cmrEnv(),
+        environment: earthdataEnvironment,
         urs_id: username
       })
     }
@@ -77,20 +92,20 @@ const edlCallback = async (event, context) => {
     // Store a new token in the database for the user
     await dbConnection('user_tokens').insert({
       user_id: userRow.id,
-      environment: cmrEnv(),
+      environment: earthdataEnvironment,
       access_token: accessToken,
       refresh_token: refreshToken,
       expires_at: expiresAt
     })
 
     // Create a JWT token from the EDL response
-    jwtToken = createJwtToken(userRow)
+    jwtToken = createJwtToken(userRow, earthdataEnvironment)
 
     if (!process.env.IS_OFFLINE) {
       await sqs.sendMessage({
         QueueUrl: process.env.userDataQueueUrl,
         MessageBody: JSON.stringify({
-          environment: cmrEnv(),
+          environment: earthdataEnvironment,
           userId: userRow.id,
           username
         })
@@ -98,6 +113,20 @@ const edlCallback = async (event, context) => {
     }
   } catch (e) {
     parseError(e)
+
+    const queryParams = {
+      ee: earthdataEnvironment,
+      state
+    }
+
+    const location = `${apiHost}/login?${stringify(queryParams)}`
+
+    return {
+      statusCode: 307,
+      headers: {
+        Location: location
+      }
+    }
   }
 
   const queryParams = {

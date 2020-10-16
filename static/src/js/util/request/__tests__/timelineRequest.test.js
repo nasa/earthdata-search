@@ -20,7 +20,7 @@ describe('TimelineRequest#constructor', () => {
   test('sets the default values when unauthenticated', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-    const request = new TimelineRequest()
+    const request = new TimelineRequest(undefined, 'prod')
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
@@ -30,7 +30,7 @@ describe('TimelineRequest#constructor', () => {
 
 describe('TimelineRequest#permittedCmrKeys', () => {
   test('returns an array of timeline CMR keys', () => {
-    const request = new TimelineRequest()
+    const request = new TimelineRequest(undefined, 'prod')
 
     expect(request.permittedCmrKeys()).toEqual([
       'concept_id',
@@ -43,7 +43,7 @@ describe('TimelineRequest#permittedCmrKeys', () => {
 
 describe('TimelineRequest#nonIndexedKeys', () => {
   test('returns an array of timeline CMR keys', () => {
-    const request = new TimelineRequest()
+    const request = new TimelineRequest(undefined, 'prod')
 
     expect(request.nonIndexedKeys()).toEqual([
       'concept_id'

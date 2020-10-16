@@ -16,6 +16,6 @@ describe('util#getJwtToken', () => {
       }
     }
 
-    expect(getJwtToken(event)).toEqual('123.456.789')
+    expect(getJwtToken(event, 'prod')).toEqual('123.456.789')
   })
 })

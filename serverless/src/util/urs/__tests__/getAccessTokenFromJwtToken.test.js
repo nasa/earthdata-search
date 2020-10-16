@@ -47,7 +47,7 @@ describe('getAccessTokenFromJwtToken', () => {
         query.response(null)
       })
 
-      const response = await getAccessTokenFromJwtToken('jwtToken')
+      const response = await getAccessTokenFromJwtToken('jwtToken', 'prod')
 
       expect(response).toEqual(null)
 
@@ -70,7 +70,7 @@ describe('getAccessTokenFromJwtToken', () => {
         })
       })
 
-      const response = await getAccessTokenFromJwtToken('jwtToken')
+      const response = await getAccessTokenFromJwtToken('jwtToken', 'prod')
 
       expect(response).toEqual({
         access_token: 'access-token',

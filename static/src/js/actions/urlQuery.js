@@ -9,6 +9,7 @@ import {
   isSavedProjectsPage,
   urlPathsWithoutUrlParams
 } from '../util/url/url'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
@@ -24,6 +25,7 @@ export const updateStore = ({
   autocompleteSelected,
   cmrFacets,
   collections,
+  earthdataEnvironment,
   featureFacets,
   focusedCollection,
   focusedGranule,
@@ -50,6 +52,7 @@ export const updateStore = ({
       autocompleteSelected,
       cmrFacets,
       collections,
+      earthdataEnvironment,
       featureFacets,
       focusedCollection,
       focusedGranule,
@@ -63,11 +66,18 @@ export const updateStore = ({
 }
 
 export const changePath = (path = '') => async (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
+
   const [pathname, queryString] = path.split('?')
 
   // If query string is a projectId, call getProject
   if (queryString && queryString.indexOf('projectId=') === 0) {
-    const requestObject = new ProjectRequest()
+    const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
 
     const { projectId } = parse(queryString)
 
@@ -106,8 +116,6 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   const decodedParams = decodeUrlParams(queryString)
 
   dispatch(actions.updateStore(decodedParams, pathname))
-
-  const state = getState()
 
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
@@ -177,11 +185,16 @@ const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
  * changeUrl({ pathname: '/a-new-url' })
  */
 export const changeUrl = options => (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
   const {
     authToken,
     router,
     savedProject
-  } = getState()
+  } = state
 
   let newOptions = options
   const { location } = router
@@ -194,7 +207,7 @@ export const changeUrl = options => (dispatch, getState) => {
     const { projectId, name, path } = savedProject
     if (projectId || options.length > 2000) {
       if (path !== newOptions) {
-        const requestObject = new ProjectRequest()
+        const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
 
         const projectResponse = requestObject.save({
           authToken,

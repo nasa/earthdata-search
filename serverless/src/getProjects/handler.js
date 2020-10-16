@@ -1,8 +1,9 @@
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
-import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -17,8 +18,13 @@ const getProjects = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const jwtToken = getJwtToken(event)
-  const { username } = getVerifiedJwtToken(jwtToken)
+  const { headers } = event
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
+  const jwtToken = getJwtToken(event, earthdataEnvironment)
+
+  const { username } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()

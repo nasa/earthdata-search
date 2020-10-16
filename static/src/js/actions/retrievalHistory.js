@@ -5,6 +5,8 @@ import {
   SET_RETRIEVAL_HISTORY_LOADING,
   REMOVE_RETRIEVAL_HISTORY
 } from '../constants/actionTypes'
+
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 
 export const setRetrievalHistory = retrievalHistoryData => ({
@@ -25,11 +27,17 @@ export const removeRetrievalHistory = retrievalId => ({
  * Fetch a retrieval from the database
  */
 export const fetchRetrievalHistory = () => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
 
   dispatch(setRetrievalHistoryLoading())
 
-  const requestObject = new RetrievalRequest(authToken)
+  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+
   const response = requestObject.all()
     .then((response) => {
       const { data } = response

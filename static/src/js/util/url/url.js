@@ -1,19 +1,20 @@
 import qs from 'qs'
 import cleanDeep from 'clean-deep'
 
-import { decodeFeatures, encodeFeatures } from './featureFacetEncoders'
+import { decodeCollections, encodeCollections } from './collectionsEncoders'
 import { decodeFacets, encodeFacets } from './facetEncoders'
+import { decodeFeatures, encodeFeatures } from './featureFacetEncoders'
+import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesOrCwicEncoders'
 import { decodeMap, encodeMap } from './mapEncoders'
 import { decodeScienceKeywords, encodeScienceKeywords } from './scienceKeywordEncoders'
 import { decodeString, encodeString } from './stringEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
-import { decodeCollections, encodeCollections } from './collectionsEncoders'
-import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesOrCwicEncoders'
-import { isPath } from '../isPath'
 import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEncoders'
-import { encodeAutocomplete, decodeAutocomplete } from './autocompleteEncoders'
 import { encodeArray, decodeArray } from './arrayEncoders'
+import { encodeAutocomplete, decodeAutocomplete } from './autocompleteEncoders'
+import { encodeEarthdataEnvironment, decodeEarthdataEnvironment } from './environmentEncoders'
+import { isPath } from '../isPath'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -38,6 +39,7 @@ export const stringify = params => qs.stringify(
  * Mapping of URL Shortened Keys to their redux store keys
  */
 const urlDefs = {
+  earthdataEnvironment: { shortKey: 'ee', encode: encodeEarthdataEnvironment, decode: decodeEarthdataEnvironment },
   focusedGranule: { shortKey: 'g', encode: encodeString, decode: decodeString },
   keywordSearch: { shortKey: 'q', encode: encodeString, decode: decodeString },
   pointSearch: { shortKey: 'sp', encode: encodeArray, decode: decodeArray },
@@ -170,8 +172,11 @@ export const decodeUrlParams = (paramString) => {
 
   const autocompleteSelected = decodeHelp(params, 'autocompleteSelected')
 
+  const earthdataEnvironment = decodeHelp(params, 'earthdataEnvironment')
+
   return {
     advancedSearch,
+    earthdataEnvironment,
     autocompleteSelected,
     cmrFacets,
     metadata,

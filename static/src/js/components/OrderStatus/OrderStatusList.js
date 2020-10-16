@@ -6,13 +6,14 @@ import OrderStatusItem from './OrderStatusItem'
 import './OrderStatusList.scss'
 
 export const OrderStatusList = ({
+  collections,
+  earthdataEnvironment,
   granuleDownload,
   match,
   onChangePath,
   onFetchRetrieval,
   onFetchRetrievalCollection,
-  onFetchRetrievalCollectionGranuleLinks,
-  collections
+  onFetchRetrievalCollectionGranuleLinks
 }) => (
   <div className="order-status-list">
     <ul className="order-status-list__list">
@@ -25,11 +26,12 @@ export const OrderStatusList = ({
 
           return (
             <OrderStatusItem
-              key={id + collectionId}
               collection={order}
               defaultOpen={collections.length === 1}
-              match={match}
+              earthdataEnvironment={earthdataEnvironment}
               granuleDownload={granuleDownload}
+              key={id + collectionId}
+              match={match}
               onChangePath={onChangePath}
               onFetchRetrieval={onFetchRetrieval}
               onFetchRetrievalCollection={onFetchRetrievalCollection}
@@ -47,13 +49,14 @@ OrderStatusList.defaultProps = {
 }
 
 OrderStatusList.propTypes = {
+  collections: PropTypes.arrayOf(PropTypes.shape({})),
+  earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
-  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
-  collections: PropTypes.arrayOf(PropTypes.shape({}))
+  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired
 }
 
 export default OrderStatusList

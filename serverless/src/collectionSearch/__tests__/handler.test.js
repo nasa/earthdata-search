@@ -29,6 +29,7 @@ describe('collectionSearch', () => {
 
     expect(mock).toBeCalledTimes(1)
     expect(mock).toBeCalledWith({
+      earthdataEnvironment: 'prod',
       jwtToken: 'mockJwt',
       path: '/search/collections.json',
       params: 'concept_id=C100005-EDSC&tag_key=edsc.extra.serverless',

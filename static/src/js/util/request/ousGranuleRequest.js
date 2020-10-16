@@ -5,8 +5,9 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
  * Request object for granule specific requests
  */
 export default class OusGranuleRequest extends CmrRequest {
-  constructor(authToken) {
-    super(getEnvironmentConfig().apiHost)
+  constructor(authToken, earthdataEnvironment) {
+    super(getEnvironmentConfig().apiHost, earthdataEnvironment)
+
     this.authenticated = true
     this.authToken = authToken
     this.searchPath = 'granules/ous'

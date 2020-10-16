@@ -1,7 +1,6 @@
 import 'array-foreach-async'
 import request from 'request-promise'
 
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -39,16 +38,11 @@ const submitLegacyServicesOrder = async (event, context) => {
       id
     } = JSON.parse(body)
 
-    const edlConfig = await getEdlConfig()
-    const { client } = edlConfig
-    const { id: clientId } = client
-
-    const accessTokenWithClient = `${accessToken}:${clientId}`
-
     // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
     const retrievalRecord = await dbConnection('retrieval_orders')
       .first(
         'retrievals.id',
+        'retrievals.environment',
         'retrieval_collections.access_method',
         'retrieval_orders.granule_params',
         'users.echo_profile',
@@ -63,17 +57,24 @@ const submitLegacyServicesOrder = async (event, context) => {
 
     const {
       access_method: accessMethod,
+      environment,
       granule_params: granuleParams,
       echo_profile: echoProfile,
       urs_profile: ursProfile
     } = retrievalRecord
+
+    const edlConfig = await getEdlConfig(environment)
+    const { client } = edlConfig
+    const { id: clientId } = client
+
+    const accessTokenWithClient = `${accessToken}:${clientId}`
 
     const { type } = accessMethod
 
     try {
       // 1. Submit an empty order
       const emptyOrderResponse = await request.post({
-        uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders.json`,
+        uri: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
         headers: {
           'Echo-Token': accessTokenWithClient,
           'Client-Id': getClientId().background
@@ -94,7 +95,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       console.log(`Order Items Payload: ${JSON.stringify(orderItemPayload, null, 4)}`)
 
       await request.post({
-        uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
+        uri: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
         headers: {
           'Echo-Token': accessTokenWithClient,
           'Client-Id': getClientId().background
@@ -110,7 +111,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       console.log(`User Information Payload: ${JSON.stringify(userInformationPayload, null, 4)}`)
 
       await request.put({
-        uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders/${orderId}/user_information`,
+        uri: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/user_information`,
         headers: {
           'Echo-Token': accessTokenWithClient,
           'Client-Id': getClientId().background
@@ -122,7 +123,7 @@ const submitLegacyServicesOrder = async (event, context) => {
 
       // 4. Submit the order
       await request.post({
-        uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders/${orderId}/submit`,
+        uri: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/submit`,
         headers: {
           'Echo-Token': accessTokenWithClient,
           'Client-Id': getClientId().background

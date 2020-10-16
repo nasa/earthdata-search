@@ -3,6 +3,7 @@ import request from 'request-promise'
 import { Client } from '@googlemaps/google-maps-services-js'
 
 import { buildParams } from '../util/cmr/buildParams'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 import { getGoogleMapsApiKey } from '../util/google/getGoogleMapsApiKey'
@@ -13,11 +14,11 @@ import { parseError } from '../../../sharedUtils/parseError'
  * Search the Google Maps API endpoint
  * @param {query} query The spatial query provided from the user
  */
-const googleGeocode = async (query) => {
+const googleGeocode = async (query, earthdataEnvironment) => {
   const client = new Client({})
 
   // Retrieve the Google Maps API key
-  const apiKey = await getGoogleMapsApiKey()
+  const apiKey = await getGoogleMapsApiKey(earthdataEnvironment)
 
   const geocodeResult = await client
     .geocode({
@@ -137,17 +138,17 @@ const nominatimGeocode = async (query) => {
  * Geocode the user query based on the configured geocoding service
  * @param {query} query The spatial query provided from the user
  */
-const geocode = (query) => {
+const geocode = (query, earthdataEnvironment) => {
   const { geocodingService } = process.env
 
   console.log(`Geocoding '${query}' with ${geocodingService}`)
 
   if (geocodingService === 'google') {
-    return googleGeocode(query)
+    return googleGeocode(query, earthdataEnvironment)
   }
 
   if (geocodingService === 'nominatim') {
-    return nominatimGeocode(query)
+    return nominatimGeocode(query, earthdataEnvironment)
   }
 
   // Not setting a geocoding service should result in an
@@ -160,13 +161,15 @@ const geocode = (query) => {
  * @param {Object} event Details about the HTTP request that it received
  */
 const autocomplete = async (event) => {
-  const { body } = event
+  const { body, headers } = event
 
   const { params, requestId } = JSON.parse(body)
 
   const { type, q } = params
 
   const { defaultResponseHeaders } = getApplicationConfig()
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   const permittedCmrKeys = [
     'q',
@@ -179,7 +182,7 @@ const autocomplete = async (event) => {
 
   try {
     if (type === 'spatial') {
-      const geocodeResult = await geocode(q, process.env.GEOCODE_SERVICE)
+      const geocodeResult = await geocode(q, process.env.GEOCODE_SERVICE, earthdataEnvironment)
 
       return {
         isBase64Encoded: false,
@@ -190,7 +193,7 @@ const autocomplete = async (event) => {
     }
 
     const results = await doSearchRequest({
-      jwtToken: getJwtToken(event),
+      jwtToken: getJwtToken(event, earthdataEnvironment),
       method: 'get',
       bodyType: 'json',
       path: '/search/autocomplete',
@@ -200,7 +203,8 @@ const autocomplete = async (event) => {
         nonIndexedKeys,
         stringifyResult: false
       }),
-      requestId
+      requestId,
+      earthdataEnvironment
     })
 
     console.log(`Autocomplete Params: ${JSON.stringify(params)}, Results: ${results.body}`)

@@ -5,6 +5,8 @@ import {
   LOADING_SHAPEFILE,
   UPDATE_SHAPEFILE
 } from '../constants/actionTypes'
+
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 
 export const clearShapefile = () => ({
@@ -30,8 +32,13 @@ export const shapefileErrored = payload => ({
  *  Sends a shapefile to be saved in the database
  * @param {Object} data The file to be saved, the filename and size of the file
  */
-export const saveShapefile = data => (dispatch) => {
-  const requestObject = new ShapefileRequest()
+export const saveShapefile = data => (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const requestObject = new ShapefileRequest(earthdataEnvironment)
 
   const {
     filename: shapefileName,
@@ -69,8 +76,13 @@ export const saveShapefile = data => (dispatch) => {
  * Retrieves a shapefile from lambda
  * @param {String} shapefileId Shapefile ID to retrieve
  */
-export const fetchShapefile = shapefileId => (dispatch) => {
-  const requestObject = new ShapefileRequest()
+export const fetchShapefile = shapefileId => (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const requestObject = new ShapefileRequest(earthdataEnvironment)
 
   const response = requestObject.fetch(shapefileId)
     .then((response) => {

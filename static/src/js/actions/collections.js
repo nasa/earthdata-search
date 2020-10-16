@@ -26,6 +26,7 @@ import {
 } from '../constants/actionTypes'
 
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 export const addMoreCollectionResults = payload => ({
   type: ADD_MORE_COLLECTION_RESULTS,
@@ -139,12 +140,17 @@ let cancelToken
  * @param {Function} getState - A function that returns the current state provided by redux.
  */
 export const getCollections = () => (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
   // If cancel token is set, cancel the previous request(s)
   if (cancelToken) {
     cancelToken.cancel()
   }
 
-  const collectionParams = prepareCollectionParams(getState())
+  const collectionParams = prepareCollectionParams(state)
 
   const {
     authToken,
@@ -163,7 +169,7 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(onFacetsLoading())
   dispatch(startCollectionsTimer())
 
-  const requestObject = new CollectionRequest(authToken)
+  const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
   cancelToken = requestObject.getCancelToken()
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))

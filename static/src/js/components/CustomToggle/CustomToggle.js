@@ -48,7 +48,6 @@ export const CustomToggle = React.forwardRef(({
   )
 })
 
-
 CustomToggle.defaultProps = {
   children: null,
   className: null,

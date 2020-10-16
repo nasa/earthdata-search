@@ -10,6 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(propsOverride) {
   const props = {
     authToken: '',
+    earthdataEnvironment: 'prod',
     granuleDownload: {
       1: []
     },

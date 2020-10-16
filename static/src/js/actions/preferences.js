@@ -6,6 +6,7 @@ import { displayNotificationType } from '../constants/enums'
 import addToast from '../util/addToast'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { handleError } from './errors'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 export const setIsSubmitting = payload => ({
   type: SET_PREFERENCES_IS_SUBMITTING,
@@ -28,11 +29,17 @@ export const setPreferencesFromJwt = jwtToken => (dispatch) => {
 
 export const updatePreferences = data => (dispatch, getState) => {
   const { formData: preferences } = data
-  const { authToken } = getState()
+
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
 
   dispatch(setIsSubmitting(true))
 
-  const requestObject = new PreferencesRequest(authToken)
+  const requestObject = new PreferencesRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.update({ preferences })
     .then((response) => {

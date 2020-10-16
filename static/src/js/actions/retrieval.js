@@ -7,6 +7,7 @@ import {
 
 import RetrievalRequest from '../util/request/retrievalRequest'
 
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
@@ -29,12 +30,12 @@ export const updateRetrieval = retrievalData => ({
 export const submitRetrieval = () => (dispatch, getState) => {
   const state = getState()
 
-  const {
-    authToken,
-    project
-  } = state
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
 
-  const requestObject = new RetrievalRequest(authToken)
+  const { authToken, project } = state
+
+  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
   const { collections: projectCollections } = project
   const {
@@ -110,11 +111,17 @@ export const submitRetrieval = () => (dispatch, getState) => {
  * @param {Integer} id Database ID of the retrieval to lookup
  */
 export const fetchRetrieval = id => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
 
   dispatch(setRetrievalLoading())
 
-  const requestObject = new RetrievalRequest(authToken)
+  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+
   const response = requestObject.fetch(id)
     .then((response) => {
       const { data } = response
@@ -160,10 +167,15 @@ export const fetchRetrieval = id => (dispatch, getState) => {
  * @param {Integer} id Database ID of the retrieval to lookup
  */
 export const deleteRetrieval = id => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
 
   try {
-    const requestObject = new RetrievalRequest(authToken)
+    const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
     const response = requestObject.remove(id)
       .then(() => {
         dispatch(removeRetrievalHistory(id))

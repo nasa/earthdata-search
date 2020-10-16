@@ -21,6 +21,7 @@ describe('GranuleResultsBodyContainer component', () => {
     test('passes its props and renders a single GranuleResultsBody component', () => {
       const { enzymeWrapper } = setup({
         authToken: '',
+        earthdataEnvironment: 'prod',
         granuleMetadata: {
           metadataUrls: {
             atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'

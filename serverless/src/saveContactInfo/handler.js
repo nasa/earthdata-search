@@ -1,14 +1,15 @@
 import AWS from 'aws-sdk'
 import request from 'request-promise'
-import { getDbConnection } from '../util/database/getDbConnection'
-import { getJwtToken } from '../util/getJwtToken'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { getEchoToken } from '../util/urs/getEchoToken'
-import { getSqsConfig } from '../util/aws/getSqsConfig'
-import { parseError } from '../../../sharedUtils/parseError'
+
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getDbConnection } from '../util/database/getDbConnection'
+import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEchoToken } from '../util/urs/getEchoToken'
+import { getJwtToken } from '../util/getJwtToken'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { parseError } from '../../../sharedUtils/parseError'
 
 // AWS SQS adapter
 let sqs
@@ -19,11 +20,14 @@ let sqs
 const saveContactInfo = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const jwtToken = getJwtToken(event)
-  const { id } = getVerifiedJwtToken(jwtToken)
-
-  const { body } = event
+  const { body, headers } = event
   const { params } = JSON.parse(body)
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
+  const jwtToken = getJwtToken(event, earthdataEnvironment)
+
+  const { id } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()
@@ -33,8 +37,6 @@ const saveContactInfo = async (event) => {
   }
 
   try {
-    const cmrEnvironment = cmrEnv()
-
     const userRecord = await dbConnection('users')
       .first(
         'echo_id',
@@ -49,9 +51,9 @@ const saveContactInfo = async (event) => {
       urs_id: userId
     } = userRecord
 
-    const url = `${getEarthdataConfig(cmrEnvironment).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
+    const url = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
 
-    const echoToken = await getEchoToken(jwtToken)
+    const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
     const response = await request.put({
       uri: url,
@@ -68,7 +70,7 @@ const saveContactInfo = async (event) => {
       await sqs.sendMessage({
         QueueUrl: process.env.userDataQueueUrl,
         MessageBody: JSON.stringify({
-          environment: cmrEnvironment,
+          environment: earthdataEnvironment,
           userId: id,
           username: userId
         })

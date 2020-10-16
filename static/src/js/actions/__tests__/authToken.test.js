@@ -33,7 +33,8 @@ describe('updateAuthTokenFromHeaders', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      authToken: ''
+      authToken: '',
+      earthdataEnvironment: 'prod'
     })
 
     // call the dispatch
@@ -49,7 +50,8 @@ describe('updateAuthTokenFromHeaders', () => {
   test('should not remove the authToken if a header token is not available', () => {
     // mockStore with initialState
     const store = mockStore({
-      authToken: 'authToken-token'
+      authToken: 'authToken-token',
+      earthdataEnvironment: 'prod'
     })
 
     // call the dispatch
@@ -62,11 +64,11 @@ describe('updateAuthTokenFromHeaders', () => {
 })
 
 describe('logout', () => {
-  const { href } = window.location
+  const { assign } = window.location
 
   afterEach(() => {
     jest.clearAllMocks()
-    window.location.href = href
+    window.location.assign = assign
   })
 
   test('calls LogoutRequest, removes the cookie and redirects to the root url', async () => {
@@ -75,14 +77,19 @@ describe('logout', () => {
       .reply(204)
 
     const store = mockStore({
-      authToken: 'mockToken'
+      authToken: 'mockToken',
+      earthdataEnvironment: 'prod'
     })
+
+    delete window.location
+    window.location = { assign: jest.fn() }
 
     const removeMock = jest.spyOn(tinyCookie, 'remove')
 
     await store.dispatch(logout()).then(() => {
       expect(removeMock).toBeCalledTimes(1)
-      expect(window.location.href).toEqual('http://localhost/')
+      expect(window.location.assign).toBeCalledTimes(1)
+      expect(window.location.assign).toBeCalledWith('/search?ee=prod')
     })
   })
 })

@@ -1,14 +1,19 @@
 import request from 'request-promise'
+
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { requestTimeout } from '../util/requestTimeout'
 
 const regionSearch = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { endpoint, exact, query } = event.queryStringParameters
+  const { headers, queryStringParameters } = event
 
-  const { regionHost } = getEarthdataConfig(cmrEnv())
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
+  const { endpoint, exact, query } = queryStringParameters
+
+  const { regionHost } = getEarthdataConfig(earthdataEnvironment)
 
   let regionResponse
   try {

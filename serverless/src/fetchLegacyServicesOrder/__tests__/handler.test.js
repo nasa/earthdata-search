@@ -1,10 +1,11 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 import nock from 'nock'
-import * as getSystemToken from '../../util/urs/getSystemToken'
+
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
-import * as cmrEnv from '../../../../sharedUtils/cmrEnv'
+import * as getSystemToken from '../../util/urs/getSystemToken'
+
 import fetchLegacyServicesOrder from '../handler'
 
 let dbTracker
@@ -14,8 +15,6 @@ beforeEach(() => {
 
   jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
   jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
-
-  jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementation(() => {
     const dbCon = knex({
@@ -38,10 +37,11 @@ afterEach(() => {
 })
 
 describe('fetchLegacyServicesOrder', () => {
-  test('correctly retrieves a known catalog rest order currently processing', async () => {
+  test('correctly retrieves a known legacy services order currently processing', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
+          environment: 'prod',
           order_number: 'ABCD-1234-EFGH-5678'
         })
       } else {
@@ -101,6 +101,7 @@ describe('fetchLegacyServicesOrder', () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
+          environment: 'prod',
           order_number: 'ABCD-1234-EFGH-5678'
         })
       } else {
@@ -160,6 +161,7 @@ describe('fetchLegacyServicesOrder', () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
+          environment: 'prod',
           order_number: 'ABCD-1234-EFGH-5678'
         })
       } else {
@@ -264,6 +266,7 @@ describe('fetchLegacyServicesOrder', () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
+          environment: 'prod',
           order_number: 'ABCD-1234-EFGH-5678'
         })
       } else {

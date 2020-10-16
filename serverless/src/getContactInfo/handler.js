@@ -1,7 +1,8 @@
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -16,8 +17,13 @@ const getContactInfo = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const jwtToken = getJwtToken(event)
-  const { id } = getVerifiedJwtToken(jwtToken)
+  const { headers } = event
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
+  const jwtToken = getJwtToken(event, earthdataEnvironment)
+
+  const { id } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()

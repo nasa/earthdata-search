@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
@@ -17,18 +17,21 @@ const graphQl = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
+  const { body, headers } = event
+
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { body } = event
   const { data, requestId } = JSON.parse(body)
 
   const { variables, query } = data
 
-  const jwtToken = getJwtToken(event)
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const echoToken = await getEchoToken(jwtToken)
+  const jwtToken = getJwtToken(event, earthdataEnvironment)
 
-  const { graphQlHost } = getEarthdataConfig(cmrEnv())
+  const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
+
+  const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
   const graphQlUrl = `${graphQlHost}/api`
 

@@ -1,23 +1,21 @@
 import CmrRequest from './cmrRequest'
+
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import { getUmmGranuleVersionHeader } from '../../../../../sharedUtils/ummVersionHeader'
 
 /**
  * Request object for concept specific requests
  */
 export default class GranuleConceptRequest extends CmrRequest {
-  constructor(authToken) {
-    const cmrEnvironment = cmrEnv()
-
+  constructor(authToken, earthdataEnvironment) {
     if (authToken && authToken !== '') {
-      super(getEnvironmentConfig().apiHost)
+      super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'concepts'
     } else {
-      super(getEarthdataConfig(cmrEnvironment).cmrHost)
+      super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
       this.searchPath = 'search/concepts'
     }

@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
-
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleImage from '../../components/GranuleImage/GranuleImage'
 
 const mapStateToProps = state => ({
+  earthdataEnvironment: getEarthdataEnvironment(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granuleMetadata: getFocusedGranuleMetadata(state)
 })
@@ -24,7 +24,7 @@ export const GranuleImageContainer = ({
   let imageSrc = ''
 
   if (browseFlag) {
-    imageSrc = `${getEarthdataConfig(cmrEnv()).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=512&w=512`
+    imageSrc = `${getEarthdataConfig(getEarthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=512&w=512`
   }
 
   return (

@@ -15,6 +15,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps = {}) {
   const props = {
+    earthdataEnvironment: 'prod',
     loadTime: 2.2,
     location: {
       pathname: '/search'

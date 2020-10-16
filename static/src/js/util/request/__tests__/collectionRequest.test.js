@@ -20,7 +20,7 @@ describe('CollectionRequest#constructor', () => {
   test('sets the default values when unauthenticated', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-    const request = new CollectionRequest()
+    const request = new CollectionRequest(undefined, 'prod')
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
@@ -30,7 +30,7 @@ describe('CollectionRequest#constructor', () => {
 
 describe('CollectionRequest#permittedCmrKeys', () => {
   test('returns an array of collection CMR keys', () => {
-    const request = new CollectionRequest()
+    const request = new CollectionRequest(undefined, 'prod')
 
     expect(request.permittedCmrKeys()).toEqual([
       'params',
@@ -79,7 +79,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
 
 describe('CollectionRequest#nonIndexedKeys', () => {
   test('returns an array of collection CMR keys', () => {
-    const request = new CollectionRequest()
+    const request = new CollectionRequest(undefined, 'prod')
 
     expect(request.nonIndexedKeys()).toEqual([
       'bounding_box',
@@ -113,7 +113,7 @@ describe('CollectionRequest#transformResponse', () => {
   })
 
   test('returns transformed data', () => {
-    const request = new CollectionRequest()
+    const request = new CollectionRequest(undefined, 'prod')
 
     const data = {
       feed: {
@@ -146,7 +146,7 @@ describe('CollectionRequest#transformResponse', () => {
   })
 
   test('return data with isCwic flag correctly', () => {
-    const request = new CollectionRequest()
+    const request = new CollectionRequest(undefined, 'prod')
 
     const data = {
       feed: {
@@ -188,7 +188,7 @@ describe('CollectionRequest#transformResponse', () => {
     test('when an image is defined', () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-      const request = new CollectionRequest()
+      const request = new CollectionRequest(undefined, 'prod')
 
       const data = {
         feed: {
@@ -229,7 +229,7 @@ describe('CollectionRequest#transformResponse', () => {
     })
 
     test('when an image is not defined', () => {
-      const request = new CollectionRequest()
+      const request = new CollectionRequest(undefined, 'prod')
 
       const data = {
         feed: {
@@ -267,7 +267,7 @@ describe('CollectionRequest#transformResponse', () => {
   })
 
   test('returns data if response is not successful', () => {
-    const request = new CollectionRequest()
+    const request = new CollectionRequest(undefined, 'prod')
 
     const data = {
       errors: ['HTTP Request Error']

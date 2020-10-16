@@ -1,5 +1,6 @@
 export const granuleResultsBodyProps = {
   authToken: '',
+  earthdataEnvironment: 'prod',
   granuleMetadata: {
     boxes: [
       '-90 -180 90 180'

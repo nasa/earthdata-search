@@ -37,16 +37,11 @@ const submitHarmonyOrder = async (event, context) => {
       id
     } = JSON.parse(body)
 
-    const edlConfig = await getEdlConfig()
-    const { client } = edlConfig
-    const { id: clientId } = client
-
-    const accessTokenWithClient = `${accessToken}:${clientId}`
-
     // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
     const retrievalRecord = await dbConnection('retrieval_orders')
       .first(
         'retrievals.id',
+        'retrievals.environment',
         'retrievals.jsondata',
         'retrievals.user_id',
         'retrieval_collections.access_method',
@@ -62,10 +57,17 @@ const submitHarmonyOrder = async (event, context) => {
     const {
       access_method: accessMethod,
       collection_id: collectionId,
+      environment,
       granule_params: granuleParams,
       jsondata,
       user_id: userId
     } = retrievalRecord
+
+    const edlConfig = await getEdlConfig(environment)
+    const { client } = edlConfig
+    const { id: clientId } = client
+
+    const accessTokenWithClient = `${accessToken}:${clientId}`
 
     const {
       type

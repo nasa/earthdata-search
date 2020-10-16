@@ -5,10 +5,13 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
+
 import OrderStatus from '../../components/OrderStatus/OrderStatus'
 
 const mapStateToProps = state => ({
   authToken: state.authToken,
+  earthdataEnvironment: getEarthdataEnvironment(state),
   granuleDownload: state.granuleDownload,
   portal: state.portal,
   retrieval: state.retrieval
@@ -31,6 +34,7 @@ const mapDispatchToProps = dispatch => ({
 
 export const OrderStatusContainer = ({
   authToken,
+  earthdataEnvironment,
   granuleDownload,
   match,
   portal,
@@ -42,6 +46,7 @@ export const OrderStatusContainer = ({
 }) => (
   <OrderStatus
     authToken={authToken}
+    earthdataEnvironment={earthdataEnvironment}
     match={match}
     portal={portal}
     granuleDownload={granuleDownload}
@@ -55,6 +60,7 @@ export const OrderStatusContainer = ({
 
 OrderStatusContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
