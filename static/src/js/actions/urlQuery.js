@@ -89,7 +89,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
 
         // In the event that the user has the earthdata environment set to the deployed environment
         // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
-        const [, projectQueryString] = state.split('?')
+        const [, projectQueryString] = projectPath.split('?')
 
         // Parse the query string into an object
         const paramsObj = parse(projectQueryString)
@@ -151,9 +151,9 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   }
 
   // Fetch collections in the project
-  const { project } = decodedParams
-  const { collections: projectCollections } = project
-  const { allIds } = projectCollections
+  const { project = {} } = decodedParams
+  const { collections: projectCollections = {} } = project
+  const { allIds = [] } = projectCollections
 
   if (allIds.length > 0) {
     // Project collection metadata needs to exist before calling retrieving access methods
