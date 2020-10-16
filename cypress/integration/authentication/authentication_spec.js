@@ -16,7 +16,7 @@ describe('Authentication', () => {
       headers: collectionFixture.headers
     })
 
-    cy.visit(`/auth_callback?jwt=${getJwtToken()}&redirect=http://localhost:8080/`)
+    cy.visit(`/auth_callback?jwt=${getJwtToken('prod')}&redirect=http://localhost:8080/`)
 
     cy.contains('Earthdata Login').should('not.exist')
     getByTestId('collection-results-list')
