@@ -1,6 +1,6 @@
 import request from 'request-promise'
 
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
@@ -27,24 +27,28 @@ const retrieveConcept = async (event) => {
   // The 'Accept' header contains the UMM version
   const providedHeaders = pick(headers, ['Accept'])
 
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
   const permittedCmrKeys = ['pretty']
 
   const obj = pick(queryStringParameters, permittedCmrKeys)
+
   const queryParams = prepKeysForCmr(obj)
 
-  const jwtToken = getJwtToken(event)
+  const jwtToken = getJwtToken(event, earthdataEnvironment)
 
   const { id } = pathParameters
+
   const path = `/search/concepts/${id}?${queryParams}`
 
   try {
     const response = await request.get({
-      uri: `${getEarthdataConfig(cmrEnv()).cmrHost}${path}`,
+      uri: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
       json: true,
       resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().lambda,
-        'Echo-Token': await getEchoToken(jwtToken),
+        'Echo-Token': await getEchoToken(jwtToken, earthdataEnvironment),
         ...providedHeaders
       }
     })

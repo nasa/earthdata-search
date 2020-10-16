@@ -5,6 +5,8 @@ import {
   SET_SAVED_PROJECTS_LOADING,
   REMOVE_SAVED_PROJECT
 } from '../constants/actionTypes'
+
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 
 export const setSavedProjects = payload => ({
@@ -25,11 +27,16 @@ export const removeSavedProject = payload => ({
  * Fetch a retrieval from the database
  */
 export const fetchSavedProjects = () => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
 
   dispatch(setSavedProjectsLoading())
 
-  const requestObject = new ProjectRequest(authToken)
+  const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.all()
     .then((response) => {

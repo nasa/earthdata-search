@@ -1,8 +1,9 @@
+import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
-import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
-import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -17,14 +18,18 @@ const saveProject = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { body } = event
+  const { body, headers } = event
+
   const { params } = JSON.parse(body)
+
   const {
     authToken,
     name = '',
     path,
     projectId
   } = params
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()
@@ -35,7 +40,7 @@ const saveProject = async (event, context) => {
     let userId
     // If user information was included, use it in the queries
     if (authToken) {
-      const { username } = getVerifiedJwtToken(authToken)
+      const { username } = getVerifiedJwtToken(authToken, earthdataEnvironment)
 
       const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
 

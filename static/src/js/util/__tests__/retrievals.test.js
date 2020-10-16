@@ -1,11 +1,8 @@
-import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 
 import { prepareRetrievalParams } from '../retrievals'
 
 describe('retrievals', () => {
   test('prepareRetrievalParams', () => {
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
     const response = prepareRetrievalParams({
       authToken: 'auth-token',
       metadata: {

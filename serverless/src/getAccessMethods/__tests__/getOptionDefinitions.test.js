@@ -41,7 +41,7 @@ describe('getOptionDefinitions', () => {
       }
     ]
 
-    const forms = await getOptionDefinitions(collectionProvider, optionDefinitions, 'mockJwt')
+    const forms = await getOptionDefinitions(collectionProvider, optionDefinitions, 'mockJwt', 'prod')
 
     expect(forms).toEqual([
       {
@@ -95,7 +95,7 @@ describe('getOptionDefinitions', () => {
       }
     ]
 
-    const forms = await getOptionDefinitions(collectionProvider, optionDefinitions, 'mockJwt')
+    const forms = await getOptionDefinitions(collectionProvider, optionDefinitions, 'mockJwt', 'prod')
 
     expect(forms).toEqual([
       {
@@ -149,7 +149,7 @@ describe('getOptionDefinitions', () => {
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
-    const forms = await getOptionDefinitions(collectionProvider, optionDefinitions, 'mockJwt')
+    const forms = await getOptionDefinitions(collectionProvider, optionDefinitions, 'mockJwt', 'prod')
 
     // The first will output the number of records, the second will
     // contain the message we're looking for

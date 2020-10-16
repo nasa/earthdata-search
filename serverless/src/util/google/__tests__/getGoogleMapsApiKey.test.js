@@ -2,8 +2,6 @@ import AWS from 'aws-sdk'
 
 import { getGoogleMapsApiKey } from '../getGoogleMapsApiKey'
 
-import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
-
 describe('getGoogleMapsApiKey', () => {
   test('fetches urs credentials from secrets manager', async () => {
     const secretsManagerData = jest.fn().mockReturnValue({
@@ -17,9 +15,7 @@ describe('getGoogleMapsApiKey', () => {
         getSecretValue: secretsManagerData
       }))
 
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
-    const response = await getGoogleMapsApiKey()
+    const response = await getGoogleMapsApiKey('prod')
 
     expect(response).toEqual({
       key: 'fake-api-key'

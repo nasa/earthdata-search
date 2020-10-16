@@ -20,7 +20,6 @@ import {
   UPDATE_FOCUSED_GRANULE
 } from '../../constants/actionTypes'
 
-import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 import * as EventEmitter from '../../events/events'
 import * as getClientId from '../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
@@ -56,7 +55,6 @@ describe('getFocusedCollection', () => {
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
       }))
-      jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
       const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
       relevancyMock.mockImplementationOnce(() => jest.fn())
@@ -103,7 +101,6 @@ describe('getFocusedCollection', () => {
           graphQlHost: 'https://graphql.example.com',
           opensearchRoot: 'https://cmr.example.com'
         }))
-        jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
         nock(/graph/)
           .post(/api/)
@@ -168,7 +165,6 @@ describe('getFocusedCollection', () => {
             graphQlHost: 'https://graphql.example.com',
             opensearchRoot: 'https://cmr.example.com'
           }))
-          jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
           nock(/graph/)
             .post(/api/)
@@ -245,7 +241,6 @@ describe('getFocusedCollection', () => {
           graphQlHost: 'https://graphql.example.com',
           opensearchRoot: 'https://cmr.example.com'
         }))
-        jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
         nock(/graph/)
           .post(/api/)
@@ -312,7 +307,6 @@ describe('getFocusedCollection', () => {
       graphQlHost: 'https://graphql.example.com',
       opensearchRoot: 'https://cmr.example.com'
     }))
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementationOnce(() => jest.fn())

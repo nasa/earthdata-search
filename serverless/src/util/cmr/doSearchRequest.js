@@ -1,10 +1,10 @@
 import request from 'request-promise'
-import { prepareExposeHeaders } from './prepareExposeHeaders'
+
+import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { getEchoToken } from '../urs/getEchoToken'
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import { parseError } from '../../../../sharedUtils/parseError'
-import { getClientId } from '../../../../sharedUtils/getClientId'
+import { prepareExposeHeaders } from './prepareExposeHeaders'
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -17,13 +17,14 @@ import { getClientId } from '../../../../sharedUtils/getClientId'
  * @param {String} method The HTTP method to use when making the request
  */
 export const doSearchRequest = async ({
-  jwtToken,
-  path,
-  params,
-  requestId,
-  providedHeaders = {},
   bodyType = 'form',
-  method = 'post'
+  earthdataEnvironment,
+  jwtToken,
+  method = 'post',
+  params,
+  path,
+  providedHeaders = {},
+  requestId
 }) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
@@ -36,7 +37,7 @@ export const doSearchRequest = async ({
 
     if (jwtToken) {
       // Support endpoints that have optional authentication
-      requestHeaders['Echo-Token'] = await getEchoToken(jwtToken)
+      requestHeaders['Echo-Token'] = await getEchoToken(jwtToken, earthdataEnvironment)
     }
 
     if (requestId) {
@@ -45,7 +46,7 @@ export const doSearchRequest = async ({
     }
 
     const requestParams = {
-      uri: `${getEarthdataConfig(cmrEnv()).cmrHost}${path}`,
+      uri: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
       json: true,
       resolveWithFullResponse: true,
       time: true,

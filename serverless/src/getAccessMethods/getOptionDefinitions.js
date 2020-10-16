@@ -1,17 +1,17 @@
 import request from 'request-promise'
 import 'array-foreach-async'
 
-import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { generateFormDigest } from '../util/generateFormDigest'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getClientId } from '../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { parseError } from '../../../sharedUtils/parseError'
-import { getClientId } from '../../../sharedUtils/getClientId'
 
 export const getOptionDefinitions = async (
   collectionProvider,
   optionDefinitions,
-  jwtToken
+  jwtToken,
+  earthdataEnvironment
 ) => {
   const forms = []
 
@@ -21,7 +21,7 @@ export const getOptionDefinitions = async (
   await optionDefinitions.forEachAsync(async (optionDefinition, index) => {
     const { name } = optionDefinition
 
-    const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/option_definitions.json`
+    const url = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/option_definitions.json`
 
     try {
       const response = await request.get({
@@ -33,7 +33,7 @@ export const getOptionDefinitions = async (
         },
         headers: {
           'Client-Id': getClientId().lambda,
-          'Echo-Token': await getEchoToken(jwtToken)
+          'Echo-Token': await getEchoToken(jwtToken, earthdataEnvironment)
         },
         json: true,
         resolveWithFullResponse: true

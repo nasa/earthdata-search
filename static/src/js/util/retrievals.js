@@ -4,12 +4,12 @@ import {
   extractProjectCollectionGranuleParams
 } from './granules'
 
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import {
   getProjectCollections,
   getProjectCollectionsIds,
   getProjectCollectionsMetadata
 } from '../selectors/project'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { mbr } from './map/mbr'
 
 /**
@@ -27,6 +27,7 @@ export const prepareRetrievalParams = (state) => {
 
   // Retrieve data from Redux using selectors
   const collectionsMetadata = getProjectCollectionsMetadata(state)
+  const earthdataEnvironment = getEarthdataEnvironment(state)
   const projectCollections = getProjectCollections(state)
   const projectCollectionsIds = getProjectCollectionsIds(state)
 
@@ -115,7 +116,7 @@ export const prepareRetrievalParams = (state) => {
   return {
     authToken,
     collections: [...retrievalCollections],
-    environment: cmrEnv(),
+    environment: earthdataEnvironment,
     json_data: jsonData
   }
 }

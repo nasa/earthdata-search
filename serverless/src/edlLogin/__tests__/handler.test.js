@@ -18,6 +18,7 @@ describe('edlLogin', () => {
 
     const response = await edlLogin({
       queryStringParameters: {
+        ee: 'prod',
         state: 'http://edsc-state.nasa.gov'
       }
     })
@@ -25,7 +26,7 @@ describe('edlLogin', () => {
     expect(response).toEqual({
       statusCode: 307,
       headers: {
-        Location: 'http://edl.example.com/oauth/authorize?response_type=code&client_id=edlClientId&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsearch&state=http%3A%2F%2Fedsc-state.nasa.gov'
+        Location: 'http://edl.example.com/oauth/authorize?response_type=code&client_id=edlClientId&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsearch&state=http%3A%2F%2Fedsc-state.nasa.gov%3Fee%3Dprod'
       }
     })
   })

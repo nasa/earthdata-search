@@ -4,7 +4,7 @@ import {
   getEarthdataConfig,
   getSecretEarthdataConfig
 } from '../../../sharedUtils/config'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+
 import { getSecretsManagerConfig } from './aws/getSecretsManagerConfig'
 
 let clientConfig
@@ -13,9 +13,9 @@ let secretsmanager
 /**
  * Configuration object used by the simple-oauth2 plugin
  */
-const oAuthConfig = cmrEnvironment => ({
+const oAuthConfig = earthdataEnvironment => ({
   auth: {
-    tokenHost: getEarthdataConfig(cmrEnvironment).edlHost
+    tokenHost: getEarthdataConfig(earthdataEnvironment).edlHost
   }
 })
 
@@ -23,20 +23,17 @@ const oAuthConfig = cmrEnvironment => ({
  * Get the Earthdata Login configuration, from either secret.config.json or AWS
  * @param {Object} edlConfig A previously defined config object, or null if one has not be instantiated
  */
-export const getEdlConfig = async (providedCmrEnv) => {
-  // If provided an environment, us it -- otherwise use the configured value
-  const cmrEnvironment = (providedCmrEnv || cmrEnv())
-
+export const getEdlConfig = async (earthdataEnvironment) => {
   if (clientConfig == null) {
     if (secretsmanager == null) {
       secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
     }
 
     if (process.env.NODE_ENV === 'development') {
-      const { clientId, password } = getSecretEarthdataConfig(cmrEnvironment)
+      const { clientId, password } = getSecretEarthdataConfig(earthdataEnvironment)
 
       return {
-        ...oAuthConfig(cmrEnvironment),
+        ...oAuthConfig(earthdataEnvironment),
         client: {
           id: clientId,
           secret: password
@@ -44,13 +41,10 @@ export const getEdlConfig = async (providedCmrEnv) => {
       }
     }
 
-    // Use a variable here for easier find/replace until cmr_env is implemented
-    const environment = cmrEnvironment
-
-    console.log(`Fetching UrsClientConfigSecret_${environment}`)
+    console.log(`Fetching UrsClientConfigSecret_${earthdataEnvironment}`)
 
     const params = {
-      SecretId: `UrsClientConfigSecret_${environment}`
+      SecretId: `UrsClientConfigSecret_${earthdataEnvironment}`
     }
 
     // If not running in development mode fetch secrets from AWS
@@ -60,7 +54,7 @@ export const getEdlConfig = async (providedCmrEnv) => {
   }
 
   return {
-    ...oAuthConfig(cmrEnvironment),
+    ...oAuthConfig(earthdataEnvironment),
     client: clientConfig
   }
 }

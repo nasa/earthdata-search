@@ -10,6 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(state, overrideProps) {
   const props = {
     authToken: '',
+    earthdataEnvironment: 'prod',
     location: {
       pathname: '/search'
     },

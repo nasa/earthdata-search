@@ -27,6 +27,7 @@ describe('timelineSearch', () => {
     expect(mock).toBeCalledTimes(1)
     expect(mock).toBeCalledWith({
       jwtToken: 'mockJwt',
+      earthdataEnvironment: 'prod',
       path: '/search/granules/timeline',
       params: '',
       requestId: 'asdf-1234-qwer-5678'

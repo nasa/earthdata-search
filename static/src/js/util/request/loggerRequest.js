@@ -5,8 +5,9 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
  * Request object for logging errors to lambda
  */
 export default class LoggerRequest extends Request {
-  constructor() {
-    super(getEnvironmentConfig().apiHost)
+  constructor(earthdataEnvironment) {
+    super(getEnvironmentConfig().apiHost, earthdataEnvironment)
+
     this.lambda = true
   }
 

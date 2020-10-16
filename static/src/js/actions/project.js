@@ -27,6 +27,8 @@ import { buildCollectionSearchParams, prepareCollectionParams } from '../util/co
 import { buildPromise } from '../util/buildPromise'
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { getCollectionsMetadata } from '../selectors/collectionMetadata'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { hasTag } from '../../../../sharedUtils/tags'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 
@@ -126,11 +128,12 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   const state = getState()
   const {
     authToken,
-    metadata,
     project
   } = state
 
-  const { collections: collectionsMetadata = {} } = metadata
+  // Retrieve data from Redux using selectors
+  const collectionsMetadata = getCollectionsMetadata(state)
+  const earthdataEnvironment = getEarthdataEnvironment(state)
 
   const { defaultCmrSearchTags } = getApplicationConfig()
 
@@ -172,7 +175,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     includeHasGranules
   } = searchParams
 
-  const graphRequestObject = new GraphQlRequest(authToken)
+  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetCollections(
@@ -273,7 +276,11 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           versionId
         } = metadata
 
-        const focusedMetadata = createFocusedCollectionMetadata(metadata, authToken)
+        const focusedMetadata = createFocusedCollectionMetadata(
+          metadata,
+          authToken,
+          earthdataEnvironment
+        )
 
         payload.push({
           abstract,

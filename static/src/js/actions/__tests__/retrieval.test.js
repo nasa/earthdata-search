@@ -38,6 +38,7 @@ describe('submitRetrieval', () => {
     // mockStore with initialState
     const store = mockStore({
       authToken: 'mockToken',
+      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           allIds: ['collectionId'],

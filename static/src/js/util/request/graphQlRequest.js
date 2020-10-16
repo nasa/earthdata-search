@@ -1,7 +1,6 @@
 import axios from 'axios'
 import Request from './request'
 
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import {
   getEnvironmentConfig,
   getEarthdataConfig
@@ -9,17 +8,15 @@ import {
 import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 export default class GraphQlRequest extends Request {
-  constructor(authToken) {
-    const cmrEnvironment = cmrEnv()
-
+  constructor(authToken, earthdataEnvironment) {
     if (authToken && authToken !== '') {
-      super(getEnvironmentConfig().apiHost)
+      super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'graphql'
     } else {
-      super(getEarthdataConfig(cmrEnvironment).graphQlHost)
+      super(getEarthdataConfig(earthdataEnvironment).graphQlHost, earthdataEnvironment)
 
       this.searchPath = 'api'
     }
@@ -31,6 +28,14 @@ export default class GraphQlRequest extends Request {
    * @return {Object} A modified object.
    */
   transformRequest(data, headers) {
+    if (
+      this.earthdataEnvironment
+      && (this.authenticated || this.optionallyAuthenticated || this.lambda)
+    ) {
+      // eslint-disable-next-line no-param-reassign
+      headers['Earthdata-ENV'] = this.earthdataEnvironment
+    }
+
     if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
       headers.Authorization = `Bearer: ${this.getAuthToken()}`

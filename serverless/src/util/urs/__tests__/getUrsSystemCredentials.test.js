@@ -2,8 +2,6 @@ import AWS from 'aws-sdk'
 
 import { getUrsSystemCredentials } from '../getUrsSystemCredentials'
 
-import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
-
 describe('getUrsSystemCredentials', () => {
   test('fetches urs credentials from secrets manager', async () => {
     const secretsManagerData = jest.fn().mockReturnValue({
@@ -17,9 +15,7 @@ describe('getUrsSystemCredentials', () => {
         getSecretValue: secretsManagerData
       }))
 
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
-    const response = await getUrsSystemCredentials()
+    const response = await getUrsSystemCredentials('prod')
 
     expect(response).toEqual({
       username: 'test',

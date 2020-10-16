@@ -4,8 +4,8 @@ import { getTemporal } from '../edscDate'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export default class CwicGranuleRequest extends Request {
-  constructor(authToken) {
-    super(getEnvironmentConfig().apiHost)
+  constructor(authToken, earthdataEnvironment) {
+    super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.lambda = true
 

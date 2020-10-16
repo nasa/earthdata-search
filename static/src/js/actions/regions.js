@@ -14,6 +14,8 @@ import {
   ERRORED_REGIONS
 } from '../constants/actionTypes'
 
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+
 export const updateRegionResults = payload => ({
   type: UPDATE_REGION_RESULTS,
   payload
@@ -47,7 +49,12 @@ export const finishRegionsTimer = () => ({
  * @param {function} getState - A function that returns the current state provided by redux.
  */
 export const getRegions = () => (dispatch, getState) => {
-  const regionParams = prepareRegionParams(getState())
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const regionParams = prepareRegionParams(state)
 
   const {
     query
@@ -56,7 +63,7 @@ export const getRegions = () => (dispatch, getState) => {
   dispatch(onRegionsLoading())
   dispatch(startRegionsTimer())
 
-  const requestObject = new RegionRequest()
+  const requestObject = new RegionRequest(earthdataEnvironment)
 
   const response = requestObject.search(regionParams)
     .then((response) => {

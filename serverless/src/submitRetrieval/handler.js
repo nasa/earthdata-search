@@ -32,7 +32,7 @@ const submitRetrieval = async (event, context) => {
 
   const { collections, environment, json_data: jsonData } = params
 
-  const jwtToken = getJwtToken(event)
+  const jwtToken = getJwtToken(event, environment)
 
   if (sqs == null) {
     sqs = new AWS.SQS(getSqsConfig())
@@ -41,7 +41,7 @@ const submitRetrieval = async (event, context) => {
   const {
     access_token: accessToken,
     user_id: userId
-  } = await getAccessTokenFromJwtToken(jwtToken)
+  } = await getAccessTokenFromJwtToken(jwtToken, environment)
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()

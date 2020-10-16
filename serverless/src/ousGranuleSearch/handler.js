@@ -1,7 +1,8 @@
 import { buildParams } from '../util/cmr/buildParams'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
-import { getJwtToken } from '../util/getJwtToken'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -23,20 +24,21 @@ const ousGranuleSearch = async (event) => {
     'variables'
   ]
 
-  const { body } = event
+  const { body, headers } = event
 
-  const { requestId } = JSON.parse(body)
-
-  const { defaultResponseHeaders } = getApplicationConfig()
+  const { params = {}, requestId } = JSON.parse(body)
 
   // We need echo_collection_id to construct the URL but it is not listed
   // as a permitted key so it will be ignored when the request is made
-  const { params = {} } = JSON.parse(body)
   const { echo_collection_id: echoCollectionId } = params
+
+  const { defaultResponseHeaders } = getApplicationConfig()
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   try {
     return doSearchRequest({
-      jwtToken: getJwtToken(event),
+      jwtToken: getJwtToken(event, earthdataEnvironment),
       path: `/service-bridge/ous/collection/${echoCollectionId}`,
       params: buildParams({
         body,
@@ -45,7 +47,8 @@ const ousGranuleSearch = async (event) => {
         stringifyResult: false
       }),
       requestId,
-      bodyType: 'json'
+      bodyType: 'json',
+      earthdataEnvironment
     })
   } catch (e) {
     return {

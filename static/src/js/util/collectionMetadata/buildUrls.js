@@ -1,9 +1,8 @@
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import { buildAuthenticatedRedirectUrl } from '../url/buildAuthenticatedRedirectUrl'
 import { getClientId } from '../../../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
-export const buildUrls = (json, authToken) => {
+export const buildUrls = (json, authToken, earthdataEnvironment) => {
   const {
     conceptId: collectionId,
     shortName: providedCollectionShortName,
@@ -22,7 +21,7 @@ export const buildUrls = (json, authToken) => {
     { ext: 'dif', title: 'DIF' }
   ]
 
-  const eartdataConfig = getEarthdataConfig(cmrEnv())
+  const eartdataConfig = getEarthdataConfig(earthdataEnvironment)
   const {
     cmrHost,
     opensearchRoot
@@ -37,7 +36,7 @@ export const buildUrls = (json, authToken) => {
 
     if (authToken !== '') {
       // If an auth token is provided route the request through Lambda
-      url = buildAuthenticatedRedirectUrl(encodeURIComponent(url), authToken)
+      url = buildAuthenticatedRedirectUrl(encodeURIComponent(url), authToken, earthdataEnvironment)
     }
 
     urls[type.ext] = {
@@ -68,7 +67,11 @@ export const buildUrls = (json, authToken) => {
 
     if (authToken !== '') {
       // If an auth token is provided route the request through Lambda
-      cmrGranulesUrl = buildAuthenticatedRedirectUrl(encodeURIComponent(cmrGranulesUrl), authToken)
+      cmrGranulesUrl = buildAuthenticatedRedirectUrl(
+        encodeURIComponent(cmrGranulesUrl),
+        authToken,
+        earthdataEnvironment
+      )
     }
 
     urls.granuleDatasource = {
@@ -76,10 +79,6 @@ export const buildUrls = (json, authToken) => {
       href: cmrGranulesUrl
     }
   }
-
-  // TODO: GIBS
-  // TODO: Opendap
-  // TODO: Modaps
 
   return urls
 }

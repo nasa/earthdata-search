@@ -41,7 +41,7 @@ afterEach(() => {
 
 describe('validateToken', () => {
   describe('when the provided token is invalid', () => {
-    test('returns the username associated with the token', async () => {
+    test('returns false', async () => {
       jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'JWT_SIGNING_SECRET_KEY' }))
 
       jest.spyOn(simpleOAuth2, 'create').mockImplementation(() => ({
@@ -88,12 +88,12 @@ describe('validateToken', () => {
         }
       })
 
-      const response = await validateToken('invalid.jwtToken')
+      const response = await validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.0WJdf_c93ZCIzFSchcKMzIRgwaL2HhihXGg0y9pDm2M')
 
       expect(response).toEqual(false)
 
       expect(consoleMock).toBeCalledTimes(1)
-      expect(consoleMock.mock.calls[0]).toEqual(['JWT Token Invalid. JsonWebTokenError: jwt malformed'])
+      expect(consoleMock.mock.calls[0]).toEqual(['JWT Token Invalid. JsonWebTokenError: invalid signature'])
     })
   })
 
@@ -218,7 +218,7 @@ describe('validateToken', () => {
       expect(queries[2].method).toEqual('insert')
       expect(queries[2].bindings).toEqual([
         'accessToken',
-        'prod',
+        'test',
         '2019-09-10T20:00:23.313Z',
         'refreshedToken',
         1

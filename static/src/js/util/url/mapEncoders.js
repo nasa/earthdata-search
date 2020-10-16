@@ -49,7 +49,6 @@ export const encodeMap = (map) => {
   return encodedString
 }
 
-
 /**
  * Decodes a map parameter string into an object
  * @param {string} string A `!` delimited string of the map values

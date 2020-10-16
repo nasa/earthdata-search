@@ -1,6 +1,5 @@
 import request from 'request-promise'
 
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { getEdlConfig } from '../getEdlConfig'
@@ -11,17 +10,18 @@ let cmrToken
 
 /**
  * Returns a token from Legacy Services
- *  * @param {String} providedCmrEnv The CMR Environment to retrieve a token from
+ *  * @param {String} earthdataEnvironment The Earthdata Environment to retrieve a token from
  */
-export const getSystemToken = async (providedCmrEnv) => {
+export const getSystemToken = async (earthdataEnvironment) => {
   if (cmrToken == null) {
-    const cmrEnvironment = (providedCmrEnv || cmrEnv())
-
-    const dbCredentials = await getUrsSystemCredentials()
-    const { username: dbUsername, password: dbPassword } = dbCredentials
+    const dbCredentials = await getUrsSystemCredentials(earthdataEnvironment)
+    const {
+      username: dbUsername,
+      password: dbPassword
+    } = dbCredentials
 
     // The client id is part of our Earthdata Login credentials
-    const edlConfig = await getEdlConfig()
+    const edlConfig = await getEdlConfig(earthdataEnvironment)
     const { client } = edlConfig
     const { id: clientId } = client
 
@@ -34,7 +34,7 @@ export const getSystemToken = async (providedCmrEnv) => {
       user_ip_address: '127.0.0.1'
     }
 
-    const authenticationUrl = `${getEarthdataConfig(cmrEnvironment).cmrHost}/legacy-services/rest/tokens.json`
+    const authenticationUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/tokens.json`
     const tokenResponse = await request.post({
       uri: authenticationUrl,
       body: {
@@ -58,7 +58,7 @@ export const getSystemToken = async (providedCmrEnv) => {
     const { token } = body
     const { id, username } = token
 
-    console.log(`Successfully retrieved a ${cmrEnvironment.toUpperCase()} token for '${username}'`)
+    console.log(`Successfully retrieved a ${earthdataEnvironment.toUpperCase()} token for '${username}'`)
 
     // The actual token is returned as `id`
     cmrToken = id

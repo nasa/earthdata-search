@@ -2,7 +2,6 @@ import AWS from 'aws-sdk'
 
 import { getEdlConfig } from '../getEdlConfig'
 
-import * as cmrEnv from '../../../../sharedUtils/cmrEnv'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
 describe('getEdlConfig', () => {
@@ -22,9 +21,7 @@ describe('getEdlConfig', () => {
         getSecretValue: secretsManagerData
       }))
 
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
-    const response = await getEdlConfig()
+    const response = await getEdlConfig('prod')
 
     expect(response).toEqual({
       auth: {

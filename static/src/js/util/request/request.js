@@ -4,7 +4,6 @@ import uuidv4 from 'uuid/v4'
 import configureStore from '../../store/configureStore'
 import { metricsTiming } from '../../middleware/metrics/actions'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 const store = configureStore()
 
@@ -12,18 +11,19 @@ const store = configureStore()
  * Parent class for the application API layer to communicate with external services
  */
 export default class Request {
-  constructor(baseUrl) {
+  constructor(baseUrl, earthdataEnvironment) {
     if (!baseUrl) {
       throw new Error('A baseUrl must be provided.')
     }
 
     this.authenticated = false
-    this.optionallyAuthenticated = false
     this.baseUrl = baseUrl
+    this.cancelToken = CancelToken.source()
+    this.earthdataEnvironment = earthdataEnvironment
     this.lambda = false
+    this.optionallyAuthenticated = false
     this.searchPath = ''
     this.startTime = null
-    this.cancelToken = CancelToken.source()
 
     this.generateRequestId()
   }
@@ -71,6 +71,14 @@ export default class Request {
   transformRequest(data, headers) {
     // Filter out an unwanted data
     const filteredData = this.filterData(data)
+
+    if (
+      this.earthdataEnvironment
+      && (this.authenticated || this.optionallyAuthenticated || this.lambda)
+    ) {
+      // eslint-disable-next-line no-param-reassign
+      headers['Earthdata-ENV'] = this.earthdataEnvironment
+    }
 
     if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
@@ -168,6 +176,19 @@ export default class Request {
       }
     }
 
+    if (
+      this.earthdataEnvironment
+      && (this.authenticated || this.optionallyAuthenticated || this.lambda)
+    ) {
+      requestOptions = {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          'Earthdata-ENV': this.earthdataEnvironment
+        }
+      }
+    }
+
     return axios(requestOptions)
   }
 
@@ -199,6 +220,19 @@ export default class Request {
       }
     }
 
+    if (
+      this.earthdataEnvironment
+      && (this.authenticated || this.optionallyAuthenticated || this.lambda)
+    ) {
+      requestOptions = {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          'Earthdata-ENV': this.earthdataEnvironment
+        }
+      }
+    }
+
     return axios(requestOptions)
   }
 
@@ -215,7 +249,6 @@ export default class Request {
    * Handle an unauthorized response
    */
   handleUnauthorized(data) {
-    const cmrEnvironment = cmrEnv()
     if (data.statusCode === 401 || data.message === 'Unauthorized') {
       const { href, pathname } = window.location
       // Determine the path to redirect to for logging in
@@ -226,7 +259,7 @@ export default class Request {
         return
       }
 
-      const redirectPath = `${getEnvironmentConfig().apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
+      const redirectPath = `${getEnvironmentConfig().apiHost}/login?ee=${this.earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
 
       window.location.href = redirectPath
     }

@@ -1,10 +1,11 @@
 import 'pg'
 import forge from 'node-forge'
 
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
-import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -19,13 +20,17 @@ const saveShapefile = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { body } = event
+  const { body, headers } = event
+
   const { params } = JSON.parse(body)
+
   const {
     authToken,
     file,
     filename
   } = params
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()
@@ -45,7 +50,7 @@ const saveShapefile = async (event, context) => {
 
     // If user information was included, use it in the queries
     if (authToken) {
-      const { id: userId } = getVerifiedJwtToken(authToken)
+      const { id: userId } = getVerifiedJwtToken(authToken, earthdataEnvironment)
 
       shapefileSearchOptions.user_id = userId
       shapefileInsertOptions.user_id = userId

@@ -30,7 +30,7 @@ describe('getSystemToken', () => {
         }
       })
 
-    const tokenResponse = await getSystemToken()
+    const tokenResponse = await getSystemToken('prod')
 
     expect(tokenResponse).toEqual('1234-abcd-5678-efgh')
   })

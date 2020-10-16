@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { get } from 'tiny-cookie'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
+
+const mapStateToProps = state => ({
+  earthdataEnvironment: getEarthdataEnvironment(state)
+})
 
 export class AuthRequiredContainer extends Component {
   constructor(props) {
@@ -16,14 +21,15 @@ export class AuthRequiredContainer extends Component {
 
   componentWillMount() {
     const { apiHost } = getEnvironmentConfig()
-    const cmrEnvironment = cmrEnv()
 
     const token = get('authToken')
+
+    const { earthdataEnvironment } = this.props
 
     const returnPath = window.location.href
 
     if (token === null || token === '') {
-      window.location.href = `${apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
+      window.location.href = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
     } else {
       this.setState({ isLoggedIn: true })
     }
@@ -48,7 +54,8 @@ export class AuthRequiredContainer extends Component {
 }
 
 AuthRequiredContainer.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired
 }
 
-export default AuthRequiredContainer
+export default connect(mapStateToProps, null)(AuthRequiredContainer)

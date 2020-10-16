@@ -38,6 +38,7 @@ import adminIsAuthorizedReducer from './admin/isAuthorized'
 import adminRetrievalsReducer from './admin/retrievals'
 import preferencesReducer from './preferences'
 import autocompleteReducer from './autocomplete'
+import earthdataEnvironmentReducer from './earthdataEnvironment'
 
 export default history => combineReducers({
   admin: combineReducers({
@@ -50,6 +51,7 @@ export default history => combineReducers({
   browser: browserReducer,
   contactInfo: contactInfoReducer,
   dataQualitySummaries: dataQualitySummariesReducer,
+  earthdataEnvironment: earthdataEnvironmentReducer,
   errors: errorsReducer,
   facetsParams: combineReducers({
     feature: featureFacetsReducer,

@@ -50,6 +50,7 @@ describe('util#doSearchRequest', () => {
 
     await expect(doSearchRequest({
       jwtToken,
+      earthdataEnvironment: 'prod',
       path: url
     })).resolves.toEqual(expectedResponse)
   })

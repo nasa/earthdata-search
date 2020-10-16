@@ -34,6 +34,7 @@ export class OrderStatus extends Component {
 
   render() {
     const {
+      earthdataEnvironment,
       granuleDownload,
       match,
       portal,
@@ -113,13 +114,14 @@ export class OrderStatus extends Component {
               isLoaded && (
                 <OrderStatusList
                   collections={allCollections}
-                  match={match}
+                  earthdataEnvironment={earthdataEnvironment}
                   granuleDownload={granuleDownload}
-                  retrievalCollection={retrievalCollection}
+                  match={match}
                   onChangePath={onChangePath}
                   onFetchRetrieval={onFetchRetrieval}
                   onFetchRetrievalCollection={onFetchRetrievalCollection}
                   onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+                  retrievalCollection={retrievalCollection}
                 />
               )
             }
@@ -227,6 +229,7 @@ export class OrderStatus extends Component {
 
 OrderStatus.propTypes = {
   authToken: PropTypes.string.isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,

@@ -1,10 +1,9 @@
 import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
 
-import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
 import { getDbConnection } from '../database/getDbConnection'
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 import { getEdlConfig } from '../getEdlConfig'
+import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
 import { parseError } from '../../../../sharedUtils/parseError'
 
 /**
@@ -13,16 +12,22 @@ import { parseError } from '../../../../sharedUtils/parseError'
  * @returns {String} username associated with the valid EDL token
  */
 export const validateToken = async (jwtToken) => {
-  const edlConfig = await getEdlConfig()
+  const decodedJwtToken = jwt.decode(jwtToken)
+
+  if (!decodedJwtToken) {
+    return false
+  }
+
+  const { earthdataEnvironment = '' } = decodedJwtToken
+
+  const edlConfig = await getEdlConfig(earthdataEnvironment)
 
   try {
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 
     // Pull the secret used to encrypt our jwtTokens
-    const { secret } = getSecretEarthdataConfig(cmrEnv())
-
-    const cmrEnvironment = cmrEnv()
+    const { secret } = getSecretEarthdataConfig(earthdataEnvironment)
 
     return jwt.verify(jwtToken, secret, async (verifyError, decodedJwtToken) => {
       if (verifyError) {
@@ -37,7 +42,6 @@ export const validateToken = async (jwtToken) => {
         username
       } = decodedJwtToken
 
-
       // Retrieve the authenticated users' access tokens from the database
       const existingUserTokens = await dbConnection('user_tokens')
         .select([
@@ -46,7 +50,7 @@ export const validateToken = async (jwtToken) => {
           'refresh_token',
           'expires_at'
         ])
-        .where({ user_id: userId, environment: cmrEnvironment })
+        .where({ user_id: userId, environment: earthdataEnvironment })
         .orderBy('created_at', 'DESC')
 
       if (existingUserTokens.length === 0) {
@@ -75,7 +79,7 @@ export const validateToken = async (jwtToken) => {
         try {
           // Remove all tokens for this user in the current environment
           await dbConnection('user_tokens')
-            .where({ user_id: userId, environment: cmrEnvironment })
+            .where({ user_id: userId, environment: earthdataEnvironment })
             .del()
 
           const refreshedToken = await oauthToken.refresh()
@@ -94,7 +98,7 @@ export const validateToken = async (jwtToken) => {
             access_token: accessToken,
             refresh_token: refreshToken,
             expires_at: expiresAt,
-            environment: cmrEnvironment
+            environment: earthdataEnvironment
           })
         } catch (error) {
           console.log('Error refreshing access token: ', error.message)

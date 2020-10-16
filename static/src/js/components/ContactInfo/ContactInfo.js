@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './ContactInfo.scss'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+
 import Button from '../Button/Button'
+
+import './ContactInfo.scss'
 
 /**
  * Renders the Contact Info form
@@ -41,7 +42,7 @@ class ContactInfo extends Component {
   render() {
     const { notificationLevel } = this.state
 
-    const { contactInfo } = this.props
+    const { contactInfo, earthdataEnvironment } = this.props
     const { ursProfile = {} } = contactInfo
     const {
       affiliation,
@@ -54,7 +55,7 @@ class ContactInfo extends Component {
       user_type: userType
     } = ursProfile
 
-    const { edlHost } = getEarthdataConfig(cmrEnv())
+    const { edlHost } = getEarthdataConfig(earthdataEnvironment)
 
     return (
       <fieldset className="contact-info-form">
@@ -145,6 +146,7 @@ class ContactInfo extends Component {
 
 ContactInfo.propTypes = {
   contactInfo: PropTypes.shape({}).isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired,
   onUpdateNotificationLevel: PropTypes.func.isRequired
 }
 

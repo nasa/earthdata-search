@@ -10,7 +10,7 @@ import { getClientId } from '../../../sharedUtils/getClientId'
  */
 export const getEchoPreferencesData = async (username, token, environment) => {
   // The client id is part of our Earthdata Login credentials
-  const edlConfig = await getEdlConfig()
+  const edlConfig = await getEdlConfig(environment)
   const { client } = edlConfig
   const { id: clientId } = client
 
