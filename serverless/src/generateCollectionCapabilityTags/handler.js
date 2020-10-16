@@ -5,7 +5,7 @@ import request from 'request-promise'
 
 import { stringify } from 'qs'
 
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getCollectionCapabilities } from './getCollectionCapabilities'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
@@ -41,7 +41,7 @@ const generateCollectionCapabilityTags = async (input) => {
     include_tags: tagName('*')
   }
 
-  const { cmrHost } = getEarthdataConfig(cmrEnv())
+  const { cmrHost } = getEarthdataConfig(deployedEnvironment())
   const collectionSearchUrl = `${cmrHost}/search/collections.json`
 
   const response = await request.post({

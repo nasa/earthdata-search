@@ -1,17 +1,18 @@
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import request from 'request-promise'
+
 import { chunkArray } from '../util/chunkArray'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
+import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getRelevantServices } from './getRelevantServices'
 import { getServiceOptionDefinitionIdNamePairs } from './getServiceOptionDefinitionIdNamePairs'
-import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
-import { getSystemToken } from '../util/urs/getSystemToken'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
-import { tagName } from '../../../sharedUtils/tags'
+import { getSystemToken } from '../util/urs/getSystemToken'
+import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { parseError } from '../../../sharedUtils/parseError'
-import { getClientId } from '../../../sharedUtils/getClientId'
+import { tagName } from '../../../sharedUtils/tags'
 
 // AWS SQS adapter
 let sqs
@@ -36,7 +37,7 @@ const generateSubsettingTags = async (event, context) => {
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { echoRestRoot } = getEarthdataConfig(cmrEnv())
+  const { echoRestRoot } = getEarthdataConfig(deployedEnvironment())
 
   // Retrieve all known service option associations to use later when constructing
   // tag data payloads for ESI collections
@@ -89,7 +90,7 @@ const generateSubsettingTags = async (event, context) => {
   await chunkedServices.forEachAsync(async (chunk) => {
     const allCmrCollections = await pageAllCmrResults({
       cmrToken,
-      cmrEnvironment: cmrEnv(),
+      deployedEnvironment: deployedEnvironment(),
       path: 'search/collections.json',
       queryParams: {
         service_concept_id: chunk,

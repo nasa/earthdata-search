@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
@@ -10,7 +10,7 @@ import { getClientId } from '../../../sharedUtils/getClientId'
  * @return {Object} An object representing the CMR tag association response
  */
 export async function removeTag(tagName, searchCriteria, cmrToken) {
-  const tagRemovalUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/tags/${tagName}/associations/by_query`
+  const tagRemovalUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/tags/${tagName}/associations/by_query`
 
   try {
     await request.delete({

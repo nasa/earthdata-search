@@ -6,12 +6,12 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
  */
 export const getEarthdataEnvironment = (state) => {
   // Pull the default environment from the static application config
-  let { env: defaultCmrEnvironment } = getApplicationConfig()
+  let { env: defaultdeployedEnvironment } = getApplicationConfig()
 
   // Default to production when developing locally
-  if (defaultCmrEnvironment === 'dev') defaultCmrEnvironment = 'prod'
+  if (defaultdeployedEnvironment === 'dev') defaultdeployedEnvironment = 'prod'
 
-  const { earthdataEnvironment = defaultCmrEnvironment } = state
+  const { earthdataEnvironment = defaultdeployedEnvironment } = state
 
   return earthdataEnvironment
 }

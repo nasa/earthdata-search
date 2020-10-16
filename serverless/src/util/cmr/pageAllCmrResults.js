@@ -13,7 +13,7 @@ import { getClientId } from '../../../../sharedUtils/getClientId'
  */
 export const pageAllCmrResults = async ({
   cmrToken,
-  cmrEnvironment,
+  deployedEnvironment,
   path,
   queryParams = {},
   additionalHeaders = {}
@@ -30,7 +30,7 @@ export const pageAllCmrResults = async ({
     // Make an initial request so that we can get cmr-hits from the header, this
     // will help determine how many additional requests we'll need to make to get
     // all of the results
-    const { cmrHost } = getEarthdataConfig(cmrEnvironment)
+    const { cmrHost } = getEarthdataConfig(deployedEnvironment)
 
     const response = await request.post({
       uri: `${cmrHost}/${path}`,

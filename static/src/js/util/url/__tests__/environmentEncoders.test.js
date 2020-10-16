@@ -1,4 +1,4 @@
-import * as cmrEnv from '../../../../../../sharedUtils/cmrEnv'
+import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 
 import {
   decodeEarthdataEnvironment,
@@ -14,9 +14,9 @@ describe('encodeEarthdataEnvironment', () => {
     })
   })
 
-  describe('when the provided value matches cmrEnv', () => {
+  describe('when the provided value matches deployedEnvironment', () => {
     test('returns an empty string', () => {
-      jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+      jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
       const response = encodeEarthdataEnvironment('prod')
 
@@ -24,7 +24,7 @@ describe('encodeEarthdataEnvironment', () => {
     })
   })
 
-  describe('when the provided value does not match cmrEnv', () => {
+  describe('when the provided value does not match deployedEnvironment', () => {
     test('returns the provided environment', () => {
       const response = encodeEarthdataEnvironment('uat')
 
@@ -35,8 +35,8 @@ describe('encodeEarthdataEnvironment', () => {
 
 describe('decodeEarthdataEnvironment', () => {
   describe('when no value is provided', () => {
-    test('returns the cmrEnv', () => {
-      jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+    test('returns the deployedEnvironment', () => {
+      jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
       const response = decodeEarthdataEnvironment()
 
@@ -46,7 +46,7 @@ describe('decodeEarthdataEnvironment', () => {
 
   describe('when a value is provided', () => {
     test('returns the provided environment', () => {
-      jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+      jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
       const response = decodeEarthdataEnvironment('uat')
 
