@@ -77,7 +77,6 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
 
   const collectionParams = prepareCollectionParams(state)
 
-  // const { authToken } = collectionParams
   const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
