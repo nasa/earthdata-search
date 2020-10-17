@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { FaPlus, FaTimes } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
@@ -94,14 +95,14 @@ class GranuleImage extends Component {
           isOpen ? (
             <Button
               className="granule-image__button granule-image__button--close"
-              icon="FaTimes"
+              icon={FaTimes}
               onClick={this.handleToggleImage}
               label="Close browse image"
             />
           ) : (
             <Button
               className="granule-image__button granule-image__button--open"
-              icon="FaPlus"
+              icon={FaPlus}
               onClick={this.handleToggleImage}
               label="Open browse image"
             />

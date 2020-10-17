@@ -55,7 +55,7 @@ export const Button = React.forwardRef(({
     iconClasses = classNames(
       'button__icon',
       children ? 'button__icon--push' : null,
-      icon.includes('edsc') ? icon : null
+      typeof icon === 'string' && icon.includes('edsc') ? icon : null
     )
   }
 
@@ -77,10 +77,6 @@ export const Button = React.forwardRef(({
     asEl = undefined
   }
 
-  const Icon = () => (icon.includes('edsc')
-    ? <i className={iconClasses} />
-    : <EDSCIcon library="fa" icon={icon} className={iconClasses} />)
-
   const button = (
     <Btn
       ref={ref}
@@ -101,7 +97,7 @@ export const Button = React.forwardRef(({
       style={style}
       data-test-id={dataTestId}
     >
-      {(!spinner && icon) && <Icon />}
+      {(!spinner && icon) && <EDSCIcon icon={icon} className={iconClasses} />}
       <span className="button__contents">
         { spinner
           ? (
@@ -175,7 +171,7 @@ Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   href: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   overlayClass: PropTypes.string,

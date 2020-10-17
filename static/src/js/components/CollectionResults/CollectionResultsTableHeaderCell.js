@@ -1,5 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {
+  FaMinus,
+  FaPlus,
+  FaInfoCircle
+} from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
@@ -41,7 +46,7 @@ const CollectionResultsTableHeaderCell = (props) => {
       <div className="collection-results-table__collection-actions">
         <Button
           className="collection-results-table__collection-action collection-results-table__collection-action--info"
-          icon="FaInfoCircle"
+          icon={FaInfoCircle}
           variant="naked"
           label="View collection details"
           title="View collection details"
@@ -57,7 +62,7 @@ const CollectionResultsTableHeaderCell = (props) => {
                 ? (
                   <Button
                     className="collection-results-table__collection-action collection-results-table__collection-action--add"
-                    icon="FaPlus"
+                    icon={FaPlus}
                     variant="naked"
                     label="Add collection to the current project"
                     title="Add collection to the current project"
@@ -69,7 +74,7 @@ const CollectionResultsTableHeaderCell = (props) => {
                 ) : (
                   <Button
                     className="collection-results-table__collection-action collection-results-table__collection-action--remove"
-                    icon="FaMinus"
+                    icon={FaMinus}
                     variant="naked"
                     label="Remove collection from the current project"
                     title="Remove collection from the current project"

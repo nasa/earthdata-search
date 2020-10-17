@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
+import { FaTimesCircle } from 'react-icons/fa'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { pluralize } from '../../util/pluralize'
@@ -121,7 +122,7 @@ export class DownloadHistory extends Component {
                               className="download-history__button download-history__button--remove"
                               onClick={() => this.onHandleRemove(id)}
                               variant="naked"
-                              icon="FaTimesCircle"
+                              icon={FaTimesCircle}
                               label="Delete Download"
                             />
                           </td>

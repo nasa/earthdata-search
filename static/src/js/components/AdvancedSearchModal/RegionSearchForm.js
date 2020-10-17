@@ -6,6 +6,7 @@ import {
   Row
 } from 'react-bootstrap'
 import { isEmpty } from 'lodash'
+import { FaQuestionCircle } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import EDSCAlert from '../EDSCAlert/EDSCAlert'
@@ -192,7 +193,7 @@ export class RegionSearchForm extends Component {
                     <EDSCAlert
                       variant="small"
                       bootstrapVariant="light"
-                      icon="FaQuestionCircle"
+                      icon={FaQuestionCircle}
                     >
                       Find more information about Hydrological Units at
                       {' '}

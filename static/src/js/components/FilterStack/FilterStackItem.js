@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { FaTimesCircle } from 'react-icons/fa'
 
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './FilterStackItem.scss'
 
@@ -22,10 +24,10 @@ const FilterStackItem = (props) => {
 
   let iconClass = ''
 
-  if (icon === 'edsc-globe') {
+  if (typeof icon === 'string' && icon === 'edsc-globe') {
     iconClass = 'edsc-icon-globe-grid filter-stack-item__icon filter-stack-item__icon--small'
   } else {
-    iconClass = `fa fa-${icon} filter-stack-item__icon`
+    iconClass = 'filter-stack-item__icon'
   }
 
   const filterStackItemClasses = classNames([
@@ -46,10 +48,7 @@ const FilterStackItem = (props) => {
                 <>
                   <div className="filter-stack-item__body-primary">
                     <header className="filter-stack-item__header">
-                      <i
-                        className={iconClass}
-                        title={title}
-                      />
+                      <EDSCIcon className={iconClass} icon={icon} title={title} />
                       <h3 className="filter-stack-item__title">{title}</h3>
                       {
                         secondaryTitle && (
@@ -67,7 +66,7 @@ const FilterStackItem = (props) => {
                         <Button
                           className="filter-stack-item__action-button"
                           label={`Remove ${title.toLowerCase()} filter`}
-                          icon="FaTimesCircle"
+                          icon={FaTimesCircle}
                           onClick={() => { onRemove() }}
                         />
                       )
@@ -115,7 +114,7 @@ FilterStackItem.propTypes = {
     PropTypes.string,
     PropTypes.node
   ]),
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   onRemove: PropTypes.func,
   title: PropTypes.string.isRequired,
   secondaryTitle: PropTypes.string,

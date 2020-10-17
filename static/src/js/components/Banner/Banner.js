@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { FaTimesCircle } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 
@@ -29,7 +30,7 @@ export const Banner = ({
         className="banner__close"
         label="close"
         onClick={onClose}
-        icon="FaTimesCircle"
+        icon={FaTimesCircle}
       />
     </div>
   )

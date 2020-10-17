@@ -27,7 +27,7 @@ export const MoreActionsDropdownItem = ({
       className={moreActionItemClasses}
       onClick={onClick}
     >
-      {icon && <EDSCIcon library="fa" icon={icon} className={moreActionItemIconClasses} />}
+      {icon && <EDSCIcon icon={icon} className={moreActionItemIconClasses} />}
       {title}
     </Dropdown.Item>
   )
@@ -41,7 +41,7 @@ MoreActionsDropdownItem.defaultProps = {
 
 MoreActionsDropdownItem.propTypes = {
   className: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   onClick: PropTypes.func,
   title: PropTypes.string.isRequired
 }

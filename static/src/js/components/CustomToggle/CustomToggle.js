@@ -76,7 +76,7 @@ export const CustomToggle = React.forwardRef(({
       {...buttonEventHandlers}
       {...props}
     >
-      {icon && <EDSCIcon library="fa" icon={icon} className={iconClasses} />}
+      {icon && <EDSCIcon icon={icon} className={iconClasses} />}
       {children}
     </button>
   )

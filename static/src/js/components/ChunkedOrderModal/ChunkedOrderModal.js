@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 
 import { calculateOrderCount } from '../../util/orderCount'
 import { commafy } from '../../util/commafy'
@@ -54,7 +55,7 @@ export class ChunkedOrderModal extends Component {
         className="chunked-order-modal__action chunked-order-modal__action--secondary"
         bootstrapVariant="primary"
         type="button"
-        icon="FaArrowCircleLeft"
+        icon={FaArrowCircleLeft}
         label="Refine your search"
         onClick={() => onToggleChunkedOrderModal(false)}
         to={{

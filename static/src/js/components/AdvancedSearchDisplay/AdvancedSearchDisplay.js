@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isObject } from 'lodash'
+import { FaSlidersH } from 'react-icons/fa'
 
 import AdvancedSearchDisplayEntry from './AdvancedSearchDisplayEntry'
 import FilterStackItem from '../FilterStack/FilterStackItem'
@@ -29,7 +30,7 @@ class AdvancedSearchDisplay extends PureComponent {
 
     return (
       <FilterStackItem
-        icon="FaSlidersH"
+        icon={FaSlidersH}
         title="Advanced Search"
         onRemove={() => {
           onUpdateAdvancedSearch({})

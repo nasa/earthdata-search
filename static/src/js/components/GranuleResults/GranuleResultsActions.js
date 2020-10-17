@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { FaFolderPlus, FaFolderMinus } from 'react-icons/fa'
+import { FaFolder, FaFolderPlus, FaFolderMinus } from 'react-icons/fa'
 
 import { commafy } from '../../util/commafy'
 import { granuleTotalCount } from './skeleton'
@@ -53,7 +53,7 @@ const GranuleResultsActions = ({
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--add"
       onClick={() => onAddProjectCollection(focusedCollectionId)}
-      icon="FaFolderPlus"
+      icon={FaFolderPlus}
       label="Add collection to the current project"
       title="Add collection to the current project"
     />
@@ -63,7 +63,7 @@ const GranuleResultsActions = ({
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--remove"
       onClick={() => onRemoveCollectionFromProject(focusedCollectionId)}
-      icon="FaFolderMinus"
+      icon={FaFolderMinus}
       label="Remove collection from the current project"
       title="Remove collection from the current project"
     />
@@ -151,7 +151,7 @@ const GranuleResultsActions = ({
                           search: location.search
                         }}
                       >
-                        <EDSCIcon library="fa" icon="FaFolder" className="granule-results-actions__project-pill-icon" />
+                        <EDSCIcon icon={FaFolder} className="granule-results-actions__project-pill-icon" />
                         {
                           (!addedGranuleIds.length && !removedGranuleIds.length) && <span title="All granules in project">All Granules</span>
                         }

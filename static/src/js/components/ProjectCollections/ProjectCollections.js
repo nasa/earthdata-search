@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { isEqual } from 'lodash'
+import { FaDownload } from 'react-icons/fa'
 
 import { isProjectValid } from '../../util/isProjectValid'
 
@@ -171,7 +172,7 @@ export class ProjectCollections extends Component {
             type="submit"
             variant="full"
             bootstrapVariant="success"
-            icon="FaDownload"
+            icon={FaDownload}
             label="Download project data"
             disabled={!isValid}
             spinner={isSubmitting}

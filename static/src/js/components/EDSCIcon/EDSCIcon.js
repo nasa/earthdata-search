@@ -1,47 +1,70 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import { IconContext } from 'react-icons'
 
 /**
- * Renders an icon per requested library and icon name.
- * @param {String} [className]
- * @param {String} [library='fa'] The library to target
- * @param {String} icon The full icon name as it exists within the loaded library
- * @param {ReactNodeLike} [children]
+ * Renders an icon wrapped with EDSCIcon.
+ * @param {String|Function} icon - The `react-icon` or 'edsc-*' icon name to render
+ * @param {Node} children - React children to display with the icon.
+ * @param {String} className - An optional classname.
+ * @param {Object} context - Optional object to pass to `react-icons/IconContext.Provider`
+ * @param {String} title - Optional string used as the `title` attribute
  */
 export const EDSCIcon = ({
-  className,
-  library,
   icon,
-  children
+  className,
+  children,
+  context,
+  title
 }) => {
-  let IconLoader
+  if (!icon) { return (<i />) }
 
-  switch (library) { // Lazy load the requested library
-    case 'fa':
-    default:
-      IconLoader = React.lazy(() => import('./FaLoader'))
-      break
+  if (typeof icon === 'string') {
+    return (
+      <i
+        className={className}
+        title={title}
+      />
+    )
   }
 
+  const Icon = icon
+
   return (
-    <Suspense fallback={<i />}>
-      <IconLoader icon={icon} className={className} />
-      {children}
-    </Suspense>
+    <>
+      {context ? (
+        <IconContext.Provider
+          key={icon}
+          value={context}
+        >
+          <Icon className={className} style={{ verticalAlign: 'initial' }} title={title} />
+          {children}
+        </IconContext.Provider>
+      ) : (
+        <>
+          <Icon key={icon} className={className} style={{ verticalAlign: 'initial' }} title={title} />
+          {children}
+        </>
+      )}
+    </>
   )
 }
 
 EDSCIcon.defaultProps = {
+  icon: null,
   children: null,
   className: null,
-  library: 'fa'
+  context: null,
+  title: null
 }
 
 EDSCIcon.propTypes = {
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   children: PropTypes.node,
   className: PropTypes.string,
-  library: PropTypes.oneOf(['fa']),
-  icon: PropTypes.string.isRequired
+  // eslint-disable-next-line react/forbid-prop-types
+  context: PropTypes.object,
+  title: PropTypes.string
 }
 
 export default EDSCIcon

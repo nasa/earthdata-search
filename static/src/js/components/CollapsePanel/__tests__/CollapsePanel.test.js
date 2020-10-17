@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { FaChevronCircleDown, FaChevronCircleUp } from 'react-icons/fa'
 
 import { CollapsePanel } from '../CollapsePanel'
 
@@ -44,10 +45,10 @@ describe('CollapsePanel component', () => {
     const { enzymeWrapper } = setup()
     const button = enzymeWrapper.find('button')
     expect(enzymeWrapper.state('open')).toEqual(false)
-    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual('FaChevronCircleDown')
+    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual(FaChevronCircleDown)
     button.simulate('click')
     expect(enzymeWrapper.state('open')).toEqual(true)
-    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual('FaChevronCircleUp')
+    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual(FaChevronCircleUp)
   })
 
   test('renders it children correctly', () => {

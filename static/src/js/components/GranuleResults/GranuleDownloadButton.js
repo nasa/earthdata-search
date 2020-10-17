@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FaDownload } from 'react-icons/fa'
 
 import { parse } from 'qs'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
@@ -50,7 +51,7 @@ export const GranuleDownloadButton = (props) => {
             className="granule-results-actions__download-all-button"
             badge={badge}
             bootstrapVariant="secondary"
-            icon="FaDownload"
+            icon={FaDownload}
             variant="full"
             label={buttonText}
             disabled
@@ -118,7 +119,7 @@ export const GranuleDownloadButton = (props) => {
         bootstrapVariant="success"
         className="granule-results-actions__download-all-button"
         disabled={granuleCount === 0 || initialLoading}
-        icon="FaDownload"
+        icon={FaDownload}
         label={buttonText}
         variant="full"
       >

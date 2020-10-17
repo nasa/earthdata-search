@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash'
 import Autosuggest from 'react-autosuggest'
+import {
+  FaEraser, FaChevronUp, FaBars, FaSlidersH
+} from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import AdvancedSearchDisplayContainer
@@ -331,7 +334,7 @@ class SearchForm extends Component {
             className="search-form__button search-form__button--clear"
             label="Clear search"
             onClick={this.onSearchClear}
-            icon="FaEraser"
+            icon={FaEraser}
           />
           {
             showFilterStackToggle && (
@@ -345,7 +348,7 @@ class SearchForm extends Component {
                         onClick={this.onToggleFilterStack}
                         title="Close filter stack"
                         label="Close filter stack"
-                        icon="FaChevronUp"
+                        icon={FaChevronUp}
                       />
                     )
                     : (
@@ -355,7 +358,7 @@ class SearchForm extends Component {
                         onClick={this.onToggleFilterStack}
                         title="Open filter stack"
                         label="Open filter stack"
-                        icon="FaBars"
+                        icon={FaBars}
                       />
                     )
                 }
@@ -373,7 +376,7 @@ class SearchForm extends Component {
                 className="search-form__button search-form__button--dark search-form__button--advanced-search"
                 label="Advanced search"
                 onClick={this.onToggleAdvancedSearch}
-                icon="FaSlidersH"
+                icon={FaSlidersH}
               />
             </PortalFeatureContainer>
           </div>

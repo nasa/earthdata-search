@@ -5,6 +5,7 @@ import {
   Row
 } from 'react-bootstrap'
 import classNames from 'classnames'
+import { FaChevronLeft } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
@@ -65,7 +66,7 @@ export class RegionSearch extends Component {
             <Button
               className="region-search-results__back-button"
               variant="naked"
-              icon="FaChevronLeft"
+              icon={FaChevronLeft}
               label="Back to Region Search"
               onClick={() => {
                 setModalOverlay(null)

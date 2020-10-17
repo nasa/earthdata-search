@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
 import { Table } from 'react-bootstrap'
+import { FaCaretUp, FaCaretDown } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -75,12 +76,12 @@ export const AdminRetrievalsList = ({
               User
               {
                 sortKey === '+username' && (
-                  <EDSCIcon library="fa" icon="FaCaretUp" className="admin-retrievals-list__sortable-icon" />
+                  <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
                 )
               }
               {
                 sortKey === '-username' && (
-                  <EDSCIcon library="fa" icon="FaCaretDown" className="admin-retrievals-list__sortable-icon" />
+                  <EDSCIcon icon={FaCaretDown} className="admin-retrievals-list__sortable-icon" />
                 )
               }
             </th>
@@ -92,12 +93,12 @@ export const AdminRetrievalsList = ({
               Created
               {
                 sortKey === '+created_at' && (
-                  <EDSCIcon library="fa" icon="FaCaretUp" className="admin-retrievals-list__sortable-icon" />
+                  <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
                 )
               }
               {
                 sortKey === '-created_at' && (
-                  <EDSCIcon library="fa" icon="FaCaretDown" className="admin-retrievals-list__sortable-icon" />
+                  <EDSCIcon icon={FaCaretDown} className="admin-retrievals-list__sortable-icon" />
                 )
               }
             </th>

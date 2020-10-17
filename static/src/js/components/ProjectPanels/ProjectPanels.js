@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash'
+import { FaExclamationCircle, FaCheckCircle, FaMap } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
@@ -341,14 +342,14 @@ class ProjectPanels extends PureComponent {
           {
             !isValid && (
               <span className="project-panels__collection-status project-panels__collection-status--invalid">
-                <EDSCIcon library="fa" icon="FaExclamationCircle" />
+                <EDSCIcon icon={FaExclamationCircle} />
               </span>
             )
           }
           {
             isValid && (
               <span className="project-panels__collection-status project-panels__collection-status--valid">
-                <EDSCIcon library="fa" icon="FaCheckCircle" />
+                <EDSCIcon icon={FaCheckCircle} />
               </span>
             )
           }
@@ -419,7 +420,7 @@ class ProjectPanels extends PureComponent {
             Back
           </Button>
         </div>
-      )e
+      )
 
       // Panels are controlled using the onSetActivePanel action. The parameters are
       // dot separated indexes of the panel you would like to trigger.
