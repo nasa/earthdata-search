@@ -18,7 +18,6 @@ export const updateFeatureFacet = facetInfo => ({
   payload: { ...facetInfo }
 })
 
-
 /**
  * Sets the desired feature facet and performs a collections request.
  * @param {object} facetInfo - An object containing information about the selected facet.
@@ -31,12 +30,10 @@ export const changeFeatureFacet = facetInfo => (dispatch) => {
   dispatch(actions.getCollections())
 }
 
-
 export const updateCmrFacet = newParams => ({
   type: UPDATE_SELECTED_CMR_FACET,
   payload: prepareCMRFacetPayload(newParams)
 })
-
 
 /**
  * Sets the desired facet and performs a collections request.

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -11,7 +11,7 @@ import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getProjectCollectionsIds } from '../../selectors/project'
 import { isPath } from '../../util/isPath'
 
-import Timeline from '../../components/Timeline/Timeline'
+const Timeline = lazy(() => import('../../components/Timeline/Timeline'))
 
 const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
@@ -71,18 +71,20 @@ export const TimelineContainer = (props) => {
   if (collectionsToRender.length === 0) return null
 
   return (
-    <Timeline
-      browser={browser}
-      collectionMetadata={collectionMetadata}
-      pathname={pathname}
-      showOverrideModal={isProjectPage}
-      temporalSearch={temporalSearch}
-      timeline={timeline}
-      onChangeQuery={onChangeQuery}
-      onChangeTimelineQuery={onChangeTimelineQuery}
-      onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
-      onMetricsTimeline={onMetricsTimeline}
-    />
+    <Suspense fallback={null}>
+      <Timeline
+        browser={browser}
+        collectionMetadata={collectionMetadata}
+        pathname={pathname}
+        showOverrideModal={isProjectPage}
+        temporalSearch={temporalSearch}
+        timeline={timeline}
+        onChangeQuery={onChangeQuery}
+        onChangeTimelineQuery={onChangeTimelineQuery}
+        onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
+        onMetricsTimeline={onMetricsTimeline}
+      />
+    </Suspense>
   )
 }
 

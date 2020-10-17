@@ -1,8 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 
 import L from 'leaflet'
-import { capitalize, difference, isEqual } from 'lodash'
-import camelcaseKeys from 'camelcase-keys'
+import {
+  camelCase,
+  capitalize,
+  difference,
+  isEqual
+} from 'lodash'
 import $ from 'jquery'
 
 import {
@@ -12,8 +16,7 @@ import {
 
 import {
   addPath,
-  isClockwise,
-  getlprojection
+  isClockwise
 } from '../../util/map/granules'
 
 import {
@@ -42,7 +45,7 @@ const config = {
   // eslint-disable-next-line max-len
   gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}',
   // eslint-disable-next-line max-len
-  gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{projection}/std/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}'
+  gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{lprojection}/std/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}'
 }
 
 const MAX_RETRIES = 1 // Maximum number of times to attempt to reload an image
@@ -73,7 +76,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const { granules: projectCollectionGranules = {} } = projectCollection
 
     this.collectionId = collectionId
-    this.projection = projection
     this.onChangeFocusedGranule = onChangeFocusedGranule
     this.onExcludeGranule = onExcludeGranule
     this.onMetricsMap = onMetricsMap
@@ -100,6 +102,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       isProjectPage,
       metadata,
       projectCollection,
+      projection,
       removedGranuleIds
     })
 
@@ -203,7 +206,9 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const operators = ['>=', '<=']
     Object.keys(matcher || {}).forEach((prop) => {
       let value = matcher[prop]
-      const granuleValue = granule[prop].split('T')[0]
+
+      // Granule metadata is camel case, so camelCase the prop in order to find the granuleValue
+      const granuleValue = granule[camelCase(prop)].split('T')[0]
       if (value && !granuleValue) { return false }
       let op = null
       operators.forEach((operator) => {
@@ -232,28 +237,56 @@ class GranuleGridLayerExtended extends L.GridLayer {
       const newOptionSet = optionSet
       if (this.matches(granule, newOptionSet.match)) {
         let newResolution
+        let tileMatrixLimits
 
         const oldResolution = newOptionSet.resolution
 
         // Set resolution to {projection}_resolution if it exists and if the layer exists within newOptionSet
         if ((this.projection === projections.geographic) && newOptionSet.geographic) {
           matched = true
-          newResolution = newOptionSet.geographicResolution
+          newResolution = newOptionSet.geographic_resolution
+          tileMatrixLimits = newOptionSet.geographic_tile_matrix_limits
         } else if ((this.projection === projections.arctic) && newOptionSet.arctic) {
           matched = true
-          newResolution = newOptionSet.arcticResolution
+          newResolution = newOptionSet.arctic_resolution
+          tileMatrixLimits = newOptionSet.arctic_tile_matrix_limits
         } else if ((this.projection === projections.antarctic) && newOptionSet.antarctic) {
           matched = true
-          newResolution = newOptionSet.antarcticResolution
+          newResolution = newOptionSet.antarctic_resolution
+          tileMatrixLimits = newOptionSet.antarctic_tile_matrix_limits
         }
 
         // Use default resolution unless newResolution exists
         if (newResolution == null) { newResolution = oldResolution }
         newOptionSet.resolution = newResolution
+        newOptionSet.tileMatrixLimits = tileMatrixLimits
 
         this.options = L.extend({}, this.originalOptions, newOptionSet)
       }
     })
+
+    const { resolution, tileMatrixLimits = {} } = this.options
+    const { [resolution]: tileMatrixLimitsByResolution = {} } = tileMatrixLimits
+
+    // If the z point is not included in the tile matrix limits, return null
+    if (!Object.keys(tileMatrixLimitsByResolution).includes(tilePoint.z.toString())) {
+      return null
+    }
+
+    const {
+      matrixHeight,
+      matrixWidth
+    } = tileMatrixLimitsByResolution[tilePoint.z]
+
+    // If the x or y points are less than 0 or greater than the width - 1 or height - 1 return null
+    // Subtract 1 because the tilePoints start at 0 instead of 1
+    if (
+      tilePoint.x < 0 || tilePoint.x > matrixWidth - 1
+      || tilePoint.y < 0 || tilePoint.y > matrixHeight - 1
+    ) {
+      return null
+    }
+
 
     if (!matched) { return false }
 
@@ -267,7 +300,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     }
 
     const data = {
-      lprojection: getlprojection(this.options),
+      lprojection: this.projection, // use current map projection
       x: tilePoint.x,
       y: tilePoint.y,
       z: tilePoint.z,
@@ -731,7 +764,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
       focusedCollectionId,
       addedGranuleIds = [],
       removedGranuleIds = [],
-      isProjectPage
+      isProjectPage,
+      projection
     } = props
 
     this.granules = granules
@@ -740,6 +774,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     this.isProjectPage = isProjectPage
     this.collectionId = collectionId
     this.focusedCollectionId = focusedCollectionId
+    this.projection = projection
 
     if (defaultGranules) {
       this.defaultGranules = defaultGranules
@@ -760,7 +795,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       const { tags } = metadata
 
       if (tags) {
-        this.multiOptions = camelcaseKeys(getValueForTag('gibs', tags), { deep: true })
+        this.multiOptions = getValueForTag('gibs', tags)
       }
     }
 
@@ -1304,6 +1339,7 @@ export class GranuleGridLayer extends MapLayer {
           lightColor,
           metadata,
           projectCollection,
+          projection,
           removedGranuleIds
         })
 

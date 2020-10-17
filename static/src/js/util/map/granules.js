@@ -1,5 +1,3 @@
-import projections from './projections'
-
 function pairs(array) {
   const len = array.length
 
@@ -41,18 +39,4 @@ export function addPath(ctx, path) {
     poly.slice(1).forEach(p => ctx.lineTo(p.x, p.y))
     if (line == null) ctx.closePath()
   }
-}
-
-// Translate project types into 'epsg####' strings
-export function getlprojection(options) {
-  if (options.geographic) {
-    return projections.geographic
-  }
-  if (options.arctic) {
-    return projections.arctic
-  }
-  if (options.antarctic) {
-    return projections.antarctic
-  }
-  return ''
 }

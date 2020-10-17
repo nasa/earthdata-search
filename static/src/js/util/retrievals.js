@@ -52,7 +52,10 @@ export const prepareRetrievalParams = (state) => {
 
     const extractedGranuleParams = extractProjectCollectionGranuleParams(state, collectionId)
 
-    const preparedParams = prepareGranuleParams(collectionsMetadata, extractedGranuleParams)
+    const preparedParams = prepareGranuleParams(
+      collectionsMetadata,
+      extractedGranuleParams
+    )
 
     const params = buildGranuleSearchParams(preparedParams)
 

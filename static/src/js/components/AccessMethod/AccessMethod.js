@@ -177,7 +177,9 @@ export class AccessMethod extends Component {
       onUpdateAccessMethod,
       selectedAccessMethod,
       shapefileId,
-      spatial
+      spatial,
+      temporal,
+      overrideTemporal
     } = this.props
 
     const { conceptId: collectionId } = metadata
@@ -400,6 +402,8 @@ export class AccessMethod extends Component {
                           rawModel={rawModel}
                           shapefileId={shapefileId}
                           spatial={spatial}
+                          temporal={temporal}
+                          overrideTemporal={overrideTemporal}
                           onUpdateAccessMethod={onUpdateAccessMethod}
                         />
                       </Suspense>
@@ -462,7 +466,7 @@ export class AccessMethod extends Component {
                           value={selectedOutputFormat}
                         >
                           {[
-                            <option key={null} value={null}>None</option>,
+                            <option key="output-format-none" value="">None</option>,
                             ...supportedOutputFormatOptions
                           ]}
                         </select>
@@ -485,7 +489,7 @@ export class AccessMethod extends Component {
                           value={selectedOutputProjection}
                         >
                           {[
-                            <option key={null} value={null}>None</option>,
+                            <option key="output-projection-none" value="">None</option>,
                             ...supportedOutputProjectionOptions
                           ]}
                         </select>
@@ -532,7 +536,9 @@ AccessMethod.propTypes = {
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string,
   shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({})
+  spatial: PropTypes.shape({}),
+  temporal: PropTypes.shape({}).isRequired,
+  overrideTemporal: PropTypes.shape({}).isRequired
 }
 
 export default AccessMethod

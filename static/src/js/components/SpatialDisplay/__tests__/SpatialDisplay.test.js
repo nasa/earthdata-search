@@ -18,11 +18,8 @@ function setup() {
     lineSearch: [],
     pointSearch: [],
     polygonSearch: [],
-    gridName: '',
     onChangeQuery: jest.fn(),
-    onRemoveGridFilter: jest.fn(),
     onRemoveSpatialFilter: jest.fn(),
-    selectingNewGrid: false,
     shapefile: {}
   }
 
@@ -284,27 +281,6 @@ describe('SpatialDisplay component', () => {
     })
   })
 
-  describe('with grid', () => {
-    test('should render the spatial info', () => {
-      const { enzymeWrapper } = setup()
-      const gridName = 'WRS-1'
-      enzymeWrapper.setProps({ gridName })
-
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
-
-      expect(filterStackItem.props().title).toEqual('Grid')
-      expect(filterStackItem.props().icon).toEqual('edsc-globe')
-      expect(filterStackContents.props().title).toEqual('Grid')
-
-      const gridNameSelect = filterStackContents.props().body.props.children.props.children
-      const gridNameSelectLabel = gridNameSelect.props.children[0]
-      const gridNameSelectInput = gridNameSelect.props.children[1]
-      expect(gridNameSelectLabel.props.children).toEqual('Coordinate System')
-      expect(gridNameSelectInput.props.value).toEqual(gridName)
-    })
-  })
-
   test('componentWillReceiveProps sets the state', () => {
     const { enzymeWrapper } = setup()
 
@@ -312,50 +288,6 @@ describe('SpatialDisplay component', () => {
     const newPoint = '0,0'
     enzymeWrapper.setProps({ pointSearch: [newPoint] })
     expect(enzymeWrapper.state().pointSearch).toEqual(newPoint)
-  })
-
-  describe('#onChangeGridType', () => {
-    test('calls onChangeQuery', () => {
-      const { enzymeWrapper, props } = setup()
-
-      const preventDefaultMock = jest.fn()
-      enzymeWrapper.instance().onChangeGridType({
-        target: {
-          value: 'test'
-        },
-        preventDefault: preventDefaultMock
-      })
-
-      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-      expect(props.onChangeQuery).toHaveBeenCalledWith({
-        collection: {
-          gridName: 'test'
-        }
-      })
-    })
-
-    test('calls preventDefault', () => {
-      const { enzymeWrapper } = setup()
-
-      const preventDefaultMock = jest.fn()
-      enzymeWrapper.instance().onChangeGridType({
-        target: {
-          value: 'test'
-        },
-        preventDefault: preventDefaultMock
-      })
-      expect(preventDefaultMock).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  describe('#onGridRemove', () => {
-    test('calls onRemoveGridFilter', () => {
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.instance().onGridRemove()
-
-      expect(props.onRemoveGridFilter).toHaveBeenCalledTimes(1)
-    })
   })
 
   describe('#onSpatialRemove', () => {

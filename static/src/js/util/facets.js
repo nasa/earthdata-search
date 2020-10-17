@@ -90,7 +90,8 @@ export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied
     platform_h: newParams.platform_h,
     processing_level_id_h: newParams.processing_level_id_h,
     project_h: newParams.project_h,
-    science_keywords_h: newParams.science_keywords_h
+    science_keywords_h: newParams.science_keywords_h,
+    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
   }
 
   onChangeHandler(paramsToSend, facet, applied)
@@ -111,7 +112,8 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
     platform_h: newParams.platform_h,
     processing_level_id_h: newParams.processing_level_id_h,
     project_h: newParams.project_h,
-    science_keywords_h: newParams.science_keywords_h
+    science_keywords_h: newParams.science_keywords_h,
+    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
   }
 
   onChangeHandler(paramsToSend)
@@ -129,7 +131,8 @@ export const categoryNameToCMRParam = (name) => {
     Instruments: 'instrument',
     Organizations: 'data-center',
     Projects: 'project',
-    'Processing levels': 'processing-level-id'
+    'Processing levels': 'processing-level-id',
+    'Tiling System': 'two-d-coordinate-system-name'
   }
   return categoryMap[name]
 }
@@ -160,6 +163,9 @@ export const prepareCMRFacetPayload = newParams => ({
     : undefined,
   science_keywords_h: newParams.science_keywords_h
     ? newParams.science_keywords_h
+    : undefined,
+  two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
+    ? newParams.two_d_coordinate_system_name
     : undefined
 })
 

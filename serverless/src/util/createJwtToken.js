@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import cmrEnv from '../../../sharedUtils/cmrEnv'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
 
 /**

@@ -1,5 +1,7 @@
 import AWS from 'aws-sdk'
+
 import { getStepFunctionsConfig } from './aws/getStepFunctionsConfig'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Initiate an order status workflow
@@ -21,6 +23,6 @@ export const startOrderStatusUpdateWorkflow = async (orderId, accessToken, order
 
     console.log(`State Machine Invocation (Order ID: ${orderId}): `, stepFunctionResponse)
   } catch (e) {
-    console.log(e)
+    parseError(e)
   }
 }

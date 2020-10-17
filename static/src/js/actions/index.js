@@ -51,7 +51,6 @@ import {
   changeRegionQuery,
   changeQuery,
   clearFilters,
-  removeGridFilter,
   removeSpatialFilter,
   removeTemporalFilter,
   updateGranuleSearchQuery,
@@ -80,10 +79,10 @@ import {
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
   toggleSecondaryOverlayPanel,
-  toggleSelectingNewGrid,
   toggleShapefileUploadModal,
   toggleSpatialPolygonWarning,
-  toggleTooManyPointsModal
+  toggleTooManyPointsModal,
+  toggleKeyboardShortcutsModal
 } from './ui'
 import {
   applyViewAllFacets,
@@ -233,7 +232,6 @@ const actions = {
   removeCollectionFromProject,
   removeError,
   removeGranuleFromProjectCollection,
-  removeGridFilter,
   removeSpatialFilter,
   removeTemporalFilter,
   restoreProject,
@@ -256,11 +254,11 @@ const actions = {
   toggleCollectionVisibility,
   toggleDrawingNewLayer,
   toggleFacetsModal,
+  toggleKeyboardShortcutsModal,
   toggleOverrideTemporalModal,
   togglePanels,
   toggleRelatedUrlsModal,
   toggleSecondaryOverlayPanel,
-  toggleSelectingNewGrid,
   toggleShapefileUploadModal,
   toggleSpatialPolygonWarning,
   toggleTooManyPointsModal,

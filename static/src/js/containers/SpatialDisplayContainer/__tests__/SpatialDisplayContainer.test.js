@@ -13,14 +13,12 @@ function setup() {
     circleSearch: ['Test Circle'],
     displaySpatialPolygonWarning: false,
     drawingNewLayer: false,
-    gridName: 'Test Grid',
     lineSearch: ['Test Line'],
     onChangeQuery: jest.fn(),
     onRemoveGridFilter: jest.fn(),
     onRemoveSpatialFilter: jest.fn(),
     pointSearch: ['Test Point Search'],
     polygonSearch: ['Test Polygon Search'],
-    selectingNewGrid: false,
     shapefile: {}
   }
 
@@ -42,14 +40,12 @@ describe('SpatialDisplayContainer component', () => {
       circleSearch: ['Test Circle'],
       displaySpatialPolygonWarning: false,
       drawingNewLayer: false,
-      gridName: 'Test Grid',
       lineSearch: ['Test Line'],
       onChangeQuery: props.onChangeQuery,
       onRemoveGridFilter: props.onRemoveGridFilter,
       onRemoveSpatialFilter: props.onRemoveSpatialFilter,
       pointSearch: ['Test Point Search'],
       polygonSearch: ['Test Polygon Search'],
-      selectingNewGrid: false,
       shapefile: {}
     })
   })

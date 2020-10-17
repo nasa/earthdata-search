@@ -2,6 +2,7 @@ import AWS from 'aws-sdk'
 
 import * as getSupportedGibsLayers from '../getSupportedGibsLayers'
 import generateGibsTags from '../handler'
+import { matrixLimits } from './mocks'
 
 const OLD_ENV = process.env
 
@@ -62,7 +63,8 @@ describe('generateGibsTags', () => {
         },
         type: 'wmts',
         id: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-        tags: 'ssc podaac PO.DAAC'
+        tags: 'ssc podaac PO.DAAC',
+        matrixLimits
       },
       'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly': {
         startDate: '2000-02-01',
@@ -81,7 +83,8 @@ describe('generateGibsTags', () => {
             source: 'GIBS:geographic',
             matrixSet: '2km'
           }
-        }
+        },
+        matrixLimits
       }
     }))
 
@@ -120,10 +123,13 @@ describe('generateGibsTags', () => {
             format: 'png',
             antarctic: false,
             antarctic_resolution: null,
+            antarctic_tile_matrix_limits: null,
             arctic: false,
             arctic_resolution: null,
+            arctic_tile_matrix_limits: null,
             geographic: true,
-            geographic_resolution: '2km'
+            geographic_resolution: '2km',
+            geographic_tile_matrix_limits: matrixLimits
           }]
         }
       })
@@ -151,10 +157,13 @@ describe('generateGibsTags', () => {
           format: 'png',
           antarctic: false,
           antarctic_resolution: null,
+          antarctic_tile_matrix_limits: null,
           arctic: false,
           arctic_resolution: null,
+          arctic_tile_matrix_limits: null,
           geographic: true,
-          geographic_resolution: '2km'
+          geographic_resolution: '2km',
+          geographic_tile_matrix_limits: matrixLimits
         }]
       })
     }])

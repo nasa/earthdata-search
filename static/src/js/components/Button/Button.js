@@ -13,7 +13,7 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './Button.scss'
 
-export const Button = ({
+export const Button = React.forwardRef(({
   as,
   badge,
   badgeVariant,
@@ -37,7 +37,7 @@ export const Button = ({
   tooltipId,
   type,
   variant
-}) => {
+}, ref) => {
   const buttonClasses = classNames(
     'button',
     {
@@ -79,6 +79,7 @@ export const Button = ({
 
   const button = (
     <Btn
+      ref={ref}
       as={asEl}
       className={buttonClasses}
       variant={bootstrapVariant}
@@ -119,7 +120,6 @@ export const Button = ({
       )}
     </Btn>
   )
-
   if (tooltip && tooltipId) {
     return (
       <OverlayTrigger
@@ -132,9 +132,8 @@ export const Button = ({
       </OverlayTrigger>
     )
   }
-
   return button
-}
+})
 
 Button.defaultProps = {
   as: 'button',
@@ -150,10 +149,9 @@ Button.defaultProps = {
   icon: null,
   onClick: null,
   overlayClass: null,
-  popover: null,
-  popoverId: null,
   spinner: false,
   style: null,
+  target: null,
   title: null,
   tooltip: null,
   tooltipId: null,

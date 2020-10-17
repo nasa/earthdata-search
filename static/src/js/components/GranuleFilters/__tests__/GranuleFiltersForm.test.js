@@ -16,11 +16,12 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    cmrFacetParams: {},
+    collectionMetadata: {},
+    collectionQuery: {},
     errors: {},
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
-    collectionMetadata: {},
-    collectionQuery: {},
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
     touched: {},
@@ -618,8 +619,20 @@ describe('GranuleFiltersForm component', () => {
 
     test('defaults to an empty value', () => {
       const { enzymeWrapper } = setup({
-        collectionQuery: {
-          gridName: 'CALIPSO'
+        collectionMetadata: {
+          tilingIdentificationSystems: [
+            {
+              tilingIdentificationSystemName: 'MISR',
+              coordinate1: {
+                minimumValue: 1,
+                maximumValue: 233
+              },
+              coordinate2: {
+                minimumValue: 1,
+                maximumValue: 180
+              }
+            }
+          ]
         }
       })
 
@@ -629,15 +642,54 @@ describe('GranuleFiltersForm component', () => {
 
     test('calls handleChange on change', () => {
       const { enzymeWrapper, props } = setup({
-        collectionQuery: {
-          gridName: 'CALIPSO'
+        collectionMetadata: {
+          tilingIdentificationSystems: [
+            {
+              tilingIdentificationSystemName: 'MISR',
+              coordinate1: {
+                minimumValue: 1,
+                maximumValue: 233
+              },
+              coordinate2: {
+                minimumValue: 1,
+                maximumValue: 180
+              }
+            }
+          ]
         }
       })
 
       const gridCoordsSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
-      gridCoordsSection.find(Form.Control).prop('onChange')({ event: 'test' })
+      gridCoordsSection.find(Form.Control).prop('onChange')({ target: { value: 'MISR' } })
       expect(props.handleChange).toHaveBeenCalledTimes(1)
-      expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+      expect(props.handleChange).toHaveBeenCalledWith({ target: { value: 'MISR' } })
+    })
+
+    test('tiling system onchange displays grid coordinates', () => {
+      const { enzymeWrapper } = setup({
+        collectionMetadata: {
+          tilingIdentificationSystems: [
+            {
+              tilingIdentificationSystemName: 'MISR',
+              coordinate1: {
+                minimumValue: 1,
+                maximumValue: 233
+              },
+              coordinate2: {
+                minimumValue: 1,
+                maximumValue: 183
+              }
+            }
+          ]
+        },
+        values: {
+          tilingSystem: 'MISR'
+        }
+      })
+
+      const gridCoordsSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+      expect(gridCoordsSection.find(Form.Control).length).toBe(2)
+      expect(gridCoordsSection.find(Form.Text).at(0).text()).toEqual('Enter path (min: 1, max: 233) and block (min: 1, max: 183) coordinates separated by spaces, e.g. "2,3 5,7"')
     })
   })
 })

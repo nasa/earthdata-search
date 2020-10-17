@@ -46,7 +46,7 @@ describe('GranuleImage component', () => {
 
       expect(enzymeWrapper.state().isOpen).toEqual(true)
 
-      enzymeWrapper.find('Button').simulate('click')
+      enzymeWrapper.find('.granule-image__button').simulate('click')
 
       expect(enzymeWrapper.state().isOpen).toEqual(false)
     })
@@ -62,7 +62,7 @@ describe('GranuleImage component', () => {
 
       expect(enzymeWrapper.state().isOpen).toEqual(false)
 
-      enzymeWrapper.find('Button').simulate('click')
+      enzymeWrapper.find('.granule-image__button').simulate('click')
 
       expect(enzymeWrapper.state().isOpen).toEqual(true)
     })

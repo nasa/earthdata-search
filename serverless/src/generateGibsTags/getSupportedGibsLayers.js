@@ -1,5 +1,7 @@
 import 'array-foreach-async'
 import request from 'request-promise'
+import { parse as parseXml } from 'fast-xml-parser'
+
 import customGibsProducts from '../static/gibs'
 import { getClientId } from '../../../sharedUtils/getClientId'
 
@@ -17,11 +19,59 @@ export const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
     }
   })
 
-  const supportedProjections = [
-    'GIBS:antarctic',
-    'GIBS:arctic',
-    'GIBS:geographic'
-  ]
+  const projectionMap = {
+    epsg4326: 'GIBS:geographic',
+    epsg3413: 'GIBS:arctic',
+    epsg3031: 'GIBS:antarctic'
+  }
+
+  const capabilitiesMatrixSets = {}
+
+  // For each projection, parse the capabilities document and pull out TileMatrixSet for each resolution
+  await Object.keys(projectionMap).forEachAsync(async (projection) => {
+    const capabilitiesUrl = `https://gibs.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?SERVICE=WMTS&request=GetCapabilities`
+    const capabilitiesResponse = await request.get({
+      uri: capabilitiesUrl,
+      resolveWithFullResponse: true
+    })
+
+    const parsedCapabilities = parseXml(capabilitiesResponse.body, {
+      ignoreAttributes: false,
+      attributeNamePrefix: ''
+    })
+
+    const { Capabilities: capabilities = {} } = parsedCapabilities
+    const { Contents: contents = {} } = capabilities
+    let { TileMatrixSet: capabilityTileMatrixSets = [] } = contents
+    capabilityTileMatrixSets = [].concat(capabilityTileMatrixSets).filter(Boolean)
+
+    const matrixLimits = {}
+    capabilityTileMatrixSets.forEach((matrixSet) => {
+      const { 'ows:Identifier': resolution } = matrixSet
+      let { TileMatrix: tileMatrix = [] } = matrixSet
+      tileMatrix = [].concat(tileMatrix).filter(Boolean)
+
+      const resolutionMap = {}
+      tileMatrix.forEach((matrix) => {
+        const {
+          'ows:Identifier': id,
+          MatrixWidth: matrixWidth,
+          MatrixHeight: matrixHeight
+        } = matrix
+
+        resolutionMap[id] = {
+          matrixWidth,
+          matrixHeight
+        }
+      })
+
+      matrixLimits[resolution] = resolutionMap
+    })
+
+    capabilitiesMatrixSets[projectionMap[projection]] = matrixLimits
+  })
+
+  const supportedProjections = Object.values(projectionMap)
 
   const { body: worldviewProducts } = worldviewResponse
 
@@ -73,6 +123,8 @@ export const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
       if (!supportedProjections.includes(projection.source)) {
         delete projections[key]
       }
+
+      currentLayer.matrixLimits = capabilitiesMatrixSets[projection.source]
     })
 
     // Ensure the layer has projections that we support

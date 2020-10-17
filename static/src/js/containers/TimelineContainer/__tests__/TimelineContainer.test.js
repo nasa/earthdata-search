@@ -54,9 +54,8 @@ describe('TimelineContainer component', () => {
     const { enzymeWrapper } = setup({
       pathname: '/search/granules'
     })
-
-    expect(enzymeWrapper.find(Timeline).length).toBe(1)
-    expect(enzymeWrapper.find(Timeline).props().collectionMetadata).toEqual({
+    expect(enzymeWrapper.find(Timeline).at(1))
+    expect(enzymeWrapper.childAt(0).props().collectionMetadata).toEqual({
       focusedCollectionId: {
         title: 'focused'
       }
@@ -68,8 +67,8 @@ describe('TimelineContainer component', () => {
       pathname: '/projects'
     })
 
-    expect(enzymeWrapper.find(Timeline).length).toBe(1)
-    expect(enzymeWrapper.find(Timeline).props().collectionMetadata).toEqual({
+    expect(enzymeWrapper.find(Timeline).at(1))
+    expect(enzymeWrapper.childAt(0).props().collectionMetadata).toEqual({
       projectCollectionId: {
         title: 'project'
       }

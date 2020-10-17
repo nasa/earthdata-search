@@ -81,6 +81,8 @@ function setup(overrideProps) {
     },
     shapefileId: '',
     spatial: {},
+    temporal: {},
+    overrideTemporal: {},
     onChangePath: jest.fn(),
     onSelectAccessMethod: jest.fn(),
     onTogglePanels: jest.fn(),

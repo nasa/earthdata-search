@@ -28,7 +28,6 @@ const mapStateToProps = state => ({
   focusedCollection: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granuleDataFormatFacets: state.facetsParams.cmr.granule_data_format_h,
-  gridName: state.query.collection.gridName,
   hasGranulesOrCwic: state.query.collection.hasGranulesOrCwic,
   instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.collection.keyword,
@@ -50,6 +49,7 @@ const mapStateToProps = state => ({
   shapefileId: state.shapefile.shapefileId,
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal,
+  twoDCoordinateSystemNameFacets: state.facetsParams.cmr.two_d_coordinate_system_name,
   timelineQuery: state.timeline.query
 })
 

@@ -13,7 +13,6 @@ import {
 const initialState = {
   collection: {
     byId: {},
-    gridName: '',
     keyword: '',
     hasGranulesOrCwic: true,
     pageNum: 1,
@@ -41,7 +40,6 @@ describe('UPDATE_COLLECTION_QUERY', () => {
       spatial: {
         point: '0,0'
       },
-      gridName: '',
       temporal: {}
     }
     const action = {
@@ -228,6 +226,49 @@ describe('UPDATE_GRANULE_SEARCH_QUERY', () => {
           collectionId: {
             granules: {
               ...initialGranuleState
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              collectionId: 'collectionId',
+              pageNum: 2
+            }
+          }
+        }
+      }
+    }
+
+    expect(queryReducer(initial, action)).toEqual(expectedState)
+  })
+
+  test('returns the correct state when removing values', () => {
+    const action = {
+      type: UPDATE_GRANULE_SEARCH_QUERY,
+      payload: {
+        collectionId: 'collectionId',
+        pageNum: 2
+      }
+    }
+
+    const initial = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              browseOnly: true
             }
           }
         }

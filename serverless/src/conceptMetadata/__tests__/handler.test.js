@@ -1,15 +1,20 @@
 import conceptMetadata from '../handler'
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getEdlConfig from '../../util/getEdlConfig'
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+    client: {
+      id: 'clientId'
+    }
+  }))
 })
 
 describe('conceptMetadata', () => {
   test('returns a redirect', async () => {
     jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
-    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
 
     const event = {
       queryStringParameters: {
@@ -26,7 +31,6 @@ describe('conceptMetadata', () => {
 
   test('returns a redirect correctly when the provided url has query params', async () => {
     jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
-    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
 
     const event = {
       queryStringParameters: {

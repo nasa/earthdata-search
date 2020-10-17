@@ -20,7 +20,6 @@ export class SpatialSelectionDropdown extends PureComponent {
 
   onItemClick(item) {
     const {
-      onToggleSelectingNewGrid,
       onToggleShapefileUploadModal
     } = this.props
 
@@ -50,10 +49,6 @@ export class SpatialSelectionDropdown extends PureComponent {
 
     if (item === 'file') {
       onToggleShapefileUploadModal(true)
-    }
-
-    if (item === 'grid') {
-      onToggleSelectingNewGrid(true)
     }
   }
 
@@ -116,15 +111,6 @@ export class SpatialSelectionDropdown extends PureComponent {
               <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
             </span>
           </Dropdown.Item>
-          <Dropdown.Item
-            className="spatial-selection-dropdown__button"
-            as={Button}
-            icon="edsc-icon-globe-grid edsc-icon-fw"
-            onClick={() => this.onItemClick('grid')}
-            label="Select Grid Coordinates"
-          >
-            <span>Grid Coordinates</span>
-          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     )
@@ -132,7 +118,6 @@ export class SpatialSelectionDropdown extends PureComponent {
 }
 
 SpatialSelectionDropdown.propTypes = {
-  onToggleSelectingNewGrid: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }
 

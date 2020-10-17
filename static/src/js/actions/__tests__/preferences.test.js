@@ -1,3 +1,4 @@
+jest.mock('../../util/addToast', () => jest.fn())
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
@@ -10,6 +11,7 @@ import {
   setPreferencesFromJwt,
   updatePreferences
 } from '../preferences'
+import addToastMock from '../../util/addToast'
 
 const mockStore = configureMockStore([thunk])
 
@@ -103,6 +105,10 @@ describe('updatePreferences', () => {
         type: SET_PREFERENCES_IS_SUBMITTING,
         payload: false
       })
+      expect(addToastMock.mock.calls.length).toBe(1)
+      expect(addToastMock.mock.calls[0][0]).toBe('Preferences saved!')
+      expect(addToastMock.mock.calls[0][1].appearance).toBe('success')
+      expect(addToastMock.mock.calls[0][1].autoDismiss).toBe(true)
     })
   })
 
@@ -134,6 +140,9 @@ describe('updatePreferences', () => {
         payload: false
       })
       expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(addToastMock.mock.calls.length).toBe(1)
+      expect(addToastMock.mock.calls[0][1].appearance).toBe('error')
+      expect(addToastMock.mock.calls[0][1].autoDismiss).toBe(false)
     })
   })
 })

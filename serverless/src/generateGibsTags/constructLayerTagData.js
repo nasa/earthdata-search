@@ -12,6 +12,7 @@ export const constructLayerTagData = (layer) => {
     format,
     group,
     id,
+    matrixLimits,
     product,
     projections,
     subtitle,
@@ -50,9 +51,11 @@ export const constructLayerTagData = (layer) => {
 
       tagData[projection] = true
       tagData[`${projection}_resolution`] = resolution
+      tagData[`${projection}_tile_matrix_limits`] = matrixLimits
     } else {
       tagData[projection] = false
       tagData[`${projection}_resolution`] = null
+      tagData[`${projection}_tile_matrix_limits`] = null
     }
   })
 

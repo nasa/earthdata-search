@@ -3,11 +3,28 @@ import uuidv4 from 'uuid/v4'
 import { REMOVE_ERROR, ADD_ERROR } from '../constants/actionTypes'
 import LoggerRequest from '../util/request/loggerRequest'
 import { parseError } from '../../../../sharedUtils/parseError'
+import { displayNotificationType } from '../constants/enums'
+import addToast from '../util/addToast'
 
-export const addError = payload => ({
-  type: ADD_ERROR,
-  payload
-})
+export const addError = payload => (dispatch) => {
+  // Default the notificationType to none
+  const { notificationType = 'none' } = payload
+
+  if (notificationType === 'banner') {
+    dispatch({
+      type: ADD_ERROR,
+      payload
+    })
+  } else if (notificationType === 'toast') {
+    const { message } = payload
+
+    // Disable autoDismiss for errors
+    addToast(message, {
+      appearance: 'error',
+      autoDismiss: false
+    })
+  }
+}
 
 export const removeError = payload => ({
   type: REMOVE_ERROR,
@@ -20,7 +37,7 @@ export const handleError = ({
   action,
   resource,
   verb = 'retrieving',
-  displayBanner = true,
+  notificationType = displayNotificationType.banner,
   requestObject
 }) => (dispatch, getState) => {
   const { router = {} } = getState()
@@ -32,14 +49,14 @@ export const handleError = ({
 
     requestId = existingRequestId
   }
-  if (displayBanner) {
-    dispatch(addError({
-      id: requestId,
-      title: `Error ${verb} ${resource}`,
-      message,
-      details: error
-    }))
-  }
+
+  dispatch(addError({
+    id: requestId,
+    title: `Error ${verb} ${resource}`,
+    message,
+    details: error,
+    notificationType
+  }))
 
   const parsedError = parseError(error, { asJSON: false })
   const [defaultErrorMessage = message] = parsedError

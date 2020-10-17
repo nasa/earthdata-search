@@ -8,5 +8,6 @@ export const autocompleteFacetsMap = {
   platform: 'platform_h',
   processing_level_id: 'processing_level_id_h',
   project: 'project_h',
-  science_keywords: 'science_keywords_h'
+  science_keywords: 'science_keywords_h',
+  two_d_coordinate_system_name: 'two_d_coordinate_system_name_h'
 }

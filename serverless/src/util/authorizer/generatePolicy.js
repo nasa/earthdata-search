@@ -6,8 +6,9 @@
  * @param {Object} resource
  */
 export const generatePolicy = (username, jwtToken, effect, resource) => {
-  const authResponse = {}
-  authResponse.principalId = username
+  const authResponse = {
+    principalId: username
+  }
 
   if (jwtToken) {
     authResponse.context = { jwtToken }

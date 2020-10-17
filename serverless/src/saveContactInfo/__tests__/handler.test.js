@@ -4,12 +4,13 @@ import AWS from 'aws-sdk'
 
 import nock from 'nock'
 
-import saveContactInfo from '../handler'
+import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
+import * as getDbConnection from '../../util/database/getDbConnection'
+import * as getEdlConfig from '../../util/getEdlConfig'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
-import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
-import * as invokeLambda from '../../util/aws/invokeLambda'
+
+import saveContactInfo from '../handler'
 
 let dbConnectionToMock
 let dbTracker
@@ -20,7 +21,12 @@ beforeEach(() => {
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
   jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: '1' }))
   jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'mock token' }))
-  jest.spyOn(invokeLambda, 'invokeLambda').mockImplementation(() => ({}))
+
+  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+    client: {
+      id: 'clientId'
+    }
+  }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({

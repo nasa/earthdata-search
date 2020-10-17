@@ -43,8 +43,6 @@ export const parseError = (errorObj, {
 
     const { 'content-type': contentType = '' } = headers
 
-    let errors = []
-
     if (contentType.indexOf('application/opensearchdescription+xml') > -1) {
       // CWIC collections return errors in XML, ensure we capture them
       const osddBody = parseXml(responseBody, {
@@ -54,23 +52,33 @@ export const parseError = (errorObj, {
       const { OpenSearchDescription: description } = osddBody
       const { Description: errorMessage } = description
 
-      errors = [errorMessage]
+      errorArray = [errorMessage]
+    } else if (contentType.indexOf('text/xml') > -1) {
+      // CWIC collections return errors in XML, ensure we capture them
+      const gibsError = parseXml(responseBody, {
+        ignoreAttributes: false,
+        attributeNamePrefix: ''
+      })
+
+      const { ExceptionReport: report } = gibsError
+      const { Exception: exception } = report
+      const { ExceptionText: errorMessage } = exception
+
+      errorArray = [errorMessage]
     } else if (description) {
       // Harmony uses code/description object in the response
-      errors = [description]
+      errorArray = [description]
     } else {
       // Default to CMR error response body
-      ({ errors = ['Unknown Error'] } = responseBody)
+      ({ errors: errorArray = ['Unknown Error'] } = responseBody)
     }
 
     if (shouldLog) {
       // Log each error provided
-      errors.forEach((message) => {
+      errorArray.forEach((message) => {
         console.log(`${name} (${code}): ${message}`)
       })
     }
-
-    errorArray = errors
   } else {
     if (shouldLog) {
       console.log(errorObj.toString())

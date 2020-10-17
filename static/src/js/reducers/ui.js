@@ -3,14 +3,14 @@ import {
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
-  TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_TOO_MANY_POINTS_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
-  TOGGLE_SPATIAL_POLYGON_WARNING
+  TOGGLE_SPATIAL_POLYGON_WARNING,
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -29,9 +29,6 @@ const initialState = {
   },
   map: {
     drawingNewLayer: false
-  },
-  grid: {
-    selectingNewGrid: false
   },
   secondaryOverlayPanel: {
     isOpen: false
@@ -53,6 +50,9 @@ const initialState = {
   },
   spatialPolygonWarning: {
     isDisplayed: false
+  },
+  keyboardShortcutsModal: {
+    isOpen: false
   }
 }
 
@@ -97,16 +97,6 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         secondaryOverlayPanel: {
           isOpen: action.payload
-        }
-      }
-    }
-    case TOGGLE_SELECTING_NEW_GRID: {
-      const { grid } = state
-      return {
-        ...state,
-        grid: {
-          ...grid,
-          selectingNewGrid: action.payload
         }
       }
     }
@@ -155,6 +145,14 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         spatialPolygonWarning: {
           isDisplayed: action.payload
+        }
+      }
+    }
+    case TOGGLE_KEYBOARD_SHORTCUTS_MODAL: {
+      return {
+        ...state,
+        keyboardShortcutsModal: {
+          isOpen: action.payload
         }
       }
     }

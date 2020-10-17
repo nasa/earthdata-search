@@ -276,7 +276,9 @@ class ProjectPanels extends PureComponent {
       project,
       projectCollectionsMetadata,
       shapefileId,
-      spatial
+      spatial,
+      temporal,
+      overrideTemporal
     } = this.props
 
     const { selectedVariable } = this.state
@@ -449,6 +451,8 @@ class ProjectPanels extends PureComponent {
               selectedAccessMethod={selectedAccessMethod}
               shapefileId={shapefileId}
               spatial={spatial}
+              temporal={temporal}
+              overrideTemporal={overrideTemporal}
             />
           </PanelItem>
           <PanelItem
@@ -547,7 +551,9 @@ ProjectPanels.propTypes = {
   project: PropTypes.shape({}).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({}).isRequired
+  spatial: PropTypes.shape({}).isRequired,
+  temporal: PropTypes.shape({}).isRequired,
+  overrideTemporal: PropTypes.shape({}).isRequired
 }
 
 export default ProjectPanels

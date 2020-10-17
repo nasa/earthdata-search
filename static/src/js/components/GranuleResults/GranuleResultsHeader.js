@@ -11,6 +11,8 @@ import { commafy } from '../../util/commafy'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { pluralize } from '../../util/pluralize'
 import { locationPropType } from '../../util/propTypes/location'
+import { pathStartsWith } from '../../util/pathStartsWith'
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
 import Button from '../Button/Button'
 import GranuleResultsActionsContainer from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
@@ -52,12 +54,20 @@ class GranuleResultsHeader extends Component {
       searchValue: readableGranuleName.join() || '',
       prevSearchValue: readableGranuleName.join()
     }
+    this.keyboardShortcuts = {
+      toggleGranuleFilters: 'g'
+    }
 
     this.handleUpdateSortOrder = this.handleUpdateSortOrder.bind(this)
     this.handleUpdateSearchValue = this.handleUpdateSearchValue.bind(this)
     this.handleBlurSearchValue = this.handleBlurSearchValue.bind(this)
     this.handleUndoExcludeGranule = this.handleUndoExcludeGranule.bind(this)
     this.handleSearchKeyUp = this.handleSearchKeyUp.bind(this)
+    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
+  }
+
+  componentDidMount() {
+    window.addEventListener('keyup', this.onWindowKeyUp)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,6 +83,27 @@ class GranuleResultsHeader extends Component {
 
     if (sortKey && sortKey !== sortOrder) {
       this.setState({ sortOrder: sortKey })
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.onWindowKeyUp)
+  }
+
+  onWindowKeyUp(e) {
+    const { keyboardShortcuts } = this
+    const { location, onToggleSecondaryOverlayPanel, secondaryOverlayPanel } = this.props
+
+    const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
+
+    const toggleModal = () => onToggleSecondaryOverlayPanel(!granuleFiltersOpen)
+
+    if (pathStartsWith(location.pathname, ['/search/granules'])) {
+      triggerKeyboardShortcut({
+        event: e,
+        shortcutKey: keyboardShortcuts.toggleGranuleFilters,
+        shortcutCallback: toggleModal
+      })
     }
   }
 
@@ -105,7 +136,9 @@ class GranuleResultsHeader extends Component {
     const { searchValue, prevSearchValue } = this.state
 
     if (searchValue !== prevSearchValue) {
-      let readableGranuleName = null
+      // empty array (truthy value) necessary
+      // to override existing filter with empty input
+      let readableGranuleName = []
 
       if (searchValue) {
         readableGranuleName = searchValue.split(',')
