@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FaMap } from 'react-icons/fa'
 
 import { granuleTitle } from './skeleton'
 
@@ -38,7 +39,7 @@ const GranuleDetailsHeader = ({ granuleMetadata, location }) => {
                           search: location.search
                         }}
                       >
-                        <EDSCIcon library="fa" icon="FaMap" />
+                        <EDSCIcon icon={FaMap} />
                         {' View Granules'}
                       </PortalLinkContainer>
                     </>

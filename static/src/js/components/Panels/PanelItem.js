@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash'
 import $ from 'jquery'
+import { FaChevronLeft } from 'react-icons/fa'
 
 import SimpleBar from 'simplebar-react'
 
@@ -92,7 +93,7 @@ export class PanelItem extends Component {
       backButton = (
         <Button
           className="panel-item__back-button"
-          icon="FaChevronLeft"
+          icon={FaChevronLeft}
           label={backButtonText}
           onClick={() => {
             onChangePanel(location)

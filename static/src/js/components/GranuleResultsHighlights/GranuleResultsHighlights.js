@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FaMap } from 'react-icons/fa'
 
 import { commafy } from '../../util/commafy'
 import { granuleListItem, granuleListTotal } from './skeleton'
@@ -121,7 +122,7 @@ export const GranuleResultsHighlights = ({
           search: location.search
         }}
       >
-        <EDSCIcon library="fa" icon="FaMap" />
+        <EDSCIcon icon={FaMap} />
         {' View Granules'}
       </PortalLinkContainer>
     </div>

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash'
+import { FaExclamationCircle, FaCheckCircle, FaMap } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
@@ -330,14 +331,14 @@ class ProjectPanels extends PureComponent {
           {
             !isValid && (
               <span className="project-panels__collection-status project-panels__collection-status--invalid">
-                <EDSCIcon library="fa" icon="FaExclamationCircle" />
+                <EDSCIcon icon={FaExclamationCircle} />
               </span>
             )
           }
           {
             isValid && (
               <span className="project-panels__collection-status project-panels__collection-status--valid">
-                <EDSCIcon library="fa" icon="FaCheckCircle" />
+                <EDSCIcon icon={FaCheckCircle} />
               </span>
             )
           }
@@ -416,7 +417,7 @@ class ProjectPanels extends PureComponent {
           label="View Granules"
           onClick={() => { onViewCollectionGranules(collectionId) }}
         >
-          <EDSCIcon library="fa" icon="FaMap" />
+          <EDSCIcon icon={FaMap} />
           {' View Granules'}
         </Button>
       )

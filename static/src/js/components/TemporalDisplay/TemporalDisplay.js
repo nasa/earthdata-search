@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { FaCalendar } from 'react-icons/fa'
 
 import TemporalDisplayEntry from './TemporalDisplayEntry'
 import FilterStackItem from '../FilterStack/FilterStackItem'
@@ -82,7 +83,7 @@ class TemporalDisplay extends PureComponent {
 
     return (
       <FilterStackItem
-        icon="FaCalendar"
+        icon={FaCalendar}
         title="Temporal"
         onRemove={this.onTimelineRemove}
       >

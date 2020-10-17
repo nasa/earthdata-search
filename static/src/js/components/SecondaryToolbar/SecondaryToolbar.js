@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import { Col, Dropdown, Form } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
+import {
+  FaUser, FaSave, FaArrowCircleLeft, FaLock
+} from 'react-icons/fa'
 
 import { isPath } from '../../util/isPath'
 import { pathStartsWith } from '../../util/pathStartsWith'
@@ -127,7 +130,7 @@ class SecondaryToolbar extends Component {
         <Button
           className="secondary-toolbar__back"
           bootstrapVariant="light"
-          icon="FaArrowCircleLeft"
+          icon={FaArrowCircleLeft}
           label="Back to Search"
         >
           Back to Search
@@ -177,7 +180,7 @@ class SecondaryToolbar extends Component {
         className="secondary-toolbar__login"
         bootstrapVariant="light"
         href={`${apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        icon="FaLock"
+        icon={FaLock}
         label="Login"
       >
         Earthdata Login
@@ -190,7 +193,7 @@ class SecondaryToolbar extends Component {
           className="secondary-toolbar__user-dropdown-toggle"
           variant="light"
         >
-          <EDSCIcon library="fa" icon="FaUser" />
+          <EDSCIcon icon={FaUser} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
@@ -254,7 +257,7 @@ class SecondaryToolbar extends Component {
           variant="light"
           onClick={this.onToggleProjectDropdown}
         >
-          <EDSCIcon library="fa" icon="FaFloppy" />
+          <EDSCIcon icon={FaSave} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Form inline className="flex-nowrap">

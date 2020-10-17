@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { FaTimes } from 'react-icons/fa'
 
 import SimpleBar from 'simplebar-react'
 
@@ -38,7 +39,7 @@ export const SecondaryOverlayPanel = ({
           <Button
             className="secondary-overlay-panel__close-button"
             label="Close Panel"
-            icon="FaTimes"
+            icon={FaTimes}
             size="lg"
             onClick={() => onToggleSecondaryOverlayPanel(false)}
           />

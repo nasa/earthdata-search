@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEqual } from 'lodash'
+import { FaCrop } from 'react-icons/fa'
 
 import {
   Col,
@@ -810,7 +811,7 @@ class SpatialDisplay extends Component {
       items.push((
         <FilterStackItem
           key="item__spatial"
-          icon="FaCrop"
+          icon={FaCrop}
           title="Spatial"
           secondaryTitle={secondaryTitle}
           error={drawingNewLayer ? '' : spatialError}

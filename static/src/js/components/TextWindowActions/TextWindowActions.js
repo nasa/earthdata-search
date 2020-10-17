@@ -1,6 +1,7 @@
 
 import PropTypes from 'prop-types'
 import React, { useRef, useState } from 'react'
+import { FaCopy, FaSave, FaExpand } from 'react-icons/fa'
 
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
 
@@ -60,7 +61,7 @@ export const TextWindowActions = ({
             <Button
               className="text-window-actions__action text-window-actions__action--copy"
               bootstrapSize="sm"
-              icon="FaCopy"
+              icon={FaCopy}
               onClick={copyToClipboard}
               label="Copy"
             >
@@ -74,7 +75,7 @@ export const TextWindowActions = ({
               className="text-window-actions__action text-window-actions__action--save"
               bootstrapSize="sm"
               label="Save"
-              icon="FaSave"
+              icon={FaSave}
               onClick={(e) => {
                 constructDownloadableFile(fileContents, fileName)
                 e.stopPropagation()
@@ -89,7 +90,7 @@ export const TextWindowActions = ({
           bootstrapSize="sm"
           onClick={handleOpen}
           label="Expand"
-          icon="FaExpand"
+          icon={FaExpand}
         >
           Expand
         </Button>
@@ -140,7 +141,7 @@ export const TextWindowActions = ({
                       <Button
                         className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--copy"
                         bootstrapSize="sm"
-                        icon="FaCopy"
+                        icon={FaCopy}
                         onClick={copyToClipboard}
                         label="Copy"
                       >
@@ -154,7 +155,7 @@ export const TextWindowActions = ({
                         className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--save"
                         bootstrapSize="sm"
                         label="Save"
-                        icon="FaSave"
+                        icon={FaSave}
                         onClick={(e) => {
                           constructDownloadableFile(fileContents, fileName)
                           e.stopPropagation()

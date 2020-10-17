@@ -6,6 +6,7 @@ import {
   Switch,
   withRouter
 } from 'react-router-dom'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 
 import actions from '../../actions/index'
 
@@ -67,7 +68,7 @@ export const Downloads = ({
                         }}
                         onClick={() => { onChangePath(`/projects/${source}`) }}
                       >
-                        <EDSCIcon library="fa" icon="FaArrowCircleLeft" />
+                        <EDSCIcon icon={FaArrowCircleLeft} />
                         {' Back to Project'}
                       </PortalLinkContainer>
                     </nav>

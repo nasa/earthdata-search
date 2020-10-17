@@ -2,6 +2,9 @@ import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 import { LinkContainer } from 'react-router-bootstrap'
+import {
+  FaPlus, FaMinus, FaInfoCircle, FaTimesCircle
+} from 'react-icons/fa'
 
 import murmurhash3 from '../../util/murmurhash3'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -191,12 +194,12 @@ const GranuleResultsItem = forwardRef(({
           >
             <MoreActionsDropdownItem
               title="View details"
-              icon="FaInfoCircle"
+              icon={FaInfoCircle}
             />
           </LinkContainer>
           <MoreActionsDropdownItem
             title="Filter granule"
-            icon="FaTimesCircle"
+            icon={FaTimesCircle}
             onClick={handleFilterClick}
           />
         </MoreActionsDropdown>
@@ -233,7 +236,7 @@ const GranuleResultsItem = forwardRef(({
                             e.stopPropagation()
                           }}
                         >
-                          <EDSCIcon library="fa" icon="FaPlus" />
+                          <EDSCIcon icon={FaPlus} />
                         </Button>
                       )
                       : (
@@ -251,7 +254,7 @@ const GranuleResultsItem = forwardRef(({
                             e.stopPropagation()
                           }}
                         >
-                          <EDSCIcon library="fa" icon="FaMinus" />
+                          <EDSCIcon icon={FaMinus} />
                         </Button>
                       )
                   }

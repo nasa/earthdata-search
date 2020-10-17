@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { CSSTransition } from 'react-transition-group'
+import { FaCheck } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
@@ -49,7 +50,7 @@ export const AccessMethodRadio = ({
         onClick={onClick}
       />
       <div className="access-method-radio__radio">
-        { checked && <EDSCIcon library="fa" icon="FaCheck" className="access-method-radio__radio-icon" /> }
+        { checked && <EDSCIcon icon={FaCheck} className="access-method-radio__radio-icon" /> }
       </div>
       <div className="access-method-radio__content">
         <header className="access-method-radio__header">

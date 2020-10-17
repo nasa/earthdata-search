@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react'
 import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
+import {
+  FaCrop, FaMapMarker, FaCircle, FaFile
+} from 'react-icons/fa'
 
 import { eventEmitter } from '../../events/events'
 
@@ -62,7 +65,7 @@ export class SpatialSelectionDropdown extends PureComponent {
           id="spatial-selection-dropdown"
           className="search-form__button search-form__button--dark"
         >
-          <EDSCIcon library="fa" icon="FaCrop" />
+          <EDSCIcon icon={FaCrop} />
         </Dropdown.Toggle>
         <Dropdown.Menu className="spatial-selection-dropdown__menu">
           <Dropdown.Item
@@ -86,7 +89,7 @@ export class SpatialSelectionDropdown extends PureComponent {
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
             as={Button}
-            icon="FaMapMarker"
+            icon={FaMapMarker}
             onClick={() => this.onItemClick('point')}
             label="Select Point"
           >
@@ -95,7 +98,7 @@ export class SpatialSelectionDropdown extends PureComponent {
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
             as={Button}
-            icon="FaCircle"
+            icon={FaCircle}
             onClick={() => this.onItemClick('circle')}
             label="Select Circle"
           >
@@ -104,7 +107,7 @@ export class SpatialSelectionDropdown extends PureComponent {
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
             as={Button}
-            icon="FaFile"
+            icon={FaFile}
             onClick={() => this.onItemClick('file')}
             label="Select Shapefile"
           >

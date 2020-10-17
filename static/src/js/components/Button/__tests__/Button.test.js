@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { FaGlobe } from 'react-icons/fa'
 
 import Button from '../Button'
 import Spinner from '../../Spinner/Spinner'
@@ -14,7 +15,7 @@ function setup(type) {
   }
 
   if (type === 'icon') {
-    props.icon = 'FaGlobe'
+    props.icon = FaGlobe
   }
 
   if (type === 'edsc-icon') {
@@ -62,7 +63,7 @@ describe('Button component', () => {
     const { enzymeWrapper } = setup('icon')
 
     expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
-    expect(enzymeWrapper.find('EDSCIcon').props().icon).toEqual('FaGlobe')
+    expect(enzymeWrapper.find('EDSCIcon').props().icon).toEqual(FaGlobe)
   })
 
   test('should render self with an edsc-icon', () => {

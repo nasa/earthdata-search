@@ -47,7 +47,7 @@ export class CustomToggle extends Component {
         title={title}
         onClick={this.handleClick}
       >
-        {icon && <EDSCIcon library="fa" icon={icon} className={iconClasses} />}
+        {icon && <EDSCIcon icon={icon} className={iconClasses} />}
         {children}
       </button>
     )
@@ -63,7 +63,7 @@ CustomToggle.defaultProps = {
 CustomToggle.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired
 }

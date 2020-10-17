@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from 'react-bootstrap/Dropdown'
+import { FaCalendar } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -11,7 +12,7 @@ const TemporalSelectionDropdownToggle = ({ onToggleClick }) => (
     className="search-form__button search-form__button--dark"
     onClick={onToggleClick}
   >
-    <EDSCIcon library="fa" icon="FaCalendar" />
+    <EDSCIcon icon={FaCalendar} />
   </Dropdown.Toggle>
 )
 

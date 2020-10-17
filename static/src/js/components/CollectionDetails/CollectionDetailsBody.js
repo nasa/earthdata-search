@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import SimpleBar from 'simplebar-react'
+import { FaQuestionCircle, FaArrowRight } from 'react-icons/fa'
 
 import ArrowTags from '../ArrowTags/ArrowTags'
 import Button from '../Button/Button'
@@ -262,7 +263,7 @@ export const CollectionDetailsBody = ({
                               </Tooltip>
                             )}
                           >
-                            <EDSCIcon library="fa" icon="FaQuestionCircle" />
+                            <EDSCIcon icon={FaQuestionCircle} />
                           </OverlayTrigger>
                         </span>
                       </dt>
@@ -283,7 +284,7 @@ export const CollectionDetailsBody = ({
                               >
                                 <dt className="collection-details-body__reformatting-item-heading">
                                   {supportedInputFormat}
-                                  <EDSCIcon library="fa" icon="FaArrowRight" className="collection-details-body__reformatting-item-icon" />
+                                  <EDSCIcon icon={FaArrowRight} className="collection-details-body__reformatting-item-icon" />
                                 </dt>
                                 <dd className="collection-details-body__reformatting-item-body">
                                   {supportedOutputFormats.join(', ')}

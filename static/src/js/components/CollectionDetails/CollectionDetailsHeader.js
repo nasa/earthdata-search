@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Badge } from 'react-bootstrap'
+import { FaMap } from 'react-icons/fa'
 
 import Skeleton from '../Skeleton/Skeleton'
 import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
@@ -64,7 +65,7 @@ export const CollectionDetailsHeader = ({
                         search: location.search
                       }}
                     >
-                      <EDSCIcon library="fa" icon="FaMap" />
+                      <EDSCIcon icon={FaMap} />
                       {' View Granules'}
                     </PortalLinkContainer>
                     <div className="mt-1">

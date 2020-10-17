@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Col, Form, Row } from 'react-bootstrap'
 import classNames from 'classnames'
+import {
+  FaPlus, FaSlidersH, FaList, FaTable
+} from 'react-icons/fa'
 
 import { collectionResultsTotal } from './skeleton'
 import { commafy } from '../../util/commafy'
@@ -153,7 +156,7 @@ const CollectionResultsHeader = ({
                   className="collection-results-header__adv-search-btn"
                   bootstrapVariant="link"
                   variant="link"
-                  icon="FaSlidersH"
+                  icon={FaSlidersH}
                   label="Advanced search"
                   onClick={() => onToggleAdvancedSearchModal(true)}
                 >
@@ -169,7 +172,7 @@ const CollectionResultsHeader = ({
               <span className="collection-results-header__tip">
                 <strong className="collection-results-header__tip-label">Tip:</strong>
                 Add
-                <EDSCIcon library="fa" icon="FaPlus" className="collection-results-header__tip-icon" />
+                <EDSCIcon icon={FaPlus} className="collection-results-header__tip-icon" />
                 collections to your project to compare and download their data.
               </span>
             </div>
@@ -193,7 +196,7 @@ const CollectionResultsHeader = ({
             className={viewButtonListClasses}
             dataTestId="collection-results-header__view-button--list"
             variant="naked"
-            icon="FaList"
+            icon={FaList}
             label="Switch to list view"
             onClick={() => { onChangePanelView('list') }}
           />
@@ -201,7 +204,7 @@ const CollectionResultsHeader = ({
             className={viewButtonTableClasses}
             dataTestId="collection-results-header__view-button--table"
             variant="naked"
-            icon="FaTable"
+            icon={FaTable}
             label="Switch to table view"
             onClick={() => { onChangePanelView('table') }}
           />

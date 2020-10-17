@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { OverlayTrigger } from 'react-bootstrap'
+import { FaFilter, FaTimes } from 'react-icons/fa'
 
 import GranuleResultsHeader from '../GranuleResultsHeader'
 import projections from '../../../util/map/projections'
@@ -259,7 +260,7 @@ describe('granuleFilters link', () => {
           isOpen: false
         }
       })
-      expect(enzymeWrapper.find('.granule-results-header__link').prop('icon')).toEqual('FaFilter')
+      expect(enzymeWrapper.find('.granule-results-header__link').prop('icon')).toEqual(FaFilter)
     })
 
     test('fires the correct callback on click', () => {
@@ -281,7 +282,7 @@ describe('granuleFilters link', () => {
           isOpen: true
         }
       })
-      expect(enzymeWrapper.find('.granule-results-header__link').prop('icon')).toEqual('FaTimes')
+      expect(enzymeWrapper.find('.granule-results-header__link').prop('icon')).toEqual(FaTimes)
     })
 
     test('fires the correct callback on click', () => {

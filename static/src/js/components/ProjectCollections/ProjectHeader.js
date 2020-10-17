@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import abbreviate from 'number-abbreviate'
 import classNames from 'classnames'
+import { FaInfoCircle, FaCheck, FaEdit } from 'react-icons/fa'
 
 import { commafy } from '../../util/commafy'
 import { convertSizeToMB, convertSize } from '../../util/project'
@@ -222,7 +223,7 @@ export class ProjectHeader extends Component {
                 label="Submit project name"
                 onClick={this.handleNameSubmit}
               >
-                <EDSCIcon library="fa" icon="FaCheck" />
+                <EDSCIcon icon={FaCheck} />
               </button>
             )
           }
@@ -234,7 +235,7 @@ export class ProjectHeader extends Component {
                 label="Edit project name"
                 onClick={this.handleEditClick}
               >
-                <EDSCIcon library="fa" icon="FaPencil" />
+                <EDSCIcon icon={FaEdit} />
               </button>
             )
           }
@@ -281,7 +282,7 @@ export class ProjectHeader extends Component {
                       </Tooltip>
                     )}
                   >
-                    <EDSCIcon library="fa" icon="FaInfoCircle" className="project-header__stats-icon" />
+                    <EDSCIcon icon={FaInfoCircle} className="project-header__stats-icon" />
                   </OverlayTrigger>
                 </li>
               </>

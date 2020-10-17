@@ -55,7 +55,7 @@ export const Button = ({
     iconClasses = classNames(
       'button__icon',
       children ? 'button__icon--push' : null,
-      icon.includes('edsc') ? icon : null
+      typeof icon === 'string' && icon.includes('edsc') ? icon : null
     )
   }
 
@@ -77,10 +77,6 @@ export const Button = ({
     asEl = undefined
   }
 
-  const Icon = () => (icon.includes('edsc')
-    ? <i className={iconClasses} />
-    : <EDSCIcon library="fa" icon={icon} className={iconClasses} />)
-
   const button = (
     <Btn
       as={asEl}
@@ -100,7 +96,7 @@ export const Button = ({
       style={style}
       data-test-id={dataTestId}
     >
-      {(!spinner && icon) && <Icon />}
+      {(!spinner && icon) && <EDSCIcon icon={icon} className={iconClasses} />}
       <span className="button__contents">
         { spinner
           ? (
@@ -177,7 +173,7 @@ Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   href: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   overlayClass: PropTypes.string,

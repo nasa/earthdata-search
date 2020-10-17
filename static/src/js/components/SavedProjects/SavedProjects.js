@@ -8,6 +8,7 @@ import {
 } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import { parse } from 'qs'
+import { FaShareSquare, FaTimesCircle } from 'react-icons/fa'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import pluralize from '../../util/pluralize'
@@ -162,7 +163,7 @@ export class SavedProjects extends Component {
                                   type="button"
                                   label="Share project"
                                   variant="naked"
-                                  icon="FaShareSquare"
+                                  icon={FaShareSquare}
                                 />
                               </OverlayTrigger>
                               <Button
@@ -170,7 +171,7 @@ export class SavedProjects extends Component {
                                 className="saved-projects__button saved-projects__button--remove"
                                 label="Remove project"
                                 variant="naked"
-                                icon="FaTimesCircle"
+                                icon={FaTimesCircle}
                                 onClick={() => this.handleDeleteSavedProject(id)}
                               />
                             </div>

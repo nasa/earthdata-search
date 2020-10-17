@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { FaEllipsisV } from 'react-icons/fa'
 
 import CustomToggle from './CustomToggle'
 
@@ -26,7 +27,7 @@ export class ToggleMoreActions extends Component {
         className={moreActionsToggleClassNames}
         onClick={onClick}
         title="More actions"
-        icon="FaEllipsisV"
+        icon={FaEllipsisV}
       />
     )
   }

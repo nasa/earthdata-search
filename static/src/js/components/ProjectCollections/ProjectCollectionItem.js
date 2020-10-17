@@ -2,6 +2,9 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 import abbreviate from 'number-abbreviate'
+import {
+  FaExclamationCircle, FaTimesCircle, FaInfoCircle, FaMap, FaCog
+} from 'react-icons/fa'
 
 import {
   projectCollectionItemHeader,
@@ -120,7 +123,7 @@ const ProjectCollectionItem = ({
               <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
-                  icon="FaTimesCircle"
+                  icon={FaTimesCircle}
                   title="Remove"
                   onClick={() => {
                     onRemoveCollectionFromProject(collectionId)
@@ -141,13 +144,13 @@ const ProjectCollectionItem = ({
                 />
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-collection-details"
-                  icon="FaInfoCircle"
+                  icon={FaInfoCircle}
                   title="Collection Details"
                   onClick={() => onViewCollectionDetails(collectionId)}
                 />
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-granules"
-                  icon="FaMap"
+                  icon={FaMap}
                   title="View Granules"
                   onClick={() => onViewCollectionGranules(collectionId)}
                 />
@@ -189,7 +192,7 @@ const ProjectCollectionItem = ({
               {
                 !isValid && (
                   <span className="project-collections-item__status project-collections-item__status--invalid">
-                    <EDSCIcon library="fa" icon="FaExclamationCircle" />
+                    <EDSCIcon icon={FaExclamationCircle} />
                   </span>
                 )
               }
@@ -197,7 +200,7 @@ const ProjectCollectionItem = ({
                 className="project-collections-item__more-options-button"
                 variant="link"
                 bootstrapVariant="link"
-                icon="FaCog"
+                icon={FaCog}
                 label="Edit options"
                 onClick={() => {
                   onUpdateFocusedCollection(conceptId)

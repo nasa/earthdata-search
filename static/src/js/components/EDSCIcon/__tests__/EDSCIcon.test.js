@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { mount, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon'
 
@@ -8,22 +9,22 @@ Enzyme.configure({ adapter: new Adapter() })
 
 describe('EDSCIcon component', () => {
   test('should render an icon', () => {
-    const enzymeWrapper = mount(<EDSCIcon icon="FaQuestionCircle" />)
+    const enzymeWrapper = mount(<EDSCIcon icon={FaQuestionCircle} />)
 
     expect(enzymeWrapper.type()).toEqual(EDSCIcon)
-    expect(enzymeWrapper.prop('icon')).toEqual('FaQuestionCircle')
+    expect(enzymeWrapper.prop('icon')).toEqual(FaQuestionCircle)
   })
 
   describe('when classes are supplied', () => {
     test('should add the class name', () => {
-      const enzymeWrapper = mount(<EDSCIcon icon="FaQuestionCircle" className="test-class" />)
+      const enzymeWrapper = mount(<EDSCIcon icon={FaQuestionCircle} className="test-class" />)
       expect(enzymeWrapper.prop('className')).toContain('test-class')
     })
   })
 
   describe('when children are provided', () => {
     test('should render the children', () => {
-      const enzymeWrapper = shallow(<EDSCIcon icon="FaQuestionCircle"><div className="test-child">Test</div></EDSCIcon>)
+      const enzymeWrapper = shallow(<EDSCIcon icon={FaQuestionCircle}><div className="test-child">Test</div></EDSCIcon>)
       expect(enzymeWrapper.find('.test-child').length).toEqual(1)
     })
   })
