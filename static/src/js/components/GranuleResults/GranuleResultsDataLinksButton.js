@@ -1,12 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
 import { Dropdown } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
+import { FaDownload } from 'react-icons/fa'
 
 import Button from '../Button/Button'
-import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
+import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 
 import './GranuleResultsDataLinksButton.scss'
 
@@ -34,7 +35,7 @@ export const CustomDataLinksToggle = React.forwardRef(({
       label="Download single granule data"
       onClick={handleClick}
     >
-      <EDSCIcon library="fa" icon="FaDownload" />
+      <EDSCIcon icon={FaDownload} />
     </Button>
   )
 })
@@ -111,7 +112,7 @@ export const GranuleResultsDataLinksButton = ({
         label="Download single granule data"
         target="_blank"
       >
-        <EDSCIcon library="fa" icon="FaDownload" />
+        <EDSCIcon icon={FaDownload} />
       </Button>
     )
   }
@@ -125,7 +126,7 @@ export const GranuleResultsDataLinksButton = ({
       disabled
       onClick={e => e.preventDefault()}
     >
-      <EDSCIcon library="fa" icon="FaDownload" />
+      <EDSCIcon icon={FaDownload} />
     </Button>
   )
 }

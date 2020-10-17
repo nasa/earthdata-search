@@ -27,7 +27,7 @@ export const EDSCAlert = ({
     >
       {
         icon && (
-          <EDSCIcon library="fa" icon={icon} className="edsc-alert__icon" />
+          <EDSCIcon icon={icon} className="edsc-alert__icon" />
         )
       }
       <div className="edsc-alert__contents">
@@ -46,7 +46,7 @@ EDSCAlert.defaultProps = {
 EDSCAlert.propTypes = {
   bootstrapVariant: PropTypes.string.isRequired,
   children: PropTypes.node,
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   variant: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool

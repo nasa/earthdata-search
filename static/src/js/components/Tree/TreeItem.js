@@ -5,8 +5,9 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { difference } from 'lodash'
-import { IconContext } from 'react-icons'
 import { FaInfoCircle, FaFolder, FaFolderOpen } from 'react-icons/fa'
+
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './TreeItem.scss'
 
@@ -134,18 +135,29 @@ export const TreeItem = ({
             type="button"
             onClick={onToggleExpanded}
           >
-            <IconContext.Provider value={{
-              style: {
-                width: '1.25em'
-              }
-            }}
-            >
-              {
-                isClosed
-                  ? <FaFolder />
-                  : <FaFolderOpen />
-              }
-            </IconContext.Provider>
+            {
+              isClosed
+                ? (
+                  <EDSCIcon
+                    icon={FaFolder}
+                    context={{
+                      style: {
+                        width: '1.25em'
+                      }
+                    }}
+                  />
+                )
+                : (
+                  <EDSCIcon
+                    icon={FaFolderOpen}
+                    context={{
+                      style: {
+                        width: '1.25em'
+                      }
+                    }}
+                  />
+                )
+            }
           </button>
         )}
         <input
@@ -170,14 +182,14 @@ export const TreeItem = ({
                   type="button"
                   onClick={() => onViewDetails(item.variable, index)}
                 >
-                  <IconContext.Provider value={{
-                    style: {
-                      width: '1.25em'
-                    }
-                  }}
-                  >
-                    <FaInfoCircle />
-                  </IconContext.Provider>
+                  <EDSCIcon
+                    icon={FaInfoCircle}
+                    context={{
+                      style: {
+                        width: '1.25em'
+                      }
+                    }}
+                  />
                 </button>
               )
             }

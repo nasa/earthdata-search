@@ -9,6 +9,9 @@ import {
 } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
+import {
+  FaUser, FaSave, FaArrowCircleLeft, FaLock
+} from 'react-icons/fa'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -134,7 +137,7 @@ class SecondaryToolbar extends Component {
         type="button"
         className="secondary-toolbar__back"
         bootstrapVariant="light"
-        icon="FaArrowCircleLeft"
+        icon={FaArrowCircleLeft}
         label="Back to Search"
         to={{
           pathname: '/search',
@@ -187,7 +190,7 @@ class SecondaryToolbar extends Component {
         className="secondary-toolbar__login"
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        icon="FaLock"
+        icon={FaLock}
         label="Login"
       >
         Earthdata Login
@@ -209,7 +212,7 @@ class SecondaryToolbar extends Component {
               </span>
             )
           }
-          <EDSCIcon library="fa" icon="FaUser" />
+          <EDSCIcon icon={FaUser} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
@@ -290,7 +293,7 @@ class SecondaryToolbar extends Component {
           label="Create a project with your current search"
         >
           {/* TODO: Check this out */}
-          <EDSCIcon library="fa" icon="FaFloppy" />
+          <EDSCIcon icon={FaSave} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Form inline className="flex-nowrap secondary-toolbar__project-name-form">

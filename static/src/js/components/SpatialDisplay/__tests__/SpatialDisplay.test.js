@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { FaCrop } from 'react-icons/fa'
 
 import SpatialDisplay from '../SpatialDisplay'
 import FilterStackItem from '../../FilterStack/FilterStackItem'
@@ -48,7 +49,7 @@ describe('SpatialDisplay component', () => {
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
 
       expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual('FaCrop')
+      expect(filterStackItem.props().icon).toEqual(FaCrop)
       expect(filterStackContents.props().title).toEqual('Point')
       const label = filterStackContents.props().body.props.children.props.children.props.children[0]
       const input = filterStackContents.props().body.props.children.props.children.props.children[1]
@@ -67,7 +68,7 @@ describe('SpatialDisplay component', () => {
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
 
       expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual('FaCrop')
+      expect(filterStackItem.props().icon).toEqual(FaCrop)
       expect(filterStackContents.props().title).toEqual('Rectangle')
 
       const sw = filterStackContents.props().body.props.children.props.children[0]
@@ -94,7 +95,7 @@ describe('SpatialDisplay component', () => {
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
 
       expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual('FaCrop')
+      expect(filterStackItem.props().icon).toEqual(FaCrop)
       expect(filterStackContents.props().title).toEqual('Circle')
 
       const center = filterStackContents.props().body.props.children.props.children[0]
@@ -125,7 +126,7 @@ describe('SpatialDisplay component', () => {
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
 
       expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual('FaCrop')
+      expect(filterStackItem.props().icon).toEqual(FaCrop)
       expect(filterStackContents.props().title).toEqual('Polygon')
 
       const pointCount = filterStackContents.props()
@@ -151,7 +152,7 @@ describe('SpatialDisplay component', () => {
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
 
       expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual('FaCrop')
+      expect(filterStackItem.props().icon).toEqual(FaCrop)
       expect(filterStackItem.props().error).toEqual('This collection does not support polygon search. Your polygon has been converted to a bounding box.')
       expect(filterStackContents.props().title).toEqual('Polygon')
 
@@ -174,7 +175,7 @@ describe('SpatialDisplay component', () => {
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
 
       expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual('FaCrop')
+      expect(filterStackItem.props().icon).toEqual(FaCrop)
       expect(filterStackContents.props().title).toEqual('Line')
       expect(filterStackContents.props().body.props.children).toEqual(null)
     })
@@ -198,7 +199,7 @@ describe('SpatialDisplay component', () => {
         const filterStackContents = enzymeWrapper.find(FilterStackContents)
 
         expect(filterStackItem.props().title).toEqual('Spatial')
-        expect(filterStackItem.props().icon).toEqual('FaCrop')
+        expect(filterStackItem.props().icon).toEqual(FaCrop)
         expect(filterStackContents.props().title).toEqual('Shape File')
 
         const fileWrapper = filterStackContents.props()
@@ -236,7 +237,7 @@ describe('SpatialDisplay component', () => {
       const filterStackContents = enzymeWrapper.find(FilterStackContents)
 
       expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual('FaCrop')
+      expect(filterStackItem.props().icon).toEqual(FaCrop)
       expect(filterStackContents.props().title).toEqual('Shape File')
 
       const fileWrapper = filterStackContents.props()

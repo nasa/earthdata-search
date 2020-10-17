@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FaArrowCircleRight } from 'react-icons/fa'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
@@ -104,7 +105,7 @@ class ContactInfo extends Component {
           >
             Edit Profile in Earthdata Login
             {' '}
-            <EDSCIcon library="fa" icon="FaArrowCircleRight" />
+            <EDSCIcon icon={FaArrowCircleRight} />
           </Button>
         </p>
 

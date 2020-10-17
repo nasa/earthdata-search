@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FaTimes } from 'react-icons/fa'
 
 import { facetCategoryAbbreviationsMap } from '../../util/facetCategoryAbbreviationsMap'
 import { buildHierarchicalAutocompleteTitle } from '../../util/autocompleteResults'
@@ -39,7 +40,7 @@ const AutocompleteDisplay = ({ selected, onRemoveAutocompleteValue }) => {
               <Button
                 className="autocomplete-display__button"
                 label={`Remove ${value}`}
-                icon="FaTimes"
+                icon={FaTimes}
                 onClick={() => { onRemoveAutocompleteValue(item) }}
               />
             </span>

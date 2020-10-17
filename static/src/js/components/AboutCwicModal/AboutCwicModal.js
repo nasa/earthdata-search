@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FaRegFilePdf, FaRegFileWord, FaExternalLinkAlt } from 'react-icons/fa'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -50,21 +51,21 @@ export class AboutCwicModal extends Component {
               <a href="http://ceos.org/wp-content/uploads/2014/12/CEOSOpenSearchBestPracticeDocument-PublicComment.pdf" target="_blank" rel="noopener noreferrer">
                 CEOS OpenSearch Best Practice
                 {' '}
-                <EDSCIcon library="fa" icon="FaRegFilePdf" />
+                <EDSCIcon icon={FaRegFilePdf} />
               </a>
             </li>
             <li>
               <a href="http://ceos.org/document_management/Working_Groups/WGISS/Projects/CWIC/OpenSearch/CEOS%20Open%20Search%20Developer%20Guide.docx" target="_blank" rel="noopener noreferrer">
                 CEOS OpenSearch Developer Guide
                 {' '}
-                <EDSCIcon library="fa" icon="FaRegFileWord" />
+                <EDSCIcon icon={FaRegFileWord} />
               </a>
             </li>
             <li>
               <a href="https://wiki.earthdata.nasa.gov/display/CWIC/CWIC+Open+Search+Architecture" target="_blank" rel="noopener noreferrer">
                 CWIC OpenSearch Architecture
                 {' '}
-                <EDSCIcon library="fa" icon="FaExternalLinkAlt" />
+                <EDSCIcon icon={FaExternalLinkAlt} />
               </a>
             </li>
           </ul>
