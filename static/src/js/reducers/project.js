@@ -492,7 +492,8 @@ const projectReducer = (state = initialState, action) => {
           byId: {
             ...byId,
             [collectionId]: {
-              granules: initialGranuleState
+              granules: initialGranuleState,
+              isVisible: true
             }
           }
         }
