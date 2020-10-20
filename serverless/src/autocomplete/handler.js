@@ -193,7 +193,7 @@ const autocomplete = async (event) => {
     }
 
     const results = await doSearchRequest({
-      jwtToken: getJwtToken(event, earthdataEnvironment),
+      jwtToken: getJwtToken(event),
       method: 'get',
       bodyType: 'json',
       path: '/search/autocomplete',

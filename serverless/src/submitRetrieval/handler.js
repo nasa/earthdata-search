@@ -32,7 +32,7 @@ const submitRetrieval = async (event, context) => {
 
   const { collections, environment, json_data: jsonData } = params
 
-  const jwtToken = getJwtToken(event, environment)
+  const jwtToken = getJwtToken(event)
 
   if (sqs == null) {
     sqs = new AWS.SQS(getSqsConfig())

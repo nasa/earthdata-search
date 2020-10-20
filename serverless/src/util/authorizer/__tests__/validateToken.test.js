@@ -88,7 +88,7 @@ describe('validateToken', () => {
         }
       })
 
-      const response = await validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.0WJdf_c93ZCIzFSchcKMzIRgwaL2HhihXGg0y9pDm2M')
+      const response = await validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.0WJdf_c93ZCIzFSchcKMzIRgwaL2HhihXGg0y9pDm2M', 'test')
 
       expect(response).toEqual(false)
 
@@ -145,7 +145,7 @@ describe('validateToken', () => {
 
       const { jwtToken } = getEarthdataConfig.getEnvironmentConfig('test')
 
-      const response = await validateToken(jwtToken)
+      const response = await validateToken(jwtToken, 'test')
 
       expect(response).toEqual('testuser')
     })
@@ -209,7 +209,7 @@ describe('validateToken', () => {
 
       const { jwtToken } = getEarthdataConfig.getEnvironmentConfig('test')
 
-      const response = await validateToken(jwtToken)
+      const response = await validateToken(jwtToken, 'test')
 
       const { queries } = dbTracker.queries
 

@@ -38,7 +38,7 @@ const ousGranuleSearch = async (event) => {
 
   try {
     return doSearchRequest({
-      jwtToken: getJwtToken(event, earthdataEnvironment),
+      jwtToken: getJwtToken(event),
       path: `/service-bridge/ous/collection/${echoCollectionId}`,
       params: buildParams({
         body,

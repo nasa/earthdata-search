@@ -21,7 +21,7 @@ const logout = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const jwtToken = getJwtToken(event, earthdataEnvironment)
+  const jwtToken = getJwtToken(event)
 
   const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 

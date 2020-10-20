@@ -27,7 +27,7 @@ const getRetrievalCollection = async (event, context) => {
       id: providedRetrievalCollectionId
     } = pathParameters
 
-    const jwtToken = getJwtToken(event, earthdataEnvironment)
+    const jwtToken = getJwtToken(event)
 
     const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 

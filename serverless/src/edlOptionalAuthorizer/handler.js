@@ -1,3 +1,4 @@
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { generatePolicy } from '../util/authorizer/generatePolicy'
 import { validateToken } from '../util/authorizer/validateToken'
 
@@ -12,6 +13,8 @@ const edlOptionalAuthorizer = async (event) => {
     methodArn,
     requestContext = {}
   } = event
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   const { Authorization: authorizationToken = '' } = headers
 
@@ -40,7 +43,7 @@ const edlOptionalAuthorizer = async (event) => {
     throw new Error('Unauthorized')
   }
 
-  const username = await validateToken(jwtToken)
+  const username = await validateToken(jwtToken, earthdataEnvironment)
 
   if (username) {
     return generatePolicy(username, jwtToken, 'Allow', methodArn)

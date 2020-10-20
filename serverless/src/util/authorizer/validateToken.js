@@ -11,18 +11,24 @@ import { parseError } from '../../../../sharedUtils/parseError'
  * @param {String} jwtToken Authorization token from request
  * @returns {String} username associated with the valid EDL token
  */
-export const validateToken = async (jwtToken) => {
+export const validateToken = async (jwtToken, earthdataEnvironment) => {
   const decodedJwtToken = jwt.decode(jwtToken)
 
   if (!decodedJwtToken) {
     return false
   }
 
-  const { earthdataEnvironment = '' } = decodedJwtToken
+  const { earthdataEnvironment: decodedEarthdataEnvironment = '' } = decodedJwtToken
 
   const edlConfig = await getEdlConfig(earthdataEnvironment)
 
   try {
+    // If the environment in the jwtToken doesn't match the environment provided in the header
+    if (earthdataEnvironment !== decodedEarthdataEnvironment) {
+      // Consider this request failed and redirect to authenticate against the correct environment
+      throw new Error('Unauthorized')
+    }
+
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 

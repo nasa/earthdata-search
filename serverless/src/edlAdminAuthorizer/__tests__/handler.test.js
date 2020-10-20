@@ -12,7 +12,10 @@ describe('edlAdminAuthorizer', () => {
       const { jwtToken } = getEnvironmentConfig('test')
 
       const event = {
-        authorizationToken: `Bearer: ${jwtToken}`
+        headers: {
+          'Earthdata-ENV': 'test',
+          Authorization: `Bearer: ${jwtToken}`
+        }
       }
 
       const response = await edlAdminAuthorizer(event, {})

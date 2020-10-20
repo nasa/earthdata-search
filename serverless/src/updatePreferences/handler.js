@@ -40,7 +40,7 @@ const updatePreferences = async (event, context) => {
 
   try {
     // If user information was included, use it in the queries
-    const jwtToken = getJwtToken(event, earthdataEnvironment)
+    const jwtToken = getJwtToken(event)
 
     const { id, username } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 

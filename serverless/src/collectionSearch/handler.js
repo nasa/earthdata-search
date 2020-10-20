@@ -91,7 +91,7 @@ const collectionSearch = async (event) => {
 
   try {
     return doSearchRequest({
-      jwtToken: getJwtToken(event, earthdataEnvironment),
+      jwtToken: getJwtToken(event),
       path: '/search/collections.json',
       params: buildParams({
         body,
