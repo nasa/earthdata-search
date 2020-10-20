@@ -32,6 +32,7 @@ export const triggerKeyboardShortcut = ({
 
   // Trigger the keyboard shortcut
   shortcutCallback()
+
   event.preventDefault()
   event.stopPropagation()
 }

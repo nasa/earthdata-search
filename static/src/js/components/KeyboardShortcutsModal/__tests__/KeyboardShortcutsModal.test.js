@@ -3,6 +3,7 @@ import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import { Modal } from 'react-bootstrap'
+
 import EDSCModal from '../../EDSCModal/EDSCModal'
 import KeyboardShortcutsModal from '../KeyboardShortcutsModal'
 
@@ -19,6 +20,7 @@ beforeEach(() => {
     windowEventMap[event] = cb
   })
   window.removeEventListener = jest.fn()
+
   document.addEventListener = jest.fn((event, cb) => {
     documentEventMap[event] = cb
   })
