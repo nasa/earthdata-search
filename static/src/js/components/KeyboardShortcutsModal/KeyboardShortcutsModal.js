@@ -59,16 +59,17 @@ export class KeyboardShortcutsModal extends Component {
         onClose={() => onToggleKeyboardShortcutsModal(false)}
         body={(
           <Container>
-            {Object.entries(keyboardShortcutsList)
-              .map(arr => (
-                <Row key={arr[0]} className="mb-1">
+            {
+              Object.entries(keyboardShortcutsList).map(shortcut => (
+                <Row key={shortcut[0]} className="mb-1">
                   <Col xs={1}>
-                    <kbd>{arr[0]}</kbd>
+                    <kbd>{shortcut[0]}</kbd>
                   </Col>
                   :
-                  <Col>{arr[1]}</Col>
+                  <Col>{shortcut[1]}</Col>
                 </Row>
-              ))}
+              ))
+            }
           </Container>
         )}
         title="Keyboard Shortcuts"
