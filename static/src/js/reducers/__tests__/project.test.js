@@ -55,7 +55,8 @@ describe('ADD_COLLECTION_TO_PROJECT', () => {
           collectionId: {
             granules: {
               ...initialGranuleState
-            }
+            },
+            isVisible: true
           }
         }
       }

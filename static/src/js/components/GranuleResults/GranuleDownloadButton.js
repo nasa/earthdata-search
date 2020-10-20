@@ -76,14 +76,20 @@ export const GranuleDownloadButton = (props) => {
 
     // We need to place the collection as the last collection in the project, get the number of collections in the project
     // so that we know what index to use
-    const projectCollectionCount = Object.keys(pg).length
+    let projectCollectionIndex = Object.keys(pg).length
+
+    // If there are no pg parameters in the URL already, the index for the first collection needs to be 1, not 0
+    if (projectCollectionIndex === 0) projectCollectionIndex = 1
 
     // Move the object at the 0 index (focused collection) into the project by adding it to the end of the pg array (resulting
     // in a non 0 index)
     pg = {
       ...pg,
       0: {},
-      [projectCollectionCount]: focusedCollection
+      [projectCollectionIndex]: {
+        ...focusedCollection,
+        v: 't' // Set the new project collection visibility to true
+      }
     }
   }
 
