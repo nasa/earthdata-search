@@ -4,7 +4,7 @@ import React, {
   useEffect
 } from 'react'
 import PropTypes from 'prop-types'
-import Skeleton from '../Skeleton/Skeleton';
+import Skeleton from '../Skeleton/Skeleton'
 import { collectionResultsItemSkeleton } from './skeleton'
 
 import CollectionResultsItem from './CollectionResultsItem'
