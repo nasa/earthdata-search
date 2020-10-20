@@ -22,7 +22,7 @@ const deleteProject = async (event, context) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const jwtToken = getJwtToken(event, earthdataEnvironment)
+  const jwtToken = getJwtToken(event)
 
   const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 

@@ -28,7 +28,7 @@ export default async function deleteRetrieval(event, context) {
     // Decode the provided retrieval id
     const decodedRetrievalId = deobfuscateId(providedRetrieval)
 
-    const jwtToken = getJwtToken(event, earthdataEnvironment)
+    const jwtToken = getJwtToken(event)
 
     const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 

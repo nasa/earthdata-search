@@ -35,7 +35,7 @@ const retrieveConcept = async (event) => {
 
   const queryParams = prepKeysForCmr(obj)
 
-  const jwtToken = getJwtToken(event, earthdataEnvironment)
+  const jwtToken = getJwtToken(event)
 
   const { id } = pathParameters
 

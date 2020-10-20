@@ -25,7 +25,7 @@ const saveContactInfo = async (event) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const jwtToken = getJwtToken(event, earthdataEnvironment)
+  const jwtToken = getJwtToken(event)
 
   const { id } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 

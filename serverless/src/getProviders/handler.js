@@ -18,7 +18,7 @@ const getProviders = async (event) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const jwtToken = getJwtToken(event, earthdataEnvironment)
+  const jwtToken = getJwtToken(event)
 
   const accessToken = await getEchoToken(jwtToken, earthdataEnvironment)
 

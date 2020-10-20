@@ -1,5 +1,6 @@
-import { getAdminUsers } from '../util/getAdminUsers'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { generatePolicy } from '../util/authorizer/generatePolicy'
+import { getAdminUsers } from '../util/getAdminUsers'
 import { validateToken } from '../util/authorizer/validateToken'
 
 /**
@@ -13,15 +14,19 @@ const edlAdminAuthorizer = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   const {
-    authorizationToken = '',
+    headers = {},
     methodArn
   } = event
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
+  const { Authorization: authorizationToken = '' } = headers
 
   // authorizationToken comes in as `Bearer: asdf.qwer.hjkl` but we only need the actual token
   const tokenParts = authorizationToken.split(' ')
   const jwtToken = tokenParts[1]
 
-  const username = await validateToken(jwtToken)
+  const username = await validateToken(jwtToken, earthdataEnvironment)
 
   if (username) {
     let adminUsers

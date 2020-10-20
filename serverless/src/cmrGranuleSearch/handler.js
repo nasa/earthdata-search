@@ -63,7 +63,7 @@ const cmrGranuleSearch = async (event) => {
 
   try {
     return doSearchRequest({
-      jwtToken: getJwtToken(event, earthdataEnvironment),
+      jwtToken: getJwtToken(event),
       path: '/search/granules.json',
       params: buildParams({
         body,

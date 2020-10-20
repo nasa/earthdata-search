@@ -22,7 +22,7 @@ const getProjects = async (event, context) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const jwtToken = getJwtToken(event, earthdataEnvironment)
+  const jwtToken = getJwtToken(event)
 
   const { username } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
