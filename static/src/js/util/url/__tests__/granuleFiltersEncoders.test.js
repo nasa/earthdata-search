@@ -32,7 +32,8 @@ describe('url#decodeGranuleFilters', () => {
         recurringDayEnd: '',
         recurringDayStart: '',
         isRecurring: false
-      }
+      },
+      readableGranuleName: ['first#id', 'anotherId']
     }
 
     expect(decodeGranuleFilters({
@@ -53,7 +54,8 @@ describe('url#decodeGranuleFilters', () => {
         min: -45,
         max: 45
       },
-      ecd: '2015-06-09T00:00.000Z,2016-05-09T00:00.000Z'
+      ecd: '2015-06-09T00:00.000Z,2016-05-09T00:00.000Z',
+      id: 'first%23id!anotherId'
     })).toEqual(expectedResult)
   })
 })
@@ -85,7 +87,8 @@ describe('url#encodeGranuleFilters', () => {
       equatorCrossingDate: {
         endDate: '2016-05-09T00:00.000Z',
         startDate: '2015-06-09T00:00.000Z'
-      }
+      },
+      readableGranuleName: ['first#id', 'anotherId']
     }
 
     expect(encodeGranuleFilters(props)).toEqual({
@@ -106,7 +109,8 @@ describe('url#encodeGranuleFilters', () => {
         min: -45,
         max: 45
       },
-      ecd: '2015-06-09T00:00.000Z,2016-05-09T00:00.000Z'
+      ecd: '2015-06-09T00:00.000Z,2016-05-09T00:00.000Z',
+      id: 'first%23id!anotherId'
     })
   })
 })

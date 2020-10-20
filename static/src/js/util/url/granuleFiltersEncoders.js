@@ -30,7 +30,7 @@ export const encodeGranuleFilters = (granuleFilters) => {
   if (cloudCover) pg.cc = cloudCover
   if (orbitNumber) pg.on = orbitNumber
   if (equatorCrossingLongitude) pg.ecl = equatorCrossingLongitude
-  if (readableGranuleName) pg.id = readableGranuleName.join('!')
+  if (readableGranuleName) pg.id = encodeURIComponent(readableGranuleName.join('!'))
   if (equatorCrossingDate) {
     pg.ecd = encodeTemporal(granuleFilters.equatorCrossingDate)
   }
@@ -73,7 +73,7 @@ export const decodeGranuleFilters = (params = {}) => {
   if (cloudCover) granuleFilters.cloudCover = cloudCover
   if (orbitNumber) granuleFilters.orbitNumber = orbitNumber
   if (equatorCrossingLongitude) granuleFilters.equatorCrossingLongitude = equatorCrossingLongitude
-  if (readableGranuleName) granuleFilters.readableGranuleName = readableGranuleName.split('!')
+  if (readableGranuleName) granuleFilters.readableGranuleName = decodeURIComponent(readableGranuleName).split('!')
   if (equatorCrossingDate) granuleFilters.equatorCrossingDate = decodeTemporal(equatorCrossingDate)
   if (sortKey) granuleFilters.sortKey = sortKey
 
