@@ -15,6 +15,7 @@ import {
   clearAutocompleteSelected,
   cancelAutocomplete
 } from '../autocomplete'
+
 import {
   LOADING_AUTOCOMPLETE,
   LOADED_AUTOCOMPLETE,
@@ -26,6 +27,7 @@ import {
   ADD_CMR_FACET,
   REMOVE_CMR_FACET
 } from '../../constants/actionTypes'
+
 import actions from '..'
 
 const mockStore = configureMockStore([thunk])

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Container, Row, Col } from 'react-bootstrap'
-import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+
+import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 
 export class KeyboardShortcutsModal extends Component {
   constructor(props) {
@@ -37,7 +38,11 @@ export class KeyboardShortcutsModal extends Component {
   }
 
   render() {
-    const { isOpen, onToggleKeyboardShortcutsModal } = this.props
+    const {
+      isOpen,
+      onToggleKeyboardShortcutsModal
+    } = this.props
+
     const keyboardShortcutsList = {
       ']': 'Toggle main search result/granules panel',
       g: 'Toggle granule filters panel',
@@ -45,6 +50,7 @@ export class KeyboardShortcutsModal extends Component {
       '/': 'Focus on search input field',
       '?': 'Display all keyboard shortcuts'
     }
+
     return (
       <EDSCModalContainer
         isOpen={isOpen}
@@ -56,8 +62,10 @@ export class KeyboardShortcutsModal extends Component {
             {Object.entries(keyboardShortcutsList)
               .map(arr => (
                 <Row key={arr[0]} className="mb-1">
-                  <Col xs={1}><kbd>{arr[0]}</kbd></Col>
-      :
+                  <Col xs={1}>
+                    <kbd>{arr[0]}</kbd>
+                  </Col>
+                  :
                   <Col>{arr[1]}</Col>
                 </Row>
               ))}

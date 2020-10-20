@@ -1,11 +1,5 @@
 import RegionRequest from '../util/request/regionRequest'
 import {
-  prepareRegionParams
-} from '../util/regions'
-import { handleError } from './errors'
-import { displayNotificationType } from '../constants/enums'
-
-import {
   UPDATE_REGION_RESULTS,
   LOADING_REGIONS,
   LOADED_REGIONS,
@@ -13,6 +7,11 @@ import {
   FINISHED_REGIONS_TIMER,
   ERRORED_REGIONS
 } from '../constants/actionTypes'
+import {
+  prepareRegionParams
+} from '../util/regions'
+import { displayNotificationType } from '../constants/enums'
+import actions from './index'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
@@ -92,7 +91,7 @@ export const getRegions = () => (dispatch, getState) => {
       dispatch(onRegionsLoaded({
         loaded: false
       }))
-      dispatch(handleError({
+      dispatch(actions.handleError({
         error,
         action: 'getRegions',
         resource: 'regions',
