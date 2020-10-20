@@ -1,4 +1,3 @@
-jest.mock('../../util/addToast', () => jest.fn())
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
@@ -15,7 +14,7 @@ import {
 
 import actions from '..'
 
-import addToastMock from '../../util/addToast'
+import * as addToast from '../../util/addToast'
 
 const mockStore = configureMockStore([thunk])
 
@@ -76,6 +75,8 @@ describe('setPreferencesFromJwt', () => {
 
 describe('updatePreferences', () => {
   test('should create an action to update the store', async () => {
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
     const preferences = {
       panelState: 'default'
     }
@@ -91,6 +92,7 @@ describe('updatePreferences', () => {
     const store = mockStore({
       authToken: 'token'
     })
+
     await store.dispatch(updatePreferences(preferences)).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
@@ -117,6 +119,8 @@ describe('updatePreferences', () => {
   })
 
   test('does not call setPreferences on error', async () => {
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
     const handleErrorMock = jest.spyOn(actions, 'handleError')
 
     nock(/localhost/)
