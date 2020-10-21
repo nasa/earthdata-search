@@ -10,32 +10,50 @@ describe('getEdlConfig', () => {
       edlHost: 'http://urs.example.com'
     }))
 
-    const secretsManagerData = jest.fn().mockReturnValue({
+    const prodSecretsManagerData = {
       promise: jest.fn().mockResolvedValue({
-        SecretString: '{"id":"test","secret":"secret"}'
+        SecretString: '{"id":"prodTest","secret":"prodSecret"}'
       })
-    })
+    }
+    const uatSecretsManagerData = {
+      promise: jest.fn().mockResolvedValue({
+        SecretString: '{"id":"uatTest","secret":"uatSecret"}'
+      })
+    }
 
-    AWS.SecretsManager = jest.fn()
-      .mockImplementationOnce(() => ({
-        getSecretValue: secretsManagerData
-      }))
+    AWS.SecretsManager = jest.fn(() => ({
+      getSecretValue: jest.fn()
+        .mockImplementationOnce(() => (prodSecretsManagerData))
+        .mockImplementationOnce(() => (uatSecretsManagerData))
+    }))
 
-    const response = await getEdlConfig('prod')
+    const prodResponse = await getEdlConfig('prod')
 
-    expect(response).toEqual({
+    expect(prodResponse).toEqual({
       auth: {
         tokenHost: 'http://urs.example.com'
       },
       client: {
-        id: 'test',
-        secret: 'secret'
+        id: 'prodTest',
+        secret: 'prodSecret'
       }
     })
 
-    expect(secretsManagerData).toBeCalledTimes(1)
-    expect(secretsManagerData.mock.calls[0]).toEqual([{
-      SecretId: 'UrsClientConfigSecret_prod'
-    }])
+    expect(prodSecretsManagerData.promise).toBeCalledTimes(1)
+
+    // call getEdlConfig again for a different value to ensure the cached value isn't being passed for the new env
+    const uatResponse = await getEdlConfig('uat')
+
+    expect(uatResponse).toEqual({
+      auth: {
+        tokenHost: 'http://urs.example.com'
+      },
+      client: {
+        id: 'uatTest',
+        secret: 'uatSecret'
+      }
+    })
+
+    expect(uatSecretsManagerData.promise).toBeCalledTimes(1)
   })
 })
