@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
 })
 
 export const GranuleImageContainer = ({
+  earthdataEnvironment,
   focusedGranuleId,
   granuleMetadata
 }) => {
@@ -24,7 +25,7 @@ export const GranuleImageContainer = ({
   let imageSrc = ''
 
   if (browseFlag) {
-    imageSrc = `${getEarthdataConfig(getEarthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=512&w=512`
+    imageSrc = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=512&w=512`
   }
 
   return (
@@ -33,6 +34,7 @@ export const GranuleImageContainer = ({
 }
 
 GranuleImageContainer.propTypes = {
+  earthdataEnvironment: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granuleMetadata: PropTypes.shape({}).isRequired
 }
