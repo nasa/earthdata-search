@@ -7,7 +7,7 @@ import {
 
 import { getSecretsManagerConfig } from './aws/getSecretsManagerConfig'
 
-let clientConfig
+const clientConfig = {}
 let secretsmanager
 
 /**
@@ -24,7 +24,8 @@ const oAuthConfig = earthdataEnvironment => ({
  * @param {Object} edlConfig A previously defined config object, or null if one has not be instantiated
  */
 export const getEdlConfig = async (earthdataEnvironment) => {
-  if (clientConfig == null) {
+  const { [earthdataEnvironment]: environmentConfig } = clientConfig
+  if (environmentConfig == null) {
     if (secretsmanager == null) {
       secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
     }
@@ -50,11 +51,11 @@ export const getEdlConfig = async (earthdataEnvironment) => {
     // If not running in development mode fetch secrets from AWS
     const secretValue = await secretsmanager.getSecretValue(params).promise()
 
-    clientConfig = JSON.parse(secretValue.SecretString)
+    clientConfig[earthdataEnvironment] = JSON.parse(secretValue.SecretString)
   }
 
   return {
     ...oAuthConfig(earthdataEnvironment),
-    client: clientConfig
+    client: clientConfig[earthdataEnvironment]
   }
 }
