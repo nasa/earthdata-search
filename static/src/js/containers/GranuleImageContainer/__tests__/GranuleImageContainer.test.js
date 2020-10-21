@@ -11,6 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    earthdataEnvironment: 'prod',
     focusedGranuleId: 'focusedGranule',
     granuleMetadata: {
       browseFlag: true
