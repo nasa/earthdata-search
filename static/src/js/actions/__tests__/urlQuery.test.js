@@ -116,6 +116,8 @@ describe('changePath', () => {
       })
 
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
+    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
     const newPath = '/search?projectId=1'
 
@@ -131,6 +133,7 @@ describe('changePath', () => {
           byId: {}
         }
       },
+      query: {},
       router: {
         location: {
           pathname: '/search'
@@ -176,12 +179,16 @@ describe('changePath', () => {
           }
         })
       )
+
+      expect(getCollectionsMock).toBeCalledTimes(1)
+      expect(getTimelineMock).toBeCalledTimes(1)
     })
   })
 
   test('updates the store if there is not a projectId', () => {
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
     const newPath = '/search?p=C00001-EDSC'
 
@@ -239,6 +246,7 @@ describe('changePath', () => {
     )
 
     expect(getCollectionsMock).toBeCalledTimes(1)
+    expect(getTimelineMock).toBeCalledTimes(1)
   })
 })
 
