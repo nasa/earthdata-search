@@ -73,13 +73,15 @@ export const changePath = (path = '') => async (dispatch, getState) => {
 
   const [pathname, queryString] = path.split('?')
 
+  let decodedParams
+
   // If query string is a projectId, call getProject
   if (queryString && queryString.indexOf('projectId=') === 0) {
     const requestObject = new ProjectRequest(undefined, earthdataEnvironment)
 
     const { projectId } = parse(queryString)
 
-    const projectResponse = requestObject.fetch(projectId)
+    await requestObject.fetch(projectId)
       .then((response) => {
         const { data } = response
         const {
@@ -106,7 +108,8 @@ export const changePath = (path = '') => async (dispatch, getState) => {
           projectId
         }))
 
-        dispatch(actions.updateStore(decodeUrlParams(stringify(paramsObj))))
+        decodedParams = decodeUrlParams(stringify(paramsObj))
+        dispatch(actions.updateStore(decodedParams))
       })
       .catch((error) => {
         dispatch(actions.handleError({
@@ -117,13 +120,11 @@ export const changePath = (path = '') => async (dispatch, getState) => {
           requestObject
         }))
       })
+  } else {
+    decodedParams = decodeUrlParams(queryString)
 
-    return projectResponse
+    dispatch(actions.updateStore(decodedParams, pathname))
   }
-
-  const decodedParams = decodeUrlParams(queryString)
-
-  dispatch(actions.updateStore(decodedParams, pathname))
 
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
