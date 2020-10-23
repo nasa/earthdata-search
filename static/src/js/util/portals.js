@@ -1,6 +1,6 @@
 /* eslint-disable import/no-dynamic-require, global-require */
 
-import { merge } from 'lodash'
+import { cloneDeep, merge } from 'lodash'
 
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
@@ -23,8 +23,9 @@ const buildConfig = (json) => {
   // If the current config has a parent, merge the current config into the result of the parents being merged together
   if (parentConfig) {
     const parentJson = require(`../../../../portals/${parentConfig}/config.json`)
-
-    return merge(buildConfig(parentJson), json)
+    const parent = buildConfig(parentJson)
+    const merged = merge(parent, json)
+    return cloneDeep(merged)
   }
 
   // If the config doesn't have a parent, merge the current config into the default portal config
