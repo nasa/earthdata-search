@@ -10,6 +10,8 @@ describe('util#doSearchRequest', () => {
       'cmr-hits': 1,
       'cmr-took': 1,
       'cmr-request-id': 123,
+      'access-control-allow-credentials': true,
+      'access-control-allow-headers': '*',
       'access-control-allow-origin': '*',
       'access-control-expose-headers': 'jwt-token',
       'jwt-token': '123.456.789'

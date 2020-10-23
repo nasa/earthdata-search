@@ -1,4 +1,6 @@
-import { getApplicationConfig } from '../../../sharedUtils/config'
+import lowercaseKeys from 'lowercase-keys'
+
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 
 /**
  * Determimine which environment to use for static config lookups
@@ -6,12 +8,12 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
  */
 export const determineEarthdataEnvironment = (headers = {}) => {
   // Pull the default environment from the static application config
-  let { env: defaultdeployedEnvironment } = getApplicationConfig()
+  let defaultDeployedEnvironment = deployedEnvironment()
 
   // Default to production when developing locally
-  if (defaultdeployedEnvironment === 'dev') defaultdeployedEnvironment = 'prod'
+  if (defaultDeployedEnvironment === 'dev') defaultDeployedEnvironment = 'prod'
 
-  const { 'Earthdata-ENV': earthdataEnvironment = defaultdeployedEnvironment } = headers
+  const { 'earthdata-env': earthdataEnvironment = defaultDeployedEnvironment } = lowercaseKeys(headers)
 
-  return earthdataEnvironment
+  return earthdataEnvironment.toLowerCase()
 }

@@ -1,5 +1,6 @@
 import request from 'request-promise'
 
+import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { getEdlConfig } from '../getEdlConfig'
@@ -10,9 +11,11 @@ let cmrToken
 
 /**
  * Returns a token from Legacy Services
- *  * @param {String} earthdataEnvironment The Earthdata Environment to retrieve a token from
+ * @param {String} earthdataEnvironment The Earthdata Environment to retrieve a token from
  */
-export const getSystemToken = async (earthdataEnvironment) => {
+export const getSystemToken = async () => {
+  const earthdataEnvironment = deployedEnvironment()
+
   if (cmrToken == null) {
     const dbCredentials = await getUrsSystemCredentials(earthdataEnvironment)
     const {

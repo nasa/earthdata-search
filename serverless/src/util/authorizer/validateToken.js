@@ -24,9 +24,8 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
 
   try {
     // If the environment in the jwtToken doesn't match the environment provided in the header
-    if (earthdataEnvironment !== decodedEarthdataEnvironment) {
-      // Consider this request failed and redirect to authenticate against the correct environment
-      throw new Error('Unauthorized')
+    if (earthdataEnvironment.toLowerCase() !== decodedEarthdataEnvironment.toLowerCase()) {
+      return false
     }
 
     // Retrieve a connection to the database
