@@ -1,4 +1,5 @@
 import request from 'request-promise'
+import lowercaseKeys from 'lowercase-keys'
 
 import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
@@ -77,12 +78,14 @@ export const doSearchRequest = async ({
     return {
       statusCode: response.statusCode,
       headers: {
+        ...lowercaseKeys(defaultResponseHeaders),
         'cmr-hits': headers['cmr-hits'],
         'cmr-took': headers['cmr-took'],
         'cmr-request-id': headers['cmr-request-id'],
         'access-control-allow-origin': headers['access-control-allow-origin'],
         'access-control-expose-headers': prepareExposeHeaders(headers),
-        'jwt-token': jwtToken
+        'jwt-token': jwtToken,
+        'access-control-allow-headers': '*'
       },
       body: JSON.stringify(body)
     }

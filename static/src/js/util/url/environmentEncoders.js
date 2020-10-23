@@ -24,5 +24,5 @@ export const decodeEarthdataEnvironment = (environment) => {
     return deployedEnvironment()
   }
 
-  return environment
+  return environment.toLowerCase()
 }

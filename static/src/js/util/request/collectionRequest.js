@@ -127,9 +127,9 @@ export default class CollectionRequest extends CmrRequest {
     if (data.items) {
       entry = data.items
     } else {
-      const { feed = {} } = data
-      // eslint-disable-next-line prefer-destructuring
-      entry = feed.entry
+      const { feed = {} } = data;
+
+      ({ entry = [] } = feed)
     }
 
     entry.map((collection) => {
