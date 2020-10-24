@@ -17,6 +17,13 @@
     white-space: nowrap;
     font-size: 0.875rem;
     vertical-align: middle;
+    &-icon {
+      display: inline-flex;
+      align-items: center;
+      svg {
+        margin-right: 4px;
+      }
+    }
   }
 
   &__short-name {

@@ -256,7 +256,7 @@ class GranuleResultsHeader extends Component {
                   )
                 }
                 <PortalLinkContainer
-                  className="granule-results-header__title-link"
+                  className="granule-results-header__title-link granule-results-header__title-link-icon"
                   to={{
                     pathname: '/search/granules/collection-details',
                     search: location.search

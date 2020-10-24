@@ -59,7 +59,7 @@ export const CollectionDetailsHeader = ({
                   <>
                     <h2 className="collection-details-header__title">{title}</h2>
                     <PortalLinkContainer
-                      className="collection-details-header__title-link"
+                      className="collection-details-header__title-link collection-details-header__title-link-icon"
                       to={{
                         pathname: '/search/granules',
                         search: location.search

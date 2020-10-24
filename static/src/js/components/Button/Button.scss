@@ -31,6 +31,11 @@
   &__contents {
     vertical-align: initial;
     line-height: 1em;
+    display: inline-flex;
+    align-items: center;
+    svg {
+      margin-right: 4px;
+    }
   }
 
   &__icon {
@@ -53,5 +58,14 @@
     background-color: rgba($color__black, 0.5);
     border-radius: 1em;
     vertical-align: middle;
+  }
+
+  &--icon__svg {
+    display: inline-flex;
+    align-items: baseline;
+
+    svg {
+      align-self: center;
+    }
   }
 }
