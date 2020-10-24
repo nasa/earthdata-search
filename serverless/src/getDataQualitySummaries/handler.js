@@ -2,26 +2,29 @@ import 'array-foreach-async'
 import request from 'request-promise'
 import uuidv4 from 'uuid/v4'
 
-import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { getJwtToken } from '../util/getJwtToken'
-import { getEchoToken } from '../util/urs/getEchoToken'
-import { parseError } from '../../../sharedUtils/parseError'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
+import { getEchoToken } from '../util/urs/getEchoToken'
+import { getJwtToken } from '../util/getJwtToken'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Retrieve data quality summaries for a given CMR Collection
  * @param {Object} event Details about the HTTP request that it received
  */
 const getDataQualitySummaries = async (event) => {
-  const { body } = event
+  const { body, headers } = event
+
   const { params, requestId } = JSON.parse(body)
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   const jwtToken = getJwtToken(event)
 
-  const echoToken = await getEchoToken(jwtToken)
+  const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
-  const { echoRestRoot } = getEarthdataConfig(cmrEnv())
+  const { echoRestRoot } = getEarthdataConfig(earthdataEnvironment)
 
   const { catalogItemId } = params
 

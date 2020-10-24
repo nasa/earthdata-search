@@ -1,7 +1,8 @@
 import { buildParams } from '../util/cmr/buildParams'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
-import { getJwtToken } from '../util/getJwtToken'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -21,11 +22,13 @@ const timelineSearch = async (event) => {
     'concept_id'
   ]
 
-  const { defaultResponseHeaders } = getApplicationConfig()
-
-  const { body } = event
+  const { body, headers } = event
 
   const { requestId } = JSON.parse(body)
+
+  const { defaultResponseHeaders } = getApplicationConfig()
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   try {
     return doSearchRequest({
@@ -36,7 +39,8 @@ const timelineSearch = async (event) => {
         nonIndexedKeys,
         permittedCmrKeys
       }),
-      requestId
+      requestId,
+      earthdataEnvironment
     })
   } catch (e) {
     return {

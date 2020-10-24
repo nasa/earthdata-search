@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
+
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { locationPropType } from '../../util/propTypes/location'
 
 import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
@@ -16,6 +18,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   authToken: state.authToken,
+  earthdataEnvironment: getEarthdataEnvironment(state),
   portal: state.portal,
   projectCollectionIds: state.project.collections.allIds,
   savedProject: state.savedProject
@@ -24,38 +27,41 @@ const mapStateToProps = state => ({
 export const SecondaryToolbarContainer = (props) => {
   const {
     authToken,
-    portal,
-    projectCollectionIds,
+    earthdataEnvironment,
     location,
-    savedProject,
+    onChangePath,
     onLogout,
     onUpdateProjectName,
-    onChangePath
+    portal,
+    projectCollectionIds,
+    savedProject
   } = props
 
   return (
     <SecondaryToolbar
       authToken={authToken}
-      portal={portal}
-      projectCollectionIds={projectCollectionIds}
+      earthdataEnvironment={earthdataEnvironment}
       location={location}
-      savedProject={savedProject}
+      onChangePath={onChangePath}
       onLogout={onLogout}
       onUpdateProjectName={onUpdateProjectName}
-      onChangePath={onChangePath}
+      portal={portal}
+      projectCollectionIds={projectCollectionIds}
+      savedProject={savedProject}
     />
   )
 }
 
 SecondaryToolbarContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  portal: PropTypes.shape({}).isRequired,
-  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
-  savedProject: PropTypes.shape({}).isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  onChangePath: PropTypes.func.isRequired
+  portal: PropTypes.shape({}).isRequired,
+  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  savedProject: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

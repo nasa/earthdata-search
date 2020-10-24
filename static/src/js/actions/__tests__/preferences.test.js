@@ -1,17 +1,20 @@
-jest.mock('../../util/addToast', () => jest.fn())
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
 import jwt from 'jsonwebtoken'
 
 import { SET_PREFERENCES_IS_SUBMITTING, SET_PREFERENCES, UPDATE_AUTH } from '../../constants/actionTypes'
+
 import {
   setIsSubmitting,
   setPreferences,
   setPreferencesFromJwt,
   updatePreferences
 } from '../preferences'
-import addToastMock from '../../util/addToast'
+
+import actions from '..'
+
+import * as addToast from '../../util/addToast'
 
 const mockStore = configureMockStore([thunk])
 
@@ -72,6 +75,8 @@ describe('setPreferencesFromJwt', () => {
 
 describe('updatePreferences', () => {
   test('should create an action to update the store', async () => {
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
     const preferences = {
       panelState: 'default'
     }
@@ -87,6 +92,7 @@ describe('updatePreferences', () => {
     const store = mockStore({
       authToken: 'token'
     })
+
     await store.dispatch(updatePreferences(preferences)).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
@@ -113,6 +119,10 @@ describe('updatePreferences', () => {
   })
 
   test('does not call setPreferences on error', async () => {
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
+    const handleErrorMock = jest.spyOn(actions, 'handleError')
+
     nock(/localhost/)
       .post(/preferences/)
       .reply(500)
@@ -126,20 +136,32 @@ describe('updatePreferences', () => {
     })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
     const preferences = {
       panelState: 'default'
     }
+
     await store.dispatch(updatePreferences(preferences)).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: SET_PREFERENCES_IS_SUBMITTING,
         payload: true
       })
+
       expect(storeActions[1]).toEqual({
         type: SET_PREFERENCES_IS_SUBMITTING,
         payload: false
       })
+
+      expect(handleErrorMock).toHaveBeenCalledTimes(1)
+      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        action: 'updatePreferences',
+        notificationType: 'toast',
+        resource: 'preferences'
+      }))
+
       expect(consoleMock).toHaveBeenCalledTimes(1)
+
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][1].appearance).toBe('error')
       expect(addToastMock.mock.calls[0][1].autoDismiss).toBe(false)

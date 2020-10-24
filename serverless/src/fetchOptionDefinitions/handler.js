@@ -6,7 +6,7 @@ import { stringify } from 'qs'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { tagName } from '../../../sharedUtils/tags'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -16,7 +16,7 @@ import { getClientId } from '../../../sharedUtils/getClientId'
 let sqs
 
 /**
- * Redirects the user to the correct EDL login URL
+ * Fetch option definitions from Legacy Services
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
@@ -38,7 +38,7 @@ const fetchOptionDefinitions = async (event, context) => {
     sqs = new AWS.SQS(getSqsConfig())
   }
 
-  const { echoRestRoot } = getEarthdataConfig(cmrEnv())
+  const { echoRestRoot } = getEarthdataConfig(deployedEnvironment())
 
   // Retrieve option definition data for the collections pertaining to the echo orders tag
   const optionDefinitionUrl = `${echoRestRoot}/order_information.json`

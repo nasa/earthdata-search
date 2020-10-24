@@ -1,24 +1,25 @@
 import CmrRequest from './cmrRequest'
-import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import {
+  getApplicationConfig,
+  getEarthdataConfig,
+  getEnvironmentConfig
+} from '../../../../../sharedUtils/config'
 
 import { getTemporal } from '../edscDate'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 /**
  * Request object for granule specific requests
  */
 export default class GranuleRequest extends CmrRequest {
-  constructor(authToken) {
-    const cmrEnvironment = cmrEnv()
-
+  constructor(authToken, earthdataEnvironment) {
     if (authToken && authToken !== '') {
-      super(getEnvironmentConfig().apiHost)
+      super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'granules'
     } else {
-      super(getEarthdataConfig(cmrEnvironment).cmrHost)
+      super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
       this.searchPath = 'search/granules.json'
     }
@@ -92,7 +93,7 @@ export default class GranuleRequest extends CmrRequest {
 
       if (granule.id) {
         // eslint-disable-next-line
-        updatedGranule.thumbnail = `${getEarthdataConfig(cmrEnv()).cmrHost}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
+        updatedGranule.thumbnail = `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
       }
 
       if (granule.links && granule.links.length > 0) {

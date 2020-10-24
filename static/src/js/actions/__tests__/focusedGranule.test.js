@@ -14,7 +14,6 @@ import {
   UPDATE_FOCUSED_GRANULE
 } from '../../constants/actionTypes'
 
-import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 import * as getClientId from '../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
@@ -49,7 +48,6 @@ describe('getFocusedGranule', () => {
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
       }))
-      jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
       const store = mockStore({
         authToken: '',
@@ -90,7 +88,6 @@ describe('getFocusedGranule', () => {
           graphQlHost: 'https://graphql.example.com',
           opensearchRoot: 'https://cmr.example.com'
         }))
-        jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
         nock(/graph/)
           .post(/api/)
@@ -141,7 +138,6 @@ describe('getFocusedGranule', () => {
             graphQlHost: 'https://graphql.example.com',
             opensearchRoot: 'https://cmr.example.com'
           }))
-          jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
           const store = mockStore({
             authToken: '',
@@ -177,7 +173,6 @@ describe('getFocusedGranule', () => {
           graphQlHost: 'https://graphql.example.com',
           opensearchRoot: 'https://cmr.example.com'
         }))
-        jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
         nock(/graph/)
           .post(/api/)
@@ -229,7 +224,6 @@ describe('getFocusedGranule', () => {
       graphQlHost: 'https://graphql.example.com',
       opensearchRoot: 'https://cmr.example.com'
     }))
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementationOnce(() => 'prod')
 
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementationOnce(() => jest.fn())

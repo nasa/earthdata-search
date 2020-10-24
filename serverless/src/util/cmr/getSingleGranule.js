@@ -2,7 +2,7 @@ import request from 'promise-request-retry'
 
 import { stringify } from 'qs'
 
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { readCmrResults } from './readCmrResults'
@@ -19,7 +19,7 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     page_size: 1
   }
 
-  const granuleSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/granules.json`
+  const granuleSearchUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/granules.json`
 
   console.log(`Retrieving a single granule for ${collectionId}`)
 

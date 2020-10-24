@@ -1,10 +1,12 @@
 import uuidv4 from 'uuid/v4'
 
 import { REMOVE_ERROR, ADD_ERROR } from '../constants/actionTypes'
-import LoggerRequest from '../util/request/loggerRequest'
-import { parseError } from '../../../../sharedUtils/parseError'
+
+import { addToast } from '../util/addToast'
 import { displayNotificationType } from '../constants/enums'
-import addToast from '../util/addToast'
+import { parseError } from '../../../../sharedUtils/parseError'
+
+import LoggerRequest from '../util/request/loggerRequest'
 
 export const addError = payload => (dispatch) => {
   // Default the notificationType to none

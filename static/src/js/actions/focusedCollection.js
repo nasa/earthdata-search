@@ -8,6 +8,7 @@ import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { eventEmitter } from '../events/events'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { getCollectionsQuery } from '../selectors/query'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { hasTag } from '../../../../sharedUtils/tags'
@@ -40,6 +41,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   // Retrieve data from Redux using selectors
   const collectionsQuery = getCollectionsQuery(state)
+  const earthdataEnvironment = getEarthdataEnvironment(state)
   const focusedCollectionId = getFocusedCollectionId(state)
   const focusedCollectionMetadata = getFocusedCollectionMetadata(state)
 
@@ -73,7 +75,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   // Retrieve the default CMR tags to provide to the collection request
   const { defaultCmrSearchTags } = getApplicationConfig()
 
-  const graphRequestObject = new GraphQlRequest(authToken)
+  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetCollection(
@@ -169,7 +171,11 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         } = collection
 
         // Formats the metadata returned from graphql for use throughout the application
-        const focusedMetadata = createFocusedCollectionMetadata(collection, authToken)
+        const focusedMetadata = createFocusedCollectionMetadata(
+          collection,
+          authToken,
+          earthdataEnvironment
+        )
 
         payload.push({
           abstract,

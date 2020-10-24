@@ -1,5 +1,4 @@
 import nock from 'nock'
-import * as cmrEnv from '../../../../sharedUtils/cmrEnv'
 
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getEchoToken from '../../util/urs/getEchoToken'
@@ -10,7 +9,6 @@ beforeEach(() => {
 
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
   jest.spyOn(getEchoToken, 'getEchoToken').mockImplementation(() => '1234-abcd-5678-efgh')
-  jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 })
 
 describe('retrieveConcept', () => {

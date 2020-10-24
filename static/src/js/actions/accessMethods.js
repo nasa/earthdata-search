@@ -6,9 +6,11 @@ import { findProvider } from '../util/findProvider'
 import { getValueForTag } from '../../../../sharedUtils/tags'
 import { parseError } from '../../../../sharedUtils/parseError'
 
-import AccessMethodsRequest from '../util/request/accessMethodsRequest'
-import { getCollectionsMetadata } from '../selectors/collectionMetadata'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionMetadata } from '../util/focusedCollection'
+import { getCollectionsMetadata } from '../selectors/collectionMetadata'
+
+import AccessMethodsRequest from '../util/request/accessMethodsRequest'
 
 /**
  * Fetch available access methods
@@ -22,6 +24,8 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
     authToken
   } = state
 
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
   const collectionsMetadata = getCollectionsMetadata(state)
 
   // If the user is not logged in, don't fetch any methods
@@ -51,7 +55,7 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
       const { count: servicesCount } = services
 
       if (servicesCount > 0) {
-        const requestObject = new AccessMethodsRequest(authToken)
+        const requestObject = new AccessMethodsRequest(authToken, earthdataEnvironment)
 
         const response = requestObject.search({
           collectionId,

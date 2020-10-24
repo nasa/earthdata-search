@@ -10,6 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     authToken: '',
+    earthdataEnvironment: 'prod',
     location: {},
     portal: {
       portalId: 'edsc'

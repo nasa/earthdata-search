@@ -156,6 +156,7 @@ describe('submitLegacyServicesOrder', () => {
         query.response({
           id: 2,
           access_method: accessMethod,
+          environment: 'prod',
           granule_params: {},
           echo_profile: echoProfile,
           urs_profile: ursProfile

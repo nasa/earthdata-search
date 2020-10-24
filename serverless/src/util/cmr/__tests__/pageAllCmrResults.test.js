@@ -17,7 +17,7 @@ describe('pageAllCmrResults', () => {
 
     await pageAllCmrResults({
       cmrToken: 'test-token',
-      cmrEnvironment: 'sit',
+      deployedEnvironment: 'sit',
       path: 'search/services',
       additionalHeaders: {
         Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.2'
@@ -43,7 +43,7 @@ describe('pageAllCmrResults', () => {
 
     await pageAllCmrResults({
       cmrToken: 'test-token',
-      cmrEnvironment: 'sit',
+      deployedEnvironment: 'sit',
       path: 'search/services',
       additionalHeaders: {
         Accept: 'application/vnd.nasa.cmr.umm_results+json; version=1.2'

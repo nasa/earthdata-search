@@ -1,23 +1,28 @@
 import request from 'request-promise'
+
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
-import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Perform an authenticated CMR Concept Metadata search
  * @param {Object} event Details about the HTTP request that it received
  */
 const getProviders = async (event) => {
+  const { headers } = event
+
   const { defaultResponseHeaders } = getApplicationConfig()
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   const jwtToken = getJwtToken(event)
 
-  const accessToken = await getEchoToken(jwtToken)
+  const accessToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
-  const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/providers.json`
+  const url = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/providers.json`
 
   try {
     const response = await request.get({

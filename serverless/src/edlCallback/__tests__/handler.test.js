@@ -4,7 +4,6 @@ import mockKnex from 'mock-knex'
 import simpleOAuth2 from 'simple-oauth2'
 import jwt from 'jsonwebtoken'
 
-import * as cmrEnv from '../../../../sharedUtils/cmrEnv'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEdlConfig from '../../util/getEdlConfig'
 import * as getSecretEarthdataConfig from '../../../../sharedUtils/config'
@@ -48,7 +47,6 @@ beforeEach(() => {
   }))
 
   jest.spyOn(getSecretEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'secret' }))
-  jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
   jest.spyOn(jwt, 'sign').mockImplementation(() => 'mockToken')
   jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
     client: {
@@ -78,7 +76,7 @@ afterEach(() => {
 describe('edlCallback', () => {
   test('logs in the user and redirects to edscHost', async () => {
     const code = '2057964173'
-    const state = 'http://example.com'
+    const state = 'http://example.com?ee=prod'
 
     const sqsUserData = jest.fn().mockReturnValue({
       promise: jest.fn().mockResolvedValue()
@@ -120,12 +118,12 @@ describe('edlCallback', () => {
     expect(queries[1].method).toEqual('insert')
 
     expect(response.statusCode).toEqual(307)
-    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com&jwt=mockToken' })
+    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com%3Fee%3Dprod&jwt=mockToken' })
   })
 
   test('creates a new user if one does not exist', async () => {
     const code = '2057964173'
-    const state = 'http://example.com'
+    const state = 'http://example.com?ee=prod'
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
@@ -152,12 +150,12 @@ describe('edlCallback', () => {
     expect(queries[2].method).toEqual('insert')
 
     expect(response.statusCode).toEqual(307)
-    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com&jwt=mockToken' })
+    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com%3Fee%3Dprod&jwt=mockToken' })
   })
 
   test('catches and logs errors correctly', async () => {
     const code = '2057964173'
-    const state = 'http://example.com'
+    const state = 'http://example.com?ee=prod'
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
@@ -179,6 +177,6 @@ describe('edlCallback', () => {
     expect(consoleMock).toBeCalledTimes(1)
 
     expect(response.statusCode).toEqual(307)
-    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com' })
+    expect(response.headers).toEqual({ Location: 'http://localhost:3000/login?ee=prod&state=http%3A%2F%2Fexample.com%3Fee%3Dprod' })
   })
 })

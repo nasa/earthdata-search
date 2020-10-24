@@ -4,6 +4,8 @@ import React, {
   useEffect
 } from 'react'
 import PropTypes from 'prop-types'
+import Skeleton from '../Skeleton/Skeleton'
+import { collectionResultsItemSkeleton } from './skeleton'
 
 import CollectionResultsItem from './CollectionResultsItem'
 
@@ -46,7 +48,16 @@ export const CollectionResultsListItem = memo(({
         className="collection-results-list-item collection-results-list-item--loading"
         style={style}
       >
-        Loading collections...
+        <Skeleton
+          containerStyle={{
+            height: '140px',
+            width: '100%',
+            borderBottomWidth: '1px',
+            borderBottomStyle: 'solid',
+            borderBottomColor: '#dcdee0'
+          }}
+          shapes={collectionResultsItemSkeleton}
+        />
       </li>
     )
   }

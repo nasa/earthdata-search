@@ -1,6 +1,6 @@
 import 'array-foreach-async'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getUmmServiceVersionHeader } from '../../../sharedUtils/ummVersionHeader'
 
 /**
@@ -13,7 +13,7 @@ export const getRelevantServices = async (cmrToken) => {
   // not offer the ability to serach by type)
   const allCmrServices = await pageAllCmrResults({
     cmrToken,
-    cmrEnvironment: cmrEnv(),
+    deployedEnvironment: deployedEnvironment(),
     path: 'search/services.umm_json',
     additionalHeaders: {
       Accept: getUmmServiceVersionHeader()

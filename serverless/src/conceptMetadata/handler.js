@@ -7,15 +7,22 @@ import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtTok
  * @param {Object} event Details about the HTTP request that it received
  */
 const conceptMetadata = async (event) => {
-  const { url, token: jwtToken } = event.queryStringParameters
+  const { queryStringParameters } = event
+
+  const {
+    ee: earthdataEnvironment,
+    url,
+    token: jwtToken
+  } = queryStringParameters
 
   const [desiredPath, desiredQueryParams] = url.split('?')
   const parsedQueryParams = parse(desiredQueryParams)
 
-  const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
+  const {
+    access_token: accessToken
+  } = await getAccessTokenFromJwtToken(jwtToken, earthdataEnvironment)
 
-  // The client id is part of our Earthdata Login credentials
-  const edlConfig = await getEdlConfig()
+  const edlConfig = await getEdlConfig(earthdataEnvironment)
   const { client } = edlConfig
   const { id: clientId } = client
 

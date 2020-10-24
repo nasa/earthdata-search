@@ -1,11 +1,5 @@
 import RegionRequest from '../util/request/regionRequest'
 import {
-  prepareRegionParams
-} from '../util/regions'
-import { handleError } from './errors'
-import { displayNotificationType } from '../constants/enums'
-
-import {
   UPDATE_REGION_RESULTS,
   LOADING_REGIONS,
   LOADED_REGIONS,
@@ -13,6 +7,13 @@ import {
   FINISHED_REGIONS_TIMER,
   ERRORED_REGIONS
 } from '../constants/actionTypes'
+import {
+  prepareRegionParams
+} from '../util/regions'
+import { displayNotificationType } from '../constants/enums'
+import actions from './index'
+
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 export const updateRegionResults = payload => ({
   type: UPDATE_REGION_RESULTS,
@@ -47,7 +48,12 @@ export const finishRegionsTimer = () => ({
  * @param {function} getState - A function that returns the current state provided by redux.
  */
 export const getRegions = () => (dispatch, getState) => {
-  const regionParams = prepareRegionParams(getState())
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const regionParams = prepareRegionParams(state)
 
   const {
     query
@@ -56,7 +62,7 @@ export const getRegions = () => (dispatch, getState) => {
   dispatch(onRegionsLoading())
   dispatch(startRegionsTimer())
 
-  const requestObject = new RegionRequest()
+  const requestObject = new RegionRequest(earthdataEnvironment)
 
   const response = requestObject.search(regionParams)
     .then((response) => {
@@ -85,7 +91,7 @@ export const getRegions = () => (dispatch, getState) => {
       dispatch(onRegionsLoaded({
         loaded: false
       }))
-      dispatch(handleError({
+      dispatch(actions.handleError({
         error,
         action: 'getRegions',
         resource: 'regions',

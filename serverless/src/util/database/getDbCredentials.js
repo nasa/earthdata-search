@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk'
 
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
 import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
 import { getSecretsManagerConfig } from '../aws/getSecretsManagerConfig'
 
@@ -17,7 +17,7 @@ export const getDbCredentials = async () => {
     }
 
     if (process.env.NODE_ENV === 'development') {
-      const { dbUsername, dbPassword } = getSecretEarthdataConfig(cmrEnv())
+      const { dbUsername, dbPassword } = getSecretEarthdataConfig(deployedEnvironment())
 
       return {
         username: dbUsername,

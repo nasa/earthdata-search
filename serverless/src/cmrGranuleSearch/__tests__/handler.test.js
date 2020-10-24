@@ -26,6 +26,7 @@ describe('cmrGranuleSearch', () => {
 
     expect(mock).toBeCalledTimes(1)
     expect(mock).toBeCalledWith({
+      earthdataEnvironment: 'prod',
       jwtToken: 'mockJwt',
       path: '/search/granules.json',
       params: '',

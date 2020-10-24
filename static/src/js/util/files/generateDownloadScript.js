@@ -1,5 +1,5 @@
 import url from 'url'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
@@ -7,7 +7,7 @@ import { getEarthdataConfig } from '../../../../../sharedUtils/config'
  * @param {Array} granuleLinks Links to include in the download script
  * @param {Object} retrievalCollection The retrieval collection data from the database
  */
-export const generateDownloadScript = (granuleLinks, retrievalCollection) => {
+export const generateDownloadScript = (granuleLinks, retrievalCollection, earthdataEnvironment) => {
   const {
     urs_id: username
   } = retrievalCollection
@@ -16,7 +16,7 @@ export const generateDownloadScript = (granuleLinks, retrievalCollection) => {
   // it attempts to download all of the files
   const [firstGranuleLink] = granuleLinks
 
-  let { edlHost } = getEarthdataConfig(cmrEnv())
+  let { edlHost } = getEarthdataConfig(earthdataEnvironment)
   edlHost = url.parse(edlHost).host
 
   return `#!/bin/sh

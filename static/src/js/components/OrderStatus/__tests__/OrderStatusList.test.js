@@ -16,6 +16,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     collections: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.echo_orders),
+    earthdataEnvironment: 'prod',
     granuleDownload: {},
     heading: 'Stage For Delivery',
     introduction: 'When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.',
@@ -55,6 +56,7 @@ describe('OrderStatus component', () => {
       expect(enzymeWrapper.find(OrderStatusItem).length).toEqual(1)
       expect(enzymeWrapper.find(OrderStatusItem).at(0).props()).toEqual({
         defaultOpen: true,
+        earthdataEnvironment: 'prod',
         granuleDownload: {},
         collection: {
           collection_id: 'TEST_COLLECTION_111',

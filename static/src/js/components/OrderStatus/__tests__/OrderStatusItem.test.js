@@ -28,6 +28,7 @@ function setup(overrideProps, mockRefresh) {
   const props = {
     collection: retrievalStatusProps.retrieval.collections.download[1],
     defaultOpen: false,
+    earthdataEnvironment: 'prod',
     granuleDownload: {
       isLoading: false,
       TEST_COLLECTION_111: []
@@ -65,6 +66,7 @@ describe('DownloadLinksPanel', () => {
       const enzymeWrapper = shallow(
         <DownloadLinksPanel
           accessMethodType="download"
+          earthdataEnvironment="prod"
           granuleLinks={[]}
           retrievalId="1"
           granuleCount={100}
@@ -82,6 +84,7 @@ describe('DownloadLinksPanel', () => {
       const enzymeWrapper = shallow(
         <DownloadLinksPanel
           accessMethodType="download"
+          earthdataEnvironment="prod"
           granuleLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalId="1"
           granuleCount={10}
@@ -105,6 +108,7 @@ describe('DownloadLinksPanel', () => {
       const enzymeWrapper = shallow(
         <DownloadLinksPanel
           accessMethodType="ESI"
+          earthdataEnvironment="prod"
           granuleLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalCollection={{}}
           retrievalId="1"
@@ -127,6 +131,7 @@ describe('DownloadScriptPanel', () => {
       const enzymeWrapper = shallow(
         <DownloadScriptPanel
           accessMethodType="download"
+          earthdataEnvironment="prod"
           granuleLinks={[]}
           retrievalCollection={{}}
           retrievalId="1"
@@ -147,6 +152,7 @@ describe('DownloadScriptPanel', () => {
       const enzymeWrapper = shallow(
         <DownloadScriptPanel
           accessMethodType="download"
+          earthdataEnvironment="prod"
           granuleLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalCollection={{}}
           retrievalId="1"
@@ -164,7 +170,8 @@ describe('DownloadScriptPanel', () => {
 
       expect(generateDownloadScriptMock).toHaveBeenCalledWith(
         ['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov'],
-        {}
+        {},
+        'prod'
       )
     })
   })

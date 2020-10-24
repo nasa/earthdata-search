@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import $ from 'jquery'
 import { isEqual } from 'lodash'
 
-import '../../../../../node_modules/edsc-timeline/dist/edsc-timeline.min'
+import '@edsc/timeline'
 import { timelineIntervals } from '../../util/timeline'
 import getObjectKeyByValue from '../../util/object'
 import { getColorByIndex } from '../../util/colors'

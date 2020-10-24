@@ -20,6 +20,7 @@ describe('OrderStatusContainer component', () => {
     test('passes its props and renders a single OrderStatus component', () => {
       const { enzymeWrapper, props } = setup({
         authToken: 'testToken',
+        earthdataEnvironment: 'prod',
         granuleDownload: {},
         match: {
           search: {

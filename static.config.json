@@ -48,7 +48,7 @@
     "test": {
       "apiHost": "http://localhost:3000",
       "edscHost": "http://localhost:8080",
-      "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3Nn0.f867w-UMt4je4Ey86soRPP1KPcBxofPGmqyTljzcgWU"
+      "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.WPMuvg26HcYGxGYi7Hl9_FO6YiiJNHWalQ35_1oP5do"
     },
     "development": {
       "dbHost": "127.0.0.1",

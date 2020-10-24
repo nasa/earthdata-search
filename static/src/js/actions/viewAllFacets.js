@@ -13,7 +13,9 @@ import {
   UPDATE_SELECTED_VIEW_ALL_FACET,
   COPY_CMR_FACETS_TO_VIEW_ALL
 } from '../constants/actionTypes'
+
 import { handleError } from './errors'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 export const updateViewAllFacets = payload => ({
   type: UPDATE_VIEW_ALL_FACETS,
@@ -63,13 +65,19 @@ export const updateViewAllFacet = newParams => ({
  * @param {function} getState - A function that returns the current state provided by redux.
  */
 export const getViewAllFacets = (category = '') => (dispatch, getState) => {
+  const state = getState()
+
+  const { authToken } = state
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
   dispatch(onViewAllFacetsLoading(category))
   dispatch(toggleFacetsModal(true))
 
-  const collectionParams = prepareCollectionParams(getState())
+  const collectionParams = prepareCollectionParams(state)
 
-  const { authToken } = collectionParams
-  const requestObject = new CollectionRequest(authToken)
+  const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
     .then((response) => {

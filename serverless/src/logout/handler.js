@@ -1,4 +1,4 @@
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
@@ -15,19 +15,22 @@ const logout = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
+  const { headers } = event
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const jwtToken = getJwtToken(event)
-  const { id: userId } = getVerifiedJwtToken(jwtToken)
+
+  const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()
 
-  const cmrEnvironment = cmrEnv()
-
   try {
     const affectedRows = await dbConnection('user_tokens')
-      .where({ user_id: userId, environment: cmrEnvironment })
+      .where({ user_id: userId, environment: earthdataEnvironment })
       .del()
 
     if (affectedRows > 0) {

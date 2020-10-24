@@ -12,6 +12,7 @@ function setup() {
       echoPreferences: { mock: 'echo' },
       ursProfile: { mock: 'urs' }
     },
+    earthdataEnvironment: 'prod',
     onUpdateNotificationLevel: jest.fn()
   }
 

@@ -5,11 +5,13 @@ import {
 } from '../constants/actionTypes'
 
 import { createEcho10MetadataUrls } from '../util/granules'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedGranuleId } from '../selectors/focusedGranule'
 import { getFocusedGranuleMetadata } from '../selectors/granuleMetadata'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
+
 
 /**
  * Sets the focused granule value in redux
@@ -32,6 +34,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   } = state
 
   // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
   const focusedGranuleId = getFocusedGranuleId(state)
   const focusedGranuleMetadata = getFocusedGranuleMetadata(state)
 
@@ -48,7 +51,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   // If we already have the metadata for the focusedGranule, don't fetch it again
   if (hasAllMetadata) return null
 
-  const graphRequestObject = new GraphQlRequest(authToken)
+  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetGranule(
@@ -123,7 +126,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
           hasAllMetadata: true,
           id: conceptId,
           measuredParameters,
-          metadataUrls: createEcho10MetadataUrls(focusedGranuleId),
+          metadataUrls: createEcho10MetadataUrls(focusedGranuleId, earthdataEnvironment),
           onlineAccessFlag,
           originalFormat,
           providerDates,

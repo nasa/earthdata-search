@@ -43,7 +43,7 @@ describe('getServiceOptionDefinitions', () => {
       }
     ]
 
-    const forms = await getServiceOptionDefinitions(collectionProvider, serviceOptionDefinitions, 'mockJwt')
+    const forms = await getServiceOptionDefinitions(collectionProvider, serviceOptionDefinitions, 'mockJwt', 'prod')
 
     expect(forms).toEqual([
       {
@@ -96,7 +96,7 @@ describe('getServiceOptionDefinitions', () => {
       }
     ]
 
-    const forms = await getServiceOptionDefinitions(collectionProvider, serviceOptionDefinitions, 'mockJwt')
+    const forms = await getServiceOptionDefinitions(collectionProvider, serviceOptionDefinitions, 'mockJwt', 'prod')
 
     expect(forms).toEqual([
       {
@@ -150,7 +150,7 @@ describe('getServiceOptionDefinitions', () => {
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
-    const forms = await getServiceOptionDefinitions(collectionProvider, serviceOptionDefinitions, 'mockJwt')
+    const forms = await getServiceOptionDefinitions(collectionProvider, serviceOptionDefinitions, 'mockJwt', 'prod')
 
     expect(consoleMock).toBeCalledTimes(1)
 

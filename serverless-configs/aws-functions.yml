@@ -356,7 +356,11 @@
           method: post
           cors: true
           path: graphql
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   retrieveConcept:
     handler: serverless/src/retrieveConcept/handler.default
@@ -366,7 +370,11 @@
           method: get
           cors: true
           path: concepts/{id}
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
           request:
             parameters:
               paths:
@@ -385,7 +393,11 @@
             parameters:
               paths:
                 format: true
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   cmrGranuleSearch:
     handler: serverless/src/cmrGranuleSearch/handler.default
@@ -396,7 +408,11 @@
           method: post
           cors: true
           path: granules
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   timelineSearch:
     handler: serverless/src/timelineSearch/handler.default
@@ -406,7 +422,11 @@
           method: post
           cors: true
           path: granules/timeline
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   submitRetrieval:
     handler: serverless/src/submitRetrieval/handler.default
@@ -416,7 +436,11 @@
           method: post
           cors: true
           path: retrievals
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   getRetrieval:
     handler: serverless/src/getRetrieval/handler.default
@@ -426,7 +450,11 @@
           method: get
           cors: true
           path: retrievals/{id}
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   deleteRetrieval:
     handler: serverless/src/deleteRetrieval/handler.default
@@ -436,7 +464,11 @@
           method: delete
           cors: true
           path: retrievals/{id}
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   getRetrievals:
     handler: serverless/src/getRetrievals/handler.default
@@ -446,7 +478,11 @@
           method: get
           cors: true
           path: retrievals
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   getRetrievalCollection:
     handler: serverless/src/getRetrievalCollection/handler.default
@@ -456,7 +492,11 @@
           method: get
           cors: true
           path: retrieval_collections/{id}
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   getAccessMethods:
     handler: serverless/src/getAccessMethods/handler.default
@@ -466,7 +506,11 @@
           method: post
           cors: true
           path: access_methods
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   ousGranuleSearch:
     handler: serverless/src/ousGranuleSearch/handler.default
@@ -476,7 +520,11 @@
           method: post
           cors: true
           path: granules/ous
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   getProjects:
     handler: serverless/src/getProjects/handler.default
@@ -486,7 +534,11 @@
           method: get
           cors: true
           path: projects
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   deleteProject:
     handler: serverless/src/deleteProject/handler.default
@@ -496,7 +548,11 @@
           method: delete
           cors: true
           path: projects/{id}
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   logout:
     handler: serverless/src/logout/handler.default
@@ -506,7 +562,11 @@
           method: delete
           cors: true
           path: logout
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   getDataQualitySummaries:
     handler: serverless/src/getDataQualitySummaries/handler.default
@@ -516,7 +576,11 @@
           method: post
           cors: true
           path: dqs
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   getProviders:
     handler: serverless/src/getProviders/handler.default
@@ -526,7 +590,11 @@
           method: get
           cors: true
           path: providers
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   getContactInfo:
     handler: serverless/src/getContactInfo/handler.default
@@ -536,7 +604,11 @@
           method: get
           cors: true
           path: contact_info
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   saveContactInfo:
     handler: serverless/src/saveContactInfo/handler.default
@@ -546,7 +618,11 @@
           method: post
           cors: true
           path: contact_info
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   updatePreferences:
     handler: serverless/src/updatePreferences/handler.default
@@ -556,7 +632,11 @@
           method: post
           cors: true
           path: preferences
-          authorizer: edlAuthorizer
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   # Admin
   adminIsAuthorized:
@@ -569,6 +649,7 @@
           path: admin/is_authorized
           authorizer:
             name: edlAdminAuthorizer
+            type: request
             resultTtlInSeconds: 0
 
   adminGetRetrievals:
@@ -581,6 +662,7 @@
           path: admin/retrievals
           authorizer:
             name: edlAdminAuthorizer
+            type: request
             resultTtlInSeconds: 0
 
   adminGetRetrieval:
@@ -593,4 +675,5 @@
           path: admin/retrievals/{id}
           authorizer:
             name: edlAdminAuthorizer
+            type: request
             resultTtlInSeconds: 0

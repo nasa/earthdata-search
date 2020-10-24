@@ -4,11 +4,11 @@ import { getVerifiedJwtToken } from '../getVerifiedJwtToken'
 /**
  * Returns the stored access tokens for the user belonging to the jwt token
  */
-export const getAccessTokenFromJwtToken = async (jwtToken) => {
+export const getAccessTokenFromJwtToken = async (jwtToken, earthdataEnvironment) => {
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
 
-  const { id } = getVerifiedJwtToken(jwtToken)
+  const { id } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
   const existingUserTokens = await dbConnection('user_tokens')
     .first([

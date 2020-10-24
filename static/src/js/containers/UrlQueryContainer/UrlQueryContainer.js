@@ -7,9 +7,10 @@ import actions from '../../actions/index'
 import { encodeUrlQuery } from '../../util/url/url'
 import { locationPropType } from '../../util/propTypes/location'
 
+import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 
 const mapDispatchToProps = dispatch => ({
   onChangePath:
@@ -24,6 +25,7 @@ const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
   collectionsMetadata: getCollectionsMetadata(state),
+  earthdataEnvironment: getEarthdataEnvironment(state),
   featureFacets: state.facetsParams.feature,
   focusedCollection: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),

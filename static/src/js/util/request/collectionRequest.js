@@ -1,24 +1,26 @@
 import CmrRequest from './cmrRequest'
-import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import {
+  getApplicationConfig,
+  getEarthdataConfig,
+  getEnvironmentConfig
+} from '../../../../../sharedUtils/config'
+
 import { hasTag } from '../../../../../sharedUtils/tags'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 /**
  * Base Request object for collection specific requests
  */
 export default class CollectionRequest extends CmrRequest {
-  constructor(authToken) {
-    const cmrEnvironment = cmrEnv()
-
+  constructor(authToken, earthdataEnvironment) {
     if (authToken && authToken !== '') {
-      super(getEnvironmentConfig().apiHost)
+      super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'collections'
     } else {
-      super(getEarthdataConfig(cmrEnvironment).cmrHost)
+      super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
       // We do not define an extension here. It will be added in the search method.
       this.searchPath = 'search/collections.json'
@@ -148,7 +150,7 @@ export default class CollectionRequest extends CmrRequest {
 
       if (collection.id) {
         transformedCollection.thumbnail = collection.browse_flag
-          ? `${getEarthdataConfig(cmrEnv()).cmrHost}/browse-scaler/browse_images/datasets/${collection.id}?h=${h}&w=${w}`
+          ? `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/datasets/${collection.id}?h=${h}&w=${w}`
           : unavailableImg
       }
 

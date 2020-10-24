@@ -10,7 +10,7 @@ describe('util#createJwtToken', () => {
       site_preferences: {}
     }
 
-    const result = createJwtToken(user)
+    const result = createJwtToken(user, 'prod')
     const decoded = jwt.decode(result)
 
     expect(decoded).toEqual(expect.objectContaining({

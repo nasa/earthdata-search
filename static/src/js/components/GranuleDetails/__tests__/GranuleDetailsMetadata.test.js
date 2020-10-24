@@ -12,6 +12,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     authToken: '',
+    earthdataEnvironment: 'prod',
     metadataUrls: {},
     ...overrideProps
   }
@@ -66,10 +67,11 @@ describe('GranuleDetailsMetadata component', () => {
       test('renders the authenticated links correctly', () => {
         const { enzymeWrapper } = setup({
           authToken: 'token',
+          earthdataEnvironment: 'prod',
           metadataUrls: granuleResultsBodyProps.granuleMetadata.metadataUrls
         })
 
-        const baseUrl = 'http://localhost:3000/concepts/metadata?url='
+        const baseUrl = 'http://localhost:3000/concepts/metadata?ee=prod&url='
         const granuleUrl = encodeURIComponent('https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC')
         const tokenUrl = '&token=token'
 

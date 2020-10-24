@@ -9,6 +9,7 @@ import {
   onRegionsLoading,
   updateRegionResults
 } from '../regions'
+
 import {
   ERRORED_REGIONS,
   FINISHED_REGIONS_TIMER,
@@ -17,6 +18,8 @@ import {
   STARTED_REGIONS_TIMER,
   UPDATE_REGION_RESULTS
 } from '../../constants/actionTypes'
+
+import actions from '..'
 
 const mockStore = configureMockStore([thunk])
 
@@ -122,6 +125,8 @@ describe('getRegions', () => {
   })
 
   test('does not call updateRegionResults on error', async () => {
+    const handleErrorMock = jest.spyOn(actions, 'handleError')
+
     const errorPayload = {
       errors: ['Your query has returned 16575 results (> 100). If you\'re searching a specific HUC, use the parameter \'exact=True\'.Otherwise, refine your search to return less results, or head here: https://water.usgs.gov/GIS/huc.html to download mass HUC data.']
     }
@@ -172,6 +177,14 @@ describe('getRegions', () => {
         type: LOADED_REGIONS,
         payload: { loaded: false }
       })
+
+      expect(handleErrorMock).toHaveBeenCalledTimes(1)
+      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        action: 'getRegions',
+        notificationType: 'none',
+        resource: 'regions'
+      }))
+
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })

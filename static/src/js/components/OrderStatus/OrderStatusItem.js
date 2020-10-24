@@ -149,6 +149,7 @@ DownloadLinksPanel.propTypes = {
 
 export const DownloadScriptPanel = ({
   accessMethodType,
+  earthdataEnvironment,
   granuleLinks,
   retrievalCollection,
   retrievalId,
@@ -189,14 +190,22 @@ export const DownloadScriptPanel = ({
         </div>
         <TextWindowActions
           id={`script-${retrievalId}`}
-          fileContents={generateDownloadScript(granuleLinks, retrievalCollection)}
+          fileContents={generateDownloadScript(
+            granuleLinks,
+            retrievalCollection,
+            earthdataEnvironment
+          )}
           fileName={downloadFileName}
-          clipboardContents={generateDownloadScript(granuleLinks, retrievalCollection)}
+          clipboardContents={generateDownloadScript(
+            granuleLinks,
+            retrievalCollection,
+            earthdataEnvironment
+          )}
           modalTitle="Download Script"
         >
           <pre className="download-links-panel__pre">
             {
-              generateDownloadScript(granuleLinks, retrievalCollection)
+              generateDownloadScript(granuleLinks, retrievalCollection, earthdataEnvironment)
             }
           </pre>
         </TextWindowActions>
@@ -211,6 +220,7 @@ export const DownloadScriptPanel = ({
 
 DownloadScriptPanel.propTypes = {
   accessMethodType: PropTypes.string.isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired,
   granuleLinks: PropTypes.arrayOf(
     PropTypes.string
   ).isRequired,
@@ -317,6 +327,7 @@ export class OrderStatusItem extends PureComponent {
 
     const {
       granuleDownload,
+      earthdataEnvironment,
       onChangePath,
       collection
     } = this.props
@@ -726,6 +737,7 @@ export class OrderStatusItem extends PureComponent {
                       >
                         <DownloadScriptPanel
                           accessMethodType={accessMethodType}
+                          earthdataEnvironment={earthdataEnvironment}
                           granuleLinks={downloadUrls}
                           retrievalCollection={collection}
                           retrievalId={retrievalId}
@@ -812,6 +824,7 @@ OrderStatusItem.defaultProps = {
 
 OrderStatusItem.propTypes = {
   defaultOpen: PropTypes.bool,
+  earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
   collection: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,

@@ -118,8 +118,10 @@ export class EDSCModalContainer extends Component {
             modalInnerRef: this.modalInner
           }
         }
+
         return cloneElement(el, returnObj)
       }
+
       return null
     }
 

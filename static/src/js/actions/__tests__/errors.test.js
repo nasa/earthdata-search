@@ -1,10 +1,9 @@
-jest.mock('../../util/addToast', () => jest.fn())
-
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { ADD_ERROR, REMOVE_ERROR } from '../../constants/actionTypes'
 import { addError, removeError } from '../errors'
-import addToastMock from '../../util/addToast'
+
+import * as addToast from '../../util/addToast'
 
 const mockStore = configureMockStore([thunk])
 
@@ -14,6 +13,8 @@ beforeEach(() => {
 
 describe('addError', () => {
   test('should call addToast with correct params', async () => {
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
     const store = mockStore({})
     const toastPayload = {
       id: 1,
@@ -42,7 +43,9 @@ describe('addError', () => {
     }
 
     await store.dispatch(addError(toastPayload))
+
     let storeActions = store.getActions()
+
     // no action should be pushed
     expect(storeActions.length).toEqual(0)
     expect(addToastMock).toHaveBeenCalledTimes(1)
@@ -52,13 +55,17 @@ describe('addError', () => {
     })
 
     await store.dispatch(addError(bannerPayload))
+
     storeActions = store.getActions()
+
     // Action does get pushed
     expect(storeActions[0]).toEqual(expectedAction0)
     expect(storeActions[0].type).toEqual(ADD_ERROR)
 
     await store.dispatch(addError(nonePayload))
+
     storeActions = store.getActions()
+
     // No new action pushed
     expect(storeActions.length).toEqual(1)
   })

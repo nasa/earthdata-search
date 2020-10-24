@@ -1,11 +1,12 @@
 import 'array-foreach-async'
+
 import request from 'request-promise'
+
+import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { parseError } from '../../../sharedUtils/parseError'
-import { getClientId } from '../../../sharedUtils/getClientId'
 
 const fetchLegacyServicesOrder = async (input) => {
   const dbConnection = await getDbConnection()
@@ -21,9 +22,11 @@ const fetchLegacyServicesOrder = async (input) => {
     // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
     const retrievalOrderRecord = await dbConnection('retrieval_orders')
       .first(
-        'retrieval_orders.order_number'
+        'retrieval_orders.order_number',
+        'retrievals.environment'
       )
       .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
+      .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
       .where({
         'retrieval_orders.id': id
       })
@@ -39,13 +42,14 @@ const fetchLegacyServicesOrder = async (input) => {
     }
 
     const {
+      environment,
       order_number: orderNumber
     } = retrievalOrderRecord
 
-    console.log(`Requesting order data from Legacy Services at ${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders.json`)
+    console.log(`Requesting order data from Legacy Services at ${getEarthdataConfig(environment).echoRestRoot}/orders.json`)
 
     const orderResponse = await request.get({
-      uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders.json`,
+      uri: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
       headers: {
         'Echo-Token': accessToken,
         'Client-Id': getClientId().background

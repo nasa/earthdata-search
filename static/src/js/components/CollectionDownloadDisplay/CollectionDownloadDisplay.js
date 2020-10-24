@@ -6,12 +6,14 @@ import { Card } from 'react-bootstrap'
 
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
 import { generateDownloadScript } from '../../util/files/generateDownloadScript'
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
 import Button from '../Button/Button'
 
 import './CollectionDownloadDisplay.scss'
 
 const mapStateToProps = state => ({
+  earthdataEnvironment: getEarthdataEnvironment(state),
   granuleDownload: state.granuleDownload,
   retrieval: state.retrieval
 })
@@ -51,6 +53,7 @@ export class CollectionDownloadDisplay extends Component {
 
   render() {
     const {
+      earthdataEnvironment,
       granuleDownload,
       match,
       retrievalCollection
@@ -91,7 +94,11 @@ export class CollectionDownloadDisplay extends Component {
     } else if (granuleFormat === 'script') {
       downloadButtonLabel = 'Download Script'
       downloadButtonMessage = 'Please click the button to download the script'
-      downloadFileContents = generateDownloadScript(granuleLinks, retrievalCollection)
+      downloadFileContents = generateDownloadScript(
+        granuleLinks,
+        retrievalCollection,
+        earthdataEnvironment
+      )
       downloadFileExtension = 'sh'
     }
     const downloadFileName = `${retrievalId}-${type}.${downloadFileExtension}`
@@ -189,6 +196,7 @@ export class CollectionDownloadDisplay extends Component {
 }
 
 CollectionDownloadDisplay.propTypes = {
+  earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,

@@ -42,6 +42,7 @@ describe('fetchCatalogRestOrder', () => {
           access_method: {
             url: 'https://n5eil09e.ecs.edsc.org/egi/request'
           },
+          environment: 'prod',
           order_number: '10005'
         })
       } else {
@@ -95,6 +96,7 @@ describe('fetchCatalogRestOrder', () => {
           access_method: {
             url: 'https://n5eil09e.ecs.edsc.org/egi/request'
           },
+          environment: 'prod',
           order_number: '10005'
         })
       } else {
@@ -148,6 +150,7 @@ describe('fetchCatalogRestOrder', () => {
           access_method: {
             url: 'https://n5eil09e.ecs.edsc.org/egi/request'
           },
+          environment: 'prod',
           order_number: '10005'
         })
       } else {

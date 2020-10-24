@@ -1,9 +1,12 @@
 import { replace } from 'connected-react-router'
 
 import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
+
 import ProjectRequest from '../util/request/projectRequest'
-import { removeSavedProject } from './savedProjects'
+
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
+import { removeSavedProject } from './savedProjects'
 
 export const updateSavedProject = payload => ({
   type: UPDATE_SAVED_PROJECT,
@@ -15,11 +18,16 @@ export const updateSavedProject = payload => ({
  * @param {String} name New project name
  */
 export const updateProjectName = name => (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
   const {
     authToken,
     router,
     savedProject
-  } = getState()
+  } = state
 
   const {
     path,
@@ -33,7 +41,7 @@ export const updateProjectName = name => (dispatch, getState) => {
   let realPath = path
   if (!path) realPath = pathname + search
 
-  const requestObject = new ProjectRequest()
+  const requestObject = new ProjectRequest(undefined, earthdataEnvironment)
 
   const response = requestObject.save({
     authToken,
@@ -75,9 +83,14 @@ export const updateProjectName = name => (dispatch, getState) => {
  * @param {String} projectId Project Id to delete
  */
 export const deleteSavedProject = projectId => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
 
-  const requestObject = new ProjectRequest(authToken)
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
+
+  const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
 
   try {
     const response = requestObject.remove(projectId)

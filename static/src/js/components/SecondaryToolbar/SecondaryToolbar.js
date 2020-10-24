@@ -7,13 +7,12 @@ import {
   FaUser, FaSave, FaArrowCircleLeft, FaLock
 } from 'react-icons/fa'
 
-import { isPath } from '../../util/isPath'
-import { pathStartsWith } from '../../util/pathStartsWith'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+import { isPath } from '../../util/isPath'
+import { locationPropType } from '../../util/propTypes/location'
+import { pathStartsWith } from '../../util/pathStartsWith'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { stringify } from '../../util/url/url'
-import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
@@ -97,6 +96,7 @@ class SecondaryToolbar extends Component {
     const { projectDropdownOpen, projectName } = this.state
     const {
       authToken,
+      earthdataEnvironment,
       projectCollectionIds,
       location,
       portal,
@@ -107,7 +107,6 @@ class SecondaryToolbar extends Component {
     const returnPath = window.location.href
 
     const { apiHost } = getEnvironmentConfig()
-    const cmrEnvironment = cmrEnv()
 
     // remove focused collection from back button params
     const params = parse(location.search, { parseArrays: false, ignoreQueryPrefix: true })
@@ -145,7 +144,7 @@ class SecondaryToolbar extends Component {
           <Button
             className="secondary-toolbar__project"
             bootstrapVariant="light"
-            href={`${apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(projectPath)}`}
+            href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
           >
             My Project
@@ -179,7 +178,7 @@ class SecondaryToolbar extends Component {
       <Button
         className="secondary-toolbar__login"
         bootstrapVariant="light"
-        href={`${apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`}
+        href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
         icon={FaLock}
         label="Login"
       >
@@ -310,13 +309,14 @@ class SecondaryToolbar extends Component {
 
 SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
-  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
-  portal: PropTypes.shape({}).isRequired,
-  savedProject: PropTypes.shape({}).isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  onChangePath: PropTypes.func.isRequired
+  portal: PropTypes.shape({}).isRequired,
+  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  savedProject: PropTypes.shape({}).isRequired
 }
 
 export default SecondaryToolbar

@@ -3,11 +3,15 @@ import { stringify } from 'qs'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 import { getClientId } from '../../../sharedUtils/getClientId'
 
-export const constructOrderPayload = async (accessMethod, granuleParams, accessTokenWithClient) => {
+export const constructOrderPayload = async (
+  accessMethod,
+  granuleParams,
+  accessTokenWithClient,
+  earthdataEnvironment
+) => {
   const {
     model,
     option_definition: optionDefinition
@@ -42,7 +46,7 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
   const granuleOrderOptions = []
 
   // Ensure that only orders that apply to the requested option definition are selected
-  const optionInformationUrl = `${getEarthdataConfig(cmrEnv()).echoRestRoot}/order_information.json`
+  const optionInformationUrl = `${getEarthdataConfig(earthdataEnvironment).echoRestRoot}/order_information.json`
   const optionInformationResponse = await request.post({
     uri: optionInformationUrl,
     form: stringify({

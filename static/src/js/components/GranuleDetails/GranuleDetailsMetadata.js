@@ -9,6 +9,7 @@ import { buildAuthenticatedRedirectUrl } from '../../util/url/buildAuthenticated
 
 export const GranuleDetailsMetadata = ({
   authToken,
+  earthdataEnvironment,
   metadataUrls
 }) => {
   const metdataUrlKeys = [
@@ -38,7 +39,8 @@ export const GranuleDetailsMetadata = ({
                         // If an auth token is provided route the request through Lambda
                         cmrGranulesUrl = buildAuthenticatedRedirectUrl(
                           encodeURIComponent(href),
-                          authToken
+                          authToken,
+                          earthdataEnvironment
                         )
                       }
 
@@ -77,6 +79,7 @@ GranuleDetailsMetadata.defaultProps = {
 
 GranuleDetailsMetadata.propTypes = {
   authToken: PropTypes.string,
+  earthdataEnvironment: PropTypes.string.isRequired,
   metadataUrls: PropTypes.shape({})
 }
 

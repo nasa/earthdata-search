@@ -2,14 +2,14 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import * as tinyCookie from 'tiny-cookie'
-import * as cmrEnv from '../../../../../../sharedUtils/cmrEnv'
 import { AuthRequiredContainer } from '../AuthRequiredContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    children: 'children'
+    children: 'children',
+    earthdataEnvironment: 'prod'
   }
 
   const enzymeWrapper = shallow(<AuthRequiredContainer {...props} />)
@@ -34,8 +34,6 @@ describe('AuthRequiredContainer component', () => {
   })
 
   test('should redirect if there is no auth cookie', () => {
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
-
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
       if (param === 'authToken') return null
       return null
@@ -50,7 +48,7 @@ describe('AuthRequiredContainer component', () => {
     const div = enzymeWrapper.find('div')
     expect(div.hasClass('route-wrapper')).toEqual(true)
 
-    expect(window.location.href).toEqual(`http://localhost:3000/login?cmr_env=prod&state=${encodeURIComponent(returnPath)}`)
+    expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
   })
 
   test('should render children if there is an auth cookie', () => {

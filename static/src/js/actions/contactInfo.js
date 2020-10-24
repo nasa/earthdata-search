@@ -1,5 +1,8 @@
 import ContactInfoRequest from '../util/request/contactInfoRequest'
+
 import { UPDATE_CONTACT_INFO } from '../constants/actionTypes'
+
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 export const updateContactInfo = data => ({
   type: UPDATE_CONTACT_INFO,
@@ -10,9 +13,14 @@ export const updateContactInfo = data => ({
  * Fetch the user's ECHO preferences and URS profile from lambda
  */
 export const fetchContactInfo = () => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
 
-  const requestObject = new ContactInfoRequest(authToken)
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
+
+  const requestObject = new ContactInfoRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.fetch()
     .then((response) => {
@@ -36,7 +44,13 @@ export const fetchContactInfo = () => (dispatch, getState) => {
  * @param {String} level New order notification level
  */
 export const updateNotificationLevel = level => (dispatch, getState) => {
-  const { authToken, contactInfo } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken, contactInfo } = state
+
   const { ursProfile = {} } = contactInfo
   const {
     country,
@@ -66,7 +80,7 @@ export const updateNotificationLevel = level => (dispatch, getState) => {
     order_notification_level: level
   }
 
-  const requestObject = new ContactInfoRequest(authToken)
+  const requestObject = new ContactInfoRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.updateNotificationLevel({ preferences })
     .then((response) => {

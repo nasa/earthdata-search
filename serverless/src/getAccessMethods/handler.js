@@ -1,6 +1,6 @@
 import parser from 'fast-xml-parser'
 
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -28,8 +28,10 @@ const getAccessMethods = async (event, context) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const { body } = event
+    const { body, headers } = event
+
     const { params = {} } = JSON.parse(body)
+
     const {
       collectionId,
       collectionProvider,
@@ -38,9 +40,12 @@ const getAccessMethods = async (event, context) => {
       variables: associatedVariables
     } = params
 
+    const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
     const jwtToken = getJwtToken(event)
 
-    const { id: userId } = getVerifiedJwtToken(jwtToken)
+    const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+
     const { count: servicesCount } = associatedServices
 
     let items = []
@@ -89,7 +94,8 @@ const getAccessMethods = async (event, context) => {
         const forms = await getOptionDefinitions(
           collectionProvider,
           optionDefinitions,
-          jwtToken
+          jwtToken,
+          earthdataEnvironment
         )
 
         forms.forEach((form) => {
@@ -123,7 +129,8 @@ const getAccessMethods = async (event, context) => {
         const forms = await getServiceOptionDefinitions(
           collectionProvider,
           serviceOptionDefinitions,
-          jwtToken
+          jwtToken,
+          earthdataEnvironment
         )
 
         forms.forEach((form) => {
@@ -265,7 +272,7 @@ const getAccessMethods = async (event, context) => {
     // Retrieve the savedAccessConfig for this user and collection
     const authenticatedUser = await dbConnection('users')
       .first('urs_profile')
-      .where({ id: userId, environment: cmrEnv() })
+      .where({ id: userId, environment: earthdataEnvironment })
 
     let selectedAccessMethod
 

@@ -1,8 +1,10 @@
 import { pick } from 'lodash'
+
 import { buildParams } from '../util/cmr/buildParams'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
-import { getJwtToken } from '../util/getJwtToken'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -18,6 +20,8 @@ const cmrGranuleSearch = async (event) => {
 
   // The 'Accept' header contains the UMM version
   const providedHeaders = pick(headers, ['Accept'])
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
@@ -67,7 +71,8 @@ const cmrGranuleSearch = async (event) => {
         nonIndexedKeys
       }),
       providedHeaders,
-      requestId
+      requestId,
+      earthdataEnvironment
     })
   } catch (e) {
     return {

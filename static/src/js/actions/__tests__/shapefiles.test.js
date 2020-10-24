@@ -87,6 +87,7 @@ describe('saveShapefile', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      earthdataEnvironment: 'prod',
       query: {
         collection: {
           pageNum: 1,
@@ -136,7 +137,9 @@ describe('saveShapefile', () => {
       size: '42 KB'
     }
 
-    const store = mockStore({})
+    const store = mockStore({
+      earthdataEnvironment: 'prod'
+    })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
@@ -173,6 +176,7 @@ describe('saveShapefile', () => {
 
       // mockStore with initialState
       const store = mockStore({
+        earthdataEnvironment: 'prod',
         query: {
           collection: {
             pageNum: 1,

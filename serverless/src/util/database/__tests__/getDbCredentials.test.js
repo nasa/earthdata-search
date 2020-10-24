@@ -2,7 +2,7 @@ import AWS from 'aws-sdk'
 
 import { getDbCredentials } from '../getDbCredentials'
 
-import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
+import * as deployedEnvironment from '../../../../../sharedUtils/deployedEnvironment'
 
 const OLD_ENV = process.env
 
@@ -33,7 +33,7 @@ describe('getDbCredentials', () => {
         getSecretValue: secretsManagerData
       }))
 
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+    jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
     const response = await getDbCredentials()
 

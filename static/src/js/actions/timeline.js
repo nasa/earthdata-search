@@ -7,9 +7,11 @@ import {
   UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY
 } from '../constants/actionTypes'
+
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { handleError } from './errors'
 import { prepareTimelineParams } from '../util/timeline'
 import { updateAuthTokenFromHeaders } from './authToken'
-import { handleError } from './errors'
 
 export const updateTimelineIntervals = payload => ({
   type: UPDATE_TIMELINE_INTERVALS,
@@ -35,7 +37,14 @@ export const getTimeline = () => (dispatch, getState) => {
     cancelToken.cancel()
   }
 
-  const timelineParams = prepareTimelineParams(getState())
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
+
+  const timelineParams = prepareTimelineParams(state)
 
   if (!timelineParams) {
     dispatch(updateTimelineIntervals({
@@ -46,7 +55,6 @@ export const getTimeline = () => (dispatch, getState) => {
   }
 
   const {
-    authToken,
     boundingBox,
     conceptId,
     endDate,
@@ -56,7 +64,7 @@ export const getTimeline = () => (dispatch, getState) => {
     startDate
   } = timelineParams
 
-  const requestObject = new TimelineRequest(authToken)
+  const requestObject = new TimelineRequest(authToken, earthdataEnvironment)
 
   cancelToken = requestObject.getCancelToken()
 

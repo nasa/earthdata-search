@@ -11,7 +11,7 @@ beforeEach(() => {
 describe('GranuleConceptRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
     const token = '123'
-    const request = new GranuleConceptRequest(token)
+    const request = new GranuleConceptRequest(token, 'prod')
 
     expect(request.authenticated).toBeTruthy()
     expect(request.authToken).toEqual(token)
@@ -22,7 +22,7 @@ describe('GranuleConceptRequest#constructor', () => {
   test('sets the default values when unauthenticated', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-    const request = new GranuleConceptRequest()
+    const request = new GranuleConceptRequest(undefined, 'prod')
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
@@ -32,7 +32,7 @@ describe('GranuleConceptRequest#constructor', () => {
 
 describe('GranuleConceptRequest#search', () => {
   test('calls Request#get', () => {
-    const request = new GranuleConceptRequest()
+    const request = new GranuleConceptRequest(undefined, 'prod')
 
     const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
 
@@ -52,7 +52,7 @@ describe('GranuleConceptRequest#transformRequest', () => {
   test('adds umm version header', () => {
     jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
-    const request = new GranuleConceptRequest()
+    const request = new GranuleConceptRequest(undefined, 'prod')
 
     const data = { param1: 123 }
     const headers = {}

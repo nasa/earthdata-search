@@ -4,6 +4,8 @@ import {
   UPDATE_RETRIEVAL_COLLECTION,
   SET_RETRIEVAL_COLLECTION_LOADING
 } from '../constants/actionTypes'
+
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 
 export const setRetrievalCollectionLoading = retrievalCollection => ({
@@ -20,11 +22,16 @@ export const updateRetrievalCollection = (id, retrievalCollectionData) => ({
  * Fetch order data for an order
  */
 export const fetchRetrievalCollection = id => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
+
+  const { authToken } = state
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
 
   dispatch(setRetrievalCollectionLoading({ id }))
 
-  const requestObject = new RetrievalCollectionRequest(authToken)
+  const requestObject = new RetrievalCollectionRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.fetch(id)
     .then((response) => {

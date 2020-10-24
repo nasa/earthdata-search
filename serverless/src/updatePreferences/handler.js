@@ -2,12 +2,13 @@ import Ajv from 'ajv'
 
 import schema from '../../../schemas/sitePreferencesSchema.json'
 
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getDbConnection } from '../util/database/getDbConnection'
-import { getApplicationConfig } from '../../../sharedUtils/config'
-import { parseError } from '../../../sharedUtils/parseError'
-import { getJwtToken } from '../util/getJwtToken'
 import { createJwtToken } from '../util/createJwtToken'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getDbConnection } from '../util/database/getDbConnection'
+import { getJwtToken } from '../util/getJwtToken'
+import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { parseError } from '../../../sharedUtils/parseError'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
 const updatePreferences = async (event, context) => {
@@ -16,9 +17,12 @@ const updatePreferences = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   const { defaultResponseHeaders } = getApplicationConfig()
-  const { body } = event
+
+  const { body, headers } = event
   const { params } = JSON.parse(body)
   const { preferences } = params
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   // Validate preferences against schema
   const ajv = new Ajv()
@@ -37,7 +41,8 @@ const updatePreferences = async (event, context) => {
   try {
     // If user information was included, use it in the queries
     const jwtToken = getJwtToken(event)
-    const { id, username } = getVerifiedJwtToken(jwtToken)
+
+    const { id, username } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
     await dbConnection('users')
       .update({
@@ -45,7 +50,11 @@ const updatePreferences = async (event, context) => {
       })
       .where({ id })
 
-    const newJwtToken = createJwtToken({ id, urs_id: username, site_preferences: preferences })
+    const newJwtToken = createJwtToken({
+      id,
+      urs_id: username,
+      site_preferences: preferences
+    }, earthdataEnvironment)
 
     return {
       isBase64Encoded: false,

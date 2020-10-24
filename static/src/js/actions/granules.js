@@ -52,6 +52,7 @@ import {
 import { getProjectCollectionsIds } from '../selectors/project'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { eventEmitter } from '../events/events'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -143,9 +144,14 @@ export const initializeCollectionGranulesQuery = payload => ({
  * @param {String} authToken The authenticated users' JWT token
  */
 export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
 
-  const requestObject = new GranuleRequest(authToken)
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
+
+  const requestObject = new GranuleRequest(authToken, earthdataEnvironment)
 
   const {
     id,
@@ -200,9 +206,14 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
  * @param {Object} retrievalCollectionData Retreival Collection response from the database
  */
 export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState) => {
-  const { authToken } = getState()
+  const state = getState()
 
-  const requestObject = new OusGranuleRequest(authToken)
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
+
+  const requestObject = new OusGranuleRequest(authToken, earthdataEnvironment)
 
   const {
     id,
@@ -317,9 +328,10 @@ const granuleSearchCancelTokens = {}
 export const getSearchGranules = () => (dispatch, getState) => {
   const state = getState()
 
-  const {
-    authToken
-  } = state
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
 
   // Retrieve data from Redux using selectors
   const collectionId = getFocusedCollectionId(state)
@@ -356,7 +368,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
   let requestObject = null
 
   if (isCwic) {
-    requestObject = new CwicGranuleRequest(authToken)
+    requestObject = new CwicGranuleRequest(authToken, earthdataEnvironment)
 
     const { polygon } = searchParams
 
@@ -378,7 +390,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
       delete searchParams.polygon
     }
   } else {
-    requestObject = new GranuleRequest(authToken)
+    requestObject = new GranuleRequest(authToken, earthdataEnvironment)
   }
 
   const response = requestObject.search(searchParams)
@@ -442,6 +454,9 @@ const projectGranuleCancelTokens = {}
 export const getProjectGranules = () => (dispatch, getState) => {
   const state = getState()
 
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
   const {
     authToken,
     project
@@ -488,7 +503,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
     let requestObject = null
 
     if (isCwic) {
-      requestObject = new CwicGranuleRequest(authToken)
+      requestObject = new CwicGranuleRequest(authToken, earthdataEnvironment)
 
       // Provide the correctly named collection id parameter
       searchParams.echoCollectionId = collectionId
@@ -513,7 +528,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
         delete searchParams.polygon
       }
     } else {
-      requestObject = new GranuleRequest(authToken)
+      requestObject = new GranuleRequest(authToken, earthdataEnvironment)
     }
 
     projectGranuleCancelTokens[collectionId] = requestObject.getCancelToken()

@@ -1,5 +1,5 @@
 import { replace, push } from 'connected-react-router'
-import { parse } from 'qs'
+import { parse, stringify } from 'qs'
 
 import actions from './index'
 
@@ -9,6 +9,7 @@ import {
   isSavedProjectsPage,
   urlPathsWithoutUrlParams
 } from '../util/url/url'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
@@ -24,6 +25,7 @@ export const updateStore = ({
   autocompleteSelected,
   cmrFacets,
   collections,
+  earthdataEnvironment,
   featureFacets,
   focusedCollection,
   focusedGranule,
@@ -50,6 +52,7 @@ export const updateStore = ({
       autocompleteSelected,
       cmrFacets,
       collections,
+      earthdataEnvironment,
       featureFacets,
       focusedCollection,
       focusedGranule,
@@ -63,11 +66,16 @@ export const updateStore = ({
 }
 
 export const changePath = (path = '') => async (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
   const [pathname, queryString] = path.split('?')
 
   // If query string is a projectId, call getProject
   if (queryString && queryString.indexOf('projectId=') === 0) {
-    const requestObject = new ProjectRequest()
+    const requestObject = new ProjectRequest(undefined, earthdataEnvironment)
 
     const { projectId } = parse(queryString)
 
@@ -79,7 +87,17 @@ export const changePath = (path = '') => async (dispatch, getState) => {
           path: projectPath
         } = data
 
-        const projectQueryString = projectPath.split('?')[1]
+        // In the event that the user has the earthdata environment set to the deployed environment
+        // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
+        const [, projectQueryString] = projectPath.split('?')
+
+        // Parse the query string into an object
+        const paramsObj = parse(projectQueryString)
+
+        // If the earthdata environment variable
+        if (!Object.keys(paramsObj).includes('ee')) {
+          paramsObj.ee = earthdataEnvironment
+        }
 
         // Save name, path and projectId into store
         dispatch(actions.updateSavedProject({
@@ -88,7 +106,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
           projectId
         }))
 
-        dispatch(actions.updateStore(decodeUrlParams(projectQueryString)))
+        dispatch(actions.updateStore(decodeUrlParams(stringify(paramsObj))))
       })
       .catch((error) => {
         dispatch(actions.handleError({
@@ -106,8 +124,6 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   const decodedParams = decodeUrlParams(queryString)
 
   dispatch(actions.updateStore(decodedParams, pathname))
-
-  const state = getState()
 
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
@@ -135,9 +151,9 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   }
 
   // Fetch collections in the project
-  const { project } = state
-  const { collections: projectCollections } = project
-  const { allIds } = projectCollections
+  const { project = {} } = decodedParams
+  const { collections: projectCollections = {} } = project
+  const { allIds = [] } = projectCollections
 
   if (allIds.length > 0) {
     // Project collection metadata needs to exist before calling retrieving access methods
@@ -177,11 +193,16 @@ const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
  * changeUrl({ pathname: '/a-new-url' })
  */
 export const changeUrl = options => (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
   const {
     authToken,
     router,
     savedProject
-  } = getState()
+  } = state
 
   let newOptions = options
   const { location } = router
@@ -194,7 +215,7 @@ export const changeUrl = options => (dispatch, getState) => {
     const { projectId, name, path } = savedProject
     if (projectId || options.length > 2000) {
       if (path !== newOptions) {
-        const requestObject = new ProjectRequest()
+        const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
 
         const projectResponse = requestObject.save({
           authToken,

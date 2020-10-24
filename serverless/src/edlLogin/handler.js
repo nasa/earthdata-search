@@ -1,6 +1,7 @@
-import { getEdlConfig } from '../util/getEdlConfig'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { parse, stringify } from 'qs'
+
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
+import { getEdlConfig } from '../util/getEdlConfig'
 
 /**
  * Redirects the user to the correct EDL login URL
@@ -9,25 +10,38 @@ import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/c
  */
 const edlLogin = async (event) => {
   const { queryStringParameters } = event
-  const { state } = queryStringParameters
+
+  const { ee: earthdataEnvironment, state } = queryStringParameters
 
   // The client id is part of our Earthdata Login credentials
-  const edlConfig = await getEdlConfig()
+  const edlConfig = await getEdlConfig(earthdataEnvironment)
   const { client } = edlConfig
   const { id: clientId } = client
 
   const {
     edlHost,
     redirectUriPath
-  } = getEarthdataConfig(cmrEnv())
+  } = getEarthdataConfig(earthdataEnvironment)
 
   const { apiHost } = getEnvironmentConfig()
   const redirectUri = `${apiHost}${redirectUriPath}`
 
+  // In the event that the user has the earthdata environment set to the deployed environment
+  // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
+  const [path, queryParams] = state.split('?')
+
+  // Parse the query string into an object
+  const paramsObj = parse(queryParams)
+
+  // If the earthdata environment variable
+  if (!Object.keys(paramsObj).includes('ee')) {
+    paramsObj.ee = earthdataEnvironment
+  }
+
   return {
     statusCode: 307,
     headers: {
-      Location: `${edlHost}/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${encodeURIComponent(state)}`
+      Location: `${edlHost}/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${encodeURIComponent(`${path}?${stringify(paramsObj)}`)}`
     }
   }
 }

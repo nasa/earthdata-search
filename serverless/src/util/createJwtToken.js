@@ -1,23 +1,24 @@
 import jwt from 'jsonwebtoken'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+
 import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
 
 /**
  * Create a signed JWT Token with user information
  * @param {Object} user User object from database
  */
-export const createJwtToken = (user) => {
+export const createJwtToken = (user, earthdataEnvironment) => {
   const {
     id,
     urs_id: username,
     site_preferences: preferences
   } = user
 
-  const { secret } = getSecretEarthdataConfig(cmrEnv())
+  const { secret } = getSecretEarthdataConfig(earthdataEnvironment)
 
   return jwt.sign({
     id,
     username,
-    preferences
+    preferences,
+    earthdataEnvironment
   }, secret)
 }

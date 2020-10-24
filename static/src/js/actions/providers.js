@@ -1,8 +1,10 @@
 import ProviderRequest from '../util/request/providerRequest'
 
 import { SET_PROVIDERS } from '../constants/actionTypes'
-import { handleError } from './errors'
+
 import { buildPromise } from '../util/buildPromise'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { handleError } from './errors'
 
 export const setProviders = providerData => ({
   type: SET_PROVIDERS,
@@ -13,14 +15,19 @@ export const setProviders = providerData => ({
  * Fetch all providers form legacy services
  */
 export const fetchProviders = () => (dispatch, getState) => {
-  const { authToken, providers } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken, providers } = state
 
   // If providers have already be retrieved or there is no authToken
   if (authToken === '' || providers.length > 0) {
     return buildPromise(null)
   }
 
-  const requestObject = new ProviderRequest(authToken)
+  const requestObject = new ProviderRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.all()
     .then((response) => {

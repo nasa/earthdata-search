@@ -3,7 +3,7 @@ import request from 'request-promise'
 import { stringify } from 'qs'
 import { chunkArray } from '../util/chunkArray'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { parseError } from '../../../sharedUtils/parseError'
 import { getClientId } from '../../../sharedUtils/getClientId'
 
@@ -13,7 +13,7 @@ import { getClientId } from '../../../sharedUtils/getClientId'
  */
 export const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOptionIds) => {
   // TODO: Consider consalidating this and the lambda that retrieves a single record
-  const { echoRestRoot } = getEarthdataConfig(cmrEnv())
+  const { echoRestRoot } = getEarthdataConfig(deployedEnvironment())
 
   // This is a get request so we need to consider URL length
   const chunkedServiceOptionIds = chunkArray(serviceOptionIds, 50)

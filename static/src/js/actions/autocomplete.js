@@ -10,11 +10,14 @@ import {
   DELETE_AUTOCOMPLETE_VALUE,
   CLEAR_AUTOCOMPLETE_SELECTED
 } from '../constants/actionTypes'
-import { handleError } from './errors'
+
 import actions from '.'
+
 import { autocompleteFacetsMap } from '../util/autocompleteFacetsMap'
-import { scienceKeywordTypes } from '../util/scienceKeywordTypes'
 import { buildPromise } from '../util/buildPromise'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { handleError } from './errors'
+import { scienceKeywordTypes } from '../util/scienceKeywordTypes'
 
 export const onAutocompleteLoaded = payload => ({
   type: LOADED_AUTOCOMPLETE,
@@ -74,11 +77,17 @@ export const fetchAutocomplete = data => (dispatch, getState) => {
 
   const { value } = data
 
-  const { authToken } = getState()
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
 
   dispatch(onAutocompleteLoading())
 
-  const requestObject = new AutocompleteRequest(authToken)
+  const requestObject = new AutocompleteRequest(authToken, earthdataEnvironment)
+
   cancelToken = requestObject.getCancelToken()
 
   const params = {

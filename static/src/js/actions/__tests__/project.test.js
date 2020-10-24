@@ -32,15 +32,12 @@ import {
 } from '../project'
 
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
-import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
-
-  jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 })
 
 describe('addCollectionToProject', () => {
@@ -231,7 +228,6 @@ describe('getProjectCollections', () => {
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
     }))
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
     nock(/localhost/)
       .post(/dqs/)
@@ -355,7 +351,6 @@ describe('getProjectCollections', () => {
       cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))
 
-    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 

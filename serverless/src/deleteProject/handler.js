@@ -1,8 +1,9 @@
+import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
-import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -17,8 +18,13 @@ const deleteProject = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
+  const { headers } = event
+
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
   const jwtToken = getJwtToken(event)
-  const { id: userId } = getVerifiedJwtToken(jwtToken)
+
+  const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
   const { pathParameters } = event
   const {
