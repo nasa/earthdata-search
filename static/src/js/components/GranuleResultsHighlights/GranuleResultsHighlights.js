@@ -116,7 +116,7 @@ export const GranuleResultsHighlights = ({
     </ul>
     <div className="granule-results-highlights__footer">
       <PortalLinkContainer
-        className="granule-results-header__title-link"
+        className="granule-results-header__title-link granule-results-header__title-link-icon"
         to={{
           pathname: '/search/granules',
           search: location.search

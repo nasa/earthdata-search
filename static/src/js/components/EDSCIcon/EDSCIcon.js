@@ -37,12 +37,12 @@ export const EDSCIcon = ({
           key={icon}
           value={context}
         >
-          <Icon className={className} style={{ verticalAlign: 'initial' }} title={title} />
+          <Icon className={className} style={{ verticalAlign: 'inherit' }} title={title} />
           {children}
         </IconContext.Provider>
       ) : (
         <>
-          <Icon key={icon} className={className} style={{ verticalAlign: 'initial' }} title={title} />
+          <Icon key={icon} className={className} style={{ verticalAlign: 'inherit' }} title={title} />
           {children}
         </>
       )}
