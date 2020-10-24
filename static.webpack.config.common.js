@@ -47,7 +47,7 @@ const StaticCommonConfig = {
         test: /\.js$/,
         exclude: [
           /node_modules\/(?!(map-obj|snakecase-keys|strict-uri-encode|qs|fast-xml-parser)\/).*/,
-          /font-awesome.config.js/
+          // /font-awesome.config.js/
         ],
         use: [
           {
@@ -106,13 +106,13 @@ const StaticCommonConfig = {
           }
         }
       },
-      {
-        test: /font-awesome\.config\.js/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'font-awesome-loader' }
-        ]
-      },
+      // {
+      //   test: /font-awesome\.config\.js/,
+      //   use: [
+      //     { loader: 'style-loader' },
+      //     { loader: 'font-awesome-loader' }
+      //   ]
+      // },
       {
         test: /portals.*styles\.s?css$/i,
         use: [
