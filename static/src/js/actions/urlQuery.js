@@ -81,9 +81,9 @@ export const changePath = (path = '') => async (dispatch, getState) => {
 
     const { projectId } = parse(queryString)
 
-    const projectResponse = await requestObject.fetch(projectId)
-
     try {
+      const projectResponse = await requestObject.fetch(projectId)
+
       const { data } = projectResponse
       const {
         name,
