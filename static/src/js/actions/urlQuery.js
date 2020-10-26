@@ -81,45 +81,45 @@ export const changePath = (path = '') => async (dispatch, getState) => {
 
     const { projectId } = parse(queryString)
 
-    await requestObject.fetch(projectId)
-      .then((response) => {
-        const { data } = response
-        const {
-          name,
-          path: projectPath
-        } = data
+    const projectResponse = await requestObject.fetch(projectId)
 
-        // In the event that the user has the earthdata environment set to the deployed environment
-        // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
-        const [, projectQueryString] = projectPath.split('?')
+    try {
+      const { data } = projectResponse
+      const {
+        name,
+        path: projectPath
+      } = data
 
-        // Parse the query string into an object
-        const paramsObj = parse(projectQueryString)
+      // In the event that the user has the earthdata environment set to the deployed environment
+      // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
+      const [, projectQueryString] = projectPath.split('?')
 
-        // If the earthdata environment variable
-        if (!Object.keys(paramsObj).includes('ee')) {
-          paramsObj.ee = earthdataEnvironment
-        }
+      // Parse the query string into an object
+      const paramsObj = parse(projectQueryString)
 
-        // Save name, path and projectId into store
-        dispatch(actions.updateSavedProject({
-          path: projectPath,
-          name,
-          projectId
-        }))
+      // If the earthdata environment variable
+      if (!Object.keys(paramsObj).includes('ee')) {
+        paramsObj.ee = earthdataEnvironment
+      }
 
-        decodedParams = decodeUrlParams(stringify(paramsObj))
-        dispatch(actions.updateStore(decodedParams))
-      })
-      .catch((error) => {
-        dispatch(actions.handleError({
-          error,
-          action: 'changePath',
-          resource: 'project',
-          verb: 'updating',
-          requestObject
-        }))
-      })
+      // Save name, path and projectId into store
+      dispatch(actions.updateSavedProject({
+        path: projectPath,
+        name,
+        projectId
+      }))
+
+      decodedParams = decodeUrlParams(stringify(paramsObj))
+      dispatch(actions.updateStore(decodedParams))
+    } catch (error) {
+      dispatch(actions.handleError({
+        error,
+        action: 'changePath',
+        resource: 'project',
+        verb: 'updating',
+        requestObject
+      }))
+    }
   } else {
     decodedParams = decodeUrlParams(queryString)
 
