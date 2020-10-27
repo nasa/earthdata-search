@@ -4,13 +4,13 @@ import request from 'request-promise'
 
 import { createReadStream, writeFileSync } from 'fs'
 
-import { cmrUrl } from '../util/cmr/cmrUrl'
+import { bboxToPolygon } from './bboxToPolygon'
+import { ccwShapefile } from './ccwShapefile'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 import { pointStringToLatLng } from './pointStringToLatLng'
-import { bboxToPolygon } from './bboxToPolygon'
 import { readCmrResults } from '../util/cmr/readCmrResults'
-import { ccwShapefile } from './ccwShapefile'
 
 /**
  * Construct the payload that we'll send to Harmony to create this order
@@ -19,11 +19,13 @@ export const constructOrderPayload = async ({
   accessMethod,
   granuleParams,
   accessTokenWithClient,
-  shapefile
+  shapefile,
+  environment
 }) => {
   // Request granules from CMR
   const granuleResponse = await request.get({
-    uri: cmrUrl('search/granules.json', granuleParams),
+    uri: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
+    qs: granuleParams,
     headers: {
       'Echo-Token': accessTokenWithClient,
       'Client-Id': getClientId().background

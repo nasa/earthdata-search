@@ -98,7 +98,8 @@ const submitHarmonyOrder = async (event, context) => {
         accessMethod,
         granuleParams,
         accessTokenWithClient,
-        shapefile
+        shapefile,
+        environment
       })
 
       const orderResponse = await axios({

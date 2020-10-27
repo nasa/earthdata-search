@@ -1,9 +1,10 @@
 import { getApplicationConfig } from '../../../sharedUtils/config'
+
 /**
  * This lambda basically does nothing. The edlAuthorizer is setup on this lambda to determine if the user
  * is authorized as an admin. If not, the authorizer will return a 401
  */
-const adminIsAuthorized = () => {
+const adminIsAuthorized = async () => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   return {

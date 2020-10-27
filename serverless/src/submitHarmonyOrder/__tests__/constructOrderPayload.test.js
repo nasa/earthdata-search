@@ -1,15 +1,23 @@
 import nock from 'nock'
 import { ReadStream } from 'fs'
 
+import * as getEarthdataConfig from '../../../../sharedUtils/config'
+
 import { constructOrderPayload } from '../constructOrderPayload'
 import { mockCcwShapefile } from './mocks'
 
 describe('constructOrderPayload', () => {
+  beforeEach(() => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      cmrHost: 'https://cmr.earthdata.nasa.gov'
+    }))
+  })
+
   describe('format', () => {
     describe('with a known format', () => {
       test('constructs a payload with a format', async () => {
         nock(/cmr/)
-          .get(/search\/granules/)
+          .get('/search/granules.json')
           .reply(200, {
             feed: {
               entry: [{
@@ -39,7 +47,7 @@ describe('constructOrderPayload', () => {
     describe('with an unknown format', () => {
       test('constructs a payload without a format', async () => {
         nock(/cmr/)
-          .get(/search\/granules/)
+          .get('/search/granules.json')
           .reply(200, {
             feed: {
               entry: [{
@@ -69,7 +77,7 @@ describe('constructOrderPayload', () => {
     describe('with a known projection', () => {
       test('constructs a payload with a projection', async () => {
         nock(/cmr/)
-          .get(/search\/granules/)
+          .get('/search/granules.json')
           .reply(200, {
             feed: {
               entry: [{
@@ -100,7 +108,7 @@ describe('constructOrderPayload', () => {
   describe('granules', () => {
     test('constructs a payload with granule ids', async () => {
       nock(/cmr/)
-        .get(/search\/granules/)
+        .get('/search/granules.json')
         .reply(200, {
           feed: {
             entry: [{
@@ -129,7 +137,7 @@ describe('constructOrderPayload', () => {
     describe('with a start and end date', () => {
       test('constructs a payload with a start and end subsetting', async () => {
         nock(/cmr/)
-          .get(/search\/granules/)
+          .get('/search/granules.json?temporal=2020-01-01T01%3A36%3A52.273Z%2C2020-01-01T06%3A18%3A19.482Z')
           .reply(200, {
             feed: {
               entry: [{
@@ -159,7 +167,7 @@ describe('constructOrderPayload', () => {
     describe('with only a start date', () => {
       test('constructs a payload with an open ended start date', async () => {
         nock(/cmr/)
-          .get(/search\/granules/)
+          .get('/search/granules.json?temporal=2020-01-01T01%3A36%3A52.273Z%2C')
           .reply(200, {
             feed: {
               entry: [{
@@ -189,7 +197,7 @@ describe('constructOrderPayload', () => {
     describe('with only a end date', () => {
       test('constructs a payload with an open ended end date', async () => {
         nock(/cmr/)
-          .get(/search\/granules/)
+          .get('/search/granules.json?temporal=%2C2020-01-01T06%3A18%3A19.482Z')
           .reply(200, {
             feed: {
               entry: [{
@@ -222,7 +230,7 @@ describe('constructOrderPayload', () => {
       describe('with a shapefile', () => {
         test('constructs a payload with a shapefile', async () => {
           nock(/cmr/)
-            .get(/search\/granules/)
+            .get('/search/granules.json')
             .reply(200, {
               feed: {
                 entry: [{
@@ -254,7 +262,7 @@ describe('constructOrderPayload', () => {
       describe('with a point', () => {
         test('constructs a payload containing a shapefile representing the point', async () => {
           nock(/cmr/)
-            .get(/search\/granules/)
+            .get('/search/granules.json?point%5B0%5D=-77%2C%2034')
             .reply(200, {
               feed: {
                 entry: [{
@@ -286,7 +294,7 @@ describe('constructOrderPayload', () => {
       describe('with a bounding box', () => {
         test('constructs a payload containing the bounding box', async () => {
           nock(/cmr/)
-            .get(/search\/granules/)
+            .get('/search/granules.json?bounding_box%5B0%5D=0%2C5%2C10%2C15')
             .reply(200, {
               feed: {
                 entry: [{
@@ -318,7 +326,7 @@ describe('constructOrderPayload', () => {
       describe('with a circle', () => {
         test('constructs a payload containing a shapefile representing the circle', async () => {
           nock(/cmr/)
-            .get(/search\/granules/)
+            .get('/search/granules.json?circle%5B0%5D=-77%2C%2034%2C%2020000')
             .reply(200, {
               feed: {
                 entry: [{
@@ -350,7 +358,7 @@ describe('constructOrderPayload', () => {
       describe('with a polygon', () => {
         test('constructs a payload containing a shapefile representing the polygon', async () => {
           nock(/cmr/)
-            .get(/search\/granules/)
+            .get('/search/granules.json?polygon%5B0%5D=-29.8125%2C39.86484%2C-23.0625%2C-19.74405%2C15.75%2C20.745%2C-29.8125%2C39.86484')
             .reply(200, {
               feed: {
                 entry: [{
@@ -384,7 +392,7 @@ describe('constructOrderPayload', () => {
       describe('with a point', () => {
         test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the point', async () => {
           nock(/cmr/)
-            .get(/search\/granules/)
+            .get('/search/granules.json?point%5B0%5D=-77%2C%2034')
             .reply(200, {
               feed: {
                 entry: [{
@@ -425,7 +433,7 @@ describe('constructOrderPayload', () => {
       describe('with a bounding box', () => {
         test('constructs a payload containing the bounding box', async () => {
           nock(/cmr/)
-            .get(/search\/granules/)
+            .get('/search/granules.json?bounding_box%5B0%5D=5%2C0%2C15%2C10')
             .reply(200, {
               feed: {
                 entry: [{
@@ -460,7 +468,7 @@ describe('constructOrderPayload', () => {
       describe('with a circle', () => {
         test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the circle', async () => {
           nock(/cmr/)
-            .get(/search\/granules/)
+            .get('/search/granules.json?circle%5B0%5D=-77%2C%2034%2C%2020000')
             .reply(200, {
               feed: {
                 entry: [{
@@ -501,7 +509,7 @@ describe('constructOrderPayload', () => {
       describe('with a polygon', () => {
         test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the polygon', async () => {
           nock(/cmr/)
-            .get(/search\/granules/)
+            .get('/search/granules.json?polygon%5B0%5D=-29.8125%2C39.86484%2C-23.0625%2C-19.74405%2C15.75%2C20.745%2C-29.8125%2C39.86484')
             .reply(200, {
               feed: {
                 entry: [{
