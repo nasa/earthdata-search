@@ -57,6 +57,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const {
       collectionId,
       color,
+      drawingNewLayer,
       focusedCollectionId,
       focusedGranuleId,
       granules,
@@ -94,6 +95,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       addedGranuleIds,
       collectionId,
       color,
+      drawingNewLayer,
       lightColor,
       defaultGranules: granules,
       focusedCollectionId,
@@ -751,21 +753,27 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return result
   }
 
+  // Update the this.drawingNewLayer property
+  setDrawingNewLayer(drawingNewLayer) {
+    this.drawingNewLayer = drawingNewLayer
+  }
+
   // Set the granule results that need to be drawn
   setResults(props) {
     const {
-      metadata,
-      granules,
-      color,
-      lightColor,
-      defaultGranules,
-      focusedGranuleId,
-      collectionId,
-      focusedCollectionId,
       addedGranuleIds = [],
-      removedGranuleIds = [],
+      collectionId,
+      color,
+      defaultGranules,
+      drawingNewLayer,
+      focusedCollectionId,
+      focusedGranuleId,
+      granules,
       isProjectPage,
-      projection
+      lightColor,
+      metadata,
+      projection,
+      removedGranuleIds = []
     } = props
 
     this.granules = granules
@@ -775,6 +783,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     this.collectionId = collectionId
     this.focusedCollectionId = focusedCollectionId
     this.projection = projection
+    this.setDrawingNewLayer(drawingNewLayer)
 
     if (defaultGranules) {
       this.defaultGranules = defaultGranules
@@ -846,6 +855,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
     return this.setResults({
       color,
+      drawingNewLayer: this.drawingNewLayer,
       lightColor,
       focusedCollectionId,
       focusedGranuleId,
@@ -952,6 +962,9 @@ class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   _onEdscStickygranule(e) {
+    // If drawingNewLayer isn't false, don't sticky the granule
+    if (this.drawingNewLayer !== false) return
+
     if (this._map) {
       const { _layers: mapLayers } = this._map
 
@@ -1140,6 +1153,7 @@ export class GranuleGridLayer extends MapLayer {
     const { layers = [] } = this
 
     const {
+      drawingNewLayer,
       focusedCollectionId,
       focusedGranuleId,
       projection,
@@ -1166,17 +1180,18 @@ export class GranuleGridLayer extends MapLayer {
 
       const layer = new GranuleGridLayerExtended({
         collectionId,
-        metadata,
-        granules: granuleData,
         color,
+        drawingNewLayer,
         focusedCollectionId,
         focusedGranuleId,
-        project,
-        projection,
+        granules: granuleData,
+        isProjectPage,
+        metadata,
         onChangeFocusedGranule,
         onExcludeGranule,
         onMetricsMap,
-        isProjectPage
+        project,
+        projection
       })
 
       // Set the ZIndex for the layer
@@ -1203,6 +1218,7 @@ export class GranuleGridLayer extends MapLayer {
     const layers = this.leafletElement._layers // List of layers
 
     const {
+      drawingNewLayer,
       focusedCollectionId,
       focusedGranuleId,
       projection,
@@ -1216,6 +1232,7 @@ export class GranuleGridLayer extends MapLayer {
     this.isProjectPage = isProjectPage
 
     const {
+      drawingNewLayer: fromDrawingNewLayer,
       focusedGranuleId: oldFocusedGranule,
       focusedCollectionId: oldFocusedCollection,
       isProjectPage: oldIsProjectPage
@@ -1254,6 +1271,9 @@ export class GranuleGridLayer extends MapLayer {
         isVisible,
         granules = {}
       } = layerData[id]
+
+      // Find the layer for this collection
+      const [layer] = Object.values(layers).filter(l => l.collectionId === collectionId)
 
       const { project: fromPropsProject } = fromProps
       const { collections: fromPropsProjectCollections = {} } = fromPropsProject
@@ -1301,13 +1321,17 @@ export class GranuleGridLayer extends MapLayer {
         && isEqual(Object.keys(granulesById), Object.keys(oldGranulesById))
         && isEqual(addedGranuleIds, oldAddedGranuleIds)
         && isEqual(removedGranuleIds, oldRemovedGranuleIds)
-      ) return
+      ) {
+        // If no granules were changed, but drawingNewLayer was changed, update the layer
+        if (fromDrawingNewLayer !== drawingNewLayer) {
+          layer.setDrawingNewLayer(drawingNewLayer)
+        }
+
+        return
+      }
 
       // If the collecton is not visible, set the granuleData to an empty array
       const granuleData = isVisible ? Object.values(granulesById) : []
-
-      // Find the layer for this collection
-      const [layer] = Object.values(layers).filter(l => l.collectionId === collectionId)
 
       this.addedGranuleIds = addedGranuleIds
       this.removedGranuleIds = removedGranuleIds
@@ -1331,6 +1355,7 @@ export class GranuleGridLayer extends MapLayer {
           addedGranuleIds,
           collectionId,
           color,
+          drawingNewLayer,
           defaultGranules: granuleData,
           focusedCollectionId,
           focusedGranuleId,
@@ -1354,6 +1379,7 @@ export class GranuleGridLayer extends MapLayer {
           addedGranuleIds,
           collectionId,
           color,
+          drawingNewLayer,
           focusedCollectionId,
           focusedGranuleId,
           granules: granuleData,
