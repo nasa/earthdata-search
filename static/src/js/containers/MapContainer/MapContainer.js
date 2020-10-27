@@ -60,6 +60,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   authToken: state.authToken,
   collectionsMetadata: state.metadata.collections,
+  drawingNewLayer: state.ui.map.drawingNewLayer,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
@@ -218,6 +219,7 @@ export class MapContainer extends Component {
       authToken,
       map,
       collectionsMetadata,
+      drawingNewLayer,
       focusedCollectionId,
       focusedGranuleId,
       granuleSearchResults,
@@ -368,6 +370,7 @@ export class MapContainer extends Component {
         </LayersControl>
         <GranuleGridLayer
           collectionsMetadata={collectionsMetadata}
+          drawingNewLayer={drawingNewLayer}
           focusedCollectionId={focusedCollectionId}
           focusedGranuleId={focusedGranuleId}
           granulesMetadata={granulesMetadata}
@@ -412,6 +415,10 @@ MapContainer.defaultProps = {
 MapContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
+  drawingNewLayer: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,

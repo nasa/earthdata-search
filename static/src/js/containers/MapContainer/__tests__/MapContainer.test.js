@@ -30,6 +30,7 @@ function setup() {
   const props = {
     authToken: '',
     collectionsMetadata: {},
+    drawingNewLayer: false,
     focusedCollectionId: '',
     focusedGranuleId: '',
     granules: {},
