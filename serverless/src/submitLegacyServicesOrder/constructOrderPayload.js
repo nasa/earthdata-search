@@ -1,10 +1,11 @@
 import request from 'request-promise'
+
 import { stringify } from 'qs'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { cmrUrl } from '../util/cmr/cmrUrl'
-import { readCmrResults } from '../util/cmr/readCmrResults'
-import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
+
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
+import { readCmrResults } from '../util/cmr/readCmrResults'
 
 export const constructOrderPayload = async (
   accessMethod,
@@ -29,7 +30,8 @@ export const constructOrderPayload = async (
   const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
 
   const granuleResponse = await request.get({
-    uri: cmrUrl('search/granules.json', preparedGranuleParams),
+    uri: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
+    qs: preparedGranuleParams,
     headers: {
       'Echo-Token': accessTokenWithClient,
       'Client-Id': getClientId().background
@@ -51,7 +53,10 @@ export const constructOrderPayload = async (
     uri: optionInformationUrl,
     form: stringify({
       catalog_item_id: granuleResponseBody.map(granule => granule.id)
-    }, { indices: false, arrayFormat: 'brackets' }),
+    }, {
+      indices: false,
+      arrayFormat: 'brackets'
+    }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Echo-Token': accessTokenWithClient,
@@ -63,9 +68,9 @@ export const constructOrderPayload = async (
 
   const { body: orderInformationBody } = optionInformationResponse
 
-  console.log(`Recieved ${JSON.stringify(orderInformationBody, null, 4)}`)
+  console.log(`Received ${JSON.stringify(orderInformationBody, null, 4)}`)
 
-  await orderInformationBody.forEachAsync((orderInfoObj) => {
+  orderInformationBody.forEach((orderInfoObj) => {
     const { order_information: orderInformation = {} } = orderInfoObj
     const {
       catalog_item_ref: catalogItemRef,

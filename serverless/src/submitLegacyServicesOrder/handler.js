@@ -106,7 +106,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       })
 
       // 3. Add contact information
-      const userInformationPayload = await constructUserInformationPayload(echoProfile, ursProfile)
+      const userInformationPayload = constructUserInformationPayload(echoProfile, ursProfile)
 
       console.log(`User Information Payload: ${JSON.stringify(userInformationPayload, null, 4)}`)
 

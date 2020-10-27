@@ -2,13 +2,16 @@ import 'array-foreach-async'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
 
-import { cmrUrl } from '../util/cmr/cmrUrl'
 import { getBoundingBox } from '../util/echoForms/getBoundingBox'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEdlConfig } from '../util/getEdlConfig'
 import { getEmail } from '../util/echoForms/getEmail'
-import { getEnvironmentConfig, getApplicationConfig } from '../../../sharedUtils/config'
+import {
+  getEnvironmentConfig,
+  getApplicationConfig,
+  getEarthdataConfig
+} from '../../../sharedUtils/config'
 import { getNameValuePairsForProjections } from '../util/echoForms/getNameValuePairsForProjections'
 import { getNameValuePairsForResample } from '../util/echoForms/getNameValuePairsForResample'
 import { getShapefile } from '../util/echoForms/getShapefile'
@@ -92,7 +95,8 @@ const submitCatalogRestOrder = async (event, context) => {
     const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
 
     const granuleResponse = await request.get({
-      uri: cmrUrl('search/granules.json', preparedGranuleParams),
+      uri: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
+      qs: preparedGranuleParams,
       headers: {
         'Echo-Token': accessTokenWithClient,
         'Client-Id': getClientId().background

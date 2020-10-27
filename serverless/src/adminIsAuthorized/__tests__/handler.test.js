@@ -5,8 +5,8 @@ beforeEach(() => {
 })
 
 describe('adminIsAuthorized', () => {
-  test('correctly returns a json response', () => {
-    const response = adminIsAuthorized({}, {})
+  test('correctly returns a json response', async () => {
+    const response = await adminIsAuthorized({}, {})
 
     const { body, statusCode } = response
 

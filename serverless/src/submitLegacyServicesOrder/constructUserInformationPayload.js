@@ -1,4 +1,4 @@
-export const constructUserInformationPayload = async (echoProfile, ursProfile) => {
+export const constructUserInformationPayload = (echoProfile, ursProfile) => {
   const {
     country,
     email_address: emailAddress,
