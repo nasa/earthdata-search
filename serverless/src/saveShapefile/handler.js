@@ -1,7 +1,7 @@
 import 'pg'
 import forge from 'node-forge'
 
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
@@ -20,7 +20,7 @@ const saveShapefile = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { body, headers } = event
+  const { body } = event
 
   const { params } = JSON.parse(body)
 
@@ -30,7 +30,7 @@ const saveShapefile = async (event, context) => {
     filename
   } = params
 
-  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+  const earthdataEnvironment = deployedEnvironment()
 
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()

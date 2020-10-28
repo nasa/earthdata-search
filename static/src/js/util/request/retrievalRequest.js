@@ -1,4 +1,5 @@
 import Request from './request'
+
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export default class RetrievalRequest extends Request {
