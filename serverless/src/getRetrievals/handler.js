@@ -1,6 +1,6 @@
 import { groupBy, sortBy } from 'lodash'
 
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
@@ -21,9 +21,7 @@ export default async function getRetrievals(event, context) {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const { headers } = event
-
-    const earthdataEnvironment = determineEarthdataEnvironment(headers)
+    const earthdataEnvironment = deployedEnvironment()
 
     const jwtToken = getJwtToken(event)
 

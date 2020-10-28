@@ -1,5 +1,5 @@
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
@@ -18,7 +18,7 @@ const saveProject = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { body, headers } = event
+  const { body } = event
 
   const { params } = JSON.parse(body)
 
@@ -29,7 +29,7 @@ const saveProject = async (event, context) => {
     projectId
   } = params
 
-  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+  const earthdataEnvironment = deployedEnvironment()
 
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()

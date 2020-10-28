@@ -3,7 +3,7 @@ import Ajv from 'ajv'
 import schema from '../../../schemas/sitePreferencesSchema.json'
 
 import { createJwtToken } from '../util/createJwtToken'
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
@@ -18,11 +18,11 @@ const updatePreferences = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { body, headers } = event
+  const { body } = event
   const { params } = JSON.parse(body)
   const { preferences } = params
 
-  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+  const earthdataEnvironment = deployedEnvironment()
 
   // Validate preferences against schema
   const ajv = new Ajv()
