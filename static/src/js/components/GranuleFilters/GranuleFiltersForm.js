@@ -116,7 +116,10 @@ export const GranuleFiltersForm = (props) => {
   let coordinateTwoLimits
 
   // If the collection supports tiling identification systems
-  if (tilingIdentificationSystems.length > 0) {
+  if (
+    tilingIdentificationSystems
+    && tilingIdentificationSystems.length > 0
+  ) {
     tilingIdentificationSystems.forEach((system) => {
       const { tilingIdentificationSystemName } = system
 
