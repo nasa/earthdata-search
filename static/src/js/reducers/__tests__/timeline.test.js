@@ -2,12 +2,14 @@ import timelineReducer from '../timeline'
 import {
   UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  TOGGLE_TIMELINE
 } from '../../constants/actionTypes'
 
 const initialState = {
   intervals: {},
-  query: {}
+  query: {},
+  isOpen: true
 }
 
 describe('INITIAL_STATE', () => {
@@ -79,7 +81,8 @@ describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
     const timeline = {
       intervals: {},
-      query: {}
+      query: {},
+      isOpen: true
     }
 
     const action = {
@@ -91,6 +94,17 @@ describe('RESTORE_FROM_URL', () => {
 
     const expectedState = timeline
 
+    expect(timelineReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_TIMELINE', () => {
+  test('returns the correct state', () => {
+    const action = { type: TOGGLE_TIMELINE, payload: false }
+    const expectedState = {
+      ...initialState,
+      isOpen: false
+    }
     expect(timelineReducer(undefined, action)).toEqual(expectedState)
   })
 })

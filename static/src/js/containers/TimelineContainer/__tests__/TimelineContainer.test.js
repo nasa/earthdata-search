@@ -26,11 +26,13 @@ function setup(overrideProps) {
     onChangeTimelineQuery: jest.fn(),
     onMetricsTimeline: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
+    onToggleTimeline: jest.fn(),
     pathname: '/search',
     temporalSearch: {},
     timeline: {
       query: {},
-      state: {}
+      state: {},
+      isOpen: true
     },
     ...overrideProps
   }
