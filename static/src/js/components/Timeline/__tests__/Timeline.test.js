@@ -5,6 +5,8 @@ import Timeline from '../Timeline'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+const windowEventMap = {}
+
 function setup(overrideProps) {
   const props = {
     browser: {
@@ -12,13 +14,14 @@ function setup(overrideProps) {
     },
     collectionMetadata: {},
     temporalSearch: {},
-    timeline: { intervals: {}, query: {} },
+    timeline: { intervals: {}, query: {}, isOpen: true },
     showOverrideModal: false,
     pathname: '/search/granules',
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
     onMetricsTimeline: jest.fn(),
+    onToggleTimeline: jest.fn(),
     ...overrideProps
   }
 
@@ -33,6 +36,10 @@ function setup(overrideProps) {
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
+  window.addEventListener = jest.fn((event, cb) => {
+    windowEventMap[event] = cb
+  })
+  window.removeEventListener = jest.fn()
 })
 
 describe('Timeline component', () => {
@@ -722,5 +729,49 @@ describe('handleFocusChange', () => {
     enzymeWrapper.instance().handleFocusChange(jest.fn(), start, end)
 
     expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+  })
+})
+
+describe('handle toggleTimeline', () => {
+  test('close timeline by pressing t', () => {
+    const { props, enzymeWrapper } = setup()
+    const timelineSection = enzymeWrapper.find('section')
+
+    expect(timelineSection.prop('className')).toEqual('timeline')
+
+    const preventDefaultMock = jest.fn()
+    const stopPropagationMock = jest.fn()
+    windowEventMap.keyup({
+      key: 't',
+      tagName: 'input',
+      type: 'keyup',
+      preventDefault: preventDefaultMock,
+      stopPropagation: stopPropagationMock
+    })
+
+    expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
+    expect(props.onToggleTimeline).toHaveBeenCalledWith(false)
+  })
+  test('open timeline by pressing t', () => {
+    const { props, enzymeWrapper } = setup({
+      timeline:
+        { intervals: {}, query: {}, isOpen: false }
+    })
+    const timelineSection = enzymeWrapper.find('section')
+
+    expect(timelineSection.prop('className')).toEqual('hidden')
+
+    const preventDefaultMock = jest.fn()
+    const stopPropagationMock = jest.fn()
+    windowEventMap.keyup({
+      key: 't',
+      tagName: 'input',
+      type: 'keyup',
+      preventDefault: preventDefaultMock,
+      stopPropagation: stopPropagationMock
+    })
+
+    expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
+    expect(props.onToggleTimeline).toHaveBeenCalledWith(true)
   })
 })
