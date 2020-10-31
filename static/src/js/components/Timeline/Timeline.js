@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactCSSTransitionGroup from 'react-transition-group'
 import $ from 'jquery'
 import { isEqual } from 'lodash'
 
@@ -565,10 +566,28 @@ class Timeline extends Component {
   }
 
   render() {
+    const { timeline: { isOpen } } = this.props
+    if (isOpen) {
+      return (
+        <ReactCSSTransitionGroup
+          transitionName="pop-in"
+          transitionAppear
+          transitionAppearTimeout={500}
+        >
+          <section className="timeline">
+            <div ref={(el) => { this.el = el }} />
+          </section>
+        </ReactCSSTransitionGroup>
+      )
+    }
     return (
-      <section className="timeline">
-        <div ref={(el) => { this.el = el }} />
-      </section>
+      <ReactCSSTransitionGroup
+        transitionName="pop-in"
+        transitionAppear
+        transitionAppearTimeout={500}
+      >
+        <section />
+      </ReactCSSTransitionGroup>
     )
   }
 }
