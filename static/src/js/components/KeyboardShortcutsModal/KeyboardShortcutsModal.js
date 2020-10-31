@@ -48,6 +48,7 @@ export class KeyboardShortcutsModal extends Component {
       g: 'Toggle granule filters panel',
       a: 'Toggle advanced search modal',
       '/': 'Focus on search input field',
+      t: 'Toggle timeline',
       '?': 'Display all keyboard shortcuts'
     }
 
