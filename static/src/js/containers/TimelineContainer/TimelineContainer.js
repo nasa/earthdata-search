@@ -19,7 +19,8 @@ const mapDispatchToProps = dispatch => ({
   onToggleOverrideTemporalModal:
     open => dispatch(actions.toggleOverrideTemporalModal(open)),
   onMetricsTimeline:
-    type => dispatch(metricsTimeline(type))
+    type => dispatch(metricsTimeline(type)),
+  onToggleTimeline: open => dispatch(actions.toggleTimeline(open))
 })
 
 const mapStateToProps = state => ({
@@ -44,7 +45,8 @@ export const TimelineContainer = (props) => {
     onChangeQuery,
     onChangeTimelineQuery,
     onToggleOverrideTemporalModal,
-    onMetricsTimeline
+    onMetricsTimeline,
+    onToggleTimeline
   } = props
 
   // Determine the collectionMetadata the timeline should be displaying
@@ -83,6 +85,7 @@ export const TimelineContainer = (props) => {
         onChangeTimelineQuery={onChangeTimelineQuery}
         onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
         onMetricsTimeline={onMetricsTimeline}
+        onToggleTimeline={onToggleTimeline}
       />
     </Suspense>
   )
@@ -100,6 +103,7 @@ TimelineContainer.propTypes = {
   onChangeTimelineQuery: PropTypes.func.isRequired,
   onMetricsTimeline: PropTypes.func.isRequired,
   onToggleOverrideTemporalModal: PropTypes.func.isRequired,
+  onToggleTimeline: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   temporalSearch: PropTypes.shape({}),

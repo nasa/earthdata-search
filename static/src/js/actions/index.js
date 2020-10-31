@@ -42,7 +42,8 @@ import {
 } from './authToken'
 import {
   changeTimelineQuery,
-  getTimeline
+  getTimeline,
+  toggleTimeline
 } from './timeline'
 import {
   changeCollectionPageNum,
@@ -261,6 +262,7 @@ const actions = {
   toggleSecondaryOverlayPanel,
   toggleShapefileUploadModal,
   toggleSpatialPolygonWarning,
+  toggleTimeline,
   toggleTooManyPointsModal,
   triggerViewAllFacets,
   undoExcludeGranule,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ReactCSSTransitionGroup from 'react-transition-group'
+// import ReactCSSTransitionGroup from 'react-transition-group'
 import $ from 'jquery'
 import { isEqual } from 'lodash'
 
@@ -8,6 +8,7 @@ import '@edsc/timeline'
 import { timelineIntervals } from '../../util/timeline'
 import getObjectKeyByValue from '../../util/object'
 import { getColorByIndex } from '../../util/colors'
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
 import './Timeline.scss'
 import { getTemporalRange } from '../../util/edscDate'
@@ -20,6 +21,9 @@ class Timeline extends Component {
 
     this.rows = {}
     this.panTimeout = null
+    this.keyboardShortcuts = {
+      toggleTimeline: 't'
+    }
 
     this.handleArrowPan = this.handleArrowPan.bind(this)
     this.handleButtonZoom = this.handleButtonZoom.bind(this)
@@ -31,6 +35,7 @@ class Timeline extends Component {
     this.handleScrollPan = this.handleScrollPan.bind(this)
     this.handleScrollZoom = this.handleScrollZoom.bind(this)
     this.handleTemporalSet = this.handleTemporalSet.bind(this)
+    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
   }
 
   componentDidMount() {
@@ -73,10 +78,11 @@ class Timeline extends Component {
     this.$el.on('temporalchange.timeline', this.handleTemporalSet)
 
     this.$el.trigger('rangechange.timeline')
-
     if (showOverrideModal && Object.keys(temporalSearch).length > 0 && start && end) {
       onToggleOverrideTemporalModal(true)
     }
+
+    window.addEventListener('keyup', this.onWindowKeyUp)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -267,6 +273,21 @@ class Timeline extends Component {
     this.$el.off('scrollpan.timeline', this.handleScrollPan)
     this.$el.off('draggingpan.timeline', this.handleDraggingPan)
     this.$el.timeline('destroy')
+
+    window.removeEventListener('keyup', this.onWindowKeyUp)
+  }
+
+  onWindowKeyUp(e) {
+    const { keyboardShortcuts } = this
+    const { timeline: { isOpen }, onToggleTimeline } = this.props
+
+    const toggleTimeline = () => onToggleTimeline(!isOpen)
+
+    triggerKeyboardShortcut({
+      event: e,
+      shortcutKey: keyboardShortcuts.toggleTimeline,
+      shortcutCallback: toggleTimeline
+    })
   }
 
   /**
@@ -567,27 +588,10 @@ class Timeline extends Component {
 
   render() {
     const { timeline: { isOpen } } = this.props
-    if (isOpen) {
-      return (
-        <ReactCSSTransitionGroup
-          transitionName="pop-in"
-          transitionAppear
-          transitionAppearTimeout={500}
-        >
-          <section className="timeline">
-            <div ref={(el) => { this.el = el }} />
-          </section>
-        </ReactCSSTransitionGroup>
-      )
-    }
     return (
-      <ReactCSSTransitionGroup
-        transitionName="pop-in"
-        transitionAppear
-        transitionAppearTimeout={500}
-      >
-        <section />
-      </ReactCSSTransitionGroup>
+      <section className={isOpen ? 'timeline' : 'hidden'}>
+        {<div ref={(el) => { this.el = el }} /> }
+      </section>
     )
   }
 }
@@ -602,7 +606,8 @@ Timeline.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,
   onToggleOverrideTemporalModal: PropTypes.func.isRequired,
-  onMetricsTimeline: PropTypes.func.isRequired
+  onMetricsTimeline: PropTypes.func.isRequired,
+  onToggleTimeline: PropTypes.func.isRequired
 }
 
 export default Timeline
