@@ -1,12 +1,14 @@
 import {
   UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
-  RESTORE_FROM_URL
+  RESTORE_FROM_URL,
+  TOGGLE_TIMELINE
 } from '../constants/actionTypes'
 
 const initialState = {
   intervals: {},
-  query: {}
+  query: {},
+  isOpen: true
 }
 
 const timelineReducer = (state = initialState, action) => {
@@ -51,6 +53,12 @@ const timelineReducer = (state = initialState, action) => {
           ...state.query,
           ...timeline
         }
+      }
+    }
+    case TOGGLE_TIMELINE: {
+      return {
+        ...state,
+        isOpen: action.payload
       }
     }
     default:
