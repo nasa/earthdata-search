@@ -16,6 +16,7 @@ export const updateCollectionQuery = payload => ({
   payload
 })
 
+// Updates the granule search query, keeping existing values
 export const updateGranuleSearchQuery = payload => ({
   type: UPDATE_GRANULE_SEARCH_QUERY,
   payload

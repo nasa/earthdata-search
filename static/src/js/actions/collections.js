@@ -19,10 +19,10 @@ import {
   LOADING_COLLECTIONS,
   LOADING_FACETS,
   STARTED_COLLECTIONS_TIMER,
-  UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_COLLECTION_METADATA,
   UPDATE_COLLECTION_RESULTS,
-  UPDATE_FACETS
+  UPDATE_FACETS,
+  UPDATE_GRANULE_FILTERS
 } from '../constants/actionTypes'
 
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
@@ -122,8 +122,9 @@ export const updateFocusedCollectionGranuleFilters = granuleFilters => (dispatch
     return newObj
   }, {})
 
+  // Updates the granule search query, throwing out all existing values
   dispatch({
-    type: UPDATE_GRANULE_SEARCH_QUERY,
+    type: UPDATE_GRANULE_FILTERS,
     payload: {
       collectionId: focusedCollectionId,
       ...prunedFilters

@@ -6,6 +6,7 @@ import {
   RESTORE_FROM_URL,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_QUERY,
+  UPDATE_GRANULE_FILTERS,
   UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_REGION_QUERY
 } from '../../constants/actionTypes'
@@ -158,7 +159,8 @@ describe('EXCLUDE_GRANULE_ID', () => {
         byId: {
           collectionId: {
             granules: {
-              excludedGranuleIds: ['granuleId']
+              excludedGranuleIds: ['granuleId'],
+              pageNum: 1
             }
           }
         }
@@ -208,10 +210,10 @@ describe('UNDO_EXCLUDE_GRANULE_ID', () => {
   })
 })
 
-describe('UPDATE_GRANULE_SEARCH_QUERY', () => {
+describe('UPDATE_GRANULE_FILTERS', () => {
   test('returns the correct state', () => {
     const action = {
-      type: UPDATE_GRANULE_SEARCH_QUERY,
+      type: UPDATE_GRANULE_FILTERS,
       payload: {
         collectionId: 'collectionId',
         pageNum: 2
@@ -253,7 +255,7 @@ describe('UPDATE_GRANULE_SEARCH_QUERY', () => {
 
   test('returns the correct state when removing values', () => {
     const action = {
-      type: UPDATE_GRANULE_SEARCH_QUERY,
+      type: UPDATE_GRANULE_FILTERS,
       payload: {
         collectionId: 'collectionId',
         pageNum: 2
@@ -269,6 +271,50 @@ describe('UPDATE_GRANULE_SEARCH_QUERY', () => {
             granules: {
               ...initialGranuleState,
               browseOnly: true
+            }
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState,
+              collectionId: 'collectionId',
+              pageNum: 2
+            }
+          }
+        }
+      }
+    }
+
+    expect(queryReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_GRANULE_SEARCH_QUERY', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_GRANULE_SEARCH_QUERY,
+      payload: {
+        collectionId: 'collectionId',
+        pageNum: 2
+      }
+    }
+
+    const initial = {
+      ...initialState,
+      collection: {
+        ...initialState.collection,
+        byId: {
+          collectionId: {
+            granules: {
+              ...initialGranuleState
             }
           }
         }
