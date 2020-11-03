@@ -923,7 +923,6 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       const parent = []
       if (tag) {
         let element = tag.parentElement
-        // eslint-disable-next-line no-cond-assign
         while (element != null) {
           if (
             element.classList.contains('map')
@@ -936,7 +935,6 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       }
       // If the element that triggered the event is an `a` or `button` and is also inside
       // the leaflet map, prevent the clearing of the focused granule.
-      // if (tag && tag.length !== 0 && tag.parents('.map.leaflet-container').length > 0) return
       if (tag && tag.length !== 0 && parent.length > 0) return
 
       let granule = this.granuleAt(e.layerPoint)
