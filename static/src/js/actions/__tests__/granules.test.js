@@ -29,6 +29,7 @@ import {
   TOGGLE_SPATIAL_POLYGON_WARNING,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_AUTH,
+  UPDATE_GRANULE_FILTERS,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_RESULTS,
   UPDATE_PROJECT_GRANULE_RESULTS
@@ -1207,7 +1208,7 @@ describe('applyGranuleFilters', () => {
 
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
-        type: 'UPDATE_GRANULE_SEARCH_QUERY',
+        type: UPDATE_GRANULE_FILTERS,
         payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
       })
 
@@ -1264,7 +1265,7 @@ describe('applyGranuleFilters', () => {
 
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
-        type: 'UPDATE_GRANULE_SEARCH_QUERY',
+        type: UPDATE_GRANULE_FILTERS,
         payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
       })
 

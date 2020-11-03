@@ -625,11 +625,5 @@ export const excludeGranule = data => (dispatch) => {
     granuleId
   }))
 
-  // Reset the page number to 1 to update the UI
-  dispatch(actions.updateGranuleSearchQuery({
-    collectionId,
-    pageNum: 1
-  }))
-
   dispatch(actions.getSearchGranules())
 }

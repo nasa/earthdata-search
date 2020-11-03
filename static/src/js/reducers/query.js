@@ -5,6 +5,7 @@ import {
   RESTORE_FROM_URL,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_QUERY,
+  UPDATE_GRANULE_FILTERS,
   UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_REGION_QUERY
 } from '../constants/actionTypes'
@@ -67,7 +68,8 @@ const queryReducer = (state = initialState, action) => {
         }
       }
     }
-    case UPDATE_GRANULE_SEARCH_QUERY: {
+    // Updates the granule search query, throwing out all existing values
+    case UPDATE_GRANULE_FILTERS: {
       const { payload } = action
       const {
         collectionId
@@ -87,6 +89,36 @@ const queryReducer = (state = initialState, action) => {
               ...currentCollection,
               granules: {
                 ...initialGranuleState,
+                ...payload
+              }
+            }
+          }
+        }
+      }
+    }
+    // Updates the granule search query, keeping existing values
+    case UPDATE_GRANULE_SEARCH_QUERY: {
+      const { payload } = action
+      const {
+        collectionId
+      } = payload
+
+      const { collection = {} } = state
+      const { byId: collectionQueryById = {} } = collection
+      const { [collectionId]: currentCollection = {} } = collectionQueryById
+      const { granules = {} } = currentCollection
+
+      return {
+        ...state,
+        collection: {
+          ...state.collection,
+          byId: {
+            ...collectionQueryById,
+            [collectionId]: {
+              ...currentCollection,
+              granules: {
+                ...initialGranuleState,
+                ...granules,
                 ...payload
               }
             }
@@ -116,7 +148,8 @@ const queryReducer = (state = initialState, action) => {
                 excludedGranuleIds: [
                   ...excludedGranuleIds,
                   granuleId
-                ]
+                ],
+                pageNum: 1
               }
             }
           }
