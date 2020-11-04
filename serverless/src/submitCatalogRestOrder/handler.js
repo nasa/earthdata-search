@@ -97,6 +97,10 @@ const submitCatalogRestOrder = async (event, context) => {
     const granuleResponse = await request.get({
       uri: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
       qs: preparedGranuleParams,
+      qsStringifyOptions: {
+        indices: false,
+        arrayFormat: 'brackets'
+      },
       headers: {
         'Echo-Token': accessTokenWithClient,
         'Client-Id': getClientId().background

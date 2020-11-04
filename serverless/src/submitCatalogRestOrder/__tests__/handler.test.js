@@ -130,7 +130,7 @@ describe('submitCatalogRestOrder', () => {
     jest.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
 
     nock(/cmr/)
-      .get('/search/granules.json?collection_concept_id=C100000-EDSC')
+      .get('/search/granules.json?concept_id%5B%5D=G10000005-EDSC')
       .reply(200, {
         feed: {
           entry: [{
@@ -171,7 +171,7 @@ describe('submitCatalogRestOrder', () => {
             url: 'https://n5eil09e.ecs.edsc.org/egi/request'
           },
           granule_params: {
-            collection_concept_id: 'C100000-EDSC'
+            concept_id: ['G10000005-EDSC']
           }
         }])
       } else if (step === 2) {

@@ -32,6 +32,10 @@ export const constructOrderPayload = async (
   const granuleResponse = await request.get({
     uri: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
     qs: preparedGranuleParams,
+    qsStringifyOptions: {
+      indices: false,
+      arrayFormat: 'brackets'
+    },
     headers: {
       'Echo-Token': accessTokenWithClient,
       'Client-Id': getClientId().background
