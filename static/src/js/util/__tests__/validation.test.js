@@ -14,7 +14,7 @@ describe('#nullableValue', () => {
 
 describe('#nullableTemporal', () => {
   test('returns null for an empty temporal string', () => {
-    // We pass an invalid date object here, as that is what we recieve from Yup when an
+    // We pass an invalid date object here, as that is what we receive from Yup when an
     // empty string is passed
     expect(nullableTemporal(new Date('xx'), '')).toEqual(null)
   })

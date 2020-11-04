@@ -585,7 +585,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
  * Called when granule filters are submitted. Resets the granule query page, applies any granule filters,
  * gets the granules, and optionally closes the sidebar panel.
  * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
- * @param {Boolean} closePanel - If true, tells the overlay panel to close once the granules are recieved.
+ * @param {Boolean} closePanel - If true, tells the overlay panel to close once the granules are received.
  */
 export const applyGranuleFilters = (
   granuleFilters,

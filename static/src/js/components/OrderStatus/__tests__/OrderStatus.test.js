@@ -48,7 +48,7 @@ describe('OrderStatus component', () => {
     expect(props.onFetchRetrieval).toHaveBeenCalledWith(7, 'testToken')
   })
 
-  test('calls onFetchRetrieval when new props are recieved', () => {
+  test('calls onFetchRetrieval when new props are received', () => {
     const { enzymeWrapper, props } = setup()
     enzymeWrapper.find(OrderStatus).instance().componentWillReceiveProps({
       ...retrievalStatusProps,

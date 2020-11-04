@@ -90,7 +90,7 @@ describe('GranuleResultsList component', () => {
       expect(enzymeWrapper.find(GranuleResultsListBody).length).toEqual(1)
     })
 
-    test('recieves the correct height and width props', () => {
+    test('receives the correct height and width props', () => {
       const { enzymeWrapper } = setup('loaded')
 
       expect(enzymeWrapper.find(GranuleResultsListBody).prop('height')).toEqual(500)

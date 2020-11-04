@@ -989,7 +989,7 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ECHO ORDERS')
         expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your order has been created and sent to the data provider. You will recieve an email when your order is processed and ready to download.')
+        expect(body.find('.order-status-item__order-info').text()).toEqual('Your order has been created and sent to the data provider. You will receive an email when your order is processed and ready to download.')
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
@@ -1051,7 +1051,7 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ECHO ORDERS')
         expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your order has been created and sent to the data provider. You will recieve an email when your order is processed and ready to download.')
+        expect(body.find('.order-status-item__order-info').text()).toEqual('Your order has been created and sent to the data provider. You will receive an email when your order is processed and ready to download.')
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
@@ -1134,7 +1134,7 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ECHO ORDERS')
         expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your order has been created and sent to the data provider. You will recieve an email when your order is processed and ready to download.')
+        expect(body.find('.order-status-item__order-info').text()).toEqual('Your order has been created and sent to the data provider. You will receive an email when your order is processed and ready to download.')
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
@@ -1217,7 +1217,7 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ECHO ORDERS')
         expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The data provider has completed processing your order. You should have recieved an email with information regarding how to access your data from the data provider.')
+        expect(body.find('.order-status-item__order-info').text()).toEqual('The data provider has completed processing your order. You should have received an email with information regarding how to access your data from the data provider.')
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')

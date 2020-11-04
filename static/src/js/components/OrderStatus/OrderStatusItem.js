@@ -406,12 +406,12 @@ export class OrderStatusItem extends PureComponent {
       if (isEchoOrders) {
         if (stateFromOrderStatus === 'creating' || stateFromOrderStatus === 'in_progress') {
           progressPercentage = 0
-          orderInfo = 'Your order has been created and sent to the data provider. You will recieve an email when your order is processed and ready to download.'
+          orderInfo = 'Your order has been created and sent to the data provider. You will receive an email when your order is processed and ready to download.'
         }
 
         if (stateFromOrderStatus === 'complete') {
           progressPercentage = 100
-          orderInfo = 'The data provider has completed processing your order. You should have recieved an email with information regarding how to access your data from the data provider.'
+          orderInfo = 'The data provider has completed processing your order. You should have received an email with information regarding how to access your data from the data provider.'
         }
 
         if (stateFromOrderStatus === 'failed') {
