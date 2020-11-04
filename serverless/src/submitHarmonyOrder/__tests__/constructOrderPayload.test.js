@@ -262,7 +262,7 @@ describe('constructOrderPayload', () => {
       describe('with a point', () => {
         test('constructs a payload containing a shapefile representing the point', async () => {
           nock(/cmr/)
-            .get('/search/granules.json?point%5B0%5D=-77%2C%2034')
+            .get('/search/granules.json?point%5B%5D=-77%2C%2034')
             .reply(200, {
               feed: {
                 entry: [{
@@ -294,7 +294,7 @@ describe('constructOrderPayload', () => {
       describe('with a bounding box', () => {
         test('constructs a payload containing the bounding box', async () => {
           nock(/cmr/)
-            .get('/search/granules.json?bounding_box%5B0%5D=0%2C5%2C10%2C15')
+            .get('/search/granules.json?bounding_box%5B%5D=0%2C5%2C10%2C15')
             .reply(200, {
               feed: {
                 entry: [{
@@ -326,7 +326,7 @@ describe('constructOrderPayload', () => {
       describe('with a circle', () => {
         test('constructs a payload containing a shapefile representing the circle', async () => {
           nock(/cmr/)
-            .get('/search/granules.json?circle%5B0%5D=-77%2C%2034%2C%2020000')
+            .get('/search/granules.json?circle%5B%5D=-77%2C%2034%2C%2020000')
             .reply(200, {
               feed: {
                 entry: [{
@@ -358,7 +358,7 @@ describe('constructOrderPayload', () => {
       describe('with a polygon', () => {
         test('constructs a payload containing a shapefile representing the polygon', async () => {
           nock(/cmr/)
-            .get('/search/granules.json?polygon%5B0%5D=-29.8125%2C39.86484%2C-23.0625%2C-19.74405%2C15.75%2C20.745%2C-29.8125%2C39.86484')
+            .get('/search/granules.json?polygon%5B%5D=-29.8125%2C39.86484%2C-23.0625%2C-19.74405%2C15.75%2C20.745%2C-29.8125%2C39.86484')
             .reply(200, {
               feed: {
                 entry: [{
@@ -392,7 +392,7 @@ describe('constructOrderPayload', () => {
       describe('with a point', () => {
         test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the point', async () => {
           nock(/cmr/)
-            .get('/search/granules.json?point%5B0%5D=-77%2C%2034')
+            .get('/search/granules.json?point%5B%5D=-77%2C%2034')
             .reply(200, {
               feed: {
                 entry: [{
@@ -433,7 +433,7 @@ describe('constructOrderPayload', () => {
       describe('with a bounding box', () => {
         test('constructs a payload containing the bounding box', async () => {
           nock(/cmr/)
-            .get('/search/granules.json?bounding_box%5B0%5D=5%2C0%2C15%2C10')
+            .get('/search/granules.json?bounding_box%5B%5D=5%2C0%2C15%2C10')
             .reply(200, {
               feed: {
                 entry: [{
@@ -468,7 +468,7 @@ describe('constructOrderPayload', () => {
       describe('with a circle', () => {
         test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the circle', async () => {
           nock(/cmr/)
-            .get('/search/granules.json?circle%5B0%5D=-77%2C%2034%2C%2020000')
+            .get('/search/granules.json?circle%5B%5D=-77%2C%2034%2C%2020000')
             .reply(200, {
               feed: {
                 entry: [{
@@ -509,7 +509,7 @@ describe('constructOrderPayload', () => {
       describe('with a polygon', () => {
         test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the polygon', async () => {
           nock(/cmr/)
-            .get('/search/granules.json?polygon%5B0%5D=-29.8125%2C39.86484%2C-23.0625%2C-19.74405%2C15.75%2C20.745%2C-29.8125%2C39.86484')
+            .get('/search/granules.json?polygon%5B%5D=-29.8125%2C39.86484%2C-23.0625%2C-19.74405%2C15.75%2C20.745%2C-29.8125%2C39.86484')
             .reply(200, {
               feed: {
                 entry: [{
