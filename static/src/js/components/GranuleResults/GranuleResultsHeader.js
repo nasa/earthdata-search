@@ -180,13 +180,9 @@ class GranuleResultsHeader extends Component {
       mapProjection,
       onChangePanelView,
       onToggleAboutCwicModal,
-      onToggleSecondaryOverlayPanel,
       pageNum,
-      panelView,
-      secondaryOverlayPanel
+      panelView
     } = this.props
-
-    const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
 
     const {
       isLoaded: collectionSearchIsLoaded
@@ -291,32 +287,6 @@ class GranuleResultsHeader extends Component {
                         </Button>
                       </span>
                     </div>
-                    {
-                      granuleFiltersOpen
-                        ? (
-                          <Button
-                            className="granule-results-header__link"
-                            onClick={() => onToggleSecondaryOverlayPanel(false)}
-                            variant="link"
-                            bootstrapVariant="link"
-                            icon="times"
-                            label="Close Granule Filters"
-                          >
-                            Granule Filters
-                          </Button>
-                        ) : (
-                          <Button
-                            className="granule-results-header__link"
-                            onClick={() => onToggleSecondaryOverlayPanel(true)}
-                            variant="link"
-                            bootstrapVariant="link"
-                            icon="filter"
-                            label="Open Granule Filters"
-                          >
-                            Granule Filters
-                          </Button>
-                        )
-                    }
                   </>
                 )
               }
@@ -397,33 +367,6 @@ class GranuleResultsHeader extends Component {
                             </span>
                           </OverlayTrigger>
                         </div>
-                      </div>
-                      <div className="col-auto">
-                        {granuleFiltersOpen ? (
-                          <Button
-                            className="granule-results-header__link"
-                            onClick={() => onToggleSecondaryOverlayPanel(false)}
-                            variant="link"
-                            bootstrapVariant="link"
-                            icon="times"
-                            title="Close filters"
-                            label="Close Granule Filters"
-                          >
-                            Granule Filters
-                          </Button>
-                        ) : (
-                          <Button
-                            className="granule-results-header__link"
-                            onClick={() => onToggleSecondaryOverlayPanel(true)}
-                            variant="link"
-                            bootstrapVariant="link"
-                            icon="filter"
-                            title="Filter granules"
-                            label="Open Granule Filters"
-                          >
-                            Granule Filters
-                          </Button>
-                        )}
                       </div>
                       {
                         excludedGranuleIds.length > 0 && (

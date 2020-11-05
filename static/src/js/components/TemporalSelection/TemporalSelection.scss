@@ -33,6 +33,14 @@
       font-size: 0.925rem;
     }
   }
+
+  &__inputs {
+    .sidebar-section & {
+      > .row {
+        flex-direction: column;
+      }
+    }
+  }
 }
 
 .input-range__track,

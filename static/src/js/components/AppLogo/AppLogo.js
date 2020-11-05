@@ -1,5 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {
+  Route,
+  Switch
+} from 'react-router-dom'
+
+
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { isDefaultPortal } from '../../util/portals'
 
@@ -50,7 +57,7 @@ const AppLogo = ({
   }
 
   return (
-    <header className="app-logo">
+    <nav className="app-logo">
       <h1 className="app-logo__site-logo">
         <a
           className="app-logo__site-meatball"
@@ -70,7 +77,17 @@ const AppLogo = ({
           <span className="app-logo__site-name-ent app-logo__site-name-ent--s">{title}</span>
         </a>
       </h1>
-    </header>
+      <Switch>
+        <Route path="/admin">
+          <PortalLinkContainer
+            className="app-logo__header-site-area-link"
+            to="/admin"
+          >
+            <h2 className="app-logo__header-site-area-title">Admin</h2>
+          </PortalLinkContainer>
+        </Route>
+      </Switch>
+    </nav>
   )
 }
 

@@ -32,6 +32,7 @@ import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
+import AppHeader from './components/AppHeader/AppHeader'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -74,6 +75,7 @@ class App extends Component {
               <ErrorBannerContainer />
               <AuthTokenContainer>
                 <UrlQueryContainer>
+                  <AppHeader />
                   <Switch>
                     <Route
                       path="/admin"

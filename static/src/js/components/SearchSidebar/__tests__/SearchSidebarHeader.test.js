@@ -33,31 +33,6 @@ describe('SearchSidebarHeader component', () => {
     expect(enzymeWrapper.find(SearchFormContainer).exists()).toBeTruthy()
   })
 
-  test('displays a "Back to collections" link on granules page', () => {
-    const { enzymeWrapper } = setup({
-      location: {
-        pathname: '/search/granules',
-        search: '?p=C12345-EDSC'
-      }
-    })
-
-    expect(enzymeWrapper.find('.search-sidebar-header__link-wrapper--is-active').length).toBe(1)
-  })
-
-  test('clicking the "Back to collections" link calls onFocusedCollectionChange', () => {
-    const { enzymeWrapper, props } = setup({
-      location: {
-        pathname: '/search/granules',
-        search: '?p=C12345-EDSC'
-      }
-    })
-
-    enzymeWrapper.find(PortalLinkContainer).simulate('click')
-
-    expect(props.onFocusedCollectionChange).toBeCalledTimes(1)
-    expect(props.onFocusedCollectionChange).toBeCalledWith('')
-  })
-
   test('does not display a "Back to collections" link on search page', () => {
     const { enzymeWrapper } = setup({
       location: {

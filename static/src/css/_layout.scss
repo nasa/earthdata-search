@@ -35,32 +35,6 @@
     }
   }
 
-  &__header-site-area-link {
-    display: block;
-    position: relative;
-    align-self: flex-end;
-    margin-left: 2rem;
-    margin-bottom: 0.75rem;
-
-    &:before {
-      content: "";
-      display: block;
-      position: absolute;
-      left: -1.0625rem;
-      bottom: 0;
-      height: 3.25rem;
-      width: 1px;
-      background-color: $color__black--300;
-    }
-  }
-
-  &__header-site-area-title {
-    margin: 0;
-    font-weight: 300;
-    font-size: 1.75rem;
-    color: $color__blue--dark;
-  }
-
   &__content {
     display: flex;
     width: 100%;

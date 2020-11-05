@@ -164,7 +164,7 @@ export class TemporalSelection extends Component {
       <div className={classes.temporalSelection}>
         <div className="temporal-selection__inputs">
           <Row>
-            <Col sm={12} md={6}>
+            <Col>
               <Form.Group controlId={`${controlId}__start-date`} className={classes.inputStart}>
                 <Form.Label className="temporal-selection__label">
                   Start
@@ -182,7 +182,7 @@ export class TemporalSelection extends Component {
                 />
               </Form.Group>
             </Col>
-            <Col sm={12} md={6}>
+            <Col>
               <Form.Group controlId={`${controlId}__end-date`} className={classes.inputEnd}>
                 <Form.Label className="temporal-selection__label">
                   End

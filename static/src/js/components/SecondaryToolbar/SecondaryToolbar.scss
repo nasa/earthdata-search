@@ -1,6 +1,6 @@
 .secondary-toolbar {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   position: relative;
   z-index: 2;
 
@@ -10,16 +10,65 @@
 
   .button,
   .dropdown {
-    flex-shrink: 0;
-    flex-grow: 0;
+    display: flex;
+    flex-shrink: 1;
+    flex-grow: 1;
     white-space: nowrap;
-    margin-left: $spacer/2;
+  }
+
+  .button {
+    align-items: center;
   }
 
   &__project-name-dropdown {
     .dropdown-menu {
       padding: $spacer/2;
     }
+  }
+
+  &__project-name-dropdown-toggle {
+    &:after {
+      display: none;
+    }
+  }
+
+  &__back,
+  &__login,
+  &__project {
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__back,
+  &__project,
+  &__login,
+  &__project-name-dropdown-toggle,
+  &__user-dropdown-toggle {
+    position: relative;
+    padding: 0 1rem;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+    border-left: 1px solid $color__black--700 !important;
+    border-right: 1px solid transparent !important;
+    background: transparent;
+    color: $color__black--300;
+
+    .show > &,
+    &:hover {
+      background-color: rgba($color__black, 0.2) !important;
+      color: $color__black--100 !important;
+    }
+  }
+
+  &__project-name-form {
+    .input-group {
+      width: 200px;
+    }
+  }
+
+  &__username {
+    margin-right: 0.5rem;
   }
 
   &__project-name-dropdown-toggle {

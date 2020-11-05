@@ -1,16 +1,25 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 
 import './SidebarSection.scss'
 
 const SidebarSection = (props) => {
   const {
     children,
-    sectionTitle
+    sectionTitle,
+    padded
   } = props
 
+  const classes = classNames([
+    'sidebar-section',
+    {
+      'sidebar-section--padded': padded
+    }
+  ])
+
   return (
-    <section className="sidebar-section">
+    <section className={classes}>
       {
         sectionTitle && (
           <header className="sidebar-section__header">
@@ -24,12 +33,14 @@ const SidebarSection = (props) => {
 }
 
 SidebarSection.defaultProps = {
-  sectionTitle: null
+  sectionTitle: null,
+  padded: false
 }
 
 SidebarSection.propTypes = {
   sectionTitle: PropTypes.string,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  padded: PropTypes.bool
 }
 
 export default SidebarSection

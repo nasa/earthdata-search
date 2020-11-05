@@ -16,16 +16,14 @@ import FacetsModalContainer
   from '../../containers/FacetsModalContainer/FacetsModalContainer'
 import GranuleResultsHighlightsContainer
   from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
-import GranuleFiltersPanelContainer
-  from '../../containers/GranuleFiltersPanelContainer/GranuleFiltersPanelContainer'
+import GranuleFiltersContainer
+  from '../../containers/GranuleFiltersContainer/GranuleFiltersContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SearchPanelsContainer
   from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
 import SearchSidebarHeaderContainer
   from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
-import SecondaryToolbarContainer
-  from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
@@ -61,7 +59,7 @@ export const Search = ({
               <GranuleResultsHighlightsContainer />
             </Route>
             <Route exact path={`${path}/granules`}>
-              <CollectionDetailsHighlightsContainer />
+              <GranuleFiltersContainer />
             </Route>
             <Route exact path={`${path}/granules/granule-details`}>
               <CollectionDetailsHighlightsContainer />
@@ -73,16 +71,6 @@ export const Search = ({
         </SidebarSection>
       </SidebarContainer>
       <div className="route-wrapper__content">
-        <header className="route-wrapper__header">
-          <div className="route-wrapper__header-primary">
-            <SecondaryToolbarContainer />
-          </div>
-        </header>
-        <Switch>
-          <Route exact path={`${path}/granules`}>
-            <GranuleFiltersPanelContainer />
-          </Route>
-        </Switch>
         <RelatedUrlsModalContainer />
         <FacetsModalContainer />
         <PortalFeatureContainer advancedSearch>

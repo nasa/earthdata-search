@@ -1,7 +1,10 @@
 .sidebar-section {
   min-height: 0;
-  margin: 0.5*$spacer;
-  background-color: $color__black--900;
+  color: $color__black--400;
+
+  &--padded {
+    padding: 0.5*$spacer;
+  }
 
   &__header {
     display: flex;

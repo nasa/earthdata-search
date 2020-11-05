@@ -7,7 +7,7 @@ import SecondaryToolbar from '../../../components/SecondaryToolbar/SecondaryTool
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     authToken: '',
     earthdataEnvironment: 'prod',
@@ -19,7 +19,10 @@ function setup() {
     savedProject: {},
     onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),
-    onChangePath: jest.fn()
+    onChangePath: jest.fn(),
+    onFetchContactInfo: jest.fn(),
+    ursProfile: {},
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<SecondaryToolbarContainer {...props} />)
@@ -36,4 +39,18 @@ describe('SecondaryToolbarContainer component', () => {
 
     expect(enzymeWrapper.find(SecondaryToolbar).props().authToken).toEqual('')
   })
+
+  // describe('when a user is logged in', () => {
+  //   describe('when a ursProfile does not exist', () => {
+  //     test.only('requests the contact info', () => {
+  //       const { props } = setup()
+
+  //       // enzymeWrapper.setProps({ authToken: 'token' })
+
+  //       console.log(props.onFetchContactInfo)
+
+  //       expect(props.onFetchContactInfo).toHaveBeenCalledTimes(1)
+  //     })
+  //   })
+  // })
 })

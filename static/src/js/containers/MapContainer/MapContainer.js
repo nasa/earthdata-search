@@ -205,12 +205,13 @@ export class MapContainer extends Component {
     if (!document) return
 
     const leafletControlContainer = document.querySelector('.leaflet-control-container')
+    const appHeader = document.querySelector('.app-header')
     const routeWrapper = document.querySelector('.route-wrapper')
 
     // If the control container and the route wrapper are defined, set the leaflet controls to
     // the same height as the route wrapper.
-    if (leafletControlContainer && routeWrapper) {
-      leafletControlContainer.style.height = `${routeWrapper.clientHeight}px`
+    if (leafletControlContainer && routeWrapper && appHeader) {
+      leafletControlContainer.style.height = `${routeWrapper.clientHeight + appHeader.clientHeight}px`
     }
   }
 

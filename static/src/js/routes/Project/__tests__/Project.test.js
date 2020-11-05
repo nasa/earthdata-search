@@ -69,16 +69,6 @@ describe('Project component', () => {
 
       expect(enzymeWrapper.find(SavedProjectsContainer).length).toBe(1)
     })
-
-    test('displays a header', () => {
-      const { enzymeWrapper } = setup({
-        location: {
-          search: ''
-        }
-      })
-
-      expect(enzymeWrapper.find(AppLogoContainer).length).toBe(1)
-    })
   })
 
   describe('Projects page', () => {

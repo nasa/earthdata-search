@@ -24,6 +24,9 @@ function setup(state, overrideProps) {
     onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),
     onChangePath: jest.fn(),
+    ursProfile: {
+      first_name: 'First'
+    },
     ...overrideProps
   }
 

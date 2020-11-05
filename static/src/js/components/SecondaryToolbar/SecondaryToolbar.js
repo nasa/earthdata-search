@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Col, Dropdown, Form } from 'react-bootstrap'
+import {
+  Col,
+  Dropdown,
+  Form,
+  FormControl,
+  InputGroup
+} from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
 
@@ -27,7 +33,7 @@ class SecondaryToolbar extends Component {
 
     this.state = {
       projectDropdownOpen: false,
-      projectName: name || 'Untitled Project'
+      projectName: name
     }
 
     this.handleLogout = this.handleLogout.bind(this)
@@ -56,7 +62,7 @@ class SecondaryToolbar extends Component {
   }
 
   onInputChange(event) {
-    this.setState({ projectName: event.target.value })
+    this.setState({ newProjectName: event.target.value })
   }
 
   /**
@@ -69,16 +75,16 @@ class SecondaryToolbar extends Component {
 
   handleNameSubmit() {
     const { onUpdateProjectName } = this.props
-    const { projectName } = this.state
+    const { newProjectName } = this.state
 
-    const newName = projectName || 'Untitled Project'
+    const newName = newProjectName || 'Untitled Project'
 
     this.setState({
       projectDropdownOpen: false,
       projectName: newName
     })
 
-    onUpdateProjectName(projectName)
+    onUpdateProjectName(newProjectName)
   }
 
   handleKeypress(event) {
@@ -90,16 +96,26 @@ class SecondaryToolbar extends Component {
   }
 
   render() {
-    const { projectDropdownOpen, projectName } = this.state
+    const {
+      projectDropdownOpen,
+      projectName,
+      newProjectName
+    } = this.state
+
     const {
       authToken,
       earthdataEnvironment,
       projectCollectionIds,
       location,
       portal,
-      onChangePath
+      onChangePath,
+      savedProject,
+      ursProfile
     } = this.props
 
+    const { first_name: firstName = '' } = ursProfile
+
+    const { name: savedProjectName = '' } = savedProject
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
 
@@ -116,21 +132,18 @@ class SecondaryToolbar extends Component {
     })
     const backLink = (
       <PortalLinkContainer
-        className="collection-results__item-title-link"
+        type="button"
+        className="secondary-toolbar__back"
+        bootstrapVariant="light"
+        icon="arrow-circle-o-left"
+        label="Back to Search"
         to={{
           pathname: '/search',
           search: newSearch
         }}
         onClick={() => { onChangePath(`/search${newSearch}`) }}
       >
-        <Button
-          className="secondary-toolbar__back"
-          bootstrapVariant="light"
-          icon="arrow-circle-o-left"
-          label="Back to Search"
-        >
-          Back to Search
-        </Button>
+        Back to Search
       </PortalLinkContainer>
     )
 
@@ -150,6 +163,7 @@ class SecondaryToolbar extends Component {
       }
       return (
         <PortalLinkContainer
+          type="button"
           onClick={() => {
             onChangePath(`/projects${location.search}`)
           }}
@@ -157,14 +171,12 @@ class SecondaryToolbar extends Component {
             pathname: '/projects',
             search: location.search
           }}
+          className="secondary-toolbar__project"
+          bootstrapVariant="light"
+          label="View Project"
+          icon="folder"
         >
-          <Button
-            className="secondary-toolbar__project"
-            bootstrapVariant="light"
-            label="View Project"
-          >
-            My Project
-          </Button>
+          My Project
         </PortalLinkContainer>
       )
     }
@@ -186,9 +198,18 @@ class SecondaryToolbar extends Component {
     const loggedInDropdown = (
       <Dropdown className="secondary-toolbar__user-dropdown">
         <Dropdown.Toggle
+          label="User menu"
           className="secondary-toolbar__user-dropdown-toggle"
           variant="light"
+          as={Button}
         >
+          {
+            firstName && (
+              <span className="secondary-toolbar__username">
+                {firstName}
+              </span>
+            )
+          }
           <i className="fa fa-user" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
@@ -246,63 +267,80 @@ class SecondaryToolbar extends Component {
     )
 
     const saveProjectDropdown = (
-      <Dropdown
-        show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
-        alignRight
-      >
-        <Dropdown.Toggle
-          className="secondary-toolbar__project-name-dropdown-toggle"
-          variant="light"
-          onClick={this.onToggleProjectDropdown}
-        >
-          <i className="fa fa-floppy-o" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Form inline className="flex-nowrap">
-            <Form.Row>
-              <Col>
-                <Form.Control
-                  className="secondary-toolbar__project-name-input"
-                  name="projectName"
-                  value={projectName}
-                  onChange={this.onInputChange}
-                  onKeyPress={this.handleKeypress}
-                />
-                <Button
-                  className="secondary-toolbar__button secondary-toolbar__button--submit"
-                  bootstrapVariant="primary"
-                  label="Save project name"
-                  onClick={this.handleNameSubmit}
-                >
-                  Save
-                </Button>
-              </Col>
-            </Form.Row>
-          </Form>
-        </Dropdown.Menu>
-      </Dropdown>
+      <>
+        {
+          (projectCollectionIds.length === 0 && !projectName) && (
+            <Dropdown
+              show={projectDropdownOpen}
+              className="secondary-toolbar__project-name-dropdown"
+              onToggle={this.onToggleProjectDropdown}
+              alignRight
+            >
+              <Dropdown.Toggle
+                className="secondary-toolbar__project-name-dropdown-toggle"
+                variant="light"
+                onClick={this.onToggleProjectDropdown}
+                as={Button}
+                icon="floppy-o"
+                label="Create a project with your current search"
+              >
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Form inline className="flex-nowrap secondary-toolbar__project-name-form">
+                  <Form.Row>
+                    <Col>
+                      <InputGroup>
+                        <FormControl
+                          className="secondary-toolbar__project-name-input"
+                          name="projectName"
+                          value={newProjectName}
+                          placeholder="Untitled Project"
+                          onChange={this.onInputChange}
+                          onKeyPress={this.handleKeypress}
+                        />
+                        <InputGroup.Append>
+                          <Button
+                            className="secondary-toolbar__button secondary-toolbar__button--submit"
+                            bootstrapVariant="primary"
+                            label="Save project name"
+                            onClick={this.handleNameSubmit}
+                          >
+                            Save
+                          </Button>
+                        </InputGroup.Append>
+                      </InputGroup>
+                    </Col>
+                  </Form.Row>
+                </Form>
+              </Dropdown.Menu>
+            </Dropdown>
+          )
+        }
+      </>
     )
 
+    const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn && !savedProjectName
+    const showProjectDropdown = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
+
     return (
-      <section className="secondary-toolbar">
+      <nav className="secondary-toolbar">
         {
           isPath(location.pathname, ['/projects']) && backLink
         }
         <PortalFeatureContainer authentication>
           <>
             {
-              (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && projectCollectionIds.length > 0) && projectLink
+              showProjectDropdown && projectLink
             }
             {
-              pathStartsWith(location.pathname, ['/search']) && loggedIn && saveProjectDropdown
+              showSaveProjectDropdown && saveProjectDropdown
             }
             {
               !loggedIn ? loginLink : loggedInDropdown
             }
           </>
         </PortalFeatureContainer>
-      </section>
+      </nav>
     )
   }
 }
@@ -316,7 +354,8 @@ SecondaryToolbar.propTypes = {
   onUpdateProjectName: PropTypes.func.isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  savedProject: PropTypes.shape({}).isRequired
+  savedProject: PropTypes.shape({}).isRequired,
+  ursProfile: PropTypes.shape({}).isRequired
 }
 
 export default SecondaryToolbar

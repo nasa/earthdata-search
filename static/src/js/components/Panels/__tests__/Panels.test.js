@@ -881,56 +881,23 @@ describe('Panels component', () => {
   })
 
   describe('calculateMaxWidth', () => {
-    describe('when the available space is greater that 1000px', () => {
-      test('calculates the correct width', () => {
-        const querySelectorMock = jest.fn((selector) => {
-          if (selector === '.route-wrapper__content') {
-            return {
-              offsetWidth: 1200
-            }
+    test('calculates the correct width', () => {
+      const querySelectorMock = jest.fn((selector) => {
+        if (selector === '.route-wrapper__content') {
+          return {
+            offsetWidth: 1200
           }
-          if (selector === '.secondary-toolbar') {
-            return {
-              offsetWidth: 150
-            }
-          }
-        })
-
-        document.querySelector = querySelectorMock
-
-        const { enzymeWrapper } = setup()
-
-        const maxWidth = enzymeWrapper.instance().calculateMaxWidth()
-
-        // 1020 = 1200 - 150 - 30
-        expect(maxWidth).toEqual(1020)
+        }
       })
-    })
 
-    describe('when the available space is greater that 1000px', () => {
-      test('calculates the correct width', () => {
-        const querySelectorMock = jest.fn((selector) => {
-          if (selector === '.route-wrapper__content') {
-            return {
-              offsetWidth: 900
-            }
-          }
-          if (selector === '.secondary-toolbar') {
-            return {
-              offsetWidth: 150
-            }
-          }
-        })
+      document.querySelector = querySelectorMock
 
-        document.querySelector = querySelectorMock
+      const { enzymeWrapper } = setup()
 
-        const { enzymeWrapper } = setup()
+      const maxWidth = enzymeWrapper.instance().calculateMaxWidth()
 
-        const maxWidth = enzymeWrapper.instance().calculateMaxWidth()
-
-        // 845 = 900 - 55
-        expect(maxWidth).toEqual(845)
-      })
+      // 1020 = 1200 - 150 - 30
+      expect(maxWidth).toEqual(1145)
     })
   })
 
