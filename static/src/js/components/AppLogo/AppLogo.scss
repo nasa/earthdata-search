@@ -28,7 +28,7 @@
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 0 center;
-    margin-right: 0.25rem;
+    margin-right: 0.5rem;
     transition: background 0.2s ease-in-out;
     cursor: pointer;
     width: 30px;
@@ -103,8 +103,8 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    height: 40px;
-    max-width: 95px;
+    height: 24px;
+    max-width: 57px;
     text-indent: inherit;
     margin: 0;
     margin-right: $spacer*0.75;
@@ -113,7 +113,7 @@
 
     img {
       display: block;
-      height: 40px;
+      height: 24px;
     }
   }
 

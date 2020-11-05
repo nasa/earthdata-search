@@ -129,8 +129,12 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
   // other cases, getGranules will be requested using the granule search query params.
-  // if ((pathname.includes('/search') && !newPathname) || (newPathname && newPathname.includes('/search'))) {
-  if (pathname === '/' || pathname.includes('/search')) {
+  if (
+    pathname === '/'
+    || pathname.includes('/search')
+    // matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
+    || pathname.match(/\/portal\/\w*/)
+  ) {
     dispatch(actions.getCollections())
 
     // Granules Search
