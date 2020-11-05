@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { StaticRouter } from 'react-router'
+
 import { retrievalStatusProps, retrievalStatusPropsTwo } from './mocks'
 import { Well } from '../../Well/Well'
 import { OrderStatus } from '../OrderStatus'
@@ -62,7 +63,8 @@ describe('OrderStatus component', () => {
     beforeEach(() => {
       jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
       jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
-        defaultPortal: 'edsc'
+        defaultPortal: 'edsc',
+        env: 'prod'
       }))
     })
 
@@ -79,6 +81,16 @@ describe('OrderStatus component', () => {
     test('status link has correct href', () => {
       const { enzymeWrapper } = setup()
       expect(enzymeWrapper.find(Well.Introduction).find('a').at(1).props().href).toEqual('http://localhost/downloads')
+    })
+
+    test('status link has correct href when earthdataEnvironment is different than the deployed environment', () => {
+      jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+        defaultPortal: 'edsc',
+        env: 'uat'
+      }))
+
+      const { enzymeWrapper } = setup()
+      expect(enzymeWrapper.find(Well.Introduction).find('a').at(1).props().href).toEqual('http://localhost/downloads?ee=prod')
     })
   })
 

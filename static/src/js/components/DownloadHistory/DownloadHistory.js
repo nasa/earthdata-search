@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 
+import deployedEnvironment from '../../../../../sharedUtils/deployedEnvironment'
 import pluralize from '../../util/pluralize'
 
 import Button from '../Button/Button'
@@ -56,10 +57,13 @@ export class DownloadHistory extends Component {
 
   render() {
     const {
+      earthdataEnvironment,
       retrievalHistory,
       retrievalHistoryLoading,
       retrievalHistoryLoaded
     } = this.props
+
+    const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
 
     return (
       <>
@@ -112,7 +116,7 @@ export class DownloadHistory extends Component {
                           <td>
                             <PortalLinkContainer
                               portalId={portalId}
-                              to={`/downloads/${id}`}
+                              to={`/downloads/${id}${eeLink}`}
                             >
                               {this.retrievalDescription(collections)}
                             </PortalLinkContainer>
@@ -141,6 +145,7 @@ DownloadHistory.defaultProps = {
 }
 
 DownloadHistory.propTypes = {
+  earthdataEnvironment: PropTypes.string.isRequired,
   retrievalHistory: PropTypes.arrayOf(
     PropTypes.shape({})
   ),

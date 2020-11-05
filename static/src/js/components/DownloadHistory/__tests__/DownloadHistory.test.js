@@ -23,6 +23,7 @@ describe('DownloadHistory component', () => {
     test('renders a spinner when retrievals are loading', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
+        earthdataEnvironment: 'prod',
         retrievalHistory: [],
         retrievalHistoryLoading: true,
         retrievalHistoryLoaded: false,
@@ -35,6 +36,7 @@ describe('DownloadHistory component', () => {
     test('renders a message when no retrievals exist', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
+        earthdataEnvironment: 'prod',
         retrievalHistory: [],
         retrievalHistoryLoading: false,
         retrievalHistoryLoaded: true,
@@ -49,6 +51,7 @@ describe('DownloadHistory component', () => {
     test('renders a table when a retrieval exists with one collection that has no title', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
+        earthdataEnvironment: 'prod',
         retrievalHistory: [{
           id: '8069076',
           jsondata: {},
@@ -68,6 +71,7 @@ describe('DownloadHistory component', () => {
     test('renders a table when a retrieval exists with one collection', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
+        earthdataEnvironment: 'prod',
         retrievalHistory: [{
           id: '8069076',
           jsondata: {},
@@ -89,6 +93,7 @@ describe('DownloadHistory component', () => {
     test('renders a table when a retrieval exists with two collections', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
+        earthdataEnvironment: 'prod',
         retrievalHistory: [{
           id: '8069076',
           jsondata: {},
@@ -112,6 +117,7 @@ describe('DownloadHistory component', () => {
     test('renders links correctly when portals were used to place an order', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
+        earthdataEnvironment: 'prod',
         retrievalHistory: [{
           id: '8069076',
           jsondata: {
@@ -130,6 +136,32 @@ describe('DownloadHistory component', () => {
       expect(enzymeWrapper.find(Table).length).toBe(1)
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
       expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual('/downloads/8069076')
+      expect(enzymeWrapper.find(PortalLinkContainer).prop('portalId')).toEqual('test')
+      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title')
+    })
+
+    test('renders links correctly when the earthdataEnvironment doesn\'t match the deployed environment', () => {
+      const { enzymeWrapper } = setup({
+        authToken: 'testToken',
+        earthdataEnvironment: 'uat',
+        retrievalHistory: [{
+          id: '8069076',
+          jsondata: {
+            portal_id: 'test'
+          },
+          created_at: '2019-08-25T11:58:14.390Z',
+          collections: [{
+            title: 'Collection Title'
+          }]
+        }],
+        retrievalHistoryLoading: false,
+        retrievalHistoryLoaded: true,
+        onDeleteRetrieval: jest.fn()
+      })
+
+      expect(enzymeWrapper.find(Table).length).toBe(1)
+      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
+      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual('/downloads/8069076?ee=uat')
       expect(enzymeWrapper.find(PortalLinkContainer).prop('portalId')).toEqual('test')
       expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title')
     })

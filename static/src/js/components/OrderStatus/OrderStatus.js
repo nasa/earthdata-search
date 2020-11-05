@@ -7,6 +7,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import Skeleton from '../Skeleton/Skeleton'
 
 import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
+import deployedEnvironment from '../../../../../sharedUtils/deployedEnvironment'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
@@ -75,6 +76,8 @@ export class OrderStatus extends Component {
 
     const { edscHost } = getEnvironmentConfig()
 
+    const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
+
     const introduction = (
       <p>
         {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
@@ -82,7 +85,7 @@ export class OrderStatus extends Component {
           {`${edscHost}${portalPath(portal)}/downloads/${id}`}
         </a>
         {' or the '}
-        <a href={`${edscHost}${portalPath(portal)}/downloads`}>Download Status and History</a>
+        <a href={`${edscHost}${portalPath(portal)}/downloads${eeLink}`}>Download Status and History</a>
         {' page.'}
       </p>
     )

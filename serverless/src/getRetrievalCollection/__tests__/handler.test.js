@@ -1,5 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
+import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
@@ -36,6 +37,7 @@ afterEach(() => {
 describe('getRetrievalCollection', () => {
   test('correctly retrieves retrievals', async () => {
     process.env.obfuscationSpin = 1000
+    const determineEarthdataEnvironmentMock = jest.spyOn(determineEarthdataEnvironment, 'determineEarthdataEnvironment')
 
     dbTracker.on('query', (query) => {
       query.response([{
@@ -62,7 +64,8 @@ describe('getRetrievalCollection', () => {
     const retrievalResponse = await getRetrievalCollection({
       pathParameters: {
         id: 1
-      }
+      },
+      headers: { 'Earthdata-Env': 'prod' }
     }, {})
 
     const { queries } = dbTracker.queries
@@ -84,6 +87,8 @@ describe('getRetrievalCollection', () => {
       urs_id: 'test_user'
     }))
     expect(statusCode).toEqual(200)
+    expect(determineEarthdataEnvironmentMock).toBeCalledTimes(1)
+    expect(determineEarthdataEnvironmentMock).toBeCalledWith({ 'Earthdata-Env': 'prod' })
   })
 
   test('correctly returns an error', async () => {

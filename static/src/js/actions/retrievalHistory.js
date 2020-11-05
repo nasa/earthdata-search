@@ -26,12 +26,14 @@ export const removeRetrievalHistory = retrievalId => ({
 /**
  * Fetch a retrieval from the database
  */
-export const fetchRetrievalHistory = () => (dispatch, getState) => {
+export const fetchRetrievalHistory = ee => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
-
+  let earthdataEnvironment = ee
+  if (!ee) {
+    earthdataEnvironment = getEarthdataEnvironment(state)
+  }
   const { authToken } = state
 
   dispatch(setRetrievalHistoryLoading())
