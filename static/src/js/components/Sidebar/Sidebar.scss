@@ -27,6 +27,7 @@
   }
 
   &__content {
+    overflow-x: hidden;
     min-height: 0;
     flex: 0 1 100%;
   }

@@ -37,10 +37,4 @@ describe('Downloads component', () => {
 
     expect(enzymeWrapper.exists()).toBeTruthy()
   })
-
-  test('displays a header', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(AppLogoContainer).length).toBe(1)
-  })
 })

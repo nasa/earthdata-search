@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import SimpleBar from 'simplebar-react'
 
-import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
-
 import './Sidebar.scss'
 
 const Sidebar = ({
@@ -21,7 +19,6 @@ const Sidebar = ({
   return (
     <section className={className}>
       <div className="sidebar__inner">
-        <AppLogoContainer />
         { headerChildren }
         <SimpleBar
           className="sidebar__content"

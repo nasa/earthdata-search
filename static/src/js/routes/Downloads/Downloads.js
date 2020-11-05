@@ -9,13 +9,10 @@ import {
 
 import actions from '../../actions/index'
 
-import SecondaryToolbarContainer
-  from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import OrderStatusContainer from '../../containers/OrderStatusContainer/OrderStatusContainer'
 import CollectionContainer from '../../containers/CollectionContainer/CollectionContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import DownloadHistoryContainer from '../../containers/DownloadHistoryContainer/DownloadHistoryContainer'
-import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
 
 
 const mapStateToProps = state => ({
@@ -51,10 +48,6 @@ export const Downloads = ({
         <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
           <div className="route-wrapper__content">
             <header className="route-wrapper__header">
-              <div className="route-wrapper__header-primary">
-                <AppLogoContainer />
-                <SecondaryToolbarContainer />
-              </div>
               <div className="route-wrapper__header-secondary">
                 <Switch>
                   <Route exact path={`${path}/:id`}>

@@ -1,8 +1,17 @@
 .app-logo {
   color: $color__white;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    .app-logo__site-meatball {
+      background-image: url('~Images/app-logo_hover.png');
+    }
+  }
 
   &__site-logo {
-    padding: 2rem 0 0.5rem 0.75rem;
+    padding: 0 0 0 1.3rem;
+    margin-bottom: 0;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -16,14 +25,14 @@
     display: flex;
     align-items: flex-end;
     background-image: url('~Images/app-logo.png');
-    background-size: 52px 42px;
+    background-size: 100%;
     background-repeat: no-repeat;
     background-position: 0 center;
     margin-right: 0.25rem;
     transition: background 0.2s ease-in-out;
     cursor: pointer;
-    width: 52px;
-    height: 42px;
+    width: 30px;
+    height: 24px;
     flex-shrink: 0;
 
     &:hover {
@@ -50,6 +59,10 @@
   &__site-name {
     display: inline-block;
     color: $color__white;
+    font-size: 1.125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    font-weight: 300;
 
     &:hover {
       text-decoration: none;
@@ -65,21 +78,14 @@
     }
   }
 
-  &__site-name-ent {
-    display: block;
-  }
-
   &__site-name-ent--e {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05rem;
+    margin-right: 0.125rem;
+    color: rgba($color__white, 0.8)
   }
 
   &__site-name-ent--s {
-    font-size: 1.7rem;
-    font-weight: 100;
-    letter-spacing: 0.02rem;
-    line-height: 1.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06rem;
   }
 
   &__site-env {
@@ -109,5 +115,19 @@
       display: block;
       height: 40px;
     }
+  }
+
+  &__header-site-area-link {
+    display: block;
+    position: relative;
+    align-self: center;
+    margin-left: 0.5rem;
+  }
+
+  &__header-site-area-title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.125rem;
+    color: $color__blue;
   }
 }

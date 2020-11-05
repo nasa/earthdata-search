@@ -1,0 +1,33 @@
+.app-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 2.4rem;
+  background: $color__black--800;
+  z-index: 1;
+  border-top: 1px solid $color__black--900;
+  border-bottom: 1px solid $color__black--700;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+  z-index: 4;
+
+  &__actions {
+    display: flex;
+  }
+
+  &__action {
+    position: relative;
+    padding: 0 1rem;
+    border: 0;
+    outline: 0;
+    border-left: 1px solid $color__black--700;
+    border-right: 1px solid transparent;
+    background: transparent;
+    color: $color__black--300;
+    z-index: 0;
+
+    &:hover {
+      background-color: rgba($color__black, 0.2);
+      color: $color__black--100;
+    }
+  }
+}

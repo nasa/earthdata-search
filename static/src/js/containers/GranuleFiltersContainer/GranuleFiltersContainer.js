@@ -24,10 +24,6 @@ import GranuleFiltersBody
   from '../../components/GranuleFilters/GranuleFiltersBody'
 import GranuleFiltersForm
   from '../../components/GranuleFilters/GranuleFiltersForm'
-import GranuleFiltersHeaderContainer
-  from '../GranuleFiltersHeaderContainer/GranuleFiltersHeaderContainer'
-import SecondaryOverlayPanelContainer
-  from '../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
 
 const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
@@ -43,7 +39,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 /**
- * Renders GranuleFiltersPanelContainer.
+ * Renders GranuleFiltersContainer.
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collections - The collections.
  * @param {String} props.focusedCollection - The focused collection id.
@@ -58,7 +54,7 @@ const mapDispatchToProps = dispatch => ({
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
  */
-export class GranuleFiltersPanelContainer extends Component {
+export class GranuleFiltersContainer extends Component {
   constructor(props) {
     super(props)
     this.form = null
@@ -98,32 +94,27 @@ export class GranuleFiltersPanelContainer extends Component {
     } = this.props
 
     return (
-      <SecondaryOverlayPanelContainer
-        header={<GranuleFiltersHeaderContainer />}
-        body={(
-          <GranuleFiltersBody
-            granuleFiltersForm={(
-              <GranuleFiltersForm
-                collectionMetadata={collectionMetadata}
-                values={values}
-                touched={touched}
-                errors={errors}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                setFieldValue={setFieldValue}
-                setFieldTouched={setFieldTouched}
-              />
-            )}
-          />
-        )}
-        footer={(
-          <GranuleFiltersActions
-            isValid={isValid}
-            onApplyClick={handleSubmit}
-            onClearClick={this.onClearGranuleFilters}
-          />
-        )}
-      />
+      <>
+        <GranuleFiltersBody
+          granuleFiltersForm={(
+            <GranuleFiltersForm
+              collectionMetadata={collectionMetadata}
+              values={values}
+              touched={touched}
+              errors={errors}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+            />
+          )}
+        />
+        <GranuleFiltersActions
+          isValid={isValid}
+          onApplyClick={handleSubmit}
+          onClearClick={this.onClearGranuleFilters}
+        />
+      </>
     )
   }
 }
@@ -272,7 +263,7 @@ const ValidationSchema = (props) => {
   })
 }
 
-const EnhancedGranuleFiltersPanelContainer = withFormik({
+const EnhancedGranuleFiltersContainer = withFormik({
   enableReinitialize: true,
   validationSchema: ValidationSchema,
   mapPropsToValues: (props) => {
@@ -361,9 +352,9 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
 
     setSubmitting(false)
   }
-})(GranuleFiltersPanelContainer)
+})(GranuleFiltersContainer)
 
-GranuleFiltersPanelContainer.propTypes = {
+GranuleFiltersContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   errors: PropTypes.shape({}).isRequired,
@@ -379,4 +370,4 @@ GranuleFiltersPanelContainer.propTypes = {
   values: PropTypes.shape({}).isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EnhancedGranuleFiltersPanelContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(EnhancedGranuleFiltersContainer)

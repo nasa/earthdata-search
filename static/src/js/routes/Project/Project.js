@@ -10,8 +10,6 @@ import { getProjectCollectionsRequiringChunking } from '../../selectors/project'
 
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
-import SecondaryToolbarContainer
-  from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import ProjectCollectionsContainer
   from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
 import ProjectPanelsContainer
@@ -22,8 +20,6 @@ import EdscMapContainer
   from '../../containers/MapContainer/MapContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
-import AppLogoContainer from '../../containers/AppLogoContainer/AppLogoContainer'
-
 
 const mapDispatchToProps = dispatch => ({
   onSubmitRetrieval:
@@ -71,12 +67,6 @@ export class Project extends Component {
         <AuthRequiredContainer>
           <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
             <div className="route-wrapper__content">
-              <header className="route-wrapper__header">
-                <div className="route-wrapper__header-primary">
-                  <AppLogoContainer />
-                  <SecondaryToolbarContainer />
-                </div>
-              </header>
               <div className="route-wrapper__content-inner">
                 <SavedProjectsContainer />
               </div>
@@ -100,13 +90,6 @@ export class Project extends Component {
           >
             <ProjectCollectionsContainer />
           </SidebarContainer>
-          <div className="route-wrapper__content">
-            <header className="route-wrapper__header">
-              <div className="route-wrapper__header-primary">
-                <SecondaryToolbarContainer />
-              </div>
-            </header>
-          </div>
           <OverrideTemporalModalContainer />
         </form>
         <EdscMapContainer />

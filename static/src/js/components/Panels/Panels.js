@@ -487,23 +487,13 @@ export class Panels extends PureComponent {
    */
   calculateMaxWidth() {
     const routeWrapper = document.querySelector('.route-wrapper__content')
-    const secondaryToolbar = document.querySelector('.secondary-toolbar')
 
-    if (routeWrapper && secondaryToolbar) {
+    if (routeWrapper) {
       const routeWrapperWidth = routeWrapper.offsetWidth
-      const secondaryToolbarWidth = secondaryToolbar.offsetWidth
 
       // Set the maxWidth to the available space minus the width of the
-      // secondary toolbar, with 30px of padding.
-      let maxWidth = routeWrapperWidth - secondaryToolbarWidth - 30
-
-      if (routeWrapperWidth < 1000) {
-        // If the available space is less than 1000px, set the maxWidth to
-        // the width of the available space minus 55px of padding.
-        maxWidth = routeWrapperWidth - 55
-      }
-
-      return maxWidth
+      // map tools.
+      return routeWrapperWidth - 55
     }
 
     // If for some reason the elements are not available in the DOM, set

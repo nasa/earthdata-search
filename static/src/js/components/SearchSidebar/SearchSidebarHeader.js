@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -28,7 +29,7 @@ export class SearchSidebarHeader extends PureComponent {
 
     return (
       <div className="search-sidebar-header">
-        <div className={linkWrapperClassNames}>
+        {/* <div className={linkWrapperClassNames}>
           <PortalLinkContainer
             className="search-sidebar-header__button"
             type="button"
@@ -42,7 +43,7 @@ export class SearchSidebarHeader extends PureComponent {
             <i className="fa fa-chevron-left" />
             {' Back to collections'}
           </PortalLinkContainer>
-        </div>
+        </div> */}
         <SearchFormContainer />
       </div>
     )
