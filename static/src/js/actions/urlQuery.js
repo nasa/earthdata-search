@@ -95,7 +95,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
       const [, projectQueryString] = projectPath.split('?')
 
       // Parse the query string into an object
-      const paramsObj = parse(projectQueryString)
+      const paramsObj = parse(projectQueryString, { parseArrays: false })
 
       // If the earthdata environment variable
       if (!Object.keys(paramsObj).includes('ee')) {

@@ -45,7 +45,7 @@ export class ChunkedOrderModal extends Component {
     const { defaultGranulesPerOrder } = getApplicationConfig()
 
     // Remove focused collection from back button params
-    const params = parse(location.search, { ignoreQueryPrefix: true })
+    const params = parse(location.search, { ignoreQueryPrefix: true, parseArrays: false })
     let { p = '' } = params
     p = p.replace(/^[^!]*/, '')
 

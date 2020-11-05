@@ -112,11 +112,13 @@ describe('changePath', () => {
       .get(/projects/)
       .reply(200, {
         name: null,
-        path: '/search?p=C00001-EDSC'
+        path: '/search?p=C00001-EDSC!C00001-EDSC&pg[1][v]=t'
       })
 
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
+    const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules').mockImplementation(() => jest.fn())
     const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
     const newPath = '/search?projectId=1'
@@ -147,7 +149,7 @@ describe('changePath', () => {
         payload: {
           name: null,
           projectId: '1',
-          path: '/search?p=C00001-EDSC'
+          path: '/search?p=C00001-EDSC!C00001-EDSC&pg[1][v]=t'
         },
         type: UPDATE_SAVED_PROJECT
       })
@@ -158,6 +160,17 @@ describe('changePath', () => {
           featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
           focusedCollection: 'C00001-EDSC',
           map: {},
+          project: {
+            collections: {
+              allIds: ['C00001-EDSC'],
+              byId: {
+                'C00001-EDSC': {
+                  granules: {},
+                  isVisible: true
+                }
+              }
+            }
+          },
           query: {
             collection: {
               byId: {
@@ -181,6 +194,8 @@ describe('changePath', () => {
       )
 
       expect(getCollectionsMock).toBeCalledTimes(1)
+      expect(getProjectCollectionsMock).toBeCalledTimes(1)
+      expect(getProjectGranulesMock).toBeCalledTimes(1)
       expect(getTimelineMock).toBeCalledTimes(1)
     })
   })
