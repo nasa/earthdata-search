@@ -10,7 +10,9 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     isOpen: false,
-    location: {},
+    location: {
+      search: '?p=C100005-EDSC!C100005-EDSC&pg[1][v]=t'
+    },
     projectCollectionsMetadata: {
       'C100005-EDSC': {
         title: 'collection title'
@@ -54,6 +56,17 @@ describe('ChunkedOrderModal component', () => {
     const message = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[0].props.children.join('')
 
     expect(message).toEqual('Orders for data containing more than 2,000 granules will be split into multiple orders. You will receive a set of emails for each order placed.')
+  })
+
+  test('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', () => {
+    const { enzymeWrapper } = setup()
+
+    const { to } = enzymeWrapper.find(EDSCModalContainer).prop('footerMeta').props
+
+    expect(to).toEqual({
+      pathname: '/search',
+      search: '?p=!C100005-EDSC&pg[1][v]=t'
+    })
   })
 
   describe('modal actions', () => {
