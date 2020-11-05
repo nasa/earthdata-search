@@ -1,7 +1,7 @@
 import { keyBy } from 'lodash'
 
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
-import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
@@ -22,9 +22,9 @@ export default async function getRetrieval(event, context) {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const { pathParameters } = event
+    const { headers, pathParameters } = event
 
-    const earthdataEnvironment = deployedEnvironment()
+    const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
     const { id: providedRetrieval } = pathParameters
 

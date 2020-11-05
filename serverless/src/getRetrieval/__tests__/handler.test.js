@@ -1,5 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
+import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getJwtToken from '../../util/getJwtToken'
@@ -39,6 +40,8 @@ afterEach(() => {
 
 describe('getRetrieval', () => {
   test('correctly retrieves a known retrieval', async () => {
+    const determineEarthdataEnvironmentMock = jest.spyOn(determineEarthdataEnvironment, 'determineEarthdataEnvironment')
+
     dbTracker.on('query', (query) => {
       query.response([{
         jsondata: {},
@@ -58,6 +61,8 @@ describe('getRetrieval', () => {
 
     expect(body).toEqual('{"id":2,"jsondata":{},"collections":{},"links":[]}')
     expect(statusCode).toEqual(200)
+    expect(determineEarthdataEnvironmentMock).toBeCalledTimes(1)
+    expect(determineEarthdataEnvironmentMock).toBeCalledWith({ 'Earthdata-Env': 'prod' })
   })
 
   test('correctly retrieves a known retrieval with collection retrievals', async () => {

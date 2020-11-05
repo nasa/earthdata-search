@@ -20,6 +20,10 @@ describe('DownloadHistoryContainer component', () => {
     test('renders a table when a retrieval exists with one collection that has no title', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
+        earthdataEnvironment: 'prod',
+        location: {
+          search: ''
+        },
         retrievalHistory: [{
           id: '8069076',
           jsondata: {},

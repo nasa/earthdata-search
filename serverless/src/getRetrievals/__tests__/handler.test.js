@@ -1,5 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
+import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
@@ -35,6 +36,8 @@ afterEach(() => {
 
 describe('getRetrievals', () => {
   test('correctly retrieves retrievals', async () => {
+    const determineEarthdataEnvironmentMock = jest.spyOn(determineEarthdataEnvironment, 'determineEarthdataEnvironment')
+
     dbTracker.on('query', (query) => {
       query.response([{
         id: 1,
@@ -63,7 +66,7 @@ describe('getRetrievals', () => {
       }])
     })
 
-    const retrievalResponse = await getRetrievals({}, {})
+    const retrievalResponse = await getRetrievals({ headers: { 'Earthdata-Env': 'prod' } }, {})
 
     const { queries } = dbTracker.queries
 
@@ -98,8 +101,11 @@ describe('getRetrievals', () => {
         ]
       }
     ]
+
     expect(body).toEqual(JSON.stringify(responseObj))
     expect(statusCode).toEqual(200)
+    expect(determineEarthdataEnvironmentMock).toBeCalledTimes(1)
+    expect(determineEarthdataEnvironmentMock).toBeCalledWith({ 'Earthdata-Env': 'prod' })
   })
 
   test('correctly returns an error', async () => {

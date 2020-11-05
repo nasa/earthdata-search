@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import { LinkContainer } from 'react-router-bootstrap'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -88,6 +89,26 @@ describe('SecondaryToolbar component', () => {
       logoutButton.simulate('click')
 
       expect(instance.handleLogout).toBeCalledTimes(1)
+    })
+
+    describe('Download Status and History link', () => {
+      test('adds the ee param if the earthdataEnvironment is different than the deployed environment', () => {
+        const { enzymeWrapper } = setup('loggedIn', { earthdataEnvironment: 'uat' })
+
+        const downloadLink = enzymeWrapper.find('.secondary-toolbar__downloads')
+        const linkContainer = downloadLink.parents(LinkContainer)
+
+        expect(linkContainer.props().to).toEqual('/downloads?ee=uat')
+      })
+
+      test('does not add the ee param if the earthdataEnvironment is the deployed environment', () => {
+        const { enzymeWrapper } = setup('loggedIn')
+
+        const downloadLink = enzymeWrapper.find('.secondary-toolbar__downloads')
+        const linkContainer = downloadLink.parents(LinkContainer)
+
+        expect(linkContainer.props().to).toEqual('/downloads')
+      })
     })
   })
 
