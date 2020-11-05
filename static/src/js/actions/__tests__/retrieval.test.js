@@ -24,7 +24,8 @@ beforeEach(() => {
 describe('submitRetrieval', () => {
   beforeEach(() => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-      defaultPortal: 'edsc'
+      defaultPortal: 'edsc',
+      env: 'prod'
     }))
   })
 
@@ -115,6 +116,83 @@ describe('submitRetrieval', () => {
       expect(store.getActions()[3]).toEqual({
         payload: {
           args: ['/downloads/7'],
+          method: 'push'
+        },
+        type: '@@router/CALL_HISTORY_METHOD'
+      })
+    })
+  })
+
+  test('directs the user to the retrieval page with ee param included if different than the deployed environment', async () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      defaultPortal: 'edsc',
+      env: 'uat'
+    }))
+
+    nock(/localhost/)
+      .post(/retrievals/)
+      .reply(200, {
+        id: 7
+      })
+
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: 'mockToken',
+      earthdataEnvironment: 'prod',
+      metadata: {
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {},
+              metadata: {}
+            }
+          }
+        }
+      },
+      query: {
+        collection: {
+          pageNum: 1,
+          keyword: 'search keyword'
+        },
+        granule: {
+          pageNum: 1
+        }
+      },
+      portal: {
+        portalId: 'edsc'
+      },
+      project: {
+        collections: {
+          byId: {
+            collectionId: {
+              accessMethods: {
+                download: {
+                  type: 'download'
+                }
+              },
+              selectedAccessMethod: 'download',
+              granules: {
+                hits: 84
+              }
+            }
+          },
+          allIds: ['collectionId']
+        }
+      },
+      router: {
+        location: {
+          search: '?some=testparams'
+        }
+      },
+      shapefile: {}
+    })
+
+    // call the dispatch
+    await store.dispatch(submitRetrieval()).then(() => {
+      expect(store.getActions()[3]).toEqual({
+        payload: {
+          args: ['/downloads/7?ee=prod'],
           method: 'push'
         },
         type: '@@router/CALL_HISTORY_METHOD'
