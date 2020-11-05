@@ -14,6 +14,7 @@ import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { prepareRetrievalParams } from '../util/retrievals'
 import { removeRetrievalHistory } from './retrievalHistory'
 import { submittingProject, submittedProject } from './project'
+import deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 
 export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING
@@ -91,7 +92,10 @@ export const submitRetrieval = () => (dispatch, getState) => {
       const { id: retrievalId } = response.data
 
       dispatch(submittedProject())
-      dispatch(push(`${portalPathFromState(state)}/downloads/${retrievalId}`))
+
+      const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
+
+      dispatch(push(`${portalPathFromState(state)}/downloads/${retrievalId}${eeLink}`))
     })
     .catch((error) => {
       dispatch(handleError({
