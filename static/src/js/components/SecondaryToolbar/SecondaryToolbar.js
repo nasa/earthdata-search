@@ -4,7 +4,7 @@ import { Col, Dropdown, Form } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
 
-import deployedEnvironment from '../../../../../sharedUtils/deployedEnvironment'
+import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { isPath } from '../../util/isPath'
 import { locationPropType } from '../../util/propTypes/location'
@@ -183,8 +183,6 @@ class SecondaryToolbar extends Component {
       </Button>
     )
 
-    const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
-
     const loggedInDropdown = (
       <Dropdown className="secondary-toolbar__user-dropdown">
         <Dropdown.Toggle
@@ -215,7 +213,10 @@ class SecondaryToolbar extends Component {
             </Dropdown.Item>
           </LinkContainer>
           <LinkContainer
-            to={`${portalPath(portal)}/downloads${eeLink}`}
+            to={{
+              pathname: `${portalPath(portal)}/downloads`,
+              search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+            }}
           >
             <Dropdown.Item
               className="secondary-toolbar__downloads"

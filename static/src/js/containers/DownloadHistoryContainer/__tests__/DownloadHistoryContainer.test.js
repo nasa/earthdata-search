@@ -21,9 +21,6 @@ describe('DownloadHistoryContainer component', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
         earthdataEnvironment: 'prod',
-        location: {
-          search: ''
-        },
         retrievalHistory: [{
           id: '8069076',
           jsondata: {},

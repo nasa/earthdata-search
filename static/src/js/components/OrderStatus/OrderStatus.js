@@ -7,9 +7,10 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import Skeleton from '../Skeleton/Skeleton'
 
 import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
-import deployedEnvironment from '../../../../../sharedUtils/deployedEnvironment'
+import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { stringify } from '../../util/url/url'
 
 import './OrderStatus.scss'
 
@@ -81,11 +82,26 @@ export class OrderStatus extends Component {
     const introduction = (
       <p>
         {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-        <a href={`${edscHost}${portalPath(portal)}/downloads/${id}`}>
-          {`${edscHost}${portalPath(portal)}/downloads/${id}`}
+        {/* <PortalLinkContainer
+          to={{
+            pathname: '/downloads',
+            search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+          }}
+        >
+          Download Status and History
+        </PortalLinkContainer> */}
+        <a href={`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}>
+          {`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}
         </a>
         {' or the '}
-        <a href={`${edscHost}${portalPath(portal)}/downloads${eeLink}`}>Download Status and History</a>
+        <PortalLinkContainer
+          to={{
+            pathname: '/downloads',
+            search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+          }}
+        >
+          Download Status and History
+        </PortalLinkContainer>
         {' page.'}
       </p>
     )
@@ -211,7 +227,8 @@ export class OrderStatus extends Component {
                 <PortalLinkContainer
                   className="order-status__footer-link"
                   to={{
-                    pathname: '/search'
+                    pathname: '/search',
+                    search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
                   }}
                   onClick={() => { onChangePath('/search') }}
                 >
@@ -220,7 +237,15 @@ export class OrderStatus extends Component {
               </li>
               <li className="order-status__footer-link-item">
                 <i className="fa fa-chevron-circle-right order-status__footer-link-icon" />
-                <a className="order-status__footer-link" href={`${portalPath(portal)}/downloads`}>View Your Download Status & History</a>
+                <PortalLinkContainer
+                  className="order-status__footer-link"
+                  to={{
+                    pathname: '/downloads',
+                    search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+                  }}
+                >
+                  View Your Download Status & History
+                </PortalLinkContainer>
               </li>
             </ul>
           </Well.Footer>

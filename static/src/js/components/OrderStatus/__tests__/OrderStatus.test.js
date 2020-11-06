@@ -78,9 +78,22 @@ describe('OrderStatus component', () => {
       expect(enzymeWrapper.find(Well.Introduction).find('a').at(0).props().href).toEqual('http://localhost/downloads/7')
     })
 
+    test('download status link has correct href when earthdataEnvironment is different than the deployed environment', () => {
+      jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+        defaultPortal: 'edsc',
+        env: 'uat'
+      }))
+
+      const { enzymeWrapper } = setup()
+      expect(enzymeWrapper.find(Well.Introduction).find('a').at(0).props().href).toEqual('http://localhost/downloads/7?ee=prod')
+    })
+
     test('status link has correct href', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Well.Introduction).find('a').at(1).props().href).toEqual('http://localhost/downloads')
+      expect(enzymeWrapper.find(Well.Introduction).find(PortalLinkContainer).at(0).props().to).toEqual({
+        pathname: '/downloads',
+        search: ''
+      })
     })
 
     test('status link has correct href when earthdataEnvironment is different than the deployed environment', () => {
@@ -90,7 +103,10 @@ describe('OrderStatus component', () => {
       }))
 
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Well.Introduction).find('a').at(1).props().href).toEqual('http://localhost/downloads?ee=prod')
+      expect(enzymeWrapper.find(Well.Introduction).find(PortalLinkContainer).at(0).props().to).toEqual({
+        pathname: '/downloads',
+        search: '?ee=prod'
+      })
     })
   })
 

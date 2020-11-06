@@ -2,14 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { parse } from 'qs'
 
 import actions from '../../actions'
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 
 const mapStateToProps = state => ({
   earthdataEnvironment: state.earthdataEnvironment,
-  location: state.router.location,
   retrievalHistory: state.retrievalHistory.history,
   retrievalHistoryLoading: state.retrievalHistory.isLoading,
   retrievalHistoryLoaded: state.retrievalHistory.isLoaded
@@ -25,14 +23,10 @@ const mapDispatchToProps = dispatch => ({
 export class DownloadHistoryContainer extends Component {
   componentDidMount() {
     const {
-      location,
       onFetchRetrievalHistory
     } = this.props
 
-    const { search } = location
-    const { ee: earthdataEnvironment } = parse(search, { ignoreQueryPrefix: true })
-
-    onFetchRetrievalHistory(earthdataEnvironment)
+    onFetchRetrievalHistory()
   }
 
   render() {
@@ -62,7 +56,6 @@ DownloadHistoryContainer.defaultProps = {
 
 DownloadHistoryContainer.propTypes = {
   earthdataEnvironment: PropTypes.string.isRequired,
-  location: PropTypes.shape({}).isRequired,
   retrievalHistory: PropTypes.arrayOf(
     PropTypes.shape({})
   ),

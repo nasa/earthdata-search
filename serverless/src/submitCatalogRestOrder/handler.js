@@ -12,6 +12,7 @@ import {
   getApplicationConfig,
   getEarthdataConfig
 } from '../../../sharedUtils/config'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getNameValuePairsForProjections } from '../util/echoForms/getNameValuePairsForProjections'
 import { getNameValuePairsForResample } from '../util/echoForms/getNameValuePairsForResample'
 import { getShapefile } from '../util/echoForms/getShapefile'
@@ -115,8 +116,10 @@ const submitCatalogRestOrder = async (event, context) => {
 
     const obfuscatedRetrievalId = obfuscateId(retrievalId)
 
+    const eeLink = environment === deployedEnvironment() ? '' : `?ee=${environment}`
+
     // URL used when submitting the order to inform the user where they can retrieve their order status
-    const edscStatusUrl = `${edscHost}${portalPath({ portalId })}/downloads/${obfuscatedRetrievalId}`
+    const edscStatusUrl = `${edscHost}${portalPath({ portalId })}/downloads/${obfuscatedRetrievalId}${eeLink}`
 
     const { model, url, type } = accessMethod
 

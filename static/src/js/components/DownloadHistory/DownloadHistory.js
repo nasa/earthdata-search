@@ -5,6 +5,7 @@ import TimeAgo from 'react-timeago'
 
 import deployedEnvironment from '../../../../../sharedUtils/deployedEnvironment'
 import pluralize from '../../util/pluralize'
+import { stringify } from '../../util/url/url'
 
 import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
@@ -63,8 +64,6 @@ export class DownloadHistory extends Component {
       retrievalHistoryLoaded
     } = this.props
 
-    const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
-
     return (
       <>
         <h2 className="route-wrapper__page-heading">Download Status & History</h2>
@@ -116,7 +115,10 @@ export class DownloadHistory extends Component {
                           <td>
                             <PortalLinkContainer
                               portalId={portalId}
-                              to={`/downloads/${id}${eeLink}`}
+                              to={{
+                                pathname: `/downloads/${id}`,
+                                search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+                              }}
                             >
                               {this.retrievalDescription(collections)}
                             </PortalLinkContainer>
