@@ -82,14 +82,6 @@ export class OrderStatus extends Component {
     const introduction = (
       <p>
         {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-        {/* <PortalLinkContainer
-          to={{
-            pathname: '/downloads',
-            search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-          }}
-        >
-          Download Status and History
-        </PortalLinkContainer> */}
         <a href={`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}>
           {`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}
         </a>
