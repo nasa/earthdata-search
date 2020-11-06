@@ -119,7 +119,7 @@ describe('submitCatalogRestOrder', () => {
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('update')
-    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token:clientId', 'ESI')
+    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'ESI')
   })
 
   test('prepares granule access params', async () => {

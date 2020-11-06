@@ -22,7 +22,7 @@ const edlAdminAuthorizer = async (event, context) => {
 
   const { Authorization: authorizationToken = '' } = headers
 
-  // authorizationToken comes in as `Bearer: asdf.qwer.hjkl` but we only need the actual token
+  // authorizationToken comes in as `Bearer asdf.qwer.hjkl` but we only need the actual token
   const tokenParts = authorizationToken.split(' ')
   const jwtToken = tokenParts[1]
 

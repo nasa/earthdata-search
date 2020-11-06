@@ -71,7 +71,7 @@ describe('fetchCatalogRestOrder', () => {
         </eesi:agentResponse>`)
 
     const catalogRestResponse = await fetchCatalogRestOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ESI'
     })
@@ -82,7 +82,7 @@ describe('fetchCatalogRestOrder', () => {
     expect(queries[1].method).toEqual('update')
 
     expect(catalogRestResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'in_progress',
       orderType: 'ESI'
@@ -125,7 +125,7 @@ describe('fetchCatalogRestOrder', () => {
         </eesi:agentResponse>`)
 
     const catalogRestResponse = await fetchCatalogRestOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ESI'
     })
@@ -136,7 +136,7 @@ describe('fetchCatalogRestOrder', () => {
     expect(queries[1].method).toEqual('update')
 
     expect(catalogRestResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'complete',
       orderType: 'ESI'
@@ -179,7 +179,7 @@ describe('fetchCatalogRestOrder', () => {
         </eesi:agentResponse>`)
 
     const catalogRestResponse = await fetchCatalogRestOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ESI'
     })
@@ -190,7 +190,7 @@ describe('fetchCatalogRestOrder', () => {
     expect(queries[1].method).toEqual('update')
 
     expect(catalogRestResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'failed',
       orderType: 'ESI'
@@ -207,7 +207,7 @@ describe('fetchCatalogRestOrder', () => {
     })
 
     const catalogRestResponse = await fetchCatalogRestOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ESI'
     })
@@ -217,7 +217,7 @@ describe('fetchCatalogRestOrder', () => {
     expect(queries[0].method).toEqual('first')
 
     expect(catalogRestResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'not_found',
       orderType: 'ESI'

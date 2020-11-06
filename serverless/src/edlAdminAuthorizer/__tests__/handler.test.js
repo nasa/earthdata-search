@@ -14,7 +14,7 @@ describe('edlAdminAuthorizer', () => {
       const event = {
         headers: {
           'Earthdata-ENV': 'test',
-          Authorization: `Bearer: ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`
         }
       }
 
@@ -48,7 +48,7 @@ describe('edlAdminAuthorizer', () => {
       const { jwtToken } = getEnvironmentConfig('test')
 
       const event = {
-        authorizationToken: `Bearer: ${jwtToken}`
+        authorizationToken: `Bearer ${jwtToken}`
       }
 
       await expect(
@@ -67,7 +67,7 @@ describe('edlAdminAuthorizer', () => {
       const { jwtToken } = getEnvironmentConfig('test')
 
       const event = {
-        authorizationToken: `Bearer: ${jwtToken}`
+        authorizationToken: `Bearer ${jwtToken}`
       }
 
       await expect(

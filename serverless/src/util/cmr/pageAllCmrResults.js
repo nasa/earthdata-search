@@ -36,9 +36,9 @@ export const pageAllCmrResults = async ({
       uri: `${cmrHost}/${path}`,
       form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
       headers: {
+        Authorization: `Bearer ${cmrToken}`,
         'Client-Id': getClientId().background,
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Echo-Token': cmrToken,
         ...additionalHeaders
       },
       json: true,
@@ -67,9 +67,9 @@ export const pageAllCmrResults = async ({
           uri: `${cmrHost}/${path}`,
           form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
           headers: {
+            Authorization: `Bearer ${cmrToken}`,
             'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Echo-Token': cmrToken,
             ...additionalHeaders
           },
           json: true,

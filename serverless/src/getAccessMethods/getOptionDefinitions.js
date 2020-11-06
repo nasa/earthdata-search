@@ -18,6 +18,8 @@ export const getOptionDefinitions = async (
   const { provider } = collectionProvider
   const { id: providerId, organization_name: organizationName } = provider
 
+  const accessToken = await getEchoToken(jwtToken, earthdataEnvironment)
+
   await optionDefinitions.forEachAsync(async (optionDefinition, index) => {
     const { name } = optionDefinition
 
@@ -32,8 +34,8 @@ export const getOptionDefinitions = async (
           provider: providerId
         },
         headers: {
-          'Client-Id': getClientId().lambda,
-          'Echo-Token': await getEchoToken(jwtToken, earthdataEnvironment)
+          Authorization: `Bearer ${accessToken}`,
+          'Client-Id': getClientId().lambda
         },
         json: true,
         resolveWithFullResponse: true

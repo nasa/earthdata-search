@@ -38,7 +38,7 @@ export default class GraphQlRequest extends Request {
 
     if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
-      headers.Authorization = `Bearer: ${this.getAuthToken()}`
+      headers.Authorization = `Bearer ${this.getAuthToken()}`
     }
 
     if (data) {

@@ -16,8 +16,8 @@ export async function removeTag(tagName, searchCriteria, cmrToken) {
     await request.delete({
       uri: tagRemovalUrl,
       headers: {
-        'Client-Id': getClientId().background,
-        'Echo-Token': cmrToken
+        Authorization: `Bearer ${cmrToken}`,
+        'Client-Id': getClientId().background
       },
       body: searchCriteria,
       json: true,

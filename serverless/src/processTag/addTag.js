@@ -42,8 +42,8 @@ export async function addTag({
       const collectionJsonResponse = await request.post({
         uri: `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
         headers: {
-          'Client-Id': getClientId().background,
-          'Echo-Token': cmrToken
+          Authorization: `Bearer ${cmrToken}`,
+          'Client-Id': getClientId().background
         },
         body: searchCriteria,
         json: true,
@@ -101,8 +101,8 @@ export async function addTag({
       const taggingResponse = await request.post({
         uri: addTagUrl,
         headers: {
-          'Client-Id': getClientId().background,
-          'Echo-Token': cmrToken
+          Authorization: `Bearer ${cmrToken}`,
+          'Client-Id': getClientId().background
         },
         body: castArray(associationData),
         json: true,
@@ -132,8 +132,8 @@ export async function addTag({
     await request.post({
       uri: tagRemovalUrl,
       headers: {
-        'Client-Id': getClientId().background,
-        'Echo-Token': cmrToken
+        Authorization: `Bearer ${cmrToken}`,
+        'Client-Id': getClientId().background
       },
       body: searchCriteria,
       json: true,

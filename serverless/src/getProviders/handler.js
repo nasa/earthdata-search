@@ -29,8 +29,8 @@ const getProviders = async (event) => {
       uri: url,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId().lambda,
-        'Echo-Token': accessToken
+        Authorization: `Bearer ${accessToken}`,
+        'Client-Id': getClientId().lambda
       },
       json: true
     })

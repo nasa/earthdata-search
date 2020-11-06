@@ -38,7 +38,9 @@ export const doSearchRequest = async ({
 
     if (jwtToken) {
       // Support endpoints that have optional authentication
-      requestHeaders['Echo-Token'] = await getEchoToken(jwtToken, earthdataEnvironment)
+      const token = await getEchoToken(jwtToken, earthdataEnvironment)
+
+      requestHeaders.Authorization = `Bearer ${token}`
     }
 
     if (requestId) {

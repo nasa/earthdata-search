@@ -31,7 +31,7 @@ describe('getEchoPreferencesData', () => {
     expect(ursGetMock).toBeCalledWith({
       uri: 'http://echorest.example.com/users/test_user/preferences.json',
       headers: {
-        'Echo-Token': 'fake.access.token:clientId',
+        Authorization: 'Bearer fake.access.token',
         'Client-Id': 'eed-edsc-test-serverless-lambda'
       },
       json: true,

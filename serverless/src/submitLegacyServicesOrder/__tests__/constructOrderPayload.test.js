@@ -54,13 +54,13 @@ describe('constructOrderPayload', () => {
       collection_concept_id: 'C100000-EDSC'
     }
 
-    const accessTokenWithClient = 'accessToken:clientId'
+    const accessToken = 'accessToken'
     const earthdataEnvironment = 'prod'
 
     const response = await constructOrderPayload(
       accessMethod,
       granuleParams,
-      accessTokenWithClient,
+      accessToken,
       earthdataEnvironment
     )
 

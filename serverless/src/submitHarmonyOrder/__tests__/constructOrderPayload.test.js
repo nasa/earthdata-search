@@ -32,12 +32,12 @@ describe('constructOrderPayload', () => {
           selectedOutputFormat: 'image/png'
         }
         const granuleParams = {}
-        const accessTokenWithClient = ''
+        const accessToken = ''
 
         const response = await constructOrderPayload({
           accessMethod,
           granuleParams,
-          accessTokenWithClient
+          accessToken
         })
 
         expect(response.get('format')).toEqual('image/png')
@@ -60,12 +60,12 @@ describe('constructOrderPayload', () => {
 
         const accessMethod = {}
         const granuleParams = {}
-        const accessTokenWithClient = ''
+        const accessToken = ''
 
         const response = await constructOrderPayload({
           accessMethod,
           granuleParams,
-          accessTokenWithClient
+          accessToken
         })
 
         expect(response.get('format')).toEqual(null)
@@ -92,12 +92,12 @@ describe('constructOrderPayload', () => {
           selectedOutputProjection: 'EPSG:4326'
         }
         const granuleParams = {}
-        const accessTokenWithClient = ''
+        const accessToken = ''
 
         const response = await constructOrderPayload({
           accessMethod,
           granuleParams,
-          accessTokenWithClient
+          accessToken
         })
 
         expect(response.get('outputCrs')).toEqual('EPSG:4326')
@@ -121,12 +121,12 @@ describe('constructOrderPayload', () => {
 
       const accessMethod = {}
       const granuleParams = {}
-      const accessTokenWithClient = ''
+      const accessToken = ''
 
       const response = await constructOrderPayload({
         accessMethod,
         granuleParams,
-        accessTokenWithClient
+        accessToken
       })
 
       expect(response.get('granuleId')).toEqual('G10000001-EDSC,G10000005-EDSC')
@@ -152,12 +152,12 @@ describe('constructOrderPayload', () => {
         const granuleParams = {
           temporal: '2020-01-01T01:36:52.273Z,2020-01-01T06:18:19.482Z'
         }
-        const accessTokenWithClient = ''
+        const accessToken = ''
 
         const response = await constructOrderPayload({
           accessMethod,
           granuleParams,
-          accessTokenWithClient
+          accessToken
         })
 
         expect(response.getAll('subset')).toEqual(['time("2020-01-01T01:36:52.273Z":"2020-01-01T06:18:19.482Z")'])
@@ -182,12 +182,12 @@ describe('constructOrderPayload', () => {
         const granuleParams = {
           temporal: '2020-01-01T01:36:52.273Z,'
         }
-        const accessTokenWithClient = ''
+        const accessToken = ''
 
         const response = await constructOrderPayload({
           accessMethod,
           granuleParams,
-          accessTokenWithClient
+          accessToken
         })
 
         expect(response.getAll('subset')).toEqual(['time("2020-01-01T01:36:52.273Z":"*")'])
@@ -212,12 +212,12 @@ describe('constructOrderPayload', () => {
         const granuleParams = {
           temporal: ',2020-01-01T06:18:19.482Z'
         }
-        const accessTokenWithClient = ''
+        const accessToken = ''
 
         const response = await constructOrderPayload({
           accessMethod,
           granuleParams,
-          accessTokenWithClient
+          accessToken
         })
 
         expect(response.getAll('subset')).toEqual(['time("*":"2020-01-01T06:18:19.482Z")'])
@@ -245,13 +245,13 @@ describe('constructOrderPayload', () => {
             supportsShapefileSubsetting: true
           }
           const granuleParams = {}
-          const accessTokenWithClient = ''
+          const accessToken = ''
           const shapefile = mockCcwShapefile
 
           const response = await constructOrderPayload({
             accessMethod,
             granuleParams,
-            accessTokenWithClient,
+            accessToken,
             shapefile
           })
 
@@ -279,12 +279,12 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             point: ['-77, 34']
           }
-          const accessTokenWithClient = ''
+          const accessToken = ''
 
           const response = await constructOrderPayload({
             accessMethod,
             granuleParams,
-            accessTokenWithClient
+            accessToken
           })
 
           expect(response.get('shapefile')).toBeInstanceOf(ReadStream)
@@ -311,12 +311,12 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             bounding_box: ['0,5,10,15']
           }
-          const accessTokenWithClient = ''
+          const accessToken = ''
 
           const response = await constructOrderPayload({
             accessMethod,
             granuleParams,
-            accessTokenWithClient
+            accessToken
           })
 
           expect(response.get('shapefile')).toBeInstanceOf(ReadStream)
@@ -343,12 +343,12 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             circle: ['-77, 34, 20000']
           }
-          const accessTokenWithClient = ''
+          const accessToken = ''
 
           const response = await constructOrderPayload({
             accessMethod,
             granuleParams,
-            accessTokenWithClient
+            accessToken
           })
 
           expect(response.get('shapefile')).toBeInstanceOf(ReadStream)
@@ -375,12 +375,12 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             polygon: ['-29.8125,39.86484,-23.0625,-19.74405,15.75,20.745,-29.8125,39.86484']
           }
-          const accessTokenWithClient = ''
+          const accessToken = ''
 
           const response = await constructOrderPayload({
             accessMethod,
             granuleParams,
-            accessTokenWithClient
+            accessToken
           })
 
           expect(response.get('shapefile')).toBeInstanceOf(ReadStream)
@@ -415,12 +415,12 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             point: ['-77, 34']
           }
-          const accessTokenWithClient = ''
+          const accessToken = ''
 
           const response = await constructOrderPayload({
             accessMethod,
             granuleParams,
-            accessTokenWithClient
+            accessToken
           })
 
           expect(response.getAll('subset')).toEqual([
@@ -450,12 +450,12 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             bounding_box: ['5,0,15,10']
           }
-          const accessTokenWithClient = ''
+          const accessToken = ''
 
           const response = await constructOrderPayload({
             accessMethod,
             granuleParams,
-            accessTokenWithClient
+            accessToken
           })
 
           expect(response.getAll('subset')).toEqual([
@@ -491,12 +491,12 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             circle: ['-77, 34, 20000']
           }
-          const accessTokenWithClient = ''
+          const accessToken = ''
 
           const response = await constructOrderPayload({
             accessMethod,
             granuleParams,
-            accessTokenWithClient
+            accessToken
           })
 
           expect(response.getAll('subset')).toEqual([
@@ -532,12 +532,12 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             polygon: ['-29.8125,39.86484,-23.0625,-19.74405,15.75,20.745,-29.8125,39.86484']
           }
-          const accessTokenWithClient = ''
+          const accessToken = ''
 
           const response = await constructOrderPayload({
             accessMethod,
             granuleParams,
-            accessTokenWithClient
+            accessToken
           })
 
           expect(response.getAll('subset')).toEqual([

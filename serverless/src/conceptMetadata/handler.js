@@ -26,6 +26,7 @@ const conceptMetadata = async (event) => {
   const { client } = edlConfig
   const { id: clientId } = client
 
+  // Access tokens used in the URL still require the client id
   const conceptUrl = `${desiredPath}?${stringify({ ...parsedQueryParams, token: `${accessToken}:${clientId}` }, { encode: false })}`
 
   return {

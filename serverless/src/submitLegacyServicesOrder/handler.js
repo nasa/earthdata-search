@@ -6,7 +6,6 @@ import { constructUserInformationPayload } from './constructUserInformationPaylo
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { getEdlConfig } from '../util/getEdlConfig'
 import { parseError } from '../../../sharedUtils/parseError'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 
@@ -63,12 +62,6 @@ const submitLegacyServicesOrder = async (event, context) => {
       urs_profile: ursProfile
     } = retrievalRecord
 
-    const edlConfig = await getEdlConfig(environment)
-    const { client } = edlConfig
-    const { id: clientId } = client
-
-    const accessTokenWithClient = `${accessToken}:${clientId}`
-
     const { type } = accessMethod
 
     try {
@@ -76,7 +69,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       const emptyOrderResponse = await request.post({
         uri: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
         headers: {
-          'Echo-Token': accessTokenWithClient,
+          Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         },
         body: { order: {} },
@@ -89,7 +82,7 @@ const submitLegacyServicesOrder = async (event, context) => {
 
       // 2. Add items to the orders
       const orderItemPayload = await constructOrderPayload(
-        accessMethod, granuleParams, accessTokenWithClient, environment
+        accessMethod, granuleParams, accessToken, environment
       )
 
       console.log(`Order Items Payload: ${JSON.stringify(orderItemPayload, null, 4)}`)
@@ -97,7 +90,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       await request.post({
         uri: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
         headers: {
-          'Echo-Token': accessTokenWithClient,
+          Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         },
         body: orderItemPayload,
@@ -113,7 +106,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       await request.put({
         uri: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/user_information`,
         headers: {
-          'Echo-Token': accessTokenWithClient,
+          Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         },
         body: userInformationPayload,
@@ -125,7 +118,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       await request.post({
         uri: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/submit`,
         headers: {
-          'Echo-Token': accessTokenWithClient,
+          Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         },
         json: true,
@@ -135,7 +128,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       await dbConnection('retrieval_orders').update({ order_number: orderId, state: 'initialized' }).where({ id })
 
       // Start the order status check workflow
-      await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
+      await startOrderStatusUpdateWorkflow(id, accessToken, type)
     } catch (e) {
       const parsedErrorMessage = parseError(e, { asJSON: false })
 

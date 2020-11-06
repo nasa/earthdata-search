@@ -58,8 +58,8 @@ const saveContactInfo = async (event) => {
     const response = await request.put({
       uri: url,
       headers: {
-        'Client-Id': getClientId().lambda,
-        'Echo-Token': echoToken
+        Authorization: `Bearer ${echoToken}`,
+        'Client-Id': getClientId().lambda
       },
       body: params,
       json: true,

@@ -1,5 +1,7 @@
 import nock from 'nock'
+
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
+
 import { addTag } from '../addTag'
 
 beforeEach(() => {

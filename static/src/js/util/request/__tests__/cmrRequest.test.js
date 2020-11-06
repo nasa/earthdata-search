@@ -73,7 +73,7 @@ describe('CmrRequest#transformRequest', () => {
     request.transformRequest(data, headers)
 
     expect(headers).toEqual(expect.objectContaining({
-      Authorization: 'Bearer: 123'
+      Authorization: 'Bearer 123'
     }))
   })
 

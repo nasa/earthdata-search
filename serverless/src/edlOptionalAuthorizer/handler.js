@@ -21,12 +21,12 @@ const edlOptionalAuthorizer = async (event) => {
   // resourcePath contains the path assigned to the lambda being requested
   const { resourcePath } = requestContext
 
-  // authorizationToken comes in as `Bearer: asdf.qwer.hjkl` but we only need the actual token
+  // authorizationToken comes in as `Bearer asdf.qwer.hjkl` but we only need the actual token
   const tokenParts = authorizationToken.split(' ')
   const jwtToken = tokenParts[1]
 
   // Authorization header must exist for API Gateway to execute this authorizer, but if the user isn't logged in,
-  // the header will be `Bearer: `
+  // the header will be `Bearer `
   if (!jwtToken || jwtToken === '') {
     const authOptionalPaths = [
       '/autocomplete',

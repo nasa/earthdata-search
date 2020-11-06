@@ -12,7 +12,7 @@ describe('edlAuthorizer', () => {
       const event = {
         headers: {
           'Earthdata-ENV': 'test',
-          Authorization: `Bearer: ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`
         }
       }
 

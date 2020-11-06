@@ -82,7 +82,7 @@ export default class Request {
 
     if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
-      headers.Authorization = `Bearer: ${this.getAuthToken()}`
+      headers.Authorization = `Bearer ${this.getAuthToken()}`
     }
 
     if (data) {
@@ -171,7 +171,7 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer: ${this.getAuthToken()}`
+          Authorization: `Bearer ${this.getAuthToken()}`
         }
       }
     }
@@ -215,7 +215,7 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer: ${this.getAuthToken()}`
+          Authorization: `Bearer ${this.getAuthToken()}`
         }
       }
     }
