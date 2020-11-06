@@ -1,10 +1,11 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import { LinkContainer } from 'react-router-bootstrap'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -58,6 +59,13 @@ describe('SecondaryToolbar component', () => {
   })
 
   describe('when logged in', () => {
+    beforeEach(() => {
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        defaultPortal: 'edsc',
+        env: 'prod'
+      }))
+    })
+
     test('should render the user dropdown', () => {
       const { enzymeWrapper } = setup('loggedIn')
 
