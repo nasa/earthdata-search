@@ -10,7 +10,7 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
 export const getEarthdataEnvironmentFromUrl = (state) => {
   const { router = {} } = state
   const { location = {} } = router
-  const { search } = location
+  const { search = '' } = location
 
   const { ee: earthdataEnvironment } = parse(search, { ignoreQueryPrefix: true })
 
