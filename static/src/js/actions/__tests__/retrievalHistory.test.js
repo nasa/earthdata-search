@@ -40,52 +40,6 @@ describe('fetchRetrievalHistory', () => {
     })
 
     // call the dispatch
-    await store.dispatch(fetchRetrievalHistory('prod')).then(() => {
-      expect(store.getActions().length).toEqual(2)
-      expect(store.getActions()[0]).toEqual({
-        type: SET_RETRIEVAL_HISTORY_LOADING
-      })
-      expect(store.getActions()[1]).toEqual({
-        payload: [
-          {
-            id: '1234',
-            environment: 'prod',
-            collections: [],
-            jsondata: {
-              portalId: 'edsc',
-              source: '?p=!C1234-EDSC'
-            }
-          }
-        ],
-        type: SET_RETRIEVAL_HISTORY
-      })
-    })
-  })
-
-  test('retrieves the earthdataEnvironment from the state if not provided', async () => {
-    nock(/localhost/)
-      .get(/retrievals/)
-      .reply(200, [
-        {
-          id: '1234',
-          environment: 'prod',
-          collections: [],
-          jsondata: {
-            portalId: 'edsc',
-            source: '?p=!C1234-EDSC'
-          }
-        }
-      ])
-
-    // mockStore with initialState
-    const store = mockStore({
-      authToken: 'mockToken',
-      earthdataEnvironment: 'prod'
-    })
-
-    const getEarthdataEnvironmentMock = jest.spyOn(earthdataEnvironmentSelector, 'getEarthdataEnvironment')
-
-    // call the dispatch
     await store.dispatch(fetchRetrievalHistory()).then(() => {
       expect(store.getActions().length).toEqual(2)
       expect(store.getActions()[0]).toEqual({
@@ -105,8 +59,6 @@ describe('fetchRetrievalHistory', () => {
         ],
         type: SET_RETRIEVAL_HISTORY
       })
-
-      expect(getEarthdataEnvironmentMock).toHaveBeenCalledTimes(1)
     })
   })
 
