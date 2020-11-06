@@ -4,7 +4,6 @@ import axios from 'axios'
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructOrderUrl } from './constructOrderUrl'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getEdlConfig } from '../util/getEdlConfig'
 import { parseError } from '../../../sharedUtils/parseError'
 import { processPartialShapefile } from '../util/processPartialShapefile'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
@@ -63,12 +62,6 @@ const submitHarmonyOrder = async (event, context) => {
       user_id: userId
     } = retrievalRecord
 
-    const edlConfig = await getEdlConfig(environment)
-    const { client } = edlConfig
-    const { id: clientId } = client
-
-    const accessTokenWithClient = `${accessToken}:${clientId}`
-
     const {
       type
     } = accessMethod
@@ -97,7 +90,7 @@ const submitHarmonyOrder = async (event, context) => {
       const orderPayload = await constructOrderPayload({
         accessMethod,
         granuleParams,
-        accessTokenWithClient,
+        accessToken,
         shapefile,
         environment
       })

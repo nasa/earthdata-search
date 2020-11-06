@@ -80,7 +80,7 @@ describe('fetchHarmonyOrder', () => {
       })
 
     const harmonyResponse = await fetchHarmonyOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'Harmony'
     })
@@ -91,7 +91,7 @@ describe('fetchHarmonyOrder', () => {
     expect(queries[1].method).toEqual('update')
 
     expect(harmonyResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'in_progress',
       orderType: 'Harmony'
@@ -170,7 +170,7 @@ describe('fetchHarmonyOrder', () => {
       })
 
     const harmonyResponse = await fetchHarmonyOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'Harmony'
     })
@@ -181,7 +181,7 @@ describe('fetchHarmonyOrder', () => {
     expect(queries[1].method).toEqual('update')
 
     expect(harmonyResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'complete',
       orderType: 'Harmony'
@@ -238,7 +238,7 @@ describe('fetchHarmonyOrder', () => {
       })
 
     const harmonyResponse = await fetchHarmonyOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'Harmony'
     })
@@ -249,7 +249,7 @@ describe('fetchHarmonyOrder', () => {
     expect(queries[1].method).toEqual('update')
 
     expect(harmonyResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'failed',
       orderType: 'Harmony'
@@ -266,7 +266,7 @@ describe('fetchHarmonyOrder', () => {
     })
 
     const harmonyResponse = await fetchHarmonyOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'Harmony'
     })
@@ -276,7 +276,7 @@ describe('fetchHarmonyOrder', () => {
     expect(queries[0].method).toEqual('first')
 
     expect(harmonyResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'not_found',
       orderType: 'Harmony'
@@ -291,7 +291,7 @@ describe('fetchHarmonyOrder', () => {
     // Exclude an error message from the `toThrow` matcher because its
     // a specific sql statement and not necessary
     await expect(fetchHarmonyOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'Harmony'
     })).rejects.toThrow()
@@ -337,7 +337,7 @@ describe('fetchHarmonyOrder', () => {
       })
 
     await expect(fetchHarmonyOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'Harmony'
     })).rejects.toThrow('Error: Invalid format for Job ID \'ABCD-1234-EFGH-5678\'. Job ID must be a UUID.')

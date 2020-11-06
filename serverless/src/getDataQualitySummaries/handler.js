@@ -40,7 +40,7 @@ const getDataQualitySummaries = async (event) => {
         catalog_item_id: catalogItemId
       },
       headers: {
-        'Echo-Token': echoToken,
+        Authorization: `Bearer ${echoToken}`,
         'Client-Id': getClientId().background,
         'CMR-Request-Id': requestId
       },
@@ -74,7 +74,7 @@ const getDataQualitySummaries = async (event) => {
         dqsResponse = await request.get({
           uri: `${echoRestRoot}/data_quality_summary_definitions/${dqsId}.json`,
           headers: {
-            'Echo-Token': echoToken,
+            Authorization: `Bearer ${echoToken}`,
             'Client-Id': getClientId().background,
             'CMR-Request-Id': dataQualitySummaryRequestId
           },

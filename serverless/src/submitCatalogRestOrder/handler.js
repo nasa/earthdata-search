@@ -5,7 +5,6 @@ import request from 'request-promise'
 import { getBoundingBox } from '../util/echoForms/getBoundingBox'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getEdlConfig } from '../util/getEdlConfig'
 import { getEmail } from '../util/echoForms/getEmail'
 import {
   getEnvironmentConfig,
@@ -81,13 +80,6 @@ const submitCatalogRestOrder = async (event, context) => {
     } = retrievalRecord
 
     try {
-      const edlConfig = await getEdlConfig(environment)
-      const { client } = edlConfig
-
-      const { id: clientId } = client
-
-      const accessTokenWithClient = `${accessToken}:${clientId}`
-
       const {
         portalId = getApplicationConfig().defaultPortal,
         shapefileId,
@@ -104,7 +96,7 @@ const submitCatalogRestOrder = async (event, context) => {
           arrayFormat: 'brackets'
         },
         headers: {
-          'Echo-Token': accessTokenWithClient,
+          Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         },
         json: true,
@@ -165,7 +157,7 @@ const submitCatalogRestOrder = async (event, context) => {
         uri: url,
         form: orderPayload,
         headers: {
-          'Echo-Token': accessTokenWithClient,
+          Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         },
         resolveWithFullResponse: true
@@ -183,7 +175,7 @@ const submitCatalogRestOrder = async (event, context) => {
       await dbConnection('retrieval_orders').update({ order_number: orderId, state: 'initialized' }).where({ id })
 
       // Start the order status check workflow
-      await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
+      await startOrderStatusUpdateWorkflow(id, accessToken, type)
     } catch (e) {
       const parsedErrorMessage = parseError(e, { asJSON: false })
 

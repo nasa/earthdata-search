@@ -1,6 +1,6 @@
 import request from 'request-promise'
+
 import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { getEdlConfig } from '../util/getEdlConfig'
 import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
@@ -9,11 +9,6 @@ import { getClientId } from '../../../sharedUtils/getClientId'
  * @param {String} token A valid URS access token
  */
 export const getEchoPreferencesData = async (username, token, environment) => {
-  // The client id is part of our Earthdata Login credentials
-  const edlConfig = await getEdlConfig(environment)
-  const { client } = edlConfig
-  const { id: clientId } = client
-
   const { echoRestRoot } = getEarthdataConfig(environment)
 
   const echoRestPreferencesUrl = `${echoRestRoot}/users/${username}/preferences.json`
@@ -21,8 +16,8 @@ export const getEchoPreferencesData = async (username, token, environment) => {
   const echoRestPreferencesResponse = await request.get({
     uri: echoRestPreferencesUrl,
     headers: {
-      'Client-Id': getClientId().lambda,
-      'Echo-Token': `${token}:${clientId}`
+      Authorization: `Bearer ${token}`,
+      'Client-Id': getClientId().lambda
     },
     json: true,
     resolveWithFullResponse: true

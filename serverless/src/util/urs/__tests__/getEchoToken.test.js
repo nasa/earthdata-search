@@ -19,6 +19,6 @@ describe('getEchoToken', () => {
   test('returns an echo token with environment specific client id', async () => {
     const response = await getEchoToken()
 
-    expect(response).toEqual('access_token:clientId')
+    expect(response).toEqual('access_token')
   })
 })

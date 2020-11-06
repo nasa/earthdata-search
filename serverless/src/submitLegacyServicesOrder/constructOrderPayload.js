@@ -10,7 +10,7 @@ import { readCmrResults } from '../util/cmr/readCmrResults'
 export const constructOrderPayload = async (
   accessMethod,
   granuleParams,
-  accessTokenWithClient,
+  accessToken,
   earthdataEnvironment
 ) => {
   const {
@@ -37,7 +37,7 @@ export const constructOrderPayload = async (
       arrayFormat: 'brackets'
     },
     headers: {
-      'Echo-Token': accessTokenWithClient,
+      Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().background
     },
     json: true,
@@ -63,7 +63,7 @@ export const constructOrderPayload = async (
     }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Echo-Token': accessTokenWithClient,
+      Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().background
     },
     json: true,

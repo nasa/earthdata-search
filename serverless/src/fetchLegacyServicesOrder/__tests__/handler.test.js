@@ -79,7 +79,7 @@ describe('fetchLegacyServicesOrder', () => {
       ])
 
     const legacyServicesResponse = await fetchLegacyServicesOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
     })
@@ -90,7 +90,7 @@ describe('fetchLegacyServicesOrder', () => {
     expect(queries[1].method).toEqual('update')
 
     expect(legacyServicesResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'in_progress',
       orderType: 'ECHO ORDERS'
@@ -139,7 +139,7 @@ describe('fetchLegacyServicesOrder', () => {
       ])
 
     const legacyServicesResponse = await fetchLegacyServicesOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
     })
@@ -150,7 +150,7 @@ describe('fetchLegacyServicesOrder', () => {
     expect(queries[1].method).toEqual('update')
 
     expect(legacyServicesResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'complete',
       orderType: 'ECHO ORDERS'
@@ -199,7 +199,7 @@ describe('fetchLegacyServicesOrder', () => {
       ])
 
     const legacyServicesResponse = await fetchLegacyServicesOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
     })
@@ -210,7 +210,7 @@ describe('fetchLegacyServicesOrder', () => {
     expect(queries[1].method).toEqual('update')
 
     expect(legacyServicesResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'failed',
       orderType: 'ECHO ORDERS'
@@ -227,7 +227,7 @@ describe('fetchLegacyServicesOrder', () => {
     })
 
     const legacyServicesResponse = await fetchLegacyServicesOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
     })
@@ -237,7 +237,7 @@ describe('fetchLegacyServicesOrder', () => {
     expect(queries[0].method).toEqual('first')
 
     expect(legacyServicesResponse).toEqual({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'not_found',
       orderType: 'ECHO ORDERS'
@@ -252,7 +252,7 @@ describe('fetchLegacyServicesOrder', () => {
     // Exclude an error message from the `toThrow` matcher because its
     // a specific sql statement and not necessary
     await expect(fetchLegacyServicesOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
     })).rejects.toThrow()
@@ -283,7 +283,7 @@ describe('fetchLegacyServicesOrder', () => {
       })
 
     await expect(fetchLegacyServicesOrder({
-      accessToken: 'fake.access.token:clientId',
+      accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
     })).rejects.toThrow('Test error message')

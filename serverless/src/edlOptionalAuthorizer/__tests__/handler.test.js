@@ -13,7 +13,7 @@ describe('edlOptionalAuthorizer', () => {
 
       const event = {
         headers: {
-          Authorization: `Bearer: ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`
         }
       }
 
@@ -76,7 +76,7 @@ describe('edlOptionalAuthorizer', () => {
 
       const event = {
         headers: {
-          Authorization: `Bearer: ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`
         }
       }
 

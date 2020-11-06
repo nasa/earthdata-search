@@ -52,7 +52,7 @@ const fetchCatalogRestOrder = async (input) => {
       url: `${url}/${orderNumber}`,
       method: 'get',
       headers: {
-        'Echo-Token': accessToken,
+        Authorization: `Bearer ${accessToken}`,
         'Client-Id': getClientId().background
       }
     })

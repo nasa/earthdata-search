@@ -44,8 +44,8 @@ const graphQl = async (event, context) => {
         variables
       },
       headers: {
-        'X-Request-Id': requestId,
-        'Echo-Token': echoToken
+        Authorization: `Bearer ${echoToken}`,
+        'X-Request-Id': requestId
       }
     })
 

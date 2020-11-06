@@ -18,7 +18,7 @@ import { readCmrResults } from '../util/cmr/readCmrResults'
 export const constructOrderPayload = async ({
   accessMethod,
   granuleParams,
-  accessTokenWithClient,
+  accessToken,
   shapefile,
   environment
 }) => {
@@ -31,7 +31,7 @@ export const constructOrderPayload = async ({
       arrayFormat: 'brackets'
     },
     headers: {
-      'Echo-Token': accessTokenWithClient,
+      Authorization: accessToken,
       'Client-Id': getClientId().background
     },
     json: true,

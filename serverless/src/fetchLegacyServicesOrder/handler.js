@@ -51,7 +51,7 @@ const fetchLegacyServicesOrder = async (input) => {
     const orderResponse = await request.get({
       uri: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
       headers: {
-        'Echo-Token': accessToken,
+        Authorization: `Bearer ${accessToken}`,
         'Client-Id': getClientId().background
       },
       qs: { id: orderNumber },
