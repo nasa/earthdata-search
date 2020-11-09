@@ -36,7 +36,7 @@ jobs:
     - name: Copy secrets example file
       run: npm run copy-secrets
     - name: Run Jest tests
-      run: npm run test-gh
+      run: npm run silent-test
     - name: Upload coverage to codecov
       uses: codecov/codecov-action@v1
   cypress:
