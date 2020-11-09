@@ -8,8 +8,7 @@ import {
 
 const initialState = {
   intervals: {},
-  query: {},
-  isOpen: true
+  query: {}
 }
 
 describe('INITIAL_STATE', () => {
@@ -81,8 +80,7 @@ describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
     const timeline = {
       intervals: {},
-      query: {},
-      isOpen: true
+      query: {}
     }
 
     const action = {
@@ -102,8 +100,7 @@ describe('TOGGLE_TIMELINE', () => {
   test('returns the correct state', () => {
     const action = { type: TOGGLE_TIMELINE, payload: false }
     const expectedState = {
-      ...initialState,
-      isOpen: false
+      ...initialState
     }
     expect(timelineReducer(undefined, action)).toEqual(expectedState)
   })

@@ -31,9 +31,9 @@ function setup(overrideProps) {
     temporalSearch: {},
     timeline: {
       query: {},
-      state: {},
-      isOpen: true
+      state: {}
     },
+    isOpen: true,
     ...overrideProps
   }
 

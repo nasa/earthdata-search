@@ -9,7 +9,8 @@ import {
   toggleRelatedUrlsModal,
   toggleShapefileUploadModal,
   toggleTooManyPointsModal,
-  toggleKeyboardShortcutsModal
+  toggleKeyboardShortcutsModal,
+  toggleTimeline
 } from '../ui'
 
 import {
@@ -20,7 +21,8 @@ import {
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_TOO_MANY_POINTS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
-  TOGGLE_KEYBOARD_SHORTCUTS_MODAL
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
+  TOGGLE_TIMELINE
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -194,5 +196,16 @@ describe('toggleKeyboardShortcutsModal', () => {
       type: TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
       payload: true
     })
+  })
+})
+
+describe('toggleTimeline', () => {
+  test('should create an action to toggle timeline', () => {
+    const payload = false
+    const expectedAction = {
+      type: TOGGLE_TIMELINE,
+      payload
+    }
+    expect(toggleTimeline(payload)).toEqual(expectedAction)
   })
 })

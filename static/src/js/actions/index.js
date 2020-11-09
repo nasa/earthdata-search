@@ -42,8 +42,7 @@ import {
 } from './authToken'
 import {
   changeTimelineQuery,
-  getTimeline,
-  toggleTimeline
+  getTimeline
 } from './timeline'
 import {
   changeCollectionPageNum,
@@ -83,7 +82,8 @@ import {
   toggleShapefileUploadModal,
   toggleSpatialPolygonWarning,
   toggleTooManyPointsModal,
-  toggleKeyboardShortcutsModal
+  toggleKeyboardShortcutsModal,
+  toggleTimeline
 } from './ui'
 import {
   applyViewAllFacets,

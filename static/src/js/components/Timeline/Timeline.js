@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-// import ReactCSSTransitionGroup from 'react-transition-group'
 import $ from 'jquery'
 import { isEqual } from 'lodash'
+import classNames from 'classnames'
 
 import '@edsc/timeline'
 import { timelineIntervals } from '../../util/timeline'
@@ -279,7 +279,7 @@ class Timeline extends Component {
 
   onWindowKeyUp(e) {
     const { keyboardShortcuts } = this
-    const { timeline: { isOpen }, onToggleTimeline } = this.props
+    const { isOpen, onToggleTimeline } = this.props
 
     const toggleTimeline = () => onToggleTimeline(!isOpen)
 
@@ -587,9 +587,16 @@ class Timeline extends Component {
   }
 
   render() {
-    const { timeline: { isOpen } } = this.props
+    const { isOpen } = this.props
+    const timelineClasses = classNames([
+      'timeline',
+      {
+        'timeline--is-hidden': !isOpen
+      }
+    ])
+
     return (
-      <section className={isOpen ? 'timeline' : 'hidden'}>
+      <section className={timelineClasses}>
         {<div ref={(el) => { this.el = el }} /> }
       </section>
     )
@@ -607,7 +614,8 @@ Timeline.propTypes = {
   onChangeTimelineQuery: PropTypes.func.isRequired,
   onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   onMetricsTimeline: PropTypes.func.isRequired,
-  onToggleTimeline: PropTypes.func.isRequired
+  onToggleTimeline: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired
 }
 
 export default Timeline

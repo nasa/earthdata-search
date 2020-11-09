@@ -10,7 +10,8 @@ import {
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_SPATIAL_POLYGON_WARNING,
   TOGGLE_TOO_MANY_POINTS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_TIMELINE
 } from '../constants/actionTypes'
 
 export const toggleFacetsModal = state => ({
@@ -70,5 +71,10 @@ export const toggleSpatialPolygonWarning = state => ({
 
 export const toggleKeyboardShortcutsModal = state => ({
   type: TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
+  payload: state
+})
+
+export const toggleTimeline = state => ({
+  type: TOGGLE_TIMELINE,
   payload: state
 })
