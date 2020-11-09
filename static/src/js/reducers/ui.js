@@ -10,7 +10,8 @@ import {
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_SPATIAL_POLYGON_WARNING,
-  TOGGLE_KEYBOARD_SHORTCUTS_MODAL
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
+  TOGGLE_TIMELINE
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -53,6 +54,9 @@ const initialState = {
   },
   keyboardShortcutsModal: {
     isOpen: false
+  },
+  timeline: {
+    isOpen: true
   }
 }
 
@@ -152,6 +156,14 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         keyboardShortcutsModal: {
+          isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_TIMELINE: {
+      return {
+        ...state,
+        timeline: {
           isOpen: action.payload
         }
       }

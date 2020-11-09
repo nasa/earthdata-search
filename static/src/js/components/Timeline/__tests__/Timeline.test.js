@@ -14,7 +14,7 @@ function setup(overrideProps) {
     },
     collectionMetadata: {},
     temporalSearch: {},
-    timeline: { intervals: {}, query: {}, isOpen: true },
+    timeline: { intervals: {}, query: {} },
     showOverrideModal: false,
     pathname: '/search/granules',
     onChangeQuery: jest.fn(),
@@ -22,6 +22,7 @@ function setup(overrideProps) {
     onToggleOverrideTemporalModal: jest.fn(),
     onMetricsTimeline: jest.fn(),
     onToggleTimeline: jest.fn(),
+    isOpen: true,
     ...overrideProps
   }
 
@@ -754,12 +755,11 @@ describe('handle toggleTimeline', () => {
   })
   test('open timeline by pressing t', () => {
     const { props, enzymeWrapper } = setup({
-      timeline:
-        { intervals: {}, query: {}, isOpen: false }
+      isOpen: false
     })
     const timelineSection = enzymeWrapper.find('section')
 
-    expect(timelineSection.prop('className')).toEqual('hidden')
+    expect(timelineSection.prop('className')).toEqual('timeline timeline--is-hidden')
 
     const preventDefaultMock = jest.fn()
     const stopPropagationMock = jest.fn()

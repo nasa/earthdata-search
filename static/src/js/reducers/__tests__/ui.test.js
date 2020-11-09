@@ -10,7 +10,8 @@ import {
   TOGGLE_TOO_MANY_POINTS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_SPATIAL_POLYGON_WARNING,
-  TOGGLE_KEYBOARD_SHORTCUTS_MODAL
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
+  TOGGLE_TIMELINE
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -53,6 +54,9 @@ const initialState = {
   },
   keyboardShortcutsModal: {
     isOpen: false
+  },
+  timeline: {
+    isOpen: true
   }
 }
 
@@ -234,6 +238,22 @@ describe('TOGGLE_KEYBOARD_SHORTCUTS_MODAL', () => {
     const expectedState = {
       ...initialState,
       keyboardShortcutsModal: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_TIMELINE', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_TIMELINE,
+      payload: false
+    }
+
+    const expectedState = {
+      ...initialState,
+      timeline: { isOpen: false }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)

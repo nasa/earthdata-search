@@ -30,7 +30,8 @@ const mapStateToProps = state => ({
   pathname: state.router.location.pathname,
   projectCollectionsIds: getProjectCollectionsIds(state),
   temporalSearch: state.query.collection.temporal,
-  timeline: state.timeline
+  timeline: state.timeline,
+  isOpen: state.ui.timeline.isOpen
 })
 
 export const TimelineContainer = (props) => {
@@ -46,7 +47,8 @@ export const TimelineContainer = (props) => {
     onChangeTimelineQuery,
     onToggleOverrideTemporalModal,
     onMetricsTimeline,
-    onToggleTimeline
+    onToggleTimeline,
+    isOpen
   } = props
 
   // Determine the collectionMetadata the timeline should be displaying
@@ -86,6 +88,7 @@ export const TimelineContainer = (props) => {
         onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
         onMetricsTimeline={onMetricsTimeline}
         onToggleTimeline={onToggleTimeline}
+        isOpen={isOpen}
       />
     </Suspense>
   )
@@ -107,7 +110,8 @@ TimelineContainer.propTypes = {
   pathname: PropTypes.string.isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   temporalSearch: PropTypes.shape({}),
-  timeline: PropTypes.shape({}).isRequired
+  timeline: PropTypes.shape({}).isRequired,
+  isOpen: PropTypes.bool.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineContainer)

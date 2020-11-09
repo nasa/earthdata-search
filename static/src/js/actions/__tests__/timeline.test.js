@@ -7,14 +7,12 @@ import {
   updateTimelineIntervals,
   updateTimelineQuery,
   getTimeline,
-  changeTimelineQuery,
-  toggleTimeline
+  changeTimelineQuery
 } from '../timeline'
 import {
   UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
-  UPDATE_AUTH,
-  TOGGLE_TIMELINE
+  UPDATE_AUTH
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -285,16 +283,5 @@ describe('changeTimelineQuery', () => {
 
     // was getTimeline called
     expect(getTimelineMock).toHaveBeenCalledTimes(1)
-  })
-})
-
-describe('toggleTimeline', () => {
-  test('should create an action to toggle timeline', () => {
-    const payload = false
-    const expectedAction = {
-      type: TOGGLE_TIMELINE,
-      payload
-    }
-    expect(toggleTimeline(payload)).toEqual(expectedAction)
   })
 })

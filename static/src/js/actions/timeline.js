@@ -5,8 +5,7 @@ import actions from './index'
 import TimelineRequest from '../util/request/timelineRequest'
 import {
   UPDATE_TIMELINE_INTERVALS,
-  UPDATE_TIMELINE_QUERY,
-  TOGGLE_TIMELINE
+  UPDATE_TIMELINE_QUERY
 } from '../constants/actionTypes'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
@@ -104,8 +103,3 @@ export const changeTimelineQuery = query => (dispatch) => {
   dispatch(updateTimelineQuery(query))
   dispatch(actions.getTimeline())
 }
-
-export const toggleTimeline = payload => ({
-  type: TOGGLE_TIMELINE,
-  payload
-})
