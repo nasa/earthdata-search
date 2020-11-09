@@ -1,7 +1,7 @@
 # [Earthdata Search](https://search.earthdata.nasa.gov)
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
-![Build Status](https://github.com/nasa/earthdata-search/workflows/CI/badge.svg)
+![Build Status](https://github.com/nasa/earthdata-search/workflows/CI/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/nasa/earthdata-search/branch/master/graph/badge.svg?token=kIkZQ0NrqK)](https://codecov.io/gh/nasa/earthdata-search)
 [![Known Vulnerabilities](https://snyk.io/test/github/nasa/earthdata-search/badge.svg)](https://snyk.io/test/github/nasa/earthdata-search)
 
