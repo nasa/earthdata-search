@@ -57,65 +57,6 @@ export class AccessMethod extends Component {
     this.handleOutputProjectionSelection = this.handleOutputProjectionSelection.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { selectedOutputFormat, selectedOutputProjection } = this.state
-    const {
-      accessMethods,
-      selectedAccessMethod
-    } = nextProps
-
-    if (
-      selectedAccessMethod
-      && (selectedAccessMethod === 'opendap'
-      || selectedAccessMethod.includes('harmony'))
-    ) {
-      const selectedMethod = accessMethods[selectedAccessMethod]
-      const {
-        selectedOutputFormat: nextSelectedOutputFormat,
-        selectedOutputProjection: nextSelectedOutputProjection,
-        supportedOutputFormats = [],
-        supportedOutputProjections = []
-      } = selectedMethod || {}
-
-      // If there is no selected option, select the first option
-      if (nextSelectedOutputFormat !== selectedOutputFormat) {
-        if (!nextSelectedOutputFormat) {
-          let defaultSelectedOutputFormat
-
-          if (selectedAccessMethod === 'opendap') {
-            // Pull out the ext value from formatMappings
-            const ousSupportedFormats = supportedOutputFormats.filter(
-              format => ousFormatMapping[format] !== undefined
-            )
-
-            defaultSelectedOutputFormat = ousFormatMapping[ousSupportedFormats[0]]
-          } else if (selectedAccessMethod.includes('harmony')) {
-            // Pull out the ext value from formatMappings
-            const harmonySupportedFormats = supportedOutputFormats.filter(
-              format => harmonyFormatMapping[format] !== undefined
-            )
-
-            defaultSelectedOutputFormat = harmonyFormatMapping[harmonySupportedFormats[0]]
-          }
-
-          this.setState({ selectedOutputFormat: defaultSelectedOutputFormat })
-        } else {
-          this.setState({ selectedOutputFormat: nextSelectedOutputFormat })
-        }
-      }
-
-      // If there is no selected option, select the first option
-      if (nextSelectedOutputProjection !== selectedOutputProjection) {
-        if (!nextSelectedOutputProjection) {
-          const defaultSelectedOutputProjection = supportedOutputProjections[0]
-          this.setState({ selectedOutputProjection: defaultSelectedOutputProjection })
-        } else {
-          this.setState({ selectedOutputProjection: nextSelectedOutputProjection })
-        }
-      }
-    }
-  }
-
   handleAccessMethodSelection(method) {
     const { metadata, onSelectAccessMethod } = this.props
 
