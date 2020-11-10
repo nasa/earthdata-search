@@ -50,8 +50,9 @@ export async function addTag({
         resolveWithFullResponse: true
       })
 
-      const { body } = collectionJsonResponse
-      const { entry } = body
+      const { body = {} } = collectionJsonResponse
+      const { feed = {} } = body
+      const { entry = [] } = feed
       collections = entry
     } catch (e) {
       parseError(e, { reThrowError: true })
