@@ -15,12 +15,14 @@ describe('addTag', () => {
         short_name: 'MIL3MLS'
       })
       .reply(200, {
-        entry: [{
-          id: 'C123456789-EDSC',
-          tags: {
-            'edsc.extra.gibs': {}
-          }
-        }]
+        feed: {
+          entry: [{
+            id: 'C123456789-EDSC',
+            tags: {
+              'edsc.extra.gibs': {}
+            }
+          }]
+        }
       })
 
     nock(/example/)
@@ -52,9 +54,11 @@ describe('addTag', () => {
         short_name: 'MIL3MLS'
       })
       .reply(200, {
-        entry: [{
-          id: 'C123456789-EDSC'
-        }]
+        feed: {
+          entry: [{
+            id: 'C123456789-EDSC'
+          }]
+        }
       })
 
     nock(/example/)
@@ -86,16 +90,18 @@ describe('addTag', () => {
         short_name: 'MIL3MLS'
       })
       .reply(200, {
-        entry: [{
-          id: 'C123456789-EDSC',
-          tags: {
-            'edsc.extra.gibs': {
-              data: [{
-                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-              }]
+        feed: {
+          entry: [{
+            id: 'C123456789-EDSC',
+            tags: {
+              'edsc.extra.gibs': {
+                data: [{
+                  product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+                }]
+              }
             }
-          }
-        }]
+          }]
+        }
       })
 
     nock(/example/)
@@ -127,16 +133,18 @@ describe('addTag', () => {
         short_name: 'MIL3MLS'
       })
       .reply(200, {
-        entry: [{
-          id: 'C123456789-EDSC',
-          tags: {
-            'edsc.extra.gibs': {
-              data: [{
-                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-              }]
+        feed: {
+          entry: [{
+            id: 'C123456789-EDSC',
+            tags: {
+              'edsc.extra.gibs': {
+                data: [{
+                  product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+                }]
+              }
             }
-          }
-        }]
+          }]
+        }
       })
 
     nock(/example/)
@@ -170,16 +178,18 @@ describe('addTag', () => {
         short_name: 'MIL3MLS'
       })
       .reply(200, {
-        entry: [{
-          id: 'C123456789-EDSC',
-          tags: {
-            'edsc.extra.gibs': {
-              data: [{
-                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-              }]
+        feed: {
+          entry: [{
+            id: 'C123456789-EDSC',
+            tags: {
+              'edsc.extra.gibs': {
+                data: [{
+                  product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+                }]
+              }
             }
-          }
-        }]
+          }]
+        }
       })
 
     nock(/example/)
@@ -211,16 +221,18 @@ describe('addTag', () => {
         short_name: 'MIL3MLS'
       })
       .reply(200, {
-        entry: [{
-          id: 'C123456789-EDSC',
-          tags: {
-            'edsc.extra.gibs': {
-              data: [{
-                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-              }]
+        feed: {
+          entry: [{
+            id: 'C123456789-EDSC',
+            tags: {
+              'edsc.extra.gibs': {
+                data: [{
+                  product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+                }]
+              }
             }
-          }
-        }]
+          }]
+        }
       })
 
     nock(/example/)
@@ -254,12 +266,14 @@ describe('addTag', () => {
         short_name: 'MIL3MLS'
       }))
       .reply(200, {
-        entry: [{
-          id: 'C1234-EDSC',
-          tags: {
-            'edsc.extra.gibs': {}
-          }
-        }]
+        feed: {
+          entry: [{
+            id: 'C1234-EDSC',
+            tags: {
+              'edsc.extra.gibs': {}
+            }
+          }]
+        }
       })
 
     await addTag({
@@ -278,16 +292,18 @@ describe('addTag', () => {
         short_name: 'MIL3MLS'
       })
       .reply(200, {
-        entry: [{
-          id: 'C123456789-EDSC',
-          tags: {
-            'edsc.extra.gibs': {
-              data: [{
-                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-              }]
+        feed: {
+          entry: [{
+            id: 'C123456789-EDSC',
+            tags: {
+              'edsc.extra.gibs': {
+                data: [{
+                  product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+                }]
+              }
             }
-          }
-        }]
+          }]
+        }
       })
 
     nock(/example/)
@@ -335,16 +351,18 @@ describe('addTag', () => {
         short_name: 'MIL3MLS'
       })
       .reply(200, {
-        entry: [{
-          id: 'C123456789-EDSC',
-          tags: {
-            'edsc.extra.gibs': {
-              data: [{
-                product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
-              }]
+        feed: {
+          entry: [{
+            id: 'C123456789-EDSC',
+            tags: {
+              'edsc.extra.gibs': {
+                data: [{
+                  product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+                }]
+              }
             }
-          }
-        }]
+          }]
+        }
       })
 
     nock(/example/)
