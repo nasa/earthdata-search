@@ -8,7 +8,7 @@ beforeEach(() => {
 
   // MockDate is used here to overwrite the js Date object. This allows us to
   // mock changes needed to test the moment functions
-  MockDate.set('09/03/1988 10:00:00')
+  MockDate.set('1988-09-03T10:00:00.000Z')
 })
 
 afterEach(() => {
@@ -51,7 +51,7 @@ describe('constructLayerTagData', () => {
           product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
           source: 'Aqua / MODIS',
           title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-          updated_at: '1988-09-03T14:00:00.000Z'
+          updated_at: '1988-09-03T10:00:00.000Z'
         }
       }
     ])
@@ -93,7 +93,7 @@ describe('constructLayerTagData', () => {
           product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
           source: 'Aqua / MODIS',
           title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-          updated_at: '1988-09-03T14:00:00.000Z'
+          updated_at: '1988-09-03T10:00:00.000Z'
         }
       }
     ])
@@ -137,7 +137,7 @@ describe('constructLayerTagData', () => {
           product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
           source: 'Aqua / MODIS',
           title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-          updated_at: '1988-09-03T14:00:00.000Z'
+          updated_at: '1988-09-03T10:00:00.000Z'
         }
       }
     ])
@@ -187,7 +187,7 @@ describe('constructLayerTagData', () => {
         product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
         source: 'Aqua / MODIS',
         title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-        updated_at: '1988-09-03T14:00:00.000Z'
+        updated_at: '1988-09-03T10:00:00.000Z'
       }
     }
 

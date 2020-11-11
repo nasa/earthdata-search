@@ -10,7 +10,7 @@ beforeEach(() => {
 
   // MockDate is used here to overwrite the js Date object. This allows us to
   // mock changes needed to test the moment functions
-  MockDate.set('09/03/1988 10:00:00')
+  MockDate.set('1988-09-03T10:00:00.000Z')
 })
 
 afterEach(() => {
@@ -208,7 +208,7 @@ describe('getCollectionCapabilities', () => {
       day_night_flag: false,
       granule_online_access_flag: false,
       orbit_calculated_spatial_domains: false,
-      updated_at: '1988-09-03T14:00:00.000Z'
+      updated_at: '1988-09-03T10:00:00.000Z'
     })
   })
 })
