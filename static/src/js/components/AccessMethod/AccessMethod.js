@@ -42,14 +42,12 @@ export class AccessMethod extends Component {
     const selectedMethod = accessMethods[selectedAccessMethod]
     const {
       selectedOutputFormat = '',
-      selectedOutputProjection = '',
-      supportedOutputFormats = [],
-      supportedOutputProjections = []
+      selectedOutputProjection = ''
     } = selectedMethod || {}
 
     this.state = {
-      selectedOutputFormat: selectedOutputFormat || supportedOutputFormats[0],
-      selectedOutputProjection: selectedOutputProjection || supportedOutputProjections[0]
+      selectedOutputFormat,
+      selectedOutputProjection
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
