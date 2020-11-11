@@ -18,7 +18,7 @@ beforeEach(() => {
 
   // MockDate is used here to overwrite the js Date object. This allows us to
   // mock changes needed to test the moment functions
-  MockDate.set('09/03/1988 10:00:00')
+  MockDate.set('1988-09-03T10:00:00.000Z')
 })
 
 afterEach(() => {
@@ -126,7 +126,7 @@ describe('generateGibsTags', () => {
             title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
             source: 'Terra / MISR',
             format: 'png',
-            updated_at: '1988-09-03T14:00:00.000Z',
+            updated_at: '1988-09-03T10:00:00.000Z',
             antarctic: false,
             antarctic_resolution: null,
             arctic: false,
@@ -158,7 +158,7 @@ describe('generateGibsTags', () => {
           title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
           source: 'Aqua / MODIS',
           format: 'png',
-          updated_at: '1988-09-03T14:00:00.000Z',
+          updated_at: '1988-09-03T10:00:00.000Z',
           antarctic: false,
           antarctic_resolution: null,
           arctic: false,
