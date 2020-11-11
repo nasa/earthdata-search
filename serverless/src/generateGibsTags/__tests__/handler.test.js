@@ -1,8 +1,9 @@
 import AWS from 'aws-sdk'
+import MockDate from 'mockdate'
 
 import * as getSupportedGibsLayers from '../getSupportedGibsLayers'
+
 import generateGibsTags from '../handler'
-import { matrixLimits } from './mocks'
 
 const OLD_ENV = process.env
 
@@ -14,11 +15,17 @@ beforeEach(() => {
   // jest.resetModules()
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
+
+  // MockDate is used here to overwrite the js Date object. This allows us to
+  // mock changes needed to test the moment functions
+  MockDate.set('09/03/1988 10:00:00')
 })
 
 afterEach(() => {
   // Restore any ENV variables overwritten in tests
   process.env = OLD_ENV
+
+  MockDate.reset()
 })
 
 describe('generateGibsTags', () => {
@@ -63,8 +70,7 @@ describe('generateGibsTags', () => {
         },
         type: 'wmts',
         id: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-        tags: 'ssc podaac PO.DAAC',
-        matrixLimits
+        tags: 'ssc podaac PO.DAAC'
       },
       'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly': {
         startDate: '2000-02-01',
@@ -83,8 +89,7 @@ describe('generateGibsTags', () => {
             source: 'GIBS:geographic',
             matrixSet: '2km'
           }
-        },
-        matrixLimits
+        }
       }
     }))
 
@@ -121,15 +126,13 @@ describe('generateGibsTags', () => {
             title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
             source: 'Terra / MISR',
             format: 'png',
+            updated_at: '1988-09-03T14:00:00.000Z',
             antarctic: false,
             antarctic_resolution: null,
-            antarctic_tile_matrix_limits: null,
             arctic: false,
             arctic_resolution: null,
-            arctic_tile_matrix_limits: null,
             geographic: true,
-            geographic_resolution: '2km',
-            geographic_tile_matrix_limits: matrixLimits
+            geographic_resolution: '2km'
           }]
         }
       })
@@ -155,15 +158,13 @@ describe('generateGibsTags', () => {
           title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
           source: 'Aqua / MODIS',
           format: 'png',
+          updated_at: '1988-09-03T14:00:00.000Z',
           antarctic: false,
           antarctic_resolution: null,
-          antarctic_tile_matrix_limits: null,
           arctic: false,
           arctic_resolution: null,
-          arctic_tile_matrix_limits: null,
           geographic: true,
-          geographic_resolution: '2km',
-          geographic_tile_matrix_limits: matrixLimits
+          geographic_resolution: '2km'
         }]
       })
     }])

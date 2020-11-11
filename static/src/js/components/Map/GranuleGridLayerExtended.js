@@ -219,6 +219,11 @@ export class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   getTileUrl(tilePoint, granule) {
+    // ***
+    // * Storing TileMatrixLimits in CMR tags is not a viable option, the payload is
+    // * too large. This tag data will be replaced with the efforts associated with EDSC-2972.
+    // ***
+
     if (!this.multiOptions) return null
     const date = granule.timeStart != null ? granule.timeStart.substring(0, 10) : undefined
 
@@ -227,7 +232,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       const newOptionSet = optionSet
       if (this.matches(granule, newOptionSet.match)) {
         let newResolution
-        let tileMatrixLimits
+        // let tileMatrixLimits
 
         const oldResolution = newOptionSet.resolution
 
@@ -235,47 +240,47 @@ export class GranuleGridLayerExtended extends L.GridLayer {
         if ((this.projection === projections.geographic) && newOptionSet.geographic) {
           matched = true
           newResolution = newOptionSet.geographic_resolution
-          tileMatrixLimits = newOptionSet.geographic_tile_matrix_limits
+          // tileMatrixLimits = newOptionSet.geographic_tile_matrix_limits
         } else if ((this.projection === projections.arctic) && newOptionSet.arctic) {
           matched = true
           newResolution = newOptionSet.arctic_resolution
-          tileMatrixLimits = newOptionSet.arctic_tile_matrix_limits
+          // tileMatrixLimits = newOptionSet.arctic_tile_matrix_limits
         } else if ((this.projection === projections.antarctic) && newOptionSet.antarctic) {
           matched = true
           newResolution = newOptionSet.antarctic_resolution
-          tileMatrixLimits = newOptionSet.antarctic_tile_matrix_limits
+          // tileMatrixLimits = newOptionSet.antarctic_tile_matrix_limits
         }
 
         // Use default resolution unless newResolution exists
         if (newResolution == null) { newResolution = oldResolution }
         newOptionSet.resolution = newResolution
-        newOptionSet.tileMatrixLimits = tileMatrixLimits
+        // newOptionSet.tileMatrixLimits = tileMatrixLimits
 
         this.options = L.extend({}, this.originalOptions, newOptionSet)
       }
     })
 
-    const { resolution, tileMatrixLimits = {} } = this.options
-    const { [resolution]: tileMatrixLimitsByResolution = {} } = tileMatrixLimits
+    // const { resolution, tileMatrixLimits = {} } = this.options
+    // const { [resolution]: tileMatrixLimitsByResolution = {} } = tileMatrixLimits
 
     // If the z point is not included in the tile matrix limits, return null
-    if (!Object.keys(tileMatrixLimitsByResolution).includes(tilePoint.z.toString())) {
-      return null
-    }
+    // if (!Object.keys(tileMatrixLimitsByResolution).includes(tilePoint.z.toString())) {
+    //   return null
+    // }
 
-    const {
-      matrixHeight,
-      matrixWidth
-    } = tileMatrixLimitsByResolution[tilePoint.z]
+    // const {
+    //   matrixHeight,
+    //   matrixWidth
+    // } = tileMatrixLimitsByResolution[tilePoint.z]
 
     // If the x or y points are less than 0 or greater than the width - 1 or height - 1 return null
     // Subtract 1 because the tilePoints start at 0 instead of 1
-    if (
-      tilePoint.x < 0 || tilePoint.x > matrixWidth - 1
-      || tilePoint.y < 0 || tilePoint.y > matrixHeight - 1
-    ) {
-      return null
-    }
+    // if (
+    //   tilePoint.x < 0 || tilePoint.x > matrixWidth - 1
+    //   || tilePoint.y < 0 || tilePoint.y > matrixHeight - 1
+    // ) {
+    //   return null
+    // }
 
     if (!matched) { return false }
 

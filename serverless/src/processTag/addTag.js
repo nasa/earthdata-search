@@ -98,7 +98,7 @@ export async function addTag({
   if (associationData) {
     try {
       const addTagUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/tags/${tagName}/associations`
-      await request.post({
+      const taggingResponse = await request.post({
         uri: addTagUrl,
         headers: {
           'Client-Id': getClientId().background,
@@ -107,6 +107,15 @@ export async function addTag({
         body: castArray(associationData),
         json: true,
         resolveWithFullResponse: true
+      })
+
+      const { body = [] } = taggingResponse
+
+      Array.from(body).forEach((tagResponse) => {
+        const { errors = [] } = tagResponse
+
+        // Log each (potential) error
+        errors.forEach(error => console.log(error))
       })
     } catch (e) {
       parseError(e, { reThrowError: true })

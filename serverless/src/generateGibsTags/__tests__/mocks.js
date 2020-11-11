@@ -233,20 +233,3 @@ export const capabilitiesResponse = `<Capabilities
   </Contents>
   <ServiceMetadataURL xlink:href="https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/1.0.0/WMTSCapabilities.xml"/>
 </Capabilities>`
-
-export const matrixLimits = {
-  '2km': {
-    0: {
-      matrixHeight: 1,
-      matrixWidth: 2
-    },
-    1: {
-      matrixHeight: 2,
-      matrixWidth: 3
-    },
-    2: {
-      matrixHeight: 3,
-      matrixWidth: 5
-    }
-  }
-}

@@ -25,7 +25,8 @@ export const getCollectionCapabilities = async (cmrToken, collection) => {
       cloud_cover: !!cloudCover,
       day_night_flag: !!dayNightFlag && ['DAY', 'NIGHT', 'BOTH'].includes(dayNightFlag.toUpperCase()),
       granule_online_access_flag: onlineAccessFlag,
-      orbit_calculated_spatial_domains: Object.keys(orbitCalculatedSpatialDomains).length > 0
+      orbit_calculated_spatial_domains: Object.keys(orbitCalculatedSpatialDomains).length > 0,
+      updated_at: new Date().toISOString()
     }
   } catch (e) {
     parseError(e)
@@ -35,7 +36,8 @@ export const getCollectionCapabilities = async (cmrToken, collection) => {
       cloud_cover: false,
       day_night_flag: false,
       granule_online_access_flag: false,
-      orbit_calculated_spatial_domains: false
+      orbit_calculated_spatial_domains: false,
+      updated_at: new Date().toISOString()
     }
   }
 }

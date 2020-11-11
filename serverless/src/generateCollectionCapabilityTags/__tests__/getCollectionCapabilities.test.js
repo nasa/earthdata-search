@@ -1,8 +1,21 @@
 import nock from 'nock'
+import MockDate from 'mockdate'
 
 import * as getSingleGranule from '../../util/cmr/getSingleGranule'
 
 import { getCollectionCapabilities } from '../getCollectionCapabilities'
+
+beforeEach(() => {
+  jest.clearAllMocks()
+
+  // MockDate is used here to overwrite the js Date object. This allows us to
+  // mock changes needed to test the moment functions
+  MockDate.set('09/03/1988 10:00:00')
+})
+
+afterEach(() => {
+  MockDate.reset()
+})
 
 describe('getCollectionCapabilities', () => {
   describe('cloud_cover', () => {
@@ -188,14 +201,14 @@ describe('getCollectionCapabilities', () => {
         ]
       })
 
-
     const response = await getCollectionCapabilities('token', { id: 'C100000-EDSC' })
 
     expect(response).toEqual({
       cloud_cover: false,
       day_night_flag: false,
       granule_online_access_flag: false,
-      orbit_calculated_spatial_domains: false
+      orbit_calculated_spatial_domains: false,
+      updated_at: '1988-09-03T14:00:00.000Z'
     })
   })
 })
