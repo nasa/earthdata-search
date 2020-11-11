@@ -1,8 +1,18 @@
-import { gibsResponse, matrixLimits } from './mocks'
+import MockDate from 'mockdate'
+
+import { gibsResponse } from './mocks'
 import { constructLayerTagData } from '../constructLayerTagData'
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  // MockDate is used here to overwrite the js Date object. This allows us to
+  // mock changes needed to test the moment functions
+  MockDate.set('09/03/1988 10:00:00')
+})
+
+afterEach(() => {
+  MockDate.reset()
 })
 
 describe('constructLayerTagData', () => {
@@ -15,7 +25,6 @@ describe('constructLayerTagData', () => {
     const { [product]: productObject } = products
 
     testingLayer.product = productObject
-    testingLayer.matrixLimits = matrixLimits
 
     const response = constructLayerTagData(testingLayer)
 
@@ -29,14 +38,11 @@ describe('constructLayerTagData', () => {
         data: {
           antarctic: false,
           antarctic_resolution: null,
-          antarctic_tile_matrix_limits: null,
           arctic: false,
           arctic_resolution: null,
-          arctic_tile_matrix_limits: null,
           format: 'png',
           geographic: true,
           geographic_resolution: '2km',
-          geographic_tile_matrix_limits: matrixLimits,
           group: 'overlays',
           match: {
             day_night_flag: 'NIGHT',
@@ -44,7 +50,8 @@ describe('constructLayerTagData', () => {
           },
           product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
           source: 'Aqua / MODIS',
-          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)'
+          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
+          updated_at: '1988-09-03T14:00:00.000Z'
         }
       }
     ])
@@ -61,7 +68,6 @@ describe('constructLayerTagData', () => {
     const { [product]: productObject } = products
 
     testingLayer.product = productObject
-    testingLayer.matrixLimits = matrixLimits
 
     const response = constructLayerTagData(testingLayer)
 
@@ -75,21 +81,19 @@ describe('constructLayerTagData', () => {
         data: {
           antarctic: false,
           antarctic_resolution: null,
-          antarctic_tile_matrix_limits: null,
           arctic: false,
           arctic_resolution: null,
-          arctic_tile_matrix_limits: null,
           format: 'png',
           geographic: true,
           geographic_resolution: '2km',
-          geographic_tile_matrix_limits: matrixLimits,
           group: 'overlays',
           match: {
             day_night_flag: 'NIGHT'
           },
           product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
           source: 'Aqua / MODIS',
-          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)'
+          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
+          updated_at: '1988-09-03T14:00:00.000Z'
         }
       }
     ])
@@ -106,7 +110,6 @@ describe('constructLayerTagData', () => {
     const { [product]: productObject } = products
 
     testingLayer.product = productObject
-    testingLayer.matrixLimits = matrixLimits
 
     const response = constructLayerTagData(testingLayer)
 
@@ -120,14 +123,11 @@ describe('constructLayerTagData', () => {
         data: {
           antarctic: false,
           antarctic_resolution: null,
-          antarctic_tile_matrix_limits: null,
           arctic: false,
           arctic_resolution: null,
-          arctic_tile_matrix_limits: null,
           format: 'png',
           geographic: true,
           geographic_resolution: '2km',
-          geographic_tile_matrix_limits: matrixLimits,
           group: 'overlays',
           match: {
             day_night_flag: 'NIGHT',
@@ -136,7 +136,8 @@ describe('constructLayerTagData', () => {
           },
           product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
           source: 'Aqua / MODIS',
-          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)'
+          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
+          updated_at: '1988-09-03T14:00:00.000Z'
         }
       }
     ])
@@ -161,7 +162,6 @@ describe('constructLayerTagData', () => {
       }
     }
     testingLayer.product = productObject
-    testingLayer.matrixLimits = matrixLimits
 
     const response = constructLayerTagData(testingLayer)
 
@@ -174,14 +174,11 @@ describe('constructLayerTagData', () => {
       data: {
         antarctic: false,
         antarctic_resolution: null,
-        antarctic_tile_matrix_limits: null,
         arctic: false,
         arctic_resolution: null,
-        arctic_tile_matrix_limits: null,
         format: 'png',
         geographic: true,
         geographic_resolution: '2km',
-        geographic_tile_matrix_limits: matrixLimits,
         group: 'overlays',
         match: {
           time_start: '>=2002-07-04T00:00:00Z',
@@ -189,7 +186,8 @@ describe('constructLayerTagData', () => {
         },
         product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
         source: 'Aqua / MODIS',
-        title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)'
+        title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
+        updated_at: '1988-09-03T14:00:00.000Z'
       }
     }
 

@@ -36,7 +36,7 @@ describe('addTag', () => {
           ]
         }
       ]))
-      .reply(200)
+      .reply(200, [])
 
     await addTag({
       tagName: 'edsc.extra.gibs',
@@ -72,7 +72,7 @@ describe('addTag', () => {
           ]
         }
       ]))
-      .reply(200)
+      .reply(200, [])
 
     await addTag({
       tagName: 'edsc.extra.gibs',
@@ -115,7 +115,7 @@ describe('addTag', () => {
           ]
         }
       ]))
-      .reply(200)
+      .reply(200, [])
 
     await addTag({
       tagName: 'edsc.extra.gibs',
@@ -160,7 +160,7 @@ describe('addTag', () => {
           ]
         }
       ]))
-      .reply(200)
+      .reply(200, [])
 
     await addTag({
       tagName: 'edsc.extra.gibs',
@@ -203,7 +203,7 @@ describe('addTag', () => {
           ]
         }
       ]))
-      .reply(200)
+      .reply(200, [])
 
     await addTag({
       tagName: 'edsc.extra.gibs',
@@ -248,7 +248,7 @@ describe('addTag', () => {
           ]
         }
       ]))
-      .reply(200)
+      .reply(200, [])
 
     await addTag({
       tagName: 'edsc.extra.gibs',
@@ -312,7 +312,7 @@ describe('addTag', () => {
           'concept-id': 'C123456789-EDSC'
         }
       ]))
-      .reply(200)
+      .reply(200, [])
 
     await addTag({
       tagName: 'edsc.extra.gibs',

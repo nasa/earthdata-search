@@ -1,7 +1,8 @@
 import AWS from 'aws-sdk'
 import nock from 'nock'
-import * as getSystemToken from '../../util/urs/getSystemToken'
+import MockDate from 'mockdate'
 
+import * as getSystemToken from '../../util/urs/getSystemToken'
 import * as getSingleGranule from '../../util/cmr/getSingleGranule'
 
 import generateCollectionCapabilityTags from '../handler'
@@ -26,11 +27,17 @@ beforeEach(() => {
   jest.resetModules()
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
+
+  // MockDate is used here to overwrite the js Date object. This allows us to
+  // mock changes needed to test the moment functions
+  MockDate.set('09/03/1988 10:00:00')
 })
 
 afterEach(() => {
   // Restore any ENV variables overwritten in tests
   process.env = OLD_ENV
+
+  MockDate.reset()
 })
 
 describe('generateCollectionCapabilityTags', () => {
@@ -70,7 +77,8 @@ describe('generateCollectionCapabilityTags', () => {
               cloud_cover: false,
               day_night_flag: false,
               granule_online_access_flag: false,
-              orbit_calculated_spatial_domains: false
+              orbit_calculated_spatial_domains: false,
+              updated_at: '1988-09-03T14:00:00.000Z'
             }
           }]
         }),
@@ -120,7 +128,8 @@ describe('generateCollectionCapabilityTags', () => {
               cloud_cover: false,
               day_night_flag: false,
               granule_online_access_flag: false,
-              orbit_calculated_spatial_domains: false
+              orbit_calculated_spatial_domains: false,
+              updated_at: '1988-09-03T14:00:00.000Z'
             }
           }]
         }),
