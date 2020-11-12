@@ -1,5 +1,7 @@
 import parser from 'fast-xml-parser'
 
+import { uniq } from 'lodash'
+
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getApplicationConfig } from '../../../sharedUtils/config'
@@ -191,7 +193,7 @@ const getAccessMethods = async (event, context) => {
         keywordMappings,
         longName,
         name,
-        supportedOutputFormats: outputFormats,
+        supportedOutputFormats: uniq(outputFormats),
         supportsVariableSubsetting: supportsVariableSubsetting(fullServiceObject),
         type,
         variables
@@ -249,7 +251,7 @@ const getAccessMethods = async (event, context) => {
           keywordMappings,
           longName,
           name,
-          supportedOutputFormats: outputFormats,
+          supportedOutputFormats: uniq(outputFormats),
           supportedOutputProjections: outputProjections,
           supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceObject),
           supportsShapefileSubsetting: supportsShapefileSubsetting(serviceObject),
