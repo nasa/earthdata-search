@@ -99,16 +99,13 @@ describe('getAccessMethods', () => {
               conceptId: 'umm-s-record-1',
               type: 'Harmony',
               serviceOptions: {},
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'GIF'
-                  ]
-                }
-              ],
+              supportedReformattings: [{
+                supportedInputFormat: 'NETCDF-4',
+                supportedOutputFormats: ['GEOTIFF', 'PNG', 'GIF']
+              }, {
+                supportedInputFormat: 'GEOTIFF',
+                supportedOutputFormats: ['GEOTIFF', 'PNG', 'GIF']
+              }],
               supportedOutputProjections: [{
                 projectionAuthority: 'EPSG:4326'
               }],
