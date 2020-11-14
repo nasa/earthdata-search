@@ -597,7 +597,7 @@ class Timeline extends Component {
 
     return (
       <section className={timelineClasses}>
-        {<div ref={(el) => { this.el = el }} /> }
+        <div ref={(el) => { this.el = el }} />
       </section>
     )
   }

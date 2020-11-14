@@ -2,8 +2,7 @@ import timelineReducer from '../timeline'
 import {
   UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
-  RESTORE_FROM_URL,
-  TOGGLE_TIMELINE
+  RESTORE_FROM_URL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -92,16 +91,6 @@ describe('RESTORE_FROM_URL', () => {
 
     const expectedState = timeline
 
-    expect(timelineReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('TOGGLE_TIMELINE', () => {
-  test('returns the correct state', () => {
-    const action = { type: TOGGLE_TIMELINE, payload: false }
-    const expectedState = {
-      ...initialState
-    }
     expect(timelineReducer(undefined, action)).toEqual(expectedState)
   })
 })
