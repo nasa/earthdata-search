@@ -78,6 +78,24 @@ describe('cmrFacetsReducer', () => {
         }
       }
 
+      const initial = initialState
+
+      const expectedState = {
+        ...initialState,
+        platform_h: ['Terra']
+      }
+
+      expect(cmrFacetsReducer(initial, action)).toEqual(expectedState)
+    })
+
+    test('returns the correct state when the initial state already has the key', () => {
+      const action = {
+        type: ADD_CMR_FACET,
+        payload: {
+          platform_h: 'Terra'
+        }
+      }
+
       const initial = {
         ...initialState,
         platform_h: ['Aqua']
