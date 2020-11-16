@@ -392,6 +392,29 @@ describe('addTag', () => {
     })).rejects.toThrow('Test error message')
   })
 
+  test('does not call the cmr endpoint when tag data is provided but no collections are returned from the collection search endpoint', async () => {
+    nock(/example/)
+      .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
+        short_name: 'MIL3MLS'
+      })
+      .reply(200, {
+        feed: {
+          entry: []
+        }
+      })
+
+    const result = await addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: true,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
+
+    expect(result).toBeFalsy()
+  })
+
   test('correctly calls cmr endpoint when no tag data is provided', async () => {
     nock(/example/)
       .post(/search\/tags\/edsc\.extra\.gibs\/associations\/by_query/, JSON.stringify({
