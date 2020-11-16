@@ -60,7 +60,7 @@ export async function addTag({
 
     // If collections were returned from the search, examine their metadata and
     // construct appropriate tag data to be assigned to them
-    if (!collections) return false
+    if (!collections.length) return false
 
     // If `append` is true, the tagData provided will be appended to previous tag data
     // already assigned to the provided collections
