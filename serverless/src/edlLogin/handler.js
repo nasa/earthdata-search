@@ -31,7 +31,7 @@ const edlLogin = async (event) => {
   const [path, queryParams] = state.split('?')
 
   // Parse the query string into an object
-  const paramsObj = parse(queryParams)
+  const paramsObj = parse(queryParams, { parseArrays: false })
 
   // If the earthdata environment variable
   if (!Object.keys(paramsObj).includes('ee')) {
