@@ -53,6 +53,7 @@ const urlDefs = {
   featureFacets: { shortKey: 'ff', encode: encodeFeatures, decode: decodeFeatures },
   platformFacets: { shortKey: 'fp', encode: encodeFacets, decode: decodeFacets },
   twoDCoordinateSystemNameFacets: { shortKey: 's2n', encode: encodeFacets, decode: decodeFacets },
+  horizontalDataResolutionRangeFacets: { shortKey: 'hdr', encode: encodeFacets, decode: decodeFacets },
   instrumentFacets: { shortKey: 'fi', encode: encodeFacets, decode: decodeFacets },
   organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
@@ -150,6 +151,7 @@ export const decodeUrlParams = (paramString) => {
   const processingLevels = decodeHelp(params, 'processingLevelFacets')
   const projects = decodeHelp(params, 'projectFacets')
   const twoDCoordinateSystemName = decodeHelp(params, 'twoDCoordinateSystemNameFacets')
+  const horizontalDataResolutionRange = decodeHelp(params, 'horizontalDataResolutionRangeFacets')
   const scienceKeywords = decodeScienceKeywords(params)
 
   const cmrFacets = {
@@ -160,7 +162,8 @@ export const decodeUrlParams = (paramString) => {
     processing_level_id_h: processingLevels,
     project_h: projects,
     science_keywords_h: scienceKeywords,
-    two_d_coordinate_system_name: twoDCoordinateSystemName
+    two_d_coordinate_system_name: twoDCoordinateSystemName,
+    horizontal_data_resolution_range: horizontalDataResolutionRange
   }
 
   const shapefile = {

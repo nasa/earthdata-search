@@ -15,6 +15,7 @@ function setup() {
     featureFacets: {},
     focusedCollection: '',
     focusedGranule: '',
+    horizontalDataResolutionRangeFacets: {},
     instrumentFacets: {},
     granuleDataFormatFacets: {},
     keywordSearch: '',
