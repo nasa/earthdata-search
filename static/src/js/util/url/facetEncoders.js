@@ -9,7 +9,7 @@ export const encodeFacets = (facets) => {
   const encoded = []
 
   facets.forEach((facet) => {
-    encoded.push(facet)
+    encoded.push(encodeURIComponent(facet))
   })
 
   return encoded.join('!')
@@ -26,7 +26,7 @@ export const decodeFacets = (string) => {
     return undefined
   }
 
-  const decodedValues = string.split('!')
+  const decodedValues = string.split('!').map(value => decodeURIComponent(value))
 
   return decodedValues
 }
