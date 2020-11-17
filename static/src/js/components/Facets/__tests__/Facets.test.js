@@ -139,6 +139,40 @@ function setup(overrideProps = {}) {
           title: 'Data Format',
           totalSelected: 0,
           type: 'group'
+        },
+        'Tiling System': {
+          applied: false,
+          children: [{
+            applied: false,
+            count: 1,
+            has_children: false,
+            links: {
+              apply: 'http://example.com/apply_tiling_system_link'
+            },
+            title: 'Mock Tiling System Facet',
+            type: 'filter'
+          }],
+          hasChildren: true,
+          title: 'Tiling System',
+          totalSelected: 0,
+          type: 'group'
+        },
+        'Horizontal Data Resolution': {
+          applied: false,
+          children: [{
+            applied: false,
+            count: 1,
+            has_children: false,
+            links: {
+              apply: 'http://example.com/apply_horizontal_data_resolution_link'
+            },
+            title: 'Mock Horizontal Data Resolution Facet',
+            type: 'filter'
+          }],
+          hasChildren: true,
+          title: 'Horizontal Data Resolution',
+          totalSelected: 0,
+          type: 'group'
         }
       },
       isLoaded: true,
@@ -352,6 +386,46 @@ describe('Facets component', () => {
       has_children: false,
       links: { apply: 'http://example.com/apply_data_format_link' },
       title: 'Mock Data Format Facet',
+      type: 'filter'
+    }])
+  })
+
+  test('renders tiling system FacetsGroup', () => {
+    const { enzymeWrapper } = setup()
+
+    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(8)
+
+    expect(facetsGroup.props().facet.applied).toEqual(false)
+    expect(facetsGroup.props().facet.autocompleteType).toEqual('two_d_coordinate_system_name')
+    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
+    expect(facetsGroup.props().facet.title).toEqual('Tiling System')
+    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
+    expect(facetsGroup.props().facet.children).toEqual([{
+      applied: false,
+      count: 1,
+      has_children: false,
+      links: { apply: 'http://example.com/apply_tiling_system_link' },
+      title: 'Mock Tiling System Facet',
+      type: 'filter'
+    }])
+  })
+
+  test('renders horizontal data resolution FacetsGroup', () => {
+    const { enzymeWrapper } = setup()
+
+    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(9)
+
+    expect(facetsGroup.props().facet.applied).toEqual(false)
+    expect(facetsGroup.props().facet.autocompleteType).toEqual('horizontal_data_resolution')
+    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
+    expect(facetsGroup.props().facet.title).toEqual('Horizontal Data Resolution')
+    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
+    expect(facetsGroup.props().facet.children).toEqual([{
+      applied: false,
+      count: 1,
+      has_children: false,
+      links: { apply: 'http://example.com/apply_horizontal_data_resolution_link' },
+      title: 'Mock Horizontal Data Resolution Facet',
       type: 'filter'
     }])
   })

@@ -121,6 +121,12 @@ const Facets = (props) => {
     autocompleteType: 'two_d_coordinate_system_name'
   }
 
+  const horizontalDataResolution = {
+    ...cmrFacetDefaults,
+    title: 'Horizontal Data Resolution',
+    autocompleteType: 'horizontal_data_resolution'
+  }
+
   const facetsTemplate = [
     featuresFacet,
     keywordsFacet,
@@ -130,7 +136,8 @@ const Facets = (props) => {
     projectsTemplate,
     processingLevels,
     formats,
-    tilingSystem
+    tilingSystem,
+    horizontalDataResolution
   ]
 
   // If all feature facets were disabled, don't show the featuresFacet group

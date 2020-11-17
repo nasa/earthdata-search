@@ -223,6 +223,7 @@ export const buildCollectionSearchParams = (params) => {
     granuleDataFormat,
     granuleDataFormatH: facetsToSend.granule_data_format_h,
     hasGranulesOrCwic,
+    horizontalDataResolutionRange: facetsToSend.horizontal_data_resolution_range,
     instrument,
     instrumentH: facetsToSend.instrument_h,
     keyword: keywordWithWildcard,

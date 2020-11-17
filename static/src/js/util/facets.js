@@ -91,7 +91,8 @@ export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied
     processing_level_id_h: newParams.processing_level_id_h,
     project_h: newParams.project_h,
     science_keywords_h: newParams.science_keywords_h,
-    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
+    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name,
+    horizontal_data_resolution_range: newParams.horizontal_data_resolution_range
   }
 
   onChangeHandler(paramsToSend, facet, applied)
@@ -113,7 +114,8 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
     processing_level_id_h: newParams.processing_level_id_h,
     project_h: newParams.project_h,
     science_keywords_h: newParams.science_keywords_h,
-    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
+    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name,
+    horizontal_data_resolution_range: newParams.horizontal_data_resolution_range
   }
 
   onChangeHandler(paramsToSend)
@@ -142,32 +144,38 @@ export const categoryNameToCMRParam = (name) => {
  * @param {object} newParams - An object containing the next facet params to set.
  * @return {object} An object with the values to be sent to a facets reducer.
  */
-export const prepareCMRFacetPayload = newParams => ({
-  data_center_h: newParams.data_center_h
-    ? newParams.data_center_h
-    : undefined,
-  instrument_h: newParams.instrument_h
-    ? newParams.instrument_h
-    : undefined,
-  granule_data_format_h: newParams.granule_data_format_h
-    ? newParams.granule_data_format_h
-    : undefined,
-  platform_h: newParams.platform_h
-    ? newParams.platform_h
-    : undefined,
-  processing_level_id_h: newParams.processing_level_id_h
-    ? newParams.processing_level_id_h
-    : undefined,
-  project_h: newParams.project_h
-    ? newParams.project_h
-    : undefined,
-  science_keywords_h: newParams.science_keywords_h
-    ? newParams.science_keywords_h
-    : undefined,
-  two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
-    ? newParams.two_d_coordinate_system_name
-    : undefined
-})
+export const prepareCMRFacetPayload = (newParams) => {
+  console.log('newParams', newParams)
+  return {
+    data_center_h: newParams.data_center_h
+      ? newParams.data_center_h
+      : undefined,
+    instrument_h: newParams.instrument_h
+      ? newParams.instrument_h
+      : undefined,
+    granule_data_format_h: newParams.granule_data_format_h
+      ? newParams.granule_data_format_h
+      : undefined,
+    platform_h: newParams.platform_h
+      ? newParams.platform_h
+      : undefined,
+    processing_level_id_h: newParams.processing_level_id_h
+      ? newParams.processing_level_id_h
+      : undefined,
+    project_h: newParams.project_h
+      ? newParams.project_h
+      : undefined,
+    science_keywords_h: newParams.science_keywords_h
+      ? newParams.science_keywords_h
+      : undefined,
+    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
+      ? newParams.two_d_coordinate_system_name
+      : undefined,
+    horizontal_data_resolution_range: newParams.horizontal_data_resolution_range
+      ? newParams.horizontal_data_resolution_range
+      : undefined
+  }
+}
 
 /**
  * Takes a facets object and some options and returns arrays populated with the relevant facets.

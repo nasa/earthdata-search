@@ -1,4 +1,4 @@
-import { withAdvancedSearch, prepareCollectionParams, buildCollectionSearchParams } from '../collections'
+import { withAdvancedSearch, prepareCollectionParams } from '../collections'
 
 describe('#withAdvancedSearch', () => {
   describe('when no advanced search parameters are passed', () => {
