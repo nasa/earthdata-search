@@ -181,7 +181,6 @@ export const extractProjectCollectionGranuleParams = (state, collectionId) => {
     // Ensure that the `generic` search params are also included
     ...extractGranuleSearchParams(state, collectionId),
     addedGranuleIds,
-    excludedGranuleIds: [], // Excluded granules should not be taken into account for project granule requests
     pageNum,
     removedGranuleIds
   }
