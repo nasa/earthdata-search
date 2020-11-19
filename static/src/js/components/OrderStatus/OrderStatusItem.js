@@ -378,7 +378,7 @@ export class OrderStatusItem extends PureComponent {
       const isEchoOrders = typeToLower === 'echo orders'
       const isEsi = typeToLower === 'esi'
 
-      const message = []
+      const messages = []
       let messageIsError = false
       let orderInfo = null
 
@@ -455,8 +455,15 @@ export class OrderStatusItem extends PureComponent {
 
             const {
               downloadUrls: currentDownloadUrlsObject = {},
+              // processInfo = {},
               requestStatus = {}
             } = orderInformation
+
+            // processInfo will be where the info messages from EGI are stored
+            // This will implemented in EDSC-2983
+            // const { message } = processInfo
+
+            // messages.push([...Array.from(message)])
 
             const { downloadUrl: currentDownloadUrls = [] } = currentDownloadUrlsObject
 
@@ -503,11 +510,11 @@ export class OrderStatusItem extends PureComponent {
             }
 
             if (status === 'successful' && !jobId) {
-              message.push(harmonyMessage)
+              messages.push(harmonyMessage)
             }
 
             if (status === 'failed' && harmonyMessage) {
-              message.push(harmonyMessage)
+              messages.push(harmonyMessage)
               messageIsError = messageIsError || true
             }
 
@@ -669,12 +676,12 @@ export class OrderStatusItem extends PureComponent {
                   </div>
                   <div className="order-status-item__additional-info">
                     {
-                      message.length > 0 && (
+                      messages.length > 0 && (
                         <div className={`order-status-item__message${messageIsError ? ' order-status-item__message--is-error' : ''}`}>
                           <h3 className="order-status-item__message-heading">Service has responded with message:</h3>
                           <ul className="order-status-item__message-body">
                             {
-                              message.map((message, i) => {
+                              messages.map((message, i) => {
                                 const key = `message-${i}`
                                 return (
                                   <li key={key}>{message}</li>

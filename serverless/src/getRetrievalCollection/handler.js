@@ -50,6 +50,7 @@ const getRetrievalCollection = async (event, context) => {
         'retrieval_orders.order_number',
         'retrieval_orders.order_information',
         'retrieval_orders.state',
+        'retrieval_orders.error',
         'users.urs_id'
       )
       .leftJoin('retrieval_orders', { 'retrieval_collections.id': 'retrieval_orders.retrieval_collection_id' })
@@ -87,13 +88,15 @@ const getRetrievalCollection = async (event, context) => {
           type,
           order_number: orderNumber,
           order_information: orderInformation,
-          state
+          state,
+          error
         }) => ({
           id,
           type,
           order_number: orderNumber,
           order_information: orderInformation,
-          state
+          state,
+          error
         }))
       }
 

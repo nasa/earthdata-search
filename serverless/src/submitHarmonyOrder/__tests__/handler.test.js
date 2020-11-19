@@ -318,6 +318,7 @@ describe('submitHarmonyOrder', () => {
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('update')
+    expect(queries[2].bindings).toEqual(['create_failed', 'Error: You are not authorized to access the requested resource', 12])
 
     expect(consoleMock).toBeCalledTimes(2)
     expect(consoleMock.mock.calls[0]).toEqual(['Processing 1 order(s)'])
