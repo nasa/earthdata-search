@@ -142,7 +142,8 @@ const submitLegacyServicesOrder = async (event, context) => {
       const [errorMessage] = parsedErrorMessage
 
       await dbConnection('retrieval_orders').update({
-        state: 'create_failed'
+        state: 'create_failed',
+        error: errorMessage
       }).where({ id })
 
       // Re-throw the error so the state machine handles the error correctly

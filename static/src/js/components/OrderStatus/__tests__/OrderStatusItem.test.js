@@ -493,7 +493,7 @@ describe('OrderStatusItem', () => {
     describe('when the order created', () => {
       test('renders creating state', () => {
         const { enzymeWrapper } = setup({
-          type: 'harmony',
+          type: 'esi',
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
