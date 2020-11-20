@@ -80,87 +80,87 @@ const submitCatalogRestOrder = async (event, context) => {
       user_id: userId
     } = retrievalRecord
 
-    const edlConfig = await getEdlConfig(environment)
-    const { client } = edlConfig
+    try {
+      const edlConfig = await getEdlConfig(environment)
+      const { client } = edlConfig
 
-    const { id: clientId } = client
+      const { id: clientId } = client
 
-    const accessTokenWithClient = `${accessToken}:${clientId}`
+      const accessTokenWithClient = `${accessToken}:${clientId}`
 
-    const {
-      portalId = getApplicationConfig().defaultPortal,
-      shapefileId,
-      selectedFeatures
-    } = jsondata
-
-    const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
-
-    const granuleResponse = await request.get({
-      uri: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
-      qs: preparedGranuleParams,
-      qsStringifyOptions: {
-        indices: false,
-        arrayFormat: 'brackets'
-      },
-      headers: {
-        'Echo-Token': accessTokenWithClient,
-        'Client-Id': getClientId().background
-      },
-      json: true,
-      resolveWithFullResponse: true
-    })
-
-    const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
-
-    const { edscHost } = getEnvironmentConfig()
-
-    const obfuscatedRetrievalId = obfuscateId(retrievalId)
-
-    const eeLink = environment === deployedEnvironment() ? '' : `?ee=${environment}`
-
-    // URL used when submitting the order to inform the user where they can retrieve their order status
-    const edscStatusUrl = `${edscHost}${portalPath({ portalId })}/downloads/${obfuscatedRetrievalId}${eeLink}`
-
-    const { model, url, type } = accessMethod
-
-    console.log('Submitted Model: ', model)
-
-    let shapefileParam = {}
-
-    if (shapefileId) {
-      // Retrieve a shapefile if one was provided, and create a partial shapefile if the
-      // user selected individual features from a file
-      const shapefile = await processPartialShapefile(
-        dbConnection,
-        userId,
+      const {
+        portalId = getApplicationConfig().defaultPortal,
         shapefileId,
         selectedFeatures
-      )
+      } = jsondata
 
-      shapefileParam = getShapefile(model, shapefile)
-    }
+      const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
 
-    const orderPayload = {
-      FILE_IDS: granuleResponseBody.map(granuleMetadata => granuleMetadata.title).join(','),
-      CLIENT_STRING: `To view the status of your request, please see: ${edscStatusUrl}`,
+      const granuleResponse = await request.get({
+        uri: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
+        qs: preparedGranuleParams,
+        qsStringifyOptions: {
+          indices: false,
+          arrayFormat: 'brackets'
+        },
+        headers: {
+          'Echo-Token': accessTokenWithClient,
+          'Client-Id': getClientId().background
+        },
+        json: true,
+        resolveWithFullResponse: true
+      })
 
-      // Add echo forms keys to the order payload
-      ...getTopLevelFields(model),
-      ...getSwitchFields(model),
-      ...getNameValuePairsForProjections(model),
-      ...getNameValuePairsForResample(model),
-      ...getSubsetDataLayers(model),
-      ...getBoundingBox(model),
-      ...getEmail(model),
-      ...shapefileParam
-    }
+      const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
 
-    // Remove any empty keys
-    Object.keys(orderPayload)
-      .forEach(key => (orderPayload[key] == null
-        || orderPayload[key].length === 0) && delete orderPayload[key])
+      const { edscHost } = getEnvironmentConfig()
 
-    try {
+      const obfuscatedRetrievalId = obfuscateId(retrievalId)
+
+      const eeLink = environment === deployedEnvironment() ? '' : `?ee=${environment}`
+
+      // URL used when submitting the order to inform the user where they can retrieve their order status
+      const edscStatusUrl = `${edscHost}${portalPath({ portalId })}/downloads/${obfuscatedRetrievalId}${eeLink}`
+
+      const { model, url, type } = accessMethod
+
+      console.log('Submitted Model: ', model)
+
+      let shapefileParam = {}
+
+      if (shapefileId) {
+        // Retrieve a shapefile if one was provided, and create a partial shapefile if the
+        // user selected individual features from a file
+        const shapefile = await processPartialShapefile(
+          dbConnection,
+          userId,
+          shapefileId,
+          selectedFeatures
+        )
+
+        shapefileParam = getShapefile(model, shapefile)
+      }
+
+      const orderPayload = {
+        FILE_IDS: granuleResponseBody.map(granuleMetadata => granuleMetadata.title).join(','),
+        CLIENT_STRING: `To view the status of your request, please see: ${edscStatusUrl}`,
+
+        // Add echo forms keys to the order payload
+        ...getTopLevelFields(model),
+        ...getSwitchFields(model),
+        ...getNameValuePairsForProjections(model),
+        ...getNameValuePairsForResample(model),
+        ...getSubsetDataLayers(model),
+        ...getBoundingBox(model),
+        ...getEmail(model),
+        ...shapefileParam
+      }
+
+      // Remove any empty keys
+      Object.keys(orderPayload)
+        .forEach(key => (orderPayload[key] == null
+          || orderPayload[key].length === 0) && delete orderPayload[key])
+
       const orderResponse = await request.post({
         uri: url,
         form: orderPayload,

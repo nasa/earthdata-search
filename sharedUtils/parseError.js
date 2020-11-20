@@ -13,9 +13,8 @@ export const parseError = (errorObj, {
   const {
     name = 'Error',
     response = {},
-    options = {}
+    isAxiosError
   } = errorObj
-  const { uri = '' } = options
 
   let errorArray = []
   let code = 500
@@ -26,7 +25,8 @@ export const parseError = (errorObj, {
       data = {},
       headers = {},
       status,
-      statusCode
+      statusCode,
+      statusText
     } = response
 
     // The request-promise library uses `body` for the response body
@@ -70,10 +70,9 @@ export const parseError = (errorObj, {
     } else if (description) {
       // Harmony uses code/description object in the response
       errorArray = [description]
-    } else if (uri.includes('egi')) {
-      // EGI errors need to be parsed
-      const { error: egiError = 'Unknown Error' } = JSON.parse(responseBody)
-      errorArray = [egiError]
+    } else if (isAxiosError && contentType.indexOf('text/html') > -1) {
+      // If the error is from Axios and the content type is html, build a string error using the status code and status text
+      errorArray = [`${name} (${code}): ${statusText}`]
     } else {
       // Default to CMR error response body
       ({ errors: errorArray = ['Unknown Error'] } = responseBody)

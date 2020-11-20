@@ -1,5 +1,5 @@
 import 'array-foreach-async'
-import request from 'request-promise'
+import axios from 'axios'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -48,18 +48,18 @@ const fetchCatalogRestOrder = async (input) => {
 
     console.log(`Requesting order data from EGI at ${url}/${orderNumber}`)
 
-    const orderResponse = await request.get({
-      uri: `${url}/${orderNumber}`,
+    const orderResponse = await axios({
+      url: `${url}/${orderNumber}`,
+      method: 'get',
       headers: {
         'Echo-Token': accessToken,
         'Client-Id': getClientId().background
-      },
-      resolveWithFullResponse: true
+      }
     })
 
-    console.log('Order Response Body', orderResponse.body)
+    console.log('Order Response Body', orderResponse.data)
 
-    const orderResponseBody = parseXml(orderResponse.body, {
+    const orderResponseBody = parseXml(orderResponse.data, {
       ignoreAttributes: false,
       attributeNamePrefix: ''
     })

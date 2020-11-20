@@ -440,5 +440,37 @@ describe('parseError', () => {
         })
       })
     })
+
+    describe('when the content type is text/html', () => {
+      test('returns an error string with the status code and status text', () => {
+        const consoleMock = jest.spyOn(console, 'log')
+
+        const response = parseError({
+          isAxiosError: true,
+          response: {
+            headers: {
+              'content-type': 'text/html; charset=utf-8'
+            },
+            data: {
+              errors: [
+                '400 Bad Request'
+              ]
+            },
+            status: 401,
+            statusText: 'Unauthorized'
+          },
+          name: 'Error'
+        }, {
+          asJSON: false,
+          shouldLog: false
+        })
+
+        expect(consoleMock).toBeCalledTimes(0)
+
+        expect(response).toEqual([
+          'Error (401): Unauthorized'
+        ])
+      })
+    })
   })
 })

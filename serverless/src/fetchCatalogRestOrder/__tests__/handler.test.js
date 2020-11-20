@@ -259,15 +259,17 @@ describe('fetchCatalogRestOrder', () => {
 
     nock('https://n5eil09e.ecs.edsc.org')
       .get('/egi/request/10005')
-      .reply(401, {
-        error: 'HTTP Basic: Access denied.'
-      })
+      .reply(401,
+        '',
+        {
+          'content-type': 'text/html; charset=utf-8'
+        })
 
     await expect(fetchCatalogRestOrder({
       accessToken: 'fake.access.token:clientId',
       id: 1,
       orderType: 'ESI'
-    })).rejects.toThrow('HTTP Basic: Access denied.')
+    })).rejects.toThrow('Error (401):')
 
     const { queries } = dbTracker.queries
 
