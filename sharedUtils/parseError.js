@@ -12,8 +12,10 @@ export const parseError = (errorObj, {
 } = {}) => {
   const {
     name = 'Error',
-    response = {}
+    response = {},
+    options = {}
   } = errorObj
+  const { uri = '' } = options
 
   let errorArray = []
   let code = 500
@@ -68,6 +70,10 @@ export const parseError = (errorObj, {
     } else if (description) {
       // Harmony uses code/description object in the response
       errorArray = [description]
+    } else if (uri.includes('egi')) {
+      // EGI errors need to be parsed
+      const { error: egiError = 'Unknown Error' } = JSON.parse(responseBody)
+      errorArray = [egiError]
     } else {
       // Default to CMR error response body
       ({ errors: errorArray = ['Unknown Error'] } = responseBody)

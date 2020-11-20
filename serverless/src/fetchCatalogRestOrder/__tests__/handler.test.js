@@ -223,4 +223,54 @@ describe('fetchCatalogRestOrder', () => {
       orderType: 'ESI'
     })
   })
+
+  test('responds correctly on code error', async () => {
+    dbTracker.on('query', (query) => {
+      query.reject('Unknown Error')
+    })
+
+    // Exclude an error message from the `toThrow` matcher because its
+    // a specific sql statement and not necessary
+    await expect(fetchCatalogRestOrder({
+      accessToken: 'fake.access.token:clientId',
+      id: 1,
+      orderType: 'ESI'
+    })).rejects.toThrow()
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('first')
+  })
+
+  test('responds correctly on http error', async () => {
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response({
+          access_method: {
+            url: 'https://n5eil09e.ecs.edsc.org/egi/request'
+          },
+          environment: 'prod',
+          order_number: '10005'
+        })
+      } else {
+        query.response([])
+      }
+    })
+
+    nock('https://n5eil09e.ecs.edsc.org')
+      .get('/egi/request/10005')
+      .reply(401, {
+        error: 'HTTP Basic: Access denied.'
+      })
+
+    await expect(fetchCatalogRestOrder({
+      accessToken: 'fake.access.token:clientId',
+      id: 1,
+      orderType: 'ESI'
+    })).rejects.toThrow('HTTP Basic: Access denied.')
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('first')
+  })
 })
