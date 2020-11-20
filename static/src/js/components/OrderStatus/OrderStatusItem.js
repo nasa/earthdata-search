@@ -451,7 +451,12 @@ export class OrderStatusItem extends PureComponent {
           }
 
           orders.forEach((order) => {
-            const { order_information: orderInformation = {} } = order
+            const {
+              error,
+              order_information: orderInformation = {}
+            } = order
+
+            if (error) messages.push(error)
 
             const {
               downloadUrls: currentDownloadUrlsObject = {},
