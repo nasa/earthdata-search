@@ -15,7 +15,7 @@
     flex-grow: 1;
     height: 100%;
     z-index: 1;
-    background: $color__black--800;
+    background: darken($color__black--700, 4);
   }
 
   &__section-title {

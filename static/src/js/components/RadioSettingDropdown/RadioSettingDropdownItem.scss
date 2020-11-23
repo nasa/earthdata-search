@@ -1,0 +1,35 @@
+.radio-setting-dropdown-item {
+  padding: $spacer/4 $spacer/2;
+  font-size: 0.75rem;
+
+  &--is-active {
+    &.dropdown-item {
+      background-color: $color__blue;
+      color: $color__white;
+
+      .radio-setting-dropdown-item:hover & {
+        background-color: $color__blue;
+        color: $color__white;
+      }
+    }
+  }
+
+  &__icon {
+    width: 1rem;
+    margin-right: $spacer/4;
+    text-align: center;
+    color: $color__black--300;
+
+    .radio-setting-dropdown-item:hover & {
+      color: $color__black--400;
+    }
+
+    .radio-setting-dropdown-item--is-active & {
+      color: $color__white;
+    }
+
+    .radio-setting-dropdown-item--is-active:hover & {
+      color: $color__white;
+    }
+  }
+}

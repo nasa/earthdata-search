@@ -56,9 +56,13 @@
     font-size: 0.625rem;
   }
 
+  &__tags {
+    display: flex;
+    margin-bottom: $spacer;
+  }
+
   &__doi {
     display: inline-block;
-    margin-bottom: $spacer;
     vertical-align: top;
 
     .badge {

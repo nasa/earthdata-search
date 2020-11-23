@@ -132,6 +132,22 @@ export const updateFocusedCollectionGranuleFilters = granuleFilters => (dispatch
   })
 }
 
+/**
+ * Clears out the granule filters for the focused collection.
+ */
+export const clearFocusedCollectionGranuleFilters = () => (dispatch, getState) => {
+  const state = getState()
+
+  const focusedCollectionId = getFocusedCollectionId(state)
+
+  dispatch({
+    type: UPDATE_GRANULE_FILTERS,
+    payload: {
+      collectionId: focusedCollectionId
+    }
+  })
+}
+
 // Cancel token to cancel pending requests
 let cancelToken
 

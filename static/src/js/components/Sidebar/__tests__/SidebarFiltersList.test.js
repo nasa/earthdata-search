@@ -1,8 +1,9 @@
+
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import GranuleFiltersList from '../GranuleFiltersList'
+import SidebarFiltersList from '../SidebarFiltersList'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -11,7 +12,7 @@ function setup() {
     children: <div className="test" />
   }
 
-  const enzymeWrapper = shallow(<GranuleFiltersList {...props} />)
+  const enzymeWrapper = shallow(<SidebarFiltersList {...props} />)
 
   return {
     enzymeWrapper,
@@ -19,7 +20,7 @@ function setup() {
   }
 }
 
-describe('GranuleFiltersList component', () => {
+describe('SidebarFiltersList component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 

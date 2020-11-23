@@ -62,10 +62,10 @@ export function maxLessThanMin(value) {
  * @returns {Boolean} The result
  */
 export function startBeforeEnd(value) {
+  if (!value) return true
   const endDate = this.resolve(Yup.ref('endDate'))
   const momentEndVal = moment(endDate, dateFormat, true)
   const momentStartVal = moment(value, dateFormat, true)
-  if (!value) return true
   if (momentStartVal && !endDate) return true
   return momentStartVal.isBefore(momentEndVal)
 }
@@ -78,12 +78,12 @@ export function startBeforeEnd(value) {
  * @returns {Boolean} The result
  */
 export function dateOutsideRange(value, startDate, endDate) {
+  if (!value) return true
   // const endDate = this.resolve(Yup.ref('endDate'))
   const momentVal = moment(value, dateFormat, true)
   const momentStartVal = moment(startDate, dateFormat, true)
   const momentEndVal = moment(endDate, dateFormat, true)
 
-  if (!value) return true
 
   if (startDate) {
     if (!momentVal.isSame(momentStartVal) && !momentVal.isAfter(momentStartVal)) return false

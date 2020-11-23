@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import SimpleBar from 'simplebar-react'
 
 import ArrowTags from '../ArrowTags/ArrowTags'
@@ -119,9 +119,11 @@ export const CollectionDetailsBody = ({
     relatedUrls,
     services,
     scienceKeywords,
+    shortName,
     spatial,
     temporal,
-    urls
+    urls,
+    versionId
   } = collectionMetadata
 
   // TODO: Implement and use a focused collection loading state
@@ -181,9 +183,13 @@ export const CollectionDetailsBody = ({
         <div className="collection-details-body__content">
           <div className="row collection-details-body__row">
             <div className="col col-12">
-              {
-                doi && buildDoiLink(doi)
-              }
+              <div className="collection-details-body__tags">
+                <Badge className="collection-details-header__short-name" variant="light">{shortName}</Badge>
+                <Badge className="collection-details-header__version-id mr-2" variant="info">{`Version ${versionId}`}</Badge>
+                {
+                  doi && buildDoiLink(doi)
+                }
+              </div>
               <dl className="collection-details-body__info">
                 {
                   <>

@@ -17,7 +17,8 @@ const initialState = {
     hasGranulesOrCwic: true,
     pageNum: 1,
     spatial: {},
-    temporal: {}
+    temporal: {},
+    sortKey: []
   },
   region: {
     exact: false

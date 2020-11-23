@@ -15,6 +15,8 @@ import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
 
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { locationPropType } from '../../util/propTypes/location'
+import { commafy } from '../../util/commafy'
+import { pluralize } from '../../util/pluralize'
 
 import './ProjectPanels.scss'
 
@@ -268,7 +270,6 @@ class ProjectPanels extends PureComponent {
       onSetActivePanel,
       onTogglePanels,
       onUpdateAccessMethod,
-      onViewCollectionGranules,
       panels,
       portal,
       project,
@@ -307,8 +308,14 @@ class ProjectPanels extends PureComponent {
 
       const {
         accessMethods,
-        selectedAccessMethod
+        selectedAccessMethod,
+        granules: projectCollectionGranules = {}
       } = projectCollection
+
+      const {
+        allIds: granulesAllIds = [],
+        hits: granuleCount
+      } = projectCollectionGranules
 
       const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
 
@@ -319,6 +326,8 @@ class ProjectPanels extends PureComponent {
       const { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
 
       const { valid: isValid } = isAccessMethodValid(projectCollection, collectionMetadata)
+
+      const projectGranulesHeaderMetaPrimaryText = `Showing ${commafy(granulesAllIds.length)} of ${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`
 
       const backButtonOptions = {
         text: 'Edit Options',
@@ -411,17 +420,6 @@ class ProjectPanels extends PureComponent {
         </div>
       )
 
-      const projectHeadingLink = (
-        <Button
-          className="panel-group-header__heading-primary-link"
-          label="View Granules"
-          onClick={() => { onViewCollectionGranules(collectionId) }}
-        >
-          <i className="fa fa-map" />
-          {' View Granules'}
-        </Button>
-      )
-
       // Panels are controlled using the onSetActivePanel action. The parameters are
       // dot separated indexes of the panel you would like to trigger.
       // They should be passed like so:
@@ -429,9 +427,20 @@ class ProjectPanels extends PureComponent {
       panelSectionEditOptions.push(
         <PanelGroup
           key={`${collectionId}_edit-options`}
-          headingLink={projectHeadingLink}
-          primaryHeading={title}
-          secondaryHeading="Edit Options"
+          primaryHeading="Edit Options"
+          breadcrumbs={[
+            {
+              title,
+              onClick: () => this.onChangePanel(`1.${index}.0`)
+            }
+          ]}
+          moreActionsDropdownItems={[
+            {
+              title: 'View Project Granules',
+              icon: 'map',
+              onClick: () => this.onChangePanel(`1.${index}.0`)
+            }
+          ]}
           footer={editOptionsFooter}
         >
           <PanelItem
@@ -480,9 +489,15 @@ class ProjectPanels extends PureComponent {
       panelSectionCollectionDetails.push(
         <PanelGroup
           key={`${collectionId}_collection-details`}
-          headingLink={projectHeadingLink}
+          moreActionsDropdownItems={[
+            {
+              title: 'Edit Project Options',
+              icon: 'cog',
+              onClick: () => this.onChangePanel(`0.${index}.0`)
+            }
+          ]}
           primaryHeading={title}
-          secondaryHeading="Details"
+          headerMetaPrimaryText={projectGranulesHeaderMetaPrimaryText}
         >
           <PanelItem scrollable={false}>
             <CollectionDetails
@@ -543,7 +558,6 @@ ProjectPanels.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,

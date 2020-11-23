@@ -8,9 +8,21 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    portal: {
-      test: 'portal'
+    collectionMetadata: {},
+    collectionQuery: {},
+    collectionsSearch: {},
+    granuleMetadata: {},
+    granuleSearchResults: {},
+    granuleQuery: {},
+    location: {},
+    match: {
+      url: '/search'
     },
+    mapProjection: '',
+    onApplyGranuleFilters: jest.fn(),
+    onChangeQuery: jest.fn(),
+    onMetricsCollectionSortChange: jest.fn(),
+    onToggleAboutCwicModal: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
     panels: {
@@ -22,8 +34,8 @@ function setup() {
       collectionListView: 'default',
       granuleListView: 'default'
     },
-    match: {
-      url: '/search'
+    portal: {
+      test: 'portal'
     }
   }
 

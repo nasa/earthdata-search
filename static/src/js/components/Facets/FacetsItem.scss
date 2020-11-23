@@ -6,7 +6,7 @@
     vertical-align: top;
     opacity: 0.3;
     flex: none;
-    transform: scale(1.2);
+    transform: scale(1);
 
     &:checked {
       opacity: 1;
@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     margin: 0;
-    padding: 0.2rem 0.4rem 0.2rem 0.75rem;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
     font-size: 0.875rem;
     vertical-align: middle;
     border-left: .2rem solid transparent;
@@ -52,6 +52,7 @@
     white-space: nowrap;
     color: $color__black--200;
     font-weight: 300;
+    font-size: 0.875rem;
 
     .facets-list--light & {
       color: $color__black--600;

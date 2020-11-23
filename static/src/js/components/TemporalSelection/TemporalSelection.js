@@ -16,6 +16,23 @@ import './TemporalSelection.scss'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import DatepickerContainer from '../../containers/DatepickerContainer/DatepickerContainer'
 
+/**
+ * Renders TemporalSelection component
+ * @param {Object} props - The props passed into the component.
+ * @param {Boolean} props.allowRecurring - Flag to designate the whether recurring dates are supported
+ * @param {String} props.controlId - A unique id
+ * @param {String} props.format - A string temporal format
+ * @param {Function} props.onChangeRecurring - Callback function to call when recurring range is changed
+ * @param {Function} props.onInvalid - Callback function to call when entry is invalid
+ * @param {Function} props.onRecurringToggle - Callback function to call when recurring is toggled
+ * @param {Function} props.onSubmitEnd - Callback function to call when a submission ends
+ * @param {Function} props.onSubmitStart - Callback function to call when a submission starts
+ * @param {Function} props.onValid - Callback function to call when the entry is valid
+ * @param {String} props.size - String representing the bootstrap size
+ * @param {Object} props.temporal - Object configuring the temporal information
+ * @param {Boolean} props.validate - Flag to designate the whether or not entry should be validated
+ */
+
 export class TemporalSelection extends Component {
   constructor(props) {
     super(props)
@@ -112,11 +129,12 @@ export class TemporalSelection extends Component {
       allowRecurring,
       controlId,
       format,
-      temporal,
       onChangeRecurring,
       onRecurringToggle,
-      onSubmitStart,
       onSubmitEnd,
+      onSubmitStart,
+      size,
+      temporal,
       validate
     } = this.props
 
@@ -170,9 +188,10 @@ export class TemporalSelection extends Component {
                   Start
                 </Form.Label>
                 <DatepickerContainer
-                  id="temporal-form__start-date"
+                  id={`${controlId}__temporal-form__start-date`}
                   onSubmit={value => onSubmitStart(value)}
                   type="start"
+                  size={size}
                   format={format}
                   value={temporal.startDate}
                   minDate={minimumTemporalDateString}
@@ -188,9 +207,10 @@ export class TemporalSelection extends Component {
                   End
                 </Form.Label>
                 <DatepickerContainer
-                  id="temporal-form__end-date"
+                  id={`${controlId}__temporal-form__end-date`}
                   onSubmit={value => onSubmitEnd(value)}
                   type="end"
+                  size={size}
                   format={format}
                   value={temporal.endDate}
                   minDate={minimumTemporalDateString}
@@ -274,25 +294,27 @@ export class TemporalSelection extends Component {
 TemporalSelection.defaultProps = {
   allowRecurring: true,
   format: 'YYYY-MM-DD HH:mm:ss',
-  onValid: null,
-  onInvalid: null,
-  validate: true,
   onChangeRecurring: null,
-  onRecurringToggle: null
+  onInvalid: null,
+  onRecurringToggle: null,
+  onValid: null,
+  size: '',
+  validate: true
 }
 
 TemporalSelection.propTypes = {
   allowRecurring: PropTypes.bool,
   controlId: PropTypes.string.isRequired,
   format: PropTypes.string,
-  temporal: PropTypes.shape({}).isRequired,
-  validate: PropTypes.bool,
   onChangeRecurring: PropTypes.func,
+  onInvalid: PropTypes.func,
   onRecurringToggle: PropTypes.func,
-  onSubmitStart: PropTypes.func.isRequired,
   onSubmitEnd: PropTypes.func.isRequired,
+  onSubmitStart: PropTypes.func.isRequired,
   onValid: PropTypes.func,
-  onInvalid: PropTypes.func
+  size: PropTypes.string,
+  temporal: PropTypes.shape({}).isRequired,
+  validate: PropTypes.bool
 }
 
 export default TemporalSelection

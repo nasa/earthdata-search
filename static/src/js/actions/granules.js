@@ -1,4 +1,5 @@
 import { isCancel } from 'axios'
+import { isEmpty } from 'lodash'
 
 import actions from './index'
 import {
@@ -359,6 +360,15 @@ export const getSearchGranules = () => (dispatch, getState) => {
 
   dispatch(startGranulesTimer(collectionId))
 
+  // Clear out the current results if a new set of pages has been requested
+  if (pageNum === 1) {
+    const emptyPayload = {
+      collectionId,
+      results: []
+    }
+    dispatch(updateGranuleResults(emptyPayload))
+  }
+
   dispatch(onGranulesLoading(collectionId))
 
   dispatch(toggleSpatialPolygonWarning(false))
@@ -585,20 +595,20 @@ export const getProjectGranules = () => (dispatch, getState) => {
  * Called when granule filters are submitted. Resets the granule query page, applies any granule filters,
  * gets the granules, and optionally closes the sidebar panel.
  * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
- * @param {Boolean} closePanel - If true, tells the overlay panel to close once the granules are received.
  */
-export const applyGranuleFilters = (
-  granuleFilters,
-  closePanel = false
-) => (dispatch, getState) => {
+export const applyGranuleFilters = granuleFilters => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
   const focusedCollectionId = getFocusedCollectionId(state)
   const projectCollectionsIds = getProjectCollectionsIds(state)
 
-  // Apply granule filters, ensuring to reset the page number to 1 as this results in a new search
-  dispatch(actions.updateFocusedCollectionGranuleFilters({ pageNum: 1, ...granuleFilters }))
+  if (isEmpty(granuleFilters)) {
+    dispatch(actions.clearFocusedCollectionGranuleFilters())
+  } else {
+    // Apply granule filters, ensuring to reset the page number to 1 as this results in a new search
+    dispatch(actions.updateFocusedCollectionGranuleFilters({ pageNum: 1, ...granuleFilters }))
+  }
 
   // If there is a focused collection, and it is in the project also update the project granules
   if (focusedCollectionId && projectCollectionsIds.includes(focusedCollectionId)) {
@@ -606,9 +616,9 @@ export const applyGranuleFilters = (
   }
 
   dispatch(actions.getSearchGranules())
-
-  if (closePanel) dispatch(actions.toggleSecondaryOverlayPanel(false))
 }
+
+export const clearGranuleFilters = () => applyGranuleFilters({})
 
 /**
  * Excludes a single granule from search results and requests granules again

@@ -54,7 +54,7 @@ describe('FacetsGroup component', () => {
         }
       })
       enzymeWrapper.setState({ isOpen: true })
-      expect(enzymeWrapper.find('.facets-group__meta').text()).toEqual('9 Selected')
+      expect(enzymeWrapper.find('.facets-group__selected-count').text()).toEqual('9 Selected')
     })
   })
 

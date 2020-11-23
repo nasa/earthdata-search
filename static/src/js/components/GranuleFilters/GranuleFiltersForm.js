@@ -1,7 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form as FormikForm } from 'formik'
-import { Col, Form, Row } from 'react-bootstrap'
+import {
+  Col,
+  Form,
+  OverlayTrigger,
+  Tooltip,
+  Row
+} from 'react-bootstrap'
 
 import moment from 'moment'
 
@@ -9,8 +15,8 @@ import { findGridByName } from '../../util/grid'
 import { getTemporalDateFormat } from '../../util/edscDate'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 
-import GranuleFiltersItem from './GranuleFiltersItem'
-import GranuleFiltersList from './GranuleFiltersList'
+import SidebarFiltersItem from '../Sidebar/SidebarFiltersItem'
+import SidebarFiltersList from '../Sidebar/SidebarFiltersList'
 import TemporalSelection from '../TemporalSelection/TemporalSelection'
 
 /**
@@ -31,6 +37,7 @@ export const GranuleFiltersForm = (props) => {
     errors,
     handleBlur,
     handleChange,
+    handleSubmit,
     setFieldTouched,
     setFieldValue,
     touched,
@@ -43,6 +50,7 @@ export const GranuleFiltersForm = (props) => {
     dayNightFlag = '',
     equatorCrossingDate = {},
     equatorCrossingLongitude = {},
+    readableGranuleName = '',
     gridCoords = '',
     onlineOnly = false,
     orbitNumber = {},
@@ -94,7 +102,8 @@ export const GranuleFiltersForm = (props) => {
     orbitNumber: orbitNumberError = {},
     equatorCrossingLongitude: equatorCrossingLongitudeError = {},
     equatorCrossingDate: equatorCrossingDateError = {},
-    temporal: temporalError = {}
+    temporal: temporalError = {},
+    readableGranuleName: readableGranuleNameError
   } = errors
 
   const {
@@ -103,7 +112,8 @@ export const GranuleFiltersForm = (props) => {
     orbitNumber: orbitNumberTouched = {},
     equatorCrossingLongitude: equatorCrossingLongitudeTouched = {},
     equatorCrossingDate: equatorCrossingDateTouched = {},
-    temporal: temporalTouched = {}
+    temporal: temporalTouched = {},
+    readableGranuleName: readableGranuleNameTouched
   } = touched
 
   // Determine the tiling system names
@@ -159,70 +169,156 @@ export const GranuleFiltersForm = (props) => {
     }
   }
 
+  // Blur the field and submit the form. Should be used on text fields.
+  const submitOnBlur = (e) => {
+    handleBlur(e)
+    handleSubmit(e)
+  }
+
+  // Submit the form when the enter key is pressed. Should be used on text fields.
+  const submitOnKeypress = (e) => {
+    const {
+      key = ''
+    } = e
+    if (key === 'Enter') {
+      handleBlur(e)
+      handleSubmit(e)
+    }
+  }
+
+  // Change the field and submit the form. Should be used on checkboxes or selects.
+  const submitOnChange = (e) => {
+    handleChange(e)
+    handleSubmit(e)
+  }
+
   return (
     <FormikForm className="granule-filters-body">
-      <GranuleFiltersList>
+      <SidebarFiltersList>
         {
-          tilingSystemOptions.length > 0 && (
-            <GranuleFiltersItem heading="Grid Coordinates">
-              <Form.Group controlId="granule-filters_tiling-system">
-                <Form.Label sm="auto">
-                  Tiling System
-                </Form.Label>
-                <Form.Control
-                  name="tilingSystem"
-                  as="select"
-                  value={tilingSystem}
-                  onChange={(e) => {
-                    // Call the default change handler
-                    handleChange(e)
-
-                    const { target = {} } = e
-                    const { value = '' } = target
-
-                    // If the tiling system is empty clear the grid coordinates
-                    if (value === '') {
-                      setFieldValue('gridCoords', '')
-                    }
-                  }}
+          !isCwic && (
+            <SidebarFiltersItem heading="Granule Search">
+              <div>
+                <Form.Group
+                  controlId="granule-filters_granule-search"
+                  className="mt-1"
                 >
-                  {[
-                    <option key="tiling-system-none" value="">None</option>,
-                    ...tilingSystemOptions
-                  ]}
-                </Form.Control>
-              </Form.Group>
-              {
-                tilingSystem && (
-                  <Form.Group controlId="granule-filters_grid-coordinates">
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={(
+                      <Tooltip
+                        id="tooltip__granule-search"
+                        className="tooltip--large tooltip--ta-left tooltip--wide"
+                      >
+                        <strong>Wildcards:</strong>
+                        {' '}
+                        <ul className="m-0">
+                          <li>
+                            * (asterisk) matches any number of characters
+                          </li>
+                          <li>
+                            ? (question mark) matches exactly one character.
+                          </li>
+                        </ul>
+                        <br />
+                        <strong>Delimiters:</strong>
+                        {' '}
+                        Separate multiple granule IDs by commas.
+                      </Tooltip>
+                    )}
+                  >
                     <Form.Control
-                      name="gridCoords"
+                      name="readableGranuleName"
+                      size="sm"
                       type="text"
-                      placeholder="Coordinates..."
-                      value={gridCoords}
+                      placeholder="Search Single or Multiple Granule IDs..."
+                      value={readableGranuleName}
                       onChange={handleChange}
-                      onBlur={handleBlur}
-                      isInvalid={gridCoordsTouched && gridCoordsError}
+                      onBlur={submitOnBlur}
+                      onKeyPress={submitOnKeypress}
                     />
-                    {
-                      gridCoordsTouched && (
-                        <>
-                          <Form.Control.Feedback type="invalid">
-                            {gridCoordsError}
-                          </Form.Control.Feedback>
-                        </>
-                      )
-                    }
-                    <Form.Text muted>
-                      {`Enter ${axis0label} ${coordinateOneLimits} and ${axis1label} ${coordinateTwoLimits} coordinates separated by spaces, e.g. "2,3 5,7"`}
-                    </Form.Text>
-                  </Form.Group>
-                )
-              }
-            </GranuleFiltersItem>
+                  </OverlayTrigger>
+                  {
+                    readableGranuleNameTouched && (
+                      <Form.Control.Feedback type="invalid">
+                        {readableGranuleNameError}
+                      </Form.Control.Feedback>
+                    )
+                  }
+                </Form.Group>
+              </div>
+            </SidebarFiltersItem>
           )
         }
-        <GranuleFiltersItem
+        {
+          tilingSystemOptions.length > 0 && (
+            <SidebarFiltersItem heading="Grid Coordinates">
+              <div>
+                <Form.Group controlId="granule-filters_tiling-system">
+                  <Form.Label sm="auto">
+                    Tiling System
+                  </Form.Label>
+                  <Form.Control
+                    name="tilingSystem"
+                    size="sm"
+                    as="select"
+                    value={tilingSystem}
+                    onChange={(e) => {
+                      // Call the default change handler
+                      handleChange(e)
+
+                      const { target = {} } = e
+                      const { value = '' } = target
+
+                      // If the tiling system is empty clear the grid coordinates
+                      if (value === '') {
+                        setFieldValue('gridCoords', '')
+                      }
+                    }}
+                  >
+                    {[
+                      <option key="tiling-system-none" value="">None</option>,
+                      ...tilingSystemOptions
+                    ]}
+                  </Form.Control>
+                </Form.Group>
+                {
+                  tilingSystem && (
+                    <Form.Group
+                      controlId="granule-filters_grid-coordinates"
+                      className="mt-1"
+                    >
+                      <Form.Control
+                        name="gridCoords"
+                        size="sm"
+                        type="text"
+                        placeholder="Coordinates..."
+                        value={gridCoords}
+                        onChange={handleChange}
+                        onBlur={submitOnBlur}
+                        onKeyPress={submitOnKeypress}
+                        isInvalid={gridCoordsTouched && gridCoordsError}
+                      />
+                      {
+                        gridCoordsTouched && (
+                          <>
+                            <Form.Control.Feedback type="invalid">
+                              {gridCoordsError}
+                            </Form.Control.Feedback>
+                          </>
+                        )
+                      }
+                      <Form.Text muted>
+                        {`Enter ${axis0label} ${coordinateOneLimits} and ${axis1label} ${coordinateTwoLimits} coordinates separated by spaces, e.g. "2,3 5,7"`}
+                      </Form.Text>
+                    </Form.Group>
+                  )
+                }
+              </div>
+            </SidebarFiltersItem>
+          )
+        }
+        <SidebarFiltersItem
           heading="Temporal"
         >
           <Form.Group controlId="granule-filters__temporal">
@@ -236,6 +332,7 @@ export const GranuleFiltersForm = (props) => {
             >
               <TemporalSelection
                 controlId="granule-filters__temporal-selection"
+                size="sm"
                 format={temporalDateFormat}
                 temporal={temporal}
                 validate={false}
@@ -244,6 +341,10 @@ export const GranuleFiltersForm = (props) => {
 
                   setFieldValue('temporal.isRecurring', isChecked)
                   setFieldTouched('temporal.isRecurring', isChecked)
+
+                  setTimeout(() => {
+                    handleSubmit()
+                  }, 0)
                 }}
                 onChangeRecurring={(value) => {
                   const { temporal } = values
@@ -272,6 +373,9 @@ export const GranuleFiltersForm = (props) => {
 
                   setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
                   setFieldValue('temporal.recurringDayEnd', newEndDate.dayOfYear())
+
+
+                  handleSubmit()
                 }}
                 onSubmitStart={(startDate) => {
                   // eslint-disable-next-line no-underscore-dangle
@@ -283,6 +387,8 @@ export const GranuleFiltersForm = (props) => {
                   if (temporal.isRecurring) {
                     setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
                   }
+
+                  handleSubmit()
                 }}
                 onSubmitEnd={(endDate) => {
                   // eslint-disable-next-line no-underscore-dangle
@@ -294,6 +400,8 @@ export const GranuleFiltersForm = (props) => {
                   if (temporal.isRecurring) {
                     setFieldValue('temporal.recurringDayEnd', endDate.dayOfYear())
                   }
+
+                  handleSubmit()
                 }}
               />
             </Form.Control>
@@ -316,24 +424,25 @@ export const GranuleFiltersForm = (props) => {
               )
             }
           </Form.Group>
-        </GranuleFiltersItem>
+        </SidebarFiltersItem>
         {
           !isCwic && (
             <>
               {
                 dayNightCapable && (
-                  <GranuleFiltersItem
+                  <SidebarFiltersItem
                     heading="Day/Night"
                     description="Find granules captured during the day, night or anytime."
                   >
                     <Row>
-                      <Col sm="auto">
+                      <Col>
                         <Form.Group controlId="granule-filters__day-night-flag">
                           <Form.Control
                             name="dayNightFlag"
                             as="select"
                             value={dayNightFlag}
-                            onChange={handleChange}
+                            onChange={submitOnChange}
+                            size="sm"
                           >
                             <option value="">Anytime</option>
                             <option value="DAY">Day</option>
@@ -343,10 +452,10 @@ export const GranuleFiltersForm = (props) => {
                         </Form.Group>
                       </Col>
                     </Row>
-                  </GranuleFiltersItem>
+                  </SidebarFiltersItem>
                 )
               }
-              <GranuleFiltersItem
+              <SidebarFiltersItem
                 heading="Data Access"
               >
                 <Form.Group controlId="granule-filters__data-access">
@@ -356,7 +465,7 @@ export const GranuleFiltersForm = (props) => {
                     label="Find only granules that have browse images"
                     checked={browseOnly}
                     value={browseOnly}
-                    onChange={handleChange}
+                    onChange={submitOnChange}
                   />
                   <Form.Check
                     id="input__online-only"
@@ -364,28 +473,33 @@ export const GranuleFiltersForm = (props) => {
                     label="Find only granules that are available online"
                     checked={onlineOnly}
                     value={onlineOnly}
-                    onChange={handleChange}
+                    onChange={submitOnChange}
                   />
                 </Form.Group>
-              </GranuleFiltersItem>
+              </SidebarFiltersItem>
               {
                 cloudCoverCapable && (
-                  <GranuleFiltersItem
+                  <SidebarFiltersItem
                     heading="Cloud Cover"
                     description="Find granules by cloud cover percentage."
                   >
-                    <Form.Group as={Row} controlId="granule-filters__cloud-cover-min">
-                      <Form.Label column sm={3}>
+                    <Form.Group
+                      as={Row}
+                      controlId="granule-filters__cloud-cover-min"
+                      noGutters
+                    >
+                      <Form.Label column sm={5}>
                         Minimum
                       </Form.Label>
-                      <Col sm={9}>
+                      <Col sm={7}>
                         <Form.Control
                           name="cloudCover.min"
                           type="text"
+                          size="sm"
                           placeholder="Example: 10"
                           value={cloudCoverMin}
                           onChange={handleChange}
-                          onBlur={handleBlur}
+                          onBlur={submitOnBlur}
                           isInvalid={cloudCoverTouched.min && !!cloudCoverError.min}
                         />
                         {
@@ -397,18 +511,23 @@ export const GranuleFiltersForm = (props) => {
                         }
                       </Col>
                     </Form.Group>
-                    <Form.Group as={Row} controlId="granule-filters__cloud-cover-max">
-                      <Form.Label column sm={3}>
+                    <Form.Group
+                      as={Row}
+                      controlId="granule-filters__cloud-cover-max"
+                      noGutters
+                    >
+                      <Form.Label column sm={5}>
                         Maximum
                       </Form.Label>
-                      <Col sm={9}>
+                      <Col sm={7}>
                         <Form.Control
                           name="cloudCover.max"
                           type="text"
+                          size="sm"
                           placeholder="Example: 50"
                           value={cloudCoverMax}
                           onChange={handleChange}
-                          onBlur={handleBlur}
+                          onBlur={submitOnBlur}
                           isInvalid={cloudCoverTouched.max && !!cloudCoverError.max}
                         />
                         {
@@ -420,27 +539,33 @@ export const GranuleFiltersForm = (props) => {
                         }
                       </Col>
                     </Form.Group>
-                  </GranuleFiltersItem>
+                  </SidebarFiltersItem>
                 )
               }
               {
                 (!isCwic && orbitCalculatedSpatialDomainsCapable) && (
                   <>
-                    <GranuleFiltersItem
+                    <SidebarFiltersItem
                       heading="Orbit Number"
                     >
-                      <Form.Group as={Row} controlId="granule-filters__orbit-number-min">
-                        <Form.Label column sm={3}>
+                      <Form.Group
+                        as={Row}
+                        controlId="granule-filters__orbit-number-min"
+                        noGutters
+                      >
+                        <Form.Label column="sm">
                           Minimum
                         </Form.Label>
-                        <Col sm={9}>
+                        <Col sm={7}>
                           <Form.Control
                             name="orbitNumber.min"
                             type="text"
+                            size="sm"
                             placeholder="Example: 30000"
                             value={orbitNumberMin}
                             onChange={handleChange}
-                            onBlur={handleBlur}
+                            onBlur={submitOnBlur}
+                            onKeyPress={submitOnKeypress}
                             isInvalid={orbitNumberTouched.min && !!orbitNumberError.min}
                           />
                           {
@@ -452,18 +577,25 @@ export const GranuleFiltersForm = (props) => {
                           }
                         </Col>
                       </Form.Group>
-                      <Form.Group as={Row} controlId="granule-filters__orbit-number-max">
-                        <Form.Label column sm={3}>
+                      <Form.Group
+                        as={Row}
+                        controlId="granule-filters__orbit-number-max"
+                        size="sm"
+                        noGutters
+                      >
+                        <Form.Label column="sm" sm={5}>
                           Maximum
                         </Form.Label>
-                        <Col sm={9}>
+                        <Col sm={7}>
                           <Form.Control
                             name="orbitNumber.max"
                             type="text"
+                            size="sm"
                             placeholder="Example: 30009"
                             value={orbintNumberMax}
                             onChange={handleChange}
-                            onBlur={handleBlur}
+                            onBlur={submitOnBlur}
+                            onKeyPress={submitOnKeypress}
                             isInvalid={orbitNumberTouched.max && !!orbitNumberError.max}
                           />
                           {
@@ -475,23 +607,29 @@ export const GranuleFiltersForm = (props) => {
                           }
                         </Col>
                       </Form.Group>
-                    </GranuleFiltersItem>
+                    </SidebarFiltersItem>
 
-                    <GranuleFiltersItem
+                    <SidebarFiltersItem
                       heading="Equatorial Crossing Longitude"
                     >
-                      <Form.Group as={Row} controlId="granule-filters__equatorial-crossing-longitude-min">
-                        <Form.Label column sm={3}>
+                      <Form.Group
+                        as={Row}
+                        controlId="granule-filters__equatorial-crossing-longitude-min"
+                        noGutters
+                      >
+                        <Form.Label column="sm" sm={5}>
                             Minimum
                         </Form.Label>
-                        <Col sm={9}>
+                        <Col sm={7}>
                           <Form.Control
                             name="equatorCrossingLongitude.min"
                             type="text"
+                            size="sm"
                             placeholder="Example: -45"
                             value={equatorCrossingLongitudeMin}
                             onChange={handleChange}
-                            onBlur={handleBlur}
+                            onBlur={submitOnBlur}
+                            onKeyPress={submitOnKeypress}
                             isInvalid={equatorCrossingLongitudeTouched.min
                               && !!equatorCrossingLongitudeError.min}
                           />
@@ -504,18 +642,24 @@ export const GranuleFiltersForm = (props) => {
                           }
                         </Col>
                       </Form.Group>
-                      <Form.Group as={Row} controlId="granule-filters__equatorial-crossing-longitude-max">
-                        <Form.Label column sm={3}>
+                      <Form.Group
+                        as={Row}
+                        controlId="granule-filters__equatorial-crossing-longitude-max"
+                        noGutters
+                      >
+                        <Form.Label column="sm" sm={5}>
                           Maximum
                         </Form.Label>
-                        <Col sm={9}>
+                        <Col sm={7}>
                           <Form.Control
                             name="equatorCrossingLongitude.max"
                             type="text"
+                            size="sm"
                             placeholder="Example: 45"
                             value={equatorCrossingLongitudeMax}
                             onChange={handleChange}
-                            onBlur={handleBlur}
+                            onBlur={submitOnBlur}
+                            onKeyPress={submitOnKeypress}
                             isInvalid={equatorCrossingLongitudeTouched.max
                               && !!equatorCrossingLongitudeError.max}
                           />
@@ -528,9 +672,9 @@ export const GranuleFiltersForm = (props) => {
                           }
                         </Col>
                       </Form.Group>
-                    </GranuleFiltersItem>
+                    </SidebarFiltersItem>
 
-                    <GranuleFiltersItem
+                    <SidebarFiltersItem
                       heading="Equatorial Crossing Date"
                     >
                       <Form.Group controlId="granule-filters__equatorial-crossing-date">
@@ -547,6 +691,7 @@ export const GranuleFiltersForm = (props) => {
                           <TemporalSelection
                             allowRecurring={false}
                             controlId="granule-filters__equatorial-crossing-date-selection"
+                            size="sm"
                             format={temporalDateFormat}
                             temporal={equatorCrossingDate}
                             validate={false}
@@ -585,14 +730,14 @@ export const GranuleFiltersForm = (props) => {
                           )
                         }
                       </Form.Group>
-                    </GranuleFiltersItem>
+                    </SidebarFiltersItem>
                   </>
                 )
               }
             </>
           )
         }
-      </GranuleFiltersList>
+      </SidebarFiltersList>
     </FormikForm>
   )
 }
@@ -602,6 +747,7 @@ GranuleFiltersForm.propTypes = {
   errors: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,

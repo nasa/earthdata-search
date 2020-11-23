@@ -102,25 +102,32 @@ describe('getSearchGranules', () => {
         payload: 'collectionId'
       })
       expect(storeActions[1]).toEqual({
+        type: UPDATE_GRANULE_RESULTS,
+        payload: {
+          collectionId: 'collectionId',
+          results: []
+        }
+      })
+      expect(storeActions[2]).toEqual({
         type: LOADING_GRANULES,
         payload: 'collectionId'
       })
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[4]).toEqual({
         type: FINISHED_GRANULES_TIMER,
         payload: 'collectionId'
       })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[5]).toEqual({
         type: LOADED_GRANULES,
         payload: {
           collectionId: 'collectionId',
           loaded: true
         }
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [
           {
@@ -129,7 +136,7 @@ describe('getSearchGranules', () => {
           }
         ]
       })
-      expect(storeActions[6]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
@@ -197,29 +204,36 @@ describe('getSearchGranules', () => {
         payload: 'collectionId'
       })
       expect(storeActions[1]).toEqual({
+        type: UPDATE_GRANULE_RESULTS,
+        payload: {
+          collectionId: 'collectionId',
+          results: []
+        }
+      })
+      expect(storeActions[2]).toEqual({
         type: LOADING_GRANULES,
         payload: 'collectionId'
       })
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[4]).toEqual({
         type: FINISHED_GRANULES_TIMER,
         payload: 'collectionId'
       })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[5]).toEqual({
         type: UPDATE_AUTH,
         payload: 'token'
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: LOADED_GRANULES,
         payload: {
           collectionId: 'collectionId',
           loaded: true
         }
       })
-      expect(storeActions[6]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [
           {
@@ -228,7 +242,7 @@ describe('getSearchGranules', () => {
           }
         ]
       })
-      expect(storeActions[7]).toEqual({
+      expect(storeActions[8]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
@@ -290,29 +304,36 @@ describe('getSearchGranules', () => {
         payload: 'collectionId'
       })
       expect(storeActions[1]).toEqual({
+        type: UPDATE_GRANULE_RESULTS,
+        payload: {
+          collectionId: 'collectionId',
+          results: []
+        }
+      })
+      expect(storeActions[2]).toEqual({
         type: LOADING_GRANULES,
         payload: 'collectionId'
       })
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[4]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: true
       })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[5]).toEqual({
         type: FINISHED_GRANULES_TIMER,
         payload: 'collectionId'
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: LOADED_GRANULES,
         payload: {
           collectionId: 'collectionId',
           loaded: true
         }
       })
-      expect(storeActions[6]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [{
           title: 'CWIC Granule',
@@ -320,7 +341,7 @@ describe('getSearchGranules', () => {
           browse_flag: false
         }]
       })
-      expect(storeActions[7]).toEqual({
+      expect(storeActions[8]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',

@@ -1,0 +1,13 @@
+.radio-setting-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color__black--400;
+  font-size: 1.125rem;
+
+  &__label {
+    font-size: 0.875rem;
+    color: $color__black--800;
+    margin-left: $spacer/4;
+  }
+}
