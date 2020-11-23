@@ -29,21 +29,6 @@ export class SearchSidebarHeader extends PureComponent {
 
     return (
       <div className="search-sidebar-header">
-        {/* <div className={linkWrapperClassNames}>
-          <PortalLinkContainer
-            className="search-sidebar-header__button"
-            type="button"
-            label="Back to collections"
-            to={{
-              pathname: '/search',
-              search: location.search
-            }}
-            onClick={() => onFocusedCollectionChange('')}
-          >
-            <i className="fa fa-chevron-left" />
-            {' Back to collections'}
-          </PortalLinkContainer>
-        </div> */}
         <SearchFormContainer />
       </div>
     )

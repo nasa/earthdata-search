@@ -1,5 +1,14 @@
 .dropdown-menu {
   padding: .25rem 0;
+  overflow: visible !important;
+
+  &--auto-width {
+    min-width: auto;
+  }
+
+  &--carat {
+    @include carat('center');
+  }
 
   &--carat-right {
     @include carat('topright');

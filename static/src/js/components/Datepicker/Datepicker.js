@@ -6,9 +6,21 @@ import Datetime from 'react-datetime'
 import './Datepicker.scss'
 
 /**
- * Component representing the Datepicker. We use this to make some of the customizations
+ * Component representing the Datepicker. Used to make some of the customizations
  * that should be passed down to the react-datetime component
  * @extends PureComponent
+ * @param {Object} props - The props passed into the component.
+ * @param {String} props.id - A unique id
+ * @param {String} props.format - A string temporal format
+ * @param {Function} props.isValidDate - Callback function to determine if a date is valid
+ * @param {Function} props.onBlur - Callback function to call when the field is blurred
+ * @param {Function} props.onChange - Callback function to call when the field is changed
+ * @param {Function} props.onClearClick - Callback function to call when the clear button is clicked
+ * @param {Function} props.onTodayClick - Callback function to call when the today button is clicked
+ * @param {Node} props.picker - A ref for the datepicker
+ * @param {String} props.size - String representing the bootstrap size
+ * @param {String} props.value - The value to be used in the input
+ * @param {String} props.viewMode - The default view mode for the picker
  */
 class Datepicker extends PureComponent {
   componentDidMount() {
@@ -51,6 +63,7 @@ class Datepicker extends PureComponent {
       onBlur,
       onChange,
       picker,
+      size,
       value
     } = this.props
 
@@ -64,7 +77,8 @@ class Datepicker extends PureComponent {
         inputProps={{
           id,
           placeholder: format,
-          autoComplete: 'off'
+          autoComplete: 'off',
+          className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`
         }}
         isValidDate={isValidDate}
         onBlur={onBlur}
@@ -81,6 +95,7 @@ class Datepicker extends PureComponent {
 
 Datepicker.defaultProps = {
   format: 'YYYY-MM-DD HH:mm:ss',
+  size: '',
   value: '',
   viewMode: 'years'
 }
@@ -99,6 +114,7 @@ Datepicker.propTypes = {
     // Or the instance of a DOM native element (see the note about SSR)
     PropTypes.shape({ currentView: PropTypes.instanceOf(Element) })
   ]).isRequired,
+  size: PropTypes.string,
   value: PropTypes.string,
   viewMode: PropTypes.string
 }

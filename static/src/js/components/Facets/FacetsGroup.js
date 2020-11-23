@@ -32,48 +32,28 @@ class FacetsGroup extends Component {
     onTriggerViewAllFacets(facet.title)
   }
 
-  renderHeaderInfo() {
-    const { facet } = this.props
-
-    if (!(facet.totalSelected > 0 || facet.children.length > 49)) return null
-
-    return (
-      <>
-        {
-          facet.totalSelected > 0 && (
-            <span className="facets-group__meta">{`${facet.totalSelected} Selected`}</span>
-          )
-        }
-        {
-          (facet.totalSelected === 0 && facet.children.length > 49) && (
-            <span className="facets-group__meta">Showing Top 50</span>
-          )
-        }
-        {
-          facet.children.length > 49 && (
-            <button className="facets-group__view-all" type="button" onClick={this.onViewAllClick}>View All</button>
-          )
-        }
-      </>
-    )
-  }
-
   render() {
     const {
       facet,
       facetCategory
     } = this.props
+
     const {
       autocompleteType,
       changeHandler,
       children,
       options = {},
-      title
+      title,
+      totalSelected = 0
     } = facet
 
     const { isOpen } = this.state
 
-    const headerInfo = this.renderHeaderInfo()
+    let buttonTitleText = title
+
+    if (totalSelected > 0) {
+      buttonTitleText += `  (${totalSelected} Selected)`
+    }
 
     return (
       <li className="facets-group" key={title}>
@@ -81,11 +61,22 @@ class FacetsGroup extends Component {
           <button
             className="btn btn-block facets-group__button"
             type="button"
+            label={buttonTitleText}
+            title={buttonTitleText}
             onClick={this.onToggle}
           >
-            <span className="facets-group__title">
-              {title}
-            </span>
+            <div className="facets-group__heading-primary">
+              <span className="facets-group__title">
+                {title}
+              </span>
+              {
+                totalSelected > 0 && (
+                  <span className="facets-group__selected-count">
+                    {`${totalSelected} Selected`}
+                  </span>
+                )
+              }
+            </div>
             <div className="facets-group__action">
               {
                 !isOpen
@@ -105,11 +96,14 @@ class FacetsGroup extends Component {
         {
           isOpen && (
             <section className="facets-group__body">
-              {headerInfo && (
-                <header className="facets-group__header">
-                  {headerInfo}
-                </header>
-              )}
+              {
+                facet.children.length > 49 && (
+                  <header className="facets-group__header">
+                    <span className="facets-group__meta">Showing Top 50</span>
+                    <button className="facets-group__view-all" type="button" onClick={this.onViewAllClick}>View All</button>
+                  </header>
+                )
+              }
               <FacetsList
                 autocompleteType={autocompleteType}
                 changeHandler={changeHandler}

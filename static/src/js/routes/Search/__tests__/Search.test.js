@@ -9,8 +9,10 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    collectionQuery: {},
     match: {},
     advancedSearch: {},
+    onChangeQuery: jest.fn(),
     onUpdateAdvancedSearch: jest.fn()
   }
 

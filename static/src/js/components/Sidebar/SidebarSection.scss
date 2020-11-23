@@ -1,6 +1,8 @@
 .sidebar-section {
+  margin: $spacer/2;
   min-height: 0;
   color: $color__black--400;
+  background-color: $color__black--900;
 
   &--padded {
     padding: 0.5*$spacer;
@@ -9,20 +11,105 @@
   &__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 0.75rem 0.75rem 1.125rem;
     color: $color__black--300;
     border-bottom: 1px solid $color__black--700;
   }
 
+  &__header-action {
+    margin-right: 0.5rem;
+    padding: 0.075rem 0.425rem;
+    background-color: $color__blue--dark;
+    border-color: $color__blue--dark;
+
+    &:hover {
+      background-color: darken($color__blue--dark, 5);
+      border-color: darken($color__blue--dark, 5);
+    }
+  }
+
+  &__more-actions {
+    padding: 0 0.5rem;
+  }
+
+  &__header-primary {
+    padding:0.5rem;
+    flex-grow: 1;
+  }
+
+  &__header-secondary {
+    flex-grow: 0;
+  }
+
   &__title {
+    display: flex;
+    align-items: center;
     margin: 0;
     font-size: 0.875rem;
-    color: $color__black--400;
+    color: $color__black--200;
+  }
+
+  &__title-icon {
+    margin-right: 0.25rem;
   }
 
   &__icon {
     color: rgba(255,255,255,0.3)
   }
 
+  .form-group {
+    margin: 0;
+
+    label {
+      font-size: 0.8rem;
+      color: $color__black--200;
+      font-weight: 400;
+      letter-spacing: 0.005rem;
+    }
+
+    &:last-child {
+      > label {
+        margin-bottom: 0;
+      }
+
+      .temporal-selection__label {
+        margin-bottom: 0.125rem;
+      }
+    }
+  }
+
+  .form-check {
+    display: flex;
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      position: relative;
+      top: 0.075rem;
+      font-weight: 300;
+    }
+
+    input[type='checkbox'] {
+      margin-right: 0.425rem;
+    }
+  }
+
+  .temporal-selection {
+    margin-bottom: 0;
+    margin-top: -0.25rem;
+
+    .form-group:nth-child(3) {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .temporal-selection__range-label {
+    padding: 0;
+  }
+
+  .temporal-selection__input-group {
+    margin-bottom: 0.25rem;
+  }
 }

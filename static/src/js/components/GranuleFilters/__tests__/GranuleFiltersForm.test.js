@@ -7,7 +7,7 @@ import moment from 'moment'
 import { Form, FormControl } from 'react-bootstrap'
 
 import GranuleFiltersForm from '../GranuleFiltersForm'
-import GranuleFiltersItem from '../GranuleFiltersItem'
+import SidebarFiltersItem from '../../Sidebar/SidebarFiltersItem'
 import TemporalSelection from '../../TemporalSelection/TemporalSelection'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -22,6 +22,7 @@ function setup(overrideProps) {
     errors: {},
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
+    handleSubmit: jest.fn(),
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
     touched: {},
@@ -49,16 +50,22 @@ describe('GranuleFiltersForm component', () => {
   })
 
   describe('Form', () => {
+    test('shows granule searcg by default', () => {
+      const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Granule Search')
+    })
+
     test('shows temporal by default', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find(GranuleFiltersItem).at(0).prop('heading')).toEqual('Temporal')
+      expect(enzymeWrapper.find(SidebarFiltersItem).at(1).prop('heading')).toEqual('Temporal')
     })
 
     test('shows data access by default', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find(GranuleFiltersItem).at(1).prop('heading')).toEqual('Data Access')
+      expect(enzymeWrapper.find(SidebarFiltersItem).at(2).prop('heading')).toEqual('Data Access')
     })
 
     describe('Temporal section', () => {
@@ -72,7 +79,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const temporalSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
           expect(temporalSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-14T00:00:00:000Z')
           expect(temporalSection.find(TemporalSelection).prop('temporal').endDate).toEqual(undefined)
         })
@@ -86,7 +93,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const temporalSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
           expect(temporalSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T00:00:00:000Z')
           expect(temporalSection.find(TemporalSelection).prop('temporal').startDate).toEqual(undefined)
         })
@@ -101,7 +108,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const temporalSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
           expect(temporalSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T23:59:59:999Z')
           expect(temporalSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-13T00:00:00:000Z')
         })
@@ -115,7 +122,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const temporalSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
           temporalSection.find(TemporalSelection).prop('onSubmitStart')(moment('2019-08-13T00:00:00:000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
 
           expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
@@ -133,7 +140,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const temporalSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
           temporalSection.find(TemporalSelection).prop('onSubmitEnd')(moment('2019-08-14T23:59:59:999Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
 
           expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
@@ -157,7 +164,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const dayNightSection = enzymeWrapper.find(GranuleFiltersItem).at(1)
+        const dayNightSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
         expect(dayNightSection.find(FormControl).prop('value')).toEqual('')
       })
 
@@ -176,7 +183,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const dayNightSection = enzymeWrapper.find(GranuleFiltersItem).at(1)
+        const dayNightSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
         expect(dayNightSection.find(FormControl).prop('value')).toEqual('NIGHT')
       })
 
@@ -195,8 +202,8 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const dayNightSection = enzymeWrapper.find(GranuleFiltersItem).at(1)
-        const dayNightInput = dayNightSection.find(Form.Control)
+        const dayNightSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
+        const dayNightInput = dayNightSection.find(FormControl)
 
         dayNightInput.prop('onChange')({ event: 'test' })
         expect(props.handleChange).toHaveBeenCalledTimes(1)
@@ -209,7 +216,7 @@ describe('GranuleFiltersForm component', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup()
 
-          const dataAccessSection = enzymeWrapper.find(GranuleFiltersItem).at(1)
+          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
           expect(dataAccessSection.find(Form.Check).at(0).prop('value')).toEqual(false)
         })
 
@@ -220,14 +227,14 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const dataAccessSection = enzymeWrapper.find(GranuleFiltersItem).at(1)
+          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
           expect(dataAccessSection.find(Form.Check).at(0).prop('value')).toEqual(true)
         })
 
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup()
 
-          const dataAccessSection = enzymeWrapper.find(GranuleFiltersItem).at(1)
+          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
           dataAccessSection.find(Form.Check).at(0).prop('onChange')({ event: 'test' })
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
@@ -238,7 +245,7 @@ describe('GranuleFiltersForm component', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup()
 
-          const dataAccessSection = enzymeWrapper.find(GranuleFiltersItem).at(1)
+          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
           expect(dataAccessSection.find(Form.Check).at(1).prop('value')).toEqual(false)
         })
 
@@ -249,14 +256,14 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const dataAccessSection = enzymeWrapper.find(GranuleFiltersItem).at(1)
+          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
           expect(dataAccessSection.find(Form.Check).at(1).prop('value')).toEqual(true)
         })
 
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup()
 
-          const dataAccessSection = enzymeWrapper.find(GranuleFiltersItem).at(1)
+          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
           dataAccessSection.find(Form.Check).at(1).prop('onChange')({ event: 'test' })
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
@@ -278,7 +285,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const cloudCoverSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          const cloudCoverSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
           expect(cloudCoverSection.find(Form.Control).at(0).prop('value')).toEqual('')
         })
 
@@ -294,7 +301,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const cloudCoverSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          const cloudCoverSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
           cloudCoverSection.find(Form.Control).at(0).prop('onChange')({ event: 'test' })
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
@@ -314,7 +321,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const cloudCoverSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          const cloudCoverSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
           expect(cloudCoverSection.find(Form.Control).at(1).prop('value')).toEqual('')
         })
 
@@ -330,7 +337,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const cloudCoverSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          const cloudCoverSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
           cloudCoverSection.find(Form.Control).at(1).prop('onChange')({ event: 'test' })
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
@@ -352,7 +359,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
           expect(orbitNumberSection.find(Form.Control).at(0).prop('value')).toEqual('')
         })
 
@@ -368,7 +375,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
           orbitNumberSection.find(Form.Control).at(0).prop('onChange')({ event: 'test' })
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
@@ -388,7 +395,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
           expect(orbitNumberSection.find(Form.Control).at(1).prop('value')).toEqual('')
         })
 
@@ -404,7 +411,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(GranuleFiltersItem).at(2)
+          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
           orbitNumberSection.find(Form.Control).at(1).prop('onChange')({ event: 'test' })
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
@@ -426,7 +433,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(GranuleFiltersItem).at(3)
+          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
           expect(equatorCrossingLongitudeSection.find(Form.Control).at(0).prop('value')).toEqual('')
         })
 
@@ -442,7 +449,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(GranuleFiltersItem).at(3)
+          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
           equatorCrossingLongitudeSection.find(Form.Control).at(0).prop('onChange')({ event: 'test' })
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
@@ -462,7 +469,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(GranuleFiltersItem).at(3)
+          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
           expect(equatorCrossingLongitudeSection.find(Form.Control).at(1).prop('value')).toEqual('')
         })
 
@@ -478,7 +485,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(GranuleFiltersItem).at(3)
+          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
           equatorCrossingLongitudeSection.find(Form.Control).at(1).prop('onChange')({ event: 'test' })
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
@@ -505,7 +512,7 @@ describe('GranuleFiltersForm component', () => {
             }
           }
         })
-        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
         expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-14T00:00:00:000Z')
         expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').endDate).toEqual(undefined)
       })
@@ -527,7 +534,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
         expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T00:00:00:000Z')
         expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').startDate).toEqual(undefined)
       })
@@ -550,7 +557,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
         expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T23:59:59:999Z')
         expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-13T00:00:00:000Z')
       })
@@ -572,7 +579,7 @@ describe('GranuleFiltersForm component', () => {
             }
           }
         })
-        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
         equatorCrossingDateSection.find(TemporalSelection).prop('onSubmitStart')(moment('2019-08-13T00:00:00:000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
 
         expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
@@ -598,7 +605,7 @@ describe('GranuleFiltersForm component', () => {
             }
           }
         })
-        const equatorCrossingDateSection = enzymeWrapper.find(GranuleFiltersItem).at(4)
+        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
         equatorCrossingDateSection.find(TemporalSelection).prop('onSubmitEnd')(moment('2019-08-14T23:59:59:999Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
 
         expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
@@ -613,7 +620,7 @@ describe('GranuleFiltersForm component', () => {
     test('does not render if no gridName is applied', () => {
       const { enzymeWrapper } = setup()
 
-      const firstSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+      const firstSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
       expect(firstSection.props().heading).not.toEqual('Grid Coordinates')
     })
 
@@ -636,7 +643,7 @@ describe('GranuleFiltersForm component', () => {
         }
       })
 
-      const gridCoordsSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+      const gridCoordsSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
       expect(gridCoordsSection.find(Form.Control).at(0).prop('value')).toEqual('')
     })
 
@@ -659,7 +666,7 @@ describe('GranuleFiltersForm component', () => {
         }
       })
 
-      const gridCoordsSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+      const gridCoordsSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
       gridCoordsSection.find(Form.Control).prop('onChange')({ target: { value: 'MISR' } })
       expect(props.handleChange).toHaveBeenCalledTimes(1)
       expect(props.handleChange).toHaveBeenCalledWith({ target: { value: 'MISR' } })
@@ -687,7 +694,7 @@ describe('GranuleFiltersForm component', () => {
         }
       })
 
-      const gridCoordsSection = enzymeWrapper.find(GranuleFiltersItem).at(0)
+      const gridCoordsSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
       expect(gridCoordsSection.find(Form.Control).length).toBe(2)
       expect(gridCoordsSection.find(Form.Text).at(0).text()).toEqual('Enter path (min: 1, max: 233) and block (min: 1, max: 183) coordinates separated by spaces, e.g. "2,3 5,7"')
     })

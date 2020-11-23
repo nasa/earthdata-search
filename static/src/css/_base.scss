@@ -53,9 +53,9 @@ body.is-panels-will-minimize {
 
 button {
   &:focus {
-    border-color: $color__black--300;
+    border-color: $color__blue--dark;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem $color__black--200;
+    box-shadow: 0 0 0 0.2rem rgba($color__blue--dark, 0.5);
   }
 }
 

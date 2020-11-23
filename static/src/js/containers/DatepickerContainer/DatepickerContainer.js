@@ -5,6 +5,21 @@ import moment from 'moment'
 import isCustomTime from '../../util/datepicker'
 import Datepicker from '../../components/Datepicker/Datepicker'
 
+/**
+ * DatepickerContainer component
+ * @extends Component
+ * @param {Object} props - The props passed into the component.
+ * @param {String} props.format - A string temporal format
+ * @param {String} props.id - A unique id
+ * @param {Function} props.maxDate - String representing the maximum date
+ * @param {Function} props.minDate - String representing the minimum date
+ * @param {Function} props.onSubmit - Callback function to call when the date is submitted
+ * @param {Function} props.shouldValidate - Flag designating whether or not the picker should validate the input
+ * @param {String} props.type - String designating the start or end
+ * @param {String} props.size - String representing the bootstrap size
+ * @param {String} props.value - The value to be used in the input
+ * @param {String} props.viewMode - The default view mode for the picker
+ */
 class DatepickerContainer extends Component {
   constructor(props) {
     super(props)
@@ -116,6 +131,7 @@ class DatepickerContainer extends Component {
     const {
       id,
       format,
+      size,
       viewMode
     } = this.props
 
@@ -139,6 +155,7 @@ class DatepickerContainer extends Component {
         onClearClick={this.onClearClick}
         onTodayClick={this.onTodayClick}
         picker={this.picker}
+        size={size}
         value={value}
         viewMode={viewMode}
       />
@@ -148,23 +165,25 @@ class DatepickerContainer extends Component {
 
 DatepickerContainer.defaultProps = {
   format: 'YYYY-MM-DD HH:mm:ss',
-  minDate: '',
   maxDate: '',
+  minDate: '',
   shouldValidate: true,
+  size: '',
   type: '',
   value: '',
   viewMode: 'years'
 }
 
 DatepickerContainer.propTypes = {
-  id: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   format: PropTypes.string,
-  minDate: PropTypes.string,
+  id: PropTypes.string.isRequired,
   maxDate: PropTypes.string,
+  minDate: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
   shouldValidate: PropTypes.bool,
-  value: PropTypes.string,
+  size: PropTypes.string,
   type: PropTypes.string,
+  value: PropTypes.string,
   viewMode: PropTypes.string
 }
 

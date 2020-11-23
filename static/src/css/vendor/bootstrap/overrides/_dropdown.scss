@@ -6,6 +6,8 @@
   .dropdown-dark & {
     background-color: $color__black--800;
     color: $color__black--200;
+    border: 1px solid $color__black--700;
+    box-shadow: 0 0 1rem rgba($color__black, 1);
 
     .dropdown-item {
       color: $color__black--100;
@@ -16,36 +18,16 @@
       }
     }
 
+    &:before {
+      border-bottom-color: $color__black--700;
+    }
+
+    &:after {
+      border-bottom-color: $color__black--800;
+    }
+
     .button__icon {
       color: $color__black--500;
-    }
-
-    .form-control {
-      background-color: $color__black--700;
-      color: $color__white;
-      border: $color__black--700;
-
-      &:placeholder-shown {
-        color: $color__black--300;
-      }
-
-      &:focus {
-        color: $color__white;
-        background-color: $color__black--600;
-      }
-    }
-
-    input[type="checkbox"] {
-      margin-right: 0.7rem;
-      border-radius: 4px;
-      position: relative;
-      vertical-align: top;
-      opacity: 0.3;
-      flex: none;
-
-      &:checked {
-        opacity: 1;
-      }
     }
   }
 }

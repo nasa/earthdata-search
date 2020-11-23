@@ -7,29 +7,63 @@
     font-size: 1rem;
   }
 
+  &__title {
+    flex-grow: 0;
+    flex-shrink: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &__heading-primary {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &__selected-count {
+    flex-shrink: 0;
+    position: relative;
+    top: 0.075rem;
+    margin-left: 0.5rem;
+    padding: 0 0.5rem;
+    background-color: rgba($color__blue--dark, 0.75);
+    color: $color__white;
+    font-size: 0.625rem;
+    height: 1rem;
+    border-radius: 0.5rem;
+  }
+
   &__button {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 0.75rem;
+    align-items: center;
+    padding: 0.425rem 0.5rem;
+    padding-left: 0.75rem;
     color: $color__white;
     border-radius: 0;
-    border-bottom: 1px solid $color__black--700;
-    font-size: 0.925rem;
+    border-bottom: 1px solid darken($color__black--700, 5);
+    font-size: 0.875rem;
     font-weight: 300;
 
-    .facets-group:last-child & {
-      border: 0;
+    .facets-group:first-child & {
+      border-top: 1px solid darken($color__black--700, 5);
     }
 
     &:hover {
       color: $color__white;
-      background: $color__black--700;
+      background: darken($color__black--700, 5);
     }
 
     &:focus {
       outline: 0;
       border-color: transparent;
-      border-bottom-color: $color__black--700;
+      border-bottom-color: darken($color__black--700, 5);
     }
   }
 
@@ -40,7 +74,7 @@
 
   &__header {
     display: flex;
-    padding: 0.2rem 0.4rem 0.2rem 0.75rem;
+    padding: 0.2rem 0.5rem 0.2rem 0.7rem;
   }
 
   &__meta {
@@ -63,10 +97,15 @@
     }
   }
 
+  &__action {
+    margin-left: 0.5rem;
+    color: darken($color__black--400, 10);
+  }
+
   &__body {
     overflow: hidden;
-    background: $color__black--900;
-    border-bottom: 1px solid $color__black--700;
+    border-bottom: 1px solid darken($color__black--700, 5);
+    // background: $color__black--800;
 
     &:first-child {
       padding-top: 0.6rem;

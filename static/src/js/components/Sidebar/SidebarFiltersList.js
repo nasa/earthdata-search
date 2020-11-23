@@ -1,23 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './GranuleFiltersList.scss'
+import './SidebarFiltersList.scss'
 
 /**
- * Renders GranuleFiltersList.
+ * Renders SidebarFiltersList.
  * @param {Object} props - The props passed into the component.
  * @param {Node} props.children - The granule filter items.
  */
-export const GranuleFiltersList = ({
+export const SidebarFiltersList = ({
   children
 }) => (
-  <ul className="granule-filters-list">
+  <ul className="sidebar-filters-list">
     {children}
   </ul>
 )
 
-GranuleFiltersList.propTypes = {
+SidebarFiltersList.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default GranuleFiltersList
+export default SidebarFiltersList

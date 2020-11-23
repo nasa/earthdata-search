@@ -145,13 +145,9 @@ describe('Panels component', () => {
     const sectionOne = enzymeWrapper.find(PanelSection).at(0)
     const sectionTwo = enzymeWrapper.find(PanelSection).at(1)
     expect(sectionOne.find(PanelGroup).at(0).props().primaryHeading).toEqual('Panel Group 0.0')
-    expect(sectionOne.find(PanelGroup).at(0).props().secondaryHeading).toEqual('Secondary tile Panel 1')
     expect(sectionOne.find(PanelGroup).at(1).props().primaryHeading).toEqual('Panel Group 0.1')
-    expect(sectionOne.find(PanelGroup).at(1).props().secondaryHeading).toEqual('Secondary tile Panel 2')
     expect(sectionTwo.find(PanelGroup).at(0).props().primaryHeading).toEqual('Panel Group 1.0')
-    expect(sectionTwo.find(PanelGroup).at(0).props().secondaryHeading).toEqual(null)
     expect(sectionTwo.find(PanelGroup).at(1).props().primaryHeading).toEqual('Panel Group 1.1')
-    expect(sectionTwo.find(PanelGroup).at(1).props().secondaryHeading).toEqual(null)
   })
 
   test('renders the panel items correctly', () => {

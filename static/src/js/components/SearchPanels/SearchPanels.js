@@ -1,30 +1,30 @@
+/* eslint-disable no-unused-vars */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import {
   Route,
   Switch
 } from 'react-router-dom'
-
 import { isEqual, startCase } from 'lodash'
+import { Col } from 'react-bootstrap'
+
+import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
+import { commafy } from '../../util/commafy'
+import { pluralize } from '../../util/pluralize'
 
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
-import CollectionResultsHeaderContainer
-  from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
-import CollectionDetailsHeaderContainer
-  from '../../containers/CollectionDetailsHeaderContainer/CollectionDetailsHeaderContainer'
 import CollectionDetailsBodyContainer
   from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
-import GranuleDetailsHeaderContainer
-  from '../../containers/GranuleDetailsHeaderContainer/GranuleDetailsHeaderContainer'
 import GranuleDetailsBodyContainer
   from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
-
 import GranuleResultsBodyContainer
   from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
-import GranuleResultsHeaderContainer
-  from '../../containers/GranuleResultsHeaderContainer/GranuleResultsHeaderContainer'
+import GranuleResultsActionsContainer
+  from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 
+
+import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
@@ -61,7 +61,7 @@ class SearchPanels extends PureComponent {
 
     this.onPanelClose = this.onPanelClose.bind(this)
     this.onChangePanel = this.onChangePanel.bind(this)
-    this.onChangeCollectionPanelView = this.onChangeCollectionPanelView.bind(this)
+    this.onChangeCollectionsPanelView = this.onChangeCollectionsPanelView.bind(this)
     this.onChangeGranulePanelView = this.onChangeGranulePanelView.bind(this)
     this.updatePanelViewState = this.updatePanelViewState.bind(this)
   }
@@ -97,7 +97,7 @@ class SearchPanels extends PureComponent {
     onTogglePanels(true)
   }
 
-  onChangeCollectionPanelView(view) {
+  onChangeCollectionsPanelView(view) {
     this.setState({
       collectionPanelView: view
     })
@@ -129,13 +129,61 @@ class SearchPanels extends PureComponent {
 
   render() {
     const {
+      collectionMetadata,
+      collectionQuery,
+      collectionsSearch,
+      granuleMetadata,
+      granuleQuery,
+      granuleSearchResults,
+      location,
       match,
+      mapProjection,
       preferences,
       portal,
+      onApplyGranuleFilters,
+      onChangeQuery,
+      onMetricsCollectionSortChange,
+      onToggleAboutCwicModal,
       onSetActivePanel
     } = this.props
 
+    const {
+      pageNum: granulesPageNum = 1,
+      sortKey: activeGranulesSortKey = ''
+    } = granuleQuery
+
+    const {
+      pageNum: collectionsPageNum = 1,
+      sortKey: collectionsSortKey = ''
+    } = collectionQuery
+
+    const [activeCollectionsSortKey = ''] = collectionsSortKey
+
+    const {
+      allIds: collectionAllIds,
+      hits: collectionHits = 0,
+      isLoading: collectionSearchIsLoading,
+      isLoaded: collectionSearchIsLoaded
+    } = collectionsSearch
+
     const { panelState } = preferences
+
+    const {
+      hasAllMetadata: hasAllCollectionMetadata = false,
+      title: collectionTitle = '',
+      isCwic: collectionIsCwic
+    } = collectionMetadata
+
+    const { title: granuleTitle = '' } = granuleMetadata
+
+    const handoffLinks = generateHandoffs(collectionMetadata, collectionQuery, mapProjection)
+
+    const {
+      allIds: allGranuleIds = [],
+      hits: granuleHits = '0',
+      isLoading: granulesIsLoading,
+      isLoaded: granulesIsLoaded
+    } = granuleSearchResults
 
     const {
       collectionPanelView,
@@ -147,6 +195,115 @@ class SearchPanels extends PureComponent {
       org = portalId,
       title = portalId
     } = portal
+
+    const granuleResultsHeaderMetaPrimaryText = `Showing ${commafy(allGranuleIds.length)} of ${commafy(
+      granuleHits
+    )} matching ${pluralize('granule', granuleHits)}`
+
+
+    let collectionResultsHeaderMetaPrimaryText = ''
+    let collectionResultsPrimaryHeading = ''
+
+    collectionResultsPrimaryHeading = `${commafy(collectionHits)} Matching ${pluralize('Collection', collectionHits)}`
+    collectionResultsHeaderMetaPrimaryText = `Showing ${commafy(collectionAllIds.length)} of ${commafy(
+      collectionHits
+    )} matching ${pluralize('collection', collectionHits)}`
+
+    const initialGranulesLoading = (
+      (granulesPageNum === 1 && granulesIsLoading)
+      || (!granulesIsLoaded && !granulesIsLoading)
+    )
+
+    const granulesSortsArray = [
+      {
+        label: 'Start Date, Newest First',
+        isActive: activeGranulesSortKey === '-start_date',
+        onClick: () => onApplyGranuleFilters({ sortKey: '-start_date' })
+      },
+      {
+        label: 'Start Date, Oldest First',
+        isActive: activeGranulesSortKey === 'start_date',
+        onClick: () => onApplyGranuleFilters({ sortKey: 'start_date' })
+      },
+      {
+        label: 'End Date, Newest First',
+        isActive: activeGranulesSortKey === '-end_date',
+        onClick: () => onApplyGranuleFilters({ sortKey: '-end_date' })
+      },
+      {
+        label: 'End Date, Oldest First',
+        isActive: activeGranulesSortKey === 'end_date',
+        onClick: () => onApplyGranuleFilters({ sortKey: 'end_date' })
+      }
+    ]
+
+    const setGranulesActiveView = view => this.onChangeGranulePanelView(view)
+
+    const granulesViewsArray = [
+      {
+        label: 'List',
+        icon: 'list',
+        isActive: granulePanelView === 'list',
+        onClick: () => setGranulesActiveView('list')
+      },
+      {
+        label: 'Table',
+        icon: 'table',
+        isActive: granulePanelView === 'table',
+        onClick: () => setGranulesActiveView('table')
+      }
+    ]
+
+    const setCollectionSort = (value) => {
+      const sortKey = value === 'relevance' ? undefined : [value]
+
+      onChangeQuery({
+        collection: {
+          sortKey
+        }
+      })
+      onMetricsCollectionSortChange({ value })
+    }
+
+    const collectionsSortsArray = [
+      {
+        label: 'Relevance',
+        isActive: activeCollectionsSortKey === '',
+        onClick: sortOrder => setCollectionSort('relevance')
+      },
+      {
+        label: 'Usage',
+        isActive: activeCollectionsSortKey === '-usage_score',
+        onClick: sortOrder => setCollectionSort('-usage_score')
+      },
+      {
+        label: 'End Date',
+        isActive: activeCollectionsSortKey === '-ongoing',
+        onClick: sortOrder => setCollectionSort('-ongoing')
+      }
+    ]
+
+    const initialCollectionsLoading = (
+      (collectionsPageNum === 1 && collectionSearchIsLoading)
+      || (!collectionSearchIsLoaded && !collectionSearchIsLoading)
+    )
+
+    const setCollectionsActiveView = view => this.onChangeCollectionsPanelView(view)
+
+    const collectionsViewsArray = [
+      {
+        label: 'List',
+        icon: 'list',
+        isActive: collectionPanelView === 'list',
+        onClick: () => setCollectionsActiveView('list')
+      },
+      {
+        label: 'Table',
+        icon: 'table',
+        isActive: collectionPanelView === 'table',
+        onClick: () => setCollectionsActiveView('table')
+      }
+    ]
 
     const buildCollectionResultsBodyFooter = () => {
       if (isDefaultPortal(portalId)) return null
@@ -174,12 +331,13 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="collection-results-panel"
-        header={(
-          <CollectionResultsHeaderContainer
-            panelView={collectionPanelView}
-            onChangePanelView={this.onChangeCollectionPanelView}
-          />
-        )}
+        primaryHeading={collectionResultsPrimaryHeading}
+        headerMetaPrimaryLoading={initialCollectionsLoading}
+        headerMetaPrimaryText={collectionResultsHeaderMetaPrimaryText}
+        headerLoading={initialCollectionsLoading}
+        viewsArray={collectionsViewsArray}
+        activeView={collectionPanelView}
+        sortsArray={collectionsSortsArray}
         footer={buildCollectionResultsBodyFooter()}
         onPanelClose={this.onPanelClose}
       >
@@ -192,13 +350,60 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="granule-results-panel"
-        header={(
-          <GranuleResultsHeaderContainer
-            panelView={granulePanelView}
-            onChangePanelView={this.onChangeGranulePanelView}
-            onSetActivePanel={onSetActivePanel}
-          />
+        handoffLinks={handoffLinks}
+        headerMessage={(
+          <>
+            {
+              collectionIsCwic && (
+                <Col className="search-panels__cwic-note">
+                  {'This is '}
+                  <span className="granule-results-header__cwic-emph">Int&apos;l / Interagency Data</span>
+                  {' data. Searches will be performed by external services which may vary in performance and available features. '}
+                  <Button
+                    className="granule-results-header__link"
+                    onClick={() => onToggleAboutCwicModal(true)}
+                    variant="link"
+                    bootstrapVariant="link"
+                    icon="question-circle"
+                    label="More details"
+                  >
+                    More Details
+                  </Button>
+                </Col>
+              )
+            }
+          </>
         )}
+        breadcrumbs={[
+          {
+            title: `Search Results (${commafy(collectionHits)} Collections)`,
+            link: {
+              pathname: '/search',
+              search: location.search
+            }
+          }
+        ]}
+        footer={(
+          <GranuleResultsActionsContainer />
+        )}
+        primaryHeading={collectionTitle}
+        headerLoading={!collectionSearchIsLoaded && hasAllCollectionMetadata === false}
+        activeView={granulePanelView}
+        activeSort={activeGranulesSortKey}
+        sortsArray={!collectionIsCwic ? granulesSortsArray : []}
+        viewsArray={granulesViewsArray}
+        headerMetaPrimaryLoading={initialGranulesLoading}
+        headerMetaPrimaryText={granuleResultsHeaderMetaPrimaryText}
+        moreActionsDropdownItems={[
+          {
+            title: 'View Collection Details',
+            icon: 'info-circle',
+            link: {
+              pathname: '/search/granules/collection-details',
+              search: location.search
+            }
+          }
+        ]}
         onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
@@ -210,9 +415,28 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="collection-details-panel"
-        header={
-          <CollectionDetailsHeaderContainer />
-        }
+        primaryHeading={collectionTitle}
+        headerLoading={initialCollectionsLoading}
+        breadcrumbs={[
+          {
+            title: `Search Results (${commafy(collectionHits)} ${pluralize('Collection', collectionHits)})`,
+            link: {
+              pathname: '/search',
+              search: location.search
+            }
+          }
+        ]}
+        handoffLinks={handoffLinks}
+        moreActionsDropdownItems={[
+          {
+            title: 'View Granules',
+            icon: 'map',
+            link: {
+              pathname: '/search/granules',
+              search: location.search
+            }
+          }
+        ]}
         onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
@@ -224,9 +448,45 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="granule-details-panel"
-        header={
-          <GranuleDetailsHeaderContainer />
-        }
+        primaryHeading={granuleTitle}
+        headerLoading={!granuleTitle}
+        breadcrumbs={[
+          {
+            title: 'Search Results',
+            link: {
+              pathname: '/search',
+              search: location.search
+            }
+          },
+          {
+            title: collectionTitle,
+            link: {
+              pathname: '/search/granules',
+              search: location.search
+            },
+            options: {
+              shrink: true
+            }
+          }
+        ]}
+        moreActionsDropdownItems={[
+          {
+            title: 'View Granules',
+            icon: 'map',
+            link: {
+              pathname: '/search/granules',
+              search: location.search
+            }
+          },
+          {
+            title: 'View Collection Details',
+            icon: 'info-circle',
+            link: {
+              pathname: '/search/granules/collection-details',
+              search: location.search
+            }
+          }
+        ]}
         onPanelClose={this.onPanelClose}
       >
         <PanelItem>
@@ -288,8 +548,20 @@ class SearchPanels extends PureComponent {
 }
 
 SearchPanels.propTypes = {
+  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionQuery: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
+  granuleMetadata: PropTypes.shape({}).isRequired,
+  granuleSearchResults: PropTypes.shape({}).isRequired,
+  granuleQuery: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
+  mapProjection: PropTypes.string.isRequired,
+  onApplyGranuleFilters: PropTypes.func.isRequired,
+  onChangeQuery: PropTypes.func.isRequired,
+  onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
+  onToggleAboutCwicModal: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   preferences: PropTypes.shape({}).isRequired,

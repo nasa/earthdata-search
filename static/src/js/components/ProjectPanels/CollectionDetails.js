@@ -61,9 +61,6 @@ export const CollectionDetails = ({
 
   return (
     <div className="collection-details">
-      <span className="collection-details__meta">
-        {!granuleCount ? 'Loading granules' : `Showing ${granulesToDisplay.length} of ${granuleCount} granules in project`}
-      </span>
       <div className="collection-details__list-wrapper">
         <ul className="collection-details__list">
           {

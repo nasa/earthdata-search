@@ -39,18 +39,4 @@ describe('SecondaryToolbarContainer component', () => {
 
     expect(enzymeWrapper.find(SecondaryToolbar).props().authToken).toEqual('')
   })
-
-  // describe('when a user is logged in', () => {
-  //   describe('when a ursProfile does not exist', () => {
-  //     test.only('requests the contact info', () => {
-  //       const { props } = setup()
-
-  //       // enzymeWrapper.setProps({ authToken: 'token' })
-
-  //       console.log(props.onFetchContactInfo)
-
-  //       expect(props.onFetchContactInfo).toHaveBeenCalledTimes(1)
-  //     })
-  //   })
-  // })
 })

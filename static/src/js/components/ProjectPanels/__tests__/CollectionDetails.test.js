@@ -75,11 +75,6 @@ describe('CollectionDetails component', () => {
     expect(enzymeWrapper.find('.collection-details__item').length).toEqual(2)
   })
 
-  test('renders the granule count', () => {
-    expect(enzymeWrapper.find('.collection-details__meta').text())
-      .toEqual('Showing 2 of 2 granules in project')
-  })
-
   describe('onMouseEnter', () => {
     test('focuses the granule', () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
@@ -209,11 +204,6 @@ describe('CollectionDetails component', () => {
       expect(enzymeWrapper.find('.collection-details__item').length).toEqual(1)
       expect(enzymeWrapper.find('.collection-details__item').text()).toContain('GRAN-1.hdf')
     })
-
-    test('renders the granule count', () => {
-      expect(enzymeWrapper.find('.collection-details__meta').text())
-        .toEqual('Showing 1 of 1 granules in project')
-    })
   })
 
   describe('when removed granules are provided', () => {
@@ -230,11 +220,6 @@ describe('CollectionDetails component', () => {
     test('renders the removed granules', () => {
       expect(enzymeWrapper.find('.collection-details__item').length).toEqual(1)
       expect(enzymeWrapper.find('.collection-details__item').text()).toContain('GRAN-2.hdf')
-    })
-
-    test('renders the granule count', () => {
-      expect(enzymeWrapper.find('.collection-details__meta').text())
-        .toEqual('Showing 1 of 1 granules in project')
     })
   })
 

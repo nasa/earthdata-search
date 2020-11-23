@@ -12,6 +12,7 @@ import {
 } from './advancedSearch'
 import {
   getCollections,
+  clearFocusedCollectionGranuleFilters,
   updateFocusedCollectionGranuleFilters,
   updateCollectionMetadata
 } from './collections'
@@ -24,6 +25,7 @@ import {
 } from './focusedCollection'
 import {
   applyGranuleFilters,
+  clearGranuleFilters,
   excludeGranule,
   fetchRetrievalCollectionGranuleLinks,
   getProjectGranules,
@@ -193,6 +195,8 @@ const actions = {
   changeViewAllFacet,
   clearAutocompleteSelected,
   clearAutocompleteSuggestions,
+  clearFocusedCollectionGranuleFilters,
+  clearGranuleFilters,
   clearFilters,
   clearShapefile,
   collectionRelevancyMetrics,

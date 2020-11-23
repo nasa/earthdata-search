@@ -1,0 +1,34 @@
+.sidebar-filters-item {
+  &__heading {
+    padding: 0.325rem 0.5*$spacer;
+    margin: 0;
+    font-size: 0.775rem;
+    font-weight: 500;
+    letter-spacing: 0.005rem;
+    color: rgba($color__black--100, 0.9);
+    background-color: darken($color__blue--dark, 20);
+  }
+
+  &__body {
+    padding: $spacer 0.5*$spacer 1.25*$spacer;
+
+    .sidebar-filters-item--no-padding & {
+      padding: 0;
+    }
+
+    > .form-group {
+      > .form-control {
+        // Target only direct decendants of a form-group, as is the case with the temporal selection
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+
+  &__description {
+    padding: 0.5rem 0.5*$spacer 0;
+    font-size: 0.775rem;
+    margin-bottom: 0;
+    color: $color__black--300;
+  }
+}

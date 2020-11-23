@@ -1,0 +1,37 @@
+.radio-setting-dropdown {
+  &__menu {
+    box-shadow: $box-shadow;
+    overflow: hidden;
+
+    &--has-actions {
+      padding-top: 0;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    border-bottom: 1px solid $color__black--200;
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 0.25rem;
+    border-right: 1px solid $color__black--200;
+    font-size: 0.75rem;
+    border-radius: 0;
+    background-color: $color__white;
+    color: $color__black--500;
+
+    &:last-child {
+      border-right: 0;
+    }
+
+    &--is-active {
+      color: $color__black--800;
+      background-color: $color__black--200;
+    }
+  }
+}

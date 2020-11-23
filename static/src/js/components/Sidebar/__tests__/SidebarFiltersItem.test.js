@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import GranuleFiltersItem from '../GranuleFiltersItem'
+import SidebarFiltersItem from '../SidebarFiltersItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -14,7 +14,7 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<GranuleFiltersItem {...props} />)
+  const enzymeWrapper = shallow(<SidebarFiltersItem {...props} />)
 
   return {
     enzymeWrapper,
@@ -22,7 +22,7 @@ function setup(overrideProps) {
   }
 }
 
-describe('GranuleFiltersItem component', () => {
+describe('SidebarFiltersItem component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
@@ -32,13 +32,13 @@ describe('GranuleFiltersItem component', () => {
   test('renders its children correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.granule-filters-item__body').children(0).prop('className')).toBe('test-child')
+    expect(enzymeWrapper.find('.sidebar-filters-item__body').children(0).prop('className')).toBe('test-child')
   })
 
   test('renders its heading correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.granule-filters-item__heading').children(0).prop('className')).toBe('test-heading')
+    expect(enzymeWrapper.find('.sidebar-filters-item__heading').children(0).prop('className')).toBe('test-heading')
   })
 
   describe('Description', () => {
@@ -47,13 +47,13 @@ describe('GranuleFiltersItem component', () => {
         description: null
       })
 
-      expect(enzymeWrapper.find('.granule-filters-item__description').length).toEqual(0)
+      expect(enzymeWrapper.find('.sidebar-filters-item__description').length).toEqual(0)
     })
 
     test('renders correctly when defined', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find('.granule-filters-item__description').text()).toEqual('Test description')
+      expect(enzymeWrapper.find('.sidebar-filters-item__description').text()).toEqual('Test description')
     })
   })
 })

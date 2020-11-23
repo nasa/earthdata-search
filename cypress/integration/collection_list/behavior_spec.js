@@ -24,7 +24,13 @@ describe('Collection List Behavior', () => {
   })
 
   it('toggles to the table view and displays results', () => {
-    getByTestId('collection-results-header__view-button--table')
+    // Move the mouse over the dropdown
+    cy.get('#root').trigger('mousemove', 850, 100)
+
+    // Click on the "Table" dropdown item
+    getByTestId('panel-group-header-dropdown__view__0__menu')
+      .find('.radio-setting-dropdown-item')
+      .eq(1)
       .click()
 
     getByTestId('collection-results-table')

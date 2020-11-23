@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -6,6 +6,7 @@ import {
   Switch,
   withRouter
 } from 'react-router-dom'
+import { Form } from 'react-bootstrap'
 
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
@@ -27,23 +28,73 @@ import SearchSidebarHeaderContainer
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
+import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
+
 
 import actions from '../../actions'
+import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
-import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 const mapDispatchToProps = dispatch => ({
   onUpdateAdvancedSearch:
     values => dispatch(actions.updateAdvancedSearch(values)),
   onFocusedCollectionChange:
-    collectionId => dispatch(actions.changeFocusedCollection(collectionId))
+    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+  onChangeQuery:
+    query => dispatch(actions.changeQuery(query)),
+  onMetricsCollectionSortChange:
+    data => dispatch(metricsCollectionSortChange(data))
 })
 
+const mapStateToProps = state => ({
+  collectionQuery: state.query.collection
+})
+
+/**
+ * Search route components
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.collectionQuery - Collection query state
+ * @param {Object} props.match - Router match state
+ * @param {Function} props.onUpdateAdvancedSearch - Callback to update the advanced search state
+ * @param {Function} props.onChangeQuery - Callback to change the query
+ */
 export const Search = ({
+  collectionQuery,
   match,
-  onUpdateAdvancedSearch
+  onUpdateAdvancedSearch,
+  onChangeQuery
 }) => {
   const { path } = match
+  const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
+
+  const { hasGranulesOrCwic = false, tagKey } = collectionQuery
+  const isHasNoGranulesChecked = !hasGranulesOrCwic
+
+  const { eosdisTagKey } = getApplicationConfig()
+  const isEosdisChecked = tagKey === eosdisTagKey
+
+  const handleCheckboxCheck = (event) => {
+    const { target } = event
+    const { checked, id } = target
+
+    const collection = {}
+    if (id === 'input__non-eosdis') {
+      if (!checked) collection.tagKey = undefined
+      if (checked) collection.tagKey = getApplicationConfig().eosdisTagKey
+    }
+
+    if (id === 'input__only-granules') {
+      if (!checked) collection.hasGranulesOrCwic = true
+      if (checked) collection.hasGranulesOrCwic = undefined
+    }
+
+    onChangeQuery({
+      collection
+    })
+  }
 
   return (
     <div className="route-wrapper route-wrapper--search search">
@@ -53,22 +104,78 @@ export const Search = ({
         )}
         panels={<SearchPanelsContainer />}
       >
-        <SidebarSection>
-          <Switch>
-            <Route exact path={`${path}/granules/collection-details`}>
+        <Switch>
+          <Route exact path={`${path}/granules/collection-details`}>
+            <SidebarSection
+              sectionTitle="Granules"
+              titleIcon="map"
+            >
               <GranuleResultsHighlightsContainer />
-            </Route>
-            <Route exact path={`${path}/granules`}>
-              <GranuleFiltersContainer />
-            </Route>
-            <Route exact path={`${path}/granules/granule-details`}>
+            </SidebarSection>
+          </Route>
+          <Route exact path={`${path}/granules`}>
+            <SidebarSection
+              sectionTitle="Filter Granules"
+              titleIcon="filter"
+              headerAction={{
+                title: 'Clear Filters',
+                onClick: () => {
+                  setGranuleFiltersNeedReset(true)
+                }
+              }}
+            >
+              <GranuleFiltersContainer
+                granuleFiltersNeedsReset={granuleFiltersNeedsReset}
+                setGranuleFiltersNeedReset={setGranuleFiltersNeedReset}
+              />
+            </SidebarSection>
+          </Route>
+          <Route exact path={`${path}/granules/granule-details`}>
+            <SidebarSection
+              sectionTitle="Collection Details"
+              titleIcon="info-circle"
+            >
               <CollectionDetailsHighlightsContainer />
-            </Route>
-            <Route path={path}>
-              <FacetsContainer />
-            </Route>
-          </Switch>
-        </SidebarSection>
+            </SidebarSection>
+          </Route>
+          <Route path={path}>
+            <SidebarSection
+              sectionTitle="Filter Collections"
+              titleIcon="filter"
+            >
+              <SidebarFiltersList>
+                <SidebarFiltersItem
+                  heading="Categories"
+                  hasPadding={false}
+                >
+                  <FacetsContainer />
+                </SidebarFiltersItem>
+                <SidebarFiltersItem
+                  heading="Additional Filters"
+                >
+                  <Form.Group controlId="collection-filters__has-no-granules">
+                    <PortalFeatureContainer onlyGranulesCheckbox>
+                      <Form.Check
+                        checked={isHasNoGranulesChecked}
+                        id="input__only-granules"
+                        label="Include collections without granules"
+                        onChange={event => handleCheckboxCheck(event)}
+                      />
+                    </PortalFeatureContainer>
+                    <PortalFeatureContainer nonEosdisCheckbox>
+                      <Form.Check
+                        checked={isEosdisChecked}
+                        id="input__non-eosdis"
+                        label="Include only EOSDIS collections"
+                        onChange={event => handleCheckboxCheck(event)}
+                      />
+                    </PortalFeatureContainer>
+                  </Form.Group>
+                </SidebarFiltersItem>
+              </SidebarFiltersList>
+            </SidebarSection>
+          </Route>
+        </Switch>
       </SidebarContainer>
       <div className="route-wrapper__content">
         <RelatedUrlsModalContainer />
@@ -85,10 +192,12 @@ export const Search = ({
 }
 
 Search.propTypes = {
+  collectionQuery: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
-  onUpdateAdvancedSearch: PropTypes.func.isRequired
+  onUpdateAdvancedSearch: PropTypes.func.isRequired,
+  onChangeQuery: PropTypes.func.isRequired
 }
 
 export default withRouter(
-  connect(null, mapDispatchToProps)(Search)
+  connect(mapStateToProps, mapDispatchToProps)(Search)
 )
