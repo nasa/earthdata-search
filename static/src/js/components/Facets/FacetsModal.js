@@ -45,7 +45,10 @@ export class FacetsModal extends Component {
     const isFirstLoad = isLoading && !viewAllFacets.allIds.length
 
     const viewAllFacetHandler = (e, facetLinkInfo) => {
-      changeViewAllFacet(e, facetLinkInfo, onChangeViewAllFacet)
+      changeViewAllFacet(e, {
+        params: facetLinkInfo,
+        selectedCategory
+      }, onChangeViewAllFacet)
     }
 
     if (!selectedCategory) return null

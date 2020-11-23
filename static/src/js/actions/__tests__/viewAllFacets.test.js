@@ -206,7 +206,7 @@ describe('getViewAllFacets', () => {
 
   const facetsPayload = {
     hits: 1,
-    selectedCategory: undefined,
+    selectedCategory: 'Instruments',
     facets: {
       instrument: {
         applied: true,
@@ -503,7 +503,10 @@ describe('changeViewAllFacet', () => {
 
     // call the dispatch
     const newFacets = { instrument_h: ['1 Test facet', 'Test facet 2', 'And another'] }
-    store.dispatch(changeViewAllFacet(newFacets))
+    store.dispatch(changeViewAllFacet({
+      params: newFacets,
+      selectedCategory: 'Instruments'
+    }))
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
@@ -520,7 +523,7 @@ describe('changeViewAllFacet', () => {
     expect(storeActions[1]).toEqual({
       type: LOADING_VIEW_ALL_FACETS,
       payload: {
-        selectedCategory: ''
+        selectedCategory: 'Instruments'
       }
     })
   })

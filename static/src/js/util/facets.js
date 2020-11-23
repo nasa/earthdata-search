@@ -105,7 +105,8 @@ export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied
  * @param {object} onChangeHandler - The change handler to call.
  */
 export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
-  const newParams = qs.parse(queryParamsFromUrlString(facetLinkInfo.destination))
+  const { params, selectedCategory } = facetLinkInfo
+  const newParams = qs.parse(queryParamsFromUrlString(params.destination))
 
   const paramsToSend = {
     data_center_h: newParams.data_center_h,
@@ -118,7 +119,10 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
     horizontal_data_resolution_range: newParams.horizontal_data_resolution_range
   }
 
-  onChangeHandler(paramsToSend)
+  onChangeHandler({
+    params: paramsToSend,
+    selectedCategory
+  })
 }
 
 /**
