@@ -1,9 +1,11 @@
 import React from 'react'
-import Enzyme, { mount } from 'enzyme'
+import Enzyme, { mount, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router'
 import configureStore from '../../../store/configureStore'
+
+import * as PortalUtils from '../../../util/portals'
 
 import SearchPanels from '../SearchPanels'
 import Panels from '../../Panels/Panels'
@@ -13,6 +15,12 @@ import GranuleResultsActionsContainer from '../../../containers/GranuleResultsAc
 const store = configureStore()
 
 Enzyme.configure({ adapter: new Adapter() })
+
+beforeEach(() => {
+  jest.clearAllMocks()
+
+  jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
+})
 
 // Mock ReactDOM.createPortal to prevent any errors in the MoreActionsDropdown compontent
 jest.mock('react-dom', () => (
@@ -118,6 +126,30 @@ describe('SearchPanels component', () => {
       expect(collectionResultsPanelProps.sortsArray[1].isActive).toBe(false)
       expect(collectionResultsPanelProps.sortsArray[2].label).toBe('End Date')
       expect(collectionResultsPanelProps.sortsArray[2].isActive).toBe(false)
+    })
+
+    describe('when in the default portal', () => {
+      test('does not show the link to the deault portal', () => {
+        const { enzymeWrapper } = setup()
+        const panels = enzymeWrapper.find(Panels)
+        const collectionResultsPanel = panels.find(PanelGroup).at(0)
+        const collectionResultsPanelProps = collectionResultsPanel.props()
+
+        expect(collectionResultsPanelProps.footer).toBe(null)
+      })
+    })
+
+    describe('when not the default portal', () => {
+      test('does not show the link to the deault portal', () => {
+        jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => false)
+
+        const { enzymeWrapper } = setup()
+        const panels = enzymeWrapper.find(Panels)
+        const collectionResultsPanel = panels.find(PanelGroup).at(0)
+        const collectionResultsPanelProps = collectionResultsPanel.props()
+
+        expect(shallow(collectionResultsPanelProps.footer).text()).toContain('Looking for more collections?')
+      })
     })
 
     describe('when the collections are loading', () => {
