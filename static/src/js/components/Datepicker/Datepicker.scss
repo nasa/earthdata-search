@@ -16,10 +16,6 @@
 
   .form-control {
     font-size: 0.85rem;
-
-    @include media-breakpoint-up(xl) {
-      font-size: 1rem;
-    }
   }
 
   &.rdtOpen .rdtPicker {

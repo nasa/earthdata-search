@@ -14,10 +14,14 @@ import moment from 'moment'
 import { findGridByName } from '../../util/grid'
 import { getTemporalDateFormat } from '../../util/edscDate'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
+import { pluralize } from '../../util/pluralize'
 
 import SidebarFiltersItem from '../Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../Sidebar/SidebarFiltersList'
 import TemporalSelection from '../TemporalSelection/TemporalSelection'
+import Button from '../Button/Button'
+
+import './GranuleFiltersForm.scss'
 
 /**
  * Renders GranuleFiltersForm.
@@ -35,9 +39,11 @@ export const GranuleFiltersForm = (props) => {
   const {
     collectionMetadata,
     errors,
+    excludedGranuleIds,
     handleBlur,
     handleChange,
     handleSubmit,
+    onUndoExcludeGranule,
     setFieldTouched,
     setFieldValue,
     touched,
@@ -79,6 +85,7 @@ export const GranuleFiltersForm = (props) => {
   } = equatorCrossingLongitude
 
   const {
+    id: collectionId,
     isCwic,
     tags,
     tilingIdentificationSystems = []
@@ -193,8 +200,34 @@ export const GranuleFiltersForm = (props) => {
   }
 
   return (
-    <FormikForm className="granule-filters-body">
+    <FormikForm className="granule-filters-form">
       <SidebarFiltersList>
+        {
+          excludedGranuleIds.length > 0 && (
+            <SidebarFiltersItem heading="Filtered Granules">
+              <div className="granule-filters-form__item">
+                <span className="granule-filters-form__item-meta">
+                  { excludedGranuleIds.length }
+                  {' '}
+                  {
+                    pluralize('Granule', excludedGranuleIds.length)
+                  }
+                  {' Filtered'}
+                </span>
+                <Button
+                  className="granule-filters-form__item-button"
+                  label="Undo last filtered granule"
+                  onClick={() => onUndoExcludeGranule(collectionId)}
+                  type="button"
+                  bootstrapSize="sm"
+                  bootstrapVariant="primary"
+                >
+                  Undo
+                </Button>
+              </div>
+            </SidebarFiltersItem>
+          )
+        }
         {
           !isCwic && (
             <SidebarFiltersItem heading="Granule Search">
@@ -745,9 +778,11 @@ export const GranuleFiltersForm = (props) => {
 GranuleFiltersForm.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   errors: PropTypes.shape({}).isRequired,
+  excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  onUndoExcludeGranule: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,

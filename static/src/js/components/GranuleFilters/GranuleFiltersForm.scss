@@ -1,0 +1,23 @@
+.granule-filters-form {
+  &__item {
+    display: flex;
+    align-items: center;
+  }
+
+  &__item-button {
+    margin-left: $spacer/2;
+    padding: 0.075rem 0.425rem;
+    background-color: $color__blue--dark;
+    border-color: $color__blue--dark;
+
+    &:hover {
+      background-color: darken($color__blue--dark, 5);
+      border-color: darken($color__blue--dark, 5);
+    }
+  }
+
+  &__item-meta {
+    font-size: 0.775rem;
+    margin-bottom: 0;
+  }
+}

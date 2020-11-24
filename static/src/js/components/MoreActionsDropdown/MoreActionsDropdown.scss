@@ -1,4 +1,11 @@
 .more-actions-dropdown {
+  &__toggle {
+    &:hover,
+    &:focus {
+      color: $color__black--500;
+    }
+  }
+
   &__menu {
     box-shadow: $box-shadow;
   }

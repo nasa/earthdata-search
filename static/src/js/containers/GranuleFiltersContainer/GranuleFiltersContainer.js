@@ -28,7 +28,9 @@ const mapDispatchToProps = dispatch => ({
     ),
   onClearGranuleFilters: collectionId => dispatch(
     actions.clearGranuleFilters(collectionId)
-  )
+  ),
+  onUndoExcludeGranule:
+    collectionId => dispatch(actions.undoExcludeGranule(collectionId))
 })
 
 /**
@@ -100,13 +102,19 @@ export class GranuleFiltersContainer extends Component {
     const {
       collectionMetadata,
       errors,
+      granuleQuery,
       handleBlur,
       handleChange,
       setFieldTouched,
       setFieldValue,
+      onUndoExcludeGranule,
       touched,
       values
     } = this.props
+
+    const {
+      excludedGranuleIds = []
+    } = granuleQuery
 
     return (
       <GranuleFiltersForm
@@ -119,6 +127,8 @@ export class GranuleFiltersContainer extends Component {
         handleSubmit={this.onHandleSubmit}
         setFieldValue={setFieldValue}
         setFieldTouched={setFieldTouched}
+        excludedGranuleIds={excludedGranuleIds}
+        onUndoExcludeGranule={onUndoExcludeGranule}
       />
     )
   }
@@ -142,6 +152,7 @@ GranuleFiltersContainer.propTypes = {
   handleReset: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onClearGranuleFilters: PropTypes.func.isRequired,
+  onUndoExcludeGranule: PropTypes.func.isRequired,
   setGranuleFiltersNeedReset: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
