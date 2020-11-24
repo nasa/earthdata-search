@@ -43,6 +43,40 @@ describe('Search component', () => {
     expect(portalFeatureContainer.props().advancedSearch).toBeTruthy()
   })
 
+  test('renders the Additional Filters under PortalFeatureContainer', () => {
+    const { enzymeWrapper } = setup()
+
+    const filters = enzymeWrapper
+      .find('#input__only-granules')
+    const portalFeatureContainer = filters
+      .parents(PortalFeatureContainer) // #input__only-granules PortalFeatureContainer
+      .first()
+      .parents(PortalFeatureContainer) // Additional Filters PortalFeatureContainer
+
+    expect(portalFeatureContainer.props().onlyGranulesCheckbox).toBeTruthy()
+    expect(portalFeatureContainer.props().nonEosdisCheckbox).toBeTruthy()
+  })
+
+  test('renders the "Include collections without granules" checkbox under PortalFeatureContainer', () => {
+    const { enzymeWrapper } = setup()
+
+    const filters = enzymeWrapper
+      .find('#input__only-granules')
+    const portalFeatureContainer = filters.parents(PortalFeatureContainer).first()
+
+    expect(portalFeatureContainer.props().onlyGranulesCheckbox).toBeTruthy()
+  })
+
+  test('renders the "Include only EOSDIS collections" checkbox under PortalFeatureContainer', () => {
+    const { enzymeWrapper } = setup()
+
+    const filters = enzymeWrapper
+      .find('#input__non-eosdis')
+    const portalFeatureContainer = filters.parents(PortalFeatureContainer).first()
+
+    expect(portalFeatureContainer.props().nonEosdisCheckbox).toBeTruthy()
+  })
+
   describe('handleCheckboxCheck', () => {
     test('checking the "Include collections without granules" checkbox calls onChangeQuery', () => {
       const { enzymeWrapper, props } = setup()
@@ -74,7 +108,7 @@ describe('Search component', () => {
         }
       }
 
-      enzymeWrapper.find('#input__only-granules').props().onChange(event)
+      enzymeWrapper.find('#input__non-eosdis').props().onChange(event)
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
