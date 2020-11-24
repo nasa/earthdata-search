@@ -21,7 +21,9 @@ function setup(overrideProps) {
     collectionQuery: {},
     dirty: false,
     granuleFiltersNeedsReset: false,
-    granuleQuery: {},
+    granuleQuery: {
+      excludedGranuleIds: []
+    },
     errors: {},
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
@@ -30,6 +32,7 @@ function setup(overrideProps) {
     isValid: true,
     onApplyGranuleFilters: jest.fn(),
     onClearGranuleFilters: jest.fn(),
+    onUndoExcludeGranule: jest.fn(),
     setFieldTouched: jest.fn(),
     setFieldValue: jest.fn(),
     setGranuleFiltersNeedReset: jest.fn(),
@@ -67,18 +70,20 @@ describe('GranuleFiltersContainer component', () => {
       expect(granuleFiltersFormProps.setFieldValue).toEqual(props.setFieldValue)
       expect(granuleFiltersFormProps.setFieldTouched).toEqual(props.setFieldTouched)
       expect(granuleFiltersFormProps.portal).toEqual(props.portal)
+      expect(granuleFiltersFormProps.excludedGranuleIds).toEqual(props.granuleQuery.excludedGranuleIds)
+      expect(granuleFiltersFormProps.onUndoExcludeGranule).toEqual(props.onUndoExcludeGranule)
     })
 
     describe('when the component is updated', () => {
       describe('when the granuleFiltersNeedsReset flag is set to true', () => {
         test('calls onClearGranuleFilters', () => {
           const onClearGranuleFiltersMock = jest.fn()
-          const { enzymeWrapper, props } = setup()
+          const { enzymeWrapper } = setup()
 
           enzymeWrapper.instance().onClearGranuleFilters = onClearGranuleFiltersMock
 
 
-          enzymeWrapper.setProps({ granuleFiltersNeedsReset: true})
+          enzymeWrapper.setProps({ granuleFiltersNeedsReset: true })
           enzymeWrapper.update()
 
           expect(onClearGranuleFiltersMock).toHaveBeenCalledTimes(1)
@@ -87,7 +92,7 @@ describe('GranuleFiltersContainer component', () => {
         test('sets the granuleFiltersNeedsReset flag to false', () => {
           const { enzymeWrapper, props } = setup()
 
-          enzymeWrapper.setProps({ granuleFiltersNeedsReset: true})
+          enzymeWrapper.setProps({ granuleFiltersNeedsReset: true })
           enzymeWrapper.update()
 
           expect(props.setGranuleFiltersNeedReset).toHaveBeenCalledTimes(1)
@@ -98,7 +103,7 @@ describe('GranuleFiltersContainer component', () => {
       describe('when the granuleFiltersNeedsReset flag is set to false', () => {
         test('does not run onClearGranuleFilters', () => {
           const onClearGranuleFiltersMock = jest.fn()
-          const { enzymeWrapper, props } = setup()
+          const { enzymeWrapper } = setup()
 
           enzymeWrapper.instance().onClearGranuleFilters = onClearGranuleFiltersMock
 

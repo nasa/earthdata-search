@@ -55,7 +55,6 @@ export const RadioSettingDropdown = ({
   )
 
   const onWindowMouseMove = useCallback((e) => {
-    console.log('firing mousemove', { x: e.clientX, y: e.clientY })
     const elements = [
       wrapperRef.current,
       menuRef.current,
@@ -81,7 +80,6 @@ export const RadioSettingDropdown = ({
         (xPos >= toggleLeft && xPos <= toggleRight)
         && (yPos >= toggleTop && yPos <= (toggleBottom + 10))
       ) {
-        console.log('dropdown is active', toggleRef.current.getBoundingClientRect())
         setDropdownActive(true)
         return
       }
@@ -89,7 +87,6 @@ export const RadioSettingDropdown = ({
 
     const shouldShowDropdown = elements.some((element) => {
       if (!element) return false
-      console.log('e.target', e.target)
       return element === e.target || element.contains(e.target)
     })
 

@@ -20,9 +20,11 @@ function setup(overrideProps) {
     collectionMetadata: {},
     collectionQuery: {},
     errors: {},
+    excludedGranuleIds: [],
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
     handleSubmit: jest.fn(),
+    onUndoExcludeGranule: jest.fn(),
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
     touched: {},
@@ -47,6 +49,87 @@ describe('GranuleFiltersForm component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toBe(FormikForm)
+  })
+
+  describe('Filtered Granules', () => {
+    describe('when no granules are filtered', () => {
+      test('does not display the filtered granules section', () => {
+        const { enzymeWrapper } = setup()
+
+        expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).not.toEqual('Filtered Granules')
+      })
+    })
+
+    describe('when a granule is filtered', () => {
+      test('displays the filtered granules section', () => {
+        const { enzymeWrapper } = setup({
+          excludedGranuleIds: ['GRAN_ID_1']
+        })
+
+        expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Filtered Granules')
+      })
+
+      test('displays the undo button', () => {
+        const { enzymeWrapper } = setup({
+          excludedGranuleIds: ['GRAN_ID_1']
+        })
+
+        const sidebarItem = enzymeWrapper.find(SidebarFiltersItem).at(0)
+
+        const button = sidebarItem.find('.granule-filters-form__item-button')
+
+        expect(button.text()).toEqual('Undo')
+        expect(button.props().label).toEqual('Undo last filtered granule')
+      })
+
+      describe('when a single granule is filtered', () => {
+        test('displays the correct status text', () => {
+          const { enzymeWrapper } = setup({
+            excludedGranuleIds: ['GRAN_ID_1']
+          })
+
+          const sidebarItem = enzymeWrapper.find(SidebarFiltersItem).at(0)
+
+          const item = sidebarItem.find('.granule-filters-form__item-meta')
+
+          expect(item.text()).toEqual('1 Granule Filtered')
+        })
+      })
+
+      describe('when multiple granules are filtered', () => {
+        test('displays the correct status text', () => {
+          const { enzymeWrapper } = setup({
+            excludedGranuleIds: ['GRAN_ID_1', 'GRAN_ID_2']
+          })
+
+          const sidebarItem = enzymeWrapper.find(SidebarFiltersItem).at(0)
+
+          const item = sidebarItem.find('.granule-filters-form__item-meta')
+
+          expect(item.text()).toEqual('2 Granules Filtered')
+        })
+      })
+
+      describe('when clicking the undo button', () => {
+        test('displays the undo button', () => {
+          const { enzymeWrapper, props } = setup({
+            excludedGranuleIds: ['GRAN_ID_1'],
+            collectionMetadata: {
+              id: 'COLL_ID'
+            }
+          })
+
+          const sidebarItem = enzymeWrapper.find(SidebarFiltersItem).at(0)
+
+          const button = sidebarItem.find('.granule-filters-form__item-button')
+
+          button.simulate('click')
+
+          expect(props.onUndoExcludeGranule).toHaveBeenCalledTimes(1)
+          expect(props.onUndoExcludeGranule).toHaveBeenCalledWith('COLL_ID')
+        })
+      })
+    })
   })
 
   describe('Form', () => {
