@@ -42,4 +42,46 @@ describe('Search component', () => {
     expect(advancedSearchModalContainer.exists()).toBeTruthy()
     expect(portalFeatureContainer.props().advancedSearch).toBeTruthy()
   })
+
+  describe('handleCheckboxCheck', () => {
+    test('checking the "Include collections without granules" checkbox calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup()
+
+      const event = {
+        target: {
+          checked: true,
+          id: 'input__only-granules'
+        }
+      }
+
+      enzymeWrapper.find('#input__only-granules').props().onChange(event)
+
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({
+        collection: {
+          hasGranulesOrCwic: undefined
+        }
+      })
+    })
+
+    test('checking the "Include only EOSDIS collections" checkbox calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup()
+
+      const event = {
+        target: {
+          checked: true,
+          id: 'input__non-eosdis'
+        }
+      }
+
+      enzymeWrapper.find('#input__only-granules').props().onChange(event)
+
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({
+        collection: {
+          tagKey: 'gov.nasa.eosdis'
+        }
+      })
+    })
+  })
 })
