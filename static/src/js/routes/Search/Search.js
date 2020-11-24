@@ -150,28 +150,33 @@ export const Search = ({
                 >
                   <FacetsContainer />
                 </SidebarFiltersItem>
-                <SidebarFiltersItem
-                  heading="Additional Filters"
+                <PortalFeatureContainer
+                  onlyGranulesCheckbox
+                  nonEosdisCheckbox
                 >
-                  <Form.Group controlId="collection-filters__has-no-granules">
-                    <PortalFeatureContainer onlyGranulesCheckbox>
-                      <Form.Check
-                        checked={isHasNoGranulesChecked}
-                        id="input__only-granules"
-                        label="Include collections without granules"
-                        onChange={event => handleCheckboxCheck(event)}
-                      />
-                    </PortalFeatureContainer>
-                    <PortalFeatureContainer nonEosdisCheckbox>
-                      <Form.Check
-                        checked={isEosdisChecked}
-                        id="input__non-eosdis"
-                        label="Include only EOSDIS collections"
-                        onChange={event => handleCheckboxCheck(event)}
-                      />
-                    </PortalFeatureContainer>
-                  </Form.Group>
-                </SidebarFiltersItem>
+                  <SidebarFiltersItem
+                    heading="Additional Filters"
+                  >
+                    <Form.Group controlId="collection-filters__has-no-granules">
+                      <PortalFeatureContainer onlyGranulesCheckbox>
+                        <Form.Check
+                          checked={isHasNoGranulesChecked}
+                          id="input__only-granules"
+                          label="Include collections without granules"
+                          onChange={event => handleCheckboxCheck(event)}
+                        />
+                      </PortalFeatureContainer>
+                      <PortalFeatureContainer nonEosdisCheckbox>
+                        <Form.Check
+                          checked={isEosdisChecked}
+                          id="input__non-eosdis"
+                          label="Include only EOSDIS collections"
+                          onChange={event => handleCheckboxCheck(event)}
+                        />
+                      </PortalFeatureContainer>
+                    </Form.Group>
+                  </SidebarFiltersItem>
+                </PortalFeatureContainer>
               </SidebarFiltersList>
             </SidebarSection>
           </Route>
