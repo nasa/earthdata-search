@@ -25,7 +25,8 @@ describe('Collection List Behavior', () => {
 
   it('toggles to the table view and displays results', () => {
     // Move the mouse over the dropdown
-    cy.get('#root').trigger('mousemove', 850, 100)
+    getByTestId('panel-group-header-dropdown__view__0')
+      .trigger('mousemove')
 
     // Click on the "Table" dropdown item
     getByTestId('panel-group-header-dropdown__view__0__menu')

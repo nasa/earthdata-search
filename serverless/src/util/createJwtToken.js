@@ -10,7 +10,8 @@ export const createJwtToken = (user, earthdataEnvironment) => {
   const {
     id,
     urs_id: username,
-    site_preferences: preferences
+    site_preferences: preferences,
+    urs_profile: ursProfile = {}
   } = user
 
   const { secret } = getSecretEarthdataConfig(earthdataEnvironment)
@@ -19,6 +20,9 @@ export const createJwtToken = (user, earthdataEnvironment) => {
     id,
     username,
     preferences,
+    ursProfile: {
+      first_name: ursProfile.first_name
+    },
     earthdataEnvironment
   }, secret)
 }
