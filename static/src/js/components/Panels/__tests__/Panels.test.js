@@ -49,7 +49,6 @@ function setup() {
       <PanelSection>
         <PanelGroup
           primaryHeading="Panel Group 0.0"
-          secondaryHeading="Secondary tile Panel 1"
           footer={<div className="footer">A group footer</div>}
         >
           <PanelItem>
@@ -61,7 +60,6 @@ function setup() {
         </PanelGroup>
         <PanelGroup
           primaryHeading="Panel Group 0.1"
-          secondaryHeading="Secondary tile Panel 2"
           footer={<div className="footer">Another group footer</div>}
         >
           <PanelItem hideFooter>

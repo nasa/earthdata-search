@@ -39,7 +39,7 @@ export const MoreActionsDropdown = ({
       onClick={e => e.stopPropagation()}
       onKeyPress={e => e.stopPropagation()}
     >
-      <Dropdown className="more-actions-dropdown__dropdown dropdown-dark">
+      <Dropdown className="more-actions-dropdown__dropdown">
         <Dropdown.Toggle
           className="more-actions-dropdown__toggle"
           as={MoreActionsToggle}

@@ -87,6 +87,7 @@ export const RadioSettingDropdown = ({
 
     const shouldShowDropdown = elements.some((element) => {
       if (!element) return false
+
       return element === e.target || element.contains(e.target)
     })
 
