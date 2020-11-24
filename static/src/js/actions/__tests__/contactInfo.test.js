@@ -28,7 +28,7 @@ describe('updateContactInfo', () => {
   })
 })
 
-describe('setPreferencesFromJwt', () => {
+describe('setContactInfoFromJwt', () => {
   test('should create an action to update the store', () => {
     const contactInfo = {
       ursProfile: {
