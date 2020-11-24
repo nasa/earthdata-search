@@ -10,6 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     children: 'children',
+    onSetContactInfoFromJwt: jest.fn(),
     onSetPreferencesFromJwt: jest.fn(),
     onUpdateAuthToken: jest.fn()
   }
@@ -38,5 +39,9 @@ describe('AuthTokenContainer component', () => {
     expect(enzymeWrapper).toBeDefined()
     expect(props.onUpdateAuthToken).toHaveBeenCalled()
     expect(props.onUpdateAuthToken.mock.calls[0]).toEqual(['token'])
+    expect(props.onSetContactInfoFromJwt).toHaveBeenCalled()
+    expect(props.onSetContactInfoFromJwt.mock.calls[0]).toEqual(['token'])
+    expect(props.onSetPreferencesFromJwt).toHaveBeenCalled()
+    expect(props.onSetPreferencesFromJwt.mock.calls[0]).toEqual(['token'])
   })
 })

@@ -150,7 +150,11 @@ import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 import { handleError, removeError } from './errors'
 import { updateBrowserVersion } from './browser'
 import { collectionRelevancyMetrics } from './relevancy'
-import { fetchContactInfo, updateNotificationLevel } from './contactInfo'
+import {
+  fetchContactInfo,
+  setContactInfoFromJwt,
+  updateNotificationLevel
+} from './contactInfo'
 import {
   cancelAutocomplete,
   clearAutocompleteSelected,
@@ -246,6 +250,7 @@ const actions = {
   setActivePanel,
   setActivePanelGroup,
   setActivePanelSection,
+  setContactInfoFromJwt,
   setIsSubmitting,
   setPreferences,
   setPreferencesFromJwt,

@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken'
+
 import ContactInfoRequest from '../util/request/contactInfoRequest'
 
 import { UPDATE_CONTACT_INFO } from '../constants/actionTypes'
@@ -8,6 +10,17 @@ export const updateContactInfo = data => ({
   type: UPDATE_CONTACT_INFO,
   payload: data
 })
+
+export const setContactInfoFromJwt = jwtToken => (dispatch) => {
+  if (!jwtToken) return
+
+  const decoded = jwt.decode(jwtToken)
+  const { ursProfile } = decoded
+
+  dispatch(updateContactInfo({
+    ursProfile
+  }))
+}
 
 /**
  * Fetch the user's ECHO preferences and URS profile from lambda

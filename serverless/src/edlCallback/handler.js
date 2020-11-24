@@ -76,7 +76,12 @@ const edlCallback = async (event, context) => {
     const username = getUsernameFromToken(token)
 
     // Look for an existing user
-    let userRow = await dbConnection('users').first(['id', 'urs_id', 'site_preferences']).where({
+    let userRow = await dbConnection('users').first([
+      'id',
+      'urs_id',
+      'site_preferences',
+      'urs_profile'
+    ]).where({
       urs_id: username,
       environment: earthdataEnvironment
     })

@@ -4,5 +4,6 @@
   "viewportWidth": 1400,
   "viewportHeight": 900,
   "testFiles": "**/*_spec.js",
-  "fixturesFolder": "cypress/fixtures"
+  "fixturesFolder": "cypress/fixtures",
+  "chromeWebSecurity": false
 }

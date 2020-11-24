@@ -1,9 +1,15 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
+import jwt from 'jsonwebtoken'
 
 import { UPDATE_CONTACT_INFO } from '../../constants/actionTypes'
-import { fetchContactInfo, updateContactInfo, updateNotificationLevel } from '../contactInfo'
+import {
+  fetchContactInfo,
+  setContactInfoFromJwt,
+  updateContactInfo,
+  updateNotificationLevel
+} from '../contactInfo'
 
 const mockStore = configureMockStore([thunk])
 
@@ -19,6 +25,34 @@ describe('updateContactInfo', () => {
       payload
     }
     expect(updateContactInfo(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('setPreferencesFromJwt', () => {
+  test('should create an action to update the store', () => {
+    const contactInfo = {
+      ursProfile: {
+        first_name: 'Test'
+      }
+    }
+
+    jest.spyOn(jwt, 'decode').mockImplementation(() => (contactInfo))
+
+    const store = mockStore({})
+    store.dispatch(setContactInfoFromJwt('mockJwt'))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_CONTACT_INFO,
+      payload: contactInfo
+    })
+  })
+
+  test('does not create an action if payload doesn\'t exist', () => {
+    const store = mockStore({})
+    store.dispatch(setContactInfoFromJwt())
+    const storeActions = store.getActions()
+    expect(storeActions.length).toBe(0)
   })
 })
 

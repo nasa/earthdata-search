@@ -7,7 +7,10 @@ describe('util#createJwtToken', () => {
     const user = {
       id: 1,
       urs_id: 'testuser',
-      site_preferences: {}
+      site_preferences: {},
+      urs_profile: {
+        first_name: 'test'
+      }
     }
 
     const result = createJwtToken(user, 'prod')
@@ -16,7 +19,10 @@ describe('util#createJwtToken', () => {
     expect(decoded).toEqual(expect.objectContaining({
       id: 1,
       preferences: {},
-      username: 'testuser'
+      username: 'testuser',
+      ursProfile: {
+        first_name: 'test'
+      }
     }))
   })
 })

@@ -7,9 +7,9 @@ import { getSecretEarthdataConfig, getSecretCypressConfig } from '../../sharedUt
  */
 export const getJwtToken = (earthdataEnvironment) => {
   const { secret } = getSecretEarthdataConfig(earthdataEnvironment)
-  const { user } = getSecretCypressConfig()
+  const cypressConfig = getSecretCypressConfig()
 
-  const jwtToken = jwt.sign({ ...user }, secret)
+  const jwtToken = jwt.sign({ ...cypressConfig }, secret)
 
   return jwtToken
 }
