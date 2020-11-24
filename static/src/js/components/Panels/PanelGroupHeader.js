@@ -44,7 +44,6 @@ export const PanelGroupHeader = ({
   panelGroupId,
   primaryHeading,
   headerLoading,
-  secondaryHeading,
   moreActionsDropdownItems,
   sortsArray,
   viewsArray
@@ -147,13 +146,6 @@ export const PanelGroupHeader = ({
             )
             : (
               <h2 className="panel-group-header__heading">
-                {
-                  secondaryHeading && (
-                    <span className="panel-group-header__heading-secondary">
-                      {secondaryHeading}
-                    </span>
-                  )
-                }
                 <span className="panel-group-header__heading-primary">
                   {primaryHeading}
                 </span>
@@ -299,7 +291,6 @@ PanelGroupHeader.defaultProps = {
   panelGroupId: null,
   primaryHeading: null,
   headerLoading: false,
-  secondaryHeading: null,
   viewsArray: [],
   sortsArray: []
 }
@@ -327,7 +318,6 @@ PanelGroupHeader.propTypes = {
   panelGroupId: PropTypes.string,
   primaryHeading: PropTypes.string,
   headerLoading: PropTypes.bool,
-  secondaryHeading: PropTypes.string,
   viewsArray: PropTypes.arrayOf(PropTypes.shape({})),
   sortsArray: PropTypes.arrayOf(PropTypes.shape({}))
 }

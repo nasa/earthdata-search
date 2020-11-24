@@ -133,7 +133,7 @@ describe('GranuleFiltersForm component', () => {
   })
 
   describe('Form', () => {
-    test('shows granule searcg by default', () => {
+    test('shows granule search by default', () => {
       const { enzymeWrapper } = setup()
 
       expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Granule Search')

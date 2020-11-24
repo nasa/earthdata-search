@@ -1,5 +1,4 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
 
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
@@ -13,9 +12,5 @@ const AppHeader = () => (
     <SecondaryToolbarContainer />
   </header>
 )
-
-AppHeader.propTypes = {
-  // portal: PropTypes.shape({}).isRequired
-}
 
 export default AppHeader
