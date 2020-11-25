@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, {
   useCallback,
   useEffect,
@@ -10,7 +9,6 @@ import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
 import classNames from 'classnames'
 
-import Button from '../Button/Button'
 import RadioSettingDropdownItem from './RadioSettingDropdownItem'
 import RadioSettingToggle from '../CustomToggle/RadioSettingToggle'
 
@@ -38,7 +36,6 @@ export const RadioSettingDropdown = ({
   const wrapperRef = useRef(null)
 
   const [menuOffsetX, setMenuOffsetX] = useState(0)
-  const [menuHeight, setMenuHeight] = useState(0)
   const [dropdownActive, setDropdownActive] = useState(false)
 
   const radioSettingClasses = classNames(
@@ -80,7 +77,6 @@ export const RadioSettingDropdown = ({
         (xPos >= toggleLeft && xPos <= toggleRight)
         && (yPos >= toggleTop && yPos <= (toggleBottom + 10))
       ) {
-        setDropdownActive(true)
         return
       }
     }
@@ -104,7 +100,7 @@ export const RadioSettingDropdown = ({
     return () => {
       window.removeEventListener('mousemove', onWindowMouseMove)
     }
-  }, [])
+  }, [onWindowMouseMove])
 
   useEffect(() => {
     // If the dropdown is visible and the refs are defined, calculate and set the offset.

@@ -23,14 +23,23 @@ export const MoreActionsDropdown = ({
   dark,
   handoffLinks
 }) => {
+  // Don't render the dropdown if there are no elements to render
+  if (children == null && handoffLinks.length === 0) return null
+
   const moreActionClasses = classNames(
     className,
     'condensed',
     'more-actions-dropdown'
   )
 
-  // Don't render the dropdown if there are no elements to render
-  if (children == null && handoffLinks.length === 0) return null
+  const dropdownMenuClasses = classNames(
+    'more-actions-dropdown__menu',
+    'dropdown-menu--carat-right',
+    'dropdown-menu--condensed',
+    {
+      'dropdown-menu-dark': dark
+    }
+  )
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
@@ -47,7 +56,7 @@ export const MoreActionsDropdown = ({
         {
           ReactDOM.createPortal(
             <Dropdown.Menu
-              className={`more-actions-dropdown__menu dropdown-menu--carat-right dropdown-menu--condensed ${dark ? 'dropdown-menu-dark' : ''}`}
+              className={dropdownMenuClasses}
               alignRight={alignRight}
             >
               {children}

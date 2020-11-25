@@ -184,7 +184,7 @@ export const CollectionDetailsBody = ({
           <div className="row collection-details-body__row">
             <div className="col col-12">
               <div className="collection-details-body__tags">
-                <Badge className="collection-details-header__short-name" variant="light">{shortName}</Badge>
+                <Badge className="collection-details-header__short-name mr-2" variant="light">{shortName}</Badge>
                 <Badge className="collection-details-header__version-id mr-2" variant="info">{`Version ${versionId}`}</Badge>
                 {
                   doi && buildDoiLink(doi)

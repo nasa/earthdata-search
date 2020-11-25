@@ -37,7 +37,6 @@ export const PanelGroupHeader = ({
   activeView,
   breadcrumbs,
   handoffLinks,
-  header,
   headerMessage,
   headerMetaPrimaryLoading,
   headerMetaPrimaryText,
@@ -87,7 +86,7 @@ export const PanelGroupHeader = ({
                   }
                 ])
 
-                if (typeof onClick === 'function') {
+                if (!link || !pathname) {
                   return (
                     <Button
                       key={`${key}_portal-link_${panelGroupId}`}
@@ -111,6 +110,7 @@ export const PanelGroupHeader = ({
                       bootstrapVariant="link"
                       icon={icon}
                       label={title}
+                      onClick={onClick}
                       to={{
                         pathname,
                         search
@@ -212,7 +212,6 @@ export const PanelGroupHeader = ({
           )
         }
       </div>
-      {header && header}
       {
         headerMessage && (
           <div className="panel-group-header__message">
@@ -250,7 +249,7 @@ export const PanelGroupHeader = ({
                         id={`panel-group-header-dropdown__sort__${panelGroupId}`}
                         className="panel-group-header__setting-dropdown"
                         activeSortOrder={activeSort}
-                        activeIcon={`${activeSort === 'descending' ? 'sort-amount-desc' : 'sort-amount-asc'}`}
+                        activeIcon={`${activeSort.indexOf('-') >= 0 ? 'sort-amount-desc' : 'sort-amount-asc'}`}
                         label="Sort"
                         settings={sortsArray}
                       />
@@ -282,7 +281,6 @@ PanelGroupHeader.defaultProps = {
   activeSort: '',
   breadcrumbs: [],
   handoffLinks: [],
-  header: null,
   headingLink: null,
   headerMessage: null,
   headerMetaPrimaryLoading: false,
@@ -300,7 +298,6 @@ PanelGroupHeader.propTypes = {
   activeView: PropTypes.string,
   breadcrumbs: PropTypes.arrayOf(PropTypes.shape({})),
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
-  header: PropTypes.node,
   headingLink: PropTypes.shape({}),
   headerMessage: PropTypes.node,
   headerMetaPrimaryLoading: PropTypes.bool,

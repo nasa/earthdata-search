@@ -27,16 +27,18 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onApplyGranuleFilters:
     values => dispatch(actions.applyGranuleFilters(values)),
+  onChangeQuery:
+    query => dispatch(actions.changeQuery(query)),
+  onFocusedCollectionChange:
+    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+  onMetricsCollectionSortChange:
+    data => dispatch(metricsCollectionSortChange(data)),
   onSetActivePanel:
     panelId => dispatch(actions.setActivePanel(panelId)),
   onToggleAboutCwicModal:
     state => dispatch(actions.toggleAboutCwicModal(state)),
   onTogglePanels:
-    value => dispatch(actions.togglePanels(value)),
-  onChangeQuery:
-    query => dispatch(actions.changeQuery(query)),
-  onMetricsCollectionSortChange:
-    data => dispatch(metricsCollectionSortChange(data))
+    value => dispatch(actions.togglePanels(value))
 })
 
 /**
@@ -53,6 +55,7 @@ const mapDispatchToProps = dispatch => ({
  * @param {String} props.mapProjection - Map projection state
  * @param {Function} props.onApplyGranuleFilters - Callback to apply granule filters
  * @param {Function} props.onChangeQuery - Callback to change the query
+ * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection
  * @param {Function} props.onMetricsCollectionSortChange - Callback for collection sort metrics
  * @param {Function} props.onSetActivePanel - Callback to set the active panel
  * @param {Function} props.onToggleAboutCwicModal - Callback to toggle the CWIC modal
@@ -72,6 +75,7 @@ export const SearchPanelsContainer = ({
   location,
   mapProjection,
   onApplyGranuleFilters,
+  onFocusedCollectionChange,
   onChangeQuery,
   onMetricsCollectionSortChange,
   onSetActivePanel,
@@ -92,6 +96,7 @@ export const SearchPanelsContainer = ({
     location={location}
     mapProjection={mapProjection}
     onApplyGranuleFilters={onApplyGranuleFilters}
+    onFocusedCollectionChange={onFocusedCollectionChange}
     onChangeQuery={onChangeQuery}
     onMetricsCollectionSortChange={onMetricsCollectionSortChange}
     onSetActivePanel={onSetActivePanel}
@@ -115,6 +120,7 @@ SearchPanelsContainer.propTypes = {
   match: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
+  onFocusedCollectionChange: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
