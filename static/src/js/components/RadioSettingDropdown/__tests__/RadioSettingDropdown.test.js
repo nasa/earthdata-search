@@ -4,7 +4,6 @@ import Adapter from 'enzyme-adapter-react-16'
 import { Dropdown } from 'react-bootstrap'
 
 import { RadioSettingDropdown } from '../RadioSettingDropdown'
-// import { RadioSettingDropdownItem } from '../RadioSettingDropdownItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 

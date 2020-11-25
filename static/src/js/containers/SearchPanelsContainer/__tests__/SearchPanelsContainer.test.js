@@ -21,6 +21,7 @@ function setup() {
     mapProjection: '',
     onApplyGranuleFilters: jest.fn(),
     onChangeQuery: jest.fn(),
+    onFocusedCollectionChange: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
     onTogglePanels: jest.fn(),

@@ -143,7 +143,8 @@ export const clearFocusedCollectionGranuleFilters = () => (dispatch, getState) =
   dispatch({
     type: UPDATE_GRANULE_FILTERS,
     payload: {
-      collectionId: focusedCollectionId
+      collectionId: focusedCollectionId,
+      pageNum: 1
     }
   })
 }

@@ -70,6 +70,7 @@ function setup(overrideProps, location = '/search') {
     mapProjection: 'epsg4326',
     onApplyGranuleFilters: jest.fn(),
     onChangeQuery: jest.fn(),
+    onFocusedCollectionChange: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
     onTogglePanels: jest.fn(),
@@ -271,15 +272,10 @@ describe('SearchPanels component', () => {
       const granuleResultsPanel = panels.find(PanelGroup).at(1)
       const granuleResultsPanelProps = granuleResultsPanel.props()
 
-      expect(granuleResultsPanelProps.breadcrumbs).toStrictEqual([
-        {
-          link: {
-            pathname: '/search',
-            search: ''
-          },
-          title: 'Search Results (1 Collections)'
-        }
-      ])
+      expect(granuleResultsPanelProps.breadcrumbs[0].link.pathname).toEqual('/search')
+      expect(granuleResultsPanelProps.breadcrumbs[0].link.search).toEqual('')
+      expect(typeof granuleResultsPanelProps.breadcrumbs[0].onClick).toEqual('function')
+      expect(granuleResultsPanelProps.breadcrumbs[0].title).toEqual('Search Results (1 Collections)')
     })
 
     test('sets the correct more action dropdown items', () => {
@@ -462,25 +458,15 @@ describe('SearchPanels component', () => {
       const granuleDetails = panels.find(PanelGroup).at(3)
       const granuleDetailsProps = granuleDetails.props()
 
-      expect(granuleDetailsProps.breadcrumbs).toStrictEqual([
-        {
-          link: {
-            pathname: '/search',
-            search: ''
-          },
-          title: 'Search Results'
-        },
-        {
-          link: {
-            pathname: '/search/granules',
-            search: ''
-          },
-          options: {
-            shrink: true
-          },
-          title: 'Collection Title'
-        }
-      ])
+      expect(granuleDetailsProps.breadcrumbs[0].link.pathname).toEqual('/search')
+      expect(granuleDetailsProps.breadcrumbs[0].link.search).toEqual('')
+      expect(typeof granuleDetailsProps.breadcrumbs[0].onClick).toEqual('function')
+      expect(granuleDetailsProps.breadcrumbs[0].title).toEqual('Search Results')
+
+      expect(granuleDetailsProps.breadcrumbs[1].link.pathname).toEqual('/search/granules')
+      expect(granuleDetailsProps.breadcrumbs[1].link.search).toEqual('')
+      expect(granuleDetailsProps.breadcrumbs[1].options.shrink).toEqual(true)
+      expect(granuleDetailsProps.breadcrumbs[1].title).toEqual('Collection Title')
     })
 
     test('sets the correct more action dropdown items', () => {
@@ -553,15 +539,10 @@ describe('SearchPanels component', () => {
       const granuleDetails = panels.find(PanelGroup).at(2)
       const granuleDetailsProps = granuleDetails.props()
 
-      expect(granuleDetailsProps.breadcrumbs).toStrictEqual([
-        {
-          link: {
-            pathname: '/search',
-            search: ''
-          },
-          title: 'Search Results (1 Collection)'
-        }
-      ])
+      expect(granuleDetailsProps.breadcrumbs[0].link.pathname).toEqual('/search')
+      expect(granuleDetailsProps.breadcrumbs[0].link.search).toEqual('')
+      expect(typeof granuleDetailsProps.breadcrumbs[0].onClick).toEqual('function')
+      expect(granuleDetailsProps.breadcrumbs[0].title).toEqual('Search Results (1 Collection)')
     })
 
     test('sets the correct more action dropdown items', () => {

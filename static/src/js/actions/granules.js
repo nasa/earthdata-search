@@ -618,6 +618,9 @@ export const applyGranuleFilters = granuleFilters => (dispatch, getState) => {
   dispatch(actions.getSearchGranules())
 }
 
+/**
+ * Calls apply granule filters with an empty object to reset the filters.
+ */
 export const clearGranuleFilters = () => applyGranuleFilters({})
 
 /**

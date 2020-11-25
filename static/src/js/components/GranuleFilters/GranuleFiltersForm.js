@@ -230,12 +230,16 @@ export const GranuleFiltersForm = (props) => {
         }
         {
           !isCwic && (
-            <SidebarFiltersItem heading="Granule Search">
+            <SidebarFiltersItem
+              heading="Granule Search"
+            >
               <div>
                 <Form.Group
                   controlId="granule-filters_granule-search"
-                  className="mt-1"
                 >
+                  <Form.Label className="mb-1" sm="auto">
+                    Granule ID(s)
+                  </Form.Label>
                   <OverlayTrigger
                     placement="bottom"
                     overlay={(

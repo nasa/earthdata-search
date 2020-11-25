@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -142,9 +141,9 @@ class SearchPanels extends PureComponent {
       portal,
       onApplyGranuleFilters,
       onChangeQuery,
+      onFocusedCollectionChange,
       onMetricsCollectionSortChange,
-      onToggleAboutCwicModal,
-      onSetActivePanel
+      onToggleAboutCwicModal
     } = this.props
 
     const {
@@ -269,17 +268,17 @@ class SearchPanels extends PureComponent {
       {
         label: 'Relevance',
         isActive: activeCollectionsSortKey === '',
-        onClick: sortOrder => setCollectionSort('relevance')
+        onClick: () => setCollectionSort('relevance')
       },
       {
         label: 'Usage',
         isActive: activeCollectionsSortKey === '-usage_score',
-        onClick: sortOrder => setCollectionSort('-usage_score')
+        onClick: () => setCollectionSort('-usage_score')
       },
       {
         label: 'End Date',
         isActive: activeCollectionsSortKey === '-ongoing',
-        onClick: sortOrder => setCollectionSort('-ongoing')
+        onClick: () => setCollectionSort('-ongoing')
       }
     ]
 
@@ -380,7 +379,8 @@ class SearchPanels extends PureComponent {
             link: {
               pathname: '/search',
               search: location.search
-            }
+            },
+            onClick: () => onFocusedCollectionChange('')
           }
         ]}
         footer={(
@@ -423,7 +423,8 @@ class SearchPanels extends PureComponent {
             link: {
               pathname: '/search',
               search: location.search
-            }
+            },
+            onClick: () => onFocusedCollectionChange('')
           }
         ]}
         handoffLinks={handoffLinks}
@@ -456,7 +457,8 @@ class SearchPanels extends PureComponent {
             link: {
               pathname: '/search',
               search: location.search
-            }
+            },
+            onClick: () => onFocusedCollectionChange('')
           },
           {
             title: collectionTitle,
@@ -559,6 +561,7 @@ SearchPanels.propTypes = {
   mapProjection: PropTypes.string.isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
+  onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,

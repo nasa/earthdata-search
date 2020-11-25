@@ -43,10 +43,6 @@ export const CollectionDetailsHighlights = ({
 
   return (
     <div className="collection-details-highlights">
-      <div className="collection-details-highlights__header">
-        Collection Details
-      </div>
-
       <div className="collection-details-highlights__body">
         <header className="collection-details-highlights__item-header">
           <h4 className="collection-details-highlights__item-title">
