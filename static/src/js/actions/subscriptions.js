@@ -72,6 +72,7 @@ export const getSubscriptions = () => async (dispatch, getState) => {
             }
             collectionConceptId
             conceptId
+            name
             query
           }
         }
