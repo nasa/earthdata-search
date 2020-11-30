@@ -7,10 +7,11 @@ import {
   projectCollectionItemHeader,
   projectCollectionItemFooter
 } from './skeleton'
-import { isAccessMethodValid } from '../../util/accessMethods'
-import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
-import pluralize from '../../util/pluralize'
+
 import { convertSize } from '../../util/project'
+import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
+import { isAccessMethodValid } from '../../util/accessMethods'
+import { pluralize } from '../../util/pluralize'
 
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
