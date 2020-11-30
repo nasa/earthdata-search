@@ -82,9 +82,7 @@ export const parseError = (errorObj, {
       const graphQlErrors = errorArray.map(e => e.message)
 
       // If that is found use that instead of the array we set above
-      // console.log('graphQlErrors.filter(Boolean)', graphQlErrors.filter(Boolean))
       if (graphQlErrors.filter(Boolean).length > 0) {
-        // console.log('alsjfas;dlfasdfasdfasdfasdfsdf')
         errorArray = graphQlErrors
       }
     }
