@@ -82,8 +82,9 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       $id: String!
       $includeHasGranules: Boolean
       $includeTags: String
+      $subscriberId: String
     ) {
-      collection(
+      collection (
         conceptId: $id
         includeHasGranules: $includeHasGranules
         includeTags: $includeTags
@@ -120,6 +121,16 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             serviceOptions
             supportedOutputProjections
             supportedReformattings
+          }
+        }
+        subscriptions (
+          subscriberId: $subscriberId
+        ) {
+          count
+          items {
+            collectionConceptId
+            conceptId
+            query
           }
         }
         variables {
