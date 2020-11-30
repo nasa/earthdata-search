@@ -170,6 +170,7 @@ import {
   setPreferencesFromJwt,
   updatePreferences
 } from './preferences'
+import { getSubscriptions } from './subscriptions'
 
 const actions = {
   addAccessMethods,
@@ -228,6 +229,7 @@ const actions = {
   getProjectGranules,
   getRegions,
   getSearchGranules,
+  getSubscriptions,
   getTimeline,
   getViewAllFacets,
   handleError,

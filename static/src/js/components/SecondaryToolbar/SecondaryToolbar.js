@@ -254,6 +254,16 @@ class SecondaryToolbar extends Component {
               Saved Projects
             </Dropdown.Item>
           </LinkContainer>
+          <LinkContainer
+            to={`${portalPath(portal)}/subscriptions`}
+          >
+            <Dropdown.Item
+              className="secondary-toolbar__saved-subscriptions"
+              active={false}
+            >
+              Subscriptions
+            </Dropdown.Item>
+          </LinkContainer>
           <Dropdown.Item
             className="secondary-toolbar__logout"
             onClick={this.handleLogout}

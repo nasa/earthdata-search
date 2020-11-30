@@ -61,6 +61,9 @@ export const handleError = ({
   }))
 
   const parsedError = parseError(error, { asJSON: false })
+
+  // Use the first element of the errorArray returned from parseError
+  // defaulting to the `message` argument provided to this action
   const [defaultErrorMessage = message] = parsedError
 
   console.error(`Action [${action}] failed: ${defaultErrorMessage}`)
