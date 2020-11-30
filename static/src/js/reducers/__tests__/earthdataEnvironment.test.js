@@ -6,6 +6,8 @@ import { RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
+    jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+
     const action = { type: 'dummy_action' }
     const initialState = 'prod'
 

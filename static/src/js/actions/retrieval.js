@@ -7,6 +7,7 @@ import {
 
 import RetrievalRequest from '../util/request/retrievalRequest'
 
+import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { metricsDataAccess } from '../middleware/metrics/actions'
@@ -14,7 +15,6 @@ import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { prepareRetrievalParams } from '../util/retrievals'
 import { removeRetrievalHistory } from './retrievalHistory'
 import { submittingProject, submittedProject } from './project'
-import deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 
 export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING

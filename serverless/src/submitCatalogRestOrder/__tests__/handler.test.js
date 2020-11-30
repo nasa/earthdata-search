@@ -5,6 +5,7 @@ import nock from 'nock'
 import { stringify } from 'qs'
 
 import * as createLimitedShapefile from '../../util/createLimitedShapefile'
+import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getEdlConfig from '../../util/getEdlConfig'
@@ -19,6 +20,8 @@ let dbTracker
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
   jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
     client: {

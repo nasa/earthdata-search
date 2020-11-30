@@ -1,12 +1,16 @@
 import nock from 'nock'
-import * as getJwtToken from '../../util/getJwtToken'
-import * as getEchoToken from '../../util/urs/getEchoToken'
+
+import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import * as doSearchRequest from '../../util/cmr/doSearchRequest'
+import * as getEchoToken from '../../util/urs/getEchoToken'
+import * as getJwtToken from '../../util/getJwtToken'
+
 import cmrGranuleSearch from '../handler'
 
 beforeEach(() => {
   jest.clearAllMocks()
 
+  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
   jest.spyOn(getEchoToken, 'getEchoToken').mockImplementation(() => '1234-abcd-5678-efgh')
 })
