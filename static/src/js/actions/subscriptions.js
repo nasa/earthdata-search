@@ -41,7 +41,7 @@ export const finishSubscriptionsTimer = () => ({
 })
 
 /**
- * Perform a collection request based on the focusedCollection from the store.
+ * Perform a subscriptions request.
  */
 export const getSubscriptions = () => async (dispatch, getState) => {
   const state = getState()
