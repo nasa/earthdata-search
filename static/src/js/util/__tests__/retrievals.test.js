@@ -5,6 +5,7 @@ describe('retrievals', () => {
   test('prepareRetrievalParams', () => {
     const response = prepareRetrievalParams({
       authToken: 'auth-token',
+      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           'C100000-EDSC': {

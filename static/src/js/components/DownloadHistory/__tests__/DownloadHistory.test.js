@@ -3,6 +3,8 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Table } from 'react-bootstrap'
 
+import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
+
 import Spinner from '../../Spinner/Spinner'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { DownloadHistory } from '../DownloadHistory'
@@ -17,6 +19,10 @@ function setup(props) {
     props
   }
 }
+
+beforeEach(() => {
+  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+})
 
 describe('DownloadHistory component', () => {
   describe('when passed the correct props', () => {

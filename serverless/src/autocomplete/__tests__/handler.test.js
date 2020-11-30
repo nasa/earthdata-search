@@ -2,11 +2,12 @@ import nock from 'nock'
 
 import * as googleClient from '@googlemaps/google-maps-services-js'
 
-import * as getJwtToken from '../../util/getJwtToken'
-import * as getEchoToken from '../../util/urs/getEchoToken'
-import * as getGoogleMapsApiKey from '../../util/google/getGoogleMapsApiKey'
+import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import * as doSearchRequest from '../../util/cmr/doSearchRequest'
+import * as getEchoToken from '../../util/urs/getEchoToken'
 import * as getEnvironmentConfig from '../../../../sharedUtils/config'
+import * as getGoogleMapsApiKey from '../../util/google/getGoogleMapsApiKey'
+import * as getJwtToken from '../../util/getJwtToken'
 
 import autocomplete from '../handler'
 
@@ -15,6 +16,7 @@ const OLD_ENV = process.env
 beforeEach(() => {
   jest.clearAllMocks()
 
+  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
   jest.spyOn(getEchoToken, 'getEchoToken').mockImplementation(() => '1234-abcd-5678-efgh')
   jest.spyOn(getGoogleMapsApiKey, 'getGoogleMapsApiKey').mockImplementation(() => 'testApiKey')

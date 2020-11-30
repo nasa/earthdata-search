@@ -2,6 +2,12 @@ import { decodeUrlParams, encodeUrlQuery } from '../url'
 
 import { emptyDecodedResult } from './url.mocks'
 
+import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
+
+beforeEach(() => {
+  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+})
+
 describe('url#decodeUrlParams', () => {
   test('decodes timelineQuery correctly without a focused date', () => {
     const expectedResult = {
