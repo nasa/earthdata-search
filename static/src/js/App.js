@@ -12,27 +12,28 @@ import Admin from './routes/Admin/Admin'
 import ContactInfo from './routes/ContactInfo/ContactInfo'
 import Downloads from './routes/Downloads/Downloads'
 import FooterContainer from './containers/FooterContainer/FooterContainer'
-import Project from './routes/Project/Project'
 import Preferences from './routes/Preferences/Preferences'
+import Project from './routes/Project/Project'
 import Search from './routes/Search/Search'
+import Subscriptions from './routes/Subscriptions/Subscriptions'
 
 import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
+import AppHeader from './components/AppHeader/AppHeader'
 import AuthCallbackContainer from './containers/AuthCallbackContainer/AuthCallbackContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
 import EdscMapContainer from './containers/MapContainer/MapContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
+import ErrorBoundary from './components/Errors/ErrorBoundary'
+import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
+import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
-import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
-import ErrorBoundary from './components/Errors/ErrorBoundary'
-import NotFound from './components/Errors/NotFound'
-import AppHeader from './components/AppHeader/AppHeader'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -98,6 +99,14 @@ class App extends Component {
                       render={() => (
                         <AuthRequiredContainer>
                           <Preferences />
+                        </AuthRequiredContainer>
+                      )}
+                    />
+                    <Route
+                      path={this.portalPaths('/subscriptions')}
+                      render={() => (
+                        <AuthRequiredContainer>
+                          <Subscriptions />
                         </AuthRequiredContainer>
                       )}
                     />

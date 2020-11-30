@@ -76,6 +76,17 @@ export const parseError = (errorObj, {
     } else {
       // Default to CMR error response body
       ({ errors: errorArray = ['Unknown Error'] } = responseBody)
+
+      // GraphQL uses a similar response structure but uses an object with
+      // key `message` inside
+      const graphQlErrors = errorArray.map(e => e.message)
+
+      // If that is found use that instead of the array we set above
+      // console.log('graphQlErrors.filter(Boolean)', graphQlErrors.filter(Boolean))
+      if (graphQlErrors.filter(Boolean).length > 0) {
+        // console.log('alsjfas;dlfasdfasdfasdfasdfsdf')
+        errorArray = graphQlErrors
+      }
     }
 
     if (shouldLog) {

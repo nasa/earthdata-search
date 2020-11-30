@@ -1,44 +1,45 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
-import collectionMetadataReducer from './collectionMetadata'
-import dataQualitySummariesReducer from './dataQualitySummaries'
-import granuleMetadataReducer from './granuleMetadata'
-import collectionsResultsReducer from './collectionsResults'
+import adminIsAuthorizedReducer from './admin/isAuthorized'
+import adminRetrievalsReducer from './admin/retrievals'
 import advancedSearchReducer from './advancedSearch'
 import authTokenReducer from './authToken'
-import facetsReducer from './facets'
+import autocompleteReducer from './autocomplete'
+import browserReducer from './browser'
+import collectionMetadataReducer from './collectionMetadata'
+import collectionsResultsReducer from './collectionsResults'
+import contactInfoReducer from './contactInfo'
+import dataQualitySummariesReducer from './dataQualitySummaries'
+import earthdataEnvironmentReducer from './earthdataEnvironment'
+import errorsReducer from './errors'
 import {
   cmrFacetsReducer,
   featureFacetsReducer,
   viewAllFacetsReducer
 } from './facetsParams'
+import facetsReducer from './facets'
 import focusedCollectionReducer from './focusedCollection'
+import focusedGranuleReducer from './focusedGranule'
 import granuleDownloadReducer from './granuleDownload'
+import granuleMetadataReducer from './granuleMetadata'
 import mapReducer from './map'
+import panelsReducer from './panels'
+import portalsReducer from './portals'
+import preferencesReducer from './preferences'
+import projectReducer from './project'
+import providersReducer from './providers'
 import queryReducer from './query'
+import regionResultsReducer from './regionResults'
+import retrievalHistoryReducer from './retrievalHistory'
+import retrievalReducer from './retrieval'
+import savedProjectReducer from './savedProject'
+import savedProjectsReducer from './savedProjects'
+import shapefileReducer from './shapefile'
+import subscriptionsReducer from './subscriptions'
 import timelineReducer from './timeline'
 import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
-import focusedGranuleReducer from './focusedGranule'
-import retrievalReducer from './retrieval'
-import regionResultsReducer from './regionResults'
-import retrievalHistoryReducer from './retrievalHistory'
-import portalsReducer from './portals'
-import panelsReducer from './panels'
-import projectReducer from './project'
-import shapefileReducer from './shapefile'
-import savedProjectReducer from './savedProject'
-import savedProjectsReducer from './savedProjects'
-import errorsReducer from './errors'
-import browserReducer from './browser'
-import providersReducer from './providers'
-import contactInfoReducer from './contactInfo'
-import adminIsAuthorizedReducer from './admin/isAuthorized'
-import adminRetrievalsReducer from './admin/retrievals'
-import preferencesReducer from './preferences'
-import autocompleteReducer from './autocomplete'
-import earthdataEnvironmentReducer from './earthdataEnvironment'
 
 export default history => combineReducers({
   admin: combineReducers({
@@ -84,6 +85,7 @@ export default history => combineReducers({
     viewAllFacets: viewAllFacetsRequestReducer
   }),
   shapefile: shapefileReducer,
+  subscriptions: subscriptionsReducer,
   timeline: timelineReducer,
   ui: uiReducer
 })
