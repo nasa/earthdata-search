@@ -66,7 +66,8 @@
     vertical-align: top;
 
     .badge {
-      vertical-align: bottom;
+      display: flex;
+      align-items: center;
     }
   }
 
