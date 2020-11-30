@@ -10,6 +10,7 @@ import {
 } from '../constants/actionTypes'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getUsername } from '../selectors/user'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -52,6 +53,7 @@ export const getSubscriptions = () => async (dispatch, getState) => {
 
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)
+  const username = getUsername(state)
 
   dispatch(onSubscriptionsLoading())
   dispatch(startSubscriptionsTimer())
@@ -79,7 +81,7 @@ export const getSubscriptions = () => async (dispatch, getState) => {
       }`
 
   const response = graphRequestObject.search(graphQuery, {
-    subscriberId: 'rabbott'
+    subscriberId: username
   })
     .then((response) => {
       const {

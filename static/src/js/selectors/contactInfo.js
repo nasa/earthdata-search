@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 
 /**
- * Retrieve current collection query information from Redux
+ * Retrieve current contact information from Redux
  * @param {Object} state Current state of Redux
  */
 export const getContactInfo = (state) => {
@@ -12,8 +12,7 @@ export const getContactInfo = (state) => {
 
 
 /**
- * Retrieve current collection query information from Redux
- * @param {Object} state Current state of Redux
+ * Retrieve current URS Profile from Redux
  */
 export const getUrsProfile = createSelector(
   [getContactInfo],
