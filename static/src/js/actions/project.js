@@ -183,8 +183,9 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       $includeHasGranules: Boolean
       $includeTags: String
       $pageSize: Int
+      $subscriberId: String
     ) {
-      collections(
+      collections (
         conceptId: $ids
         includeHasGranules: $includeHasGranules
         includeTags: $includeTags
@@ -223,6 +224,16 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               serviceOptions
               supportedOutputProjections
               supportedReformattings
+            }
+          }
+          subscriptions (
+            subscriberId: $subscriberId
+          ) {
+            count
+            items {
+              collectionConceptId
+              conceptId
+              query
             }
           }
           variables {
