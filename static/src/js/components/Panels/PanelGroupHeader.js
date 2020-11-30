@@ -231,12 +231,13 @@ export const PanelGroupHeader = ({
                 headerMetaPrimaryLoading
                   ? (
                     <Skeleton
+                      className="panel-group-header__heading-meta-skeleton"
                       containerStyle={{ height: '18px', width: '213px' }}
                       shapes={headerMetaSkeleton}
                     />
                   )
                   : (
-                    <span>{headerMetaPrimaryText}</span>
+                    <span className="panel-group-header__heading-meta-text">{headerMetaPrimaryText}</span>
                   )
               }
             </div>
@@ -305,7 +306,7 @@ PanelGroupHeader.propTypes = {
   moreActionsDropdownItems: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
+      icon: PropTypes.string,
       link: PropTypes.shape({
         pathname: PropTypes.string,
         search: PropTypes.string
