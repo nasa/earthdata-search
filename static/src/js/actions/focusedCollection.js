@@ -130,6 +130,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           items {
             collectionConceptId
             conceptId
+            name
             query
           }
         }

@@ -41,6 +41,7 @@ export const SubscriptionsList = ({
             <Table className="subscriptions-list__table">
               <thead>
                 <tr>
+                  <th className="subscriptions-list-table__name-heading">Name</th>
                   <th className="subscriptions-list-table__collection-heading">Collection</th>
                   <th className="subscriptions-list-table__query-heading">Query</th>
                   <th className="subscriptions-list-table__actions-heading">Actions</th>
@@ -52,6 +53,7 @@ export const SubscriptionsList = ({
                     const {
                       conceptId,
                       collection,
+                      name,
                       query
                     } = subscription
 
@@ -63,6 +65,9 @@ export const SubscriptionsList = ({
                       <tr
                         key={conceptId}
                       >
+                        <td>
+                          {name}
+                        </td>
                         <td>
                           {title}
                         </td>

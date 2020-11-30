@@ -233,6 +233,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
             items {
               collectionConceptId
               conceptId
+              name
               query
             }
           }
