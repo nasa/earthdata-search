@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 
-import deployedEnvironment from '../../../../../sharedUtils/deployedEnvironment'
-import pluralize from '../../util/pluralize'
+import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
+import { pluralize } from '../../util/pluralize'
 import { stringify } from '../../util/url/url'
 
 import Button from '../Button/Button'
@@ -80,12 +80,12 @@ export class DownloadHistory extends Component {
         {
           retrievalHistoryLoaded && (
             retrievalHistory.length > 0 ? (
-              <Table className="order-status-table">
+              <Table className="download-history-table">
                 <thead>
                   <tr>
-                    <th />
-                    <th>Contents</th>
-                    <th>Created</th>
+                    <th className="download-history-table__contents-heading">Contents</th>
+                    <th className="download-history-table__created-heading">Created</th>
+                    <th className="download-history-table__actions-heading">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -103,16 +103,6 @@ export class DownloadHistory extends Component {
                       return (
                         <tr key={id}>
                           <td>
-                            <Button
-                              className="order-status-table__remove"
-                              onClick={() => this.onHandleRemove(id)}
-                              variant="link"
-                              bootstrapVariant="link"
-                              icon="times-circle"
-                              label="Delete Download"
-                            />
-                          </td>
-                          <td>
                             <PortalLinkContainer
                               portalId={portalId}
                               to={{
@@ -123,8 +113,17 @@ export class DownloadHistory extends Component {
                               {this.retrievalDescription(collections)}
                             </PortalLinkContainer>
                           </td>
-                          <td className="order-status-table__ago">
+                          <td className="download-history-table__ago">
                             <TimeAgo date={createdAt} />
+                          </td>
+                          <td className="download-history-table__actions">
+                            <Button
+                              className="download-history__button download-history__button--remove"
+                              onClick={() => this.onHandleRemove(id)}
+                              variant="naked"
+                              icon="times-circle"
+                              label="Delete Download"
+                            />
                           </td>
                         </tr>
                       )

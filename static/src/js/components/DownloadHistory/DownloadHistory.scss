@@ -2,9 +2,25 @@
   &__spinner {
     margin: 0 auto;
   }
+
+  &__button {
+    margin: 0 $spacer/2;
+    color: $color__black--300;
+
+    &--share {
+      i {
+        position: relative;
+        top: 0.0625rem;
+      }
+    }
+
+    &:hover {
+      color: $color__black--600;
+    }
+  }
 }
 
-.order-status-table {
+.download-history-table {
   a {
     color: $color__blue;
 
@@ -18,12 +34,19 @@
     white-space: nowrap;
   }
 
-  &__remove {
-    color: $color__black--300;
-
-    &:hover,
-    &:active {
-      color: $color__black--600;
-    }
+  &__actions,
+  &__actions-heading {
+    text-align: center;
   }
+
+  &__ago {
+    white-space: nowrap;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 }

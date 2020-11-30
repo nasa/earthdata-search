@@ -9,12 +9,13 @@ import {
   Spinner
 } from 'react-bootstrap'
 
+import { eventEmitter } from '../../events/events'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { pluralize } from '../../util/pluralize'
+
 import FilterStackItem from '../FilterStack/FilterStackItem'
 import FilterStackContents from '../FilterStack/FilterStackContents'
 import SpatialDisplayEntry from './SpatialDisplayEntry'
-import { eventEmitter } from '../../events/events'
-import pluralize from '../../util/pluralize'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import './SpatialDisplay.scss'
 

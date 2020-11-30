@@ -1,4 +1,5 @@
-import RegionRequest from '../util/request/regionRequest'
+import actions from './index'
+
 import {
   UPDATE_REGION_RESULTS,
   LOADING_REGIONS,
@@ -7,13 +8,12 @@ import {
   FINISHED_REGIONS_TIMER,
   ERRORED_REGIONS
 } from '../constants/actionTypes'
-import {
-  prepareRegionParams
-} from '../util/regions'
-import { displayNotificationType } from '../constants/enums'
-import actions from './index'
 
+import { displayNotificationType } from '../constants/enums'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { prepareRegionParams } from '../util/regions'
+
+import RegionRequest from '../util/request/regionRequest'
 
 export const updateRegionResults = payload => ({
   type: UPDATE_REGION_RESULTS,

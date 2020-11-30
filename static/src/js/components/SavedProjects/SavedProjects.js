@@ -10,7 +10,7 @@ import TimeAgo from 'react-timeago'
 import { parse } from 'qs'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import pluralize from '../../util/pluralize'
+import { pluralize } from '../../util/pluralize'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
