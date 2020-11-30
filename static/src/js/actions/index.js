@@ -171,6 +171,7 @@ import {
   updatePreferences
 } from './preferences'
 import { getSubscriptions } from './subscriptions'
+import { setUserFromJwt } from './user'
 
 const actions = {
   addAccessMethods,
@@ -257,6 +258,7 @@ const actions = {
   setPreferences,
   setPreferencesFromJwt,
   setSavedProjects,
+  setUserFromJwt,
   shapefileErrored,
   shapefileLoading,
   submitRetrieval,

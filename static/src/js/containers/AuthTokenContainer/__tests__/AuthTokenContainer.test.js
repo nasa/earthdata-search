@@ -12,6 +12,7 @@ function setup() {
     children: 'children',
     onSetContactInfoFromJwt: jest.fn(),
     onSetPreferencesFromJwt: jest.fn(),
+    onSetUserFromJwt: jest.fn(),
     onUpdateAuthToken: jest.fn()
   }
 
@@ -43,5 +44,7 @@ describe('AuthTokenContainer component', () => {
     expect(props.onSetContactInfoFromJwt.mock.calls[0]).toEqual(['token'])
     expect(props.onSetPreferencesFromJwt).toHaveBeenCalled()
     expect(props.onSetPreferencesFromJwt.mock.calls[0]).toEqual(['token'])
+    expect(props.onSetUserFromJwt).toHaveBeenCalled()
+    expect(props.onSetUserFromJwt.mock.calls[0]).toEqual(['token'])
   })
 })

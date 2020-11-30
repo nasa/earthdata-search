@@ -10,6 +10,8 @@ const mapDispatchToProps = dispatch => ({
     token => dispatch(actions.setContactInfoFromJwt(token)),
   onSetPreferencesFromJwt:
     token => dispatch(actions.setPreferencesFromJwt(token)),
+  onSetUserFromJwt:
+    token => dispatch(actions.setUserFromJwt(token)),
   onUpdateAuthToken:
     token => dispatch(actions.updateAuthToken(token))
 })
@@ -19,6 +21,7 @@ export class AuthTokenContainer extends Component {
     const {
       onSetContactInfoFromJwt,
       onSetPreferencesFromJwt,
+      onSetUserFromJwt,
       onUpdateAuthToken
     } = this.props
 
@@ -27,6 +30,7 @@ export class AuthTokenContainer extends Component {
     onUpdateAuthToken(jwtToken || '')
     onSetPreferencesFromJwt(jwtToken)
     onSetContactInfoFromJwt(jwtToken)
+    onSetUserFromJwt(jwtToken)
   }
 
   render() {
@@ -44,6 +48,7 @@ AuthTokenContainer.propTypes = {
   children: PropTypes.node.isRequired,
   onSetContactInfoFromJwt: PropTypes.func.isRequired,
   onSetPreferencesFromJwt: PropTypes.func.isRequired,
+  onSetUserFromJwt: PropTypes.func.isRequired,
   onUpdateAuthToken: PropTypes.func.isRequired
 }
 
