@@ -13,7 +13,7 @@ describe('getUser selector', () => {
     })
   })
 
-  test('returns an empty object when there is no contactInfo', () => {
+  test('returns an empty object when there is no user', () => {
     const state = {}
 
     expect(getUser(state)).toEqual({})
@@ -21,7 +21,7 @@ describe('getUser selector', () => {
 })
 
 describe('getUsername selector', () => {
-  test('returns the contact info', () => {
+  test('returns the username', () => {
     const state = {
       user: {
         username: 'testUser'
