@@ -174,5 +174,32 @@ describe('DownloadHistory component', () => {
       expect(enzymeWrapper.find(PortalLinkContainer).prop('portalId')).toEqual('test')
       expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title')
     })
+
+    test('onHandleRemove calls onDeleteRetrieval', () => {
+      const { enzymeWrapper, props } = setup({
+        authToken: 'testToken',
+        earthdataEnvironment: 'prod',
+        retrievalHistory: [{
+          id: '8069076',
+          jsondata: {},
+          created_at: '2019-08-25T11:58:14.390Z',
+          collections: [{
+            title: 'Collection Title'
+          }]
+        }],
+        retrievalHistoryLoading: false,
+        retrievalHistoryLoaded: true,
+        onDeleteRetrieval: jest.fn()
+      })
+
+      window.confirm = jest.fn().mockImplementation(() => true)
+
+      const removeButton = enzymeWrapper.find('.download-history__button--remove')
+
+      removeButton.simulate('click')
+
+      expect(props.onDeleteRetrieval).toBeCalledTimes(1)
+      expect(props.onDeleteRetrieval).toBeCalledWith('8069076')
+    })
   })
 })
