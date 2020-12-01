@@ -5,6 +5,7 @@ import {
   FINISHED_SUBSCRIPTIONS_TIMER,
   LOADED_SUBSCRIPTIONS,
   LOADING_SUBSCRIPTIONS,
+  REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
@@ -12,6 +13,7 @@ import {
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getUsername } from '../selectors/user'
 
+import { addToast } from '../util/addToast'
 import GraphQlRequest from '../util/request/graphQlRequest'
 
 export const updateSubscriptionResults = payload => ({
@@ -39,6 +41,11 @@ export const startSubscriptionsTimer = () => ({
 
 export const finishSubscriptionsTimer = () => ({
   type: FINISHED_SUBSCRIPTIONS_TIMER
+})
+
+export const removeSubscription = payload => ({
+  type: REMOVE_SUBSCRIPTION,
+  payload
 })
 
 /**
@@ -75,6 +82,7 @@ export const getSubscriptions = () => async (dispatch, getState) => {
             collectionConceptId
             conceptId
             name
+            nativeId
             query
           }
         }
@@ -115,6 +123,59 @@ export const getSubscriptions = () => async (dispatch, getState) => {
         action: 'fetchSubscriptions',
         resource: 'subscription',
         requestObject: graphRequestObject
+      }))
+    })
+
+  return response
+}
+
+/**
+ * Perform a subscriptions request.
+ */
+export const deleteSubscription = (conceptId, nativeId) => async (dispatch, getState) => {
+  const state = getState()
+
+  const {
+    authToken
+  } = state
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+
+  const graphQuery = `
+    mutation DeleteSubscription (
+      $conceptId: String!
+      $nativeId: String!
+    ) {
+      deleteSubscription (
+        conceptId: $conceptId
+        nativeId: $nativeId
+      ) {
+          conceptId
+        }
+      }
+  `
+
+  const response = graphRequestObject.search(graphQuery, {
+    conceptId,
+    nativeId
+  })
+    .then(() => {
+      dispatch(removeSubscription(conceptId))
+      addToast('Subscription removed', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    })
+    .catch((error) => {
+      dispatch(actions.handleError({
+        error,
+        action: 'deleteSubscription',
+        resource: 'subscription',
+        verb: 'deleting',
+        graphRequestObject
       }))
     })
 

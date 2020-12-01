@@ -3,6 +3,7 @@ import { replace } from 'connected-react-router'
 import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
 
 import ProjectRequest from '../util/request/projectRequest'
+import { addToast } from '../util/addToast'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
@@ -96,6 +97,10 @@ export const deleteSavedProject = projectId => (dispatch, getState) => {
     const response = requestObject.remove(projectId)
       .then(() => {
         dispatch(removeSavedProject(projectId))
+        addToast('Project removed', {
+          appearance: 'success',
+          autoDismiss: true
+        })
       })
       .catch((error) => {
         dispatch(handleError({

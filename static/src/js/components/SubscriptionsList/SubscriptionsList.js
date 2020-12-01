@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Table } from 'react-bootstrap'
 
+import Button from '../Button/Button'
 import { Spinner } from '../Spinner/Spinner'
 
 import './SubscriptionsList.scss'
@@ -11,7 +12,8 @@ import './SubscriptionsList.scss'
  * Renders the logged in users' subscription list
  */
 export const SubscriptionsList = ({
-  subscriptions = {}
+  subscriptions = {},
+  onDeleteSubscription
 }) => {
   const {
     byId: subscriptionsById,
@@ -20,6 +22,15 @@ export const SubscriptionsList = ({
   } = subscriptions
 
   const subscriptionsMetadata = Object.values(subscriptionsById)
+
+  const onHandleRemove = (conceptId, nativeId) => {
+    // eslint-disable-next-line no-alert
+    const confirmDeletion = window.confirm('Are you sure you want to remove this subscription? This action cannot be undone.')
+
+    if (confirmDeletion) {
+      onDeleteSubscription(conceptId, nativeId)
+    }
+  }
 
   return (
     <>
@@ -54,6 +65,7 @@ export const SubscriptionsList = ({
                       conceptId,
                       collection,
                       name,
+                      nativeId,
                       query
                     } = subscription
 
@@ -74,7 +86,15 @@ export const SubscriptionsList = ({
                         <td>
                           {query}
                         </td>
-                        <td className="subscriptions-list-table__actions" />
+                        <td className="subscriptions-list-table__actions">
+                          <Button
+                            className="subscriptions-list__button subscriptions-list__button--remove"
+                            onClick={() => onHandleRemove(conceptId, nativeId)}
+                            variant="naked"
+                            icon="times-circle"
+                            label="Delete Download"
+                          />
+                        </td>
                       </tr>
                     )
                   })
@@ -91,7 +111,8 @@ export const SubscriptionsList = ({
 }
 
 SubscriptionsList.propTypes = {
-  subscriptions: PropTypes.shape({}).isRequired
+  subscriptions: PropTypes.shape({}).isRequired,
+  onDeleteSubscription: PropTypes.func.isRequired
 }
 
 export default SubscriptionsList

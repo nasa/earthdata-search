@@ -4,7 +4,8 @@ import {
   LOADING_SUBSCRIPTIONS,
   LOADED_SUBSCRIPTIONS,
   STARTED_SUBSCRIPTIONS_TIMER,
-  FINISHED_SUBSCRIPTIONS_TIMER
+  FINISHED_SUBSCRIPTIONS_TIMER,
+  REMOVE_SUBSCRIPTION
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -76,6 +77,19 @@ const subscriptionsReducer = (state = initialState, action) => {
         ...state,
         error: message,
         byId: {}
+      }
+    }
+    case REMOVE_SUBSCRIPTION: {
+      const conceptId = action.payload
+
+      const { byId } = state
+      delete byId[conceptId]
+
+      return {
+        ...state,
+        byId: {
+          ...byId
+        }
       }
     }
     default:

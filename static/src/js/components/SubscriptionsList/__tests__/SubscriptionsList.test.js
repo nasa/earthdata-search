@@ -28,8 +28,6 @@ describe('SubscriptionsList component', () => {
   describe('when passed the correct props', () => {
     test('renders a spinner when retrievals are loading', () => {
       const { enzymeWrapper } = setup({
-        authToken: 'testToken',
-        earthdataEnvironment: 'prod',
         subscriptions: {
           byId: {},
           isLoading: true,
@@ -37,7 +35,8 @@ describe('SubscriptionsList component', () => {
           error: null,
           timerStart: Date.now(),
           loadTime: null
-        }
+        },
+        onDeleteSubscription: jest.fn()
       })
 
       expect(enzymeWrapper.find(Spinner).length).toBe(1)
@@ -45,8 +44,6 @@ describe('SubscriptionsList component', () => {
 
     test('renders a message when no retrievals exist', () => {
       const { enzymeWrapper } = setup({
-        authToken: 'testToken',
-        earthdataEnvironment: 'prod',
         subscriptions: {
           byId: {},
           isLoading: false,
@@ -54,7 +51,8 @@ describe('SubscriptionsList component', () => {
           error: null,
           timerStart: null,
           loadTime: 1265
-        }
+        },
+        onDeleteSubscription: jest.fn()
       })
 
       expect(enzymeWrapper.find(Table).length).toBe(0)
@@ -64,8 +62,6 @@ describe('SubscriptionsList component', () => {
 
     test('renders a table when subscriptions exist', () => {
       const { enzymeWrapper } = setup({
-        authToken: 'testToken',
-        earthdataEnvironment: 'prod',
         subscriptions: {
           byId: {
             'SUB100000-EDSC': {
@@ -84,10 +80,46 @@ describe('SubscriptionsList component', () => {
           error: null,
           timerStart: null,
           loadTime: 1265
-        }
+        },
+        onDeleteSubscription: jest.fn()
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
+    })
+
+    test('onHandleRemove calls onDeleteSubscription', () => {
+      const { enzymeWrapper, props } = setup({
+        subscriptions: {
+          byId: {
+            'SUB100000-EDSC': {
+              collection: {
+                conceptId: 'C100000-EDSC',
+                title: 'Mattis Justo Vulputate Ullamcorper Amet.'
+              },
+              collectionConceptId: 'C100000-EDSC',
+              conceptId: 'SUB100000-EDSC',
+              name: 'Test Subscription',
+              nativeId: 'mock-guid',
+              query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
+            }
+          },
+          isLoading: false,
+          isLoaded: true,
+          error: null,
+          timerStart: null,
+          loadTime: 1265
+        },
+        onDeleteSubscription: jest.fn()
+      })
+
+      window.confirm = jest.fn().mockImplementation(() => true)
+
+      const removeButton = enzymeWrapper.find('.subscriptions-list__button--remove')
+
+      removeButton.simulate('click')
+
+      expect(props.onDeleteSubscription).toBeCalledTimes(1)
+      expect(props.onDeleteSubscription).toBeCalledWith('SUB100000-EDSC', 'mock-guid')
     })
   })
 })

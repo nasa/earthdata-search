@@ -5,6 +5,7 @@ import {
   UPDATE_RETRIEVAL
 } from '../constants/actionTypes'
 
+import { addToast } from '../util/addToast'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
@@ -183,6 +184,10 @@ export const deleteRetrieval = id => (dispatch, getState) => {
     const response = requestObject.remove(id)
       .then(() => {
         dispatch(removeRetrievalHistory(id))
+        addToast('Retrieval removed', {
+          appearance: 'success',
+          autoDismiss: true
+        })
       })
       .catch((error) => {
         dispatch(handleError({

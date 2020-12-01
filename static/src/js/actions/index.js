@@ -170,7 +170,10 @@ import {
   setPreferencesFromJwt,
   updatePreferences
 } from './preferences'
-import { getSubscriptions } from './subscriptions'
+import {
+  deleteSubscription,
+  getSubscriptions
+} from './subscriptions'
 import { setUserFromJwt } from './user'
 
 const actions = {
@@ -209,6 +212,7 @@ const actions = {
   deleteAutocompleteValue,
   deleteRetrieval,
   deleteSavedProject,
+  deleteSubscription,
   excludeGranule,
   fetchAccessMethods,
   fetchAdminRetrieval,

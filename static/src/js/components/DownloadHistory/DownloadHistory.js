@@ -23,8 +23,8 @@ export class DownloadHistory extends Component {
   onHandleRemove(id) {
     const { onDeleteRetrieval } = this.props
 
-    // eslint-disable-next-line no-restricted-globals, no-alert
-    const confirmDeletion = confirm('Are you sure you want to remove this download from your history? This action cannot be undone.')
+    // eslint-disable-next-line no-alert
+    const confirmDeletion = window.confirm('Are you sure you want to remove this download from your history? This action cannot be undone.')
 
     if (confirmDeletion) {
       onDeleteRetrieval(id)
