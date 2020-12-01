@@ -81,8 +81,8 @@ describe('getSubscriptions', () => {
           graphQlHost: 'https://graphql.example.com'
         }))
 
-        nock(/graph/)
-          .post(/api/)
+        nock(/localhost/)
+          .post(/graphql/)
           .reply(200, {
             data: {
               subscriptions: {
@@ -103,7 +103,9 @@ describe('getSubscriptions', () => {
             }
           })
 
-        const store = mockStore({})
+        const store = mockStore({
+          authToken: 'token'
+        })
 
         await store.dispatch(getSubscriptions()).then(() => {
           const storeActions = store.getActions()
@@ -148,8 +150,8 @@ describe('getSubscriptions', () => {
           graphQlHost: 'https://graphql.example.com'
         }))
 
-        nock(/graph/)
-          .post(/api/)
+        nock(/localhost/)
+          .post(/graphql/)
           .reply(200, {
             data: {
               subscriptions: {
@@ -159,7 +161,9 @@ describe('getSubscriptions', () => {
             }
           })
 
-        const store = mockStore({})
+        const store = mockStore({
+          authToken: 'token'
+        })
 
         await store.dispatch(getSubscriptions()).then(() => {
           const storeActions = store.getActions()
@@ -195,8 +199,8 @@ describe('getSubscriptions', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/graph/)
-      .post(/api/)
+    nock(/localhost/)
+      .post(/graphql/)
       .reply(403, {
         errors: [{
           message: 'Token does not exist'
@@ -207,7 +211,9 @@ describe('getSubscriptions', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const store = mockStore({})
+    const store = mockStore({
+      authToken: 'token'
+    })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
@@ -248,8 +254,8 @@ describe('deleteSubscription', () => {
     }))
     const addToastMock = jest.spyOn(addToast, 'addToast')
 
-    nock(/graph/)
-      .post(/api/)
+    nock(/localhost/)
+      .post(/graphql/)
       .reply(200, {
         data: {
           deleteSubscription: {
@@ -258,7 +264,9 @@ describe('deleteSubscription', () => {
         }
       })
 
-    const store = mockStore({})
+    const store = mockStore({
+      authToken: 'token'
+    })
 
     await store.dispatch(deleteSubscription('SUB1000-EDSC', 'mock-guid')).then(() => {
       const storeActions = store.getActions()
@@ -282,8 +290,8 @@ describe('deleteSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/graph/)
-      .post(/api/)
+    nock(/localhost/)
+      .post(/graphql/)
       .reply(403, {
         errors: [{
           message: 'Token does not exist'
@@ -294,7 +302,9 @@ describe('deleteSubscription', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const store = mockStore({})
+    const store = mockStore({
+      authToken: 'token'
+    })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
