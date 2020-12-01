@@ -9,6 +9,8 @@ import {
   deleteSavedProject
 } from '../savedProject'
 
+import * as addToast from '../../util/addToast'
+
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
@@ -69,10 +71,79 @@ describe('updateProjectName', () => {
       })
     })
   })
+
+  test('when the project doesn\'t have a path yet, saves the path from the URL', async () => {
+    const name = 'test name'
+
+    nock(/localhost/)
+      .post('/projects')
+      .reply(200, {
+        name,
+        project_id: 1,
+        path: '/search?p=C00001-EDSC'
+      })
+
+    const store = mockStore({
+      router: {
+        location: {
+          pathname: '/search',
+          search: '?p=C00001-EDSC'
+        }
+      },
+      savedProject: {}
+    })
+
+    await store.dispatch(updateProjectName(name)).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        payload: {
+          name,
+          projectId: 1,
+          path: '/search?p=C00001-EDSC'
+        },
+        type: UPDATE_SAVED_PROJECT
+      })
+    })
+  })
+
+  test('does not call updateSavedProject on error', async () => {
+    const name = 'test name'
+
+    nock(/localhost/)
+      .get(/projects/)
+      .reply(500, {
+        errors: ['An error occured.']
+      })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      router: {
+        location: {
+          pathname: '/projectId=1',
+          search: ''
+        }
+      },
+      savedProject: {
+        projectId: 1,
+        path: '/search?p=C00001-EDSC'
+      }
+    })
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    await store.dispatch(updateProjectName(name)).then(() => {
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+    })
+  })
 })
 
 describe('deleteSavedProject', () => {
   test('calls lambda to delete a project', async () => {
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
     nock(/localhost/)
       .delete(/2057964173/)
       .reply(204)
@@ -87,6 +158,34 @@ describe('deleteSavedProject', () => {
         payload: '2057964173',
         type: REMOVE_SAVED_PROJECT
       })
+
+      expect(addToastMock.mock.calls.length).toBe(1)
+      expect(addToastMock.mock.calls[0][0]).toEqual('Project removed')
+      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
+      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+    })
+  })
+
+  test('does not call removeSavedProject on error', async () => {
+    nock(/localhost/)
+      .delete(/2057964173/)
+      .reply(500, {
+        errors: ['An error occured.']
+      })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      authToken: 'mockToken',
+      retrievalHistory: []
+    })
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    await store.dispatch(deleteSavedProject('2057964173')).then(() => {
+      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

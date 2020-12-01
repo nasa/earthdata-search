@@ -1,10 +1,12 @@
 import jwt from 'jsonwebtoken'
 
+import { addToast } from '../util/addToast'
 import ContactInfoRequest from '../util/request/contactInfoRequest'
 
 import { UPDATE_CONTACT_INFO } from '../constants/actionTypes'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { handleError } from './errors'
 
 export const updateContactInfo = data => ({
   type: UPDATE_CONTACT_INFO,
@@ -104,6 +106,20 @@ export const updateNotificationLevel = level => (dispatch, getState) => {
 
       dispatch(updateContactInfo({
         echoPreferences
+      }))
+
+      addToast('Notification Preference Level updated', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    })
+    .catch((error) => {
+      dispatch(handleError({
+        error,
+        action: 'updateNotificationLevel',
+        resource: 'contactInfo',
+        verb: 'updating',
+        requestObject
       }))
     })
 

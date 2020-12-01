@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  onDeleteSubscription: data => dispatch(actions.deleteSubscription(data)),
   onFetchSubscriptions: () => dispatch(actions.getSubscriptions())
 })
 
@@ -28,12 +29,14 @@ export class SubscriptionsContainer extends Component {
 
   render() {
     const {
-      subscriptions
+      subscriptions,
+      onDeleteSubscription
     } = this.props
 
     return (
       <SubscriptionsList
         subscriptions={subscriptions}
+        onDeleteSubscription={onDeleteSubscription}
       />
     )
   }
@@ -41,6 +44,7 @@ export class SubscriptionsContainer extends Component {
 
 SubscriptionsContainer.propTypes = {
   subscriptions: PropTypes.shape({}).isRequired,
+  onDeleteSubscription: PropTypes.func.isRequired,
   onFetchSubscriptions: PropTypes.func.isRequired
 }
 

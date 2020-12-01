@@ -11,6 +11,8 @@ import {
   updateNotificationLevel
 } from '../contactInfo'
 
+import * as addToast from '../../util/addToast'
+
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
@@ -85,14 +87,9 @@ describe('fetchContactInfo', () => {
 })
 
 describe('updateNotificationLevel', () => {
-  const { href } = window.location
+  test('calls updateContactInfo on success', async () => {
+    const addToastMock = jest.spyOn(addToast, 'addToast')
 
-  afterEach(() => {
-    jest.clearAllMocks()
-    window.location.href = href
-  })
-
-  test('calls LogoutRequest, removes the cookie and redirects to the root url', async () => {
     nock(/localhost/)
       .post(/contact_info/)
       .reply(201, {
@@ -112,6 +109,34 @@ describe('updateNotificationLevel', () => {
           echoPreferences: { mock: 'echo' }
         }
       })
+
+      expect(addToastMock.mock.calls.length).toBe(1)
+      expect(addToastMock.mock.calls[0][0]).toEqual('Notification Preference Level updated')
+      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
+      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+    })
+  })
+
+  test('does not call updateContactInfo on error', async () => {
+    nock(/localhost/)
+      .post(/contact_info/)
+      .reply(500, {
+        errors: ['An error occured.']
+      })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      authToken: 'mockToken',
+      contactInfo: {}
+    })
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    await store.dispatch(updateNotificationLevel('INFO')).then(() => {
+      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

@@ -9,7 +9,8 @@ import {
   updateSubscriptionResults,
   onSubscriptionsLoading,
   onSubscriptionsLoaded,
-  onSubscriptionsErrored
+  onSubscriptionsErrored,
+  deleteSubscription
 } from '../subscriptions'
 
 import {
@@ -17,11 +18,13 @@ import {
   FINISHED_SUBSCRIPTIONS_TIMER,
   LOADED_SUBSCRIPTIONS,
   LOADING_SUBSCRIPTIONS,
+  REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../../constants/actionTypes'
 
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+import * as addToast from '../../util/addToast'
 
 const mockStore = configureMockStore([thunk])
 
@@ -229,6 +232,76 @@ describe('getSubscriptions', () => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
         action: 'fetchSubscriptions',
+        resource: 'subscription'
+      }))
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+    })
+  })
+})
+
+describe('deleteSubscription', () => {
+  test('should call graphql and call removeSubscription', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com'
+    }))
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
+    nock(/graph/)
+      .post(/api/)
+      .reply(200, {
+        data: {
+          deleteSubscription: {
+            conceptId: 'SUB1000-EDSC'
+          }
+        }
+      })
+
+    const store = mockStore({})
+
+    await store.dispatch(deleteSubscription('SUB1000-EDSC', 'mock-guid')).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: REMOVE_SUBSCRIPTION,
+        payload: 'SUB1000-EDSC'
+      })
+
+      expect(addToastMock.mock.calls.length).toBe(1)
+      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription removed')
+      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
+      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+    })
+  })
+
+  test('does not call updateFocusedCollection when graphql throws an http error', async () => {
+    const handleErrorMock = jest.spyOn(actions, 'handleError')
+
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com'
+    }))
+
+    nock(/graph/)
+      .post(/api/)
+      .reply(403, {
+        errors: [{
+          message: 'Token does not exist'
+        }]
+      })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({})
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    await store.dispatch(deleteSubscription()).then(() => {
+      expect(handleErrorMock).toHaveBeenCalledTimes(1)
+      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        action: 'deleteSubscription',
         resource: 'subscription'
       }))
 

@@ -4,6 +4,7 @@ import {
   FINISHED_SUBSCRIPTIONS_TIMER,
   LOADED_SUBSCRIPTIONS,
   LOADING_SUBSCRIPTIONS,
+  REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../../constants/actionTypes'
@@ -134,5 +135,37 @@ describe('LOADED_SUBSCRIPTIONS', () => {
     }
 
     expect(subscriptionsReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('REMOVE_SUBSCRIPTION', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: REMOVE_SUBSCRIPTION,
+      payload: 'SUB1000-EDSC'
+    }
+
+    const initial = {
+      ...initialState,
+      byId: {
+        'SUB1000-EDSC': {
+          mock: 'data'
+        },
+        'SUB1001-EDSC': {
+          mock: 'data'
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      byId: {
+        'SUB1001-EDSC': {
+          mock: 'data'
+        }
+      }
+    }
+
+    expect(subscriptionsReducer(initial, action)).toEqual(expectedState)
   })
 })

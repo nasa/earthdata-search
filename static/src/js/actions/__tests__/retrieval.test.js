@@ -14,6 +14,7 @@ import {
 } from '../retrieval'
 
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
+import * as addToast from '../../util/addToast'
 
 const mockStore = configureMockStore([thunk])
 
@@ -534,6 +535,8 @@ describe('fetchRetrieval', () => {
 
 describe('deleteRetrieval', () => {
   test('calls lambda to delete a retrieval', async () => {
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
     nock(/localhost/)
       .delete(/2057964173/)
       .reply(204)
@@ -551,6 +554,11 @@ describe('deleteRetrieval', () => {
         payload: '2057964173',
         type: REMOVE_RETRIEVAL_HISTORY
       })
+
+      expect(addToastMock.mock.calls.length).toBe(1)
+      expect(addToastMock.mock.calls[0][0]).toEqual('Retrieval removed')
+      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
+      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
     })
   })
 

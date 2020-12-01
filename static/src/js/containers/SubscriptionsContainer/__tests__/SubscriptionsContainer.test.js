@@ -27,6 +27,7 @@ function setup() {
       timerStart: null,
       loadTime: 1265
     },
+    onDeleteSubscription: jest.fn(),
     onFetchSubscriptions: jest.fn()
   }
 
