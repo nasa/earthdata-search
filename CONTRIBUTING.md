@@ -18,6 +18,6 @@ Our ticketing and CI/CD tools are configured to sync statuses amongst each other
 
 ## Disclaimer
 
-The Earthdata Search develoment team will review all pull requests submitted. Only requests that meet the standard of quality set forth by existing code, following the patterns set forth by existing code, and adhering to the design patterns set forth by existing UI elements will be considered and/or accepted.
+The Earthdata Search development team will review all pull requests submitted. Only requests that meet the standard of quality set forth by existing code, following the patterns set forth by existing code, and adhering to the design patterns set forth by existing UI elements will be considered and/or accepted.
 
 For general tips on open source contributions, see [Contributing to Open Source on GitHub](https://guides.github.com/activities/contributing-to-open-source/).
