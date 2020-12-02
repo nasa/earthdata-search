@@ -29,6 +29,7 @@ import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getUsername } from '../selectors/user'
 import { hasTag } from '../../../../sharedUtils/tags'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 
@@ -134,6 +135,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   // Retrieve data from Redux using selectors
   const collectionsMetadata = getCollectionsMetadata(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
+  const username = getUsername(state)
 
   const { defaultCmrSearchTags } = getApplicationConfig()
 
@@ -256,7 +258,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     includeTags: defaultCmrSearchTags.join(','),
     includeGranuleCounts,
     includeHasGranules,
-    pageSize: filteredIds.length
+    pageSize: filteredIds.length,
+    subscriberId: username
   })
     .then((response) => {
       const payload = []

@@ -11,6 +11,7 @@ import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
+import { getUsername } from '../selectors/user'
 import { hasTag } from '../../../../sharedUtils/tags'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
@@ -44,6 +45,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   const earthdataEnvironment = getEarthdataEnvironment(state)
   const focusedCollectionId = getFocusedCollectionId(state)
   const focusedCollectionMetadata = getFocusedCollectionMetadata(state)
+  const username = getUsername(state)
 
   // Use the `hasAllMetadata` flag to determine if we've requested previously
   // requested the focused collections metadata from graphql
@@ -150,7 +152,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   const response = graphRequestObject.search(graphQuery, {
     id: focusedCollectionId,
     includeHasGranules: true,
-    includeTags: defaultCmrSearchTags.join(',')
+    includeTags: defaultCmrSearchTags.join(','),
+    subscriberId: username
   })
     .then((response) => {
       const payload = []
