@@ -161,12 +161,6 @@ describe('createSubscription', () => {
     })
 
     await store.dispatch(createSubscription()).then(() => {
-      // const storeActions = store.getActions()
-      // expect(storeActions[0]).toEqual({
-      //   type: REMOVE_SUBSCRIPTION,
-      //   payload: 'SUB1000-EDSC'
-      // })
-
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription created')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')

@@ -14,6 +14,6 @@ export const prepareSubscriptionQuery = (params) => {
   delete prunedParams.pageNum
   delete prunedParams.sortKey
 
-  // Return the remianing parameters stringified
+  // Return the remaining parameters stringified
   return stringify(prunedParams)
 }
