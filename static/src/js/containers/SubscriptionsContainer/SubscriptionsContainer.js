@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onDeleteSubscription: data => dispatch(actions.deleteSubscription(data)),
+  onDeleteSubscription:
+    (conceptId, nativeId) => dispatch(actions.deleteSubscription(conceptId, nativeId)),
   onFetchSubscriptions: () => dispatch(actions.getSubscriptions())
 })
 
