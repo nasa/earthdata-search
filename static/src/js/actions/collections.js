@@ -1,5 +1,4 @@
 import { isCancel } from 'axios'
-import { isPlainObject } from 'lodash'
 
 import CollectionRequest from '../util/request/collectionRequest'
 import {
@@ -27,6 +26,7 @@ import {
 
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { pruneFilters } from '../util/pruneFilters'
 
 export const addMoreCollectionResults = payload => ({
   type: ADD_MORE_COLLECTION_RESULTS,
@@ -104,23 +104,7 @@ export const updateFocusedCollectionGranuleFilters = granuleFilters => (dispatch
     ...granuleFilters
   }
 
-  // Prune empty filters before sending to the store
-  const prunedFilters = Object.keys(allGranuleFilters).reduce((obj, key) => {
-    const newObj = obj
-
-    // If the value is not an object, only add the key if the value is truthy. This removes
-    // any unset values
-    if (!isPlainObject(allGranuleFilters[key])) {
-      if (allGranuleFilters[key]) {
-        newObj[key] = allGranuleFilters[key]
-      }
-    } else if (Object.values(allGranuleFilters[key]).some(key => !!key)) {
-      // Otherwise, only add an object if it contains at least one truthy value
-      newObj[key] = allGranuleFilters[key]
-    }
-
-    return newObj
-  }, {})
+  const prunedFilters = pruneFilters(allGranuleFilters)
 
   // Updates the granule search query, throwing out all existing values
   dispatch({

@@ -10,11 +10,15 @@ import {
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
+import { extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getFocusedCollectionId } from '../selectors/focusedCollection'
+import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
 
 import { addToast } from '../util/addToast'
 import GraphQlRequest from '../util/request/graphQlRequest'
+import { prepareSubscriptionQuery } from '../util/subscriptions'
 
 export const updateSubscriptionResults = payload => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -47,6 +51,77 @@ export const removeSubscription = payload => ({
   type: REMOVE_SUBSCRIPTION,
   payload
 })
+
+/**
+ * Perform a subscriptions request.
+ */
+export const createSubscription = () => async (dispatch, getState) => {
+  const state = getState()
+
+  const {
+    authToken
+  } = state
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const username = getUsername(state)
+  const collectionId = getFocusedCollectionId(state)
+  const collectionMetadata = getFocusedCollectionMetadata(state)
+
+  // Extract granule search parameters from redux specific to the focused collection
+  const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
+
+  const granuleParams = prepareGranuleParams(
+    collectionMetadata,
+    extractedGranuleParams
+  )
+
+  // Prun granuleParams and remove unused keys to create the subscription query
+  const subscriptionQuery = prepareSubscriptionQuery(granuleParams)
+
+  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+
+  const graphQuery = `
+    mutation CreateSubscription (
+      $collectionConceptId: String!
+      $name: String!
+      $subscriberId: String!
+      $query: String!
+    ) {
+      createSubscription (
+        collectionConceptId: $collectionConceptId
+        name: $name
+        subscriberId: $subscriberId
+        query: $query
+      ) {
+          conceptId
+        }
+      }
+  `
+
+  const response = graphRequestObject.search(graphQuery, {
+    collectionConceptId: collectionId,
+    name: `${collectionId} Subscription`,
+    subscriberId: username,
+    query: subscriptionQuery
+  })
+    .then(() => {
+      addToast('Subscription created', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    })
+    .catch((error) => {
+      dispatch(actions.handleError({
+        error,
+        action: 'createSubscription',
+        resource: 'subscription',
+        requestObject: graphRequestObject
+      }))
+    })
+
+  return response
+}
 
 /**
  * Perform a subscriptions request.
