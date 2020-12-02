@@ -76,7 +76,7 @@ export const createSubscription = () => async (dispatch, getState) => {
     extractedGranuleParams
   )
 
-  // Prun granuleParams and remove unused keys to create the subscription query
+  // Prune granuleParams and remove unused keys to create the subscription query
   const subscriptionQuery = prepareSubscriptionQuery(granuleParams)
 
   const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
