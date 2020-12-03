@@ -171,6 +171,7 @@ import {
   updatePreferences
 } from './preferences'
 import {
+  createSubscription,
   deleteSubscription,
   getSubscriptions
 } from './subscriptions'
@@ -209,6 +210,7 @@ const actions = {
   clearFilters,
   clearShapefile,
   collectionRelevancyMetrics,
+  createSubscription,
   deleteAutocompleteValue,
   deleteRetrieval,
   deleteSavedProject,

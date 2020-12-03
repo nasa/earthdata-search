@@ -143,6 +143,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             definition
             longName
             name
+            nativeId
             scienceKeywords
           }
         }
@@ -178,6 +179,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           hasGranules,
           services,
           shortName,
+          subscriptions,
           tags,
           tilingIdentificationSystems,
           title,
@@ -204,6 +206,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', ''),
           services,
           shortName,
+          subscriptions,
           tags,
           tilingIdentificationSystems,
           title,

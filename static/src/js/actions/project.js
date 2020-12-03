@@ -246,6 +246,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               definition
               longName
               name
+              nativeId
               scienceKeywords
             }
           }
@@ -284,6 +285,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           hasGranules,
           services,
           shortName,
+          subscriptions,
           tags,
           tilingIdentificationSystems,
           title,
@@ -309,6 +311,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', ''),
           services,
           shortName,
+          subscriptions,
           tags,
           tilingIdentificationSystems,
           title,

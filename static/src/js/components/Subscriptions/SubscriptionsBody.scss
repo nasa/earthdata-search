@@ -1,0 +1,18 @@
+.subscriptions-body {
+  &__content {
+    padding: 1rem;
+  }
+
+  &__row {
+    &--intro {
+      padding-bottom: 1rem;
+      border-bottom: 1px solid $color__black--200;
+    }
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

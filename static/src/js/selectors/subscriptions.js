@@ -1,7 +1,5 @@
 import { createSelector } from 'reselect'
 
-import { getFocusedCollectionId } from './focusedCollection'
-
 /**
  * Retrieve all subscription metadata from Redux
  * @param {Object} state Current state of Redux
@@ -34,17 +32,5 @@ export const getSubscriptionsByCollectionId = createSelector(
     })
 
     return byCollectionConceptId
-  }
-)
-
-/**
- * Retrieve subscriptions from Redux pertaining to the focused collection id
- */
-export const getFocusedCollectionSubscriptions = createSelector(
-  [getFocusedCollectionId, getSubscriptionsByCollectionId],
-  (focusedCollectionId, subscriptionsByCollectionId) => {
-    const { [focusedCollectionId]: subscriptions = [] } = subscriptionsByCollectionId
-
-    return subscriptions
   }
 )
