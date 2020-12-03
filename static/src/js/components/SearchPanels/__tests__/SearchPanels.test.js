@@ -559,6 +559,14 @@ describe('SearchPanels component', () => {
             search: ''
           },
           title: 'View Granules'
+        },
+        {
+          icon: 'bell',
+          link: {
+            pathname: '/search/granules/subscriptions',
+            search: ''
+          },
+          title: 'View Subscriptions'
         }
       ])
     })
@@ -571,6 +579,61 @@ describe('SearchPanels component', () => {
 
       expect(granuleDetailsProps.primaryHeading).toBe('Collection Title')
       expect(granuleDetailsProps.headerLoading).toBe(false)
+    })
+  })
+
+  describe('while on the /granules/subscriptions route', () => {
+    test('sets the correct breadcrumbs', () => {
+      const { enzymeWrapper } = setup({}, '/search/granules/subscriptions')
+      const panels = enzymeWrapper.find(Panels)
+      const subscriptionsPanel = panels.find(PanelGroup).at(4)
+      const subscriptionsPanelProps = subscriptionsPanel.props()
+
+      expect(subscriptionsPanelProps.breadcrumbs[0].link.pathname).toEqual('/search')
+      expect(subscriptionsPanelProps.breadcrumbs[0].link.search).toEqual('')
+      expect(typeof subscriptionsPanelProps.breadcrumbs[0].onClick).toEqual('function')
+      expect(subscriptionsPanelProps.breadcrumbs[0].title).toEqual('Search Results')
+
+      expect(subscriptionsPanelProps.breadcrumbs[1].link.pathname).toEqual('/search/granules')
+      expect(subscriptionsPanelProps.breadcrumbs[1].link.search).toEqual('')
+      expect(subscriptionsPanelProps.breadcrumbs[1].options.shrink).toEqual(true)
+      expect(subscriptionsPanelProps.breadcrumbs[1].title).toEqual('Collection Title')
+    })
+
+    test('sets the correct more action dropdown items', () => {
+      const { enzymeWrapper } = setup({}, '/search/granules/subscriptions')
+      const panels = enzymeWrapper.find(Panels)
+      const subscriptionsPanel = panels.find(PanelGroup).at(4)
+      const subscriptionsPanelProps = subscriptionsPanel.props()
+
+      expect(subscriptionsPanelProps.moreActionsDropdownItems).toStrictEqual([
+        {
+          icon: 'info-circle',
+          link: {
+            pathname: '/search/granules/collection-details',
+            search: ''
+          },
+          title: 'View Collection Details'
+        },
+        {
+          icon: 'map',
+          link: {
+            pathname: '/search/granules',
+            search: ''
+          },
+          title: 'View Granules'
+        }
+      ])
+    })
+
+    test('sets the correct primary heading', () => {
+      const { enzymeWrapper } = setup({}, '/search/granules/subscriptions')
+      const panels = enzymeWrapper.find(Panels)
+      const subscriptionsPanel = panels.find(PanelGroup).at(4)
+      const subscriptionsPanelProps = subscriptionsPanel.props()
+
+      expect(subscriptionsPanelProps.primaryHeading).toBe('Subscriptions')
+      expect(subscriptionsPanelProps.headerLoading).toBe(false)
     })
   })
 

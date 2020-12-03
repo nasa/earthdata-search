@@ -21,6 +21,8 @@ import GranuleResultsBodyContainer
   from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
 import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
+import SubscriptionsBodyContainer
+  from '../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
 
 
 import Button from '../Button/Button'
@@ -436,6 +438,14 @@ class SearchPanels extends PureComponent {
               pathname: '/search/granules',
               search: location.search
             }
+          },
+          {
+            title: 'View Subscriptions',
+            icon: 'bell',
+            link: {
+              pathname: '/search/granules/subscriptions',
+              search: location.search
+            }
           }
         ]}
         onPanelClose={this.onPanelClose}
@@ -497,6 +507,56 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    panelSection.push(
+      <PanelGroup
+        key="subscriptions-panel"
+        primaryHeading="Subscriptions"
+        breadcrumbs={[
+          {
+            title: 'Search Results',
+            link: {
+              pathname: '/search',
+              search: location.search
+            },
+            onClick: () => onFocusedCollectionChange('')
+          },
+          {
+            title: collectionTitle,
+            link: {
+              pathname: '/search/granules',
+              search: location.search
+            },
+            options: {
+              shrink: true
+            }
+          }
+        ]}
+        moreActionsDropdownItems={[
+          {
+            title: 'View Collection Details',
+            icon: 'info-circle',
+            link: {
+              pathname: '/search/granules/collection-details',
+              search: location.search
+            }
+          },
+          {
+            title: 'View Granules',
+            icon: 'map',
+            link: {
+              pathname: '/search/granules',
+              search: location.search
+            }
+          }
+        ]}
+        onPanelClose={this.onPanelClose}
+      >
+        <PanelItem scrollable={false}>
+          <SubscriptionsBodyContainer />
+        </PanelItem>
+      </PanelGroup>
+    )
+
     return (
       <Switch key="panel-children">
         <Route
@@ -515,6 +575,9 @@ class SearchPanels extends PureComponent {
               let activePanel = '0.0.0'
 
               switch (activePanelFromProps) {
+                case 'granules/subscriptions':
+                  activePanel = '0.4.0'
+                  break
                 case 'granules/granule-details':
                   activePanel = '0.3.0'
                   break

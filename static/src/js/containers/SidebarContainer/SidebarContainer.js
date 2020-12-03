@@ -18,7 +18,8 @@ export const SidebarContainer = ({
     '/search/granules',
     '/projects',
     '/search/granules/collection-details',
-    '/search/granules/granule-details'
+    '/search/granules/granule-details',
+    '/search/granules/subscriptions'
   ])
 
   return (

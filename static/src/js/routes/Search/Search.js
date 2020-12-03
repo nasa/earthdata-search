@@ -138,6 +138,14 @@ export const Search = ({
               <CollectionDetailsHighlightsContainer />
             </SidebarSection>
           </Route>
+          <Route exact path={`${path}/granules/subscriptions`}>
+            <SidebarSection
+              sectionTitle="Collection Details"
+              titleIcon="info-circle"
+            >
+              <CollectionDetailsHighlightsContainer />
+            </SidebarSection>
+          </Route>
           <Route path={path}>
             <SidebarSection
               sectionTitle="Filter Collections"
