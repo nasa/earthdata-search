@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect'
 
+import { extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
+import { prepareSubscriptionQuery } from '../util/subscriptions'
+
 import { getFocusedCollectionId } from './focusedCollection'
+import { getFocusedCollectionMetadata } from './collectionMetadata'
 
 /**
  * Retrieve current collection query information from Redux
@@ -24,5 +28,24 @@ export const getFocusedCollectionGranuleQuery = createSelector(
     const { granules: collectionGranuleQuery = {} } = collectionQuery
 
     return collectionGranuleQuery
+  }
+)
+
+// TODO: Needs tests - EDSC-2923
+export const getFocusedGranuleQueryString = createSelector(
+  [state => state, getFocusedCollectionMetadata],
+  (state, collectionMetadata) => {
+    const { collectionId } = collectionMetadata
+    // Extract granule search parameters from redux specific to the focused collection
+    const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
+
+    const granuleParams = prepareGranuleParams(
+      collectionMetadata,
+      extractedGranuleParams
+    )
+
+    const subscriptionQuery = prepareSubscriptionQuery(granuleParams)
+
+    return subscriptionQuery
   }
 )
