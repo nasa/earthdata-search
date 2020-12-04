@@ -1,8 +1,9 @@
 import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-
+import { stringify } from 'qs'
 import { isEqual } from 'lodash'
+
 import actions from '../index'
 
 import {
@@ -27,7 +28,6 @@ import {
 
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as addToast from '../../util/addToast'
-import { stringify } from 'qs'
 
 const mockStore = configureMockStore([thunk])
 
@@ -165,6 +165,107 @@ describe('createSubscription', () => {
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription created')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
       expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+    })
+  })
+
+  describe.only('when other subscriptions exist for the same collection', () => {
+    test('calls graphql to create a subscription', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com'
+      }))
+      const addToastMock = jest.spyOn(addToast, 'addToast')
+
+      nock(/localhost/)
+        .post(/graphql/, (body) => {
+          const { data } = body
+          const { variables } = data
+          const {
+            collectionConceptId,
+            name,
+            subscriberId,
+            query
+          } = variables
+
+          const expectedName = 'collectionId Subscription (1)'
+          const expectedQuery = stringify({
+            browseOnly: true,
+            options: { spatial: { or: true } },
+            polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78',
+            temporalString: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
+          })
+
+          // Mock the request if the the variables match
+          return collectionConceptId === 'collectionId'
+            && name === expectedName
+            && subscriberId === 'testUser'
+            && isEqual(query, expectedQuery)
+        })
+        .reply(200, {
+          data: {
+            createSubscription: {
+              conceptId: 'SUB1000-EDSC'
+            }
+          }
+        })
+
+      const store = mockStore({
+        authToken: 'token',
+        earthdataEnvironment: 'prod',
+        metadata: {
+          collections: {
+            collectionId: {
+              subscriptions: {
+                items: [
+                  {
+                    name: 'collectionId Subscription',
+                    conceptId: 'SUB1'
+                  }
+                ]
+              }
+            }
+          }
+        },
+        project: {},
+        focusedCollection: 'collectionId',
+        query: {
+          collection: {
+            byId: {
+              collectionId: {
+                granules: {
+                  excludedGranuleIds: [],
+                  gridCoords: '',
+                  pageNum: 2,
+                  sortKey: '-start_date',
+                  collectionId: 'collectionId',
+                  browseOnly: true
+                }
+              }
+            },
+            temporal: {
+              startDate: '2020-01-01T00:00:00.000Z',
+              endDate: '2020-01-31T23:59:59.999Z',
+              isRecurring: false
+            },
+            spatial: {
+              polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
+            }
+          }
+        },
+        timeline: {
+          query: {}
+        },
+        user: {
+          username: 'testUser'
+        }
+      })
+
+      await store.dispatch(createSubscription()).then(() => {
+        expect(addToastMock.mock.calls.length).toBe(1)
+        expect(addToastMock.mock.calls[0][0]).toEqual('Subscription created')
+        expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
+        expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+      })
     })
   })
 })
