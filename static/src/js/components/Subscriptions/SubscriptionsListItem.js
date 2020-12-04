@@ -55,7 +55,7 @@ export const SubscriptionsListItem = ({
               </Tooltip>
             )}
           >
-            <span className="subscriptions-list-item__query">
+            <span className="subscriptions-list-item__query-text">
               {
                 Object.keys(parsedQuery).map((key, i) => {
                   const humanizedKey = humanizedGranuleQueryMap[key]

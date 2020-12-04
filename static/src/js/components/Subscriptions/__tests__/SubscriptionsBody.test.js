@@ -14,6 +14,7 @@ beforeAll(() => {
 
 function setup(overrideProps) {
   const props = {
+    granuleQueryString: 'options[spatial][or]=true',
     onCreateSubscription: jest.fn(),
     subscriptions: [],
     ...overrideProps
