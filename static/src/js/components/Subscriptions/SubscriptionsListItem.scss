@@ -5,19 +5,72 @@
   padding: 0.75rem 1rem;
   border-bottom: 1px solid $color__black--200;
 
+  &__primary {
+    flex-shrink: 1;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
   &__name {
     margin: 0;
     font-weight: 500;
     font-size: 0.825rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   &__query {
     display: block;
     font-size: 0.75rem;
     color: $color__black--500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__actions {
+    display: none;
+    flex-shrink: 0;
+    flex-grow: 0;
   }
 
   &__action {
     margin-left: 0.5rem;
+  }
+
+  &__tooltip {
+    width: 20rem;
+  }
+
+  &__tooltip-query-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__tooltip-query-heading {
+    text-align: left;
+    margin-bottom: 0.325rem;
+    padding-bottom: 0.325rem;
+    border-bottom: 1px solid rgba($color__white, 0.15);
+  }
+
+  &__tooltip-query-list-item {
+    display: flex;
+    margin-bottom: 0.125rem;
+  }
+
+  &__tooltip-query-list-item-heading {
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin-right: 0.125rem;
+    font-size: 0.75rem;
+  }
+
+  &__tooltip-query-list-item-value {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
