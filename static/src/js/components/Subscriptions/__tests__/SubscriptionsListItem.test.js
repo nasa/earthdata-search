@@ -16,7 +16,7 @@ function setup(overrideProps) {
       collectionId: 'COLL-ID-1',
       conceptId: 'SUB1',
       name: 'Subscription 1',
-      query: 'options%5Bspatial%5D%5Bor%5D=true'
+      query: 'options[spatial][or]=true'
     },
     ...overrideProps
   }
@@ -43,8 +43,8 @@ describe('SubscriptionsBody component', () => {
 
   test('should render the query', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('.subscriptions-list-item__query').text())
-      .toEqual('options[spatial][or]=true')
+    expect(enzymeWrapper.find('.subscriptions-list-item__query-text').text())
+      .toEqual('Options: {"spatial":{"or":"true"}}')
   })
 
   describe('edit button', () => {

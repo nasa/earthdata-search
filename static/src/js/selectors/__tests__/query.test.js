@@ -48,7 +48,7 @@ describe('getFocusedGranuleQueryString selector', () => {
               granules: {
                 browseOnly: true,
                 pageNum: 2,
-                sortKeu: '-start_date'
+                sortKey: '-start_date'
               }
             }
           },
