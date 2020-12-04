@@ -11,6 +11,7 @@ import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 
+import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import CollectionDetailsBodyContainer
@@ -552,7 +553,9 @@ class SearchPanels extends PureComponent {
         onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
-          <SubscriptionsBodyContainer />
+          <AuthRequiredContainer>
+            <SubscriptionsBodyContainer />
+          </AuthRequiredContainer>
         </PanelItem>
       </PanelGroup>
     )

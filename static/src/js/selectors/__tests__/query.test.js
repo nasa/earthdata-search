@@ -1,4 +1,4 @@
-import { getFocusedCollectionGranuleQuery } from '../query'
+import { getFocusedCollectionGranuleQuery, getFocusedGranuleQueryString } from '../query'
 
 describe('getFocusedCollectionGranuleQuery selector', () => {
   test('returns the granule query', () => {
@@ -27,5 +27,38 @@ describe('getFocusedCollectionGranuleQuery selector', () => {
     }
 
     expect(getFocusedCollectionGranuleQuery(state)).toEqual({})
+  })
+})
+
+describe('getFocusedGranuleQueryString selector', () => {
+  test('returns the granule query string', () => {
+    const state = {
+      focusedCollection: 'collectionId',
+      metadata: {
+        collections: {
+          collectionId: {
+            collectionId: 'collectionId'
+          }
+        }
+      },
+      query: {
+        collection: {
+          byId: {
+            collectionId: {
+              granules: {
+                browseOnly: true,
+                pageNum: 2,
+                sortKeu: '-start_date'
+              }
+            }
+          },
+          spatial: {
+            point: '0,0'
+          }
+        }
+      }
+    }
+
+    expect(getFocusedGranuleQueryString(state)).toEqual('browseOnly=true&options%5Bspatial%5D%5Bor%5D=true&point=0%2C0')
   })
 })
