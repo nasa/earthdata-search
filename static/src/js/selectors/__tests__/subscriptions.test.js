@@ -1,7 +1,6 @@
 import {
   getSubscriptions,
-  getSubscriptionsByCollectionId,
-  getFocusedCollectionSubscriptions
+  getSubscriptionsByCollectionId
 } from '../subscriptions'
 
 describe('getSubscriptions selector', () => {

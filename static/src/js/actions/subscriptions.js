@@ -68,6 +68,17 @@ export const createSubscription = () => async (dispatch, getState) => {
   const collectionId = getFocusedCollectionId(state)
   const collectionMetadata = getFocusedCollectionMetadata(state)
 
+  const { subscriptions = {} } = collectionMetadata
+  const { items: subscriptionItems = [] } = subscriptions
+  const existingSubscriptionCount = subscriptionItems.length > 0 ? subscriptionItems.length : ''
+
+  // Format the subscription name
+  let subscriptionName = `${collectionId} Subscription`
+
+  if (existingSubscriptionCount) {
+    subscriptionName += ` (${existingSubscriptionCount})`
+  }
+
   // Extract granule search parameters from redux specific to the focused collection
   const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
 
@@ -98,10 +109,9 @@ export const createSubscription = () => async (dispatch, getState) => {
         }
       }
   `
-
   const response = graphRequestObject.search(graphQuery, {
     collectionConceptId: collectionId,
-    name: `${collectionId} Subscription`,
+    name: subscriptionName,
     subscriberId: username,
     query: subscriptionQuery
   })
