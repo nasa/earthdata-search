@@ -1,4 +1,6 @@
+import nock from 'nock'
 import request from 'request-promise'
+
 import { pageAllCmrResults } from '../pageAllCmrResults'
 
 beforeEach(() => {
@@ -7,13 +9,16 @@ beforeEach(() => {
 
 describe('pageAllCmrResults', () => {
   test('does not iterate when uneccessary', async () => {
-    const cmrMock = jest.spyOn(request, 'post').mockImplementationOnce(() => ({
-      statusCode: 200,
-      headers: {
+    const cmrMock = jest.spyOn(request, 'post')
+
+    nock(/cmr/)
+      .matchHeader('Echo-Token', 'test-token')
+      .post(/services/)
+      .reply(200, {
+        items: []
+      }, {
         'cmr-hits': 495
-      },
-      body: { items: [] }
-    }))
+      })
 
     await pageAllCmrResults({
       cmrToken: 'test-token',
@@ -28,18 +33,17 @@ describe('pageAllCmrResults', () => {
   })
 
   test('iterates through the correct number of pages', async () => {
-    const pageResponse = {
-      statusCode: 200,
-      headers: {
-        'cmr-hits': 2000
-      },
-      body: { items: [] }
-    }
     const cmrMock = jest.spyOn(request, 'post')
-      .mockImplementationOnce(() => pageResponse)
-      .mockImplementationOnce(() => pageResponse)
-      .mockImplementationOnce(() => pageResponse)
-      .mockImplementationOnce(() => pageResponse)
+
+    nock(/cmr/)
+      .matchHeader('Echo-Token', 'test-token')
+      .post(/services/)
+      .times(4)
+      .reply(200, {
+        items: []
+      }, {
+        'cmr-hits': 2000
+      })
 
     await pageAllCmrResults({
       cmrToken: 'test-token',

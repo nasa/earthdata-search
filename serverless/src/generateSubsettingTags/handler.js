@@ -54,7 +54,7 @@ const generateSubsettingTags = async (event, context) => {
       uri: serviceOptionAssignmentUrl,
       headers: {
         'Client-Id': getClientId().background,
-        'Echo-Client': cmrToken
+        'Echo-Token': cmrToken
       },
       json: true,
       resolveWithFullResponse: true

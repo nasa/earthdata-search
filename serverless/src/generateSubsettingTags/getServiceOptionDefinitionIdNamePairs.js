@@ -34,7 +34,7 @@ export const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOpt
         uri: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}`,
         headers: {
           'Client-Id': getClientId().background,
-          'Echo-Client': cmrToken
+          'Echo-Token': cmrToken
         },
         json: true,
         resolveWithFullResponse: true
