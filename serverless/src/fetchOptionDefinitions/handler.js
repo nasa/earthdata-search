@@ -60,9 +60,9 @@ const fetchOptionDefinitions = async (event, context) => {
           'catalog_item_id[]': granuleId
         }, { indices: false, arrayFormat: 'brackets' }),
         headers: {
-          Authorization: `Bearer ${cmrToken}`,
           'Client-Id': getClientId().background,
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Echo-Token': cmrToken
         },
         json: true,
         resolveWithFullResponse: true
