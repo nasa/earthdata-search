@@ -1,7 +1,8 @@
 import collectionMetadataReducer from '../collectionMetadata'
 import {
   RESTORE_FROM_URL,
-  UPDATE_COLLECTION_METADATA
+  UPDATE_COLLECTION_METADATA,
+  UPDATE_COLLECTION_SUBSCRIPTIONS
 } from '../../constants/actionTypes'
 
 const initialState = {}
@@ -11,6 +12,48 @@ describe('INITIAL_STATE', () => {
     const action = { type: 'dummy_action' }
 
     expect(collectionMetadataReducer(undefined, action)).toEqual(initialState)
+  })
+})
+
+describe('UPDATE_COLLECTION_SUBSCRIPTIONS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+      payload: {
+        collectionId: 'collectionId',
+        subscriptions: {
+          items: [
+            'new items'
+          ]
+        }
+      }
+    }
+
+    const initial = {
+      collectionId: {
+        id: 'collectionId',
+        conceptId: 'collectionId',
+        subscriptions: {
+          items: [
+            'original items'
+          ]
+        }
+      }
+    }
+
+    const expectedState = {
+      collectionId: {
+        id: 'collectionId',
+        conceptId: 'collectionId',
+        subscriptions: {
+          items: [
+            'new items'
+          ]
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
   })
 })
 

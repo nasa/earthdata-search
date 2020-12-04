@@ -2,7 +2,8 @@ import camelCaseKeys from 'camelcase-keys'
 
 import {
   RESTORE_FROM_URL,
-  UPDATE_COLLECTION_METADATA
+  UPDATE_COLLECTION_METADATA,
+  UPDATE_COLLECTION_SUBSCRIPTIONS
 } from '../constants/actionTypes'
 
 const initialState = {}
@@ -46,6 +47,20 @@ const collectionMetadataReducer = (state = initialState, action) => {
       return {
         ...state,
         ...newState
+      }
+    }
+    case UPDATE_COLLECTION_SUBSCRIPTIONS: {
+      const { payload } = action
+      const { collectionId, subscriptions } = payload
+
+      const collectionMetadata = state[collectionId]
+
+      return {
+        ...state,
+        [collectionId]: {
+          ...collectionMetadata,
+          subscriptions
+        }
       }
     }
     case RESTORE_FROM_URL: {

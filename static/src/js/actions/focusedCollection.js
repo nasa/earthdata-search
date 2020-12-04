@@ -1,7 +1,8 @@
 import actions from './index'
 
 import {
-  UPDATE_FOCUSED_COLLECTION
+  UPDATE_FOCUSED_COLLECTION,
+  UPDATE_COLLECTION_SUBSCRIPTIONS
 } from '../constants/actionTypes'
 
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
@@ -241,6 +242,78 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         error,
         action: 'getFocusedCollection',
         resource: 'collection',
+        requestObject: graphRequestObject
+      }))
+    })
+
+  return response
+}
+
+
+/**
+ * Request subscriptions for the focused collection
+ */
+export const getFocusedCollectionSubscriptions = () => async (dispatch, getState) => {
+  const state = getState()
+
+  const {
+    authToken
+  } = state
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const focusedCollectionId = getFocusedCollectionId(state)
+  const username = getUsername(state)
+
+  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+
+  const graphQuery = `
+    query GetCollectionSubscriptions(
+      $collectionConceptId: String
+      $subscriberId: String
+    ) {
+      subscriptions(
+        collectionConceptId: $collectionConceptId
+        subscriberId: $subscriberId
+      ) {
+        count
+        items {
+          collectionConceptId
+          conceptId
+          name
+          query
+        }
+      }
+    }`
+
+  const response = graphRequestObject.search(graphQuery, {
+    collectionConceptId: focusedCollectionId,
+    subscriberId: username
+  })
+    .then((response) => {
+      const {
+        data: responseData,
+        headers
+      } = response.data
+
+      const { subscriptions } = responseData
+
+      // A users authToken will come back with an authenticated request if a valid token was used
+      dispatch(actions.updateAuthTokenFromHeaders(headers))
+
+      dispatch({
+        type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+        payload: {
+          collectionId: focusedCollectionId,
+          subscriptions
+        }
+      })
+    })
+    .catch((error) => {
+      dispatch(actions.handleError({
+        error,
+        action: 'getFocusedCollectionSubscriptions',
+        resource: 'subscription',
         requestObject: graphRequestObject
       }))
     })

@@ -6,6 +6,7 @@ import actions from '../index'
 
 import {
   getFocusedCollection,
+  getFocusedCollectionSubscriptions,
   updateFocusedCollection,
   viewCollectionDetails,
   viewCollectionGranules
@@ -16,6 +17,7 @@ import {
   INITIALIZE_COLLECTION_GRANULES_RESULTS,
   TOGGLE_SPATIAL_POLYGON_WARNING,
   UPDATE_COLLECTION_METADATA,
+  UPDATE_COLLECTION_SUBSCRIPTIONS,
   UPDATE_FOCUSED_COLLECTION,
   UPDATE_FOCUSED_GRANULE
 } from '../../constants/actionTypes'
@@ -337,6 +339,76 @@ describe('getFocusedCollection', () => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(relevancyMock).toHaveBeenCalledTimes(1)
     })
+  })
+})
+
+describe('getFocusedCollectionSubscriptions', () => {
+  beforeEach(() => {
+    jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
+  })
+
+  test('should update the subscriptions', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com',
+      opensearchRoot: 'https://cmr.example.com'
+    }))
+
+    nock(/graph/)
+      .post(/api/)
+      .reply(200, {
+        data: {
+          subscriptions: {
+            items: [
+              'new items'
+            ]
+          }
+        }
+      })
+
+    const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
+    updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
+
+    const store = mockStore({
+      authToken: '',
+      focusedCollection: 'C10000000000-EDSC',
+      metadata: {
+        collections: {
+          'C10000000000-EDSC': {
+            id: 'C10000000000-EDSC',
+            subscriptions: {
+              items: [
+                'original items'
+              ]
+            }
+          }
+        }
+      },
+      query: {
+        collection: {
+          spatial: {}
+        }
+      },
+      searchResults: {}
+    })
+
+    await store.dispatch(getFocusedCollectionSubscriptions()).then(() => {
+      const storeActions = store.getActions()
+      console.log('storeActions', storeActions)
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+        payload: {
+          collectionId: 'C10000000000-EDSC',
+          subscriptions: {
+            items: [
+              'new items'
+            ]
+          }
+        }
+      })
+    })
+
+    expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
   })
 })
 
