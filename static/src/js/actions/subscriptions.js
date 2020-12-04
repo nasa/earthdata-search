@@ -120,6 +120,7 @@ export const createSubscription = () => async (dispatch, getState) => {
         appearance: 'success',
         autoDismiss: true
       })
+      dispatch(actions.getFocusedCollectionSubscriptions())
     })
     .catch((error) => {
       dispatch(actions.handleError({
