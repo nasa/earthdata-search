@@ -29,9 +29,9 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     uri: granuleSearchUrl,
     form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {
-      Authorization: `Bearer ${cmrToken}`,
       'Client-Id': getClientId().background,
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Echo-Token': cmrToken
     },
     json: true,
     resolveWithFullResponse: true,

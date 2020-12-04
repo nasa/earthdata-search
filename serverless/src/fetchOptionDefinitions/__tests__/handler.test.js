@@ -46,6 +46,7 @@ describe('fetchOptionDefinitions', () => {
     jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
 
     nock(/echorest/)
+      .matchHeader('Echo-Token', 'mocked-system-token')
       .post(/order_information/)
       .reply(200, [{
         order_information: {
@@ -124,6 +125,7 @@ describe('fetchOptionDefinitions', () => {
     jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
 
     nock(/echorest/)
+      .matchHeader('Echo-Token', 'mocked-system-token')
       .post(/order_information/)
       .reply(200, [{
         order_information: {}
@@ -179,6 +181,7 @@ describe('fetchOptionDefinitions', () => {
     jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
 
     nock(/echorest/)
+      .matchHeader('Echo-Token', 'mocked-system-token')
       .post(/order_information/)
       .reply(200, [])
 
@@ -228,6 +231,7 @@ describe('fetchOptionDefinitions', () => {
     jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
 
     nock(/echorest/)
+      .matchHeader('Echo-Token', 'mocked-system-token')
       .post(/order_information/)
       .reply(200, [{
         order_information: {
@@ -288,6 +292,7 @@ describe('fetchOptionDefinitions', () => {
     jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({ id: 'G10000001-EDSC' }))
 
     nock(/echorest/)
+      .matchHeader('Echo-Token', 'mocked-system-token')
       .post(/order_information/)
       .reply(500, {
         errors: [

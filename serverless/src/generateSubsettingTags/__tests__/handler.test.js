@@ -32,6 +32,7 @@ describe('generateSubsettingTags', () => {
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
 
     nock(/cmr/)
+      .matchHeader('Echo-Token', 'mocked-system-token')
       .get(/service_option_assignments/)
       .reply(200, [
         {
@@ -46,6 +47,7 @@ describe('generateSubsettingTags', () => {
       ])
 
     nock(/cmr/)
+      .matchHeader('Echo-Token', 'mocked-system-token')
       .get(/service_option_definitions/)
       .reply(200, [
         {
@@ -274,6 +276,7 @@ describe('generateSubsettingTags', () => {
 
   test('catches and logs errors from the service option assignments http request correctly', async () => {
     nock(/cmr/)
+      .matchHeader('Echo-Token', 'mocked-system-token')
       .get(/service_option_assignments/)
       .reply(500, {
         errors: [

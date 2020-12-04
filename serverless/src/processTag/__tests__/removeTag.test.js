@@ -24,8 +24,8 @@ describe('removeTag', () => {
     expect(cmrDeleteMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations/by_query',
       headers: {
-        Authorization: 'Bearer 1234-abcd-5678-efgh',
-        'Client-Id': 'eed-edsc-test-serverless-background'
+        'Client-Id': 'eed-edsc-test-serverless-background',
+        'Echo-Token': '1234-abcd-5678-efgh'
       },
       body: { short_name: 'MIL3MLS' },
       json: true,
@@ -55,8 +55,8 @@ describe('removeTag', () => {
     expect(cmrDeleteMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations/by_query',
       headers: {
-        Authorization: 'Bearer 1234-abcd-5678-efgh',
-        'Client-Id': 'eed-edsc-test-serverless-background'
+        'Client-Id': 'eed-edsc-test-serverless-background',
+        'Echo-Token': '1234-abcd-5678-efgh'
       },
       body: { short_name: 'MIL3MLS' },
       json: true,

@@ -51,6 +51,7 @@ describe('generateCollectionCapabilityTags', () => {
       }))
 
       nock(/cmr/)
+        .matchHeader('Echo-Token', 'mocked-system-token')
         .post(/collections/)
         .reply(200, {
           feed: {
@@ -102,6 +103,7 @@ describe('generateCollectionCapabilityTags', () => {
       }))
 
       nock(/cmr/)
+        .matchHeader('Echo-Token', 'mocked-system-token')
         .post(/collections/)
         .reply(200, {
           feed: {
