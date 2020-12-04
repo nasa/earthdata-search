@@ -31,7 +31,6 @@ export const getFocusedCollectionGranuleQuery = createSelector(
   }
 )
 
-// TODO: Needs tests - EDSC-2923
 export const getFocusedGranuleQueryString = createSelector(
   [state => state, getFocusedCollectionMetadata],
   (state, collectionMetadata) => {

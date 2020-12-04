@@ -9,8 +9,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    onCreateSubscription: jest.fn(),
-    subscriptions: []
+    granuleQueryString: 'mock-string',
+    subscriptions: [],
+    onCreateSubscription: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SubscriptionsBodyContainer {...props} />)
@@ -26,7 +27,10 @@ describe('SpatialSelectionContainer component', () => {
     const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(SubscriptionsBody).length).toBe(1)
-    expect(enzymeWrapper.find(SubscriptionsBody).props().onCreateSubscription).toEqual(props.onCreateSubscription)
+    expect(enzymeWrapper.find(SubscriptionsBody).props().granuleQueryString)
+      .toEqual(props.granuleQueryString)
     expect(enzymeWrapper.find(SubscriptionsBody).props().subscriptions).toEqual(props.subscriptions)
+    expect(enzymeWrapper.find(SubscriptionsBody).props().onCreateSubscription)
+      .toEqual(props.onCreateSubscription)
   })
 })
