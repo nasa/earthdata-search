@@ -46,6 +46,7 @@ describe('SubscriptionsBody component', () => {
       expect(enzymeWrapper.find(Button).length).toEqual(1)
     })
 
+    // TODO: Assert that the state updates the loading indicator EDSC-2923
     test('calls onCreateSubscription', () => {
       const { enzymeWrapper, props } = setup()
       const createButton = enzymeWrapper.find(Button)
