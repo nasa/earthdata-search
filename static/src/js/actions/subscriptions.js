@@ -115,12 +115,12 @@ export const createSubscription = () => async (dispatch, getState) => {
     subscriberId: username,
     query: subscriptionQuery
   })
-    .then(() => {
+    .then(async () => {
       addToast('Subscription created', {
         appearance: 'success',
         autoDismiss: true
       })
-      dispatch(actions.getFocusedCollectionSubscriptions())
+      await dispatch(actions.getFocusedCollectionSubscriptions())
     })
     .catch((error) => {
       dispatch(actions.handleError({

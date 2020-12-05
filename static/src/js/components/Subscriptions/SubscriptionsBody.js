@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { isEqual } from 'lodash'
@@ -16,6 +16,8 @@ export const SubscriptionsBody = ({
   subscriptions
 }) => {
   const currentQuery = parse(granuleQueryString)
+
+  const [submittingNewSubscription, setSubmittingNewSubscription] = useState(false)
 
   // TODO: Needs tests - EDSC-2923
   const exactlyMatchingGranuleQueries = subscriptions.filter((subscription) => {
@@ -74,7 +76,12 @@ export const SubscriptionsBody = ({
               bootstrapVariant="primary"
               label="Create New Subscription"
               icon="plus"
-              onClick={() => onCreateSubscription()}
+              spinner={submittingNewSubscription}
+              onClick={async () => {
+                setSubmittingNewSubscription(true)
+                await onCreateSubscription()
+                setSubmittingNewSubscription(false)
+              }}
             >
               Create New Subscription
             </Button>
