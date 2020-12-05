@@ -143,7 +143,10 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     }
 
     // Collection Details
-    if (pathname === '/search/granules/collection-details') {
+    if (
+      pathname === '/search/granules/collection-details'
+      || pathname === '/search/granules/subscriptions'
+    ) {
       dispatch(actions.getFocusedCollection())
     }
 

@@ -17,6 +17,7 @@ import {
 } from '../subscriptions'
 
 import {
+  ADD_ERROR,
   ERRORED_SUBSCRIPTIONS,
   FINISHED_SUBSCRIPTIONS_TIMER,
   LOADED_SUBSCRIPTIONS,
@@ -191,7 +192,7 @@ describe('createSubscription', () => {
             query
           } = variables
 
-          const expectedName = 'collectionId Subscription (1)'
+          const expectedName = 'collectionId Subscription (testUser-1)'
           const expectedQuery = stringify({
             browseOnly: true,
             options: { spatial: { or: true } },
@@ -393,7 +394,7 @@ describe('getSubscriptions', () => {
     })
   })
 
-  test('does not call updateFocusedCollection when graphql throws an http error', async () => {
+  test('calls handleError when graphql throws an http error', async () => {
     const handleErrorMock = jest.spyOn(actions, 'handleError')
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
@@ -403,7 +404,7 @@ describe('getSubscriptions', () => {
 
     nock(/localhost/)
       .post(/graphql/)
-      .reply(403, {
+      .reply(200, {
         errors: [{
           message: 'Token does not exist'
         }]
@@ -424,17 +425,24 @@ describe('getSubscriptions', () => {
       expect(storeActions[0]).toEqual({ type: LOADING_SUBSCRIPTIONS })
       expect(storeActions[1]).toEqual({ type: STARTED_SUBSCRIPTIONS_TIMER })
       expect(storeActions[2]).toEqual({ type: FINISHED_SUBSCRIPTIONS_TIMER })
+
       expect(storeActions[3]).toEqual({
-        type: ERRORED_SUBSCRIPTIONS,
-        payload: [
-          {
-            message: 'Token does not exist'
-          }
-        ]
-      })
-      expect(storeActions[4]).toEqual({
         type: LOADED_SUBSCRIPTIONS,
         payload: { loaded: false }
+      })
+
+      expect(storeActions[4]).toEqual({
+        type: ADD_ERROR,
+        payload: expect.objectContaining({
+          message: 'Error: Token does not exist',
+          notificationType: 'banner',
+          title: 'Error retrieving subscription'
+        })
+      })
+
+      expect(storeActions[5]).toEqual({
+        type: ERRORED_SUBSCRIPTIONS,
+        payload: 'Error: Token does not exist'
       })
 
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
@@ -484,7 +492,7 @@ describe('deleteSubscription', () => {
     })
   })
 
-  test('does not call updateFocusedCollection when graphql throws an http error', async () => {
+  test('calls handleError when graphql throws an http error', async () => {
     const handleErrorMock = jest.spyOn(actions, 'handleError')
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
@@ -494,7 +502,7 @@ describe('deleteSubscription', () => {
 
     nock(/localhost/)
       .post(/graphql/)
-      .reply(403, {
+      .reply(200, {
         errors: [{
           message: 'Token does not exist'
         }]

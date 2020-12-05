@@ -92,7 +92,7 @@ describe('fetchAccessMethods', () => {
       type: ADD_ERROR,
       payload: expect.objectContaining({
         title: 'Error retrieving providers',
-        message: 'There was a problem completing the request'
+        message: 'HTTP Request Error'
       })
     })
   })
@@ -186,7 +186,7 @@ describe('fetchAccessMethods', () => {
       type: ADD_ERROR,
       payload: expect.objectContaining({
         title: 'Error retrieving access methods',
-        message: 'There was a problem completing the request'
+        message: 'HTTP Request Error'
       })
     })
   })

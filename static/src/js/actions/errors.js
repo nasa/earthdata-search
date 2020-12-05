@@ -40,7 +40,8 @@ export const handleError = ({
   resource,
   verb = 'retrieving',
   notificationType = displayNotificationType.banner,
-  requestObject
+  requestObject,
+  errorAction
 }) => (dispatch, getState) => {
   const { router = {} } = getState()
   const { location } = router
@@ -52,19 +53,22 @@ export const handleError = ({
     requestId = existingRequestId
   }
 
-  dispatch(addError({
-    id: requestId,
-    title: `Error ${verb} ${resource}`,
-    message,
-    details: error,
-    notificationType
-  }))
-
   const parsedError = parseError(error, { asJSON: false })
 
   // Use the first element of the errorArray returned from parseError
   // defaulting to the `message` argument provided to this action
   const [defaultErrorMessage = message] = parsedError
+
+  dispatch(addError({
+    id: requestId,
+    title: `Error ${verb} ${resource}`,
+    message: defaultErrorMessage,
+    notificationType
+  }))
+
+  if (errorAction) {
+    dispatch(errorAction(defaultErrorMessage))
+  }
 
   console.error(`Action [${action}] failed: ${defaultErrorMessage}`)
 

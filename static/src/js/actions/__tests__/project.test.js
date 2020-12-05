@@ -388,7 +388,7 @@ describe('getProjectCollections', () => {
       type: ADD_ERROR,
       payload: expect.objectContaining({
         title: 'Error retrieving project collections',
-        message: 'There was a problem completing the request'
+        message: 'HTTP Request Error'
       })
     })
 
