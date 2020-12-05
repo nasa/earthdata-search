@@ -394,7 +394,6 @@ describe('getFocusedCollectionSubscriptions', () => {
 
     await store.dispatch(getFocusedCollectionSubscriptions()).then(() => {
       const storeActions = store.getActions()
-      console.log('storeActions', storeActions)
       expect(storeActions[0]).toEqual({
         type: UPDATE_COLLECTION_SUBSCRIPTIONS,
         payload: {

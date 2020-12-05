@@ -10,15 +10,17 @@ import {
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
+import { addToast } from '../util/addToast'
+import { displayNotificationType } from '../constants/enums'
 import { extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
-
-import { addToast } from '../util/addToast'
-import GraphQlRequest from '../util/request/graphQlRequest'
+import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { prepareSubscriptionQuery } from '../util/subscriptions'
+
+import GraphQlRequest from '../util/request/graphQlRequest'
 
 export const updateSubscriptionResults = payload => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -63,10 +65,10 @@ export const createSubscription = () => async (dispatch, getState) => {
   } = state
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
-  const username = getUsername(state)
   const collectionId = getFocusedCollectionId(state)
   const collectionMetadata = getFocusedCollectionMetadata(state)
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const username = getUsername(state)
 
   const { subscriptions = {} } = collectionMetadata
   const { items: subscriptionItems = [] } = subscriptions
@@ -76,7 +78,7 @@ export const createSubscription = () => async (dispatch, getState) => {
   let subscriptionName = `${collectionId} Subscription`
 
   if (existingSubscriptionCount) {
-    subscriptionName += ` (${existingSubscriptionCount})`
+    subscriptionName += ` (${username}-${existingSubscriptionCount})`
   }
 
   // Extract granule search parameters from redux specific to the focused collection
@@ -107,29 +109,35 @@ export const createSubscription = () => async (dispatch, getState) => {
       ) {
           conceptId
         }
-      }
-  `
-  const response = graphRequestObject.search(graphQuery, {
-    collectionConceptId: collectionId,
-    name: subscriptionName,
-    subscriberId: username,
-    query: subscriptionQuery
-  })
-    .then(async () => {
-      addToast('Subscription created', {
-        appearance: 'success',
-        autoDismiss: true
-      })
-      await dispatch(actions.getFocusedCollectionSubscriptions())
+      }`
+
+  let response
+
+  try {
+    response = await graphRequestObject.search(graphQuery, {
+      collectionConceptId: collectionId,
+      name: subscriptionName,
+      subscriberId: username,
+      query: subscriptionQuery
     })
-    .catch((error) => {
-      dispatch(actions.handleError({
-        error,
-        action: 'createSubscription',
-        resource: 'subscription',
-        requestObject: graphRequestObject
-      }))
+
+    parseGraphQLError(response)
+
+    addToast('Subscription created', {
+      appearance: 'success',
+      autoDismiss: true
     })
+
+    await dispatch(actions.getFocusedCollectionSubscriptions())
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'createSubscription',
+      resource: 'subscription',
+      requestObject: graphRequestObject,
+      notificationType: displayNotificationType.toast
+    }))
+  }
 
   return response
 }
@@ -174,43 +182,43 @@ export const getSubscriptions = () => async (dispatch, getState) => {
         }
       }`
 
-  const response = graphRequestObject.search(graphQuery, {
-    subscriberId: username
-  })
-    .then((response) => {
-      const {
-        data: responseData
-      } = response
+  let response
 
-      const { data } = responseData
-      const { subscriptions } = data
-      const { items } = subscriptions
-
-      dispatch(finishSubscriptionsTimer())
-      dispatch(onSubscriptionsLoaded({
-        loaded: true
-      }))
-      dispatch(updateSubscriptionResults(items))
+  try {
+    response = await graphRequestObject.search(graphQuery, {
+      subscriberId: username
     })
-    .catch((error) => {
-      dispatch(finishSubscriptionsTimer())
 
-      const { response } = error
-      const { data } = response
-      const { errors = [] } = data
+    parseGraphQLError(response)
 
-      dispatch(onSubscriptionsErrored(errors))
-      dispatch(onSubscriptionsLoaded({
-        loaded: false
-      }))
+    const {
+      data: responseData
+    } = response
 
-      dispatch(actions.handleError({
-        error,
-        action: 'fetchSubscriptions',
-        resource: 'subscription',
-        requestObject: graphRequestObject
-      }))
-    })
+    const { data } = responseData
+    const { subscriptions } = data
+    const { items } = subscriptions
+
+    dispatch(finishSubscriptionsTimer())
+    dispatch(onSubscriptionsLoaded({
+      loaded: true
+    }))
+    dispatch(updateSubscriptionResults(items))
+  } catch (error) {
+    dispatch(finishSubscriptionsTimer())
+
+    dispatch(onSubscriptionsLoaded({
+      loaded: false
+    }))
+
+    dispatch(actions.handleError({
+      error,
+      action: 'fetchSubscriptions',
+      resource: 'subscription',
+      requestObject: graphRequestObject,
+      errorAction: onSubscriptionsErrored
+    }))
+  }
 
   return response
 }
@@ -241,29 +249,35 @@ export const deleteSubscription = (conceptId, nativeId) => async (dispatch, getS
       ) {
           conceptId
         }
-      }
-  `
+      }`
 
-  const response = graphRequestObject.search(graphQuery, {
-    conceptId,
-    nativeId
-  })
-    .then(() => {
-      dispatch(removeSubscription(conceptId))
-      addToast('Subscription removed', {
-        appearance: 'success',
-        autoDismiss: true
-      })
+  let response
+
+  try {
+    response = await graphRequestObject.search(graphQuery, {
+      conceptId,
+      nativeId
     })
-    .catch((error) => {
-      dispatch(actions.handleError({
-        error,
-        action: 'deleteSubscription',
-        resource: 'subscription',
-        verb: 'deleting',
-        graphRequestObject
-      }))
+
+    parseGraphQLError(response)
+
+    dispatch(removeSubscription(conceptId))
+
+    // TODO: If project collections exist, we need to query for the subscriptions
+
+    addToast('Subscription removed', {
+      appearance: 'success',
+      autoDismiss: true
     })
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'deleteSubscription',
+      resource: 'subscription',
+      verb: 'deleting',
+      graphRequestObject
+    }))
+  }
 
   return response
 }
