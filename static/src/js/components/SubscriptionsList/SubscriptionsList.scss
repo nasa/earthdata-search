@@ -31,4 +31,20 @@
     justify-content: center;
     align-items: center;
   }
+
+  &__name {
+    width: 200px;
+  }
+
+  &__query {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__query-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 }

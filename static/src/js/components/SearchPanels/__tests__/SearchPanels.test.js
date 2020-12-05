@@ -22,6 +22,9 @@ beforeEach(() => {
   jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
 })
 
+delete window.location
+window.location = { assign: jest.fn() }
+
 // Mock ReactDOM.createPortal to prevent any errors in the MoreActionsDropdown compontent
 jest.mock('react-dom', () => (
   {

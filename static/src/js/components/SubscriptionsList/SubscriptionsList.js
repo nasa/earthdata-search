@@ -1,10 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { parse } from 'qs'
+
 import { Table } from 'react-bootstrap'
 
 import Button from '../Button/Button'
 import { Spinner } from '../Spinner/Spinner'
+
+import { humanizedGranuleQueryMap } from '../../util/humanizedGranuleQueryMap'
 
 import './SubscriptionsList.scss'
 
@@ -69,6 +73,8 @@ export const SubscriptionsList = ({
                       query
                     } = subscription
 
+                    const parsedQuery = parse(query)
+
                     const {
                       title
                     } = collection
@@ -77,14 +83,35 @@ export const SubscriptionsList = ({
                       <tr
                         key={conceptId}
                       >
-                        <td>
+                        <td className="subscriptions-list-table__name">
                           {name}
                         </td>
-                        <td>
+                        <td className="subscriptions-list-table__collection">
                           {title}
                         </td>
-                        <td>
-                          {query}
+                        <td className="subscriptions-list-table__query">
+                          <ul className="subscriptions-list-table__query-list">
+                            {
+                              Object.keys(parsedQuery).map((key) => {
+                                const humanizedKey = humanizedGranuleQueryMap[key]
+
+                                return (
+                                  <li key={key} className="subscriptions-list-table__query-list-item">
+                                    <span>
+                                      {humanizedKey}
+                                      {': '}
+                                    </span>
+                                    <span
+                                      title={JSON.stringify(parsedQuery[key])}
+                                      className="subscriptions-list-table__query-list-item-value"
+                                    >
+                                      {JSON.stringify(parsedQuery[key])}
+                                    </span>
+                                  </li>
+                                )
+                              })
+                            }
+                          </ul>
                         </td>
                         <td className="subscriptions-list-table__actions">
                           <Button
