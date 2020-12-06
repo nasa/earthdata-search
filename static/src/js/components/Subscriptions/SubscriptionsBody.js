@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
@@ -9,7 +10,14 @@ import SubscriptionsListItem from './SubscriptionsListItem'
 import { humanizedGranuleQueryMap } from '../../util/humanizedGranuleQueryMap'
 
 import './SubscriptionsBody.scss'
+import EmptyListItem from '../EmptyListItem/EmptyListItem'
 
+/**
+ * Renders SubscriptionsBody.
+ * @param {Node} granuleQueryString - String representing the current granule query string.
+ * @param {String} onCreateSubscription - Callback to create a subscription.
+ * @param {Array} subscriptions - An array of subscriptions.
+ */
 export const SubscriptionsBody = ({
   granuleQueryString,
   onCreateSubscription,
@@ -88,7 +96,6 @@ export const SubscriptionsBody = ({
           </div>
         </div>
         <div className="subscriptions-body__row  subscriptions-body__row--list">
-
           <ul className="subscriptions-body__list">
             {
               subscriptions.map((subscription) => {
@@ -98,6 +105,22 @@ export const SubscriptionsBody = ({
                   <SubscriptionsListItem key={conceptId} subscription={subscription} />
                 )
               })
+            }
+            {
+              subscriptions.length === 0 && (
+                <EmptyListItem>
+                  {'No subscriptions exist for this collection. Use filters to define your query and '}
+                  <Button
+                    bootstrapVariant="link"
+                    label="Create New Subscription"
+                    variant="link"
+                    onClick={() => onCreateSubscription()}
+                  >
+                    create a new subscription
+                  </Button>
+                  {' to be notified when new data becomes available.'}
+                </EmptyListItem>
+              )
             }
           </ul>
         </div>
