@@ -6,10 +6,11 @@ import { AuthRequiredContainer } from '../AuthRequiredContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     children: 'children',
-    earthdataEnvironment: 'prod'
+    earthdataEnvironment: 'prod',
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<AuthRequiredContainer {...props} />)
@@ -59,5 +60,37 @@ describe('AuthRequiredContainer component', () => {
 
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.text()).toEqual('children')
+  })
+
+  describe('when redirect is set to false', () => {
+    test('should not redirect if there is no auth cookie', () => {
+      jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
+        if (param === 'authToken') return null
+        return null
+      })
+
+      const returnPath = 'http://example.com/test/path'
+      delete window.location
+      window.location = { href: returnPath }
+
+      const { enzymeWrapper } = setup({ redirect: false })
+
+      const div = enzymeWrapper.find('div')
+      expect(div.hasClass('route-wrapper')).toEqual(true)
+
+      expect(window.location.href).toEqual('http://example.com/test/path')
+    })
+
+    test('should not render the children', () => {
+      jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
+        if (param === 'authToken') return null
+        return null
+      })
+
+      const { enzymeWrapper } = setup({
+        redirect: false
+      })
+      expect(enzymeWrapper.text()).toEqual('')
+    })
   })
 })

@@ -35,6 +35,7 @@ jest.mock('react-dom', () => (
 
 function setup(overrideProps, location = '/search') {
   const props = {
+    authToken: '',
     collectionMetadata: {
       hasAllMetadata: true,
       title: 'Collection Title',
@@ -90,6 +91,7 @@ function setup(overrideProps, location = '/search') {
     portal: {
       portalId: 'edsc'
     },
+    subscriptions: [],
     ...overrideProps
   }
 
@@ -294,9 +296,39 @@ describe('SearchPanels component', () => {
             pathname: '/search/granules/collection-details',
             search: ''
           },
-          title: 'View Collection Details'
+          title: 'Collection Details'
         }
       ])
+    })
+
+    describe('when the user is logged in', () => {
+      test('sets the correct more action dropdown items', () => {
+        const { enzymeWrapper } = setup({
+          authToken: 'token'
+        }, '/search/granules')
+        const panels = enzymeWrapper.find(Panels)
+        const granuleResultsPanel = panels.find(PanelGroup).at(1)
+        const granuleResultsPanelProps = granuleResultsPanel.props()
+
+        expect(granuleResultsPanelProps.moreActionsDropdownItems).toStrictEqual([
+          {
+            icon: 'info-circle',
+            link: {
+              pathname: '/search/granules/collection-details',
+              search: ''
+            },
+            title: 'Collection Details'
+          },
+          {
+            icon: 'bell',
+            link: {
+              pathname: '/search/granules/subscriptions',
+              search: ''
+            },
+            title: 'Subscriptions'
+          }
+        ])
+      })
     })
 
     test('sets the correct primary heading', () => {
@@ -485,7 +517,7 @@ describe('SearchPanels component', () => {
             pathname: '/search/granules',
             search: ''
           },
-          title: 'View Granules'
+          title: 'Granules'
         },
         {
           icon: 'info-circle',
@@ -493,7 +525,7 @@ describe('SearchPanels component', () => {
             pathname: '/search/granules/collection-details',
             search: ''
           },
-          title: 'View Collection Details'
+          title: 'Collection Details'
         }
       ])
     })
@@ -561,17 +593,39 @@ describe('SearchPanels component', () => {
             pathname: '/search/granules',
             search: ''
           },
-          title: 'View Granules'
-        },
-        {
-          icon: 'bell',
-          link: {
-            pathname: '/search/granules/subscriptions',
-            search: ''
-          },
-          title: 'View Subscriptions'
+          title: 'Granules'
         }
       ])
+    })
+
+    describe('when the user is logged in', () => {
+      test('sets the correct more action dropdown items', () => {
+        const { enzymeWrapper } = setup({
+          authToken: 'token'
+        }, '/search/granules/collection-details')
+        const panels = enzymeWrapper.find(Panels)
+        const granuleDetails = panels.find(PanelGroup).at(2)
+        const granuleDetailsProps = granuleDetails.props()
+
+        expect(granuleDetailsProps.moreActionsDropdownItems).toStrictEqual([
+          {
+            icon: 'map',
+            link: {
+              pathname: '/search/granules',
+              search: ''
+            },
+            title: 'Granules'
+          },
+          {
+            icon: 'bell',
+            link: {
+              pathname: '/search/granules/subscriptions',
+              search: ''
+            },
+            title: 'Subscriptions'
+          }
+        ])
+      })
     })
 
     test('sets the correct primary heading', () => {
@@ -611,20 +665,20 @@ describe('SearchPanels component', () => {
 
       expect(subscriptionsPanelProps.moreActionsDropdownItems).toStrictEqual([
         {
-          icon: 'info-circle',
-          link: {
-            pathname: '/search/granules/collection-details',
-            search: ''
-          },
-          title: 'View Collection Details'
-        },
-        {
           icon: 'map',
           link: {
             pathname: '/search/granules',
             search: ''
           },
-          title: 'View Granules'
+          title: 'Granules'
+        },
+        {
+          icon: 'info-circle',
+          link: {
+            pathname: '/search/granules/collection-details',
+            search: ''
+          },
+          title: 'Collection Details'
         }
       ])
     })

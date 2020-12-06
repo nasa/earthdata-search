@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import { FaFolderPlus, FaFolderMinus } from 'react-icons/fa'
 
 import { commafy } from '../../util/commafy'
 import { granuleTotalCount } from './skeleton'
 import { pluralize } from '../../util/pluralize'
 import { locationPropType } from '../../util/propTypes/location'
 
+import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import Button from '../Button/Button'
 import GranuleDownloadButton from './GranuleDownloadButton'
 import Skeleton from '../Skeleton/Skeleton'
@@ -42,19 +45,18 @@ const GranuleResultsActions = ({
   onSetActivePanelSection,
   projectGranuleCount,
   removedGranuleIds,
-  searchGranuleCount
+  searchGranuleCount,
+  subscriptions
 }) => {
   const addToProjectButton = (
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--add"
       onClick={() => onAddProjectCollection(focusedCollectionId)}
-      variant="link"
-      bootstrapVariant="link"
-      icon="plus-circle"
+      icon=""
       label="Add collection to the current project"
       title="Add collection to the current project"
     >
-      Add to project
+      <FaFolderPlus />
     </Button>
   )
 
@@ -62,13 +64,11 @@ const GranuleResultsActions = ({
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--remove"
       onClick={() => onRemoveCollectionFromProject(focusedCollectionId)}
-      variant="link"
-      bootstrapVariant="link"
-      icon="times-circle"
+      icon=""
       label="Remove collection from the current project"
       title="Remove collection from the current project"
     >
-      Remove from project
+      <FaFolderMinus />
     </Button>
   )
 
@@ -108,6 +108,13 @@ const GranuleResultsActions = ({
       tooManyGranules={tooManyGranules}
     />
   )
+
+  const subscriptionButtonClassnames = classNames([
+    'granule-results-actions__subscriptions-button',
+    {
+      'granule-results-actions__subscriptions-button--is-subscribed': subscriptions.length > 0
+    }
+  ])
 
   return (
     <div className="granule-results-actions">
@@ -168,16 +175,32 @@ const GranuleResultsActions = ({
               </div>
             )
         }
-        <PortalFeatureContainer authentication>
-          <>
-            {
-              isCollectionInProject && !tooManyGranules && removeFromProjectButton
-            }
-            {
-              !isCollectionInProject && !tooManyGranules && addToProjectButton
-            }
-          </>
-        </PortalFeatureContainer>
+        <div className="granule-results-actions__primary-actions">
+          <PortalFeatureContainer authentication>
+            <AuthRequiredContainer redirect={false}>
+              <PortalLinkContainer
+                type="button"
+                icon="bell"
+                className={subscriptionButtonClassnames}
+                label="View subscriptions"
+                to={{
+                  pathname: '/search/granules/subscriptions',
+                  search: location.search
+                }}
+              />
+            </AuthRequiredContainer>
+          </PortalFeatureContainer>
+          <PortalFeatureContainer authentication>
+            <>
+              {
+                isCollectionInProject && !tooManyGranules && removeFromProjectButton
+              }
+              {
+                !isCollectionInProject && !tooManyGranules && addToProjectButton
+              }
+            </>
+          </PortalFeatureContainer>
+        </div>
       </div>
       <PortalFeatureContainer authentication>
         {downloadButton}
@@ -206,7 +229,8 @@ GranuleResultsActions.propTypes = {
   onSetActivePanelSection: PropTypes.func.isRequired,
   projectGranuleCount: PropTypes.number,
   removedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  searchGranuleCount: PropTypes.number
+  searchGranuleCount: PropTypes.number,
+  subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 
 export default GranuleResultsActions

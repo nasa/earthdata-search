@@ -68,7 +68,8 @@ function setup() {
     onAddProjectCollection: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
-    onChangePath: jest.fn()
+    onChangePath: jest.fn(),
+    subscriptions: []
   }
 
   const enzymeWrapper = shallow(<GranuleResultsActionsContainer {...props} />)

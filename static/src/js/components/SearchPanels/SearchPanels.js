@@ -131,6 +131,7 @@ class SearchPanels extends PureComponent {
 
   render() {
     const {
+      authToken,
       collectionMetadata,
       collectionQuery,
       collectionsSearch,
@@ -148,6 +149,8 @@ class SearchPanels extends PureComponent {
       onMetricsCollectionSortChange,
       onToggleAboutCwicModal
     } = this.props
+
+    const isLoggedIn = !(authToken === null || authToken === '')
 
     const {
       pageNum: granulesPageNum = 1,
@@ -328,6 +331,19 @@ class SearchPanels extends PureComponent {
       )
     }
 
+    const subscriptionsMoreActionsItem = isLoggedIn
+      ? [
+        {
+          title: 'Subscriptions',
+          icon: 'bell',
+          link: {
+            pathname: '/search/granules/subscriptions',
+            search: location.search
+          }
+        }
+      ]
+      : []
+
     const panelSection = []
 
     panelSection.push(
@@ -399,13 +415,14 @@ class SearchPanels extends PureComponent {
         headerMetaPrimaryText={granuleResultsHeaderMetaPrimaryText}
         moreActionsDropdownItems={[
           {
-            title: 'View Collection Details',
+            title: 'Collection Details',
             icon: 'info-circle',
             link: {
               pathname: '/search/granules/collection-details',
               search: location.search
             }
-          }
+          },
+          ...subscriptionsMoreActionsItem
         ]}
         onPanelClose={this.onPanelClose}
       >
@@ -433,21 +450,14 @@ class SearchPanels extends PureComponent {
         handoffLinks={handoffLinks}
         moreActionsDropdownItems={[
           {
-            title: 'View Granules',
+            title: 'Granules',
             icon: 'map',
             link: {
               pathname: '/search/granules',
               search: location.search
             }
           },
-          {
-            title: 'View Subscriptions',
-            icon: 'bell',
-            link: {
-              pathname: '/search/granules/subscriptions',
-              search: location.search
-            }
-          }
+          ...subscriptionsMoreActionsItem
         ]}
         onPanelClose={this.onPanelClose}
       >
@@ -484,7 +494,7 @@ class SearchPanels extends PureComponent {
         ]}
         moreActionsDropdownItems={[
           {
-            title: 'View Granules',
+            title: 'Granules',
             icon: 'map',
             link: {
               pathname: '/search/granules',
@@ -492,7 +502,7 @@ class SearchPanels extends PureComponent {
             }
           },
           {
-            title: 'View Collection Details',
+            title: 'Collection Details',
             icon: 'info-circle',
             link: {
               pathname: '/search/granules/collection-details',
@@ -534,18 +544,18 @@ class SearchPanels extends PureComponent {
         ]}
         moreActionsDropdownItems={[
           {
-            title: 'View Collection Details',
-            icon: 'info-circle',
+            title: 'Granules',
+            icon: 'map',
             link: {
-              pathname: '/search/granules/collection-details',
+              pathname: '/search/granules',
               search: location.search
             }
           },
           {
-            title: 'View Granules',
-            icon: 'map',
+            title: 'Collection Details',
+            icon: 'info-circle',
             link: {
-              pathname: '/search/granules',
+              pathname: '/search/granules/collection-details',
               search: location.search
             }
           }
@@ -553,7 +563,7 @@ class SearchPanels extends PureComponent {
         onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
-          <AuthRequiredContainer>
+          <AuthRequiredContainer redirect={false}>
             <SubscriptionsBodyContainer />
           </AuthRequiredContainer>
         </PanelItem>
@@ -616,6 +626,7 @@ class SearchPanels extends PureComponent {
 }
 
 SearchPanels.propTypes = {
+  authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,

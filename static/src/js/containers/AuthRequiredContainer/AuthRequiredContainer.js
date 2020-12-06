@@ -20,6 +20,7 @@ export class AuthRequiredContainer extends Component {
   }
 
   componentWillMount() {
+    const { redirect } = this.props
     const { apiHost } = getEnvironmentConfig()
 
     const token = get('authToken')
@@ -29,17 +30,22 @@ export class AuthRequiredContainer extends Component {
     const returnPath = window.location.href
 
     if (token === null || token === '') {
-      window.location.href = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
+      this.setState({ isLoggedIn: false })
     } else {
       this.setState({ isLoggedIn: true })
     }
+
+    if ((token === null || token === '') && redirect) window.location.href = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
   }
 
   render() {
     const { isLoggedIn } = this.state
 
     if (isLoggedIn) {
-      const { children } = this.props
+      const {
+        children
+      } = this.props
+
       return (
         <>
           { children }
@@ -53,7 +59,12 @@ export class AuthRequiredContainer extends Component {
   }
 }
 
+AuthRequiredContainer.defaultProps = {
+  redirect: true
+}
+
 AuthRequiredContainer.propTypes = {
+  redirect: PropTypes.bool,
   children: PropTypes.node.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired
 }

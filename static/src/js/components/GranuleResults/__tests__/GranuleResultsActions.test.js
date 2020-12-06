@@ -31,6 +31,7 @@ function setup(overrideProps) {
     onRemoveCollectionFromProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onChangePath: jest.fn(),
+    subscriptions: [],
     ...overrideProps
   }
 
@@ -194,6 +195,32 @@ describe('GranuleResultsActions component', () => {
 
       expect(button.exists()).toBeTruthy()
       expect(portalFeatureContainer.props().authentication).toBeTruthy()
+    })
+  })
+
+  describe('when a user is not subscribed', () => {
+    test('renders a the correct subscription button', () => {
+      const { enzymeWrapper } = setup()
+
+      const subscriptionButton = enzymeWrapper.find('.granule-results-actions__subscriptions-button')
+
+      expect(subscriptionButton.props().className).not.toContain('granule-results-actions__subscriptions-button--is-subscribed')
+    })
+  })
+
+  describe('when a user is subscribed', () => {
+    test('renders a the correct subscription button', () => {
+      const { enzymeWrapper } = setup({
+        subscriptions: [
+          {
+            name: 'Sub 1'
+          }
+        ]
+      })
+
+      const subscriptionButton = enzymeWrapper.find('.granule-results-actions__subscriptions-button')
+
+      expect(subscriptionButton.props().className).toContain('granule-results-actions__subscriptions-button--is-subscribed')
     })
   })
 })
