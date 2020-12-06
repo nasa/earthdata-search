@@ -10,7 +10,7 @@ import actions from '../../actions'
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
-import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
+import { getFocusedCollectionMetadata, getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 import { getFocusedProjectCollection } from '../../selectors/project'
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
 import { locationPropType } from '../../util/propTypes/location'
@@ -37,7 +37,8 @@ const mapStateToProps = state => ({
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   project: state.project,
   searchValue: state.ui.granuleResultsPanel.searchValue,
-  sortOrder: state.ui.granuleResultsPanel.sortOrder
+  sortOrder: state.ui.granuleResultsPanel.sortOrder,
+  subscriptions: getFocusedCollectionSubscriptions(state)
 })
 
 export const GranuleResultsActionsContainer = (props) => {
@@ -52,7 +53,8 @@ export const GranuleResultsActionsContainer = (props) => {
     onChangePath,
     onRemoveCollectionFromProject,
     onSetActivePanelSection,
-    project
+    project,
+    subscriptions
   } = props
 
   const {
@@ -105,6 +107,7 @@ export const GranuleResultsActionsContainer = (props) => {
         projectGranuleCount={projectGranuleCount}
         removedGranuleIds={removedGranuleIds}
         searchGranuleCount={searchGranuleCount}
+        subscriptions={subscriptions}
       />
     </>
   )
@@ -121,7 +124,8 @@ GranuleResultsActionsContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
-  project: PropTypes.shape({}).isRequired
+  project: PropTypes.shape({}).isRequired,
+  subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 
 export default withRouter(

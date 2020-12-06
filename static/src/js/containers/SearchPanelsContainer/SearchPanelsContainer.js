@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
-import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
+import { getFocusedCollectionMetadata, getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
@@ -12,6 +12,7 @@ import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
 const mapStateToProps = state => ({
+  authToken: state.authToken,
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionQuery: state.query.collection,
   collectionsSearch: state.searchResults.collections,
@@ -21,7 +22,8 @@ const mapStateToProps = state => ({
   mapProjection: state.map.projection,
   panels: state.panels,
   preferences: state.preferences.preferences,
-  portal: state.portal
+  portal: state.portal,
+  subscriptions: getFocusedCollectionSubscriptions(state)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -66,6 +68,7 @@ const mapDispatchToProps = dispatch => ({
  * @param {Object} props.portal - Portal state
  */
 export const SearchPanelsContainer = ({
+  authToken,
   collectionMetadata,
   collectionQuery,
   collectionsSearch,
@@ -87,6 +90,7 @@ export const SearchPanelsContainer = ({
   portal
 }) => (
   <SearchPanels
+    authToken={authToken}
     collectionMetadata={collectionMetadata}
     collectionQuery={collectionQuery}
     collectionsSearch={collectionsSearch}
@@ -110,6 +114,7 @@ export const SearchPanelsContainer = ({
 )
 
 SearchPanelsContainer.propTypes = {
+  authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,

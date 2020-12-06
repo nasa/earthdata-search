@@ -47,9 +47,41 @@
     color: $color__black--700;
   }
 
+  &__primary-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  &__subscriptions-button {
+    color: $color__black--300;
+    margin-left: 0.25rem;
+
+    &:hover,
+    &:focus {
+      color: $color__black--400;
+    }
+
+    &--is-subscribed {
+      color: $color__yellow;
+
+      &:hover,
+      &:focus {
+        color: darken($color__yellow, 5);
+      }
+    }
+  }
+
   &__proj-action {
-    padding: 0;
-    font-size: 0.875rem;
+    font-size: 0.925rem;
+
+    &--add {
+      color: $color__blue;
+
+      &:hover,
+      &:active {
+        color: $color__blue--dark;
+      }
+    }
 
     &--remove {
       color: $color__red;
