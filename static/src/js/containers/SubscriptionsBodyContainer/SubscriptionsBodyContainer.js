@@ -23,6 +23,12 @@ const mapStateToProps = state => ({
 })
 
 // TODO: Needs tests for onCreateSubscription - EDSC-2923
+/**
+ * Renders SubscriptionsBodyContainer.
+ * @param {Node} granuleQueryString - String representing the current granule query string.
+ * @param {String} onCreateSubscription - Callback to create a subscription.
+ * @param {Array} subscriptions - An array of subscriptions.
+ */
 export const SubscriptionsBodyContainer = ({
   granuleQueryString,
   subscriptions,

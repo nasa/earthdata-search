@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import SubscriptionsBody from '../SubscriptionsBody'
 import Button from '../../Button/Button'
 import { SubscriptionsListItem } from '../SubscriptionsListItem'
+import { EmptyListItem } from '../../EmptyListItem/EmptyListItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -43,13 +44,15 @@ describe('SubscriptionsBody component', () => {
   describe('create button', () => {
     test('should render when the user can create a subscription', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Button).length).toEqual(1)
+      const introRow = enzymeWrapper.find('.subscriptions-body__row--intro')
+      expect(introRow.find(Button).length).toEqual(1)
     })
 
     // TODO: Assert that the state updates the loading indicator EDSC-2923
     test('calls onCreateSubscription', () => {
       const { enzymeWrapper, props } = setup()
-      const createButton = enzymeWrapper.find(Button)
+      const introRow = enzymeWrapper.find('.subscriptions-body__row--intro')
+      const createButton = introRow.find(Button)
 
       createButton.simulate('click')
 
@@ -59,10 +62,20 @@ describe('SubscriptionsBody component', () => {
 
   describe('subscription list', () => {
     describe('when the collection has no subscriptions', () => {
-      test('should render no children', () => {
+      test('should render an empty list item', () => {
         const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.subscriptions-body__list').children().length)
-          .toEqual(0)
+        expect(enzymeWrapper.find(EmptyListItem).length)
+          .toEqual(1)
+      })
+
+      test('should render an link to create a new subscription', () => {
+        const { enzymeWrapper, props } = setup()
+        const emptyListItem = enzymeWrapper.find(EmptyListItem)
+        const newSubButton = emptyListItem.find(Button).at(0)
+
+        newSubButton.simulate('click')
+
+        expect(props.onCreateSubscription).toHaveBeenCalledTimes(1)
       })
     })
 

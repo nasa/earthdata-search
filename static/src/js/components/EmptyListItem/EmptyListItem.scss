@@ -1,0 +1,18 @@
+.empty-list-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 0;
+  color: $color__black--400;
+
+  &__icon {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  &__body {
+    max-width: 25rem;
+    margin: 0 2rem;
+    text-align: center;
+  }
+}
