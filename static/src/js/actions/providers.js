@@ -4,6 +4,7 @@ import { SET_PROVIDERS } from '../constants/actionTypes'
 
 import { buildPromise } from '../util/buildPromise'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getProviders } from '../selectors/providers'
 import { handleError } from './errors'
 
 export const setProviders = providerData => ({
@@ -19,8 +20,9 @@ export const fetchProviders = () => (dispatch, getState) => {
 
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)
+  const providers = getProviders(state)
 
-  const { authToken, providers } = state
+  const { authToken } = state
 
   // If providers have already be retrieved or there is no authToken
   if (authToken === '' || providers.length > 0) {
