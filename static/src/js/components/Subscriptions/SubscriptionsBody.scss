@@ -26,12 +26,13 @@
   &__query {
     max-width: 25rem;
     margin-bottom: 1rem;
-    background-color: $color__black--200;
-    border-radius: 0.125rem;
   }
 
   &__query-primary {
+    margin-bottom: 0.5rem;
     padding: 0.5rem 1rem;
+    border-radius: 0.125rem;
+    background-color: $color__black--200;
   }
 
   &__query-list-heading {

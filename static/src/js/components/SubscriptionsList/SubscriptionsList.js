@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { parse } from 'qs'
-
-import { Table } from 'react-bootstrap'
+import {
+  Table,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 
 import Button from '../Button/Button'
 import { Spinner } from '../Spinner/Spinner'
@@ -53,7 +55,7 @@ export const SubscriptionsList = ({
       {
         isLoaded && (
           subscriptionsMetadata.length > 0 ? (
-            <Table className="subscriptions-list__table">
+            <Table className="subscriptions-list__table" responsive>
               <thead>
                 <tr>
                   <th className="subscriptions-list-table__name-heading">Name</th>
@@ -83,35 +85,52 @@ export const SubscriptionsList = ({
                       <tr
                         key={conceptId}
                       >
-                        <td className="subscriptions-list-table__name">
+                        <td className="subscriptions-list-table__name" title={name}>
                           {name}
                         </td>
-                        <td className="subscriptions-list-table__collection">
+                        <td className="subscriptions-list-table__collection" title={title}>
                           {title}
                         </td>
                         <td className="subscriptions-list-table__query">
-                          <ul className="subscriptions-list-table__query-list">
-                            {
-                              Object.keys(parsedQuery).map((key) => {
-                                const humanizedKey = humanizedGranuleQueryMap[key]
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={(
+                              <Tooltip
+                                id={`tooltip__subscription-info__${conceptId}`}
+                                className="subscriptions-list-table__tooltip tooltip--wide"
+                              >
+                                <>
+                                  <p className="subscriptions-list-table__tooltip-query-heading">Query Parameters</p>
+                                  <ul className="subscriptions-list-table__tooltip-query-list">
+                                    {
+                                      Object.keys(parsedQuery).map((key) => {
+                                        const humanizedKey = humanizedGranuleQueryMap[key]
 
-                                return (
-                                  <li key={key} className="subscriptions-list-table__query-list-item">
-                                    <span>
-                                      {humanizedKey}
-                                      {': '}
-                                    </span>
-                                    <span
-                                      title={JSON.stringify(parsedQuery[key])}
-                                      className="subscriptions-list-table__query-list-item-value"
-                                    >
-                                      {JSON.stringify(parsedQuery[key])}
-                                    </span>
-                                  </li>
-                                )
-                              })
-                            }
-                          </ul>
+                                        return (
+                                          <li key={key} className="subscriptions-list-table__tooltip-query-list-item">
+                                            <span>
+                                              {humanizedKey}
+                                              {': '}
+                                            </span>
+                                            <span
+                                              title={JSON.stringify(parsedQuery[key])}
+                                              className="subscriptions-list-table__tooltip-query-list-item-value"
+                                            >
+                                              {JSON.stringify(parsedQuery[key])}
+                                            </span>
+                                          </li>
+                                        )
+                                      })
+                                    }
+                                  </ul>
+                                </>
+                              </Tooltip>
+                            )}
+                          >
+                            <span className="subscriptions-list-table__query-text">
+                              Preview Query
+                            </span>
+                          </OverlayTrigger>
                         </td>
                         <td className="subscriptions-list-table__actions">
                           <Button
