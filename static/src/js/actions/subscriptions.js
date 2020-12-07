@@ -73,16 +73,8 @@ export const createSubscription = () => async (dispatch, getState) => {
   const earthdataEnvironment = getEarthdataEnvironment(state)
   const username = getUsername(state)
 
-  const { subscriptions = {} } = collectionMetadata
-  const { items: subscriptionItems = [] } = subscriptions
-  const existingSubscriptionCount = subscriptionItems.length > 0 ? subscriptionItems.length : ''
-
   // Format the subscription name
-  let subscriptionName = `${collectionId} Subscription`
-
-  if (existingSubscriptionCount) {
-    subscriptionName += ` - ${username} (${existingSubscriptionCount})`
-  }
+  const subscriptionName = `${collectionId} Subscription - ${new Date().toISOString()}`
 
   // Extract granule search parameters from redux specific to the focused collection
   const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
