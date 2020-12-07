@@ -97,7 +97,6 @@ describe('createSubscription', () => {
           query
         } = variables
 
-        const expectedName = 'collectionId Subscription'
         const expectedQuery = stringify({
           browseOnly: true,
           options: { spatial: { or: true } },
@@ -107,7 +106,7 @@ describe('createSubscription', () => {
 
         // Mock the request if the the variables match
         return collectionConceptId === 'collectionId'
-          && name === expectedName
+          && name.indexOf('collectionId Subscription') > -1
           && subscriberId === 'testUser'
           && isEqual(query, expectedQuery)
       })
@@ -192,7 +191,6 @@ describe('createSubscription', () => {
             query
           } = variables
 
-          const expectedName = 'collectionId Subscription - testUser (1)'
           const expectedQuery = stringify({
             browseOnly: true,
             options: { spatial: { or: true } },
@@ -202,7 +200,7 @@ describe('createSubscription', () => {
 
           // Mock the request if the the variables match
           return collectionConceptId === 'collectionId'
-            && name === expectedName
+            && name.indexOf('collectionId Subscription - ') > -1
             && subscriberId === 'testUser'
             && isEqual(query, expectedQuery)
         })
