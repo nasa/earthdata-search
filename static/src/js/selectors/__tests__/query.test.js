@@ -37,7 +37,7 @@ describe('getFocusedGranuleQueryString selector', () => {
       metadata: {
         collections: {
           collectionId: {
-            collectionId: 'collectionId'
+            id: 'collectionId'
           }
         }
       },

@@ -192,7 +192,7 @@ describe('createSubscription', () => {
             query
           } = variables
 
-          const expectedName = 'collectionId Subscription (testUser-1)'
+          const expectedName = 'collectionId Subscription - testUser (1)'
           const expectedQuery = stringify({
             browseOnly: true,
             options: { spatial: { or: true } },
@@ -274,7 +274,7 @@ describe('createSubscription', () => {
     })
   })
 
-  describe('when the subscription failes to create', () => {
+  describe('when the subscription fails to create', () => {
     test('calls handleError', async () => {
       const handleErrorMock = jest.spyOn(actions, 'handleError')
 

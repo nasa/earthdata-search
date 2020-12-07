@@ -73,7 +73,7 @@ describe('AuthRequiredContainer component', () => {
       delete window.location
       window.location = { href: returnPath }
 
-      const { enzymeWrapper } = setup({ redirect: false })
+      const { enzymeWrapper } = setup({ noRedirect: true })
 
       const div = enzymeWrapper.find('div')
       expect(div.hasClass('route-wrapper')).toEqual(true)
@@ -88,7 +88,7 @@ describe('AuthRequiredContainer component', () => {
       })
 
       const { enzymeWrapper } = setup({
-        redirect: false
+        noRedirect: true
       })
       expect(enzymeWrapper.text()).toEqual('')
     })

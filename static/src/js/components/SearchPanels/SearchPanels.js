@@ -331,8 +331,10 @@ class SearchPanels extends PureComponent {
       )
     }
 
-    const subscriptionsMoreActionsItem = isLoggedIn
-      ? [
+    let subscriptionsMoreActionsItem = []
+
+    if (isLoggedIn) {
+      subscriptionsMoreActionsItem = [
         {
           title: 'Subscriptions',
           icon: 'bell',
@@ -342,7 +344,7 @@ class SearchPanels extends PureComponent {
           }
         }
       ]
-      : []
+    }
 
     const panelSection = []
 
@@ -563,7 +565,7 @@ class SearchPanels extends PureComponent {
         onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
-          <AuthRequiredContainer redirect={false}>
+          <AuthRequiredContainer noRedirect>
             <SubscriptionsBodyContainer />
           </AuthRequiredContainer>
         </PanelItem>

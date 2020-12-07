@@ -10,7 +10,6 @@ export const humanizedGranuleQueryMap = {
   equatorCrossingLongitude: 'Equitorial Longitude',
   exclude: 'Exclude',
   gridCoords: 'Grid Coordinates',
-  isCwic: 'Is CWIC',
   line: 'Line',
   onlineOnly: 'Online Only',
   options: 'Options',

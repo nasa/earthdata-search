@@ -78,7 +78,7 @@ export const createSubscription = () => async (dispatch, getState) => {
   let subscriptionName = `${collectionId} Subscription`
 
   if (existingSubscriptionCount) {
-    subscriptionName += ` (${username}-${existingSubscriptionCount})`
+    subscriptionName += ` - ${username} (${existingSubscriptionCount})`
   }
 
   // Extract granule search parameters from redux specific to the focused collection
