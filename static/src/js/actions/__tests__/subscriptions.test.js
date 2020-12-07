@@ -562,12 +562,65 @@ describe('deleteSubscription', () => {
       authToken: 'token'
     })
 
-    await store.dispatch(deleteSubscription('SUB1000-EDSC', 'mock-guid')).then(() => {
+    await store.dispatch(deleteSubscription('SUB1000-EDSC', 'mock-guid', 'collectionId')).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: REMOVE_SUBSCRIPTION,
         payload: 'SUB1000-EDSC'
       })
+
+      expect(addToastMock.mock.calls.length).toBe(1)
+      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription removed')
+      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
+      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+    })
+  })
+
+  test('should update collection metatdata if it exsits in redux', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com'
+    }))
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
+    const getCollectionSubscriptionsMock = jest.spyOn(actions, 'getCollectionSubscriptions').mockImplementationOnce(() => jest.fn())
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          deleteSubscription: {
+            conceptId: 'SUB1000-EDSC'
+          }
+        }
+      })
+
+    const store = mockStore({
+      authToken: 'token',
+      metadata: {
+        collections: {
+          collectionId: {
+            subscriptions: {
+              items: [
+                {
+                  name: 'collectionId Subscription',
+                  conceptId: 'SUB1'
+                }
+              ]
+            }
+          }
+        }
+      }
+    })
+
+    await store.dispatch(deleteSubscription('SUB1000-EDSC', 'mock-guid', 'collectionId')).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: REMOVE_SUBSCRIPTION,
+        payload: 'SUB1000-EDSC'
+      })
+
+      expect(getCollectionSubscriptionsMock).toHaveBeenCalledTimes(1)
 
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription removed')
