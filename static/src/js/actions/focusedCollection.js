@@ -14,9 +14,11 @@ import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
 import { hasTag } from '../../../../sharedUtils/tags'
+import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
+
 
 /**
  * Sets the focused collection value in redux
@@ -291,6 +293,8 @@ export const getFocusedCollectionSubscriptions = () => async (dispatch, getState
     subscriberId: username
   })
     .then((response) => {
+      parseGraphQLError(response)
+
       const {
         data: responseData,
         headers
