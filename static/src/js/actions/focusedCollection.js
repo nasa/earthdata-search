@@ -256,16 +256,20 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 /**
  * Request subscriptions for the focused collection
  */
-export const getFocusedCollectionSubscriptions = () => async (dispatch, getState) => {
+export const getCollectionSubscriptions = collectionId => async (dispatch, getState) => {
   const state = getState()
 
   const {
     authToken
   } = state
 
+  let collectionConceptId = collectionId
+
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)
-  const focusedCollectionId = getFocusedCollectionId(state)
+  if (collectionId == null) {
+    collectionConceptId = getFocusedCollectionId(state)
+  }
   const username = getUsername(state)
 
   const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
@@ -291,7 +295,7 @@ export const getFocusedCollectionSubscriptions = () => async (dispatch, getState
     }`
 
   const response = graphRequestObject.search(graphQuery, {
-    collectionConceptId: focusedCollectionId,
+    collectionConceptId,
     subscriberId: username
   })
     .then((response) => {
@@ -310,7 +314,7 @@ export const getFocusedCollectionSubscriptions = () => async (dispatch, getState
       dispatch({
         type: UPDATE_COLLECTION_SUBSCRIPTIONS,
         payload: {
-          collectionId: focusedCollectionId,
+          collectionId: collectionConceptId,
           subscriptions
         }
       })
@@ -318,7 +322,7 @@ export const getFocusedCollectionSubscriptions = () => async (dispatch, getState
     .catch((error) => {
       dispatch(actions.handleError({
         error,
-        action: 'getFocusedCollectionSubscriptions',
+        action: 'getCollectionSubscriptions',
         resource: 'subscription',
         requestObject: graphRequestObject
       }))

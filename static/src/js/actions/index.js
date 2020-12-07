@@ -19,7 +19,7 @@ import {
 import {
   changeFocusedCollection,
   getFocusedCollection,
-  getFocusedCollectionSubscriptions,
+  getCollectionSubscriptions,
   updateFocusedCollection,
   viewCollectionGranules,
   viewCollectionDetails
@@ -232,7 +232,7 @@ const actions = {
   fetchShapefile,
   getCollections,
   getFocusedCollection,
-  getFocusedCollectionSubscriptions,
+  getCollectionSubscriptions,
   getFocusedGranule,
   getProjectCollections,
   getProjectGranules,

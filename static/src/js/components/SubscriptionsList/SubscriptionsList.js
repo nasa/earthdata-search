@@ -29,12 +29,12 @@ export const SubscriptionsList = ({
 
   const subscriptionsMetadata = Object.values(subscriptionsById)
 
-  const onHandleRemove = (conceptId, nativeId) => {
+  const onHandleRemove = (conceptId, nativeId, collectionId) => {
     // eslint-disable-next-line no-alert
     const confirmDeletion = window.confirm('Are you sure you want to remove this subscription? This action cannot be undone.')
 
     if (confirmDeletion) {
-      onDeleteSubscription(conceptId, nativeId)
+      onDeleteSubscription(conceptId, nativeId, collectionId)
     }
   }
 
@@ -70,6 +70,7 @@ export const SubscriptionsList = ({
                     const {
                       conceptId,
                       collection,
+                      collectionConceptId,
                       name,
                       nativeId,
                       query
@@ -135,7 +136,7 @@ export const SubscriptionsList = ({
                         <td className="subscriptions-list-table__actions">
                           <Button
                             className="subscriptions-list__button subscriptions-list__button--remove"
-                            onClick={() => onHandleRemove(conceptId, nativeId)}
+                            onClick={() => onHandleRemove(conceptId, nativeId, collectionConceptId)}
                             variant="naked"
                             icon="times-circle"
                             label="Delete Download"

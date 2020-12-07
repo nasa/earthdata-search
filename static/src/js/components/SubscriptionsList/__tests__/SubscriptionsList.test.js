@@ -119,7 +119,7 @@ describe('SubscriptionsList component', () => {
       removeButton.simulate('click')
 
       expect(props.onDeleteSubscription).toBeCalledTimes(1)
-      expect(props.onDeleteSubscription).toBeCalledWith('SUB100000-EDSC', 'mock-guid')
+      expect(props.onDeleteSubscription).toBeCalledWith('SUB100000-EDSC', 'mock-guid', 'C100000-EDSC')
     })
   })
 })
