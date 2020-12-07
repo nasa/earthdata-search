@@ -409,6 +409,43 @@ describe('getFocusedCollectionSubscriptions', () => {
 
     expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
   })
+
+  test('calls handleError when graphql throws an http error', async () => {
+    const handleErrorMock = jest.spyOn(actions, 'handleError')
+
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com'
+    }))
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        errors: [{
+          message: 'Token does not exist'
+        }]
+      })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    await store.dispatch(getFocusedCollectionSubscriptions()).then(() => {
+      expect(handleErrorMock).toHaveBeenCalledTimes(1)
+      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        action: 'getFocusedCollectionSubscriptions',
+        resource: 'subscription'
+      }))
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+    })
+  })
 })
 
 describe('changeFocusedCollection', () => {
