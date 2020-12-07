@@ -273,6 +273,92 @@ describe('createSubscription', () => {
       })
     })
   })
+
+  describe('when the subscription failes to create', () => {
+    test('calls handleError', async () => {
+      const handleErrorMock = jest.spyOn(actions, 'handleError')
+
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com'
+      }))
+
+      nock(/localhost/)
+        .post(/graphql/)
+        .reply(200, {
+          errors: [{
+            message: 'The Provider Id [EDSC] and Subscription Name [Test Name] combination must be unique for a given native-id.'
+          }]
+        })
+
+      nock(/localhost/)
+        .post(/error_logger/)
+        .reply(200)
+
+      const store = mockStore({
+        authToken: 'token',
+        earthdataEnvironment: 'prod',
+        metadata: {
+          collections: {
+            collectionId: {
+              subscriptions: {
+                items: [
+                  {
+                    name: 'collectionId Subscription',
+                    conceptId: 'SUB1'
+                  }
+                ]
+              }
+            }
+          }
+        },
+        project: {},
+        focusedCollection: 'collectionId',
+        query: {
+          collection: {
+            byId: {
+              collectionId: {
+                granules: {
+                  excludedGranuleIds: [],
+                  gridCoords: '',
+                  pageNum: 2,
+                  sortKey: '-start_date',
+                  collectionId: 'collectionId',
+                  browseOnly: true
+                }
+              }
+            },
+            temporal: {
+              startDate: '2020-01-01T00:00:00.000Z',
+              endDate: '2020-01-31T23:59:59.999Z',
+              isRecurring: false
+            },
+            spatial: {
+              polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
+            }
+          }
+        },
+        timeline: {
+          query: {}
+        },
+        user: {
+          username: 'testUser'
+        }
+      })
+
+      const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+      await store.dispatch(createSubscription()).then(() => {
+        expect(handleErrorMock).toHaveBeenCalledTimes(1)
+        expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+          action: 'createSubscription',
+          resource: 'subscription'
+        }))
+
+        expect(consoleMock).toHaveBeenCalledTimes(1)
+      })
+    })
+  })
 })
 
 describe('getSubscriptions', () => {

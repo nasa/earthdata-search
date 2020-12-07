@@ -16,6 +16,8 @@ const mockStore = configureMockStore([thunk])
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
+
+  jest.spyOn(actions, 'fetchProviders').mockImplementation(() => jest.fn())
 })
 
 describe('updateStore', () => {
@@ -86,6 +88,8 @@ describe('updateStore', () => {
         shapefile: {}
       }
 
+      jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
+      jest.spyOn(actions, 'fetchAccessMethods').mockImplementation(() => jest.fn())
       jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
       const store = mockStore({
@@ -126,7 +130,12 @@ describe('changePath', () => {
     const store = mockStore({
       earthdataEnvironment: 'prod',
       metadata: {
-        collections: {},
+        collections: {
+          'C00001-EDSC': {
+            services: [],
+            variables: []
+          }
+        },
         granules: {}
       },
       project: {
@@ -135,6 +144,7 @@ describe('changePath', () => {
           byId: {}
         }
       },
+      providers: [],
       query: {},
       router: {
         location: {
@@ -262,6 +272,163 @@ describe('changePath', () => {
 
     expect(getCollectionsMock).toBeCalledTimes(1)
     expect(getTimelineMock).toBeCalledTimes(1)
+  })
+
+  describe('when a path is provided', () => {
+    describe('when the path matches granule search', () => {
+      test('calls getFocusedCollection action', () => {
+        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
+
+        const newPath = '/search/granules?p=C00001-EDSC'
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          providers: [],
+          query: {
+            collection: {
+              spatial: {}
+            }
+          },
+          router: {
+            location: {
+              pathname: '/search'
+            }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        store.dispatch(urlQuery.changePath(newPath))
+
+        expect(getCollectionsMock).toBeCalledTimes(1)
+        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+      })
+    })
+
+    describe('when the path matches collection details', () => {
+      test('calls getFocusedCollection action', () => {
+        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
+
+        const newPath = '/search/granules/collection-details?p=C00001-EDSC'
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          providers: [],
+          query: {
+            collection: {
+              spatial: {}
+            }
+          },
+          router: {
+            location: {
+              pathname: '/search'
+            }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        store.dispatch(urlQuery.changePath(newPath))
+
+        expect(getCollectionsMock).toBeCalledTimes(1)
+        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+      })
+    })
+
+    describe('when the path matches subscription list', () => {
+      test('calls getFocusedCollection action', () => {
+        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
+
+        const newPath = '/search/granules/subscriptions?p=C00001-EDSC'
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          providers: [],
+          query: {
+            collection: {
+              spatial: {}
+            }
+          },
+          router: {
+            location: {
+              pathname: '/search'
+            }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        store.dispatch(urlQuery.changePath(newPath))
+
+        expect(getCollectionsMock).toBeCalledTimes(1)
+        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+      })
+    })
+
+    describe('when the path matches granule details', () => {
+      test('calls getFocusedCollection action', () => {
+        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
+        const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule').mockImplementation(() => jest.fn())
+
+        const newPath = '/search/granules/granule-details?p=C00001-EDSC'
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
+          focusedGranule: 'G00001-EDSC',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          providers: [],
+          query: {
+            collection: {
+              spatial: {}
+            }
+          },
+          router: {
+            location: {
+              pathname: '/search'
+            }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        store.dispatch(urlQuery.changePath(newPath))
+
+        expect(getCollectionsMock).toBeCalledTimes(1)
+        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+        expect(getFocusedGranuleMock).toBeCalledTimes(1)
+      })
+    })
   })
 })
 
@@ -426,7 +593,6 @@ describe('changeUrl', () => {
       })
     })
   })
-
 
   describe('when called with an object', () => {
     test('calls replace when the pathname has not changed', () => {
