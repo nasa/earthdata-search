@@ -136,6 +136,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             collectionConceptId
             conceptId
             name
+            nativeId
             query
           }
         }
@@ -283,6 +284,7 @@ export const getFocusedCollectionSubscriptions = () => async (dispatch, getState
           collectionConceptId
           conceptId
           name
+          nativeId
           query
         }
       }

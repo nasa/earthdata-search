@@ -11,6 +11,7 @@ export const prepareSubscriptionQuery = (params) => {
   // Remove fields that should not be included in a subscription query
   delete prunedParams.collectionId
   delete prunedParams.conceptId
+  delete prunedParams.isCwic
   delete prunedParams.pageNum
   delete prunedParams.sortKey
 

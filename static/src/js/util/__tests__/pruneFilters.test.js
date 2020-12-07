@@ -1,7 +1,7 @@
 import { pruneFilters } from '../pruneFilters'
 
 describe('pruneFilters', () => {
-  test('removes ', () => {
+  test('removes empty values', () => {
     const inputParams = {
       boundingBox: undefined,
       browseOnly: true,

@@ -52,7 +52,6 @@ const GranuleResultsActions = ({
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--add"
       onClick={() => onAddProjectCollection(focusedCollectionId)}
-      icon=""
       label="Add collection to the current project"
       title="Add collection to the current project"
     >
@@ -64,7 +63,6 @@ const GranuleResultsActions = ({
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--remove"
       onClick={() => onRemoveCollectionFromProject(focusedCollectionId)}
-      icon=""
       label="Remove collection from the current project"
       title="Remove collection from the current project"
     >
@@ -177,7 +175,7 @@ const GranuleResultsActions = ({
         }
         <div className="granule-results-actions__primary-actions">
           <PortalFeatureContainer authentication>
-            <AuthRequiredContainer redirect={false}>
+            <AuthRequiredContainer noRedirect>
               <PortalLinkContainer
                 type="button"
                 icon="bell"
