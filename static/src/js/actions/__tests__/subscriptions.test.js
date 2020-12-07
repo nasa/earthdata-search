@@ -83,7 +83,7 @@ describe('createSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    const getFocusedCollectionSubscriptionsMock = jest.spyOn(actions, 'getFocusedCollectionSubscriptions').mockImplementationOnce(() => jest.fn())
+    const getCollectionSubscriptionsMock = jest.spyOn(actions, 'getCollectionSubscriptions').mockImplementationOnce(() => jest.fn())
     const addToastMock = jest.spyOn(addToast, 'addToast')
 
     nock(/localhost/)
@@ -168,7 +168,7 @@ describe('createSubscription', () => {
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription created')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
       expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
-      expect(getFocusedCollectionSubscriptionsMock).toHaveBeenCalledTimes(1)
+      expect(getCollectionSubscriptionsMock).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -179,7 +179,7 @@ describe('createSubscription', () => {
         graphQlHost: 'https://graphql.example.com'
       }))
       const addToastMock = jest.spyOn(addToast, 'addToast')
-      jest.spyOn(actions, 'getFocusedCollectionSubscriptions').mockImplementationOnce(() => jest.fn())
+      jest.spyOn(actions, 'getCollectionSubscriptions').mockImplementationOnce(() => jest.fn())
 
       nock(/localhost/)
         .post(/graphql/, (body) => {

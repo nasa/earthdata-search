@@ -15,7 +15,10 @@ import { displayNotificationType } from '../constants/enums'
 import { extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
-import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
+import {
+  getCollectionsMetadata,
+  getFocusedCollectionMetadata
+} from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { prepareSubscriptionQuery } from '../util/subscriptions'
@@ -128,7 +131,7 @@ export const createSubscription = () => async (dispatch, getState) => {
       autoDismiss: true
     })
 
-    await dispatch(actions.getFocusedCollectionSubscriptions())
+    await dispatch(actions.getCollectionSubscriptions())
   } catch (error) {
     dispatch(actions.handleError({
       error,
@@ -226,7 +229,11 @@ export const getSubscriptions = () => async (dispatch, getState) => {
 /**
  * Perform a subscriptions request.
  */
-export const deleteSubscription = (conceptId, nativeId) => async (dispatch, getState) => {
+export const deleteSubscription = (
+  conceptId,
+  nativeId,
+  collectionId
+) => async (dispatch, getState) => {
   const state = getState()
 
   const {
@@ -234,6 +241,7 @@ export const deleteSubscription = (conceptId, nativeId) => async (dispatch, getS
   } = state
 
   // Retrieve data from Redux using selectors
+  const collectionsMetadata = getCollectionsMetadata(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
   const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
@@ -263,7 +271,10 @@ export const deleteSubscription = (conceptId, nativeId) => async (dispatch, getS
 
     dispatch(removeSubscription(conceptId))
 
-    // TODO: If project collections exist, we need to query for the subscriptions
+    // If the collection associated with the subscription has metadata Redux
+    if (Object.keys(collectionsMetadata).includes(collectionId)) {
+      dispatch(actions.getCollectionSubscriptions(collectionId))
+    }
 
     addToast('Subscription removed', {
       appearance: 'success',

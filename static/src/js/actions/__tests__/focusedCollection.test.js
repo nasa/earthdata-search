@@ -6,7 +6,7 @@ import actions from '../index'
 
 import {
   getFocusedCollection,
-  getFocusedCollectionSubscriptions,
+  getCollectionSubscriptions,
   updateFocusedCollection,
   viewCollectionDetails,
   viewCollectionGranules
@@ -342,72 +342,138 @@ describe('getFocusedCollection', () => {
   })
 })
 
-describe('getFocusedCollectionSubscriptions', () => {
+describe('getCollectionSubscriptions', () => {
   beforeEach(() => {
     jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
   })
 
-  test('should update the subscriptions', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
-      cmrHost: 'https://cmr.example.com',
-      graphQlHost: 'https://graphql.example.com',
-      opensearchRoot: 'https://cmr.example.com'
-    }))
+  describe('when a collection is not provided', () => {
+    test('updates the subscriptions of the focused collection', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
 
-    nock(/graph/)
-      .post(/api/)
-      .reply(200, {
-        data: {
-          subscriptions: {
-            items: [
-              'new items'
-            ]
-          }
-        }
-      })
-
-    const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
-    updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
-
-    const store = mockStore({
-      authToken: '',
-      focusedCollection: 'C10000000000-EDSC',
-      metadata: {
-        collections: {
-          'C10000000000-EDSC': {
-            id: 'C10000000000-EDSC',
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
             subscriptions: {
               items: [
-                'original items'
+                'new items'
               ]
             }
           }
-        }
-      },
-      query: {
-        collection: {
-          spatial: {}
-        }
-      },
-      searchResults: {}
-    })
+        })
 
-    await store.dispatch(getFocusedCollectionSubscriptions()).then(() => {
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: UPDATE_COLLECTION_SUBSCRIPTIONS,
-        payload: {
-          collectionId: 'C10000000000-EDSC',
-          subscriptions: {
-            items: [
-              'new items'
-            ]
+      const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
+      updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        authToken: '',
+        focusedCollection: 'C10000000000-EDSC',
+        metadata: {
+          collections: {
+            'C10000000000-EDSC': {
+              id: 'C10000000000-EDSC',
+              subscriptions: {
+                items: [
+                  'original items'
+                ]
+              }
+            }
           }
-        }
+        },
+        query: {
+          collection: {
+            spatial: {}
+          }
+        },
+        searchResults: {}
       })
-    })
 
-    expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
+      await store.dispatch(getCollectionSubscriptions()).then(() => {
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+          payload: {
+            collectionId: 'C10000000000-EDSC',
+            subscriptions: {
+              items: [
+                'new items'
+              ]
+            }
+          }
+        })
+      })
+
+      expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when a collection is provided', () => {
+    test('updates the subscriptions of the focused collection', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            subscriptions: {
+              items: [
+                'new items'
+              ]
+            }
+          }
+        })
+
+      const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
+      updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        authToken: '',
+        metadata: {
+          collections: {
+            'C10000000000-EDSC': {
+              id: 'C10000000000-EDSC',
+              subscriptions: {
+                items: [
+                  'original items'
+                ]
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            spatial: {}
+          }
+        },
+        searchResults: {}
+      })
+
+      await store.dispatch(getCollectionSubscriptions('C10000000000-EDSC')).then(() => {
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+          payload: {
+            collectionId: 'C10000000000-EDSC',
+            subscriptions: {
+              items: [
+                'new items'
+              ]
+            }
+          }
+        })
+      })
+
+      expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
+    })
   })
 
   test('calls handleError when graphql throws an http error', async () => {
@@ -436,10 +502,10 @@ describe('getFocusedCollectionSubscriptions', () => {
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
-    await store.dispatch(getFocusedCollectionSubscriptions()).then(() => {
+    await store.dispatch(getCollectionSubscriptions()).then(() => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
-        action: 'getFocusedCollectionSubscriptions',
+        action: 'getCollectionSubscriptions',
         resource: 'subscription'
       }))
 
