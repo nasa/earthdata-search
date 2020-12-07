@@ -55,7 +55,7 @@ const GranuleResultsActions = ({
       label="Add collection to the current project"
       title="Add collection to the current project"
     >
-      <FaFolderPlus />
+      <FaFolderPlus size="1rem" />
     </Button>
   )
 
@@ -66,7 +66,7 @@ const GranuleResultsActions = ({
       label="Remove collection from the current project"
       title="Remove collection from the current project"
     >
-      <FaFolderMinus />
+      <FaFolderMinus size="1rem" />
     </Button>
   )
 

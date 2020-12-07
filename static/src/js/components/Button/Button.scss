@@ -30,12 +30,12 @@
 
   &__contents {
     vertical-align: initial;
+    display: inherit;
     line-height: 1em;
   }
 
   &__icon {
     display: inline-block;
-    vertical-align: initial;
     line-height: 1rem;
 
     .button--naked & {
