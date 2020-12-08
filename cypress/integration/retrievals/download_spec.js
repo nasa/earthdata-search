@@ -10,48 +10,58 @@ import { getAuthHeaders } from '../utils/getAuthHeaders'
 
 describe('Download project spec', () => {
   it('downloading a collection sends gives the user download links', () => {
-    cy.server()
-
     cy.login()
 
     const authHeaders = getAuthHeaders()
 
-    cy.route({
-      method: 'POST',
-      url: '**/graphql',
-      response: collectionsGraphJson.body,
-      headers: authHeaders
-    })
-    cy.route({
-      method: 'POST',
-      url: '**/granules/timeline',
-      response: timeline.body,
-      headers: authHeaders
-    })
-    cy.route({
-      method: 'POST',
-      url: '**/dqs',
-      response: []
-    })
-    cy.route({
-      method: 'POST',
-      url: '**/granules',
-      response: granules.body,
-      headers: {
-        ...authHeaders,
-        'cmr-hits': 42
+    cy.intercept(
+      'POST',
+      '**/graphql',
+      {
+        body: collectionsGraphJson.body,
+        headers: authHeaders
       }
-    })
-    cy.route({
-      method: 'GET',
-      url: '**/providers',
-      response: providers.body
-    })
-    cy.route({
-      method: 'POST',
-      url: '**/access_methods',
-      response: accessMethods.body
-    })
+    )
+    cy.intercept(
+      'POST',
+      '**/granules/timeline',
+      {
+        body: timeline.body,
+        headers: authHeaders
+      }
+    )
+    cy.intercept(
+      'POST',
+      '**/dqs',
+      {
+        body: []
+      }
+    )
+    cy.intercept(
+      'POST',
+      '**/granules',
+      {
+        body: granules.body,
+        headers: {
+          ...authHeaders,
+          'cmr-hits': '42'
+        }
+      }
+    )
+    cy.intercept(
+      'GET',
+      '**/providers',
+      {
+        body: providers.body
+      }
+    )
+    cy.intercept(
+      'POST',
+      '**/access_methods',
+      {
+        body: accessMethods.body
+      }
+    )
 
     cy.visit('/projects?p=!C1443528505-LAADS&sb=-77.15071678161621%2C38.78817179999825%2C-76.89801406860352%2C38.99784152603538&m=37.64643450971326!-77.407470703125!7!1!0!0%2C2&qt=2020-01-06T04%3A15%3A27.310Z%2C2020-01-13T07%3A32%3A50.962Z&ff=Map%20Imagery&tl=1563377338!4!!')
 
@@ -62,28 +72,34 @@ describe('Download project spec', () => {
     getByTestId('project-panels-done').click()
     getByTestId('panels-section').should('not.have.class', 'panels--is-open')
 
-    cy.route({
-      method: 'POST',
-      url: '**/retrievals',
-      response: retrievals.body,
-      headers: retrievals.headers
-    })
-    cy.route({
-      method: 'GET',
-      url: '**/retrievals/*',
-      response: retrieval.body,
-      headers: retrieval.headers
-    })
+    cy.intercept(
+      'POST',
+      '**/retrievals',
+      {
+        body: retrievals.body,
+        headers: retrievals.headers
+      }
+    )
+    cy.intercept(
+      'GET',
+      '**/retrievals/*',
+      {
+        body: retrieval.body,
+        headers: retrieval.headers
+      }
+    )
 
     // Click the download button
     getByTestId('project-download-data').click()
 
-    cy.route({
-      method: 'POST',
-      url: '**/granules',
-      response: granules.body,
-      headers: granules.headers
-    })
+    cy.intercept(
+      'POST',
+      '**/granules',
+      {
+        body: granules.body,
+        headers: granules.headers
+      }
+    )
 
     // view download links
     cy.contains('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1720.061.2020008170450.hdf').should('be.visible')

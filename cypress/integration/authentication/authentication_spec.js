@@ -8,13 +8,14 @@ const expectedCollectionCount = 7
 
 describe('Authentication', () => {
   it('logs the user in with the auth_callback endpoint and redirects the user', () => {
-    cy.server()
-    cy.route({
-      method: 'POST',
-      url: '**/collections',
-      response: collectionFixture.body,
-      headers: collectionFixture.headers
-    })
+    cy.intercept(
+      'POST',
+      '**/collections',
+      {
+        body: collectionFixture.body,
+        headers: collectionFixture.headers
+      }
+    )
 
     cy.visit(`/auth_callback?jwt=${getJwtToken('prod')}&redirect=http://localhost:8080/`)
 
@@ -25,13 +26,14 @@ describe('Authentication', () => {
   })
 
   it('sets auth cookie', () => {
-    cy.server()
-    cy.route({
-      method: 'POST',
-      url: '**/collections',
-      response: collectionFixture.body,
-      headers: collectionFixture.headers
-    })
+    cy.intercept(
+      'POST',
+      '**/collections',
+      {
+        body: collectionFixture.body,
+        headers: collectionFixture.headers
+      }
+    )
 
     cy.getCookies().should('be.empty')
     // See cypress/support/commands.js for cy.login command
