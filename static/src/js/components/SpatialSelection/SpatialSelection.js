@@ -321,7 +321,7 @@ class SpatialSelection extends Component {
 
   onSpatialDropdownClick(event) {
     const { type } = event
-    if (this.drawControl) {
+    if (this.drawControl && this.drawControl._toolbars.draw._modes[type]) {
       this.drawControl._toolbars.draw._modes[type].handler.enable()
     }
   }

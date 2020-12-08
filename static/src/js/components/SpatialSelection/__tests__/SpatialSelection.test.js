@@ -212,6 +212,22 @@ describe('SpatialSelection component', () => {
 
       expect(enableMock).toHaveBeenCalledTimes(1)
     })
+
+    test('does not try to enable the drawControl if the mode doesn\'t exist', () => {
+      const enableMock = jest.fn()
+      const { enzymeWrapper } = setup(defaultProps)
+
+      enzymeWrapper.instance().drawControl = {
+        _toolbars: {
+          draw: {
+            _modes: {}
+          }
+        }
+      }
+      enzymeWrapper.instance().onSpatialDropdownClick({ type: 'circle' })
+
+      expect(enableMock).toHaveBeenCalledTimes(0)
+    })
   })
 
   describe('onDrawStart', () => {
