@@ -2,13 +2,14 @@ import singleCollection from './single_collection'
 
 describe('Panel Behavior', () => {
   beforeEach(() => {
-    cy.server()
-    cy.route({
-      method: 'POST',
-      url: '**/search/collections.json',
-      response: singleCollection.body,
-      headers: singleCollection.headers
-    })
+    cy.intercept(
+      'POST',
+      '**/search/collections.json',
+      {
+        body: singleCollection.body,
+        headers: singleCollection.headers
+      }
+    )
 
     cy.visit('/')
   })

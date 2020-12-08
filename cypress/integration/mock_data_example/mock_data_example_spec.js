@@ -14,17 +14,27 @@ describe('Mock data example', () => {
   it('How to setup mock data', () => {
     // // // //
     // Do not add these lines until after you have copied successfull responses into json files
-    // You only need cy.server() once per test
-    cy.server()
 
-    // cy.route() must be before the action that creates the network request,
-    // in this case the initial page load, cy.visit('/')
-    cy.route({
-      method: 'POST',
-      url: '**/collections.json',
-      response: collectionResults.body,
-      headers: collectionResults.headers
-    })
+    // cy.intercept() currently pops matching requests off a stack, so we have to add the calls
+    // in the reverse order they should be used. Hopefully this changes soon
+    // https://github.com/cypress-io/cypress/issues/9302
+    //
+    cy.intercept(
+      'POST',
+      '**/collections.json',
+      {
+        body: collectionResultsModis.body,
+        headers: collectionResultsModis.headers
+      }
+    )
+    cy.intercept(
+      'POST',
+      '**/collections.json',
+      {
+        body: collectionResults.body,
+        headers: collectionResults.headers
+      }
+    )
     // // // //
 
     cy.visit('/')
@@ -33,17 +43,6 @@ describe('Mock data example', () => {
       .should('not.be.empty')
       .children().should('have.length', 7)
 
-
-    // // // //
-    // Do not add these lines until after you have copied successfull responses into json files
-    // The action that creates this network request is typing into the keyword search field
-    cy.route({
-      method: 'POST',
-      url: '**/collections.json',
-      response: collectionResultsModis.body,
-      headers: collectionResultsModis.headers
-    })
-    // // // //
 
     getByTestId('keywordSearchInput')
       .type('MODIS{enter}')
