@@ -1,7 +1,5 @@
 import { nullableValue, nullableTemporal, dateOutsideRange } from '../validation'
 
-// TODO: Add tests for functions that use 'this' @medium
-
 describe('#nullableValue', () => {
   test('returns null for an empty string', () => {
     expect(nullableValue('', '')).toEqual(null)
