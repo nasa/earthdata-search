@@ -130,6 +130,9 @@ class SpatialSelection extends Component {
       const bounds = featureGroup.getBounds() || false
       panFeatureGroupToCenter(map, bounds)
     }
+
+    eventEmitter.on('map.drawStart', this.onSpatialDropdownClick)
+    eventEmitter.on('map.drawCancel', this.onDrawCancel)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -314,14 +317,11 @@ class SpatialSelection extends Component {
   // Callback from EditControl, called when the controls are mounted
   onMounted(drawControl) {
     this.drawControl = drawControl
-
-    eventEmitter.on('map.drawStart', this.onSpatialDropdownClick)
-    eventEmitter.on('map.drawCancel', this.onDrawCancel)
   }
 
   onSpatialDropdownClick(event) {
     const { type } = event
-    if (this.drawControl && this.drawControl._toolbars.draw._modes[type]) {
+    if (this.drawControl) {
       this.drawControl._toolbars.draw._modes[type].handler.enable()
     }
   }
