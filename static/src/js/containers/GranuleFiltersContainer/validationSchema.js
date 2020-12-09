@@ -114,14 +114,14 @@ export const ValidationSchema = (props) => {
       startDate: Yup.date()
         .label('Start')
         .typeError(errors.equatorCrossingDate.invalidStartDate)
-        .transform(nullableValue)
+        .transform(nullableTemporal)
         .nullable()
         .test('start-before-end', errors.equatorCrossingDate.startBeforeEnd, startBeforeEnd)
         .test('inside-global-equatorial-crossing-date', errors.equatorCrossingDate.outsideRange, value => dateOutsideRange(value, startDate, endDate)),
       endDate: Yup.date()
         .label('End')
         .typeError(errors.equatorCrossingDate.invalidEndDate)
-        .transform(nullableValue)
+        .transform(nullableTemporal)
         .nullable()
         .test('inside-global-equatorial-crossing-date', errors.equatorCrossingDate.outsideRange, value => dateOutsideRange(value, startDate, endDate))
     }),

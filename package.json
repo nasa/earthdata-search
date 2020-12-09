@@ -131,7 +131,7 @@
     "events": "^3.0.0",
     "fast-xml-parser": "^3.17.4",
     "formdata-node": "^2.4.0",
-    "formik": "^1.5.8",
+    "formik": "^2.2.5",
     "geojson": "^0.5.0",
     "history": "^4.7.2",
     "jsonwebtoken": "^8.5.1",
@@ -198,7 +198,7 @@
     "uuid": "^3.3.3",
     "xmldom": "^0.1.27",
     "xpath": "0.0.27",
-    "yup": "^0.28.2"
+    "yup": "^0.32.6"
   },
   "engines": {
     "yarn": "YARN NO LONGER USED - use npm instead."

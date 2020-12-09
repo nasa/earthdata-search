@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
 import moment from 'moment'
 
-const dateFormat = 'YYYY-MM-DDTHH:m:s.SSSZ'
+const dateFormat = 'YYYY-MM-DDTHH:mm:ss.SSSZ'
 
 /**
  * Returns null if the original value passed is an empty string
@@ -17,7 +17,6 @@ export const nullableValue = (value, originalValue) => (originalValue.trim() ===
  * @param {String} originalValue - The original field value
  * @returns {Null|String} null or the valid field value
  */
-// eslint-disable-next-line arrow-body-style,no-unused-vars
 export const nullableTemporal = (value, originalValue) => {
   const isDate = value instanceof Date
   if ((isDate && !Number.isNaN(value)) && originalValue === '') {
@@ -32,14 +31,15 @@ export const nullableTemporal = (value, originalValue) => {
  * @returns {Boolean} The result
  */
 export function minLessThanMax(value) {
+  // If the value is not set, dont check
+  if (!value) return true
+
   const min = value
   const max = this.resolve(Yup.ref('max'))
 
   // If there is no max
-  if (min && !max) return true
+  if (!max) return true
 
-  // If the value is not set, dont check
-  if (min === null) return true
   return min <= max
 }
 
@@ -49,10 +49,15 @@ export function minLessThanMax(value) {
  * @returns {Boolean} The result
  */
 export function maxLessThanMin(value) {
+  // If the value is not set, dont check
+  if (!value) return true
+
   const max = value
   const min = this.resolve(Yup.ref('min'))
-  if (max && !min) return true
-  if (max === null) return true
+
+  // If there is no min
+  if (!min) return true
+
   return max >= min
 }
 
@@ -78,20 +83,20 @@ export function startBeforeEnd(value) {
  * @returns {Boolean} The result
  */
 export function dateOutsideRange(value, startDate, endDate) {
-  if (!value) return true
-  // const endDate = this.resolve(Yup.ref('endDate'))
+  if (!value || (!startDate && !endDate)) return true
+
   const momentVal = moment(value, dateFormat, true)
   const momentStartVal = moment(startDate, dateFormat, true)
   const momentEndVal = moment(endDate, dateFormat, true)
 
 
-  if (startDate) {
-    if (!momentVal.isSame(momentStartVal) && !momentVal.isAfter(momentStartVal)) return false
+  if (!endDate) {
+    return momentVal.isSameOrAfter(momentStartVal)
   }
 
-  if (endDate) {
-    if (!momentVal.isSame(momentEndVal) && !momentVal.isBefore(momentEndVal)) return false
+  if (!startDate) {
+    return momentVal.isSameOrBefore(momentEndVal)
   }
 
-  return true
+  return momentVal.isBetween(momentStartVal, momentEndVal, undefined, '[]')
 }
