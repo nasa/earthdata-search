@@ -58,11 +58,8 @@ describe('submitHarmonyOrder', () => {
     const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
       .mockImplementation(() => (jest.fn()))
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get(/search\/granules/)
       .reply(200, {
         feed: {
@@ -152,11 +149,8 @@ describe('submitHarmonyOrder', () => {
     const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
       .mockImplementation(() => ('limited mock shapefile'))
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get(/search\/granules/)
       .reply(200, {
         feed: {
@@ -256,11 +250,8 @@ describe('submitHarmonyOrder', () => {
       edscHost: 'http://localhost:8080'
     }))
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get(/search\/granules/)
       .reply(200, {
         feed: {
