@@ -16,7 +16,11 @@ describe('constructOrderPayload', () => {
   describe('format', () => {
     describe('with a known format', () => {
       test('constructs a payload with a format', async () => {
-        nock(/cmr/)
+        nock(/cmr/, {
+          reqheaders: {
+            Authorization: 'Bearer access-token'
+          }
+        })
           .get('/search/granules.json')
           .reply(200, {
             feed: {
@@ -32,7 +36,7 @@ describe('constructOrderPayload', () => {
           selectedOutputFormat: 'image/png'
         }
         const granuleParams = {}
-        const accessToken = ''
+        const accessToken = 'access-token'
 
         const response = await constructOrderPayload({
           accessMethod,
@@ -46,7 +50,11 @@ describe('constructOrderPayload', () => {
 
     describe('with an unknown format', () => {
       test('constructs a payload without a format', async () => {
-        nock(/cmr/)
+        nock(/cmr/, {
+          reqheaders: {
+            Authorization: 'Bearer access-token'
+          }
+        })
           .get('/search/granules.json')
           .reply(200, {
             feed: {
@@ -60,7 +68,7 @@ describe('constructOrderPayload', () => {
 
         const accessMethod = {}
         const granuleParams = {}
-        const accessToken = ''
+        const accessToken = 'access-token'
 
         const response = await constructOrderPayload({
           accessMethod,
@@ -76,7 +84,11 @@ describe('constructOrderPayload', () => {
   describe('projection', () => {
     describe('with a known projection', () => {
       test('constructs a payload with a projection', async () => {
-        nock(/cmr/)
+        nock(/cmr/, {
+          reqheaders: {
+            Authorization: 'Bearer access-token'
+          }
+        })
           .get('/search/granules.json')
           .reply(200, {
             feed: {
@@ -92,7 +104,7 @@ describe('constructOrderPayload', () => {
           selectedOutputProjection: 'EPSG:4326'
         }
         const granuleParams = {}
-        const accessToken = ''
+        const accessToken = 'access-token'
 
         const response = await constructOrderPayload({
           accessMethod,
@@ -107,7 +119,11 @@ describe('constructOrderPayload', () => {
 
   describe('granules', () => {
     test('constructs a payload with granule ids', async () => {
-      nock(/cmr/)
+      nock(/cmr/, {
+        reqheaders: {
+          Authorization: 'Bearer access-token'
+        }
+      })
         .get('/search/granules.json')
         .reply(200, {
           feed: {
@@ -121,7 +137,7 @@ describe('constructOrderPayload', () => {
 
       const accessMethod = {}
       const granuleParams = {}
-      const accessToken = ''
+      const accessToken = 'access-token'
 
       const response = await constructOrderPayload({
         accessMethod,
@@ -136,7 +152,11 @@ describe('constructOrderPayload', () => {
   describe('temporal', () => {
     describe('with a start and end date', () => {
       test('constructs a payload with a start and end subsetting', async () => {
-        nock(/cmr/)
+        nock(/cmr/, {
+          reqheaders: {
+            Authorization: 'Bearer access-token'
+          }
+        })
           .get('/search/granules.json?temporal=2020-01-01T01%3A36%3A52.273Z%2C2020-01-01T06%3A18%3A19.482Z')
           .reply(200, {
             feed: {
@@ -152,7 +172,7 @@ describe('constructOrderPayload', () => {
         const granuleParams = {
           temporal: '2020-01-01T01:36:52.273Z,2020-01-01T06:18:19.482Z'
         }
-        const accessToken = ''
+        const accessToken = 'access-token'
 
         const response = await constructOrderPayload({
           accessMethod,
@@ -166,7 +186,11 @@ describe('constructOrderPayload', () => {
 
     describe('with only a start date', () => {
       test('constructs a payload with an open ended start date', async () => {
-        nock(/cmr/)
+        nock(/cmr/, {
+          reqheaders: {
+            Authorization: 'Bearer access-token'
+          }
+        })
           .get('/search/granules.json?temporal=2020-01-01T01%3A36%3A52.273Z%2C')
           .reply(200, {
             feed: {
@@ -182,7 +206,7 @@ describe('constructOrderPayload', () => {
         const granuleParams = {
           temporal: '2020-01-01T01:36:52.273Z,'
         }
-        const accessToken = ''
+        const accessToken = 'access-token'
 
         const response = await constructOrderPayload({
           accessMethod,
@@ -196,7 +220,11 @@ describe('constructOrderPayload', () => {
 
     describe('with only a end date', () => {
       test('constructs a payload with an open ended end date', async () => {
-        nock(/cmr/)
+        nock(/cmr/, {
+          reqheaders: {
+            Authorization: 'Bearer access-token'
+          }
+        })
           .get('/search/granules.json?temporal=%2C2020-01-01T06%3A18%3A19.482Z')
           .reply(200, {
             feed: {
@@ -212,7 +240,7 @@ describe('constructOrderPayload', () => {
         const granuleParams = {
           temporal: ',2020-01-01T06:18:19.482Z'
         }
-        const accessToken = ''
+        const accessToken = 'access-token'
 
         const response = await constructOrderPayload({
           accessMethod,
@@ -229,7 +257,11 @@ describe('constructOrderPayload', () => {
     describe('when shapefile subsetting is supported', () => {
       describe('with a shapefile', () => {
         test('constructs a payload with a shapefile', async () => {
-          nock(/cmr/)
+          nock(/cmr/, {
+            reqheaders: {
+              Authorization: 'Bearer access-token'
+            }
+          })
             .get('/search/granules.json')
             .reply(200, {
               feed: {
@@ -245,7 +277,7 @@ describe('constructOrderPayload', () => {
             supportsShapefileSubsetting: true
           }
           const granuleParams = {}
-          const accessToken = ''
+          const accessToken = 'access-token'
           const shapefile = mockCcwShapefile
 
           const response = await constructOrderPayload({
@@ -261,7 +293,11 @@ describe('constructOrderPayload', () => {
 
       describe('with a point', () => {
         test('constructs a payload containing a shapefile representing the point', async () => {
-          nock(/cmr/)
+          nock(/cmr/, {
+            reqheaders: {
+              Authorization: 'Bearer access-token'
+            }
+          })
             .get('/search/granules.json?point%5B%5D=-77%2C%2034')
             .reply(200, {
               feed: {
@@ -279,7 +315,7 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             point: ['-77, 34']
           }
-          const accessToken = ''
+          const accessToken = 'access-token'
 
           const response = await constructOrderPayload({
             accessMethod,
@@ -293,7 +329,11 @@ describe('constructOrderPayload', () => {
 
       describe('with a bounding box', () => {
         test('constructs a payload containing the bounding box', async () => {
-          nock(/cmr/)
+          nock(/cmr/, {
+            reqheaders: {
+              Authorization: 'Bearer access-token'
+            }
+          })
             .get('/search/granules.json?bounding_box%5B%5D=0%2C5%2C10%2C15')
             .reply(200, {
               feed: {
@@ -311,7 +351,7 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             bounding_box: ['0,5,10,15']
           }
-          const accessToken = ''
+          const accessToken = 'access-token'
 
           const response = await constructOrderPayload({
             accessMethod,
@@ -325,7 +365,11 @@ describe('constructOrderPayload', () => {
 
       describe('with a circle', () => {
         test('constructs a payload containing a shapefile representing the circle', async () => {
-          nock(/cmr/)
+          nock(/cmr/, {
+            reqheaders: {
+              Authorization: 'Bearer access-token'
+            }
+          })
             .get('/search/granules.json?circle%5B%5D=-77%2C%2034%2C%2020000')
             .reply(200, {
               feed: {
@@ -343,7 +387,7 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             circle: ['-77, 34, 20000']
           }
-          const accessToken = ''
+          const accessToken = 'access-token'
 
           const response = await constructOrderPayload({
             accessMethod,
@@ -357,7 +401,11 @@ describe('constructOrderPayload', () => {
 
       describe('with a polygon', () => {
         test('constructs a payload containing a shapefile representing the polygon', async () => {
-          nock(/cmr/)
+          nock(/cmr/, {
+            reqheaders: {
+              Authorization: 'Bearer access-token'
+            }
+          })
             .get('/search/granules.json?polygon%5B%5D=-29.8125%2C39.86484%2C-23.0625%2C-19.74405%2C15.75%2C20.745%2C-29.8125%2C39.86484')
             .reply(200, {
               feed: {
@@ -375,7 +423,7 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             polygon: ['-29.8125,39.86484,-23.0625,-19.74405,15.75,20.745,-29.8125,39.86484']
           }
-          const accessToken = ''
+          const accessToken = 'access-token'
 
           const response = await constructOrderPayload({
             accessMethod,
@@ -391,7 +439,11 @@ describe('constructOrderPayload', () => {
     describe('when only bounding subsetting is supported', () => {
       describe('with a point', () => {
         test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the point', async () => {
-          nock(/cmr/)
+          nock(/cmr/, {
+            reqheaders: {
+              Authorization: 'Bearer access-token'
+            }
+          })
             .get('/search/granules.json?point%5B%5D=-77%2C%2034')
             .reply(200, {
               feed: {
@@ -415,7 +467,7 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             point: ['-77, 34']
           }
-          const accessToken = ''
+          const accessToken = 'access-token'
 
           const response = await constructOrderPayload({
             accessMethod,
@@ -432,7 +484,11 @@ describe('constructOrderPayload', () => {
 
       describe('with a bounding box', () => {
         test('constructs a payload containing the bounding box', async () => {
-          nock(/cmr/)
+          nock(/cmr/, {
+            reqheaders: {
+              Authorization: 'Bearer access-token'
+            }
+          })
             .get('/search/granules.json?bounding_box%5B%5D=5%2C0%2C15%2C10')
             .reply(200, {
               feed: {
@@ -450,7 +506,7 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             bounding_box: ['5,0,15,10']
           }
-          const accessToken = ''
+          const accessToken = 'access-token'
 
           const response = await constructOrderPayload({
             accessMethod,
@@ -467,7 +523,11 @@ describe('constructOrderPayload', () => {
 
       describe('with a circle', () => {
         test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the circle', async () => {
-          nock(/cmr/)
+          nock(/cmr/, {
+            reqheaders: {
+              Authorization: 'Bearer access-token'
+            }
+          })
             .get('/search/granules.json?circle%5B%5D=-77%2C%2034%2C%2020000')
             .reply(200, {
               feed: {
@@ -491,7 +551,7 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             circle: ['-77, 34, 20000']
           }
-          const accessToken = ''
+          const accessToken = 'access-token'
 
           const response = await constructOrderPayload({
             accessMethod,
@@ -508,7 +568,11 @@ describe('constructOrderPayload', () => {
 
       describe('with a polygon', () => {
         test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the polygon', async () => {
-          nock(/cmr/)
+          nock(/cmr/, {
+            reqheaders: {
+              Authorization: 'Bearer access-token'
+            }
+          })
             .get('/search/granules.json?polygon%5B%5D=-29.8125%2C39.86484%2C-23.0625%2C-19.74405%2C15.75%2C20.745%2C-29.8125%2C39.86484')
             .reply(200, {
               feed: {
@@ -532,7 +596,7 @@ describe('constructOrderPayload', () => {
           const granuleParams = {
             polygon: ['-29.8125,39.86484,-23.0625,-19.74405,15.75,20.745,-29.8125,39.86484']
           }
-          const accessToken = ''
+          const accessToken = 'access-token'
 
           const response = await constructOrderPayload({
             accessMethod,
