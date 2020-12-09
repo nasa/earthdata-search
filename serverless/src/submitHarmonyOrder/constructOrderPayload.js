@@ -31,7 +31,7 @@ export const constructOrderPayload = async ({
       arrayFormat: 'brackets'
     },
     headers: {
-      Authorization: accessToken,
+      Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().background
     },
     json: true,

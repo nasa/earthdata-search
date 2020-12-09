@@ -13,7 +13,11 @@ describe('constructOrderPayload', () => {
   })
 
   test('constructs an order payload', async () => {
-    nock(/cmr/)
+    nock(/cmr/, {
+      reqheaders: {
+        Authorization: 'Bearer access-token'
+      }
+    })
       .get('/search/granules.json?collection_concept_id=C100000-EDSC')
       .reply(200, {
         feed: {
@@ -54,7 +58,7 @@ describe('constructOrderPayload', () => {
       collection_concept_id: 'C100000-EDSC'
     }
 
-    const accessToken = 'accessToken'
+    const accessToken = 'access-token'
     const earthdataEnvironment = 'prod'
 
     const response = await constructOrderPayload(
@@ -78,7 +82,11 @@ describe('constructOrderPayload', () => {
   })
 
   test('constructs an order payload with added granule params', async () => {
-    nock(/cmr/)
+    nock(/cmr/, {
+      reqheaders: {
+        Authorization: 'Bearer access-token'
+      }
+    })
       .get('/search/granules.json?concept_id%5B%5D=G10000005-EDSC')
       .reply(200, {
         feed: {
@@ -119,13 +127,13 @@ describe('constructOrderPayload', () => {
       concept_id: ['G10000005-EDSC']
     }
 
-    const accessTokenWithClient = 'accessToken:clientId'
+    const accessToken = 'access-token'
     const earthdataEnvironment = 'prod'
 
     const response = await constructOrderPayload(
       accessMethod,
       granuleParams,
-      accessTokenWithClient,
+      accessToken,
       earthdataEnvironment
     )
 
