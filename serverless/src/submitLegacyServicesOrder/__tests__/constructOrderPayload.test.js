@@ -13,11 +13,8 @@ describe('constructOrderPayload', () => {
   })
 
   test('constructs an order payload', async () => {
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get('/search/granules.json?collection_concept_id=C100000-EDSC')
       .reply(200, {
         feed: {
@@ -82,11 +79,8 @@ describe('constructOrderPayload', () => {
   })
 
   test('constructs an order payload with added granule params', async () => {
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get('/search/granules.json?concept_id%5B%5D=G10000005-EDSC')
       .reply(200, {
         feed: {

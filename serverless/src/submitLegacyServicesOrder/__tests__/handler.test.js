@@ -85,11 +85,8 @@ describe('submitLegacyServicesOrder', () => {
       role: 'Order Contact'
     }
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .post(/orders\.json/)
       .reply(201, {
         order: {
@@ -97,11 +94,8 @@ describe('submitLegacyServicesOrder', () => {
         }
       })
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get(/granules/)
       .reply(200, {
         feed: {
@@ -111,11 +105,8 @@ describe('submitLegacyServicesOrder', () => {
         }
       })
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .post(/order_information/)
       .reply(200, [
         {
@@ -133,11 +124,8 @@ describe('submitLegacyServicesOrder', () => {
         }
       ])
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .post(/orders\/100005\/order_items\/bulk_action/, [{
         order_item: {
           quantity: 1,
@@ -151,11 +139,8 @@ describe('submitLegacyServicesOrder', () => {
       }])
       .reply(201)
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .put(/orders\/100005\/user_information/, {
         user_information: {
           shipping_contact: contactInformation,
@@ -167,11 +152,8 @@ describe('submitLegacyServicesOrder', () => {
       })
       .reply(201)
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .post(/orders\/100005\/submit/)
       .reply(201)
 
@@ -226,11 +208,8 @@ describe('submitLegacyServicesOrder', () => {
       organization: 'Earthdadta Search'
     }
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .post(/orders\.json/)
       .reply(500, {
         errorType: 'Error',
