@@ -59,11 +59,8 @@ describe('submitCatalogRestOrder', () => {
     const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
       .mockImplementation(() => (jest.fn()))
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get('/search/granules.json?collection_concept_id=C100000-EDSC')
       .reply(200, {
         feed: {
@@ -137,11 +134,8 @@ describe('submitCatalogRestOrder', () => {
 
     jest.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get('/search/granules.json?concept_id%5B%5D=G10000005-EDSC')
       .reply(200, {
         feed: {
@@ -210,11 +204,8 @@ describe('submitCatalogRestOrder', () => {
 
     jest.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get('/search/granules.json?concept_id%5B%5D=G10000005-EDSC')
       .reply(200, {
         feed: {
@@ -285,11 +276,8 @@ describe('submitCatalogRestOrder', () => {
     const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
       .mockImplementation(() => ('limited mock shapefile'))
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get('/search/granules.json?collection_concept_id=C100000-EDSC')
       .reply(200, {
         feed: {
@@ -375,11 +363,8 @@ describe('submitCatalogRestOrder', () => {
       edscHost: 'http://localhost:8080'
     }))
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get('/search/granules.json?collection_concept_id=C100000-EDSC')
       .reply(500)
 
@@ -420,11 +405,8 @@ describe('submitCatalogRestOrder', () => {
       edscHost: 'http://localhost:8080'
     }))
 
-    nock(/cmr/, {
-      reqheaders: {
-        Authorization: 'Bearer access-token'
-      }
-    })
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
       .get('/search/granules.json?collection_concept_id=C100000-EDSC')
       .reply(200, {
         feed: {
