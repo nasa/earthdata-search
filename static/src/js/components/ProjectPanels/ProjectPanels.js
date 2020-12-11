@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash'
-import { FaExclamationCircle, FaCheckCircle, FaMap } from 'react-icons/fa'
+import { FaExclamationCircle, FaCheckCircle } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'

@@ -168,20 +168,17 @@
     &:hover {
       cursor: default;
     }
+
+    .split-badge__inner {
+      display: inline-block;
+      text-transform: none;
+    }
   }
 
   &__badge-icon {
-    &.fa {
-      margin-right: $spacer/3;
-      font-size: 0.75rem;
-      line-height: 0.625rem;
-    }
-
-    &.svg {
-      margin-right: $spacer/3;
-      font-size: 0.75rem;
-      line-height: 0.625rem;
-    }
+    margin-right: $spacer/3;
+    font-size: 0.75rem;
+    line-height: 0.625rem;
 
     &:last-child {
       margin-right: 0;

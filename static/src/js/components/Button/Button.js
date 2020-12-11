@@ -25,6 +25,7 @@ export const Button = React.forwardRef(({
   disabled,
   href,
   icon,
+  iconSize,
   label,
   onClick,
   overlayClass,
@@ -98,7 +99,13 @@ export const Button = React.forwardRef(({
       style={style}
       data-test-id={dataTestId}
     >
-      {(!spinner && icon) && <EDSCIcon icon={icon} className={iconClasses} />}
+      {(!spinner && icon) && (
+        <EDSCIcon
+          className={iconClasses}
+          icon={icon}
+          size={iconSize}
+        />
+      )}
       <span className="button__contents">
         { spinner
           ? (
@@ -148,6 +155,7 @@ Button.defaultProps = {
   className: null,
   href: null,
   icon: null,
+  iconSize: null,
   onClick: null,
   overlayClass: null,
   spinner: false,
@@ -173,6 +181,7 @@ Button.propTypes = {
   children: PropTypes.node,
   href: PropTypes.string,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  iconSize: PropTypes.string,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   overlayClass: PropTypes.string,

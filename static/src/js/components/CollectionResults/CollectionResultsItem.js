@@ -92,7 +92,11 @@ export const CollectionResultsItem = forwardRef(({
           </Tooltip>
         )}
       >
-        <EDSCIcon icon={FaGlobe} className="collection-results-item__badge-icon svg fa-globe-svg" />
+        <EDSCIcon
+          className="collection-results-item__badge-icon svg fa-globe-svg"
+          icon={FaGlobe}
+          size="0.625rem"
+        />
       </OverlayTrigger>
     ))
   }
@@ -112,7 +116,11 @@ export const CollectionResultsItem = forwardRef(({
           </Tooltip>
         )}
       >
-        <EDSCIcon icon={FaTags} className="collection-results-item__badge-icon svg fa-tags-svg" />
+        <EDSCIcon
+          className="collection-results-item__badge-icon svg fa-tags-svg"
+          icon={FaTags}
+          size="0.625rem"
+        />
       </OverlayTrigger>
     ))
   }
@@ -132,7 +140,11 @@ export const CollectionResultsItem = forwardRef(({
           </Tooltip>
         )}
       >
-        <EDSCIcon icon={FaSlidersH} className="collection-results-item__badge-icon svg fa-sliders-svg" />
+        <EDSCIcon
+          className="collection-results-item__badge-icon svg fa-sliders-svg"
+          icon={FaSlidersH}
+          size="0.625rem"
+        />
       </OverlayTrigger>
     ))
   }
@@ -152,7 +164,11 @@ export const CollectionResultsItem = forwardRef(({
           </Tooltip>
         )}
       >
-        <EDSCIcon icon={FaFileAlt} className="collection-results-item__badge-icon svg fa-file-svg" />
+        <EDSCIcon
+          className="collection-results-item__badge-icon svg fa-file-svg"
+          icon={FaFileAlt}
+          size="0.625rem"
+        />
       </OverlayTrigger>
     ))
   }
@@ -172,7 +188,11 @@ export const CollectionResultsItem = forwardRef(({
           </Tooltip>
         )}
       >
-        <EDSCIcon icon={FaClock} className="collection-results-item__badge-icon svg fa-clock-svg" />
+        <EDSCIcon
+          className="collection-results-item__badge-icon svg fa-clock-svg"
+          icon={FaClock}
+          size="0.625rem"
+        />
       </OverlayTrigger>
     ))
   }

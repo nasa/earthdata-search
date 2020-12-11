@@ -335,6 +335,7 @@ class SearchForm extends Component {
             label="Clear search"
             onClick={this.onSearchClear}
             icon={FaEraser}
+            iconSize="0.825rem"
           />
           {
             showFilterStackToggle && (
@@ -349,6 +350,7 @@ class SearchForm extends Component {
                         title="Close filter stack"
                         label="Close filter stack"
                         icon={FaChevronUp}
+                        iconSize="0.825rem"
                       />
                     )
                     : (
@@ -359,6 +361,7 @@ class SearchForm extends Component {
                         title="Open filter stack"
                         label="Open filter stack"
                         icon={FaBars}
+                        iconSize="0.825rem"
                       />
                     )
                 }
@@ -377,6 +380,7 @@ class SearchForm extends Component {
                 label="Advanced search"
                 onClick={this.onToggleAdvancedSearch}
                 icon={FaSlidersH}
+                iconSize="0.825rem"
               />
             </PortalFeatureContainer>
           </div>

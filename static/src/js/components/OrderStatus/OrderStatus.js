@@ -15,6 +15,7 @@ import { stringify } from '../../util/url/url'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './OrderStatus.scss'
+
 export class OrderStatus extends Component {
   componentDidMount() {
     const { onFetchRetrieval, match, authToken } = this.props
@@ -251,7 +252,7 @@ export class OrderStatus extends Component {
 OrderStatus.propTypes = {
   authToken: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
-granuleDownload: PropTypes.shape({}).isRequired,
+  granuleDownload: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
