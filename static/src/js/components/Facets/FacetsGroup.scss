@@ -98,8 +98,15 @@
   }
 
   &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-left: 0.5rem;
     color: darken($color__black--400, 10);
+
+    svg {
+      transform: translateY(-0.125rem)
+    }
   }
 
   &__body {

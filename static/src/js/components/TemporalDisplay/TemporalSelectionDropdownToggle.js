@@ -9,10 +9,10 @@ const TemporalSelectionDropdownToggle = ({ onToggleClick }) => (
   <Dropdown.Toggle
     variant="inline-block"
     id="temporal-selection-dropdown"
-    className="search-form__button search-form__button--dark"
+    className="temporal-selection-dropdown__button earch-form__button search-form__button--dark"
     onClick={onToggleClick}
   >
-    <EDSCIcon icon={FaCalendar} />
+    <EDSCIcon icon={FaCalendar} size="0.825rem" />
   </Dropdown.Toggle>
 )
 

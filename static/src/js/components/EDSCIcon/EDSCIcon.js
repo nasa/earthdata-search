@@ -15,9 +15,10 @@ export const EDSCIcon = ({
   className,
   children,
   context,
+  size,
   title
 }) => {
-  if (!icon) { return (<i />) }
+  if (!icon) return null
 
   if (typeof icon === 'string') {
     return (
@@ -34,15 +35,24 @@ export const EDSCIcon = ({
     <>
       {context ? (
         <IconContext.Provider
-          key={icon}
           value={context}
         >
-          <Icon className={className} style={{ verticalAlign: 'inherit' }} title={title} />
+          <Icon
+            className={className}
+            style={{ verticalAlign: 'text-bottom' }}
+            title={title}
+            size={size}
+          />
           {children}
         </IconContext.Provider>
       ) : (
         <>
-          <Icon key={icon} className={className} style={{ verticalAlign: 'inherit' }} title={title} />
+          <Icon
+            className={className}
+            style={{ verticalAlign: 'text-bottom' }}
+            title={title}
+            size={size}
+          />
           {children}
         </>
       )}
@@ -55,6 +65,7 @@ EDSCIcon.defaultProps = {
   children: null,
   className: null,
   context: null,
+  size: '1rem',
   title: null
 }
 
@@ -62,8 +73,8 @@ EDSCIcon.propTypes = {
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   children: PropTypes.node,
   className: PropTypes.string,
-  // eslint-disable-next-line react/forbid-prop-types
-  context: PropTypes.object,
+  context: PropTypes.shape({}),
+  size: PropTypes.string,
   title: PropTypes.string
 }
 

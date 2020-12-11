@@ -1,6 +1,12 @@
 .temporal-selection-dropdown {
   display: flex;
 
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .dropdown-toggle:after {
     display: none;
   }

@@ -97,7 +97,7 @@ CustomToggle.propTypes = {
   className: PropTypes.string,
   handleClose: PropTypes.func,
   handleOpen: PropTypes.func,
-  icon: PropTypes.string,
+  icon: PropTypes.func,
   onClick: PropTypes.func,
   openOnHover: PropTypes.bool,
   title: PropTypes.string.isRequired
