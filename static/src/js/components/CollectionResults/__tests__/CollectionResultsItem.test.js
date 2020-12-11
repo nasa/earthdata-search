@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Overlay, Tooltip } from 'react-bootstrap'
 
 import CollectionResultsItem from '../CollectionResultsItem'
 import SplitBadge from '../../SplitBadge/SplitBadge'
@@ -9,6 +9,13 @@ import { collectionListItemProps } from './mocks'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
+
+const popperOffset = {
+  name: 'offset',
+  options: {
+    offset: [0, 6]
+  }
+}
 
 function setup(propsOverride) {
   const props = {
@@ -320,6 +327,10 @@ describe('CollectionResultsList component', () => {
         test('renders a tooltip with the correct text', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Spatial customizable options available')
         })
+
+        test('renders a tooltip the correct popperConfig', () => {
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
+        })
       })
 
       describe('variables icon', () => {
@@ -342,6 +353,10 @@ describe('CollectionResultsList component', () => {
 
         test('renders a tooltip with the correct text', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Variable customizable options available')
+        })
+
+        test('renders a tooltip the correct popperConfig', () => {
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
         })
       })
 
@@ -366,6 +381,10 @@ describe('CollectionResultsList component', () => {
         test('renders a tooltip with the correct text', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Data transformation options available')
         })
+
+        test('renders a tooltip the correct popperConfig', () => {
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
+        })
       })
 
       describe('formats icon', () => {
@@ -389,6 +408,10 @@ describe('CollectionResultsList component', () => {
         test('renders a tooltip with the correct text', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Reformatting options available')
         })
+
+        test('renders a tooltip the correct popperConfig', () => {
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
+        })
       })
 
       describe('temporal subsetting icon', () => {
@@ -411,6 +434,10 @@ describe('CollectionResultsList component', () => {
 
         test('renders a tooltip with the correct text', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Temporal subsetting options available')
+        })
+
+        test('renders a tooltip the correct popperConfig', () => {
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
         })
       })
     })

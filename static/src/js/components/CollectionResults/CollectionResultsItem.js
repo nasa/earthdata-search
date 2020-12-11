@@ -57,11 +57,21 @@ export const CollectionResultsItem = forwardRef(({
 
   const customizeBadges = []
 
+  const popperOffset = {
+    modifiers: [{
+      name: 'offset',
+      options: {
+        offset: [0, 6]
+      }
+    }]
+  }
+
   if (hasSpatialSubsetting) {
     customizeBadges.push((
       <OverlayTrigger
         key="badge-icon__spatial-subsetting"
         placement="top"
+        popperConfig={popperOffset}
         overlay={(
           <Tooltip
             id="tooltip_customize-spatial-subsetting"
@@ -81,6 +91,7 @@ export const CollectionResultsItem = forwardRef(({
       <OverlayTrigger
         key="badge-icon__variables"
         placement="top"
+        popperConfig={popperOffset}
         overlay={(
           <Tooltip
             id="tooltip_customize-variables"
@@ -100,6 +111,7 @@ export const CollectionResultsItem = forwardRef(({
       <OverlayTrigger
         key="badge-icon__transforms"
         placement="top"
+        popperConfig={popperOffset}
         overlay={(
           <Tooltip
             id="tooltip_customize-transforms"
@@ -119,6 +131,7 @@ export const CollectionResultsItem = forwardRef(({
       <OverlayTrigger
         key="badge-icon__formats"
         placement="top"
+        popperConfig={popperOffset}
         overlay={(
           <Tooltip
             id="tooltip_customize-formats"
@@ -138,6 +151,7 @@ export const CollectionResultsItem = forwardRef(({
       <OverlayTrigger
         key="badge-icon__temporal-subsetting"
         placement="top"
+        popperConfig={popperOffset}
         overlay={(
           <Tooltip
             id="tooltip_customize-temporal-subsetting"
