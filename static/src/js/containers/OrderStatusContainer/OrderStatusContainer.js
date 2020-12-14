@@ -9,7 +9,7 @@ import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
 import OrderStatus from '../../components/OrderStatus/OrderStatus'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   authToken: state.authToken,
   earthdataEnvironment: getEarthdataEnvironment(state),
   granuleDownload: state.granuleDownload,
@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
   retrieval: state.retrieval
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onFetchRetrieval:
     retrievalId => dispatch(actions.fetchRetrieval(retrievalId)),
   onFetchRetrievalCollection:

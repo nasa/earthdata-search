@@ -6,11 +6,11 @@ import actions from '../../actions'
 
 import ShapefileUploadModal from '../../components/ShapefileUploadModal/ShapefileUploadModal'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   isOpen: state.ui.shapefileUploadModal.isOpen
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onToggleShapefileUploadModal:
     state => dispatch(actions.toggleShapefileUploadModal(state))
 })

@@ -1,8 +1,11 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { SearchPanelsContainer } from '../SearchPanelsContainer'
+
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, SearchPanelsContainer } from '../SearchPanelsContainer'
 import SearchPanels from '../../../components/SearchPanels/SearchPanels'
+import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -48,6 +51,127 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onApplyGranuleFilters calls actions.applyGranuleFilters', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'applyGranuleFilters')
+
+    mapDispatchToProps(dispatch).onApplyGranuleFilters({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onChangeQuery calls actions.changeQuery', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeQuery')
+
+    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeFocusedCollection')
+
+    mapDispatchToProps(dispatch).onFocusedCollectionChange('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onMetricsCollectionSortChange calls metricsCollectionSortChange', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsCollectionSortChange, 'metricsCollectionSortChange')
+
+    mapDispatchToProps(dispatch).onMetricsCollectionSortChange({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onSetActivePanel calls actions.setActivePanel', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'setActivePanel')
+
+    mapDispatchToProps(dispatch).onSetActivePanel('panelId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('panelId')
+  })
+
+  test('onToggleAboutCwicModal calls actions.toggleAboutCwicModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleAboutCwicModal')
+
+    mapDispatchToProps(dispatch).onToggleAboutCwicModal(true)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(true)
+  })
+
+  test('onTogglePanels calls actions.togglePanels', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'togglePanels')
+
+    mapDispatchToProps(dispatch).onTogglePanels('value')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('value')
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      authToken: 'mock-token',
+      metadata: {
+        collections: {
+          collectionId: {
+            subscriptions: []
+          }
+        }
+      },
+      focusedCollection: 'collectionId',
+      map: {
+        projection: ''
+      },
+      panels: {},
+      preferences: {
+        preferences: {}
+      },
+      portal: {},
+      query: {
+        collection: {}
+      },
+      searchResults: {
+        collections: {}
+      }
+    }
+
+    const expectedState = {
+      authToken: 'mock-token',
+      collectionMetadata: {
+        subscriptions: []
+      },
+      collectionQuery: {},
+      collectionsSearch: {},
+      granuleMetadata: {},
+      granuleSearchResults: {},
+      granuleQuery: {},
+      mapProjection: '',
+      panels: {},
+      preferences: {},
+      portal: {},
+      subscriptions: []
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('SearchPanelsContainer component', () => {
   test('passes its props and renders a single SearchPanels component', () => {

@@ -13,7 +13,7 @@ import { FooterLink } from '../../components/FooterLink/FooterLink'
 
 import './FooterContainer.scss'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   loadTime: state.searchResults.collections.loadTime,
   portal: state.portal
 })

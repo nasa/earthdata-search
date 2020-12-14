@@ -6,12 +6,11 @@ import actions from '../../actions/index'
 
 import { metricsDataAccess } from '../../middleware/metrics/actions'
 
-import { viewCollectionGranules, viewCollectionDetails } from '../../actions/focusedCollection'
 import { getProjectCollectionsMetadata, getProjectCollectionsIds } from '../../selectors/project'
 
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onRemoveCollectionFromProject:
     collectionId => dispatch(actions.removeCollectionFromProject(collectionId)),
   onToggleCollectionVisibility:
@@ -29,12 +28,12 @@ const mapDispatchToProps = dispatch => ({
   onUpdateFocusedCollection:
     collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
   onViewCollectionDetails:
-    data => dispatch(viewCollectionDetails(data)),
+    data => dispatch(actions.viewCollectionDetails(data)),
   onViewCollectionGranules:
-    data => dispatch(viewCollectionGranules(data))
+    data => dispatch(actions.viewCollectionGranules(data))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   collectionsQuery: state.query.collection,
   mapProjection: state.map.projection,
   panels: state.panels,

@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { GranuleResultsHighlightsContainer } from '../GranuleResultsHighlightsContainer'
+import { GranuleResultsHighlightsContainer, mapStateToProps } from '../GranuleResultsHighlightsContainer'
 import GranuleResultsHighlights from '../../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -46,6 +46,33 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      metadata: {
+        collections: {}
+      },
+      focusedCollection: 'collectionId',
+      query: {
+        collection: {}
+      },
+      searchResults: {
+        collections: {}
+      }
+    }
+
+    const expectedState = {
+      collectionsQuery: {},
+      collectionsSearch: {},
+      focusedCollectionGranuleMetadata: {},
+      focusedCollectionId: 'collectionId',
+      focusedCollectionMetadata: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('GranuleResultsHighlightsContainer component', () => {
   test('passes its props and renders a single GranuleResultsHighlights component', () => {

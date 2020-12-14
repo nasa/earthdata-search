@@ -12,7 +12,7 @@ import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata
 
 import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
 
-const mapDispathToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
   onMetricsMap: type => dispatch(metricsMap(type)),
   onMetricsSpatialEdit: data => dispatch(metricsSpatialEdit(data)),
@@ -20,7 +20,7 @@ const mapDispathToProps = dispatch => ({
   onToggleDrawingNewLayer: state => dispatch(actions.toggleDrawingNewLayer(state))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
@@ -111,4 +111,4 @@ SpatialSelectionContainer.propTypes = {
   onRemoveSpatialFilter: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispathToProps)(SpatialSelectionContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(SpatialSelectionContainer)

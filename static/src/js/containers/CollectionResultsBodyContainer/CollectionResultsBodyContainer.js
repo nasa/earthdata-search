@@ -10,7 +10,7 @@ import { getProjectCollectionsIds } from '../../selectors/project'
 
 import CollectionResultsBody from '../../components/CollectionResults/CollectionResultsBody'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   browser: state.browser,
   collectionsSearch: state.searchResults.collections,
   collectionsMetadata: state.metadata.collections,
@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
   query: state.query.collection
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onAddProjectCollection:
     collectionId => dispatch(actions.addProjectCollection(collectionId)),
   onRemoveCollectionFromProject:

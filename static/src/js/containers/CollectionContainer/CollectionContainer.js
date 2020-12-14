@@ -7,12 +7,12 @@ import actions from '../../actions'
 
 import CollectionDownloadDisplay from '../../components/CollectionDownloadDisplay/CollectionDownloadDisplay'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   authToken: state.authToken,
   retrieval: state.retrieval
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onFetchRetrieval:
     (retrievalId, authToken) => dispatch(
       actions.fetchRetrieval(retrievalId, authToken)
@@ -31,7 +31,7 @@ export class CollectionContainer extends Component {
     } = this.props
 
     const { params } = match
-    const { retrieval_id: retrievalId } = params
+    const { id: retrievalId } = params
 
     if (retrievalId) {
       onFetchRetrieval(retrievalId)
@@ -54,8 +54,8 @@ export class CollectionContainer extends Component {
     const { params: nextParams } = nextMatch
     const { id: nextRetrievalId } = nextParams
 
-    if (retrievalId && (retrievalId !== nextRetrievalId)) {
-      onFetchRetrieval(retrievalId)
+    if (nextRetrievalId && (retrievalId !== nextRetrievalId)) {
+      onFetchRetrieval(nextRetrievalId)
     }
   }
 

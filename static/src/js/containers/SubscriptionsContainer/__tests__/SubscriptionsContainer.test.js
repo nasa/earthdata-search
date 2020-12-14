@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { SubscriptionsContainer } from '../SubscriptionsContainer'
+
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, SubscriptionsContainer } from '../SubscriptionsContainer'
 import SubscriptionsList from '../../../components/SubscriptionsList/SubscriptionsList'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -38,6 +40,41 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onDeleteSubscription calls actions.deleteSubscription', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'deleteSubscription')
+
+    mapDispatchToProps(dispatch).onDeleteSubscription('conceptId', 'nativeId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('conceptId', 'nativeId')
+  })
+
+  test('onFetchSubscriptions calls actions.getSubscriptions', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'getSubscriptions')
+
+    mapDispatchToProps(dispatch).onFetchSubscriptions()
+
+    expect(spy).toBeCalledTimes(1)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      subscriptions: {}
+    }
+
+    const expectedState = {
+      subscriptions: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('SubscriptionsContainer component', () => {
   test('passes its props and renders SubscriptionsList component', () => {

@@ -3,7 +3,8 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import * as tinyCookie from 'tiny-cookie'
 
-import { AuthTokenContainer } from '../AuthTokenContainer'
+import actions from '../../../actions'
+import { AuthTokenContainer, mapDispatchToProps } from '../AuthTokenContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -26,6 +27,48 @@ function setup() {
 
 beforeEach(() => {
   jest.clearAllMocks()
+})
+
+describe('mapDispatchToProps', () => {
+  test('onSetContactInfoFromJwt calls actions.setContactInfoFromJwt', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'setContactInfoFromJwt')
+
+    mapDispatchToProps(dispatch).onSetContactInfoFromJwt('mock-token')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('mock-token')
+  })
+
+  test('onSetPreferencesFromJwt calls actions.setPreferencesFromJwt', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'setPreferencesFromJwt')
+
+    mapDispatchToProps(dispatch).onSetPreferencesFromJwt('mock-token')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('mock-token')
+  })
+
+  test('onSetUserFromJwt calls actions.setUserFromJwt', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'setUserFromJwt')
+
+    mapDispatchToProps(dispatch).onSetUserFromJwt('mock-token')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('mock-token')
+  })
+
+  test('onUpdateAuthToken calls actions.updateAuthToken', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'updateAuthToken')
+
+    mapDispatchToProps(dispatch).onUpdateAuthToken('mock-token')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('mock-token')
+  })
 })
 
 describe('AuthTokenContainer component', () => {

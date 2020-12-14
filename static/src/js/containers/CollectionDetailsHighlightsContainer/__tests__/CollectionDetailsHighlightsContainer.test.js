@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { CollectionDetailsHighlightsContainer } from '../CollectionDetailsHighlightsContainer'
+import actions from '../../../actions'
+import { CollectionDetailsHighlightsContainer, mapDispatchToProps, mapStateToProps } from '../CollectionDetailsHighlightsContainer'
 import CollectionDetailsHighlights from '../../../components/CollectionDetailsHighlights/CollectionDetailsHighlights'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -28,6 +29,39 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onToggleRelatedUrlsModal calls actions.toggleRelatedUrlsModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleRelatedUrlsModal')
+
+    mapDispatchToProps(dispatch).onToggleRelatedUrlsModal(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      metadata: {
+        collections: {}
+      },
+      focusedCollection: 'collectionId',
+      searchResults: {
+        collections: {}
+      }
+    }
+
+    const expectedState = {
+      collectionMetadata: {},
+      collectionsSearch: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('CollectionDetailsHighlightsContainer component', () => {
   test('passes its props and renders a single CollectionDetailsHighlights component', () => {

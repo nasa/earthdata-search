@@ -10,12 +10,12 @@ import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata
 
 import CollectionDetailsHighlights from '../../components/CollectionDetailsHighlights/CollectionDetailsHighlights'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionsSearch: state.searchResults.collections
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onToggleRelatedUrlsModal:
     state => dispatch(actions.toggleRelatedUrlsModal(state))
 })

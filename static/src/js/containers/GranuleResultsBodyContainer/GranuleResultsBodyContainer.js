@@ -17,7 +17,7 @@ import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangeGranulePageNum:
     data => dispatch(actions.changeGranulePageNum(data)),
   onExcludeGranule:
@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => ({
     data => dispatch(actions.removeGranuleFromProjectCollection(data))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),

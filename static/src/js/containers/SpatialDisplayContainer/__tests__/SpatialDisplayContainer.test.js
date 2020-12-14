@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { SpatialDisplayContainer } from '../SpatialDisplayContainer'
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, SpatialDisplayContainer } from '../SpatialDisplayContainer'
 import SpatialDisplay from '../../../components/SpatialDisplay/SpatialDisplay'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -15,7 +16,6 @@ function setup() {
     drawingNewLayer: false,
     lineSearch: ['Test Line'],
     onChangeQuery: jest.fn(),
-    onRemoveGridFilter: jest.fn(),
     onRemoveSpatialFilter: jest.fn(),
     pointSearch: ['Test Point Search'],
     polygonSearch: ['Test Polygon Search'],
@@ -29,6 +29,67 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onChangeQuery calls actions.changeQuery', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeQuery')
+
+    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onRemoveSpatialFilter calls actions.removeSpatialFilter', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'removeSpatialFilter')
+
+    mapDispatchToProps(dispatch).onRemoveSpatialFilter()
+
+    expect(spy).toBeCalledTimes(1)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      query: {
+        collection: {
+          spatial: {
+            boundingBox: [],
+            circle: [],
+            line: [],
+            point: [],
+            polygon: []
+          }
+        }
+      },
+      shapefile: {},
+      ui: {
+        map: {
+          drawingNewLayer: false
+        },
+        spatialPolygonWarning: {
+          isDisplayed: false
+        }
+      }
+    }
+
+    const expectedState = {
+      boundingBoxSearch: [],
+      circleSearch: [],
+      displaySpatialPolygonWarning: false,
+      drawingNewLayer: false,
+      lineSearch: [],
+      pointSearch: [],
+      polygonSearch: [],
+      shapefile: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('SpatialDisplayContainer component', () => {
   test('passes its props and renders a single SpatialDisplay component', () => {

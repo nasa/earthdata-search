@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import actions from '../../actions/index'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onSetContactInfoFromJwt:
     token => dispatch(actions.setContactInfoFromJwt(token)),
   onSetPreferencesFromJwt:

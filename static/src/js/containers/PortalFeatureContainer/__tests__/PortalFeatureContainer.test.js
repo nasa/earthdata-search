@@ -1,7 +1,8 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { PortalFeatureContainer } from '../PortalFeatureContainer'
+
+import { mapStateToProps, PortalFeatureContainer } from '../PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -28,6 +29,20 @@ function setup(overrideProps = {}) {
     props
   }
 }
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      portal: {}
+    }
+
+    const expectedState = {
+      portal: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('PortalFeatureContainer component', () => {
   describe('advancedSearch', () => {

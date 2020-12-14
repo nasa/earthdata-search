@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { MetricsEventsContainer } from '../MetricsEventsContainer'
+
+import { mapDispatchToProps, MetricsEventsContainer } from '../MetricsEventsContainer'
+import * as metricsClick from '../../../middleware/metrics/actions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -17,6 +19,18 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onMetricsClick calls metricsClick', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsClick, 'metricsClick')
+
+    mapDispatchToProps(dispatch).onMetricsClick({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+})
 
 describe('MetricsEventsContainer component', () => {
   describe('metricsClick fires onMetricsClick correctly', () => {

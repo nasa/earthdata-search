@@ -42,7 +42,7 @@ import './MapContainer.scss'
 
 const { BaseLayer, Overlay } = LayersControl
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangeFocusedGranule:
     granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
   onChangeMap: query => dispatch(actions.changeMap(query)),
@@ -57,7 +57,7 @@ const mapDispatchToProps = dispatch => ({
   onUpdateShapefile: data => dispatch(actions.updateShapefile(data))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   authToken: state.authToken,
   collectionsMetadata: state.metadata.collections,
   drawingNewLayer: state.ui.map.drawingNewLayer,

@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Link } from 'react-router-dom'
 
-import { PortalLinkContainer } from '../PortalLinkContainer'
+import { mapStateToProps, PortalLinkContainer } from '../PortalLinkContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -35,6 +35,20 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      portal: {}
+    }
+
+    const expectedState = {
+      portal: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('PortalLinkContainer component', () => {
   beforeEach(() => {

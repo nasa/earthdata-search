@@ -6,13 +6,13 @@ import actions from '../../actions'
 
 import FacetsModal from '../../components/Facets/FacetsModal'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   collectionHits: state.searchResults.viewAllFacets.hits,
   viewAllFacets: state.searchResults.viewAllFacets,
   isOpen: state.ui.facetsModal.isOpen
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangeViewAllFacet:
     (e, facetLinkInfo) => dispatch(actions.changeViewAllFacet(e, facetLinkInfo)),
   onToggleFacetsModal:

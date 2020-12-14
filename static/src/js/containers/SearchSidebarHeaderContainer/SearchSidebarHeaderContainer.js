@@ -8,7 +8,7 @@ import SearchSidebarHeader from '../../components/SearchSidebar/SearchSidebarHea
 import actions from '../../actions/index'
 import { locationPropType } from '../../util/propTypes/location'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onFocusedCollectionChange:
     collectionId => dispatch(actions.changeFocusedCollection(collectionId))
 })

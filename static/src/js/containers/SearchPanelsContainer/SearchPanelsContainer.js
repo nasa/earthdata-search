@@ -11,7 +11,7 @@ import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   authToken: state.authToken,
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionQuery: state.query.collection,
@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
   subscriptions: getFocusedCollectionSubscriptions(state)
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onApplyGranuleFilters:
     values => dispatch(actions.applyGranuleFilters(values)),
   onChangeQuery:

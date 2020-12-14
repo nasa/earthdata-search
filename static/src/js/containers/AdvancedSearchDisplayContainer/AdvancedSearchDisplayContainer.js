@@ -6,14 +6,14 @@ import actions from '../../actions'
 
 import AdvancedSearchDisplay from '../../components/AdvancedSearchDisplay/AdvancedSearchDisplay'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onUpdateAdvancedSearch:
     state => dispatch(actions.updateAdvancedSearch(state)),
   onChangeQuery:
-    (state, options) => dispatch(actions.changeQuery(state, options))
+    query => dispatch(actions.changeQuery(query))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch
 })
 

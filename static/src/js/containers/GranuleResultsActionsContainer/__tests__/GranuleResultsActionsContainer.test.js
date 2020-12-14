@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { GranuleResultsActionsContainer } from '../GranuleResultsActionsContainer'
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, GranuleResultsActionsContainer } from '../GranuleResultsActionsContainer'
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -79,6 +80,91 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onAddProjectCollection calls actions.addProjectCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'addProjectCollection')
+
+    mapDispatchToProps(dispatch).onAddProjectCollection('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onRemoveCollectionFromProject calls actions.removeCollectionFromProject', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'removeCollectionFromProject')
+
+    mapDispatchToProps(dispatch).onRemoveCollectionFromProject('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onSetActivePanelSection calls actions.setActivePanelSection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'setActivePanelSection')
+
+    mapDispatchToProps(dispatch).onSetActivePanelSection('panelId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('panelId')
+  })
+
+  test('onUpdateFocusedCollection calls actions.updateFocusedCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'updateFocusedCollection')
+
+    mapDispatchToProps(dispatch).onUpdateFocusedCollection('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onChangePath calls actions.changePath', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changePath')
+
+    mapDispatchToProps(dispatch).onChangePath('path')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('path')
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      metadata: {
+        collections: {
+          collectionId: {
+            subscriptions: []
+          }
+        }
+      },
+      focusedCollection: 'collectionId',
+      focusedGranule: 'granuleId',
+      query: {},
+      project: {},
+      shapefile: {}
+    }
+
+    const expectedState = {
+      collectionMetadata: {
+        subscriptions: []
+      },
+      focusedCollectionId: 'collectionId',
+      focusedProjectCollection: {},
+      granuleQuery: {},
+      granuleSearchResults: {},
+      project: {},
+      subscriptions: []
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('GranuleResultsActionsContainer component', () => {
   test('passes its props and renders a single GranuleResultsActions component', () => {

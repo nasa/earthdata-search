@@ -8,12 +8,12 @@ import RelatedUrlsModal from '../../components/CollectionDetails/RelatedUrlsModa
 
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   isOpen: state.ui.relatedUrlsModal.isOpen
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onToggleRelatedUrlsModal:
     state => dispatch(actions.toggleRelatedUrlsModal(state))
 })

@@ -6,11 +6,11 @@ import { withRouter } from 'react-router-dom'
 import actions from '../../actions'
 import AdminRetrieval from '../../components/AdminRetrieval/AdminRetrieval'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   retrievals: state.admin.retrievals.byId
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onFetchAdminRetrieval: id => dispatch(actions.fetchAdminRetrieval(id))
 })
 

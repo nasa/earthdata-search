@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { OrderStatusContainer } from '../OrderStatusContainer'
+
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, OrderStatusContainer } from '../OrderStatusContainer'
 import OrderStatus from '../../../components/OrderStatus/OrderStatus'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -14,6 +16,74 @@ function setup(props) {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onFetchRetrieval calls actions.fetchRetrieval', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'fetchRetrieval')
+
+    mapDispatchToProps(dispatch).onFetchRetrieval('retrievalId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('retrievalId')
+  })
+
+  test('onFetchRetrievalCollection calls actions.fetchRetrievalCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'fetchRetrievalCollection')
+
+    mapDispatchToProps(dispatch).onFetchRetrievalCollection('retrievalCollectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('retrievalCollectionId')
+  })
+
+  test('onFetchRetrievalCollectionGranuleLinks calls actions.fetchRetrievalCollectionGranuleLinks', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'fetchRetrievalCollectionGranuleLinks')
+
+    mapDispatchToProps(dispatch).onFetchRetrievalCollectionGranuleLinks({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onChangePath calls actions.changePath', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changePath')
+
+    mapDispatchToProps(dispatch).onChangePath('path')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('path')
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      authToken: 'mock-token',
+      earthdataEnvironment: 'prod',
+      granuleDownload: {},
+      portal: {
+        portalId: 'edsc'
+      },
+      retrieval: {}
+    }
+
+    const expectedState = {
+      authToken: 'mock-token',
+      earthdataEnvironment: 'prod',
+      granuleDownload: {},
+      portal: {
+        portalId: 'edsc'
+      },
+      retrieval: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('OrderStatusContainer component', () => {
   describe('when passed the correct props', () => {

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import AppLogo from '../../components/AppLogo/AppLogo'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   portal: state.portal
 })
 

@@ -13,7 +13,7 @@ import { isPath } from '../../util/isPath'
 
 const Timeline = lazy(() => import('../../components/Timeline/Timeline'))
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
   onChangeTimelineQuery: query => dispatch(actions.changeTimelineQuery(query)),
   onToggleOverrideTemporalModal:
@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
   onToggleTimeline: open => dispatch(actions.toggleTimeline(open))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   browser: state.browser,
   collectionsMetadata: getCollectionsMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),

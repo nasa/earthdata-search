@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { SearchSidebarHeaderContainer } from '../SearchSidebarHeaderContainer'
+
+import actions from '../../../actions'
+import { mapDispatchToProps, SearchSidebarHeaderContainer } from '../SearchSidebarHeaderContainer'
 import SearchSidebarHeader from '../../../components/SearchSidebar/SearchSidebarHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -21,6 +23,18 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeFocusedCollection')
+
+    mapDispatchToProps(dispatch).onFocusedCollectionChange('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+})
 
 describe('SearchSidebarHeaderContainer component', () => {
   test('passes its props and renders a single SearchSidebarHeader component', () => {

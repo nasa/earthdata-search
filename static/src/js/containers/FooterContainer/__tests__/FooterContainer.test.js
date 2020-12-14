@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import * as config from '../../../../../../sharedUtils/config'
 
-import { FooterContainer } from '../FooterContainer'
+import { mapStateToProps, FooterContainer } from '../FooterContainer'
 import { FooterLink } from '../../../components/FooterLink/FooterLink'
 
 beforeEach(() => {
@@ -44,6 +44,26 @@ function setup(overrideProps = {}) {
     props
   }
 }
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      searchResults: {
+        collections: {
+          loadTime: ''
+        }
+      },
+      portal: {}
+    }
+
+    const expectedState = {
+      loadTime: '',
+      portal: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('FooterContainer component', () => {
   test('displays version', () => {

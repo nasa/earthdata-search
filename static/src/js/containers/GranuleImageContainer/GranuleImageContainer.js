@@ -9,7 +9,7 @@ import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleImage from '../../components/GranuleImage/GranuleImage'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   earthdataEnvironment: getEarthdataEnvironment(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granuleMetadata: getFocusedGranuleMetadata(state)

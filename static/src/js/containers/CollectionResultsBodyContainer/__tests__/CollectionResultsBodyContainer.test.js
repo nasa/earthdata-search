@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { CollectionResultsBodyContainer } from '../CollectionResultsBodyContainer'
+import actions from '../../../actions'
+import { CollectionResultsBodyContainer, mapDispatchToProps, mapStateToProps } from '../CollectionResultsBodyContainer'
 import CollectionResultsBody from '../../../components/CollectionResults/CollectionResultsBody'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -44,6 +45,87 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onAddProjectCollection calls actions.addProjectCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'addProjectCollection')
+
+    mapDispatchToProps(dispatch).onAddProjectCollection('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onRemoveCollectionFromProject calls actions.removeCollectionFromProject', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'removeCollectionFromProject')
+
+    mapDispatchToProps(dispatch).onRemoveCollectionFromProject('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onViewCollectionGranules calls actions.viewCollectionGranules', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'viewCollectionGranules')
+
+    mapDispatchToProps(dispatch).onViewCollectionGranules('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onViewCollectionDetails calls actions.viewCollectionDetails', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'viewCollectionDetails')
+
+    mapDispatchToProps(dispatch).onViewCollectionDetails('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onChangeCollectionPageNum calls actions.changeCollectionPageNum', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeCollectionPageNum')
+
+    mapDispatchToProps(dispatch).onChangeCollectionPageNum({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      browser: {},
+      metadata: {
+        collections: {}
+      },
+      portal: {},
+      query: {
+        collection: {}
+      },
+      searchResults: {
+        collections: {}
+      }
+    }
+
+    const expectedState = {
+      browser: {},
+      collectionsSearch: {},
+      collectionsMetadata: {},
+      portal: {},
+      projectCollectionsIds: [],
+      query: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('CollectionResultsBodyContainer component', () => {
   test('passes its props and renders a single CollectionResultsBody component', () => {

@@ -6,11 +6,11 @@ import actions from '../../actions'
 
 import KeyboardShortcutsModal from '../../components/KeyboardShortcutsModal/KeyboardShortcutsModal'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   isOpen: state.ui.keyboardShortcutsModal.isOpen
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onToggleKeyboardShortcutsModal: state => dispatch(actions.toggleKeyboardShortcutsModal(state))
 })
 

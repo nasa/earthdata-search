@@ -11,14 +11,14 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onLogout: () => dispatch(actions.logout()),
   onUpdateProjectName: name => dispatch(actions.updateProjectName(name)),
   onChangePath: path => dispatch(actions.changePath(path)),
   onFetchContactInfo: () => dispatch(actions.fetchContactInfo())
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   authToken: state.authToken,
   earthdataEnvironment: getEarthdataEnvironment(state),
   portal: state.portal,

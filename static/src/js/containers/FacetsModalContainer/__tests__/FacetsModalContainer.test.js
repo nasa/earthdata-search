@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { FacetsModalContainer } from '../FacetsModalContainer'
+import actions from '../../../actions'
+import { FacetsModalContainer, mapDispatchToProps, mapStateToProps } from '../FacetsModalContainer'
 import FacetsModal from '../../../components/Facets/FacetsModal'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -24,6 +25,64 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onChangeViewAllFacet calls actions.changeViewAllFacet', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeViewAllFacet')
+
+    mapDispatchToProps(dispatch).onChangeViewAllFacet({ mock: 'event' }, { mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'event' }, { mock: 'data' })
+  })
+
+  test('onToggleFacetsModal calls actions.toggleFacetsModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleFacetsModal')
+
+    mapDispatchToProps(dispatch).onToggleFacetsModal(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+
+  test('onApplyViewAllFacets calls actions.applyViewAllFacets', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'applyViewAllFacets')
+
+    mapDispatchToProps(dispatch).onApplyViewAllFacets()
+
+    expect(spy).toBeCalledTimes(1)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      searchResults: {
+        viewAllFacets: {
+          hits: 42
+        }
+      },
+      ui: {
+        facetsModal: {
+          isOpen: false
+        }
+      }
+    }
+
+    const expectedState = {
+      collectionHits: 42,
+      viewAllFacets: {
+        hits: 42
+      },
+      isOpen: false
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('FacetsModalContainer component', () => {
   test('passes its props and renders a single FacetsModal component', () => {

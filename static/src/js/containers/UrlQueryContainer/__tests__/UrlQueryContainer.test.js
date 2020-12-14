@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { UrlQueryContainer } from '../UrlQueryContainer'
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, UrlQueryContainer } from '../UrlQueryContainer'
 import * as encodeUrlQuery from '../../../util/url/url'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -50,6 +51,145 @@ function setup() {
 
 beforeEach(() => {
   jest.resetAllMocks()
+})
+
+describe('mapDispatchToProps', () => {
+  test('onChangePath calls actions.changePath', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changePath')
+
+    mapDispatchToProps(dispatch).onChangePath('path')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('path')
+  })
+
+  test('onChangeUrl calls actions.changeUrl', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeUrl')
+
+    mapDispatchToProps(dispatch).onChangeUrl('query')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('query')
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      advancedSearch: {},
+      autocomplete: {
+        selected: []
+      },
+      earthdataEnvironment: 'prod',
+      facetsParams: {
+        cmr: {
+          granule_data_format_h: [],
+          horizontal_data_resolution_range: [],
+          instrument_h: [],
+          data_center_h: [],
+          platform_h: [],
+          processing_level_id_h: [],
+          project_h: [],
+          science_keywords_h: [],
+          two_d_coordinate_system_name: []
+        },
+        feature: {}
+      },
+      focusedCollection: 'collectionId',
+      focusedGranule: 'granuleIdId',
+      map: {},
+      metadata: {
+        collections: {}
+      },
+      project: {},
+      query: {
+        collection: {
+          hasGranulesOrCwic: false,
+          keyword: '',
+          overrideTemporal: {},
+          spatial: {
+            boundingBox: [],
+            circle: [],
+            line: [],
+            point: [],
+            polygon: []
+          },
+          tagKey: '',
+          temporal: {}
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
+      },
+      shapefile: {
+        selectedFeatures: [],
+        shapefileId: ''
+      },
+      timeline: {
+        query: {}
+      }
+    }
+
+    const expectedState = {
+      advancedSearch: {},
+      autocompleteSelected: [],
+      boundingBoxSearch: [],
+      circleSearch: [],
+      collectionsMetadata: {},
+      earthdataEnvironment: 'prod',
+      featureFacets: {},
+      focusedCollection: 'collectionId',
+      focusedGranuleId: 'granuleIdId',
+      granuleDataFormatFacets: [],
+      hasGranulesOrCwic: false,
+      horizontalDataResolutionRangeFacets: [],
+      instrumentFacets: [],
+      keywordSearch: '',
+      lineSearch: [],
+      location: {
+        pathname: ''
+      },
+      map: {},
+      organizationFacets: [],
+      overrideTemporalSearch: {},
+      pathname: '',
+      platformFacets: [],
+      pointSearch: [],
+      polygonSearch: [],
+      processingLevelFacets: [],
+      project: {},
+      projectFacets: [],
+      query: {
+        collection: {
+          hasGranulesOrCwic: false,
+          keyword: '',
+          overrideTemporal: {},
+          spatial: {
+            boundingBox: [],
+            circle: [],
+            line: [],
+            point: [],
+            polygon: []
+          },
+          tagKey: '',
+          temporal: {}
+        }
+      },
+      scienceKeywordFacets: [],
+      selectedFeatures: [],
+      shapefileId: '',
+      tagKey: '',
+      temporalSearch: {},
+      twoDCoordinateSystemNameFacets: [],
+      timelineQuery: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
 })
 
 describe('UrlQueryContainer', () => {

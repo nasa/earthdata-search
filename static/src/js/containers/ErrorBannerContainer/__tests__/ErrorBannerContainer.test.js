@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { ErrorBannerContainer } from '../ErrorBannerContainer'
+import actions from '../../../actions'
+import { ErrorBannerContainer, mapDispatchToProps, mapStateToProps } from '../ErrorBannerContainer'
 import Banner from '../../../components/Banner/Banner'
 import { displayNotificationType } from '../../../constants/enums'
 
@@ -27,6 +28,32 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onRemoveError calls actions.removeError', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'removeError')
+
+    mapDispatchToProps(dispatch).onRemoveError('id')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('id')
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      errors: {}
+    }
+
+    const expectedState = {
+      errors: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('ErrorBannerContainer component', () => {
   test('passes its props and renders a single ErrorBanner component', () => {
