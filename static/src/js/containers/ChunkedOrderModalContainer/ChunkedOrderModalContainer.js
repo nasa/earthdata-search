@@ -14,7 +14,7 @@ import {
 
 import ChunkedOrderModal from '../../components/ChunkedOrderModal/ChunkedOrderModal'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   isOpen: state.ui.chunkedOrderModal.isOpen,
   location: state.router.location,
   project: state.project,
@@ -22,7 +22,7 @@ const mapStateToProps = state => ({
   projectCollectionsRequiringChunking: getProjectCollectionsRequiringChunking(state)
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onToggleChunkedOrderModal:
     state => dispatch(actions.toggleChunkedOrderModal(state)),
   onSubmitRetrieval:

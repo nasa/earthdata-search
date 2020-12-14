@@ -2,8 +2,9 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+import actions from '../../../actions'
 import * as EventEmitter from '../../../events/events'
-import { ShapefileDropzoneContainer } from '../ShapefileDropzoneContainer'
+import { mapDispatchToProps, mapStateToProps, ShapefileDropzoneContainer } from '../ShapefileDropzoneContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -28,6 +29,81 @@ function setup() {
 
 beforeEach(() => {
   jest.clearAllMocks()
+})
+
+describe('mapDispatchToProps', () => {
+  test('onRemoveSpatialFilter calls actions.removeSpatialFilter', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'removeSpatialFilter')
+
+    mapDispatchToProps(dispatch).onRemoveSpatialFilter()
+
+    expect(spy).toBeCalledTimes(1)
+  })
+
+  test('onSaveShapefile calls actions.saveShapefile', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'saveShapefile')
+
+    mapDispatchToProps(dispatch).onSaveShapefile({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onShapefileErrored calls actions.shapefileErrored', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'shapefileErrored')
+
+    mapDispatchToProps(dispatch).onShapefileErrored({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onShapefileLoading calls actions.shapefileLoading', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'shapefileLoading')
+
+    mapDispatchToProps(dispatch).onShapefileLoading({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onToggleShapefileUploadModal calls actions.toggleShapefileUploadModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleShapefileUploadModal')
+
+    mapDispatchToProps(dispatch).onToggleShapefileUploadModal({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onUpdateShapefile calls actions.updateShapefile', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'updateShapefile')
+
+    mapDispatchToProps(dispatch).onUpdateShapefile({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      authToken: 'mock-token'
+    }
+
+    const expectedState = {
+      authToken: 'mock-token'
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
 })
 
 describe('ShapefileDropzoneContainer component', () => {

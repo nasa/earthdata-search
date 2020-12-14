@@ -2,8 +2,10 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { SpatialSelectionContainer } from '../SpatialSelectionContainer'
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, SpatialSelectionContainer } from '../SpatialSelectionContainer'
 import SpatialSelection from '../../../components/SpatialSelection/SpatialSelection'
+import * as metrics from '../../../middleware/metrics/actions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -39,6 +41,95 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onChangeQuery calls actions.changeQuery', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeQuery')
+
+    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onMetricsMap calls metricsMap', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metrics, 'metricsMap')
+
+    mapDispatchToProps(dispatch).onMetricsMap('type')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('type')
+  })
+
+  test('onMetricsSpatialEdit calls metricsSpatialEdit', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metrics, 'metricsSpatialEdit')
+
+    mapDispatchToProps(dispatch).onMetricsSpatialEdit({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onRemoveSpatialFilter calls actions.removeSpatialFilter', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'removeSpatialFilter')
+
+    mapDispatchToProps(dispatch).onRemoveSpatialFilter()
+
+    expect(spy).toBeCalledTimes(1)
+  })
+
+  test('onToggleDrawingNewLayer calls actions.toggleDrawingNewLayer', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleDrawingNewLayer')
+
+    mapDispatchToProps(dispatch).onToggleDrawingNewLayer(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      advancedSearch: {},
+      metadata: {
+        collection: {}
+      },
+      query: {
+        collection: {
+          spatial: {
+            boundingBox: [],
+            circle: [],
+            line: [],
+            point: [],
+            polygon: []
+          }
+        }
+      },
+      router: {},
+      shapefile: {}
+    }
+
+    const expectedState = {
+      advancedSearch: {},
+      boundingBoxSearch: [],
+      circleSearch: [],
+      collectionMetadata: {},
+      lineSearch: [],
+      router: {},
+      pointSearch: [],
+      polygonSearch: [],
+      shapefile: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('SpatialSelectionContainer component', () => {
   test('passes its props and renders a single SpatialSelection component', () => {

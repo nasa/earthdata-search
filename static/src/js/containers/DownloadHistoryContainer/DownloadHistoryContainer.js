@@ -6,14 +6,14 @@ import { withRouter } from 'react-router-dom'
 import actions from '../../actions'
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   earthdataEnvironment: state.earthdataEnvironment,
   retrievalHistory: state.retrievalHistory.history,
   retrievalHistoryLoading: state.retrievalHistory.isLoading,
   retrievalHistoryLoaded: state.retrievalHistory.isLoaded
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onFetchRetrievalHistory: (earthdataEnvironment) => {
     dispatch(actions.fetchRetrievalHistory(earthdataEnvironment))
   },

@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { AdvancedSearchModalContainer } from '../AdvancedSearchModalContainer'
+
+import actions from '../../../actions'
+import { AdvancedSearchModalContainer, mapDispatchToProps, mapStateToProps } from '../AdvancedSearchModalContainer'
 import { AdvancedSearchModal } from '../../../components/AdvancedSearchModal/AdvancedSearchModal'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -38,6 +40,62 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onToggleAdvancedSearchModal calls actions.toggleAdvancedSearchModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleAdvancedSearchModal')
+
+    mapDispatchToProps(dispatch).onToggleAdvancedSearchModal({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onChangeRegionQuery calls actions.changeRegionQuery', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeRegionQuery')
+
+    mapDispatchToProps(dispatch).onChangeRegionQuery({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onChangeQuery calls actions.changeQuery', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeQuery')
+
+    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      advancedSearch: {},
+      searchResults: {
+        regions: {}
+      },
+      ui: {
+        advancedSearchModal: {
+          isOpen: false
+        }
+      }
+    }
+
+    const expectedState = {
+      advancedSearch: {},
+      isOpen: false,
+      regionSearchResults: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('AdvancedSearchModalContainer component', () => {
   test('passes its props and renders a single FacetsModal component', () => {

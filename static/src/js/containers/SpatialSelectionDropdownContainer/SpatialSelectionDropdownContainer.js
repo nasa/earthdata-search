@@ -6,7 +6,7 @@ import SpatialSelectionDropdown from '../../components/SpatialDisplay/SpatialSel
 
 import actions from '../../actions'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onToggleShapefileUploadModal: state => dispatch(actions.toggleShapefileUploadModal(state))
 })
 
@@ -14,7 +14,7 @@ const mapDispatchToProps = dispatch => ({
  * Component representing the spatial selection dropdown
  * @param {function} onChangeQuery - A redux action to update the temporal state
  */
-const SpatialSelectionDropdownContainer = (props) => {
+export const SpatialSelectionDropdownContainer = (props) => {
   const {
     onToggleShapefileUploadModal
   } = props

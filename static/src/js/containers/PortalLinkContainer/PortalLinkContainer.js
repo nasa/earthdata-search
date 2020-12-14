@@ -8,7 +8,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../../components/Button/Button'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   portal: state.portal
 })
 

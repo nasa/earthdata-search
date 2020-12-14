@@ -6,11 +6,11 @@ import TemporalSelectionDropdown from '../../components/TemporalDisplay/Temporal
 
 import actions from '../../actions'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   temporalSearch: state.query.collection.temporal
 })
 
@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
  * @param {object} temporalSearch - The temporal state from the redux store
  * @param {function} onChangeQuery - A redux action to update the temporal state
  */
-const TemporalSelectionDropdownContainer = (props) => {
+export const TemporalSelectionDropdownContainer = (props) => {
   const {
     onChangeQuery,
     temporalSearch

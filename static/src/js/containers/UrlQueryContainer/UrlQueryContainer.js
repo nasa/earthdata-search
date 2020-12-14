@@ -12,14 +12,14 @@ import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangePath:
     path => dispatch(actions.changePath(path)),
   onChangeUrl:
     query => dispatch(actions.changeUrl(query))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   autocompleteSelected: state.autocomplete.selected,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,

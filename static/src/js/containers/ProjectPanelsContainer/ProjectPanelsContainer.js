@@ -11,7 +11,7 @@ import { getProjectCollectionsMetadata } from '../../selectors/project'
 
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   dataQualitySummaries: state.dataQualitySummaries,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
@@ -27,7 +27,7 @@ const mapStateToProps = state => ({
   overrideTemporal: state.query.collection.overrideTemporal
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangePath:
     path => dispatch(actions.changePath(path)),
   onSelectAccessMethod:

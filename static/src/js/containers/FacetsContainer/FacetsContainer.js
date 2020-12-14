@@ -6,7 +6,7 @@ import actions from '../../actions/index'
 
 import Facets from '../../components/Facets/Facets'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangeCmrFacet:
     (e, facetLinkInfo, facet, applied) => dispatch(
       actions.changeCmrFacet(e, facetLinkInfo, facet, applied)
@@ -17,13 +17,13 @@ const mapDispatchToProps = dispatch => ({
     category => dispatch(actions.triggerViewAllFacets(category))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   facets: state.searchResults.facets,
   featureFacets: state.facetsParams.feature,
   portal: state.portal
 })
 
-const FacetsContainer = (props) => {
+export const FacetsContainer = (props) => {
   const {
     facets,
     featureFacets,

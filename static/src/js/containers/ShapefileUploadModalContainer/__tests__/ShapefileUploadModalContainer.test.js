@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { ShapefileUploadModalContainer } from '../ShapefileUploadModalContainer'
+
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, ShapefileUploadModalContainer } from '../ShapefileUploadModalContainer'
 import { ShapefileUploadModal } from '../../../components/ShapefileUploadModal/ShapefileUploadModal'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -19,6 +21,36 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onToggleShapefileUploadModal calls actions.toggleShapefileUploadModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleShapefileUploadModal')
+
+    mapDispatchToProps(dispatch).onToggleShapefileUploadModal(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      ui: {
+        shapefileUploadModal: {
+          isOpen: false
+        }
+      }
+    }
+
+    const expectedState = {
+      isOpen: false
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('ShapefileUploadModalContainer component', () => {
   test('passes its props and renders a single FacetsModal component', () => {

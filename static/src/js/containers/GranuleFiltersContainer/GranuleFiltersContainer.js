@@ -15,13 +15,13 @@ import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata
 import GranuleFiltersForm
   from '../../components/GranuleFilters/GranuleFiltersForm'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   temporal: state.query.collection.temporal
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onApplyGranuleFilters:
     (values, closePanel) => dispatch(
       actions.applyGranuleFilters(values, closePanel)

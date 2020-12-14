@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { GranuleFiltersContainer } from '../GranuleFiltersContainer'
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, GranuleFiltersContainer } from '../GranuleFiltersContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -48,6 +49,67 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onApplyGranuleFilters calls actions.applyGranuleFilters', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'applyGranuleFilters')
+
+    mapDispatchToProps(dispatch).onApplyGranuleFilters({ mock: 'data' }, true)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' }, true)
+  })
+
+  test('onClearGranuleFilters calls actions.clearGranuleFilters', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'clearGranuleFilters')
+
+    mapDispatchToProps(dispatch).onClearGranuleFilters('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onUndoExcludeGranule calls actions.undoExcludeGranule', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'undoExcludeGranule')
+
+    mapDispatchToProps(dispatch).onUndoExcludeGranule('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      metadata: {
+        collections: {}
+      },
+      focusedCollection: 'collectionId',
+      query: {
+        collection: {
+          byId: {
+            collectionId: {
+              granule: {}
+            }
+          },
+          temporal: {}
+        }
+      }
+    }
+
+    const expectedState = {
+      collectionMetadata: {},
+      granuleQuery: {},
+      temporal: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('GranuleFiltersContainer component', () => {
   test('renders itself correctly', () => {

@@ -17,7 +17,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onAddProjectCollection:
     collectionId => dispatch(actions.addProjectCollection(collectionId)),
   onRemoveCollectionFromProject:
@@ -29,15 +29,13 @@ const mapDispatchToProps = dispatch => ({
   onChangePath: path => dispatch(actions.changePath(path))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
   focusedProjectCollection: getFocusedProjectCollection(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   project: state.project,
-  searchValue: state.ui.granuleResultsPanel.searchValue,
-  sortOrder: state.ui.granuleResultsPanel.sortOrder,
   subscriptions: getFocusedCollectionSubscriptions(state)
 })
 

@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { GranuleDetailsBodyContainer } from '../GranuleDetailsBodyContainer'
+import { GranuleDetailsBodyContainer, mapStateToProps } from '../GranuleDetailsBodyContainer'
 import GranuleDetailsBody from '../../../components/GranuleDetails/GranuleDetailsBody'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -15,6 +15,26 @@ function setup(props) {
     props
   }
 }
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      authToken: 'mock-token',
+      earthdataEnvironment: 'prod',
+      metadata: {
+        granules: {}
+      }
+    }
+
+    const expectedState = {
+      authToken: 'mock-token',
+      earthdataEnvironment: 'prod',
+      granuleMetadata: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('GranuleResultsBodyContainer component', () => {
   describe('when passed granule metadata', () => {

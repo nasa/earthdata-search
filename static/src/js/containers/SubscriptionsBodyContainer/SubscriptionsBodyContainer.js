@@ -12,12 +12,12 @@ import { getFocusedCollectionSubscriptions } from '../../selectors/collectionMet
 
 import SubscriptionsBody from '../../components/Subscriptions/SubscriptionsBody'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onCreateSubscription:
     () => dispatch(actions.createSubscription())
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   granuleQueryString: getFocusedGranuleQueryString(state),
   subscriptions: getFocusedCollectionSubscriptions(state)
 })

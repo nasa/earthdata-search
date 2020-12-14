@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import * as tinyCookie from 'tiny-cookie'
 
-import { AuthCallbackContainer } from '../AuthCallbackContainer'
+import { AuthCallbackContainer, mapStateToProps } from '../AuthCallbackContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -26,6 +26,22 @@ function setup(overrideProps) {
 beforeEach(() => {
   jest.restoreAllMocks()
   jest.clearAllMocks()
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      router: {
+        location: {}
+      }
+    }
+
+    const expectedState = {
+      location: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
 })
 
 describe('AuthCallbackContainer component', () => {

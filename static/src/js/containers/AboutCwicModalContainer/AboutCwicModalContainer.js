@@ -6,11 +6,11 @@ import actions from '../../actions'
 
 import AboutCwicModal from '../../components/AboutCwicModal/AboutCwicModal'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   isOpen: state.ui.aboutCwicModal.isOpen
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onToggleAboutCwicModal:
     state => dispatch(actions.toggleAboutCwicModal(state))
 })

@@ -5,7 +5,7 @@ import $ from 'jquery'
 
 import { metricsClick } from '../../middleware/metrics/actions'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onMetricsClick:
     data => dispatch(metricsClick(data))
 })

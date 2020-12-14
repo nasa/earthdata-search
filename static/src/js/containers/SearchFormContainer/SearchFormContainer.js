@@ -7,7 +7,7 @@ import actions from '../../actions/index'
 
 import SearchForm from '../../components/SearchForm/SearchForm'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
   onChangeFocusedCollection:
     collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
     data => dispatch(actions.selectAutocompleteSuggestion(data))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   autocomplete: state.autocomplete,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,

@@ -6,13 +6,12 @@ import actions from '../../actions'
 
 import SpatialDisplay from '../../components/SpatialDisplay/SpatialDisplay'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onRemoveGridFilter: () => dispatch(actions.removeGridFilter()),
   onRemoveSpatialFilter: () => dispatch(actions.removeSpatialFilter())
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
@@ -31,7 +30,6 @@ export const SpatialDisplayContainer = (props) => {
     drawingNewLayer,
     lineSearch,
     onChangeQuery,
-    onRemoveGridFilter,
     onRemoveSpatialFilter,
     pointSearch,
     polygonSearch,
@@ -46,7 +44,6 @@ export const SpatialDisplayContainer = (props) => {
       drawingNewLayer={drawingNewLayer}
       lineSearch={lineSearch}
       onChangeQuery={onChangeQuery}
-      onRemoveGridFilter={onRemoveGridFilter}
       onRemoveSpatialFilter={onRemoveSpatialFilter}
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
@@ -74,7 +71,6 @@ SpatialDisplayContainer.propTypes = {
   ]).isRequired,
   lineSearch: PropTypes.arrayOf(PropTypes.string),
   onChangeQuery: PropTypes.func.isRequired,
-  onRemoveGridFilter: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),

@@ -2,8 +2,10 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { TimelineContainer } from '../TimelineContainer'
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, TimelineContainer } from '../TimelineContainer'
 import Timeline from '../../../components/Timeline/Timeline'
+import * as metricsTimeline from '../../../middleware/metrics/actions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -44,6 +46,99 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onChangeQuery calls actions.changeQuery', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeQuery')
+
+    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onChangeTimelineQuery calls actions.changeTimelineQuery', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeTimelineQuery')
+
+    mapDispatchToProps(dispatch).onChangeTimelineQuery({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onToggleOverrideTemporalModal calls actions.toggleOverrideTemporalModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleOverrideTemporalModal')
+
+    mapDispatchToProps(dispatch).onToggleOverrideTemporalModal(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+
+  test('onMetricsTimeline calls metricsTimeline', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsTimeline, 'metricsTimeline')
+
+    mapDispatchToProps(dispatch).onMetricsTimeline(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+
+  test('onToggleTimeline calls actions.toggleTimeline', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleTimeline')
+
+    mapDispatchToProps(dispatch).onToggleTimeline(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      browser: {},
+      metadata: {
+        collections: {}
+      },
+      focusedCollection: 'collectionId',
+      query: {
+        collection: {
+          temporal: {}
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
+      },
+      timeline: {},
+      ui: {
+        timeline: {
+          isOpen: false
+        }
+      }
+    }
+
+    const expectedState = {
+      browser: {},
+      collectionsMetadata: {},
+      focusedCollectionId: 'collectionId',
+      pathname: '',
+      projectCollectionsIds: [],
+      temporalSearch: {},
+      timeline: {},
+      isOpen: false
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('TimelineContainer component', () => {
   test('does not render a timeline if no timeline should be rendered', () => {

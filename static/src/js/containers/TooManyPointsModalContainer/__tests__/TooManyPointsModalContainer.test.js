@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { TooManyPointsModalContainer } from '../TooManyPointsModalContainer'
+
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, TooManyPointsModalContainer } from '../TooManyPointsModalContainer'
 import { TooManyPointsModal } from '../../../components/TooManyPointsModal/TooManyPointsModal'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -19,6 +21,36 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onToggleTooManyPointsModal calls actions.toggleTooManyPointsModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleTooManyPointsModal')
+
+    mapDispatchToProps(dispatch).onToggleTooManyPointsModal(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      ui: {
+        tooManyPointsModal: {
+          isOpen: false
+        }
+      }
+    }
+
+    const expectedState = {
+      isOpen: false
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('TooManyPointsModalContainer component', () => {
   test('passes its props and renders a single FacetsModal component', () => {

@@ -9,12 +9,12 @@ import actions from '../../actions/index'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { isDefaultPortal, getPortalConfig } from '../../util/portals'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onLoadPortalConfig:
     portalId => dispatch(actions.loadPortalConfig(portalId))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   portal: state.portal
 })
 

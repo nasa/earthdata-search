@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { SecondaryToolbarContainer } from '../SecondaryToolbarContainer'
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, SecondaryToolbarContainer } from '../SecondaryToolbarContainer'
 import SecondaryToolbar from '../../../components/SecondaryToolbar/SecondaryToolbar'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -32,6 +33,76 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onLogout calls actions.logout', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'logout')
+
+    mapDispatchToProps(dispatch).onLogout()
+
+    expect(spy).toBeCalledTimes(1)
+  })
+
+  test('onUpdateProjectName calls actions.updateProjectName', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'updateProjectName')
+
+    mapDispatchToProps(dispatch).onUpdateProjectName('name')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('name')
+  })
+
+  test('onChangePath calls actions.changePath', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changePath')
+
+    mapDispatchToProps(dispatch).onChangePath('path')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('path')
+  })
+
+  test('onFetchContactInfo calls actions.fetchContactInfo', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'fetchContactInfo')
+
+    mapDispatchToProps(dispatch).onFetchContactInfo()
+
+    expect(spy).toBeCalledTimes(1)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      authToken: 'mock-token',
+      contactInfo: {
+        ursProfile: {}
+      },
+      earthdataEnvironment: 'prod',
+      portal: {},
+      project: {
+        collections: {
+          allIds: []
+        }
+      },
+      savedProject: {}
+    }
+
+    const expectedState = {
+      authToken: 'mock-token',
+      earthdataEnvironment: 'prod',
+      portal: {},
+      projectCollectionIds: [],
+      savedProject: {},
+      ursProfile: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('SecondaryToolbarContainer component', () => {
   test('passes its props and renders a single SearchForm component', () => {

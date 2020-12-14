@@ -2,8 +2,10 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { GranuleResultsBodyContainer } from '../GranuleResultsBodyContainer'
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, GranuleResultsBodyContainer } from '../GranuleResultsBodyContainer'
 import GranuleResultsBody from '../../../components/GranuleResults/GranuleResultsBody'
+import * as metricsDataAccess from '../../../middleware/metrics/actions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -35,6 +37,105 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onChangeGranulePageNum calls actions.changeGranulePageNum', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeGranulePageNum')
+
+    mapDispatchToProps(dispatch).onChangeGranulePageNum({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onExcludeGranule calls actions.excludeGranule', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'excludeGranule')
+
+    mapDispatchToProps(dispatch).onExcludeGranule({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onFocusedGranuleChange calls actions.changeFocusedGranule', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeFocusedGranule')
+
+    mapDispatchToProps(dispatch).onFocusedGranuleChange('granuleId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('granuleId')
+  })
+
+  test('onMetricsDataAccess calls metricsDataAccess', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsDataAccess, 'metricsDataAccess')
+
+    mapDispatchToProps(dispatch).onMetricsDataAccess({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onAddGranuleToProjectCollection calls actions.addGranuleToProjectCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'addGranuleToProjectCollection')
+
+    mapDispatchToProps(dispatch).onAddGranuleToProjectCollection({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onRemoveGranuleFromProjectCollection calls actions.removeGranuleFromProjectCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'removeGranuleFromProjectCollection')
+
+    mapDispatchToProps(dispatch).onRemoveGranuleFromProjectCollection({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      metadata: {
+        collections: {}
+      },
+      focusedCollection: 'collectionId',
+      focusedGranule: 'granuleId',
+      query: {
+        collection: {
+          byId: {
+            collectionId: {
+              granule: {}
+            }
+          },
+          temporal: {}
+        }
+      },
+      portal: {},
+      project: {}
+    }
+
+    const expectedState = {
+      collectionMetadata: {},
+      focusedCollectionId: 'collectionId',
+      focusedGranuleId: 'granuleId',
+      granuleQuery: {},
+      granuleSearchResults: {},
+      granulesMetadata: {},
+      portal: {},
+      project: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('GranuleResultsBodyContainer component', () => {
   test('passes its props and renders a single GranuleResultsBody component', () => {

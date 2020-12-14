@@ -7,7 +7,7 @@ import actions from '../../actions'
 import { eventEmitter } from '../../events/events'
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onRemoveSpatialFilter: () => dispatch(actions.removeSpatialFilter()),
   onSaveShapefile: options => dispatch(actions.saveShapefile(options)),
   onShapefileErrored: options => dispatch(actions.shapefileErrored(options)),
@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
   onUpdateShapefile: options => dispatch(actions.updateShapefile(options))
 })
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   authToken: state.authToken
 })
 

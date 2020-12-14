@@ -2,7 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { RelatedUrlsModalContainer } from '../RelatedUrlsModalContainer'
+import actions from '../../../actions'
+import { mapDispatchToProps, mapStateToProps, RelatedUrlsModalContainer } from '../RelatedUrlsModalContainer'
 import { RelatedUrlsModal } from '../../../components/CollectionDetails/RelatedUrlsModal'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -23,6 +24,40 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onToggleRelatedUrlsModal calls actions.toggleRelatedUrlsModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleRelatedUrlsModal')
+
+    mapDispatchToProps(dispatch).onToggleRelatedUrlsModal(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      metadata: {
+        collections: {}
+      },
+      ui: {
+        relatedUrlsModal: {
+          isOpen: false
+        }
+      }
+    }
+
+    const expectedState = {
+      collectionMetadata: {},
+      isOpen: false
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('RelatedUrlsModalContainer component', () => {
   test('passes its props and renders a single FacetsModal component', () => {

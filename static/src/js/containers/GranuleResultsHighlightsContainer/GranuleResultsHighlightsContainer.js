@@ -12,7 +12,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   collectionsQuery: state.query.collection,
   collectionsSearch: state.searchResults.collections,
   focusedCollectionGranuleMetadata: getFocusedCollectionGranuleMetadata(state),

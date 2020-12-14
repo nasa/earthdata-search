@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
-import { GranuleImageContainer } from '../GranuleImageContainer'
+import { GranuleImageContainer, mapStateToProps } from '../GranuleImageContainer'
 import GranuleImage from '../../../components/GranuleImage/GranuleImage'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -25,6 +25,26 @@ function setup() {
     props
   }
 }
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      earthdataEnvironment: 'prod',
+      focusedGranule: 'granuleId',
+      metadata: {
+        granules: {}
+      }
+    }
+
+    const expectedState = {
+      earthdataEnvironment: 'prod',
+      focusedGranuleId: 'granuleId',
+      granuleMetadata: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('GranuleImageContainer component', () => {
   test('passes its props and renders a single GranuleImage component', () => {

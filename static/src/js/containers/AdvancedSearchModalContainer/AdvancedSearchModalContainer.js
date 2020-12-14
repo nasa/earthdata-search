@@ -10,19 +10,19 @@ import {
 
 import AdvancedSearchModal from '../../components/AdvancedSearchModal/AdvancedSearchModal'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   advancedSearch: state.advancedSearch,
   isOpen: state.ui.advancedSearchModal.isOpen,
   regionSearchResults: state.searchResults.regions
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onToggleAdvancedSearchModal:
     state => dispatch(actions.toggleAdvancedSearchModal(state)),
   onChangeRegionQuery:
     query => dispatch(actions.changeRegionQuery(query)),
   onChangeQuery:
-    (query, options) => dispatch(actions.changeQuery(query, options))
+    query => dispatch(actions.changeQuery(query))
 })
 
 /**

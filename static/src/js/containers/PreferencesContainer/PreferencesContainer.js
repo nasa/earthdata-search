@@ -7,11 +7,11 @@ import actions from '../../actions'
 
 import Preferences from '../../components/Preferences/Preferences'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   preferences: state.preferences
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onUpdatePreferences: data => dispatch(actions.updatePreferences(data))
 })
 

@@ -5,7 +5,7 @@ import { parse } from 'qs'
 
 import { locationPropType } from '../../util/propTypes/location'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   location: state.router.location
 })
 
