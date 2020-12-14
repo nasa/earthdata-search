@@ -328,7 +328,7 @@ describe('CollectionResultsList component', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Spatial customizable options available')
         })
 
-        test('renders a tooltip the correct popperConfig', () => {
+        test('renders a tooltip with the correct popperConfig', () => {
           expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
         })
       })
@@ -355,7 +355,7 @@ describe('CollectionResultsList component', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Variable customizable options available')
         })
 
-        test('renders a tooltip the correct popperConfig', () => {
+        test('renders a tooltip with the correct popperConfig', () => {
           expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
         })
       })
@@ -382,7 +382,7 @@ describe('CollectionResultsList component', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Data transformation options available')
         })
 
-        test('renders a tooltip the correct popperConfig', () => {
+        test('renders a tooltip with the correct popperConfig', () => {
           expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
         })
       })
@@ -409,7 +409,7 @@ describe('CollectionResultsList component', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Reformatting options available')
         })
 
-        test('renders a tooltip the correct popperConfig', () => {
+        test('renders a tooltip with the correct popperConfig', () => {
           expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
         })
       })
@@ -436,7 +436,7 @@ describe('CollectionResultsList component', () => {
           expect(tooltip.find(Tooltip).text()).toEqual('Temporal subsetting options available')
         })
 
-        test('renders a tooltip the correct popperConfig', () => {
+        test('renders a tooltip with the correct popperConfig', () => {
           expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
         })
       })
