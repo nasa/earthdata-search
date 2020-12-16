@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { Dropdown } from 'react-bootstrap'
 
 import './RadioSettingDropdownItem.scss'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 /**
  * Renders RadioSettingDropdownItem.
@@ -30,21 +31,22 @@ export const RadioSettingDropdownItem = ({
     }
   )
 
-  const radioSettingItemIconClasses = classNames(
-    {
-      [`fa fa-${icon}`]: icon
-    },
-    'radio-setting-dropdown-item__icon'
-  )
-
   return (
     <Dropdown.Item
       as="button"
       className={radioSettingItemClasses}
       onClick={onClick}
     >
-      {icon && <i className={radioSettingItemIconClasses} />}
-      {title}
+      {
+        icon && (
+          <EDSCIcon
+            className="radio-setting-dropdown-item__icon"
+            size="0.75rem"
+            icon={icon}
+          />
+        )
+      }
+      <span className="radio-setting-dropdown-item__title">{title}</span>
     </Dropdown.Item>
   )
 }
@@ -58,7 +60,7 @@ RadioSettingDropdownItem.defaultProps = {
 
 RadioSettingDropdownItem.propTypes = {
   className: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.func,
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
   title: PropTypes.string.isRequired

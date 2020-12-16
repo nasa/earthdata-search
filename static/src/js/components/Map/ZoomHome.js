@@ -1,9 +1,14 @@
+import React from 'react'
+import { renderToString } from 'react-dom/server'
 import { Control } from 'leaflet'
-
 import {
   withLeaflet,
   MapControl
 } from 'react-leaflet'
+import { FaPlus, FaMinus, FaHome } from 'react-icons/fa'
+
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 
 /*
  * Prevents the default events.
@@ -29,11 +34,11 @@ const disableClickEvent = (el, disabled) => {
 class ZoomExtended extends Control.Zoom {
   options = {
     position: 'bottomright',
-    zoomInText: '<i class="fa fa-plus"></i>',
+    zoomInText: renderToString(<EDSCIcon size="0.75rem" icon={FaPlus} />),
     zoomInTitle: 'Zoom in',
-    zoomOutText: '<i class="fa fa-minus"></i>',
+    zoomOutText: renderToString(<EDSCIcon size="0.75rem" icon={FaMinus} />),
     zoomOutTitle: 'Zoom out',
-    zoomHomeText: '<i class="fa fa-home"></i>',
+    zoomHomeText: renderToString(<EDSCIcon size="0.75rem" icon={FaHome} />),
     zoomHomeTitle: 'Zoom home'
   }
 

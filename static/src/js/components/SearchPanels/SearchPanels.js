@@ -6,6 +6,13 @@ import {
 } from 'react-router-dom'
 import { isEqual, startCase } from 'lodash'
 import { Col } from 'react-bootstrap'
+import {
+  FaBell,
+  FaInfoCircle,
+  FaList,
+  FaMap,
+  FaTable
+} from 'react-icons/fa'
 
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { commafy } from '../../util/commafy'
@@ -247,13 +254,13 @@ class SearchPanels extends PureComponent {
     const granulesViewsArray = [
       {
         label: 'List',
-        icon: 'list',
+        icon: FaList,
         isActive: granulePanelView === 'list',
         onClick: () => setGranulesActiveView('list')
       },
       {
         label: 'Table',
-        icon: 'table',
+        icon: FaTable,
         isActive: granulePanelView === 'table',
         onClick: () => setGranulesActiveView('table')
       }
@@ -298,13 +305,13 @@ class SearchPanels extends PureComponent {
     const collectionsViewsArray = [
       {
         label: 'List',
-        icon: 'list',
+        icon: FaList,
         isActive: collectionPanelView === 'list',
         onClick: () => setCollectionsActiveView('list')
       },
       {
         label: 'Table',
-        icon: 'table',
+        icon: FaTable,
         isActive: collectionPanelView === 'table',
         onClick: () => setCollectionsActiveView('table')
       }
@@ -337,7 +344,7 @@ class SearchPanels extends PureComponent {
       subscriptionsMoreActionsItem = [
         {
           title: 'Subscriptions',
-          icon: 'bell',
+          icon: FaBell,
           link: {
             pathname: '/search/granules/subscriptions',
             search: location.search
@@ -418,7 +425,7 @@ class SearchPanels extends PureComponent {
         moreActionsDropdownItems={[
           {
             title: 'Collection Details',
-            icon: 'info-circle',
+            icon: FaInfoCircle,
             link: {
               pathname: '/search/granules/collection-details',
               search: location.search
@@ -453,7 +460,7 @@ class SearchPanels extends PureComponent {
         moreActionsDropdownItems={[
           {
             title: 'Granules',
-            icon: 'map',
+            icon: FaMap,
             link: {
               pathname: '/search/granules',
               search: location.search
@@ -497,7 +504,7 @@ class SearchPanels extends PureComponent {
         moreActionsDropdownItems={[
           {
             title: 'Granules',
-            icon: 'map',
+            icon: FaMap,
             link: {
               pathname: '/search/granules',
               search: location.search
@@ -505,7 +512,7 @@ class SearchPanels extends PureComponent {
           },
           {
             title: 'Collection Details',
-            icon: 'info-circle',
+            icon: FaInfoCircle,
             link: {
               pathname: '/search/granules/collection-details',
               search: location.search
@@ -547,7 +554,7 @@ class SearchPanels extends PureComponent {
         moreActionsDropdownItems={[
           {
             title: 'Granules',
-            icon: 'map',
+            icon: FaMap,
             link: {
               pathname: '/search/granules',
               search: location.search
@@ -555,7 +562,7 @@ class SearchPanels extends PureComponent {
           },
           {
             title: 'Collection Details',
-            icon: 'info-circle',
+            icon: FaInfoCircle,
             link: {
               pathname: '/search/granules/collection-details',
               search: location.search

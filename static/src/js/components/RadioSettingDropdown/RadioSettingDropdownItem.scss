@@ -15,6 +15,8 @@
   }
 
   &__icon {
+    display: inline-block;
+    vertical-align: middle;
     width: 1rem;
     margin-right: $spacer/4;
     text-align: center;
@@ -31,5 +33,10 @@
     .radio-setting-dropdown-item--is-active:hover & {
       color: $color__white;
     }
+  }
+
+  &__title {
+    display: inline-block;
+    vertical-align: middle;
   }
 }

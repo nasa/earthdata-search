@@ -10,7 +10,11 @@ import {
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
 import {
-  FaUser, FaSave, FaArrowCircleLeft, FaLock
+  FaArrowCircleLeft,
+  FaFolder,
+  FaLock,
+  FaSave,
+  FaUser
 } from 'react-icons/fa'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
@@ -176,7 +180,7 @@ class SecondaryToolbar extends Component {
           className="secondary-toolbar__project"
           bootstrapVariant="light"
           label="View Project"
-          icon="folder"
+          icon={FaFolder}
         >
           My Project
         </PortalLinkContainer>
@@ -212,7 +216,7 @@ class SecondaryToolbar extends Component {
               </span>
             )
           }
-          <EDSCIcon icon={FaUser} />
+          <EDSCIcon size="0.825rem" icon={FaUser} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
@@ -293,7 +297,7 @@ class SecondaryToolbar extends Component {
           label="Create a project with your current search"
         >
           {/* TODO: Check this out */}
-          <EDSCIcon icon={FaSave} />
+          <EDSCIcon size="0.825rem" icon={FaSave} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Form inline className="flex-nowrap secondary-toolbar__project-name-form">

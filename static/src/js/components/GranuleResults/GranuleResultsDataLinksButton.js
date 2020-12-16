@@ -5,7 +5,6 @@ import { PropTypes } from 'prop-types'
 import { FaDownload } from 'react-icons/fa'
 
 import Button from '../Button/Button'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 
@@ -31,12 +30,11 @@ export const CustomDataLinksToggle = React.forwardRef(({
     <Button
       className="button granule-results-data-links-button__button"
       type="button"
+      icon={FaDownload}
       ref={ref}
       label="Download single granule data"
       onClick={handleClick}
-    >
-      <EDSCIcon icon={FaDownload} />
-    </Button>
+    />
   )
 })
 
@@ -100,6 +98,7 @@ export const GranuleResultsDataLinksButton = ({
     return (
       <Button
         className="button granule-results-data-links-button__button"
+        icon={FaDownload}
         variant={buttonVariant}
         href={dataLinks[0].href}
         onClick={() => onMetricsDataAccess({
@@ -111,9 +110,7 @@ export const GranuleResultsDataLinksButton = ({
         rel="noopener noreferrer"
         label="Download single granule data"
         target="_blank"
-      >
-        <EDSCIcon icon={FaDownload} />
-      </Button>
+      />
     )
   }
 
@@ -122,12 +119,11 @@ export const GranuleResultsDataLinksButton = ({
       className="button granule-results-data-links-button__button"
       variant={buttonVariant}
       type="button"
+      icon={FaDownload}
       label="No download link available"
       disabled
       onClick={e => e.preventDefault()}
-    >
-      <EDSCIcon icon={FaDownload} />
-    </Button>
+    />
   )
 }
 

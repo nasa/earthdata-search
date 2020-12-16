@@ -3,7 +3,13 @@ import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 import abbreviate from 'number-abbreviate'
 import {
-  FaExclamationCircle, FaTimesCircle, FaInfoCircle, FaMap, FaCog
+  FaCog,
+  FaEye,
+  FaEyeSlash,
+  FaExclamationCircle,
+  FaInfoCircle,
+  FaMap,
+  FaTimesCircle
 } from 'react-icons/fa'
 
 import {
@@ -157,7 +163,7 @@ const ProjectCollectionItem = ({
                 />
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
-                  icon={isVisible ? 'FaEyeSlash' : 'FaEye'}
+                  icon={isVisible ? FaEye : FaEyeSlash}
                   title="Toggle Visibility"
                   onClick={handleToggleCollectionVisibility}
                 />
@@ -192,9 +198,7 @@ const ProjectCollectionItem = ({
             <div className="project-collections-item__footer">
               {
                 !isValid && (
-                  <span className="project-collections-item__status project-collections-item__status--invalid">
-                    <EDSCIcon icon={FaExclamationCircle} />
-                  </span>
+                  <EDSCIcon className="project-collections-item__status project-collections-item__status--invalid" icon={FaExclamationCircle} />
                 )
               }
               <Button

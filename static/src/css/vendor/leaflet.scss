@@ -56,10 +56,17 @@
     }
 
     // Set baseline styles for icons
-    .leaflet-control-container .fa {
-      font-size: 12px;
-      line-height: 1.65;
-      vertical-align: middle;
+    .leaflet-control-container {
+      .edsc-icon {
+        font-size: 12px;
+        line-height: 1.65;
+        vertical-align: middle;
+      }
+
+      .leaflet-control-zoom-out .edsc-icon,
+      .leaflet-control-zoom-in .edsc-icon {
+        transform: translateX(-1px);
+      }
     }
 
     // Positions the layers list and scale elements outside of the default container

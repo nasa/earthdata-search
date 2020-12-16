@@ -10,7 +10,6 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollectionDetails.scss'
 
@@ -113,18 +112,20 @@ export const CollectionDetails = ({
                           e.stopPropagation()
                         }}
                         label="View granule details"
+                        icon={FaInfoCircle}
+                        iconSize="0.875rem"
                         to={{
                           pathname: `${portalPath(portal)}/search/granules/granule-details`,
                           search: location.search
                         }}
-                      >
-                        <EDSCIcon icon={FaInfoCircle} />
-                      </PortalLinkContainer>
+                      />
                       <Button
                         className="collection-details__item-action collection-details__item-action--remove"
                         bootstrapSize="sm"
                         type="button"
                         label="Remove granule"
+                        icon={FaMinus}
+                        iconSize="0.875rem"
                         onClick={(e) => {
                           onRemoveGranuleFromProjectCollection({
                             collectionId,
@@ -132,9 +133,7 @@ export const CollectionDetails = ({
                           })
                           e.stopPropagation()
                         }}
-                      >
-                        <EDSCIcon icon={FaMinus} />
-                      </Button>
+                      />
                     </span>
                   </div>
                 </li>

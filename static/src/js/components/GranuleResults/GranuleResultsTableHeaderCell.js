@@ -2,7 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { LinkContainer } from 'react-router-bootstrap'
 import {
-  FaPlus, FaMinus, FaInfoCircle, FaTimesCircle
+  FaPlus,
+  FaMinus,
+  FaInfoCircle,
+  FaTimesCircle
 } from 'react-icons/fa'
 
 import murmurhash3 from '../../util/murmurhash3'
@@ -13,7 +16,6 @@ import Button from '../Button/Button'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 const GranuleResultsTableHeaderCell = (props) => {
   const { column, cell, row } = props
@@ -72,6 +74,8 @@ const GranuleResultsTableHeaderCell = (props) => {
                     type="button"
                     label="Add granule"
                     title="Add granule"
+                    icon={FaPlus}
+                    iconSize="0.75rem"
                     onClick={(e) => {
                       onAddGranuleToProjectCollection({
                         collectionId,
@@ -81,9 +85,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                       // Prevent event bubbling up to the granule focus event.
                       e.stopPropagation()
                     }}
-                  >
-                    <EDSCIcon icon={FaPlus} />
-                  </Button>
+                  />
                 )
                 : (
                   <Button
@@ -91,6 +93,8 @@ const GranuleResultsTableHeaderCell = (props) => {
                     type="button"
                     label="Remove granule"
                     title="Remove granule"
+                    icon={FaMinus}
+                    iconSize="0.75rem"
                     onClick={(e) => {
                       onRemoveGranuleFromProjectCollection({
                         collectionId,
@@ -100,9 +104,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                       // Prevent event bubbling up to the granule focus event.
                       e.stopPropagation()
                     }}
-                  >
-                    <EDSCIcon icon={FaMinus} />
-                  </Button>
+                  />
                 )
             }
           </>

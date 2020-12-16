@@ -269,7 +269,6 @@ export class ProjectHeader extends Component {
                   {totalUnit}
 
                   <OverlayTrigger
-                    container={this.component}
                     placement="right"
                     overlay={(
                       <Tooltip

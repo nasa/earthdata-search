@@ -27,8 +27,14 @@ export const MoreActionsDropdownItem = ({
       className={moreActionItemClasses}
       onClick={onClick}
     >
-      {icon && <EDSCIcon icon={icon} className={moreActionItemIconClasses} />}
-      {title}
+      {icon && (
+        <EDSCIcon
+          className={moreActionItemIconClasses}
+          size="0.75rem"
+          icon={icon}
+        />
+      )}
+      <span className="more-actions-dropdown-item__title">{title}</span>
     </Dropdown.Item>
   )
 }

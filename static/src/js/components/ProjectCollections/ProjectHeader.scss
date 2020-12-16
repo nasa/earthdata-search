@@ -67,6 +67,9 @@
   }
 
   &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
     top: -0.05rem;
     flex-shrink: 0;
@@ -86,6 +89,11 @@
     &:hover {
       color: $color__black--400;
       background-color: $color__black--200;
+    }
+
+    .edsc-icon {
+      height: 0.925rem;
+      width: 0.925rem;
     }
   }
 
@@ -123,6 +131,7 @@
     font-size: 0.775rem;
     line-height: 1.25rem;
     color: $color__black--500;
+    vertical-align: middle;
   }
 
   &__stats-val {
@@ -130,6 +139,11 @@
   }
 
   &__stats-icon {
+    position: relative;
+    top: -0.125rem;
+    display: inline;
+    height: 0.75rem;
+    width: 0.75rem;
     margin-left: $spacer/4;
     color: $color__black--400;
   }

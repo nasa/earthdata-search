@@ -46,7 +46,7 @@ export const Button = React.forwardRef(({
       'button--icon': !!icon,
       'button--icon-only': !!icon && children === null,
       'button--badge': !!badge,
-      'button--icon__svg': icon && typeof icon !== 'string'
+      'button--svg-icon': icon && typeof icon !== 'string'
     },
     className
   )

@@ -7,6 +7,11 @@ import {
   withRouter
 } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
+import {
+  FaMap,
+  FaFilter,
+  FaInfoCircle
+} from 'react-icons/fa'
 
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
@@ -108,7 +113,7 @@ export const Search = ({
           <Route exact path={`${path}/granules/collection-details`}>
             <SidebarSection
               sectionTitle="Granules"
-              titleIcon="map"
+              titleIcon={FaMap}
             >
               <GranuleResultsHighlightsContainer />
             </SidebarSection>
@@ -116,7 +121,7 @@ export const Search = ({
           <Route exact path={`${path}/granules`}>
             <SidebarSection
               sectionTitle="Filter Granules"
-              titleIcon="filter"
+              titleIcon={FaFilter}
               headerAction={{
                 title: 'Clear Filters',
                 onClick: () => {
@@ -133,7 +138,7 @@ export const Search = ({
           <Route exact path={`${path}/granules/granule-details`}>
             <SidebarSection
               sectionTitle="Collection Details"
-              titleIcon="info-circle"
+              titleIcon={FaInfoCircle}
             >
               <CollectionDetailsHighlightsContainer />
             </SidebarSection>
@@ -141,7 +146,7 @@ export const Search = ({
           <Route exact path={`${path}/granules/subscriptions`}>
             <SidebarSection
               sectionTitle="Collection Details"
-              titleIcon="info-circle"
+              titleIcon={FaInfoCircle}
             >
               <CollectionDetailsHighlightsContainer />
             </SidebarSection>
@@ -149,7 +154,7 @@ export const Search = ({
           <Route path={path}>
             <SidebarSection
               sectionTitle="Filter Collections"
-              titleIcon="filter"
+              titleIcon={FaFilter}
             >
               <SidebarFiltersList>
                 <SidebarFiltersItem

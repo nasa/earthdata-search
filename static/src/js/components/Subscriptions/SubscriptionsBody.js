@@ -2,14 +2,16 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { isEqual } from 'lodash'
+import { FaBell, FaPlus } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import SubscriptionsListItem from './SubscriptionsListItem'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import EmptyListItem from '../EmptyListItem/EmptyListItem'
 
 import { humanizedGranuleQueryMap } from '../../util/humanizedGranuleQueryMap'
 
 import './SubscriptionsBody.scss'
-import EmptyListItem from '../EmptyListItem/EmptyListItem'
 
 /**
  * Renders SubscriptionsBody.
@@ -71,7 +73,7 @@ export const SubscriptionsBody = ({
               {
                 exactlyMatchingGranuleQueries.length > 0 && (
                   <p className="subscriptions-body__query-exists-warning">
-                    <i className="fa fa-bell subscriptions-body__query-exists-warning-icon" />
+                    <EDSCIcon icon={FaBell} />
                     {' You’re subscribed to be notified when data matching the current search query becomes available.'}
                   </p>
                 )
@@ -82,7 +84,7 @@ export const SubscriptionsBody = ({
               disabled={exactlyMatchingGranuleQueries.length > 0}
               bootstrapVariant="primary"
               label="Create New Subscription"
-              icon="plus"
+              icon={FaPlus}
               spinner={submittingNewSubscription}
               onClick={async () => {
                 setSubmittingNewSubscription(true)

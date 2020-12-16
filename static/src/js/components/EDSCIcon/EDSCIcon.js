@@ -16,15 +16,20 @@ export const EDSCIcon = ({
   children,
   context,
   size,
-  title
+  title,
+  ...props
 }) => {
   if (!icon) return null
 
+  let iconClassNames = `edsc-icon ${className}`
+
   if (typeof icon === 'string') {
+    iconClassNames = `${iconClassNames} edsc-icon--simple`
     return (
       <i
-        className={className}
+        className={iconClassNames}
         title={title}
+        {...props}
       />
     )
   }
@@ -38,20 +43,20 @@ export const EDSCIcon = ({
           value={context}
         >
           <Icon
-            className={className}
-            style={{ verticalAlign: 'text-bottom' }}
+            className={iconClassNames}
             title={title}
             size={size}
+            {...props}
           />
           {children}
         </IconContext.Provider>
       ) : (
         <>
           <Icon
-            className={className}
-            style={{ verticalAlign: 'text-bottom' }}
+            className={iconClassNames}
             title={title}
             size={size}
+            {...props}
           />
           {children}
         </>
@@ -62,7 +67,7 @@ export const EDSCIcon = ({
 
 EDSCIcon.defaultProps = {
   icon: null,
-  children: null,
+  children: '',
   className: null,
   context: null,
   size: '1rem',

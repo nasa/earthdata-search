@@ -3,8 +3,15 @@ import Enzyme, { mount, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router'
-import configureStore from '../../../store/configureStore'
+import {
+  FaBell,
+  FaInfoCircle,
+  FaList,
+  FaMap,
+  FaTable
+} from 'react-icons/fa'
 
+import configureStore from '../../../store/configureStore'
 import * as PortalUtils from '../../../util/portals'
 
 import SearchPanels from '../SearchPanels'
@@ -119,10 +126,10 @@ describe('SearchPanels component', () => {
 
       expect(collectionResultsPanelProps.activeView).toBe('list')
       expect(collectionResultsPanelProps.viewsArray[0].label).toBe('List')
-      expect(collectionResultsPanelProps.viewsArray[0].icon).toBe('list')
+      expect(collectionResultsPanelProps.viewsArray[0].icon).toBe(FaList)
       expect(collectionResultsPanelProps.viewsArray[0].isActive).toBe(true)
       expect(collectionResultsPanelProps.viewsArray[1].label).toBe('Table')
-      expect(collectionResultsPanelProps.viewsArray[1].icon).toBe('table')
+      expect(collectionResultsPanelProps.viewsArray[1].icon).toBe(FaTable)
       expect(collectionResultsPanelProps.viewsArray[1].isActive).toBe(false)
 
       expect(collectionResultsPanelProps.activeSort).toBe('')
@@ -291,7 +298,7 @@ describe('SearchPanels component', () => {
 
       expect(granuleResultsPanelProps.moreActionsDropdownItems).toStrictEqual([
         {
-          icon: 'info-circle',
+          icon: FaInfoCircle,
           link: {
             pathname: '/search/granules/collection-details',
             search: ''
@@ -312,7 +319,7 @@ describe('SearchPanels component', () => {
 
         expect(granuleResultsPanelProps.moreActionsDropdownItems).toStrictEqual([
           {
-            icon: 'info-circle',
+            icon: FaInfoCircle,
             link: {
               pathname: '/search/granules/collection-details',
               search: ''
@@ -320,7 +327,7 @@ describe('SearchPanels component', () => {
             title: 'Collection Details'
           },
           {
-            icon: 'bell',
+            icon: FaBell,
             link: {
               pathname: '/search/granules/subscriptions',
               search: ''
@@ -358,10 +365,10 @@ describe('SearchPanels component', () => {
 
       expect(granuleResultsPanelProps.activeView).toBe('list')
       expect(granuleResultsPanelProps.viewsArray[0].label).toBe('List')
-      expect(granuleResultsPanelProps.viewsArray[0].icon).toBe('list')
+      expect(granuleResultsPanelProps.viewsArray[0].icon).toBe(FaList)
       expect(granuleResultsPanelProps.viewsArray[0].isActive).toBe(true)
       expect(granuleResultsPanelProps.viewsArray[1].label).toBe('Table')
-      expect(granuleResultsPanelProps.viewsArray[1].icon).toBe('table')
+      expect(granuleResultsPanelProps.viewsArray[1].icon).toBe(FaTable)
       expect(granuleResultsPanelProps.viewsArray[1].isActive).toBe(false)
 
       expect(granuleResultsPanelProps.activeSort).toBe('-start_date')
@@ -512,7 +519,7 @@ describe('SearchPanels component', () => {
 
       expect(granuleDetailsProps.moreActionsDropdownItems).toStrictEqual([
         {
-          icon: 'map',
+          icon: FaMap,
           link: {
             pathname: '/search/granules',
             search: ''
@@ -520,7 +527,7 @@ describe('SearchPanels component', () => {
           title: 'Granules'
         },
         {
-          icon: 'info-circle',
+          icon: FaInfoCircle,
           link: {
             pathname: '/search/granules/collection-details',
             search: ''
@@ -588,7 +595,7 @@ describe('SearchPanels component', () => {
 
       expect(granuleDetailsProps.moreActionsDropdownItems).toStrictEqual([
         {
-          icon: 'map',
+          icon: FaMap,
           link: {
             pathname: '/search/granules',
             search: ''
@@ -609,7 +616,7 @@ describe('SearchPanels component', () => {
 
         expect(granuleDetailsProps.moreActionsDropdownItems).toStrictEqual([
           {
-            icon: 'map',
+            icon: FaMap,
             link: {
               pathname: '/search/granules',
               search: ''
@@ -617,7 +624,7 @@ describe('SearchPanels component', () => {
             title: 'Granules'
           },
           {
-            icon: 'bell',
+            icon: FaBell,
             link: {
               pathname: '/search/granules/subscriptions',
               search: ''
@@ -665,7 +672,7 @@ describe('SearchPanels component', () => {
 
       expect(subscriptionsPanelProps.moreActionsDropdownItems).toStrictEqual([
         {
-          icon: 'map',
+          icon: FaMap,
           link: {
             pathname: '/search/granules',
             search: ''
@@ -673,7 +680,7 @@ describe('SearchPanels component', () => {
           title: 'Granules'
         },
         {
-          icon: 'info-circle',
+          icon: FaInfoCircle,
           link: {
             pathname: '/search/granules/collection-details',
             search: ''

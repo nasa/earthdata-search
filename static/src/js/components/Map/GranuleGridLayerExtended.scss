@@ -1,0 +1,27 @@
+.granule-grid-layer-extended {
+  &__panel-list-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.25rem;
+    width: 1.25rem;
+    margin: 0.5rem auto;
+    border: 0;
+    outline: 0;
+    background-color: rgba($color__black--400, 0.5);
+    color: $color__white;
+    border-radius: 50%;
+
+    &:hover,
+    &:focus {
+      background-color: $color__red;
+    }
+  }
+
+  &__exclude-icon {
+    .edsc-icon {
+      height: 0.875rem;
+      width: 0.875rem;
+    }
+  }
+}

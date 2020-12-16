@@ -89,15 +89,15 @@
   &__footer {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
   }
 
   &__status {
     margin-right: $spacer/4;
-    font-size: 0.85rem;
-
-    .fa {
-      vertical-align: middle;
-    }
+    height: 0.85rem;
+    width: 0.85rem;
+    display: inline;
+    vertical-align: middle;
 
     &--invalid {
       display: flex;
