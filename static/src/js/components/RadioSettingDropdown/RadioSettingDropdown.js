@@ -187,7 +187,7 @@ RadioSettingDropdown.defaultProps = {
 }
 
 RadioSettingDropdown.propTypes = {
-  activeIcon: PropTypes.string.isRequired,
+  activeIcon: PropTypes.func.isRequired,
   className: PropTypes.string,
   settings: PropTypes.arrayOf(PropTypes.shape({})),
   id: PropTypes.string.isRequired,

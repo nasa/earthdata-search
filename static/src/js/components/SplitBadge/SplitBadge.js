@@ -20,10 +20,12 @@ const SplitBadge = ({
   )
   return (
     <Badge className={classes} variant={variant}>
-      {primary}
+      <span className="split-badge__primary">
+        {primary}
+      </span>
       {
         secondary && (
-          <span className="split-badge__inner">
+          <span className="split-badge__secondary">
             {secondary}
           </span>
         )

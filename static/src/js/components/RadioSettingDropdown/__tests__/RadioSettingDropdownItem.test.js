@@ -2,6 +2,9 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Dropdown } from 'react-bootstrap'
+import { FaBacon } from 'react-icons/fa'
+
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import { RadioSettingDropdownItem } from '../RadioSettingDropdownItem'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -9,7 +12,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     className: 'test-class',
-    icon: 'test-icon',
+    icon: FaBacon,
     onClick: jest.fn(),
     title: 'Test Title',
     ...overrideProps
@@ -39,7 +42,7 @@ describe('RadioSettingDropdownItem component', () => {
   test('adds an icon', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.fa-test-icon').type()).toBe('i')
+    expect(enzymeWrapper.find(EDSCIcon).props().icon).toEqual(FaBacon)
   })
 
   test('displays the text', () => {

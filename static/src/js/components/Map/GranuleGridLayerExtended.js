@@ -1,11 +1,15 @@
 /* eslint-disable no-underscore-dangle */
-
+import React from 'react'
+import { renderToString } from 'react-dom/server'
 import L from 'leaflet'
 import {
   camelCase,
   capitalize,
   isEqual
 } from 'lodash'
+import { FaTimes } from 'react-icons/fa'
+
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import {
   addPath,
@@ -30,6 +34,8 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 import projections from '../../util/map/projections'
 import projectPath from '../../util/map/interpolation'
 
+import './GranuleGridLayerExtended.scss'
+
 const config = {
   // debug: true,
   // eslint-disable-next-line max-len
@@ -39,6 +45,8 @@ const config = {
 }
 
 const MAX_RETRIES = 1 // Maximum number of times to attempt to reload an image
+
+const timesIconSvg = renderToString(<EDSCIcon className="granule-grid-layer-extended__exclude-icon" icon={FaTimes} />)
 
 export class GranuleGridLayerExtended extends L.GridLayer {
   initialize(props) {
@@ -919,7 +927,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     if (this._map) {
       const tag = e.originalEvent.target.closest('a, button')
 
-      if (tag && tag.classList.contains('panel-list-remove')) {
+      if (tag && tag.classList.contains('granule-grid-layer-extended__panel-list-remove')) {
         const granuleId = tag.getAttribute('data-granule-id')
         eventEmitter.emit('map.excludestickygranule', granuleId)
         return
@@ -1060,12 +1068,17 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     const { id: granuleId } = granule
 
     let excludeHtml = ''
-    excludeHtml = `<a class="panel-list-remove" data-granule-id="${granuleId}" href="#" title="Remove granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>`
+
+    excludeHtml = `
+      <button class="granule-grid-layer-extended__panel-list-remove" data-granule-id="${granuleId}" title="Filter granule">
+        ${timesIconSvg}
+      </button>
+    `
+
     const icon = new L.DivIcon({
       className: 'granule-spatial-label',
       html: `<span class="granule-spatial-label-temporal">${temporalLabel}</span>${excludeHtml}`
     })
-
 
     const marker = L.marker([0, 0], { clickable: false, icon })
     layer.addLayer(marker)

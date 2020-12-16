@@ -1,7 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { FaFolder, FaFolderPlus, FaFolderMinus } from 'react-icons/fa'
+import {
+  FaBell,
+  FaFolder,
+  FaFolderPlus,
+  FaFolderMinus
+} from 'react-icons/fa'
 
 import { commafy } from '../../util/commafy'
 import { granuleTotalCount } from './skeleton'
@@ -177,7 +182,7 @@ const GranuleResultsActions = ({
             <AuthRequiredContainer noRedirect>
               <PortalLinkContainer
                 type="button"
-                icon="bell"
+                icon={FaBell}
                 className={subscriptionButtonClassnames}
                 label="View subscriptions"
                 to={{

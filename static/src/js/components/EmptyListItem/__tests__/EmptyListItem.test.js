@@ -1,7 +1,10 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { FaBacon } from 'react-icons/fa'
+
 import EmptyListItem from '../EmptyListItem'
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -9,6 +12,9 @@ function setup(overrideProps) {
   const props = {
     ...overrideProps
   }
+
+  console.log('props', props)
+
   const enzymeWrapper = shallow(<EmptyListItem {...props} />)
 
   return {
@@ -45,23 +51,23 @@ describe('EmptyListItem component', () => {
       children: 'This is the text'
     })
 
-    expect(enzymeWrapper.find('.fa-exclamation-triangle').length).toEqual(1)
+    expect(enzymeWrapper.find(EDSCIcon).length).toEqual(1)
   })
 
-  test('should render the custom icon', () => {
+  test.only('should render the custom icon', () => {
     const { enzymeWrapper } = setup({
       children: 'This is the text',
-      icon: 'help'
+      icon: FaBacon
     })
 
-    expect(enzymeWrapper.find('.fa-help').length).toEqual(1)
+    expect(enzymeWrapper.find(EDSCIcon).props().icon).toEqual(FaBacon)
   })
 
   test('should add a custom class name', () => {
     const { enzymeWrapper } = setup({
       className: 'custom-class-name',
       children: 'This is the text',
-      icon: 'help'
+      icon: FaBacon
     })
 
     expect(enzymeWrapper.props().className).toContain('custom-class-name')

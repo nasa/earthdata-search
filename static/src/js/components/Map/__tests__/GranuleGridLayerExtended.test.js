@@ -480,7 +480,7 @@ describe('GranuleGridLayerExtended class', () => {
           target: {
             closest: jest.fn().mockImplementation(() => {
               const div = document.createElement('div')
-              div.className = 'panel-list-remove'
+              div.className = 'granule-grid-layer-extended__panel-list-remove'
               div.dataset.granuleId = 'granuleId'
               return div
             })

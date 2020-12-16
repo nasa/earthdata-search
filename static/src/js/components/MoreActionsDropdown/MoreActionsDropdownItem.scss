@@ -3,6 +3,8 @@
   font-size: 0.75rem;
 
   &__icon {
+    display: inline-block;
+    vertical-align: middle;
     width: 1rem;
     margin-right: $spacer/4;
     text-align: center;
@@ -11,5 +13,10 @@
     .more-actions-dropdown-item:hover & {
       color: $color__black--400;
     }
+  }
+
+  &__title {
+    display: inline-block;
+    vertical-align: middle;
   }
 }

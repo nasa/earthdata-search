@@ -15,37 +15,48 @@
 
   &--link {
     padding: 0;
-    vertical-align: baseline;
+    vertical-align: middle;
     border: 0;
-
-    .button__icon {
-      line-height: 1.5;
-      margin-right: $spacer/4;
-    }
-
-    .button__contents {
-      vertical-align: baseline;
-    }
+    line-height: 1em;
   }
 
   &__contents {
     vertical-align: initial;
     display: inherit;
-    line-height: 1em;
+    line-height: 1.5em;
     display: inline-flex;
     align-items: center;
+
+    .button--link & {
+      vertical-align: middle;
+      line-height: 1em;
+    }
+
+    .button--svg & {
+      vertical-align: top;
+      line-height: 1em;
+    }
   }
 
   &__icon {
     display: inline-block;
-    line-height: 1rem;
+    line-height: 1.5em;
 
     .button--naked & {
-      vertical-align: middle;
+      vertical-align: text-bottom;
     }
 
     &--push {
       margin-right: $spacer/2;
+    }
+
+    .button--link & {
+      line-height: 1em;
+      margin-right: $spacer/4;
+    }
+
+    .button--svg & {
+      line-height: 1em;
     }
   }
 
@@ -55,14 +66,5 @@
     background-color: rgba($color__black, 0.5);
     border-radius: 1em;
     vertical-align: middle;
-  }
-
-  &--icon__svg {
-    display: inline-flex;
-    align-items: baseline;
-
-    svg {
-      align-self: center;
-    }
   }
 }

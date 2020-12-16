@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Dropdown } from 'react-bootstrap'
+import { FaBacon } from 'react-icons/fa'
 
 import { RadioSettingDropdown } from '../RadioSettingDropdown'
 
@@ -34,7 +35,7 @@ function setup(overrideProps) {
     children: null,
     className: null,
     handoffLinks: [],
-    activeIcon: '',
+    activeIcon: FaBacon,
     label: 'Label',
     ...overrideProps
   }

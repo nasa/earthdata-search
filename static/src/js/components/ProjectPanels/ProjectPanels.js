@@ -1,7 +1,12 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash'
-import { FaExclamationCircle, FaCheckCircle } from 'react-icons/fa'
+import {
+  FaCheckCircle,
+  FaCog,
+  FaExclamationCircle,
+  FaMap
+} from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
@@ -439,7 +444,7 @@ class ProjectPanels extends PureComponent {
           moreActionsDropdownItems={[
             {
               title: 'View Project Granules',
-              icon: 'map',
+              icon: FaMap,
               onClick: () => this.onChangePanel(`1.${index}.0`)
             }
           ]}
@@ -494,7 +499,7 @@ class ProjectPanels extends PureComponent {
           moreActionsDropdownItems={[
             {
               title: 'Edit Project Options',
-              icon: 'cog',
+              icon: FaCog,
               onClick: () => this.onChangePanel(`0.${index}.0`)
             }
           ]}

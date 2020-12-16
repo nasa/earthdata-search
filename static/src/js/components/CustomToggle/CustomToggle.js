@@ -43,15 +43,6 @@ export const CustomToggle = React.forwardRef(({
     className
   )
 
-  let iconClasses
-
-  if (icon) {
-    iconClasses = classNames(
-      'custom-toggle__icon',
-      icon ? `fa fa-${icon}` : null
-    )
-  }
-
   // Default the event handlers to the onClick
   let buttonEventHandlers = { onClick: e => handleClick(e) }
 
@@ -76,7 +67,13 @@ export const CustomToggle = React.forwardRef(({
       {...buttonEventHandlers}
       {...props}
     >
-      {icon && <EDSCIcon icon={icon} className={iconClasses} />}
+      {icon && (
+        <EDSCIcon
+          size="0.875rem"
+          icon={icon}
+          className="custom-toggle__icon"
+        />
+      )}
       {children}
     </button>
   )

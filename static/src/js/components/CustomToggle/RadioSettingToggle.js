@@ -46,7 +46,7 @@ RadioSettingToggle.defaultProps = {
 }
 
 RadioSettingToggle.propTypes = {
-  activeIcon: PropTypes.string.isRequired,
+  activeIcon: PropTypes.func.isRequired,
   className: PropTypes.string,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired

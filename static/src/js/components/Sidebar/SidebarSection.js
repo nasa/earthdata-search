@@ -3,6 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -48,9 +49,7 @@ const SidebarSection = (props) => {
           <header className="sidebar-section__header">
             <div className="sidebar-section__header-primary">
               <h2 className="sidebar-section__title">
-                {titleIcon && (
-                  <i className={`sidebar-section__title-icon fa fa-${titleIcon}`} />
-                )}
+                {titleIcon && <EDSCIcon className="sidebar-section__title-icon" icon={titleIcon} />}
                 {sectionTitle}
               </h2>
             </div>
@@ -133,7 +132,7 @@ SidebarSection.defaultProps = {
   headerAction: {},
   moreActionsDropdownItems: [],
   sectionTitle: null,
-  titleIcon: '',
+  titleIcon: null,
   padded: false
 }
 
@@ -152,7 +151,7 @@ SidebarSection.propTypes = {
     })
   ),
   sectionTitle: PropTypes.string,
-  titleIcon: PropTypes.string,
+  titleIcon: PropTypes.func,
   padded: PropTypes.bool
 }
 

@@ -163,13 +163,17 @@
     margin-right: $spacer/4;
     margin-bottom: $spacer/8;
     color: $color__white;
-    text-transform: uppercase;
 
     &:hover {
       cursor: default;
     }
 
-    .split-badge__inner {
+    .split-badge__primary{
+      display: inline-block;
+      text-transform: uppercase;
+    }
+
+    .split-badge__secondary {
       display: inline-block;
       text-transform: none;
     }

@@ -139,7 +139,7 @@ PanelGroup.propTypes = {
   moreActionsDropdownItems: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
+      icon: PropTypes.func.isRequired,
       link: PropTypes.shape({
         pathname: PropTypes.string,
         search: PropTypes.string,

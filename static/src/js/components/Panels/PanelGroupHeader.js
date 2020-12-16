@@ -1,6 +1,12 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import {
+  FaSortAmountDownAlt,
+  FaSortAmountDown,
+  FaTable,
+  FaList
+} from 'react-icons/fa'
 
 import { headerMetaSkeleton, titleSkeleton } from './skeleton'
 
@@ -53,6 +59,22 @@ export const PanelGroupHeader = ({
       'panel-group-header--custom': true
     }
   ])
+
+  let ActiveSortIcon = null
+
+  if (activeSort.indexOf('-') >= 0) {
+    ActiveSortIcon = FaSortAmountDown
+  } else {
+    ActiveSortIcon = FaSortAmountDownAlt
+  }
+
+  let ActiveViewIcon
+
+  if (activeView === 'table') {
+    ActiveViewIcon = FaTable
+  } else {
+    ActiveViewIcon = FaList
+  }
 
   return (
     <header className={panelGroupHeaderClasses}>
@@ -250,7 +272,7 @@ export const PanelGroupHeader = ({
                         id={`panel-group-header-dropdown__sort__${panelGroupId}`}
                         className="panel-group-header__setting-dropdown"
                         activeSortOrder={activeSort}
-                        activeIcon={`${activeSort.indexOf('-') >= 0 ? 'sort-amount-desc' : 'sort-amount-asc'}`}
+                        activeIcon={ActiveSortIcon}
                         label="Sort"
                         settings={sortsArray}
                       />
@@ -261,7 +283,7 @@ export const PanelGroupHeader = ({
                       <RadioSettingDropdown
                         id={`panel-group-header-dropdown__view__${panelGroupId}`}
                         className="panel-group-header__setting-dropdown"
-                        activeIcon={activeView}
+                        activeIcon={ActiveViewIcon}
                         label="View"
                         settings={viewsArray}
                       />
@@ -306,7 +328,7 @@ PanelGroupHeader.propTypes = {
   moreActionsDropdownItems: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      icon: PropTypes.string,
+      icon: PropTypes.func,
       link: PropTypes.shape({
         pathname: PropTypes.string,
         search: PropTypes.string
