@@ -25,7 +25,12 @@ describe('updateStore', () => {
     const params = {
       cmrFacets: {},
       earthdataEnvironment: 'prod',
-      featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
+      featureFacets: {
+        availableFromAwsCloud: false,
+        customizable: false,
+        mapImagery: false,
+        nearRealTime: false
+      },
       focusedCollection: 'C00001-EDSC',
       map: {},
       project: {
@@ -67,7 +72,12 @@ describe('updateStore', () => {
       const params = {
         cmrFacets: {},
         earthdataEnvironment: 'prod',
-        featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
+        featureFacets: {
+          availableFromAwsCloud: false,
+          customizable: false,
+          mapImagery: false,
+          nearRealTime: false
+        },
         focusedCollection: 'C00001-EDSC',
         map: {},
         project: {
@@ -167,7 +177,12 @@ describe('changePath', () => {
       expect(updateStoreMock).toBeCalledTimes(1)
       expect(updateStoreMock).toBeCalledWith(
         expect.objectContaining({
-          featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
+          featureFacets: {
+            availableFromAwsCloud: false,
+            customizable: false,
+            mapImagery: false,
+            nearRealTime: false
+          },
           focusedCollection: 'C00001-EDSC',
           map: {},
           project: {
@@ -245,7 +260,12 @@ describe('changePath', () => {
     expect(updateStoreMock).toBeCalledTimes(1)
     expect(updateStoreMock).toBeCalledWith(
       expect.objectContaining({
-        featureFacets: { customizable: false, mapImagery: false, nearRealTime: false },
+        featureFacets: {
+          availableFromAwsCloud: false,
+          customizable: false,
+          mapImagery: false,
+          nearRealTime: false
+        },
         focusedCollection: 'C00001-EDSC',
         map: {},
         query: {

@@ -15,9 +15,10 @@ import {
 const initialCmrState = {}
 
 const initialFeatureState = {
+  availableFromAwsCloud: false,
+  customizable: false,
   mapImagery: false,
-  nearRealTime: false,
-  customizable: false
+  nearRealTime: false
 }
 
 const initialViewAllState = {}

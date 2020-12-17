@@ -7,6 +7,7 @@ export const encodeFeatures = (features) => {
   if (!features) return ''
 
   const {
+    availableFromAwsCloud,
     customizable,
     mapImagery,
     nearRealTime
@@ -14,9 +15,10 @@ export const encodeFeatures = (features) => {
 
   const encoded = []
 
+  if (availableFromAwsCloud) encoded.push('Available from AWS Cloud')
+  if (customizable) encoded.push('Customizable')
   if (mapImagery) encoded.push('Map Imagery')
   if (nearRealTime) encoded.push('Near Real Time')
-  if (customizable) encoded.push('Customizable')
 
   const encodedString = encoded.join('!')
 
@@ -33,9 +35,10 @@ export const encodeFeatures = (features) => {
  */
 export const decodeFeatures = (string) => {
   const defaultFeatures = {
+    availableFromAwsCloud: false,
+    customizable: false,
     mapImagery: false,
-    nearRealTime: false,
-    customizable: false
+    nearRealTime: false
   }
 
   if (!string) {
@@ -45,9 +48,10 @@ export const decodeFeatures = (string) => {
   const decodedValues = string.split('!')
 
   const decodedFeatures = {
+    availableFromAwsCloud: decodedValues.indexOf('Available from AWS Cloud') !== -1,
+    customizable: decodedValues.indexOf('Customizable') !== -1,
     mapImagery: decodedValues.indexOf('Map Imagery') !== -1,
-    nearRealTime: decodedValues.indexOf('Near Real Time') !== -1,
-    customizable: decodedValues.indexOf('Customizable') !== -1
+    nearRealTime: decodedValues.indexOf('Near Real Time') !== -1
   }
 
   return {

@@ -3,9 +3,10 @@
     "advancedSearch": false,
     "authentication": false,
     "featureFacets": {
+      "showAvailableFromAwsCloud": false,
+      "showCustomizable": false,
       "showMapImagery": false,
-      "showNearRealTime": true,
-      "showCustomizable": false
+      "showNearRealTime": true
     }
   },
   "footer": {

@@ -13,6 +13,7 @@ export const emptyDecodedResult = {
   },
   earthdataEnvironment: 'prod',
   featureFacets: {
+    availableFromAwsCloud: false,
     customizable: false,
     mapImagery: false,
     nearRealTime: false
