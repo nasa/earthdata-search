@@ -144,9 +144,10 @@ describe('cmrFacetsReducer', () => {
 
 describe('featureFacetsReducer', () => {
   const initialState = {
+    availableFromAwsCloud: false,
+    customizable: false,
     mapImagery: false,
-    nearRealTime: false,
-    customizable: false
+    nearRealTime: false
   }
 
   describe('INITIAL_STATE', () => {
@@ -178,9 +179,10 @@ describe('featureFacetsReducer', () => {
   describe('RESTORE_FROM_URL', () => {
     test('returns the correct state', () => {
       const featureFacets = {
+        availableFromAwsCloud: false,
+        customizable: false,
         mapImagery: false,
-        nearRealTime: false,
-        customizable: false
+        nearRealTime: false
       }
 
       const action = {

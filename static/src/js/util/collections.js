@@ -100,6 +100,10 @@ export const prepareCollectionParams = (state) => {
     tagKey.push(tagName('subset_service.opendap'))
   }
   if (featureFacets.mapImagery) tagKey.push(tagName('gibs'))
+  if (featureFacets.availableFromAwsCloud) {
+    const { availableFromAwsCloudTagKey } = getApplicationConfig()
+    tagKey.push(availableFromAwsCloudTagKey)
+  }
 
   const { query: portalQuery = {} } = portal
 

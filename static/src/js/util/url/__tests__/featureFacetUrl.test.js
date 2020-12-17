@@ -13,12 +13,13 @@ describe('url#decodeUrlParams', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       featureFacets: {
+        availableFromAwsCloud: true,
         customizable: true,
         mapImagery: true,
         nearRealTime: true
       }
     }
-    expect(decodeUrlParams('?ff=Map%20Imagery!Near%20Real%20Time!Customizable')).toEqual(expectedResult)
+    expect(decodeUrlParams('?ff=Available%20from%20AWS%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')).toEqual(expectedResult)
   })
 })
 
@@ -28,6 +29,7 @@ describe('url#encodeUrlQuery', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
       featureFacets: {
+        availableFromAwsCloud: false,
         customizable: false,
         mapImagery: false,
         nearRealTime: false
@@ -41,11 +43,12 @@ describe('url#encodeUrlQuery', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
       featureFacets: {
+        availableFromAwsCloud: true,
         customizable: true,
         mapImagery: true,
         nearRealTime: true
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?ff=Map%20Imagery!Near%20Real%20Time!Customizable')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?ff=Available%20from%20AWS%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')
   })
 })

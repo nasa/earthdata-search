@@ -31,7 +31,8 @@ const Facets = (props) => {
   const {
     showMapImagery,
     showNearRealTime,
-    showCustomizable
+    showCustomizable,
+    showAvailableFromAwsCloud
   } = portalFeatureFacets
 
   const featuresFacet = {
@@ -43,6 +44,20 @@ const Facets = (props) => {
     children: []
   }
 
+  if (showAvailableFromAwsCloud) {
+    featuresFacet.children.push({
+      applied: featureFacets.availableFromAwsCloud,
+      title: 'Available from AWS Cloud',
+      type: 'feature'
+    })
+  }
+  if (showCustomizable) {
+    featuresFacet.children.push({
+      applied: featureFacets.customizable,
+      title: 'Customizable',
+      type: 'feature'
+    })
+  }
   if (showMapImagery) {
     featuresFacet.children.push({
       applied: featureFacets.mapImagery,
@@ -54,13 +69,6 @@ const Facets = (props) => {
     featuresFacet.children.push({
       applied: featureFacets.nearRealTime,
       title: 'Near Real Time',
-      type: 'feature'
-    })
-  }
-  if (showCustomizable) {
-    featuresFacet.children.push({
-      applied: featureFacets.customizable,
-      title: 'Customizable',
       type: 'feature'
     })
   }

@@ -179,6 +179,7 @@ function setup(overrideProps = {}) {
       isLoading: false
     },
     featureFacets: {
+      availableFromAwsCloud: false,
       customizable: false,
       mapImagery: false,
       nearRealTime: false
@@ -186,9 +187,10 @@ function setup(overrideProps = {}) {
     portal: {
       features: {
         featureFacets: {
+          showAvailableFromAwsCloud: true,
+          showCustomizable: true,
           showMapImagery: true,
-          showNearRealTime: true,
-          showCustomizable: true
+          showNearRealTime: true
         }
       }
     },

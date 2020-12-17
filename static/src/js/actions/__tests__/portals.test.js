@@ -39,9 +39,10 @@ describe('loadPortalConfig', () => {
         advancedSearch: true,
         authentication: true,
         featureFacets: {
+          showAvailableFromAwsCloud: true,
+          showCustomizable: true,
           showMapImagery: true,
-          showNearRealTime: true,
-          showCustomizable: true
+          showNearRealTime: true
         }
       },
       footer: {
