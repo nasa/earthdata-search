@@ -291,14 +291,12 @@ class SecondaryToolbar extends Component {
       >
         <Dropdown.Toggle
           className="secondary-toolbar__project-name-dropdown-toggle"
-          variant="light"
-          onClick={this.onToggleProjectDropdown}
           as={Button}
+          onClick={this.onToggleProjectDropdown}
+          icon={FaSave}
+          iconSize="0.825rem"
           label="Create a project with your current search"
-        >
-          {/* TODO: Check this out */}
-          <EDSCIcon size="0.825rem" icon={FaSave} />
-        </Dropdown.Toggle>
+        />
         <Dropdown.Menu>
           <Form inline className="flex-nowrap secondary-toolbar__project-name-form">
             <Form.Row>

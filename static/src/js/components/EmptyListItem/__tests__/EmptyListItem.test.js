@@ -13,8 +13,6 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  console.log('props', props)
-
   const enzymeWrapper = shallow(<EmptyListItem {...props} />)
 
   return {
@@ -54,7 +52,7 @@ describe('EmptyListItem component', () => {
     expect(enzymeWrapper.find(EDSCIcon).length).toEqual(1)
   })
 
-  test.only('should render the custom icon', () => {
+  test('should render the custom icon', () => {
     const { enzymeWrapper } = setup({
       children: 'This is the text',
       icon: FaBacon
