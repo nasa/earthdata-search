@@ -45,7 +45,8 @@ describe('getDataQualitySummaries', () => {
       body: JSON.stringify({
         params: {
           catalog_item_id: 'C10000001-EDSC'
-        }
+        },
+        requestId: 'asdf-1234-qwer-5678'
       })
     }, { functionName: 'getDataQualitySummaries' })
 
@@ -73,7 +74,8 @@ describe('getDataQualitySummaries', () => {
       body: JSON.stringify({
         params: {
           catalog_item_id: 'C10000001-EDSC'
-        }
+        },
+        requestId: 'asdf-1234-qwer-5678'
       })
     }, { functionName: 'getDataQualitySummaries' })
 
@@ -111,7 +113,8 @@ describe('getDataQualitySummaries', () => {
       body: JSON.stringify({
         params: {
           catalog_item_id: 'C10000001-EDSC'
-        }
+        },
+        requestId: 'asdf-1234-qwer-5678'
       })
     }, { functionName: 'getDataQualitySummaries' })
 
@@ -141,7 +144,8 @@ describe('getDataQualitySummaries', () => {
       body: JSON.stringify({
         params: {
           catalog_item_id: 'C10000001-EDSC'
-        }
+        },
+        requestId: 'asdf-1234-qwer-5678'
       })
     }, { functionName: 'getDataQualitySummaries' })
 

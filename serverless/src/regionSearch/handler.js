@@ -1,8 +1,12 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { requestTimeout } from '../util/requestTimeout'
+import { parseError } from '../../../sharedUtils/parseError'
+import { wrapAxios } from '../util/wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 const regionSearch = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
@@ -17,54 +21,71 @@ const regionSearch = async (event) => {
 
   let regionResponse
   try {
-    regionResponse = await request.get({
-      uri: `${regionHost}/${endpoint}/${query}`,
-      qs: {
+    regionResponse = await wrappedAxios({
+      method: 'get',
+      url: `${regionHost}/${endpoint}/${query}`,
+      params: {
         exact
       },
-      json: true,
-      resolveWithFullResponse: true,
-      timeout: requestTimeout(),
-      time: true
+      timeout: requestTimeout()
     })
+
+    // Errors are returned with a 200 status code
+    const { data } = regionResponse
+    const { error } = data
+
+    // If an error is present in a successful response
+    if (error) {
+      // Construct an error resembling that of an HTTP error
+      const errorObj = new Error(error)
+
+      // Mimic Axios' http error response by adding a key for response and providing the response object
+      errorObj.response = regionResponse
+
+      // Throw the error to be caught in the catch block below
+      throw errorObj
+    }
   } catch (e) {
-    const {
-      error = {},
-      message,
-      response,
-      statusCode: errorStatusCode
-    } = e
+    const { response = {} } = e
 
-    // Default error messaging
-    let statusCode = 500
-    let errorMessage = 'An unknown error has occurred'
+    let { status: statusCode } = response
 
-    if (!regionResponse) {
-      if (errorStatusCode) {
-        const { message } = error
+    let errorMessage
 
-        if (message) errorMessage = message
+    // Use our parseError method to extract the error message out
+    const parsedError = parseError(e, { asJSON: false, shouldLog: false })
+    const [parsedErrorMessage] = parsedError
 
-        statusCode = errorStatusCode
+    // Search the error message looking for the FTS standard (CODE: Message)
+    const errorRegexMatch = parsedErrorMessage.match(/(\d{3})?:?\s?(.*)/)
 
-        const { elapsedTime } = response
+    if (errorRegexMatch) {
+      // Regex response will contain [
+      //  Original,
+      //  Status Code or undefined,
+      //  Error Message,
+      //  Some Object we don't care about
+      // ]
+      ([, statusCode = 500, errorMessage] = errorRegexMatch)
+    }
 
-        console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${elapsedTime} ms`)
-      } else if (message.includes('ESOCKETTIMEDOUT') || message.includes('ETIMEDOUT')) {
-        // If no valid error response was provided construct an error from the exception object
-        statusCode = 504
-        errorMessage = `Request to external service timed out after ${requestTimeout()} ms`
+    // An actual timeout does not return a status code, we shouldn't see this happen
+    // given that we set a timeout on the request to FTS that defines a padding
+    if (errorMessage.includes('ESOCKETTIMEDOUT') || errorMessage.includes('ETIMEDOUT')) {
+      // If no valid error response was provided construct an error from the exception object
+      statusCode = 504
+      errorMessage = `Request to external service timed out after ${requestTimeout()} ms`
 
-        console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${requestTimeout()} ms`)
-      } else {
-        errorMessage = message
-      }
+      console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${requestTimeout()} ms`)
     } else {
-      const { statusCode: responseStatusCode, error: responseError = {} } = regionResponse
-      const { message: responseErrorMessage } = responseError
+      // Regex returns a string result from `match` and we need/want an integer
+      statusCode = parseInt(statusCode, 10)
+      errorMessage = errorMessage.trim()
 
-      statusCode = responseStatusCode
-      errorMessage = responseErrorMessage
+      const { config = {} } = response
+      const { elapsedTime } = config
+
+      console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${elapsedTime} ms`)
     }
 
     return {
@@ -77,44 +98,14 @@ const regionSearch = async (event) => {
     }
   }
 
-  const { body, elapsedTime } = regionResponse
+  const { config, data } = regionResponse
+  const { elapsedTime } = config
+
   const {
-    error,
-    errorMessage,
     hits,
     time,
     results
-  } = body
-
-  // Handles a 200 with body.error (which includes the actual statusCode)
-  if (error) {
-    console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${elapsedTime} ms`)
-
-    const [, errorCode, parsedErrorMessage] = error.match(/(\d{3}): (.+)/)
-
-    return {
-      isBase64Encoded: false,
-      statusCode: parseInt(errorCode, 10),
-      headers: defaultResponseHeaders,
-      body: JSON.stringify({
-        errors: [parsedErrorMessage]
-      })
-    }
-  }
-
-  // Handles a 200 with body.errorMessage
-  if (errorMessage) {
-    console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${elapsedTime} ms`)
-
-    return {
-      isBase64Encoded: false,
-      statusCode: 500,
-      headers: defaultResponseHeaders,
-      body: JSON.stringify({
-        errors: [errorMessage]
-      })
-    }
-  }
+  } = data
 
   console.log(`Request for '${endpoint}' (exact: ${exact}) successfully completed in [reported: ${time}, observed: ${elapsedTime} ms]`)
 

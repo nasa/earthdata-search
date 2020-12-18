@@ -360,7 +360,7 @@ describe('addTag', () => {
       requireGranules: false,
       append: true,
       cmrToken: '1234-abcd-5678-efgh'
-    })).rejects.toThrow('Test error message')
+    })).rejects.toThrow('Request failed with status code 500')
   })
 
   test('does not call the cmr endpoint when tag data is provided but an error is returned from the collection search endpoint', async () => {
@@ -409,7 +409,7 @@ describe('addTag', () => {
       requireGranules: false,
       append: true,
       cmrToken: '1234-abcd-5678-efgh'
-    })).rejects.toThrow('Test error message')
+    })).rejects.toThrow('Request failed with status code 500')
   })
 
   test('does not call the cmr endpoint when tag data is provided but no collections are returned from the collection search endpoint', async () => {
@@ -455,6 +455,6 @@ describe('addTag', () => {
       requireGranules: false,
       append: false,
       cmrToken: '1234-abcd-5678-efgh'
-    })).rejects.toThrow('Test error message')
+    })).rejects.toThrow('Request failed with status code 500')
   })
 })

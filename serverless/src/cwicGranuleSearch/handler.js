@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -8,6 +8,9 @@ import { pick } from '../util/pick'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 import { renderOpenSearchTemplate } from './renderOpenSearchTemplate'
 import { requestTimeout } from '../util/requestTimeout'
+import { wrapAxios } from '../util/wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 /**
  * Retrieve granules from CWIC
@@ -60,26 +63,28 @@ const cwicGranuleSearch = async (event) => {
   console.log(`CWIC Granule Query: ${renderedTemplate}`)
 
   try {
-    const granuleResponse = await request.get({
-      time: true,
-      uri: renderedTemplate,
+    const granuleResponse = await wrappedAxios({
+      method: 'get',
+      url: renderedTemplate,
       timeout: requestTimeout(),
-      resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().lambda
       }
     })
 
-    console.log(`CWIC Granule Request took ${granuleResponse.elapsedTime} ms`)
+    const { config, data } = granuleResponse
+    const { elapsedTime } = config
+
+    console.log(`CWIC Granule Request took ${elapsedTime} ms`)
 
     return {
       isBase64Encoded: false,
-      statusCode: granuleResponse.statusCode,
+      statusCode: granuleResponse.status,
       headers: {
         ...responseHeaders,
         'access-control-expose-headers': prepareExposeHeaders(responseHeaders)
       },
-      body: granuleResponse.body
+      body: data
     }
   } catch (e) {
     return {

@@ -155,7 +155,7 @@ describe('getServiceOptionDefinitions', () => {
     expect(consoleMock).toBeCalledTimes(1)
 
     expect(consoleMock.mock.calls[0]).toEqual([
-      'StatusCodeError (500): Test error message'
+      'Error (500): Test error message'
     ])
 
     expect(forms).toEqual([])

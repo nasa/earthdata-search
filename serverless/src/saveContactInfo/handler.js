@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk'
-import request from 'request-promise'
+
+import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -55,15 +56,14 @@ const saveContactInfo = async (event) => {
 
     const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
-    const response = await request.put({
-      uri: url,
+    const response = await axios({
+      method: 'put',
+      url,
       headers: {
         Authorization: `Bearer ${echoToken}`,
         'Client-Id': getClientId().lambda
       },
-      body: params,
-      json: true,
-      resolveWithFullResponse: true
+      data: params
     })
 
     if (process.env.IS_OFFLINE) {
@@ -77,13 +77,13 @@ const saveContactInfo = async (event) => {
       }).promise()
     }
 
-    const { body, statusCode } = response
+    const { data, statusCode } = response
 
     return {
       isBase64Encoded: false,
       statusCode,
       headers: defaultResponseHeaders,
-      body: JSON.stringify(body)
+      body: JSON.stringify(data)
     }
   } catch (e) {
     return {

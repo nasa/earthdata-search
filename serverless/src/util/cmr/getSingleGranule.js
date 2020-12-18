@@ -1,4 +1,5 @@
-import request from 'promise-request-retry'
+import axios from 'axios'
+import axiosRetry from 'axios-retry'
 
 import { stringify } from 'qs'
 
@@ -6,6 +7,9 @@ import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment
 import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { readCmrResults } from './readCmrResults'
+
+// Compensate for intermittent ENOTFOUND issues
+axiosRetry(axios, { retries: 4 })
 
 /**
  * Returns tags for a collection based on a single granule sample
@@ -24,20 +28,15 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
   console.log(`Retrieving a single granule for ${collectionId}`)
 
   // Using an extension of request promise that supports retries
-  const cmrResponse = await request({
-    method: 'POST',
-    uri: granuleSearchUrl,
+  const cmrResponse = await axios({
+    method: 'post',
+    url: granuleSearchUrl,
     form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
       'Echo-Token': cmrToken
-    },
-    json: true,
-    resolveWithFullResponse: true,
-
-    // Compensate for intermittent ENOTFOUND issues
-    retry: 4
+    }
   })
 
   const responseBody = readCmrResults('search/granules.json', cmrResponse)

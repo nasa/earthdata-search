@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
@@ -18,17 +18,16 @@ export const getUrsUserData = async (username, token, environment) => {
 
   const ursProfileUrl = `${edlHost}/api/users/${username}?client_id=${clientId}`
 
-  const ursProfileResponse = await request.get({
-    uri: ursProfileUrl,
+  const ursProfileResponse = await axios({
+    method: 'get',
+    url: ursProfileUrl,
     headers: {
       'Client-Id': getClientId().lambda,
       Authorization: `Bearer ${token}`
-    },
-    json: true,
-    resolveWithFullResponse: true
+    }
   })
 
-  const { body = {} } = ursProfileResponse
+  const { data = {} } = ursProfileResponse
 
-  return body
+  return data
 }

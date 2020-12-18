@@ -1,6 +1,7 @@
 import 'array-foreach-async'
 
-import request from 'request-promise'
+import axios from 'axios'
+import { stringify } from 'qs'
 
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -48,25 +49,25 @@ const fetchLegacyServicesOrder = async (input) => {
 
     console.log(`Requesting order data from Legacy Services at ${getEarthdataConfig(environment).echoRestRoot}/orders.json`)
 
-    const orderResponse = await request.get({
-      uri: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
+    const orderResponse = await axios({
+      method: 'get',
+      url: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Client-Id': getClientId().background
       },
-      qs: { id: orderNumber },
-      qsStringifyOptions: {
-        indices: false,
-        arrayFormat: 'brackets'
-      },
-      json: true,
-      resolveWithFullResponse: true
+      params: { id: orderNumber },
+      paramsSerializer: params => stringify(params,
+        {
+          indices: false,
+          arrayFormat: 'brackets'
+        })
     })
 
-    console.log('Order Response Body', JSON.stringify(orderResponse.body, null, 4))
+    console.log('Order Response Body', JSON.stringify(orderResponse.data, null, 4))
 
     // This endpoint returns and array, but we're only asking for a single record
-    const [firstOrder] = orderResponse.body
+    const [firstOrder] = orderResponse.data
 
     const { order } = firstOrder
     const { state } = order

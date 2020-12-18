@@ -1,8 +1,9 @@
 import FormData from 'formdata-node'
 import GeoJSON from 'geojson'
-import request from 'request-promise'
+import axios from 'axios'
 
 import { createReadStream, writeFileSync } from 'fs'
+import { stringify } from 'qs'
 
 import { bboxToPolygon } from './bboxToPolygon'
 import { ccwShapefile } from './ccwShapefile'
@@ -23,19 +24,18 @@ export const constructOrderPayload = async ({
   environment
 }) => {
   // Request granules from CMR
-  const granuleResponse = await request.get({
-    uri: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
-    qs: granuleParams,
-    qsStringifyOptions: {
-      indices: false,
-      arrayFormat: 'brackets'
-    },
+  const granuleResponse = await axios({
+    url: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
+    params: granuleParams,
+    paramsSerializer: params => stringify(params,
+      {
+        indices: false,
+        arrayFormat: 'brackets'
+      }),
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().background
-    },
-    json: true,
-    resolveWithFullResponse: true
+    }
   })
 
   const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)

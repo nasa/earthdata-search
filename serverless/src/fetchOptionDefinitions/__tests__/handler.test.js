@@ -337,7 +337,7 @@ describe('fetchOptionDefinitions', () => {
     expect(consoleMock).toBeCalledTimes(2)
 
     expect(consoleMock.mock.calls[1]).toEqual([
-      'StatusCodeError (500): Test error message'
+      'Error (500): Test error message'
     ])
   })
 })

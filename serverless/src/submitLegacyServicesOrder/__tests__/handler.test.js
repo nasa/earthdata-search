@@ -2,7 +2,7 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 import nock from 'nock'
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getEdlConfig from '../../util/getEdlConfig'
+// import * as getEdlConfig from '../../util/getEdlConfig'
 import * as startOrderStatusUpdateWorkflow from '../../util/startOrderStatusUpdateWorkflow'
 import { mockLegacyServicesOrder } from './mocks'
 import submitLegacyServicesOrder from '../handler'
@@ -12,11 +12,11 @@ let dbTracker
 beforeEach(() => {
   jest.clearAllMocks()
 
-  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
-    client: {
-      id: 'clientId'
-    }
-  }))
+  // jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+  //   client: {
+  //     id: 'clientId'
+  //   }
+  // }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({

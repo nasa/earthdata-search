@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { stringify } from 'qs'
 
@@ -29,19 +29,18 @@ export const constructOrderPayload = async (
 
   const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
 
-  const granuleResponse = await request.get({
-    uri: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
-    qs: preparedGranuleParams,
-    qsStringifyOptions: {
-      indices: false,
-      arrayFormat: 'brackets'
-    },
+  const granuleResponse = await axios({
+    url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
+    params: preparedGranuleParams,
+    paramsSerializer: params => stringify(params,
+      {
+        indices: false,
+        arrayFormat: 'brackets'
+      }),
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().background
-    },
-    json: true,
-    resolveWithFullResponse: true
+    }
   })
 
   const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
@@ -53,9 +52,10 @@ export const constructOrderPayload = async (
 
   // Ensure that only orders that apply to the requested option definition are selected
   const optionInformationUrl = `${getEarthdataConfig(earthdataEnvironment).echoRestRoot}/order_information.json`
-  const optionInformationResponse = await request.post({
-    uri: optionInformationUrl,
-    form: stringify({
+  const optionInformationResponse = await axios({
+    method: 'post',
+    url: optionInformationUrl,
+    data: stringify({
       catalog_item_id: granuleResponseBody.map(granule => granule.id)
     }, {
       indices: false,
@@ -65,12 +65,10 @@ export const constructOrderPayload = async (
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().background
-    },
-    json: true,
-    resolveWithFullResponse: true
+    }
   })
 
-  const { body: orderInformationBody } = optionInformationResponse
+  const { data: orderInformationBody } = optionInformationResponse
 
   console.log(`Received ${JSON.stringify(orderInformationBody, null, 4)}`)
 

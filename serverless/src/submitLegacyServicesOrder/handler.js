@@ -1,5 +1,6 @@
 import 'array-foreach-async'
-import request from 'request-promise'
+
+import axios from 'axios'
 
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
@@ -66,18 +67,17 @@ const submitLegacyServicesOrder = async (event, context) => {
 
     try {
       // 1. Submit an empty order
-      const emptyOrderResponse = await request.post({
-        uri: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
+      const emptyOrderResponse = await axios({
+        method: 'post',
+        url: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         },
-        body: { order: {} },
-        json: true,
-        resolveWithFullResponse: true
+        data: { order: {} }
       })
 
-      const { order } = emptyOrderResponse.body
+      const { order } = emptyOrderResponse.data
       const { id: orderId } = order
 
       // 2. Add items to the orders
@@ -87,15 +87,14 @@ const submitLegacyServicesOrder = async (event, context) => {
 
       console.log(`Order Items Payload: ${JSON.stringify(orderItemPayload, null, 4)}`)
 
-      await request.post({
-        uri: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
+      await axios({
+        method: 'post',
+        url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         },
-        body: orderItemPayload,
-        json: true,
-        resolveWithFullResponse: true
+        data: orderItemPayload
       })
 
       // 3. Add contact information
@@ -103,26 +102,24 @@ const submitLegacyServicesOrder = async (event, context) => {
 
       console.log(`User Information Payload: ${JSON.stringify(userInformationPayload, null, 4)}`)
 
-      await request.put({
-        uri: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/user_information`,
+      await axios({
+        method: 'put',
+        url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/user_information`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         },
-        body: userInformationPayload,
-        json: true,
-        resolveWithFullResponse: true
+        data: userInformationPayload
       })
 
       // 4. Submit the order
-      await request.post({
-        uri: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/submit`,
+      await axios({
+        method: 'post',
+        url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/submit`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
-        },
-        json: true,
-        resolveWithFullResponse: true
+        }
       })
 
       await dbConnection('retrieval_orders').update({ order_number: orderId, state: 'initialized' }).where({ id })

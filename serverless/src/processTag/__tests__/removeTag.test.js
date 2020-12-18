@@ -1,4 +1,5 @@
-import request from 'request-promise'
+import nock from 'nock'
+
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getClientId from '../../../../sharedUtils/getClientId'
 import * as removeTag from '../removeTag'
@@ -12,25 +13,16 @@ describe('removeTag', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
     jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
-    const cmrDeleteMock = jest.spyOn(request, 'delete').mockImplementation(() => jest.fn())
+    nock(/example/)
+      .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .delete(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify({ short_name: 'MIL3MLS' }))
+      .reply(200)
 
     const removeTagResponse = await removeTag.removeTag(
       'edsc.extra.gibs',
       { short_name: 'MIL3MLS' },
       '1234-abcd-5678-efgh'
     )
-
-    expect(cmrDeleteMock).toBeCalledTimes(1)
-    expect(cmrDeleteMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations/by_query',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: { short_name: 'MIL3MLS' },
-      json: true,
-      resolveWithFullResponse: true
-    })
 
     expect(removeTagResponse).toBe(true)
   })
@@ -39,11 +31,10 @@ describe('removeTag', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
     jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
-    const cmrDeleteMock = jest.spyOn(request, 'delete').mockImplementation(() => {
-      throw new Error()
-    })
-
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+    nock(/example/)
+      .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .delete(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify({ short_name: 'MIL3MLS' }))
+      .reply(500)
 
     const removeTagResponse = await removeTag.removeTag(
       'edsc.extra.gibs',
@@ -51,19 +42,6 @@ describe('removeTag', () => {
       '1234-abcd-5678-efgh'
     )
 
-    expect(cmrDeleteMock).toBeCalledTimes(1)
-    expect(cmrDeleteMock).toBeCalledWith({
-      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations/by_query',
-      headers: {
-        'Client-Id': 'eed-edsc-test-serverless-background',
-        'Echo-Token': '1234-abcd-5678-efgh'
-      },
-      body: { short_name: 'MIL3MLS' },
-      json: true,
-      resolveWithFullResponse: true
-    })
-
-    expect(consoleMock).toBeCalledTimes(1)
     expect(removeTagResponse).toBe(false)
   })
 })

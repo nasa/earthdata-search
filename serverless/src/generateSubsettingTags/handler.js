@@ -1,6 +1,6 @@
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
-import request from 'request-promise'
+import axios from 'axios'
 
 import { chunkArray } from '../util/chunkArray'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
@@ -50,17 +50,16 @@ const generateSubsettingTags = async (event, context) => {
 
   const serviceOptionAssignmentUrl = `${echoRestRoot}/service_option_assignments.json`
   try {
-    const serviceOptionResponse = await request.get({
-      uri: serviceOptionAssignmentUrl,
+    const serviceOptionResponse = await axios({
+      method: 'get',
+      url: serviceOptionAssignmentUrl,
       headers: {
         'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
-      },
-      json: true,
-      resolveWithFullResponse: true
+      }
     })
 
-    serviceOptionAssignments = serviceOptionResponse.body
+    serviceOptionAssignments = serviceOptionResponse.data
 
     const serviceOptionIds = serviceOptionAssignments.map((optionAssociation) => {
       const { service_option_assignment: optionAssignment } = optionAssociation

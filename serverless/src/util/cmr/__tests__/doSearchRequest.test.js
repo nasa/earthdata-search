@@ -1,15 +1,22 @@
-import request from 'request-promise'
+import nock from 'nock'
+
 import { doSearchRequest } from '../doSearchRequest'
+
 import * as getEdlConfig from '../../getEdlConfig'
+import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as getAccessTokenFromJwtToken from '../../urs/getAccessTokenFromJwtToken'
 
 describe('util#doSearchRequest', () => {
   test('correctly returns the search response', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      cmrHost: 'https://cmr.earthdata.nasa.gov'
+    }))
+
     const body = { success: true }
     const headers = {
-      'cmr-hits': 1,
-      'cmr-took': 1,
-      'cmr-request-id': 123,
+      'cmr-hits': '1',
+      'cmr-took': '1',
+      'cmr-request-id': '123',
       'access-control-allow-credentials': true,
       'access-control-allow-headers': '*',
       'access-control-allow-origin': '*',
@@ -23,16 +30,20 @@ describe('util#doSearchRequest', () => {
       statusCode
     }
 
-    jest.spyOn(request, 'post').mockImplementation(() => ({
-      body,
-      headers: {
-        'cmr-hits': 1,
-        'cmr-took': 1,
-        'cmr-request-id': 123,
+    nock(/cmr/)
+      .matchHeader('CMR-Hits', 1)
+      .matchHeader('CMR-Took', 1)
+      .matchHeader('CMR-Request-Id', 123)
+      .matchHeader('Access-Control-Allow-Credentials', 'true')
+      .matchHeader('Access-Control-Allow-Headers', '*')
+      .matchHeader('Access-Control-Allow-Origin', '*')
+      .post(/path/)
+      .reply(200, { success: true }, {
+        'cmr-hits': '1',
+        'cmr-took': '1',
+        'cmr-request-id': '123',
         'access-control-allow-origin': '*'
-      },
-      statusCode
-    }))
+      })
 
     const token = {
       token: {
@@ -48,12 +59,19 @@ describe('util#doSearchRequest', () => {
     }))
 
     const jwtToken = '123.456.789'
-    const url = 'http://example.com/search/path?param1=123&param2=abc&param3%5B%5D=987'
+    const path = '/search/path'
+    const params = {
+      param1: '123',
+      param2: 'abc',
+      param3: ['987']
+    }
 
     await expect(doSearchRequest({
       jwtToken,
       earthdataEnvironment: 'prod',
-      path: url
+      params,
+      providedHeaders: headers,
+      path
     })).resolves.toEqual(expectedResponse)
   })
 })
