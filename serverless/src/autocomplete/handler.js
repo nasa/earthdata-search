@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { Client } from '@googlemaps/google-maps-services-js'
 
@@ -86,19 +86,16 @@ const nominatimGeocode = async (query) => {
     queryParams.polygon_geojson = 1
   }
 
-  const geocodeResult = await request.get({
-    uri: 'https://nominatim.openstreetmap.org/search.php',
-    qs: queryParams,
+  const geocodeResult = await axios.get('https://nominatim.openstreetmap.org/search.php', {
+    params: queryParams,
     headers: {
       Referer: edscHost
-    },
-    json: true,
-    resolveWithFullResponse: true
+    }
   })
 
-  const { body } = geocodeResult
+  const { data } = geocodeResult
 
-  const formattedResult = body.map((place) => {
+  const formattedResult = data.map((place) => {
     const {
       boundingbox,
       display_name: displayName,
@@ -195,7 +192,6 @@ const autocomplete = async (event) => {
     const results = await doSearchRequest({
       jwtToken: getJwtToken(event),
       method: 'get',
-      bodyType: 'json',
       path: '/search/autocomplete',
       params: buildParams({
         body,

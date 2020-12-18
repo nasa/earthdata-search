@@ -1,7 +1,7 @@
-import request from 'request-promise'
+import axios from 'axios'
 
-import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
 
 /**
  * Retrieve ECHO profile data for the provided username
@@ -12,17 +12,16 @@ export const getEchoProfileData = async (accessToken, environment) => {
 
   const echoRestProfileUrl = `${echoRestRoot}/users/current.json`
 
-  const echoRestProfileResponse = await request.get({
-    uri: echoRestProfileUrl,
+  const echoRestProfileResponse = await axios({
+    method: 'get',
+    url: echoRestProfileUrl,
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().lambda
-    },
-    json: true,
-    resolveWithFullResponse: true
+    }
   })
 
-  const { body = {} } = echoRestProfileResponse
+  const { data = {} } = echoRestProfileResponse
 
-  return body
+  return data
 }

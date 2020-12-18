@@ -12,8 +12,7 @@ export const parseError = (errorObj, {
 } = {}) => {
   const {
     name = 'Error',
-    response = {},
-    isAxiosError
+    response = {}
   } = errorObj
 
   let errorArray = []
@@ -21,33 +20,25 @@ export const parseError = (errorObj, {
 
   if (Object.keys(response).length) {
     const {
-      body = {},
       data = {},
       headers = {},
       status,
-      statusCode,
       statusText
     } = response
 
-    // The request-promise library uses `body` for the response body
-    let responseBody = body
-    if (statusCode) code = statusCode
-
-    // If that key is not set, fall back to what Axios uses, which is `data`
-    if (Object.keys(body).length === 0) {
-      responseBody = data
-      if (status) code = status
-    }
+    code = status
 
     const {
-      description
-    } = responseBody
+      description: harmonyError,
+      error: hucError,
+      message: hucSocketError
+    } = data
 
     const { 'content-type': contentType = '' } = headers
 
     if (contentType.indexOf('application/opensearchdescription+xml') > -1) {
       // CWIC collections return errors in XML, ensure we capture them
-      const osddBody = parseXml(responseBody, {
+      const osddBody = parseXml(data, {
         ignoreAttributes: false,
         attributeNamePrefix: ''
       })
@@ -57,7 +48,7 @@ export const parseError = (errorObj, {
       errorArray = [errorMessage]
     } else if (contentType.indexOf('text/xml') > -1) {
       // CWIC collections return errors in XML, ensure we capture them
-      const gibsError = parseXml(responseBody, {
+      const gibsError = parseXml(data, {
         ignoreAttributes: false,
         attributeNamePrefix: ''
       })
@@ -67,15 +58,18 @@ export const parseError = (errorObj, {
       const { ExceptionText: errorMessage } = exception
 
       errorArray = [errorMessage]
-    } else if (description) {
+    } else if (harmonyError) {
       // Harmony uses code/description object in the response
-      errorArray = [description]
-    } else if (isAxiosError && contentType.indexOf('text/html') > -1) {
+      errorArray = [harmonyError]
+    } else if (hucError || hucSocketError) {
+      // HUC uses code/description object in the response
+      errorArray = [hucError || hucSocketError]
+    } else if (contentType.indexOf('text/html') > -1) {
       // If the error is from Axios and the content type is html, build a string error using the status code and status text
       errorArray = [`${name} (${code}): ${statusText}`]
     } else {
       // Default to CMR error response body
-      ({ errors: errorArray = ['Unknown Error'] } = responseBody)
+      ({ errors: errorArray = ['Unknown Error'] } = data)
     }
 
     if (shouldLog) {

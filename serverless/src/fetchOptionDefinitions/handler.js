@@ -1,16 +1,18 @@
 import AWS from 'aws-sdk'
 
 import 'array-foreach-async'
-import request from 'request-promise'
+import axios from 'axios'
+
 import { stringify } from 'qs'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { getSystemToken } from '../util/urs/getSystemToken'
-import { getSingleGranule } from '../util/cmr/getSingleGranule'
+
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { getSqsConfig } from '../util/aws/getSqsConfig'
-import { tagName } from '../../../sharedUtils/tags'
-import { parseError } from '../../../sharedUtils/parseError'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getSingleGranule } from '../util/cmr/getSingleGranule'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { getSystemToken } from '../util/urs/getSystemToken'
+import { parseError } from '../../../sharedUtils/parseError'
+import { tagName } from '../../../sharedUtils/tags'
 
 // AWS SQS adapter
 let sqs
@@ -54,22 +56,21 @@ const fetchOptionDefinitions = async (event, context) => {
 
       const { id: granuleId } = singleGranule
 
-      const optionDefinitionResponse = await request.post({
-        uri: optionDefinitionUrl,
-        form: stringify({
+      const optionDefinitionResponse = await axios({
+        method: 'post',
+        url: optionDefinitionUrl,
+        data: stringify({
           'catalog_item_id[]': granuleId
         }, { indices: false, arrayFormat: 'brackets' }),
         headers: {
           'Client-Id': getClientId().background,
           'Content-Type': 'application/x-www-form-urlencoded',
           'Echo-Token': cmrToken
-        },
-        json: true,
-        resolveWithFullResponse: true
+        }
       })
 
-      const { body } = optionDefinitionResponse
-      const [optionDefinition] = body
+      const { data } = optionDefinitionResponse
+      const [optionDefinition] = data
       const { order_information: orderInformation } = optionDefinition
       const { option_definition_refs: optionDefinitions = [] } = orderInformation
 

@@ -47,7 +47,6 @@ const ousGranuleSearch = async (event) => {
         stringifyResult: false
       }),
       requestId,
-      bodyType: 'json',
       earthdataEnvironment
     })
   } catch (e) {

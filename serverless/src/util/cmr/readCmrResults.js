@@ -6,7 +6,7 @@
  */
 export const readCmrResults = (providedPath, cmrResponse) => {
   // Return an empty result for non successful requests
-  if (cmrResponse.statusCode !== 200) {
+  if (cmrResponse.status !== 200) {
     console.log(cmrResponse.body)
 
     return []
@@ -14,7 +14,7 @@ export const readCmrResults = (providedPath, cmrResponse) => {
 
   const [path, extension] = providedPath.split('.')
 
-  const { body } = cmrResponse
+  const { data } = cmrResponse
 
   // The collection and granule search endpoint has a different response
   // than other concepts as does umm_json
@@ -24,14 +24,14 @@ export const readCmrResults = (providedPath, cmrResponse) => {
       path.includes('collections')
       || path.includes('granules')
     )) {
-    const { feed } = body
+    const { feed } = data
     const { entry } = feed
 
     return entry
   }
 
   // All other endpoints return `items`
-  const { items } = body
+  const { items } = data
 
   return items
 }

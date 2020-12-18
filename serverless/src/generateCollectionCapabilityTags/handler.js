@@ -1,7 +1,7 @@
 import 'array-foreach-async'
 
 import AWS from 'aws-sdk'
-import request from 'request-promise'
+import axios from 'axios'
 
 import { stringify } from 'qs'
 
@@ -44,16 +44,15 @@ const generateCollectionCapabilityTags = async (input) => {
   const { cmrHost } = getEarthdataConfig(deployedEnvironment())
   const collectionSearchUrl = `${cmrHost}/search/collections.json`
 
-  const response = await request.post({
-    uri: collectionSearchUrl,
-    form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+  const response = await axios({
+    method: 'post',
+    url: collectionSearchUrl,
+    data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
       'Echo-Token': cmrToken
-    },
-    json: true,
-    resolveWithFullResponse: true
+    }
   })
 
   const cmrHits = parseInt(response.headers['cmr-hits'], 10)

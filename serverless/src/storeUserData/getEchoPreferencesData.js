@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -13,17 +13,16 @@ export const getEchoPreferencesData = async (username, token, environment) => {
 
   const echoRestPreferencesUrl = `${echoRestRoot}/users/${username}/preferences.json`
 
-  const echoRestPreferencesResponse = await request.get({
-    uri: echoRestPreferencesUrl,
+  const echoRestPreferencesResponse = await axios({
+    method: 'get',
+    url: echoRestPreferencesUrl,
     headers: {
       Authorization: `Bearer ${token}`,
       'Client-Id': getClientId().lambda
-    },
-    json: true,
-    resolveWithFullResponse: true
+    }
   })
 
-  const { body = {} } = echoRestPreferencesResponse
+  const { data = {} } = echoRestPreferencesResponse
 
-  return body
+  return data
 }

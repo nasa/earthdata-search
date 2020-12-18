@@ -1,5 +1,7 @@
 import 'array-foreach-async'
-import request from 'request-promise'
+
+import axios from 'axios'
+
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -56,15 +58,15 @@ const processColorMap = async (event, context) => {
     const specialColors = []
     const specialLabels = []
 
-    const gibsResponse = await request.get({
-      uri: providedColorMap.url,
-      resolveWithFullResponse: true,
+    const gibsResponse = await axios({
+      method: 'get',
+      url: providedColorMap.url,
       headers: {
         'Client-Id': getClientId().background
       }
     })
 
-    const parsedColorMap = parseXml(gibsResponse.body, {
+    const parsedColorMap = parseXml(gibsResponse.data, {
       ignoreAttributes: false,
       attributeNamePrefix: ''
     })

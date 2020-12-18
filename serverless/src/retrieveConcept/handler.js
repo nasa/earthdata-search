@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -42,10 +42,9 @@ const retrieveConcept = async (event) => {
   const path = `/search/concepts/${id}?${queryParams}`
 
   try {
-    const response = await request.get({
-      uri: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
-      json: true,
-      resolveWithFullResponse: true,
+    const response = await axios({
+      method: 'get',
+      url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
       headers: {
         'Client-Id': getClientId().lambda,
         'Echo-Token': await getEchoToken(jwtToken, earthdataEnvironment),
@@ -53,10 +52,10 @@ const retrieveConcept = async (event) => {
       }
     })
 
-    const { body, headers } = response
+    const { data, headers } = response
 
     return {
-      statusCode: response.statusCode,
+      statusCode: response.status,
       headers: {
         'cmr-hits': headers['cmr-hits'],
         'cmr-took': headers['cmr-took'],
@@ -65,7 +64,7 @@ const retrieveConcept = async (event) => {
         'access-control-expose-headers': prepareExposeHeaders(headers),
         'jwt-token': jwtToken
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(data)
     }
   } catch (e) {
     return {

@@ -1,10 +1,12 @@
-import request from 'request-promise'
-import { stringify } from 'qs'
+import axios from 'axios'
+
 import { castArray } from 'lodash'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { stringify } from 'qs'
+
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { parseError } from '../../../sharedUtils/parseError'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Adds a tag association to any collections meeting the provided search criteria
@@ -14,14 +16,14 @@ import { getClientId } from '../../../sharedUtils/getClientId'
  * @param {Boolean} requireGranules Whether or not to include collections without granules
  * @param {Boolean} append If tag data already exists, should the provided data be appended or not
  */
-export async function addTag({
+export const addTag = async ({
   tagName,
   tagData,
   searchCriteria,
   requireGranules,
   append,
   cmrToken
-}) {
+}) => {
   let associationData = null
 
   // Avoid querying CMR if we were already able to generate the appropriate
@@ -39,19 +41,18 @@ export async function addTag({
     let collections = []
 
     try {
-      const collectionJsonResponse = await request.post({
-        uri: `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
+      const collectionJsonResponse = await axios({
+        method: 'post',
+        url: `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
         headers: {
           'Client-Id': getClientId().background,
           'Echo-Token': cmrToken
         },
-        body: searchCriteria,
-        json: true,
-        resolveWithFullResponse: true
+        data: searchCriteria
       })
 
-      const { body = {} } = collectionJsonResponse
-      const { feed = {} } = body
+      const { data = {} } = collectionJsonResponse
+      const { feed = {} } = data
       const { entry = [] } = feed
       collections = entry
     } catch (e) {
@@ -98,20 +99,19 @@ export async function addTag({
   if (associationData) {
     try {
       const addTagUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/tags/${tagName}/associations`
-      const taggingResponse = await request.post({
-        uri: addTagUrl,
+      const taggingResponse = await axios({
+        method: 'post',
+        url: addTagUrl,
         headers: {
           'Client-Id': getClientId().background,
           'Echo-Token': cmrToken
         },
-        body: castArray(associationData),
-        json: true,
-        resolveWithFullResponse: true
+        data: castArray(associationData)
       })
 
-      const { body = [] } = taggingResponse
+      const { data = [] } = taggingResponse
 
-      Array.from(body).forEach((tagResponse) => {
+      Array.from(data).forEach((tagResponse) => {
         const { errors = [] } = tagResponse
 
         // Log each (potential) error
@@ -129,15 +129,14 @@ export async function addTag({
     // for anything, so we'll just associate the tag with all collections that match the searchCriteria
     const tagRemovalUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/tags/${tagName}/associations/by_query`
 
-    await request.post({
-      uri: tagRemovalUrl,
+    await axios({
+      method: 'post',
+      url: tagRemovalUrl,
       headers: {
         'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
       },
-      body: searchCriteria,
-      json: true,
-      resolveWithFullResponse: true
+      data: searchCriteria
     })
   } catch (e) {
     parseError(e, { reThrowError: true })

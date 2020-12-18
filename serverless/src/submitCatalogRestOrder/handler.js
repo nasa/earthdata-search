@@ -1,6 +1,8 @@
 import 'array-foreach-async'
+
+import axios from 'axios'
 import { parse as parseXml } from 'fast-xml-parser'
-import request from 'request-promise'
+import { stringify } from 'qs'
 
 import { getBoundingBox } from '../util/echoForms/getBoundingBox'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -88,19 +90,18 @@ const submitCatalogRestOrder = async (event, context) => {
 
       const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
 
-      const granuleResponse = await request.get({
-        uri: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
-        qs: preparedGranuleParams,
-        qsStringifyOptions: {
-          indices: false,
-          arrayFormat: 'brackets'
-        },
+      const granuleResponse = await axios({
+        url: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
+        params: preparedGranuleParams,
+        paramsSerializer: params => stringify(params,
+          {
+            indices: false,
+            arrayFormat: 'brackets'
+          }),
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
-        },
-        json: true,
-        resolveWithFullResponse: true
+        }
       })
 
       const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
@@ -153,17 +154,20 @@ const submitCatalogRestOrder = async (event, context) => {
         .forEach(key => (orderPayload[key] == null
           || orderPayload[key].length === 0) && delete orderPayload[key])
 
-      const orderResponse = await request.post({
-        uri: url,
-        form: orderPayload,
+      const orderResponse = await axios({
+        method: 'post',
+        url,
+        data: stringify(orderPayload, {
+          indices: false,
+          arrayFormat: 'brackets'
+        }),
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
-        },
-        resolveWithFullResponse: true
+        }
       })
 
-      const orderResponseBody = parseXml(orderResponse.body, {
+      const orderResponseBody = parseXml(orderResponse.data, {
         ignoreAttributes: false,
         attributeNamePrefix: ''
       })

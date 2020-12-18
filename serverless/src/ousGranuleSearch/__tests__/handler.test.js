@@ -33,7 +33,6 @@ describe('ousGranuleSearch', () => {
     expect(mock).toBeCalledTimes(1)
     expect(mock).toBeCalledWith({
       earthdataEnvironment: 'prod',
-      bodyType: 'json',
       jwtToken: 'mockJwt',
       path: '/service-bridge/ous/collection/C100000-EDSC',
       params: {},

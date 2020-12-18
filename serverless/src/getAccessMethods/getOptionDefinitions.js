@@ -1,11 +1,15 @@
-import request from 'request-promise'
 import 'array-foreach-async'
+
+import axios from 'axios'
 
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { parseError } from '../../../sharedUtils/parseError'
+import { wrapAxios } from '../util/wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 export const getOptionDefinitions = async (
   collectionProvider,
@@ -26,25 +30,26 @@ export const getOptionDefinitions = async (
     const url = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/option_definitions.json`
 
     try {
-      const response = await request.get({
-        time: true,
-        uri: url,
-        qs: {
+      const response = await wrappedAxios({
+        method: 'get',
+        url,
+        params: {
           name,
           provider: providerId
         },
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().lambda
-        },
-        json: true,
-        resolveWithFullResponse: true
+        }
       })
 
-      console.log(`Took ${response.elapsedTime / 1000}s to retrieve option definition '${name}' for ${organizationName}`)
+      const { config } = response
+      const { elapsedTime } = config
 
-      const { body } = response
-      const [firstOptionDefinition] = body
+      console.log(`Took ${elapsedTime / 1000}s to retrieve option definition '${name}' for ${organizationName}`)
+
+      const { data } = response
+      const [firstOptionDefinition] = data
       const {
         option_definition: responseOptionDefinition
       } = firstOptionDefinition

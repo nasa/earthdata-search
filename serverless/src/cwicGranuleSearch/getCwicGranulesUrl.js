@@ -1,9 +1,12 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { parse as parseXml } from 'fast-xml-parser'
 
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { parseError } from '../../../sharedUtils/parseError'
+import { wrapAxios } from '../util/wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
@@ -16,10 +19,7 @@ export const getCwicGranulesUrl = async (collectionId) => {
   console.log(`OpenSearch OSDD: ${collectionTemplate}`)
 
   try {
-    const osddResponse = await request.get({
-      time: true,
-      uri: collectionTemplate,
-      resolveWithFullResponse: true,
+    const osddResponse = await wrappedAxios.get(collectionTemplate, {
       headers: {
         'Client-Id': getClientId().lambda
       }
@@ -27,7 +27,7 @@ export const getCwicGranulesUrl = async (collectionId) => {
 
     console.log(`Request for granules URL for CWIC collection '${collectionId}' successfully completed in ${osddResponse.elapsedTime} ms`)
 
-    const osddBody = parseXml(osddResponse.body, {
+    const osddBody = parseXml(osddResponse.data, {
       ignoreAttributes: false,
       attributeNamePrefix: ''
     })
@@ -36,7 +36,7 @@ export const getCwicGranulesUrl = async (collectionId) => {
     const { Url: granuleUrls = [] } = opensearchDescription
 
     return {
-      statusCode: osddResponse.statusCode,
+      statusCode: osddResponse.status,
       body: granuleUrls.find(url => url.type === 'application/atom+xml')
     }
   } catch (e) {

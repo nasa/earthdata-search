@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import axios from 'axios'
 import lowercaseKeys from 'lowercase-keys'
 
 import { getClientId } from '../../../../sharedUtils/getClientId'
@@ -6,6 +6,9 @@ import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtil
 import { getEchoToken } from '../urs/getEchoToken'
 import { parseError } from '../../../../sharedUtils/parseError'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
+import { wrapAxios } from '../wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -14,11 +17,9 @@ import { prepareExposeHeaders } from './prepareExposeHeaders'
  * @param {String} params The parameters to send to with the HTTP request
  * @param {String} requestId A generated request id that will be sent as a header with the HTTP request
  * @param {String} providedHeaders Any headers to send along with the HTTP request
- * @param {String} bodyType The body type of the HTTP request
  * @param {String} method The HTTP method to use when making the request
  */
 export const doSearchRequest = async ({
-  bodyType = 'form',
   earthdataEnvironment,
   jwtToken,
   method = 'post',
@@ -49,36 +50,33 @@ export const doSearchRequest = async ({
     }
 
     const requestParams = {
-      uri: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
-      json: true,
-      resolveWithFullResponse: true,
-      time: true,
+      url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
       headers: requestHeaders
     }
 
     let response
     if (method === 'post') {
-      // CMR requires form data for POST requests, while service bridge requires JSON
-      if (bodyType === 'form') {
-        requestParams.form = params
-      } else if (bodyType === 'json') {
-        requestParams.body = params
-      }
+      requestParams.method = 'post'
 
-      response = await request.post(requestParams)
+      requestParams.data = params
+
+      response = await wrappedAxios(requestParams)
     } else {
-      requestParams.qs = params
+      requestParams.method = 'get'
 
-      response = await request.get(requestParams)
+      requestParams.params = params
+
+      response = await wrappedAxios(requestParams)
     }
 
-    const { body, headers } = response
+    const { config, data, headers } = response
+    const { elapsedTime } = config
     const { 'cmr-took': cmrTook } = headers
 
-    console.log(`Request ${requestId} completed external request in [reported: ${cmrTook} ms, observed: ${response.elapsedTime} ms]`)
+    console.log(`Request ${requestId} completed external request in [reported: ${cmrTook} ms, observed: ${elapsedTime} ms]`)
 
     return {
-      statusCode: response.statusCode,
+      statusCode: response.status,
       headers: {
         ...lowercaseKeys(defaultResponseHeaders),
         'cmr-hits': headers['cmr-hits'],
@@ -89,7 +87,7 @@ export const doSearchRequest = async ({
         'jwt-token': jwtToken,
         'access-control-allow-headers': '*'
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(data)
     }
   } catch (e) {
     return {

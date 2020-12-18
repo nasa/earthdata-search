@@ -4,10 +4,10 @@ describe('readCmrResults', () => {
   describe('when the status code is not 200', () => {
     test('returns an empty array', () => {
       const response = readCmrResults('search/collextions.json', {
-        body: {
+        data: {
           errors: ['Record not found.']
         },
-        statusCode: 404
+        status: 404
       })
 
       expect(response).toEqual([])
@@ -17,13 +17,13 @@ describe('readCmrResults', () => {
   describe('when the extension is umm', () => {
     test('the response exists in the items key', () => {
       const response = readCmrResults('search/collections.umm_json', {
-        body: {
+        data: {
           items: [{
             id: 'umm-concept-id',
             title: 'Aenean lacinia bibendum nulla sed consectetur.'
           }]
         },
-        statusCode: 200
+        status: 200
       })
 
       expect(response).toEqual([{
@@ -37,7 +37,7 @@ describe('readCmrResults', () => {
     describe('when the path includes collections', () => {
       test('the response exists in the feed key', () => {
         const response = readCmrResults('search/collections.json', {
-          body: {
+          data: {
             feed: {
               entry: [{
                 id: 'concept-id',
@@ -45,7 +45,7 @@ describe('readCmrResults', () => {
               }]
             }
           },
-          statusCode: 200
+          status: 200
         })
 
         expect(response).toEqual([{
@@ -58,7 +58,7 @@ describe('readCmrResults', () => {
     describe('when the path includes granules', () => {
       test('the response exists in the feed key', () => {
         const response = readCmrResults('search/granules.json', {
-          body: {
+          data: {
             feed: {
               entry: [{
                 id: 'concept-id',
@@ -66,7 +66,7 @@ describe('readCmrResults', () => {
               }]
             }
           },
-          statusCode: 200
+          status: 200
         })
 
         expect(response).toEqual([{

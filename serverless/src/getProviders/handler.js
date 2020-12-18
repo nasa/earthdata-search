@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -25,23 +25,22 @@ const getProviders = async (event) => {
   const url = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/providers.json`
 
   try {
-    const response = await request.get({
-      uri: url,
-      resolveWithFullResponse: true,
+    const response = await axios({
+      method: 'get',
+      url,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Client-Id': getClientId().lambda
-      },
-      json: true
+      }
     })
 
-    const { body } = response
+    const { data } = response
 
     return {
       isBase64Encoded: false,
       statusCode: 200,
       headers: defaultResponseHeaders,
-      body: JSON.stringify(body)
+      body: JSON.stringify(data)
     }
   } catch (e) {
     return {

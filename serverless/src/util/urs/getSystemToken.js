@@ -1,4 +1,4 @@
-import request from 'request-promise'
+import axios from 'axios'
 
 import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../../sharedUtils/getClientId'
@@ -38,27 +38,26 @@ export const getSystemToken = async () => {
     }
 
     const authenticationUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/tokens.json`
-    const tokenResponse = await request.post({
-      uri: authenticationUrl,
-      body: {
+    const tokenResponse = await axios({
+      method: 'post',
+      url: authenticationUrl,
+      data: {
         token: authenticationParams
       },
-      json: true,
-      resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().background
       }
     })
 
-    const { body } = tokenResponse
+    const { data } = tokenResponse
 
-    if (tokenResponse.statusCode !== 201) {
-      // On error return whatever body is provided and let
+    if (tokenResponse.status !== 201) {
+      // On error return whatever data is provided and let
       // the caller deal with it
-      return body
+      return data
     }
 
-    const { token } = body
+    const { token } = data
     const { id, username } = token
 
     console.log(`Successfully retrieved a ${earthdataEnvironment.toUpperCase()} token for '${username}'`)

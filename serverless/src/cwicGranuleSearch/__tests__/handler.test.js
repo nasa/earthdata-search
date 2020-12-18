@@ -17,7 +17,7 @@ describe('handler', () => {
       jest.spyOn(getCwicGranulesUrl, 'getCwicGranulesUrl').mockImplementationOnce(() => (
         new Promise(resolve => resolve({
           statusCode: 400,
-          errors: ['StatusCodeError (400): REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset']
+          errors: ['Error (400): REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset']
         }))
       ))
 
@@ -33,7 +33,7 @@ describe('handler', () => {
 
       expect(response).toEqual({
         body: [
-          'StatusCodeError (400): REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset'
+          'Error (400): REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset'
         ],
         headers: {
           'Access-Control-Allow-Credentials': true,

@@ -1,7 +1,9 @@
-import request from 'request-promise'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import axios from 'axios'
+
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Removes a tag association from any collections meeting the provided search criteria
@@ -9,22 +11,21 @@ import { getClientId } from '../../../sharedUtils/getClientId'
  * @param {Object} searchCriteria Criteria used to search for collections in JQL
  * @return {Object} An object representing the CMR tag association response
  */
-export async function removeTag(tagName, searchCriteria, cmrToken) {
+export const removeTag = async (tagName, searchCriteria, cmrToken) => {
   const tagRemovalUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/tags/${tagName}/associations/by_query`
 
   try {
-    await request.delete({
-      uri: tagRemovalUrl,
+    await axios({
+      method: 'delete',
+      url: tagRemovalUrl,
       headers: {
         'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
       },
-      body: searchCriteria,
-      json: true,
-      resolveWithFullResponse: true
+      data: searchCriteria
     })
   } catch (e) {
-    console.log(e)
+    parseError(e)
 
     return false
   }

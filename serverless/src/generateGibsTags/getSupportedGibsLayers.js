@@ -1,5 +1,5 @@
 import 'array-foreach-async'
-import request from 'request-promise'
+import axios from 'axios'
 
 import customGibsProducts from '../static/gibs'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -9,10 +9,9 @@ import { getClientId } from '../../../sharedUtils/getClientId'
  */
 export const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
   const worldviewConfig = 'https://worldview.earthdata.nasa.gov/config/wv.json'
-  const worldviewResponse = await request.get({
-    uri: worldviewConfig,
-    json: true,
-    resolveWithFullResponse: true,
+  const worldviewResponse = await axios({
+    method: 'get',
+    url: worldviewConfig,
     headers: {
       'Client-Id': getClientId().background
     }
@@ -26,7 +25,7 @@ export const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
 
   const supportedProjections = Object.values(projectionMap)
 
-  const { body: worldviewProducts } = worldviewResponse
+  const { data: worldviewProducts } = worldviewResponse
 
   // Merge the EDSC custom products into the GIBS products before processing
   if (mergeCustomProducts) {

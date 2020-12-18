@@ -1,7 +1,7 @@
 import 'array-foreach-async'
 
 import AWS from 'aws-sdk'
-import request from 'request-promise'
+import axios from 'axios'
 
 import { parse as parseXml } from 'fast-xml-parser'
 
@@ -38,12 +38,12 @@ export const getProjectionCapabilities = async (projection) => {
 
     const colormapProducts = []
 
-    const gibsResponse = await request.get({
-      uri: capabilitiesUrl,
-      resolveWithFullResponse: true
+    const gibsResponse = await axios({
+      method: 'get',
+      url: capabilitiesUrl
     })
 
-    const parsedCapabilities = parseXml(gibsResponse.body, {
+    const parsedCapabilities = parseXml(gibsResponse.data, {
       ignoreAttributes: false,
       attributeNamePrefix: ''
     })
@@ -97,7 +97,7 @@ export const getProjectionCapabilities = async (projection) => {
     console.log(`Successfully processed ${colormapProducts.length} colormaps`)
 
     return {
-      statusCode: gibsResponse.statusCode,
+      statusCode: gibsResponse.status,
       body: JSON.stringify(colormapProducts)
     }
   } catch (e) {

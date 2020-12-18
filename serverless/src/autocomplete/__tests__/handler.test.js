@@ -39,7 +39,6 @@ describe('autocomplete', () => {
 
     expect(mock).toBeCalledTimes(1)
     expect(mock).toBeCalledWith({
-      bodyType: 'json',
       jwtToken: 'mockJwt',
       earthdataEnvironment: 'prod',
       method: 'get',

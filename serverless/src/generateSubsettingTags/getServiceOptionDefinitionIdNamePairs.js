@@ -1,5 +1,7 @@
 import 'array-foreach-async'
-import request from 'request-promise'
+
+import axios from 'axios'
+
 import { stringify } from 'qs'
 import { chunkArray } from '../util/chunkArray'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
@@ -30,18 +32,17 @@ export const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOpt
 
     try {
       // Request the service option definitions from legacy services
-      const serviceOptionDefinitionResponse = await request.get({
-        uri: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}`,
+      const serviceOptionDefinitionResponse = await axios({
+        method: 'get',
+        url: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}`,
         headers: {
           'Client-Id': getClientId().background,
           'Echo-Token': cmrToken
-        },
-        json: true,
-        resolveWithFullResponse: true
+        }
       })
 
       // Iterate through the option definitions returned
-      const serviceOptionDefinitionResponseBody = serviceOptionDefinitionResponse.body
+      const serviceOptionDefinitionResponseBody = serviceOptionDefinitionResponse.data
 
       serviceOptionDefinitionResponseBody.forEach((serviceOptionObj) => {
         const { service_option_definition: serviceOptionDefinition } = serviceOptionObj

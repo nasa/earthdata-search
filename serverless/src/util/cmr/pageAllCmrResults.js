@@ -1,6 +1,6 @@
 import 'array-foreach-async'
 import { stringify } from 'qs'
-import request from 'request-promise'
+import axios from 'axios'
 import { readCmrResults } from './readCmrResults'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { getClientId } from '../../../../sharedUtils/getClientId'
@@ -32,17 +32,16 @@ export const pageAllCmrResults = async ({
     // all of the results
     const { cmrHost } = getEarthdataConfig(deployedEnvironment)
 
-    const response = await request.post({
-      uri: `${cmrHost}/${path}`,
-      form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+    const response = await axios({
+      method: 'post',
+      url: `${cmrHost}/${path}`,
+      data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
       headers: {
         'Client-Id': getClientId().background,
         'Content-Type': 'application/x-www-form-urlencoded',
         'Echo-Token': cmrToken,
         ...additionalHeaders
-      },
-      json: true,
-      resolveWithFullResponse: true
+      }
     })
 
     // Initialize the array that will contain all of the results from CMR with the
@@ -63,17 +62,16 @@ export const pageAllCmrResults = async ({
 
         console.log(`Retrieving page ${cmrParams.page_num}...`)
 
-        const additionalCmrResponse = await request.post({
-          uri: `${cmrHost}/${path}`,
-          form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+        const additionalCmrResponse = await axios({
+          method: 'post',
+          url: `${cmrHost}/${path}`,
+          data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
           headers: {
             'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',
             'Echo-Token': cmrToken,
             ...additionalHeaders
-          },
-          json: true,
-          resolveWithFullResponse: true
+          }
         })
 
         allResults.push(...readCmrResults(path, additionalCmrResponse))

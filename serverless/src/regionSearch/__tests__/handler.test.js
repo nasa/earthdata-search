@@ -155,7 +155,7 @@ describe('regionSearch', () => {
 
     expect(statusCode).toBe(500)
     expect(body).toBe(JSON.stringify({
-      errors: ['An unknown error has occurred']
+      errors: ['Unknown Error']
     }))
   })
 
@@ -185,20 +185,13 @@ describe('regionSearch', () => {
     }))
   })
 
-  test('returns region results when they exist', async () => {
+  test('returns an error when one is present', async () => {
     process.env.LAMBDA_TIMEOUT = 30
 
     nock(/region/)
       .get(/regions/)
       .reply(200, {
-        status: '200 OK',
-        hits: 0,
-        time: '5.128 ms.',
-        'search on': {
-          parameter: 'region',
-          exact: true
-        },
-        errorMessage: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam.'
+        error: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam.'
       })
 
     const regionResponse = await regionSearch({

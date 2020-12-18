@@ -110,7 +110,7 @@ describe('updateProjectName', () => {
     const name = 'test name'
 
     nock(/localhost/)
-      .get(/projects/)
+      .post(/projects/)
       .reply(500, {
         errors: ['An error occured.']
       })
