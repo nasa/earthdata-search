@@ -6,20 +6,24 @@
  */
 export const wrapAxios = (axiosModule) => {
   // Add the timing object and request start time during the request
-  axiosModule.interceptors.request.use((x) => {
-    x.timing = {}
-    x.timing.requestStartedAt = new Date().getTime()
+  axiosModule.interceptors.request.use((module) => {
+    module.timing = {}
+    module.timing.requestStartedAt = new Date().getTime()
 
-    return x
+    return module
   })
 
   // Add the request end time and elapsedTime during the response
-  axiosModule.interceptors.response.use((x) => {
-    x.config.timing.requestEndedAt = new Date().getTime()
+  axiosModule.interceptors.response.use((module) => {
+    module.config.timing.requestEndedAt = new Date().getTime()
 
-    x.config.elapsedTime = x.config.timing.requestEndedAt - x.config.timing.requestStartedAt
+    const { config = {} } = module
+    const { timing = {} } = config
+    const { requestEndedAt, requestStartedAt } = timing
 
-    return x
+    module.config.elapsedTime = requestEndedAt - requestStartedAt
+
+    return module
   })
 
   // Return the module with the interceptors applied
