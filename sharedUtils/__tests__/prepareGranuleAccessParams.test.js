@@ -12,7 +12,8 @@ const paramsWithAddedGranulesArr = {
 }
 
 const returnParamsWithAddedGranulesArr = {
-  concept_id: ['1', '2', '3', '4']
+  concept_id: ['1', '2', '3', '4'],
+  page_size: 2000
 }
 
 describe('prepareGranuleAccessParams', () => {
