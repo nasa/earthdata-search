@@ -33,7 +33,7 @@ export const getServiceOptionDefinitions = async (
       const response = await wrappedAxios({
         method: 'get',
         url,
-        qs: {
+        params: {
           name,
           provider_guid: providerId
         },
