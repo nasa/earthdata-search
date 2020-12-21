@@ -136,7 +136,7 @@ describe('submitCatalogRestOrder', () => {
 
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
-      .get('/search/granules.json?concept_id%5B%5D=G10000005-EDSC')
+      .get('/search/granules.json?concept_id%5B%5D=G10000005-EDSC&page_size=2000')
       .reply(200, {
         feed: {
           entry: [{
@@ -206,7 +206,7 @@ describe('submitCatalogRestOrder', () => {
 
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
-      .get('/search/granules.json?concept_id%5B%5D=G10000005-EDSC')
+      .get('/search/granules.json?concept_id%5B%5D=G10000005-EDSC&page_size=2000')
       .reply(200, {
         feed: {
           entry: [{

@@ -1,3 +1,5 @@
+import { getApplicationConfig } from './config'
+
 /**
  * Takes granule params and returns the params to be used in a CMR request
  * @param {Object} params Queue messages from SQS
@@ -9,8 +11,11 @@ export const prepareGranuleAccessParams = (params = {}) => {
   // If there are added granules, return only the added granules. Otherwise, send
   // all of the granules params.
   if (conceptIdsFromParams.length) {
+    const { defaultGranulesPerOrder } = getApplicationConfig()
+
     return {
-      concept_id: conceptIdsFromParams
+      concept_id: conceptIdsFromParams,
+      page_size: defaultGranulesPerOrder
     }
   }
 
