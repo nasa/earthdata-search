@@ -313,7 +313,7 @@ export class OrderStatusItem extends PureComponent {
     const orderStatus = aggregatedOrderStatus(orders)
 
     // If the order is in a terminal state stop asking for order status
-    if (['complete', 'failed'].includes(orderStatus)) {
+    if (['complete', 'failed', 'canceled'].includes(orderStatus)) {
       clearInterval(this.intervalId)
     } else {
       onFetchRetrievalCollection(id)
@@ -367,7 +367,8 @@ export class OrderStatusItem extends PureComponent {
           'order-status-item--is-opened': opened,
           'order-status-item--complete': !hasStatus || (hasStatus && stateFromOrderStatus === 'complete'),
           'order-status-item--in_progress': hasStatus && stateFromOrderStatus === 'in_progress',
-          'order-status-item--failed': hasStatus && stateFromOrderStatus === 'failed'
+          'order-status-item--failed': hasStatus && stateFromOrderStatus === 'failed',
+          'order-status-item--canceled': hasStatus && stateFromOrderStatus === 'canceled'
         }
       )
 
@@ -440,6 +441,11 @@ export class OrderStatusItem extends PureComponent {
           orderInfo = 'The order has failed processing.'
         }
 
+        if (stateFromOrderStatus === 'canceled') {
+          progressPercentage = 0
+          orderInfo = 'The order has been canceled.'
+        }
+
         if (isEsi) {
           let totalNumber = 0
           let totalProcessed = 0
@@ -510,7 +516,7 @@ export class OrderStatusItem extends PureComponent {
               jobId = false
             } = orderInformation
 
-            if (status === 'successful' || status === 'failed') {
+            if (status === 'successful' || status === 'failed' || status === 'canceled') {
               totalCompleteOrders += 1
             }
 
@@ -521,6 +527,10 @@ export class OrderStatusItem extends PureComponent {
             if (status === 'failed' && harmonyMessage) {
               messages.push(harmonyMessage)
               messageIsError = messageIsError || true
+            }
+
+            if (status === 'canceled' && harmonyMessage) {
+              messages.push(harmonyMessage)
             }
 
             downloadUrls.push(...links

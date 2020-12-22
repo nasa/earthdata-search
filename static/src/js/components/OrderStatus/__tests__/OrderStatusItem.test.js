@@ -306,6 +306,32 @@ describe('OrderStatusItem', () => {
           expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
         })
       })
+
+      describe('when the order status is canceled', () => {
+        test('should not try to refresh', () => {
+          const { props } = setup({
+            type: 'harmony',
+            collection: {
+              id: 'TEST_COLLECTION_111',
+              collection_metadata: {
+                id: 'TEST_COLLECTION_111',
+                dataset_id: 'Test Dataset ID'
+              },
+              access_method: {
+                type: 'HARMONY'
+              },
+              orders: [{
+                state: 'canceled',
+                order_information: {}
+              }],
+              isLoaded: true
+            }
+          })
+
+          jest.advanceTimersByTime(60000)
+          expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
+        })
+      })
     })
 
     describe('when unmounted', () => {
@@ -1792,6 +1818,98 @@ describe('OrderStatusItem', () => {
 
         expect(body.find('.order-status-item__order-info').text()).toEqual('The order has failed processing.')
         expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:Variable subsetting failed with error: HTTP Error 400: Bad Request.')
+
+        const tabs = body.find('EDSCTabs')
+        expect(tabs.children().length).toEqual(3)
+
+        const linksTab = tabs.childAt(0)
+        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+
+        const stacLinksTab = tabs.childAt(1)
+        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
+
+        const orderStatusTab = tabs.childAt(2)
+        expect(orderStatusTab.props().title).toEqual('Order Status')
+        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+      })
+    })
+
+    describe('when the order is canceled', () => {
+      test('renders an updated progress state', () => {
+        const { enzymeWrapper, props } = setup({
+          type: 'harmony',
+          collection: {
+            id: 1,
+            collection_id: 'TEST_COLLECTION_111',
+            retrieval_id: '54',
+            collection_metadata: {
+              id: 'TEST_COLLECTION_111',
+              title: 'Test Dataset ID'
+            },
+            access_method: {
+              type: 'Harmony'
+            },
+            granule_count: 100,
+            orders: [{
+              state: 'canceled',
+              order_information: {
+                jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
+                links: [
+                  {
+                    rel: 'self',
+                    href: 'https://harmony.uat.earthdata.nasa.gov/jobs/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
+                    type: 'application/json',
+                    title: 'Job Status'
+                  }
+                ],
+                status: 'canceled',
+                message: 'Canceled by user.',
+                request: 'https://harmony.uat.earthdata.nasa.gov/C1233800302-EEDTEST/ogc-api-coverages/1.0.0/collections/all/coverage/rangeset?forceAsync=true&granuleIds=G1233800432-EEDTEST%2CG1233800431-EEDTEST%2CG1233800430-EEDTEST%2CG1233800429-EEDTEST%2CG1233800428-EEDTEST%2CG1233800427-EEDTEST%2CG1233800426-EEDTEST%2CG1233800513-EEDTEST%2CG1233800512-EEDTEST%2CG1233800425-EEDTEST%2CG1233800424-EEDTEST%2CG1233800423-EEDTEST%2CG1233800422-EEDTEST%2CG1233800421-EEDTEST%2CG1233800420-EEDTEST%2CG1233800419-EEDTEST%2CG1233800418-EEDTEST%2CG1233800417-EEDTEST%2CG1233800511-EEDTEST%2CG1233800510-EEDTEST%2CG1233800416-EEDTEST%2CG1233800415-EEDTEST%2CG1233800414-EEDTEST%2CG1233800413-EEDTEST%2CG1233800412-EEDTEST%2CG1233800411-EEDTEST%2CG1233800410-EEDTEST%2CG1233800409-EEDTEST%2CG1233800408-EEDTEST%2CG1233800509-EEDTEST%2CG1233800508-EEDTEST%2CG1233800407-EEDTEST%2CG1233800406-EEDTEST%2CG1233800405-EEDTEST%2CG1233800404-EEDTEST%2CG1233800403-EEDTEST%2CG1233800402-EEDTEST%2CG1233800401-EEDTEST%2CG1233800400-EEDTEST%2CG1233800399-EEDTEST%2CG1233800507-EEDTEST%2CG1233800506-EEDTEST%2CG1233800398-EEDTEST%2CG1233800397-EEDTEST%2CG1233800396-EEDTEST%2CG1233800395-EEDTEST%2CG1233800394-EEDTEST%2CG1233800393-EEDTEST%2CG1233800392-EEDTEST%2CG1233800391-EEDTEST%2CG1233800390-EEDTEST&subset=time(%222020-01-06T08%3A18%3A35.096Z%22%3A%222020-01-10T20%3A38%3A58.262Z%22)&format=image%2Fpng&outputCrs=EPSG%3A4326',
+                progress: 0,
+                username: 'rabbott',
+                createdAt: '2020-09-10T13:50:22.372Z',
+                updatedAt: '2020-09-10T13:50:22.372Z'
+              }
+            }],
+            isLoaded: true
+          }
+        })
+
+        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
+        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
+        expect(enzymeWrapper.hasClass('order-status-item--canceled')).toEqual(true)
+
+        const header = enzymeWrapper.find('.order-status-item__header')
+        expect(header.find(ProgressRing).props().progress).toEqual(0)
+        expect(header.find('.order-status-item__status').text()).toEqual('Canceled')
+        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+
+        let body = enzymeWrapper.find('.order-status-item__body')
+        expect(body.length).toBe(0)
+
+        // Expand the body
+        enzymeWrapper.find('.order-status-item__button').simulate('click')
+
+        expect(header.find(ProgressRing).props().progress).toEqual(0)
+        expect(header.find('.order-status-item__status').text()).toEqual('Canceled')
+        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+
+        body = enzymeWrapper.find('.order-status-item__body')
+        expect(body.find(ProgressRing).props().progress).toEqual(0)
+        expect(body.find('.order-status-item__status').text()).toEqual('Canceled')
+        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+
+        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
+        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
+        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+
+        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has been canceled.')
+        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:Canceled by user.')
 
         const tabs = body.find('EDSCTabs')
         expect(tabs.children().length).toEqual(3)

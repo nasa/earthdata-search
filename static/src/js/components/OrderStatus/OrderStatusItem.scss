@@ -113,7 +113,8 @@ $item-height: 3rem;
 
     .order-status-item--in_progress &,
     .order-status-item--complete &,
-    .order-status-item--failed & {
+    .order-status-item--failed &,
+    .order-status-item--canceled & {
       .progress-ring__circle-back {
         animation: none;
       }
