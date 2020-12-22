@@ -8,6 +8,7 @@ export const orderStates = {
     'successful'
   ],
   failed: [
+    'canceled',
     'cancelled',
     'cancelling',
     'closed_with_exceptions',
