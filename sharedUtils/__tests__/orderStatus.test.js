@@ -8,8 +8,14 @@ describe('aggregatedOrderStatus', () => {
 
     test('returns the correct state for failed', () => {
       expect(aggregatedOrderStatus([{
-        state: 'cancelled'
+        state: 'not_found'
       }])).toEqual('failed')
+    })
+
+    test('returns the correct state for canceled', () => {
+      expect(aggregatedOrderStatus([{
+        state: 'cancelled'
+      }])).toEqual('canceled')
     })
 
     test('returns the correct state for in progress', () => {

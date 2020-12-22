@@ -1,6 +1,11 @@
 import { upperFirst } from 'lodash'
 
 export const orderStates = {
+  canceled: [
+    'canceled',
+    'cancelled',
+    'cancelling'
+  ],
   complete: [
     'closed',
     'complete_with_errors',
@@ -8,9 +13,6 @@ export const orderStates = {
     'successful'
   ],
   failed: [
-    'canceled',
-    'cancelled',
-    'cancelling',
     'closed_with_exceptions',
     'create_failed', // Custom EDSC status for orders that failed to create
     'failed',
@@ -59,6 +61,7 @@ export const getStateFromOrderStatus = (status) => {
   if (orderStates.complete.indexOf(status.toLowerCase()) > -1) return 'complete'
   if (orderStates.in_progress.indexOf(status.toLowerCase()) > -1) return 'in_progress'
   if (orderStates.creating.indexOf(status.toLowerCase()) > -1) return 'creating'
+  if (orderStates.canceled.indexOf(status.toLowerCase()) > -1) return 'canceled'
 
   return false
 }
@@ -83,6 +86,10 @@ export const aggregatedOrderStatus = (orders = []) => {
 
   if (orders.every(order => getStateFromOrderStatus(order.state) === 'complete')) {
     orderStatus = 'complete'
+  }
+
+  if (orders.every(order => getStateFromOrderStatus(order.state) === 'canceled')) {
+    orderStatus = 'canceled'
   }
 
   return orderStatus
