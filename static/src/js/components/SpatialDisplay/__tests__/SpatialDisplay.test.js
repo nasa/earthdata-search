@@ -394,4 +394,26 @@ describe('SpatialDisplay component', () => {
       expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { circle: ['-77,38,10000'] } } })
     })
   })
+
+  describe('#trimCoordinate', () => {
+    test('returns the input trimmed', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = '45.60161000002, -94.60986000001'
+
+      const result = enzymeWrapper.instance().trimCoordinate(input)
+
+      expect(result).toEqual('45.60161,-94.60986')
+    })
+
+    test('returns the input if no match was found', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = 'test'
+
+      const result = enzymeWrapper.instance().trimCoordinate(input)
+
+      expect(result).toEqual(input)
+    })
+  })
 })
