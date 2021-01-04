@@ -155,7 +155,7 @@ class SpatialDisplay extends Component {
 
     this.setState({
       pointSearch: point,
-      error: this.validateCoordinate(point)
+      error: this.validateCoordinate(trimmedValue)
     })
   }
 
@@ -207,7 +207,7 @@ class SpatialDisplay extends Component {
 
     this.setState({
       boundingBoxSearch: newSearch,
-      error: this.validateCoordinate(trimmedValue)
+      error: this.validateBoundingBoxCoordinates(newSearch)
     })
   }
 
@@ -322,7 +322,7 @@ class SpatialDisplay extends Component {
 
     let errorMessage = ''
 
-    const regex = new RegExp(`^-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}},?\\s?-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}}$`)
+    const regex = new RegExp(`^(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}}),?\\s?(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}})$`)
     const validCoordinates = coordinates.trim().match(regex)
 
     if (validCoordinates == null) {
@@ -335,7 +335,7 @@ class SpatialDisplay extends Component {
       const [, lat, lon] = validCoordinates
 
       if (lat < -90 || lat > 90) {
-        errorMessage = `Lattitude (${lat}) must be between -90 and 90.`
+        errorMessage = `Latitude (${lat}) must be between -90 and 90.`
       }
 
       if (lon < -180 || lon > 180) {
@@ -344,6 +344,15 @@ class SpatialDisplay extends Component {
     }
 
     return errorMessage
+  }
+
+  /**
+   * Validate the provided bounding box points
+   * @param {Array} boundingBox Array with [swPoint, nePoint] values
+   */
+  validateBoundingBoxCoordinates(boundingBox) {
+    const [swPoint, nePoint] = boundingBox
+    return this.validateCoordinate(swPoint) + this.validateCoordinate(nePoint)
   }
 
   /**
@@ -379,11 +388,11 @@ class SpatialDisplay extends Component {
   }
 
   /**
-   * Turns '1,2,3' into '2,1,3' for leaflet
+   * Turns '1,2,3' into ['2,1', '3'] for leaflet
    * @param {String} circleCoordinates A center point and radius
    */
   transformCircleCoordinates(circleCoordinates) {
-    if (!circleCoordinates) return ['', '', '']
+    if (!circleCoordinates) return ['', '']
 
     const points = circleCoordinates.split(',')
 
@@ -398,7 +407,7 @@ class SpatialDisplay extends Component {
       return [this.transformSingleCoordinate(coordinate.join(',')), radius]
     }
 
-    return ['', '', '']
+    return ['', '']
   }
 
   /**
@@ -742,7 +751,7 @@ class SpatialDisplay extends Component {
           icon={FaCrop}
           title="Spatial"
           secondaryTitle={secondaryTitle}
-          error={drawingNewLayer ? '' : spatialError}
+          error={drawingNewLayer && !manuallyEntering ? '' : spatialError}
           onRemove={this.onSpatialRemove}
           hint={hint}
         >

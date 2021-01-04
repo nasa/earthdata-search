@@ -133,6 +133,16 @@ describe('SpatialDisplay component', () => {
         .body.props.children.props.children.props.children
       expect(pointCount).toEqual('3 Points')
     })
+
+    test('should render a hint to draw the polygon on the map', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setProps({ drawingNewLayer: 'polygon' })
+
+      const filterStackItem = enzymeWrapper.find(FilterStackItem)
+
+      expect(filterStackItem.props().hint).toEqual('Draw a polygon on the map to filter results')
+    })
   })
 
   describe('with polygonSearch and displaySpatialPolygonWarning', () => {
@@ -182,7 +192,7 @@ describe('SpatialDisplay component', () => {
   })
 
   describe('with shapefile', () => {
-    describe('when the shapfile is loading', () => {
+    describe('when the shapefile is loading', () => {
       test('should render with a loading spinner', () => {
         const { enzymeWrapper } = setup()
 
@@ -216,7 +226,7 @@ describe('SpatialDisplay component', () => {
       })
     })
 
-    describe('when the shapfile is loaded', () => {
+    describe('when the shapefile is loaded', () => {
       const { enzymeWrapper } = setup()
       const newPolygon = '-77.04444122314453,38.99228142151045,'
         + '-77.01992797851562,38.79166886339155,'
@@ -256,7 +266,7 @@ describe('SpatialDisplay component', () => {
       })
     })
 
-    describe('when the shapfile has selected shapes', () => {
+    describe('when the shapefile has selected shapes', () => {
       test('should render a hint with number of shapes selected', () => {
         const { enzymeWrapper } = setup()
         const newPolygon = '-77.04444122314453,38.99228142151045,'
@@ -278,6 +288,23 @@ describe('SpatialDisplay component', () => {
         const filterStackContents = enzymeWrapper.find(FilterStackContents)
         expect(filterStackContents.props().hint).toEqual('1 shape selected')
       })
+    })
+
+    describe('when the shapefile is the wrong type', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setProps({
+        shapefile: {
+          shapefileName: 'test file',
+          shapefileSize: '42 KB',
+          isErrored: {
+            type: 'upload_shape'
+          }
+        }
+      })
+
+      const filterStackItem = enzymeWrapper.find(FilterStackItem)
+      expect(filterStackItem.props().error).toEqual('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')
     })
   })
 
@@ -414,6 +441,190 @@ describe('SpatialDisplay component', () => {
       const result = enzymeWrapper.instance().trimCoordinate(input)
 
       expect(result).toEqual(input)
+    })
+  })
+
+  describe('#transformBoundingBoxCoordinates', () => {
+    test('returns the input in the correct order', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = '1,2,3,4'
+
+      const result = enzymeWrapper.instance().transformBoundingBoxCoordinates(input)
+
+      expect(result).toEqual(['2,1', '4,3'])
+    })
+
+    test('returns an array of empty values if no input was provided', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = ''
+
+      const result = enzymeWrapper.instance().transformBoundingBoxCoordinates(input)
+
+      expect(result).toEqual(['', ''])
+    })
+  })
+
+  describe('#transformCircleCoordinates', () => {
+    test('returns the input in the correct order', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = '45.60161,-94.60986,200'
+
+      const result = enzymeWrapper.instance().transformCircleCoordinates(input)
+
+      expect(result).toEqual(['-94.60986,45.60161', '200'])
+    })
+
+    test('returns an array of empty values if no input was provided', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = ''
+
+      const result = enzymeWrapper.instance().transformCircleCoordinates(input)
+
+      expect(result).toEqual(['', ''])
+    })
+
+    test('returns an array of empty values if either latitude or longitude was not provided', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = '0,,'
+
+      const result = enzymeWrapper.instance().transformCircleCoordinates(input)
+
+      expect(result).toEqual(['', ''])
+    })
+  })
+
+  describe('#onFocusSpatialSearch', () => {
+    test('focusing the point field sets the manuallyEntering state', () => {
+      const { enzymeWrapper } = setup()
+
+      const newPoint = '-77.0418825,38.805869' // Lon,Lat
+      enzymeWrapper.setProps({ pointSearch: [newPoint] })
+
+      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+
+      const input = filterStackContents.props()
+        .body.props.children.props.children.props.children[1].props.children
+
+      input.props.onFocus()
+
+      expect(enzymeWrapper.state().manuallyEntering).toEqual('marker')
+    })
+
+    test('focusing the bounding box SW field sets the manuallyEntering state', () => {
+      const { enzymeWrapper } = setup()
+
+      const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
+      enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
+
+      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      const sw = filterStackContents.props().body.props.children.props.children[0]
+      const swInput = sw.props.children[1].props.children
+
+      swInput.props.onFocus()
+
+      expect(enzymeWrapper.state().manuallyEntering).toEqual('rectangle')
+    })
+
+    test('focusing the bounding box NE field sets the manuallyEntering state', () => {
+      const { enzymeWrapper } = setup()
+
+      const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
+      enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
+
+      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      const ne = filterStackContents.props().body.props.children.props.children[1]
+      const neInput = ne.props.children[1].props.children
+
+      neInput.props.onFocus()
+
+      expect(enzymeWrapper.state().manuallyEntering).toEqual('rectangle')
+    })
+
+    test('focusing the circle center field sets the manuallyEntering state', () => {
+      const { enzymeWrapper } = setup()
+
+      const newCircle = '-77.119759,38.791645,20000'
+      enzymeWrapper.setProps({ circleSearch: [newCircle] })
+
+      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      const center = filterStackContents.props().body.props.children.props.children[0]
+      const centerInput = center.props.children[1].props.children
+
+      centerInput.props.onFocus()
+
+      expect(enzymeWrapper.state().manuallyEntering).toEqual('circle')
+    })
+
+    test('focusing the circle radius field sets the manuallyEntering state', () => {
+      const { enzymeWrapper } = setup()
+
+      const newCircle = '-77.119759,38.791645,20000'
+      enzymeWrapper.setProps({ circleSearch: [newCircle] })
+
+      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      const radius = filterStackContents.props().body.props.children.props.children[1]
+      const radiusInput = radius.props.children[1].props.children
+
+      radiusInput.props.onFocus()
+
+      expect(enzymeWrapper.state().manuallyEntering).toEqual('circle')
+    })
+  })
+
+  describe('#validateCoordinate', () => {
+    test('returns an empty string if no coordinate is provided', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = ''
+
+      const result = enzymeWrapper.instance().validateCoordinate(input)
+
+      expect(result).toEqual(input)
+    })
+
+    test('returns no error with a valid coordinate', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = '0,0'
+
+      const result = enzymeWrapper.instance().validateCoordinate(input)
+
+      expect(result).toEqual('')
+    })
+
+    test('returns an error for a coordinate with too many decimal places', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = '0,0.123456'
+
+      const result = enzymeWrapper.instance().validateCoordinate(input)
+
+      expect(result).toEqual('Coordinates (0,0.123456) must use \'lat,lon\' format with up to 5 decimal place(s)')
+    })
+
+    test('returns an error for a coordinate an invalid latitude', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = '95,0'
+
+      const result = enzymeWrapper.instance().validateCoordinate(input)
+
+      expect(result).toEqual('Latitude (95) must be between -90 and 90.')
+    })
+
+    test('returns an error for a coordinate an invalid longitude', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = '0,190'
+
+      const result = enzymeWrapper.instance().validateCoordinate(input)
+
+      expect(result).toEqual('Longitude (190) must be between -180 and 180.')
     })
   })
 })
