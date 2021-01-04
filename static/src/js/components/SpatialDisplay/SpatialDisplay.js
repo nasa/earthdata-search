@@ -150,12 +150,13 @@ class SpatialDisplay extends Component {
   onChangePointSearch(e) {
     const { value = '' } = e.target
 
-    if (this.isValidDecimalLatLng(value)) {
-      this.setState({
-        pointSearch: this.transformSingleCoordinate(value),
-        error: this.validateCoordinate(value)
-      })
-    }
+    const trimmedValue = this.trimCoordinate(value)
+    const point = this.transformSingleCoordinate(trimmedValue)
+
+    this.setState({
+      pointSearch: point,
+      error: this.validateCoordinate(point)
+    })
   }
 
   onSubmitPointSearch(e) {
@@ -170,10 +171,11 @@ class SpatialDisplay extends Component {
           manuallyEntering: false
         })
 
+        const point = pointSearch.length ? [pointSearch.replace(/\s/g, '')] : []
         onChangeQuery({
           collection: {
             spatial: {
-              point: [pointSearch.replace(/\s/g, '')]
+              point
             }
           }
         })
@@ -192,22 +194,21 @@ class SpatialDisplay extends Component {
       value = ''
     } = e.target
 
+    const trimmedValue = this.trimCoordinate(value)
     let newSearch
 
     if (name === 'swPoint') {
-      newSearch = [value, nePoint]
+      newSearch = [trimmedValue, nePoint]
     }
 
     if (name === 'nePoint') {
-      newSearch = [swPoint, value]
+      newSearch = [swPoint, trimmedValue]
     }
 
-    if (this.isValidDecimalLatLng(value)) {
-      this.setState({
-        boundingBoxSearch: newSearch,
-        error: this.validateCoordinate(value)
-      })
-    }
+    this.setState({
+      boundingBoxSearch: newSearch,
+      error: this.validateCoordinate(trimmedValue)
+    })
   }
 
   onFocusSpatialSearch(spatialType) {
@@ -249,14 +250,13 @@ class SpatialDisplay extends Component {
 
     const { value = '' } = e.target
 
-    if (this.isValidDecimalLatLng(value)) {
-      const newSearch = [value, radius]
+    const trimmedValue = this.trimCoordinate(value)
+    const newSearch = [trimmedValue, radius]
 
-      this.setState({
-        circleSearch: newSearch,
-        error: this.validateCircleCoordinates(newSearch)
-      })
-    }
+    this.setState({
+      circleSearch: newSearch,
+      error: this.validateCircleCoordinates(newSearch)
+    })
   }
 
   onChangeCircleRadius(e) {
@@ -304,16 +304,6 @@ class SpatialDisplay extends Component {
   }
 
   /**
-   * Validates a Lat/Lng is limited to a configured number of decimal places
-   * @param {String} latLng
-   */
-  isValidDecimalLatLng(latLng) {
-    const regex = new RegExp(`^-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}},?-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}}$`)
-
-    return !!(latLng.match(regex))
-  }
-
-  /**
    * Validates a radius is limited to an integer
    * @param {String} value
    */
@@ -332,7 +322,9 @@ class SpatialDisplay extends Component {
 
     let errorMessage = ''
 
-    const validCoordinates = coordinates.trim().match(/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/)
+    const regex = new RegExp(`^-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}},?\\s?-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}}$`)
+    const validCoordinates = coordinates.trim().match(regex)
+
     if (validCoordinates == null) {
       errorMessage = `Coordinates (${coordinates}) must use 'lat,lon' format with up to ${defaultSpatialDecimalSize} decimal place(s)`
     }
@@ -407,6 +399,26 @@ class SpatialDisplay extends Component {
     }
 
     return ['', '', '']
+  }
+
+  /**
+   * Trims the latitude and longitude to defaultSpatialDecimalSize
+   * @param {String} coordinateString A single coordinate representing a point on a map
+   */
+  trimCoordinate(coordinateString) {
+    const coordinates = coordinateString.replace(/\s/g, '').split(',').map((coordinate) => {
+      const regex = new RegExp(`^(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}})`)
+
+      const matchedCoordinate = coordinate.match(regex)
+      if (matchedCoordinate[0]) {
+        return matchedCoordinate[0]
+      }
+
+      // If a matching coordinate wasn't found, return the input exactly
+      return coordinate
+    })
+
+    return coordinates.join(',')
   }
 
   render() {
