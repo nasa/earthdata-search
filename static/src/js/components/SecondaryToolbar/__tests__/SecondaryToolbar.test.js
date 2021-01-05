@@ -70,6 +70,25 @@ describe('SecondaryToolbar component', () => {
       }))
     })
 
+    describe('when on the project page', () => {
+      test('the Back to Search link calls onChangePath', () => {
+        const { enzymeWrapper, props } = setup('loggedIn')
+
+        enzymeWrapper.setProps({
+          location: {
+            pathname: '/projects',
+            search: '?p=!EDSC-1000'
+          }
+        })
+
+        const link = enzymeWrapper.find('.secondary-toolbar__back')
+        link.simulate('click')
+
+        expect(props.onChangePath).toBeCalledTimes(1)
+        expect(props.onChangePath).toBeCalledWith('/search?p=!EDSC-1000')
+      })
+    })
+
     describe('when on the downloads page', () => {
       test('the Back to Project link calls onChangePath', () => {
         const { enzymeWrapper, props } = setup('loggedIn')
@@ -89,7 +108,7 @@ describe('SecondaryToolbar component', () => {
         link.simulate('click')
 
         expect(props.onChangePath).toBeCalledTimes(1)
-        expect(props.onChangePath).toBeCalledWith('/projects/?p=!EDSC-1000')
+        expect(props.onChangePath).toBeCalledWith('/projects?p=!EDSC-1000')
       })
     })
 
@@ -126,6 +145,24 @@ describe('SecondaryToolbar component', () => {
       expect(instance.handleLogout).toBeCalledTimes(1)
     })
 
+    test('the My Project link calls onChangePath', () => {
+      const { enzymeWrapper, props } = setup('loggedIn')
+
+      enzymeWrapper.setProps({
+        location: {
+          pathname: '/search',
+          search: '?p=!EDSC-1000'
+        },
+        projectCollectionIds: ['EDSC-1000']
+      })
+
+      const link = enzymeWrapper.find('.secondary-toolbar__project')
+      link.simulate('click')
+
+      expect(props.onChangePath).toBeCalledTimes(1)
+      expect(props.onChangePath).toBeCalledWith('/projects?p=!EDSC-1000')
+    })
+
     describe('Download Status and History link', () => {
       test('adds the ee param if the earthdataEnvironment is different than the deployed environment', () => {
         const { enzymeWrapper } = setup('loggedIn', { earthdataEnvironment: 'uat' })
@@ -147,13 +184,43 @@ describe('SecondaryToolbar component', () => {
     })
   })
 
-  describe('handleLogout', () => {
+  describe('#handleLogout', () => {
     test('calls onLogout', () => {
       const { enzymeWrapper, props } = setup('loggedIn')
 
       enzymeWrapper.instance().handleLogout()
 
       expect(props.onLogout).toBeCalledTimes(1)
+    })
+  })
+
+  describe('#handleKeypress', () => {
+    test('calls stopPropagation and preventDefault on \'Enter\' press', () => {
+      const { enzymeWrapper } = setup('loggedIn')
+
+      const event = {
+        key: 'Enter',
+        stopPropagation: jest.fn(),
+        preventDefault: jest.fn()
+      }
+      enzymeWrapper.instance().handleKeypress(event)
+
+      expect(event.stopPropagation).toBeCalledTimes(1)
+      expect(event.preventDefault).toBeCalledTimes(1)
+    })
+
+    test('does not call stopPropagation and preventDefault on a non-\'Enter\' press', () => {
+      const { enzymeWrapper } = setup('loggedIn')
+
+      const event = {
+        key: 'Space',
+        stopPropagation: jest.fn(),
+        preventDefault: jest.fn()
+      }
+      enzymeWrapper.instance().handleKeypress(event)
+
+      expect(event.stopPropagation).toBeCalledTimes(0)
+      expect(event.preventDefault).toBeCalledTimes(0)
     })
   })
 
@@ -194,7 +261,7 @@ describe('SecondaryToolbar component', () => {
       const toggle = enzymeWrapper.find('.secondary-toolbar__project-name-dropdown-toggle')
       toggle.simulate('click')
 
-      expect(enzymeWrapper.state('projectDropdownOpen')).toBeTruthy()
+      expect(enzymeWrapper.state().projectDropdownOpen).toBeTruthy()
     })
 
     test('clicking the save button sets the state and calls onUpdateProjectName', () => {
@@ -213,7 +280,7 @@ describe('SecondaryToolbar component', () => {
       const saveButton = enzymeWrapper.find('.secondary-toolbar__button.secondary-toolbar__button--submit')
       saveButton.simulate('click')
 
-      expect(enzymeWrapper.state('projectDropdownOpen')).toBeFalsy()
+      expect(enzymeWrapper.state().projectDropdownOpen).toBeFalsy()
       expect(props.onUpdateProjectName).toBeCalledTimes(1)
       expect(props.onUpdateProjectName).toBeCalledWith('test project name')
     })
@@ -229,5 +296,17 @@ describe('SecondaryToolbar component', () => {
 
     expect(button.exists()).toBeTruthy()
     expect(portalFeatureContainer.props().authentication).toBeTruthy()
+  })
+
+  test('changing the project name sets the state', () => {
+    const { enzymeWrapper } = setup(undefined)
+
+    enzymeWrapper.setProps({
+      savedProject: {
+        name: 'new name'
+      }
+    })
+
+    expect(enzymeWrapper.state().projectName).toEqual('new name')
   })
 })
