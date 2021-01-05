@@ -21,6 +21,7 @@ function setup(state, overrideProps) {
     },
     projectCollectionIds: [],
     savedProject: {},
+    retrieval: {},
     onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),
     onChangePath: jest.fn(),
@@ -67,6 +68,29 @@ describe('SecondaryToolbar component', () => {
         defaultPortal: 'edsc',
         env: 'prod'
       }))
+    })
+
+    describe('when on the downloads page', () => {
+      test('the Back to Project link calls onChangePath', () => {
+        const { enzymeWrapper, props } = setup('loggedIn')
+
+        enzymeWrapper.setProps({
+          location: {
+            pathname: '/downloads/1234'
+          },
+          retrieval: {
+            jsondata: {
+              source: '?p=!EDSC-1000'
+            }
+          }
+        })
+
+        const link = enzymeWrapper.find('.secondary-toolbar__back')
+        link.simulate('click')
+
+        expect(props.onChangePath).toBeCalledTimes(1)
+        expect(props.onChangePath).toBeCalledWith('/projects/?p=!EDSC-1000')
+      })
     })
 
     test('should render the user dropdown', () => {

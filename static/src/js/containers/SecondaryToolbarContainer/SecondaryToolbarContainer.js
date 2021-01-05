@@ -24,6 +24,7 @@ export const mapStateToProps = state => ({
   portal: state.portal,
   projectCollectionIds: state.project.collections.allIds,
   savedProject: state.savedProject,
+  retrieval: state.retrieval,
   ursProfile: getUrsProfile(state)
 })
 
@@ -38,6 +39,7 @@ export const SecondaryToolbarContainer = (props) => {
     portal,
     projectCollectionIds,
     savedProject,
+    retrieval,
     ursProfile,
     onFetchContactInfo
   } = props
@@ -60,6 +62,7 @@ export const SecondaryToolbarContainer = (props) => {
       portal={portal}
       projectCollectionIds={projectCollectionIds}
       savedProject={savedProject}
+      retrieval={retrieval}
       ursProfile={ursProfile}
     />
   )
@@ -76,6 +79,7 @@ SecondaryToolbarContainer.propTypes = {
   portal: PropTypes.shape({}).isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
+  retrieval: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({}).isRequired
 }
 
