@@ -116,6 +116,7 @@ class SecondaryToolbar extends Component {
       projectCollectionIds,
       location,
       portal,
+      retrieval = {},
       onChangePath,
       ursProfile
     } = this.props
@@ -136,7 +137,7 @@ class SecondaryToolbar extends Component {
       ...params,
       p
     })
-    const backLink = (
+    const backToSearchLink = (
       <PortalLinkContainer
         type="button"
         className="secondary-toolbar__back"
@@ -150,6 +151,25 @@ class SecondaryToolbar extends Component {
         onClick={() => { onChangePath(`/search${newSearch}`) }}
       >
         Back to Search
+      </PortalLinkContainer>
+    )
+
+    const { jsondata = {} } = retrieval
+    const { source } = jsondata
+    const backToProjectLink = (
+      <PortalLinkContainer
+        type="button"
+        className="secondary-toolbar__back"
+        bootstrapVariant="light"
+        icon={FaArrowCircleLeft}
+        label="Back to Search"
+        to={{
+          pathname: '/projects',
+          search: source
+        }}
+        onClick={() => { onChangePath(`/projects/${source}`) }}
+      >
+        Back to Project
       </PortalLinkContainer>
     )
 
@@ -334,7 +354,10 @@ class SecondaryToolbar extends Component {
     return (
       <nav className="secondary-toolbar">
         {
-          isPath(location.pathname, ['/projects']) && backLink
+          isPath(location.pathname, ['/projects']) && backToSearchLink
+        }
+        {
+          pathStartsWith(location.pathname, ['/downloads/']) && backToProjectLink
         }
         <PortalFeatureContainer authentication>
           <>
@@ -363,6 +386,7 @@ SecondaryToolbar.propTypes = {
   onUpdateProjectName: PropTypes.func.isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  retrieval: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({}).isRequired
 }

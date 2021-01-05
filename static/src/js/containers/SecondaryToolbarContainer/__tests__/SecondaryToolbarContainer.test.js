@@ -18,6 +18,7 @@ function setup(overrideProps) {
     },
     projectCollectionIds: [],
     savedProject: {},
+    retrieval: {},
     onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),
     onChangePath: jest.fn(),
@@ -88,7 +89,8 @@ describe('mapStateToProps', () => {
           allIds: []
         }
       },
-      savedProject: {}
+      savedProject: {},
+      retrieval: {}
     }
 
     const expectedState = {
@@ -97,6 +99,7 @@ describe('mapStateToProps', () => {
       portal: {},
       projectCollectionIds: [],
       savedProject: {},
+      retrieval: {},
       ursProfile: {}
     }
 
