@@ -167,7 +167,7 @@ class SecondaryToolbar extends Component {
           pathname: '/projects',
           search: source
         }}
-        onClick={() => { onChangePath(`/projects/${source}`) }}
+        onClick={() => { onChangePath(`/projects${source}`) }}
       >
         Back to Project
       </PortalLinkContainer>
