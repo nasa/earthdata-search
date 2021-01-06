@@ -14,7 +14,7 @@ import {
   triggerViewAllFacets,
   updateViewAllFacets
 } from '../viewAllFacets'
-// import * as actions from '../viewAllFacets'
+
 import {
   COPY_CMR_FACETS_TO_VIEW_ALL,
   ERRORED_VIEW_ALL_FACETS,
@@ -24,8 +24,7 @@ import {
   UPDATE_VIEW_ALL_FACETS,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   UPDATE_COLLECTION_QUERY,
-  UPDATE_SELECTED_CMR_FACET,
-  UPDATE_AUTH
+  UPDATE_SELECTED_CMR_FACET
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -338,16 +337,12 @@ describe('getViewAllFacets', () => {
         payload: true
       })
       expect(storeActions[2]).toEqual({
-        type: UPDATE_AUTH,
-        payload: 'token'
-      })
-      expect(storeActions[3]).toEqual({
         type: LOADED_VIEW_ALL_FACETS,
         payload: {
           loaded: true
         }
       })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_VIEW_ALL_FACETS,
         payload: facetsPayload
       })

@@ -5,7 +5,6 @@ import {
   buildCollectionSearchParams,
   prepareCollectionParams
 } from '../util/collections'
-import { updateAuthTokenFromHeaders } from './authToken'
 import { handleError } from './errors'
 
 import {
@@ -195,8 +194,6 @@ export const getCollections = () => (dispatch, getState) => {
       }
 
       dispatch(finishCollectionsTimer())
-
-      dispatch(updateAuthTokenFromHeaders(headers))
 
       dispatch(updateCollectionMetadata(entry))
 

@@ -14,7 +14,6 @@ import {
   SUBMITTING_PROJECT,
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
-  UPDATE_AUTH,
   UPDATE_COLLECTION_METADATA
 } from '../../constants/actionTypes'
 
@@ -307,10 +306,6 @@ describe('getProjectCollections', () => {
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: UPDATE_AUTH,
-      payload: 'token'
-    })
-    expect(storeActions[1]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({

@@ -266,8 +266,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       const payload = []
 
       const {
-        data: responseData,
-        headers
+        data: responseData
       } = response
 
       const { data } = responseData
@@ -322,9 +321,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
 
         dispatch(actions.fetchDataQualitySummaries(conceptId))
       })
-
-      // A users authToken will come back with an authenticated request if a valid token was used
-      dispatch(actions.updateAuthTokenFromHeaders(headers))
 
       // Update metadata in the store
       dispatch(actions.updateCollectionMetadata(payload))

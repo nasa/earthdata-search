@@ -32,7 +32,6 @@ import {
   UPDATE_GRANULE_RESULTS,
   INITIALIZE_COLLECTION_GRANULES_QUERY
 } from '../constants/actionTypes'
-import { updateAuthTokenFromHeaders } from './authToken'
 import { mbr } from '../util/map/mbr'
 import { prepareGranuleAccessParams } from '../../../../sharedUtils/prepareGranuleAccessParams'
 import { toggleSpatialPolygonWarning } from './ui'
@@ -413,11 +412,9 @@ export const getSearchGranules = () => (dispatch, getState) => {
 
       dispatch(finishGranulesTimer(collectionId))
 
-      const { data, headers } = response
+      const { data } = response
       const { feed } = data
       const { entry } = feed
-
-      dispatch(updateAuthTokenFromHeaders(headers))
 
       dispatch(onGranulesLoaded({
         collectionId,
@@ -553,11 +550,9 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
         dispatch(finishProjectGranulesTimer(collectionId))
 
-        const { data, headers } = response
+        const { data } = response
         const { feed } = data
         const { entry } = feed
-
-        dispatch(updateAuthTokenFromHeaders(headers))
 
         dispatch(projectGranulesLoaded({
           collectionId,

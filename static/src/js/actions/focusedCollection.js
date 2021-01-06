@@ -164,8 +164,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       const payload = []
 
       const {
-        data: responseData,
-        headers
+        data: responseData
       } = response
 
       const { data } = responseData
@@ -220,7 +219,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         })
 
         // A users authToken will come back with an authenticated request if a valid token was used
-        dispatch(actions.updateAuthTokenFromHeaders(headers))
 
         // Update metadata in the store
         dispatch(actions.updateCollectionMetadata(payload))
@@ -302,14 +300,10 @@ export const getCollectionSubscriptions = collectionId => async (dispatch, getSt
       parseGraphQLError(response)
 
       const {
-        data: responseData,
-        headers
+        data: responseData
       } = response.data
 
       const { subscriptions } = responseData
-
-      // A users authToken will come back with an authenticated request if a valid token was used
-      dispatch(actions.updateAuthTokenFromHeaders(headers))
 
       dispatch({
         type: UPDATE_COLLECTION_SUBSCRIPTIONS,
