@@ -24,7 +24,6 @@ import {
   LOADING_COLLECTIONS,
   LOADING_FACETS,
   STARTED_COLLECTIONS_TIMER,
-  UPDATE_AUTH,
   UPDATE_COLLECTION_METADATA,
   UPDATE_COLLECTION_RESULTS,
   UPDATE_FACETS
@@ -250,16 +249,12 @@ describe('getCollections', () => {
       expect(storeActions[2]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
       expect(storeActions[3]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
       expect(storeActions[4]).toEqual({
-        type: UPDATE_AUTH,
-        payload: 'token'
-      })
-      expect(storeActions[5]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [{
           mockCollectionData: 'goes here'
         }]
       })
-      expect(storeActions[6]).toEqual({
+      expect(storeActions[5]).toEqual({
         type: ADD_MORE_COLLECTION_RESULTS,
         payload: {
           keyword: 'search keyword',
@@ -270,11 +265,11 @@ describe('getCollections', () => {
           hits: 1
         }
       })
-      expect(storeActions[7]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: LOADED_COLLECTIONS,
         payload: { loaded: true }
       })
-      expect(storeActions[8]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: LOADED_FACETS,
         payload: { loaded: true }
       })

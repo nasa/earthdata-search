@@ -11,8 +11,7 @@ import {
 } from '../timeline'
 import {
   UPDATE_TIMELINE_INTERVALS,
-  UPDATE_TIMELINE_QUERY,
-  UPDATE_AUTH
+  UPDATE_TIMELINE_QUERY
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -157,10 +156,6 @@ describe('getTimeline', () => {
       // Is updateTimelineIntervals called with the right payload
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
-        type: UPDATE_AUTH,
-        payload: 'token'
-      })
-      expect(storeActions[1]).toEqual({
         type: UPDATE_TIMELINE_INTERVALS,
         payload: {
           results: [{

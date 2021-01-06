@@ -99,9 +99,6 @@ describe('getFocusedGranule', () => {
             }
           })
 
-        const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
-        updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
-
         // mockStore with initialState
         const store = mockStore({
           authToken: '',
@@ -127,8 +124,6 @@ describe('getFocusedGranule', () => {
             ]
           })
         })
-
-        expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
       })
 
       describe('when the requested granule is cwic and a polygon search is active', () => {

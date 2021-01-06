@@ -119,9 +119,6 @@ describe('getFocusedCollection', () => {
         const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
         relevancyMock.mockImplementationOnce(() => jest.fn())
 
-        const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
-        updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
-
         const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
         getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
@@ -156,7 +153,6 @@ describe('getFocusedCollection', () => {
         })
 
         expect(relevancyMock).toHaveBeenCalledTimes(1)
-        expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
         expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
       })
 
@@ -186,9 +182,6 @@ describe('getFocusedCollection', () => {
 
           const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
           relevancyMock.mockImplementationOnce(() => jest.fn())
-
-          const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
-          updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
 
           const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
           getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
@@ -230,7 +223,6 @@ describe('getFocusedCollection', () => {
           })
 
           expect(relevancyMock).toHaveBeenCalledTimes(1)
-          expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
           expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
         })
       })
@@ -367,9 +359,6 @@ describe('getCollectionSubscriptions', () => {
           }
         })
 
-      const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
-      updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
-
       const store = mockStore({
         authToken: '',
         focusedCollection: 'C10000000000-EDSC',
@@ -407,8 +396,6 @@ describe('getCollectionSubscriptions', () => {
           }
         })
       })
-
-      expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -431,9 +418,6 @@ describe('getCollectionSubscriptions', () => {
             }
           }
         })
-
-      const updateAuthTokenFromHeadersMock = jest.spyOn(actions, 'updateAuthTokenFromHeaders')
-      updateAuthTokenFromHeadersMock.mockImplementationOnce(() => jest.fn())
 
       const store = mockStore({
         authToken: '',
@@ -471,8 +455,6 @@ describe('getCollectionSubscriptions', () => {
           }
         })
       })
-
-      expect(updateAuthTokenFromHeadersMock).toHaveBeenCalledTimes(1)
     })
   })
 

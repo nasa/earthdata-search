@@ -11,7 +11,6 @@ import {
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { prepareTimelineParams } from '../util/timeline'
-import { updateAuthTokenFromHeaders } from './authToken'
 
 export const updateTimelineIntervals = payload => ({
   type: UPDATE_TIMELINE_INTERVALS,
@@ -82,7 +81,6 @@ export const getTimeline = () => (dispatch, getState) => {
 
       payload.results = response.data
 
-      dispatch(updateAuthTokenFromHeaders(response.headers))
       dispatch(updateTimelineIntervals(payload))
     })
     .catch((error) => {

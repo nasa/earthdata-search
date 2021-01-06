@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import nock from 'nock'
 import jwt from 'jsonwebtoken'
 
-import { SET_PREFERENCES_IS_SUBMITTING, SET_PREFERENCES, UPDATE_AUTH } from '../../constants/actionTypes'
+import { SET_PREFERENCES_IS_SUBMITTING, SET_PREFERENCES } from '../../constants/actionTypes'
 
 import {
   setIsSubmitting,
@@ -100,14 +100,10 @@ describe('updatePreferences', () => {
         payload: true
       })
       expect(storeActions[1]).toEqual({
-        type: UPDATE_AUTH,
-        payload: 'token'
-      })
-      expect(storeActions[2]).toEqual({
         type: SET_PREFERENCES,
         payload: preferences
       })
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[2]).toEqual({
         type: SET_PREFERENCES_IS_SUBMITTING,
         payload: false
       })

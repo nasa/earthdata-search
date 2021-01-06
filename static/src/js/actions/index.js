@@ -40,8 +40,7 @@ import {
 } from './granules'
 import {
   logout,
-  updateAuthToken,
-  updateAuthTokenFromHeaders
+  updateAuthToken
 } from './authToken'
 import {
   changeTimelineQuery,
@@ -292,7 +291,6 @@ const actions = {
   updateAdminRetrievalsSortKey,
   updateAdvancedSearch,
   updateAuthToken,
-  updateAuthTokenFromHeaders,
   updateBrowserVersion,
   updateCmrFacet,
   updateCollectionMetadata,

@@ -3,7 +3,6 @@ import CollectionRequest from '../util/request/collectionRequest'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { prepareCMRFacetPayload } from '../util/facets'
 import { changeCmrFacet } from './facets'
-import { updateAuthTokenFromHeaders } from './authToken'
 
 import {
   ERRORED_VIEW_ALL_FACETS,
@@ -89,7 +88,6 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
       payload.facets = response.data.feed.facets.children || []
       payload.hits = parseInt(response.headers['cmr-hits'], 10)
 
-      dispatch(updateAuthTokenFromHeaders(response.headers))
       dispatch(onViewAllFacetsLoaded({
         loaded: true
       }))

@@ -28,7 +28,6 @@ import {
   STARTED_PROJECT_GRANULES_TIMER,
   TOGGLE_SPATIAL_POLYGON_WARNING,
   UNDO_EXCLUDE_GRANULE_ID,
-  UPDATE_AUTH,
   UPDATE_GRANULE_FILTERS,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_RESULTS,
@@ -223,17 +222,13 @@ describe('getSearchGranules', () => {
         payload: 'collectionId'
       })
       expect(storeActions[5]).toEqual({
-        type: UPDATE_AUTH,
-        payload: 'token'
-      })
-      expect(storeActions[6]).toEqual({
         type: LOADED_GRANULES,
         payload: {
           collectionId: 'collectionId',
           loaded: true
         }
       })
-      expect(storeActions[7]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [
           {
@@ -242,7 +237,7 @@ describe('getSearchGranules', () => {
           }
         ]
       })
-      expect(storeActions[8]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
@@ -581,17 +576,13 @@ describe('getProjectGranules', () => {
         payload: 'C10000000000-EDSC'
       })
       expect(storeActions[4]).toEqual({
-        type: UPDATE_AUTH,
-        payload: 'token'
-      })
-      expect(storeActions[5]).toEqual({
         type: PROJECT_GRANULES_LOADED,
         payload: {
           collectionId: 'C10000000000-EDSC',
           loaded: true
         }
       })
-      expect(storeActions[6]).toEqual({
+      expect(storeActions[5]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [
           {
@@ -600,7 +591,7 @@ describe('getProjectGranules', () => {
           }
         ]
       })
-      expect(storeActions[7]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: UPDATE_PROJECT_GRANULE_RESULTS,
         payload: {
           collectionId: 'C10000000000-EDSC',

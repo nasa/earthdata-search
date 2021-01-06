@@ -5,7 +5,6 @@ import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../constants/act
 import { addToast } from '../util/addToast'
 import { displayNotificationType } from '../constants/enums'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-import { updateAuthTokenFromHeaders } from './authToken'
 
 import PreferencesRequest from '../util/request/preferencesRequest'
 
@@ -46,10 +45,9 @@ export const updatePreferences = data => (dispatch, getState) => {
 
   const response = requestObject.update({ preferences })
     .then((response) => {
-      const { data, headers } = response
+      const { data } = response
       const { preferences } = data
 
-      dispatch(updateAuthTokenFromHeaders(headers))
       dispatch(setPreferences(preferences))
       dispatch(setIsSubmitting(false))
       addToast('Preferences saved!', {
