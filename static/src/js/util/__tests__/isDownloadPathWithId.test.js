@@ -1,21 +1,21 @@
-import { isDownloadPath } from '../isDownloadPath'
+import { isDownloadPathWithId } from '../isDownloadPathWithId'
 
-describe('isDownloadPath', () => {
+describe('isDownloadPathWithId', () => {
   describe('when passed a download path with a retrieval id', () => {
     test('returns true', () => {
-      expect(isDownloadPath('/downloads/1234')).toBeTruthy()
+      expect(isDownloadPathWithId('/downloads/1234')).toBeTruthy()
     })
   })
 
   describe('when no retrieval ID is provided', () => {
     test('returns false', () => {
-      expect(isDownloadPath('/downloads')).toEqual(false)
+      expect(isDownloadPathWithId('/downloads')).toEqual(false)
     })
   })
 
   describe('when the downloads path is not provided', () => {
     test('returns false', () => {
-      expect(isDownloadPath('/search')).toEqual(false)
+      expect(isDownloadPathWithId('/search')).toEqual(false)
     })
   })
 })

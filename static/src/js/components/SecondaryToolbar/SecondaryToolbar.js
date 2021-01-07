@@ -19,7 +19,7 @@ import {
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { isDownloadPath } from '../../util/isDownloadPath'
+import { isDownloadPathWithId } from '../../util/isDownloadPathWithId'
 import { isPath } from '../../util/isPath'
 import { locationPropType } from '../../util/propTypes/location'
 import { pathStartsWith } from '../../util/pathStartsWith'
@@ -358,7 +358,7 @@ class SecondaryToolbar extends Component {
           isPath(location.pathname, ['/projects']) && backToSearchLink
         }
         {
-          isDownloadPath(location.pathname) && backToProjectLink
+          isDownloadPathWithId(location.pathname) && backToProjectLink
         }
         <PortalFeatureContainer authentication>
           <>
