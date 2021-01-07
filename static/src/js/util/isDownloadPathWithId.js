@@ -3,10 +3,10 @@
  * @param {string} pathname - The pathname to check.
  * @return {boolean}
  */
-export const isDownloadPath = (pathname) => {
+export const isDownloadPathWithId = (pathname) => {
   const regex = new RegExp(/\/downloads\/\d+/)
 
   return !!pathname.match(regex)
 }
 
-export default isDownloadPath
+export default isDownloadPathWithId
