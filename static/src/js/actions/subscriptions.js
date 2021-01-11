@@ -335,7 +335,6 @@ export const updateSubscription = (
   } = state
 
   // Retrieve data from Redux using selectors
-  // const collectionsMetadata = getCollectionsMetadata(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
   const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
