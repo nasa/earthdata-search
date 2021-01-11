@@ -34,6 +34,24 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toBeCalledTimes(1)
   })
+
+  test('onCreateSubscription calls actions.updateSubscription', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'updateSubscription')
+
+    mapDispatchToProps(dispatch).onUpdateSubscription()
+
+    expect(spy).toBeCalledTimes(1)
+  })
+
+  test('onCreateSubscription calls actions.deleteSubscription', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'deleteSubscription')
+
+    mapDispatchToProps(dispatch).onDeleteSubscription()
+
+    expect(spy).toBeCalledTimes(1)
+  })
 })
 
 describe('mapStateToProps', () => {
