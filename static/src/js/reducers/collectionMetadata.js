@@ -2,8 +2,10 @@ import camelCaseKeys from 'camelcase-keys'
 
 import {
   RESTORE_FROM_URL,
+  DELETE_COLLECTION_SUBSCRIPTION,
   UPDATE_COLLECTION_METADATA,
-  UPDATE_COLLECTION_SUBSCRIPTIONS
+  UPDATE_COLLECTION_SUBSCRIPTIONS,
+  UPDATE_COLLECTION_SUBSCRIPTION
 } from '../constants/actionTypes'
 
 const initialState = {}
@@ -60,6 +62,61 @@ const collectionMetadataReducer = (state = initialState, action) => {
         [collectionId]: {
           ...collectionMetadata,
           subscriptions
+        }
+      }
+    }
+    case DELETE_COLLECTION_SUBSCRIPTION: {
+      const { payload } = action
+      const { collectionConceptId, conceptId } = payload
+
+      const collectionMetadata = state[collectionConceptId]
+      const { subscriptions: subscriptionsMetadata = {} } = collectionMetadata
+      const { items: currentSubscriptions = [], count } = subscriptionsMetadata
+
+      const newSubscriptionItems = currentSubscriptions.filter((subscription) => {
+        const { conceptId: subscriptionConceptId } = subscription
+        return subscriptionConceptId !== conceptId
+      })
+
+      return {
+        ...state,
+        [collectionConceptId]: {
+          ...collectionMetadata,
+          subscriptions: {
+            ...subscriptionsMetadata,
+            count: count - 1,
+            items: newSubscriptionItems
+          }
+        }
+      }
+    }
+    case UPDATE_COLLECTION_SUBSCRIPTION: {
+      const { payload } = action
+      const { collectionConceptId, conceptId, query } = payload
+
+      const collectionMetadata = state[collectionConceptId]
+      const { subscriptions: subscriptionsMetadata = {} } = collectionMetadata
+      const { items: currentSubscriptions = [] } = subscriptionsMetadata
+
+      const newSubscriptionItems = currentSubscriptions.map((subscription) => {
+        const { conceptId: subscriptionConceptId } = subscription
+        if (subscriptionConceptId === conceptId) {
+          return {
+            ...subscription,
+            query
+          }
+        }
+        return subscription
+      })
+
+      return {
+        ...state,
+        [collectionConceptId]: {
+          ...collectionMetadata,
+          subscriptions: {
+            ...subscriptionsMetadata,
+            items: newSubscriptionItems
+          }
         }
       }
     }

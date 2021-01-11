@@ -1,7 +1,9 @@
 import collectionMetadataReducer from '../collectionMetadata'
 import {
+  DELETE_COLLECTION_SUBSCRIPTION,
   RESTORE_FROM_URL,
   UPDATE_COLLECTION_METADATA,
+  UPDATE_COLLECTION_SUBSCRIPTION,
   UPDATE_COLLECTION_SUBSCRIPTIONS
 } from '../../constants/actionTypes'
 
@@ -48,6 +50,108 @@ describe('UPDATE_COLLECTION_SUBSCRIPTIONS', () => {
         subscriptions: {
           items: [
             'new items'
+          ]
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('DELETE_COLLECTION_SUBSCRIPTION', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: DELETE_COLLECTION_SUBSCRIPTION,
+      payload: {
+        collectionConceptId: 'collectionId',
+        conceptId: 'SUB-1'
+      }
+    }
+
+    const initial = {
+      collectionId: {
+        id: 'collectionId',
+        conceptId: 'collectionId',
+        subscriptions: {
+          count: 2,
+          items: [
+            {
+              conceptId: 'SUB-1'
+            },
+            {
+              conceptId: 'SUB-2'
+            }
+          ]
+        }
+      }
+    }
+
+    const expectedState = {
+      collectionId: {
+        id: 'collectionId',
+        conceptId: 'collectionId',
+        subscriptions: {
+          count: 1,
+          items: [
+            {
+              conceptId: 'SUB-2'
+            }
+          ]
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_COLLECTION_SUBSCRIPTION', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_COLLECTION_SUBSCRIPTION,
+      payload: {
+        collectionConceptId: 'collectionId',
+        conceptId: 'SUB-1',
+        query: 'query=updated'
+      }
+    }
+
+    const initial = {
+      collectionId: {
+        id: 'collectionId',
+        conceptId: 'collectionId',
+        subscriptions: {
+          count: 2,
+          items: [
+            {
+              conceptId: 'SUB-1',
+              query: 'query=one'
+            },
+            {
+              conceptId: 'SUB-2',
+              query: 'query=two'
+            }
+          ]
+        }
+      }
+    }
+
+    const expectedState = {
+      collectionId: {
+        id: 'collectionId',
+        conceptId: 'collectionId',
+        subscriptions: {
+          count: 2,
+          items: [
+            {
+              conceptId: 'SUB-1',
+              query: 'query=updated'
+            },
+            {
+              conceptId: 'SUB-2',
+              query: 'query=two'
+            }
           ]
         }
       }

@@ -10,9 +10,36 @@ import { humanizedGranuleQueryMap } from '../../util/humanizedGranuleQueryMap'
 import './SubscriptionsListItem.scss'
 
 export const SubscriptionsListItem = ({
-  subscription
+  hasExactlyMatchingGranuleQuery,
+  subscription,
+  onDeleteSubscription,
+  onUpdateSubscription
 }) => {
-  const { name, query, conceptId } = subscription
+  const {
+    collectionConceptId,
+    name,
+    nativeId,
+    query,
+    conceptId
+  } = subscription
+
+  const onHandleRemove = () => {
+    // eslint-disable-next-line no-alert
+    const confirmDeletion = window.confirm('Are you sure you want to remove this subscription? This action cannot be undone.')
+
+    if (confirmDeletion) {
+      onDeleteSubscription(conceptId, nativeId, collectionConceptId)
+    }
+  }
+
+  const onHandleUpdate = () => {
+    // eslint-disable-next-line no-alert
+    const confirmUpdate = window.confirm('Are you sure you want to update this subscription with your current search parameters?')
+
+    if (confirmUpdate) {
+      onUpdateSubscription(conceptId, nativeId, name)
+    }
+  }
 
   // TODO: Needs tests - EDSC-2923
   const parsedQuery = parse(query)
@@ -85,19 +112,18 @@ export const SubscriptionsListItem = ({
           className="subscriptions-list-item__action"
           bootstrapVariant="light"
           bootstrapSize="sm"
-          disabled
-          label="Edit Subscription"
-          onClick={() => console.log('Edit clicked')}
+          disabled={hasExactlyMatchingGranuleQuery}
+          label="Update Subscription"
+          onClick={() => onHandleUpdate()}
         >
-          Edit
+          Update
         </Button>
         <Button
           className="subscriptions-list-item__action"
           bootstrapVariant="danger"
           bootstrapSize="sm"
-          disabled
           label="Delete Subscription"
-          onClick={() => console.log('Delete clicked')}
+          onClick={() => onHandleRemove()}
         >
           Delete
         </Button>
@@ -107,6 +133,9 @@ export const SubscriptionsListItem = ({
 }
 
 SubscriptionsListItem.propTypes = {
+  hasExactlyMatchingGranuleQuery: PropTypes.bool.isRequired,
+  onDeleteSubscription: PropTypes.func.isRequired,
+  onUpdateSubscription: PropTypes.func.isRequired,
   subscription: PropTypes.shape({}).isRequired
 }
 

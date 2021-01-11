@@ -12,12 +12,16 @@ beforeAll(() => {
 
 function setup(overrideProps) {
   const props = {
+    hasExactlyMatchingGranuleQuery: false,
     subscription: {
-      collectionId: 'COLL-ID-1',
+      collectionConceptId: 'COLL-ID-1',
       conceptId: 'SUB1',
+      nativeId: 'SUB1-NATIVE-ID',
       name: 'Subscription 1',
       query: 'options[spatial][or]=true'
     },
+    onDeleteSubscription: jest.fn(),
+    onUpdateSubscription: jest.fn(),
     ...overrideProps
   }
 
@@ -47,22 +51,37 @@ describe('SubscriptionsBody component', () => {
       .toEqual('Options: {"spatial":{"or":"true"}}')
   })
 
-  describe('edit button', () => {
+  describe('update button', () => {
     test('should render', () => {
       const { enzymeWrapper } = setup()
       expect(enzymeWrapper.find('.subscriptions-list-item__action').at(0).props().label)
-        .toEqual('Edit Subscription')
+        .toEqual('Update Subscription')
     })
 
     describe('when clicked', () => {
-      test('should log to the console', () => {
-        const consoleMock = jest.fn()
-        console.log = consoleMock
+      describe('if the user denies the action', () => {
+        test('should do nothing', () => {
+          const confirmMock = jest.fn(() => false)
+          window.confirm = confirmMock
 
-        const { enzymeWrapper } = setup()
-        enzymeWrapper.find('.subscriptions-list-item__action').at(0).simulate('click')
+          const { enzymeWrapper, props } = setup()
+          enzymeWrapper.find('.subscriptions-list-item__action').at(0).simulate('click')
 
-        expect(consoleMock).toHaveBeenCalledTimes(1)
+          expect(props.onUpdateSubscription).toHaveBeenCalledTimes(0)
+        })
+      })
+
+      describe('if the user allows the action', () => {
+        test('should call onUpdateSubscription', () => {
+          const confirmMock = jest.fn(() => true)
+          window.confirm = confirmMock
+
+          const { enzymeWrapper, props } = setup()
+          enzymeWrapper.find('.subscriptions-list-item__action').at(0).simulate('click')
+
+          expect(props.onUpdateSubscription).toHaveBeenCalledTimes(1)
+          expect(props.onUpdateSubscription).toHaveBeenCalledWith('SUB1', 'SUB1-NATIVE-ID', 'Subscription 1')
+        })
       })
     })
   })
@@ -75,14 +94,29 @@ describe('SubscriptionsBody component', () => {
     })
 
     describe('when clicked', () => {
-      test('should log to the console', () => {
-        const consoleMock = jest.fn()
-        console.log = consoleMock
+      describe('if the user denies the action', () => {
+        test('should do nothing', () => {
+          const confirmMock = jest.fn(() => false)
+          window.confirm = confirmMock
 
-        const { enzymeWrapper } = setup()
-        enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
+          const { enzymeWrapper, props } = setup()
+          enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
 
-        expect(consoleMock).toHaveBeenCalledTimes(1)
+          expect(props.onDeleteSubscription).toHaveBeenCalledTimes(0)
+        })
+      })
+
+      describe('if the user allows the action', () => {
+        test('should call onDeleteSubscription', () => {
+          const confirmMock = jest.fn(() => true)
+          window.confirm = confirmMock
+
+          const { enzymeWrapper, props } = setup()
+          enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
+
+          expect(props.onDeleteSubscription).toHaveBeenCalledTimes(1)
+          expect(props.onDeleteSubscription).toHaveBeenCalledWith('SUB1', 'SUB1-NATIVE-ID', 'COLL-ID-1')
+        })
       })
     })
   })

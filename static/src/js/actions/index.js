@@ -173,8 +173,11 @@ import {
 } from './preferences'
 import {
   createSubscription,
+  getSubscriptions,
   deleteSubscription,
-  getSubscriptions
+  deleteCollectionSubscription,
+  updateSubscription,
+  updateCollectionSubscription
 } from './subscriptions'
 import { setUserFromJwt } from './user'
 
@@ -213,6 +216,7 @@ const actions = {
   collectionRelevancyMetrics,
   createSubscription,
   deleteAutocompleteValue,
+  deleteCollectionSubscription,
   deleteRetrieval,
   deleteSavedProject,
   deleteSubscription,
@@ -296,6 +300,7 @@ const actions = {
   updateBrowserVersion,
   updateCmrFacet,
   updateCollectionMetadata,
+  updateCollectionSubscription,
   updateFeatureFacet,
   updateFocusedCollection,
   updateFocusedCollectionGranuleFilters,
@@ -311,6 +316,7 @@ const actions = {
   updateSavedProject,
   updateShapefile,
   updateStore,
+  updateSubscription,
   viewCollectionDetails,
   viewCollectionGranules
 }

@@ -1,13 +1,15 @@
 import actions from './index'
 
 import {
+  DELETE_COLLECTION_SUBSCRIPTION,
   ERRORED_SUBSCRIPTIONS,
   FINISHED_SUBSCRIPTIONS_TIMER,
   LOADED_SUBSCRIPTIONS,
   LOADING_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
-  UPDATE_SUBSCRIPTION_RESULTS
+  UPDATE_SUBSCRIPTION_RESULTS,
+  UPDATE_COLLECTION_SUBSCRIPTION
 } from '../constants/actionTypes'
 
 import { addToast } from '../util/addToast'
@@ -20,6 +22,7 @@ import {
   getFocusedCollectionMetadata
 } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
+import { getUrsProfile } from '../selectors/contactInfo'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { prepareSubscriptionQuery } from '../util/subscriptions'
 
@@ -54,6 +57,16 @@ export const finishSubscriptionsTimer = () => ({
 
 export const removeSubscription = payload => ({
   type: REMOVE_SUBSCRIPTION,
+  payload
+})
+
+export const updateCollectionSubscription = payload => ({
+  type: UPDATE_COLLECTION_SUBSCRIPTION,
+  payload
+})
+
+export const deleteCollectionSubscription = payload => ({
+  type: DELETE_COLLECTION_SUBSCRIPTION,
   payload
 })
 
@@ -263,9 +276,13 @@ export const deleteSubscription = (
 
     dispatch(removeSubscription(conceptId))
 
-    // If the collection associated with the subscription has metadata Redux
+    // If the collection associated with the subscription has metadata Redux, remove the
+    // subscription from the store.
     if (Object.keys(collectionsMetadata).includes(collectionId)) {
-      dispatch(actions.getCollectionSubscriptions(collectionId))
+      dispatch(actions.deleteCollectionSubscription({
+        collectionConceptId: collectionId,
+        conceptId
+      }))
     }
 
     addToast('Subscription removed', {
@@ -278,6 +295,104 @@ export const deleteSubscription = (
       action: 'deleteSubscription',
       resource: 'subscription',
       verb: 'deleting',
+      graphRequestObject
+    }))
+  }
+
+  return response
+}
+
+/**
+ * Perform a subscriptions update.
+ */
+export const updateSubscription = (
+  conceptId,
+  nativeId,
+  subscriptionName
+) => async (dispatch, getState) => {
+  const state = getState()
+
+  const username = getUsername(state)
+  const ursProfile = getUrsProfile(state)
+  const collectionId = getFocusedCollectionId(state)
+  const collectionMetadata = getFocusedCollectionMetadata(state)
+
+  const { email_address: emailAddress } = ursProfile
+
+  // Extract granule search parameters from redux specific to the focused collection
+  const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
+
+  const granuleParams = prepareGranuleParams(
+    collectionMetadata,
+    extractedGranuleParams
+  )
+
+  // Prune granuleParams and remove unused keys to create the subscription query
+  const subscriptionQuery = prepareSubscriptionQuery(granuleParams)
+
+  const {
+    authToken
+  } = state
+
+  // Retrieve data from Redux using selectors
+  // const collectionsMetadata = getCollectionsMetadata(state)
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+
+  const graphQuery = `
+    mutation UpdateSubscription (
+      $collectionConceptId: String!
+      $emailAddress: String
+      $name: String!
+      $nativeId: String!
+      $subscriberId: String!
+      $query: String!
+    ) {
+      updateSubscription (
+        collectionConceptId: $collectionConceptId
+        emailAddress: $emailAddress
+        name: $name
+        nativeId: $nativeId
+        subscriberId: $subscriberId
+        query: $query
+      ) {
+          conceptId
+        }
+      }`
+
+  let response
+
+  try {
+    response = await graphRequestObject.search(graphQuery, {
+      collectionConceptId: collectionId,
+      emailAddress,
+      name: subscriptionName,
+      nativeId,
+      subscriberId: username,
+      query: subscriptionQuery
+    })
+
+    parseGraphQLError(response)
+
+    addToast('Subscription updated', {
+      appearance: 'success',
+      autoDismiss: true
+    })
+
+    dispatch(
+      actions.updateCollectionSubscription({
+        collectionConceptId: collectionId,
+        conceptId,
+        query: subscriptionQuery
+      })
+    )
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'updateSubscription',
+      resource: 'subscription',
+      verb: 'updating',
       graphRequestObject
     }))
   }
