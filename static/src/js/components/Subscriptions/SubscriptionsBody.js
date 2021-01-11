@@ -17,11 +17,14 @@ import './SubscriptionsBody.scss'
  * Renders SubscriptionsBody.
  * @param {Node} granuleQueryString - String representing the current granule query string.
  * @param {String} onCreateSubscription - Callback to create a subscription.
+ * @param {String} onDeleteSubscription - Callback to delete a subscription.
  * @param {Array} subscriptions - An array of subscriptions.
  */
 export const SubscriptionsBody = ({
   granuleQueryString,
   onCreateSubscription,
+  onDeleteSubscription,
+  onUpdateSubscription,
   subscriptions
 }) => {
   const currentQuery = parse(granuleQueryString)
@@ -35,6 +38,8 @@ export const SubscriptionsBody = ({
 
     return isEqual(currentQuery, parsedGranuleQuery)
   })
+
+  const hasExactlyMatchingGranuleQuery = exactlyMatchingGranuleQueries.length > 0
 
   return (
     <div className="subscriptions-body">
@@ -73,7 +78,7 @@ export const SubscriptionsBody = ({
               {
                 exactlyMatchingGranuleQueries.length > 0 && (
                   <p className="subscriptions-body__query-exists-warning">
-                    <EDSCIcon icon={FaBell} />
+                    <EDSCIcon className="subscriptions-body__query-exists-warning-icon" icon={FaBell} />
                     {' You’re subscribed to be notified when data matching the current search query becomes available.'}
                   </p>
                 )
@@ -100,10 +105,18 @@ export const SubscriptionsBody = ({
           <ul className="subscriptions-body__list">
             {
               subscriptions.map((subscription) => {
-                const { conceptId } = subscription
+                const {
+                  conceptId
+                } = subscription
 
                 return (
-                  <SubscriptionsListItem key={conceptId} subscription={subscription} />
+                  <SubscriptionsListItem
+                    key={conceptId}
+                    subscription={subscription}
+                    onUpdateSubscription={onUpdateSubscription}
+                    onDeleteSubscription={onDeleteSubscription}
+                    hasExactlyMatchingGranuleQuery={hasExactlyMatchingGranuleQuery}
+                  />
                 )
               })
             }
@@ -132,6 +145,8 @@ export const SubscriptionsBody = ({
 SubscriptionsBody.propTypes = {
   granuleQueryString: PropTypes.string.isRequired,
   onCreateSubscription: PropTypes.func.isRequired,
+  onDeleteSubscription: PropTypes.func.isRequired,
+  onUpdateSubscription: PropTypes.func.isRequired,
   subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 

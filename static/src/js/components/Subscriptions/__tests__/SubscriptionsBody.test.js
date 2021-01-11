@@ -17,6 +17,8 @@ function setup(overrideProps) {
   const props = {
     granuleQueryString: 'options[spatial][or]=true',
     onCreateSubscription: jest.fn(),
+    onDeleteSubscription: jest.fn(),
+    onUpdateSubscription: jest.fn(),
     subscriptions: [],
     ...overrideProps
   }
@@ -80,7 +82,7 @@ describe('SubscriptionsBody component', () => {
     })
 
     describe('when the collection has subscriptions', () => {
-      test('should render no children', () => {
+      test('should render children', () => {
         const subOne = {
           name: 'Subscription 1',
           conceptId: 'SUB-1'
@@ -104,6 +106,90 @@ describe('SubscriptionsBody component', () => {
           .toEqual(subOne)
         expect(enzymeWrapper.find(SubscriptionsListItem).at(1).props().subscription)
           .toEqual(subTwo)
+      })
+    })
+
+    describe('when the current query already exists', () => {
+      test('should show a message about the duplicate query', () => {
+        const subOne = {
+          name: 'Subscription 1',
+          conceptId: 'SUB-1',
+          query: 'query=one'
+        }
+
+        const subTwo = {
+          name: 'Subscription 2',
+          conceptId: 'SUB-2',
+          query: 'query=two'
+        }
+
+        const { enzymeWrapper } = setup({
+          granuleQueryString: 'query=one',
+          subscriptions: [
+            subOne,
+            subTwo
+          ]
+        })
+
+        expect(enzymeWrapper.find('.subscriptions-body__query-exists-warning').length).toEqual(1)
+      })
+
+      test('should render the update button as disabled', () => {
+        const subOne = {
+          name: 'Subscription 1',
+          conceptId: 'SUB-1',
+          query: 'query=one'
+        }
+
+        const subTwo = {
+          name: 'Subscription 2',
+          conceptId: 'SUB-2',
+          query: 'query=two'
+        }
+
+        const { enzymeWrapper } = setup({
+          granuleQueryString: 'query=one',
+          subscriptions: [
+            subOne,
+            subTwo
+          ]
+        })
+
+        const subscriptionItemOne = enzymeWrapper.find(SubscriptionsListItem).at(0)
+        const subscriptionItemTwo = enzymeWrapper.find(SubscriptionsListItem).at(0)
+
+        expect(subscriptionItemOne.props().hasExactlyMatchingGranuleQuery).toEqual(true)
+        expect(subscriptionItemTwo.props().hasExactlyMatchingGranuleQuery).toEqual(true)
+      })
+    })
+
+    describe('when a collection subscription can be updated', () => {
+      test('should render the update button as disabled', () => {
+        const subOne = {
+          name: 'Subscription 1',
+          conceptId: 'SUB-1',
+          query: 'query=one'
+        }
+
+        const subTwo = {
+          name: 'Subscription 2',
+          conceptId: 'SUB-2',
+          query: 'query=two'
+        }
+
+        const { enzymeWrapper } = setup({
+          granuleQueryString: 'query=unique',
+          subscriptions: [
+            subOne,
+            subTwo
+          ]
+        })
+
+        const subscriptionItemOne = enzymeWrapper.find(SubscriptionsListItem).at(0)
+        const subscriptionItemTwo = enzymeWrapper.find(SubscriptionsListItem).at(0)
+
+        expect(subscriptionItemOne.props().hasExactlyMatchingGranuleQuery).toEqual(false)
+        expect(subscriptionItemTwo.props().hasExactlyMatchingGranuleQuery).toEqual(false)
       })
     })
   })

@@ -12,7 +12,9 @@ function setup() {
   const props = {
     granuleQueryString: 'mock-string',
     subscriptions: [],
-    onCreateSubscription: jest.fn()
+    onCreateSubscription: jest.fn(),
+    onUpdateSubscription: jest.fn(),
+    onDeleteSubscription: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SubscriptionsBodyContainer {...props} />)
@@ -61,5 +63,9 @@ describe('SpatialSelectionContainer component', () => {
     expect(enzymeWrapper.find(SubscriptionsBody).props().subscriptions).toEqual(props.subscriptions)
     expect(enzymeWrapper.find(SubscriptionsBody).props().onCreateSubscription)
       .toEqual(props.onCreateSubscription)
+    expect(enzymeWrapper.find(SubscriptionsBody).props().onUpdateSubscription)
+      .toEqual(props.onUpdateSubscription)
+    expect(enzymeWrapper.find(SubscriptionsBody).props().onDeleteSubscription)
+      .toEqual(props.onDeleteSubscription)
   })
 })

@@ -139,7 +139,7 @@ export const SubscriptionsList = ({
                             onClick={() => onHandleRemove(conceptId, nativeId, collectionConceptId)}
                             variant="naked"
                             icon="times-circle"
-                            label="Delete Download"
+                            label="Delete Subscription"
                           />
                         </td>
                       </tr>

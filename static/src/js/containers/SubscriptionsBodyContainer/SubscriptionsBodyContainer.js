@@ -14,7 +14,15 @@ import SubscriptionsBody from '../../components/Subscriptions/SubscriptionsBody'
 
 export const mapDispatchToProps = dispatch => ({
   onCreateSubscription:
-    () => dispatch(actions.createSubscription())
+    () => dispatch(actions.createSubscription()),
+  onUpdateSubscription:
+    (conceptId, nativeId, subscriptionName) => dispatch(
+      actions.updateSubscription(conceptId, nativeId, subscriptionName)
+    ),
+  onDeleteSubscription:
+    (conceptId, nativeId, collectionConceptId) => dispatch(
+      actions.deleteSubscription(conceptId, nativeId, collectionConceptId)
+    )
 })
 
 export const mapStateToProps = state => ({
@@ -32,19 +40,25 @@ export const mapStateToProps = state => ({
 export const SubscriptionsBodyContainer = ({
   granuleQueryString,
   subscriptions,
-  onCreateSubscription
+  onCreateSubscription,
+  onDeleteSubscription,
+  onUpdateSubscription
 }) => (
   <SubscriptionsBody
     granuleQueryString={granuleQueryString}
     subscriptions={subscriptions}
     onCreateSubscription={onCreateSubscription}
+    onDeleteSubscription={onDeleteSubscription}
+    onUpdateSubscription={onUpdateSubscription}
   />
 )
 
 SubscriptionsBodyContainer.propTypes = {
   granuleQueryString: PropTypes.string.isRequired,
-  subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  onCreateSubscription: PropTypes.func.isRequired
+  onCreateSubscription: PropTypes.func.isRequired,
+  onDeleteSubscription: PropTypes.func.isRequired,
+  onUpdateSubscription: PropTypes.func.isRequired,
+  subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 
 export default withRouter(

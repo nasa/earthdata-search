@@ -13,6 +13,7 @@ import {
   onSubscriptionsErrored,
   onSubscriptionsLoaded,
   onSubscriptionsLoading,
+  updateSubscription,
   updateSubscriptionResults
 } from '../subscriptions'
 
@@ -24,6 +25,7 @@ import {
   LOADING_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
+  UPDATE_COLLECTION_SUBSCRIPTION,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../../constants/actionTypes'
 
@@ -583,7 +585,7 @@ describe('deleteSubscription', () => {
     }))
     const addToastMock = jest.spyOn(addToast, 'addToast')
 
-    const getCollectionSubscriptionsMock = jest.spyOn(actions, 'getCollectionSubscriptions').mockImplementationOnce(() => jest.fn())
+    const deleteCollectionSubscriptionMock = jest.spyOn(actions, 'deleteCollectionSubscription').mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
       .post(/graphql/)
@@ -620,7 +622,7 @@ describe('deleteSubscription', () => {
         payload: 'SUB1000-EDSC'
       })
 
-      expect(getCollectionSubscriptionsMock).toHaveBeenCalledTimes(1)
+      expect(deleteCollectionSubscriptionMock).toHaveBeenCalledTimes(1)
 
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription removed')
@@ -650,7 +652,21 @@ describe('deleteSubscription', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: 'token'
+      authToken: 'token',
+      metadata: {
+        collections: {
+          collectionId: {
+            subscriptions: {
+              items: [
+                {
+                  name: 'collectionId Subscription',
+                  conceptId: 'SUB1'
+                }
+              ]
+            }
+          }
+        }
+      }
     })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
@@ -659,6 +675,166 @@ describe('deleteSubscription', () => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
         action: 'deleteSubscription',
+        resource: 'subscription'
+      }))
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+    })
+  })
+})
+
+describe('updateSubscription', () => {
+  test('should call graphql and update the subscription', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com'
+    }))
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          updateSubscription: {
+            conceptId: 'SUB1000-EDSC'
+          }
+        }
+      })
+
+    const store = mockStore({
+      authToken: 'token',
+      earthdataEnvironment: 'prod',
+      metadata: {
+        collections: {
+          collectionId: {
+            subscriptions: {
+              items: [
+                {
+                  name: 'collectionId Subscription',
+                  conceptId: 'SUB1',
+                  query: 'query=original'
+                }
+              ]
+            }
+          }
+        }
+      },
+      project: {},
+      focusedCollection: 'collectionId',
+      query: {
+        collection: {
+          byId: {
+            collectionId: {
+              granules: {
+                browseOnly: true
+              }
+            }
+          },
+          temporal: {
+            startDate: '2020-01-01T00:00:00.000Z',
+            endDate: '2020-01-31T23:59:59.999Z',
+            isRecurring: false
+          },
+          spatial: {}
+        }
+      },
+      timeline: {
+        query: {}
+      },
+      user: {
+        username: 'testUser'
+      }
+    })
+
+    await store.dispatch(updateSubscription('SUB1000-EDSC', 'mock-guid', 'Collection Name')).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_COLLECTION_SUBSCRIPTION,
+        payload: {
+          collectionConceptId: 'collectionId',
+          conceptId: 'SUB1000-EDSC',
+          query: 'browseOnly=true&options%5Bspatial%5D%5Bor%5D=true&temporalString=2020-01-01T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z'
+        }
+      })
+
+      expect(addToastMock.mock.calls.length).toBe(1)
+      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
+      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
+      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+    })
+  })
+
+  test('calls handleError when graphql throws an http error', async () => {
+    const handleErrorMock = jest.spyOn(actions, 'handleError')
+
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com'
+    }))
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        errors: [{
+          message: 'Token does not exist'
+        }]
+      })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      authToken: 'token',
+      earthdataEnvironment: 'prod',
+      metadata: {
+        collections: {
+          collectionId: {
+            subscriptions: {
+              items: [
+                {
+                  name: 'collectionId Subscription',
+                  conceptId: 'SUB1',
+                  query: 'query=original'
+                }
+              ]
+            }
+          }
+        }
+      },
+      project: {},
+      focusedCollection: 'collectionId',
+      query: {
+        collection: {
+          byId: {
+            collectionId: {
+              granules: {
+                browseOnly: true
+              }
+            }
+          },
+          temporal: {
+            startDate: '2020-01-01T00:00:00.000Z',
+            endDate: '2020-01-31T23:59:59.999Z',
+            isRecurring: false
+          },
+          spatial: {}
+        }
+      },
+      timeline: {
+        query: {}
+      },
+      user: {
+        username: 'testUser'
+      }
+    })
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    await store.dispatch(updateSubscription()).then(() => {
+      expect(handleErrorMock).toHaveBeenCalledTimes(1)
+      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        action: 'updateSubscription',
         resource: 'subscription'
       }))
 
