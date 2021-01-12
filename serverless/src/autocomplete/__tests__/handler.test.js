@@ -1,7 +1,5 @@
 import nock from 'nock'
 
-import * as googleClient from '@googlemaps/google-maps-services-js'
-
 import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import * as doSearchRequest from '../../util/cmr/doSearchRequest'
 import * as getEchoToken from '../../util/urs/getEchoToken'
@@ -149,24 +147,22 @@ describe('autocomplete', () => {
       })
 
       test('correctly returns when no bounds are returned', async () => {
-        jest.spyOn(googleClient, 'Client').mockImplementationOnce(() => ({
-          geocode: jest.fn(() => ({
-            data: {
-              results: [
-                {
-                  formatted_address: 'Alexandria, VA, USA',
-                  geometry: {
-                    location: {
-                      lat: 38.8048355,
-                      lng: -77.0469214
-                    }
-                  },
-                  place_id: 'ChIJ8aukkz5NtokRLAHB24Ym9dc'
-                }
-              ]
-            }
-          }))
-        }))
+        nock(/maps.googleapis.com/)
+          .get(/geocode/)
+          .reply(200, {
+            results: [
+              {
+                formatted_address: 'Alexandria, VA, USA',
+                geometry: {
+                  location: {
+                    lat: 38.8048355,
+                    lng: -77.0469214
+                  }
+                },
+                place_id: 'ChIJ8aukkz5NtokRLAHB24Ym9dc'
+              }
+            ]
+          })
 
         const event = {
           body: JSON.stringify({
@@ -193,34 +189,32 @@ describe('autocomplete', () => {
       })
 
       test('correctly returns a full result', async () => {
-        jest.spyOn(googleClient, 'Client').mockImplementationOnce(() => ({
-          geocode: jest.fn(() => ({
-            data: {
-              results: [
-                {
-                  formatted_address: 'Alexandria, VA, USA',
-                  geometry: {
-                    bounds: {
-                      northeast: {
-                        lat: 38.845011,
-                        lng: -77.0372879
-                      },
-                      southwest: {
-                        lat: 38.785216,
-                        lng: -77.144359
-                      }
+        nock(/maps.googleapis.com/)
+          .get(/geocode/)
+          .reply(200, {
+            results: [
+              {
+                formatted_address: 'Alexandria, VA, USA',
+                geometry: {
+                  bounds: {
+                    northeast: {
+                      lat: 38.845011,
+                      lng: -77.0372879
                     },
-                    location: {
-                      lat: 38.8048355,
-                      lng: -77.0469214
+                    southwest: {
+                      lat: 38.785216,
+                      lng: -77.144359
                     }
                   },
-                  place_id: 'ChIJ8aukkz5NtokRLAHB24Ym9dc'
-                }
-              ]
-            }
-          }))
-        }))
+                  location: {
+                    lat: 38.8048355,
+                    lng: -77.0469214
+                  }
+                },
+                place_id: 'ChIJ8aukkz5NtokRLAHB24Ym9dc'
+              }
+            ]
+          })
 
         const event = {
           body: JSON.stringify({
