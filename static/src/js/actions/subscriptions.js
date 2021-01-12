@@ -276,7 +276,7 @@ export const deleteSubscription = (
 
     dispatch(removeSubscription(conceptId))
 
-    // If the collection associated with the subscription has metadata Redux, remove the
+    // If the collection associated with the subscription has metadata in Redux, remove the
     // subscription from the store.
     if (Object.keys(collectionsMetadata).includes(collectionId)) {
       dispatch(actions.deleteCollectionSubscription({
@@ -342,7 +342,6 @@ export const updateSubscription = (
   const graphQuery = `
     mutation UpdateSubscription (
       $collectionConceptId: String!
-      $emailAddress: String
       $name: String!
       $nativeId: String!
       $subscriberId: String!
@@ -350,7 +349,6 @@ export const updateSubscription = (
     ) {
       updateSubscription (
         collectionConceptId: $collectionConceptId
-        emailAddress: $emailAddress
         name: $name
         nativeId: $nativeId
         subscriberId: $subscriberId

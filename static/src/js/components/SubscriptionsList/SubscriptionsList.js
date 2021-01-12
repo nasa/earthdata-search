@@ -6,9 +6,14 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
+import {
+  FaEdit,
+  FaTimesCircle
+} from 'react-icons/fa'
 
 import Button from '../Button/Button'
-import { Spinner } from '../Spinner/Spinner'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import Spinner from '../Spinner/Spinner'
 
 import { humanizedGranuleQueryMap } from '../../util/humanizedGranuleQueryMap'
 
@@ -19,7 +24,8 @@ import './SubscriptionsList.scss'
  */
 export const SubscriptionsList = ({
   subscriptions = {},
-  onDeleteSubscription
+  onDeleteSubscription,
+  onFocusedCollectionChange
 }) => {
   const {
     byId: subscriptionsById,
@@ -134,11 +140,23 @@ export const SubscriptionsList = ({
                           </OverlayTrigger>
                         </td>
                         <td className="subscriptions-list-table__actions">
+                          <PortalLinkContainer
+                            className="subscriptions-list__button subscriptions-list__button--edit"
+                            type="button"
+                            to={{
+                              pathname: '/search/granules/subscriptions',
+                              search: `?p=${collectionConceptId}`
+                            }}
+                            onClick={() => onFocusedCollectionChange(collectionConceptId)}
+                            variant="naked"
+                            icon={FaEdit}
+                            label="Delete Subscription"
+                          />
                           <Button
                             className="subscriptions-list__button subscriptions-list__button--remove"
                             onClick={() => onHandleRemove(conceptId, nativeId, collectionConceptId)}
                             variant="naked"
-                            icon="times-circle"
+                            icon={FaTimesCircle}
                             label="Delete Subscription"
                           />
                         </td>
@@ -159,7 +177,8 @@ export const SubscriptionsList = ({
 
 SubscriptionsList.propTypes = {
   subscriptions: PropTypes.shape({}).isRequired,
-  onDeleteSubscription: PropTypes.func.isRequired
+  onDeleteSubscription: PropTypes.func.isRequired,
+  onFocusedCollectionChange: PropTypes.func.isRequired
 }
 
 export default SubscriptionsList
