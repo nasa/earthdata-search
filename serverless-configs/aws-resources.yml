@@ -5,11 +5,13 @@ Resources:
     Properties:
       MessageRetentionPeriod: 345600 # Default value, leaving for visibility
       VisibilityTimeout: 300
+      ReceiveMessageWaitTimeSeconds: 20
 
   TagProcessingQueue:
     Type: 'AWS::SQS::Queue'
     Properties:
       VisibilityTimeout: 300
+      ReceiveMessageWaitTimeSeconds: 20
 
   LegacyServicesOrderQueue:
     Type: 'AWS::SQS::Queue'

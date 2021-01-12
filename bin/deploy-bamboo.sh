@@ -43,14 +43,23 @@ EOF
 
 cat <<EOF > .dockerignore
 node_modules
+.DS_Store
+.git
+.github
 .serverless
+.webpack
+coverage
+cypress
+dist
+node_modules
+tmp
 EOF
 
 cat <<EOF > Dockerfile
 FROM node:12.16
 COPY . /build
 WORKDIR /build
-RUN npm ci && npm install -g serverless@1.51.0 && npm run build
+RUN npm ci --production && npm run build
 EOF
 
 dockerTag=edsc-$bamboo_STAGE_NAME
@@ -60,6 +69,7 @@ docker build -t $dockerTag .
 dockerRun() {
     docker run \
         -e "NODE_ENV=production" \
+        -e "NODE_OPTIONS=--max_old_space_size=4096" \
         -e "AWS_ACCESS_KEY_ID=$bamboo_AWS_ACCESS_KEY_ID" \
         -e "AWS_SECRET_ACCESS_KEY=$bamboo_AWS_SECRET_ACCESS_KEY" \
         -e "CLOUDFRONT_BUCKET_NAME=$bamboo_CLOUDFRONT_BUCKET_NAME" \
@@ -83,16 +93,16 @@ stageOpts="--stage $bamboo_STAGE_NAME"
 
 # Deploy AWS Infrastructure Resources
 echo 'Deploying AWS Infrastructure Resources...'
-dockerRun serverless deploy $stageOpts --config serverless-infrastructure.yml
+dockerRun npx serverless deploy $stageOpts --config serverless-infrastructure.yml
 
 # Deploy AWS Application Resources
 echo 'Deploying AWS Application Resources...'
-dockerRun serverless deploy $stageOpts
+dockerRun npx serverless deploy $stageOpts
 
 # Migrate the database
 echo 'Migrating the database...'
-dockerRun serverless invoke $stageOpts --function migrateDatabase
+dockerRun npx serverless invoke $stageOpts --function migrateDatabase
 
 # Deploy static assets
 echo 'Deploying static assets to S3...'
-dockerRun serverless client deploy $stageOpts --no-confirm
+dockerRun npx serverless client deploy $stageOpts --no-confirm

@@ -10,15 +10,12 @@
           rules:
             - suffix: .gz
             - prefix:
-                Fn::Join: [
-                  "/", [
-                    "cloudfront/AWSLogs",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    "${self:provider.region}/search_${self:provider.stage}_api/"
-                  ]
-                ]
+                'Fn::Join':
+                  - '/'
+                  - - 'cloudfront/AWSLogs'
+                    - Ref: 'AWS::AccountId'
+                    - ${self:provider.region}
+                    - 'search_${self:provider.stage}_api/'
       - s3:
           bucket: ${env:CLOUDFRONT_BUCKET_NAME}
           event: s3:ObjectCreated:*
@@ -26,16 +23,12 @@
           rules:
             - suffix: .gz
             - prefix:
-                Fn::Join: [
-                  "/", [
-                    "cloudfront/AWSLogs",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    "${self:provider.region}/search_${self:provider.stage}_s3/"
-                  ]
-                ]
-
+                'Fn::Join':
+                  - '/'
+                  - - 'cloudfront/AWSLogs'
+                    - Ref: 'AWS::AccountId'
+                    - ${self:provider.region}
+                    - 'search_${self:provider.stage}_s3/'
   #
   # Standalone functions
   #
@@ -71,7 +64,6 @@
   processColorMap:
     handler: serverless/src/processColorMap/handler.default
     timeout: 300
-    receiveMessageWaitTimeSeconds: 30
     reservedConcurrency: 25
     events:
       - sqs:
@@ -83,7 +75,6 @@
   processTag:
     handler: serverless/src/processTag/handler.default
     timeout: 300
-    receiveMessageWaitTimeSeconds: 30
     reservedConcurrency: 25
     events:
       - sqs:
@@ -333,17 +324,14 @@
   edlOptionalAuthorizer:
     handler: serverless/src/edlOptionalAuthorizer/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
-    cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
 
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
-    cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
 
   edlAdminAuthorizer:
     handler: serverless/src/edlAdminAuthorizer/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
-    cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
 
   #
   # EDL Authenticated API Gateway Endpoints

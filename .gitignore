@@ -1,8 +1,10 @@
 # Project build files
+.dockerignore
 .DS_Store
 .serverless
 coverage
 dist
+Dockerfile
 node_modules
 secret.config.json
 tmp
