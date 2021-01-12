@@ -98,4 +98,8 @@
     list-style: none;
     overflow-y: scroll
   }
+
+  &__empty-list-item  {
+    vertical-align: baseline;
+  }
 }

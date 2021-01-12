@@ -125,6 +125,7 @@ export const SubscriptionsBody = ({
                 <EmptyListItem>
                   {'No subscriptions exist for this collection. Use filters to define your query and '}
                   <Button
+                    className="subscriptions-body__empty-list-item"
                     bootstrapVariant="link"
                     label="Create New Subscription"
                     variant="link"

@@ -15,7 +15,7 @@
 
   &--link {
     padding: 0;
-    vertical-align: middle;
+    vertical-align: baseline;
     border: 0;
     line-height: 1em;
   }
@@ -28,8 +28,8 @@
     align-items: center;
 
     .button--link & {
-      vertical-align: middle;
-      line-height: 1em;
+      vertical-align: baseline;
+      line-height: 1;
     }
 
     .button--svg & {

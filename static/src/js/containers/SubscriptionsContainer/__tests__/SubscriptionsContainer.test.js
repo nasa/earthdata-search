@@ -30,7 +30,8 @@ function setup() {
       loadTime: 1265
     },
     onDeleteSubscription: jest.fn(),
-    onFetchSubscriptions: jest.fn()
+    onFetchSubscriptions: jest.fn(),
+    onFocusedCollectionChange: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SubscriptionsContainer {...props} />)
@@ -50,6 +51,16 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('conceptId', 'nativeId')
+  })
+
+  test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeFocusedCollection')
+
+    mapDispatchToProps(dispatch).onFocusedCollectionChange('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
   })
 
   test('onFetchSubscriptions calls actions.getSubscriptions', () => {

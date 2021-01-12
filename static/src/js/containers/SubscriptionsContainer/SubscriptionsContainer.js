@@ -16,7 +16,9 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
   onDeleteSubscription:
     (conceptId, nativeId) => dispatch(actions.deleteSubscription(conceptId, nativeId)),
-  onFetchSubscriptions: () => dispatch(actions.getSubscriptions())
+  onFetchSubscriptions: () => dispatch(actions.getSubscriptions()),
+  onFocusedCollectionChange:
+    collectionId => dispatch(actions.changeFocusedCollection(collectionId))
 })
 
 export class SubscriptionsContainer extends Component {
@@ -31,13 +33,15 @@ export class SubscriptionsContainer extends Component {
   render() {
     const {
       subscriptions,
-      onDeleteSubscription
+      onDeleteSubscription,
+      onFocusedCollectionChange
     } = this.props
 
     return (
       <SubscriptionsList
         subscriptions={subscriptions}
         onDeleteSubscription={onDeleteSubscription}
+        onFocusedCollectionChange={onFocusedCollectionChange}
       />
     )
   }
@@ -46,7 +50,8 @@ export class SubscriptionsContainer extends Component {
 SubscriptionsContainer.propTypes = {
   subscriptions: PropTypes.shape({}).isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
-  onFetchSubscriptions: PropTypes.func.isRequired
+  onFetchSubscriptions: PropTypes.func.isRequired,
+  onFocusedCollectionChange: PropTypes.func.isRequired
 }
 
 export default withRouter(
