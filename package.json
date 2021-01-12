@@ -35,7 +35,6 @@
   },
   "devDependencies": {
     "@welldone-software/why-did-you-render": "^3.2.1",
-    "aws-sdk": "^2.448.0",
     "babel-jest": "^24.1.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
@@ -78,6 +77,7 @@
     "ajv": "^6.12.3",
     "array-foreach-async": "^1.0.1",
     "autoprefixer": "^9.6.1",
+    "aws-sdk": "^2.448.0",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
     "babel-eslint": "^10.0.1",
