@@ -22,7 +22,6 @@ import {
   getFocusedCollectionMetadata
 } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
-import { getUrsProfile } from '../selectors/contactInfo'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { prepareSubscriptionQuery } from '../util/subscriptions'
 
