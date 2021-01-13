@@ -35,6 +35,8 @@ export const mapStateToProps = state => ({
  * Renders SubscriptionsBodyContainer.
  * @param {Node} granuleQueryString - String representing the current granule query string.
  * @param {String} onCreateSubscription - Callback to create a subscription.
+ * @param {String} onUpdateSubscription - Callback to update a subscription.
+ * @param {String} onDeleteSubscription - Callback to delete a subscription.
  * @param {Array} subscriptions - An array of subscriptions.
  */
 export const SubscriptionsBodyContainer = ({
