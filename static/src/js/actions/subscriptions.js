@@ -313,11 +313,8 @@ export const updateSubscription = (
   const state = getState()
 
   const username = getUsername(state)
-  const ursProfile = getUrsProfile(state)
   const collectionId = getFocusedCollectionId(state)
   const collectionMetadata = getFocusedCollectionMetadata(state)
-
-  const { email_address: emailAddress } = ursProfile
 
   // Extract granule search parameters from redux specific to the focused collection
   const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
@@ -363,7 +360,6 @@ export const updateSubscription = (
   try {
     response = await graphRequestObject.search(graphQuery, {
       collectionConceptId: collectionId,
-      emailAddress,
       name: subscriptionName,
       nativeId,
       subscriberId: username,
