@@ -322,7 +322,9 @@ class SpatialDisplay extends Component {
 
     let errorMessage = ''
 
-    const regex = new RegExp(`^(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}}),?\\s?(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}})$`)
+    // Checks if the coordinates are two positive or negitive numbers separated by a comma,
+    // each number optionally followed by up to defaultSpatialDecimalSize decimal points
+    const regex = new RegExp(`^(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}}),\\s?(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}})$`)
     const validCoordinates = coordinates.trim().match(regex)
 
     if (validCoordinates == null) {
@@ -416,6 +418,8 @@ class SpatialDisplay extends Component {
    */
   trimCoordinate(coordinateString) {
     const coordinates = coordinateString.replace(/\s/g, '').split(',').map((coordinate) => {
+      // Checks if the coordinate is a positive or negitive number,
+      // optionally followed by up to defaultSpatialDecimalSize decimal points
       const regex = new RegExp(`^(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}})`)
 
       const matchedCoordinate = coordinate.match(regex)
