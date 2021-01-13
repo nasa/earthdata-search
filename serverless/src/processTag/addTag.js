@@ -46,6 +46,7 @@ export const addTag = async ({
         url: `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
         headers: {
           'Client-Id': getClientId().background,
+          'Content-Type': 'application/x-www-form-urlencoded',
           'Echo-Token': cmrToken
         },
         data: searchCriteria
