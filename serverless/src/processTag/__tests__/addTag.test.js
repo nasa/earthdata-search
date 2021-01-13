@@ -13,6 +13,7 @@ beforeEach(() => {
 describe('addTag', () => {
   test('correctly calls cmr endpoint when no tag data existed', async () => {
     nock(/example/)
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
         short_name: 'MIL3MLS'
