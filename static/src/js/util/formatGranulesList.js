@@ -42,7 +42,6 @@ export const formatGranulesList = ({
       id,
       links,
       onlineAccessFlag,
-      originalFormat,
       producerGranuleId,
       thumbnail: granuleThumbnail,
       title
@@ -84,7 +83,6 @@ export const formatGranulesList = ({
       links,
       onlineAccessFlag,
       original,
-      originalFormat,
       temporal,
       thumbnail,
       timeEnd,
