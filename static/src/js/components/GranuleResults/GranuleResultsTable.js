@@ -98,15 +98,6 @@ export const GranuleResultsTable = ({
       }
     },
     {
-      Header: 'Orig. Format',
-      Cell,
-      accessor: 'originalFormat',
-      width: '100',
-      customProps: {
-        centerContent: true
-      }
-    },
-    {
       Header: 'Day/Night',
       Cell,
       accessor: 'dayNightFlag',

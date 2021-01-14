@@ -63,10 +63,6 @@ describe('GranuleResultsTable component', () => {
       accessor: 'timeEnd'
     }))
     expect(columns[4]).toEqual(expect.objectContaining({
-      Header: 'Orig. Format',
-      accessor: 'originalFormat'
-    }))
-    expect(columns[5]).toEqual(expect.objectContaining({
       Header: 'Day/Night',
       accessor: 'dayNightFlag'
     }))
