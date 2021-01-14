@@ -3,7 +3,6 @@ Resources:
   ColorMapsProcessingQueue:
     Type: 'AWS::SQS::Queue'
     Properties:
-      MessageRetentionPeriod: 345600 # Default value, leaving for visibility
       VisibilityTimeout: 300
       ReceiveMessageWaitTimeSeconds: 20
 
@@ -12,6 +11,17 @@ Resources:
     Properties:
       VisibilityTimeout: 300
       ReceiveMessageWaitTimeSeconds: 20
+      RedrivePolicy:
+        deadLetterTargetArn:
+          Fn::GetAtt:
+            - TagProcessingDeadLetterQueue
+            - Arn
+
+  TagProcessingDeadLetterQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: ${self:custom.siteName}-TagProcessingDeadLetterQueue
+      MessageRetentionPeriod: 1209600
 
   LegacyServicesOrderQueue:
     Type: 'AWS::SQS::Queue'
@@ -68,6 +78,7 @@ Resources:
     Type: 'AWS::SQS::Queue'
     Properties:
       VisibilityTimeout: 3600
+      ReceiveMessageWaitTimeSeconds: 20
       RedrivePolicy:
         deadLetterTargetArn:
           Fn::GetAtt:
