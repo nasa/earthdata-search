@@ -11,6 +11,7 @@ import {
   FaInfoCircle,
   FaList,
   FaMap,
+  FaQuestionCircle,
   FaTable
 } from 'react-icons/fa'
 
@@ -391,7 +392,7 @@ class SearchPanels extends PureComponent {
                     onClick={() => onToggleAboutCwicModal(true)}
                     variant="link"
                     bootstrapVariant="link"
-                    icon="question-circle"
+                    icon={FaQuestionCircle}
                     label="More details"
                   >
                     More Details

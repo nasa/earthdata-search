@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Tab } from 'react-bootstrap'
 import { upperFirst } from 'lodash'
+import { FaChevronUp, FaChevronDown } from 'react-icons/fa'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { getStateFromOrderStatus, aggregatedOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
@@ -616,7 +617,7 @@ export class OrderStatusItem extends PureComponent {
             <Button
               className="order-status-item__button"
               type="icon"
-              icon={opened ? 'FaChevronUp' : 'FaChevronDown'}
+              icon={opened ? FaChevronUp : FaChevronDown}
               label={opened ? 'Close details' : 'Show details'}
               title={opened ? 'Close details' : 'Show details'}
               onClick={this.onOpenClick}
