@@ -15,9 +15,6 @@ const processTag = async (event, context) => {
 
   const { Records: sqsRecords = [] } = event
 
-  console.log('Received payload:')
-  console.log(JSON.stringify(event.Records, null, 4))
-
   if (sqsRecords.length === 0) return
 
   console.log(`Processing ${sqsRecords.length} tag(s)`)

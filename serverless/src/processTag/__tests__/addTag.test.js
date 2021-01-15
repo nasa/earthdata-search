@@ -31,6 +31,7 @@ describe('addTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
         {
           'concept-id': 'C123456789-EDSC',
@@ -56,6 +57,7 @@ describe('addTag', () => {
   test('correctly calls cmr endpoint when the tag is not already associated with the collection', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
         short_name: 'MIL3MLS'
       })
@@ -69,6 +71,7 @@ describe('addTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
         {
           'concept-id': 'C123456789-EDSC',
@@ -94,6 +97,7 @@ describe('addTag', () => {
   test('correctly calls cmr endpoint when the tag data already exists', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
         short_name: 'MIL3MLS'
       })
@@ -114,6 +118,7 @@ describe('addTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
         {
           'concept-id': 'C123456789-EDSC',
@@ -139,6 +144,7 @@ describe('addTag', () => {
   test('correctly calls cmr endpoint when new tag data is provided', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
         short_name: 'MIL3MLS'
       })
@@ -159,6 +165,7 @@ describe('addTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
         {
           'concept-id': 'C123456789-EDSC',
@@ -186,6 +193,7 @@ describe('addTag', () => {
   test('correctly calls cmr endpoint when append is set to false', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
         short_name: 'MIL3MLS'
       })
@@ -206,6 +214,7 @@ describe('addTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
         {
           'concept-id': 'C123456789-EDSC',
@@ -231,6 +240,7 @@ describe('addTag', () => {
   test('correctly calls cmr endpoint when requireGranules is set to true (and append is set to true)', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true&has_granules=true', {
         short_name: 'MIL3MLS'
       })
@@ -251,6 +261,7 @@ describe('addTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
         {
           'concept-id': 'C123456789-EDSC',
@@ -278,6 +289,7 @@ describe('addTag', () => {
   test('correctly calls cmr endpoint when no tag data is provided', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations\/by_query/, JSON.stringify({
         short_name: 'MIL3MLS'
       }))
@@ -305,6 +317,7 @@ describe('addTag', () => {
   test('correctly calls cmr endpoint when no tag data is provided but granules are required', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true&has_granules=true', {
         short_name: 'MIL3MLS'
       })
@@ -325,6 +338,7 @@ describe('addTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
         {
           'concept-id': 'C123456789-EDSC'
@@ -345,6 +359,7 @@ describe('addTag', () => {
   test('does not call the cmr endpoint when tag data is provided but an error is returned from the collection search endpoint', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
         short_name: 'MIL3MLS'
       })
@@ -367,6 +382,7 @@ describe('addTag', () => {
   test('does not call the cmr endpoint when tag data is provided but an error is returned from the collection search endpoint', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
         short_name: 'MIL3MLS'
       })
@@ -387,6 +403,7 @@ describe('addTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
         {
           'concept-id': 'C123456789-EDSC',
@@ -416,6 +433,7 @@ describe('addTag', () => {
   test('does not call the cmr endpoint when tag data is provided but no collections are returned from the collection search endpoint', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post('/search/collections.json?include_tags=edsc.extra.gibs&include_has_granules=true', {
         short_name: 'MIL3MLS'
       })
@@ -440,6 +458,7 @@ describe('addTag', () => {
   test('correctly calls cmr endpoint when no tag data is provided', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .post(/search\/tags\/edsc\.extra\.gibs\/associations\/by_query/, JSON.stringify({
         short_name: 'MIL3MLS'
       }))

@@ -105,6 +105,7 @@ export const addTag = async ({
         url: addTagUrl,
         headers: {
           'Client-Id': getClientId().background,
+          'Content-Type': 'application/x-www-form-urlencoded',
           'Echo-Token': cmrToken
         },
         data: castArray(associationData)
@@ -135,6 +136,7 @@ export const addTag = async ({
       url: tagRemovalUrl,
       headers: {
         'Client-Id': getClientId().background,
+        'Content-Type': 'application/x-www-form-urlencoded',
         'Echo-Token': cmrToken
       },
       data: searchCriteria

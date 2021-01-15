@@ -15,6 +15,7 @@ describe('removeTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .delete(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify({ short_name: 'MIL3MLS' }))
       .reply(200)
 
@@ -33,6 +34,7 @@ describe('removeTag', () => {
 
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
       .delete(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify({ short_name: 'MIL3MLS' }))
       .reply(500)
 
