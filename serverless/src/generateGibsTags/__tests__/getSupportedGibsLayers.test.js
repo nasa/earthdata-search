@@ -1,4 +1,5 @@
 import nock from 'nock'
+
 import { gibsResponse, capabilitiesResponse } from './mocks'
 import { getSupportedGibsLayers } from '../getSupportedGibsLayers'
 
