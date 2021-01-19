@@ -1,11 +1,14 @@
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
+
 import { groupBy, omit } from 'lodash'
-import { getSqsConfig } from '../util/aws/getSqsConfig'
-import { tagName } from '../../../sharedUtils/tags'
+
 import { constructLayerTagData } from './constructLayerTagData'
-import { getSupportedGibsLayers } from './getSupportedGibsLayers'
+import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getSqsConfig } from '../util/aws/getSqsConfig'
+import { getSupportedGibsLayers } from './getSupportedGibsLayers'
+import { tagName } from '../../../sharedUtils/tags'
 
 // AWS SQS adapter
 let sqs
@@ -25,7 +28,12 @@ const generateGibsTags = async (event, context) => {
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const supportedGibsLayers = await getSupportedGibsLayers()
+  // Prevent merging custom products in non-production deployments
+  let mergeCustomProducts = false
+  if (deployedEnvironment() === 'prod') {
+    mergeCustomProducts = true
+  }
+  const supportedGibsLayers = await getSupportedGibsLayers(mergeCustomProducts)
 
   const layerTagData = []
 
