@@ -150,7 +150,7 @@ export const SubscriptionsList = ({
                             onClick={() => onFocusedCollectionChange(collectionConceptId)}
                             variant="naked"
                             icon={FaEdit}
-                            label="Delete Subscription"
+                            label="Edit Subscription"
                           />
                           <Button
                             className="subscriptions-list__button subscriptions-list__button--remove"
