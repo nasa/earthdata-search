@@ -5,7 +5,7 @@
     "link": "https://podaac.jpl.nasa.gov",
     "title": "PO.DAAC Home"
   },
-  "org": "PO.DAAC",
+  "org": "PO.DAAC Cloud",
   "pageTitle": "PO.DAAC Cloud",
   "parentConfig": "edsc",
   "query": {
