@@ -18,7 +18,7 @@ export const DataQualitySummary = ({
         className="data-quality-summary__panel"
         header={(
           <>
-            <EDSCIcon icon={FaExclamationCircle} />
+            <EDSCIcon icon={FaExclamationCircle} className="data-quality-summary__icon" />
             {' Important data quality information'}
           </>
         )}

@@ -1,4 +1,7 @@
 .more-actions-dropdown {
+  display: flex;
+  align-items: center;
+
   &__toggle {
     &:hover,
     &:focus {
@@ -8,5 +11,11 @@
 
   &__menu {
     box-shadow: $box-shadow;
+  }
+
+  &__dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
