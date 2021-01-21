@@ -62,7 +62,7 @@ export const GranuleResultsDataLinksButton = ({
         <Dropdown.Toggle as={CustomDataLinksToggle} />
         {
           ReactDOM.createPortal(
-            <Dropdown.Menu>
+            <Dropdown.Menu className="granule-results-data-links-button__menu">
               {
                 dataLinks.map((dataLink, i) => {
                   const key = `data_link_${i}`

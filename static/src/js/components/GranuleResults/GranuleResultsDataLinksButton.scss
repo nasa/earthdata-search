@@ -8,9 +8,9 @@
       color: $color__black--200;
     }
   }
-}
 
-.dropdown-menu {
-  max-height: 15.825rem;
-  overflow-y: scroll;
+  &__menu {
+    max-height: 15.825rem;
+    overflow-y: scroll !important; // !important is needed here to override the !important included in the bootstrap css for .dropdown-menu
+  }
 }
