@@ -4,4 +4,15 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  &__button-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__button-secondary-icon {
+    width: 0.825rem;
+    height: 0.825rem;
+  }
 }

@@ -21,6 +21,11 @@
       }
     }
 
+    .collapse-panel__button-primary {
+      display: flex;
+      align-items: center;
+    }
+
     .collapse-panel__button-secondary {
       color: rgba($color__black, 0.4)
     }
@@ -44,5 +49,11 @@
         max-height: 400px;
       }
     }
+  }
+
+  &__icon {
+    margin-right: 0.5rem;
+    color: rgba($color__black, 0.75);    width: 0.725rem;
+    height: 0.725rem;
   }
 }
