@@ -6,7 +6,7 @@
     "title": "PO.DAAC Home"
   },
   "org": "PO.DAAC",
-  "pageTitle": "PO.DAAC",
+  "pageTitle": "PO.DAAC Cloud",
   "parentConfig": "edsc",
   "query": {
     "provider": "POCLOUD",
