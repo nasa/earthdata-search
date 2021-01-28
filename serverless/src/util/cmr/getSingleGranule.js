@@ -31,7 +31,7 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
   const cmrResponse = await axios({
     method: 'post',
     url: granuleSearchUrl,
-    form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+    data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
