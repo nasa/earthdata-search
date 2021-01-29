@@ -6,7 +6,8 @@ import { getGranuleLimit } from './collectionMetadata/granuleLimit'
 export const validAccessMethod = {
   valid: true,
   noGranules: false,
-  tooManyGranules: false
+  tooManyGranules: false,
+  needsCustomization: false
 }
 
 /**
@@ -59,10 +60,19 @@ export const isAccessMethodValid = (projectCollection, collectionMetadata) => {
 
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
 
-  const { isValid = false } = selectedMethod
+  const {
+    isValid = false,
+    hasChanged = false
+  } = selectedMethod
+
+  let esiNeedsCustomization = false
+  if (selectedAccessMethod.startsWith('esi') && !hasChanged) {
+    esiNeedsCustomization = true
+  }
 
   return {
     ...validAccessMethod,
-    valid: isValid
+    valid: isValid && !esiNeedsCustomization,
+    needsCustomization: esiNeedsCustomization
   }
 }
