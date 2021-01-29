@@ -128,6 +128,13 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             supportedReformattings
           }
         }
+        granules {
+          count
+          items {
+            conceptId
+            onlineAccessFlag
+          }
+        }
         subscriptions (
           subscriberId: $subscriberId
         ) {
@@ -179,6 +186,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           conceptId,
           coordinateSystem,
           dataCenter,
+          granules,
           hasGranules,
           services,
           shortName,
@@ -203,6 +211,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           boxes,
           coordinateSystem,
           dataCenter,
+          granules,
           hasAllMetadata: true,
           hasGranules,
           id: conceptId,
