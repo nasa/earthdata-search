@@ -155,18 +155,22 @@
           rate: cron(0 12 ? * MON-FRI *)
           input:
             projection: 'epsg4326'
+          enabled: false
       - schedule:
           rate: cron(5 12 ? * MON-FRI *)
           input:
             projection: 'epsg3857'
+          enabled: false
       - schedule:
           rate: cron(10 12 ? * MON-FRI *)
           input:
             projection: 'epsg3413'
+          enabled: false
       - schedule:
           rate: cron(15 12 ? * MON-FRI *)
           input:
             projection: 'epsg3031'
+          enabled: false
 
   generateGibsTags:
     handler: serverless/src/generateGibsTags/handler.default
