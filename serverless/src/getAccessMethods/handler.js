@@ -37,6 +37,7 @@ const getAccessMethods = async (event, context) => {
     const {
       collectionId,
       collectionProvider,
+      granules: associatedGranules,
       services: associatedServices,
       tags,
       variables: associatedVariables
@@ -75,12 +76,17 @@ const getAccessMethods = async (event, context) => {
     const harmonyServices = items.filter(service => service.type === 'Harmony')
     const hasHarmony = harmonyServices.length > 0
 
-    const capabilitiesData = getValueForTag('collection_capabilities', tags)
-    const { granule_online_access_flag: downloadable } = capabilitiesData || {}
+    let onlineAccessFlag = false
+    if (associatedGranules) {
+      const { items: granuleItems } = associatedGranules
+      const [firstGranule] = granuleItems;
+
+      ({ onlineAccessFlag = false } = firstGranule)
+    }
 
     const accessMethods = {}
 
-    if (downloadable) {
+    if (onlineAccessFlag) {
       accessMethods.download = {
         isValid: true,
         type: 'download'

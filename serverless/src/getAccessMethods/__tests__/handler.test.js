@@ -47,16 +47,16 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         params: {
           collectionId: 'collectionId',
+          granules: {
+            count: 1,
+            items: [{
+              conceptId: 'G100000-EDSC',
+              onlineAccessFlag: true
+            }]
+          },
           services: {
             count: 0,
             items: null
-          },
-          tags: {
-            'edsc.extra.serverless.collection_capabilities': {
-              data: {
-                granule_online_access_flag: true
-              }
-            }
           }
         }
       })
@@ -537,6 +537,13 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            granules: {
+              count: 1,
+              items: [{
+                conceptId: 'G100000-EDSC',
+                onlineAccessFlag: true
+              }]
+            },
             services: {
               count: 1,
               items: [{
@@ -549,11 +556,6 @@ describe('getAccessMethods', () => {
               }]
             },
             tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
-                }
-              },
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
                   id: 'umm-s-record-1',
@@ -623,6 +625,13 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            granules: {
+              count: 1,
+              items: [{
+                conceptId: 'G100000-EDSC',
+                onlineAccessFlag: true
+              }]
+            },
             services: {
               count: 1,
               items: [{
@@ -633,13 +642,6 @@ describe('getAccessMethods', () => {
                   urlValue: 'http://echo-order-endpoint.com'
                 }
               }]
-            },
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
-                }
-              }
             }
           }
         })
@@ -684,6 +686,13 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            granules: {
+              count: 1,
+              items: [{
+                conceptId: 'G100000-EDSC',
+                onlineAccessFlag: true
+              }]
+            },
             services: {
               count: 1,
               items: [{
@@ -694,13 +703,6 @@ describe('getAccessMethods', () => {
                   urlValue: 'http://echo-order-endpoint.com'
                 }
               }]
-            },
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
-                }
-              }
             }
           }
         })
@@ -753,6 +755,13 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            granules: {
+              count: 1,
+              items: [{
+                conceptId: 'G100000-EDSC',
+                onlineAccessFlag: true
+              }]
+            },
             services: {
               count: 1,
               items: [{
@@ -765,11 +774,6 @@ describe('getAccessMethods', () => {
               }]
             },
             tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
-                }
-              },
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
                   id: 'umm-s-record-1',
@@ -862,6 +866,13 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            granules: {
+              count: 1,
+              items: [{
+                conceptId: 'G100000-EDSC',
+                onlineAccessFlag: true
+              }]
+            },
             services: {
               count: 1,
               items: [{
@@ -874,11 +885,6 @@ describe('getAccessMethods', () => {
               }]
             },
             tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
-                }
-              },
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
                   id: 'umm-s-record-1',
@@ -966,6 +972,13 @@ describe('getAccessMethods', () => {
         body: JSON.stringify({
           params: {
             collectionId: 'collectionId',
+            granules: {
+              count: 1,
+              items: [{
+                conceptId: 'G100000-EDSC',
+                onlineAccessFlag: true
+              }]
+            },
             services: {
               count: 1,
               items: [{
@@ -978,11 +991,6 @@ describe('getAccessMethods', () => {
               }]
             },
             tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
-                }
-              },
               'edsc.extra.serverless.subset_service.echo_orders': {
                 data: {
                   id: 'umm-s-record-1',

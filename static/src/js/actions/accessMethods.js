@@ -45,6 +45,7 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
 
       const {
         dataCenter,
+        granules,
         services,
         tags,
         variables
@@ -60,6 +61,7 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
         const response = requestObject.search({
           collectionId,
           collectionProvider,
+          granules,
           services,
           tags,
           variables
