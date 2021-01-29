@@ -94,7 +94,8 @@ export class ProjectCollections extends Component {
     const {
       valid: isValid,
       noGranules,
-      tooManyGranules
+      tooManyGranules,
+      needsCustomization
     } = isProjectValid(project, projectCollectionsMetadata)
 
     const { isSubmitting } = project
@@ -137,9 +138,16 @@ export class ProjectCollections extends Component {
             !isLoading && (
               <p className="project-collections__footer-message">
                 {
-                  !isValid && !tooManyGranules && !noGranules && (
+                  !isValid && !tooManyGranules && !noGranules && !needsCustomization && (
                     <>
                       {'Select a data access method for each collection in your project before downloading.'}
+                    </>
+                  )
+                }
+                {
+                  !isValid && needsCustomization && (
+                    <>
+                      {'One or more collections in your project have an access method selected that requires customization options. Please select a customization option or choose a different access method.'}
                     </>
                   )
                 }

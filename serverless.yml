@@ -126,7 +126,7 @@ custom:
   # Default is 3000 so to avoid conflicts with rails applications we'll define a new port
   serverless-offline:
     httpPort: 3001
-    useSeparateProcesses: true
+    allowCache: true
 
   # Serverless Webpack configurations
   webpack:

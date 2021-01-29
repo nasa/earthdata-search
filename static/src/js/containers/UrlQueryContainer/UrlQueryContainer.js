@@ -28,7 +28,7 @@ export const mapStateToProps = state => ({
   earthdataEnvironment: getEarthdataEnvironment(state),
   featureFacets: state.facetsParams.feature,
   focusedCollection: getFocusedCollectionId(state),
-  focusedGranuleId: getFocusedGranuleId(state),
+  focusedGranule: getFocusedGranuleId(state),
   granuleDataFormatFacets: state.facetsParams.cmr.granule_data_format_h,
   hasGranulesOrCwic: state.query.collection.hasGranulesOrCwic,
   horizontalDataResolutionRangeFacets: state.facetsParams.cmr.horizontal_data_resolution_range,

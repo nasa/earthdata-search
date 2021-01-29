@@ -112,9 +112,14 @@ export const EchoForm = ({
   }
 
   const onFormModelUpdated = (value) => {
-    const { model, rawModel: newRawModel } = value
+    const {
+      hasChanged,
+      model,
+      rawModel: newRawModel
+    } = value
 
     updateAccessMethod({
+      hasChanged,
       model,
       rawModel: newRawModel
     })

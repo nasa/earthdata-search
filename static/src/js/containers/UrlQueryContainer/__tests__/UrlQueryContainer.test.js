@@ -143,7 +143,7 @@ describe('mapStateToProps', () => {
       earthdataEnvironment: 'prod',
       featureFacets: {},
       focusedCollection: 'collectionId',
-      focusedGranuleId: 'granuleIdId',
+      focusedGranule: 'granuleIdId',
       granuleDataFormatFacets: [],
       hasGranulesOrCwic: false,
       horizontalDataResolutionRangeFacets: [],
