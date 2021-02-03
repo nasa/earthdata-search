@@ -1,9 +1,6 @@
-/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
-
-import { groupBy, omit } from 'lodash'
 
 import { constructLayerTagData } from './constructLayerTagData'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
@@ -12,7 +9,7 @@ import { getClientId } from '../../../sharedUtils/getClientId'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getSupportedGibsLayers } from './getSupportedGibsLayers'
 import { getSystemToken } from '../util/urs/getSystemToken'
-import { readCmrResults } from '../util/cmr/readCmrResults'
+import { parseError } from '../../../sharedUtils/parseError'
 import { tagName } from '../../../sharedUtils/tags'
 
 // AWS SQS adapter
@@ -116,7 +113,7 @@ const generateGibsTags = async (event, context) => {
           }
         })
       } catch (e) {
-        console.log(e)
+        parseError(e)
       }
     }
   })
