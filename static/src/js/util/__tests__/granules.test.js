@@ -41,7 +41,7 @@ describe('#withAdvancedSearch', () => {
         const result = withAdvancedSearch(collectionParams, advancedSearch)
 
         expect(result).toEqual({
-          polygon: advSearchPolygon
+          polygon: [advSearchPolygon]
         })
       })
     })
