@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import axios from 'axios'
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
 
@@ -5,9 +7,12 @@ import { groupBy, omit } from 'lodash'
 
 import { constructLayerTagData } from './constructLayerTagData'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
+import { getClientId } from '../../../sharedUtils/getClientId'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getSupportedGibsLayers } from './getSupportedGibsLayers'
+import { getSystemToken } from '../util/urs/getSystemToken'
+import { readCmrResults } from '../util/cmr/readCmrResults'
 import { tagName } from '../../../sharedUtils/tags'
 
 // AWS SQS adapter
@@ -24,6 +29,9 @@ const generateGibsTags = async (event, context) => {
   if (sqs == null) {
     sqs = new AWS.SQS(getSqsConfig())
   }
+
+  // Retrieve a connection to the database
+  const cmrToken = await getSystemToken()
 
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
@@ -46,35 +54,75 @@ const generateGibsTags = async (event, context) => {
   })
 
   // Given concept ids we can make tags directly without using cmr search
-  const conceptIdLayers = groupBy(layerTagData, layer => layer.collection.condition.concept_id)
+  let conceptIdLayers = {}
 
   // As we iterate through all the layerTagDatas we'll keep track of
   // each individual configuration; we'll then tell CMR to delete tags on
   // any collection that does match the compiled configurations
   const allTagConditions = []
 
-  // conceptIdLayers are layers that apply to specific concept ids. When we already have a
-  // concept id we dont need to provide searchCriteria to `addTag` but we need to modify
+  // When we already have a concept id we dont need to provide searchCriteria to `addTag` but we need to modify
   // the payload a bit to include it
-  await Object.keys(omit(conceptIdLayers, undefined)).forEachAsync(async (collectionId) => {
-    const { [collectionId]: configurations } = conceptIdLayers
+  await layerTagData.forEachAsync(async (tagData) => {
+    const { collection, data: collectionTagData } = tagData
 
-    const tagData = configurations.map((configuration) => {
-      const { data } = configuration
+    const { condition } = collection
 
-      const { collection } = configuration
-      const { condition } = collection
-
-      allTagConditions.push(condition)
-
-      return data
-    })
-
-    const [firstConfiguration] = configurations
-
-    const { collection: searchCriteria } = firstConfiguration
-    const { condition } = searchCriteria
     const { concept_id: conceptId } = condition
+
+    allTagConditions.push(condition)
+
+    // If this layer is specific to a concept id already
+    if (conceptId) {
+      const { [conceptId]: existingLayer = [] } = conceptIdLayers
+
+      conceptIdLayers = {
+        ...conceptIdLayers,
+        [conceptId]: [
+          ...existingLayer,
+          collectionTagData
+        ]
+      }
+    } else {
+      try {
+        const collectionJsonQlUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/collections`
+
+        const cmrResponse = await axios({
+          method: 'post',
+          url: collectionJsonQlUrl,
+          data: JSON.stringify(collection),
+          headers: {
+            'Client-Id': getClientId().background,
+            'Content-Type': 'application/json',
+            'Echo-Token': cmrToken
+          }
+        })
+
+        const { data = {} } = cmrResponse
+        const { feed = {} } = data
+        const { entry = [] } = feed
+
+        entry.forEach((entry) => {
+          const { id } = entry
+
+          const { [conceptId]: existingLayer = [] } = conceptIdLayers
+
+          conceptIdLayers = {
+            ...conceptIdLayers,
+            [id]: [
+              ...existingLayer,
+              collectionTagData
+            ]
+          }
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  })
+
+  await Object.keys(conceptIdLayers).forEachAsync(async (conceptId) => {
+    const { [conceptId]: tagData } = conceptIdLayers
 
     await sqs.sendMessage({
       QueueUrl: process.env.tagQueueUrl,
@@ -86,44 +134,6 @@ const generateGibsTags = async (event, context) => {
           'concept-id': conceptId,
           data: tagData
         }
-      })
-    }).promise()
-  })
-
-  // Shortname and provider require using the search endpoint to create tags as their concept ids are not yet known
-  const shortNameLayers = groupBy(layerTagData, layer => layer.collection.condition.short_name)
-  const providerLayers = groupBy(layerTagData, layer => layer.collection.condition.provider)
-
-  const searchableLayers = {
-    ...omit(shortNameLayers, undefined),
-    ...omit(providerLayers, undefined)
-  }
-  await Object.keys(searchableLayers).forEachAsync(async (collectionId) => {
-    const { [collectionId]: configurations } = searchableLayers
-
-    const tagData = configurations.map((configuration) => {
-      const { data } = configuration
-
-      const { collection } = configuration
-      const { condition } = collection
-
-      allTagConditions.push(condition)
-
-      return data
-    })
-
-    const [firstConfiguration] = configurations
-
-    const { collection: searchCriteria } = firstConfiguration
-
-    await sqs.sendMessage({
-      QueueUrl: process.env.tagQueueUrl,
-      MessageBody: JSON.stringify({
-        tagName: tagName('gibs'),
-        action: 'ADD',
-        requireGranules: false,
-        searchCriteria,
-        tagData
       })
     }).promise()
   })
@@ -144,7 +154,7 @@ const generateGibsTags = async (event, context) => {
             },
             {
               not: {
-                or: allTagConditions
+                or: Object.keys(conceptIdLayers).map(conceptId => ({ concept_id: conceptId }))
               }
             }
           ]
