@@ -1,8 +1,11 @@
+import nock from 'nock'
+
 import AWS from 'aws-sdk'
 import MockDate from 'mockdate'
 
 import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import * as getSupportedGibsLayers from '../getSupportedGibsLayers'
+import * as getSystemToken from '../../util/urs/getSystemToken'
 
 import generateGibsTags from '../handler'
 
@@ -25,6 +28,8 @@ AWS.SQS = jest.fn()
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
 
   // Manage resetting ENV variables
   // TODO: This is causing problems with mocking knex but is noted as important for managing process.env
@@ -50,6 +55,16 @@ describe('generateGibsTags', () => {
       process.env.tagQueueUrl = 'http://example.com/tagQueue'
 
       jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementationOnce(() => 'prod')
+
+      nock(/cmr/)
+        .post(/collections/)
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'C100000-EDSC'
+            }]
+          }
+        })
 
       const getSupportedGibsLayersMock = jest.spyOn(getSupportedGibsLayers, 'getSupportedGibsLayers').mockImplementationOnce(() => ({
         MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily: {
@@ -123,23 +138,26 @@ describe('generateGibsTags', () => {
           action: 'ADD',
           requireGranules: false,
           tagData: {
-            'concept-id': 'C84942916-LARC',
-            data: [{
-              match: {
-                time_start: '>=2000-02-01'
-              },
-              product: 'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly',
-              title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
-              source: 'Terra / MISR',
-              format: 'png',
-              updated_at: '1988-09-03T10:00:00.000Z',
-              antarctic: false,
-              antarctic_resolution: null,
-              arctic: false,
-              arctic_resolution: null,
-              geographic: true,
-              geographic_resolution: '2km'
-            }]
+            'concept-id': 'C100000-EDSC',
+            data: [
+              {
+                match: {
+                  time_start: '>=2002-07-04T00:00:00Z'
+                },
+                product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
+                group: 'overlays',
+                title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
+                source: 'Aqua / MODIS',
+                format: 'png',
+                updated_at: '1988-09-03T10:00:00.000Z',
+                antarctic: false,
+                antarctic_resolution: null,
+                arctic: false,
+                arctic_resolution: null,
+                geographic: true,
+                geographic_resolution: '2km'
+              }
+            ]
           }
         })
       }])
@@ -150,28 +168,27 @@ describe('generateGibsTags', () => {
           tagName: 'edsc.extra.serverless.gibs',
           action: 'ADD',
           requireGranules: false,
-          searchCriteria: {
-            condition: {
-              short_name: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
-            }
-          },
-          tagData: [{
-            match: {
-              time_start: '>=2002-07-04T00:00:00Z'
-            },
-            product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-            group: 'overlays',
-            title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-            source: 'Aqua / MODIS',
-            format: 'png',
-            updated_at: '1988-09-03T10:00:00.000Z',
-            antarctic: false,
-            antarctic_resolution: null,
-            arctic: false,
-            arctic_resolution: null,
-            geographic: true,
-            geographic_resolution: '2km'
-          }]
+          tagData: {
+            'concept-id': 'C84942916-LARC',
+            data: [
+              {
+                match: {
+                  time_start: '>=2000-02-01'
+                },
+                product: 'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly',
+                title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
+                source: 'Terra / MISR',
+                format: 'png',
+                updated_at: '1988-09-03T10:00:00.000Z',
+                antarctic: false,
+                antarctic_resolution: null,
+                arctic: false,
+                arctic_resolution: null,
+                geographic: true,
+                geographic_resolution: '2km'
+              }
+            ]
+          }
         })
       }])
 
@@ -182,21 +199,24 @@ describe('generateGibsTags', () => {
           action: 'REMOVE',
           searchCriteria: {
             condition: {
-              and: [{
-                tag: {
-                  tag_key: 'edsc.extra.serverless.gibs'
+              and: [
+                {
+                  tag: {
+                    tag_key: 'edsc.extra.serverless.gibs'
+                  }
+                },
+                {
+                  not: {
+                    or: [
+                      {
+                        concept_id: 'C100000-EDSC'
+                      }, {
+                        concept_id: 'C84942916-LARC'
+                      }
+                    ]
+                  }
                 }
-              }, {
-                not: {
-                  or: [
-                    {
-                      concept_id: 'C84942916-LARC'
-                    }, {
-                      short_name: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
-                    }
-                  ]
-                }
-              }]
+              ]
             }
           }
         })
@@ -209,6 +229,16 @@ describe('generateGibsTags', () => {
       process.env.tagQueueUrl = 'http://example.com/tagQueue'
 
       jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementationOnce(() => 'sit')
+
+      nock(/cmr/)
+        .post(/collections/)
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'C100000-EDSC'
+            }]
+          }
+        })
 
       const getSupportedGibsLayersMock = jest.spyOn(getSupportedGibsLayers, 'getSupportedGibsLayers').mockImplementationOnce(() => ({
         MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily: {
@@ -282,23 +312,26 @@ describe('generateGibsTags', () => {
           action: 'ADD',
           requireGranules: false,
           tagData: {
-            'concept-id': 'C84942916-LARC',
-            data: [{
-              match: {
-                time_start: '>=2000-02-01'
-              },
-              product: 'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly',
-              title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
-              source: 'Terra / MISR',
-              format: 'png',
-              updated_at: '1988-09-03T10:00:00.000Z',
-              antarctic: false,
-              antarctic_resolution: null,
-              arctic: false,
-              arctic_resolution: null,
-              geographic: true,
-              geographic_resolution: '2km'
-            }]
+            'concept-id': 'C100000-EDSC',
+            data: [
+              {
+                match: {
+                  time_start: '>=2002-07-04T00:00:00Z'
+                },
+                product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
+                group: 'overlays',
+                title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
+                source: 'Aqua / MODIS',
+                format: 'png',
+                updated_at: '1988-09-03T10:00:00.000Z',
+                antarctic: false,
+                antarctic_resolution: null,
+                arctic: false,
+                arctic_resolution: null,
+                geographic: true,
+                geographic_resolution: '2km'
+              }
+            ]
           }
         })
       }])
@@ -309,28 +342,27 @@ describe('generateGibsTags', () => {
           tagName: 'edsc.extra.serverless.gibs',
           action: 'ADD',
           requireGranules: false,
-          searchCriteria: {
-            condition: {
-              short_name: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
-            }
-          },
-          tagData: [{
-            match: {
-              time_start: '>=2002-07-04T00:00:00Z'
-            },
-            product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-            group: 'overlays',
-            title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-            source: 'Aqua / MODIS',
-            format: 'png',
-            updated_at: '1988-09-03T10:00:00.000Z',
-            antarctic: false,
-            antarctic_resolution: null,
-            arctic: false,
-            arctic_resolution: null,
-            geographic: true,
-            geographic_resolution: '2km'
-          }]
+          tagData: {
+            'concept-id': 'C84942916-LARC',
+            data: [
+              {
+                match: {
+                  time_start: '>=2000-02-01'
+                },
+                product: 'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly',
+                title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
+                source: 'Terra / MISR',
+                format: 'png',
+                updated_at: '1988-09-03T10:00:00.000Z',
+                antarctic: false,
+                antarctic_resolution: null,
+                arctic: false,
+                arctic_resolution: null,
+                geographic: true,
+                geographic_resolution: '2km'
+              }
+            ]
+          }
         })
       }])
 
@@ -349,9 +381,9 @@ describe('generateGibsTags', () => {
                 not: {
                   or: [
                     {
-                      concept_id: 'C84942916-LARC'
+                      concept_id: 'C100000-EDSC'
                     }, {
-                      short_name: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
+                      concept_id: 'C84942916-LARC'
                     }
                   ]
                 }
