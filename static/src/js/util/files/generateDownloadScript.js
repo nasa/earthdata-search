@@ -19,7 +19,7 @@ export const generateDownloadScript = (granuleLinks, retrievalCollection, earthd
   let { edlHost } = getEarthdataConfig(earthdataEnvironment)
   edlHost = url.parse(edlHost).host
 
-  return `#!/bin/sh
+  return `#!/bin/bash
 
 GREP_OPTIONS=''
 
