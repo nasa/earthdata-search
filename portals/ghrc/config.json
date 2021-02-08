@@ -1,13 +1,13 @@
 {
     "hasStyles": true,
-    "hasScrpits": false,
+    "hasScrpits": true,
     "logo":{
         "id": "ghrc-logo",
         "link": "https://ghrc.nsstc.nasa.gov/home",
-        "tittle": "GHRC Home"
+        "title": "GHRC Home"
     },
     "org": "GHRC",
-    "pageTittle": "GHRC Portal",
+    "pageTitle": "GHRC Portal",
     "parentConfig": "edsc",
     "query": {
         "dataCenter": "NASA/MSFC/GHRC",
