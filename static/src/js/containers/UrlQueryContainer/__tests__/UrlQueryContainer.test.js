@@ -21,6 +21,7 @@ function setup() {
     granuleDataFormatFacets: {},
     keywordSearch: '',
     map: {},
+    mapPreferences: {},
     organizationFacets: {},
     overrideTemporalSearch: {},
     pathname: '',
@@ -154,6 +155,7 @@ describe('mapStateToProps', () => {
         pathname: ''
       },
       map: {},
+      mapPreferences: {},
       organizationFacets: [],
       overrideTemporalSearch: {},
       pathname: '',

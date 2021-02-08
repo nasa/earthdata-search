@@ -5,7 +5,18 @@ const initialState = {
   preferences: {
     panelState: 'default',
     collectionListView: 'default',
-    granuleListView: 'default'
+    granuleListView: 'default',
+    mapView: {
+      zoom: 2,
+      latitude: 0,
+      baseLayer: 'blueMarble',
+      longitude: 0,
+      projection: 'epsg4326',
+      overlayLayers: [
+        'referenceFeatures',
+        'referenceLabels'
+      ]
+    }
   },
   isSubmitting: false,
   isSubmitted: false

@@ -11,6 +11,7 @@ import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
+import { getMapPreferences } from '../../selectors/preferences'
 
 export const mapDispatchToProps = dispatch => ({
   onChangePath:
@@ -37,6 +38,7 @@ export const mapStateToProps = state => ({
   lineSearch: state.query.collection.spatial.line,
   location: state.router.location,
   map: state.map,
+  mapPreferences: getMapPreferences(state),
   organizationFacets: state.facetsParams.cmr.data_center_h,
   overrideTemporalSearch: state.query.collection.overrideTemporal,
   pathname: state.router.location.pathname,

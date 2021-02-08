@@ -10,5 +10,16 @@
   "granuleListView": {
     "ui:widget": "radio",
     "ui:field": "radio"
+  },
+  "mapView": {
+    "latitude": {},
+    "projection": {
+      "ui:widget": "radio",
+      "ui:field": "radio"
+    },
+    "baseLayer": {
+      "ui:widget": "radio",
+      "ui:field": "radio"
+    }
   }
 }

@@ -1,66 +1,147 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "type": "object",
-  "title": "Preferences",
-  "additionalProperties": false,
-  "required": [
-      "panelState",
-      "collectionListView",
-      "granuleListView"
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"title": "Preferences",
+	"additionalProperties": false,
+	"required": [
+		"panelState",
+		"collectionListView",
+		"granuleListView"
   ],
-  "properties": {
-      "panelState": {
-          "$id": "#/properties/panelState",
+  "definitions": {
+
+  },
+	"properties": {
+		"panelState": {
+			"$id": "#/properties/panelState",
+			"type": "string",
+			"title": "Panel State",
+			"description": "Select your preference for the state of the main panel when you are logged into Earthdata Search. Collapsed maximizes usable map space on the initial load. Open allows for panel and map interactions. Full Width uses the full width of your browser for search results.",
+			"default": "default",
+			"enum": [
+				"default",
+				"collapsed",
+				"open",
+				"fullWidth"
+			],
+			"enumNames": [
+				"Default",
+				"Collapsed",
+				"Open",
+				"Full Width"
+			]
+		},
+		"collectionListView": {
+			"$id": "#/properties/collectionListView",
+			"type": "string",
+			"title": "Collection Search Results View",
+			"description": "Set a default view for collection search results.",
+			"default": "default",
+			"enum": [
+				"default",
+				"list",
+				"table"
+			],
+			"enumNames": [
+				"Default",
+				"List",
+				"Table"
+			]
+		},
+		"granuleListView": {
+			"$id": "#/properties/granuleListView",
+			"type": "string",
+			"title": "Granule Search Results View",
+			"description": "Set a default view for granule search results.",
+			"default": "default",
+			"enum": [
+				"default",
+				"list",
+				"table"
+			],
+			"enumNames": [
+				"Default",
+				"List",
+				"Table"
+			]
+    },
+    "mapView": {
+      "$id": "#/properties/mapView",
+      "type": "object",
+      "title": "Default Map View",
+      "description": "Set a default view for the map.",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "title": "Latitude",
+          "minimum": -90,
+          "maximum": 90,
+          "default": 0
+        },
+        "longitude": {
+          "type": "number",
+          "title": "Longitude",
+          "minimum": -180,
+          "maximum": 180,
+          "default": 0
+        },
+        "zoom": {
+          "type": "number",
+          "title": "Zoom",
+          "minimum": 0,
+          "maximum": 7,
+          "default": 2
+        },
+        "projection": {
           "type": "string",
-          "title": "Panel State",
-          "description": "Select your preference for the state of the main panel when you are logged into Earthdata Search. Collapsed maximizes usable map space on the initial load. Open allows for panel and map interactions. Full Width uses the full width of your browser for search results.",
-          "default": "default",
+          "title": "Projection",
+          "default": "1",
           "enum": [
-            "default",
-            "collapsed",
-            "open",
-            "fullWidth"
+            "epsg4326",
+            "epsg3413",
+            "epsg3031"
           ],
           "enumNames": [
-            "Default",
-            "Collapsed",
-            "Open",
-            "Full Width"
+            "Geographic",
+            "Arctic",
+            "Antarctic"
           ]
-      },
-      "collectionListView": {
-          "$id": "#/properties/collectionListView",
+        },
+        "baseLayer": {
           "type": "string",
-          "title": "Collection Search Results View",
-          "description": "Set a default view for collection search results.",
-          "default": "default",
+          "title": "Base Layer",
+          "default": "blueMarble",
           "enum": [
-              "default",
-              "list",
-              "table"
+            "blueMarble",
+            "trueColor",
+            "landWaterMap"
           ],
           "enumNames": [
-            "Default",
-            "List",
-            "Table"
+            "Blue Marble",
+            "Corrected Reflectance (True Color)",
+            "Land / Water Map"
           ]
-      },
-      "granuleListView": {
-          "$id": "#/properties/granuleListView",
-          "type": "string",
-          "title": "Granule Search Results View",
-          "description": "Set a default view for granule search results.",
-          "default": "default",
-          "enum": [
-              "default",
-              "list",
-              "table"
-          ],
-          "enumNames": [
-            "Default",
-            "List",
-            "Table"
-          ]
+        },
+        "overlayLayers": {
+          "type": "array",
+          "title": "Overlay Layers",
+          "default": ["referenceFeatures", "referenceLabels"],
+          "items": {
+            "type": "string",
+            "enum": [
+              "referenceFeatures",
+              "coastlines",
+              "referenceLabels"
+            ],
+            "enumNames": [
+              "Borders and Roads",
+              "Coastlines",
+              "Place Labels"
+            ]
+          },
+          "uniqueItems": true
+        }
       }
-  }
+    }
+	}
 }

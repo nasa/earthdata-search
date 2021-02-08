@@ -47,7 +47,6 @@ const urlDefs = {
   polygonSearch: { shortKey: 'polygon', encode: encodeArray, decode: decodeArray },
   lineSearch: { shortKey: 'line', encode: encodeArray, decode: decodeArray },
   circleSearch: { shortKey: 'circle', encode: encodeArray, decode: decodeArray },
-  map: { shortKey: 'm', encode: encodeMap, decode: decodeMap },
   temporalSearch: { shortKey: 'qt', encode: encodeTemporal, decode: decodeTemporal },
   overrideTemporalSearch: { shortKey: 'ot', encode: encodeTemporal, decode: decodeTemporal },
   featureFacets: { shortKey: 'ff', encode: encodeFeatures, decode: decodeFeatures },
@@ -96,7 +95,7 @@ export const decodeUrlParams = (paramString) => {
   // e.g. map is store separately from query
   const focusedGranule = decodeHelp(params, 'focusedGranule')
 
-  const map = decodeHelp(params, 'map')
+  const map = decodeMap(params)
 
   const spatial = {}
   spatial.point = decodeHelp(params, 'pointSearch')
@@ -212,6 +211,7 @@ export const encodeUrlQuery = (props) => {
     query[shortKey] = value
   })
 
+  const mapParams = encodeMap(props.map, props.mapPreferences)
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
   const collectionsQuery = encodeCollections(props)
   const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
@@ -222,7 +222,8 @@ export const encodeUrlQuery = (props) => {
     ...query,
     ...timelineQuery,
     ...scienceKeywordQuery,
-    ...advancedQuery
+    ...advancedQuery,
+    ...mapParams
   }
 
   const paramString = stringify(encodedQuery)
