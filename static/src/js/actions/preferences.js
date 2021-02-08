@@ -27,7 +27,7 @@ export const setPreferencesFromJwt = jwtToken => (dispatch) => {
   if (!jwtToken) return
 
   const decoded = jwt.decode(jwtToken)
-  const { preferences } = decoded
+  const { preferences = {} } = decoded
 
   dispatch(setPreferences(preferences))
 

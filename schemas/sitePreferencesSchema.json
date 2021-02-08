@@ -8,9 +8,6 @@
 		"collectionListView",
 		"granuleListView"
   ],
-  "definitions": {
-
-  },
 	"properties": {
 		"panelState": {
 			"$id": "#/properties/panelState",
@@ -74,6 +71,7 @@
         "latitude": {
           "type": "number",
           "title": "Latitude",
+          "description": "Centers the map in your window over this latitude.",
           "minimum": -90,
           "maximum": 90,
           "default": 0
@@ -81,6 +79,7 @@
         "longitude": {
           "type": "number",
           "title": "Longitude",
+          "description": "Centers the map in your window over this longitude.",
           "minimum": -180,
           "maximum": 180,
           "default": 0

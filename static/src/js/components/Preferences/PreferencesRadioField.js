@@ -6,7 +6,7 @@ import { Form } from 'react-bootstrap'
 
 import './PreferencesRadioField.scss'
 
-class RadioField extends Component {
+class PreferencesRadioField extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -77,11 +77,11 @@ class RadioField extends Component {
   }
 }
 
-RadioField.propTypes = {
+PreferencesRadioField.propTypes = {
   schema: PropTypes.shape({}).isRequired,
   name: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 }
 
-export default RadioField
+export default PreferencesRadioField
