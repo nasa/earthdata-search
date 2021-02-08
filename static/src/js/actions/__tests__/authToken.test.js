@@ -4,7 +4,7 @@ import nock from 'nock'
 import * as tinyCookie from 'tiny-cookie'
 
 import { UPDATE_AUTH } from '../../constants/actionTypes'
-import { logout, updateAuthToken } from '../authToken'
+import { logout, updateAuthToken, updateAuthTokenFromHeaders } from '../authToken'
 
 const mockStore = configureMockStore([thunk])
 
@@ -20,6 +20,46 @@ describe('updateAuthToken', () => {
       payload
     }
     expect(updateAuthToken(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('updateAuthTokenFromHeaders', () => {
+  test('should update the authToken from a header token if available', () => {
+    const token = 'authToken-token'
+
+    const payload = {
+      'jwt-token': token
+    }
+
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: '',
+      earthdataEnvironment: 'prod'
+    })
+
+    // call the dispatch
+    store.dispatch(updateAuthTokenFromHeaders(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_AUTH,
+      payload: token
+    })
+  })
+
+  test('should not remove the authToken if a header token is not available', () => {
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: 'authToken-token',
+      earthdataEnvironment: 'prod'
+    })
+
+    // call the dispatch
+    store.dispatch(updateAuthTokenFromHeaders({}))
+
+    const storeActions = store.getActions()
+
+    expect(storeActions.length).toBe(0)
   })
 })
 

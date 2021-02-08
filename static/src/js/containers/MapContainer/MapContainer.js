@@ -10,8 +10,9 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-import { difference } from 'lodash'
+import { difference, isEmpty } from 'lodash'
 import LRUCache from 'lrucache'
+import { parse } from 'qs'
 
 import actions from '../../actions/index'
 
@@ -25,6 +26,7 @@ import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getGranulesMetadata } from '../../selectors/granuleMetadata'
+import { getMapPreferences } from '../../selectors/preferences'
 import { isPath } from '../../util/isPath'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
@@ -67,6 +69,7 @@ export const mapStateToProps = state => ({
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granulesMetadata: getGranulesMetadata(state),
   map: state.map,
+  mapPreferences: getMapPreferences(state),
   project: state.project,
   router: state.router,
   shapefile: state.shapefile
@@ -228,6 +231,7 @@ export class MapContainer extends Component {
       focusedGranuleId,
       granuleSearchResults,
       granulesMetadata,
+      mapPreferences,
       project,
       router,
       shapefile,
@@ -241,18 +245,50 @@ export class MapContainer extends Component {
       onUpdateShapefile
     } = this.props
 
-    const {
-      base,
-      latitude,
-      longitude,
-      overlays,
-      projection,
-      zoom
-    } = map
-
     const { location } = router
-    const { pathname } = location
+    const { pathname, search } = location
     const isProjectPage = isPath(pathname, '/projects')
+
+    let base
+    let latitude
+    let longitude
+    let overlays
+    let projection
+    let zoom
+    const { m } = parse(search, { ignoreQueryPrefix: true })
+
+    // If the `m` parameter is in the URL or mapPreferences are empty
+    // use the map values from the store
+    if (!isEmpty(m) || isEmpty(mapPreferences)) {
+      ({
+        base,
+        latitude,
+        longitude,
+        overlays,
+        projection,
+        zoom
+      } = map)
+    } else {
+      ({
+        latitude,
+        longitude,
+        projection,
+        zoom
+      } = mapPreferences)
+
+      const {
+        baseLayer,
+        overlayLayers = []
+      } = mapPreferences
+
+      base = {
+        [baseLayer]: true
+      }
+      overlays = {}
+      overlayLayers.forEach((layer) => {
+        overlays[layer] = true
+      })
+    }
 
     const center = [latitude, longitude]
 
@@ -429,6 +465,7 @@ MapContainer.propTypes = {
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}),
+  mapPreferences: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   router: PropTypes.shape({}).isRequired,
   shapefile: PropTypes.shape({}).isRequired,

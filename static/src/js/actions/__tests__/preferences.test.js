@@ -3,7 +3,12 @@ import thunk from 'redux-thunk'
 import nock from 'nock'
 import jwt from 'jsonwebtoken'
 
-import { SET_PREFERENCES_IS_SUBMITTING, SET_PREFERENCES } from '../../constants/actionTypes'
+import {
+  SET_PREFERENCES_IS_SUBMITTING,
+  SET_PREFERENCES,
+  UPDATE_AUTH,
+  UPDATE_MAP
+} from '../../constants/actionTypes'
 
 import {
   setIsSubmitting,
@@ -71,6 +76,49 @@ describe('setPreferencesFromJwt', () => {
     const storeActions = store.getActions()
     expect(storeActions.length).toBe(0)
   })
+
+  test('calls changeMap if map preferences exist', () => {
+    const preferences = {
+      mapView: {
+        zoom: 4,
+        latitude: 39,
+        baseLayer: 'blueMarble',
+        longitude: -95,
+        projection: 'epsg4326',
+        overlayLayers: [
+          'referenceFeatures',
+          'referenceLabels'
+        ]
+      }
+    }
+
+    jest.spyOn(jwt, 'decode').mockImplementation(() => ({ preferences }))
+
+    const store = mockStore({})
+    store.dispatch(setPreferencesFromJwt('mockJwt'))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: SET_PREFERENCES,
+      payload: preferences
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_MAP,
+      payload: {
+        base: {
+          blueMarble: true
+        },
+        latitude: 39,
+        longitude: -95,
+        overlays: {
+          referenceFeatures: true,
+          referenceLabels: true
+        },
+        projection: 'epsg4326',
+        zoom: 4
+      }
+    })
+  })
 })
 
 describe('updatePreferences', () => {
@@ -100,10 +148,14 @@ describe('updatePreferences', () => {
         payload: true
       })
       expect(storeActions[1]).toEqual({
+        type: UPDATE_AUTH,
+        payload: 'token'
+      })
+      expect(storeActions[2]).toEqual({
         type: SET_PREFERENCES,
         payload: preferences
       })
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: SET_PREFERENCES_IS_SUBMITTING,
         payload: false
       })

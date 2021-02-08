@@ -45,6 +45,7 @@ const PreferencesForm = (props) => {
         onSubmit={onUpdatePreferences}
         onChange={onChange}
         fields={fields}
+        liveValidate
       >
         <div>
           <Button

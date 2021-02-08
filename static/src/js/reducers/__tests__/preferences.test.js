@@ -7,7 +7,18 @@ const initialState = {
   preferences: {
     panelState: 'default',
     collectionListView: 'default',
-    granuleListView: 'default'
+    granuleListView: 'default',
+    mapView: {
+      zoom: 2,
+      latitude: 0,
+      baseLayer: 'blueMarble',
+      longitude: 0,
+      projection: 'epsg4326',
+      overlayLayers: [
+        'referenceFeatures',
+        'referenceLabels'
+      ]
+    }
   },
   isSubmitting: false,
   isSubmitted: false
@@ -38,6 +49,15 @@ describe('SET_PREFERENCES', () => {
     }
 
     expect(preferencesReducer(undefined, action)).toEqual(expectedState)
+  })
+
+  test('returns the initial state if the payload is empty', () => {
+    const action = {
+      type: SET_PREFERENCES,
+      payload: {}
+    }
+
+    expect(preferencesReducer(undefined, action)).toEqual(initialState)
   })
 })
 

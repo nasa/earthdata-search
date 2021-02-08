@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash'
+
 import projections from '../map/projections'
 
 const projectionList = [
@@ -8,10 +10,10 @@ const projectionList = [
 
 /**
  * Encodes a Map object into a string
- * @param {object} query Map object with query and state
- * @return {string} A `!` delimited string of the map values
+ * @param {Object} query Map object with query and state
+ * @return {String} A `!` delimited string of the map values
  */
-export const encodeMap = (map) => {
+export const encodeMap = (map, mapPreferences) => {
   if (!map) return ''
 
   const {
@@ -44,22 +46,63 @@ export const encodeMap = (map) => {
     encodedOverlays.join(',')
   ].join('!')
 
-  if (encodedString === '0!0!2!1!0!0,2') return ''
+  // home is used to determine if the map values need to be present in the URL
+  let home = '0!0!2!1!0!0,2'
 
-  return encodedString
+  // If map preferences exist, encode them to use as the `home` location
+  if (!isEmpty(mapPreferences)) {
+    const {
+      baseLayer,
+      latitude: latitudePreference,
+      longitude: longitudePreference,
+      projection,
+      overlayLayers,
+      zoom: zoomPreference
+    } = mapPreferences
+
+    const encodedProjectionPreference = projectionList.indexOf(projection)
+
+    let encodedBasePreference
+    if (baseLayer === 'blueMarble') encodedBasePreference = 0
+    if (baseLayer === 'trueColor') encodedBasePreference = 1
+    if (baseLayer === 'landWaterMap') encodedBasePreference = 2
+
+    const encodedOverlaysPreference = []
+    if (overlayLayers.includes('referenceFeatures')) encodedOverlaysPreference.push(0)
+    if (overlayLayers.includes('coastlines')) encodedOverlaysPreference.push(1)
+    if (overlayLayers.includes('referenceLabels')) encodedOverlaysPreference.push(2)
+
+    home = [
+      latitudePreference,
+      longitudePreference,
+      zoomPreference,
+      encodedProjectionPreference,
+      encodedBasePreference,
+      encodedOverlaysPreference.join(',')
+    ].join('!')
+  }
+
+  // If the encoded map values match the `home` location, return an empty object
+  // to prevent the values being written to the url
+  if (encodedString === home) return {}
+
+  return {
+    m: encodedString
+  }
 }
 
 /**
  * Decodes a map parameter string into an object
- * @param {string} string A `!` delimited string of the map values
- * @return {object} Map object with query and state
+ * @param {Object} params URL parameter object from parsing the URL parameter string
+ * @return {Object} Map object with query and state
  */
-export const decodeMap = (string) => {
-  if (!string) {
+export const decodeMap = (params) => {
+  const { m: mParam } = params
+  if (!mParam) {
     return {}
   }
 
-  const [latitude, longitude, zoom, projection, base, overlays] = string.split('!')
+  const [latitude, longitude, zoom, projection, base, overlays] = mParam.split('!')
 
   const decodedLatitude = parseFloat(latitude)
   const decodedLongitude = parseFloat(longitude)

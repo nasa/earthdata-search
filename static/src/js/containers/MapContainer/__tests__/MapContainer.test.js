@@ -30,7 +30,7 @@ beforeEach(() => {
 
 const store = configureStore()
 
-function setup() {
+function setup(overrideProps = {}) {
   const props = {
     authToken: '',
     collectionsMetadata: {},
@@ -62,6 +62,17 @@ function setup() {
       projection: projections.geographic,
       zoom: 2
     },
+    mapPreferences: {
+      zoom: 4,
+      latitude: 39,
+      baseLayer: 'blueMarble',
+      longitude: -95,
+      projection: 'epsg4326',
+      overlayLayers: [
+        'referenceFeatures',
+        'referenceLabels'
+      ]
+    },
     shapefile: {},
     onChangeFocusedGranule: jest.fn(),
     onChangeMap: jest.fn(),
@@ -71,7 +82,8 @@ function setup() {
     onShapefileErrored: jest.fn(),
     onMetricsMap: jest.fn(),
     onToggleTooManyPointsModal: jest.fn(),
-    onUpdateShapefile: jest.fn()
+    onUpdateShapefile: jest.fn(),
+    ...overrideProps
   }
 
   // Mount is required here so we can have access to the mapRef
@@ -208,6 +220,7 @@ describe('mapStateToProps', () => {
       granuleSearchResults: {},
       granulesMetadata: {},
       map: {},
+      mapPreferences: {},
       project: {},
       router: {},
       shapefile: {}
@@ -288,6 +301,52 @@ describe('MapContainer component', () => {
 
       // Reset the inner width to the starting value.
       global.innerWidth = prevInnerWidth
+    })
+  })
+
+  describe('map preferences', () => {
+    test('loads the map defaults when no preferences are provided', () => {
+      const { enzymeWrapper } = setup({ mapPreferences: {} })
+
+      expect(enzymeWrapper.find(Map).props().center).toEqual([0, 0])
+      expect(enzymeWrapper.find(Map).props().zoom).toEqual(2)
+    })
+
+    test('loads the map preferences instead of default values', () => {
+      const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find(Map).props().center).toEqual([39, -95])
+      expect(enzymeWrapper.find(Map).props().zoom).toEqual(4)
+    })
+
+    test('loads the map URL parameter instead of default values or preferences', () => {
+      const { enzymeWrapper } = setup({
+        map: {
+          base: {
+            blueMarble: true,
+            trueColor: false,
+            landWaterMap: false
+          },
+          latitude: 10,
+          longitude: 10,
+          overlays: {
+            referenceFeatures: true,
+            coastlines: false,
+            referenceLabels: true
+          },
+          projection: projections.geographic,
+          zoom: 5
+        },
+        router: {
+          location: {
+            pathname: '/search',
+            search: '?m=10!10!5!1!0!0%2C2'
+          }
+        }
+      })
+
+      expect(enzymeWrapper.find(Map).props().center).toEqual([10, 10])
+      expect(enzymeWrapper.find(Map).props().zoom).toEqual(5)
     })
   })
 })

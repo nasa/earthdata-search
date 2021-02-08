@@ -84,5 +84,72 @@ describe('url#encodeUrlQuery', () => {
       }
       expect(encodeUrlQuery(props)).toEqual('/path/here?m=10!15!0!1!2!0')
     })
+
+    test('encodes map correctly when map preferences exist', () => {
+      const props = {
+        ...defaultProps,
+        map: {
+          ...defaultProps.map,
+          base: {
+            blueMarble: false,
+            trueColor: false,
+            landWaterMap: true
+          },
+          latitude: 10,
+          longitude: 15,
+          overlays: {
+            referenceFeatures: true,
+            coastlines: false,
+            referenceLabels: false
+          },
+          zoom: 0
+        },
+        mapPreferences: {
+          baseLayer: 'blueMarble',
+          latitude: 39,
+          longitude: -95,
+          overlayLayers: [
+            'referenceFeatures',
+            'referenceLabels'
+          ],
+          projection: 'epsg4326',
+          zoom: 4
+        }
+      }
+      expect(encodeUrlQuery(props)).toEqual('/path/here?m=10!15!0!1!2!0')
+    })
+
+    test('does not encode the map when it matches the map preferences', () => {
+      const props = {
+        ...defaultProps,
+        map: {
+          ...defaultProps.map,
+          base: {
+            blueMarble: false,
+            trueColor: false,
+            landWaterMap: true
+          },
+          latitude: 39,
+          longitude: -95,
+          overlays: {
+            referenceFeatures: true,
+            coastlines: false,
+            referenceLabels: false
+          },
+          zoom: 4
+        },
+        mapPreferences: {
+          baseLayer: 'landWaterMap',
+          latitude: 39,
+          longitude: -95,
+          overlayLayers: [
+            'referenceFeatures'
+          ],
+          projection: 'epsg4326',
+          zoom: 4
+        }
+      }
+      expect(encodeUrlQuery(props)).toEqual('/path/here')
+    })
   })
 })

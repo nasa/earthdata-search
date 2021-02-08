@@ -60,7 +60,18 @@ describe('PreferencesForm component', () => {
         formData: {
           panelState: 'collapsed',
           collectionListView: 'list',
-          granuleListView: 'table'
+          granuleListView: 'table',
+          mapView: {
+            zoom: 4,
+            baseLayer: 'blueMarble',
+            latitude: 39,
+            longitude: -95,
+            overlayLayers: [
+              'referenceFeatures',
+              'referenceLabels'
+            ],
+            projection: 'epsg4326'
+          }
         }
       })
     })
@@ -70,7 +81,18 @@ describe('PreferencesForm component', () => {
     expect(enzymeWrapper.find(Form).props().formData).toEqual({
       panelState: 'collapsed',
       collectionListView: 'list',
-      granuleListView: 'table'
+      granuleListView: 'table',
+      mapView: {
+        zoom: 4,
+        baseLayer: 'blueMarble',
+        latitude: 39,
+        longitude: -95,
+        overlayLayers: [
+          'referenceFeatures',
+          'referenceLabels'
+        ],
+        projection: 'epsg4326'
+      }
     })
   })
 
