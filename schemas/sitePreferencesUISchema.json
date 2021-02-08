@@ -12,7 +12,15 @@
     "ui:field": "radio"
   },
   "mapView": {
-    "latitude": {},
+    "latitude": {
+      "ui:field": "number"
+    },
+    "longitude": {
+      "ui:field": "number"
+    },
+    "zoom": {
+      "ui:field": "number"
+    },
     "projection": {
       "ui:widget": "radio",
       "ui:field": "radio"
@@ -20,6 +28,9 @@
     "baseLayer": {
       "ui:widget": "radio",
       "ui:field": "radio"
+    },
+    "overlayLayers": {
+      "ui:field": "multiSelect"
     }
   }
 }

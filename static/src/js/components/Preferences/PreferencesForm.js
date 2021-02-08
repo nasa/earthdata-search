@@ -10,6 +10,8 @@ import schema from '../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../schemas/sitePreferencesUISchema.json'
 import Button from '../Button/Button'
 import PreferencesRadioField from './PreferencesRadioField'
+import PreferencesNumberField from './PreferencesNumberField'
+import PreferencesMultiSelectField from './PreferencesMultiSelectField'
 
 import './PreferencesForm.scss'
 
@@ -34,7 +36,11 @@ const PreferencesForm = (props) => {
     setFormData(formData)
   }
 
-  const fields = { radio: PreferencesRadioField }
+  const fields = {
+    multiSelect: PreferencesMultiSelectField,
+    number: PreferencesNumberField,
+    radio: PreferencesRadioField
+  }
 
   return (
     <div className="preferences-form">
