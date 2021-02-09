@@ -7,7 +7,7 @@
     "title": "GHRC Home"
   },
   "org": "GHRC",
-  "pageTitle": "GHRC Portal",
+  "pageTitle": "GHRC",
   "parentConfig": "edsc",
   "query": {
     "dataCenter": "NASA/MSFC/GHRC",
@@ -17,5 +17,4 @@
     "showOnlyGranulesCheckbox": false,
     "showNonEosdisCheckbox": false
   }
-  }
-  
+}
