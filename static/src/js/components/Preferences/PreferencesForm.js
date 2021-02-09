@@ -42,16 +42,36 @@ const PreferencesForm = (props) => {
     radio: PreferencesRadioField
   }
 
+  const validate = (formData, errors) => {
+    // Projections that aren't geographic have a zoom limit of 4
+    if (formData.mapView.projection !== 'epsg4326' && formData.mapView.zoom > 4) {
+      errors.mapView.zoom.addError('should be less than or equal to 4')
+    }
+
+    return errors
+  }
+
+  const transformErrors = errors => errors.map((error) => {
+    // eslint-disable-next-line no-param-reassign
+    error.message = error.message.replace('<=', 'less than or equal to')
+    // eslint-disable-next-line no-param-reassign
+    error.message = error.message.replace('>=', 'greater than or equal to')
+
+    return error
+  })
+
   return (
     <div className="preferences-form">
       <Form
-        schema={schema}
-        uiSchema={uiSchema}
-        formData={formData}
-        onSubmit={onUpdatePreferences}
-        onChange={onChange}
         fields={fields}
+        formData={formData}
         liveValidate
+        onChange={onChange}
+        onSubmit={onUpdatePreferences}
+        schema={schema}
+        transformErrors={transformErrors}
+        uiSchema={uiSchema}
+        validate={validate}
       >
         <div>
           <Button

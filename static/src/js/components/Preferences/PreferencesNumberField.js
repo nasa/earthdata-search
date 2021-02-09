@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { startCase } from 'lodash'
-
 import { Form } from 'react-bootstrap'
+import { asNumber } from 'react-jsonschema-form/lib/utils'
 
 import './PreferencesNumberField.scss'
 
@@ -23,8 +23,24 @@ class PreferencesNumberField extends Component {
       this.setState({
         formData: event.target.value
       }, () => {
-        const { formData } = this.state
-        return onChange(formData)
+        let { formData } = this.state
+
+        // Normalize decimals that don't start with a zero character in advance so
+        // that the rest of the normalization logic is simpler
+        if (`${formData}`.charAt(0) === '.') {
+          formData = `0${formData}`
+        }
+
+        // Check that the value is a string (this can happen if the widget used is a
+        // <select>, due to an enum declaration etc) then, if the value ends in a
+        // trailing decimal point or multiple zeroes, strip the trailing values
+        const trailingCharMatcherWithPrefix = /\.([0-9]*0)*$/
+        const trailingCharMatcher = /[0.]0*$/
+        const processed = typeof formData === 'string' && formData.match(trailingCharMatcherWithPrefix)
+          ? asNumber(formData.replace(trailingCharMatcher, ''))
+          : asNumber(formData)
+
+        return onChange(processed || formData)
       })
     }
   }
@@ -55,6 +71,7 @@ class PreferencesNumberField extends Component {
             key={`${fieldName}-number`}
             label={fieldName}
             name={fieldName}
+            type="number"
             onChange={this.onChange()}
             value={formData}
           />
@@ -64,10 +81,17 @@ class PreferencesNumberField extends Component {
   }
 }
 
+PreferencesNumberField.defaultProps = {
+  formData: ''
+}
+
 PreferencesNumberField.propTypes = {
   schema: PropTypes.shape({}).isRequired,
   name: PropTypes.string.isRequired,
-  formData: PropTypes.number.isRequired,
+  formData: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   onChange: PropTypes.func.isRequired
 }
 
