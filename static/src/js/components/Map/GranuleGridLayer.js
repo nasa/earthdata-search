@@ -101,6 +101,7 @@ export class GranuleGridLayer extends MapLayer {
       onChangeFocusedGranule,
       onExcludeGranule,
       onMetricsMap,
+      imageryCache,
       isProjectPage
     } = props
 
@@ -125,6 +126,7 @@ export class GranuleGridLayer extends MapLayer {
         focusedCollectionId,
         focusedGranuleId,
         granules: granuleData,
+        imageryCache,
         isProjectPage,
         metadata,
         onChangeFocusedGranule,
@@ -163,6 +165,7 @@ export class GranuleGridLayer extends MapLayer {
       focusedGranuleId,
       projection,
       project,
+      imageryCache,
       isProjectPage,
       onChangeFocusedGranule,
       onExcludeGranule,
@@ -323,6 +326,7 @@ export class GranuleGridLayer extends MapLayer {
           focusedCollectionId,
           focusedGranuleId,
           granules: granuleData,
+          imageryCache,
           isProjectPage,
           lightColor,
           metadata,
