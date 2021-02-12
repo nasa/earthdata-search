@@ -11,6 +11,7 @@ import {
   ScaleControl
 } from 'react-leaflet'
 import { difference } from 'lodash'
+import LRUCache from 'lrucache'
 
 import actions from '../../actions/index'
 
@@ -80,6 +81,8 @@ export class MapContainer extends Component {
     this.handleOverlayChange = this.handleOverlayChange.bind(this)
     this.handleProjectionSwitching = this.handleProjectionSwitching.bind(this)
     this.onMapReady = this.onMapReady.bind(this)
+
+    this.imageryCache = LRUCache(400)
   }
 
   componentDidMount() {
@@ -377,6 +380,7 @@ export class MapContainer extends Component {
           granulesMetadata={granulesMetadata}
           isProjectPage={isProjectPage}
           granules={nonExcludedGranules}
+          imageryCache={this.imageryCache}
           project={project}
           projection={projection}
           onChangeFocusedGranule={onChangeFocusedGranule}

@@ -57,6 +57,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       focusedCollectionId,
       focusedGranuleId,
       granules,
+      imageryCache,
       isProjectPage,
       lightColor,
       metadata,
@@ -77,6 +78,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     this.onExcludeGranule = onExcludeGranule
     this.onMetricsMap = onMetricsMap
     this.focusedCollectionId = focusedCollectionId
+    this.imageryCache = imageryCache
 
     const {
       addedGranuleIds = [],
@@ -502,6 +504,12 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
   loadImage(url, callback, retries = 0) {
     if (url != null) {
+      // Check for image in cache, return if found
+      const cachedImage = this.imageryCache.get(url)
+      if (cachedImage !== undefined) {
+        return callback(cachedImage)
+      }
+
       const image = new Image()
       image.onload = function onload() {
         callback(this)
@@ -521,6 +529,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       image.setAttribute('style', 'display: none;')
       document.body.appendChild(image)
       image.src = url
+
       return url
     }
     return callback(null)
@@ -623,6 +632,9 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
       // eslint-disable-next-line no-loop-func
       self.loadImage(url, (image) => {
+        // Cache the image
+        this.imageryCache.set(url, image)
+
         queue[i] = () => {
           const paths = []
           const deemphisizedPaths = []
