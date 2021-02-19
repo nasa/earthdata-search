@@ -8,7 +8,8 @@ import { parse as parseXml } from 'fast-xml-parser'
 export const parseError = (errorObj, {
   shouldLog = true,
   asJSON = true,
-  reThrowError = false
+  reThrowError = false,
+  logPrefix
 } = {}) => {
   const {
     name = 'Error',
@@ -79,11 +80,17 @@ export const parseError = (errorObj, {
       })
     }
   } else {
+    const logParts = [
+      logPrefix,
+      errorObj.toString()
+    ]
+
     if (shouldLog) {
-      console.log(errorObj.toString())
+
+      console.log(logParts.filter(Boolean).join(' '))
     }
 
-    errorArray = [errorObj.toString()]
+    errorArray = [logParts.filter(Boolean).join(' ')]
   }
 
   // If the error needs to be thrown again, do so before returning
