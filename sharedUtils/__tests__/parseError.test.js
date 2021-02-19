@@ -25,6 +25,27 @@ describe('parseError', () => {
           })
         })
       })
+
+      describe('when a logPrefix is provided', () => {
+        test('it logs the errors with the prefix', () => {
+          const consoleMock = jest.spyOn(console, 'log')
+
+          const response = parseError(new Error('Standard Error'), { logPrefix: '[Log Prefix]:' })
+
+          expect(consoleMock).toBeCalledTimes(1)
+          expect(consoleMock.mock.calls[0]).toEqual(['[Log Prefix]: Error: Standard Error'])
+
+          expect(response).toEqual({
+            statusCode: 500,
+            body: JSON.stringify({
+              statusCode: 500,
+              errors: [
+                '[Log Prefix]: Error: Standard Error'
+              ]
+            })
+          })
+        })
+      })
     })
 
     describe('when shouldLog is set to false', () => {
