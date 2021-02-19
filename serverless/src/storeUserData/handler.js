@@ -1,21 +1,10 @@
 import 'array-foreach-async'
-import { getUrsUserData } from './getUrsUserData'
-import { getEchoProfileData } from './getEchoProfileData'
-import { getEchoPreferencesData } from './getEchoPreferencesData'
+
 import { getDbConnection } from '../util/database/getDbConnection'
-
-/**
- * Log an error from the lambda specific to the calling method
- * @param {Object} errorObj Error object thrown
- * @param {String} endpointName An identifier for the log message to indicate the calling method
- */
-const logResponseError = (errorObj, endpointName) => {
-  const { errors = [] } = errorObj.error
-
-  errors.forEach((errorMessage) => {
-    console.log(`[StoreUserData Error] (${endpointName}) ${errorMessage}`)
-  })
-}
+import { getEchoPreferencesData } from './getEchoPreferencesData'
+import { getEchoProfileData } from './getEchoProfileData'
+import { getUrsUserData } from './getUrsUserData'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Accepts a username and token to fetch profile information from URS and ECHO
@@ -67,14 +56,14 @@ const storeUserData = async (event, context) => {
       try {
         ursUserData = await getUrsUserData(username, token, environment)
       } catch (e) {
-        logResponseError(e, 'URS Profile')
+        parseError(e, { logPrefix: '[StoreUserData Error] (URS Profile)'})
       }
 
       let echoProfileData
       try {
         echoProfileData = await getEchoProfileData(token, environment)
       } catch (e) {
-        logResponseError(e, 'Echo Profile')
+        parseError(e, { logPrefix: '[StoreUserData Error] (Echo Profile)' })
       }
 
       // Update the previously defined value for this variable
@@ -86,7 +75,7 @@ const storeUserData = async (event, context) => {
       try {
         echoPreferencesData = await getEchoPreferencesData(id, token, environment)
       } catch (e) {
-        logResponseError(e, 'Echo Preferences')
+        parseError(e, { logPrefix: '[StoreUserData Error] (Echo Preferences)' })
       }
     }
 
