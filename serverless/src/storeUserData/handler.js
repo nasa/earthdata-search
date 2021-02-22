@@ -1,5 +1,7 @@
 import 'array-foreach-async'
 
+import { isEmpty } from 'lodash'
+
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEchoPreferencesData } from './getEchoPreferencesData'
 import { getEchoProfileData } from './getEchoProfileData'
@@ -28,10 +30,14 @@ const storeUserData = async (event, context) => {
   await sqsRecords.forEachAsync(async (sqsRecord) => {
     const { body } = sqsRecord
 
+    console.log(`[StoreUserData Debug] Payload received: ${body}`)
+
     // Destruct the payload from SQS
     const {
       environment, userId, username
     } = JSON.parse(body)
+
+    console.log(`[StoreUserData Debug] Attempting to retrieve user data for ${username} (id: ${userId}, environment: ${environment}).`)
 
     // Retrieve the authenticated users' access tokens from the database
     const existingUserTokens = await dbConnection('user_tokens')
@@ -53,13 +59,23 @@ const storeUserData = async (event, context) => {
       const [tokenRow] = existingUserTokens
       const { access_token: token } = tokenRow
 
+      // Default the payload that gets sent to the database
+      const userPayload = {
+        echo_id: id,
+        environment,
+        urs_id: username
+      }
+
       try {
         ursUserData = await getUrsUserData(username, token, environment)
+
+        // If we successfully retrieved URS data add the response to the database payload
+        userPayload.urs_profile = ursUserData
       } catch (e) {
         parseError(e, { logPrefix: '[StoreUserData Error] (URS Profile)' })
       }
 
-      let echoProfileData
+      let echoProfileData = {}
       try {
         echoProfileData = await getEchoProfileData(token, environment)
       } catch (e) {
@@ -67,28 +83,30 @@ const storeUserData = async (event, context) => {
       }
 
       // Update the previously defined value for this variable
-      ({ user = {} } = echoProfileData);
+      ({ user = {} } = echoProfileData)
 
-      // The user GUID will be used to get the preference data as well as stored separately in the database
-      ({ id } = user)
+      if (!isEmpty(user)) {
+        // If we successfully retrieved Echo Profile data add the response to the database payload
+        userPayload.echo_profile = user;
 
-      try {
-        echoPreferencesData = await getEchoPreferencesData(id, token, environment)
-      } catch (e) {
-        parseError(e, { logPrefix: '[StoreUserData Error] (Echo Preferences)' })
+        // The user GUID will be used to get the preference data as well as stored separately in the database
+        ({ id } = user)
+
+        try {
+          echoPreferencesData = await getEchoPreferencesData(id, token, environment)
+
+          userPayload.echo_preferences = echoPreferencesData
+        } catch (e) {
+          parseError(e, { logPrefix: '[StoreUserData Error] (Echo Preferences)' })
+        }
+      } else {
+        console.log(`[StoreUserData Debug] Ignoring attempt to retrieve echo preferences data for ${username} (userId: ${userId}, environment: ${environment}) because the attempt to retrieve echo profile data failed.`)
       }
-    }
 
-    const userPayload = {
-      echo_id: id,
-      echo_profile: user,
-      echo_preferences: echoPreferencesData,
-      environment,
-      urs_id: username,
-      urs_profile: ursUserData
+      await dbConnection('users').update({ ...userPayload }).where({ id: userId })
+    } else {
+      console.log(`[StoreUserData Debug] Ignoring attempt to retrieve user data for ${username} (userId: ${userId}, environment: ${environment}) because the user doesn't have any available tokens.`)
     }
-
-    await dbConnection('users').update({ ...userPayload }).where({ id: userId })
   })
 }
 
