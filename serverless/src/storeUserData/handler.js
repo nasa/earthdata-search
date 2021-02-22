@@ -56,7 +56,7 @@ const storeUserData = async (event, context) => {
       try {
         ursUserData = await getUrsUserData(username, token, environment)
       } catch (e) {
-        parseError(e, { logPrefix: '[StoreUserData Error] (URS Profile)'})
+        parseError(e, { logPrefix: '[StoreUserData Error] (URS Profile)' })
       }
 
       let echoProfileData
