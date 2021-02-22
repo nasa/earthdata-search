@@ -94,7 +94,7 @@
         "projection": {
           "type": "string",
           "title": "Projection",
-          "default": "1",
+          "default": "epsg4326",
           "enum": [
             "epsg4326",
             "epsg3413",
