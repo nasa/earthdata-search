@@ -13,6 +13,9 @@ import { getSystemToken } from '../util/urs/getSystemToken'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { parseError } from '../../../sharedUtils/parseError'
 import { tagName } from '../../../sharedUtils/tags'
+import { wrapAxios } from '../util/wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 // AWS SQS adapter
 let sqs
@@ -50,7 +53,7 @@ const generateSubsettingTags = async (event, context) => {
 
   const serviceOptionAssignmentUrl = `${echoRestRoot}/service_option_assignments.json`
   try {
-    const serviceOptionResponse = await axios({
+    const serviceOptionResponse = await wrappedAxios({
       method: 'get',
       url: serviceOptionAssignmentUrl,
       headers: {
@@ -58,6 +61,8 @@ const generateSubsettingTags = async (event, context) => {
         'Echo-Token': cmrToken
       }
     })
+
+    console.log(`Request for service options assignments successfully completed in ${serviceOptionResponse.elapsedTime} ms`)
 
     serviceOptionAssignments = serviceOptionResponse.data
 
@@ -83,6 +88,8 @@ const generateSubsettingTags = async (event, context) => {
   // Retrieve only those service objects that match the types edsc subsets
   const serviceObjects = await getRelevantServices(cmrToken)
 
+  console.log(`Retrieved ${serviceObjects.length} services from CMR.`)
+
   const allCollectionsWithServices = []
   const chunkedServices = chunkArray(Object.keys(serviceObjects), 100)
 
@@ -100,11 +107,13 @@ const generateSubsettingTags = async (event, context) => {
     allCollectionsWithServices.push(...allCmrCollections)
   })
 
-  await allCollectionsWithServices.forEachAsync(async (collection) => {
+  console.log('Retrieved all the collections that have UMM Services we need.')
+
+  allCollectionsWithServices.forEach((collection) => {
     const { associations = {} } = collection
     const { services = [] } = associations
 
-    await services.forEachAsync(async (collectionService) => {
+    services.forEach(async (collectionService) => {
       if (Object.keys(serviceObjects).includes(collectionService)) {
         serviceObjects[collectionService].collections.push(collection)
       }
@@ -192,35 +201,43 @@ const generateSubsettingTags = async (event, context) => {
     }
   })
 
-  // Remove tags from collections that don't meet the criteria defined above
-  await Object.keys(collectionsToTag).forEachAsync(async (tagPostFix) => {
-    const removeTagCriteria = {
-      condition: {
-        and: [
-          {
-            tag: { tag_key: tagName(`subset_service.${tagPostFix}`) }
-          }
-        ]
+  console.log('Completed creating an SQS message for all necessary ADD tags.')
+
+  try {
+    // Remove tags from collections that don't meet the criteria defined above
+    await Object.keys(collectionsToTag).forEachAsync(async (tagPostFix) => {
+      const removeTagCriteria = {
+        condition: {
+          and: [
+            {
+              tag: { tag_key: tagName(`subset_service.${tagPostFix}`) }
+            }
+          ]
+        }
       }
-    }
 
-    const taggedCollections = collectionsToTag[tagPostFix]
+      const taggedCollections = collectionsToTag[tagPostFix]
 
-    if (taggedCollections.length) {
-      removeTagCriteria.condition.and.push({
-        not: { or: taggedCollections }
-      })
-
-      await sqs.sendMessage({
-        QueueUrl: process.env.tagQueueUrl,
-        MessageBody: JSON.stringify({
-          tagName: tagName(`subset_service.${tagPostFix}`),
-          action: 'REMOVE',
-          searchCriteria: removeTagCriteria
+      if (taggedCollections.length) {
+        removeTagCriteria.condition.and.push({
+          not: { or: taggedCollections }
         })
-      }).promise()
-    }
-  })
+
+        await sqs.sendMessage({
+          QueueUrl: process.env.tagQueueUrl,
+          MessageBody: JSON.stringify({
+            tagName: tagName(`subset_service.${tagPostFix}`),
+            action: 'REMOVE',
+            searchCriteria: removeTagCriteria
+          })
+        }).promise()
+      }
+    })
+  } catch (e) {
+    parseError(e)
+  }
+
+  console.log('Completed creating an SQS message for all necessary REMOVED tags.')
 
   return {
     isBase64Encoded: false,
