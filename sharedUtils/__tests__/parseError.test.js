@@ -5,7 +5,7 @@ beforeEach(() => {
 })
 
 describe('parseError', () => {
-  describe('when standard errors are throw', () => {
+  describe('when standard errors are thrown', () => {
     describe('when shouldLog is set to true', () => {
       test('it logs the errors', () => {
         const consoleMock = jest.spyOn(console, 'log')
@@ -97,6 +97,36 @@ describe('parseError', () => {
               errors: [
                 '400 Bad Request'
               ]
+            })
+          })
+        })
+
+        describe('when a logPrefix is provided', () => {
+          test('it logs the errors with the prefix', () => {
+            const consoleMock = jest.spyOn(console, 'log')
+
+            const response = parseError({
+              response: {
+                data: {
+                  errors: [
+                    '400 Bad Request'
+                  ]
+                },
+                status: 400
+              }
+            }, { logPrefix: '[Log Prefix]:' })
+
+            expect(consoleMock).toBeCalledTimes(1)
+            expect(consoleMock.mock.calls[0]).toEqual(['[Log Prefix]: Error (400): 400 Bad Request'])
+
+            expect(response).toEqual({
+              statusCode: 400,
+              body: JSON.stringify({
+                statusCode: 400,
+                errors: [
+                  '400 Bad Request'
+                ]
+              })
             })
           })
         })

@@ -76,7 +76,12 @@ export const parseError = (errorObj, {
     if (shouldLog) {
       // Log each error provided
       errorArray.forEach((message) => {
-        console.log(`${name} (${code}): ${message}`)
+        const logParts = [
+          logPrefix,
+          `${name} (${code}): ${message}`
+        ]
+
+        console.log(logParts.filter(Boolean).join(' '))
       })
     }
   } else {
