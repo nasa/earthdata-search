@@ -86,7 +86,6 @@ export const parseError = (errorObj, {
     ]
 
     if (shouldLog) {
-
       console.log(logParts.filter(Boolean).join(' '))
     }
 
