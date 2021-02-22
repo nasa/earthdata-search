@@ -1,9 +1,15 @@
 import 'array-foreach-async'
+
 import { stringify } from 'qs'
 import axios from 'axios'
-import { readCmrResults } from './readCmrResults'
-import { getEarthdataConfig } from '../../../../sharedUtils/config'
+
 import { getClientId } from '../../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../../sharedUtils/config'
+import { parseError } from '../../../../sharedUtils/parseError'
+import { readCmrResults } from './readCmrResults'
+import { wrapAxios } from '../wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 /**
  * CMR has a maximum page size of 2000, this method will automatically page through all results regardless of how many there are
@@ -32,7 +38,7 @@ export const pageAllCmrResults = async ({
     // all of the results
     const { cmrHost } = getEarthdataConfig(deployedEnvironment)
 
-    const response = await axios({
+    const response = wrappedAxios({
       method: 'post',
       url: `${cmrHost}/${path}`,
       data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
@@ -43,6 +49,8 @@ export const pageAllCmrResults = async ({
         ...additionalHeaders
       }
     })
+
+    console.log(`Request for page 1 of cmr results to ${path} successfully completed in ${response.elapsedTime} ms`)
 
     // Initialize the array that will contain all of the results from CMR with the
     // body from the first request
@@ -62,7 +70,7 @@ export const pageAllCmrResults = async ({
 
         console.log(`Retrieving page ${cmrParams.page_num}...`)
 
-        const additionalCmrResponse = await axios({
+        const additionalCmrResponse = wrappedAxios({
           method: 'post',
           url: `${cmrHost}/${path}`,
           data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
@@ -74,13 +82,15 @@ export const pageAllCmrResults = async ({
           }
         })
 
+        console.log(`Request for page ${cmrParams.page_num} of cmr results to ${path} successfully completed in ${response.elapsedTime} ms`)
+
         allResults.push(...readCmrResults(path, additionalCmrResponse))
       })
     }
 
     return allResults
   } catch (e) {
-    console.log(e)
+    parseError(e)
 
     return e
   }
