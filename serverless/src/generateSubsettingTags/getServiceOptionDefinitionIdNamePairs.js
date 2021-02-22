@@ -3,11 +3,15 @@ import 'array-foreach-async'
 import axios from 'axios'
 
 import { stringify } from 'qs'
+
 import { chunkArray } from '../util/chunkArray'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { parseError } from '../../../sharedUtils/parseError'
 import { getClientId } from '../../../sharedUtils/getClientId'
+import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { parseError } from '../../../sharedUtils/parseError'
+import { wrapAxios } from '../util/wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 /**
  * Retrieve service option definition records
@@ -32,7 +36,7 @@ export const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOpt
 
     try {
       // Request the service option definitions from legacy services
-      const serviceOptionDefinitionResponse = await axios({
+      const serviceOptionDefinitionResponse = await wrappedAxios({
         method: 'get',
         url: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}`,
         headers: {
@@ -40,6 +44,8 @@ export const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOpt
           'Echo-Token': cmrToken
         }
       })
+
+      console.log(`Request for service options definition successfully completed in ${serviceOptionDefinitionResponse.elapsedTime} ms`)
 
       // Iterate through the option definitions returned
       const serviceOptionDefinitionResponseBody = serviceOptionDefinitionResponse.data
