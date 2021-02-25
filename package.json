@@ -70,7 +70,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.9.0",
     "@babel/runtime": "^7.4.4",
-    "@edsc/echoforms": "^1.1.10",
+    "@edsc/echoforms": "^1.1.11",
     "@edsc/timeline": "^1.0.1",
     "@googlemaps/google-maps-services-js": "^3.1.14",
     "@hot-loader/react-dom": "^16.12.0",
