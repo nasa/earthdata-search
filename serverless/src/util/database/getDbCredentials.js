@@ -1,7 +1,6 @@
 import AWS from 'aws-sdk'
 
-import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
-import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
+import { getSecretEnvironmentConfig } from '../../../../sharedUtils/config'
 import { getSecretsManagerConfig } from '../aws/getSecretsManagerConfig'
 
 let dbCredentials
@@ -17,7 +16,7 @@ export const getDbCredentials = async () => {
     }
 
     if (process.env.NODE_ENV === 'development') {
-      const { dbUsername, dbPassword } = getSecretEarthdataConfig(deployedEnvironment())
+      const { dbUsername, dbPassword } = getSecretEnvironmentConfig(process.env.NODE_ENV)
 
       return {
         username: dbUsername,
