@@ -56,7 +56,7 @@
     "regenerator-runtime": "^0.13.3",
     "snyk": "^1.396.0",
     "start-server-and-test": "^1.10.6",
-    "three": "~0.86.0",
+    "three": "~0.125.0",
     "webpack-dev-server": "^3.11.0",
     "why-did-you-update": "^1.0.6"
   },
