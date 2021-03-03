@@ -5,16 +5,16 @@
  * @return {Array} The results from a successful response object
  */
 export const readCmrResults = (providedPath, cmrResponse) => {
+  const { data, status } = cmrResponse
+
   // Return an empty result for non successful requests
-  if (cmrResponse.status !== 200) {
-    console.log(cmrResponse.body)
+  if (status !== 200) {
+    console.log(data)
 
     return []
   }
 
   const [path, extension] = providedPath.split('.')
-
-  const { data } = cmrResponse
 
   // The collection and granule search endpoint has a different response
   // than other concepts as does umm_json

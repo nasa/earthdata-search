@@ -103,7 +103,9 @@ const storeUserData = async (event, context) => {
         console.log(`[StoreUserData Debug] Ignoring attempt to retrieve echo preferences data for ${username} (userId: ${userId}, environment: ${environment}) because the attempt to retrieve echo profile data failed.`)
       }
 
-      await dbConnection('users').update({ ...userPayload }).where({ id: userId })
+      const dbResponse = await dbConnection('users').update({ ...userPayload }).where({ id: userId })
+
+      console.log(`Response from updating ${username} (id: ${userId}): ${dbResponse}`)
     } else {
       console.log(`[StoreUserData Debug] Ignoring attempt to retrieve user data for ${username} (userId: ${userId}, environment: ${environment}) because the user doesn't have any available tokens.`)
     }

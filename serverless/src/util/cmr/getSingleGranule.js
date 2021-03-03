@@ -7,6 +7,9 @@ import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment
 import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { readCmrResults } from './readCmrResults'
+import { wrapAxios } from '../wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 // Compensate for intermittent ENOTFOUND issues
 axiosRetry(axios, { retries: 4 })
@@ -28,7 +31,7 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
   console.log(`Retrieving a single granule for ${collectionId}`)
 
   // Using an extension of request promise that supports retries
-  const cmrResponse = await axios({
+  const cmrResponse = await wrappedAxios({
     method: 'post',
     url: granuleSearchUrl,
     data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
@@ -38,6 +41,11 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
       'Echo-Token': cmrToken
     }
   })
+
+  const { config } = cmrResponse
+  const { elapsedTime } = config
+
+  console.log(`Request for a single cmr granule successfully completed in ${elapsedTime} ms`)
 
   const responseBody = readCmrResults('search/granules.json', cmrResponse)
 

@@ -62,9 +62,12 @@ const generateSubsettingTags = async (event, context) => {
       }
     })
 
-    console.log(`Request for service options assignments successfully completed in ${serviceOptionResponse.elapsedTime} ms`)
+    const { config, data } = serviceOptionResponse
+    const { elapsedTime } = config
 
-    serviceOptionAssignments = serviceOptionResponse.data
+    console.log(`Request for ${data.length} service options assignments successfully completed in ${elapsedTime} ms`)
+
+    serviceOptionAssignments = data
 
     const serviceOptionIds = serviceOptionAssignments.map((optionAssociation) => {
       const { service_option_assignment: optionAssignment } = optionAssociation
@@ -88,7 +91,7 @@ const generateSubsettingTags = async (event, context) => {
   // Retrieve only those service objects that match the types edsc subsets
   const serviceObjects = await getRelevantServices(cmrToken)
 
-  console.log(`Retrieved ${serviceObjects.length} services from CMR.`)
+  console.log(`Retrieved ${Object.keys(serviceObjects).length} services from CMR.`)
 
   const allCollectionsWithServices = []
   const chunkedServices = chunkArray(Object.keys(serviceObjects), 100)

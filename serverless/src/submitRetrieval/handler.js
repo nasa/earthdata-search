@@ -169,7 +169,7 @@ const submitRetrieval = async (event, context) => {
               })
             })
           } catch (e) {
-            console.log(e)
+            parseError(e)
           }
 
           if (!process.env.IS_OFFLINE) {
@@ -177,14 +177,10 @@ const submitRetrieval = async (event, context) => {
             // chunk potentially larger request into acceptable chunks
             if (pageNum % 10 === 0 || pageNum === orderPayloads.length) {
               // Send all of the order messages to sqs as a single batch
-              try {
-                await sqs.sendMessageBatch({
-                  QueueUrl: queueUrl,
-                  Entries: sqsEntries
-                }).promise()
-              } catch (e) {
-                console.log(e)
-              }
+              await sqs.sendMessageBatch({
+                QueueUrl: queueUrl,
+                Entries: sqsEntries
+              }).promise()
 
               sqsEntries = []
             }

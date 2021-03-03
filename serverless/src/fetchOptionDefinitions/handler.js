@@ -13,6 +13,9 @@ import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { tagName } from '../../../sharedUtils/tags'
+import { wrapAxios } from '../util/wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 // AWS SQS adapter
 let sqs
@@ -31,7 +34,7 @@ const fetchOptionDefinitions = async (event, context) => {
 
   if (sqsRecords.length === 0) return
 
-  console.log(`Processing ${sqsRecords.length} tag(s)`)
+  console.log(`Processing ${sqsRecords.length} option definition(s)`)
 
   // Retrieve a connection to the database
   const cmrToken = await getSystemToken()
@@ -56,7 +59,7 @@ const fetchOptionDefinitions = async (event, context) => {
 
       const { id: granuleId } = singleGranule
 
-      const optionDefinitionResponse = await axios({
+      const optionDefinitionResponse = await wrappedAxios({
         method: 'post',
         url: optionDefinitionUrl,
         data: stringify({
@@ -69,7 +72,11 @@ const fetchOptionDefinitions = async (event, context) => {
         }
       })
 
-      const { data } = optionDefinitionResponse
+      const { config, data } = optionDefinitionResponse
+      const { elapsedTime } = config
+
+      console.log(`Request for option definition order information successfully completed in ${elapsedTime} ms`)
+
       const [optionDefinition] = data
       const { order_information: orderInformation } = optionDefinition
       const { option_definition_refs: optionDefinitions = [] } = orderInformation
