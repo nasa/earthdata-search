@@ -29,28 +29,26 @@ export const getRelevantServices = async (cmrToken) => {
     const { Type: serviceType, RelatedURLs: relatedUrls = [] } = umm
 
     // We only need to tag ECHO ORDERS and ESI collections
-    if (!['OPeNDAP', 'ESI', 'ECHO ORDERS'].includes(serviceType)) {
-      return
-    }
+    if (['OPeNDAP', 'ESI', 'ECHO ORDERS'].includes(serviceType)) {
+      const serviceData = {
+        id: conceptId,
+        type: serviceType
+      }
 
-    const serviceData = {
-      id: conceptId,
-      type: serviceType
-    }
+      if (serviceType === 'ESI' || serviceType === 'ECHO ORDERS') {
+        relatedUrls.forEach((relatedUrl) => {
+          const { Type: urlType, URL: urlValue } = relatedUrl
 
-    if (serviceType === 'ESI' || serviceType === 'ECHO ORDERS') {
-      relatedUrls.forEach((relatedUrl) => {
-        const { Type: urlType, URL: urlValue } = relatedUrl
+          if (urlType === 'GET SERVICE') {
+            serviceData.url = urlValue
+          }
+        })
+      }
 
-        if (urlType === 'GET SERVICE') {
-          serviceData.url = urlValue
-        }
-      })
-    }
-
-    serviceObjects[meta['concept-id']] = {
-      collections: [],
-      tagData: serviceData
+      serviceObjects[meta['concept-id']] = {
+        collections: [],
+        tagData: serviceData
+      }
     }
   })
 

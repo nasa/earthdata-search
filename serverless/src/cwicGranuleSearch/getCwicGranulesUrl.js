@@ -25,9 +25,12 @@ export const getCwicGranulesUrl = async (collectionId) => {
       }
     })
 
-    console.log(`Request for granules URL for CWIC collection '${collectionId}' successfully completed in ${osddResponse.elapsedTime} ms`)
+    const { config, data } = osddResponse
+    const { elapsedTime } = config
 
-    const osddBody = parseXml(osddResponse.data, {
+    console.log(`Request for granules URL for CWIC collection '${collectionId}' successfully completed in ${elapsedTime} ms`)
+
+    const osddBody = parseXml(data, {
       ignoreAttributes: false,
       attributeNamePrefix: ''
     })
