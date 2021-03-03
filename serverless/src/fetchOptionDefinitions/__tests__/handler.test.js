@@ -165,9 +165,9 @@ describe('fetchOptionDefinitions', () => {
 
     // The first will output the number of records, the second will
     // contain the message we're looking for
-    expect(consoleMock).toBeCalledTimes(2)
+    expect(consoleMock).toBeCalledTimes(3)
 
-    expect(consoleMock.mock.calls[1]).toEqual([
+    expect(consoleMock.mock.calls[2]).toEqual([
       "No Option Definitions for C10000001-EDSC, skipping 'edsc.extra.serverless.subset_service.echo_orders' tag."
     ])
   })
@@ -219,7 +219,7 @@ describe('fetchOptionDefinitions', () => {
 
     // The first will output the number of records, the second will
     // contain the message we're looking for
-    expect(consoleMock).toBeCalledTimes(2)
+    expect(consoleMock).toBeCalledTimes(3)
   })
 
   test('does not submit data to sqs when no option definitions exist', async () => {
@@ -280,7 +280,7 @@ describe('fetchOptionDefinitions', () => {
 
     // The first will output the number of records, the second will
     // contain the message we're looking for
-    expect(consoleMock).toBeCalledTimes(2)
+    expect(consoleMock).toBeCalledTimes(3)
   })
 
   test('catches and logs errors correctly', async () => {

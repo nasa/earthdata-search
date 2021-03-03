@@ -45,10 +45,13 @@ export const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOpt
         }
       })
 
-      console.log(`Request for service options definition successfully completed in ${serviceOptionDefinitionResponse.elapsedTime} ms`)
+      const { config, data } = serviceOptionDefinitionResponse
+      const { elapsedTime } = config
+
+      console.log(`Request for service options definition successfully completed in ${elapsedTime} ms`)
 
       // Iterate through the option definitions returned
-      const serviceOptionDefinitionResponseBody = serviceOptionDefinitionResponse.data
+      const serviceOptionDefinitionResponseBody = data
 
       serviceOptionDefinitionResponseBody.forEach((serviceOptionObj) => {
         const { service_option_definition: serviceOptionDefinition } = serviceOptionObj

@@ -77,14 +77,10 @@ export const getProjectionCapabilities = async (projection) => {
             console.log('knownColorMap', knownColorMap)
           }
 
-          try {
-            await sqs.sendMessage({
-              QueueUrl: process.env.colorMapQueueUrl,
-              MessageBody: JSON.stringify(knownColorMap)
-            }).promise()
-          } catch (e) {
-            console.log(e)
-          }
+          await sqs.sendMessage({
+            QueueUrl: process.env.colorMapQueueUrl,
+            MessageBody: JSON.stringify(knownColorMap)
+          }).promise()
         }
       })
 

@@ -50,7 +50,10 @@ export const pageAllCmrResults = async ({
       }
     })
 
-    console.log(`Request for page 1 of cmr results to ${path} successfully completed in ${response.elapsedTime} ms`)
+    const { config } = response
+    const { elapsedTime } = config
+
+    console.log(`Request for page 1 of cmr results to ${path} successfully completed in ${elapsedTime} ms`)
 
     // Initialize the array that will contain all of the results from CMR with the
     // body from the first request

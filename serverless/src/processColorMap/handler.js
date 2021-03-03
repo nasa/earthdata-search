@@ -48,8 +48,6 @@ const processColorMap = async (event, context) => {
 
     const providedColorMap = JSON.parse(body)
 
-    console.log('providedColorMap', providedColorMap)
-
     const scaleColors = []
     const scaleLabels = []
     const scaleValues = []
