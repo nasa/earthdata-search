@@ -38,7 +38,7 @@ export const pageAllCmrResults = async ({
     // all of the results
     const { cmrHost } = getEarthdataConfig(deployedEnvironment)
 
-    const response = wrappedAxios({
+    const response = await wrappedAxios({
       method: 'post',
       url: `${cmrHost}/${path}`,
       data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
@@ -73,7 +73,7 @@ export const pageAllCmrResults = async ({
 
         console.log(`Retrieving page ${cmrParams.page_num}...`)
 
-        const additionalCmrResponse = wrappedAxios({
+        const additionalCmrResponse = await wrappedAxios({
           method: 'post',
           url: `${cmrHost}/${path}`,
           data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
