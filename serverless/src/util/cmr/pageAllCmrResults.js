@@ -85,7 +85,10 @@ export const pageAllCmrResults = async ({
           }
         })
 
-        console.log(`Request for page ${cmrParams.page_num} of cmr results to ${path} successfully completed in ${response.elapsedTime} ms`)
+        const { config } = additionalCmrResponse
+        const { elapsedTime } = config
+
+        console.log(`Request for page ${cmrParams.page_num} of cmr results to ${path} successfully completed in ${elapsedTime} ms`)
 
         allResults.push(...readCmrResults(path, additionalCmrResponse))
       })
