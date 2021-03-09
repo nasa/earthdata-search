@@ -23,7 +23,7 @@ function setup(overrides) {
       hasAllMetadata: true,
       dataCenters: [],
       scienceKeywords: [],
-      nativeFormats: [],
+      nativeDataFormats: [],
       urls: {
         html: {
           title: 'HTML',
@@ -133,7 +133,7 @@ describe('CollectionDetails component', () => {
         ],
         dataCenters: [],
         scienceKeywords: [],
-        nativeFormats: [],
+        nativeDataFormats: [],
         spatial: [
           'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
         ],
@@ -470,7 +470,7 @@ describe('CollectionDetails component', () => {
     test('renders correctly', () => {
       const { enzymeWrapper } = setup({
         overrideMetadata: {
-          nativeFormats: ['PDF']
+          nativeDataFormats: ['PDF']
         }
       })
 

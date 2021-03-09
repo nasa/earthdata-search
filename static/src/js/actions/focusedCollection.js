@@ -104,6 +104,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         doi
         hasGranules
         lines
+        nativeDataFormats
         points
         polygons
         relatedUrls
@@ -188,6 +189,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           dataCenter,
           granules,
           hasGranules,
+          nativeDataFormats,
           services,
           shortName,
           subscriptions,
@@ -216,6 +218,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           hasGranules,
           id: conceptId,
           isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', ''),
+          nativeDataFormats,
           services,
           shortName,
           subscriptions,
@@ -248,6 +251,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       }
     })
     .catch((error) => {
+      console.log('🚀 ~ file: focusedCollection.js ~ line 251 ~ getFocusedCollection ~ error', error)
       dispatch(actions.handleError({
         error,
         action: 'getFocusedCollection',
