@@ -17,7 +17,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C191855458-LARC'
+        }
+      ]
     },
     MISR_Directional_Hemispherical_Reflectance_Average_Natural_Color_Monthly: {
       startDate: '2000-02-01',
@@ -32,7 +37,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C43677721-LARC'
+        }
+      ]
     },
     MISR_Radiance_Average_Natural_Color_Monthly: {
       startDate: '2000-02-01',
@@ -47,7 +57,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C43677725-LARC'
+        }
+      ]
     },
     MISR_Radiance_Average_Infrared_Color_Monthly: {
       startDate: '2000-02-01',
@@ -62,7 +77,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C43677725-LARC'
+        }
+      ]
     },
     MOPITT_CO_Daily_Surface_Mixing_Ratio_Day: {
       startDate: '2000-03-01',
@@ -77,7 +97,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C191855458-LARC'
+        }
+      ]
     },
     MOPITT_CO_Monthly_Surface_Mixing_Ratio_Day: {
       startDate: '2000-03-03',
@@ -92,7 +117,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C191855459-LARC'
+        }
+      ]
     },
     MOPITT_CO_Daily_Surface_Mixing_Ratio_Night: {
       startDate: '2000-03-01',
@@ -107,7 +137,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C191855458-LARC'
+        }
+      ]
     },
     MOPITT_CO_Monthly_Surface_Mixing_Ratio_Night: {
       startDate: '2000-03-03',
@@ -122,7 +157,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C191855459-LARC'
+        }
+      ]
     },
     MOPITT_CO_Monthly_Total_Column_Day: {
       startDate: '2000-03-03',
@@ -137,7 +177,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C191855459-LARC'
+        }
+      ]
     },
     MOPITT_CO_Daily_Total_Column_Night: {
       startDate: '2000-03-01',
@@ -152,7 +197,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C191855458-LARC'
+        }
+      ]
     },
     MOPITT_CO_Monthly_Total_Column_Night: {
       startDate: '2000-03-03',
@@ -167,7 +217,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C191855459-LARC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Longwave_Flux_Up_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -182,7 +237,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Longwave_Flux_Up_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -197,7 +257,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Net_Longwave_Flux_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -212,7 +277,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Net_Longwave_Flux_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -227,7 +297,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Net_Shortwave_Flux_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -242,7 +317,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Net_Shortwave_Flux_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -257,7 +337,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Net_Total_Flux_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -272,7 +357,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Net_Total_Flux_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -287,7 +377,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Shortwave_Flux_Down_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -302,7 +397,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Shortwave_Flux_Up_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -317,7 +417,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_Surface_Shortwave_Flux_Up_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -332,7 +437,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7227850-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_Incoming_Solar_Flux_Monthly: {
       startDate: '2000-03-01',
@@ -347,7 +457,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_CRE_Longwave_Flux_Monthly: {
       startDate: '2000-03-01',
@@ -362,7 +477,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_CRE_Net_Flux_Monthly: {
       startDate: '2000-03-01',
@@ -377,7 +497,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_CRE_Shortwave_Flux_Monthly: {
       startDate: '2000-03-01',
@@ -392,7 +517,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_Longwave_Flux_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -407,7 +537,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_Longwave_Flux_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -422,7 +557,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_Net_Flux_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -437,7 +577,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_Net_Flux_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -452,7 +597,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_Shortwave_Flux_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -467,7 +617,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_EBAF_TOA_Shortwave_Flux_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -482,7 +637,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7085910-LARC_ASDC'
+        }
+      ]
     },
     CERES_Combined_TOA_Longwave_Flux_Clear_Sky_Monthly: {
       startDate: '2002-07-01',
@@ -497,7 +657,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7612165-LARC_ASDC'
+        }
+      ]
     },
     CERES_Combined_TOA_Longwave_Flux_All_Sky_Monthly: {
       startDate: '2002-07-01',
@@ -512,7 +677,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7612165-LARC_ASDC'
+        }
+      ]
     },
     CERES_Combined_TOA_Shortwave_Flux_Clear_Sky_Monthly: {
       startDate: '2002-07-01',
@@ -527,7 +697,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7612165-LARC_ASDC'
+        }
+      ]
     },
     CERES_Combined_TOA_Shortwave_Flux_All_Sky_Monthly: {
       startDate: '2002-07-01',
@@ -542,7 +717,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7612165-LARC_ASDC'
+        }
+      ]
     },
     CERES_Combined_TOA_Window_Region_Flux_Clear_Sky_Monthly: {
       startDate: '2002-07-01',
@@ -557,7 +737,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7612165-LARC_ASDC'
+        }
+      ]
     },
     CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly: {
       startDate: '2002-07-01',
@@ -572,7 +757,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C7612165-LARC_ASDC'
+        }
+      ]
     },
     CERES_Terra_TOA_Longwave_Flux_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -587,7 +777,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C6011924-LARC_ASDC'
+        }
+      ]
     },
     CERES_Terra_TOA_Longwave_Flux_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -602,7 +797,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C6011924-LARC_ASDC'
+        }
+      ]
     },
     CERES_Terra_TOA_Shortwave_Flux_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -617,7 +817,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C6011924-LARC_ASDC'
+        }
+      ]
     },
     CERES_Terra_TOA_Shortwave_Flux_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -632,7 +837,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C6011924-LARC_ASDC'
+        }
+      ]
     },
     CERES_Terra_TOA_Window_Region_Flux_Clear_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -647,7 +857,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C6011924-LARC_ASDC'
+        }
+      ]
     },
     CERES_Terra_TOA_Window_Region_Flux_All_Sky_Monthly: {
       startDate: '2000-03-01',
@@ -662,7 +877,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C6011924-LARC_ASDC'
+        }
+      ]
     },
     MISR_Aerosol_Optical_Depth_Avg_Green_Monthly: {
       startDate: '2000-02-01',
@@ -677,7 +897,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C43677719-LARC'
+        }
+      ]
     },
     MISR_Land_NDVI_Average_Monthly: {
       startDate: '2000-02-01',
@@ -692,7 +917,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C43677721-LARC'
+        }
+      ]
     },
     MISR_TOA_Albedo_Average_Red_Monthly: {
       startDate: '2000-02-01',
@@ -707,7 +937,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C61095981-LARC'
+        }
+      ]
     },
     MISR_Cloud_Stereo_Height_Histogram_Bin_05km_Monthly: {
       startDate: '2000-02-01',
@@ -722,7 +957,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C84942916-LARC'
+        }
+      ]
     },
     'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly': {
       startDate: '2000-02-01',
@@ -737,254 +977,12 @@ export const customGibsProducts = {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
-      }
-    }
-  },
-  products: {
-    MOPITT_CO_Daily_Total_Column_Day: {
-      query: {
-        conceptId: ['C191855458-LARC']
-      }
-    },
-    MISR_Directional_Hemispherical_Reflectance_Average_Natural_Color_Monthly: {
-      query: {
-        conceptId: ['C43677721-LARC']
-      }
-    },
-    MISR_Radiance_Average_Natural_Color_Monthly: {
-      query: {
-        conceptId: ['C43677725-LARC']
-      }
-    },
-    MISR_Radiance_Average_Infrared_Color_Monthly: {
-      query: {
-        conceptId: ['C43677725-LARC']
-      }
-    },
-    MOPITT_CO_Daily_Surface_Mixing_Ratio_Day: {
-      query: {
-        conceptId: ['C191855458-LARC']
-      }
-    },
-    MOPITT_CO_Monthly_Surface_Mixing_Ratio_Day: {
-      query: {
-        conceptId: ['C191855459-LARC']
-      }
-    },
-    MOPITT_CO_Daily_Surface_Mixing_Ratio_Night: {
-      query: {
-        conceptId: ['C191855458-LARC']
-      }
-    },
-    MOPITT_CO_Monthly_Surface_Mixing_Ratio_Night: {
-      query: {
-        conceptId: ['C191855459-LARC']
-      }
-    },
-    MOPITT_CO_Monthly_Total_Column_Day: {
-      query: {
-        conceptId: ['C191855459-LARC']
-      }
-    },
-    MOPITT_CO_Daily_Total_Column_Night: {
-      query: {
-        conceptId: ['C191855458-LARC']
-      }
-    },
-    MOPITT_CO_Monthly_Total_Column_Night: {
-      query: {
-        conceptId: ['C191855459-LARC']
-      }
-    },
-    CERES_EBAF_Surface_Longwave_Flux_Up_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Longwave_Flux_Up_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Net_Longwave_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Net_Longwave_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Net_Shortwave_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Net_Shortwave_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Net_Total_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Net_Total_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Shortwave_Flux_Down_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Shortwave_Flux_Up_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_Surface_Shortwave_Flux_Up_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7227850-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_Incoming_Solar_Flux_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_CRE_Longwave_Flux_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_CRE_Net_Flux_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_CRE_Shortwave_Flux_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_Longwave_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_Longwave_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_Net_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_Net_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_Shortwave_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_EBAF_TOA_Shortwave_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7085910-LARC_ASDC']
-      }
-    },
-    CERES_Combined_TOA_Longwave_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7612165-LARC_ASDC']
-      }
-    },
-    CERES_Combined_TOA_Longwave_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7612165-LARC_ASDC']
-      }
-    },
-    CERES_Combined_TOA_Shortwave_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7612165-LARC_ASDC']
-      }
-    },
-    CERES_Combined_TOA_Shortwave_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7612165-LARC_ASDC']
-      }
-    },
-    CERES_Combined_TOA_Window_Region_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C7612165-LARC_ASDC']
-      }
-    },
-    CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C7612165-LARC_ASDC']
-      }
-    },
-    CERES_Terra_TOA_Longwave_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C6011924-LARC_ASDC']
-      }
-    },
-    CERES_Terra_TOA_Longwave_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C6011924-LARC_ASDC']
-      }
-    },
-    CERES_Terra_TOA_Shortwave_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C6011924-LARC_ASDC']
-      }
-    },
-    CERES_Terra_TOA_Shortwave_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C6011924-LARC_ASDC']
-      }
-    },
-    CERES_Terra_TOA_Window_Region_Flux_Clear_Sky_Monthly: {
-      query: {
-        conceptId: ['C6011924-LARC_ASDC']
-      }
-    },
-    CERES_Terra_TOA_Window_Region_Flux_All_Sky_Monthly: {
-      query: {
-        conceptId: ['C6011924-LARC_ASDC']
-      }
-    },
-    MISR_Aerosol_Optical_Depth_Avg_Green_Monthly: {
-      query: {
-        conceptId: ['C43677719-LARC']
-      }
-    },
-    MISR_Land_NDVI_Average_Monthly: {
-      query: {
-        conceptId: ['C43677721-LARC']
-      }
-    },
-    MISR_TOA_Albedo_Average_Red_Monthly: {
-      query: {
-        conceptId: ['C61095981-LARC']
-      }
-    },
-    MISR_Cloud_Stereo_Height_Histogram_Bin_05km_Monthly: {
-      query: {
-        conceptId: ['C84942916-LARC']
-      }
-    },
-    'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly': {
-      query: {
-        conceptId: ['C84942916-LARC']
-      }
+      },
+      conceptIds: [
+        {
+          value: 'C84942916-LARC'
+        }
+      ]
     }
   }
 }

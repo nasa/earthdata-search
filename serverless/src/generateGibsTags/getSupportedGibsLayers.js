@@ -7,7 +7,7 @@ import { getClientId } from '../../../sharedUtils/getClientId'
 /*
  * Retrieve the worldview configuration file and pull out products that Earthdata Search supports
  */
-export const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
+export const getSupportedGibsLayers = async () => {
   const worldviewConfig = 'https://worldview.earthdata.nasa.gov/config/wv.json'
   const worldviewResponse = await axios({
     method: 'get',
@@ -28,46 +28,34 @@ export const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
   const { data: worldviewProducts } = worldviewResponse
 
   // Merge the EDSC custom products into the GIBS products before processing
-  if (mergeCustomProducts) {
-    Object.keys(customGibsProducts).forEach((key) => {
-      console.log(`Merged ${Object.keys(customGibsProducts[key]).length} objects into '${key}'`)
+  Object.keys(customGibsProducts).forEach((key) => {
+    console.log(`Merged ${Object.keys(customGibsProducts[key]).length} objects into '${key}'`)
 
-      worldviewProducts[key] = {
-        ...worldviewProducts[key],
-        ...customGibsProducts[key]
-      }
-    })
-  }
+    worldviewProducts[key] = {
+      ...worldviewProducts[key],
+      ...customGibsProducts[key]
+    }
+  })
 
-  const { layers, products } = worldviewProducts
+  const { layers } = worldviewProducts
 
   const evaluatedLayers = {}
+
   Object.keys(layers).forEach((key) => {
-    // Prevent `eslint(no-param-reassign)` errors
-    const currentLayer = layers[key]
+    const { [key]: currentLayer } = layers
+
+    const { conceptIds, projections, type } = currentLayer
 
     // Ignore non Web Map Tile Service layers
-    if (currentLayer.type !== 'wmts') {
+    if (type !== 'wmts') {
       return
     }
 
-    const { product } = currentLayer
-
-    if (!product) {
+    // If no concept id is found in this object there are not
+    // collections associated with it and we can ignore it
+    if (!conceptIds) {
       return
     }
-
-    const productObject = products[product]
-
-    // Ensure that we have a product that matches this layer
-    if (!productObject) {
-      return
-    }
-
-    // Overwrites the product (currently just the ID) with the full object
-    currentLayer.product = productObject
-
-    const { projections = {} } = currentLayer
 
     Object.keys(projections).forEach((key) => {
       const projection = projections[key]
