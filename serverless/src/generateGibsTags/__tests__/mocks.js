@@ -1,24 +1,17 @@
 export const gibsResponse = {
   layers: {
-    MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily: {
-      startDate: '2002-07-04T00:00:00Z',
-      palette: {
-        id: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily'
-      },
-      description: 'modis/aqua/MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
+    AMSR2_Cloud_Liquid_Water_Day: {
+      id: 'AMSR2_Cloud_Liquid_Water_Day',
+      type: 'wmts',
       format: 'image/png',
-      title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
       period: 'daily',
-      layergroup: [
-        'modis',
-        'modis_aqua'
-      ],
-      group: 'overlays',
+      startDate: '2015-06-07T00:00:00Z',
+      endDate: '2020-06-10T00:00:00Z',
       dateRanges: [
         {
-          startDate: '2002-07-04T00:00:00Z',
-          dateInterval: '1',
-          endDate: '2019-05-06T00:00:00Z'
+          startDate: '2015-06-07T00:00:00Z',
+          endDate: '2020-06-10T00:00:00Z',
+          dateInterval: '1'
         }
       ],
       projections: {
@@ -27,167 +20,118 @@ export const gibsResponse = {
           matrixSet: '2km'
         }
       },
-      subtitle: 'Aqua / MODIS',
-      product: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0',
+      palette: {
+        id: 'AMSR2_Cloud_Liquid_Water_Day'
+      },
+      title: 'Columnar Cloud Liquid Water (Day, Historical)',
+      subtitle: 'GCOM-W1 / AMSR2',
+      description: 'amsr2/AMSR2_Cloud_Liquid_Water_Day',
+      tags: 'amsr-2',
+      inactive: true,
+      group: 'overlays',
+      layergroup: 'Cloud Liquid Water',
+      product: 'A2_RainOcn_NRT',
+      tracks: [
+        'OrbitTracks_GCOM-W1_Ascending'
+      ],
+      daynight: [
+        'day'
+      ]
+    },
+    AMSRE_Surface_Rain_Rate_Night: {
+      id: 'AMSRE_Surface_Rain_Rate_Night',
       type: 'wmts',
-      id: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-      tags: 'ssc podaac PO.DAAC'
-    },
-    OrbitTracks_Terra_Ascending: {
-      startDate: '2000-02-24',
-      palette: {
-        id: 'OrbitTracks_Terra_Ascending',
-        immutable: true
-      },
-      group: 'overlays',
-      description: 'reference/orbits/OrbitTracks_Terra_Ascending',
       format: 'image/png',
-      track: 'ascending',
-      daynight: 'night',
-      title: 'Terra Orbital Track & Overpass Time (Ascending/Night)',
       period: 'daily',
-      layergroup: [
-        'reference',
-        'reference_orbits'
-      ],
-      tileSize: [
-        512,
-        512
-      ],
-      projections: {
-        antarctic: {
-          source: 'GIBS:wms:antarctic'
-        },
-        geographic: {
-          source: 'GIBS:wms'
-        },
-        arctic: {
-          source: 'GIBS:wms:arctic'
-        }
-      },
-      subtitle: 'Terra / Space-Track.org',
-      type: 'wms',
-      id: 'OrbitTracks_Terra_Ascending',
-      tags: 'tracks'
-    },
-    CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly: {
-      startDate: '2002-07-01T00:00:00Z',
-      palette: {
-        id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly'
-      },
-      group: 'overlays',
-      endDate: '2018-04-01T00:00:00Z',
-      description: 'ceres/CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
-      format: 'image/png',
-      title: 'TOA Window-Region Flux (Monthly, All-Sky)',
-      period: 'monthly',
-      layergroup: [
-        'ceres'
-      ],
-      wrapadjacentdays: true,
+      startDate: '2002-06-01T00:00:00Z',
+      endDate: '2011-10-04T00:00:00Z',
       dateRanges: [
         {
-          startDate: '2002-07-01T00:00:00Z',
-          dateInterval: '1',
-          endDate: '2018-03-01T00:00:00Z'
+          startDate: '2002-06-01T00:00:00Z',
+          endDate: '2011-10-04T00:00:00Z',
+          dateInterval: '1'
         }
       ],
-      inactive: true,
       projections: {
         geographic: {
           source: 'GIBS:geographic',
           matrixSet: '2km'
         }
       },
-      subtitle: 'Terra and Aqua/CERES',
-      product: '',
-      type: 'wmts',
-      id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
-      tags: 'top of atmosphere, cloud radiative effect'
-    },
-    ExcludedProjection_Value: {
-      startDate: '2002-07-01T00:00:00Z',
       palette: {
-        id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly'
+        id: 'AMSRE_Surface_Rain_Rate_Night'
       },
-      group: 'overlays',
-      endDate: '2018-04-01T00:00:00Z',
-      description: 'ceres/CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
-      format: 'image/png',
-      title: 'TOA Window-Region Flux (Monthly, All-Sky)',
-      period: 'monthly',
-      layergroup: [
-        'ceres'
-      ],
-      wrapadjacentdays: true,
-      dateRanges: [
+      conceptIds: [
         {
-          startDate: '2002-07-01T00:00:00Z',
-          dateInterval: '1',
-          endDate: '2018-03-01T00:00:00Z'
+          title: 'AMSR-E/Aqua L2B Global Swath Surface Precipitation GSFC Profiling Algorithm V003',
+          type: 'STD',
+          value: 'C1000000001-EDSC',
+          version: '3'
         }
       ],
+      title: 'Surface Rain Rate (Night)',
+      subtitle: 'Aqua / AMSR-E',
+      description: 'amsre/AMSRE_Surface_Rain_Rate_Night',
+      group: 'overlays',
+      product: 'AE_Rain',
+      layergroup: 'Precipitation Rate',
       inactive: true,
+      tracks: [
+        'OrbitTracks_Aqua_Descending'
+      ],
+      daynight: [
+        'night'
+      ]
+    },
+    AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day: {
+      id: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
+      type: 'wmts',
+      format: 'image/png',
+      period: 'daily',
+      startDate: '2002-08-30T00:00:00Z',
+      dateRanges: [
+        {
+          startDate: '2002-08-30T00:00:00Z',
+          endDate: '2021-03-02T00:00:00Z',
+          dateInterval: '1'
+        }
+      ],
       projections: {
-        edsc: {
-          source: 'ESDC:projection',
+        geographic: {
+          source: 'GIBS:geographic',
           matrixSet: '2km'
         }
       },
-      subtitle: 'Terra and Aqua/CERES',
-      product: 'ExcludedProjection_Value',
-      type: 'wmts',
-      id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
-      tags: 'top of atmosphere, cloud radiative effect'
-    },
-    MissingProjection_Value: {
-      startDate: '2002-07-01T00:00:00Z',
       palette: {
-        id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly'
+        id: 'AIRS_Methane_Volume_Mixing_Ratio'
       },
-      group: 'overlays',
-      endDate: '2018-04-01T00:00:00Z',
-      description: 'ceres/CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
-      format: 'image/png',
-      title: 'TOA Window-Region Flux (Monthly, All-Sky)',
-      period: 'monthly',
-      layergroup: [
-        'ceres'
-      ],
-      wrapadjacentdays: true,
-      dateRanges: [
+      conceptIds: [
         {
-          startDate: '2002-07-01T00:00:00Z',
-          dateInterval: '1',
-          endDate: '2018-03-01T00:00:00Z'
+          title: 'Aqua/AIRS L2 Near Real Time (NRT) Standard Physical Retrieval (AIRS-only) V7.0 at GES DISC',
+          type: 'NRT',
+          value: 'C1000000002-EDSC',
+          version: '7.0'
+        },
+        {
+          title: 'AIRS/Aqua L2 Standard Physical Retrieval (AIRS-only) V006 (AIRS2RET) at GES DISC',
+          type: 'STD',
+          value: 'C1000000003-EDSC',
+          version: '006'
         }
       ],
-      inactive: true,
-      subtitle: 'Terra and Aqua/CERES',
-      product: 'MissingProjection_Value',
-      type: 'wmts',
-      id: 'CERES_Combined_TOA_Window_Region_Flux_All_Sky_Monthly',
-      tags: 'top of atmosphere, cloud radiative effect'
-    }
-  },
-  products: {
-    'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0': {
-      query: {
-        shortName: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0',
-        dayNightFlag: 'NIGHT'
-      },
-      handler: 'List',
-      name: 'PODAAC-MODAM-1D4N4'
-    },
-    ExcludedProjection_Value: {
-      query: {
-        shortName: 'SOME_VALID_SHORTNAME'
-      }
-    },
-    MissingProjection_Value: {
-      query: {
-        shortName: 'SOME_VALID_SHORTNAME.1'
-      }
+      title: 'Methane (L2, 400 hPa, Day)',
+      subtitle: 'Aqua / AIRS',
+      description: 'airs/AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
+      tags: 'CH4',
+      group: 'overlays',
+      product: 'AIRS2RET',
+      layergroup: 'Methane',
+      tracks: [
+        'OrbitTracks_Aqua_Ascending'
+      ],
+      daynight: [
+        'day'
+      ]
     }
   }
 }
