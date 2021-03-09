@@ -8,7 +8,6 @@ import { buildScienceKeywords } from './collectionMetadata/scienceKeywords'
 import { buildSpatial } from './collectionMetadata/spatial'
 import { buildTemporal } from './collectionMetadata/temporal'
 import { buildUrls } from './collectionMetadata/buildUrls'
-import { buildNativeFormat } from './collectionMetadata/nativeFormat'
 
 /**
  * Returns the collection object from the metadata store for the provided collectionId
@@ -33,7 +32,6 @@ export const createFocusedCollectionMetadata = (metadata, authToken, earthdataEn
   urls: buildUrls(metadata, authToken, earthdataEnvironment),
   dataCenters: buildDataCenters(metadata),
   doi: buildDoi(metadata),
-  nativeFormats: buildNativeFormat(metadata),
   relatedUrls: buildRelatedUrls(metadata),
   scienceKeywords: buildScienceKeywords(metadata),
   temporal: buildTemporal(metadata),
