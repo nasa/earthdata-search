@@ -3,9 +3,9 @@ import nock from 'nock'
 import AWS from 'aws-sdk'
 import MockDate from 'mockdate'
 
-import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
-import * as getSupportedGibsLayers from '../getSupportedGibsLayers'
 import * as getSystemToken from '../../util/urs/getSystemToken'
+
+import { gibsResponse } from './mocks'
 
 import generateGibsTags from '../handler'
 
@@ -50,348 +50,180 @@ afterEach(() => {
 })
 
 describe('generateGibsTags', () => {
-  describe('when deployed environment is production', () => {
-    test('correctly generates and queues tag data including custom products', async () => {
-      process.env.tagQueueUrl = 'http://example.com/tagQueue'
+  test('correctly generates and queues tag data including custom products', async () => {
+    process.env.tagQueueUrl = 'http://example.com/tagQueue'
 
-      jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementationOnce(() => 'prod')
+    nock(/worldview/)
+      .get(/wv\.json/)
+      .reply(200, gibsResponse)
 
-      nock(/cmr/)
-        .post(/collections/)
-        .reply(200, {
-          feed: {
-            entry: [{
-              id: 'C100000-EDSC'
-            }]
-          }
-        })
+    await generateGibsTags({}, {})
 
-      const getSupportedGibsLayersMock = jest.spyOn(getSupportedGibsLayers, 'getSupportedGibsLayers').mockImplementationOnce(() => ({
-        MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily: {
-          startDate: '2002-07-04T00:00:00Z',
-          palette: {
-            id: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily'
-          },
-          description: 'modis/aqua/MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-          format: 'image/png',
-          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-          period: 'daily',
-          layergroup: [
-            'modis',
-            'modis_aqua'
-          ],
-          group: 'overlays',
-          dateRanges: [
+    // 14 ADD calls for the unique concept ids and 1 DELETE call
+    expect(sqsSendMessagePromise.mock.calls.length).toEqual(15)
+
+    expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
+      QueueUrl: 'http://example.com/tagQueue',
+      MessageBody: JSON.stringify({
+        tagName: 'edsc.extra.serverless.gibs',
+        action: 'ADD',
+        requireGranules: false,
+        tagData: {
+          'concept-id': 'C1000000001-EDSC',
+          data: [
             {
-              startDate: '2002-07-04T00:00:00Z',
-              dateInterval: '1',
-              endDate: '2019-05-06T00:00:00Z'
+              match: {
+                time_start: '>=2002-06-01T00:00:00Z',
+                time_end: '<=2011-10-04T00:00:00Z',
+                day_night_flag: 'night'
+              },
+              product: 'AMSRE_Surface_Rain_Rate_Night',
+              group: 'overlays',
+              title: 'Surface Rain Rate (Night)',
+              source: 'Aqua / AMSR-E',
+              format: 'png',
+              updated_at: '1988-09-03T10:00:00.000Z',
+              antarctic: false,
+              antarctic_resolution: null,
+              arctic: false,
+              arctic_resolution: null,
+              geographic: true,
+              geographic_resolution: '2km'
             }
-          ],
-          projections: {
-            geographic: {
-              source: 'GIBS:geographic',
-              matrixSet: '2km'
-            }
-          },
-          subtitle: 'Aqua / MODIS',
-          product: {
-            query: {
-              shortName: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
-            },
-            handler: 'List',
-            name: 'PODAAC-MODAM-1D4N4'
-          },
-          type: 'wmts',
-          id: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-          tags: 'ssc podaac PO.DAAC'
-        },
-        'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly': {
-          startDate: '2000-02-01',
-          product: {
-            query: {
-              conceptId: ['C84942916-LARC']
-            }
-          },
-          id: 'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly',
-          subtitle: 'Terra / MISR',
-          format: 'image/png',
-          title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
-          type: 'wmts',
-          projections: {
-            geographic: {
-              source: 'GIBS:geographic',
-              matrixSet: '2km'
-            }
-          }
+          ]
         }
-      }))
+      })
+    }])
 
-      await generateGibsTags({}, {})
-
-      expect(getSupportedGibsLayersMock).toBeCalledWith(true)
-
-      expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
-        QueueUrl: 'http://example.com/tagQueue',
-        MessageBody: JSON.stringify({
-          tagName: 'edsc.extra.serverless.gibs',
-          action: 'ADD',
-          requireGranules: false,
-          tagData: {
-            'concept-id': 'C100000-EDSC',
-            data: [
-              {
-                match: {
-                  time_start: '>=2002-07-04T00:00:00Z'
-                },
-                product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-                group: 'overlays',
-                title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-                source: 'Aqua / MODIS',
-                format: 'png',
-                updated_at: '1988-09-03T10:00:00.000Z',
-                antarctic: false,
-                antarctic_resolution: null,
-                arctic: false,
-                arctic_resolution: null,
-                geographic: true,
-                geographic_resolution: '2km'
-              }
-            ]
-          }
-        })
-      }])
-
-      expect(sqsSendMessagePromise.mock.calls[1]).toEqual([{
-        QueueUrl: 'http://example.com/tagQueue',
-        MessageBody: JSON.stringify({
-          tagName: 'edsc.extra.serverless.gibs',
-          action: 'ADD',
-          requireGranules: false,
-          tagData: {
-            'concept-id': 'C84942916-LARC',
-            data: [
-              {
-                match: {
-                  time_start: '>=2000-02-01'
-                },
-                product: 'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly',
-                title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
-                source: 'Terra / MISR',
-                format: 'png',
-                updated_at: '1988-09-03T10:00:00.000Z',
-                antarctic: false,
-                antarctic_resolution: null,
-                arctic: false,
-                arctic_resolution: null,
-                geographic: true,
-                geographic_resolution: '2km'
-              }
-            ]
-          }
-        })
-      }])
-
-      expect(sqsSendMessagePromise.mock.calls[2]).toEqual([{
-        QueueUrl: 'http://example.com/tagQueue',
-        MessageBody: JSON.stringify({
-          tagName: 'edsc.extra.serverless.gibs',
-          action: 'REMOVE',
-          searchCriteria: {
-            condition: {
-              and: [
-                {
-                  tag: {
-                    tag_key: 'edsc.extra.serverless.gibs'
-                  }
-                },
-                {
-                  not: {
-                    or: [
-                      {
-                        concept_id: 'C100000-EDSC'
-                      }, {
-                        concept_id: 'C84942916-LARC'
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        })
-      }])
-    })
-  })
-
-  describe('when deployed environment is production', () => {
-    test('correctly generates and queues tag data excluding custom products', async () => {
-      process.env.tagQueueUrl = 'http://example.com/tagQueue'
-
-      jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementationOnce(() => 'sit')
-
-      nock(/cmr/)
-        .post(/collections/)
-        .reply(200, {
-          feed: {
-            entry: [{
-              id: 'C100000-EDSC'
-            }]
-          }
-        })
-
-      const getSupportedGibsLayersMock = jest.spyOn(getSupportedGibsLayers, 'getSupportedGibsLayers').mockImplementationOnce(() => ({
-        MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily: {
-          startDate: '2002-07-04T00:00:00Z',
-          palette: {
-            id: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily'
-          },
-          description: 'modis/aqua/MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-          format: 'image/png',
-          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-          period: 'daily',
-          layergroup: [
-            'modis',
-            'modis_aqua'
-          ],
-          group: 'overlays',
-          dateRanges: [
+    expect(sqsSendMessagePromise.mock.calls[1]).toEqual([{
+      QueueUrl: 'http://example.com/tagQueue',
+      MessageBody: JSON.stringify({
+        tagName: 'edsc.extra.serverless.gibs',
+        action: 'ADD',
+        requireGranules: false,
+        tagData: {
+          'concept-id': 'C1000000002-EDSC',
+          data: [
             {
-              startDate: '2002-07-04T00:00:00Z',
-              dateInterval: '1',
-              endDate: '2019-05-06T00:00:00Z'
+              match: {
+                time_start: '>=2002-08-30T00:00:00Z',
+                day_night_flag: 'day'
+              },
+              product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
+              group: 'overlays',
+              title: 'Methane (L2, 400 hPa, Day)',
+              source: 'Aqua / AIRS',
+              format: 'png',
+              updated_at: '1988-09-03T10:00:00.000Z',
+              antarctic: false,
+              antarctic_resolution: null,
+              arctic: false,
+              arctic_resolution: null,
+              geographic: true,
+              geographic_resolution: '2km'
             }
-          ],
-          projections: {
-            geographic: {
-              source: 'GIBS:geographic',
-              matrixSet: '2km'
-            }
-          },
-          subtitle: 'Aqua / MODIS',
-          product: {
-            query: {
-              shortName: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
-            },
-            handler: 'List',
-            name: 'PODAAC-MODAM-1D4N4'
-          },
-          type: 'wmts',
-          id: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-          tags: 'ssc podaac PO.DAAC'
-        },
-        'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly': {
-          startDate: '2000-02-01',
-          product: {
-            query: {
-              conceptId: ['C84942916-LARC']
-            }
-          },
-          id: 'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly',
-          subtitle: 'Terra / MISR',
-          format: 'image/png',
-          title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
-          type: 'wmts',
-          projections: {
-            geographic: {
-              source: 'GIBS:geographic',
-              matrixSet: '2km'
-            }
-          }
+          ]
         }
-      }))
+      })
+    }])
 
-      await generateGibsTags({}, {})
+    expect(sqsSendMessagePromise.mock.calls[2]).toEqual([{
+      QueueUrl: 'http://example.com/tagQueue',
+      MessageBody: JSON.stringify({
+        tagName: 'edsc.extra.serverless.gibs',
+        action: 'ADD',
+        requireGranules: false,
+        tagData: {
+          'concept-id': 'C1000000003-EDSC',
+          data: [
+            {
+              match: {
+                time_start: '>=2002-08-30T00:00:00Z',
+                day_night_flag: 'day'
+              },
+              product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
+              group: 'overlays',
+              title: 'Methane (L2, 400 hPa, Day)',
+              source: 'Aqua / AIRS',
+              format: 'png',
+              updated_at: '1988-09-03T10:00:00.000Z',
+              antarctic: false,
+              antarctic_resolution: null,
+              arctic: false,
+              arctic_resolution: null,
+              geographic: true,
+              geographic_resolution: '2km'
+            }
+          ]
+        }
+      })
+    }])
 
-      expect(getSupportedGibsLayersMock).toBeCalledWith(false)
-
-      expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
-        QueueUrl: 'http://example.com/tagQueue',
-        MessageBody: JSON.stringify({
-          tagName: 'edsc.extra.serverless.gibs',
-          action: 'ADD',
-          requireGranules: false,
-          tagData: {
-            'concept-id': 'C100000-EDSC',
-            data: [
+    expect(sqsSendMessagePromise.mock.calls[14]).toEqual([{
+      QueueUrl: 'http://example.com/tagQueue',
+      MessageBody: JSON.stringify({
+        tagName: 'edsc.extra.serverless.gibs',
+        action: 'REMOVE',
+        searchCriteria: {
+          condition: {
+            and: [
               {
-                match: {
-                  time_start: '>=2002-07-04T00:00:00Z'
-                },
-                product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-                group: 'overlays',
-                title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-                source: 'Aqua / MODIS',
-                format: 'png',
-                updated_at: '1988-09-03T10:00:00.000Z',
-                antarctic: false,
-                antarctic_resolution: null,
-                arctic: false,
-                arctic_resolution: null,
-                geographic: true,
-                geographic_resolution: '2km'
-              }
-            ]
-          }
-        })
-      }])
-
-      expect(sqsSendMessagePromise.mock.calls[1]).toEqual([{
-        QueueUrl: 'http://example.com/tagQueue',
-        MessageBody: JSON.stringify({
-          tagName: 'edsc.extra.serverless.gibs',
-          action: 'ADD',
-          requireGranules: false,
-          tagData: {
-            'concept-id': 'C84942916-LARC',
-            data: [
-              {
-                match: {
-                  time_start: '>=2000-02-01'
-                },
-                product: 'MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-20km_Monthly',
-                title: 'Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)',
-                source: 'Terra / MISR',
-                format: 'png',
-                updated_at: '1988-09-03T10:00:00.000Z',
-                antarctic: false,
-                antarctic_resolution: null,
-                arctic: false,
-                arctic_resolution: null,
-                geographic: true,
-                geographic_resolution: '2km'
-              }
-            ]
-          }
-        })
-      }])
-
-      expect(sqsSendMessagePromise.mock.calls[2]).toEqual([{
-        QueueUrl: 'http://example.com/tagQueue',
-        MessageBody: JSON.stringify({
-          tagName: 'edsc.extra.serverless.gibs',
-          action: 'REMOVE',
-          searchCriteria: {
-            condition: {
-              and: [{
                 tag: {
                   tag_key: 'edsc.extra.serverless.gibs'
                 }
-              }, {
+              },
+              {
                 not: {
                   or: [
                     {
-                      concept_id: 'C100000-EDSC'
-                    }, {
+                      concept_id: 'C1000000001-EDSC'
+                    },
+                    {
+                      concept_id: 'C1000000002-EDSC'
+                    },
+                    {
+                      concept_id: 'C1000000003-EDSC'
+                    },
+                    {
+                      concept_id: 'C191855458-LARC'
+                    },
+                    {
+                      concept_id: 'C43677721-LARC'
+                    },
+                    {
+                      concept_id: 'C43677725-LARC'
+                    },
+                    {
+                      concept_id: 'C191855459-LARC'
+                    },
+                    {
+                      concept_id: 'C7227850-LARC_ASDC'
+                    },
+                    {
+                      concept_id: 'C7085910-LARC_ASDC'
+                    },
+                    {
+                      concept_id: 'C7612165-LARC_ASDC'
+                    },
+                    {
+                      concept_id: 'C6011924-LARC_ASDC'
+                    },
+                    {
+                      concept_id: 'C43677719-LARC'
+                    },
+                    {
+                      concept_id: 'C61095981-LARC'
+                    },
+                    {
                       concept_id: 'C84942916-LARC'
                     }
                   ]
                 }
-              }]
-            }
+              }
+            ]
           }
-        })
-      }])
-    })
+        }
+      })
+    }])
   })
 })

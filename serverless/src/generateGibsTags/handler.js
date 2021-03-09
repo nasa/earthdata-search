@@ -33,12 +33,7 @@ const generateGibsTags = async (event, context) => {
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  // Prevent merging custom products in non-production deployments
-  let mergeCustomProducts = false
-  if (deployedEnvironment() === 'prod') {
-    mergeCustomProducts = true
-  }
-  const supportedGibsLayers = await getSupportedGibsLayers(mergeCustomProducts)
+  const supportedGibsLayers = await getSupportedGibsLayers()
 
   const layerTagData = []
 
