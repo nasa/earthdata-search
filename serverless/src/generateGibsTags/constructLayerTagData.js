@@ -25,7 +25,7 @@ export const constructLayerTagData = (layer) => {
   }
 
   if (daynight.length > 0) {
-    // This used to be a string but is not an array, just using the first value until
+    // This used to be a string but is now an array, just using the first value until
     // we can discuss with the Worldview team
     const [firstDayNightValue] = daynight
 
