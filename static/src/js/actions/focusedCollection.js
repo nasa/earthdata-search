@@ -251,7 +251,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       }
     })
     .catch((error) => {
-      console.log('🚀 ~ file: focusedCollection.js ~ line 251 ~ getFocusedCollection ~ error', error)
       dispatch(actions.handleError({
         error,
         action: 'getFocusedCollection',
