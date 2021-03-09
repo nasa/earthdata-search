@@ -117,7 +117,7 @@ export const CollectionDetailsBody = ({
     doi,
     hasAllMetadata,
     gibsLayers,
-    nativeFormats,
+    nativeDataFormats,
     relatedUrls,
     services,
     scienceKeywords,
@@ -239,12 +239,12 @@ export const CollectionDetailsBody = ({
                   )
                 }
                 {
-                  nativeFormats.length > 0 && (
+                  nativeDataFormats.length > 0 && (
                     <>
-                      <dt>{`Native ${pluralize('Format', nativeFormats.length)}`}</dt>
+                      <dt>{`Native ${pluralize('Format', nativeDataFormats.length)}`}</dt>
                       <dd>
                         {
-                          nativeFormats.length > 0 && buildNativeFormatList(nativeFormats)
+                          nativeDataFormats.length > 0 && buildNativeFormatList(nativeDataFormats)
                         }
                       </dd>
                     </>
