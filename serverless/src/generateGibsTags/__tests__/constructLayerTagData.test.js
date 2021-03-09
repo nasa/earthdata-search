@@ -16,15 +16,20 @@ afterEach(() => {
 })
 
 describe('constructLayerTagData', () => {
-  test('constructs correct tag data when no end date is present', () => {
+  test('ignores layers without a concept id', () => {
     // Deep copy the gibs import to prevent issues when overwriting keys for testing
-    const { layers, products } = JSON.parse(JSON.stringify(gibsResponse))
-    const { MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily: testingLayer } = layers
+    const { layers } = JSON.parse(JSON.stringify(gibsResponse))
+    const { AMSR2_Cloud_Liquid_Water_Day: testingLayer } = layers
 
-    const { product } = testingLayer
-    const { [product]: productObject } = products
+    const response = constructLayerTagData(testingLayer)
 
-    testingLayer.product = productObject
+    expect(response).toEqual([])
+  })
+
+  test('constructs correct tag data when a single concept id is provided', () => {
+    // Deep copy the gibs import to prevent issues when overwriting keys for testing
+    const { layers } = JSON.parse(JSON.stringify(gibsResponse))
+    const { AMSRE_Surface_Rain_Rate_Night: testingLayer } = layers
 
     const response = constructLayerTagData(testingLayer)
 
@@ -32,7 +37,7 @@ describe('constructLayerTagData', () => {
       {
         collection: {
           condition: {
-            short_name: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
+            concept_id: 'C1000000001-EDSC'
           }
         },
         data: {
@@ -45,37 +50,131 @@ describe('constructLayerTagData', () => {
           geographic_resolution: '2km',
           group: 'overlays',
           match: {
-            day_night_flag: 'NIGHT',
-            time_start: '>=2002-07-04T00:00:00Z'
+            day_night_flag: 'night',
+            time_end: '<=2011-10-04T00:00:00Z',
+            time_start: '>=2002-06-01T00:00:00Z'
           },
-          product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-          source: 'Aqua / MODIS',
-          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
+          product: 'AMSRE_Surface_Rain_Rate_Night',
+          source: 'Aqua / AMSR-E',
+          title: 'Surface Rain Rate (Night)',
           updated_at: '1988-09-03T10:00:00.000Z'
         }
       }
     ])
   })
 
-  test('constructs correct tag data when no start date is present', () => {
+  test('constructs correct tag data when a single concept id is provided', () => {
     // Deep copy the gibs import to prevent issues when overwriting keys for testing
-    const { layers, products } = JSON.parse(JSON.stringify(gibsResponse))
-    const { MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily: testingLayer } = layers
+    const { layers } = JSON.parse(JSON.stringify(gibsResponse))
+    const { AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day: testingLayer } = layers
+
+    const response = constructLayerTagData(testingLayer)
+
+    expect(response).toEqual([
+      {
+        collection: {
+          condition: {
+            concept_id: 'C1000000002-EDSC'
+          }
+        },
+        data: {
+          group: 'overlays',
+          match: {
+            day_night_flag: 'day',
+            time_start: '>=2002-08-30T00:00:00Z'
+          },
+          product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
+          source: 'Aqua / AIRS',
+          title: 'Methane (L2, 400 hPa, Day)',
+          updated_at: '1988-09-03T10:00:00.000Z',
+          antarctic: false,
+          antarctic_resolution: null,
+          arctic: false,
+          arctic_resolution: null,
+          format: 'png',
+          geographic: true,
+          geographic_resolution: '2km'
+        }
+      }, {
+        collection: {
+          condition: {
+            concept_id: 'C1000000003-EDSC'
+          }
+        },
+        data: {
+          antarctic: false,
+          antarctic_resolution: null,
+          arctic: false,
+          arctic_resolution: null,
+          format: 'png',
+          geographic: true,
+          geographic_resolution: '2km',
+          group: 'overlays',
+          match: {
+            day_night_flag: 'day',
+            time_start: '>=2002-08-30T00:00:00Z'
+          },
+          product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
+          source: 'Aqua / AIRS',
+          title: 'Methane (L2, 400 hPa, Day)',
+          updated_at: '1988-09-03T10:00:00.000Z'
+        }
+      }
+    ])
+  })
+
+  test('constructs correct tag data when only a start date is provided', () => {
+    // Deep copy the gibs import to prevent issues when overwriting keys for testing
+    const { layers } = JSON.parse(JSON.stringify(gibsResponse))
+    const { AMSRE_Surface_Rain_Rate_Night: testingLayer } = layers
+
+    delete testingLayer.endDate
+
+    const response = constructLayerTagData(testingLayer)
+
+    expect(response).toEqual([
+      {
+        collection: {
+          condition: {
+            concept_id: 'C1000000001-EDSC'
+          }
+        },
+        data: {
+          antarctic: false,
+          antarctic_resolution: null,
+          arctic: false,
+          arctic_resolution: null,
+          format: 'png',
+          geographic: true,
+          geographic_resolution: '2km',
+          group: 'overlays',
+          match: {
+            day_night_flag: 'night',
+            time_start: '>=2002-06-01T00:00:00Z'
+          },
+          product: 'AMSRE_Surface_Rain_Rate_Night',
+          source: 'Aqua / AMSR-E',
+          title: 'Surface Rain Rate (Night)',
+          updated_at: '1988-09-03T10:00:00.000Z'
+        }
+      }
+    ])
+  })
+
+  test('constructs correct tag data when only an end date is provided', () => {
+    // Deep copy the gibs import to prevent issues when overwriting keys for testing
+    const { layers } = JSON.parse(JSON.stringify(gibsResponse))
+    const { AMSRE_Surface_Rain_Rate_Night: testingLayer } = layers
 
     delete testingLayer.startDate
 
-    const { product } = testingLayer
-    const { [product]: productObject } = products
-
-    testingLayer.product = productObject
-
     const response = constructLayerTagData(testingLayer)
 
     expect(response).toEqual([
       {
         collection: {
           condition: {
-            short_name: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
+            concept_id: 'C1000000001-EDSC'
           }
         },
         data: {
@@ -88,28 +187,24 @@ describe('constructLayerTagData', () => {
           geographic_resolution: '2km',
           group: 'overlays',
           match: {
-            day_night_flag: 'NIGHT'
+            day_night_flag: 'night',
+            time_end: '<=2011-10-04T00:00:00Z'
           },
-          product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-          source: 'Aqua / MODIS',
-          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
+          product: 'AMSRE_Surface_Rain_Rate_Night',
+          source: 'Aqua / AMSR-E',
+          title: 'Surface Rain Rate (Night)',
           updated_at: '1988-09-03T10:00:00.000Z'
         }
       }
     ])
   })
 
-  test('constructs correct tag data for non nrt/science layers', () => {
+  test('constructs correct tag data when no daynight flag is provided', () => {
     // Deep copy the gibs import to prevent issues when overwriting keys for testing
-    const { layers, products } = JSON.parse(JSON.stringify(gibsResponse))
-    const { MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily: testingLayer } = layers
+    const { layers } = JSON.parse(JSON.stringify(gibsResponse))
+    const { AMSRE_Surface_Rain_Rate_Night: testingLayer } = layers
 
-    testingLayer.endDate = '2002-09-05T23:059:59Z'
-
-    const { product } = testingLayer
-    const { [product]: productObject } = products
-
-    testingLayer.product = productObject
+    delete testingLayer.daynight
 
     const response = constructLayerTagData(testingLayer)
 
@@ -117,7 +212,7 @@ describe('constructLayerTagData', () => {
       {
         collection: {
           condition: {
-            short_name: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
+            concept_id: 'C1000000001-EDSC'
           }
         },
         data: {
@@ -130,81 +225,13 @@ describe('constructLayerTagData', () => {
           geographic_resolution: '2km',
           group: 'overlays',
           match: {
-            day_night_flag: 'NIGHT',
-            time_start: '>=2002-07-04T00:00:00Z',
-            time_end: '<=2002-09-05T23:059:59Z'
+            time_end: '<=2011-10-04T00:00:00Z',
+            time_start: '>=2002-06-01T00:00:00Z'
           },
-          product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-          source: 'Aqua / MODIS',
-          title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
+          product: 'AMSRE_Surface_Rain_Rate_Night',
+          source: 'Aqua / AMSR-E',
+          title: 'Surface Rain Rate (Night)',
           updated_at: '1988-09-03T10:00:00.000Z'
-        }
-      }
-    ])
-  })
-
-  test('constructs correct tag data nrt/science layers', () => {
-    // Deep copy the gibs import to prevent issues when overwriting keys for testing
-    const { layers, products } = JSON.parse(JSON.stringify(gibsResponse))
-    const { MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily: testingLayer } = layers
-
-    testingLayer.endDate = '2002-09-05T23:059:59Z'
-
-    const { product } = testingLayer
-    const { [product]: productObject } = products
-
-    productObject.query = {
-      science: {
-        shortName: 'MYD09GA'
-      },
-      nrt: {
-        shortName: 'MYD09'
-      }
-    }
-    testingLayer.product = productObject
-
-    const response = constructLayerTagData(testingLayer)
-
-    const sharedParams = {
-      collection: {
-        condition: {
-          short_name: 'MODIS_AQUA_L3_SST_MID-IR_DAILY_4KM_NIGHTTIME_V2014.0'
-        }
-      },
-      data: {
-        antarctic: false,
-        antarctic_resolution: null,
-        arctic: false,
-        arctic_resolution: null,
-        format: 'png',
-        geographic: true,
-        geographic_resolution: '2km',
-        group: 'overlays',
-        match: {
-          time_start: '>=2002-07-04T00:00:00Z',
-          time_end: '<=2002-09-05T23:059:59Z'
-        },
-        product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily',
-        source: 'Aqua / MODIS',
-        title: 'Sea Surface Temperature (L3, Night, Daily, Mid Infrared, 4 km)',
-        updated_at: '1988-09-03T10:00:00.000Z'
-      }
-    }
-
-    expect(response).toEqual([
-      {
-        ...sharedParams,
-        collection: {
-          condition: {
-            short_name: 'MYD09GA'
-          }
-        }
-      }, {
-        ...sharedParams,
-        collection: {
-          condition: {
-            short_name: 'MYD09'
-          }
         }
       }
     ])

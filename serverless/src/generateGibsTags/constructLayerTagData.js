@@ -1,6 +1,3 @@
-
-import { configToCmrQuery } from './configToCmrQuery'
-
 /**
  * Construct an object from product information provided world view that Earthdata Search can use to tag CMR collections
  * @param {Object} layer A layer object from the Worldviews JSON configuration
@@ -9,10 +6,11 @@ export const constructLayerTagData = (layer) => {
   const layerTagData = []
 
   const {
+    conceptIds = [],
+    daynight = [],
     format,
     group,
     id,
-    product,
     projections,
     subtitle,
     title
@@ -26,10 +24,12 @@ export const constructLayerTagData = (layer) => {
     match.time_end = `<=${layer.endDate}`
   }
 
-  const { query } = product
+  if (daynight.length > 0) {
+    // This used to be a string but is not an array, just using the first value until
+    // we can discuss with the Worldview team
+    const [firstDayNightValue] = daynight
 
-  if (query.dayNightFlag) {
-    match.day_night_flag = query.dayNightFlag
+    match.day_night_flag = firstDayNightValue
   }
 
   const tagData = {
@@ -57,24 +57,17 @@ export const constructLayerTagData = (layer) => {
     }
   })
 
-  const {
-    nrt,
-    science
-  } = query
-
-  if (nrt || science) {
-    Object.keys(query).forEach((queryKey) => {
-      layerTagData.push({
-        collection: configToCmrQuery(query[queryKey]),
-        data: tagData
-      })
-    })
-  } else {
+  conceptIds.forEach((collection) => {
+    const { value } = collection
     layerTagData.push({
-      collection: configToCmrQuery(query),
+      collection: {
+        condition: {
+          concept_id: value
+        }
+      },
       data: tagData
     })
-  }
+  })
 
   return layerTagData
 }
