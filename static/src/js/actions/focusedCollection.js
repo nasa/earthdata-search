@@ -96,6 +96,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       ) {
         abstract
         archiveAndDistributionInformation
+        associatedDois
         boxes
         conceptId
         coordinateSystem
@@ -183,6 +184,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         const {
           abstract,
           archiveAndDistributionInformation,
+          associatedDois,
           boxes,
           conceptId,
           coordinateSystem,
@@ -210,6 +212,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         payload.push({
           abstract,
           archiveAndDistributionInformation,
+          associatedDois,
           boxes,
           coordinateSystem,
           dataCenter,

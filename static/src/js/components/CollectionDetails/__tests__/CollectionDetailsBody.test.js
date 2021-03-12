@@ -239,6 +239,40 @@ describe('CollectionDetails component', () => {
     })
   })
 
+  describe('Associated DOIs', () => {
+    test('renders its links correctly', () => {
+      const { enzymeWrapper } = setup({
+        overrideMetadata: {
+          associatedDois: [
+            {
+              doi: '10.1234/ParentDOIID1',
+              title: 'DOI Title 1',
+              authority: 'https://doi.org/'
+            },
+            {
+              doi: '10.1234/ParentDOIID2',
+              title: 'DOI Title 2',
+              authority: 'https://doi.org/'
+            }
+          ]
+        }
+      })
+
+      expect(enzymeWrapper.find('.collection-details-body__associated-doi').at(0).props().href).toEqual(
+        'https://doi.org/10.1234/ParentDOIID1'
+      )
+      expect(enzymeWrapper.find('.collection-details-body__associated-doi').at(0).text()).toEqual(
+        'DOI Title 1'
+      )
+      expect(enzymeWrapper.find('.collection-details-body__associated-doi').at(1).props().href).toEqual(
+        'https://doi.org/10.1234/ParentDOIID2'
+      )
+      expect(enzymeWrapper.find('.collection-details-body__associated-doi').at(1).text()).toEqual(
+        'DOI Title 2'
+      )
+    })
+  })
+
   describe('Related URLs', () => {
     test('renders its links correctly', () => {
       const { enzymeWrapper } = setup({
