@@ -113,6 +113,7 @@ export const CollectionDetailsBody = ({
 }) => {
   const {
     abstract,
+    associatedDois,
     dataCenters,
     doi,
     hasAllMetadata,
@@ -192,6 +193,37 @@ export const CollectionDetailsBody = ({
                   doi && buildDoiLink(doi)
                 }
               </div>
+              {
+                associatedDois && associatedDois.length > 0 && (
+                  <dl className="collection-details-body__info">
+                    <dt>Associated DOIs</dt>
+                    <dd className="collection-details-body__associated-dois">
+                      {
+                        associatedDois.map((associatedDoi) => {
+                          const {
+                            authority,
+                            doi,
+                            title
+                          } = associatedDoi
+
+                          return (
+                            <a
+                              key={doi}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="link collection-details-body__associated-doi"
+                              title={`View ${title}`}
+                              href={`${authority}${doi}`}
+                            >
+                              {title}
+                            </a>
+                          )
+                        })
+                      }
+                    </dd>
+                  </dl>
+                )
+              }
               <dl className="collection-details-body__info">
                 {
                   <>

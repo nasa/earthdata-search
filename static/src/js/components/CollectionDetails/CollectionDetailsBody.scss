@@ -72,13 +72,7 @@
   }
 
   &__related-link {
-    padding: 0;
     display: inline-block;
-    white-space: nowrap;
-    text-decoration: underline;
-    font-weight: 700;
-    font-size: .925rem;
-    line-height: 1.5rem;
     vertical-align: baseline;
 
     &:hover {
@@ -96,6 +90,23 @@
         vertical-align: baseline;
       }
     }
+  }
+
+  &__associated-doi, &__related-link {
+    padding: 0;
+    white-space: nowrap;
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: .925rem;
+    line-height: 1.5rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__associated-doi {
+    display: block;
   }
 
   &__reformatting-item {

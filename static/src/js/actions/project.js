@@ -196,6 +196,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         items {
           abstract
           archiveAndDistributionInformation
+          associatedDois
           boxes
           conceptId
           coordinateSystem
@@ -284,6 +285,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         const {
           abstract,
           archiveAndDistributionInformation,
+          associatedDois,
           boxes,
           conceptId,
           coordinateSystem,
@@ -309,6 +311,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         payload.push({
           abstract,
           archiveAndDistributionInformation,
+          associatedDois,
           boxes,
           coordinateSystem,
           dataCenter,
