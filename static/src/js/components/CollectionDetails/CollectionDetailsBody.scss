@@ -71,28 +71,8 @@
     }
   }
 
-  &__related-link {
-    display: inline-block;
-    vertical-align: baseline;
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    &:last-child {
-      padding-top: $spacer/8;
-    }
-
-    .button {
-      display: inline-block;
-
-      &__contents {
-        vertical-align: baseline;
-      }
-    }
-  }
-
-  &__associated-doi, &__related-link {
+  &__link {
+    display: block;
     padding: 0;
     white-space: nowrap;
     text-decoration: underline;
@@ -101,12 +81,29 @@
     line-height: 1.5rem;
 
     &:hover {
-      text-decoration: underline;
+      text-decoration: underline !important;
     }
-  }
 
-  &__associated-doi {
-    display: block;
+    .collection-details-body__links--horizontal & {
+      display: inline-block;
+      vertical-align: baseline;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:last-child {
+        padding-top: $spacer/8;
+      }
+
+      .button {
+        display: inline-block;
+
+        &__contents {
+          vertical-align: baseline;
+        }
+      }
+    }
   }
 
   &__reformatting-item {

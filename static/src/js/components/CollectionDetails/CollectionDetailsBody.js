@@ -27,7 +27,7 @@ const buildRelatedUrlsList = (relatedUrls) => {
       relatedUrlsList.push(
         <a
           key={key}
-          className="link link--separated collection-details-body__related-link"
+          className="link link--separated collection-details-body__link"
           href={url.url}
           target="_blank"
           rel="noopener noreferrer"
@@ -197,7 +197,7 @@ export const CollectionDetailsBody = ({
                 associatedDois && associatedDois.length > 0 && (
                   <dl className="collection-details-body__info">
                     <dt>Associated DOIs</dt>
-                    <dd className="collection-details-body__associated-dois">
+                    <dd className="collection-details-body__links">
                       {
                         associatedDois.map((associatedDoi) => {
                           const {
@@ -211,7 +211,7 @@ export const CollectionDetailsBody = ({
                               key={doi}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="link collection-details-body__associated-doi"
+                              className="link collection-details-body__link"
                               title={`View ${title}`}
                               href={`${authority}${doi}`}
                             >
@@ -228,13 +228,13 @@ export const CollectionDetailsBody = ({
                 {
                   <>
                     <dt>Related URLs</dt>
-                    <dd className="collection-details-body__related-links">
+                    <dd className="collection-details-body__links collection-details-body__links--horizontal">
                       {
                         formattedRelatedUrls.length > 0 && (
                           <>
                             {formattedRelatedUrls}
                             <Button
-                              className="link link--separated collection-details-body__related-link"
+                              className="link link--separated collection-details-body__link"
                               type="button"
                               variant="link"
                               bootstrapVariant="link"
@@ -247,7 +247,7 @@ export const CollectionDetailsBody = ({
                         )
                       }
                       <a
-                        className="link link--external collection-details-body__related-link"
+                        className="link link--external collection-details-body__link"
                         href={urls.html.href}
                         rel="noopener noreferrer"
                         target="_blank"
