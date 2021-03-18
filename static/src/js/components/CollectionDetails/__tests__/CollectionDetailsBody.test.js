@@ -258,16 +258,16 @@ describe('CollectionDetails component', () => {
         }
       })
 
-      expect(enzymeWrapper.find('.collection-details-body__associated-doi').at(0).props().href).toEqual(
+      expect(enzymeWrapper.find('.collection-details-body__link').at(0).props().href).toEqual(
         'https://doi.org/10.1234/ParentDOIID1'
       )
-      expect(enzymeWrapper.find('.collection-details-body__associated-doi').at(0).text()).toEqual(
+      expect(enzymeWrapper.find('.collection-details-body__link').at(0).text()).toEqual(
         'DOI Title 1'
       )
-      expect(enzymeWrapper.find('.collection-details-body__associated-doi').at(1).props().href).toEqual(
+      expect(enzymeWrapper.find('.collection-details-body__link').at(1).props().href).toEqual(
         'https://doi.org/10.1234/ParentDOIID2'
       )
-      expect(enzymeWrapper.find('.collection-details-body__associated-doi').at(1).text()).toEqual(
+      expect(enzymeWrapper.find('.collection-details-body__link').at(1).text()).toEqual(
         'DOI Title 2'
       )
     })
@@ -382,19 +382,19 @@ describe('CollectionDetails component', () => {
         }
       })
 
-      expect(enzymeWrapper.find('.collection-details-body__related-link').at(0).props().href).toEqual(
+      expect(enzymeWrapper.find('.collection-details-body__link').at(0).props().href).toEqual(
         'https://doi.org/10.3334/ORNLDAAC/830'
       )
-      expect(enzymeWrapper.find('.collection-details-body__related-link').at(0).text()).toEqual(
+      expect(enzymeWrapper.find('.collection-details-body__link').at(0).text()).toEqual(
         'Data Set Landing Page'
       )
-      expect(enzymeWrapper.find('.collection-details-body__related-link').at(1).find(Button).props().href).toEqual(null)
-      expect(typeof enzymeWrapper.find('.collection-details-body__related-link').at(1).find(Button).props().onClick).toEqual('function')
-      expect(enzymeWrapper.find('.collection-details-body__related-link').at(1).find(Button).props().bootstrapVariant).toEqual('link')
-      expect(enzymeWrapper.find('.collection-details-body__related-link').at(2).props().href).toEqual(
+      expect(enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().href).toEqual(null)
+      expect(typeof enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().onClick).toEqual('function')
+      expect(enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().bootstrapVariant).toEqual('link')
+      expect(enzymeWrapper.find('.collection-details-body__link').at(2).props().href).toEqual(
         'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.html'
       )
-      expect(enzymeWrapper.find('.collection-details-body__related-link').at(2).text()).toEqual(
+      expect(enzymeWrapper.find('.collection-details-body__link').at(2).text()).toEqual(
         'View More Info'
       )
     })
