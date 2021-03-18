@@ -208,7 +208,12 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       let value = matcher[prop]
 
       // Granule metadata is camel case, so camelCase the prop in order to find the granuleValue
-      const granuleValue = granule[camelCase(prop)].split('T')[0]
+      const metadataValue = granule[camelCase(prop)]
+
+      // If the granule metadata doesn't contain the prop, return
+      if (!metadataValue) return true
+
+      const granuleValue = metadataValue.split('T')[0]
       if (value && !granuleValue) { return false }
       let op = null
       operators.forEach((operator) => {
