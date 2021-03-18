@@ -113,7 +113,7 @@ describe('CollectionResultsList component', () => {
       const { enzymeWrapper } = setup({
         collectionMetadata: {
           ...collectionListItemProps.collection,
-          isCwic: true
+          isOpenSearch: true
         }
       })
       expect(enzymeWrapper.find('.collection-results-item__desc').text())
@@ -200,7 +200,7 @@ describe('CollectionResultsList component', () => {
     })
 
     describe('cwic badge', () => {
-      test('does not render when isCwic is not set', () => {
+      test('does not render when isOpenSearch is not set', () => {
         const { enzymeWrapper } = setup()
         expect(enzymeWrapper.find('.collection-results-item__badge--cwic').length).toEqual(0)
       })
@@ -210,7 +210,7 @@ describe('CollectionResultsList component', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collection,
-              isCwic: true
+              isOpenSearch: true
             }
           })
           expect(enzymeWrapper.find('.collection-results-item__badge--cwic').length).toEqual(1)
@@ -221,7 +221,7 @@ describe('CollectionResultsList component', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collection,
-              isCwic: true
+              isOpenSearch: true
             }
           })
 

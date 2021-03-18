@@ -138,7 +138,7 @@ describe('CollectionRequest#transformResponse', () => {
           id: 'collectionId',
           tags: {},
           has_map_imagery: false,
-          isCwic: false,
+          isOpenSearch: false,
           thumbnail: 'test-file-stub'
         }]
       }
@@ -147,7 +147,7 @@ describe('CollectionRequest#transformResponse', () => {
     expect(result).toEqual(expectedResult)
   })
 
-  test('return data with isCwic flag correctly', () => {
+  test('return data with isOpenSearch flag correctly', () => {
     const request = new CollectionRequest(undefined, 'prod')
 
     const data = {
@@ -159,7 +159,9 @@ describe('CollectionRequest#transformResponse', () => {
           id: 'collectionId',
           has_granules: false,
           tags: {
-            'org.ceos.wgiss.cwic.granules.prod': 'stuff here'
+            'opensearch.granule.osdd': {
+              data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+            }
           }
         }]
       }
@@ -175,9 +177,11 @@ describe('CollectionRequest#transformResponse', () => {
           has_granules: false,
           has_map_imagery: false,
           tags: {
-            'org.ceos.wgiss.cwic.granules.prod': 'stuff here'
+            'opensearch.granule.osdd': {
+              data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+            }
           },
-          isCwic: true,
+          isOpenSearch: true,
           thumbnail: 'test-file-stub'
         }]
       }
@@ -218,7 +222,7 @@ describe('CollectionRequest#transformResponse', () => {
             browse_flag: true,
             has_granules: false,
             has_map_imagery: true,
-            isCwic: false,
+            isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.gibs': 'stuff here'
             },
@@ -257,7 +261,7 @@ describe('CollectionRequest#transformResponse', () => {
             has_granules: false,
             has_map_imagery: false,
             id: 'collectionId',
-            isCwic: false,
+            isOpenSearch: false,
             tags: {},
             thumbnail: 'test-file-stub'
           }]

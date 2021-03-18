@@ -141,12 +141,12 @@ describe('getFocusedGranule', () => {
             metadata: {
               collections: {
                 'C10000000000-EDSC': {
-                  isCwic: true
+                  isOpenSearch: true
                 }
               },
               granules: {
                 'G10000000000-EDSC': {
-                  isCwic: true
+                  isOpenSearch: true
                 }
               }
             },

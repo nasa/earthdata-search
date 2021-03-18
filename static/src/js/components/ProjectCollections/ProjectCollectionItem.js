@@ -75,7 +75,7 @@ const ProjectCollectionItem = ({
   } = projectCollection
 
   const {
-    isCwic,
+    isOpenSearch,
     title,
     id: conceptId
   } = collectionMetadata
@@ -184,7 +184,7 @@ const ProjectCollectionItem = ({
                     {`${abbreviate(granuleCount, 1)} ${pluralize('Granule', granuleCount)}`}
                   </li>
                   {
-                    !isCwic && (granuleCount > 0 && size && unit) && (
+                    !isOpenSearch && (granuleCount > 0 && size && unit) && (
                       <li
                         className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
                       >

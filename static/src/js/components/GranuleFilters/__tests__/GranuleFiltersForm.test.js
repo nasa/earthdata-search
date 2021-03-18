@@ -238,7 +238,7 @@ describe('GranuleFiltersForm component', () => {
       test('defaults to an empty value', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            isCwic: false,
+            isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: { day_night_flag: true }
@@ -254,7 +254,7 @@ describe('GranuleFiltersForm component', () => {
       test('displays selected item', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            isCwic: false,
+            isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: { day_night_flag: true }
@@ -273,7 +273,7 @@ describe('GranuleFiltersForm component', () => {
       test('calls handleChange on change', () => {
         const { enzymeWrapper, props } = setup({
           collectionMetadata: {
-            isCwic: false,
+            isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: { day_night_flag: true }
@@ -359,7 +359,7 @@ describe('GranuleFiltersForm component', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { cloud_cover: true }
@@ -375,7 +375,7 @@ describe('GranuleFiltersForm component', () => {
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { cloud_cover: true }
@@ -395,7 +395,7 @@ describe('GranuleFiltersForm component', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { cloud_cover: true }
@@ -411,7 +411,7 @@ describe('GranuleFiltersForm component', () => {
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { cloud_cover: true }
@@ -433,7 +433,7 @@ describe('GranuleFiltersForm component', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { orbit_calculated_spatial_domains: true }
@@ -449,7 +449,7 @@ describe('GranuleFiltersForm component', () => {
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { orbit_calculated_spatial_domains: true }
@@ -469,7 +469,7 @@ describe('GranuleFiltersForm component', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { orbit_calculated_spatial_domains: true }
@@ -485,7 +485,7 @@ describe('GranuleFiltersForm component', () => {
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { orbit_calculated_spatial_domains: true }
@@ -507,7 +507,7 @@ describe('GranuleFiltersForm component', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { orbit_calculated_spatial_domains: true }
@@ -523,7 +523,7 @@ describe('GranuleFiltersForm component', () => {
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { orbit_calculated_spatial_domains: true }
@@ -543,7 +543,7 @@ describe('GranuleFiltersForm component', () => {
         test('defaults to an empty value', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { orbit_calculated_spatial_domains: true }
@@ -559,7 +559,7 @@ describe('GranuleFiltersForm component', () => {
         test('calls handleChange on change', () => {
           const { enzymeWrapper, props } = setup({
             collectionMetadata: {
-              isCwic: false,
+              isOpenSearch: false,
               tags: {
                 'edsc.extra.serverless.collection_capabilities': {
                   data: { orbit_calculated_spatial_domains: true }
@@ -582,7 +582,7 @@ describe('GranuleFiltersForm component', () => {
       test('displays correctly when only start date is set', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            isCwic: false,
+            isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: { orbit_calculated_spatial_domains: true }
@@ -603,7 +603,7 @@ describe('GranuleFiltersForm component', () => {
       test('displays correctly when only end date is set', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            isCwic: false,
+            isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: { orbit_calculated_spatial_domains: true }
@@ -625,7 +625,7 @@ describe('GranuleFiltersForm component', () => {
       test('displays correctly when both dates are set', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            isCwic: false,
+            isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: { orbit_calculated_spatial_domains: true }
@@ -648,7 +648,7 @@ describe('GranuleFiltersForm component', () => {
       test('calls the correct callbacks on startDate submit', () => {
         const { enzymeWrapper, props } = setup({
           collectionMetadata: {
-            isCwic: false,
+            isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: { orbit_calculated_spatial_domains: true }
@@ -674,7 +674,7 @@ describe('GranuleFiltersForm component', () => {
       test('calls the correct callbacks on endDate submit', () => {
         const { enzymeWrapper, props } = setup({
           collectionMetadata: {
-            isCwic: false,
+            isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.collection_capabilities': {
                 data: { orbit_calculated_spatial_domains: true }

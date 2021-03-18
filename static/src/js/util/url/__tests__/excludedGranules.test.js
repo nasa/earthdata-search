@@ -155,7 +155,7 @@ describe('url#encodeUrlQuery', () => {
         const props = {
           collectionsMetadata: {
             collectionId: {
-              isCwic: false
+              isOpenSearch: false
             }
           },
           hasGranulesOrCwic: true,
@@ -188,7 +188,7 @@ describe('url#encodeUrlQuery', () => {
               collectionId: {
                 excludedGranuleIds: [],
                 granules: {},
-                isCwic: true,
+                isOpenSearch: true,
                 metadata: { mock: 'data' }
               }
             }
@@ -205,7 +205,7 @@ describe('url#encodeUrlQuery', () => {
         const props = {
           collectionsMetadata: {
             collectionId: {
-              isCwic: true
+              isOpenSearch: true
             }
           },
           hasGranulesOrCwic: true,
@@ -233,7 +233,7 @@ describe('url#encodeUrlQuery', () => {
       const props = {
         collectionsMetadata: {
           collectionId: {
-            isCwic: false
+            isOpenSearch: false
           }
         },
         hasGranulesOrCwic: true,
@@ -265,7 +265,7 @@ describe('url#encodeUrlQuery', () => {
       const props = {
         collectionsMetadata: {
           collectionId: {
-            isCwic: false
+            isOpenSearch: false
           }
         },
         hasGranulesOrCwic: true,

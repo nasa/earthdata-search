@@ -258,7 +258,7 @@ const projectReducer = (state = initialState, action) => {
       const {
         collectionId,
         hits,
-        isCwic,
+        isOpenSearch,
         results,
         totalSize,
         singleGranuleSize
@@ -293,7 +293,7 @@ const projectReducer = (state = initialState, action) => {
                 ...projectCollectionGranules,
                 allIds,
                 hits,
-                isCwic,
+                isOpenSearch,
                 totalSize,
                 singleGranuleSize
               }

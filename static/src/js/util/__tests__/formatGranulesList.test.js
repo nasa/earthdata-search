@@ -58,7 +58,7 @@ function setup(overrides) {
           href: 'http://modis.gsfc.nasa.gov/sci_team/'
         }
       ],
-      isCwic: false,
+      isOpenSearch: false,
       formattedTemporal: [
         '2020-08-13 00:00:00',
         '2020-08-14 00:00:00'
@@ -206,7 +206,7 @@ describe('granule metadata', () => {
           '#text': 'Granule metadata for C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc',
           type: 'text'
         },
-        isCwic: true,
+        isOpenSearch: true,
         timeStart: '2018-12-01',
         timeEnd: '2018-12-01',
         formattedTemporal: [

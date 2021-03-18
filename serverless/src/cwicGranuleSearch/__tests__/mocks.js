@@ -111,6 +111,19 @@ export const cwicOsddErrorResponse = `<?xml version="1.0" encoding="UTF-8"?>
    <Contact>cwic-help@wgiss.ceos.org</Contact>
 </OpenSearchDescription>`
 
+export const cwicGranuleErrorResponse = `<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/" xmlns:georss="http://www.georss.org/georss/10" xmlns:dc="http://purl.org/dc/elements/1.1" xmlns:lta="https://earthexplorer.usgs.gov/opensearch/extensions/1.0/" xmlns:esipdiscover="http://commons.esipfed.org/ns/discovery/1.2/">
+    <title>USGS&#47;EROS OpenSearch Exception</title>
+    <subtitle type="text">An error occurred searching granules: datasetName is required</subtitle>
+    <updated>2021-03-15T16:21:29Z</updated>
+    <author>
+        <name>USGS/EROS Long Term Archive</name>
+        <email></email>
+    </author>
+    <id>https://earthexplorer.usgs.gov/opensearch/granules.atom</id>
+    <link title="self" rel="self" type="application/atom+xml" href="https://earthexplorer.usgs.gov/opensearch/granules.atom"/>
+    <opensearch:totalResults>0</opensearch:totalResults>
+</feed>`
+
 export const cwicGranuleTemplate = {
   indexOffset: '0',
   'params:Parameter': [

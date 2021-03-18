@@ -59,7 +59,7 @@ innerElementType.propTypes = {
  * @param {Array} props.granules - List of formatted granule.
  * @param {Number} props.height - The height of the container provided by AutoSizer.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
- * @param {Boolean} props.isCwic - Flag designating CWIC collections.
+ * @param {Boolean} props.isOpenSearch - Flag designating CWIC collections.
  * @param {Function} props.isGranuleInProject - Function to detirmine if the granule is in the project.
  * @param {Function} props.isItemLoaded - Callback to detirmine if a granule has been loaded.
  * @param {Number} props.itemCount - Number of total granule list itmes.
@@ -81,7 +81,7 @@ export const GranuleResultsListBody = ({
   granules,
   height,
   isCollectionInProject,
-  isCwic,
+  isOpenSearch,
   isGranuleInProject,
   isItemLoaded,
   itemCount,
@@ -194,7 +194,7 @@ export const GranuleResultsListBody = ({
               getRowHeight,
               granules,
               isCollectionInProject,
-              isCwic,
+              isOpenSearch,
               isGranuleInProject,
               isItemLoaded,
               location,
@@ -247,7 +247,7 @@ GranuleResultsListBody.propTypes = {
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  isCwic: PropTypes.bool.isRequired,
+  isOpenSearch: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,

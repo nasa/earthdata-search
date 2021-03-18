@@ -213,10 +213,10 @@ class SpatialSelection extends Component {
       if (
         (nextProps.polygonSearch[0] && nextProps.polygonSearch[0] !== '')
         && drawnMbrFound.length === 0
-        && nextProps.isCwic
+        && nextProps.isOpenSearch
       ) {
         this.renderMbr(nextProps.polygonSearch[0])
-      } else if (drawnMbrFound.length > 0 && !nextProps.isCwic) {
+      } else if (drawnMbrFound.length > 0 && !nextProps.isOpenSearch) {
         if (leafletElement.removeLayer) {
           drawnMbrFound.forEach(drawnMbr => leafletElement.removeLayer(drawnMbr.layerMbr))
           if (drawnLayers.length > 0) {
@@ -1004,7 +1004,7 @@ SpatialSelection.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
   circleSearch: PropTypes.arrayOf(PropTypes.string),
-  isCwic: PropTypes.bool.isRequired,
+  isOpenSearch: PropTypes.bool.isRequired,
   isProjectPage: PropTypes.bool.isRequired,
   lineSearch: PropTypes.arrayOf(PropTypes.string),
   mapRef: PropTypes.shape({}),

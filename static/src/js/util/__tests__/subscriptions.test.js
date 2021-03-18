@@ -15,7 +15,7 @@ describe('prepareSubscriptionQuery', () => {
       equatorCrossingLongitude: undefined,
       exclude: {},
       gridCoords: '',
-      isCwic: false,
+      isOpenSearch: false,
       line: undefined,
       onlineOnly: undefined,
       options: { spatial: { or: true } },

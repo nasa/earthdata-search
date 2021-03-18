@@ -33,7 +33,7 @@ function setup(overrideProps) {
     row: {
       original: {
         id: 'one',
-        isCwic: false,
+        isOpenSearch: false,
         dataLinks: [],
         onlineAccessFlag: true,
         handleClick: jest.fn()
@@ -86,7 +86,7 @@ describe('GranuleResultsTableHeaderCell component', () => {
       row: {
         original: {
           id: 'one',
-          isCwic: true,
+          isOpenSearch: true,
           dataLinks: [],
           onlineAccessFlag: true,
           handleClick: jest.fn()

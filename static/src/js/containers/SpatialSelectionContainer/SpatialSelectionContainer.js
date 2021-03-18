@@ -55,7 +55,7 @@ export const SpatialSelectionContainer = (props) => {
   const { pathname } = location
   const isProjectPage = isPath(pathname, '/projects')
 
-  const { isCwic = false } = collectionMetadata
+  const { isOpenSearch = false } = collectionMetadata
 
   const { leafletElement } = mapRef
 
@@ -67,7 +67,7 @@ export const SpatialSelectionContainer = (props) => {
       advancedSearch={advancedSearch}
       boundingBoxSearch={boundingBoxSearch}
       circleSearch={circleSearch}
-      isCwic={isCwic}
+      isOpenSearch={isOpenSearch}
       isProjectPage={isProjectPage}
       lineSearch={lineSearch}
       mapRef={mapRef}

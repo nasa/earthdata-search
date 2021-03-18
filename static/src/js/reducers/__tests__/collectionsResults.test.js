@@ -202,7 +202,7 @@ describe('STARTED_GRANULES_TIMER', () => {
             allIds: [],
             excludedGranuleIds: [],
             hits: null,
-            isCwic: null,
+            isOpenSearch: null,
             isLoaded: false,
             isLoading: false,
             loadTime: 0,
@@ -231,7 +231,7 @@ describe('FINISHED_GRANULES_TIMER', () => {
             allIds: [],
             excludedGranuleIds: [],
             hits: null,
-            isCwic: null,
+            isOpenSearch: null,
             isLoaded: false,
             isLoading: false,
             loadTime: 0,
@@ -251,7 +251,7 @@ describe('FINISHED_GRANULES_TIMER', () => {
             allIds: [],
             excludedGranuleIds: [],
             hits: null,
-            isCwic: null,
+            isOpenSearch: null,
             isLoaded: false,
             isLoading: false,
             loadTime: 2,
@@ -291,7 +291,7 @@ describe('RESET_GRANULE_RESULTS', () => {
             allIds: [],
             excludedGranuleIds: [],
             hits: null,
-            isCwic: null,
+            isOpenSearch: null,
             isLoaded: false,
             isLoading: false,
             loadTime: 0,
@@ -385,7 +385,7 @@ describe('UPDATE_GRANULE_RESULTS', () => {
       payload: {
         collectionId: 'collectionId',
         hits: 1,
-        isCwic: false,
+        isOpenSearch: false,
         results: [{
           mock: 'metadata',
           id: 'granuleId1'
@@ -415,7 +415,7 @@ describe('UPDATE_GRANULE_RESULTS', () => {
         collectionId: {
           granules: {
             hits: 1,
-            isCwic: false,
+            isOpenSearch: false,
             allIds: ['granuleId1'],
             totalSize: {
               size: '42',
@@ -450,7 +450,7 @@ describe('ADD_MORE_GRANULE_RESULTS', () => {
         collectionId: {
           granules: {
             hits: 1,
-            isCwic: false,
+            isOpenSearch: false,
             allIds: ['granuleId1'],
             totalSize: {
               size: '42',
@@ -468,7 +468,7 @@ describe('ADD_MORE_GRANULE_RESULTS', () => {
         collectionId: {
           granules: {
             hits: 1,
-            isCwic: false,
+            isOpenSearch: false,
             allIds: ['granuleId1', 'granuleId2'],
             totalSize: {
               size: '42',

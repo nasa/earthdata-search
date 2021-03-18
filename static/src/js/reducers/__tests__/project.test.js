@@ -972,7 +972,7 @@ describe('UPDATE_PROJECT_GRANULE_RESULTS', () => {
         results: [{
           id: 'granuleId'
         }],
-        isCwic: false,
+        isOpenSearch: false,
         hits: 1,
         totalSize: {
           size: '42',
@@ -1004,7 +1004,7 @@ describe('UPDATE_PROJECT_GRANULE_RESULTS', () => {
             granules: {
               ...initialGranuleState,
               allIds: ['granuleId'],
-              isCwic: false,
+              isOpenSearch: false,
               hits: 1,
               totalSize: {
                 size: '42',

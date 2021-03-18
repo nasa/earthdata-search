@@ -42,11 +42,11 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   // requested the focused collections metadata from graphql
   const {
     hasAllMetadata = false,
-    isCwic = false
+    isOpenSearch = false
   } = focusedGranuleMetadata
 
   // If this is a cwic granule, we've already retrieved everything we can from the search
-  if (isCwic) return null
+  if (isOpenSearch) return null
 
   // If we already have the metadata for the focusedGranule, don't fetch it again
   if (hasAllMetadata) return null

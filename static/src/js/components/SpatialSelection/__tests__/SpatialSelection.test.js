@@ -26,7 +26,7 @@ const defaultProps = {
   },
   boundingBoxSearch: [],
   circleSearch: [],
-  isCwic: false,
+  isOpenSearch: false,
   isProjectPage: false,
   lineSearch: [],
   mapRef: {

@@ -192,7 +192,7 @@ describe('getFocusedCollection', () => {
             metadata: {
               collections: {
                 'C10000000000-EDSC': {
-                  isCwic: true
+                  isOpenSearch: true
                 }
               }
             },

@@ -28,7 +28,7 @@ export const initialGranuleState = {
   allIds: [],
   excludedGranuleIds: [],
   hits: null,
-  isCwic: null,
+  isOpenSearch: null,
   isLoaded: false,
   isLoading: false,
   loadTime: 0,
@@ -222,7 +222,7 @@ const collectionsResultsReducer = (state = initialState, action) => {
       const {
         collectionId,
         hits,
-        isCwic,
+        isOpenSearch,
         results,
         totalSize,
         singleGranuleSize
@@ -240,7 +240,7 @@ const collectionsResultsReducer = (state = initialState, action) => {
               ...state.byId[collectionId].granules,
               allIds,
               hits,
-              isCwic,
+              isOpenSearch,
               totalSize,
               singleGranuleSize
             }

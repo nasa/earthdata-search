@@ -19,7 +19,7 @@ import './GranuleResultsBody.scss'
  * @param {String} props.collectionId - The focused collection ID.
  * @param {String} props.focusedGranuleId - The focused granule ID.
  * @param {Object} props.granuleSearchResults - Granules passed from redux store.
- * @param {Object} props.isCwic - Flag set if the focused collection is a CWIC collection.
+ * @param {Object} props.isOpenSearch - Flag set if the focused collection is a CWIC collection.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
  * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onExcludeGranule - Callback exclude a granule.
@@ -34,7 +34,7 @@ const GranuleResultsBody = ({
   granuleQuery,
   granuleSearchResults,
   granulesMetadata,
-  isCwic,
+  isOpenSearch,
   loadNextPage,
   location,
   onAddGranuleToProjectCollection,
@@ -75,7 +75,7 @@ const GranuleResultsBody = ({
   const granuleIds = getGranuleIds({
     allIds,
     excludedGranuleIds,
-    isCwic,
+    isOpenSearch,
     limit: false
   })
 
@@ -182,7 +182,7 @@ const GranuleResultsBody = ({
           excludedGranuleIds={excludedGranuleIds}
           granules={granulesList}
           isCollectionInProject={isCollectionInProject}
-          isCwic={isCwic}
+          isOpenSearch={isOpenSearch}
           isGranuleInProject={isGranuleInProject}
           isItemLoaded={isItemLoaded}
           itemCount={itemCount}
@@ -210,7 +210,7 @@ const GranuleResultsBody = ({
           focusedGranuleId={focusedGranuleId}
           granules={granulesList}
           hasBrowseImagery={hasBrowseImagery}
-          isCwic={isCwic}
+          isOpenSearch={isOpenSearch}
           itemCount={itemCount}
           isItemLoaded={isItemLoaded}
           location={location}
@@ -280,7 +280,7 @@ GranuleResultsBody.propTypes = {
       title: PropTypes.string.isRequired
     })
   ).isRequired,
-  isCwic: PropTypes.bool.isRequired,
+  isOpenSearch: PropTypes.bool.isRequired,
   location: locationPropType.isRequired,
   loadNextPage: PropTypes.func.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,

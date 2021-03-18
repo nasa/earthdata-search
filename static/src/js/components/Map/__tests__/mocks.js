@@ -124,7 +124,7 @@ export const updateProps = {
           href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
         }
       ],
-      isCwic: false,
+      isOpenSearch: false,
       formattedTemporal: [
         '2020-09-29 00:00:00',
         '2020-10-14 23:59:59'
@@ -251,7 +251,7 @@ export const updateProps = {
           href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
         }
       ],
-      isCwic: false,
+      isOpenSearch: false,
       formattedTemporal: [
         '2020-09-29 00:00:00',
         '2020-10-14 23:59:59'
@@ -378,7 +378,7 @@ export const updateProps = {
           href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
         }
       ],
-      isCwic: false,
+      isOpenSearch: false,
       formattedTemporal: [
         '2020-09-29 00:00:00',
         '2020-10-14 23:59:59'
@@ -509,7 +509,7 @@ export const updateProps = {
           href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
         }
       ],
-      isCwic: false,
+      isOpenSearch: false,
       formattedTemporal: [
         '2020-09-29 00:00:00',
         '2020-10-14 23:59:59'
@@ -636,7 +636,7 @@ export const updateProps = {
           href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
         }
       ],
-      isCwic: false,
+      isOpenSearch: false,
       formattedTemporal: [
         '2020-09-29 00:00:00',
         '2020-10-14 23:59:59'
@@ -763,7 +763,7 @@ export const updateProps = {
           href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
         }
       ],
-      isCwic: false,
+      isOpenSearch: false,
       formattedTemporal: [
         '2020-09-29 00:00:00',
         '2020-10-14 23:59:59'
@@ -807,7 +807,7 @@ export const updateProps = {
     hasAllMetadata: true,
     hasGranules: true,
     id: 'C194001241-LPDAAC_ECS',
-    isCwic: false,
+    isOpenSearch: false,
     services: {
       count: 0,
       items: null
@@ -1382,7 +1382,7 @@ export const pathsWithHolesResult = [[{
     }, {
       inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
-    isCwic: false,
+    isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
     thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G1953763296-LPDAAC_ECS?h=85&w=85',
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.1.jpg'
@@ -1440,7 +1440,7 @@ export const pathsWithHolesResult = [[{
     }, {
       inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
-    isCwic: false,
+    isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
     thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G1953763331-LPDAAC_ECS?h=85&w=85',
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.1.jpg'
@@ -1498,7 +1498,7 @@ export const pathsWithHolesResult = [[{
     }, {
       inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
-    isCwic: false,
+    isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
     thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G1953763366-LPDAAC_ECS?h=85&w=85',
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.1.jpg'
@@ -1558,7 +1558,7 @@ export const pathsResult = [{
     }, {
       inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
-    isCwic: false,
+    isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
     thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G1953763296-LPDAAC_ECS?h=85&w=85',
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.1.jpg'
@@ -1616,7 +1616,7 @@ export const pathsResult = [{
     }, {
       inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
-    isCwic: false,
+    isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
     thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G1953763331-LPDAAC_ECS?h=85&w=85',
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.1.jpg'
@@ -1674,7 +1674,7 @@ export const pathsResult = [{
     }, {
       inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
-    isCwic: false,
+    isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
     thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G1953763366-LPDAAC_ECS?h=85&w=85',
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.1.jpg'

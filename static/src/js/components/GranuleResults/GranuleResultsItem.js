@@ -54,9 +54,9 @@ const GranuleResultsItem = forwardRef(({
   const handleFilterClick = () => {
     let { id } = granule
 
-    const { isCwic } = granule
+    const { isOpenSearch } = granule
 
-    if (isCwic) id = murmurhash3(id).toString()
+    if (isOpenSearch) id = murmurhash3(id).toString()
 
     onExcludeGranule({
       collectionId,

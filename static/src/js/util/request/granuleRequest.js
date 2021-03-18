@@ -80,7 +80,7 @@ export default class GranuleRequest extends CmrRequest {
     entry.map((granule) => {
       const updatedGranule = granule
 
-      updatedGranule.isCwic = false
+      updatedGranule.isOpenSearch = false
 
       const formattedTemporal = getTemporal(granule.time_start, granule.time_end)
 

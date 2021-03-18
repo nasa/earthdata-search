@@ -69,7 +69,7 @@ export default class CwicGranuleRequest extends Request {
       granuleResults.map((granule) => {
         const updatedGranule = granule
 
-        updatedGranule.isCwic = true
+        updatedGranule.isOpenSearch = true
 
         const {
           'dc:date': temporal,
