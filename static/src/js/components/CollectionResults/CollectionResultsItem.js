@@ -51,7 +51,7 @@ export const CollectionResultsItem = forwardRef(({
     hasTransforms,
     hasVariables,
     hasMapImagery,
-    isCwic,
+    isOpenSearch,
     isCollectionInProject,
     isNrt,
     shortName,
@@ -271,12 +271,12 @@ export const CollectionResultsItem = forwardRef(({
               </h3>
               <p className="collection-results-item__desc">
                 {
-                  isCwic && (
+                  isOpenSearch && (
                     <strong>Int&apos;l / Interagency</strong>
                   )
                 }
                 {
-                  !isCwic && (
+                  !isOpenSearch && (
                     <strong>{`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}</strong>
                   )
                 }
@@ -318,7 +318,7 @@ export const CollectionResultsItem = forwardRef(({
           </div>
           <div className="collection-results-item__body-secondary">
             {
-              isCwic && (
+              isOpenSearch && (
                 <OverlayTrigger
                   placement="top"
                   overlay={(

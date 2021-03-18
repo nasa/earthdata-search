@@ -4,15 +4,15 @@ import { encodeGranuleFilters, decodeGranuleFilters } from './granuleFiltersEnco
 
 /**
  * Encode a list of Granule IDs
- * @param {boolean} isCwic Are the granules CWIC
+ * @param {boolean} isOpenSearch Are the granules CWIC
  * @param {array} granuleIds List of granule IDs
  */
-const encodeGranules = (isCwic, granuleIds) => {
-  // On page log, isCwic hasn't been determined yet
+const encodeGranules = (isOpenSearch, granuleIds) => {
+  // On page log, isOpenSearch hasn't been determined yet
   // temporary fix, if the granule doesn't start with G, it is CWIC
   const [firstGranuleId] = granuleIds
 
-  if (isCwic || isNumber(firstGranuleId)) {
+  if (isOpenSearch || isNumber(firstGranuleId)) {
     return granuleIds.join('!')
   }
 
@@ -32,7 +32,7 @@ const decodedGranules = (key, granules) => {
   const keys = Object.keys(granules)
 
   let result = {
-    isCwic: false,
+    isOpenSearch: false,
     granuleIds: []
   }
 
@@ -44,7 +44,7 @@ const decodedGranules = (key, granules) => {
     const granuleIds = granulesList.map(granuleId => `G${granuleId}-${provider}`)
 
     result = {
-      isCwic: false,
+      isOpenSearch: false,
       granuleIds
     }
   }
@@ -54,7 +54,7 @@ const decodedGranules = (key, granules) => {
     const granuleIds = decodedGranules.split('!')
 
     result = {
-      isCwic: true,
+      isOpenSearch: true,
       granuleIds
     }
   }
@@ -121,22 +121,22 @@ const encodeOutputProjection = (projectCollection) => {
   return selectedOutputProjection
 }
 
-const encodeAddedGranules = (isCwic, addedGranuleIds) => {
+const encodeAddedGranules = (isOpenSearch, addedGranuleIds) => {
   if (!addedGranuleIds.length) return null
 
-  return encodeGranules(isCwic, addedGranuleIds)
+  return encodeGranules(isOpenSearch, addedGranuleIds)
 }
 
-const encodeExcludedGranules = (isCwic, excludedGranuleIds) => {
+const encodeExcludedGranules = (isOpenSearch, excludedGranuleIds) => {
   if (!excludedGranuleIds.length) return null
 
-  return encodeGranules(isCwic, excludedGranuleIds)
+  return encodeGranules(isOpenSearch, excludedGranuleIds)
 }
 
-const encodeRemovedGranules = (isCwic, removedGranuleIds) => {
+const encodeRemovedGranules = (isOpenSearch, removedGranuleIds) => {
   if (!removedGranuleIds.length) return null
 
-  return encodeGranules(isCwic, removedGranuleIds)
+  return encodeGranules(isOpenSearch, removedGranuleIds)
 }
 
 const decodedSelectedVariables = (pgParam) => {
@@ -221,7 +221,7 @@ export const encodeCollections = (props) => {
     }
 
     const {
-      isCwic
+      isOpenSearch
     } = collectionMetadata
 
     const { [collectionId]: projectCollection = {} } = projectById
@@ -233,7 +233,7 @@ export const encodeCollections = (props) => {
 
     // excludedGranules
     let encodedExcludedGranules
-    const excludedKey = isCwic ? 'cx' : 'x'
+    const excludedKey = isOpenSearch ? 'cx' : 'x'
 
     const { collection: collectionsQuery = {} } = query
     const { byId: collectionQueryById = {} } = collectionsQuery
@@ -242,15 +242,15 @@ export const encodeCollections = (props) => {
     const { excludedGranuleIds = [] } = granuleQuery
 
     if (excludedGranuleIds.length > 0) {
-      encodedExcludedGranules = encodeExcludedGranules(isCwic, excludedGranuleIds)
+      encodedExcludedGranules = encodeExcludedGranules(isOpenSearch, excludedGranuleIds)
     }
 
     if (encodedExcludedGranules) pg[excludedKey] = encodedExcludedGranules
 
     let encodedAddedGranules
     let encodedRemovedGranules
-    const addedKey = isCwic ? 'ca' : 'a'
-    const removedKey = isCwic ? 'cr' : 'r'
+    const addedKey = isOpenSearch ? 'ca' : 'a'
+    const removedKey = isOpenSearch ? 'cr' : 'r'
 
     // Encode granules added to the current project
     const {
@@ -259,12 +259,12 @@ export const encodeCollections = (props) => {
     } = projectCollectionGranules
 
     if (addedGranuleIds.length > 0) {
-      encodedAddedGranules = encodeAddedGranules(isCwic, addedGranuleIds)
+      encodedAddedGranules = encodeAddedGranules(isOpenSearch, addedGranuleIds)
     }
 
     // Encode granules removed from the current project
     if (removedGranuleIds.length > 0) {
-      encodedRemovedGranules = encodeRemovedGranules(isCwic, removedGranuleIds)
+      encodedRemovedGranules = encodeRemovedGranules(isOpenSearch, removedGranuleIds)
     }
 
     if (encodedAddedGranules) pg[addedKey] = encodedAddedGranules
@@ -339,7 +339,7 @@ export const decodeCollections = (params) => {
     const collectionListIndex = index + (projectExists ? 1 : 0)
 
     // Metadata
-    let isCwic
+    let isOpenSearch
 
     // Project
     let addedGranuleIds = []
@@ -361,19 +361,19 @@ export const decodeCollections = (params) => {
 
       // Granules added by way of additive model
       ({
-        isCwic: addedIsCwic,
+        isOpenSearch: addedIsCwic,
         granuleIds: addedGranuleIds = []
       } = decodedGranules('a', pCollection));
 
       // Granules removed by way of additive model
       ({
-        isCwic: removedIsCwic,
+        isOpenSearch: removedIsCwic,
         granuleIds: removedGranuleIds = []
       } = decodedGranules('r', pCollection));
 
       // Granules removed by way of terciary filter
       ({
-        isCwic: excludedIsCwic,
+        isOpenSearch: excludedIsCwic,
         granuleIds: excludedGranuleIds = []
       } = decodedGranules('x', pCollection))
 
@@ -418,12 +418,12 @@ export const decodeCollections = (params) => {
       selectedOutputProjection = decodedOutputProjection(pCollection)
 
       // Determine if the collection is a CWIC collection
-      isCwic = excludedIsCwic || addedIsCwic || removedIsCwic
+      isOpenSearch = excludedIsCwic || addedIsCwic || removedIsCwic
 
       // Populate the collection object for the redux store
       collectionMetadata[collectionId] = {
         id: collectionId,
-        isCwic
+        isOpenSearch
       }
     }
 

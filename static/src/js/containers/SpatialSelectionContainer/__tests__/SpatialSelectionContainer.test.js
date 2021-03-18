@@ -138,7 +138,7 @@ describe('SpatialSelectionContainer component', () => {
     expect(enzymeWrapper.find(SpatialSelection).length).toBe(1)
     expect(enzymeWrapper.find(SpatialSelection).props().boundingBoxSearch).toEqual(['Test value'])
     expect(enzymeWrapper.find(SpatialSelection).props().circleSearch).toEqual(['Test value'])
-    expect(enzymeWrapper.find(SpatialSelection).props().isCwic).toEqual(false)
+    expect(enzymeWrapper.find(SpatialSelection).props().isOpenSearch).toEqual(false)
     expect(enzymeWrapper.find(SpatialSelection).props().isProjectPage).toEqual(false)
     expect(enzymeWrapper.find(SpatialSelection).props().pointSearch).toEqual(['Test value'])
     expect(enzymeWrapper.find(SpatialSelection).props().polygonSearch).toEqual(['Test value'])

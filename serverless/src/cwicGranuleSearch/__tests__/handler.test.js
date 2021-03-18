@@ -1,9 +1,14 @@
 import nock from 'nock'
 
-import { cwicGranuleResponse, cwicGranuleTemplate } from './mocks'
+import {
+  // cwicGranuleErrorResponse,
+  cwicGranuleResponse,
+  cwicOsddErrorResponse,
+  cwicOsddResponse
+} from './mocks'
 
-import * as getCwicGranulesUrl from '../getCwicGranulesUrl'
-import * as renderOpenSearchTemplate from '../renderOpenSearchTemplate'
+// import * as getOpenSearchGranulesUrl from '../getOpenSearchGranulesUrl'
+// import * as renderOpenSearchTemplate from '../renderOpenSearchTemplate'
 
 import cwicGranuleSearch from '../handler'
 
@@ -12,19 +17,26 @@ beforeEach(() => {
 })
 
 describe('handler', () => {
-  describe('when retrieving the granule url fails', () => {
+  describe('when retrieving the collection url fails', () => {
     test('returns the error', async () => {
-      jest.spyOn(getCwicGranulesUrl, 'getCwicGranulesUrl').mockImplementationOnce(() => (
-        new Promise(resolve => resolve({
-          statusCode: 400,
-          errors: ['Error (400): REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset']
-        }))
-      ))
+      // jest.spyOn(getOpenSearchGranulesUrl, 'getOpenSearchGranulesUrl').mockImplementationOnce(() => (
+      //   new Promise(resolve => resolve({
+      //     statusCode: 400,
+      //     errors: ['Error (400): REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset']
+      //   }))
+      // ))
+
+      nock(/cwic/)
+        .get(/opensearch/)
+        .reply(400, cwicOsddErrorResponse, {
+          'Content-Type': 'application/opensearchdescription+xml'
+        })
 
       const event = {
         body: JSON.stringify({
           params: {
-            echoCollectionId: 'C1597928934-SNOAA_NCEI'
+            echoCollectionId: 'C1597928934-NOAA_NCEI',
+            openSearchOsdd: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
           }
         })
       }
@@ -33,7 +45,7 @@ describe('handler', () => {
 
       expect(response).toEqual({
         body: [
-          'Error (400): REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset'
+          'REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset'
         ],
         headers: {
           'Access-Control-Allow-Credentials': true,
@@ -47,26 +59,26 @@ describe('handler', () => {
     })
   })
 
-  describe('when retrieving the granule url succeeds', () => {
-    describe('success', () => {
+  describe('when retrieving the collection url succeeds', () => {
+    describe('when retrieving the granule url succeeds', () => {
       test('returns the granules', async () => {
-        jest.spyOn(getCwicGranulesUrl, 'getCwicGranulesUrl').mockImplementationOnce(() => (
-          new Promise(resolve => resolve({
-            statusCode: 200,
-            body: cwicGranuleTemplate
-          }))
-        ))
+        nock(/cwic/)
+          .get(/opensearch\/datasets/)
+          .reply(200, cwicOsddResponse, {
+            'Content-Type': 'application/opensearchdescription+xml'
+          })
 
-        jest.spyOn(renderOpenSearchTemplate, 'renderOpenSearchTemplate').mockImplementationOnce(() => 'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&count=20&clientId=eed-edsc-dev')
-
-        nock(/wgiss/)
-          .get(/granules/)
-          .reply(200, cwicGranuleResponse)
+        nock(/cwic/)
+          .get(/opensearch\/granules/)
+          .reply(200, cwicGranuleResponse, {
+            'Content-Type': 'application/opensearchdescription+xml'
+          })
 
         const event = {
           body: JSON.stringify({
             params: {
-              echoCollectionId: 'C1597928934-NOAA_NCEI'
+              echoCollectionId: 'C1597928934-NOAA_NCEI',
+              openSearchOsdd: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
             }
           })
         }
@@ -83,39 +95,39 @@ describe('handler', () => {
       })
     })
 
-    describe('failure', () => {
-      test('returns an error', async () => {
-        jest.spyOn(getCwicGranulesUrl, 'getCwicGranulesUrl').mockImplementationOnce(() => (
-          new Promise(resolve => resolve({
-            statusCode: 200,
-            body: cwicGranuleTemplate
-          }))
-        ))
+    // describe('when retrieving the granule url fails', () => {
+    //   test('returns an error', async () => {
+    //     nock(/cwic/)
+    //       .get(/opensearch\/datasets/)
+    //       .reply(200, cwicOsddResponse, {
+    //         'Content-Type': 'application/opensearchdescription+xml'
+    //       })
 
-        jest.spyOn(renderOpenSearchTemplate, 'renderOpenSearchTemplate').mockImplementationOnce(() => 'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&count=20&clientId=eed-edsc-dev')
+    //     nock(/cwic/)
+    //       .get(/opensearch\/granules/)
+    //       .reply(400, cwicGranuleErrorResponse, {
+    //         'Content-Type': 'application/opensearchdescription+xml'
+    //       })
 
-        nock(/wgiss/)
-          .get(/granules/)
-          .reply(200, cwicGranuleResponse)
+    //     const event = {
+    //       body: JSON.stringify({
+    //         params: {
+    //           echoCollectionId: 'C1597928934-NOAA_NCEI',
+    //           openSearchOsdd: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+    //         }
+    //       })
+    //     }
 
-        const event = {
-          body: JSON.stringify({
-            params: {
-              echoCollectionId: 'C1597928934-NOAA_NCEI'
-            }
-          })
-        }
+    //     const response = await cwicGranuleSearch(event)
 
-        const response = await cwicGranuleSearch(event)
+    //     const {
+    //       statusCode,
+    //       body
+    //     } = response
 
-        const {
-          statusCode,
-          body
-        } = response
-
-        expect(statusCode).toEqual(200)
-        expect(body).toEqual(cwicGranuleResponse)
-      })
-    })
+    //     expect(statusCode).toEqual(200)
+    //     expect(body).toEqual(cwicGranuleResponse)
+    //   })
+    // })
   })
 })

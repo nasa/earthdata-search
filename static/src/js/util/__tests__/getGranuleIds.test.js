@@ -35,7 +35,7 @@ describe('getGranuleIds', () => {
     expect(getGranuleIds({
       allIds,
       excludedGranuleIds,
-      isCwic: true
+      isOpenSearch: true
     })).toEqual(['id1', 'id3'])
   })
 

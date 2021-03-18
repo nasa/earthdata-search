@@ -149,7 +149,7 @@ describe('GranuleResultsBodyContainer component', () => {
     })
     expect(enzymeWrapper.find(GranuleResultsBody).props().granulesMetadata).toEqual({})
     expect(enzymeWrapper.find(GranuleResultsBody).props().granuleSearchResults).toEqual({})
-    expect(enzymeWrapper.find(GranuleResultsBody).props().isCwic).toEqual(false)
+    expect(enzymeWrapper.find(GranuleResultsBody).props().isOpenSearch).toEqual(false)
     expect(enzymeWrapper.find(GranuleResultsBody).props().portal).toEqual({})
     expect(enzymeWrapper.find(GranuleResultsBody).props().project).toEqual({})
   })

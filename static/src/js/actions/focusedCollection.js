@@ -54,7 +54,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   // requested the focused collections metadata from graphql
   const {
     hasAllMetadata = false,
-    isCwic = false
+    isOpenSearch = false
   } = focusedCollectionMetadata
 
   // Determine if the user has searched using a polygon
@@ -63,7 +63,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   // CWIC does not support polygon search, if this is a CWIC collection
   // fire an action that will display a notice to the user about using a MBR
-  if (isCwic && polygon) {
+  if (isOpenSearch && polygon) {
     dispatch(actions.toggleSpatialPolygonWarning(true))
   } else {
     dispatch(actions.toggleSpatialPolygonWarning(false))
@@ -220,7 +220,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           hasAllMetadata: true,
           hasGranules,
           id: conceptId,
-          isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', ''),
+          isOpenSearch: hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', ''),
           nativeDataFormats,
           services,
           shortName,

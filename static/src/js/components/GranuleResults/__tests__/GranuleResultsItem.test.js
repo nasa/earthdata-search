@@ -202,7 +202,7 @@ function setup(type, overrideProps) {
         timeStart: '2019-04-28 00:00:00',
         timeEnd: '2019-04-29 23:59:59',
         title: 'Granule title',
-        isCwic: true,
+        isOpenSearch: true,
         granuleThumbnail: '/fake/path/image.jpg',
         dataLinks: [
           {

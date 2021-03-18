@@ -13,13 +13,11 @@ const wrappedAxios = wrapAxios(axios)
  * @param {String} collectionId The collection ID to retrieve the url for.
  * @return {Object} An object representing the OpenSearch OSDD or an error message
  */
-export const getCwicGranulesUrl = async (collectionId) => {
-  const collectionTemplate = `https://cwic.wgiss.ceos.org/opensearch/datasets/${collectionId}/osdd.xml?clientId=eed-edsc-dev`
-
-  console.log(`OpenSearch OSDD: ${collectionTemplate}`)
+export const getOpenSearchGranulesUrl = async (collectionId, openSearchOsddUrl) => {
+  console.log(`OpenSearch OSDD: ${openSearchOsddUrl}`)
 
   try {
-    const osddResponse = await wrappedAxios.get(collectionTemplate, {
+    const osddResponse = await wrappedAxios.get(openSearchOsddUrl, {
       headers: {
         'Client-Id': getClientId().lambda
       }
@@ -36,7 +34,10 @@ export const getCwicGranulesUrl = async (collectionId) => {
     })
 
     const { OpenSearchDescription: opensearchDescription = {} } = osddBody
-    const { Url: granuleUrls = [] } = opensearchDescription
+    let { Url: granuleUrls = [] } = opensearchDescription
+    if (!Array.isArray(granuleUrls)) {
+      granuleUrls = [granuleUrls]
+    }
 
     return {
       statusCode: osddResponse.status,

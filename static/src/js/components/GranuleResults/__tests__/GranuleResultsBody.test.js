@@ -67,7 +67,7 @@ function setup(options = {
       loadTime: 1123,
       timerStart: null
     },
-    isCwic: false,
+    isOpenSearch: false,
     loadNextPage: jest.fn(),
     location: { search: 'value' },
     onAddGranuleToProjectCollection: jest.fn(),

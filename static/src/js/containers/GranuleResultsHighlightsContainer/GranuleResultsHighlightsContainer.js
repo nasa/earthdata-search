@@ -29,7 +29,7 @@ export const GranuleResultsHighlightsContainer = ({
   location
 }) => {
   const {
-    isCwic
+    isOpenSearch
   } = focusedCollectionMetadata
 
   const { byId: collectionSearchById = {} } = collectionsSearch
@@ -55,7 +55,7 @@ export const GranuleResultsHighlightsContainer = ({
   const granuleIds = getGranuleIds({
     allIds,
     excludedGranuleIds,
-    isCwic,
+    isOpenSearch,
     limit
   })
 

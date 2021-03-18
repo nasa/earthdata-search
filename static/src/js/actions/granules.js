@@ -353,7 +353,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
   }
 
   const {
-    isCwic,
+    isOpenSearch,
     pageNum
   } = granuleParams
 
@@ -376,7 +376,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
 
   let requestObject = null
 
-  if (isCwic) {
+  if (isOpenSearch) {
     requestObject = new CwicGranuleRequest(authToken, earthdataEnvironment)
 
     const { polygon } = searchParams
@@ -406,7 +406,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
     .then((response) => {
       const payload = populateGranuleResults({
         collectionId,
-        isCwic,
+        isOpenSearch,
         response
       })
 
@@ -495,7 +495,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
     }
 
     const {
-      isCwic,
+      isOpenSearch,
       pageNum
     } = granuleParams
 
@@ -509,7 +509,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
     let requestObject = null
 
-    if (isCwic) {
+    if (isOpenSearch) {
       requestObject = new CwicGranuleRequest(authToken, earthdataEnvironment)
 
       // Provide the correctly named collection id parameter
@@ -544,7 +544,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
       .then((response) => {
         const payload = populateGranuleResults({
           collectionId,
-          isCwic,
+          isOpenSearch,
           response
         })
 

@@ -42,7 +42,7 @@ function setup(type) {
           title: '456'
         }
       ],
-      isCwic: false,
+      isOpenSearch: false,
       isCollectionInProject: true,
       isGranuleInProject: jest.fn(),
       isProjectGranulesLoading: false,

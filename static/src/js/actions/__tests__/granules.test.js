@@ -131,7 +131,7 @@ describe('getSearchGranules', () => {
         payload: [
           {
             mockGranuleData: 'goes here',
-            isCwic: false
+            isOpenSearch: false
           }
         ]
       })
@@ -141,9 +141,9 @@ describe('getSearchGranules', () => {
           collectionId: 'collectionId',
           results: [{
             mockGranuleData: 'goes here',
-            isCwic: false
+            isOpenSearch: false
           }],
-          isCwic: false,
+          isOpenSearch: false,
           hits: 1,
           singleGranuleSize: 0,
           totalSize: {
@@ -233,7 +233,7 @@ describe('getSearchGranules', () => {
         payload: [
           {
             mockGranuleData: 'goes here',
-            isCwic: false
+            isOpenSearch: false
           }
         ]
       })
@@ -243,9 +243,9 @@ describe('getSearchGranules', () => {
           collectionId: 'collectionId',
           results: [{
             mockGranuleData: 'goes here',
-            isCwic: false
+            isOpenSearch: false
           }],
-          isCwic: false,
+          isOpenSearch: false,
           hits: 1,
           singleGranuleSize: 0,
           totalSize: {
@@ -272,7 +272,9 @@ describe('getSearchGranules', () => {
           collectionId: {
             hasGranules: false,
             tags: {
-              'org.ceos.wgiss.cwic.granules.prod': {}
+              'opensearch.granule.osdd': {
+                data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+              }
             }
           }
         }
@@ -332,7 +334,7 @@ describe('getSearchGranules', () => {
         type: ADD_GRANULE_METADATA,
         payload: [{
           title: 'CWIC Granule',
-          isCwic: true,
+          isOpenSearch: true,
           browse_flag: false
         }]
       })
@@ -342,10 +344,10 @@ describe('getSearchGranules', () => {
           collectionId: 'collectionId',
           results: [{
             title: 'CWIC Granule',
-            isCwic: true,
+            isOpenSearch: true,
             browse_flag: false
           }],
-          isCwic: true,
+          isOpenSearch: true,
           hits: 1,
           singleGranuleSize: 0,
           totalSize: {
@@ -481,7 +483,7 @@ describe('getProjectGranules', () => {
         payload: [
           {
             mockGranuleData: 'goes here',
-            isCwic: false
+            isOpenSearch: false
           }
         ]
       })
@@ -491,9 +493,9 @@ describe('getProjectGranules', () => {
           collectionId: 'C10000000000-EDSC',
           results: [{
             mockGranuleData: 'goes here',
-            isCwic: false
+            isOpenSearch: false
           }],
-          isCwic: false,
+          isOpenSearch: false,
           hits: 1,
           singleGranuleSize: 0,
           totalSize: {
@@ -587,7 +589,7 @@ describe('getProjectGranules', () => {
         payload: [
           {
             mockGranuleData: 'goes here',
-            isCwic: false
+            isOpenSearch: false
           }
         ]
       })
@@ -597,9 +599,9 @@ describe('getProjectGranules', () => {
           collectionId: 'C10000000000-EDSC',
           results: [{
             mockGranuleData: 'goes here',
-            isCwic: false
+            isOpenSearch: false
           }],
-          isCwic: false,
+          isOpenSearch: false,
           hits: 1,
           singleGranuleSize: 0,
           totalSize: {
@@ -626,7 +628,9 @@ describe('getProjectGranules', () => {
           'C10000000000-EDSC': {
             hasGranules: false,
             tags: {
-              'org.ceos.wgiss.cwic.granules.prod': {}
+              'opensearch.granule.osdd': {
+                data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+              }
             }
           }
         }
@@ -690,7 +694,7 @@ describe('getProjectGranules', () => {
         type: ADD_GRANULE_METADATA,
         payload: [{
           title: 'CWIC Granule',
-          isCwic: true,
+          isOpenSearch: true,
           browse_flag: false
         }]
       })
@@ -700,10 +704,10 @@ describe('getProjectGranules', () => {
           collectionId: 'C10000000000-EDSC',
           results: [{
             title: 'CWIC Granule',
-            isCwic: true,
+            isOpenSearch: true,
             browse_flag: false
           }],
-          isCwic: true,
+          isOpenSearch: true,
           hits: 1,
           singleGranuleSize: 0,
           totalSize: {

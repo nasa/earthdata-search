@@ -4,7 +4,7 @@ import { convertSize } from './project'
 import { encodeGridCoords } from './url/gridEncoders'
 import { encodeTemporal } from './url/temporalEncoders'
 import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
-import { hasTag } from '../../../../sharedUtils/tags'
+import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
 
 /**
  * Takes the current CMR granule params and applies any changes needed to
@@ -38,22 +38,22 @@ export const withAdvancedSearch = (granuleParams, advancedSearch) => {
 /**
  * Populate granule payload used to update the store
  * @param {String} collectionId
- * @param {Boolean} isCwic
+ * @param {Boolean} isOpenSearch
  * @param {Object} response
  * @returns {Object} Granule payload
  */
 export const populateGranuleResults = ({
   collectionId,
-  isCwic,
+  isOpenSearch,
   response
 }) => {
   const payload = {}
 
   payload.collectionId = collectionId
   payload.results = response.data.feed.entry
-  payload.isCwic = isCwic
+  payload.isOpenSearch = isOpenSearch
 
-  if (isCwic) {
+  if (isOpenSearch) {
     payload.hits = response.data.feed.hits
   } else {
     payload.hits = parseInt(response.headers['cmr-hits'], 10)
@@ -275,7 +275,12 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     temporalString = encodeTemporal(temporal)
   }
 
-  const isCwic = hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', '')
+  const isOpenSearch = hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', '')
+
+  let openSearchOsdd
+  if (isOpenSearch) {
+    openSearchOsdd = getValueForTag('', tags, 'opensearch.granule.osdd')
+  }
 
   const options = {}
   if (readableGranuleName) {
@@ -296,9 +301,10 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     equatorCrossingLongitude,
     exclude,
     gridCoords: encodeGridCoords(gridCoords),
-    isCwic,
+    isOpenSearch,
     line,
     onlineOnly,
+    openSearchOsdd,
     options,
     orbitNumber,
     pageNum,
@@ -323,11 +329,11 @@ export const buildGranuleSearchParams = (params) => {
 
   const {
     boundingBox,
-    circle,
-    conceptId,
     browseOnly,
+    circle,
     cloudCover,
     collectionId,
+    conceptId,
     dayNightFlag,
     equatorCrossingDate,
     equatorCrossingLongitude,
@@ -335,8 +341,9 @@ export const buildGranuleSearchParams = (params) => {
     gridCoords,
     line,
     onlineOnly,
-    orbitNumber,
+    openSearchOsdd,
     options,
+    orbitNumber,
     pageNum,
     point,
     polygon,
@@ -368,8 +375,9 @@ export const buildGranuleSearchParams = (params) => {
     exclude,
     line,
     onlineOnly,
-    orbitNumber,
+    openSearchOsdd,
     options,
+    orbitNumber,
     pageNum,
     pageSize: defaultCmrPageSize,
     point,

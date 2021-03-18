@@ -100,7 +100,7 @@ export const granuleResultsBodyProps = {
         href: 'https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830'
       }
     ],
-    isCwic: false,
+    isOpenSearch: false,
     formattedTemporal: [
       '1860-01-01 00:00:00',
       '2050-12-31 00:00:00'

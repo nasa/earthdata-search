@@ -68,7 +68,7 @@ export const GranuleResultsBodyContainer = (props) => {
   } = granuleQuery
 
   const {
-    isCwic = false
+    isOpenSearch = false
   } = collectionMetadata
 
   const loadNextPage = () => {
@@ -85,7 +85,7 @@ export const GranuleResultsBodyContainer = (props) => {
       granuleQuery={granuleQuery}
       granuleSearchResults={granuleSearchResults}
       granulesMetadata={granulesMetadata}
-      isCwic={isCwic}
+      isOpenSearch={isOpenSearch}
       loadNextPage={loadNextPage}
       location={location}
       onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
