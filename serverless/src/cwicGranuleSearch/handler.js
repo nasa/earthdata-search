@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getClientId } from '../../../sharedUtils/getClientId'
-import { getCwicGranulesUrl } from './getCwicGranulesUrl'
+import { getOpenSearchGranulesUrl } from './getOpenSearchGranulesUrl'
 import { parseError } from '../../../sharedUtils/parseError'
 import { pick } from '../util/pick'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
@@ -27,10 +27,13 @@ const cwicGranuleSearch = async (event) => {
   const { body } = event
   const { params } = JSON.parse(body)
 
+  const { echoCollectionId, openSearchOsdd } = params
+
   // Whitelist parameters supplied by the request
-  const permittedCmrKeys = [
+  const permittedOpenSearchParams = [
     'boundingBox',
     'echoCollectionId',
+    'openSearchOsdd',
     'pageNum',
     'pageSize',
     'point',
@@ -39,24 +42,28 @@ const cwicGranuleSearch = async (event) => {
 
   console.log(`Parameters received: ${Object.keys(params)}`)
 
-  const obj = pick(params, permittedCmrKeys)
+  const obj = pick(params, permittedOpenSearchParams)
 
   console.log(`Filtered parameters: ${Object.keys(obj)}`)
 
-  const conceptUrl = await getCwicGranulesUrl(obj.echoCollectionId)
+  const openSearchUrlResponse = await getOpenSearchGranulesUrl(echoCollectionId, openSearchOsdd)
 
-  console.log(`Completed OSDD request with status ${conceptUrl.statusCode}.`)
+  console.log(`Completed OSDD request with status ${openSearchUrlResponse.statusCode}.`)
 
-  if (conceptUrl.statusCode !== 200) {
+  if (openSearchUrlResponse.statusCode !== 200) {
+    const { body } = openSearchUrlResponse
+
+    const parsedResponse = JSON.parse(body)
+
     return {
       isBase64Encoded: false,
-      statusCode: conceptUrl.statusCode,
+      statusCode: openSearchUrlResponse.statusCode,
       headers: responseHeaders,
-      body: conceptUrl.errors
+      body: parsedResponse.errors
     }
   }
 
-  const { template } = conceptUrl.body
+  const { template } = openSearchUrlResponse.body
 
   const renderedTemplate = renderOpenSearchTemplate(template, obj)
 

@@ -296,11 +296,11 @@ export class MapContainer extends Component {
 
     let nonExcludedGranules
     if (focusedCollectionId && granuleSearchResults) {
-      const { allIds, excludedGranuleIds, isCwic } = granuleSearchResults
+      const { allIds, excludedGranuleIds, isOpenSearch } = granuleSearchResults
       const allGranuleIds = allIds
 
       let granuleIds
-      if (isCwic) {
+      if (isOpenSearch) {
         granuleIds = allGranuleIds.filter((id) => {
           const hashedId = murmurhash3(id).toString()
           return excludedGranuleIds.indexOf(hashedId) === -1

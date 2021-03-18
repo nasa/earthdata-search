@@ -138,7 +138,7 @@ export default class CollectionRequest extends CmrRequest {
       const transformedCollection = collection
 
       if (collection && collection.tags) {
-        transformedCollection.isCwic = Object.keys(collection.tags).includes('org.ceos.wgiss.cwic.granules.prod')
+        transformedCollection.isOpenSearch = Object.keys(collection.tags).includes('opensearch.granule.osdd')
           && collection.has_granules === false
         transformedCollection.has_map_imagery = hasTag(collection, 'gibs')
       }

@@ -7,7 +7,7 @@ export const buildUrls = (json, authToken, earthdataEnvironment) => {
     conceptId: collectionId,
     shortName: providedCollectionShortName,
     versionId: collectionVersionId,
-    isCwic
+    isOpenSearch
   } = json
 
   const collectionShortName = encodeURI(providedCollectionShortName)
@@ -56,7 +56,7 @@ export const buildUrls = (json, authToken, earthdataEnvironment) => {
     href: `${opensearchUrl}?clientId=${cmrClientId}&shortName=${collectionShortName}&versionId=${collectionVersionId}&dataCenter=${provider}`
   }
 
-  if (isCwic) {
+  if (isOpenSearch) {
     // TODO: Replace the `href` here with the value stored in the tag created in EDSC-2265
     // urls.granuleDatasource = {
     //   title: 'CWIC',

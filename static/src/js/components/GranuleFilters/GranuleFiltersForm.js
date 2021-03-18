@@ -86,7 +86,7 @@ export const GranuleFiltersForm = (props) => {
 
   const {
     id: collectionId,
-    isCwic,
+    isOpenSearch,
     tags,
     tilingIdentificationSystems = []
   } = collectionMetadata
@@ -229,7 +229,7 @@ export const GranuleFiltersForm = (props) => {
           )
         }
         {
-          !isCwic && (
+          !isOpenSearch && (
             <SidebarFiltersItem
               heading="Granule Search"
             >
@@ -463,7 +463,7 @@ export const GranuleFiltersForm = (props) => {
           </Form.Group>
         </SidebarFiltersItem>
         {
-          !isCwic && (
+          !isOpenSearch && (
             <>
               {
                 dayNightCapable && (
@@ -580,7 +580,7 @@ export const GranuleFiltersForm = (props) => {
                 )
               }
               {
-                (!isCwic && orbitCalculatedSpatialDomainsCapable) && (
+                (!isOpenSearch && orbitCalculatedSpatialDomainsCapable) && (
                   <>
                     <SidebarFiltersItem
                       heading="Orbit Number"

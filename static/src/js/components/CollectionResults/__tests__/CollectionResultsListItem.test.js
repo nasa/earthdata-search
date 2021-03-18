@@ -23,7 +23,7 @@ const defaultProps = {
       hasTransforms: false,
       hasVariables: false,
       isCollectionInProject: false,
-      isCwic: false,
+      isOpenSearch: false,
       isLast: false,
       isNrt: false,
       shortName: 'cId1',

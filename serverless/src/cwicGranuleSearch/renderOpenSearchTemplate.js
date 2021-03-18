@@ -9,6 +9,7 @@ export const renderOpenSearchTemplate = (template, params) => {
   let renderedTemplate = template.replace(/&amp;/g, '&')
 
   const {
+    echoCollectionId,
     pageNum,
     pageSize = 20,
     boundingBox,
@@ -17,6 +18,7 @@ export const renderOpenSearchTemplate = (template, params) => {
   } = params
 
   renderedTemplate = renderedTemplate.replace(/{count\??}/, pageSize)
+  renderedTemplate = renderedTemplate.replace(/{datasetId\??}/, echoCollectionId)
 
   if (pageNum) {
     const startIndex = (((pageNum - 1) * pageSize) + 1)

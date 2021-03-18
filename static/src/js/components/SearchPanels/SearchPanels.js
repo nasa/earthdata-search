@@ -184,7 +184,7 @@ class SearchPanels extends PureComponent {
     const {
       hasAllMetadata: hasAllCollectionMetadata = false,
       title: collectionTitle = '',
-      isCwic: collectionIsCwic
+      isOpenSearch: collectionIsCwic
     } = collectionMetadata
 
     const { title: granuleTitle = '' } = granuleMetadata

@@ -319,7 +319,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           hasAllMetadata: true,
           hasGranules,
           id: conceptId,
-          isCwic: hasGranules === false && hasTag({ tags }, 'org.ceos.wgiss.cwic.granules.prod', ''),
+          isOpenSearch: hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', ''),
           services,
           shortName,
           subscriptions,

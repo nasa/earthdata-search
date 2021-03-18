@@ -24,7 +24,7 @@ const GranuleResultsTableHeaderCell = (props) => {
   const {
     dataLinks,
     id,
-    isCwic,
+    isOpenSearch,
     onlineAccessFlag
   } = rowProps
 
@@ -47,7 +47,7 @@ const GranuleResultsTableHeaderCell = (props) => {
   const handleFilterClick = (id) => {
     let granuleId = id
 
-    if (isCwic) granuleId = murmurhash3(id).toString()
+    if (isOpenSearch) granuleId = murmurhash3(id).toString()
 
     onExcludeGranule({
       collectionId,

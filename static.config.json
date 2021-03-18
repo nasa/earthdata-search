@@ -24,7 +24,8 @@
     "maxCmrPageSize": 2000,
     "defaultCmrSearchTags": [
       "edsc.*",
-      "org.ceos.wgiss.cwic.granules.prod"
+      "org.ceos.wgiss.cwic.granules.prod",
+      "opensearch.granule.osdd"
     ],
     "defaultMaxOrderSize": 1000000,
     "defaultGranulesPerOrder": 2000,

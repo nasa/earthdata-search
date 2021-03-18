@@ -46,7 +46,7 @@ function setup(overrideProps, location = '/search') {
     collectionMetadata: {
       hasAllMetadata: true,
       title: 'Collection Title',
-      isCwic: false
+      isOpenSearch: false
     },
     collectionQuery: {
       pageNum: 1,
@@ -388,7 +388,7 @@ describe('SearchPanels component', () => {
           collectionMetadata: {
             hasAllMetadata: false,
             title: 'Collection Title',
-            isCwic: false
+            isOpenSearch: false
           },
           granuleSearchResults: {
             allIds: [],

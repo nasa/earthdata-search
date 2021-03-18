@@ -14,7 +14,7 @@ import './GranuleResultsList.scss'
  * @param {String} props.collectionId - The collection ID.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
  * @param {Array} props.granules - List of formatted granule.
- * @param {Boolean} props.isCwic - Flag designating CWIC collections.
+ * @param {Boolean} props.isOpenSearch - Flag designating CWIC collections.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Function} props.isGranuleInProject - Function to detirmine if the granule is in the project.
  * @param {Function} props.isItemLoaded - Callback to detirmine if a granule has been loaded.
@@ -35,7 +35,7 @@ export const GranuleResultsList = ({
   excludedGranuleIds,
   granules,
   isCollectionInProject,
-  isCwic,
+  isOpenSearch,
   isGranuleInProject,
   isItemLoaded,
   itemCount,
@@ -60,7 +60,7 @@ export const GranuleResultsList = ({
             granules={granules}
             height={height}
             isCollectionInProject={isCollectionInProject}
-            isCwic={isCwic}
+            isOpenSearch={isOpenSearch}
             isGranuleInProject={isGranuleInProject}
             isItemLoaded={isItemLoaded}
             itemCount={itemCount}
@@ -92,7 +92,7 @@ GranuleResultsList.propTypes = {
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  isCwic: PropTypes.bool.isRequired,
+  isOpenSearch: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
