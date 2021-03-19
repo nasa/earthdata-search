@@ -4,6 +4,7 @@ import AWS from 'aws-sdk'
 import MockDate from 'mockdate'
 
 import * as getSystemToken from '../../util/urs/getSystemToken'
+import * as getSupportedGibsLayers from '../getSupportedGibsLayers'
 
 import { gibsResponse } from './mocks'
 
@@ -221,6 +222,40 @@ describe('generateGibsTags', () => {
                 }
               }
             ]
+          }
+        }
+      })
+    }])
+  })
+
+  test('correctly generates and queues tag data when no collections are to be tagged', async () => {
+    process.env.tagQueueUrl = 'http://example.com/tagQueue'
+
+    jest.spyOn(getSupportedGibsLayers, 'getSupportedGibsLayers').mockReturnValue({})
+
+    nock(/worldview/)
+      .get(/wv\.json/)
+      .reply(200, {
+        layers: {}
+      })
+
+    // jest.spyOn(storedLayers, 'storedLayers').mockReturnValue({})
+
+    await generateGibsTags({}, {})
+
+    // 1 DELETE call
+    expect(sqsSendMessagePromise.mock.calls.length).toEqual(1)
+
+    expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
+      QueueUrl: 'http://example.com/tagQueue',
+      MessageBody: JSON.stringify({
+        tagName: 'edsc.extra.serverless.gibs',
+        action: 'REMOVE',
+        searchCriteria: {
+          condition: {
+            tag: {
+              tag_key: 'edsc.extra.serverless.gibs'
+            }
           }
         }
       })
