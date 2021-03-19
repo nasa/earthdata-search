@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash'
 
 import { buildDataCenters } from './collectionMetadata/dataCenters'
 import { buildDoi } from './collectionMetadata/doi'
-import { buildGibsLayers } from './collectionMetadata/gibsLayers'
+import { buildGibsLayers } from './collectionMetadata/buildGibsLayers'
 import { buildRelatedUrls } from './collectionMetadata/relatedUrls'
 import { buildScienceKeywords } from './collectionMetadata/scienceKeywords'
 import { buildSpatial } from './collectionMetadata/spatial'
