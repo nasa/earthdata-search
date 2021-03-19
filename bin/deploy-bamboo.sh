@@ -68,21 +68,24 @@ docker build -t $dockerTag .
 # Convenience function to invoke `docker run` with appropriate env vars instead of baking them into image
 dockerRun() {
     docker run \
-        -e "NODE_ENV=production" \
-        -e "NODE_OPTIONS=--max_old_space_size=4096" \
         -e "AWS_ACCESS_KEY_ID=$bamboo_AWS_ACCESS_KEY_ID" \
         -e "AWS_SECRET_ACCESS_KEY=$bamboo_AWS_SECRET_ACCESS_KEY" \
         -e "CLOUDFRONT_BUCKET_NAME=$bamboo_CLOUDFRONT_BUCKET_NAME" \
+        -e "COLORMAP_JOB_ENABLED=$bamboo_COLORMAP_JOB_ENABLED" \
         -e "DB_INSTANCE_CLASS=$bamboo_DB_INSTANCE_CLASS" \
-        -e "GEOCODING_SERVICE=$bamboo_GEOCODING_SERVICE" \
         -e "GEOCODING_INCLUDE_POLYGONS=$bamboo_GEOCODING_INCLUDE_POLYGONS" \
-        -e "OBFUSCATION_SPIN=$bamboo_OBFUSCATION_SPIN" \
-        -e "OBFUSCATION_SPIN_SHAPEFILES=$bamboo_OBFUSCATION_SPIN_SHAPEFILES" \
+        -e "GEOCODING_SERVICE=$bamboo_GEOCODING_SERVICE" \
+        -e "GIBS_JOB_ENABLED=$bamboo_GIBS_JOB_ENABLED" \
+        -e "LAMBDA_TIMEOUT=$bamboo_LAMBDA_TIMEOUT" \
         -e "LOG_DESTINATION_ARN=$bamboo_LOG_DESTINATION_ARN" \
-        -e "VPC_ID=$bamboo_VPC_ID" \
+        -e "NODE_ENV=production" \
+        -e "NODE_OPTIONS=--max_old_space_size=4096" \
+        -e "OBFUSCATION_SPIN_SHAPEFILES=$bamboo_OBFUSCATION_SPIN_SHAPEFILES" \
+        -e "OBFUSCATION_SPIN=$bamboo_OBFUSCATION_SPIN" \
         -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
         -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
-        -e "LAMBDA_TIMEOUT=$bamboo_LAMBDA_TIMEOUT" \
+        -e "SUBSETTING_JOB_ENABLED=$bamboo_SUBSETTING_JOB_ENABLED" \
+        -e "VPC_ID=$bamboo_VPC_ID" \
         $dockerTag "$@"
 }
 
