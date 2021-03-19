@@ -239,8 +239,6 @@ describe('generateGibsTags', () => {
         layers: {}
       })
 
-    // jest.spyOn(storedLayers, 'storedLayers').mockReturnValue({})
-
     await generateGibsTags({}, {})
 
     // 1 DELETE call
