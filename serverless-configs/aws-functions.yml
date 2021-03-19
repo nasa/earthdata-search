@@ -67,6 +67,7 @@
     reservedConcurrency: 25
     events:
       - sqs:
+          batchSize: 10
           arn:
             Fn::GetAtt:
               - ColorMapsProcessingQueue
@@ -78,6 +79,7 @@
     reservedConcurrency: 25
     events:
       - sqs:
+          batchSize: 10
           arn:
             Fn::GetAtt:
               - TagProcessingQueue
@@ -87,7 +89,7 @@
   # within it. Putting too much load on the endpoint will cause production systems to fail
   fetchOptionDefinitions:
     handler: serverless/src/fetchOptionDefinitions/handler.default
-    timeout: 300
+    timeout: 600
     reservedConcurrency: 5
     events:
       - sqs:
@@ -155,22 +157,22 @@
           rate: cron(0 12 ? * MON-FRI *)
           input:
             projection: 'epsg4326'
-          enabled: false
+          enabled: ${env:COLORMAP_JOB_ENABLED}
       - schedule:
           rate: cron(5 12 ? * MON-FRI *)
           input:
             projection: 'epsg3857'
-          enabled: false
+          enabled: ${env:COLORMAP_JOB_ENABLED}
       - schedule:
           rate: cron(10 12 ? * MON-FRI *)
           input:
             projection: 'epsg3413'
-          enabled: false
+          enabled: ${env:COLORMAP_JOB_ENABLED}
       - schedule:
           rate: cron(15 12 ? * MON-FRI *)
           input:
             projection: 'epsg3031'
-          enabled: false
+          enabled: ${env:COLORMAP_JOB_ENABLED}
 
   generateGibsTags:
     handler: serverless/src/generateGibsTags/handler.default
@@ -179,6 +181,7 @@
     events:
       - schedule:
           rate: cron(0 12 ? * MON-FRI *)
+          enabled: ${env:GIBS_JOB_ENABLED}
 
   generateSubsettingTags:
     handler: serverless/src/generateSubsettingTags/handler.default
@@ -188,6 +191,7 @@
     events:
       - schedule:
           rate: cron(0 12-23/4 ? * MON-FRI *)
+          enabled: ${env:SUBSETTING_JOB_ENABLED}
   #
   # API Gateway Endpoints
   #
