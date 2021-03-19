@@ -131,29 +131,49 @@ const generateGibsTags = async (event, context) => {
   })
 
   // Remove stale tags
-  await sqs.sendMessage({
-    QueueUrl: process.env.tagQueueUrl,
-    MessageBody: JSON.stringify({
-      tagName: tagName('gibs'),
-      action: 'REMOVE',
-      searchCriteria: {
-        condition: {
-          and: [
-            {
-              tag: {
-                tag_key: tagName('gibs')
+  if (Object.keys(conceptIdLayers).length > 0) {
+    // If conceptIdLayers contains values we want to ensure we delete tags
+    // from only the collections that arent within it
+    await sqs.sendMessage({
+      QueueUrl: process.env.tagQueueUrl,
+      MessageBody: JSON.stringify({
+        tagName: tagName('gibs'),
+        action: 'REMOVE',
+        searchCriteria: {
+          condition: {
+            and: [
+              {
+                tag: {
+                  tag_key: tagName('gibs')
+                }
+              },
+              {
+                not: {
+                  or: Object.keys(conceptIdLayers).map(conceptId => ({ concept_id: conceptId }))
+                }
               }
-            },
-            {
-              not: {
-                or: Object.keys(conceptIdLayers).map(conceptId => ({ concept_id: conceptId }))
-              }
-            }
-          ]
+            ]
+          }
         }
-      }
-    })
-  }).promise()
+      })
+    }).promise()
+  } else {
+    // If no collections were found to match the gibs criteria, we'll just delete all the tags.
+    await sqs.sendMessage({
+      QueueUrl: process.env.tagQueueUrl,
+      MessageBody: JSON.stringify({
+        tagName: tagName('gibs'),
+        action: 'REMOVE',
+        searchCriteria: {
+          condition: {
+            tag: {
+              tag_key: tagName('gibs')
+            }
+          }
+        }
+      })
+    }).promise()
+  }
 
   return {
     isBase64Encoded: false,
