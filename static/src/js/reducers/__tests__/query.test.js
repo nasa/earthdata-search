@@ -17,7 +17,7 @@ const initialState = {
     keyword: '',
     hasGranulesOrCwic: true,
     pageNum: 1,
-    sortKey: [],
+    sortKey: ['-usage_score'],
     spatial: {},
     temporal: {}
   },
@@ -54,7 +54,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
         ...payload,
         byId: {},
         hasGranulesOrCwic: true,
-        sortKey: []
+        sortKey: ['-usage_score']
       },
       region: {
         exact: false
@@ -130,7 +130,14 @@ describe('RESTORE_FROM_URL', () => {
       }
     }
 
-    const expectedState = query
+    const expectedState = {
+      ...initialState,
+      ...query,
+      collection: {
+        ...initialState.collection,
+        ...query.collection
+      }
+    }
 
     expect(queryReducer(undefined, action)).toEqual(expectedState)
   })

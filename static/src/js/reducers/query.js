@@ -18,7 +18,7 @@ const initialState = {
     pageNum: 1,
     spatial: {},
     temporal: {},
-    sortKey: []
+    sortKey: ['-usage_score']
   },
   region: {
     exact: false
@@ -199,7 +199,11 @@ const queryReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        ...query
+        ...query,
+        collection: {
+          ...initialState.collection,
+          ...query.collection
+        }
       }
     }
     case CLEAR_FILTERS: {
