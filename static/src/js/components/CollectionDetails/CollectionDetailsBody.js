@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { uniq } from 'lodash'
 
 import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import SimpleBar from 'simplebar-react'
@@ -146,10 +147,15 @@ export const CollectionDetailsBody = ({
     const { items } = services
 
     if (items) {
+      const supportedServiceTypes = ['esi', 'opendap', 'echo orders', 'harmony']
       items.forEach((service) => {
         const {
-          supportedReformattings: supportedReformattingsList
+          supportedReformattings: supportedReformattingsList,
+          type
         } = service
+
+        // If the service type is not one that we support, don't display the reformatting options
+        if (!supportedServiceTypes.includes(type.toLowerCase())) return
 
         if (supportedReformattingsList) {
           supportedReformattingsList.forEach((supportedReformatting) => {
@@ -160,10 +166,11 @@ export const CollectionDetailsBody = ({
 
             const { [supportedInputFormat]: existingReformatting = [] } = reformattings
 
-            reformattings[supportedInputFormat] = [
+            // Ensure the reformatting options is a unique list
+            reformattings[supportedInputFormat] = uniq([
               ...existingReformatting,
               ...supportedOutputFormats
-            ]
+            ])
           })
         }
       })

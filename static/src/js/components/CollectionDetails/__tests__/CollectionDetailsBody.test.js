@@ -481,6 +481,95 @@ describe('CollectionDetails component', () => {
       expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
       expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')
     })
+
+    test('does not render duplicate formats', () => {
+      const { enzymeWrapper } = setup({
+        overrideMetadata: {
+          services: {
+            items: [
+              {
+                type: 'ECHO ORDERS',
+                supportedOutputFormats: null,
+                supportedReformattings: null
+              },
+              {
+                type: 'ESI',
+                supportedReformattings: [
+                  {
+                    supportedInputFormat: 'HDF-EOS2',
+                    supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                  },
+                  {
+                    supportedInputFormat: 'HDF-EOS5',
+                    supportedOutputFormats: ['PNG', 'JPEG']
+                  },
+                  {
+                    supportedInputFormat: 'HDF-EOS5',
+                    supportedOutputFormats: ['TIFF', 'PNG', 'JPEG'] // PNG and JPEG are duplicated for HDF-EOS5
+                  }
+                ]
+              },
+              {
+                type: 'NOT PROVIDED',
+                supportedOutputFormats: null,
+                supportedReformattings: null
+              }
+            ]
+          }
+        }
+      })
+
+      const reformattingsDataElement = enzymeWrapper.find('.collection-details-body__info').find('dd').at(1)
+
+      const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
+      const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
+
+      expect(format1.find('dt').text()).toEqual('HDF-EOS2<EDSCIcon />')
+      expect(format2.find('dt').text()).toEqual('HDF-EOS5<EDSCIcon />')
+
+      expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
+      expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')
+    })
+
+    test('does not render options not supported by EDSC', () => {
+      const { enzymeWrapper } = setup({
+        overrideMetadata: {
+          services: {
+            items: [
+              {
+                type: 'ECHO ORDERS',
+                supportedOutputFormats: null,
+                supportedReformattings: null
+              },
+              {
+                type: 'ESI',
+                supportedReformattings: null
+              },
+              {
+                type: 'NOT PROVIDED',
+                supportedOutputFormats: null,
+                supportedReformattings: [
+                  {
+                    supportedInputFormat: 'HDF-EOS2',
+                    supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                  },
+                  {
+                    supportedInputFormat: 'HDF-EOS5',
+                    supportedOutputFormats: ['PNG', 'JPEG']
+                  },
+                  {
+                    supportedInputFormat: 'HDF-EOS5',
+                    supportedOutputFormats: ['TIFF']
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      })
+
+      expect(enzymeWrapper.find('.collection-details-body__reformatting-item').exists()).toBeFalsy()
+    })
   })
 
   describe('Science Keywords', () => {
