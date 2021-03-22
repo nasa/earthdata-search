@@ -82,7 +82,7 @@ export class AboutCwicModal extends Component {
             While this allows us to search far more data than we otherwise could, there are drawbacks to WIC&apos;s federated searching and its reliance on a number of external partners to provide its capabilities.
           </p>
           <p>
-            Performance, accuracy, and available features may vary from one collection to the next. These ervices may further become unavailable or experience degraded performance unexpectedly due to their differing maintenance schedules.
+            Performance, accuracy, and available features may vary from one collection to the next. These services may further become unavailable or experience degraded performance unexpectedly due to their differing maintenance schedules.
           </p>
           <p>
             Earthdata Search makes known differences apparent through the interface.
