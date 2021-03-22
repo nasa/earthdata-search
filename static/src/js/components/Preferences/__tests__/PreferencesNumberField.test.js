@@ -35,13 +35,51 @@ describe('PreferencesNumberField component', () => {
     expect(input.props().name).toEqual('testField')
   })
 
-  test('onChange sets the state', () => {
-    const { enzymeWrapper } = setup()
+  describe('onChange', () => {
+    test('onChange calls props onChange', () => {
+      const { enzymeWrapper, props } = setup()
 
-    const input = enzymeWrapper.find(FormControl).last()
+      const input = enzymeWrapper.find(FormControl).last()
 
-    input.props().onChange({ target: { value: 0 } })
+      input.invoke('onChange')({ target: { value: '42' } })
 
-    expect(enzymeWrapper.state().formData).toEqual(0)
+      enzymeWrapper.update()
+
+      expect(props.onChange).toHaveBeenCalledTimes(1)
+      expect(props.onChange).toHaveBeenCalledWith(42)
+    })
+
+    test('returns an integer 0 when the input is "0"', () => {
+      const { enzymeWrapper, props } = setup()
+
+      const input = enzymeWrapper.find(FormControl).last()
+
+      input.props().onChange({ target: { value: '0' } })
+
+      expect(props.onChange).toHaveBeenCalledTimes(1)
+      expect(props.onChange).toHaveBeenCalledWith(0)
+    })
+
+    test('returns a number 0.1 when the input is ".1"', () => {
+      const { enzymeWrapper, props } = setup()
+
+      const input = enzymeWrapper.find(FormControl).last()
+
+      input.props().onChange({ target: { value: '.1' } })
+
+      expect(props.onChange).toHaveBeenCalledTimes(1)
+      expect(props.onChange).toHaveBeenCalledWith(0.1)
+    })
+
+    test('returns a number -42 when the input is "-42"', () => {
+      const { enzymeWrapper, props } = setup()
+
+      const input = enzymeWrapper.find(FormControl).last()
+
+      input.props().onChange({ target: { value: '-42' } })
+
+      expect(props.onChange).toHaveBeenCalledTimes(1)
+      expect(props.onChange).toHaveBeenCalledWith(-42)
+    })
   })
 })

@@ -40,7 +40,9 @@ class PreferencesNumberField extends Component {
           ? asNumber(formData.replace(trailingCharMatcher, ''))
           : asNumber(formData)
 
-        return onChange(processed || formData)
+        const value = processed || processed === 0 ? processed : formData
+
+        return onChange(value)
       })
     }
   }
