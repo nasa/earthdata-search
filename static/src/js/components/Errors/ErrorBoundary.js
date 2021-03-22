@@ -57,7 +57,7 @@ class ErrorBoundary extends Component {
             We&#39;re sorry, but something went wrong.
           </h1>
           <p>
-            An unknown error occured. Please refer to the ID
+            An unknown error occurred. Please refer to the ID
             {' '}
             <strong>
               {errorGuid}
