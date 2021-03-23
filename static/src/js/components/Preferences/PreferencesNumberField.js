@@ -25,6 +25,9 @@ class PreferencesNumberField extends Component {
       }, () => {
         let { formData } = this.state
 
+        // Borrowed this code from react-jsonschema-form. Its the code they use in their version of NumberField
+        // https://github.com/rjsf-team/react-jsonschema-form/blob/master/packages/core/src/components/fields/NumberField.js#L44
+
         // Normalize decimals that don't start with a zero character in advance so
         // that the rest of the normalization logic is simpler
         if (`${formData}`.charAt(0) === '.') {
