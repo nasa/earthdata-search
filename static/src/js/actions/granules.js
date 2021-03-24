@@ -12,7 +12,7 @@ import {
 } from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
 import OusGranuleRequest from '../util/request/ousGranuleRequest'
-import CwicGranuleRequest from '../util/request/cwicGranuleRequest'
+import OpenSearchGranuleRequest from '../util/request/openSearchGranuleRequest'
 import {
   ADD_GRANULE_METADATA,
   ADD_MORE_GRANULE_RESULTS,
@@ -377,7 +377,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
   let requestObject = null
 
   if (isOpenSearch) {
-    requestObject = new CwicGranuleRequest(authToken, earthdataEnvironment)
+    requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment)
 
     const { polygon } = searchParams
 
@@ -510,7 +510,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
     let requestObject = null
 
     if (isOpenSearch) {
-      requestObject = new CwicGranuleRequest(authToken, earthdataEnvironment)
+      requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment)
 
       // Provide the correctly named collection id parameter
       searchParams.echoCollectionId = collectionId

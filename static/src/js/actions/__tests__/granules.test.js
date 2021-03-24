@@ -34,7 +34,7 @@ import {
   UPDATE_PROJECT_GRANULE_RESULTS
 } from '../../constants/actionTypes'
 
-import CwicGranuleRequest from '../../util/request/cwicGranuleRequest'
+import OpenSearchGranuleRequest from '../../util/request/openSearchGranuleRequest'
 import * as EventEmitter from '../../events/events'
 import * as mbr from '../../util/map/mbr'
 
@@ -258,7 +258,7 @@ describe('getSearchGranules', () => {
   })
 
   test('substitutes MBR for polygon in cwic granule searches', async () => {
-    const cwicRequestMock = jest.spyOn(CwicGranuleRequest.prototype, 'search')
+    const cwicRequestMock = jest.spyOn(OpenSearchGranuleRequest.prototype, 'search')
 
     nock(/localhost/)
       .post(/cwic\/granules/)
@@ -614,7 +614,7 @@ describe('getProjectGranules', () => {
   })
 
   test('substitutes MBR for polygon in cwic granule searches', async () => {
-    const cwicRequestMock = jest.spyOn(CwicGranuleRequest.prototype, 'search')
+    const cwicRequestMock = jest.spyOn(OpenSearchGranuleRequest.prototype, 'search')
 
     nock(/localhost/)
       .post(/cwic\/granules/)

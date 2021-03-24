@@ -7,10 +7,7 @@ import {
   cwicOsddResponse
 } from './mocks'
 
-// import * as getOpenSearchGranulesUrl from '../getOpenSearchGranulesUrl'
-// import * as renderOpenSearchTemplate from '../renderOpenSearchTemplate'
-
-import cwicGranuleSearch from '../handler'
+import opensearchGranuleSearch from '../handler'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -19,13 +16,6 @@ beforeEach(() => {
 describe('handler', () => {
   describe('when retrieving the collection url fails', () => {
     test('returns the error', async () => {
-      // jest.spyOn(getOpenSearchGranulesUrl, 'getOpenSearchGranulesUrl').mockImplementationOnce(() => (
-      //   new Promise(resolve => resolve({
-      //     statusCode: 400,
-      //     errors: ['Error (400): REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset']
-      //   }))
-      // ))
-
       nock(/cwic/)
         .get(/opensearch/)
         .reply(400, cwicOsddErrorResponse, {
@@ -41,7 +31,7 @@ describe('handler', () => {
         })
       }
 
-      const response = await cwicGranuleSearch(event)
+      const response = await opensearchGranuleSearch(event)
 
       expect(response).toEqual({
         body: [
@@ -83,7 +73,7 @@ describe('handler', () => {
           })
         }
 
-        const response = await cwicGranuleSearch(event)
+        const response = await opensearchGranuleSearch(event)
 
         const {
           statusCode,
@@ -118,7 +108,7 @@ describe('handler', () => {
     //       })
     //     }
 
-    //     const response = await cwicGranuleSearch(event)
+    //     const response = await opensearchGranuleSearch(event)
 
     //     const {
     //       statusCode,

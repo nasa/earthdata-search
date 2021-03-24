@@ -29,8 +29,9 @@ export const getOpenSearchGranulesUrl = async (collectionId, openSearchOsddUrl) 
     console.log(`Request for granules URL for CWIC collection '${collectionId}' successfully completed in ${elapsedTime} ms`)
 
     const osddBody = parseXml(data, {
+      attributeNamePrefix: '',
       ignoreAttributes: false,
-      attributeNamePrefix: ''
+      ignoreNameSpace: true
     })
 
     const { OpenSearchDescription: opensearchDescription = {} } = osddBody

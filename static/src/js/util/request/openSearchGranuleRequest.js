@@ -1,9 +1,11 @@
 import { parse as parseXml } from 'fast-xml-parser'
+
 import Request from './request'
+
 import { getTemporal } from '../edscDate'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
-export default class CwicGranuleRequest extends Request {
+export default class OpenSearchGranuleRequest extends Request {
   constructor(authToken, earthdataEnvironment) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
@@ -26,13 +28,22 @@ export default class CwicGranuleRequest extends Request {
    */
   transformResponse(data) {
     try {
-      const formattedResponse = parseXml(data, { ignoreAttributes: false, attributeNamePrefix: '' })
+      const formattedResponse = parseXml(data, {
+        attributeNamePrefix: '',
+        ignoreAttributes: false,
+        ignoreNameSpace: true
+      })
 
       // CWIC provides a completely different response format when a 4XX error is thrown
       // so we handle that format and response here
       const { feed = {}, OpenSearchDescription: errorBody = {} } = formattedResponse
 
-      const { entry = [], subtitle } = feed
+      const {
+        entry = [],
+        subtitle,
+        title,
+        totalResults
+      } = feed
 
       if (subtitle) {
         const { '#text': errorAttribute } = subtitle
@@ -56,10 +67,10 @@ export default class CwicGranuleRequest extends Request {
       }
 
       // Parse out the slightly different body of the response for 5XX responses
-      if (feed.title === 'CWIC OpenSearch Exception') {
+      if (title === 'CWIC OpenSearch Exception') {
         return {
           errors: [
-            feed.subtitle['#text']
+            subtitle['#text']
           ]
         }
       }
@@ -128,7 +139,7 @@ export default class CwicGranuleRequest extends Request {
       return {
         feed: {
           entry: granuleResults,
-          hits: feed['opensearch:totalResults']
+          hits: totalResults
         }
       }
     } catch (e) {

@@ -8,15 +8,15 @@ export const singleCwicGranuleResponse = `<?xml version="1.0" encoding="UTF-8"?>
    </author>
    <id>https://cwic.wgiss.ceos.org/opensearch/granules.atom/?datasetId=C1443228137-ISRO</id>
    <dc:identifier>https://cwic.wgiss.ceos.org/opensearch/granules.atom/?datasetId=C1443228137-ISRO</dc:identifier>
-   <opensearch:totalResults>98799</opensearch:totalResults>
-   <opensearch:startIndex>1</opensearch:startIndex>
-   <opensearch:itemsPerPage>1</opensearch:itemsPerPage>
+   <totalResults>98799</totalResults>
+   <startIndex>1</startIndex>
+   <itemsPerPage>1</itemsPerPage>
    <link rel="self" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;clientId=eed-edsc-dev&amp;startPage=1" title="This Request" />
    <link rel="search" type="application/opensearchdescription+xml" href="https://cwic.wgiss.ceos.org/opensearch/datasets/C1443228137-ISRO/osdd.xml?clientId=eed-edsc-dev" title="Search this resource" />
    <link rel="next" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;startIndex=21&amp;clientId=eed-edsc-dev" title="Next results" />
    <link rel="first" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;startIndex=1&amp;clientId=eed-edsc-dev" title="First result" />
    <link rel="last" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;startIndex=98799&amp;clientId=eed-edsc-dev" title="Last result" />
-   <opensearch:Query role="request" cwic:datasetId="C1443228137-ISRO" esipdiscover:clientId="eed-edsc-dev" startIndex="1" count="1" />
+   <Query role="request" cwic:datasetId="C1443228137-ISRO" esipdiscover:clientId="eed-edsc-dev" startIndex="1" count="1" />
    <!-- Remote search completed in 14.155 seconds. -->
    <entry>
       <title>STUC00GTD_1C_LIS3_x_83_42_x_14-NOV-1996_PLD_SAN</title>
@@ -48,15 +48,15 @@ export const singleCwicGranuleResponseWithImage = `<?xml version="1.0" encoding=
    </author>
    <id>https://cwic.wgiss.ceos.org/opensearch/granules.atom/?datasetId=C1443228137-ISRO</id>
    <dc:identifier>https://cwic.wgiss.ceos.org/opensearch/granules.atom/?datasetId=C1443228137-ISRO</dc:identifier>
-   <opensearch:totalResults>98799</opensearch:totalResults>
-   <opensearch:startIndex>1</opensearch:startIndex>
-   <opensearch:itemsPerPage>1</opensearch:itemsPerPage>
+   <totalResults>98799</totalResults>
+   <startIndex>1</startIndex>
+   <itemsPerPage>1</itemsPerPage>
    <link rel="self" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;clientId=eed-edsc-dev&amp;startPage=1" title="This Request" />
    <link rel="search" type="application/opensearchdescription+xml" href="https://cwic.wgiss.ceos.org/opensearch/datasets/C1443228137-ISRO/osdd.xml?clientId=eed-edsc-dev" title="Search this resource" />
    <link rel="next" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;startIndex=21&amp;clientId=eed-edsc-dev" title="Next results" />
    <link rel="first" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;startIndex=1&amp;clientId=eed-edsc-dev" title="First result" />
    <link rel="last" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;startIndex=98799&amp;clientId=eed-edsc-dev" title="Last result" />
-   <opensearch:Query role="request" cwic:datasetId="C1443228137-ISRO" esipdiscover:clientId="eed-edsc-dev" startIndex="1" count="1" />
+   <Query role="request" cwic:datasetId="C1443228137-ISRO" esipdiscover:clientId="eed-edsc-dev" startIndex="1" count="1" />
    <!-- Remote search completed in 14.155 seconds. -->
    <entry>
       <title>STUC00GTD_1C_LIS3_x_83_42_x_14-NOV-1996_PLD_SAN</title>
@@ -89,15 +89,15 @@ export const multipleCwicGranulesResponse = `<?xml version="1.0" encoding="UTF-8
    </author>
    <id>https://cwic.wgiss.ceos.org/opensearch/granules.atom/?datasetId=C1443228137-ISRO</id>
    <dc:identifier>https://cwic.wgiss.ceos.org/opensearch/granules.atom/?datasetId=C1443228137-ISRO</dc:identifier>
-   <opensearch:totalResults>98799</opensearch:totalResults>
-   <opensearch:startIndex>1</opensearch:startIndex>
-   <opensearch:itemsPerPage>1</opensearch:itemsPerPage>
+   <totalResults>98799</totalResults>
+   <startIndex>1</startIndex>
+   <itemsPerPage>1</itemsPerPage>
    <link rel="self" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;clientId=eed-edsc-dev&amp;startPage=1" title="This Request" />
    <link rel="search" type="application/opensearchdescription+xml" href="https://cwic.wgiss.ceos.org/opensearch/datasets/C1443228137-ISRO/osdd.xml?clientId=eed-edsc-dev" title="Search this resource" />
    <link rel="next" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;startIndex=21&amp;clientId=eed-edsc-dev" title="Next results" />
    <link rel="first" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;startIndex=1&amp;clientId=eed-edsc-dev" title="First result" />
    <link rel="last" type="application/atom+xml" href="https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1443228137-ISRO&amp;count=1&amp;startIndex=98799&amp;clientId=eed-edsc-dev" title="Last result" />
-   <opensearch:Query role="request" cwic:datasetId="C1443228137-ISRO" esipdiscover:clientId="eed-edsc-dev" startIndex="1" count="1" />
+   <Query role="request" cwic:datasetId="C1443228137-ISRO" esipdiscover:clientId="eed-edsc-dev" startIndex="1" count="1" />
    <!-- Remote search completed in 14.155 seconds. -->
    <entry>
       <title>STUC00GTD_1C_LIS3_x_83_42_x_14-NOV-1996_PLD_SAN</title>
