@@ -1,5 +1,4 @@
-// import nock from 'nock'
-import CwicGranuleRequest from '../cwicGranuleRequest'
+import OpenSearchGranuleRequest from '../openSearchGranuleRequest'
 import {
   singleCwicGranuleResponse,
   singleCwicGranuleResponseWithImage,
@@ -11,10 +10,10 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('CwicGranuleRequest#transformRequest', () => {
+describe('OpenSearchGranuleRequest#transformRequest', () => {
   describe('when logged out', () => {
     test('returns a basic example result correctly transformed', () => {
-      const cwicRequest = new CwicGranuleRequest()
+      const cwicRequest = new OpenSearchGranuleRequest()
 
       const transformedData = cwicRequest.transformRequest({
         echoCollectionId: 'TEST_COLLECTION_ID'
@@ -27,7 +26,7 @@ describe('CwicGranuleRequest#transformRequest', () => {
 
   describe('when logged in', () => {
     test('returns a basic example result correctly transformed', () => {
-      const cwicRequest = new CwicGranuleRequest('authToken')
+      const cwicRequest = new OpenSearchGranuleRequest('authToken')
       cwicRequest.startTime = 1576855756
 
 
@@ -41,9 +40,9 @@ describe('CwicGranuleRequest#transformRequest', () => {
   })
 })
 
-describe('CwicGranuleRequest#transformResponse', () => {
+describe('OpenSearchGranuleRequest#transformResponse', () => {
   test('formats single granule results correctly', () => {
-    const cwicRequest = new CwicGranuleRequest()
+    const cwicRequest = new OpenSearchGranuleRequest()
 
     const transformedResponse = cwicRequest.transformResponse(singleCwicGranuleResponse)
 
@@ -56,7 +55,7 @@ describe('CwicGranuleRequest#transformResponse', () => {
   })
 
   test('appends additional keys to each granule necessary to match CMR', () => {
-    const cwicRequest = new CwicGranuleRequest()
+    const cwicRequest = new OpenSearchGranuleRequest()
 
     const transformedResponse = cwicRequest.transformResponse(singleCwicGranuleResponse)
 
@@ -68,7 +67,7 @@ describe('CwicGranuleRequest#transformResponse', () => {
   })
 
   test('formats multi-granule results correctly', () => {
-    const cwicRequest = new CwicGranuleRequest()
+    const cwicRequest = new OpenSearchGranuleRequest()
 
     const transformedResponse = cwicRequest.transformResponse(multipleCwicGranulesResponse)
 
@@ -82,7 +81,7 @@ describe('CwicGranuleRequest#transformResponse', () => {
 
   describe('sets the full browse image correctly', () => {
     test('when the granule has no link', () => {
-      const cwicRequest = new CwicGranuleRequest()
+      const cwicRequest = new OpenSearchGranuleRequest()
 
       const transformedResponse = cwicRequest
         .transformResponse(singleCwicGranuleResponse)
@@ -94,7 +93,7 @@ describe('CwicGranuleRequest#transformResponse', () => {
     })
 
     test('when the granule has a link', () => {
-      const cwicRequest = new CwicGranuleRequest()
+      const cwicRequest = new OpenSearchGranuleRequest()
 
       const transformedResponse = cwicRequest
         .transformResponse(singleCwicGranuleResponseWithImage)
@@ -107,7 +106,7 @@ describe('CwicGranuleRequest#transformResponse', () => {
   })
 })
 
-describe('CwicGranuleRequest#search', () => {
+describe('OpenSearchGranuleRequest#search', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
@@ -125,7 +124,7 @@ describe('CwicGranuleRequest#search', () => {
   //       }
   //     })
 
-  //   const cwicRequest = new CwicGranuleRequest()
+  //   const cwicRequest = new OpenSearchGranuleRequest()
 
   //   const transformRequestMock = jest.spyOn(cwicRequest, 'transformRequest')
   //     .mockImplementation(() => jest.fn(() => '{}'))

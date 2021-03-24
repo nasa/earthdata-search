@@ -16,7 +16,7 @@ const wrappedAxios = wrapAxios(axios)
  * Retrieve granules from CWIC
  * @param {Object} event Details about the HTTP request that it received
  */
-const cwicGranuleSearch = async (event) => {
+const opensearchGranuleSearch = async (event) => {
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
   const responseHeaders = {
@@ -102,4 +102,4 @@ const cwicGranuleSearch = async (event) => {
   }
 }
 
-export default cwicGranuleSearch
+export default opensearchGranuleSearch

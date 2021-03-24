@@ -235,8 +235,8 @@
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: colormaps/{product}
 
-  cwicGranuleSearch:
-    handler: serverless/src/cwicGranuleSearch/handler.default
+  openSearchGranuleSearch:
+    handler: serverless/src/openSearchGranuleSearch/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
     events:
       - http:
