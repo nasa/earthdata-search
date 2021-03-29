@@ -30,7 +30,7 @@ const edlOptionalAuthorizer = async (event) => {
   if (!jwtToken || jwtToken === '') {
     const authOptionalPaths = [
       '/autocomplete',
-      '/cwic/granules'
+      '/opensearch/granules'
     ]
 
     // Allow for optional authentication

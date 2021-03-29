@@ -29,7 +29,9 @@ describe('requestTimeout', () => {
     test('returns the lambda timeout minus the requested workload threshold', () => {
       process.env.LAMBDA_TIMEOUT = 30
 
-      const response = requestTimeout(5)
+      const response = requestTimeout({
+        workloadThreshold: 5
+      })
 
       expect(response).toEqual(25000)
     })

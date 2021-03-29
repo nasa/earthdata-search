@@ -13,7 +13,7 @@ import { wrapAxios } from '../util/wrapAxios'
 const wrappedAxios = wrapAxios(axios)
 
 /**
- * Retrieve granules from CWIC
+ * Retrieve granules from OpenSearch
  * @param {Object} event Details about the HTTP request that it received
  */
 const opensearchGranuleSearch = async (event) => {
@@ -67,13 +67,16 @@ const opensearchGranuleSearch = async (event) => {
 
   const renderedTemplate = renderOpenSearchTemplate(template, obj)
 
-  console.log(`CWIC Granule Query: ${renderedTemplate}`)
+  console.log(`OpenSearch Granule Query: ${renderedTemplate}`)
 
   try {
+    // The value for timeout here should match the value defined in the serverless config
     const granuleResponse = await wrappedAxios({
       method: 'get',
       url: renderedTemplate,
-      timeout: requestTimeout(),
+      timeout: requestTimeout({
+        definedTimeout: 60
+      }),
       headers: {
         'Client-Id': getClientId().lambda
       }
@@ -82,7 +85,7 @@ const opensearchGranuleSearch = async (event) => {
     const { config, data } = granuleResponse
     const { elapsedTime } = config
 
-    console.log(`CWIC Granule Request took ${elapsedTime} ms`)
+    console.log(`OpenSearch Granule Request took ${elapsedTime} ms`)
 
     return {
       isBase64Encoded: false,

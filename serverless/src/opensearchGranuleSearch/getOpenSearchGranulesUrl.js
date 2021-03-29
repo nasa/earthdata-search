@@ -26,7 +26,7 @@ export const getOpenSearchGranulesUrl = async (collectionId, openSearchOsddUrl) 
     const { config, data } = osddResponse
     const { elapsedTime } = config
 
-    console.log(`Request for granules URL for CWIC collection '${collectionId}' successfully completed in ${elapsedTime} ms`)
+    console.log(`Request for granules URL for OpenSearch collection '${collectionId}' successfully completed in ${elapsedTime} ms`)
 
     const osddBody = parseXml(data, {
       attributeNamePrefix: '',
