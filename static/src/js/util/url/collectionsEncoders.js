@@ -343,17 +343,17 @@ export const decodeCollections = (params) => {
 
     // Project
     let addedGranuleIds = []
-    let addedIsCwic
+    let addedIsOpenSearch
     let isVisible = false
     let removedGranuleIds = []
-    let removedIsCwic
+    let removedIsOpenSearch
     let selectedAccessMethod
     let selectedOutputFormat
     let selectedOutputProjection
     let variableIds
 
     // Search
-    let excludedIsCwic
+    let excludedIsOpenSearch
     let excludedGranuleIds = []
 
     if (pg) {
@@ -361,19 +361,19 @@ export const decodeCollections = (params) => {
 
       // Granules added by way of additive model
       ({
-        isOpenSearch: addedIsCwic,
+        isOpenSearch: addedIsOpenSearch,
         granuleIds: addedGranuleIds = []
       } = decodedGranules('a', pCollection));
 
       // Granules removed by way of additive model
       ({
-        isOpenSearch: removedIsCwic,
+        isOpenSearch: removedIsOpenSearch,
         granuleIds: removedGranuleIds = []
       } = decodedGranules('r', pCollection));
 
       // Granules removed by way of terciary filter
       ({
-        isOpenSearch: excludedIsCwic,
+        isOpenSearch: excludedIsOpenSearch,
         granuleIds: excludedGranuleIds = []
       } = decodedGranules('x', pCollection))
 
@@ -418,7 +418,7 @@ export const decodeCollections = (params) => {
       selectedOutputProjection = decodedOutputProjection(pCollection)
 
       // Determine if the collection is a CWIC collection
-      isOpenSearch = excludedIsCwic || addedIsCwic || removedIsCwic
+      isOpenSearch = excludedIsOpenSearch || addedIsOpenSearch || removedIsOpenSearch
 
       // Populate the collection object for the redux store
       collectionMetadata[collectionId] = {

@@ -381,7 +381,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
 
     const { polygon } = searchParams
 
-    // CWIC does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
+    // OpenSearch does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
     if (polygon) {
       dispatch(toggleSpatialPolygonWarning(true))
 

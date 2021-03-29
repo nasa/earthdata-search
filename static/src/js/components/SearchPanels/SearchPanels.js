@@ -184,7 +184,7 @@ class SearchPanels extends PureComponent {
     const {
       hasAllMetadata: hasAllCollectionMetadata = false,
       title: collectionTitle = '',
-      isOpenSearch: collectionIsCwic
+      isOpenSearch: collectionIsOpenSearch
     } = collectionMetadata
 
     const { title: granuleTitle = '' } = granuleMetadata
@@ -382,7 +382,7 @@ class SearchPanels extends PureComponent {
         headerMessage={(
           <>
             {
-              collectionIsCwic && (
+              collectionIsOpenSearch && (
                 <Col className="search-panels__cwic-note">
                   {'This is '}
                   <span className="granule-results-header__cwic-emph">Int&apos;l / Interagency Data</span>
@@ -419,7 +419,7 @@ class SearchPanels extends PureComponent {
         headerLoading={!collectionSearchIsLoaded && hasAllCollectionMetadata === false}
         activeView={granulePanelView}
         activeSort={activeGranulesSortKey}
-        sortsArray={!collectionIsCwic ? granulesSortsArray : []}
+        sortsArray={!collectionIsOpenSearch ? granulesSortsArray : []}
         viewsArray={granulesViewsArray}
         headerMetaPrimaryLoading={initialGranulesLoading}
         headerMetaPrimaryText={granuleResultsHeaderMetaPrimaryText}
