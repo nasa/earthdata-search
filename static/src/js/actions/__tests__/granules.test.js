@@ -261,7 +261,7 @@ describe('getSearchGranules', () => {
     const cwicRequestMock = jest.spyOn(OpenSearchGranuleRequest.prototype, 'search')
 
     nock(/localhost/)
-      .post(/cwic\/granules/)
+      .post(/opensearch\/granules/)
       .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><title>CWIC Granule</title></entry></feed>')
 
     const store = mockStore({
@@ -617,7 +617,7 @@ describe('getProjectGranules', () => {
     const cwicRequestMock = jest.spyOn(OpenSearchGranuleRequest.prototype, 'search')
 
     nock(/localhost/)
-      .post(/cwic\/granules/)
+      .post(/opensearch\/granules/)
       .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><title>CWIC Granule</title></entry></feed>')
 
     const store = mockStore({

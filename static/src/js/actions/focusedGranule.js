@@ -45,7 +45,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
     isOpenSearch = false
   } = focusedGranuleMetadata
 
-  // If this is a cwic granule, we've already retrieved everything we can from the search
+  // If this is an opensearch granule, we've already retrieved everything we can from the search
   if (isOpenSearch) return null
 
   // If we already have the metadata for the focusedGranule, don't fetch it again

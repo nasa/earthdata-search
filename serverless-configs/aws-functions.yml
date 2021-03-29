@@ -235,14 +235,16 @@
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: colormaps/{product}
 
+  # OpenSearch endpoints can far exceed our standard lambda timeout value given that they can come
+  # from servers anywhere in the world, to combat that we need to use a higher timeout here than normal.
   openSearchGranuleSearch:
     handler: serverless/src/openSearchGranuleSearch/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: 60
     events:
       - http:
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: cwic/granules
+          path: opensearch/granules
           authorizer:
             name: edlOptionalAuthorizer
             type: request

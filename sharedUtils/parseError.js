@@ -38,7 +38,7 @@ export const parseError = (errorObj, {
     const { 'content-type': contentType = '' } = headers
 
     if (contentType.indexOf('application/opensearchdescription+xml') > -1) {
-      // CWIC collections return errors in XML, ensure we capture them
+      // OpenSearch collections return errors in XML, ensure we capture them
       const osddBody = parseXml(data, {
         ignoreAttributes: false,
         attributeNamePrefix: ''
@@ -48,7 +48,7 @@ export const parseError = (errorObj, {
 
       errorArray = [errorMessage]
     } else if (contentType.indexOf('text/xml') > -1) {
-      // CWIC collections return errors in XML, ensure we capture them
+      // OpenSearch collections return errors in XML, ensure we capture them
       const gibsError = parseXml(data, {
         ignoreAttributes: false,
         attributeNamePrefix: ''
