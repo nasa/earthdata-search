@@ -3,12 +3,16 @@
   text-decoration: underline;
 
   &--separated {
-    &:after {
+    &:before {
       display: inline-block;
       margin-left: $spacer/2;
       content: '|';
       color: transparent;
       border-left: 1px solid $color__black--300;
+    }
+
+    &:first-child:before {
+      display: none;
     }
   }
 

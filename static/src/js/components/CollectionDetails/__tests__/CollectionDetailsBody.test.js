@@ -22,6 +22,7 @@ function setup(overrides) {
     collectionMetadata: {
       hasAllMetadata: true,
       dataCenters: [],
+      directDistributionInformation: {},
       scienceKeywords: [],
       nativeDataFormats: [],
       urls: {
@@ -132,6 +133,7 @@ describe('CollectionDetails component', () => {
           '-90 -180 90 180'
         ],
         dataCenters: [],
+        directDistributionInformation: {},
         scienceKeywords: [],
         nativeDataFormats: [],
         spatial: [
@@ -612,6 +614,26 @@ describe('CollectionDetails component', () => {
       expect(enzymeWrapper.find('.collection-details-body__abstract').text()).toEqual(
         'This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.'
       )
+    })
+  })
+
+  describe('Direct Distribution Information', () => {
+    test('renders correctly', () => {
+      const { enzymeWrapper } = setup({
+        overrideMetadata: {
+          directDistributionInformation: {
+            region: 'us-east-2',
+            s3BucketAndObjectPrefixNames: ['TestBucketOrObjectPrefix'],
+            s3CredentialsApiEndpoint: 'https://DAACCredentialEndpoint.org',
+            s3CredentialsApiDocumentationUrl: 'https://DAACCredentialDocumentation.org'
+          }
+        }
+      })
+
+      expect(enzymeWrapper.find('.collection-details-body__cloud-access__region').text()).toEqual('us-east-2')
+      expect(enzymeWrapper.find('.collection-details-body__cloud-access__bucket-name').text()).toEqual('TestBucketOrObjectPrefix')
+      expect(enzymeWrapper.find('.collection-details-body__cloud-access__api-link').props().href).toEqual('https://DAACCredentialEndpoint.org')
+      expect(enzymeWrapper.find('.collection-details-body__cloud-access__documentation-link').props().href).toEqual('https://DAACCredentialDocumentation.org')
     })
   })
 

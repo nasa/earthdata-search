@@ -102,6 +102,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         coordinateSystem
         dataCenter
         dataCenters
+        directDistributionInformation
         doi
         hasGranules
         lines
@@ -189,6 +190,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           conceptId,
           coordinateSystem,
           dataCenter,
+          directDistributionInformation,
           granules,
           hasGranules,
           nativeDataFormats,
@@ -216,6 +218,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           boxes,
           coordinateSystem,
           dataCenter,
+          directDistributionInformation: directDistributionInformation == null ? {} : directDistributionInformation,
           granules,
           hasAllMetadata: true,
           hasGranules,
