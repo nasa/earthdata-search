@@ -1,13 +1,13 @@
 import nock from 'nock'
 
-import { cwicOsddErrorResponse, cwicOsddResponse } from './mocks'
+import { openSearchOsddErrorResponse, openSearchOsddResponse } from './mocks'
 import { getOpenSearchGranulesUrl } from '../getOpenSearchGranulesUrl'
 
 describe('getOpenSearchGranulesUrl', () => {
   test('successful returns a template for a known collection', async () => {
     nock(/wgiss/)
       .get(/opensearch/)
-      .reply(200, cwicOsddResponse)
+      .reply(200, openSearchOsddResponse)
 
     const response = await getOpenSearchGranulesUrl('C1597928934-NOAA_NCEI', 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev')
 
@@ -66,7 +66,7 @@ describe('getOpenSearchGranulesUrl', () => {
   test('returns an error for an unknown collection', async () => {
     nock(/wgiss/)
       .get(/opensearch/)
-      .reply(400, cwicOsddErrorResponse, {
+      .reply(400, openSearchOsddErrorResponse, {
         'Content-Type': 'application/opensearchdescription+xml'
       })
 
