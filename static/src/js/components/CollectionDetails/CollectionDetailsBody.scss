@@ -188,4 +188,15 @@
     margin: 0;
     padding: 0;
   }
+
+  &__cloud-access {
+    padding-top: 1rem;
+    border-top: 1px solid $color__black--200;
+
+    &__heading {
+      h4 {
+        font-size: 1rem;
+      }
+    }
+  }
 }

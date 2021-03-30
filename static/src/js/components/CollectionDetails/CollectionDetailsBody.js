@@ -116,6 +116,7 @@ export const CollectionDetailsBody = ({
     abstract,
     associatedDois,
     dataCenters,
+    directDistributionInformation,
     doi,
     hasAllMetadata,
     gibsLayers,
@@ -181,6 +182,13 @@ export const CollectionDetailsBody = ({
   if (relatedUrls && relatedUrls.length > 0) {
     formattedRelatedUrls = buildRelatedUrlsList(relatedUrls)
   }
+
+  const {
+    region,
+    s3BucketAndObjectPrefixNames,
+    s3CredentialsApiEndpoint,
+    s3CredentialsApiDocumentationUrl
+  } = directDistributionInformation
 
   return (
     <div className="collection-details-body">
@@ -254,7 +262,7 @@ export const CollectionDetailsBody = ({
                         )
                       }
                       <a
-                        className="link link--external collection-details-body__link"
+                        className="link link--separated link--external collection-details-body__link"
                         href={urls.html.href}
                         rel="noopener noreferrer"
                         target="_blank"
@@ -395,6 +403,62 @@ export const CollectionDetailsBody = ({
               )
             }
           </div>
+          {
+            region && (
+              <div className="row collection-details-body__row collection-details-body__cloud-access">
+                <div className="col col-12">
+                  <div className="collection-details-body__cloud-access__heading">
+                    <h4>Cloud Access</h4>
+                    <p>Available for access in-region with AWS Cloud</p>
+                  </div>
+                  <dl className="collection-details-body__info">
+                    <dt>Region</dt>
+                    <dd className="collection-details-body__cloud-access__region">
+                      {region}
+                    </dd>
+
+                    <dt>Bucket/Object Prefix</dt>
+                    {
+                      s3BucketAndObjectPrefixNames.length && (
+                        s3BucketAndObjectPrefixNames.map((name, i) => {
+                          const key = `${name}-${i}`
+
+                          return (
+                            <dd
+                              key={key}
+                              className="collection-details-body__cloud-access__bucket-name"
+                            >
+                              {name}
+                            </dd>
+                          )
+                        })
+                      )
+                    }
+
+                    <dt>Credentials API</dt>
+                    <dd className="collection-details-body__links collection-details-body__links--horizontal">
+                      <a
+                        className="link link--external collection-details-body__link collection-details-body__cloud-access__api-link"
+                        href={s3CredentialsApiEndpoint}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        S3 Credentials API
+                      </a>
+                      <a
+                        className="link link--separated link--external collection-details-body__link collection-details-body__cloud-access__documentation-link"
+                        href={s3CredentialsApiDocumentationUrl}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Documentation
+                      </a>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            )
+          }
         </div>
       </SimpleBar>
       <CollapsePanel
