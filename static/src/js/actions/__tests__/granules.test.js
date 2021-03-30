@@ -257,7 +257,7 @@ describe('getSearchGranules', () => {
     })
   })
 
-  test('substitutes MBR for polygon in cwic granule searches', async () => {
+  test('substitutes MBR for polygon in opensearch granule searches', async () => {
     const cwicRequestMock = jest.spyOn(OpenSearchGranuleRequest.prototype, 'search')
 
     nock(/localhost/)
@@ -346,6 +346,125 @@ describe('getSearchGranules', () => {
             title: 'CWIC Granule',
             isOpenSearch: true,
             browse_flag: false
+          }],
+          isOpenSearch: true,
+          hits: 1,
+          singleGranuleSize: 0,
+          totalSize: {
+            size: '0.0',
+            unit: 'MB'
+          }
+        }
+      })
+
+      expect(cwicRequestMock).toHaveBeenCalledTimes(1)
+      expect(cwicRequestMock.mock.calls[0][0].boundingBox).toEqual('-77,37.99999999999998,-76,38.00105844675541')
+    })
+  })
+
+  test('correctly parses opensearch results', async () => {
+    const cwicRequestMock = jest.spyOn(OpenSearchGranuleRequest.prototype, 'search')
+
+    nock(/localhost/)
+      .post(/opensearch\/granules/)
+      .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><title type="text">CWIC Granule</title><id>12345</id><updated>2020-06-09T23:59:59Z</updated></entry></feed>')
+
+    const store = mockStore({
+      authToken: 'token',
+      earthdataEnvironment: 'prod',
+      metadata: {
+        collections: {
+          collectionId: {
+            hasGranules: false,
+            tags: {
+              'opensearch.granule.osdd': {
+                data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+              }
+            }
+          }
+        }
+      },
+      project: {},
+      focusedCollection: 'collectionId',
+      query: {
+        collection: {
+          temporal: {},
+          spatial: {
+            polygon: ['-77,38,-77,38,-76,38,-77,38']
+          }
+        }
+      },
+      timeline: {
+        query: {}
+      }
+    })
+
+    await store.dispatch(getSearchGranules()).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: STARTED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_GRANULE_RESULTS,
+        payload: {
+          collectionId: 'collectionId',
+          results: []
+        }
+      })
+      expect(storeActions[2]).toEqual({
+        type: LOADING_GRANULES,
+        payload: 'collectionId'
+      })
+      expect(storeActions[3]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[4]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: true
+      })
+      expect(storeActions[5]).toEqual({
+        type: FINISHED_GRANULES_TIMER,
+        payload: 'collectionId'
+      })
+      expect(storeActions[6]).toEqual({
+        type: LOADED_GRANULES,
+        payload: {
+          collectionId: 'collectionId',
+          loaded: true
+        }
+      })
+      expect(storeActions[7]).toEqual({
+        type: ADD_GRANULE_METADATA,
+        payload: [{
+          browse_flag: false,
+          formatted_temporal: [
+            '2020-06-09 23:59:59',
+            null
+          ],
+          id: '12345',
+          isOpenSearch: true,
+          time_start: '2020-06-09T23:59:59Z',
+          title: 'CWIC Granule',
+          updated: '2020-06-09T23:59:59Z'
+        }]
+      })
+      expect(storeActions[8]).toEqual({
+        type: UPDATE_GRANULE_RESULTS,
+        payload: {
+          collectionId: 'collectionId',
+          results: [{
+            browse_flag: false,
+            formatted_temporal: [
+              '2020-06-09 23:59:59',
+              null
+            ],
+            id: '12345',
+            isOpenSearch: true,
+            time_start: '2020-06-09T23:59:59Z',
+            title: 'CWIC Granule',
+            updated: '2020-06-09T23:59:59Z'
           }],
           isOpenSearch: true,
           hits: 1,
@@ -613,7 +732,7 @@ describe('getProjectGranules', () => {
     })
   })
 
-  test('substitutes MBR for polygon in cwic granule searches', async () => {
+  test('substitutes MBR for polygon in opensearch granule searches', async () => {
     const cwicRequestMock = jest.spyOn(OpenSearchGranuleRequest.prototype, 'search')
 
     nock(/localhost/)
