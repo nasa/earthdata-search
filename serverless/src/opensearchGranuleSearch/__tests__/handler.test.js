@@ -34,9 +34,9 @@ describe('handler', () => {
       const response = await openSearchGranuleSearch(event)
 
       expect(response).toEqual({
-        body: [
-          'REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset'
-        ],
+        body: JSON.stringify({
+          errors: ['REQUEST_EXCEPTION: INVALID_DATASET - Unrecognized dataset']
+        }),
         headers: {
           'Access-Control-Allow-Credentials': true,
           'Access-Control-Allow-Headers': '*',

@@ -112,9 +112,11 @@ export default class OpenSearchGranuleRequest extends Request {
         } = granule
 
         // Some endpoints provide a string and some provide a number, the front end expects a string
-        updatedGranule.id = id.toString()
+        if (id) {
+          updatedGranule.id = id.toString()
+        }
 
-        let formattedTemporal
+        let formattedTemporal = []
 
         if (temporal) {
           const [timeStart, timeEnd] = temporal.split('/')
