@@ -59,7 +59,9 @@ const openSearchGranuleSearch = async (event) => {
       isBase64Encoded: false,
       statusCode: openSearchUrlResponse.statusCode,
       headers: responseHeaders,
-      body: parsedResponse.errors
+      body: JSON.stringify({
+        errors: parsedResponse.errors
+      })
     }
   }
 

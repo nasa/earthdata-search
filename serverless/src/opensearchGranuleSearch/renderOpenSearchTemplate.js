@@ -26,7 +26,7 @@ export const renderOpenSearchTemplate = (template, params) => {
   }
 
   if (boundingBox) {
-    renderedTemplate = renderedTemplate.replace(/{geo:box}/, boundingBox)
+    renderedTemplate = renderedTemplate.replace(/{geo:box\??}/, boundingBox)
   }
 
   if (point) {
@@ -43,14 +43,14 @@ export const renderOpenSearchTemplate = (template, params) => {
       lat + epsilon
     ].join(',')
 
-    renderedTemplate = renderedTemplate.replace(/{geo:box}/, boundingBoxFromPoint)
+    renderedTemplate = renderedTemplate.replace(/{geo:box\??}/, boundingBoxFromPoint)
   }
 
   if (temporal) {
     const [timeStart, timeEnd] = temporal.split(',')
 
-    renderedTemplate = renderedTemplate.replace(/{time:start}/, timeStart.replace(/\.\d{3}Z$/, 'Z'))
-    renderedTemplate = renderedTemplate.replace(/{time:end}/, timeEnd.replace(/\.\d{3}Z$/, 'Z'))
+    renderedTemplate = renderedTemplate.replace(/{time:start\??}/, timeStart.replace(/\.\d{3}Z$/, 'Z'))
+    renderedTemplate = renderedTemplate.replace(/{time:end\??}/, timeEnd.replace(/\.\d{3}Z$/, 'Z'))
   }
 
   // Remove any empty params from the template
