@@ -40,12 +40,24 @@ export default class OpenSearchGranuleRequest extends Request {
 
       const {
         entry = [],
-        subtitle,
-        title,
         totalResults
       } = feed
 
+      // If the element has a `type` attribute of 'text' the XML parser interprets these
+      // two elements as an object, where the value is found within the `#text` key of the object
+      // so we use let here in the event that we need to override the values
+      let {
+        subtitle,
+        title
+      } = feed
+
       if (subtitle) {
+        if (typeof subtitle === 'object' && subtitle !== null) {
+          const { '#text': text } = subtitle
+
+          subtitle = text
+        }
+
         const { '#text': errorAttribute } = subtitle
         const [,
           errorClass
@@ -66,6 +78,14 @@ export default class OpenSearchGranuleRequest extends Request {
         }
       }
 
+      if (title) {
+        if (typeof title === 'object' && title !== null) {
+          const { '#text': text } = title
+
+          title = text
+        }
+      }
+
       // Parse out the slightly different body of the response for 5XX responses
       if (title === 'CWIC OpenSearch Exception') {
         return {
@@ -83,27 +103,60 @@ export default class OpenSearchGranuleRequest extends Request {
         updatedGranule.isOpenSearch = true
 
         const {
-          'dc:date': temporal,
-          'georss:box': boundingBox
+          box: boundingBox,
+          date: temporal,
+          id,
+          summary,
+          title,
+          updated
         } = granule
 
+        // Some endpoints provide a string and some provide a number, the front end expects a string
+        updatedGranule.id = id.toString()
+
+        let formattedTemporal
+
         if (temporal) {
-          const [timeStart, timeEnd] = granule['dc:date'].split('/')
+          const [timeStart, timeEnd] = temporal.split('/')
           updatedGranule.time_start = timeStart
           updatedGranule.time_end = timeEnd
 
-          const formattedTemporal = getTemporal(updatedGranule.time_start, updatedGranule.time_end)
+          formattedTemporal = getTemporal(updatedGranule.time_start, updatedGranule.time_end)
+        }
 
-          if (formattedTemporal.filter(Boolean).length > 0) {
-            updatedGranule.formatted_temporal = formattedTemporal
-          }
+        // OpenSearch doesn't require that temporal data reside in time start/end, some endpoints
+        // put the value within `updated` -- when that is the case we'll assume its the start date
+        if (!temporal && updated) {
+          updatedGranule.time_start = updated
+
+          formattedTemporal = getTemporal(updatedGranule.time_start)
+        }
+
+        if (formattedTemporal.filter(Boolean).length > 0) {
+          updatedGranule.formatted_temporal = formattedTemporal
         }
 
         if (boundingBox) {
           // Both keys are the same format
           updatedGranule.boxes = [
-            granule['georss:box']
+            boundingBox
           ]
+        }
+
+        if (summary) {
+          if (typeof summary === 'object' && summary !== null) {
+            const { '#text': text } = summary
+
+            updatedGranule.summary = text
+          }
+        }
+
+        if (title) {
+          if (typeof title === 'object' && title !== null) {
+            const { '#text': text } = title
+
+            updatedGranule.title = text
+          }
         }
 
         // Default `browse_flag` to false
