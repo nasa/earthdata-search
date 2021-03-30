@@ -16,7 +16,7 @@ const wrappedAxios = wrapAxios(axios)
  * Retrieve granules from OpenSearch
  * @param {Object} event Details about the HTTP request that it received
  */
-const opensearchGranuleSearch = async (event) => {
+const openSearchGranuleSearch = async (event) => {
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
   const responseHeaders = {
@@ -105,4 +105,4 @@ const opensearchGranuleSearch = async (event) => {
   }
 }
 
-export default opensearchGranuleSearch
+export default openSearchGranuleSearch

@@ -1,13 +1,13 @@
 import nock from 'nock'
 
 import {
-  // cwicGranuleErrorResponse,
-  cwicGranuleResponse,
-  cwicOsddErrorResponse,
-  cwicOsddResponse
+  // openSearchGranuleErrorResponse,
+  openSearchGranuleResponse,
+  openSearchOsddErrorResponse,
+  openSearchOsddResponse
 } from './mocks'
 
-import opensearchGranuleSearch from '../handler'
+import openSearchGranuleSearch from '../handler'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -18,7 +18,7 @@ describe('handler', () => {
     test('returns the error', async () => {
       nock(/cwic/)
         .get(/opensearch/)
-        .reply(400, cwicOsddErrorResponse, {
+        .reply(400, openSearchOsddErrorResponse, {
           'Content-Type': 'application/opensearchdescription+xml'
         })
 
@@ -31,7 +31,7 @@ describe('handler', () => {
         })
       }
 
-      const response = await opensearchGranuleSearch(event)
+      const response = await openSearchGranuleSearch(event)
 
       expect(response).toEqual({
         body: [
@@ -54,13 +54,13 @@ describe('handler', () => {
       test('returns the granules', async () => {
         nock(/cwic/)
           .get(/opensearch\/datasets/)
-          .reply(200, cwicOsddResponse, {
+          .reply(200, openSearchOsddResponse, {
             'Content-Type': 'application/opensearchdescription+xml'
           })
 
         nock(/cwic/)
           .get(/opensearch\/granules/)
-          .reply(200, cwicGranuleResponse, {
+          .reply(200, openSearchGranuleResponse, {
             'Content-Type': 'application/opensearchdescription+xml'
           })
 
@@ -73,7 +73,7 @@ describe('handler', () => {
           })
         }
 
-        const response = await opensearchGranuleSearch(event)
+        const response = await openSearchGranuleSearch(event)
 
         const {
           statusCode,
@@ -81,7 +81,7 @@ describe('handler', () => {
         } = response
 
         expect(statusCode).toEqual(200)
-        expect(body).toEqual(cwicGranuleResponse)
+        expect(body).toEqual(openSearchGranuleResponse)
       })
     })
 
@@ -89,13 +89,13 @@ describe('handler', () => {
     //   test('returns an error', async () => {
     //     nock(/cwic/)
     //       .get(/opensearch\/datasets/)
-    //       .reply(200, cwicOsddResponse, {
+    //       .reply(200, openSearchOsddResponse, {
     //         'Content-Type': 'application/opensearchdescription+xml'
     //       })
 
     //     nock(/cwic/)
     //       .get(/opensearch\/granules/)
-    //       .reply(400, cwicGranuleErrorResponse, {
+    //       .reply(400, openSearchGranuleErrorResponse, {
     //         'Content-Type': 'application/opensearchdescription+xml'
     //       })
 
@@ -108,7 +108,7 @@ describe('handler', () => {
     //       })
     //     }
 
-    //     const response = await opensearchGranuleSearch(event)
+    //     const response = await openSearchGranuleSearch(event)
 
     //     const {
     //       statusCode,
@@ -116,7 +116,7 @@ describe('handler', () => {
     //     } = response
 
     //     expect(statusCode).toEqual(200)
-    //     expect(body).toEqual(cwicGranuleResponse)
+    //     expect(body).toEqual(openSearchGranuleResponse)
     //   })
     // })
   })
