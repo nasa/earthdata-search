@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash'
 
 import { buildDataCenters } from './collectionMetadata/dataCenters'
+import { buildDirectDistributionInformation } from './collectionMetadata/buildDirectDistributionInformation'
 import { buildDoi } from './collectionMetadata/doi'
 import { buildGibsLayers } from './collectionMetadata/buildGibsLayers'
 import { buildRelatedUrls } from './collectionMetadata/relatedUrls'
@@ -25,12 +26,13 @@ export const getCollectionMetadata = (collectionId, collections) => {
 /**
  * Format fetched metadata for the UI
  * @param {Object} metadata Collection metadata
- * @param {String} authToken The authenticated users' JWT token
+ * @param {String} authToken The authenticated user's JWT token
  */
 export const createFocusedCollectionMetadata = (metadata, authToken, earthdataEnvironment) => ({
   gibsLayers: buildGibsLayers(metadata),
   urls: buildUrls(metadata, authToken, earthdataEnvironment),
   dataCenters: buildDataCenters(metadata),
+  directDistributionInformation: buildDirectDistributionInformation(metadata),
   doi: buildDoi(metadata),
   relatedUrls: buildRelatedUrls(metadata),
   scienceKeywords: buildScienceKeywords(metadata),
