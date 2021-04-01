@@ -1,4 +1,5 @@
 import { parse as parseXml } from 'fast-xml-parser'
+import { isEmpty } from 'lodash'
 
 import Request from './request'
 
@@ -28,6 +29,11 @@ export default class OpenSearchGranuleRequest extends Request {
    */
   transformResponse(data) {
     try {
+      const { errors = [] } = data
+      if (!isEmpty(errors)) {
+        return data
+      }
+
       const formattedResponse = parseXml(data, {
         attributeNamePrefix: '',
         ignoreAttributes: false,
@@ -200,11 +206,11 @@ export default class OpenSearchGranuleRequest extends Request {
     } catch (e) {
       const { errors = [] } = data
       if (errors.length > 0) {
-        return errors
+        return data
       }
 
       return {
-        erros: [e]
+        errors: [e]
       }
     }
   }
