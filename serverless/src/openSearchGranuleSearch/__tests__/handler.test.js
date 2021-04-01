@@ -1,7 +1,7 @@
 import nock from 'nock'
 
 import {
-  // openSearchGranuleErrorResponse,
+  openSearchGranuleErrorResponse,
   openSearchGranuleResponse,
   openSearchOsddErrorResponse,
   openSearchOsddResponse
@@ -50,7 +50,7 @@ describe('handler', () => {
   })
 
   describe('when retrieving the collection url succeeds', () => {
-    describe('when retrieving the granule url succeeds', () => {
+    describe('when retrieving the granules succeeds', () => {
       test('returns the granules', async () => {
         nock(/cwic/)
           .get(/opensearch\/datasets/)
@@ -85,39 +85,42 @@ describe('handler', () => {
       })
     })
 
-    // describe('when retrieving the granule url fails', () => {
-    //   test('returns an error', async () => {
-    //     nock(/cwic/)
-    //       .get(/opensearch\/datasets/)
-    //       .reply(200, openSearchOsddResponse, {
-    //         'Content-Type': 'application/opensearchdescription+xml'
-    //       })
+    describe('when retrieving the granules fails', () => {
+      test('returns an error', async () => {
+        nock(/cwic/)
+          .get(/opensearch\/datasets/)
+          .reply(200, openSearchOsddResponse, {
+            'Content-Type': 'application/opensearchdescription+xml'
+          })
 
-    //     nock(/cwic/)
-    //       .get(/opensearch\/granules/)
-    //       .reply(400, openSearchGranuleErrorResponse, {
-    //         'Content-Type': 'application/opensearchdescription+xml'
-    //       })
+        nock(/cwic/)
+          .get(/opensearch\/granules/)
+          .reply(400, openSearchGranuleErrorResponse, {
+            'Content-Type': 'application/opensearchdescription+xml'
+          })
 
-    //     const event = {
-    //       body: JSON.stringify({
-    //         params: {
-    //           echoCollectionId: 'C1597928934-NOAA_NCEI',
-    //           openSearchOsdd: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
-    //         }
-    //       })
-    //     }
+        const event = {
+          body: JSON.stringify({
+            params: {
+              echoCollectionId: 'C1597928934-NOAA_NCEI',
+              openSearchOsdd: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+            }
+          })
+        }
 
-    //     const response = await openSearchGranuleSearch(event)
+        const response = await openSearchGranuleSearch(event)
 
-    //     const {
-    //       statusCode,
-    //       body
-    //     } = response
+        const {
+          statusCode,
+          body
+        } = response
 
-    //     expect(statusCode).toEqual(200)
-    //     expect(body).toEqual(openSearchGranuleResponse)
-    //   })
-    // })
+        expect(statusCode).toEqual(400)
+        expect(body).toEqual(JSON.stringify({
+          statusCode: 400,
+          errors: ['An error occurred searching granules: datasetName is required']
+        }))
+      })
+    })
   })
 })
