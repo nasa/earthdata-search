@@ -54,5 +54,7 @@ export const renderOpenSearchTemplate = (template, params) => {
   }
 
   // Remove any empty params from the template
-  return renderedTemplate.replace(/[?&][^=]*=\{[^}]*\}/g, '')
+  return renderedTemplate.replace(/(?<=[?&])[^=]*=\{[^}]*\}/g, '')
+    .replace(/&{2,}/g, '&')
+    .replace(/\?&/g, '?')
 }
