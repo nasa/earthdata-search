@@ -58,6 +58,11 @@
     description: Fixes retrieval collection metadata that was improperly written
     timeout: 900
 
+  replaceCwicWithOpenSearch:
+    handler: serverless/src/replaceCwicWithOpenSearch/handler.default
+    description: Replaces references of isCwic with isOpenSearch
+    timeout: 900
+
   #
   # SQS Lambdas
   #
