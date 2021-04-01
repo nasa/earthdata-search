@@ -38,17 +38,39 @@ export const parseError = (errorObj, {
     const { 'content-type': contentType = '' } = headers
 
     if (contentType.indexOf('application/opensearchdescription+xml') > -1) {
-      // OpenSearch collections return errors in XML, ensure we capture them
+      // OpenSearch collections can return errors in XML, ensure we capture them
       const osddBody = parseXml(data, {
         ignoreAttributes: false,
         attributeNamePrefix: ''
       })
-      const { OpenSearchDescription: description } = osddBody
-      const { Description: errorMessage } = description
 
-      errorArray = [errorMessage]
+      const {
+        feed = {},
+        OpenSearchDescription: description = {}
+      } = osddBody
+
+      // Granule errors will come from within a `feed` element
+      const {
+        subtitle
+      } = feed
+
+      if (description) {
+        const { Description: errorMessage } = description
+
+        errorArray = [errorMessage]
+      }
+
+      if (subtitle) {
+        if (typeof subtitle === 'object' && subtitle !== null) {
+          const { '#text': text } = subtitle
+
+          errorArray = [text]
+        } else {
+          errorArray = [subtitle]
+        }
+      }
     } else if (contentType.indexOf('text/xml') > -1) {
-      // OpenSearch collections return errors in XML, ensure we capture them
+      // OpenSearch collections can return errors in XML, ensure we capture them
       const gibsError = parseXml(data, {
         ignoreAttributes: false,
         attributeNamePrefix: ''

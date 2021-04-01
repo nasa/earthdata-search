@@ -99,6 +99,24 @@ const openSearchGranuleSearch = async (event) => {
       body: data
     }
   } catch (e) {
+    const { code, config } = e
+    const { timeout } = config
+
+    // Handle timeouts specifically so that we can use a more human
+    // readable error, the default uses millisecond
+    if (code === 'ECONNABORTED') {
+      return {
+        isBase64Encoded: false,
+        headers: defaultResponseHeaders,
+        statusCode: 504,
+        body: JSON.stringify({
+          errors: [
+            `Timeout of ${timeout / 1000}s exceeded`
+          ]
+        })
+      }
+    }
+
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
