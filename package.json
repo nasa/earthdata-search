@@ -54,9 +54,9 @@
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
     "regenerator-runtime": "^0.13.3",
-    "snyk": "^1.396.0",
+    "snyk": "^1.521.0",
     "start-server-and-test": "^1.10.6",
-    "three": "~0.86.0",
+    "three": "^0.127.0",
     "webpack-dev-server": "^3.11.0",
     "why-did-you-update": "^1.0.6"
   },
@@ -194,7 +194,7 @@
     "webpack-merge": "^4.2.1",
     "webpack-node-externals": "^2.5.2",
     "webpackbar": "^4.0.0",
-    "xmldom": "^0.1.27",
+    "xmldom": "^0.5.0",
     "xpath": "0.0.27",
     "yup": "^0.32.6"
   },
