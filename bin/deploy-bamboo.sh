@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Bail on unset variables, errors and trace execution
-set -ux
+set -eux
 
 # Deployment configuration/variables
 ####################################
