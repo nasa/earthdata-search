@@ -19,7 +19,7 @@ export default class OpenSearchGranuleRequest extends Request {
       this.optionallyAuthenticated = true
     }
 
-    this.searchPath = 'opensearch/granules'
+    this.searchPath = 'cwic/granules'
   }
 
   /**
