@@ -173,7 +173,7 @@
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",
     "scatter-swap": "^0.1.0",
-    "serverless": "^2.18.0",
+    "serverless": "^2.33.1",
     "serverless-finch": "^2.6.0",
     "serverless-offline": "^6.8.0",
     "serverless-plugin-log-subscription": "^1.2.0",
