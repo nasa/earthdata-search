@@ -242,7 +242,7 @@
 
   # OpenSearch endpoints can far exceed our standard lambda timeout value given that they can come
   # from servers anywhere in the world, to combat that we need to use a higher timeout here than normal.
-  cwicGranuleSearch:
+  openSearchGranuleSearch:
     handler: serverless/src/openSearchGranuleSearch/handler.default
     timeout: 60
     events:
