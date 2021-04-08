@@ -249,7 +249,7 @@
       - http:
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: cwic/granules
+          path: opensearch/granules
           authorizer:
             name: edlOptionalAuthorizer
             type: request
