@@ -23,6 +23,15 @@ export default class OpenSearchGranuleRequest extends Request {
   }
 
   /**
+   * Checks if the provided link is an image
+   * @param {String} link Link
+   * @return {Boolean}
+   */
+  isImageLink(link) {
+    return !!link.match(/\.(?:gif|jpg|jpeg|png)(?:\?|#|$)/)
+  }
+
+  /**
    * Transform the response before completing the Promise.
    * @param {Object} data - Response object from the CWIC.
    * @return {Object} The transformed response
@@ -176,7 +185,7 @@ export default class OpenSearchGranuleRequest extends Request {
 
         granuleLinks.filter(Boolean).forEach((link) => {
           if (isString(link)) {
-            if (link.match(/\.(?:gif|jpg|jpeg|png)(?:\?|#|$)/)) {
+            if (this.isImageLink(link)) {
               browseUrl = link
             }
           } else {
@@ -192,7 +201,7 @@ export default class OpenSearchGranuleRequest extends Request {
             // return the first one which is not marked as the icon. If there's
             // no such relation, we return nothing, which results in there being
             // no link to the full size image.
-            if (!browseUrl && link.rel !== 'icon' && link.href.match(/\.(?:gif|jpg|jpeg|png)(?:\?|#|$)/)) {
+            if (!browseUrl && link.rel !== 'icon' && this.isImageLink(link.href)) {
               browseUrl = link.href
             }
           }
