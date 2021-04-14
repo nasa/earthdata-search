@@ -1,8 +1,8 @@
 import OpenSearchGranuleRequest from '../openSearchGranuleRequest'
 import {
+  multipleCwicGranulesResponse,
   singleCwicGranuleResponse,
   singleCwicGranuleResponseWithImage,
-  multipleCwicGranulesResponse,
   singleCwicGranuleResponseWithImageStringLink
 } from './mocks'
 
