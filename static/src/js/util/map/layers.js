@@ -14,7 +14,14 @@ export function parseSpatial(str) {
   if (newStr instanceof Array) {
     [newStr] = str
   }
-  const coords = newStr.split(' ')
+
+  let coords = newStr.split(' ')
+  // Sometimes OpenSearch granules come back with a comma-delimited list of coords intead of a space-delimited list
+  if (coords.length === 1) {
+    coords = newStr.split(',')
+  }
+
+
   const len = coords.length - 1
   return (() => {
     const result = []
