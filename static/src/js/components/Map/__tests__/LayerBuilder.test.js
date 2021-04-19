@@ -37,7 +37,6 @@ describe('LayerBuilder component', () => {
       projection,
       resolution
     } = props
-    const projectionResolution = `${projection.toUpperCase()}_${resolution}`
 
     const yesterday = moment().subtract(1, 'days')
     const date = yesterday.format('YYYY-MM-DD')
@@ -45,6 +44,6 @@ describe('LayerBuilder component', () => {
     expect(tileLayer.length).toBe(1)
 
     // eslint-disable-next-line max-len
-    expect(tileLayer.prop('url')).toEqual(`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${date}/${projectionResolution}/{z}/{y}/{x}.${format}`)
+    expect(tileLayer.prop('url')).toEqual(`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${date}/${resolution}/{z}/{y}/{x}.${format}`)
   })
 })
