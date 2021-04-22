@@ -13,26 +13,26 @@ describe('url#decodeUrlParams', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       timeline: {
-        center: 1534577879,
+        center: 1534577879000,
         end: undefined,
         interval: 'day',
         start: undefined
       }
     }
-    expect(decodeUrlParams('?tl=1534577879!4!!')).toEqual(expectedResult)
+    expect(decodeUrlParams('?tl=1534577879!2!!')).toEqual(expectedResult)
   })
 
   test('decodes timelineQuery correctly with a focused date', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       timeline: {
-        center: 1546300800,
-        end: 1548979199,
+        center: 1546300800000,
+        end: 1548979199000,
         interval: 'day',
-        start: 1546300800
+        start: 1546300800000
       }
     }
-    expect(decodeUrlParams('?tl=1546300800!4!1546300800!1548979199')).toEqual(expectedResult)
+    expect(decodeUrlParams('?tl=1546300800!2!1546300800!1548979199')).toEqual(expectedResult)
   })
 })
 
@@ -43,11 +43,11 @@ describe('url#encodeUrlQuery', () => {
         hasGranulesOrCwic: true,
         pathname: '/path/here',
         timelineQuery: {
-          center: 1534577879,
+          center: 1534577879000,
           interval: 'day'
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?tl=1534577879!4!!')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?tl=1534577879!2!!')
     })
 
     test('encodes timelineQuery correctly when the timeline has no center state', () => {

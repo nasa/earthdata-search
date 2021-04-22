@@ -1,7 +1,35 @@
+.timeline {
+  position: relative;
+
+  &__container {
+    display: flex;
+
+    .timeline--is-hidden & {
+      display: none;
+    }
+  }
+
+  &__toggle-open {
+    padding: 0.125rem;
+    position: absolute;
+    bottom: 0;
+    z-index: 3;
+    color: #f2f2f2;
+    background-color: #1a1a1a;
+  }
+
+  &__toggle-close {
+    border-right: 1px solid #4d4d4d;
+    padding: 0.125rem;
+    color: #f2f2f2;
+    background-color: #1a1a1a;
+  }
+}
+
 .timeline-tooltip {
   color: white;
 }
 
-.timeline--is-hidden {
-  display: none;
+.timeline__toggle-timeline {
+  background-color: blue;
 }
