@@ -2,11 +2,12 @@
  * Mapping of timeline zoom levels. The Timeline (sometimes) and URL use numbers, CMR uses words
  */
 export const timelineIntervals = {
-  minute: '2',
-  hour: '3',
-  day: '4',
-  month: '5',
-  year: '6'
+  minute: '0',
+  hour: '1',
+  day: '2',
+  month: '3',
+  year: '4',
+  decade: '5'
 }
 
 /**
