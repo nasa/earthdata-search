@@ -1,7 +1,8 @@
 <noscript>
-    <% if (gtmPropertyId.length > 0) { %>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=<%= gtmPropertyId %>" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    <% } %>
+    <% if (gtmPropertyId.length> 0) { %>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=<%= gtmPropertyId %>" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe>
+        <% } %>
 </noscript>
 <script type="text/javascript">
     var htmlElement = document.getElementsByTagName('html')[0];
@@ -24,102 +25,100 @@
     }
 </script>
 <% if (showTophat) { %>
-<div id="earthdata-tophat2" class="th-wrapper" style="height: 34px; background: #000;"></div>
-<% } %>
-<div id="root" class="root root--loading">
-    <div class="root__loading">
-        <div class="root__spinner spinner spinner--dots spinner--white spinner--small">
-            <div class="spinner__inner"></div>
-            <div class="spinner__inner"></div>
-            <div class="spinner__inner"></div>
-        </div>
-    </div>
-    <div id="app" class="root__app"></div>
-</div>
-<div class="fallback-page">
-    <div class="fallback-page__wrapper fallback-page__wrapper--no-js">
-        <div class="fallback-page__content">
-            <h3 class="fallback-page__heading">Earthdata Search uses JavaScript</h3>
-            <p class="fallback-page__note fallback-page__note--last">Please use a JavaScript-aware browser and make sure
-                JavaScript is enabled.</p>
-        </div>
-    </div>
-    <div class="fallback-page__wrapper fallback-page__wrapper--unsupported-browser">
-        <div class="fallback-page__content">
-            <h3 class="fallback-page__heading">Your browser is out of date</h3>
-            <p class="fallback-page__note">In order to use Earthdata Search, you must upgrade your web browser.<br>
-                Alternatively, you can <a href="https://access.earthdata.nasa.gov">Earthdata Access</a>.</p>
-            <p class="fallback-page__note fallback-page__note--last">To upgrade your browser, click on the icons below
-                to go to the download page.</p>
-            <ul class="browser-icons">
-                <li class="browser-icons__item">
-                    <a class="browser-icons__link" href="https://www.google.com/chrome/" target="_blank">
-                        <span class="browser-icons__icon browser-icons__icon--chrome"></span>
-                        <span class="browser-icons__name">Chrome</span>
-                    </a>
-                </li>
-                <li class="browser-icons__item">
-                    <a class="browser-icons__link" href="http://www.mozilla.org/firefox/" target="_blank">
-                        <span class="browser-icons__icon browser-icons__icon--firefox"></span>
-                        <span class="browser-icons__name">Firefox</span>
-                    </a>
-                </li>
-                <li class="browser-icons__item">
-                    <a class="browser-icons__link" href="http://www.apple.com/safari/" target="_blank">
-                        <span class="browser-icons__icon browser-icons__icon--safari"></span>
-                        <span class="browser-icons__name">Safari</span>
-                    </a>
-                </li>
-                <li class="browser-icons__item">
-                    <a class="browser-icons__link" href="http://www.opera.com/" target="_blank">
-                        <span class="browser-icons__icon browser-icons__icon--opera"></span>
-                        <span class="browser-icons__name">Opera</span>
-                    </a>
-                </li>
-                <li class="browser-icons__item">
-                    <a class="browser-icons__link" href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">
-                        <span class="browser-icons__icon browser-icons__icon--ie"></span>
-                        <span class="browser-icons__name">Internet Explorer</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer fallback-page__footer">
-        <span class="footer__info footer__info--left">
-            <span class="footer__info-bit footer__info-bit--emph">NASA Official: Stephen Berrick</span>
-            <span class="footer__info-bit"><a class="footer__info-link" href="http://www.nasa.gov/FOIA/index.html">FOIA</a></span>
-            <span class="footer__info-bit"><a class="footer__info-link" href="http://www.nasa.gov/about/highlights/HP_Privacy.html">NASA Privacy Policy</a></span>
-            <span class="footer__info-bit"><a class="footer__info-link" href="http://www.usa.gov">USA.gov</a></span>
-        </span>
-        <span class="footer__info footer__info--right">
-            <span class="footer__info-bit footer__info-bit--clean footer__info-bit--emph">
-                <a class="footer__info-link footer__info-link--underline" href="https://access.earthdata.nasa.gov/">
-                    Earthdata Access: A Section 508 accessible alternative
-                </a>
-            </span>
-        </span>
-    </div>
-</div>
-<% if (showTophat) { %>
-<script
-    id="earthdata-tophat-script"
-    src="https://cdn.earthdata.nasa.gov/tophat2/tophat2.js"
-    async="async"
-    defer="defer"
-    <% if (feedbackApp.length > 0) { %>
-    data-show-fbm="true"
-    <% } else { %>
-    data-show-fbm="false"
+    <div id="earthdata-tophat2" class="th-wrapper" style="height: 34px; background: #000;"></div>
     <% } %>
-    data-show-status="true"
-    data-status-api-url="https://status.earthdata.nasa.gov/api/v1/notifications"
-></script>
-<% } %>
-<% if (feedbackApp.length > 0) { %>
-<script
-    src="https://fbm.earthdata.nasa.gov/for/<%= feedbackApp %>/feedback.js"
-    type="text/javascript"
-></script>
-<script type="text/javascript">feedback.init({ showIcon: false });</script>
-<% } %>
+        <div id="root" class="root root--loading">
+            <div class="root__loading">
+                <div class="root__spinner spinner spinner--dots spinner--white spinner--small">
+                    <div class="spinner__inner"></div>
+                    <div class="spinner__inner"></div>
+                    <div class="spinner__inner"></div>
+                </div>
+            </div>
+            <div id="app" class="root__app"></div>
+        </div>
+        <div class="fallback-page">
+            <div class="fallback-page__wrapper fallback-page__wrapper--no-js">
+                <div class="fallback-page__content">
+                    <h3 class="fallback-page__heading">Earthdata Search uses JavaScript</h3>
+                    <p class="fallback-page__note fallback-page__note--last">Please use a JavaScript-aware browser and make sure
+                        JavaScript is enabled.</p>
+                </div>
+            </div>
+            <div class="fallback-page__wrapper fallback-page__wrapper--unsupported-browser">
+                <div class="fallback-page__content">
+                    <h3 class="fallback-page__heading">Your browser is out of date</h3>
+                    <p class="fallback-page__note">In order to use Earthdata Search, you must upgrade your web browser.<br>
+                        Alternatively, you can <a href="https://access.earthdata.nasa.gov">Earthdata Access</a>.</p>
+                    <p class="fallback-page__note fallback-page__note--last">To upgrade your browser, click on the icons below
+                        to go to the download page.</p>
+                    <ul class="browser-icons">
+                        <li class="browser-icons__item">
+                            <a class="browser-icons__link" href="https://www.google.com/chrome/" target="_blank">
+                                <span class="browser-icons__icon browser-icons__icon--chrome"></span>
+                                <span class="browser-icons__name">Chrome</span>
+                            </a>
+                        </li>
+                        <li class="browser-icons__item">
+                            <a class="browser-icons__link" href="http://www.mozilla.org/firefox/" target="_blank">
+                                <span class="browser-icons__icon browser-icons__icon--firefox"></span>
+                                <span class="browser-icons__name">Firefox</span>
+                            </a>
+                        </li>
+                        <li class="browser-icons__item">
+                            <a class="browser-icons__link" href="http://www.apple.com/safari/" target="_blank">
+                                <span class="browser-icons__icon browser-icons__icon--safari"></span>
+                                <span class="browser-icons__name">Safari</span>
+                            </a>
+                        </li>
+
+                        <li class="browser-icons__item">
+                            <a class="browser-icons__link" href="http://www.opera.com/" target="_blank">
+                                <span class="browser-icons__icon browser-icons__icon--opera"></span>
+                                <span class="browser-icons__name">Opera</span>
+                            </a>
+                        </li>
+                        <li class="browser-icons__item">
+                            <a class="browser-icons__link" href="http://windows.microsoft.com/en-us/internet-explorer/download-ie"
+                                target="_blank">
+                                <span class="browser-icons__icon browser-icons__icon--ie"></span>
+                                <span class="browser-icons__name">Internet Explorer</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer fallback-page__footer">
+                <span class="footer__info footer__info--left">
+                    <span class="footer__info-bit footer__info-bit--emph">NASA Official: Stephen Berrick</span>
+                    <span class="footer__info-bit"><a class="footer__info-link" aria-labelledby="NASA Freedom of Information Act"
+                            href="http://www.nasa.gov/FOIA/index.html">FOIA</a></span>
+                    <span class="footer__info-bit"><a class="footer__info-link"
+                            href="http://www.nasa.gov/about/highlights/HP_Privacy.html">NASA Privacy Policy</a></span>
+                    <span class="footer__info-bit"><a class="footer__info-link" href="http://www.usa.gov">USA.gov</a></span>
+                </span>
+                <span class="footer__info footer__info--right">
+                    <span class="footer__info-bit footer__info-bit--clean footer__info-bit--emph">
+                        <a class="footer__info-link footer__info-link--underline" href="https://access.earthdata.nasa.gov/">
+                            Earthdata Access: A Section 508 accessible alternative
+                        </a>
+                    </span>
+                </span>
+            </div>
+        </div>
+        <% if (showTophat) { %>
+            <script id="earthdata-tophat-script" src="https://cdn.earthdata.nasa.gov/tophat2/tophat2.js" async="async"
+                defer="defer" <% if (feedbackApp.length> 0) { %>
+                        data - show - fbm="true"
+                            <% } else { %>
+                                data - show - fbm="false"
+                                    <% } %>
+                                        data - show - status="true"
+                    data - status - api - url="https://status.earthdata.nasa.gov/api/v1/notifications"
+                        ></script>
+            <% } %>
+                <% if (feedbackApp.length> 0) { %>
+                    <script src="https://fbm.earthdata.nasa.gov/for/<%= feedbackApp %>/feedback.js"
+                        type="text/javascript"></script>
+                    <script type="text/javascript">feedback.init({ showIcon: false });</script>
+                    <% } %>
