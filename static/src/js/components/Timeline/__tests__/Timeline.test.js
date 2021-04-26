@@ -397,7 +397,7 @@ describe('handle toggleTimeline', () => {
   test('closes the timeline with the close button', () => {
     const { props, enzymeWrapper } = setup()
 
-    const button = enzymeWrapper.find('button.timeline__toggle-close')
+    const button = enzymeWrapper.find('button.timeline__toggle-button--close')
 
     button.simulate('click')
 
@@ -410,7 +410,7 @@ describe('handle toggleTimeline', () => {
       isOpen: false
     })
 
-    const button = enzymeWrapper.find('button.timeline__toggle-open')
+    const button = enzymeWrapper.find('button.timeline__toggle-button--open')
 
     button.simulate('click')
 
