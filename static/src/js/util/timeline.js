@@ -58,9 +58,11 @@ export const prepareTimelineParams = (state) => {
   const { query: timelineQuery } = timeline
   const {
     endDate,
-    interval,
     startDate
   } = timelineQuery
+
+  let { interval } = timelineQuery
+  if (interval === 'decade') interval = 'year'
 
   if (!startDate) {
     return null
