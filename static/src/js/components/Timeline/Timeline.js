@@ -272,9 +272,8 @@ export const Timeline = ({
         {
           !isOpen && (
             <Button
-              className="timeline__toggle-open"
+              className="timeline__toggle-button timeline__toggle-button--open"
               type="button"
-              variant="naked"
               icon={FaAngleDoubleUp}
               label="Show Timeline"
               onClick={() => onToggleTimeline(true)}
@@ -286,7 +285,7 @@ export const Timeline = ({
 
         <div className="timeline__container">
           <Button
-            className="timeline__toggle-close"
+            className="timeline__toggle-button timeline__toggle-button--close"
             type="button"
             variant="naked"
             icon={FaAngleDoubleDown}
