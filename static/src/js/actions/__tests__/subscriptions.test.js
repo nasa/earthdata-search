@@ -104,7 +104,7 @@ describe('createSubscription', () => {
           options: { spatial: { or: true } },
           polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78',
           temporalString: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
-        })
+        }, { encode: false })
 
         // Mock the request if the the variables match
         return collectionConceptId === 'collectionId'
@@ -198,7 +198,7 @@ describe('createSubscription', () => {
             options: { spatial: { or: true } },
             polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78',
             temporalString: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
-          })
+          }, { encode: false })
 
           // Mock the request if the the variables match
           return collectionConceptId === 'collectionId'
@@ -753,7 +753,7 @@ describe('updateSubscription', () => {
         payload: {
           collectionConceptId: 'collectionId',
           conceptId: 'SUB1000-EDSC',
-          query: 'browseOnly=true&options%5Bspatial%5D%5Bor%5D=true&temporalString=2020-01-01T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z'
+          query: 'browseOnly=true&options[spatial][or]=true&temporalString=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
         }
       })
 
