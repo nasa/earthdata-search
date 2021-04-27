@@ -15,6 +15,6 @@ export const prepareSubscriptionQuery = (params) => {
   delete prunedParams.pageNum
   delete prunedParams.sortKey
 
-  // Return the remaining parameters stringified
-  return stringify(prunedParams)
+  // Return the remaining parameters stringified, don't encode the values because CMR won't accept them
+  return stringify(prunedParams, { encode: false })
 }
