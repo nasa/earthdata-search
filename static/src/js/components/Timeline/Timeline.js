@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import EDSCTimeline from '@edsc/timeline'
 import classNames from 'classnames'
 import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa'
+import { isEqual } from 'lodash'
 
 import Button from '../Button/Button'
 
@@ -31,6 +32,21 @@ export const Timeline = ({
   const { query } = timeline
   const { center: propsCenter } = query
   const [center, setCenter] = useState(propsCenter || new Date().getTime())
+  const previousTimelineQuery = useRef(query)
+  const previousIsOpen = useRef(isOpen)
+  const isProjectPage = pathname.indexOf('projects') > -1
+
+  useEffect(() => {
+    // If the query and isOpen state have not changed, do not dispatch the resize event
+    if (isEqual(query, previousTimelineQuery.current) && isOpen === previousIsOpen.current) return
+
+    // Fire the resize event to trigger recalculation of the leaflet control container
+    window.dispatchEvent(new Event('resize'))
+
+    // Set the refs to their respective current values
+    previousTimelineQuery.current = query
+    previousIsOpen.current = isOpen
+  }, [isOpen, query])
 
   // Show the override temporal modal if temporal and focused exist and showOverrideModal is true
   useEffect(() => {
@@ -59,6 +75,9 @@ export const Timeline = ({
    * Handles keyup events
    */
   const onWindowKeyup = (event) => {
+    // Do not allow collapsing of the timeline on the project page
+    if (isProjectPage) return
+
     const toggleTimeline = () => onToggleTimeline(!isOpen)
 
     triggerKeyboardShortcut({
@@ -69,7 +88,22 @@ export const Timeline = ({
   }
 
   // Sets up event listener for keyup event
-  window.addEventListener('keyup', onWindowKeyup)
+  useEffect(() => {
+    window.addEventListener('keyup', onWindowKeyup)
+
+    return () => {
+      window.removeEventListener('keyup', onWindowKeyup)
+    }
+  }, [isOpen, isProjectPage])
+
+  // Sets up event listener for keyup event
+  useEffect(() => {
+    window.addEventListener('keyup', onWindowKeyup)
+
+    return () => {
+      window.removeEventListener('keyup', onWindowKeyup)
+    }
+  }, [])
 
   // Metrics methods
   const handleArrowKeyPan = () => onMetricsTimeline('Left/Right Arrow Pan')
@@ -284,14 +318,18 @@ export const Timeline = ({
         }
 
         <div className="timeline__container">
-          <Button
-            className="timeline__toggle-button timeline__toggle-button--close"
-            type="button"
-            variant="naked"
-            icon={FaAngleDoubleDown}
-            label="Hide Timeline"
-            onClick={() => onToggleTimeline(false)}
-          />
+          {
+            !isProjectPage && (
+              <Button
+                className="timeline__toggle-button timeline__toggle-button--close"
+                type="button"
+                variant="naked"
+                icon={FaAngleDoubleDown}
+                label="Hide Timeline"
+                onClick={() => onToggleTimeline(false)}
+              />
+            )
+          }
           <EDSCTimeline
             center={center}
             data={setupData(timeline)}

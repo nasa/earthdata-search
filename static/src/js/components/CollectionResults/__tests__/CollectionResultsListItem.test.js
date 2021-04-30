@@ -86,11 +86,12 @@ describe('CollectionResultsList component', () => {
     })
 
     test('sets the element size', () => {
-      const getBoundingClientRectMock = jest.fn(() => ({ height: 10 }))
+      const originalBoundingRect = Element.prototype.getBoundingClientRect
+      Element.prototype.getBoundingClientRect = jest.fn()
+        .mockReturnValue({ height: 20 })
+        .mockReturnValueOnce({ height: 10 })
 
       const { enzymeWrapper, props } = setup(mount)
-
-      enzymeWrapper.find('CollectionResultsItem').getElement().ref.current.getBoundingClientRect = getBoundingClientRectMock
 
       enzymeWrapper.setProps({
         data: {
@@ -99,10 +100,12 @@ describe('CollectionResultsList component', () => {
         }
       })
 
-      enzymeWrapper.update()
-
-      expect(props.data.setSize).toHaveBeenCalledTimes(1)
+      // Set size runs once on initial render, and once when the width is updated
+      expect(props.data.setSize).toHaveBeenCalledTimes(2)
       expect(props.data.setSize.mock.calls[0]).toEqual([0, 10])
+      expect(props.data.setSize.mock.calls[1]).toEqual([0, 20])
+
+      Element.prototype.getBoundingClientRect = originalBoundingRect
     })
   })
 
