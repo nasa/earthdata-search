@@ -144,7 +144,7 @@ describe('TimelineContainer component', () => {
   test('does not render a timeline if no timeline should be rendered', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(Timeline).length).toBe(0)
+    expect(enzymeWrapper.find(Timeline).props().isOpen).toBe(false)
   })
 
   test('passes its props and renders a single Timeline component on the search page', () => {
