@@ -46,7 +46,7 @@ export const Timeline = ({
     // Set the refs to their respective current values
     previousTimelineQuery.current = query
     previousIsOpen.current = isOpen
-  }, [isOpen, query])
+  }, [isOpen, query, collectionMetadata])
 
   // Show the override temporal modal if temporal and focused exist and showOverrideModal is true
   useEffect(() => {

@@ -88,7 +88,7 @@ describe('CollectionResultsList component', () => {
     test('sets the element size', () => {
       const originalBoundingRect = Element.prototype.getBoundingClientRect
       Element.prototype.getBoundingClientRect = jest.fn()
-        .mockReturnValue({ height: 20 })
+        .mockReturnValue({ height: 10 })
         .mockReturnValueOnce({ height: 10 })
 
       const { enzymeWrapper, props } = setup(mount)
@@ -103,7 +103,7 @@ describe('CollectionResultsList component', () => {
       // Set size runs once on initial render, and once when the width is updated
       expect(props.data.setSize).toHaveBeenCalledTimes(2)
       expect(props.data.setSize.mock.calls[0]).toEqual([0, 10])
-      expect(props.data.setSize.mock.calls[1]).toEqual([0, 20])
+      expect(props.data.setSize.mock.calls[1]).toEqual([0, 10])
 
       Element.prototype.getBoundingClientRect = originalBoundingRect
     })
