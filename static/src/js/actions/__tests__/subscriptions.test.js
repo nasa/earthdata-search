@@ -103,7 +103,7 @@ describe('createSubscription', () => {
           browseOnly: true,
           options: { spatial: { or: true } },
           polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'],
-          temporalString: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
+          temporal: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
         }, { encode: false, indices: false, arrayFormat: 'brackets' })
 
         // Mock the request if the the variables match
@@ -197,7 +197,7 @@ describe('createSubscription', () => {
             browseOnly: true,
             options: { spatial: { or: true } },
             polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78',
-            temporalString: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
+            temporal: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
           }, { encode: false })
 
           // Mock the request if the the variables match
@@ -753,7 +753,7 @@ describe('updateSubscription', () => {
         payload: {
           collectionConceptId: 'collectionId',
           conceptId: 'SUB1000-EDSC',
-          query: 'browseOnly=true&options[spatial][or]=true&temporalString=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
+          query: 'browseOnly=true&options[spatial][or]=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
         }
       })
 

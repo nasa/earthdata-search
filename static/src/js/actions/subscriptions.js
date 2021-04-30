@@ -14,7 +14,7 @@ import {
 
 import { addToast } from '../util/addToast'
 import { displayNotificationType } from '../constants/enums'
-import { extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
+import { buildGranuleSearchParams, extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import {
@@ -96,8 +96,10 @@ export const createSubscription = () => async (dispatch, getState) => {
     extractedGranuleParams
   )
 
+  const searchParams = buildGranuleSearchParams(granuleParams)
+
   // Prune granuleParams and remove unused keys to create the subscription query
-  const subscriptionQuery = prepareSubscriptionQuery(granuleParams)
+  const subscriptionQuery = prepareSubscriptionQuery(searchParams)
 
   const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
@@ -323,8 +325,10 @@ export const updateSubscription = (
     extractedGranuleParams
   )
 
+  const searchParams = buildGranuleSearchParams(granuleParams)
+
   // Prune granuleParams and remove unused keys to create the subscription query
-  const subscriptionQuery = prepareSubscriptionQuery(granuleParams)
+  const subscriptionQuery = prepareSubscriptionQuery(searchParams)
 
   const {
     authToken
