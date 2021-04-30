@@ -37,8 +37,8 @@ class OverrideTemporalModal extends Component {
     onChangeQuery({
       collection: {
         overrideTemporal: {
-          endDate: !end ? undefined : new Date(end * 1000).toISOString(),
-          startDate: !start ? undefined : new Date(start * 1000).toISOString()
+          endDate: !end ? undefined : new Date(end).toISOString(),
+          startDate: !start ? undefined : new Date(start).toISOString()
         }
       }
     })

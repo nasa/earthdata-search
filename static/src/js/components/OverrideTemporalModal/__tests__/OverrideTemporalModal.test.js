@@ -15,8 +15,8 @@ function setup() {
     },
     timeline: {
       query: {
-        end: 1548979199.999,
-        start: 1546300800
+        end: 1548979199999,
+        start: 1546300800000
       }
     },
     onChangeQuery: jest.fn(),
