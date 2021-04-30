@@ -98,10 +98,10 @@ describe('CollectionResultsList component', () => {
     })
 
     test('shows when additional items are being loaded', () => {
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValueOnce(true)
-        .mockReturnValueOnce(true)
-        .mockReturnValue(false)
+      const isItemLoadedMock = jest.fn((index) => {
+        if (index === 2) return false
+        return true
+      })
 
       const { enzymeWrapper } = setup({
         itemCount: 3,

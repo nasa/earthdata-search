@@ -38,6 +38,12 @@ export const CollectionResultsListItem = memo(({
   } = data
 
   useEffect(() => {
+    // Set the height of the item on load
+    setSize(index, element.current.getBoundingClientRect().height)
+  }, [])
+
+  useEffect(() => {
+    // Calculate the height when the container width is changed
     setSize(index, element.current.getBoundingClientRect().height)
   }, [windowWidth])
 

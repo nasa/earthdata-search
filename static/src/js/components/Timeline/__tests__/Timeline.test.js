@@ -352,70 +352,128 @@ describe('handleFocusedSet', () => {
 })
 
 describe('handle toggleTimeline', () => {
-  test('close timeline by pressing t', () => {
-    const { props, enzymeWrapper } = setup()
-    const timelineSection = enzymeWrapper.find('section.timeline')
+  describe('when not on the project page', () => {
+    test('close timeline by pressing t', () => {
+      const { props, enzymeWrapper } = setup()
+      const timelineSection = enzymeWrapper.find('section.timeline')
 
-    expect(timelineSection.prop('className')).toEqual('timeline')
+      expect(timelineSection.prop('className')).toEqual('timeline')
 
-    const preventDefaultMock = jest.fn()
-    const stopPropagationMock = jest.fn()
-    windowEventMap.keyup({
-      key: 't',
-      tagName: 'body',
-      type: 'keyup',
-      preventDefault: preventDefaultMock,
-      stopPropagation: stopPropagationMock
+      const preventDefaultMock = jest.fn()
+      const stopPropagationMock = jest.fn()
+
+      windowEventMap.keyup({
+        key: 't',
+        tagName: 'body',
+        type: 'keyup',
+        preventDefault: preventDefaultMock,
+        stopPropagation: stopPropagationMock
+      })
+
+      expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
+      expect(props.onToggleTimeline).toHaveBeenCalledWith(false)
     })
 
-    expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onToggleTimeline).toHaveBeenCalledWith(false)
+    test('open timeline by pressing t', () => {
+      const { props, enzymeWrapper } = setup({
+        isOpen: false
+      })
+      const timelineSection = enzymeWrapper.find('section.timeline')
+
+      expect(timelineSection.prop('className')).toEqual('timeline timeline--is-hidden')
+
+      const preventDefaultMock = jest.fn()
+      const stopPropagationMock = jest.fn()
+      windowEventMap.keyup({
+        key: 't',
+        tagName: 'body',
+        type: 'keyup',
+        preventDefault: preventDefaultMock,
+        stopPropagation: stopPropagationMock
+      })
+
+      expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
+      expect(props.onToggleTimeline).toHaveBeenCalledWith(true)
+    })
+
+    test('closes the timeline with the close button', () => {
+      const { props, enzymeWrapper } = setup()
+
+      const button = enzymeWrapper.find('button.timeline__toggle-button--close')
+
+      button.simulate('click')
+
+      expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
+      expect(props.onToggleTimeline).toHaveBeenCalledWith(false)
+    })
+
+    test('opens the timeline with the open button', () => {
+      const { props, enzymeWrapper } = setup({
+        isOpen: false
+      })
+
+      const button = enzymeWrapper.find('button.timeline__toggle-button--open')
+
+      button.simulate('click')
+
+      expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
+      expect(props.onToggleTimeline).toHaveBeenCalledWith(true)
+    })
   })
 
-  test('open timeline by pressing t', () => {
-    const { props, enzymeWrapper } = setup({
-      isOpen: false
-    })
-    const timelineSection = enzymeWrapper.find('section.timeline')
+  describe('when on the project page', () => {
+    test('does not close timeline by pressing t', () => {
+      const { props, enzymeWrapper } = setup({
+        pathname: '/projects'
+      })
+      const timelineSection = enzymeWrapper.find('section.timeline')
 
-    expect(timelineSection.prop('className')).toEqual('timeline timeline--is-hidden')
+      expect(timelineSection.prop('className')).toEqual('timeline')
 
-    const preventDefaultMock = jest.fn()
-    const stopPropagationMock = jest.fn()
-    windowEventMap.keyup({
-      key: 't',
-      tagName: 'body',
-      type: 'keyup',
-      preventDefault: preventDefaultMock,
-      stopPropagation: stopPropagationMock
-    })
+      const preventDefaultMock = jest.fn()
+      const stopPropagationMock = jest.fn()
 
-    expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onToggleTimeline).toHaveBeenCalledWith(true)
-  })
+      windowEventMap.keyup({
+        key: 't',
+        tagName: 'body',
+        type: 'keyup',
+        preventDefault: preventDefaultMock,
+        stopPropagation: stopPropagationMock
+      })
 
-  test('closes the timeline with the close button', () => {
-    const { props, enzymeWrapper } = setup()
-
-    const button = enzymeWrapper.find('button.timeline__toggle-button--close')
-
-    button.simulate('click')
-
-    expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onToggleTimeline).toHaveBeenCalledWith(false)
-  })
-
-  test('opens the timeline with the open button', () => {
-    const { props, enzymeWrapper } = setup({
-      isOpen: false
+      expect(props.onToggleTimeline).toHaveBeenCalledTimes(0)
     })
 
-    const button = enzymeWrapper.find('button.timeline__toggle-button--open')
+    test('does not open timeline by pressing t', () => {
+      const { props, enzymeWrapper } = setup({
+        pathname: '/projects'
+      })
+      const timelineSection = enzymeWrapper.find('section.timeline')
 
-    button.simulate('click')
+      expect(timelineSection.prop('className')).toEqual('timeline')
 
-    expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onToggleTimeline).toHaveBeenCalledWith(true)
+      const preventDefaultMock = jest.fn()
+      const stopPropagationMock = jest.fn()
+      windowEventMap.keyup({
+        key: 't',
+        tagName: 'body',
+        type: 'keyup',
+        preventDefault: preventDefaultMock,
+        stopPropagation: stopPropagationMock
+      })
+
+      expect(props.onToggleTimeline).toHaveBeenCalledTimes(0)
+    })
+
+    test('does not show the close button', () => {
+      const { enzymeWrapper } = setup({
+        pathname: '/projects'
+      })
+
+      const button = enzymeWrapper.find('button.timeline__toggle-button--close')
+
+      expect(button.length).toEqual(0)
+    })
   })
 })
 
