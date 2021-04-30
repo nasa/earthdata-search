@@ -102,9 +102,9 @@ describe('createSubscription', () => {
         const expectedQuery = stringify({
           browseOnly: true,
           options: { spatial: { or: true } },
-          polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78',
+          polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'],
           temporalString: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
-        }, { encode: false })
+        }, { encode: false, indices: false, arrayFormat: 'brackets' })
 
         // Mock the request if the the variables match
         return collectionConceptId === 'collectionId'
@@ -152,7 +152,7 @@ describe('createSubscription', () => {
             isRecurring: false
           },
           spatial: {
-            polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
+            polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78']
           }
         }
       },
