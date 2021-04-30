@@ -1,8 +1,9 @@
 import OpenSearchGranuleRequest from '../openSearchGranuleRequest'
 import {
+  multipleCwicGranulesResponse,
   singleCwicGranuleResponse,
   singleCwicGranuleResponseWithImage,
-  multipleCwicGranulesResponse
+  singleCwicGranuleResponseWithImageStringLink
 } from './mocks'
 
 
@@ -97,6 +98,18 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
 
       const transformedResponse = cwicRequest
         .transformResponse(singleCwicGranuleResponseWithImage)
+
+      const { feed } = transformedResponse
+      const { entry } = feed
+      expect(entry[0].browse_url)
+        .toEqual('https://uops.nrsc.gov.in//imgarchive/IRS1C/LISS/1996/NOV/14/083042LG.319.jpeg')
+    })
+
+    test('when the granule has a string link', () => {
+      const cwicRequest = new OpenSearchGranuleRequest()
+
+      const transformedResponse = cwicRequest
+        .transformResponse(singleCwicGranuleResponseWithImageStringLink)
 
       const { feed } = transformedResponse
       const { entry } = feed

@@ -86,6 +86,35 @@ describe('layers util', () => {
 
       expect(parseSpatial(string)).toEqual(expectedResult)
     })
+
+    test('parses a spatial string into an array of latlng points when they are comma-delimited', () => {
+      const string = '-19.9968,179.952,-20.2677,-162.2096,-9.9829,-162.4604,-9.7245,-179.4645,-19.9968,179.952'
+
+      const expectedResult = [
+        {
+          lat: -19.9968,
+          lng: 179.952
+        },
+        {
+          lat: -20.2677,
+          lng: -162.2096
+        },
+        {
+          lat: -9.9829,
+          lng: -162.4604
+        },
+        {
+          lat: -9.7245,
+          lng: -179.4645
+        },
+        {
+          lat: -19.9968,
+          lng: 179.952
+        }
+      ]
+
+      expect(parseSpatial(string)).toEqual(expectedResult)
+    })
   })
 
   describe('getPoints', () => {

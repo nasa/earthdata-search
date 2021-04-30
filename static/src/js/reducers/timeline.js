@@ -43,7 +43,7 @@ const timelineReducer = (state = initialState, action) => {
       }
     }
     case RESTORE_FROM_URL: {
-      const { timeline = initialState } = action.payload
+      const { timeline = initialState.query } = action.payload
 
       return {
         ...state,

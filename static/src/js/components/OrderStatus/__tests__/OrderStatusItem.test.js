@@ -943,7 +943,107 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
 
         expect(body.find('.order-status-item__order-info').text()).toEqual('The order has failed processing.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:188291813:InternalError - -1:Cancelled (Timeout).')
+
+        const tabs = body.find('EDSCTabs')
+        expect(tabs.children().length).toEqual(2)
+
+        const linksTab = tabs.childAt(0)
+        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
+
+        const statusTab = tabs.childAt(1)
+        expect(statusTab.props().title).toEqual('Order Status')
+      })
+
+      test('renders an updated progress state when messages is an array', () => {
+        const { enzymeWrapper } = setup({
+          type: 'esi',
+          collection: {
+            id: 1,
+            collection_id: 'TEST_COLLECTION_111',
+            retrieval_id: '54',
+            collection_metadata: {
+              id: 'TEST_COLLECTION_111',
+              title: 'Test Dataset ID'
+            },
+            access_method: {
+              type: 'ESI'
+            },
+            granule_count: 100,
+            orders: [{
+              state: 'failed',
+              order_information: {
+                'xsi:schemaLocation': 'http://eosdis.nasa.gov/esi/rsp/e https://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd',
+                xmlns: '',
+                'xmlns:iesi': 'http://eosdis.nasa.gov/esi/rsp/i',
+                'xmlns:ssw': 'http://newsroom.gsfc.nasa.gov/esi/rsp/ssw',
+                'xmlns:eesi': 'http://eosdis.nasa.gov/esi/rsp/e',
+                'xmlns:esi': 'http://eosdis.nasa.gov/esi/rsp',
+                'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+                order: {
+                  orderId: 50250,
+                  Instructions: 'You may receive an email about your order if you specified an EMAIL address.'
+                },
+                contactInformation: {
+                  contactName: 'LP DAAC User Services',
+                  contactEmail: 'lpdaac@usgs.gov'
+                },
+                processInfo: {
+                  message: [
+                    '188291813:InternalError - -1:Cancelled (Timeout).',
+                    '188291814:InternalError - -1:Cancelled (Timeout).',
+                    '188291815:InternalError - -1:Cancelled (Timeout).',
+                    '188291816:InternalError - -1:Cancelled (Timeout).'
+                  ],
+                  processDuration: 'PT7H17M28.085S',
+                  subagentId: 'GEDI'
+                },
+                requestStatus: {
+                  status: 'failed',
+                  numberProcessed: 1,
+                  totalNumber: 1
+                }
+              }
+            }],
+            isLoaded: true
+          }
+        })
+
+        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
+        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
+        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(true)
+
+        const header = enzymeWrapper.find('.order-status-item__header')
+        expect(header.find(ProgressRing).props().progress).toEqual(100)
+        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
+        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+
+        let body = enzymeWrapper.find('.order-status-item__body')
+        expect(body.length).toBe(0)
+
+        // Expand the body
+        enzymeWrapper.find('.order-status-item__button').simulate('click')
+
+        expect(header.find(ProgressRing).props().progress).toEqual(100)
+        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
+        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+
+        body = enzymeWrapper.find('.order-status-item__body')
+        expect(body.find(ProgressRing).props().progress).toEqual(100)
+        expect(body.find('.order-status-item__status').text()).toEqual('Failed')
+        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+
+        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
+        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ESI')
+        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+
+        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has failed processing.')
+        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:188291813:InternalError - -1:Cancelled (Timeout).')
 
         const tabs = body.find('EDSCTabs')
         expect(tabs.children().length).toEqual(2)
