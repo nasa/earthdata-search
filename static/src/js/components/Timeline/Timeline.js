@@ -34,11 +34,16 @@ export const Timeline = ({
   const [center, setCenter] = useState(propsCenter || new Date().getTime())
   const previousTimelineQuery = useRef(query)
   const previousIsOpen = useRef(isOpen)
+  const previousPathname = useRef(pathname)
   const isProjectPage = pathname.indexOf('projects') > -1
 
   useEffect(() => {
-    // If the query and isOpen state have not changed, do not dispatch the resize event
-    if (isEqual(query, previousTimelineQuery.current) && isOpen === previousIsOpen.current) return
+    // If the query, isOpen, or pathname states have not changed, do not dispatch the resize event
+    if (
+      isEqual(query, previousTimelineQuery.current)
+      && isOpen === previousIsOpen.current
+      && pathname === previousPathname.current
+    ) return
 
     // Fire the resize event to trigger recalculation of the leaflet control container
     window.dispatchEvent(new Event('resize'))
@@ -46,6 +51,7 @@ export const Timeline = ({
     // Set the refs to their respective current values
     previousTimelineQuery.current = query
     previousIsOpen.current = isOpen
+    previousPathname.current = pathname
   }, [isOpen, query, collectionMetadata])
 
   // Show the override temporal modal if temporal and focused exist and showOverrideModal is true
@@ -293,10 +299,12 @@ export const Timeline = ({
     return parseInt(timelineIntervals[interval], 10)
   }
 
+  const hideTimeline = !(isOpen || isProjectPage)
+
   const timelineClasses = classNames([
     'timeline',
     {
-      'timeline--is-hidden': !isOpen
+      'timeline--is-hidden': hideTimeline
     }
   ])
 
@@ -304,7 +312,7 @@ export const Timeline = ({
     <>
       <section className={timelineClasses}>
         {
-          !isOpen && (
+          hideTimeline && (
             <Button
               className="timeline__toggle-button timeline__toggle-button--open"
               type="button"

@@ -71,7 +71,7 @@ export const TimelineContainer = (props) => {
     collectionMetadata[collectionId] = visibleCollectionMetadata
   })
 
-  const showTimeline = isOpen && collectionsToRender.length !== 0
+  if (collectionsToRender.length === 0) return null
 
   return (
     <Timeline
@@ -86,7 +86,7 @@ export const TimelineContainer = (props) => {
       onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
       onMetricsTimeline={onMetricsTimeline}
       onToggleTimeline={onToggleTimeline}
-      isOpen={showTimeline}
+      isOpen={isOpen}
     />
   )
 }
