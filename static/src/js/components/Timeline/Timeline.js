@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import EDSCTimeline from '@edsc/timeline'
