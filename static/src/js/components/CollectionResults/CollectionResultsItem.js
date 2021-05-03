@@ -248,7 +248,7 @@ export const CollectionResultsItem = forwardRef(({
           onViewCollectionGranules(collectionId)
           e.stopPropagation()
         }}
-        data-test-id="collection-result-item"
+        data-test-id={`collection-result-item_${collectionId}`}
       >
         <div className="collection-results-item__thumb">
           {
