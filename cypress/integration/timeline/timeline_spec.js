@@ -4,8 +4,6 @@ import timeline from './timeline_mocks/timeline'
 import granules from './timeline_mocks/granules'
 import providers from './timeline_mocks/providers'
 import accessMethods from './timeline_mocks/access_methods'
-import retrievals from './timeline_mocks/retrievals'
-import retrieval from './timeline_mocks/retrieval'
 import collectionFixture from './timeline_mocks/authenticated_collections'
 
 import { getAuthHeaders } from '../utils/getAuthHeaders'
