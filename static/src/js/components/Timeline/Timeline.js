@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import EDSCTimeline from '@edsc/timeline'
 import classNames from 'classnames'
 import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa'
-import { isEqual } from 'lodash'
 
 import Button from '../Button/Button'
 
@@ -32,27 +32,22 @@ export const Timeline = ({
   const { query } = timeline
   const { center: propsCenter } = query
   const [center, setCenter] = useState(propsCenter || new Date().getTime())
-  const previousTimelineQuery = useRef(query)
-  const previousIsOpen = useRef(isOpen)
-  const previousPathname = useRef(pathname)
+
   const isProjectPage = pathname.indexOf('projects') > -1
+  const containerRef = useRef()
+  const previousHeight = useRef(0)
 
   useEffect(() => {
-    // If the query, isOpen, or pathname states have not changed, do not dispatch the resize event
-    if (
-      isEqual(query, previousTimelineQuery.current)
-      && isOpen === previousIsOpen.current
-      && pathname === previousPathname.current
-    ) return
+    if (containerRef.current) {
+      const { height: elementHeight } = containerRef.current.getBoundingClientRect()
 
-    // Fire the resize event to trigger recalculation of the leaflet control container
-    window.dispatchEvent(new Event('resize'))
+      // If the current height of the element is different than the previous render,
+      // dispatch a resize event to set the size of the leaflet tools
+      if (elementHeight !== previousHeight.current) window.dispatchEvent(new Event('resize'))
 
-    // Set the refs to their respective current values
-    previousTimelineQuery.current = query
-    previousIsOpen.current = isOpen
-    previousPathname.current = pathname
-  }, [isOpen, query, collectionMetadata])
+      previousHeight.current = elementHeight
+    }
+  })
 
   // Show the override temporal modal if temporal and focused exist and showOverrideModal is true
   useEffect(() => {
@@ -310,7 +305,7 @@ export const Timeline = ({
 
   return (
     <>
-      <section className={timelineClasses}>
+      <section ref={containerRef} className={timelineClasses}>
         {
           hideTimeline && (
             <Button
