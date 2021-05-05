@@ -65,7 +65,7 @@ export default class GraphQlRequest extends Request {
     return null
   }
 
-  search(query, variables) {
+  search(query, variables, format = undefined) {
     this.startTimer()
     this.setFullUrl(this.searchPath)
     this.generateRequestId()
@@ -76,7 +76,8 @@ export default class GraphQlRequest extends Request {
       url: this.searchPath,
       data: {
         query,
-        variables
+        variables,
+        format
       },
       transformRequest: [
         (data, headers) => this.transformRequest(data, headers)

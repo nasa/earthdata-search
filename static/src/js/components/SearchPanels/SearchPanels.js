@@ -143,6 +143,7 @@ class SearchPanels extends PureComponent {
       collectionMetadata,
       collectionQuery,
       collectionsSearch,
+      isExportRunning,
       granuleMetadata,
       granuleQuery,
       granuleSearchResults,
@@ -155,7 +156,8 @@ class SearchPanels extends PureComponent {
       onChangeQuery,
       onFocusedCollectionChange,
       onMetricsCollectionSortChange,
-      onToggleAboutCwicModal
+      onToggleAboutCwicModal,
+      onExport
     } = this.props
 
     const isLoggedIn = !(authToken === null || authToken === '')
@@ -318,6 +320,18 @@ class SearchPanels extends PureComponent {
       }
     ]
 
+    const exportsArray = [
+      // TODO: EDSC-3126
+      // {
+      //   label: 'CSV',
+      //   onClick: () => onExport('csv')
+      // },
+      {
+        label: 'JSON',
+        onClick: () => onExport('json')
+      }
+    ]
+
     const buildCollectionResultsBodyFooter = () => {
       if (isDefaultPortal(portalId)) return null
 
@@ -363,6 +377,8 @@ class SearchPanels extends PureComponent {
         headerMetaPrimaryLoading={initialCollectionsLoading}
         headerMetaPrimaryText={collectionResultsHeaderMetaPrimaryText}
         headerLoading={initialCollectionsLoading}
+        isExportRunning={isExportRunning}
+        exportsArray={exportsArray}
         viewsArray={collectionsViewsArray}
         activeView={collectionPanelView}
         sortsArray={collectionsSortsArray}
@@ -643,6 +659,7 @@ SearchPanels.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
+  isExportRunning: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
@@ -653,6 +670,7 @@ SearchPanels.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   preferences: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired

@@ -71,6 +71,7 @@ function setup(overrideProps, location = '/search') {
       pageNum: 1,
       sortKey: '-start_date'
     },
+    isExportRunning: false,
     location: {
       pathname: '/search',
       search: ''
@@ -86,6 +87,7 @@ function setup(overrideProps, location = '/search') {
     onToggleAboutCwicModal: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
+    onExport: jest.fn(),
     panels: {
       activePanel: '0.0.0',
       isOpen: true

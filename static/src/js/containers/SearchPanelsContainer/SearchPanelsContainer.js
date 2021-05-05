@@ -23,7 +23,8 @@ export const mapStateToProps = state => ({
   panels: state.panels,
   preferences: state.preferences.preferences,
   portal: state.portal,
-  subscriptions: getFocusedCollectionSubscriptions(state)
+  subscriptions: getFocusedCollectionSubscriptions(state),
+  isExportRunning: state.ui.export.isExportRunning
 })
 
 export const mapDispatchToProps = dispatch => ({
@@ -40,7 +41,8 @@ export const mapDispatchToProps = dispatch => ({
   onToggleAboutCwicModal:
     state => dispatch(actions.toggleAboutCwicModal(state)),
   onTogglePanels:
-    value => dispatch(actions.togglePanels(value))
+    value => dispatch(actions.togglePanels(value)),
+  onExport: format => dispatch(actions.exportSearch(format))
 })
 
 /**
@@ -75,6 +77,7 @@ export const SearchPanelsContainer = ({
   granuleMetadata,
   granuleSearchResults,
   granuleQuery,
+  isExportRunning,
   location,
   mapProjection,
   onApplyGranuleFilters,
@@ -84,6 +87,7 @@ export const SearchPanelsContainer = ({
   onSetActivePanel,
   onToggleAboutCwicModal,
   onTogglePanels,
+  onExport,
   panels,
   preferences,
   match,
@@ -97,6 +101,7 @@ export const SearchPanelsContainer = ({
     granuleMetadata={granuleMetadata}
     granuleSearchResults={granuleSearchResults}
     granuleQuery={granuleQuery}
+    isExportRunning={isExportRunning}
     location={location}
     mapProjection={mapProjection}
     onApplyGranuleFilters={onApplyGranuleFilters}
@@ -106,6 +111,7 @@ export const SearchPanelsContainer = ({
     onSetActivePanel={onSetActivePanel}
     onToggleAboutCwicModal={onToggleAboutCwicModal}
     onTogglePanels={onTogglePanels}
+    onExport={onExport}
     panels={panels}
     preferences={preferences}
     match={match}
@@ -121,6 +127,7 @@ SearchPanelsContainer.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
+  isExportRunning: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
@@ -130,6 +137,7 @@ SearchPanelsContainer.propTypes = {
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   preferences: PropTypes.shape({}).isRequired,
