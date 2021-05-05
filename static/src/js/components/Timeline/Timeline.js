@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import EDSCTimeline from '@edsc/timeline'
 import classNames from 'classnames'
@@ -32,6 +32,22 @@ export const Timeline = ({
   const { center: propsCenter } = query
   const [center, setCenter] = useState(propsCenter || new Date().getTime())
 
+  const isProjectPage = pathname.indexOf('projects') > -1
+  const containerRef = useRef()
+  const previousHeight = useRef(0)
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const { height: elementHeight } = containerRef.current.getBoundingClientRect()
+
+      // If the current height of the element is different than the previous render,
+      // dispatch a resize event to set the size of the leaflet tools
+      if (elementHeight !== previousHeight.current) window.dispatchEvent(new Event('resize'))
+
+      previousHeight.current = elementHeight
+    }
+  })
+
   // Show the override temporal modal if temporal and focused exist and showOverrideModal is true
   useEffect(() => {
     const {
@@ -59,6 +75,9 @@ export const Timeline = ({
    * Handles keyup events
    */
   const onWindowKeyup = (event) => {
+    // Do not allow collapsing of the timeline on the project page
+    if (isProjectPage) return
+
     const toggleTimeline = () => onToggleTimeline(!isOpen)
 
     triggerKeyboardShortcut({
@@ -69,7 +88,22 @@ export const Timeline = ({
   }
 
   // Sets up event listener for keyup event
-  window.addEventListener('keyup', onWindowKeyup)
+  useEffect(() => {
+    window.addEventListener('keyup', onWindowKeyup)
+
+    return () => {
+      window.removeEventListener('keyup', onWindowKeyup)
+    }
+  }, [isOpen, isProjectPage])
+
+  // Sets up event listener for keyup event
+  useEffect(() => {
+    window.addEventListener('keyup', onWindowKeyup)
+
+    return () => {
+      window.removeEventListener('keyup', onWindowKeyup)
+    }
+  }, [])
 
   // Metrics methods
   const handleArrowKeyPan = () => onMetricsTimeline('Left/Right Arrow Pan')
@@ -259,18 +293,20 @@ export const Timeline = ({
     return parseInt(timelineIntervals[interval], 10)
   }
 
+  const hideTimeline = !(isOpen || isProjectPage)
+
   const timelineClasses = classNames([
     'timeline',
     {
-      'timeline--is-hidden': !isOpen
+      'timeline--is-hidden': hideTimeline
     }
   ])
 
   return (
     <>
-      <section className={timelineClasses}>
+      <section ref={containerRef} className={timelineClasses}>
         {
-          !isOpen && (
+          hideTimeline && (
             <Button
               className="timeline__toggle-button timeline__toggle-button--open"
               type="button"
@@ -284,14 +320,18 @@ export const Timeline = ({
         }
 
         <div className="timeline__container">
-          <Button
-            className="timeline__toggle-button timeline__toggle-button--close"
-            type="button"
-            variant="naked"
-            icon={FaAngleDoubleDown}
-            label="Hide Timeline"
-            onClick={() => onToggleTimeline(false)}
-          />
+          {
+            !isProjectPage && (
+              <Button
+                className="timeline__toggle-button timeline__toggle-button--close"
+                type="button"
+                variant="naked"
+                icon={FaAngleDoubleDown}
+                label="Hide Timeline"
+                onClick={() => onToggleTimeline(false)}
+              />
+            )
+          }
           <EDSCTimeline
             center={center}
             data={setupData(timeline)}

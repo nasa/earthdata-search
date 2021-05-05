@@ -69,7 +69,7 @@ jobs:
     - name: Copy secrets example file
       run: npm run copy-secrets
     - name: Prepare for Cypress tests
-      run: npm run cypress:prepare-travis
+      run: npm run cypress:prepare-ci
     - name: Run Cypress tests
       run: npm run cypress:ci
   deploy:

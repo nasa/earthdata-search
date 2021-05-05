@@ -20,5 +20,6 @@ export const humanizedGranuleQueryMap = {
   readableGranuleName: 'Readable Granule Name',
   sortKey: 'Sort Key',
   temporalString: 'Temporal String',
+  temporal: 'Temporal String',
   tilingSystem: 'Tiling System'
 }
