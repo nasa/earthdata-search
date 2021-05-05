@@ -3,7 +3,7 @@ import nock from 'nock'
 import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getEchoToken from '../../util/urs/getEchoToken'
-import * as doSearchRequest from '../../util/cmr/doSearchRequest'
+import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
 import exportSearch from '../handler'
 
@@ -17,7 +17,11 @@ beforeEach(() => {
 
 describe('exportSearch', () => {
   test('returns json response correctly', async () => {
-    nock(/localhost/)
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      graphQlHost: 'https://graphql.example.com'
+    }))
+
+    nock(/graphql/)
       .post(/api/)
       .reply(200, {
         data: {
@@ -68,7 +72,11 @@ describe('exportSearch', () => {
   })
 
   test('responds correctly on http error', async () => {
-    nock(/localhost/)
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      graphQlHost: 'https://graphql.example.com'
+    }))
+
+    nock(/graphql/)
       .post(/api/)
       .reply(500, {
         errors: [
