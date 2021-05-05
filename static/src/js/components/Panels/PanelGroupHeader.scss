@@ -160,4 +160,10 @@
   &__heading-primary-link:hover {
     color: $color__blue;
   }
+
+  &__spinner-export {
+    margin: 0 0.75*$spacer;
+    border-left: 1px solid $color__black--300;
+    height: 2rem;
+  }
 }

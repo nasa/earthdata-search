@@ -1,17 +1,20 @@
 import uiReducer from '../ui'
 import {
+  EXPORT_FINISHED,
+  EXPORT_STARTED,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
+  TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
-  TOGGLE_TOO_MANY_POINTS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_SPATIAL_POLYGON_WARNING,
-  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
-  TOGGLE_TIMELINE
+  TOGGLE_TIMELINE,
+  TOGGLE_TOO_MANY_POINTS_MODAL,
+  TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -57,6 +60,9 @@ const initialState = {
   },
   timeline: {
     isOpen: true
+  },
+  export: {
+    isExportRunning: false
   }
 }
 
@@ -110,6 +116,22 @@ describe('TOGGLE_RELATED_URLS_MODAL', () => {
     const expectedState = {
       ...initialState,
       relatedUrlsModal: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_DRAWING_NEW_LAYER', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_DRAWING_NEW_LAYER,
+      payload: 'marker'
+    }
+
+    const expectedState = {
+      ...initialState,
+      map: { drawingNewLayer: 'marker' }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
@@ -254,6 +276,36 @@ describe('TOGGLE_TIMELINE', () => {
     const expectedState = {
       ...initialState,
       timeline: { isOpen: false }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('EXPORT_STARTED', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: EXPORT_STARTED
+    }
+
+    const expectedState = {
+      ...initialState,
+      export: { isExportRunning: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('EXPORT_FINISHED', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: EXPORT_FINISHED
+    }
+
+    const expectedState = {
+      ...initialState,
+      export: { isExportRunning: false }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)

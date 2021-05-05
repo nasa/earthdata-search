@@ -43,11 +43,13 @@ export const PanelGroup = ({
   headerMetaPrimaryLoading,
   headerMetaPrimaryText,
   isActive,
+  isExportRunning,
   isOpen,
   moreActionsDropdownItems,
   onChangePanel,
   panelGroupId,
   primaryHeading,
+  exportsArray,
   sortsArray,
   viewsArray
 }) => {
@@ -85,9 +87,11 @@ export const PanelGroup = ({
         handoffLinks={handoffLinks}
         headerMetaPrimaryLoading={headerMetaPrimaryLoading}
         headerMetaPrimaryText={headerMetaPrimaryText}
+        isExportRunning={isExportRunning}
         panelGroupId={panelGroupId}
         panelGroupIsActive={isActive}
         moreActionsDropdownItems={moreActionsDropdownItems}
+        exportsArray={exportsArray}
         sortsArray={sortsArray}
         viewsArray={viewsArray}
       />
@@ -108,12 +112,14 @@ PanelGroup.defaultProps = {
   headerMetaPrimaryLoading: false,
   headerMetaPrimaryText: null,
   isActive: false,
+  isExportRunning: false,
   isOpen: false,
   moreActionsDropdownItems: [],
   onChangePanel: null,
   panelGroupId: '',
   primaryHeading: null,
   headerLoading: false,
+  exportsArray: [],
   viewsArray: [],
   sortsArray: []
 }
@@ -134,6 +140,7 @@ PanelGroup.propTypes = {
   headerMetaPrimaryLoading: PropTypes.bool,
   headerMetaPrimaryText: PropTypes.string,
   isActive: PropTypes.bool,
+  isExportRunning: PropTypes.bool,
   isOpen: PropTypes.bool,
   onChangePanel: PropTypes.func,
   moreActionsDropdownItems: PropTypes.arrayOf(
@@ -151,6 +158,7 @@ PanelGroup.propTypes = {
   panelGroupId: PropTypes.string,
   primaryHeading: PropTypes.string,
   headerLoading: PropTypes.bool,
+  exportsArray: PropTypes.arrayOf(PropTypes.shape({})),
   viewsArray: PropTypes.arrayOf(PropTypes.shape({})),
   sortsArray: PropTypes.arrayOf(PropTypes.shape({}))
 }

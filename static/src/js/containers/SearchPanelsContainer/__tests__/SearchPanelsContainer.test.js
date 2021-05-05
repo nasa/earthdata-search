@@ -18,6 +18,7 @@ function setup() {
     granuleMetadata: {},
     granuleSearchResults: {},
     granuleQuery: {},
+    isExportRunning: false,
     location: {},
     match: {
       url: '/search'
@@ -30,6 +31,7 @@ function setup() {
     onToggleAboutCwicModal: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
+    onExport: jest.fn(),
     panels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -122,6 +124,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('value')
   })
+
+  test('onExport calls actions.exportSearch', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'exportSearch')
+
+    mapDispatchToProps(dispatch).onExport('json')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('json')
+  })
 })
 
 describe('mapStateToProps', () => {
@@ -149,6 +161,11 @@ describe('mapStateToProps', () => {
       },
       searchResults: {
         collections: {}
+      },
+      ui: {
+        export: {
+          isExportRunning: false
+        }
       }
     }
 
@@ -162,6 +179,7 @@ describe('mapStateToProps', () => {
       granuleMetadata: {},
       granuleSearchResults: {},
       granuleQuery: {},
+      isExportRunning: false,
       mapProjection: '',
       panels: {},
       preferences: {},

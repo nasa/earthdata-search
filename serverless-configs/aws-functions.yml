@@ -267,6 +267,20 @@
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: concepts/metadata
 
+  exportSearch:
+    handler: serverless/src/exportSearch/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    memorySize: 192
+    events:
+      - http:
+          method: post
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: collections/export
+          authorizer:
+            name: edlOptionalAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
   saveShapefile:
     handler: serverless/src/saveShapefile/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}

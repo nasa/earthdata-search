@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import PanelGroupHeader from '../PanelGroupHeader'
+import Spinner from '../../Spinner/Spinner'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -17,7 +18,9 @@ function setup(overrideProps) {
     panelGroupId: '0',
     primaryHeading: 'Primary Heading',
     headerLoading: false,
+    isExportRunning: false,
     moreActionsDropdownItems: [],
+    exportsArray: [],
     sortsArray: [],
     viewsArray: [],
     ...overrideProps
@@ -194,6 +197,41 @@ describe('PanelGroupHeader component', () => {
     test('should render the views list', () => {
       expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').length).toEqual(1)
       expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings).toEqual(props.viewsArray)
+    })
+  })
+
+  describe('when exports are provided', () => {
+    test('should render the exports list', () => {
+      const exportsClickMock = jest.fn()
+
+      const { enzymeWrapper, props } = setup({
+        exportsArray: [
+          {
+            label: 'JSON',
+            onClick: () => exportsClickMock('json')
+          }
+        ]
+      })
+
+      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').length).toEqual(1)
+      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings).toEqual(props.exportsArray)
+    })
+
+    test('should not render the exports list while an export is running', () => {
+      const exportsClickMock = jest.fn()
+
+      const { enzymeWrapper } = setup({
+        isExportRunning: true,
+        exportsArray: [
+          {
+            label: 'JSON',
+            onClick: () => exportsClickMock('json')
+          }
+        ]
+      })
+
+      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').length).toEqual(0)
+      expect(enzymeWrapper.find(Spinner).length).toEqual(1)
     })
   })
 })

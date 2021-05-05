@@ -179,6 +179,7 @@ import {
   updateCollectionSubscription
 } from './subscriptions'
 import { setUserFromJwt } from './user'
+import { exportSearch } from './exportSearch'
 
 const actions = {
   addAccessMethods,
@@ -220,6 +221,7 @@ const actions = {
   deleteSavedProject,
   deleteSubscription,
   excludeGranule,
+  exportSearch,
   fetchAccessMethods,
   fetchAdminRetrieval,
   fetchAdminRetrievals,
