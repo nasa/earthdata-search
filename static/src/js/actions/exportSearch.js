@@ -4,11 +4,11 @@ import { buildCollectionSearchParams, prepareCollectionParams } from '../util/co
 import ExportSearchRequest from '../util/request/exportSearchRequest'
 import { handleError } from './errors'
 
-const onExportStarted = () => ({
+export const onExportStarted = () => ({
   type: EXPORT_STARTED
 })
 
-const onExportFinished = () => ({
+export const onExportFinished = () => ({
   type: EXPORT_FINISHED
 })
 
