@@ -1,7 +1,35 @@
-.timeline-tooltip {
-  color: white;
-}
+.timeline {
+  position: relative;
+  z-index: 3;
 
-.timeline--is-hidden {
-  display: none;
+  &__container {
+    display: flex;
+
+    .timeline--is-hidden & {
+      display: none;
+    }
+  }
+
+  &__toggle-button {
+    color: #bfbfbf;
+
+    &:hover,
+    &:active {
+      color: #f2f2f2
+    }
+
+    &--open {
+      position: absolute;
+      bottom: 0;
+      z-index: 3;
+      background-color: #1a1a1a;
+    }
+
+    &--close {
+      border-right: 1px solid #4d4d4d;
+      padding: 0.125rem;
+      background-color: #1a1a1a;
+      border-top: 1px solid #393939;
+    }
+  }
 }

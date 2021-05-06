@@ -12,8 +12,6 @@ const LayerBuilder = (props) => {
     time
   } = props
 
-  const projectionResolution = `${projection.toUpperCase()}_${resolution}`
-
   let date = ''
   if (time) {
     const yesterday = moment().subtract(1, 'days')
@@ -23,8 +21,7 @@ const LayerBuilder = (props) => {
 
   return (
     <TileLayer
-      // eslint-disable-next-line max-len
-      url={`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${date}/${projectionResolution}/{z}/{y}/{x}.${format}`}
+      url={`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${date}/${resolution}/{z}/{y}/{x}.${format}`}
       bounds={[
         [-89.9999, -179.9999],
         [89.9999, 179.9999]

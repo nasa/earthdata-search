@@ -171,6 +171,7 @@
     margin-right: $spacer/4;
     margin-bottom: $spacer/8;
     color: $color__white;
+    text-transform: uppercase;
 
     &:hover {
       cursor: default;
@@ -191,6 +192,7 @@
     margin-right: $spacer/3;
     font-size: 0.75rem;
     line-height: 0.625rem;
+    text-transform: none;
 
     &:last-child {
       margin-right: 0;

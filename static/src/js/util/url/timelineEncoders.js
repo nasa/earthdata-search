@@ -20,10 +20,10 @@ export const encodeTimeline = (timelineQuery, pathname) => {
 
   if (!center && !start && !end) return ''
 
-  const encodedStart = start || ''
-  const encodedEnd = end || ''
+  const encodedStart = start ? start / 1000 : ''
+  const encodedEnd = end ? end / 1000 : ''
 
-  const encodedString = [center, timelineIntervals[interval], encodedStart, encodedEnd].join('!')
+  const encodedString = [center / 1000, timelineIntervals[interval], encodedStart, encodedEnd].join('!')
   // if there is no center, return an empty string
   if (encodedString[0] === '!') return ''
 
@@ -47,10 +47,10 @@ export const decodeTimeline = (params) => {
 
   const interval = getObjectKeyByValue(timelineIntervals, intervalNum)
   const query = {
-    center: parseInt(center, 10) || undefined,
-    end: parseInt(end, 10) || undefined,
+    center: parseInt(center, 10) * 1000 || undefined,
+    end: parseInt(end, 10) * 1000 || undefined,
     interval,
-    start: parseInt(start, 10) || undefined
+    start: parseInt(start, 10) * 1000 || undefined
   }
 
   return query

@@ -143,12 +143,15 @@
 
   fetchCatalogRestOrder:
     handler: serverless/src/fetchCatalogRestOrder/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
 
   fetchLegacyServicesOrder:
     handler: serverless/src/fetchLegacyServicesOrder/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
 
   fetchHarmonyOrder:
     handler: serverless/src/fetchHarmonyOrder/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
 
   #
   # Scheduled Lambdas

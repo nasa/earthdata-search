@@ -145,6 +145,7 @@ class SecondaryToolbar extends Component {
         bootstrapVariant="light"
         icon={FaArrowCircleLeft}
         label="Back to Search"
+        dataTestId="back-to-search-button"
         to={{
           pathname: '/search',
           search: newSearch

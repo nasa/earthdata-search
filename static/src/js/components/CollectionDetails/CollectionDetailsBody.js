@@ -286,7 +286,7 @@ export const CollectionDetailsBody = ({
                   )
                 }
                 {
-                  nativeDataFormats.length > 0 && (
+                  nativeDataFormats && nativeDataFormats.length > 0 && (
                     <>
                       <dt>{`Native ${pluralize('Format', nativeDataFormats.length)}`}</dt>
                       <dd>
