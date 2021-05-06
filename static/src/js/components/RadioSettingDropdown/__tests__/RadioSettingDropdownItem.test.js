@@ -6,6 +6,7 @@ import { FaBacon } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import { RadioSettingDropdownItem } from '../RadioSettingDropdownItem'
+import Spinner from '../../Spinner/Spinner'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -57,5 +58,31 @@ describe('RadioSettingDropdownItem component', () => {
     enzymeWrapper.simulate('click')
 
     expect(props.onClick).toHaveBeenCalledTimes(1)
+  })
+
+  describe('when in progress', () => {
+    test('disables the dropdown item', () => {
+      const { enzymeWrapper } = setup({
+        inProgress: true
+      })
+
+      expect(enzymeWrapper.find(Dropdown.Item).props().className).toContain('radio-setting-dropdown-item--in-progress')
+    })
+
+    test('displays a spinner', () => {
+      const { enzymeWrapper } = setup({
+        inProgress: true
+      })
+
+      expect(enzymeWrapper.find(Spinner).length).toEqual(1)
+    })
+
+    test('disables the dropdown item', () => {
+      const { enzymeWrapper } = setup({
+        inProgress: true
+      })
+
+      expect(enzymeWrapper.find(Dropdown.Item).props().disabled).toEqual(true)
+    })
   })
 })

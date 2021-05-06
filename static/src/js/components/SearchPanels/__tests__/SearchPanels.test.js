@@ -17,6 +17,7 @@ import * as PortalUtils from '../../../util/portals'
 import SearchPanels from '../SearchPanels'
 import Panels from '../../Panels/Panels'
 import PanelGroup from '../../Panels/PanelGroup'
+import PanelGroupHeader from '../../Panels/PanelGroupHeader'
 import GranuleResultsActionsContainer from '../../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 
 const store = configureStore()
@@ -766,5 +767,27 @@ describe('SearchPanels component', () => {
 
     expect(enzymeWrapper.find(SearchPanels).instance().state.collectionPanelView).toEqual('table')
     expect(enzymeWrapper.find(SearchPanels).instance().state.granulePanelView).toEqual('list')
+  })
+
+  describe('when not exporting a json file', () => {
+    test('passes the correct props to the PanelGroupHeader', () => {
+      const { enzymeWrapper } = setup()
+
+      const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup).at(0).find(PanelGroupHeader).props()
+      const { inProgress } = panelGroupHeaderProps.exportsArray[0]
+      expect(inProgress).toEqual(false)
+    })
+  })
+
+  describe('when exporting a json file', () => {
+    test('passes the correct props to the PanelGroupHeader', () => {
+      const { enzymeWrapper } = setup({
+        isExportRunning: true
+      })
+
+      const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup).at(0).find(PanelGroupHeader).props()
+      const { inProgress } = panelGroupHeaderProps.exportsArray[0]
+      expect(inProgress).toEqual(true)
+    })
   })
 })
