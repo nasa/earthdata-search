@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom'
 import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
 import classNames from 'classnames'
+import { snakeCase } from 'lodash'
 
 import RadioSettingDropdownItem from './RadioSettingDropdownItem'
 import RadioSettingToggle from '../CustomToggle/RadioSettingToggle'
@@ -113,7 +114,7 @@ export const RadioSettingDropdown = ({
 
       setMenuOffsetX(newOffset)
     }
-  }, [dropdownActive, toggleRef.current, menuRef.current])
+  }, [dropdownActive, toggleRef.current, menuRef.current, settings])
 
   return (
     <div
@@ -121,6 +122,7 @@ export const RadioSettingDropdown = ({
       className={radioSettingClasses}
     >
       <Dropdown
+        key={`${menuOffsetX}_${snakeCase(label)}`}
         className="radio-setting-dropdown__dropdown"
         show={dropdownActive}
       >
@@ -154,6 +156,7 @@ export const RadioSettingDropdown = ({
                     label,
                     icon,
                     isActive = false,
+                    inProgress,
                     onClick
                   } = setting
 
@@ -168,6 +171,7 @@ export const RadioSettingDropdown = ({
                       }}
                       icon={icon}
                       isActive={isActive}
+                      inProgress={inProgress}
                     />
                   )
                 })

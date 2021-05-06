@@ -2,7 +2,6 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import PanelGroupHeader from '../PanelGroupHeader'
-import Spinner from '../../Spinner/Spinner'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -18,7 +17,6 @@ function setup(overrideProps) {
     panelGroupId: '0',
     primaryHeading: 'Primary Heading',
     headerLoading: false,
-    isExportRunning: false,
     moreActionsDropdownItems: [],
     exportsArray: [],
     sortsArray: [],
@@ -217,21 +215,20 @@ describe('PanelGroupHeader component', () => {
       expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings).toEqual(props.exportsArray)
     })
 
-    test('should not render the exports list while an export is running', () => {
+    test('when an export is in progress', () => {
       const exportsClickMock = jest.fn()
 
       const { enzymeWrapper } = setup({
-        isExportRunning: true,
         exportsArray: [
           {
             label: 'JSON',
+            inProgress: true,
             onClick: () => exportsClickMock('json')
           }
         ]
       })
 
-      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').length).toEqual(0)
-      expect(enzymeWrapper.find(Spinner).length).toEqual(1)
+      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings[0].inProgress).toEqual(true)
     })
   })
 })

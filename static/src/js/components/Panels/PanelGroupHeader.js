@@ -17,7 +17,6 @@ import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 import RadioSettingDropdown from '../RadioSettingDropdown/RadioSettingDropdown'
 import Skeleton from '../Skeleton/Skeleton'
-import Spinner from '../Spinner/Spinner'
 
 import './PanelGroupHeader.scss'
 
@@ -48,7 +47,6 @@ export const PanelGroupHeader = ({
   headerMessage,
   headerMetaPrimaryLoading,
   headerMetaPrimaryText,
-  isExportRunning,
   panelGroupId,
   primaryHeading,
   headerLoading,
@@ -271,12 +269,7 @@ export const PanelGroupHeader = ({
               (exportsArray.length > 0 || sortsArray.length > 0 || viewsArray.length > 0) && (
                 <nav className="panel-group-header__heading-meta-secondary">
                   {
-                    isExportRunning && (
-                      <Spinner className="panel-group-header__spinner-export" size="tiny" type="dots" />
-                    )
-                  }
-                  {
-                    !isExportRunning && exportsArray.length > 0 && (
+                    exportsArray.length > 0 && (
                       <RadioSettingDropdown
                         id={`panel-group-header-dropdown__export__${panelGroupId}`}
                         className="panel-group-header__setting-dropdown"
@@ -328,7 +321,6 @@ PanelGroupHeader.defaultProps = {
   headerMessage: null,
   headerMetaPrimaryLoading: false,
   headerMetaPrimaryText: null,
-  isExportRunning: false,
   moreActionsDropdownItems: [],
   panelGroupId: null,
   primaryHeading: null,
@@ -347,7 +339,6 @@ PanelGroupHeader.propTypes = {
   headerMessage: PropTypes.node,
   headerMetaPrimaryLoading: PropTypes.bool,
   headerMetaPrimaryText: PropTypes.string,
-  isExportRunning: PropTypes.bool,
   moreActionsDropdownItems: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,

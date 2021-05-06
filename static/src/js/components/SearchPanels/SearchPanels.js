@@ -322,13 +322,16 @@ class SearchPanels extends PureComponent {
 
     const exportsArray = [
       // TODO: EDSC-3126
+      // Note: We will need to have a way to determine which type of export is running,
+      // so we can determine which item is in progress
       // {
       //   label: 'CSV',
       //   onClick: () => onExport('csv')
       // },
       {
         label: 'JSON',
-        onClick: () => onExport('json')
+        onClick: () => onExport('json'),
+        inProgress: isExportRunning
       }
     ]
 
@@ -377,7 +380,6 @@ class SearchPanels extends PureComponent {
         headerMetaPrimaryLoading={initialCollectionsLoading}
         headerMetaPrimaryText={collectionResultsHeaderMetaPrimaryText}
         headerLoading={initialCollectionsLoading}
-        isExportRunning={isExportRunning}
         exportsArray={exportsArray}
         viewsArray={collectionsViewsArray}
         activeView={collectionPanelView}
