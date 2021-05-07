@@ -18,7 +18,10 @@ function setup() {
     granuleMetadata: {},
     granuleSearchResults: {},
     granuleQuery: {},
-    isExportRunning: false,
+    isExportRunning: {
+      csv: false,
+      json: false
+    },
     location: {},
     match: {
       url: '/search'
@@ -164,7 +167,10 @@ describe('mapStateToProps', () => {
       },
       ui: {
         export: {
-          isExportRunning: false
+          isExportRunning: {
+            csv: false,
+            json: false
+          }
         }
       }
     }
@@ -179,7 +185,10 @@ describe('mapStateToProps', () => {
       granuleMetadata: {},
       granuleSearchResults: {},
       granuleQuery: {},
-      isExportRunning: false,
+      isExportRunning: {
+        csv: false,
+        json: false
+      },
       mapProjection: '',
       panels: {},
       preferences: {},

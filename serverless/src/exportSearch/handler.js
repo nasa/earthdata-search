@@ -6,6 +6,10 @@ import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
+import { jsonToCsv } from './jsonToCsv'
+import { wrapAxios } from '../util/wrapAxios'
+
+const wrappedAxios = wrapAxios(axios)
 
 /**
  * Perform a loop through collection results and return the full results in the requested format.
@@ -51,8 +55,10 @@ const exportSearch = async (event, context) => {
 
     // Loop until the request comes back with no items
     while (!finished) {
+      // We need this await inside the loop because we have to wait on the response from the previous
+      // call before making the next request
       // eslint-disable-next-line no-await-in-loop
-      const response = await axios({
+      const response = await wrappedAxios({
         url: graphQlUrl,
         method: 'post',
         data: {
@@ -66,15 +72,26 @@ const exportSearch = async (event, context) => {
       })
 
       const {
-        data: responseData
+        data: responseData,
+        config
       } = response;
       ({ headers: responseHeaders, status } = response)
+
+      const { elapsedTime } = config
 
       const { collections = {} } = responseData.data
       const { cursor: responseCursor, items = [] } = collections
 
+      console.log(`Request for ${items.length} exportSearch collections successfully completed in ${elapsedTime} ms`)
+
       // Set the cursor returned from GraphQl so the next loop will use it
       cursor = responseCursor
+
+      // If there are no items returned, set finished to true to exit the loop
+      if (!items || !items.length) {
+        finished = true
+        break
+      }
 
       // Push the items returned onto the returnItems array
       returnItems.push(...items.map((item) => {
@@ -86,14 +103,12 @@ const exportSearch = async (event, context) => {
           platforms: platforms.map(platform => platform.shortName)
         }
       }))
-
-      // If there are no items returned, set finished to true to exit the loop
-      if (!items || !items.length) finished = true
     }
 
     // Format the returnItems into the requested format
     let returnBody = null
     if (format === 'json') returnBody = JSON.stringify(returnItems)
+    if (format === 'csv') returnBody = jsonToCsv(returnItems)
 
     return {
       isBase64Encoded: false,

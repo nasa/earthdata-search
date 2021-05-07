@@ -127,7 +127,7 @@ SearchPanelsContainer.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
-  isExportRunning: PropTypes.bool.isRequired,
+  isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,

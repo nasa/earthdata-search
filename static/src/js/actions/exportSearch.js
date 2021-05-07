@@ -4,12 +4,14 @@ import { buildCollectionSearchParams, prepareCollectionParams } from '../util/co
 import ExportSearchRequest from '../util/request/exportSearchRequest'
 import { handleError } from './errors'
 
-export const onExportStarted = () => ({
-  type: EXPORT_STARTED
+export const onExportStarted = payload => ({
+  type: EXPORT_STARTED,
+  payload
 })
 
-export const onExportFinished = () => ({
-  type: EXPORT_FINISHED
+export const onExportFinished = payload => ({
+  type: EXPORT_FINISHED,
+  payload
 })
 
 /**
@@ -17,7 +19,7 @@ export const onExportFinished = () => ({
  * @param {String} format Format for the export (JSON, CSV)
  */
 export const exportSearch = format => (dispatch, getState) => {
-  dispatch(onExportStarted())
+  dispatch(onExportStarted(format))
 
   const state = getState()
 
@@ -112,20 +114,26 @@ export const exportSearch = format => (dispatch, getState) => {
           processingLevelId
           platforms
           timeStart
+          timeEnd
         }
       }
     }`
 
   const response = graphRequestObject.search(graphQuery, {
     ...buildCollectionSearchParams(collectionParams),
-    limit: 500
+    limit: 1000
   }, format)
     .then((response) => {
       const { data } = response
 
       // Create a blob with the text data from the export
-      const exportData = JSON.stringify(data)
-      const url = window.URL.createObjectURL(new Blob([exportData]))
+      let blob
+      if (format === 'csv') {
+        blob = new Blob([data], { type: 'text/csv' })
+      } else {
+        blob = new Blob([JSON.stringify(data)])
+      }
+      const url = window.URL.createObjectURL(blob)
 
       // Create a hyperlink to the blob and give it a filename
       const link = document.createElement('a')
@@ -141,10 +149,10 @@ export const exportSearch = format => (dispatch, getState) => {
       // Remove the link from the page
       link.parentNode.removeChild(link)
 
-      dispatch(onExportFinished())
+      dispatch(onExportFinished(format))
     })
     .catch((error) => {
-      dispatch(onExportFinished())
+      dispatch(onExportFinished(format))
 
       dispatch(handleError({
         error,

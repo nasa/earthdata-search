@@ -16,6 +16,61 @@ beforeEach(() => {
 })
 
 describe('exportSearch', () => {
+  test('returns csv response correctly', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      graphQlHost: 'https://graphql.example.com'
+    }))
+
+    nock(/graphql/)
+      .post(/api/)
+      .reply(200, {
+        data: {
+          collections: {
+            count: 2,
+            cursor: 'mock-cursor',
+            items: [{
+              conceptId: 'C100000-EDSC',
+              title: 'Test collection',
+              platforms: [{
+                shortName: 'platform'
+              }]
+            }, {
+              conceptId: 'C100001-EDSC',
+              title: 'Test collection 1',
+              platforms: [{
+                shortName: 'platform'
+              }]
+            }]
+          }
+        }
+      })
+      .post(/api/)
+      .reply(200, {
+        data: {
+          collections: {
+            count: 2,
+            cursor: 'mock-cursor',
+            items: []
+          }
+        }
+      })
+
+    const event = {
+      body: JSON.stringify({
+        data: {
+          format: 'csv',
+          variables: {},
+          query: {}
+        },
+        requestId: 'asdf-1234-qwer-5678'
+      })
+    }
+
+    const result = await exportSearch(event, {})
+
+    expect(result.body).toEqual('Data Provider,Short Name,Version,Entry Title,Processing Level,Platform,Start Time,End Time\r\n,,,"Test collection",,"platform",,\r\n,,,"Test collection 1",,"platform",,\r\n')
+  })
+
   test('returns json response correctly', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       graphQlHost: 'https://graphql.example.com'
