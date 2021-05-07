@@ -467,15 +467,16 @@ export class OrderStatusItem extends PureComponent {
 
             const {
               downloadUrls: currentDownloadUrlsObject = {},
-              // processInfo = {},
+              processInfo = {},
               requestStatus = {}
             } = orderInformation
 
-            // processInfo will be where the info messages from EGI are stored
-            // This will implemented in EDSC-2983
-            // const { message } = processInfo
+            // Display the message field from processInfo if it exists
+            const { message } = processInfo
 
-            // messages.push([...Array.from(message)])
+            // Wrap the message in an array, then flatten the array to ensure both string and array messages are the same
+            // Only display the first message provided
+            if (message) messages.push([message].flat()[0])
 
             const { downloadUrl: currentDownloadUrls = [] } = currentDownloadUrlsObject
 

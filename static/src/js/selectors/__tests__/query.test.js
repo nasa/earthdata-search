@@ -59,6 +59,6 @@ describe('getFocusedGranuleQueryString selector', () => {
       }
     }
 
-    expect(getFocusedGranuleQueryString(state)).toEqual('browseOnly=true&options%5Bspatial%5D%5Bor%5D=true&point=0%2C0')
+    expect(getFocusedGranuleQueryString(state)).toEqual('browseOnly=true&options[spatial][or]=true&point=0,0')
   })
 })

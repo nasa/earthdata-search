@@ -10,11 +10,13 @@ export const prepareSubscriptionQuery = (params) => {
 
   // Remove fields that should not be included in a subscription query
   delete prunedParams.collectionId
+  delete prunedParams.echoCollectionId
   delete prunedParams.conceptId
   delete prunedParams.isOpenSearch
   delete prunedParams.pageNum
+  delete prunedParams.pageSize
   delete prunedParams.sortKey
 
-  // Return the remaining parameters stringified
-  return stringify(prunedParams)
+  // Return the remaining parameters stringified, don't encode the values because CMR won't accept them
+  return stringify(prunedParams, { encode: false, indices: false, arrayFormat: 'brackets' })
 }
