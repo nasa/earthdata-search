@@ -675,14 +675,27 @@ class SpatialSelection extends Component {
       selectedRegion = {}
     } = regionSearch
 
+    const { type } = selectedRegion
+
     if (selectedRegion && selectedRegion.spatial) {
-      const points = splitListOfPoints(selectedRegion.spatial)
-      this.renderPolygon({
-        polygon: getShape(points),
-        featureGroup,
-        layerPoints: selectedRegion.spatial,
-        shouldCenter
-      })
+      if (type === 'reach') {
+        const points = splitListOfPoints(selectedRegion.spatial)
+
+        this.renderLine({
+          points,
+          featureGroup,
+          layerPoints: points,
+          shouldCenter
+        })
+      } else {
+        const points = splitListOfPoints(selectedRegion.spatial)
+        this.renderPolygon({
+          polygon: getShape(points),
+          featureGroup,
+          layerPoints: selectedRegion.spatial,
+          shouldCenter
+        })
+      }
     } else if (pointSearch[0]) {
       this.renderPoint({
         point: getShape([pointSearch[0]]),

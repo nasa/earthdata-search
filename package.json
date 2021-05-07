@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@welldone-software/why-did-you-render": "^3.2.1",
-    "babel-jest": "^24.1.0",
+    "babel-jest": "^26.6.3",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "cookies": "^0.7.3",
@@ -173,7 +173,7 @@
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",
     "scatter-swap": "^0.1.0",
-    "serverless": "^2.33.1",
+    "serverless": "^2.39.2",
     "serverless-finch": "^2.6.0",
     "serverless-offline": "^6.8.0",
     "serverless-plugin-log-subscription": "^1.2.0",
