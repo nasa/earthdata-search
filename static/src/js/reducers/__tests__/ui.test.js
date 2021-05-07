@@ -62,7 +62,10 @@ const initialState = {
     isOpen: true
   },
   export: {
-    isExportRunning: false
+    isExportRunning: {
+      csv: false,
+      json: false
+    }
   }
 }
 
@@ -285,12 +288,18 @@ describe('TOGGLE_TIMELINE', () => {
 describe('EXPORT_STARTED', () => {
   test('returns the correct state', () => {
     const action = {
-      type: EXPORT_STARTED
+      type: EXPORT_STARTED,
+      payload: 'json'
     }
 
     const expectedState = {
       ...initialState,
-      export: { isExportRunning: true }
+      export: {
+        isExportRunning: {
+          csv: false,
+          json: true
+        }
+      }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
@@ -300,14 +309,30 @@ describe('EXPORT_STARTED', () => {
 describe('EXPORT_FINISHED', () => {
   test('returns the correct state', () => {
     const action = {
-      type: EXPORT_FINISHED
+      type: EXPORT_FINISHED,
+      payload: 'json'
+    }
+
+    const initial = {
+      ...initialState,
+      export: {
+        isExportRunning: {
+          csv: false,
+          json: true
+        }
+      }
     }
 
     const expectedState = {
       ...initialState,
-      export: { isExportRunning: false }
+      export: {
+        isExportRunning: {
+          csv: false,
+          json: false
+        }
+      }
     }
 
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
+    expect(uiReducer(initial, action)).toEqual(expectedState)
   })
 })

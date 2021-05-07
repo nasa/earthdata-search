@@ -18,19 +18,22 @@ beforeEach(() => {
 
 describe('onExportStarted', () => {
   test('should create an action to update the store', () => {
+    const payload = 'json'
     const expectedAction = {
-      type: EXPORT_STARTED
+      type: EXPORT_STARTED,
+      payload
     }
 
-    expect(onExportStarted()).toEqual(expectedAction)
+    expect(onExportStarted(payload)).toEqual(expectedAction)
   })
 })
 
 describe('onExportFinished', () => {
   test('should create an action to update the store', () => {
-    const payload = { loaded: true }
+    const payload = 'json'
     const expectedAction = {
-      type: EXPORT_FINISHED
+      type: EXPORT_FINISHED,
+      payload
     }
 
     expect(onExportFinished(payload)).toEqual(expectedAction)
@@ -38,7 +41,42 @@ describe('onExportFinished', () => {
 })
 
 describe('exportSearch', () => {
-  test('calls lambda to get autocomplete suggestions', async () => {
+  test('calls lambda to get csv search export', async () => {
+    const createObjectMock = jest.fn()
+    window.URL.createObjectURL = createObjectMock
+    jest.spyOn(document, 'createElement').mockImplementation(() => ({
+      setAttribute: jest.fn(),
+      click: jest.fn(),
+      parentNode: {
+        removeChild: jest.fn()
+      }
+    }))
+    document.body.appendChild = jest.fn()
+
+    nock(/localhost/)
+      .post(/export/)
+      .reply(200, [
+        {
+          mock: 'data'
+        }
+      ])
+
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: ''
+    })
+
+    // call the dispatch
+    await store.dispatch(exportSearch('csv')).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({ type: EXPORT_STARTED, payload: 'csv' })
+      expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED, payload: 'csv' })
+
+      expect(createObjectMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  test('calls lambda to get json search export', async () => {
     const createObjectMock = jest.fn()
     window.URL.createObjectURL = createObjectMock
     jest.spyOn(document, 'createElement').mockImplementation(() => ({
@@ -66,14 +104,14 @@ describe('exportSearch', () => {
     // call the dispatch
     await store.dispatch(exportSearch('json')).then(() => {
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: EXPORT_STARTED })
-      expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED })
+      expect(storeActions[0]).toEqual({ type: EXPORT_STARTED, payload: 'json' })
+      expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED, payload: 'json' })
 
       expect(createObjectMock).toHaveBeenCalledTimes(1)
     })
   })
 
-  test('does not call updateAutocompleteSuggestions on error', async () => {
+  test('does not create a file on error', async () => {
     nock(/localhost/)
       .post(/export/)
       .reply(500)
@@ -88,10 +126,10 @@ describe('exportSearch', () => {
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
 
-    await store.dispatch(exportSearch({ value: 'test value' })).then(() => {
+    await store.dispatch(exportSearch('json')).then(() => {
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: EXPORT_STARTED })
-      expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED })
+      expect(storeActions[0]).toEqual({ type: EXPORT_STARTED, payload: 'json' })
+      expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED, payload: 'json' })
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })

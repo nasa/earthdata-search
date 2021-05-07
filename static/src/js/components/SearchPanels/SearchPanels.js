@@ -320,18 +320,20 @@ class SearchPanels extends PureComponent {
       }
     ]
 
+    const {
+      csv: csvExportRunning,
+      json: jsonExportRunning
+    } = isExportRunning
     const exportsArray = [
-      // TODO: EDSC-3126
-      // Note: We will need to have a way to determine which type of export is running,
-      // so we can determine which item is in progress
-      // {
-      //   label: 'CSV',
-      //   onClick: () => onExport('csv')
-      // },
+      {
+        label: 'CSV',
+        onClick: () => onExport('csv'),
+        inProgress: csvExportRunning
+      },
       {
         label: 'JSON',
         onClick: () => onExport('json'),
-        inProgress: isExportRunning
+        inProgress: jsonExportRunning
       }
     ]
 
@@ -661,7 +663,7 @@ SearchPanels.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
-  isExportRunning: PropTypes.bool.isRequired,
+  isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,

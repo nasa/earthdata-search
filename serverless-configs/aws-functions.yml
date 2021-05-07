@@ -269,7 +269,7 @@
 
   exportSearch:
     handler: serverless/src/exportSearch/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: 300
     memorySize: 192
     events:
       - http:

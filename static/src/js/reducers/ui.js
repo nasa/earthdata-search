@@ -61,7 +61,10 @@ const initialState = {
     isOpen: true
   },
   export: {
-    isExportRunning: false
+    isExportRunning: {
+      csv: false,
+      json: false
+    }
   }
 }
 
@@ -177,7 +180,10 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         export: {
-          isExportRunning: true
+          isExportRunning: {
+            ...state.export.isExportRunning,
+            [action.payload]: true
+          }
         }
       }
     }
@@ -185,7 +191,10 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         export: {
-          isExportRunning: false
+          isExportRunning: {
+            ...state.export.isExportRunning,
+            [action.payload]: false
+          }
         }
       }
     }
