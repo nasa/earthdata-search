@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { uniq } from 'lodash'
+
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { requestTimeout } from '../util/requestTimeout'
@@ -30,131 +32,81 @@ const regionSearch = async (event) => {
       timeout: requestTimeout()
     })
 
-    // Errors are returned with a 200 status code
-    const { data } = regionResponse
-    const { error } = data
+    const { config, data } = regionResponse
+    const { elapsedTime } = config
 
-    // If an error is present in a successful response
-    if (error) {
-      // Construct an error resembling that of an HTTP error
-      const errorObj = new Error(error)
+    const {
+      hits,
+      time,
+      results
+    } = data
 
-      // Mimic Axios' http error response by adding a key for response and providing the response object
-      errorObj.response = regionResponse
+    console.log(`Request for '${endpoint}' (exact: ${exact}) successfully completed in [reported: ${time}, observed: ${elapsedTime} ms]`)
 
-      // Throw the error to be caught in the catch block below
-      throw errorObj
-    }
-  } catch (e) {
-    const { response = {} } = e
+    const filteredResponse = []
 
-    let { status: statusCode } = response
+    Object.keys(results).forEach((id) => {
+      const { [id]: responseObject } = results
 
-    let errorMessage
+      let formattedResponseObject = {
+        ...responseObject
+      }
 
-    // Use our parseError method to extract the error message out
-    const parsedError = parseError(e, { asJSON: false, shouldLog: false })
-    const [parsedErrorMessage] = parsedError
+      if (endpoint === 'region') {
+        formattedResponseObject = {
+          id: formattedResponseObject.HUC,
+          name: id,
+          spatial: formattedResponseObject['Visvalingam Polygon'],
+          type: 'huc'
+        }
+      }
 
-    // Search the error message looking for the FTS standard (CODE: Message)
-    const errorRegexMatch = parsedErrorMessage.match(/(\d{3})?:?\s?(.*)/)
+      if (endpoint === 'huc') {
+        formattedResponseObject = {
+          id,
+          name: formattedResponseObject['Region Name'],
+          spatial: formattedResponseObject['Visvalingam Polygon'],
+          type: 'huc'
+        }
+      }
 
-    if (errorRegexMatch) {
-      // Regex response will contain [
-      //  Original,
-      //  Status Code or undefined,
-      //  Error Message,
-      //  Some Object we don't care about
-      // ]
-      ([, statusCode = 500, errorMessage] = errorRegexMatch)
-    }
+      if (endpoint === 'rivers/reach') {
+        const { geojson = {} } = formattedResponseObject
+        const { coordinates } = geojson
 
-    // An actual timeout does not return a status code, we shouldn't see this happen
-    // given that we set a timeout on the request to FTS that defines a padding
-    if (errorMessage.includes('ESOCKETTIMEDOUT') || errorMessage.includes('ETIMEDOUT')) {
-      // If no valid error response was provided construct an error from the exception object
-      statusCode = 504
-      errorMessage = `Request to external service timed out after ${requestTimeout()} ms`
+        formattedResponseObject = {
+          id,
+          name: id,
+          spatial: uniq(coordinates.map(point => point.join(','))).join(','),
+          type: 'reach'
+        }
+      }
 
-      console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${requestTimeout()} ms`)
-    } else {
-      // Regex returns a string result from `match` and we need/want an integer
-      statusCode = parseInt(statusCode, 10)
-      errorMessage = errorMessage.trim()
+      filteredResponse.push({
+        id,
+        ...formattedResponseObject
+      })
+    })
 
-      const { config = {} } = response
-      const { elapsedTime } = config
-
-      console.log(`Request for '${endpoint}' (exact: ${exact}) failed in ${elapsedTime} ms`)
-    }
+    // Convert the string provided to a float
+    const [, responseTime] = time.match(/(\d+\.\d+) ms\./)
 
     return {
       isBase64Encoded: false,
-      statusCode,
+      statusCode: 200,
       headers: defaultResponseHeaders,
       body: JSON.stringify({
-        errors: [errorMessage]
+        hits,
+        time: parseFloat(responseTime),
+        results: filteredResponse
       })
     }
-  }
-
-  const { config, data } = regionResponse
-  const { elapsedTime } = config
-
-  const {
-    hits,
-    time,
-    results
-  } = data
-
-  console.log(`Request for '${endpoint}' (exact: ${exact}) successfully completed in [reported: ${time}, observed: ${elapsedTime} ms]`)
-
-  const filteredResponse = []
-
-  Object.keys(results).forEach((id) => {
-    const { [id]: responseObject } = results
-
-    let formattedResponseObject = {
-      ...responseObject
+  } catch (e) {
+    return {
+      isBase64Encoded: false,
+      headers: defaultResponseHeaders,
+      ...parseError(e)
     }
-
-    if (endpoint === 'region') {
-      formattedResponseObject = {
-        id: formattedResponseObject.HUC,
-        name: id,
-        spatial: formattedResponseObject['Visvalingam Polygon'],
-        type: 'huc'
-      }
-    }
-
-    if (endpoint === 'huc') {
-      formattedResponseObject = {
-        id,
-        name: formattedResponseObject['Region Name'],
-        spatial: formattedResponseObject['Visvalingam Polygon'],
-        type: 'huc'
-      }
-    }
-
-    // TODO: Handle reformatting SWOT features
-    filteredResponse.push({
-      id,
-      ...formattedResponseObject
-    })
-  })
-
-  // Convert the string provided to a float
-  const [, responseTime] = time.match(/(\d+\.\d+) ms\./)
-
-  return {
-    isBase64Encoded: false,
-    statusCode: 200,
-    headers: defaultResponseHeaders,
-    body: JSON.stringify({
-      hits,
-      time: parseFloat(responseTime),
-      results: filteredResponse
-    })
   }
 }
 

@@ -26,6 +26,12 @@ export class RegionSearchForm extends Component {
         label: 'HUC Region',
         value: 'region',
         placeholder: 'ex. Colorado Mine'
+      },
+      {
+        type: 'reach',
+        label: 'River Reach',
+        value: 'rivers/reach',
+        placeholder: 'ex. 11410000013'
       }
     ]
 
