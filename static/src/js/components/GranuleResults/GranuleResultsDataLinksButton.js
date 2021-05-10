@@ -241,7 +241,6 @@ export const GranuleResultsDataLinksButton = ({
             <Dropdown.Menu
               ref={dropdownMenuRef}
               className="granule-results-data-links-button__menu"
-              // {...menuProps}
             >
               {
                 s3Links.length > 0 && dataLinks.length > 0
