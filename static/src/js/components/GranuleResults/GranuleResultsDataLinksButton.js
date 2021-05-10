@@ -62,23 +62,6 @@ export const GranuleResultsDataLinksButton = ({
   onMetricsDataAccess
 }) => {
   const dropdownMenuRef = useRef(null)
-  // const [widestTabWidth, setWidestTabWidth] = useState(null)
-
-  // useEffect(() => {
-  //   if (dropdownMenuRef.current) {
-  //     const tabs = dropdownMenuRef.current.getElementsByClassName('granule-results-data-links-button__menu-panel')
-  //     const tabWidthReducer = (acc, currVal) => {
-  //       const isActive = currVal.classList.contains('active')
-  //       currVal.classList.add('active')
-  //       const tabWidth = currVal.getBoundingClientRect().width
-  //       if (!isActive) currVal.classList.remove('active')
-  //       return (tabWidth > acc) ? tabWidth : acc
-  //     }
-
-  //     const widestTabWidth = Array.from(tabs).reduce(tabWidthReducer, tabs[0].getBoundingClientRect().width)
-  //     setWidestTabWidth(widestTabWidth)
-  //   }
-  // }, [dropdownMenuRef.current])
 
   const copyStringToClipBoard = async (string, name) => {
     try {
@@ -249,10 +232,6 @@ export const GranuleResultsDataLinksButton = ({
 
       return null
     }
-
-    // const menuProps = {}
-
-    // if (widestTabWidth) menuProps.style = { width: widestTabWidth }
 
     return (
       <Dropdown onClick={(e) => { e.stopPropagation() }} drop="right">
