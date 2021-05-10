@@ -14,6 +14,7 @@ import './GranuleResultsTable.scss'
  * Renders GranuleResultsTable.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
+ * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {String} props.focusedGranuleId - The focused granule ID.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.hasBrowseImagery - Designates if the collection has browse imagery.

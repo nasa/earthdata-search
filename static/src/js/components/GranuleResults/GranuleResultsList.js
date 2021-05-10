@@ -12,6 +12,7 @@ import './GranuleResultsList.scss'
  * Renders GranuleResultsList.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
+ * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.isOpenSearch - Flag designating CWIC collections.
