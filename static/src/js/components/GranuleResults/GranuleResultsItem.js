@@ -40,6 +40,7 @@ const thumbnailWidth = getApplicationConfig().thumbnailSize.width
  */
 const GranuleResultsItem = forwardRef(({
   collectionId,
+  directDistributionInformation,
   granule,
   isCollectionInProject,
   isGranuleInProject,
@@ -80,6 +81,7 @@ const GranuleResultsItem = forwardRef(({
     isHoveredGranule,
     isFocusedGranule,
     onlineAccessFlag,
+    s3Links,
     timeEnd,
     timeStart,
     title
@@ -265,6 +267,8 @@ const GranuleResultsItem = forwardRef(({
                   <GranuleResultsDataLinksButton
                     collectionId={collectionId}
                     dataLinks={dataLinks}
+                    directDistributionInformation={directDistributionInformation}
+                    s3Links={s3Links}
                     onMetricsDataAccess={onMetricsDataAccess}
                   />
                 )
@@ -279,6 +283,7 @@ const GranuleResultsItem = forwardRef(({
 
 GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
   granule: PropTypes.shape({}).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,

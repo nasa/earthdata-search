@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+
 import { Tabs } from 'react-bootstrap'
 
 import './EDSCTabs.scss'
@@ -11,16 +13,23 @@ import './EDSCTabs.scss'
  */
 export const EDSCTabs = ({
   className,
-  children
+  children,
+  padding
 }) => {
-  const classNames = `edsc-tabs${className ? ` ${className}` : ''}`
+  const tabsClassNames = classNames([
+    'edsc-tabs',
+    {
+      'edsc-tabs--no-padding': !padding,
+      [`${className}`]: className
+    }
+  ])
 
   return (
     (
       <>
         {
           children.filter(Boolean).length > 0 && (
-            <div className={classNames}>
+            <div className={tabsClassNames}>
               <Tabs className="edsc-tabs__tabs">
                 {children}
               </Tabs>
@@ -33,12 +42,14 @@ export const EDSCTabs = ({
 }
 
 EDSCTabs.defaultProps = {
-  className: ''
+  className: '',
+  padding: true
 }
 
 EDSCTabs.propTypes = {
   children: PropTypes.node.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
+  padding: PropTypes.bool
 }
 
 export default EDSCTabs

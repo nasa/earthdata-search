@@ -77,6 +77,7 @@ innerElementType.propTypes = {
  */
 export const GranuleResultsListBody = ({
   collectionId,
+  directDistributionInformation,
   excludedGranuleIds,
   granules,
   height,
@@ -190,6 +191,7 @@ export const GranuleResultsListBody = ({
             innerElementType={innerElementType}
             itemData={{
               collectionId,
+              directDistributionInformation,
               excludedGranuleIds,
               getRowHeight,
               granules,
@@ -243,6 +245,7 @@ GranuleResultsListBody.defaultProps = {
 
 GranuleResultsListBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,

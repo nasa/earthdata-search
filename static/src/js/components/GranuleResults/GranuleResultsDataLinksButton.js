@@ -1,11 +1,14 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Dropdown } from 'react-bootstrap'
+import { Dropdown, Tab } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
-import { FaDownload } from 'react-icons/fa'
+import { FaDownload, FaCloud, FaRegCopy } from 'react-icons/fa'
 
 import Button from '../Button/Button'
+import EDSCTabs from '../EDSCTabs/EDSCTabs'
 
+import { addToast } from '../../util/addToast'
 import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 
 import './GranuleResultsDataLinksButton.scss'
@@ -54,37 +57,271 @@ export const GranuleResultsDataLinksButton = ({
   collectionId,
   buttonVariant,
   dataLinks,
+  directDistributionInformation,
+  s3Links,
   onMetricsDataAccess
 }) => {
-  if (dataLinks.length > 1) {
-    return (
-      <Dropdown>
-        <Dropdown.Toggle as={CustomDataLinksToggle} />
-        {
-          ReactDOM.createPortal(
-            <Dropdown.Menu className="granule-results-data-links-button__menu">
-              {
-                dataLinks.map((dataLink, i) => {
-                  const key = `data_link_${i}`
-                  let dataLinkTitle = dataLink.title
+  const dropdownMenuRef = useRef(null)
+  // const [widestTabWidth, setWidestTabWidth] = useState(null)
 
-                  if (!dataLinkTitle) dataLinkTitle = getFilenameFromPath(dataLink.href)
+  // useEffect(() => {
+  //   if (dropdownMenuRef.current) {
+  //     const tabs = dropdownMenuRef.current.getElementsByClassName('granule-results-data-links-button__menu-panel')
+  //     const tabWidthReducer = (acc, currVal) => {
+  //       const isActive = currVal.classList.contains('active')
+  //       currVal.classList.add('active')
+  //       const tabWidth = currVal.getBoundingClientRect().width
+  //       if (!isActive) currVal.classList.remove('active')
+  //       return (tabWidth > acc) ? tabWidth : acc
+  //     }
 
-                  return (
-                    <Dropdown.Item
-                      key={key}
-                      href={dataLink.href}
-                      onClick={() => onMetricsDataAccess({
-                        type: 'single_granule_download',
+  //     const widestTabWidth = Array.from(tabs).reduce(tabWidthReducer, tabs[0].getBoundingClientRect().width)
+  //     setWidestTabWidth(widestTabWidth)
+  //   }
+  // }, [dropdownMenuRef.current])
+
+  const copyStringToClipBoard = async (string, name) => {
+    try {
+      await navigator.clipboard.writeText(string)
+      addToast(`Copied the ${name}`, {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    } catch (err) {
+      addToast(`Failed to copy the ${name}`, {
+        appearance: 'error',
+        autoDismiss: true
+      })
+    }
+  }
+
+  const copyS3PathToClipBoard = async (path, filename) => {
+    try {
+      await navigator.clipboard.writeText(path)
+      addToast(`Copied AWS S3 path for: ${filename}`, {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    } catch (err) {
+      addToast(`Failed to copy AWS S3 path for: ${filename}`, {
+        appearance: 'error',
+        autoDismiss: true
+      })
+    }
+  }
+
+  if (dataLinks.length > 1 || s3Links.length > 0) {
+    const dataLinksList = dataLinks.map((dataLink, i) => {
+      const key = `data_link_${i}`
+      const dataLinkTitle = getFilenameFromPath(dataLink.href)
+
+      return (
+        <Dropdown.Item
+          className="granule-results-data-links-button__dropdown-item"
+          key={key}
+          href={dataLink.href}
+          target="_blank"
+          title="Download file"
+          onClick={(e) => {
+            e.stopPropagation()
+            onMetricsDataAccess({
+              type: 'single_granule_download',
+              collections: [{
+                collectionId
+              }]
+            })
+            addToast(`Initiated download of file: ${dataLinkTitle}`, {
+              appearance: 'success',
+              autoDismiss: true
+            })
+          }}
+        >
+          {dataLinkTitle}
+          <FaDownload className="granule-results-data-links-button__icon granule-results-data-links-button__icon--download" />
+        </Dropdown.Item>
+      )
+    })
+
+    const s3LinksList = () => {
+      if (s3Links.length > 0) {
+        const {
+          region,
+          s3BucketAndObjectPrefixNames = [],
+          s3CredentialsApiDocumentationUrl,
+          s3CredentialsApiEndpoint
+        } = directDistributionInformation
+
+        return (
+          <div>
+            {
+              region && (
+                <header className="granule-results-data-links-button__menu-panel-heading">
+                  <div className="granule-results-data-links-button__menu-panel-heading-row">
+                    {'Region: '}
+                    <Button
+                      variant="naked"
+                      className="granule-results-data-links-button__menu-panel-value"
+                      onClick={() => {
+                        copyStringToClipBoard(region, 'AWS S3 Region')
+                      }}
+                      label="Copy the AWS S3 Region"
+                      icon={FaRegCopy}
+                      iconPosition="right"
+                    >
+                      {region}
+                    </Button>
+                  </div>
+                  <div className="granule-results-data-links-button__menu-panel-heading-row">
+                    {'Bucket/Object Prefix: '}
+                    {s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
+                      <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
+                        <Button
+                          variant="naked"
+                          className="granule-results-data-links-button__menu-panel-value"
+                          onClick={() => {
+                            copyStringToClipBoard(bucketAndObjPrefix, 'AWS S3 Bucket/Object Prefix')
+                          }}
+                          icon={FaRegCopy}
+                          iconPosition="right"
+                          label="Copy the AWS S3 Bucket/Object Prefix"
+                        >
+                          {bucketAndObjPrefix}
+                        </Button>
+                        {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                  <div className="granule-results-data-links-button__menu-panel-heading-row">
+                    {'Credentials API: '}
+                    <span className="granule-results-data-links-button__menu-panel-value">
+                      <a
+                        className="link link--external"
+                        href={s3CredentialsApiEndpoint}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        S3 Credentials API
+                      </a>
+                      <a
+                        className="link link--separated link--external"
+                        href={s3CredentialsApiDocumentationUrl}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Documentation
+                      </a>
+                    </span>
+                  </div>
+                </header>
+              )
+            }
+            {
+              s3Links.map((s3Link, i) => {
+                const key = `s3_link_${i}`
+                const s3LinkTitle = getFilenameFromPath(s3Link.href)
+
+                return (
+                  <Dropdown.Item
+                    as={Button}
+                    className="granule-results-data-links-button__dropdown-item"
+                    key={key}
+                    label="Copy path to file in AWS S3"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      copyS3PathToClipBoard(s3Link.href, s3LinkTitle)
+                      onMetricsDataAccess({
+                        type: 'single_granule_s3_access',
                         collections: [{
                           collectionId
                         }]
-                      })}
-                    >
-                      {dataLinkTitle}
-                    </Dropdown.Item>
+                      })
+                    }}
+                  >
+                    {s3LinkTitle}
+                    <FaRegCopy className="granule-results-data-links-button__icon" />
+                  </Dropdown.Item>
+                )
+              })
+            }
+          </div>
+        )
+      }
+
+      return null
+    }
+
+    // const menuProps = {}
+
+    // if (widestTabWidth) menuProps.style = { width: widestTabWidth }
+
+    return (
+      <Dropdown onClick={(e) => { e.stopPropagation() }} drop="right">
+        <Dropdown.Toggle as={CustomDataLinksToggle} />
+        {
+          ReactDOM.createPortal(
+            <Dropdown.Menu
+              ref={dropdownMenuRef}
+              className="granule-results-data-links-button__menu"
+              // {...menuProps}
+            >
+              {
+                s3Links.length > 0 && dataLinks.length > 0
+                  ? (
+                    <EDSCTabs padding={false}>
+                      <Tab
+                        className="granule-results-data-links-button__menu-panel"
+                        title={(
+                          <span className="granule-results-data-links-button__tab-text">
+                            <FaDownload className="granule-results-data-links-button__tab-icon" />
+                            Download Files
+                          </span>
+                        )}
+                        eventKey="download-files"
+                        tabIndex={0}
+                      >
+                        <div className="granule-results-data-links-button__list">
+                          {dataLinksList}
+                        </div>
+                      </Tab>
+                      <Tab
+                        className="granule-results-data-links-button__menu-panel"
+                        title={(
+                          <span className="granule-results-data-links-button__tab-text">
+                            <FaCloud className="granule-results-data-links-button__tab-icon" />
+                            AWS S3 Access
+                          </span>
+                        )}
+                        eventKey="aws-s3-access"
+                        tabIndex={0}
+                      >
+                        <div className="granule-results-data-links-button__list">
+                          {s3LinksList()}
+                        </div>
+                      </Tab>
+                    </EDSCTabs>
                   )
-                })
+                  : (
+                    <>
+                      {
+                        dataLinks.length > 0 && (
+                          <div className="granule-results-data-links-button__menu-panel">
+                            <div className="tab-content">
+                              {dataLinksList}
+                            </div>
+                          </div>
+                        )
+                      }
+                      {
+                        s3Links.length > 0 && (
+                          <div className="granule-results-data-links-button__menu-panel">
+                            <div className="tab-content">
+                              {s3LinksList}
+                            </div>
+                          </div>
+                        )
+                      }
+                    </>
+                  )
               }
             </Dropdown.Menu>,
             document.querySelector('#root')
@@ -136,7 +373,9 @@ GranuleResultsDataLinksButton.defaultProps = {
 GranuleResultsDataLinksButton.propTypes = {
   buttonVariant: PropTypes.string,
   collectionId: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
   dataLinks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  s3Links: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired
 }
 

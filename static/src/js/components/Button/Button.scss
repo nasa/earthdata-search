@@ -46,6 +46,11 @@
       vertical-align: text-bottom;
     }
 
+    .button--icon-right & {
+      margin-left: $spacer/2;
+      margin-right: 0;
+    }
+
     &--push {
       margin-right: $spacer/2;
     }
