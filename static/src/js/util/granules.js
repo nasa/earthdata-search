@@ -442,10 +442,23 @@ export const isDataLink = (link, type) => {
 }
 
 /**
+ * Determines if a given link is a data link.
+ * A link is a data link if it has data in the rel property and it is not inherited.
+ * @param {Object} link An individual link object from granule metadata
+ * @param {String} type 'http' or 'ftp'
+ * @returns {Boolean}
+ */
+export const isS3Link = (link) => {
+  const { rel } = link
+
+  return rel.indexOf('/s3#') !== -1
+}
+
+/**
  * Given a list of granule metadata links, filters out those links that are not data links
  * prefering http over ftp for duplicate filenames
  * @param {Array} links List of links from granule metadata
- * @returns {Array} List of data links filters from input links
+ * @returns {Array} List of data links filtered from input links
  */
 export const createDataLinks = (links = []) => {
   // All 'http' data links
@@ -469,6 +482,13 @@ export const createDataLinks = (links = []) => {
     ...ftpLinks
   ]
 }
+
+/**
+ * Given a list of granule metadata links, filters out those links that are not s3 links
+ * @param {Array} links List of links from granule metadata
+ * @returns {Array} List of s3 links filtered from input links
+ */
+export const createS3Links = (links = []) => links.filter(link => isS3Link(link))
 
 /**
 * Pull out download links from within the granule metadata

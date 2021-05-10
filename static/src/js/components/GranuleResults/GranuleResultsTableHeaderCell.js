@@ -22,6 +22,7 @@ const GranuleResultsTableHeaderCell = (props) => {
   const { customProps } = column
   const { original: rowProps } = row
   const {
+    s3Links,
     dataLinks,
     id,
     isOpenSearch,
@@ -30,6 +31,7 @@ const GranuleResultsTableHeaderCell = (props) => {
 
   const {
     collectionId,
+    directDistributionInformation,
     isGranuleInProject,
     location,
     onAddGranuleToProjectCollection,
@@ -113,7 +115,9 @@ const GranuleResultsTableHeaderCell = (props) => {
           onlineAccessFlag && (
             <GranuleResultsDataLinksButton
               collectionId={collectionId}
+              directDistributionInformation={directDistributionInformation}
               dataLinks={dataLinks}
+              s3Links={s3Links}
               onMetricsDataAccess={onMetricsDataAccess}
               buttonVariant="naked"
             />

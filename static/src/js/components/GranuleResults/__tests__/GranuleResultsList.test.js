@@ -32,6 +32,7 @@ function setup(type) {
   if (type === 'loaded') {
     props = {
       collectionId: 'collectionId',
+      directDistributionInformation: {},
       excludedGranuleIds: [],
       focusedGranule: '',
       granules: [

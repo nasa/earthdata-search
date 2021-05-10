@@ -34,6 +34,7 @@ import './GranuleResultsTable.scss'
 
 export const GranuleResultsTable = ({
   collectionId,
+  directDistributionInformation,
   focusedGranuleId,
   granules,
   hasBrowseImagery,
@@ -61,6 +62,7 @@ export const GranuleResultsTable = ({
       customProps: {
         cellClassName: 'granule-results-table__cell--granule',
         collectionId,
+        directDistributionInformation,
         isGranuleInProject,
         GranuleResultsTableHeaderCell,
         location,
@@ -201,6 +203,7 @@ GranuleResultsTable.defaultProps = {
 
 GranuleResultsTable.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape).isRequired,
   hasBrowseImagery: PropTypes.bool.isRequired,

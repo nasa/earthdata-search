@@ -13,6 +13,7 @@ function setup(overrideProps) {
     column: {
       customProps: {
         collectionId: 'collectionId',
+        directDistributionInformation: {},
         location: {},
         isGranuleInProject: jest.fn(),
         portal: {
@@ -35,6 +36,7 @@ function setup(overrideProps) {
         id: 'one',
         isOpenSearch: false,
         dataLinks: [],
+        s3Links: [],
         onlineAccessFlag: true,
         handleClick: jest.fn()
       }
@@ -88,6 +90,7 @@ describe('GranuleResultsTableHeaderCell component', () => {
           id: 'one',
           isOpenSearch: true,
           dataLinks: [],
+          s3Links: [],
           onlineAccessFlag: true,
           handleClick: jest.fn()
         }

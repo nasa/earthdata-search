@@ -25,6 +25,7 @@ export const Button = React.forwardRef(({
   disabled,
   href,
   icon,
+  iconPosition,
   iconSize,
   label,
   onClick,
@@ -45,6 +46,7 @@ export const Button = React.forwardRef(({
       [`button--${variant}`]: !!variant,
       'button--icon': !!icon,
       'button--icon-only': !!icon && children === null,
+      'button--icon-right': !!icon && iconPosition === 'right',
       'button--badge': !!badge,
       'button--svg-icon': icon && typeof icon !== 'string'
     },
@@ -99,7 +101,7 @@ export const Button = React.forwardRef(({
       style={style}
       data-test-id={dataTestId}
     >
-      {(!spinner && icon) && (
+      {(!spinner && icon && iconPosition === 'left') && (
         <EDSCIcon
           className={iconClasses}
           icon={icon}
@@ -116,6 +118,13 @@ export const Button = React.forwardRef(({
           : children
         }
       </span>
+      {(!spinner && icon && iconPosition === 'right') && (
+        <EDSCIcon
+          className={iconClasses}
+          icon={icon}
+          size={iconSize}
+        />
+      )}
       {badge && (
         <>
           <Badge
@@ -155,6 +164,7 @@ Button.defaultProps = {
   className: null,
   href: null,
   icon: null,
+  iconPosition: 'left',
   iconSize: null,
   onClick: null,
   overlayClass: null,
@@ -181,6 +191,7 @@ Button.propTypes = {
   children: PropTypes.node,
   href: PropTypes.string,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  iconPosition: PropTypes.string,
   iconSize: PropTypes.string,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,

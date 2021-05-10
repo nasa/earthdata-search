@@ -29,6 +29,7 @@ export const GranuleResultsListItem = memo(({
 
   const {
     collectionId,
+    directDistributionInformation,
     granules,
     isCollectionInProject,
     isGranuleInProject,
@@ -98,6 +99,7 @@ export const GranuleResultsListItem = memo(({
     <li className="granule-results-list-item" style={customStyle}>
       <GranuleResultsItem
         collectionId={collectionId}
+        directDistributionInformation={directDistributionInformation}
         granule={granules[index]}
         isCollectionInProject={isCollectionInProject}
         isGranuleInProject={isGranuleInProject}

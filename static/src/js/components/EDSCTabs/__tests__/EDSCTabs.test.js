@@ -83,4 +83,17 @@ describe('EDSCTabs component', () => {
       expect(tabs.length).toEqual(1)
     })
   })
+
+  describe('when padding is set to false', () => {
+    const { enzymeWrapper } = setup({
+      padding: false,
+      children: [
+        'Test children'
+      ]
+    })
+
+    test('should add the class', () => {
+      expect(enzymeWrapper.find('.edsc-tabs').props().className).toContain('edsc-tabs--no-padding')
+    })
+  })
 })

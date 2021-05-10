@@ -23,7 +23,18 @@
     }
   }
 
+  .nav-item:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
   .tab-content {
     padding: $spacer;
+  }
+
+  &--no-padding {
+    .tab-content {
+      padding: 0;
+    }
   }
 }

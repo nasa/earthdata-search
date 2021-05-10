@@ -10,9 +10,10 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    collectionId: 'collectionId',
+    directDistributionInformation: {},
     focusedGranuleId: 'one',
     granules: granuleData,
-    collectionId: 'collectionId',
     isItemLoaded: jest.fn(),
     isGranuleInProject: jest.fn(),
     isProjectGranulesLoading: false,

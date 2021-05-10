@@ -68,7 +68,8 @@ export const GranuleResultsBodyContainer = (props) => {
   } = granuleQuery
 
   const {
-    isOpenSearch = false
+    isOpenSearch = false,
+    directDistributionInformation = {}
   } = collectionMetadata
 
   const loadNextPage = () => {
@@ -81,6 +82,7 @@ export const GranuleResultsBodyContainer = (props) => {
   return (
     <GranuleResultsBody
       collectionId={focusedCollectionId}
+      directDistributionInformation={directDistributionInformation}
       focusedGranuleId={focusedGranuleId}
       granuleQuery={granuleQuery}
       granuleSearchResults={granuleSearchResults}
