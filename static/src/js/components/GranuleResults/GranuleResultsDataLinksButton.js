@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { Dropdown, Tab } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
@@ -126,111 +125,107 @@ export const GranuleResultsDataLinksButton = ({
     })
 
     const s3LinksList = () => {
-      if (s3Links.length > 0) {
-        const {
-          region,
-          s3BucketAndObjectPrefixNames = [],
-          s3CredentialsApiDocumentationUrl,
-          s3CredentialsApiEndpoint
-        } = directDistributionInformation
+      const {
+        region,
+        s3BucketAndObjectPrefixNames = [],
+        s3CredentialsApiDocumentationUrl,
+        s3CredentialsApiEndpoint
+      } = directDistributionInformation
 
-        return (
-          <div>
-            {
-              region && (
-                <header className="granule-results-data-links-button__menu-panel-heading">
-                  <div className="granule-results-data-links-button__menu-panel-heading-row">
-                    {'Region: '}
-                    <Button
-                      variant="naked"
-                      className="granule-results-data-links-button__menu-panel-value"
-                      onClick={() => {
-                        copyStringToClipBoard(region, 'AWS S3 Region')
-                      }}
-                      label="Copy the AWS S3 Region"
-                      icon={FaRegCopy}
-                      iconPosition="right"
-                    >
-                      {region}
-                    </Button>
-                  </div>
-                  <div className="granule-results-data-links-button__menu-panel-heading-row">
-                    {'Bucket/Object Prefix: '}
-                    {s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
-                      <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
-                        <Button
-                          variant="naked"
-                          className="granule-results-data-links-button__menu-panel-value"
-                          onClick={() => {
-                            copyStringToClipBoard(bucketAndObjPrefix, 'AWS S3 Bucket/Object Prefix')
-                          }}
-                          icon={FaRegCopy}
-                          iconPosition="right"
-                          label="Copy the AWS S3 Bucket/Object Prefix"
-                        >
-                          {bucketAndObjPrefix}
-                        </Button>
-                        {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
-                      </React.Fragment>
-                    ))}
-                  </div>
-                  <div className="granule-results-data-links-button__menu-panel-heading-row">
-                    {'Credentials API: '}
-                    <span className="granule-results-data-links-button__menu-panel-value">
-                      <a
-                        className="link link--external"
-                        href={s3CredentialsApiEndpoint}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        S3 Credentials API
-                      </a>
-                      <a
-                        className="link link--separated link--external"
-                        href={s3CredentialsApiDocumentationUrl}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        Documentation
-                      </a>
-                    </span>
-                  </div>
-                </header>
-              )
-            }
-            {
-              s3Links.map((s3Link, i) => {
-                const key = `s3_link_${i}`
-                const s3LinkTitle = getFilenameFromPath(s3Link.href)
-
-                return (
-                  <Dropdown.Item
-                    as={Button}
-                    className="granule-results-data-links-button__dropdown-item"
-                    key={key}
-                    label="Copy path to file in AWS S3"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      copyS3PathToClipBoard(s3Link.href, s3LinkTitle)
-                      onMetricsDataAccess({
-                        type: 'single_granule_s3_access',
-                        collections: [{
-                          collectionId
-                        }]
-                      })
+      return (
+        <div>
+          {
+            region && (
+              <header className="granule-results-data-links-button__menu-panel-heading">
+                <div className="granule-results-data-links-button__menu-panel-heading-row">
+                  {'Region: '}
+                  <Button
+                    variant="naked"
+                    className="granule-results-data-links-button__menu-panel-value"
+                    onClick={() => {
+                      copyStringToClipBoard(region, 'AWS S3 Region')
                     }}
+                    label="Copy the AWS S3 Region"
+                    icon={FaRegCopy}
+                    iconPosition="right"
                   >
-                    {s3LinkTitle}
-                    <FaRegCopy className="granule-results-data-links-button__icon" />
-                  </Dropdown.Item>
-                )
-              })
-            }
-          </div>
-        )
-      }
+                    {region}
+                  </Button>
+                </div>
+                <div className="granule-results-data-links-button__menu-panel-heading-row">
+                  {'Bucket/Object Prefix: '}
+                  {s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
+                    <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
+                      <Button
+                        variant="naked"
+                        className="granule-results-data-links-button__menu-panel-value"
+                        onClick={() => {
+                          copyStringToClipBoard(bucketAndObjPrefix, 'AWS S3 Bucket/Object Prefix')
+                        }}
+                        icon={FaRegCopy}
+                        iconPosition="right"
+                        label="Copy the AWS S3 Bucket/Object Prefix"
+                      >
+                        {bucketAndObjPrefix}
+                      </Button>
+                      {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
+                    </React.Fragment>
+                  ))}
+                </div>
+                <div className="granule-results-data-links-button__menu-panel-heading-row">
+                  {'Credentials API: '}
+                  <span className="granule-results-data-links-button__menu-panel-value">
+                    <a
+                      className="link link--external"
+                      href={s3CredentialsApiEndpoint}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      S3 Credentials API
+                    </a>
+                    <a
+                      className="link link--separated link--external"
+                      href={s3CredentialsApiDocumentationUrl}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Documentation
+                    </a>
+                  </span>
+                </div>
+              </header>
+            )
+          }
+          {
+            s3Links.map((s3Link, i) => {
+              const key = `s3_link_${i}`
+              const s3LinkTitle = getFilenameFromPath(s3Link.href)
 
-      return null
+              return (
+                <Dropdown.Item
+                  as={Button}
+                  className="granule-results-data-links-button__dropdown-item"
+                  key={key}
+                  label="Copy path to file in AWS S3"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    copyS3PathToClipBoard(s3Link.href, s3LinkTitle)
+                    onMetricsDataAccess({
+                      type: 'single_granule_s3_access',
+                      collections: [{
+                        collectionId
+                      }]
+                    })
+                  }}
+                >
+                  {s3LinkTitle}
+                  <FaRegCopy className="granule-results-data-links-button__icon" />
+                </Dropdown.Item>
+              )
+            })
+          }
+        </div>
+      )
     }
 
     return (
