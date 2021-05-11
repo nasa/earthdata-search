@@ -23,16 +23,16 @@ describe('Mock data example', () => {
       'POST',
       '**/collections.json',
       {
-        body: collectionResultsModis.body,
-        headers: collectionResultsModis.headers
+        body: collectionResults.body,
+        headers: collectionResults.headers
       }
     )
     cy.intercept(
       'POST',
       '**/collections.json',
       {
-        body: collectionResults.body,
-        headers: collectionResults.headers
+        body: collectionResultsModis.body,
+        headers: collectionResultsModis.headers
       }
     )
     // // // //
