@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -11,7 +12,21 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+
+  on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
+
+  const options = {
+    webpackOptions: require('../../static.webpack.config.dev'),
+    watchOptions: {}
+  }
+  on('file:preprocessor', webpackPreprocessor(options))
+
+  require('@cypress/code-coverage/task')(on, config)
+
+  return config
 }

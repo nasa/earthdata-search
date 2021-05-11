@@ -15,3 +15,5 @@ tmp
 cypress/screenshots
 cypress/videos
 overrideStatic.config.json
+cypress-coverage
+.nyc_output
