@@ -31,15 +31,11 @@ describe('exportSearch', () => {
             items: [{
               conceptId: 'C100000-EDSC',
               title: 'Test collection',
-              platforms: [{
-                shortName: 'platform'
-              }]
+              platforms: ['platform']
             }, {
               conceptId: 'C100001-EDSC',
               title: 'Test collection 1',
-              platforms: [{
-                shortName: 'platform'
-              }]
+              platforms: ['platform']
             }]
           }
         }
@@ -86,15 +82,11 @@ describe('exportSearch', () => {
             items: [{
               conceptId: 'C100000-EDSC',
               title: 'Test collection',
-              platforms: [{
-                shortName: 'platform'
-              }]
+              platforms: ['platform']
             }, {
               conceptId: 'C100001-EDSC',
               title: 'Test collection 1',
-              platforms: [{
-                shortName: 'platform'
-              }]
+              platforms: ['platform']
             }]
           }
         }
