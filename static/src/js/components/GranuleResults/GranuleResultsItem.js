@@ -27,6 +27,7 @@ const thumbnailWidth = getApplicationConfig().thumbnailSize.width
  * Renders GranuleResultsItem.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - Granule passed from redux store.
+ * @param {Object} props.directDistributionInformation - The collection direct distribution information.
  * @param {Object} props.granule - Granule passed from redux store.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Function} props.isGranuleInProject - Function designating if the granule is in the project.
