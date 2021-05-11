@@ -47,9 +47,11 @@ CustomDataLinksToggle.propTypes = {
 /**
  * Renders GranuleResultsDataLinksButton.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.collectionId - The collection ID.
  * @param {String} props.buttonVariant - The button variant.
+ * @param {String} props.collectionId - The collection ID.
+ * @param {Object} props.directDistributionInformation - The collection direct distribution information.
  * @param {Array} props.dataLinks - An array of data links.
+ * @param {Array} props.s3Links - An array of AWS S3 links.
  * @param {Function} props.onMetricsDataAccess - The metrics callback.
  */
 export const GranuleResultsDataLinksButton = ({
@@ -92,6 +94,8 @@ export const GranuleResultsDataLinksButton = ({
     }
   }
 
+  // If only one datalink is provided and s3 links are not provided, a button is shown rather
+  // than a dropdown list. Otherwise, use a dropdown for the links.
   if (dataLinks.length > 1 || s3Links.length > 0) {
     const dataLinksList = dataLinks.map((dataLink, i) => {
       const key = `data_link_${i}`
@@ -288,7 +292,7 @@ export const GranuleResultsDataLinksButton = ({
                         s3Links.length > 0 && (
                           <div className="granule-results-data-links-button__menu-panel">
                             <div className="tab-content">
-                              {s3LinksList}
+                              {s3LinksList()}
                             </div>
                           </div>
                         )
