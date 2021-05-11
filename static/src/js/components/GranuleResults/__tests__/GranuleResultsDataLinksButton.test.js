@@ -262,7 +262,8 @@ describe('GranuleResultsDataLinksButton component', () => {
           }
         ]
       })
-      const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children().props.children[1]
+
+      const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
       expect(tabDropdownItems[0].type.displayName).toBe('DropdownItem')
       expect(tabDropdownItems[0].props.label).toBe('Copy path to file in AWS S3')
       expect(tabDropdownItems[0].props.children[0]).toBe('linkhref')
@@ -291,7 +292,7 @@ describe('GranuleResultsDataLinksButton component', () => {
             }
           ]
         })
-        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children().props.children[1]
+        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
         tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
         expect(stopPropagationMock).toHaveBeenCalledTimes(1)
       })
@@ -318,7 +319,7 @@ describe('GranuleResultsDataLinksButton component', () => {
             }
           ]
         })
-        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children().props.children[1]
+        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
         tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
         expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(1)
         expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
@@ -353,7 +354,7 @@ describe('GranuleResultsDataLinksButton component', () => {
               }
             ]
           })
-          const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children().props.children[1]
+          const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
 
           tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
 
@@ -396,7 +397,7 @@ describe('GranuleResultsDataLinksButton component', () => {
             }
           ]
         })
-        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children().props.children[1]
+        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
         await tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
 
         expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1)
@@ -434,7 +435,7 @@ describe('GranuleResultsDataLinksButton component', () => {
             }
           ]
         })
-        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children().props.children[1]
+        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
         await tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
 
         expect(addToastMock.mock.calls.length).toBe(1)
@@ -465,7 +466,7 @@ describe('GranuleResultsDataLinksButton component', () => {
             }
           ]
         })
-        const distributionInformation = enzymeWrapper.find('.tab-content').props().children().props.children[0]
+        const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
         const regionRow = distributionInformation.props.children[0]
         const value = regionRow.props.children[1]
         expect(value.props.children).toBe('aws-region')
@@ -499,7 +500,7 @@ describe('GranuleResultsDataLinksButton component', () => {
                 }
               ]
             })
-            const distributionInformation = enzymeWrapper.find('.tab-content').props().children().props.children[0]
+            const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
             const regionRow = distributionInformation.props.children[0]
             const value = regionRow.props.children[1]
             await value.props.onClick()
@@ -540,7 +541,7 @@ describe('GranuleResultsDataLinksButton component', () => {
                 }
               ]
             })
-            const distributionInformation = enzymeWrapper.find('.tab-content').props().children().props.children[0]
+            const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
             const regionRow = distributionInformation.props.children[0]
             const value = regionRow.props.children[1]
             await value.props.onClick()
@@ -576,7 +577,7 @@ describe('GranuleResultsDataLinksButton component', () => {
             }
           ]
         })
-        const distributionInformation = enzymeWrapper.find('.tab-content').props().children().props.children[0]
+        const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
         const bucketObjectPrefixRow = distributionInformation.props.children[1]
         const value = bucketObjectPrefixRow.props.children[1][0]
         const bucketObjectPrefixButton = value.props.children[0]
@@ -614,7 +615,7 @@ describe('GranuleResultsDataLinksButton component', () => {
                 }
               ]
             })
-            const distributionInformation = enzymeWrapper.find('.tab-content').props().children().props.children[0]
+            const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
             const bucketObjectPrefixRow = distributionInformation.props.children[1]
             const value = bucketObjectPrefixRow.props.children[1][0]
             const bucketObjectPrefixButton = value.props.children[0]
@@ -659,7 +660,7 @@ describe('GranuleResultsDataLinksButton component', () => {
                 }
               ]
             })
-            const distributionInformation = enzymeWrapper.find('.tab-content').props().children().props.children[0]
+            const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
             const bucketObjectPrefixRow = distributionInformation.props.children[1]
             const value = bucketObjectPrefixRow.props.children[1][0]
             const bucketObjectPrefixButton = value.props.children[0]
@@ -700,7 +701,7 @@ describe('GranuleResultsDataLinksButton component', () => {
               }
             ]
           })
-          const distributionInformation = enzymeWrapper.find('.tab-content').props().children().props.children[0]
+          const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
           const bucketObjectPrefixRow = distributionInformation.props.children[1]
           const bucketObjectPrefixButtonOne = bucketObjectPrefixRow.props.children[1][0]
           const bucketObjectPrefixButtonTwo = bucketObjectPrefixRow.props.children[1][1]
