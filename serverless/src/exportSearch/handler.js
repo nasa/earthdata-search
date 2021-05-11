@@ -94,15 +94,7 @@ const exportSearch = async (event, context) => {
       }
 
       // Push the items returned onto the returnItems array
-      returnItems.push(...items.map((item) => {
-        const { platforms = [] } = item
-
-        // Only return an array of the platform short names
-        return {
-          ...item,
-          platforms: platforms.map(platform => platform.shortName)
-        }
-      }))
+      returnItems.push(...items)
     }
 
     // Format the returnItems into the requested format
