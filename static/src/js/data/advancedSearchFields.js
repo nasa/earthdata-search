@@ -1,5 +1,7 @@
 import * as Yup from 'yup'
 
+import { isNumber } from '../util/isNumber'
+
 export const advancedSearchFields = [
   {
     name: 'regionSearch',
@@ -11,20 +13,36 @@ export const advancedSearchFields = [
         value: 'huc'
       },
       {
-        name: 'endpoint',
-        value: 'rivers/reach'
-      },
-      {
         name: 'keyword',
         validateFor: 'regionSearch',
-        validation: Yup.mixed().when('endpoint', {
-          is: 'huc',
-          then: Yup.number()
-            .typeError('A valid HUC is required')
-            .required('A value is required'),
-          otherwise: Yup.string('A valid HUC region is required')
-            .required('Region is required')
-        })
+        validation: Yup.mixed().test(
+          'keyword',
+          'Value is not a number',
+          (value, context) => {
+            const { parent } = context
+            const { endpoint } = parent
+
+            if (endpoint === 'huc') {
+              return isNumber(value)
+            }
+
+            return true
+          }
+        ).test(
+          'keyword',
+          'Value is not a number',
+          (value, context) => {
+            const { parent } = context
+            const { endpoint } = parent
+
+            if (endpoint === 'rivers/reach') {
+              return isNumber(value)
+            }
+
+            return true
+          }
+        )
+          .required('A value is required')
       },
       {
         name: 'exact',
