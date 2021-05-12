@@ -16,15 +16,11 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       summary = '',
       datasetId = null,
       granuleCount = 0,
-      hasFormats = false,
-      hasSpatialSubsetting = false,
-      hasTemporalSubsetting = false,
-      hasTransforms = false,
-      hasVariables = false,
       hasMapImagery = false,
       isOpenSearch = false,
       isNrt = false,
       organizations = [],
+      serviceFeatures = {},
       shortName,
       thumbnail = null,
       timeEnd = null,
@@ -88,6 +84,30 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
     const isCollectionInProject = projectIds.indexOf(collectionId) !== -1
 
     const isLast = index === collectionIds.length - 1
+
+    // Determine service feature flags
+    let hasFormats = false
+    let hasSpatialSubsetting = false
+    let hasTemporalSubsetting = false
+    let hasTransforms = false
+    let hasVariables = false
+    Object.keys(serviceFeatures).forEach((key) => {
+      const service = serviceFeatures[key]
+
+      const {
+        has_formats: serviceHasFormats,
+        has_spatial_subsetting: serviceHasSpatialSubsetting,
+        has_temporal_subsetting: serviceHasTemporalSubsetting,
+        has_transforms: serviceHasTransforms,
+        has_variables: serviceHasVariables
+      } = service
+
+      if (serviceHasFormats) hasFormats = true
+      if (serviceHasSpatialSubsetting) hasSpatialSubsetting = true
+      if (serviceHasTemporalSubsetting) hasTemporalSubsetting = true
+      if (serviceHasTransforms) hasTransforms = true
+      if (serviceHasVariables) hasVariables = true
+    })
 
     return {
       summary: truncatedAbstract,
