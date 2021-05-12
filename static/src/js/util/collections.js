@@ -106,6 +106,7 @@ export const prepareCollectionParams = (state) => {
   if (featureFacets.customizable) {
     serviceType.push('esi')
     serviceType.push('opendap')
+    serviceType.push('harmony')
   }
   if (featureFacets.mapImagery) tagKey.push(tagName('gibs'))
   if (featureFacets.availableFromAwsCloud) {
