@@ -65,6 +65,7 @@ export default class CollectionRequest extends CmrRequest {
       'project',
       'provider',
       'science_keywords_h',
+      'service_type',
       'sort_key',
       'spatial_keyword',
       'tag_key',
@@ -94,6 +95,7 @@ export default class CollectionRequest extends CmrRequest {
       'project_h',
       'provider',
       'sort_key',
+      'service_type',
       'spatial_keyword',
       'tag_key',
       'two_d_coordinate_system_name'
