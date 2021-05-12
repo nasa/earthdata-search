@@ -211,9 +211,6 @@
     "include": [
       "static/src/js/**/*.js"
     ],
-    "exclude": [
-      "example"
-    ],
     "excludeAfterRemap": true
   }
 }
