@@ -79,7 +79,7 @@
       "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
       "graphQlHost": "https://graphql.sit.earthdata.nasa.gov",
-      "regionHost": "https://fts.podaac.sit.earthdata.nasa.gov/",
+      "regionHost": "https://d2dwjhzkooeayk.cloudfront.net/",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
