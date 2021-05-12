@@ -23,16 +23,34 @@ function setup(overrideProps) {
         summary: 'test summary',
         datasetId: 'test dataset id',
         granuleCount: 42,
-        hasFormats: false,
         hasMapImagery: false,
-        hasSpatialSubsetting: false,
-        hasTemporalSubsetting: false,
-        hasTransforms: false,
-        hasVariables: false,
         id: 'collectionId',
         isOpenSearch: false,
         isNrt: false,
         organizations: ['test/org'],
+        serviceFeatures: {
+          esi: {
+            has_formats: false,
+            has_variables: false,
+            has_transforms: false,
+            has_spatial_subsetting: false,
+            has_temporal_subsetting: false
+          },
+          opendap: {
+            has_formats: false,
+            has_variables: false,
+            has_transforms: false,
+            has_spatial_subsetting: false,
+            has_temporal_subsetting: false
+          },
+          harmony: {
+            has_formats: false,
+            has_variables: false,
+            has_transforms: false,
+            has_spatial_subsetting: false,
+            has_temporal_subsetting: false
+          }
+        },
         shortName: 'test_short_name',
         thumbnail: 'http://some.test.com/thumbnail/url.jpg',
         timeEnd: '2019-01-15T00:00:00.000Z',
