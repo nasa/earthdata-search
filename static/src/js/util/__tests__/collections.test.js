@@ -42,7 +42,7 @@ describe('#withAdvancedSearch', () => {
 
 describe('#prepareCollectionParams', () => {
   describe('when the customize facet is selected', () => {
-    test('includes the correct tags', () => {
+    test('includes the correct serviceType', () => {
       const params = prepareCollectionParams({
         facetsParams: {
           feature: {
@@ -53,9 +53,9 @@ describe('#prepareCollectionParams', () => {
 
       expect(params).toEqual(
         expect.objectContaining({
-          tagKey: [
-            'edsc.extra.serverless.subset_service.esi',
-            'edsc.extra.serverless.subset_service.opendap'
+          serviceType: [
+            'esi',
+            'opendap'
           ]
         })
       )
