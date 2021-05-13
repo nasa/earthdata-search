@@ -1,5 +1,5 @@
 import { eventEmitter } from '../events/events'
-import { createDataLinks } from './granules'
+import { createDataLinks, createS3Links } from './granules'
 
 /**
  * @typedef {Object} GranuleListInfo
@@ -54,6 +54,7 @@ export const formatGranulesList = ({
     const thumbnail = browseFlag ? granuleThumbnail : false
 
     const dataLinks = createDataLinks(links)
+    const s3Links = createS3Links(links)
     const isFocusedGranule = isFocused || focusedGranuleId === id
     const isHoveredGranule = hoveredGranuleId === id
     const isInProject = isGranuleInProject(id)
@@ -95,7 +96,8 @@ export const formatGranulesList = ({
       isCollectionInProject,
       handleClick,
       handleMouseEnter,
-      handleMouseLeave
+      handleMouseLeave,
+      s3Links
     }
   })
 

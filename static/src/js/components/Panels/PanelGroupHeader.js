@@ -5,7 +5,8 @@ import {
   FaSortAmountDownAlt,
   FaSortAmountDown,
   FaTable,
-  FaList
+  FaList,
+  FaFileExport
 } from 'react-icons/fa'
 
 import { headerMetaSkeleton, titleSkeleton } from './skeleton'
@@ -50,6 +51,7 @@ export const PanelGroupHeader = ({
   primaryHeading,
   headerLoading,
   moreActionsDropdownItems,
+  exportsArray,
   sortsArray,
   viewsArray
 }) => {
@@ -264,8 +266,19 @@ export const PanelGroupHeader = ({
               }
             </div>
             {
-              (sortsArray.length > 0 || viewsArray.length > 0) && (
+              (exportsArray.length > 0 || sortsArray.length > 0 || viewsArray.length > 0) && (
                 <nav className="panel-group-header__heading-meta-secondary">
+                  {
+                    exportsArray.length > 0 && (
+                      <RadioSettingDropdown
+                        id={`panel-group-header-dropdown__export__${panelGroupId}`}
+                        className="panel-group-header__setting-dropdown"
+                        activeIcon={FaFileExport}
+                        label="Export"
+                        settings={exportsArray}
+                      />
+                    )
+                  }
                   {
                     sortsArray.length > 0 && (
                       <RadioSettingDropdown
@@ -312,6 +325,7 @@ PanelGroupHeader.defaultProps = {
   panelGroupId: null,
   primaryHeading: null,
   headerLoading: false,
+  exportsArray: [],
   viewsArray: [],
   sortsArray: []
 }
@@ -338,6 +352,7 @@ PanelGroupHeader.propTypes = {
   panelGroupId: PropTypes.string,
   primaryHeading: PropTypes.string,
   headerLoading: PropTypes.bool,
+  exportsArray: PropTypes.arrayOf(PropTypes.shape({})),
   viewsArray: PropTypes.arrayOf(PropTypes.shape({})),
   sortsArray: PropTypes.arrayOf(PropTypes.shape({}))
 }

@@ -157,8 +157,6 @@ describe('SubscriptionsList component', () => {
 
     const editButton = enzymeWrapper.find('.subscriptions-list__button--edit')
 
-    console.log('editButton', editButton.debug())
-
     test('redirects to the focused collection subscriptions', () => {
       expect(editButton.props().to).toEqual({
         pathname: '/search/granules/subscriptions',

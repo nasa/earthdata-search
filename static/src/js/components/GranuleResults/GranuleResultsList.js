@@ -12,6 +12,7 @@ import './GranuleResultsList.scss'
  * Renders GranuleResultsList.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
+ * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.isOpenSearch - Flag designating CWIC collections.
@@ -32,6 +33,7 @@ import './GranuleResultsList.scss'
  */
 export const GranuleResultsList = ({
   collectionId,
+  directDistributionInformation,
   excludedGranuleIds,
   granules,
   isCollectionInProject,
@@ -56,6 +58,7 @@ export const GranuleResultsList = ({
         ({ height, width }) => (
           <GranuleResultsListBody
             collectionId={collectionId}
+            directDistributionInformation={directDistributionInformation}
             excludedGranuleIds={excludedGranuleIds}
             granules={granules}
             height={height}
@@ -89,6 +92,7 @@ GranuleResultsList.defaultProps = {
 
 GranuleResultsList.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,

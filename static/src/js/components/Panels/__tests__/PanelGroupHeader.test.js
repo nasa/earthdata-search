@@ -18,6 +18,7 @@ function setup(overrideProps) {
     primaryHeading: 'Primary Heading',
     headerLoading: false,
     moreActionsDropdownItems: [],
+    exportsArray: [],
     sortsArray: [],
     viewsArray: [],
     ...overrideProps
@@ -194,6 +195,40 @@ describe('PanelGroupHeader component', () => {
     test('should render the views list', () => {
       expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').length).toEqual(1)
       expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings).toEqual(props.viewsArray)
+    })
+  })
+
+  describe('when exports are provided', () => {
+    test('should render the exports list', () => {
+      const exportsClickMock = jest.fn()
+
+      const { enzymeWrapper, props } = setup({
+        exportsArray: [
+          {
+            label: 'JSON',
+            onClick: () => exportsClickMock('json')
+          }
+        ]
+      })
+
+      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').length).toEqual(1)
+      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings).toEqual(props.exportsArray)
+    })
+
+    test('when an export is in progress', () => {
+      const exportsClickMock = jest.fn()
+
+      const { enzymeWrapper } = setup({
+        exportsArray: [
+          {
+            label: 'JSON',
+            inProgress: true,
+            onClick: () => exportsClickMock('json')
+          }
+        ]
+      })
+
+      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings[0].inProgress).toEqual(true)
     })
   })
 })

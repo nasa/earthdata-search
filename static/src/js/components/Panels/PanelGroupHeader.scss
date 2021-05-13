@@ -73,7 +73,7 @@
   }
 
   &__heading-meta {
-    height: 2rem;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -81,7 +81,7 @@
     background-color: darken($color__black--100, 7);
     font-size: 0.725rem;
 
-    .panels--sm & {
+    .panels--md & {
       font-size: 0.825rem;
     }
   }
@@ -89,20 +89,21 @@
   &__heading-meta-primary {
     display: flex;
     align-items: center;
-    height: 2rem;
-    padding: 0 $spacer/2 0 $spacer;
+    height: auto;
+    padding: 0.325rem $spacer/2 0.325rem $spacer;
     color: $color__black--600;
   }
 
   &__heading-meta-secondary {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
-    height: 2rem;
+    height: 100%;
     padding: 0 0 0 0.75*$spacer;
   }
 
   &__setting-dropdown {
-    height: 2rem;
+    height: 100%;
     border-left: 1px solid $color__black--300;
     transition: 0.2s ease-in-out;
 
@@ -116,17 +117,24 @@
 
     .custom-toggle {
       padding: 0 0.75*$spacer;
-      height: 2rem;
+      height: 100%;
     }
 
     .custom-toggle__icon {
-      height: 2rem;
+      flex-shrink: 0;
       font-size: 1rem;
       height: 0.925rem;
+      width: 0.925rem;
       transition: 0.2s ease-in-out;
 
       &.fa-list {
         height: 0.925rem;
+      }
+    }
+
+    .panels--sm & {
+      .radio-setting-dropdown__label {
+        display: none;
       }
     }
   }
@@ -159,5 +167,11 @@
 
   &__heading-primary-link:hover {
     color: $color__blue;
+  }
+
+  &__spinner-export {
+    margin: 0 0.75*$spacer;
+    border-left: 1px solid $color__black--300;
+    height: 2rem;
   }
 }

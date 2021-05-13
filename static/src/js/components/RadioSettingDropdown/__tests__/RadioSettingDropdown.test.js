@@ -71,4 +71,20 @@ describe('RadioSettingDropdown component', () => {
 
     expect(enzymeWrapper.find(Dropdown).length).toEqual(1)
   })
+
+  test('adds a key to the Dropdown component to force rerenders', () => {
+    const { enzymeWrapper } = setup({
+      id: 'test-id',
+      label: 'menu label',
+      settings: [
+        {
+          label: 'setting label',
+          isActive: false,
+          onClick: itemOnClickCallbackMock
+        }
+      ]
+    })
+
+    expect(enzymeWrapper.find(Dropdown).key()).toEqual('0_menu_label')
+  })
 })

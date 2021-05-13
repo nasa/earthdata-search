@@ -2,15 +2,117 @@
   &__dropdown-item {
     color: $color__black--800;
     font-size: 0.875rem;
+    padding: 0.25rem 1rem;
+    user-select: text;
+    line-height: 1.5rem;
+    vertical-align: middle;
+    cursor: pointer;
 
     &:hover {
       background-color: $color__blue--dark;
-      color: $color__black--200;
+      color: $color__black--100;
     }
   }
 
   &__menu {
-    max-height: 15.825rem;
-    overflow-y: scroll !important; // !important is needed here to override the !important included in the bootstrap css for .dropdown-menu
+    padding: 0;
+
+    .edsc-tabs {
+      .nav-item {
+        flex-grow: 1;
+        text-align: center;
+      }
+    }
+
+    .tab-content {
+      max-height: 20rem;
+      overflow-y: scroll;
+    }
+  }
+
+  &__menu-panel-heading {
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 0.325rem 1rem;
+    background: $color__black--100;
+    border-bottom: 1px solid $color__black--200;
+    color: $color__black--600;
+    font-size: 0.825rem;
+    line-height: 1.5rem;
+    white-space: nowrap;
+  }
+
+  &__menu-panel-heading-row {
+    display: flex;
+  }
+
+  &__icon {
+    margin-left: 0.5rem;
+    color: rgba($color__white, 0.8);
+    opacity: 0;
+    transition: all 0.2s ease;
+
+    &--download {
+      position: relative;
+      top: -0.125rem;
+    }
+
+    .granule-results-data-links-button__dropdown-item:hover & {
+      opacity: 1;
+    }
+  }
+
+  &__menu-panel-value {
+    position: relative;
+    top: -0.0125rem;
+    display: flex;
+    align-items: center;
+    margin-left: 0.25rem;
+    color: $color__black--700;
+    font-weight: 700;
+    align-items: center;
+    user-select: text;
+    white-space: nowrap;
+
+    .button__contents {
+      display: inline-block;
+    }
+
+    .button__icon {
+      position: relative;
+      margin-left: 0.25rem;
+      font-size: 0.825rem;
+      color: $color__black--500;
+      opacity: 0;
+      transition: opacity 0.1s ease-in-out;
+
+      .button--naked & {
+        vertical-align: initial;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      .button__icon {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__tab-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__tab-icon {
+    color: $color__black--300;
+    margin-right: 0.325rem;
+    transition: color 0.1s ease-in-out;
+
+    .nav-item.active & {
+      color: $color__black--500;
+    }
   }
 }

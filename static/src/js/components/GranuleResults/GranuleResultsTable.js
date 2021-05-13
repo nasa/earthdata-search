@@ -14,6 +14,7 @@ import './GranuleResultsTable.scss'
  * Renders GranuleResultsTable.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
+ * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {String} props.focusedGranuleId - The focused granule ID.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.hasBrowseImagery - Designates if the collection has browse imagery.
@@ -34,6 +35,7 @@ import './GranuleResultsTable.scss'
 
 export const GranuleResultsTable = ({
   collectionId,
+  directDistributionInformation,
   focusedGranuleId,
   granules,
   hasBrowseImagery,
@@ -61,6 +63,7 @@ export const GranuleResultsTable = ({
       customProps: {
         cellClassName: 'granule-results-table__cell--granule',
         collectionId,
+        directDistributionInformation,
         isGranuleInProject,
         GranuleResultsTableHeaderCell,
         location,
@@ -201,6 +204,7 @@ GranuleResultsTable.defaultProps = {
 
 GranuleResultsTable.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape).isRequired,
   hasBrowseImagery: PropTypes.bool.isRequired,

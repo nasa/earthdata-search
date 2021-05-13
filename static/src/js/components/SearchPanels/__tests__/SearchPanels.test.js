@@ -17,6 +17,7 @@ import * as PortalUtils from '../../../util/portals'
 import SearchPanels from '../SearchPanels'
 import Panels from '../../Panels/Panels'
 import PanelGroup from '../../Panels/PanelGroup'
+import PanelGroupHeader from '../../Panels/PanelGroupHeader'
 import GranuleResultsActionsContainer from '../../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 
 const store = configureStore()
@@ -71,6 +72,10 @@ function setup(overrideProps, location = '/search') {
       pageNum: 1,
       sortKey: '-start_date'
     },
+    isExportRunning: {
+      csv: false,
+      json: false
+    },
     location: {
       pathname: '/search',
       search: ''
@@ -86,6 +91,7 @@ function setup(overrideProps, location = '/search') {
     onToggleAboutCwicModal: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
+    onExport: jest.fn(),
     panels: {
       activePanel: '0.0.0',
       isOpen: true
@@ -764,5 +770,61 @@ describe('SearchPanels component', () => {
 
     expect(enzymeWrapper.find(SearchPanels).instance().state.collectionPanelView).toEqual('table')
     expect(enzymeWrapper.find(SearchPanels).instance().state.granulePanelView).toEqual('list')
+  })
+
+  describe('exportsArray', () => {
+    describe('when not exporting a csv file', () => {
+      test('passes the correct props to the PanelGroupHeader', () => {
+        const { enzymeWrapper } = setup()
+
+        const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
+          .at(0).find(PanelGroupHeader).props()
+        const { inProgress } = panelGroupHeaderProps.exportsArray[0]
+        expect(inProgress).toEqual(false)
+      })
+    })
+
+    describe('when exporting a csv file', () => {
+      test('passes the correct props to the PanelGroupHeader', () => {
+        const { enzymeWrapper } = setup({
+          isExportRunning: {
+            csv: true,
+            json: false
+          }
+        })
+
+        const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
+          .at(0).find(PanelGroupHeader).props()
+        const { inProgress } = panelGroupHeaderProps.exportsArray[0]
+        expect(inProgress).toEqual(true)
+      })
+    })
+
+    describe('when not exporting a json file', () => {
+      test('passes the correct props to the PanelGroupHeader', () => {
+        const { enzymeWrapper } = setup()
+
+        const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
+          .at(0).find(PanelGroupHeader).props()
+        const { inProgress } = panelGroupHeaderProps.exportsArray[1]
+        expect(inProgress).toEqual(false)
+      })
+    })
+
+    describe('when exporting a json file', () => {
+      test('passes the correct props to the PanelGroupHeader', () => {
+        const { enzymeWrapper } = setup({
+          isExportRunning: {
+            csv: false,
+            json: true
+          }
+        })
+
+        const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
+          .at(0).find(PanelGroupHeader).props()
+        const { inProgress } = panelGroupHeaderProps.exportsArray[1]
+        expect(inProgress).toEqual(true)
+      })
+    })
   })
 })

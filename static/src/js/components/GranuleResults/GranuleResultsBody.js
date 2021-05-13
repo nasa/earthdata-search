@@ -17,6 +17,7 @@ import './GranuleResultsBody.scss'
  * Renders GranuleResultsBody.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The focused collection ID.
+ * @param {Object} props.directDistributionInformation - The collection direct distribution information.
  * @param {String} props.focusedGranuleId - The focused granule ID.
  * @param {Object} props.granuleSearchResults - Granules passed from redux store.
  * @param {Object} props.isOpenSearch - Flag set if the focused collection is a CWIC collection.
@@ -30,6 +31,7 @@ import './GranuleResultsBody.scss'
  */
 const GranuleResultsBody = ({
   collectionId,
+  directDistributionInformation,
   focusedGranuleId,
   granuleQuery,
   granuleSearchResults,
@@ -179,6 +181,7 @@ const GranuleResultsBody = ({
       >
         <GranuleResultsList
           collectionId={collectionId}
+          directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
           granules={granulesList}
           isCollectionInProject={isCollectionInProject}
@@ -206,6 +209,7 @@ const GranuleResultsBody = ({
       >
         <GranuleResultsTable
           collectionId={collectionId}
+          directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
           focusedGranuleId={focusedGranuleId}
           granules={granulesList}
@@ -255,6 +259,7 @@ const GranuleResultsBody = ({
 
 GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,

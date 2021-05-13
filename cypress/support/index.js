@@ -18,3 +18,12 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+import '@cypress/code-coverage/support'
+
+Cypress.on('uncaught:exception', (err) => {
+  console.log('Error from uncaught:exception: ', err.message)
+  // returning false here prevents Cypress from
+  // failing the test
+  return false
+})

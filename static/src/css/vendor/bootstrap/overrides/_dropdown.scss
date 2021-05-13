@@ -2,6 +2,8 @@
 // which would be done to overcome overflow issues.
 #root,
 .dropdown-menu {
+  box-shadow: 0 0 1rem rgba($color__black, 0.15);
+
   .dropdown-menu-dark,
   .dropdown-dark & {
     background-color: $color__black--800;

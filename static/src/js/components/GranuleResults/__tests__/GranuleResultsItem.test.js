@@ -15,6 +15,7 @@ function setup(type, overrideProps) {
   const defaultProps = {
     browseUrl: undefined,
     collectionId: 'collectionId',
+    directDistributionInformation: {},
     focusedGranule: '',
     isCollectionInProject: false,
     isGranuleInProject: jest.fn(() => false),
@@ -56,6 +57,43 @@ function setup(type, overrideProps) {
             title: 'linktitle',
             href: 'http://linkhref'
           }
+        ],
+        s3Links: []
+      }
+    }
+  }
+
+  if (type === 'cmr-s3') {
+    props = {
+      ...defaultProps,
+      directDistributionInformation: {
+        region: 's3-region'
+      },
+      granule: {
+        id: 'granuleId',
+        browseFlag: true,
+        onlineAccessFlag: true,
+        formattedTemporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
+        granuleThumbnail: '/fake/path/image.jpg',
+        title: 'Granule title',
+        dataLinks: [
+          {
+            rel: 'http://linkrel/data#',
+            title: 'linktitle',
+            href: 'http://linkhref'
+          }
+        ],
+        s3Links: [
+          {
+            rel: 'http://linkrel/s3#',
+            title: 'linktitle',
+            href: 's3://linkhref'
+          }
         ]
       }
     }
@@ -82,7 +120,8 @@ function setup(type, overrideProps) {
             title: 'linktitle',
             href: 's3://bucket/filename'
           }
-        ]
+        ],
+        s3Links: []
       }
     }
   }
@@ -110,7 +149,8 @@ function setup(type, overrideProps) {
             title: 'linktitle',
             href: 'http://linkhref'
           }
-        ]
+        ],
+        s3Links: []
       }
     }
   }
@@ -136,7 +176,8 @@ function setup(type, overrideProps) {
           rel: 'http://linkrel',
           title: 'linktitle',
           href: 'http://linkhref'
-        }]
+        }],
+        s3Links: []
       }
     }
   }
@@ -159,7 +200,8 @@ function setup(type, overrideProps) {
             title: 'linktitle',
             href: 'http://linkhref'
           }
-        ]
+        ],
+        s3Links: []
       }
     }
   }
@@ -184,7 +226,8 @@ function setup(type, overrideProps) {
             title: 'linktitle',
             href: 'http://linkhref'
           }
-        ]
+        ],
+        s3Links: []
       }
     }
   }
@@ -210,7 +253,8 @@ function setup(type, overrideProps) {
             title: 'linktitle',
             href: 'http://linkhref'
           }
-        ]
+        ],
+        s3Links: []
       }
     }
   }
@@ -236,7 +280,8 @@ function setup(type, overrideProps) {
             title: 'linktitle',
             href: 'http://linkhref'
           }
-        ]
+        ],
+        s3Links: []
       },
       isLast: true
     }
@@ -263,7 +308,8 @@ function setup(type, overrideProps) {
             title: 'linktitle',
             href: 'http://linkhref'
           }
-        ]
+        ],
+        s3Links: []
       },
       ...overrideProps
     }
@@ -308,7 +354,6 @@ describe('GranuleResultsItem component', () => {
       } = setup('focused-granule')
 
       expect(enzymeWrapper.props().className).toContain('granule-results-item--active')
-
     })
   })
 
@@ -343,6 +388,30 @@ describe('GranuleResultsItem component', () => {
       expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('p').text()).toEqual('2019-04-28 00:00:00')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('h5').text()).toEqual('End')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('p').text()).toEqual('2019-04-29 23:59:59')
+    })
+  })
+
+  describe('when passed s3 links', () => {
+    test('passes the direct distribution information to the data links button', () => {
+      const { enzymeWrapper } = setup('cmr-s3')
+      const dataLinksButtonProps = enzymeWrapper.find(GranuleResultsDataLinksButton).props()
+
+      expect(dataLinksButtonProps.directDistributionInformation).toEqual({
+        region: 's3-region'
+      })
+    })
+
+    test('passes the s3 links to the data links button', () => {
+      const { enzymeWrapper } = setup('cmr-s3')
+      const dataLinksButtonProps = enzymeWrapper.find(GranuleResultsDataLinksButton).props()
+
+      expect(dataLinksButtonProps.s3Links).toEqual([
+        {
+          rel: 'http://linkrel/s3#',
+          title: 'linktitle',
+          href: 's3://linkhref'
+        }
+      ])
     })
   })
 

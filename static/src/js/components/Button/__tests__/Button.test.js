@@ -5,6 +5,7 @@ import { FaGlobe } from 'react-icons/fa'
 
 import Button from '../Button'
 import Spinner from '../../Spinner/Spinner'
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -27,6 +28,17 @@ function setup(type) {
   }
 
   if (type === 'spinner') {
+    props.spinner = true
+  }
+
+  if (type === 'icon-right') {
+    props.iconPosition = 'right'
+    props.icon = FaGlobe
+  }
+
+  if (type === 'icon-right-spinner') {
+    props.iconPosition = 'right'
+    props.icon = FaGlobe
     props.spinner = true
   }
 
@@ -99,6 +111,22 @@ describe('Button component', () => {
       expect(enzymeWrapper.find(Spinner).prop('size')).toEqual('tiny')
       expect(enzymeWrapper.find(Spinner).prop('inline')).toEqual(true)
       expect(enzymeWrapper.find(Spinner).prop('color')).toEqual('white')
+    })
+  })
+
+  describe('when positioning the icon to the right', () => {
+    test('should render the icon after the text', () => {
+      const { enzymeWrapper } = setup('icon-right')
+      expect(enzymeWrapper.find('button').childAt(0).type()).toBe('span')
+      expect(enzymeWrapper.find('button').childAt(0).text()).toBe('Button Text')
+      expect(enzymeWrapper.find('button').childAt(1).type()).toBe(EDSCIcon)
+    })
+
+    describe('when the spinner is active', () => {
+      test('should not render the icon', () => {
+        const { enzymeWrapper } = setup('icon-right-spinner')
+        expect(enzymeWrapper.find('button').find(EDSCIcon).length).toBe(0)
+      })
     })
   })
 })

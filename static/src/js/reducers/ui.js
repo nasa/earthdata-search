@@ -1,17 +1,19 @@
 import {
+  EXPORT_FINISHED,
+  EXPORT_STARTED,
+  TOGGLE_ABOUT_CWIC_MODAL,
+  TOGGLE_ADVANCED_SEARCH_MODAL,
+  TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
-  TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL,
-  TOGGLE_TOO_MANY_POINTS_MODAL,
-  TOGGLE_CHUNKED_ORDER_MODAL,
-  TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_SPATIAL_POLYGON_WARNING,
-  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
-  TOGGLE_TIMELINE
+  TOGGLE_TIMELINE,
+  TOGGLE_TOO_MANY_POINTS_MODAL,
+  TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -57,6 +59,12 @@ const initialState = {
   },
   timeline: {
     isOpen: true
+  },
+  export: {
+    isExportRunning: {
+      csv: false,
+      json: false
+    }
   }
 }
 
@@ -165,6 +173,28 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         timeline: {
           isOpen: action.payload
+        }
+      }
+    }
+    case EXPORT_STARTED: {
+      return {
+        ...state,
+        export: {
+          isExportRunning: {
+            ...state.export.isExportRunning,
+            [action.payload]: true
+          }
+        }
+      }
+    }
+    case EXPORT_FINISHED: {
+      return {
+        ...state,
+        export: {
+          isExportRunning: {
+            ...state.export.isExportRunning,
+            [action.payload]: false
+          }
         }
       }
     }

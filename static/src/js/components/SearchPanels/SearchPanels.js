@@ -143,6 +143,7 @@ class SearchPanels extends PureComponent {
       collectionMetadata,
       collectionQuery,
       collectionsSearch,
+      isExportRunning,
       granuleMetadata,
       granuleQuery,
       granuleSearchResults,
@@ -155,7 +156,8 @@ class SearchPanels extends PureComponent {
       onChangeQuery,
       onFocusedCollectionChange,
       onMetricsCollectionSortChange,
-      onToggleAboutCwicModal
+      onToggleAboutCwicModal,
+      onExport
     } = this.props
 
     const isLoggedIn = !(authToken === null || authToken === '')
@@ -318,6 +320,23 @@ class SearchPanels extends PureComponent {
       }
     ]
 
+    const {
+      csv: csvExportRunning,
+      json: jsonExportRunning
+    } = isExportRunning
+    const exportsArray = [
+      {
+        label: 'CSV',
+        onClick: () => onExport('csv'),
+        inProgress: csvExportRunning
+      },
+      {
+        label: 'JSON',
+        onClick: () => onExport('json'),
+        inProgress: jsonExportRunning
+      }
+    ]
+
     const buildCollectionResultsBodyFooter = () => {
       if (isDefaultPortal(portalId)) return null
 
@@ -363,6 +382,7 @@ class SearchPanels extends PureComponent {
         headerMetaPrimaryLoading={initialCollectionsLoading}
         headerMetaPrimaryText={collectionResultsHeaderMetaPrimaryText}
         headerLoading={initialCollectionsLoading}
+        exportsArray={exportsArray}
         viewsArray={collectionsViewsArray}
         activeView={collectionPanelView}
         sortsArray={collectionsSortsArray}
@@ -643,6 +663,7 @@ SearchPanels.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
+  isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
@@ -653,6 +674,7 @@ SearchPanels.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   preferences: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired

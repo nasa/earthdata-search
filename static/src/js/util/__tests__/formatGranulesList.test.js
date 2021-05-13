@@ -224,6 +224,87 @@ describe('granule metadata', () => {
     expect(granulesList[0].title).toEqual(granulesMetadata['http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc'].title)
   })
 
+  test('returns the s3 links if they exist', () => {
+    const granulesMetadata = {
+      'G1924512983-LANCEMODIS': {
+        producerGranuleId: 'MOD09GA.A2020226.h06v03.006.2020227005059.NRT.hdf',
+        timeStart: '2020-08-13T00:00:00.000Z',
+        updated: '2020-08-14T00:51:23.212Z',
+        datasetId: 'MODIS/Terra Near Real Time (NRT) Surface Reflectance Daily L2G Global 1km and 500m SIN Grid',
+        dataCenter: 'LANCEMODIS',
+        title: 'LANCEMODIS:1073941531',
+        coordinateSystem: 'GEODETIC',
+        dayNightFlag: 'UNSPECIFIED',
+        timeEnd: '2020-08-14T00:00:00.000Z',
+        id: 'G1924512983-LANCEMODIS',
+        originalFormat: 'ECHO10',
+        granuleSize: '5.89015102386475',
+        browseFlag: true,
+        polygons: [
+          [
+            '49.9154 -179.9921 49.916 -171.1374 52.3227 -170.9023 52.3246 179.7724 49.9154 -179.9921'
+          ]
+        ],
+        collectionConceptId: 'C1219248410-LANCEMODIS',
+        onlineAccessFlag: true,
+        links: [
+          {
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            type: 'application/x-hdfeos',
+            hreflang: 'en-US',
+            href: 'https://nrt3.modaps.eosdis.nasa.gov/archive/allData/6/MOD09GA/2020/226/MOD09GA.A2020226.h06v03.006.NRT.hdf'
+          },
+          {
+            inherited: true,
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            hreflang: 'en-US',
+            href: 'https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt'
+          },
+          {
+            inherited: true,
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            hreflang: 'en-US',
+            href: 's3://lance3.modaps.eosdis.nasa.gov/data_products/'
+          },
+          {
+            inherited: true,
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            hreflang: 'en-US',
+            href: 's3://nrt3.modaps.eosdis.nasa.gov/archive/allData/6/MOD09GA'
+          },
+          {
+            inherited: true,
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+            hreflang: 'en-US',
+            href: 'http://modis.gsfc.nasa.gov/sci_team/'
+          }
+        ],
+        isOpenSearch: false,
+        formattedTemporal: [
+          '2020-08-13 00:00:00',
+          '2020-08-14 00:00:00'
+        ],
+        thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G1924512983-LANCEMODIS?h=85&w=85'
+      }
+    }
+    const { granulesList } = setup({ granulesMetadata })
+
+    expect(granulesList[0].s3Links).toEqual([
+      {
+        inherited: true,
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+        hreflang: 'en-US',
+        href: 's3://lance3.modaps.eosdis.nasa.gov/data_products/'
+      },
+      {
+        inherited: true,
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+        hreflang: 'en-US',
+        href: 's3://nrt3.modaps.eosdis.nasa.gov/archive/allData/6/MOD09GA'
+      }
+    ])
+  })
+
   test('defaults the formattedTemporal', () => {
     const { granulesList } = setup({
       granuleIds: ['G10000-EDSC'],

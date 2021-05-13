@@ -27,6 +27,7 @@ const thumbnailWidth = getApplicationConfig().thumbnailSize.width
  * Renders GranuleResultsItem.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - Granule passed from redux store.
+ * @param {Object} props.directDistributionInformation - The collection direct distribution information.
  * @param {Object} props.granule - Granule passed from redux store.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Function} props.isGranuleInProject - Function designating if the granule is in the project.
@@ -40,6 +41,7 @@ const thumbnailWidth = getApplicationConfig().thumbnailSize.width
  */
 const GranuleResultsItem = forwardRef(({
   collectionId,
+  directDistributionInformation,
   granule,
   isCollectionInProject,
   isGranuleInProject,
@@ -80,6 +82,7 @@ const GranuleResultsItem = forwardRef(({
     isHoveredGranule,
     isFocusedGranule,
     onlineAccessFlag,
+    s3Links,
     timeEnd,
     timeStart,
     title
@@ -265,6 +268,8 @@ const GranuleResultsItem = forwardRef(({
                   <GranuleResultsDataLinksButton
                     collectionId={collectionId}
                     dataLinks={dataLinks}
+                    directDistributionInformation={directDistributionInformation}
+                    s3Links={s3Links}
                     onMetricsDataAccess={onMetricsDataAccess}
                   />
                 )
@@ -279,6 +284,7 @@ const GranuleResultsItem = forwardRef(({
 
 GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
   granule: PropTypes.shape({}).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,

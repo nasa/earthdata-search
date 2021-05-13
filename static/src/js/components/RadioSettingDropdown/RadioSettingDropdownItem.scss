@@ -2,6 +2,11 @@
   padding: $spacer/4 $spacer/2;
   font-size: 0.75rem;
 
+  &--in-progress {
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
+
   &--is-active {
     &.dropdown-item {
       background-color: $color__blue;
@@ -33,6 +38,10 @@
     .radio-setting-dropdown-item--is-active:hover & {
       color: $color__white;
     }
+  }
+
+  &__spinner {
+    margin-right: 0.25rem;
   }
 
   &__title {

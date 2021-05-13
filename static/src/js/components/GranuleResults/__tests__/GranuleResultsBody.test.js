@@ -17,6 +17,7 @@ function setup(options = {
 }, overrideProps) {
   const props = {
     collectionId: 'collectionId',
+    directDistributionInformation: {},
     focusedGranuleId: '',
     granulesMetadata: {
       one: {

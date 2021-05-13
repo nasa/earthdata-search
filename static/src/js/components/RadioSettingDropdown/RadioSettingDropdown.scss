@@ -1,4 +1,8 @@
 .radio-setting-dropdown {
+  &__dropdown {
+    height: 100%;
+  }
+
   &__menu {
     box-shadow: $box-shadow;
     overflow: hidden;

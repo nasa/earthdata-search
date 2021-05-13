@@ -55,6 +55,7 @@ innerElementType.propTypes = {
  * Renders GranuleResultsListBody.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
+ * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Number} props.height - The height of the container provided by AutoSizer.
@@ -77,6 +78,7 @@ innerElementType.propTypes = {
  */
 export const GranuleResultsListBody = ({
   collectionId,
+  directDistributionInformation,
   excludedGranuleIds,
   granules,
   height,
@@ -190,6 +192,7 @@ export const GranuleResultsListBody = ({
             innerElementType={innerElementType}
             itemData={{
               collectionId,
+              directDistributionInformation,
               excludedGranuleIds,
               getRowHeight,
               granules,
@@ -243,6 +246,7 @@ GranuleResultsListBody.defaultProps = {
 
 GranuleResultsListBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,
