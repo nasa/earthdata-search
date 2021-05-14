@@ -81,10 +81,8 @@ const processTag = async (event, context) => {
 
         // There are a few jobs that add an 'updated_at' field to the tag data which will always
         // make the tags appear different so we want to ensure we strip that out before comparing
-        if ('updated_at' in tagData) {
-          delete strippedExistingTagData.updated_at
-          delete strippedTagData.updated_at
-        }
+        delete strippedExistingTagData.updated_at
+        delete strippedTagData.updated_at
 
         // Prevent creating tag data that already exists
         if (!isEqual(strippedTagData, strippedExistingTagData)) {
