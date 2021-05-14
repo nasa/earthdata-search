@@ -6,7 +6,7 @@ export const advancedSearchFields = [
   {
     name: 'regionSearch',
     type: 'regionSearch',
-    label: 'Search by region',
+    label: 'Search by Feature',
     fields: [
       {
         name: 'endpoint',

@@ -43,6 +43,7 @@ describe('AdvancedSearchForm component', () => {
 
     expect(enzymeWrapper.find(FormikForm).length).toEqual(1)
   })
+
   describe('when provided fields', () => {
     describe('when provided an input', () => {
       test('should render an input', () => {
@@ -82,6 +83,7 @@ describe('AdvancedSearchForm component', () => {
         })
       })
     })
+
     describe('when provided a regionSearch', () => {
       test('should render the RegionSearch component', () => {
         const { enzymeWrapper } = setup({
@@ -89,7 +91,7 @@ describe('AdvancedSearchForm component', () => {
             {
               name: 'regionSearch',
               type: 'regionSearch',
-              label: 'Search by region',
+              label: 'Search by Feature',
               fields: []
             }
           ]

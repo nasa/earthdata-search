@@ -67,12 +67,12 @@ export class RegionSearch extends Component {
               className="region-search-results__back-button"
               variant="naked"
               icon={FaChevronLeft}
-              label="Back to Region Search"
+              label="Back to Feature"
               onClick={() => {
                 setModalOverlay(null)
               }}
             >
-              Back to Region Search
+              Back to Feature
             </Button>
           </Col>
         </Row>
