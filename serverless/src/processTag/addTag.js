@@ -55,6 +55,7 @@ export const addTag = async ({
       const { data = {} } = collectionJsonResponse
       const { feed = {} } = data
       const { entry = [] } = feed
+
       collections = entry
     } catch (e) {
       parseError(e, { reThrowError: true })
