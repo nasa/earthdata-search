@@ -43,9 +43,9 @@ export const CollectionResultsListItem = memo(({
   }, [])
 
   useEffect(() => {
-    // Calculate the height when the container width is changed
+    // Calculate the height when the container width or element ref is changed
     setSize(index, element.current.getBoundingClientRect().height)
-  }, [windowWidth])
+  }, [windowWidth, element.current])
 
   if (!isItemLoaded(index)) {
     return (
