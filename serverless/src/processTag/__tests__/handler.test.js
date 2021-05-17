@@ -1,3 +1,5 @@
+import nock from 'nock'
+
 import processTag from '../handler'
 import * as addTag from '../addTag'
 import * as removeTag from '../removeTag'
@@ -54,6 +56,104 @@ describe('processTag', () => {
       append: true,
       cmrToken: 'mocked-system-token'
     })
+  })
+
+  test('doesnt call addTag when tagData matches current tagData', async () => {
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+
+    const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
+
+    const searchCriteria = {
+      collection: {
+        condition: {
+          concept_id: 'C1000000-EDSC'
+        }
+      }
+    }
+
+    const tagData = { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' }
+
+    nock(/cmr/)
+      .post(/search\/concepts/)
+      .reply(200, {
+        id: 'C1000000-EDSC',
+        tags: {
+          'edsc.extra.gibs': {
+            data: tagData
+          }
+        }
+      })
+
+    const event = {
+      Records: [
+        {
+          body: JSON.stringify({
+            tagName: 'edsc.extra.gibs',
+            action: 'ADD',
+            append: true,
+            requireGranules: false,
+            searchCriteria,
+            tagData
+          })
+        }
+      ]
+    }
+
+    await processTag(event, {})
+
+    expect(addTagMock).toBeCalledTimes(0)
+  })
+
+  test('doesnt call addTag when tagData matches current tagData when the difference is updated_at', async () => {
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+
+    const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
+
+    const searchCriteria = {
+      collection: {
+        condition: {
+          concept_id: 'C1000000-EDSC'
+        }
+      }
+    }
+
+    const tagData = {
+      product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6',
+      updated_at: '2020-01-16T16:00:46.124Z'
+    }
+
+    nock(/cmr/)
+      .post(/search\/concepts/)
+      .reply(200, {
+        id: 'C1000000-EDSC',
+        tags: {
+          'edsc.extra.gibs': {
+            data: {
+              ...tagData,
+              updated_at: '2020-01-14T14:00:46.124Z'
+            }
+          }
+        }
+      })
+
+    const event = {
+      Records: [
+        {
+          body: JSON.stringify({
+            tagName: 'edsc.extra.gibs',
+            action: 'ADD',
+            append: true,
+            requireGranules: false,
+            searchCriteria,
+            tagData
+          })
+        }
+      ]
+    }
+
+    await processTag(event, {})
+
+    expect(addTagMock).toBeCalledTimes(0)
   })
 
   test('correctly calls removeTag', async () => {
