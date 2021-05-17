@@ -104,6 +104,40 @@ describe('processTag', () => {
     expect(addTagMock).toBeCalledTimes(0)
   })
 
+  test('correctly call addTag when no searchCriteria is provided', async () => {
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+
+    const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
+
+    const tagData = { concept_id: 'C10000001-EDSC', data: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' }
+
+    const event = {
+      Records: [
+        {
+          body: JSON.stringify({
+            tagName: 'edsc.extra.gibs',
+            action: 'ADD',
+            append: true,
+            requireGranules: false,
+            tagData
+          })
+        }
+      ]
+    }
+
+    await processTag(event, {})
+
+    expect(addTagMock).toBeCalledTimes(1)
+    expect(addTagMock).toBeCalledWith({
+      tagName: 'edsc.extra.gibs',
+      searchCriteria: {},
+      tagData: { concept_id: 'C10000001-EDSC', data: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      requireGranules: false,
+      append: true,
+      cmrToken: 'mocked-system-token'
+    })
+  })
+
   test('doesnt call addTag when tagData matches current tagData when the difference is updated_at', async () => {
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
 

@@ -41,7 +41,7 @@ const processTag = async (event, context) => {
       action,
       append,
       requireGranules,
-      searchCriteria,
+      searchCriteria = {},
       tagData,
       tagName
     } = providedTag
