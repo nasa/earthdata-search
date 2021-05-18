@@ -1,0 +1,32 @@
+.copyable-text {
+  display: block;
+
+  .button {
+    display: flex;
+    align-items: center;
+  }
+
+  .button__icon {
+    position: relative;
+    margin-left: 0.25rem;
+    font-size: 0.825rem;
+    color: $color__black--500;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+
+    .button--naked & {
+      vertical-align: initial;
+    }
+  }
+
+  .button__contents {
+    vertical-align: middle;
+  }
+
+  &:hover,
+  &:focus {
+    .button__icon {
+      opacity: 1;
+    }
+  }
+}
