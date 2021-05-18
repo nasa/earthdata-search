@@ -62,7 +62,7 @@ const PreferencesForm = (props) => {
 
   return (
     <div className="preferences-form">
-      <label htmlFor="preferences-form-label" className="visuallyhidden">Preferences Title</label>
+      <label htmlFor="preferences-form-label" className="visually-hide-label">Preferences Title</label>
       <Form
         id="preferences-form-label"
         fields={fields}

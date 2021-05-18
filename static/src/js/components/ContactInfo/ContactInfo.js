@@ -60,7 +60,7 @@ class ContactInfo extends Component {
     const { edlHost } = getEarthdataConfig(earthdataEnvironment)
 
     return (
-      <fieldset className="contact-info-form">
+      <fieldset className="contact-info-form" >
         <legend className="contact-info-form__legend"><h3>View Contact Information</h3></legend>
         <ul className="contact-info-form__list">
           <li className="contact-info-form__item">

@@ -83,10 +83,11 @@ export class SavedProjects extends Component {
             />
           )
         }
+        <label htmlFor="saved-projects-label" className="visually-hide-label">Saved Projects</label>
         {
           savedProjectsIsLoaded && (
             savedProjects.length > 0 ? (
-              <Table className="saved-projects-table">
+              <Table className="saved-projects-table" id="saved-projects-label">
                 <thead>
                   <tr>
                     <th className="saved-projects-table__project-name-heading">Project Name</th>
