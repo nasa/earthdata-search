@@ -62,7 +62,9 @@ const PreferencesForm = (props) => {
 
   return (
     <div className="preferences-form">
+      <label htmlFor="preferences-form-label" className="visuallyhidden">Preferences Title</label>
       <Form
+        id="preferences-form-label"
         fields={fields}
         formData={formData}
         liveValidate
