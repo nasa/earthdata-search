@@ -57,11 +57,11 @@ export const SubscriptionsList = ({
           />
         )
       }
-
+      <label htmlFor="subscriptions-label" className="visually-hide-label">Subscriptions</label>
       {
         isLoaded && (
           subscriptionsMetadata.length > 0 ? (
-            <Table className="subscriptions-list__table" responsive>
+            <Table className="subscriptions-list__table" id="subscriptions-label" responsive>
               <thead>
                 <tr>
                   <th className="subscriptions-list-table__name-heading">Name</th>
