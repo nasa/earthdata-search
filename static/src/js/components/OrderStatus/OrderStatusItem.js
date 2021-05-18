@@ -3,19 +3,24 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Tab } from 'react-bootstrap'
 import { upperFirst } from 'lodash'
-import { FaChevronUp, FaChevronDown } from 'react-icons/fa'
+import {
+  FaChevronUp,
+  FaChevronDown
+} from 'react-icons/fa'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { getStateFromOrderStatus, aggregatedOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
 import { pluralize } from '../../util/pluralize'
 import { commafy } from '../../util/commafy'
 import { generateDownloadScript } from '../../util/files/generateDownloadScript'
+import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
 import EDSCTabs from '../EDSCTabs/EDSCTabs'
 import OrderProgressList from '../OrderProgressList/OrderProgressList'
 import TextWindowActions from '../TextWindowActions/TextWindowActions'
+import CopyableText from '../CopyableText/CopyableText'
 
 import ProgressRing from '../ProgressRing/ProgressRing'
 
@@ -32,15 +37,15 @@ export const STACJsonPanel = ({
 
   return stacLinks.length > 0 ? (
     <>
-      <p className="order-status-item__tab-intro">
+      <div className="order-status-item__tab-intro">
         <span className="order-status-item__status-text">
           {
             stacLinksIsLoading
               ? `Retrieving STAC links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
-              : `Retrieved ${stacLinks.length} STAC ${pluralize('link', stacLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}.`
+              : `Retrieved ${stacLinks.length} STAC ${pluralize('links', stacLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}`
           }
         </span>
-      </p>
+      </div>
       <TextWindowActions
         id={`links-${retrievalId}`}
         fileContents={stacLinks.join('\n')}
@@ -64,9 +69,9 @@ export const STACJsonPanel = ({
     </>
   )
     : (
-      <p className="order-status-item__tab-intro">
+      <div className="order-status-item__tab-intro">
         STAC links will become available once the order has finished processing
-      </p>
+      </div>
     )
 }
 
@@ -80,9 +85,9 @@ STACJsonPanel.propTypes = {
   stacLinksIsLoading: PropTypes.bool.isRequired
 }
 
-export const DownloadLinksPanel = ({
+export const DownloadFilesPanel = ({
   accessMethodType,
-  granuleLinks,
+  downloadLinks,
   retrievalId,
   granuleCount,
   granuleLinksIsLoading,
@@ -90,29 +95,29 @@ export const DownloadLinksPanel = ({
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
 
-  return granuleLinks.length > 0 ? (
+  return downloadLinks.length > 0 ? (
     <>
-      <p className="order-status-item__tab-intro">
+      <div className="order-status-item__tab-intro">
         <span className="order-status-item__status-text">
           {
             granuleLinksIsLoading
-              ? `Retrieving links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
-              : `Retrieved ${granuleLinks.length} ${pluralize('link', granuleLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}.`
+              ? `Retrieving files for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
+              : `Retrieved ${downloadLinks.length} ${pluralize('file', downloadLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}`
           }
         </span>
-      </p>
+      </div>
       <TextWindowActions
         id={`links-${retrievalId}`}
-        fileContents={granuleLinks.join('\n')}
+        fileContents={downloadLinks.join('\n')}
         fileName={downloadFileName}
-        clipboardContents={granuleLinks.join('\n')}
-        modalTitle="Download Links"
+        clipboardContents={downloadLinks.join('\n')}
+        modalTitle="Download Files"
         disableCopy={!showTextWindowActions}
         disableSave={!showTextWindowActions}
       >
         <ul className="download-links-panel__list">
           {
-            granuleLinks.map((link, i) => {
+            downloadLinks.map((link, i) => {
               const key = `link_${i}`
               return (
                 <li key={key}>
@@ -126,19 +131,157 @@ export const DownloadLinksPanel = ({
     </>
   )
     : (
-      <p className="order-status-item__tab-intro">
-        The download links will become available once the order has finished processing
-      </p>
+      <div className="order-status-item__tab-intro">
+        The download files will become available once the order has finished processing
+      </div>
     )
 }
 
-DownloadLinksPanel.defaultProps = {
+DownloadFilesPanel.defaultProps = {
   showTextWindowActions: true
 }
 
-DownloadLinksPanel.propTypes = {
+DownloadFilesPanel.propTypes = {
   accessMethodType: PropTypes.string.isRequired,
-  granuleLinks: PropTypes.arrayOf(
+  downloadLinks: PropTypes.arrayOf(
+    PropTypes.string
+  ).isRequired,
+  retrievalId: PropTypes.string.isRequired,
+  granuleCount: PropTypes.number.isRequired,
+  granuleLinksIsLoading: PropTypes.bool.isRequired,
+  showTextWindowActions: PropTypes.bool
+}
+
+export const S3LinksPanel = ({
+  accessMethodType,
+  directDistributionInformation,
+  s3Links,
+  retrievalId,
+  granuleCount,
+  granuleLinksIsLoading,
+  showTextWindowActions
+}) => {
+  const downloadFileName = `${retrievalId}-${accessMethodType}-s3.txt`
+
+  const {
+    region,
+    s3BucketAndObjectPrefixNames = [],
+    s3CredentialsApiDocumentationUrl,
+    s3CredentialsApiEndpoint
+  } = directDistributionInformation
+
+  return s3Links.length > 0 ? (
+    <>
+      <div className="order-status-item__tab-intro">
+        {
+          region && (
+            <>
+              <p>{`Direct cloud access for this collection is available in the ${region} region in AWS S3.`}</p>
+              <div className="order-status-item__direct-distribution-information">
+                <div className="order-status-item__direct-distribution-item">
+                  {'Region'}
+                  <CopyableText
+                    className="order-status-item__direct-distribution-item-value"
+                    text={region}
+                    label="Copy to clipboard"
+                    successMessage="Copied the AWS S3 region"
+                    failureMessage="Could not copy the AWS S3 region"
+                  />
+                </div>
+                <div className="order-status-item__direct-distribution-item">
+                  {'Bucket/Object Prefix'}
+                  {s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
+                    <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
+                      <CopyableText
+                        className="order-status-item__direct-distribution-item-value"
+                        text={bucketAndObjPrefix}
+                        label="Copy to clipboard"
+                        successMessage="Copied the AWS S3 Bucket/Object Prefix"
+                        failureMessage="Could not copy the AWS S3 Bucket/Object Prefix"
+                      />
+                      {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
+                    </React.Fragment>
+                  ))}
+                </div>
+                <div className="order-status-item__direct-distribution-item">
+                  {'AWS S3 Credentials'}
+                  <span className="order-status-item__direct-distribution-item-value">
+                    <a
+                      className="link link--external"
+                      href={s3CredentialsApiEndpoint}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Get AWS S3 Credentials
+                    </a>
+                    <a
+                      className="link link--separated link--external"
+                      href={s3CredentialsApiDocumentationUrl}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Documentation
+                    </a>
+                  </span>
+                </div>
+              </div>
+              <span className="order-status-item__status-text">
+                {
+                  granuleLinksIsLoading
+                    ? `Retrieving objects for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
+                    : `Retrieved ${s3Links.length} ${pluralize('object', s3Links.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}`
+                }
+              </span>
+            </>
+          )
+        }
+      </div>
+      <TextWindowActions
+        id={`links-${retrievalId}`}
+        fileContents={s3Links.join('\n')}
+        fileName={downloadFileName}
+        clipboardContents={s3Links.join('\n')}
+        modalTitle="AWS S3 Access"
+        disableCopy={!showTextWindowActions}
+        disableSave={!showTextWindowActions}
+      >
+        <ul className="download-links-panel__list">
+          {
+            s3Links.map((path, i) => {
+              const key = `link_${i}`
+              const s3LinkTitle = getFilenameFromPath(path)
+
+              return (
+                <li key={key}>
+                  <CopyableText
+                    text={path}
+                    label="Copy to clipboard"
+                    successMessage={() => `Copied AWS S3 path for: ${s3LinkTitle}`}
+                    failureMessage={() => `Could not copy AWS S3 path for: ${s3LinkTitle}`}
+                  />
+                </li>
+              )
+            })
+          }
+        </ul>
+      </TextWindowActions>
+    </>
+  )
+    : (
+      <div className="order-status-item__tab-intro">
+        The AWS S3 objects will become available once the order has finished processing
+      </div>
+    )
+}
+
+S3LinksPanel.defaultProps = {
+  showTextWindowActions: true
+}
+
+S3LinksPanel.propTypes = {
+  accessMethodType: PropTypes.string.isRequired,
+  directDistributionInformation: PropTypes.shape({}).isRequired,
+  s3Links: PropTypes.arrayOf(
     PropTypes.string
   ).isRequired,
   retrievalId: PropTypes.string.isRequired,
@@ -151,7 +294,7 @@ DownloadLinksPanel.propTypes = {
 export const DownloadScriptPanel = ({
   accessMethodType,
   earthdataEnvironment,
-  granuleLinks,
+  downloadLinks,
   retrievalCollection,
   retrievalId,
   granuleCount,
@@ -159,19 +302,11 @@ export const DownloadScriptPanel = ({
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.sh`
 
-  return granuleLinks.length > 0
+  return downloadLinks.length > 0
     ? (
       <>
         <div className="order-status-item__tab-intro">
-          <span className="order-status-item__status-text">
-            {
-              granuleLinksIsLoading
-                ? `Retrieving links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
-                : `Retrieved ${granuleLinks.length} links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}.`
-            }
-          </span>
-          <h5 className="mt-2">How to use this script</h5>
-          <p className="collection-download-display__intro">
+          <p className="collection-download-display__intro mt-2">
             <strong>Linux: </strong>
             { 'You must first make the script an executable by running the line \'chmod 777 download.sh\' from the command line. After that is complete, the file can be executed by typing \'./download.sh\'. ' }
             { 'For a detailed walk through of this process, please reference this ' }
@@ -188,17 +323,24 @@ export const DownloadScriptPanel = ({
               '. After installing Cygwin (or a similar utility), run the line \'chmod 777 download.sh\' from the utility\'s command line, and then execute by typing \'./download.sh\'.'
             }
           </p>
+          <span className="order-status-item__status-text">
+            {
+              granuleLinksIsLoading
+                ? `Retrieving files for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
+                : `Retrieved ${downloadLinks.length} files for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}`
+            }
+          </span>
         </div>
         <TextWindowActions
           id={`script-${retrievalId}`}
           fileContents={generateDownloadScript(
-            granuleLinks,
+            downloadLinks,
             retrievalCollection,
             earthdataEnvironment
           )}
           fileName={downloadFileName}
           clipboardContents={generateDownloadScript(
-            granuleLinks,
+            downloadLinks,
             retrievalCollection,
             earthdataEnvironment
           )}
@@ -206,23 +348,23 @@ export const DownloadScriptPanel = ({
         >
           <pre className="download-links-panel__pre">
             {
-              generateDownloadScript(granuleLinks, retrievalCollection, earthdataEnvironment)
+              generateDownloadScript(downloadLinks, retrievalCollection, earthdataEnvironment)
             }
           </pre>
         </TextWindowActions>
       </>
     )
     : (
-      <p className="order-status-item__tab-intro">
+      <div className="order-status-item__tab-intro">
           The download script will become available once the order has finished processing
-      </p>
+      </div>
     )
 }
 
 DownloadScriptPanel.propTypes = {
   accessMethodType: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
-  granuleLinks: PropTypes.arrayOf(
+  downloadLinks: PropTypes.arrayOf(
     PropTypes.string
   ).isRequired,
   retrievalCollection: PropTypes.shape({}).isRequired,
@@ -276,6 +418,7 @@ export class OrderStatusItem extends PureComponent {
 
     if (collection && ['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
       const { id } = collection
+
       const {
         [id]: granuleLinks = [],
         isLoading: granuleLinksIsLoading
@@ -353,6 +496,7 @@ export class OrderStatusItem extends PureComponent {
     if (isLoaded) {
       const {
         browseFlag,
+        directDistributionInformation = {},
         title
       } = collectionMetadata
 
@@ -385,6 +529,7 @@ export class OrderStatusItem extends PureComponent {
       let orderInfo = null
 
       let downloadUrls = []
+      let s3Urls = []
       let totalOrders = 0
       let totalCompleteOrders = 0
       let progressPercentage = 0
@@ -396,13 +541,23 @@ export class OrderStatusItem extends PureComponent {
       if (isDownload) {
         progressPercentage = 100
         orderInfo = 'Download your data directly from the links below, or use the provided download script.'
-        if (granuleLinks.length > 0) downloadUrls = [...granuleLinks]
+        const {
+          download: downloadLinks = [],
+          s3: s3Links = []
+        } = granuleLinks
+        if (downloadLinks.length > 0) downloadUrls = [...downloadLinks]
+        if (s3Links.length > 0) s3Urls = [...s3Links]
       }
 
       if (isOpendap) {
         progressPercentage = 100
         orderInfo = 'Download your data directly from the links below, or use the provided download script.'
-        if (granuleLinks.length > 0) downloadUrls = [...granuleLinks]
+        const {
+          download: downloadLinks = [],
+          s3: s3Links = []
+        } = granuleLinks
+        if (downloadLinks.length > 0) downloadUrls = [...downloadLinks]
+        if (s3Links.length > 0) s3Urls = [...s3Links]
       }
 
       if (isEchoOrders) {
@@ -587,7 +742,7 @@ export class OrderStatusItem extends PureComponent {
                   <span className="order-status-item__meta-column order-status-item__meta-column--progress">
                     <ProgressRing
                       className="order-status-item__progress-ring"
-                      width={20}
+                      width={22}
                       strokeWidth={3}
                       progress={progressPercentage}
                     />
@@ -635,7 +790,7 @@ export class OrderStatusItem extends PureComponent {
                         <div className="order-status-item__meta-body order-status-item__meta-body--progress">
                           <ProgressRing
                             className="order-status-item__progress-ring"
-                            width={20}
+                            width={22}
                             strokeWidth={3}
                             progress={progressPercentage}
                           />
@@ -721,12 +876,35 @@ export class OrderStatusItem extends PureComponent {
                     ) && (
                       <Tab
                         className={downloadUrls.length > 0 ? '' : 'order-status-item__tab-status'}
-                        title="Download Links"
-                        eventKey="download-links"
+                        title="Download Files"
+                        eventKey="download-files"
                       >
-                        <DownloadLinksPanel
+                        <DownloadFilesPanel
                           accessMethodType={accessMethodType}
-                          granuleLinks={downloadUrls}
+                          downloadLinks={downloadUrls}
+                          retrievalId={retrievalId}
+                          granuleCount={granuleCount}
+                          granuleLinksIsLoading={granuleLinksIsLoading}
+                          showTextWindowActions={!isEsi}
+                        />
+                      </Tab>
+                    )
+                  }
+                  {
+                    ((
+                      isDownload
+                      || isOpendap
+                      || isEsi
+                    ) && s3Urls.length > 0) && (
+                      <Tab
+                        className={s3Urls.length > 0 ? '' : 'order-status-item__tab-status'}
+                        title="AWS S3 Access"
+                        eventKey="aws-s3-access"
+                      >
+                        <S3LinksPanel
+                          accessMethodType={accessMethodType}
+                          s3Links={s3Urls}
+                          directDistributionInformation={directDistributionInformation}
                           retrievalId={retrievalId}
                           granuleCount={granuleCount}
                           granuleLinksIsLoading={granuleLinksIsLoading}
@@ -762,7 +940,7 @@ export class OrderStatusItem extends PureComponent {
                         <DownloadScriptPanel
                           accessMethodType={accessMethodType}
                           earthdataEnvironment={earthdataEnvironment}
-                          granuleLinks={downloadUrls}
+                          downloadLinks={downloadUrls}
                           retrievalCollection={collection}
                           retrievalId={retrievalId}
                           granuleCount={granuleCount}
@@ -810,9 +988,9 @@ export class OrderStatusItem extends PureComponent {
                       >
                         {
                           orders.length > 1 && (
-                            <p className="order-status-item__tab-intro">
+                            <div className="order-status-item__tab-intro">
                               {'Due to the number of granules included in the request, it has been split into multiple orders. The data for each order will become available as they are processed.'}
-                            </p>
+                            </div>
                           )
                         }
                         {

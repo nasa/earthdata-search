@@ -6,7 +6,12 @@ import * as generateDownloadScript from '../../../util/files/generateDownloadScr
 
 import { retrievalStatusProps } from './mocks'
 
-import { OrderStatusItem, DownloadLinksPanel, DownloadScriptPanel } from '../OrderStatusItem'
+import {
+  OrderStatusItem,
+  DownloadFilesPanel,
+  DownloadScriptPanel,
+  S3LinksPanel
+} from '../OrderStatusItem'
 import { TextWindowActions } from '../../TextWindowActions/TextWindowActions'
 import { ProgressRing } from '../../ProgressRing/ProgressRing'
 
@@ -60,14 +65,14 @@ function setup(overrideProps, mockRefresh) {
   }
 }
 
-describe('DownloadLinksPanel', () => {
+describe('DownloadFilesPanel', () => {
   describe('when panel is not provided granule links', () => {
     test('renders placeholder message', () => {
       const enzymeWrapper = shallow(
-        <DownloadLinksPanel
+        <DownloadFilesPanel
           accessMethodType="download"
           earthdataEnvironment="prod"
-          granuleLinks={[]}
+          downloadLinks={[]}
           retrievalId="1"
           granuleCount={100}
           granuleLinksIsLoading={false}
@@ -75,41 +80,41 @@ describe('DownloadLinksPanel', () => {
       )
 
       expect(enzymeWrapper.hasClass('order-status-item__tab-intro')).toEqual(true)
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The download links will become available once the order has finished processing')
+      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The download files will become available once the order has finished processing')
     })
   })
 
   describe('when panel is provided granule links', () => {
     test('renders a TextWindowActions component', () => {
       const enzymeWrapper = shallow(
-        <DownloadLinksPanel
+        <DownloadFilesPanel
           accessMethodType="download"
           earthdataEnvironment="prod"
-          granuleLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
+          downloadLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalId="1"
           granuleCount={10}
           granuleLinksIsLoading
         />
       )
 
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('Retrieving links for 10 granules...')
+      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('Retrieving files for 10 granules...')
 
       const windowActions = enzymeWrapper.find(TextWindowActions)
       expect(windowActions.props().id).toEqual('links-1')
       expect(windowActions.props().fileContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
       expect(windowActions.props().fileName).toEqual('1-download.txt')
       expect(windowActions.props().clipboardContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
-      expect(windowActions.props().modalTitle).toEqual('Download Links')
+      expect(windowActions.props().modalTitle).toEqual('Download Files')
     })
   })
 
   describe('when the text window actions are disabled', () => {
     test('hides the copy and save buttons', () => {
       const enzymeWrapper = shallow(
-        <DownloadLinksPanel
+        <DownloadFilesPanel
           accessMethodType="ESI"
           earthdataEnvironment="prod"
-          granuleLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
+          downloadLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalCollection={{}}
           retrievalId="1"
           granuleCount={10}
@@ -132,7 +137,7 @@ describe('DownloadScriptPanel', () => {
         <DownloadScriptPanel
           accessMethodType="download"
           earthdataEnvironment="prod"
-          granuleLinks={[]}
+          downloadLinks={[]}
           retrievalCollection={{}}
           retrievalId="1"
           granuleCount={100}
@@ -153,7 +158,7 @@ describe('DownloadScriptPanel', () => {
         <DownloadScriptPanel
           accessMethodType="download"
           earthdataEnvironment="prod"
-          granuleLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
+          downloadLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalCollection={{}}
           retrievalId="1"
           granuleCount={10}
@@ -161,7 +166,7 @@ describe('DownloadScriptPanel', () => {
         />
       )
 
-      expect(enzymeWrapper.find('.order-status-item__status-text').text()).toEqual('Retrieving links for 10 granules...')
+      expect(enzymeWrapper.find('.order-status-item__status-text').text()).toEqual('Retrieving files for 10 granules...')
 
       const windowActions = enzymeWrapper.find(TextWindowActions)
       expect(windowActions.props().id).toEqual('script-1')
@@ -173,6 +178,56 @@ describe('DownloadScriptPanel', () => {
         {},
         'prod'
       )
+    })
+  })
+})
+
+describe('S3LinksPanel', () => {
+  describe('when panel is not provided s3 links', () => {
+    test('renders placeholder message', () => {
+      const enzymeWrapper = shallow(
+        <S3LinksPanel
+          accessMethodType="download"
+          s3Links={[]}
+          retrievalId="1"
+          granuleCount={100}
+          granuleLinksIsLoading={false}
+          directDistributionInformation={{
+            region: 'aws-region'
+          }}
+        />
+      )
+
+      expect(enzymeWrapper.hasClass('order-status-item__tab-intro')).toEqual(true)
+      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The AWS S3 objects will become available once the order has finished processing')
+    })
+  })
+
+  describe('when panel is provided granule links', () => {
+    test('renders a TextWindowActions component', () => {
+      const enzymeWrapper = shallow(
+        <S3LinksPanel
+          accessMethodType="download"
+          s3Links={['s3://search.earthdata.nasa.gov', 's3://cmr.earthdata.nasa.gov']}
+          retrievalId="1"
+          granuleCount={100}
+          granuleLinksIsLoading={false}
+          directDistributionInformation={{
+            region: 'aws-region'
+          }}
+        />
+      )
+
+      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toContain('Direct cloud access for this collection is available in the aws-region region in AWS S3.')
+      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toContain('Retrieved 2 objects for 100 granule')
+
+
+      const windowActions = enzymeWrapper.find(TextWindowActions)
+      expect(windowActions.props().id).toEqual('links-1')
+      expect(windowActions.props().fileContents).toEqual('s3://search.earthdata.nasa.gov\ns3://cmr.earthdata.nasa.gov')
+      expect(windowActions.props().fileName).toEqual('1-download-s3.txt')
+      expect(windowActions.props().clipboardContents).toEqual('s3://search.earthdata.nasa.gov\ns3://cmr.earthdata.nasa.gov')
+      expect(windowActions.props().modalTitle).toEqual('AWS S3 Access')
     })
   })
 })
@@ -433,14 +488,14 @@ describe('OrderStatusItem', () => {
       expect(tabs.children().length).toEqual(2)
 
       const linksTab = tabs.childAt(0)
-      expect(linksTab.props().title).toEqual('Download Links')
+      expect(linksTab.props().title).toEqual('Download Files')
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+      expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
       expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(scriptTab.childAt(0).props().granuleLinks).toEqual([])
+      expect(scriptTab.childAt(0).props().downloadLinks).toEqual([])
     })
   })
 
@@ -504,14 +559,14 @@ describe('OrderStatusItem', () => {
       expect(tabs.children().length).toEqual(2)
 
       const linksTab = tabs.childAt(0)
-      expect(linksTab.props().title).toEqual('Download Links')
+      expect(linksTab.props().title).toEqual('Download Files')
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+      expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
       expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(scriptTab.childAt(0).props().granuleLinks).toEqual([])
+      expect(scriptTab.childAt(0).props().downloadLinks).toEqual([])
     })
   })
 
@@ -578,9 +633,9 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
 
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
         expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
@@ -649,9 +704,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
         expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
@@ -745,9 +800,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
         expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
@@ -849,9 +904,9 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
 
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
           'https://e4ftl01.cr.usgs.gov/ops/esir/50250.html',
           'https://e4ftl01.cr.usgs.gov/ops/esir/50250.zip'
         ])
@@ -949,9 +1004,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
         expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
@@ -1049,9 +1104,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
         expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
@@ -1502,9 +1557,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
@@ -1594,9 +1649,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
@@ -1708,9 +1763,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
 
@@ -1827,9 +1882,9 @@ describe('OrderStatusItem', () => {
 
         const linksTab = tabs.childAt(0)
 
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
 
@@ -1923,9 +1978,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
@@ -2015,9 +2070,9 @@ describe('OrderStatusItem', () => {
         expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Links')
+        expect(linksTab.props().title).toEqual('Download Files')
         expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().granuleLinks).toEqual([])
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)

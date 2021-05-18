@@ -202,6 +202,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           coordinateSystem
           dataCenter
           dataCenters
+          directDistributionInformation
           doi
           hasGranules
           lines

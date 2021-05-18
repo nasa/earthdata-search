@@ -7,6 +7,7 @@ import {
   prepareGranuleParams,
   buildGranuleSearchParams,
   getDownloadUrls,
+  getS3Urls,
   extractProjectCollectionGranuleParams,
   extractGranuleSearchParams
 } from '../util/granules'
@@ -181,11 +182,15 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
         const { entry } = feed
 
         // Fetch the download links from the granule metadata
-        const granuleLinks = getDownloadUrls(entry)
+        const granuleDownloadLinks = getDownloadUrls(entry)
+        const granuleS3Links = getS3Urls(entry)
 
         dispatch(updateGranuleLinks({
           id,
-          links: granuleLinks.map(lnk => lnk.href)
+          links: {
+            download: granuleDownloadLinks.map(lnk => lnk.href),
+            s3: granuleS3Links.map(lnk => lnk.href)
+          }
         }))
       })
       .catch((error) => {
