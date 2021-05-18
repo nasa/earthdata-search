@@ -36,6 +36,10 @@ function setup(overrideProps) {
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  Object.assign(navigator, {
+    clipboard: {}
+  })
 })
 
 describe('GranuleResultsDataLinksButton component', () => {

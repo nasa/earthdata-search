@@ -70,20 +70,23 @@ $item-height: 3rem;
     justify-content: flex-start;
     margin-bottom: $spacer;
     width: auto;
-    font-size: 0.775rem;
+    font-size: 0.875rem;
     color: $color__black--600;
   }
 
   &__meta-heading {
     margin-bottom: 0.125*$spacer;
-    font-size: 0.775rem;
+    font-size: 0.875rem;
     color: $color__black--400;
   }
 
   &__meta-body {
+    margin-top: 2px;
+
     &--progress {
       display: flex;
       align-items: center;
+      margin-top: 0rem;
     }
   }
 
@@ -106,6 +109,7 @@ $item-height: 3rem;
 
   &__progress-ring {
     margin-right: $spacer/4;
+    height: 23px;
 
     .progress-ring__circle-back {
       animation: pulse 1s alternate infinite;
@@ -185,7 +189,7 @@ $item-height: 3rem;
   }
 
   &__order-info {
-    font-size: 0.775rem;
+    font-size: 0.875rem;
   }
 
   &__message {
@@ -229,9 +233,9 @@ $item-height: 3rem;
     .tab-content {
       display: flex;
       flex-direction: column;
-      height: 25rem;
+      // height: 25rem;
       min-height: 25rem;
-      max-height: 25rem;
+      max-height: 35rem;
       overflow-y: scroll;
     }
 
@@ -252,6 +256,7 @@ $item-height: 3rem;
   &__tab-intro {
     flex-grow: 0;
     flex-shrink: 0;
+    margin-bottom: 1rem;
 
     .order-status-item__tab-status & {
       font-size: 1.125rem;
@@ -272,6 +277,39 @@ $item-height: 3rem;
     flex-grow: 1;
     flex-shrink: 1;
     min-height: 20rem;
+  }
+
+  &__direct-distribution-information {
+    margin-bottom: 1rem;
+
+    .link--external {
+      &:after {
+        color: $color__black--500;
+      }
+
+      &:hover:after {
+        color: $color__black--500;
+      }
+    }
+  }
+
+  &__subtitle {
+    color: $color__black--500;
+    font-weight: 500;
+    font-size: 0.925rem;
+  }
+
+  &__direct-distribution-item {
+    display: inline-block;
+    margin-right: 1rem;
+    color: $color__black--500;
+    font-weight: 500;
+  }
+
+  &__direct-distribution-item-value {
+    display: block;
+    font-weight: 700;
+    color: $color__black--600;
   }
 }
 

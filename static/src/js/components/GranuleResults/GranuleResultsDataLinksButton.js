@@ -177,7 +177,7 @@ export const GranuleResultsDataLinksButton = ({
                   ))}
                 </div>
                 <div className="granule-results-data-links-button__menu-panel-heading-row">
-                  {'Credentials API: '}
+                  {'AWS S3 Credentials: '}
                   <span className="granule-results-data-links-button__menu-panel-value">
                     <a
                       className="link link--external"
@@ -185,7 +185,7 @@ export const GranuleResultsDataLinksButton = ({
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      S3 Credentials API
+                      Get AWS S3 Credentials
                     </a>
                     <a
                       className="link link--separated link--external"

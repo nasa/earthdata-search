@@ -435,7 +435,7 @@ export const CollectionDetailsBody = ({
                       )
                     }
 
-                    <dt>Credentials API</dt>
+                    <dt>AWS S3 Credentials</dt>
                     <dd className="collection-details-body__links collection-details-body__links--horizontal">
                       <a
                         className="link link--external collection-details-body__link collection-details-body__cloud-access__api-link"
@@ -443,7 +443,7 @@ export const CollectionDetailsBody = ({
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        S3 Credentials API
+                        Get AWS S3 Credentials
                       </a>
                       <a
                         className="link link--separated link--external collection-details-body__link collection-details-body__cloud-access__documentation-link"
