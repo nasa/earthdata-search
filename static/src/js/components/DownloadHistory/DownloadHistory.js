@@ -78,10 +78,11 @@ export class DownloadHistory extends Component {
             />
           )
         }
+        <label htmlFor="download-history" className="visuallyhidden">Download history</label>
         {
           retrievalHistoryLoaded && (
             retrievalHistory.length > 0 ? (
-              <Table className="download-history-table">
+              <Table className="download-history-table" id="download-history">
                 <thead>
                   <tr>
                     <th className="download-history-table__contents-heading">Contents</th>
