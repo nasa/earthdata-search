@@ -33,7 +33,28 @@ describe('#withAdvancedSearch', () => {
         const result = withAdvancedSearch(collectionParams, advancedSearch)
 
         expect(result).toEqual({
-          polygon: advSearchPolygon
+          polygon: [advSearchPolygon]
+        })
+      })
+
+      test('should return the collection params with a modified line', () => {
+        const originalLine = '1,2,3,4,1,2,3,4'
+        const advSearchLine = '5,6,7,8,5,6,7,8'
+        const collectionParams = {
+          line: originalLine
+        }
+        const advancedSearch = {
+          regionSearch: {
+            selectedRegion: {
+              type: 'reach',
+              spatial: advSearchLine
+            }
+          }
+        }
+        const result = withAdvancedSearch(collectionParams, advancedSearch)
+
+        expect(result).toEqual({
+          line: [advSearchLine]
         })
       })
     })

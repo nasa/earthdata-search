@@ -29,7 +29,13 @@ export const withAdvancedSearch = (granuleParams, advancedSearch) => {
   // If we have a spatial value for the selectedRegion, use that for the spatial
   if (!isEmpty(selectedRegion) && selectedRegion.spatial) {
     // Query spatial is saved as an array, but the selectedRegion spatial is not
-    mergedParams.polygon = [selectedRegion.spatial]
+    const { type } = selectedRegion
+
+    if (type === 'reach') {
+      mergedParams.line = [selectedRegion.spatial]
+    } else {
+      mergedParams.polygon = [selectedRegion.spatial]
+    }
   }
 
   return mergedParams
