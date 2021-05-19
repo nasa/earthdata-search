@@ -45,7 +45,7 @@ export const exportSearch = format => (dispatch, getState) => {
       $granuleDataFormat: String
       $granuleDataFormatH: [String]
       $hasGranulesOrCwic: Boolean
-      $horizontalDataResolutionRange: String
+      $horizontalDataResolutionRange: [String]
       $instrument: String
       $instrumentH: [String]
       $keyword: String
@@ -60,7 +60,7 @@ export const exportSearch = format => (dispatch, getState) => {
       $project: String
       $projectH: [String]
       $provider: String
-      $scienceKeywordsH: [String]
+      $scienceKeywordsH: JSON
       $serviceType: [String]
       $sortKey: [String]
       $spatialKeyword: String
