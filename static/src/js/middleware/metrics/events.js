@@ -101,6 +101,19 @@ export const dataAccess = (action) => {
           dataAccessValue: 1
         })
       }
+
+      if (accessType === 'single_granule_s3_access') {
+        dataLayer.push({
+          event: 'dataAccess',
+          dimension17: collectionId,
+          dimension18: 'S3 Single Granule',
+          dimension19: 's3_single_granule',
+          dataAccessCategory: 'Data Access',
+          dataAccessAction: 'Completion',
+          dataAccessLabel: 'Data Access Completion',
+          dataAccessValue: 1
+        })
+      }
     })
   }
 

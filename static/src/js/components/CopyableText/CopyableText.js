@@ -73,6 +73,7 @@ const copyStringToClipBoard = async ({
  * @param {String} arg0.className - The button classname.
  * @param {String|Function} arg0.failureMessage - The string to display if the browser does not support copy.
  * @param {String} arg0.label - The label to display on the button.
+ * @param {Function} arg0.onClick - An callback that fires on click.
  * @param {String|Function} arg0.successMessage - The string to display if the browser supports copy.
  * @param {String} arg0.text - The text to display. This text will be copied by default.
  * @param {String|Function} arg0.textToCopy - Overrides the text that is copied. If provided a function, the return value will be displayed.
@@ -81,6 +82,7 @@ export const CopyableText = ({
   className,
   failureMessage,
   label,
+  onClick,
   successMessage,
   text,
   textToCopy
@@ -103,6 +105,7 @@ export const CopyableText = ({
           text,
           textToCopy
         })
+        if (onClick) onClick(e)
       }}
       label={label}
       icon={FaRegCopy}
@@ -116,6 +119,7 @@ export const CopyableText = ({
 CopyableText.defaultProps = {
   className: '',
   label: 'Copy text to clipboard',
+  onClick: null,
   successMessage: '',
   failureMessage: '',
   textToCopy: ''
@@ -124,6 +128,7 @@ CopyableText.defaultProps = {
 CopyableText.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
+  onClick: PropTypes.func,
   successMessage: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.string

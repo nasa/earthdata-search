@@ -220,7 +220,7 @@ export const S3LinksPanel = ({
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Documentation
+                      View Documentation
                     </a>
                   </span>
                 </div>
@@ -255,7 +255,7 @@ export const S3LinksPanel = ({
                 <li key={key}>
                   <CopyableText
                     text={path}
-                    label="Copy to clipboard"
+                    label="Copy AWS S3 path to clipboard"
                     successMessage={() => `Copied AWS S3 path for: ${s3LinkTitle}`}
                     failureMessage={() => `Could not copy AWS S3 path for: ${s3LinkTitle}`}
                   />

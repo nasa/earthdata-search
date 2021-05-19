@@ -49,7 +49,7 @@ describe('CopyableText', () => {
   })
 
   describe('when clicked', () => {
-    test('prevents event propation', () => {
+    test('prevents event propagation', () => {
       const stopPropagationMock = jest.fn()
       Object.assign(navigator, {
         clipboard: {
@@ -68,6 +68,31 @@ describe('CopyableText', () => {
 
       expect(stopPropagationMock).toHaveBeenCalledTimes(1)
     })
+
+    describe('when an onClick method is defined', () => {
+      test('calls the onClick method', () => {
+        const stopPropagationMock = jest.fn()
+        const onClickMock = jest.fn()
+        Object.assign(navigator, {
+          clipboard: {
+            writeText: () => {}
+          }
+        })
+
+        const { enzymeWrapper } = setup({
+          text: 'The text',
+          className: 'test-class',
+          onClick: onClickMock
+        })
+
+        enzymeWrapper.simulate('click', {
+          stopPropagation: stopPropagationMock
+        })
+
+        expect(onClickMock).toHaveBeenCalledTimes(1)
+      })
+    })
+
 
     describe('when the browser supports navigator.clipboard.writeText', () => {
       describe('when a success message is not defined', () => {

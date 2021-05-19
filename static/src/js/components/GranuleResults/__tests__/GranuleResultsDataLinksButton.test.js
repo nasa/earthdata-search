@@ -7,6 +7,7 @@ import { Dropdown } from 'react-bootstrap'
 import * as addToast from '../../../util/addToast'
 import { GranuleResultsDataLinksButton, CustomDataLinksToggle } from '../GranuleResultsDataLinksButton'
 import Button from '../../Button/Button'
+import CopyableText from '../../CopyableText/CopyableText'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -267,45 +268,16 @@ describe('GranuleResultsDataLinksButton component', () => {
         ]
       })
 
-      const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
-      expect(tabDropdownItems[0].type.displayName).toBe('DropdownItem')
-      expect(tabDropdownItems[0].props.label).toBe('Copy path to file in AWS S3')
-      expect(tabDropdownItems[0].props.children[0]).toBe('linkhref')
+      // const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
+      expect(enzymeWrapper.find(Dropdown.Item).at(0).type()).toBe(Dropdown.Item)
+      expect(enzymeWrapper.find(Dropdown.Item).at(0).props().label).toBe('Copy AWS S3 path to clipboard')
+      expect(enzymeWrapper.find(Dropdown.Item).at(0).props().text).toEqual('linkhref')
     })
 
     describe('when clicking an s3 link', () => {
-      test('stops event propagation', () => {
-        // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
-        const stopPropagationMock = jest.fn()
-
-        const { enzymeWrapper } = setup({
-          dataLinks: [],
-          directDistributionInformation: {
-            region: 'aws-region'
-          },
-          s3Links: [
-            {
-              rel: 'http://linkrel/s3#',
-              title: 'linktitle',
-              href: 's3://linkhref'
-            }, {
-              rel: 'http://linkrel2/s3#',
-              title: 'linktitle2',
-              href: 's3://linkhref2'
-            }
-          ]
-        })
-        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
-        tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
-        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
-      })
-
       test('calls the metrics event', async () => {
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
         ReactDOM.createPortal = jest.fn(dropdown => dropdown)
-        const stopPropagationMock = jest.fn()
-
         const { enzymeWrapper, props } = setup({
           dataLinks: [],
           directDistributionInformation: {
@@ -323,8 +295,8 @@ describe('GranuleResultsDataLinksButton component', () => {
             }
           ]
         })
-        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
-        tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
+        enzymeWrapper.find(Dropdown.Item).at(0).props().onClick()
+
         expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(1)
         expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
           collections: [{
@@ -332,120 +304,6 @@ describe('GranuleResultsDataLinksButton component', () => {
           }],
           type: 'single_granule_s3_access'
         })
-      })
-
-      describe('when navigation.clipboard.writeText is not defined', () => {
-        test('displays a toast', async () => {
-          // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-          ReactDOM.createPortal = jest.fn(dropdown => dropdown)
-          const stopPropagationMock = jest.fn()
-          const addToastMock = jest.spyOn(addToast, 'addToast')
-
-          const { enzymeWrapper } = setup({
-            dataLinks: [],
-            directDistributionInformation: {
-              region: 'aws-region'
-            },
-            s3Links: [
-              {
-                rel: 'http://linkrel/s3#',
-                title: 'linktitle',
-                href: 's3://linkhref'
-              }, {
-                rel: 'http://linkrel2/s3#',
-                title: 'linktitle2',
-                href: 's3://linkhref2'
-              }
-            ]
-          })
-          const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
-
-          tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
-
-          expect(addToastMock.mock.calls.length).toBe(1)
-          expect(addToastMock.mock.calls[0][0]).toEqual('Failed to copy AWS S3 path for: linkhref')
-          expect(addToastMock.mock.calls[0][1].appearance).toEqual('error')
-          expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
-        })
-      })
-    })
-
-    describe('when navigation.clipboard.writeText is defined', () => {
-      test('copies the s3 link', async () => {
-        // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
-        const stopPropagationMock = jest.fn()
-
-        Object.assign(navigator, {
-          clipboard: {
-            writeText: () => {}
-          }
-        })
-
-        jest.spyOn(navigator.clipboard, 'writeText')
-
-        const { enzymeWrapper } = setup({
-          dataLinks: [],
-          directDistributionInformation: {
-            region: 'aws-region'
-          },
-          s3Links: [
-            {
-              rel: 'http://linkrel/s3#',
-              title: 'linktitle',
-              href: 's3://linkhref'
-            }, {
-              rel: 'http://linkrel2/s3#',
-              title: 'linktitle2',
-              href: 's3://linkhref2'
-            }
-          ]
-        })
-        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
-        await tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
-
-        expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1)
-        expect(navigator.clipboard.writeText).toHaveBeenCalledWith('s3://linkhref')
-      })
-
-      test('displays a toast', async () => {
-        // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
-        const stopPropagationMock = jest.fn()
-        const addToastMock = jest.spyOn(addToast, 'addToast')
-
-        Object.assign(navigator, {
-          clipboard: {
-            writeText: () => {}
-          }
-        })
-
-        jest.spyOn(navigator.clipboard, 'writeText')
-
-        const { enzymeWrapper } = setup({
-          dataLinks: [],
-          directDistributionInformation: {
-            region: 'aws-region'
-          },
-          s3Links: [
-            {
-              rel: 'http://linkrel/s3#',
-              title: 'linktitle',
-              href: 's3://linkhref'
-            }, {
-              rel: 'http://linkrel2/s3#',
-              title: 'linktitle2',
-              href: 's3://linkhref2'
-            }
-          ]
-        })
-        const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
-        await tabDropdownItems[0].props.onClick({ stopPropagation: stopPropagationMock })
-
-        expect(addToastMock.mock.calls.length).toBe(1)
-        expect(addToastMock.mock.calls[0][0]).toEqual('Copied AWS S3 path for: linkhref')
-        expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-        expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
       })
     })
 
@@ -470,92 +328,8 @@ describe('GranuleResultsDataLinksButton component', () => {
             }
           ]
         })
-        const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
-        const regionRow = distributionInformation.props.children[0]
-        const value = regionRow.props.children[1]
-        expect(value.props.children).toBe('aws-region')
-      })
-
-      describe('when clicking the region', () => {
-        describe('when navigation.clipboard.writeText is not defined', () => {
-          test('displays a toast', async () => {
-            // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-            ReactDOM.createPortal = jest.fn(dropdown => dropdown)
-            const addToastMock = jest.spyOn(addToast, 'addToast')
-
-            Object.assign(navigator, {
-              clipboard: {}
-            })
-
-            const { enzymeWrapper } = setup({
-              dataLinks: [],
-              directDistributionInformation: {
-                region: 'aws-region'
-              },
-              s3Links: [
-                {
-                  rel: 'http://linkrel/s3#',
-                  title: 'linktitle',
-                  href: 's3://linkhref'
-                }, {
-                  rel: 'http://linkrel2/s3#',
-                  title: 'linktitle2',
-                  href: 's3://linkhref2'
-                }
-              ]
-            })
-            const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
-            const regionRow = distributionInformation.props.children[0]
-            const value = regionRow.props.children[1]
-            await value.props.onClick()
-
-            expect(addToastMock.mock.calls.length).toBe(1)
-            expect(addToastMock.mock.calls[0][0]).toEqual('Failed to copy the AWS S3 Region')
-            expect(addToastMock.mock.calls[0][1].appearance).toEqual('error')
-            expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
-          })
-        })
-
-        describe('when navigation.clipboard.writeText is not defined', () => {
-          test('displays a toast', async () => {
-            // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-            ReactDOM.createPortal = jest.fn(dropdown => dropdown)
-            const addToastMock = jest.spyOn(addToast, 'addToast')
-
-            Object.assign(navigator, {
-              clipboard: {
-                writeText: jest.fn()
-              }
-            })
-
-            const { enzymeWrapper } = setup({
-              dataLinks: [],
-              directDistributionInformation: {
-                region: 'aws-region'
-              },
-              s3Links: [
-                {
-                  rel: 'http://linkrel/s3#',
-                  title: 'linktitle',
-                  href: 's3://linkhref'
-                }, {
-                  rel: 'http://linkrel2/s3#',
-                  title: 'linktitle2',
-                  href: 's3://linkhref2'
-                }
-              ]
-            })
-            const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
-            const regionRow = distributionInformation.props.children[0]
-            const value = regionRow.props.children[1]
-            await value.props.onClick()
-
-            expect(addToastMock.mock.calls.length).toBe(1)
-            expect(addToastMock.mock.calls[0][0]).toEqual('Copied the AWS S3 Region')
-            expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-            expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
-          })
-        })
+        const distributionInformation = enzymeWrapper.find('.tab-content').children()
+        expect(distributionInformation.find(CopyableText).at(0).props().text).toBe('aws-region')
       })
 
       test('displays the s3 bucket and object prefix as a button', () => {
@@ -581,101 +355,8 @@ describe('GranuleResultsDataLinksButton component', () => {
             }
           ]
         })
-        const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
-        const bucketObjectPrefixRow = distributionInformation.props.children[1]
-        const value = bucketObjectPrefixRow.props.children[1][0]
-        const bucketObjectPrefixButton = value.props.children[0]
-        expect(bucketObjectPrefixButton.props.children).toBe('TestBucketOrObjectPrefix')
-      })
-
-      describe('when clicking the bucket object prefix button', () => {
-        describe('when navigation.clipboard.writeText is not defined', () => {
-          test('displays a toast', async () => {
-            // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-            ReactDOM.createPortal = jest.fn(dropdown => dropdown)
-            const addToastMock = jest.spyOn(addToast, 'addToast')
-
-            Object.assign(navigator, {
-              clipboard: {}
-            })
-
-            const { enzymeWrapper } = setup({
-              dataLinks: [],
-              directDistributionInformation: {
-                region: 'aws-region',
-                s3BucketAndObjectPrefixNames: ['TestBucketOrObjectPrefix'],
-                s3CredentialsApiEndpoint: 'https://DAACCredentialEndpoint.org',
-                s3CredentialsApiDocumentationUrl: 'https://DAACCredentialDocumentation.org'
-              },
-              s3Links: [
-                {
-                  rel: 'http://linkrel/s3#',
-                  title: 'linktitle',
-                  href: 's3://linkhref'
-                }, {
-                  rel: 'http://linkrel2/s3#',
-                  title: 'linktitle2',
-                  href: 's3://linkhref2'
-                }
-              ]
-            })
-            const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
-            const bucketObjectPrefixRow = distributionInformation.props.children[1]
-            const value = bucketObjectPrefixRow.props.children[1][0]
-            const bucketObjectPrefixButton = value.props.children[0]
-            await bucketObjectPrefixButton.props.onClick()
-
-            expect(addToastMock.mock.calls.length).toBe(1)
-            expect(addToastMock.mock.calls[0][0]).toEqual('Failed to copy the AWS S3 Bucket/Object Prefix')
-            expect(addToastMock.mock.calls[0][1].appearance).toEqual('error')
-            expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
-          })
-        })
-
-        describe('when navigation.clipboard.writeText is not defined', () => {
-          test('displays a toast', async () => {
-            // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-            ReactDOM.createPortal = jest.fn(dropdown => dropdown)
-            const addToastMock = jest.spyOn(addToast, 'addToast')
-
-            Object.assign(navigator, {
-              clipboard: {
-                writeText: jest.fn()
-              }
-            })
-
-            const { enzymeWrapper } = setup({
-              dataLinks: [],
-              directDistributionInformation: {
-                region: 'aws-region',
-                s3BucketAndObjectPrefixNames: ['TestBucketOrObjectPrefix'],
-                s3CredentialsApiEndpoint: 'https://DAACCredentialEndpoint.org',
-                s3CredentialsApiDocumentationUrl: 'https://DAACCredentialDocumentation.org'
-              },
-              s3Links: [
-                {
-                  rel: 'http://linkrel/s3#',
-                  title: 'linktitle',
-                  href: 's3://linkhref'
-                }, {
-                  rel: 'http://linkrel2/s3#',
-                  title: 'linktitle2',
-                  href: 's3://linkhref2'
-                }
-              ]
-            })
-            const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
-            const bucketObjectPrefixRow = distributionInformation.props.children[1]
-            const value = bucketObjectPrefixRow.props.children[1][0]
-            const bucketObjectPrefixButton = value.props.children[0]
-            await bucketObjectPrefixButton.props.onClick()
-
-            expect(addToastMock.mock.calls.length).toBe(1)
-            expect(addToastMock.mock.calls[0][0]).toEqual('Copied the AWS S3 Bucket/Object Prefix')
-            expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-            expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
-          })
-        })
+        const distributionInformation = enzymeWrapper.find('.tab-content').children()
+        expect(distributionInformation.find(CopyableText).at(1).props().text).toBe('TestBucketOrObjectPrefix')
       })
 
       describe('when multiple bucket object prefixes are provided', () => {
@@ -705,12 +386,9 @@ describe('GranuleResultsDataLinksButton component', () => {
               }
             ]
           })
-          const distributionInformation = enzymeWrapper.find('.tab-content').props().children.props.children[0]
-          const bucketObjectPrefixRow = distributionInformation.props.children[1]
-          const bucketObjectPrefixButtonOne = bucketObjectPrefixRow.props.children[1][0]
-          const bucketObjectPrefixButtonTwo = bucketObjectPrefixRow.props.children[1][1]
-          expect(bucketObjectPrefixButtonOne.props.children[0].props.children).toBe('TestBucketOrObjectPrefix')
-          expect(bucketObjectPrefixButtonTwo.props.children[0].props.children).toBe('TestBucketOrObjectPrefixTwo')
+          const distributionInformation = enzymeWrapper.find('.tab-content').children()
+          expect(distributionInformation.find(CopyableText).at(1).props().text).toBe('TestBucketOrObjectPrefix')
+          expect(distributionInformation.find(CopyableText).at(2).props().text).toBe('TestBucketOrObjectPrefixTwo')
         })
       })
     })

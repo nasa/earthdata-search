@@ -8,6 +8,10 @@
     vertical-align: middle;
     cursor: pointer;
 
+    .button__icon {
+      color: rgba($color__white, 0.7);
+    }
+
     &:hover {
       background-color: $color__blue--dark;
       color: $color__black--100;
@@ -41,6 +45,13 @@
     font-size: 0.825rem;
     line-height: 1.5rem;
     white-space: nowrap;
+  }
+
+  &__menu-panel-label {
+    &--align {
+      position: relative;
+      top: 0.025rem;
+    }
   }
 
   &__menu-panel-heading-row {
