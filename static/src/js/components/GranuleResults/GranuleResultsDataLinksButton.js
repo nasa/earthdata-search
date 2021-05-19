@@ -2,9 +2,10 @@ import React, { useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { Dropdown, Tab } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
-import { FaDownload, FaCloud, FaRegCopy } from 'react-icons/fa'
+import { FaDownload, FaCloud } from 'react-icons/fa'
 
 import Button from '../Button/Button'
+import CopyableText from '../CopyableText/CopyableText'
 import EDSCTabs from '../EDSCTabs/EDSCTabs'
 
 import { addToast } from '../../util/addToast'
@@ -64,36 +65,6 @@ export const GranuleResultsDataLinksButton = ({
 }) => {
   const dropdownMenuRef = useRef(null)
 
-  const copyStringToClipBoard = async (string, name) => {
-    try {
-      await navigator.clipboard.writeText(string)
-      addToast(`Copied the ${name}`, {
-        appearance: 'success',
-        autoDismiss: true
-      })
-    } catch (err) {
-      addToast(`Failed to copy the ${name}`, {
-        appearance: 'error',
-        autoDismiss: true
-      })
-    }
-  }
-
-  const copyS3PathToClipBoard = async (path, filename) => {
-    try {
-      await navigator.clipboard.writeText(path)
-      addToast(`Copied AWS S3 path for: ${filename}`, {
-        appearance: 'success',
-        autoDismiss: true
-      })
-    } catch (err) {
-      addToast(`Failed to copy AWS S3 path for: ${filename}`, {
-        appearance: 'error',
-        autoDismiss: true
-      })
-    }
-  }
-
   // If only one datalink is provided and s3 links are not provided, a button is shown rather
   // than a dropdown list. Otherwise, use a dropdown for the links.
   if (dataLinks.length > 1 || s3Links.length > 0) {
@@ -142,42 +113,38 @@ export const GranuleResultsDataLinksButton = ({
             region && (
               <header className="granule-results-data-links-button__menu-panel-heading">
                 <div className="granule-results-data-links-button__menu-panel-heading-row">
-                  {'Region: '}
-                  <Button
-                    variant="naked"
+                  <span className="granule-results-data-links-button__menu-panel-label granule-results-data-links-button__menu-panel-label--align">
+                    {'Region: '}
+                  </span>
+                  <CopyableText
                     className="granule-results-data-links-button__menu-panel-value"
-                    onClick={() => {
-                      copyStringToClipBoard(region, 'AWS S3 Region')
-                    }}
-                    label="Copy the AWS S3 Region"
-                    icon={FaRegCopy}
-                    iconPosition="right"
-                  >
-                    {region}
-                  </Button>
+                    text={region}
+                    label="Copy to clipboard"
+                    successMessage="Copied the AWS S3 region"
+                    failureMessage="Could not copy the AWS S3 region"
+                  />
                 </div>
                 <div className="granule-results-data-links-button__menu-panel-heading-row">
-                  {'Bucket/Object Prefix: '}
+                  <span className="granule-results-data-links-button__menu-panel-label granule-results-data-links-button__menu-panel-label--align">
+                    {'Bucket/Object Prefix: '}
+                  </span>
                   {s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
                     <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
-                      <Button
-                        variant="naked"
+                      <CopyableText
                         className="granule-results-data-links-button__menu-panel-value"
-                        onClick={() => {
-                          copyStringToClipBoard(bucketAndObjPrefix, 'AWS S3 Bucket/Object Prefix')
-                        }}
-                        icon={FaRegCopy}
-                        iconPosition="right"
-                        label="Copy the AWS S3 Bucket/Object Prefix"
-                      >
-                        {bucketAndObjPrefix}
-                      </Button>
+                        text={bucketAndObjPrefix}
+                        label="Copy to clipboard"
+                        successMessage="Copied the AWS S3 Bucket/Object Prefix"
+                        failureMessage="Could not copy the AWS S3 Bucket/Object Prefix"
+                      />
                       {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
                     </React.Fragment>
                   ))}
                 </div>
                 <div className="granule-results-data-links-button__menu-panel-heading-row">
-                  {'AWS S3 Credentials: '}
+                  <span className="granule-results-data-links-button__menu-panel-label">
+                    {'AWS S3 Credentials: '}
+                  </span>
                   <span className="granule-results-data-links-button__menu-panel-value">
                     <a
                       className="link link--external"
@@ -193,7 +160,7 @@ export const GranuleResultsDataLinksButton = ({
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Documentation
+                      View Documentation
                     </a>
                   </span>
                 </div>
@@ -201,19 +168,21 @@ export const GranuleResultsDataLinksButton = ({
             )
           }
           {
-            s3Links.map((s3Link, i) => {
+            s3Links.map(({ href }, i) => {
               const key = `s3_link_${i}`
-              const s3LinkTitle = getFilenameFromPath(s3Link.href)
+              const s3LinkTitle = getFilenameFromPath(href)
 
               return (
                 <Dropdown.Item
-                  as={Button}
-                  className="granule-results-data-links-button__dropdown-item"
                   key={key}
-                  label="Copy path to file in AWS S3"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    copyS3PathToClipBoard(s3Link.href, s3LinkTitle)
+                  as={CopyableText}
+                  className="granule-results-data-links-button__dropdown-item"
+                  label="Copy AWS S3 path to clipboard"
+                  textToCopy={href}
+                  text={s3LinkTitle}
+                  successMessage={() => `Copied AWS S3 path for: ${s3LinkTitle}`}
+                  failureMessage={() => `Could not copy AWS S3 path for: ${s3LinkTitle}`}
+                  onClick={() => {
                     onMetricsDataAccess({
                       type: 'single_granule_s3_access',
                       collections: [{
@@ -221,10 +190,7 @@ export const GranuleResultsDataLinksButton = ({
                       }]
                     })
                   }}
-                >
-                  {s3LinkTitle}
-                  <FaRegCopy className="granule-results-data-links-button__icon" />
-                </Dropdown.Item>
+                />
               )
             })
           }

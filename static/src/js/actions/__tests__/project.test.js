@@ -305,7 +305,6 @@ describe('getProjectCollections', () => {
     await store.dispatch(actions.getProjectCollections())
 
     const storeActions = store.getActions()
-    console.log('storeActions[0]', storeActions[0].payload)
     expect(storeActions[0]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
