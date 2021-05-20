@@ -1,45 +1,9 @@
-import { isEmpty } from 'lodash'
-
 import { convertSize } from './project'
 import { encodeGridCoords } from './url/gridEncoders'
 import { encodeTemporal } from './url/temporalEncoders'
 import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
-
-/**
- * Takes the current CMR granule params and applies any changes needed to
- * account for the current advanced search state.
- * @param {Object} granuleParams The current collection search params.
- * @param {Object} advancedSearch The current advanced search state params.
- * @returns {Object} Parameters used in prepareGranuleParams.
- */
-export const withAdvancedSearch = (granuleParams, advancedSearch) => {
-  const mergedParams = {
-    ...granuleParams
-  }
-
-  const {
-    regionSearch = {}
-  } = advancedSearch
-
-  const {
-    selectedRegion = {}
-  } = regionSearch
-
-  // If we have a spatial value for the selectedRegion, use that for the spatial
-  if (!isEmpty(selectedRegion) && selectedRegion.spatial) {
-    // Query spatial is saved as an array, but the selectedRegion spatial is not
-    const { type } = selectedRegion
-
-    if (type === 'reach') {
-      mergedParams.line = [selectedRegion.spatial]
-    } else {
-      mergedParams.polygon = [selectedRegion.spatial]
-    }
-  }
-
-  return mergedParams
-}
+import { withAdvancedSearch } from './withAdvancedSearch'
 
 /**
  * Populate granule payload used to update the store

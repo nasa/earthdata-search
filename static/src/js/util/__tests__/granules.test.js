@@ -2,73 +2,10 @@ import {
   createEcho10MetadataUrls,
   isDataLink,
   createDataLinks,
-  getDownloadUrls,
-  withAdvancedSearch
+  getDownloadUrls
 } from '../granules'
 
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
-
-describe('#withAdvancedSearch', () => {
-  describe('when no advanced search parameters are passed', () => {
-    test('should return the collection params', () => {
-      const collectionParams = {
-        test: 'test'
-      }
-      const advancedSearch = {}
-      const result = withAdvancedSearch(collectionParams, advancedSearch)
-
-      expect(result).toEqual({
-        test: 'test'
-      })
-    })
-  })
-
-  describe('when advanced search parameters are passed', () => {
-    describe('when a region search is set', () => {
-      test('should return the collection params with a modified polygon', () => {
-        const originalPolygon = '1,2,3,4,1,2,3,4'
-        const advSearchPolygon = '5,6,7,8,5,6,7,8'
-        const collectionParams = {
-          polygon: originalPolygon
-        }
-        const advancedSearch = {
-          regionSearch: {
-            selectedRegion: {
-              spatial: advSearchPolygon
-            }
-          }
-        }
-        const result = withAdvancedSearch(collectionParams, advancedSearch)
-
-        expect(result).toEqual({
-          polygon: [advSearchPolygon]
-        })
-      })
-
-      test('should return the collection params with a modified line', () => {
-        const originalLine = '1,2,3,4,1,2,3,4'
-        const advSearchLine = '5,6,7,8,5,6,7,8'
-        const collectionParams = {
-          line: originalLine
-        }
-        const advancedSearch = {
-          regionSearch: {
-            selectedRegion: {
-              type: 'reach',
-              spatial: advSearchLine
-            }
-          }
-        }
-        const result = withAdvancedSearch(collectionParams, advancedSearch)
-
-        expect(result).toEqual({
-          line: [advSearchLine]
-        })
-      })
-    })
-  })
-})
-
 
 describe('#createEcho10MetadataUrls', () => {
   describe('when provided a granule id', () => {

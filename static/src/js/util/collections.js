@@ -1,44 +1,9 @@
-import { isEmpty } from 'lodash'
 import { categoryNameToCMRParam } from './facets'
 import { encodeTemporal } from './url/temporalEncoders'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { tagName } from '../../../../sharedUtils/tags'
 import { autocompleteFacetsMap } from './autocompleteFacetsMap'
-
-/**
- * Takes the current CMR collection params and applies any changes needed to account
- * for the current advanced search state.
- * @param {Object} collectionParams The current collection search params.
- * @param {Object} advancedSearch The current advanced search state params.
- * @returns {Object} Parameters used in prepareCollectionParams.
- */
-export const withAdvancedSearch = (collectionParams, advancedSearch) => {
-  const mergedParams = {
-    ...collectionParams
-  }
-
-  const {
-    regionSearch = {}
-  } = advancedSearch
-
-  const {
-    selectedRegion = {}
-  } = regionSearch
-
-  // If we have a spatial value for the selectedRegion, use that for the spatial
-  if (!isEmpty(selectedRegion) && selectedRegion.spatial) {
-    // Query spatial is saved as an array, but the selectedRegion spatial is not
-    const { type } = selectedRegion
-
-    if (type === 'reach') {
-      mergedParams.line = [selectedRegion.spatial]
-    } else {
-      mergedParams.polygon = [selectedRegion.spatial]
-    }
-  }
-
-  return mergedParams
-}
+import { withAdvancedSearch } from './withAdvancedSearch'
 
 /**
  * Prepare parameters used in getCollections() based on current Redux State
