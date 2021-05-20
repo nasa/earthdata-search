@@ -183,6 +183,24 @@ describe('addTag', () => {
     })
   })
 
+  test('does not query cmr collections if search criteria is empty', async () => {
+    nock(/example/)
+      .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .post(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify([
+        { concept_id: 'C10000001-EDSC', data: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' }
+      ]))
+      .reply(200, [])
+
+    await addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { concept_id: 'C10000001-EDSC', data: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      searchCriteria: {},
+      requireGranules: false,
+      append: true,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
+  })
+
   test('correctly calls cmr endpoint when append is set to false', async () => {
     nock(/example/)
       .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
