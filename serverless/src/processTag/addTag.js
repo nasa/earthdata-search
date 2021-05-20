@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { castArray } from 'lodash'
+import { castArray, isEmpty } from 'lodash'
 import { stringify } from 'qs'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
@@ -28,7 +28,7 @@ export const addTag = async ({
 
   // Avoid querying CMR if we were already able to generate the appropriate
   // payload by checking for searchCriteria.
-  if (searchCriteria && (tagData || requireGranules)) {
+  if (!isEmpty(searchCriteria) && (tagData || requireGranules)) {
     const cmrParams = {
       include_tags: tagName,
       include_has_granules: true
