@@ -268,7 +268,6 @@ describe('GranuleResultsDataLinksButton component', () => {
         ]
       })
 
-      // const tabDropdownItems = enzymeWrapper.find('.tab-content').props().children.props.children[1]
       expect(enzymeWrapper.find(Dropdown.Item).at(0).type()).toBe(Dropdown.Item)
       expect(enzymeWrapper.find(Dropdown.Item).at(0).props().label).toBe('Copy AWS S3 path to clipboard')
       expect(enzymeWrapper.find(Dropdown.Item).at(0).props().text).toEqual('linkhref')

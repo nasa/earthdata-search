@@ -465,7 +465,6 @@ export const createS3Links = (links = []) => links.filter(link => isS3Link(link)
 * @param {Array} granules search result for granules that a user has asked to download
 * @returns {Array} All relevant urls for downloadable granules
 */
-// eslint-disable-next-line arrow-body-style
 export const getDownloadUrls = (granules) => {
   // Iterate through each granule search result to pull out relevant links
   const urlArrays = granules.map((granuleMetadata) => {
@@ -484,7 +483,11 @@ export const getDownloadUrls = (granules) => {
 }
 
 
-// eslint-disable-next-line arrow-body-style
+/**
+* Pull out S3 links from within the granule metadata
+* @param {Array} granules search result for granules that a user has asked to download
+* @returns {Array} All relevant s3 paths for downloadable granules
+*/
 export const getS3Urls = (granules) => {
   // Iterate through each granule search result to pull out relevant links
   const urlArrays = granules.map((granuleMetadata) => {

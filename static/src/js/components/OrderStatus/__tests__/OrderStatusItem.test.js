@@ -2,17 +2,10 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import * as generateDownloadScript from '../../../util/files/generateDownloadScript'
-
 import { retrievalStatusProps } from './mocks'
 
-import {
-  OrderStatusItem,
-  DownloadFilesPanel,
-  DownloadScriptPanel,
-  S3LinksPanel
-} from '../OrderStatusItem'
-import { TextWindowActions } from '../../TextWindowActions/TextWindowActions'
+import { OrderStatusItem } from '../OrderStatusItem'
+
 import { ProgressRing } from '../../ProgressRing/ProgressRing'
 
 const shouldRefreshCopy = OrderStatusItem.prototype.shouldRefresh
@@ -65,172 +58,10 @@ function setup(overrideProps, mockRefresh) {
   }
 }
 
-describe('DownloadFilesPanel', () => {
-  describe('when panel is not provided granule links', () => {
-    test('renders placeholder message', () => {
-      const enzymeWrapper = shallow(
-        <DownloadFilesPanel
-          accessMethodType="download"
-          earthdataEnvironment="prod"
-          downloadLinks={[]}
-          retrievalId="1"
-          granuleCount={100}
-          granuleLinksIsLoading={false}
-        />
-      )
-
-      expect(enzymeWrapper.hasClass('order-status-item__tab-intro')).toEqual(true)
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The download files will become available once the order has finished processing')
-    })
-  })
-
-  describe('when panel is provided granule links', () => {
-    test('renders a TextWindowActions component', () => {
-      const enzymeWrapper = shallow(
-        <DownloadFilesPanel
-          accessMethodType="download"
-          earthdataEnvironment="prod"
-          downloadLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
-          retrievalId="1"
-          granuleCount={10}
-          granuleLinksIsLoading
-        />
-      )
-
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('Retrieving files for 10 granules...')
-
-      const windowActions = enzymeWrapper.find(TextWindowActions)
-      expect(windowActions.props().id).toEqual('links-1')
-      expect(windowActions.props().fileContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
-      expect(windowActions.props().fileName).toEqual('1-download.txt')
-      expect(windowActions.props().clipboardContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
-      expect(windowActions.props().modalTitle).toEqual('Download Files')
-    })
-  })
-
-  describe('when the text window actions are disabled', () => {
-    test('hides the copy and save buttons', () => {
-      const enzymeWrapper = shallow(
-        <DownloadFilesPanel
-          accessMethodType="ESI"
-          earthdataEnvironment="prod"
-          downloadLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
-          retrievalCollection={{}}
-          retrievalId="1"
-          granuleCount={10}
-          granuleLinksIsLoading
-          showTextWindowActions={false}
-        />
-      )
-
-      const windowActions = enzymeWrapper.find(TextWindowActions)
-      expect(windowActions.props().disableCopy).toEqual(true)
-      expect(windowActions.props().disableSave).toEqual(true)
-    })
-  })
-})
-
-describe('DownloadScriptPanel', () => {
-  describe('when panel is not provided granule links', () => {
-    test('renders placeholder message', () => {
-      const enzymeWrapper = shallow(
-        <DownloadScriptPanel
-          accessMethodType="download"
-          earthdataEnvironment="prod"
-          downloadLinks={[]}
-          retrievalCollection={{}}
-          retrievalId="1"
-          granuleCount={100}
-          granuleLinksIsLoading={false}
-        />
-      )
-
-      expect(enzymeWrapper.hasClass('order-status-item__tab-intro')).toEqual(true)
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The download script will become available once the order has finished processing')
-    })
-  })
-
-  describe('when panel is provided granule links', () => {
-    test('renders a TextWindowActions component', () => {
-      const generateDownloadScriptMock = jest.spyOn(generateDownloadScript, 'generateDownloadScript')
-
-      const enzymeWrapper = shallow(
-        <DownloadScriptPanel
-          accessMethodType="download"
-          earthdataEnvironment="prod"
-          downloadLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
-          retrievalCollection={{}}
-          retrievalId="1"
-          granuleCount={10}
-          granuleLinksIsLoading
-        />
-      )
-
-      expect(enzymeWrapper.find('.order-status-item__status-text').text()).toEqual('Retrieving files for 10 granules...')
-
-      const windowActions = enzymeWrapper.find(TextWindowActions)
-      expect(windowActions.props().id).toEqual('script-1')
-      expect(windowActions.props().fileName).toEqual('1-download.sh')
-      expect(windowActions.props().modalTitle).toEqual('Download Script')
-
-      expect(generateDownloadScriptMock).toHaveBeenCalledWith(
-        ['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov'],
-        {},
-        'prod'
-      )
-    })
-  })
-})
-
-describe('S3LinksPanel', () => {
-  describe('when panel is not provided s3 links', () => {
-    test('renders placeholder message', () => {
-      const enzymeWrapper = shallow(
-        <S3LinksPanel
-          accessMethodType="download"
-          s3Links={[]}
-          retrievalId="1"
-          granuleCount={100}
-          granuleLinksIsLoading={false}
-          directDistributionInformation={{
-            region: 'aws-region'
-          }}
-        />
-      )
-
-      expect(enzymeWrapper.hasClass('order-status-item__tab-intro')).toEqual(true)
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The AWS S3 objects will become available once the order has finished processing')
-    })
-  })
-
-  describe('when panel is provided granule links', () => {
-    test('renders a TextWindowActions component', () => {
-      const enzymeWrapper = shallow(
-        <S3LinksPanel
-          accessMethodType="download"
-          s3Links={['s3://search.earthdata.nasa.gov', 's3://cmr.earthdata.nasa.gov']}
-          retrievalId="1"
-          granuleCount={100}
-          granuleLinksIsLoading={false}
-          directDistributionInformation={{
-            region: 'aws-region'
-          }}
-        />
-      )
-
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toContain('Direct cloud access for this collection is available in the aws-region region in AWS S3.')
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toContain('Retrieved 2 objects for 100 granule')
 
 
-      const windowActions = enzymeWrapper.find(TextWindowActions)
-      expect(windowActions.props().id).toEqual('links-1')
-      expect(windowActions.props().fileContents).toEqual('s3://search.earthdata.nasa.gov\ns3://cmr.earthdata.nasa.gov')
-      expect(windowActions.props().fileName).toEqual('1-download-s3.txt')
-      expect(windowActions.props().clipboardContents).toEqual('s3://search.earthdata.nasa.gov\ns3://cmr.earthdata.nasa.gov')
-      expect(windowActions.props().modalTitle).toEqual('AWS S3 Access')
-    })
-  })
-})
+
+
 
 describe('OrderStatusItem', () => {
   describe('Auto-refresh', () => {
