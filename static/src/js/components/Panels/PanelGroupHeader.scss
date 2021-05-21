@@ -75,7 +75,7 @@
   &__heading-meta {
     height: auto;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
     width: 100%;
     background-color: darken($color__black--100, 7);
@@ -98,7 +98,6 @@
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    height: 100%;
     padding: 0 0 0 0.75*$spacer;
   }
 

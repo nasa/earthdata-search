@@ -6,24 +6,25 @@
   font-size: 1.125rem;
 
   &__label {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-    visibility: hidden;
-    width: 0;
-    height: 0;
+    position:absolute;
+    left: -10000px;
+    top: auto;
+    width: 0px;
+    height: 0px;
     overflow: hidden;
     font-size: 0.875rem;
     color: $color__black--800;
     margin-left: $spacer/4;
+    text-indent: -10000px;
 
     .panels--sm & {
       position: relative;
-      top: auto;
-      left: auto;
+      top: 0;
+      left: 0;
       visibility: visible;
       width: auto;
       height: auto;
+      text-indent: 0px;
     }
   }
 }
