@@ -7,7 +7,6 @@ import * as generateDownloadScript from '../../../../util/files/generateDownload
 import { DownloadScriptPanel } from '../DownloadScriptPanel'
 import { TextWindowActions } from '../../../TextWindowActions/TextWindowActions'
 
-
 jest.useFakeTimers()
 
 beforeEach(() => {
