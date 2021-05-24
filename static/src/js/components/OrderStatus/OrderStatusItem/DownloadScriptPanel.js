@@ -83,7 +83,7 @@ export const DownloadScriptPanel = ({
     )
     : (
       <div className="order-status-item__tab-intro">
-          The download script will become available once the order has finished processing
+        The download script will become available once the order has finished processing
       </div>
     )
 }
