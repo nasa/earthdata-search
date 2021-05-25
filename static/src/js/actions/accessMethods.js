@@ -2,15 +2,7 @@
 import actions from './index'
 
 import { buildPromise } from '../util/buildPromise'
-import { findProvider } from '../util/findProvider'
-import { getValueForTag } from '../../../../sharedUtils/tags'
 import { parseError } from '../../../../sharedUtils/parseError'
-
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-import { getCollectionMetadata } from '../util/focusedCollection'
-import { getCollectionsMetadata } from '../selectors/collectionMetadata'
-
-import AccessMethodsRequest from '../util/request/accessMethodsRequest'
 
 /**
  * Fetch available access methods
@@ -24,13 +16,6 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
     authToken
   } = state
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
-  const collectionsMetadata = getCollectionsMetadata(state)
-
-  // If the user is not logged in, don't fetch any methods
-  if (authToken === '') return buildPromise(null)
-
   // If there are no collections, do not continue
   if (collectionIds.length === 0) return buildPromise(null)
 
@@ -38,79 +23,17 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
   // in order to look up provider guids
   try {
     // Fetching access methods requires that providers be fetched and available
-    await dispatch(actions.fetchProviders())
-
     const accessMethodPromises = collectionIds.map((collectionId) => {
-      const collectionMetadata = getCollectionMetadata(collectionId, collectionsMetadata)
-
-      const {
-        dataCenter,
-        granules,
-        services,
-        tags,
-        variables
-      } = collectionMetadata
-
-      const collectionProvider = findProvider(getState(), dataCenter)
-
-      const { count: servicesCount } = services
-
-      if (servicesCount > 0) {
-        const requestObject = new AccessMethodsRequest(authToken, earthdataEnvironment)
-
-        const response = requestObject.search({
-          collectionId,
-          collectionProvider,
-          granules,
-          services,
-          tags,
-          variables
-        })
-          .then((response) => {
-            const { data } = response
-            const { accessMethods, selectedAccessMethod } = data
-
-            const accessMethodPayload = {
-              collectionId,
-              methods: accessMethods
-            }
-
-            if (selectedAccessMethod) {
-              accessMethodPayload.selectedAccessMethod = selectedAccessMethod
-            }
-
-            dispatch(actions.addAccessMethods(accessMethodPayload))
-          })
-          .catch((error) => {
-            dispatch(actions.handleError({
-              error,
-              action: 'fetchAccessMethods',
-              resource: 'access methods',
-              requestObject
-            }))
-          })
-
-        return response
-      }
-
-      // If the collection has tag data, retrieve the access methods from lambda
-      const capabilitiesData = getValueForTag('collection_capabilities', tags)
-      const { granule_online_access_flag: downloadable } = capabilitiesData || {}
-
-      // If the collection is online downloadable, add the download method
-      if (downloadable) {
-        dispatch(actions.addAccessMethods({
-          collectionId,
-          methods: {
-            download: {
-              isValid: true,
-              type: 'download'
-            }
-          },
-          selectedAccessMethod: 'download'
-        }))
-      }
-
+      dispatch(actions.addAccessMethods({
+        collectionId,
+        methods: {
+          download: {
+            isValid: true,
+            type: 'download'
+          }
+        },
+        selectedAccessMethod: 'download'
+      }))
       return buildPromise(null)
     })
 
