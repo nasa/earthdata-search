@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { get } from 'tiny-cookie'
 
-import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
 export const mapStateToProps = state => ({
@@ -20,22 +18,7 @@ export class AuthRequiredContainer extends Component {
   }
 
   componentWillMount() {
-    const { noRedirect } = this.props
-    const { apiHost } = getEnvironmentConfig()
-
-    const token = get('authToken')
-
-    const { earthdataEnvironment } = this.props
-
-    const returnPath = window.location.href
-
-    if (token === null || token === '') {
-      this.setState({ isLoggedIn: false })
-
-      if (!noRedirect) window.location.href = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
-    } else {
-      this.setState({ isLoggedIn: true })
-    }
+    this.setState({ isLoggedIn: true })
   }
 
   render() {
@@ -59,14 +42,8 @@ export class AuthRequiredContainer extends Component {
   }
 }
 
-AuthRequiredContainer.defaultProps = {
-  noRedirect: false
-}
-
 AuthRequiredContainer.propTypes = {
-  noRedirect: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired
+  children: PropTypes.node.isRequired
 }
 
 export default connect(mapStateToProps, null)(AuthRequiredContainer)
