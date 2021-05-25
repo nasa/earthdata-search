@@ -369,9 +369,9 @@ class SecondaryToolbar extends Component {
             {
               showSaveProjectDropdown && saveProjectDropdown
             }
-            {
+            {/* {
               !loggedIn ? loginLink : loggedInDropdown
-            }
+            } */}
           </>
         </PortalFeatureContainer>
       </nav>

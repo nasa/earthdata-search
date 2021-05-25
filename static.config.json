@@ -2,7 +2,7 @@
   "application": {
     "version": "dev",
     "env": "dev",
-    "defaultPortal": "default",
+    "defaultPortal": "edsc",
     "feedbackApp": "",
     "analytics": {
       "gtmPropertyId": "",

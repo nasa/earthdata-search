@@ -17,3 +17,4 @@ cypress/videos
 overrideStatic.config.json
 cypress-coverage
 .nyc_output
+*.code-workspace
