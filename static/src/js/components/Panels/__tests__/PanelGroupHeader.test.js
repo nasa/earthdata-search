@@ -105,6 +105,17 @@ describe('PanelGroupHeader component', () => {
     })
   })
 
+  describe('when a secondary header is provided', () => {
+    test('should render the secondary header', () => {
+      const { enzymeWrapper } = setup({
+        secondaryHeading: <span>Secondary Heading</span>
+      })
+
+      expect(enzymeWrapper.find('.panel-group-header__heading').children().length).toEqual(2)
+      expect(enzymeWrapper.find('.panel-group-header__heading').childAt(1).text()).toEqual('Secondary Heading')
+    })
+  })
+
   describe('when more action dropdown items are provided', () => {
     const firstMoreActionOnClickMock = jest.fn()
     const secondMoreActionOnClickMock = jest.fn()

@@ -11,10 +11,22 @@
     text-decoration: underline;
   }
 
-  &__cwic-note {
+  &__note {
     display: block;
     margin-bottom: $spacer/2;
     color: $color__black--400;
     font-size: 0.875rem;
+  }
+
+  &__note-emph {
+    font-weight: 500;
+
+    &--opensearch {
+      color: $color__yellow;
+    }
+
+    &--csda {
+      color: $color__purple;
+    }
   }
 }

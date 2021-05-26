@@ -147,10 +147,17 @@
 
 
   &__heading-primary {
+    display: inline;
+    vertical-align: middle;
     margin-right: 0.75rem;
     font-size: 1rem;
     font-weight: 500;
     color: $color__black--700;
+  }
+
+  &__heading-badge {
+    display: inline;
+    vertical-align: middle;
   }
 
 

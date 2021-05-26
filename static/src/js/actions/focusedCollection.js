@@ -221,6 +221,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           hasAllMetadata: true,
           hasGranules,
           id: conceptId,
+          isCSDA: dataCenter === 'CSDA',
           isOpenSearch: hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', ''),
           nativeDataFormats,
           services,

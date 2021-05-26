@@ -36,6 +36,7 @@ import './PanelGroupHeader.scss'
  * @param {Array} props.moreActionsDropdownItems - An array of objects used to configure the more actions dropdown items
  * @param {String} props.panelGroupId - The element to be used as the header
  * @param {String} props.primaryHeading - The text to be used as the primary heading
+ * @param {String} props.secondaryHeading - The text to be used as the secondary heading
  * @param {Array} props.sortsArray - The text to be used as the secondary heading
  * @param {Array} props.viewsArray - The text to be used as the secondary heading
 */
@@ -52,6 +53,7 @@ export const PanelGroupHeader = ({
   headerLoading,
   moreActionsDropdownItems,
   exportsArray,
+  secondaryHeading,
   sortsArray,
   viewsArray
 }) => {
@@ -169,11 +171,12 @@ export const PanelGroupHeader = ({
               />
             )
             : (
-              <h2 className="panel-group-header__heading">
-                <span className="panel-group-header__heading-primary">
+              <span className="panel-group-header__heading">
+                <h2 className="panel-group-header__heading-primary">
                   {primaryHeading}
-                </span>
-              </h2>
+                </h2>
+                {secondaryHeading}
+              </span>
             )
         }
         {
@@ -327,6 +330,7 @@ PanelGroupHeader.defaultProps = {
   headerLoading: false,
   exportsArray: [],
   viewsArray: [],
+  secondaryHeading: null,
   sortsArray: []
 }
 
@@ -354,6 +358,7 @@ PanelGroupHeader.propTypes = {
   headerLoading: PropTypes.bool,
   exportsArray: PropTypes.arrayOf(PropTypes.shape({})),
   viewsArray: PropTypes.arrayOf(PropTypes.shape({})),
+  secondaryHeading: PropTypes.node,
   sortsArray: PropTypes.arrayOf(PropTypes.shape({}))
 }
 

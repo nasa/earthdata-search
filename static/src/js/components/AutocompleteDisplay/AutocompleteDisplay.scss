@@ -26,7 +26,7 @@
     height: 1.25rem;
     max-width: 100%;
     padding: 0.125rem 0.5rem;
-    padding-right: 1.5rem;
+    padding-right: 1.625rem;
     font-size: 0.625rem;
     line-height: 1.25rem;
     font-weight: 700;
@@ -37,24 +37,18 @@
     position: absolute;
     top: 0;
     right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 1;
     height: 1.25rem;
     width: 1.25rem;
     margin-left: auto;
-    padding: 0.125rem;
-    padding-right: 0.25rem;
+    padding: 0;
     font-size: 0.725rem;
     background-color: $color__blue;
     border-radius: 0;
-    align-items: center;
     color: rgba($color__black, 0.7);
-
-    .button__icon {
-      display: block;
-      position: relative;
-      top: -0.0375rem;
-      right: -0.0375rem;
-    }
 
     &:hover {
       background-color: darken($color__blue--dark, 1);

@@ -295,6 +295,69 @@ describe('getFocusedCollection', () => {
     })
   })
 
+  describe('when requesting a CSDA collection', () => {
+    test('sets the metadata correctly', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            collection: {
+              conceptId: 'C10000000000-EDSC',
+              shortName: 'id_1',
+              versionId: 'VersionID',
+              dataCenter: 'CSDA'
+            }
+          }
+        })
+
+      const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+      relevancyMock.mockImplementationOnce(() => jest.fn())
+
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        authToken: '',
+        focusedCollection: 'C10000000000-EDSC',
+        metadata: {
+          collections: {}
+        },
+        query: {
+          collection: {
+            spatial: {}
+          }
+        },
+        searchResults: {}
+      })
+
+      await store.dispatch(getFocusedCollection()).then(() => {
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          type: TOGGLE_SPATIAL_POLYGON_WARNING,
+          payload: false
+        })
+
+        expect(storeActions[1]).toEqual({
+          type: UPDATE_COLLECTION_METADATA,
+          payload: [
+            expect.objectContaining({
+              isCSDA: true
+            })
+          ]
+        })
+      })
+
+      expect(relevancyMock).toHaveBeenCalledTimes(1)
+      expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
   test('does not call updateFocusedCollection when graphql throws an http error', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',

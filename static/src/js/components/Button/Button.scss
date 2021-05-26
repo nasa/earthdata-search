@@ -15,7 +15,8 @@
 
   &--link {
     padding: 0;
-    vertical-align: baseline;
+    display: inline;
+    vertical-align: inherit;
     border: 0;
     line-height: 1em;
   }
@@ -56,6 +57,8 @@
     }
 
     .button--link & {
+      display: inline;
+      vertical-align: bottom;
       line-height: 1em;
       margin-right: $spacer/4;
     }

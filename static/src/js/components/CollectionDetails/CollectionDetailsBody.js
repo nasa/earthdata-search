@@ -73,17 +73,17 @@ const buildNativeFormatList = (nativeFormats) => {
   )
 }
 
-const buildDoiLink = (doi) => {
+const buildDoiLink = (doiLink, doiText) => {
   const DoiBadge = (
     <SplitBadge
       primary="DOI"
-      secondary={doi.doiText}
+      secondary={doiText}
     />
   )
 
-  if (doi.doiLink) {
+  if (doiLink) {
     return (
-      <a className="collection-details-body__doi" href={doi.doiLink} target="_blank" rel="noopener noreferrer">
+      <a className="collection-details-body__doi" href={doiLink} target="_blank" rel="noopener noreferrer">
         {DoiBadge}
       </a>
     )
@@ -117,7 +117,7 @@ export const CollectionDetailsBody = ({
     associatedDois,
     dataCenters,
     directDistributionInformation,
-    doi,
+    doi = {},
     hasAllMetadata,
     gibsLayers,
     nativeDataFormats,
@@ -190,6 +190,11 @@ export const CollectionDetailsBody = ({
     s3CredentialsApiDocumentationUrl
   } = directDistributionInformation
 
+  const {
+    doiLink,
+    doiText
+  } = doi
+
   return (
     <div className="collection-details-body">
       <SimpleBar
@@ -205,7 +210,7 @@ export const CollectionDetailsBody = ({
                 <Badge className="collection-details-header__short-name mr-2" variant="light">{shortName}</Badge>
                 <Badge className="collection-details-header__version-id mr-2" variant="info">{`Version ${versionId}`}</Badge>
                 {
-                  doi && buildDoiLink(doi)
+                  doiText && buildDoiLink(doiLink, doiText)
                 }
               </div>
               {
