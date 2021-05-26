@@ -195,6 +195,10 @@ export const getCollections = () => (dispatch, getState) => {
 
       dispatch(finishCollectionsTimer())
 
+      dispatch(onCollectionsLoaded({
+        loaded: true
+      }))
+
       dispatch(updateCollectionMetadata(entry))
 
       if (pageNum === 1) {
@@ -202,10 +206,6 @@ export const getCollections = () => (dispatch, getState) => {
       } else {
         dispatch(addMoreCollectionResults(payload))
       }
-
-      dispatch(onCollectionsLoaded({
-        loaded: true
-      }))
 
       dispatch(onFacetsLoaded({
         loaded: true

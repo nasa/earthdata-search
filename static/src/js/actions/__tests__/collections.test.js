@@ -172,12 +172,16 @@ describe('getCollections', () => {
       expect(storeActions[3]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
       expect(storeActions[4]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
       expect(storeActions[5]).toEqual({
+        type: LOADED_COLLECTIONS,
+        payload: { loaded: true }
+      })
+      expect(storeActions[6]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [{
           mockCollectionData: 'goes here'
         }]
       })
-      expect(storeActions[6]).toEqual({
+      expect(storeActions[7]).toEqual({
         type: UPDATE_COLLECTION_RESULTS,
         payload: {
           keyword: 'search keyword',
@@ -187,10 +191,6 @@ describe('getCollections', () => {
           facets: [],
           hits: 1
         }
-      })
-      expect(storeActions[7]).toEqual({
-        type: LOADED_COLLECTIONS,
-        payload: { loaded: true }
       })
       expect(storeActions[8]).toEqual({
         type: LOADED_FACETS,
@@ -249,12 +249,16 @@ describe('getCollections', () => {
       expect(storeActions[2]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
       expect(storeActions[3]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
       expect(storeActions[4]).toEqual({
+        type: LOADED_COLLECTIONS,
+        payload: { loaded: true }
+      })
+      expect(storeActions[5]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [{
           mockCollectionData: 'goes here'
         }]
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: ADD_MORE_COLLECTION_RESULTS,
         payload: {
           keyword: 'search keyword',
@@ -264,10 +268,6 @@ describe('getCollections', () => {
           facets: [],
           hits: 1
         }
-      })
-      expect(storeActions[6]).toEqual({
-        type: LOADED_COLLECTIONS,
-        payload: { loaded: true }
       })
       expect(storeActions[7]).toEqual({
         type: LOADED_FACETS,

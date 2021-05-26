@@ -111,7 +111,7 @@ describe('CollectionResultsBody component', () => {
         ...collectionResultsBodyData
       }],
       itemCount: 2,
-      loadNextPage,
+      loadMoreItems: loadNextPage,
       onAddProjectCollection,
       onRemoveCollectionFromProject,
       onViewCollectionGranules,
@@ -140,7 +140,7 @@ describe('CollectionResultsBody component', () => {
         ...collectionResultsBodyData
       }],
       itemCount: 2,
-      loadNextPage,
+      loadMoreItems: loadNextPage,
       onAddProjectCollection,
       onRemoveCollectionFromProject,
       onViewCollectionGranules,

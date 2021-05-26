@@ -104,6 +104,7 @@ export const CollectionResultsList = ({
               isItemLoaded={isItemLoaded}
               itemCount={itemCount}
               loadMoreItems={loadMoreItems}
+              threshold={4}
             >
               {
                 ({ onItemsRendered, ref }) => (
@@ -125,7 +126,6 @@ export const CollectionResultsList = ({
                       onRemoveCollectionFromProject,
                       onViewCollectionGranules,
                       onViewCollectionDetails,
-                      loadMoreItems,
                       isItemLoaded,
                       setSize
                     }}

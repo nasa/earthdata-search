@@ -28,7 +28,6 @@ export const CollectionResultsListItem = memo(({
   const {
     collectionsMetadata,
     isItemLoaded,
-    loadMoreItems,
     onAddProjectCollection,
     onRemoveCollectionFromProject,
     onViewCollectionDetails,
@@ -72,7 +71,6 @@ export const CollectionResultsListItem = memo(({
     <li className="collection-results-list-item" style={style}>
       <CollectionResultsItem
         collectionMetadata={collectionsMetadata[index]}
-        loadMoreItems={loadMoreItems}
         onAddProjectCollection={onAddProjectCollection}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onViewCollectionDetails={onViewCollectionDetails}

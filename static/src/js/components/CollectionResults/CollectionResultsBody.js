@@ -35,7 +35,8 @@ const CollectionResultsBody = ({
   const {
     allIds: collectionIds,
     hits: collectionHits,
-    isLoading
+    isLoading,
+    isLoaded
   } = collectionsSearch
 
   const collectionList = useMemo(() => formatCollectionList(
@@ -52,14 +53,22 @@ const CollectionResultsBody = ({
     && collectionList.length
     && collectionList.length < collectionHits
   )
-  const loadingFirstCollections = !!(isLoading && collectionList.length === 0)
+
+  // const loadingFirstCollections = !!(isLoading && collectionList.length === 0)
+  const noCollectionRequestStarted = !isLoading && !isLoaded
+
+  // Show a skeleton while a request is happening
+  const isCollectionsLoading = isLoading && collectionList.length === 0
+  const loadingFirstCollections = noCollectionRequestStarted || isCollectionsLoading
+
+  // Show a skeleton when items are loading
   const hasNextPage = moreCollectionsToLoad || loadingFirstCollections
 
   // If a next page is available, add an empty item to the lists for the loading indicator.
   const itemCount = hasNextPage ? collectionList.length + 1 : collectionList.length
 
   // If collections are currently loading, pass an empty function, otherwise load more collections.
-  const loadMoreItems = isLoading ? () => {} : loadNextPage
+  const loadMoreItems = isLoading || loadingFirstCollections ? () => {} : loadNextPage
 
   // Callback to check if a particular collection has loaded.
   const isItemLoaded = index => !hasNextPage || index < collectionList.length
@@ -80,7 +89,6 @@ const CollectionResultsBody = ({
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onViewCollectionGranules={onViewCollectionGranules}
           onViewCollectionDetails={onViewCollectionDetails}
-          loadNextPage={loadNextPage}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
@@ -98,7 +106,6 @@ const CollectionResultsBody = ({
           isItemLoaded={isItemLoaded}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
-          loadNextPage={loadNextPage}
           onAddProjectCollection={onAddProjectCollection}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onViewCollectionDetails={onViewCollectionDetails}
