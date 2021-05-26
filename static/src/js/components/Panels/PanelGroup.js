@@ -27,7 +27,8 @@ import './PanelGroup.scss'
  * @param {Function} props.onChangePanel - The action to change the panel
  * @param {String} props.panelGroupId - The element to be used as the header
  * @param {String} props.primaryHeading - The text to be used as the primary heading
- * @param {Array} props.sortsArray - The configuration for the sorts
+ * @param {String} props.secondaryHeading - The text to be used as the secondary heading
+* @param {Array} props.sortsArray - The configuration for the sorts
  * @param {Array} props.viewsArray - The configuration for the views
 */
 export const PanelGroup = ({
@@ -36,6 +37,7 @@ export const PanelGroup = ({
   activeView,
   breadcrumbs,
   children,
+  exportsArray,
   footer,
   handoffLinks,
   headerLoading,
@@ -49,7 +51,7 @@ export const PanelGroup = ({
   onChangePanel,
   panelGroupId,
   primaryHeading,
-  exportsArray,
+  secondaryHeading,
   sortsArray,
   viewsArray
 }) => {
@@ -82,6 +84,7 @@ export const PanelGroup = ({
         activeSort={activeSort}
         breadcrumbs={breadcrumbs}
         primaryHeading={primaryHeading}
+        secondaryHeading={secondaryHeading}
         headerLoading={headerLoading}
         headerMessage={headerMessage}
         handoffLinks={handoffLinks}
@@ -105,6 +108,7 @@ PanelGroup.defaultProps = {
   activeView: '',
   activePanelId: '0',
   breadcrumbs: [],
+  exportsArray: [],
   footer: null,
   handoffLinks: [],
   headerMessage: null,
@@ -119,9 +123,9 @@ PanelGroup.defaultProps = {
   panelGroupId: '',
   primaryHeading: null,
   headerLoading: false,
-  exportsArray: [],
-  viewsArray: [],
-  sortsArray: []
+  secondaryHeading: null,
+  sortsArray: [],
+  viewsArray: []
 }
 
 PanelGroup.propTypes = {
@@ -133,6 +137,7 @@ PanelGroup.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node)
   ]).isRequired,
+  exportsArray: PropTypes.arrayOf(PropTypes.shape({})),
   footer: PropTypes.node,
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
   headerMessage: PropTypes.node,
@@ -158,9 +163,9 @@ PanelGroup.propTypes = {
   panelGroupId: PropTypes.string,
   primaryHeading: PropTypes.string,
   headerLoading: PropTypes.bool,
-  exportsArray: PropTypes.arrayOf(PropTypes.shape({})),
-  viewsArray: PropTypes.arrayOf(PropTypes.shape({})),
-  sortsArray: PropTypes.arrayOf(PropTypes.shape({}))
+  secondaryHeading: PropTypes.node,
+  sortsArray: PropTypes.arrayOf(PropTypes.shape({})),
+  viewsArray: PropTypes.arrayOf(PropTypes.shape({}))
 }
 
 export default PanelGroup

@@ -47,6 +47,7 @@ function setup(overrideProps, location = '/search') {
     collectionMetadata: {
       hasAllMetadata: true,
       title: 'Collection Title',
+      isCsda: false,
       isOpenSearch: false
     },
     collectionQuery: {
@@ -486,6 +487,81 @@ describe('SearchPanels component', () => {
         expect(granuleResultsPanelProps.headerMetaPrimaryText).toBe('Showing 2 of 4 matching granules')
         expect(granuleResultsPanelProps.headerLoading).toBe(false)
       })
+    })
+
+    describe('on a non-CSDA collection', () => {
+      test('does not display a badge in the secondary heading', () => {
+        const { enzymeWrapper } = setup({
+          collectionMetadata: {
+            hasAllMetadata: true,
+            title: 'Collection Title',
+            isCsda: false,
+            isOpenSearch: false
+          }
+        }, '/search/granules')
+        const panels = enzymeWrapper.find(Panels)
+        const granuleResultsPanel = panels.find(PanelGroup).at(1)
+        const granuleResultsPanelProps = granuleResultsPanel.props()
+
+        expect(granuleResultsPanelProps.secondaryHeading).toEqual(false)
+      })
+
+      test('does not display a header message', () => {
+        const { enzymeWrapper } = setup({
+          collectionMetadata: {
+            hasAllMetadata: true,
+            title: 'Collection Title',
+            isCsda: false,
+            isOpenSearch: false
+          }
+        }, '/search/granules')
+        const panels = enzymeWrapper.find(Panels)
+        const granuleResultsPanel = panels.find(PanelGroup).at(1)
+        const granuleResultsPanelProps = granuleResultsPanel.props()
+
+        expect(granuleResultsPanelProps.headerMessage.props.children).toEqual([
+          false,
+          false
+        ])
+      })
+    })
+
+    describe('on a CSDA collection', () => {
+      test('displays a badge in the secondary heading', () => {
+        const { enzymeWrapper } = setup({
+          collectionMetadata: {
+            hasAllMetadata: true,
+            title: 'Collection Title',
+            isCsda: true,
+            isOpenSearch: false
+          }
+        }, '/search/granules')
+        const panels = enzymeWrapper.find(Panels)
+        const granuleResultsPanel = panels.find(PanelGroup).at(1)
+        const granuleResultsPanelProps = granuleResultsPanel.props()
+
+        expect(granuleResultsPanelProps.secondaryHeading.type.displayName).toEqual('Badge')
+        expect(granuleResultsPanelProps.secondaryHeading.props.className).toContain('badge--purple')
+        expect(granuleResultsPanelProps.secondaryHeading.props.children[1]).toEqual('CSDA')
+      })
+    })
+
+    test('displays a header message', () => {
+      const { enzymeWrapper } = setup({
+        collectionMetadata: {
+          hasAllMetadata: true,
+          title: 'Collection Title',
+          isCsda: true,
+          isOpenSearch: false
+        }
+      }, '/search/granules')
+      const panels = enzymeWrapper.find(Panels)
+      const granuleResultsPanel = panels.find(PanelGroup).at(1)
+      const granuleResultsPanelProps = granuleResultsPanel.props()
+      const messageProps = granuleResultsPanelProps.headerMessage.props.children[1].props
+
+      expect(messageProps.className).toEqual('search-panels__note')
+      expect(shallow(messageProps.children[1]).text()).toContain('NASA Commercial Smallsat Data Acquisition (CSDA) Program')
     })
   })
 

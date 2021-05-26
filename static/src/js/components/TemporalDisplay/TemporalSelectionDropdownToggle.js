@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { FaCalendar } from 'react-icons/fa'
+import { FaCalendarAlt } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -12,7 +12,7 @@ const TemporalSelectionDropdownToggle = ({ onToggleClick }) => (
     className="temporal-selection-dropdown__button earch-form__button search-form__button--dark"
     onClick={onToggleClick}
   >
-    <EDSCIcon icon={FaCalendar} size="0.825rem" />
+    <EDSCIcon icon={FaCalendarAlt} size="0.825rem" />
   </Dropdown.Toggle>
 )
 

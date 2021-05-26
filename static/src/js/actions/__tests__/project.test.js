@@ -389,6 +389,105 @@ describe('getProjectCollections', () => {
 
     expect(consoleMock).toBeCalledTimes(1)
   })
+
+  describe('when requesting a CSDA collection', () => {
+    test('calls lambda to get authenticated collections', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+        cmrHost: 'https://cmr.earthdata.nasa.gov',
+        opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
+      }))
+
+      nock(/localhost/)
+        .post(/dqs/)
+        .reply(200, {})
+
+      nock(/localhost/)
+        .post(/dqs/)
+        .reply(200, {})
+
+      nock(/localhost/)
+        .post(/graphql/)
+        .reply(200, {
+          data: {
+            collections: {
+              items: [{
+                conceptId: 'collectionId1',
+                dataCenter: 'CSDA'
+              },
+              {
+                conceptId: 'collectionId2'
+              }]
+            }
+          }
+        },
+        {
+          'jwt-token': 'token'
+        })
+
+      nock(/localhost/)
+        .post(/granules/)
+        .reply(200, {
+          feed: {
+            updated: '2019-03-27T20:21:14.705Z',
+            id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+            title: 'ECHO granule metadata',
+            entry: [{
+              id: 'G1000001-EDSC'
+            }, {
+              id: 'G1000002-EDSC'
+            }]
+          }
+        }, {
+          'cmr-hits': 1
+        })
+
+      const store = mockStore({
+        authToken: 'token',
+        metadata: {
+          collections: {}
+        },
+        focusedCollection: '',
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2']
+          }
+        },
+        providers: [
+          {
+            provider: {
+              id: 'abcd-1234-efgh-5678',
+              organization_name: 'EDSC-TEST',
+              provider_id: 'EDSC-TEST'
+            }
+          }, {
+            provider: {
+              id: 'abcd-1234-efgh-5678',
+              organization_name: 'NON-EDSC-TEST',
+              provider_id: 'NON-EDSC-TEST'
+            }
+          }
+        ],
+        query: {
+          collection: {}
+        }
+      })
+
+      await store.dispatch(actions.getProjectCollections())
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_COLLECTION_METADATA,
+        payload: [
+          expect.objectContaining({
+            isCSDA: true
+          }),
+          expect.objectContaining({
+            isCSDA: false
+          })
+        ]
+      })
+    })
+  })
 })
 
 describe('addProjectCollection', () => {

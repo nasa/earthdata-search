@@ -5,14 +5,15 @@ import {
   Switch
 } from 'react-router-dom'
 import { isEqual, startCase } from 'lodash'
-import { Col } from 'react-bootstrap'
+import { Badge, Col } from 'react-bootstrap'
 import {
   FaBell,
   FaInfoCircle,
   FaList,
   FaMap,
   FaQuestionCircle,
-  FaTable
+  FaTable,
+  FaLock
 } from 'react-icons/fa'
 
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
@@ -186,6 +187,7 @@ class SearchPanels extends PureComponent {
     const {
       hasAllMetadata: hasAllCollectionMetadata = false,
       title: collectionTitle = '',
+      isCsda: collectionIsCSDA,
       isOpenSearch: collectionIsOpenSearch
     } = collectionMetadata
 
@@ -403,9 +405,9 @@ class SearchPanels extends PureComponent {
           <>
             {
               collectionIsOpenSearch && (
-                <Col className="search-panels__cwic-note">
+                <Col className="search-panels__note">
                   {'This is '}
-                  <span className="granule-results-header__cwic-emph">Int&apos;l / Interagency Data</span>
+                  <span className="search-panels__note-emph search-panels__note-emph--opensearch">Int&apos;l / Interagency Data</span>
                   {' data. Searches will be performed by external services which may vary in performance and available features. '}
                   <Button
                     className="granule-results-header__link"
@@ -417,6 +419,27 @@ class SearchPanels extends PureComponent {
                   >
                     More Details
                   </Button>
+                </Col>
+              )
+            }
+            {
+              collectionIsCSDA && (
+                <Col className="search-panels__note">
+                  {'This collection is made available through the '}
+                  <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                  {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                  {/*
+                    // TODO: Implement CSDA Modal (EDSC-3144)
+                    <Button
+                    className="granule-results-header__link"
+                    onClick={() => onToggleAboutCSDAModal(true)}
+                    variant="link"
+                    bootstrapVariant="link"
+                    icon={FaQuestionCircle}
+                    label="More details"
+                  >
+                    More Details
+                  </Button> */}
                 </Col>
               )
             }
@@ -436,6 +459,16 @@ class SearchPanels extends PureComponent {
           <GranuleResultsActionsContainer />
         )}
         primaryHeading={collectionTitle}
+        secondaryHeading={
+          collectionIsCSDA && (
+            <Badge className="panel-group-header__heading-badge badge--purple">
+              <span className="mr-1">
+                <FaLock />
+              </span>
+              CSDA
+            </Badge>
+          )
+        }
         headerLoading={!collectionSearchIsLoaded && hasAllCollectionMetadata === false}
         activeView={granulePanelView}
         activeSort={activeGranulesSortKey}
