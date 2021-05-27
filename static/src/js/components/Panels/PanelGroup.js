@@ -28,7 +28,7 @@ import './PanelGroup.scss'
  * @param {String} props.panelGroupId - The element to be used as the header
  * @param {String} props.primaryHeading - The text to be used as the primary heading
  * @param {String} props.secondaryHeading - The text to be used as the secondary heading
-* @param {Array} props.sortsArray - The configuration for the sorts
+ * @param {Array} props.sortsArray - The configuration for the sorts
  * @param {Array} props.viewsArray - The configuration for the views
 */
 export const PanelGroup = ({

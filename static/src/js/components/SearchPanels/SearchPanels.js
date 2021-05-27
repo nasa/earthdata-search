@@ -187,7 +187,7 @@ class SearchPanels extends PureComponent {
     const {
       hasAllMetadata: hasAllCollectionMetadata = false,
       title: collectionTitle = '',
-      isCsda: collectionIsCSDA,
+      isCSDA: collectionIsCSDA,
       isOpenSearch: collectionIsOpenSearch
     } = collectionMetadata
 

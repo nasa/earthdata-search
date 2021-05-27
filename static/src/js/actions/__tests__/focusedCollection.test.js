@@ -311,7 +311,11 @@ describe('getFocusedCollection', () => {
               conceptId: 'C10000000000-EDSC',
               shortName: 'id_1',
               versionId: 'VersionID',
-              dataCenter: 'CSDA'
+              dataCenters: [
+                {
+                  shortName: 'NASA/CSDA'
+                }
+              ]
             }
           }
         })

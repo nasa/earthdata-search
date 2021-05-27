@@ -47,7 +47,7 @@ function setup(overrideProps, location = '/search') {
     collectionMetadata: {
       hasAllMetadata: true,
       title: 'Collection Title',
-      isCsda: false,
+      isCSDA: false,
       isOpenSearch: false
     },
     collectionQuery: {
@@ -495,7 +495,7 @@ describe('SearchPanels component', () => {
           collectionMetadata: {
             hasAllMetadata: true,
             title: 'Collection Title',
-            isCsda: false,
+            isCSDA: false,
             isOpenSearch: false
           }
         }, '/search/granules')
@@ -511,7 +511,7 @@ describe('SearchPanels component', () => {
           collectionMetadata: {
             hasAllMetadata: true,
             title: 'Collection Title',
-            isCsda: false,
+            isCSDA: false,
             isOpenSearch: false
           }
         }, '/search/granules')
@@ -532,7 +532,7 @@ describe('SearchPanels component', () => {
           collectionMetadata: {
             hasAllMetadata: true,
             title: 'Collection Title',
-            isCsda: true,
+            isCSDA: true,
             isOpenSearch: false
           }
         }, '/search/granules')
@@ -551,7 +551,7 @@ describe('SearchPanels component', () => {
         collectionMetadata: {
           hasAllMetadata: true,
           title: 'Collection Title',
-          isCsda: true,
+          isCSDA: true,
           isOpenSearch: false
         }
       }, '/search/granules')
