@@ -16,6 +16,7 @@ import { getUsername } from '../selectors/user'
 import { hasTag } from '../../../../sharedUtils/tags'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
+import { isCSDACollection } from '../util/isCSDACollection'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -190,6 +191,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           conceptId,
           coordinateSystem,
           dataCenter,
+          dataCenters,
           granules,
           hasGranules,
           nativeDataFormats,
@@ -221,7 +223,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           hasAllMetadata: true,
           hasGranules,
           id: conceptId,
-          isCSDA: dataCenter === 'CSDA',
+          isCSDA: isCSDACollection(dataCenters),
           isOpenSearch: hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', ''),
           nativeDataFormats,
           services,

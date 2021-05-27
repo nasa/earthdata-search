@@ -21,7 +21,11 @@ const processResults = (results) => {
     const { id } = result
 
     byId[id] = {
-      ...camelCaseKeys(result),
+      ...camelCaseKeys(result, {
+        exclude: [
+          'isCSDA'
+        ]
+      }),
       conceptId: id
     }
   })

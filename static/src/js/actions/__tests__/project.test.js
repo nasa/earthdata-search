@@ -412,7 +412,11 @@ describe('getProjectCollections', () => {
             collections: {
               items: [{
                 conceptId: 'collectionId1',
-                dataCenter: 'CSDA'
+                dataCenters: [
+                  {
+                    shortName: 'NASA/CSDA'
+                  }
+                ]
               },
               {
                 conceptId: 'collectionId2'

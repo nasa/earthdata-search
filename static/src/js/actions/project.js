@@ -32,6 +32,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getUsername } from '../selectors/user'
 import { hasTag } from '../../../../sharedUtils/tags'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
+import { isCSDACollection } from '../util/isCSDACollection'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -291,6 +292,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           conceptId,
           coordinateSystem,
           dataCenter,
+          dataCenters,
           granules,
           hasGranules,
           services,
@@ -320,7 +322,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           hasAllMetadata: true,
           hasGranules,
           id: conceptId,
-          isCSDA: dataCenter === 'CSDA',
+          isCSDA: isCSDACollection(dataCenters),
           isOpenSearch: hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', ''),
           services,
           shortName,
