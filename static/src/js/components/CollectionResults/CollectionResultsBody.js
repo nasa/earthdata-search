@@ -54,7 +54,6 @@ const CollectionResultsBody = ({
     && collectionList.length < collectionHits
   )
 
-  // const loadingFirstCollections = !!(isLoading && collectionList.length === 0)
   const noCollectionRequestStarted = !isLoading && !isLoaded
 
   // Show a skeleton while a request is happening
