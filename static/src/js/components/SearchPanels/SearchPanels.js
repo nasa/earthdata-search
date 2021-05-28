@@ -380,6 +380,7 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="collection-results-panel"
+        dataTestId="panel-group_collection-results"
         primaryHeading={collectionResultsPrimaryHeading}
         headerMetaPrimaryLoading={initialCollectionsLoading}
         headerMetaPrimaryText={collectionResultsHeaderMetaPrimaryText}

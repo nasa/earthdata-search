@@ -172,7 +172,10 @@ export const PanelGroupHeader = ({
             )
             : (
               <span className="panel-group-header__heading">
-                <h2 className="panel-group-header__heading-primary">
+                <h2
+                  className="panel-group-header__heading-primary"
+                  data-test-id="panel-group-header__heading-primary"
+                >
                   {primaryHeading}
                 </h2>
                 {secondaryHeading}
@@ -264,7 +267,12 @@ export const PanelGroupHeader = ({
                     />
                   )
                   : (
-                    <span className="panel-group-header__heading-meta-text">{headerMetaPrimaryText}</span>
+                    <span
+                      className="panel-group-header__heading-meta-text"
+                      data-test-id="panel-group-header__heading-meta-text"
+                    >
+                      {headerMetaPrimaryText}
+                    </span>
                   )
               }
             </div>
