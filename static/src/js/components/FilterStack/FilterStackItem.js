@@ -78,7 +78,10 @@ const FilterStackItem = (props) => {
         </div>
         {
           hint && (
-            <div className="filter-stack-item__hint">
+            <div
+              className="filter-stack-item__hint"
+              data-test-id="filter-stack-item__hint"
+            >
               {hint}
             </div>
           )
