@@ -31,6 +31,7 @@ function setup() {
     onChangeQuery: jest.fn(),
     onFocusedCollectionChange: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),

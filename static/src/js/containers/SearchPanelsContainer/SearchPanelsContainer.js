@@ -38,6 +38,8 @@ export const mapDispatchToProps = dispatch => ({
     data => dispatch(metricsCollectionSortChange(data)),
   onSetActivePanel:
     panelId => dispatch(actions.setActivePanel(panelId)),
+  onToggleAboutCSDAModal:
+    state => dispatch(actions.toggleAboutCSDAModal(state)),
   onToggleAboutCwicModal:
     state => dispatch(actions.toggleAboutCwicModal(state)),
   onTogglePanels:
@@ -85,6 +87,7 @@ export const SearchPanelsContainer = ({
   onChangeQuery,
   onMetricsCollectionSortChange,
   onSetActivePanel,
+  onToggleAboutCSDAModal,
   onToggleAboutCwicModal,
   onTogglePanels,
   onExport,
@@ -109,6 +112,7 @@ export const SearchPanelsContainer = ({
     onChangeQuery={onChangeQuery}
     onMetricsCollectionSortChange={onMetricsCollectionSortChange}
     onSetActivePanel={onSetActivePanel}
+    onToggleAboutCSDAModal={onToggleAboutCSDAModal}
     onToggleAboutCwicModal={onToggleAboutCwicModal}
     onTogglePanels={onTogglePanels}
     onExport={onExport}
@@ -135,6 +139,7 @@ SearchPanelsContainer.propTypes = {
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
+  onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,

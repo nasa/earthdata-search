@@ -19,6 +19,7 @@ import Panels from '../../Panels/Panels'
 import PanelGroup from '../../Panels/PanelGroup'
 import PanelGroupHeader from '../../Panels/PanelGroupHeader'
 import GranuleResultsActionsContainer from '../../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
+import Button from '../../Button/Button'
 
 const store = configureStore()
 
@@ -89,6 +90,7 @@ function setup(overrideProps, location = '/search') {
     onChangeQuery: jest.fn(),
     onFocusedCollectionChange: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
@@ -562,6 +564,47 @@ describe('SearchPanels component', () => {
 
       expect(messageProps.className).toEqual('search-panels__note')
       expect(shallow(messageProps.children[1]).text()).toContain('NASA Commercial Smallsat Data Acquisition (CSDA) Program')
+    })
+
+    test('displays a link to open a modal for more information', () => {
+      const { enzymeWrapper } = setup({
+        collectionMetadata: {
+          hasAllMetadata: true,
+          title: 'Collection Title',
+          isCSDA: true,
+          isOpenSearch: false
+        }
+      }, '/search/granules')
+      const panels = enzymeWrapper.find(Panels)
+      const granuleResultsPanel = panels.find(PanelGroup).at(1)
+      const granuleResultsPanelProps = granuleResultsPanel.props()
+      const messageProps = granuleResultsPanelProps.headerMessage.props.children[1].props
+
+      expect(shallow(messageProps.children[3]).text()).toContain('More Details')
+    })
+  })
+
+  describe('when the modal button is clicked', () => {
+    test('opens the modal', () => {
+      const { enzymeWrapper, props } = setup({
+        collectionMetadata: {
+          hasAllMetadata: true,
+          title: 'Collection Title',
+          isCSDA: true,
+          isOpenSearch: false
+        }
+      }, '/search/granules')
+      const panels = enzymeWrapper.find(Panels)
+      const granuleResultsPanel = panels.find(PanelGroup).at(1)
+      const granuleResultsPanelProps = granuleResultsPanel.props()
+      const messageProps = granuleResultsPanelProps.headerMessage.props.children[1].props
+
+      const moreDetailsButton = shallow(messageProps.children[3])
+
+      moreDetailsButton.simulate('click')
+
+      expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
     })
   })
 

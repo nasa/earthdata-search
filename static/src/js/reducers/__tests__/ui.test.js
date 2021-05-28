@@ -2,6 +2,7 @@ import uiReducer from '../ui'
 import {
   EXPORT_FINISHED,
   EXPORT_STARTED,
+  TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
@@ -47,6 +48,9 @@ const initialState = {
     isOpen: false
   },
   chunkedOrderModal: {
+    isOpen: false
+  },
+  aboutCSDAModal: {
     isOpen: false
   },
   aboutCwicModal: {
@@ -215,6 +219,22 @@ describe('TOGGLE_CHUNKED_ORDER_MODAL', () => {
     const expectedState = {
       ...initialState,
       chunkedOrderModal: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_ABOUT_CSDA_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_ABOUT_CSDA_MODAL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      aboutCSDAModal: { isOpen: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)

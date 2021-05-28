@@ -1,6 +1,7 @@
 import {
   EXPORT_FINISHED,
   EXPORT_STARTED,
+  TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
@@ -46,6 +47,9 @@ const initialState = {
     isOpen: false
   },
   chunkedOrderModal: {
+    isOpen: false
+  },
+  aboutCSDAModal: {
     isOpen: false
   },
   aboutCwicModal: {
@@ -140,6 +144,14 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         chunkedOrderModal: {
+          isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_ABOUT_CSDA_MODAL: {
+      return {
+        ...state,
+        aboutCSDAModal: {
           isOpen: action.payload
         }
       }

@@ -74,6 +74,7 @@ import {
 } from './facets'
 import {
   toggleAdvancedSearchModal,
+  toggleAboutCSDAModal,
   toggleAboutCwicModal,
   toggleChunkedOrderModal,
   toggleDrawingNewLayer,
@@ -275,6 +276,7 @@ const actions = {
   shapefileErrored,
   shapefileLoading,
   submitRetrieval,
+  toggleAboutCSDAModal,
   toggleAboutCwicModal,
   toggleAdvancedSearchModal,
   toggleChunkedOrderModal,

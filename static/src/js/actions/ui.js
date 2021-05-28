@@ -1,4 +1,5 @@
 import {
+  TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
@@ -9,9 +10,9 @@ import {
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   TOGGLE_SPATIAL_POLYGON_WARNING,
+  TOGGLE_TIMELINE,
   TOGGLE_TOO_MANY_POINTS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL,
-  TOGGLE_TIMELINE
+  TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../constants/actionTypes'
 
 export const toggleFacetsModal = state => ({
@@ -56,6 +57,11 @@ export const toggleTooManyPointsModal = state => ({
 
 export const toggleChunkedOrderModal = state => ({
   type: TOGGLE_CHUNKED_ORDER_MODAL,
+  payload: state
+})
+
+export const toggleAboutCSDAModal = state => ({
+  type: TOGGLE_ABOUT_CSDA_MODAL,
   payload: state
 })
 
