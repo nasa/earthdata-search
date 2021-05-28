@@ -157,6 +157,7 @@ class SearchPanels extends PureComponent {
       onChangeQuery,
       onFocusedCollectionChange,
       onMetricsCollectionSortChange,
+      onToggleAboutCSDAModal,
       onToggleAboutCwicModal,
       onExport
     } = this.props
@@ -411,7 +412,7 @@ class SearchPanels extends PureComponent {
                   <span className="search-panels__note-emph search-panels__note-emph--opensearch">Int&apos;l / Interagency Data</span>
                   {' data. Searches will be performed by external services which may vary in performance and available features. '}
                   <Button
-                    className="granule-results-header__link"
+                    className="search-panels__header-message-link"
                     onClick={() => onToggleAboutCwicModal(true)}
                     variant="link"
                     bootstrapVariant="link"
@@ -429,10 +430,9 @@ class SearchPanels extends PureComponent {
                   {'This collection is made available through the '}
                   <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
                   {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                  {/*
-                    // TODO: Implement CSDA Modal (EDSC-3144)
-                    <Button
-                    className="granule-results-header__link"
+                  <Button
+                    className="search-panels__header-message-link"
+                    dataTestId="search-panels__csda-modal-button"
                     onClick={() => onToggleAboutCSDAModal(true)}
                     variant="link"
                     bootstrapVariant="link"
@@ -440,7 +440,7 @@ class SearchPanels extends PureComponent {
                     label="More details"
                   >
                     More Details
-                  </Button> */}
+                  </Button>
                 </Col>
               )
             }
@@ -706,6 +706,7 @@ SearchPanels.propTypes = {
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
+  onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,

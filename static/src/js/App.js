@@ -17,6 +17,7 @@ import Project from './routes/Project/Project'
 import Search from './routes/Search/Search'
 import Subscriptions from './routes/Subscriptions/Subscriptions'
 
+import AboutCSDAModalContainer from './containers/AboutCSDAModalContainer/AboutCSDAModalContainer'
 import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
 import AppHeader from './components/AppHeader/AppHeader'
 import AuthCallbackContainer from './containers/AuthCallbackContainer/AuthCallbackContainer'
@@ -149,6 +150,7 @@ class App extends Component {
                       <ShapefileDropzoneContainer />
                       <TooManyPointsModalContainer />
                       <ChunkedOrderModalContainer />
+                      <AboutCSDAModalContainer />
                       <AboutCwicModalContainer />
                     </Route>
                   </Switch>
