@@ -15,6 +15,7 @@ import './PanelGroup.scss'
  * @param {String} props.activeView - The active view option
  * @param {Array} props.breadcrumbs - An array of objects used to configure the breadcrumbs
  * @param {Node} props.children - The panel group children, should consist only of PanelItem components
+ * @param {String} props.dataTestId - Test ID to add to the dom element
  * @param {Node} props.footer - The element to be used as the footer
  * @param {Array} props.handoffLinks - An array of objects used to configure the handoff links
  * @param {Boolean} props.headerLoading - A flag designating the header loading state
@@ -37,6 +38,7 @@ export const PanelGroup = ({
   activeView,
   breadcrumbs,
   children,
+  dataTestId,
   exportsArray,
   footer,
   handoffLinks,
@@ -77,7 +79,10 @@ export const PanelGroup = ({
   ])
 
   return (
-    <div className={className}>
+    <div
+      className={className}
+      data-test-id={dataTestId}
+    >
       <PanelGroupHeader
         activePanelId={activePanelId}
         activeView={activeView}
@@ -108,6 +113,7 @@ PanelGroup.defaultProps = {
   activeView: '',
   activePanelId: '0',
   breadcrumbs: [],
+  dataTestId: undefined,
   exportsArray: [],
   footer: null,
   handoffLinks: [],
@@ -137,6 +143,7 @@ PanelGroup.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node)
   ]).isRequired,
+  dataTestId: PropTypes.string,
   exportsArray: PropTypes.arrayOf(PropTypes.shape({})),
   footer: PropTypes.node,
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),

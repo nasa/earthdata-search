@@ -1,10 +1,13 @@
 import { getByTestId } from '../../../support/getByTestId'
 
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+
 import awsCloudBody from './__mocks__/aws_cloud.body.json'
 import commonBody from './__mocks__/common.body.json'
 import commonHeaders from './__mocks__/common.headers.json'
 import customizableBody from './__mocks__/customizable.body.json'
 import dataFormatBody from './__mocks__/data_format.body.json'
+import eeBody from './__mocks__/ee.body.json'
 import horizontalDataResolutionBody from './__mocks__/horizontal_data_resolution.body.json'
 import instrumentsBody from './__mocks__/instruments.body.json'
 import keywordBody from './__mocks__/keyword.body.json'
@@ -17,9 +20,18 @@ import organizationsBody from './__mocks__/organizations.body.json'
 import platformsBody from './__mocks__/platforms.body.json'
 import processingLevelsBody from './__mocks__/processing_levels.body.json'
 import projectsBody from './__mocks__/projects.body.json'
-import spatialBody from './__mocks__/spatial.body.json'
+import spatialBoundingBoxBody from './__mocks__/spatial_bounding_box.body.json'
+import spatialCircleBody from './__mocks__/spatial_circle.body.json'
+import spatialPointBody from './__mocks__/spatial_point.body.json'
+import spatialPolygonBody from './__mocks__/spatial_polygon.body.json'
 import temporalBody from './__mocks__/temporal.body.json'
+import temporalRecurringBody from './__mocks__/temporal_recurring.body.json'
 import tilingSystemBody from './__mocks__/tiling_system.body.json'
+import commafy from '../../../../static/src/js/util/commafy'
+import pluralize from '../../../../static/src/js/util/pluralize'
+
+
+const { defaultCmrPageSize } = getApplicationConfig()
 
 /**
  * Test that the provided facet group is expanded and the others not
@@ -55,9 +67,27 @@ const testFacetGroupSelectedCount = (facetGroup, selectedCount) => {
   getByTestId(`facet_group-${facetGroup}`).get('.facets-group__selected-count').should('have.text', `${selectedCount} Selected`)
 }
 
+/**
+ * Tests the search panel header and meta text for results size
+ * @param {Integer} cmrHits Total number of collections that match the query
+ */
+const testResultsSize = (cmrHits) => {
+  const expectedSize = Math.min(defaultCmrPageSize, cmrHits)
+
+  getByTestId('panel-group_collection-results').within(() => {
+    getByTestId('panel-group-header__heading-meta-text').should('have.text', `Showing ${expectedSize} of ${commafy(cmrHits)} matching ${pluralize('collection', cmrHits)}`)
+  })
+
+  getByTestId('panel-group_collection-results').within(() => {
+    getByTestId('panel-group-header__heading-primary').should('have.text', `${commafy(cmrHits)} Matching ${pluralize('Collection', cmrHits)}`)
+  })
+}
+
 describe('Path /search', () => {
   describe('When the path is loaded without any url params', () => {
     it('loads correctly', () => {
+      const cmrHits = 8098
+
       cy.intercept({
         method: 'POST',
         url: '**/search/collections.json'
@@ -67,11 +97,17 @@ describe('Path /search', () => {
 
         req.reply({
           body: commonBody,
-          headers: commonHeaders
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': cmrHits.toString()
+          }
         })
       })
 
       cy.visit('/search')
+
+      // Ensure the correct number of results were loaded
+      testResultsSize(cmrHits)
 
       // Keyword input is empty
       getByTestId('keyword-search-input').should('have.value', '')
@@ -83,6 +119,8 @@ describe('Path /search', () => {
 
   describe('When the path is loaded with a keyword query', () => {
     it('loads with the keyword query populated', () => {
+      const cmrHits = 1248
+
       cy.intercept({
         method: 'POST',
         url: '**/search/collections.json'
@@ -92,11 +130,17 @@ describe('Path /search', () => {
 
         req.reply({
           body: keywordBody,
-          headers: commonHeaders
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': cmrHits.toString()
+          }
         })
       })
 
       cy.visit('/search?q=modis')
+
+      // Ensure the correct number of results were loaded
+      testResultsSize(cmrHits)
 
       // Keyword input is populated
       getByTestId('keyword-search-input').should('have.value', 'modis')
@@ -109,6 +153,8 @@ describe('Path /search', () => {
   describe('When the path is loaded with a temporal query', () => {
     describe('When the temporal range is not recurring', () => {
       it('loads with the temporal query applied', () => {
+        const cmrHits = 2434
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -120,12 +166,15 @@ describe('Path /search', () => {
             body: temporalBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '2434'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?qt=2020-01-01T00%3A00%3A00.000Z%2C2021-01-01T23%3A59%3A59.999Z')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -140,6 +189,8 @@ describe('Path /search', () => {
 
     describe('When the temporal range is recurring', () => {
       it('loads with the temporal query applied', () => {
+        const cmrHits = 5521
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -148,15 +199,18 @@ describe('Path /search', () => {
           expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&temporal=2000-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z%2C1%2C31&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
-            body: temporalBody,
+            body: temporalRecurringBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '2434'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?qt=2000-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z%2C1%2C31')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -174,6 +228,8 @@ describe('Path /search', () => {
   describe('When the path is loaded with a spatial query', () => {
     describe('When the spatial query is a point', () => {
       it('loads with the spatial query applied', () => {
+        const cmrHits = 5079
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -182,15 +238,18 @@ describe('Path /search', () => {
           expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&point%5B%5D=65.44171%2C4.33676&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
-            body: spatialBody,
+            body: spatialPointBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '5079'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?sp[0]=65.44171%2C4.33676')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -207,6 +266,8 @@ describe('Path /search', () => {
 
     describe('When the spatial query is a polygon', () => {
       it('loads with the spatial query applied', () => {
+        const cmrHits = 5133
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -215,15 +276,18 @@ describe('Path /search', () => {
           expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&polygon%5B%5D=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
-            body: spatialBody,
+            body: spatialPolygonBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '5133'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -240,6 +304,8 @@ describe('Path /search', () => {
 
     describe('When the spatial query is a circle', () => {
       it('loads with the spatial query applied', () => {
+        const cmrHits = 5080
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -248,15 +314,18 @@ describe('Path /search', () => {
           expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&circle%5B%5D=62.18209%2C2.22154%2C100000&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
-            body: spatialBody,
+            body: spatialCircleBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '5080'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?circle[0]=62.18209%2C2.22154%2C100000')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -274,6 +343,8 @@ describe('Path /search', () => {
 
     describe('When the spatial query is a bounding box', () => {
       it('loads with the spatial query applied', () => {
+        const cmrHits = 5209
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -282,15 +353,18 @@ describe('Path /search', () => {
           expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&bounding_box%5B%5D=5.02679%2C0.99949%2C32.8678%2C26.17555&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
-            body: spatialBody,
+            body: spatialBoundingBoxBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '5,209'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?sb[0]=5.02679%2C0.99949%2C32.8678%2C26.17555')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -308,6 +382,8 @@ describe('Path /search', () => {
 
     describe('When the spatial query is a shapefile', () => {
       it('loads with the spatial query applied', () => {
+        const cmrHits = 5133
+
         // Retrieve the shapefile from lambda
         cy.intercept('**/shapefiles/123', {
           body: {
@@ -329,15 +405,18 @@ describe('Path /search', () => {
           // expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&polygon%5B%5D=59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704%2C59.34354%2C-9.21839&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
-            body: spatialBody,
+            body: spatialPolygonBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '5133'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?sf=123')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // URL has the polygon added from the shapefile
         cy.url().should('include', '?polygon[0]=59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704%2C59.34354%2C-9.21839&sf=123&sfs[0]=0')
@@ -360,6 +439,8 @@ describe('Path /search', () => {
   describe('Feature Facets Group', () => {
     describe('When the path is loaded with the `Available from AWS Cloud` feature facet param', () => {
       it('loads with the feature facet applied', () => {
+        const cmrHits = 720
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -371,12 +452,15 @@ describe('Path /search', () => {
             body: awsCloudBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '720'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?ff=Available%20from%20AWS%20Cloud')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
         getByTestId('facet_item-available-from-aws-cloud').should('be.checked')
@@ -394,6 +478,8 @@ describe('Path /search', () => {
 
     describe('When the path is loaded with the `Customizable` feature facet param', () => {
       it('loads with the feature facet applied', () => {
+        const cmrHits = 233
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -405,12 +491,15 @@ describe('Path /search', () => {
             body: customizableBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '233'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?ff=Customizable')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
         getByTestId('facet_item-available-from-aws-cloud').should('not.be.checked')
@@ -428,6 +517,8 @@ describe('Path /search', () => {
 
     describe('When the path is loaded with the `Map Imagery` feature facet param', () => {
       it('loads with the feature facet applied', () => {
+        const cmrHits = 394
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -439,12 +530,15 @@ describe('Path /search', () => {
             body: mapImageryBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '394'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?ff=Map%20Imagery')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
         getByTestId('facet_item-available-from-aws-cloud').should('not.be.checked')
@@ -462,6 +556,8 @@ describe('Path /search', () => {
 
     describe('When the path is loaded with the `Near Real Time` feature facet param', () => {
       it('loads with the feature facet applied', () => {
+        const cmrHits = 228
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -473,12 +569,15 @@ describe('Path /search', () => {
             body: nearRealTimeBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '228'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?ff=Near%20Real%20Time')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
         getByTestId('facet_item-available-from-aws-cloud').should('not.be.checked')
@@ -498,6 +597,8 @@ describe('Path /search', () => {
   describe('Keywords Facets Group', () => {
     describe('When the path is loaded with the `Aerosols` keywords param', () => {
       it('loads with the facet applied', () => {
+        const cmrHits = 1
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -509,12 +610,15 @@ describe('Path /search', () => {
             body: keywordsBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '1'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?fst0=Aerosols')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure the number of selected elements is displayed correctly
         testFacetGroupSelectedCount('keywords', 1)
@@ -541,6 +645,8 @@ describe('Path /search', () => {
   describe('Platforms Facets Group', () => {
     describe('When the path is loaded with the `AIRCRAFT` platforms param', () => {
       it('loads with the facet applied', () => {
+        const cmrHits = 108
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -552,12 +658,15 @@ describe('Path /search', () => {
             body: platformsBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '108'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?fp=AIRCRAFT')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure the number of selected elements is displayed correctly
         testFacetGroupSelectedCount('platforms', 1)
@@ -584,6 +693,8 @@ describe('Path /search', () => {
   describe('Instruments Facets Group', () => {
     describe('When the path is loaded with the `AIRS` instruments param', () => {
       it('loads with the facet applied', () => {
+        const cmrHits = 104
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -595,12 +706,15 @@ describe('Path /search', () => {
             body: instrumentsBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '104'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?ffi=AIRS')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure the number of selected elements is displayed correctly
         testFacetGroupSelectedCount('instruments', 1)
@@ -627,6 +741,8 @@ describe('Path /search', () => {
   describe('Organizations Facets Group', () => {
     describe('When the path is loaded with the `Alaska Satellite Facility` organizations param', () => {
       it('loads with the facet applied', () => {
+        const cmrHits = 128
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -638,12 +754,15 @@ describe('Path /search', () => {
             body: organizationsBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '128'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?fdc=Alaska%20Satellite%20Facility')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure the number of selected elements is displayed correctly
         testFacetGroupSelectedCount('organizations', 1)
@@ -670,6 +789,8 @@ describe('Path /search', () => {
   describe('Projects Facets Group', () => {
     describe('When the path is loaded with the `ABoVE` projects param', () => {
       it('loads with the facet applied', () => {
+        const cmrHits = 175
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -681,12 +802,15 @@ describe('Path /search', () => {
             body: projectsBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '175'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?fpj=ABoVE')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure the number of selected elements is displayed correctly
         testFacetGroupSelectedCount('projects', 1)
@@ -713,6 +837,8 @@ describe('Path /search', () => {
   describe('Processing Levels Facets Group', () => {
     describe('When the path is loaded with the `0 - Raw Data` processing levels param', () => {
       it('loads with the facet applied', () => {
+        const cmrHits = 50
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -724,12 +850,15 @@ describe('Path /search', () => {
             body: processingLevelsBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '50'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?fl=0%20-%20Raw%20Data')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure the number of selected elements is displayed correctly
         testFacetGroupSelectedCount('processing-levels', 1)
@@ -756,6 +885,8 @@ describe('Path /search', () => {
   describe('Data Format Facets Group', () => {
     describe('When the path is loaded with the `ArcGIS` data format param', () => {
       it('loads with the facet applied', () => {
+        const cmrHits = 5
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -767,12 +898,15 @@ describe('Path /search', () => {
             body: dataFormatBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '5'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?gdf=ArcGIS')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure the number of selected elements is displayed correctly
         testFacetGroupSelectedCount('data-format', 1)
@@ -799,6 +933,8 @@ describe('Path /search', () => {
   describe('Tiling System Facets Group', () => {
     describe('When the path is loaded with the `CALIPSO` tiling system param', () => {
       it('loads with the facet applied', () => {
+        const cmrHits = 69
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -810,12 +946,15 @@ describe('Path /search', () => {
             body: tilingSystemBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '69'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?s2n=CALIPSO')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure the number of selected elements is displayed correctly
         testFacetGroupSelectedCount('tiling-system', 1)
@@ -842,6 +981,8 @@ describe('Path /search', () => {
   describe('Horizontal Data Resolution Facets Group', () => {
     describe('When the path is loaded with the `0 - 1 meter` horizontal data resolution param', () => {
       it('loads with the facet applied', () => {
+        const cmrHits = 41
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -853,12 +994,15 @@ describe('Path /search', () => {
             body: horizontalDataResolutionBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '41'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?hdr=0%20to%201%20meter')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure the number of selected elements is displayed correctly
         testFacetGroupSelectedCount('horizontal-data-resolution', 1)
@@ -885,6 +1029,8 @@ describe('Path /search', () => {
   describe('Collections without granules', () => {
     describe('When the path is loaded with the ac param', () => {
       it('loads with the checkbox selected', () => {
+        const cmrHits = 28270
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -896,12 +1042,15 @@ describe('Path /search', () => {
             body: noGranulesBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '7704'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?ac=true')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
@@ -924,6 +1073,8 @@ describe('Path /search', () => {
   describe('EOSDIS only collections', () => {
     describe('When the path is loaded with the tag_key param', () => {
       it('loads with the checkbox selected', () => {
+        const cmrHits = 7704
+
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -935,12 +1086,15 @@ describe('Path /search', () => {
             body: nonEosdisBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': '28270'
+              'cmr-hits': cmrHits.toString()
             }
           })
         })
 
         cy.visit('/search?tag_key=gov.nasa.eosdis')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
@@ -962,6 +1116,8 @@ describe('Path /search', () => {
 
   describe('When the path is loaded with an ee parameter', () => {
     it('loads in the correct environment', () => {
+      const cmrHits = 6209
+
       cy.intercept({
         method: 'POST',
         url: '**/search/collections.json'
@@ -970,12 +1126,18 @@ describe('Path /search', () => {
         expect(req.headers.host).to.eq('cmr.uat.earthdata.nasa.gov')
 
         req.reply({
-          body: commonBody,
-          headers: commonHeaders
+          body: eeBody,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': cmrHits.toString()
+          }
         })
       })
 
       cy.visit('/search?ee=uat')
+
+      // Ensure the correct number of results were loaded
+      getByTestId('panel-group-header__heading-meta-text').should('have.text', 'Showing 20 of 6,209 matching collections')
 
       // Keyword input is empty
       getByTestId('keyword-search-input').should('have.value', '')
