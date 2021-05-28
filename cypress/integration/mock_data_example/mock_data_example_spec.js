@@ -40,7 +40,7 @@ describe('Mock data example', () => {
       .children().should('have.length', 7)
 
 
-    getByTestId('keywordSearchInput')
+    getByTestId('keyword-search-input')
       .type('MODIS{enter}')
 
     cy.url()

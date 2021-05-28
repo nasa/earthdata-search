@@ -1,0 +1,2850 @@
+{
+  "feed": {
+    "updated": "2021-05-27T13:50:41.759Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=2&page_size=20&horizontal_data_resolution_range%5B%5D=0%20to%201%20meter&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score",
+    "title": "ECHO dataset metadata",
+    "entry": [
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:42.532Z"
+            }
+          }
+        },
+        "boxes": [
+          "5.06 -157.88 21.26 -118.32"
+        ],
+        "time_start": "2016-08-24T23:30:15.000Z",
+        "version_id": "1.0",
+        "updated": "2019-07-08T21:23:11.823Z",
+        "dataset_id": "SPURS-2 Controlled Flux Technique (CFT) data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_CFT",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Controlled Flux Technique (CFT) data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project involves two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. The Controlled Flux Technique (CFT) is a system for measuring the net heat transfer velocity and turbulent kinetic energy (TKE) dissipation at the ocean surface, and is a useful tool for studying the turbulence generated at the ocean surface by the impact of raindrops. CFT was employed during both SPURS-2 Revelle cruises. It involves a laser heating a small patch of water on the ocean surface, and an infrared imaging camera then tracking the resulting thermal decay.  This decay is known to be proportional to the dissipation of TKE at the water surface, which in turn can be used to scale the transfer velocity for the net heat flux. SPURS2 CFT data take the form of a series of .raw video files each with corresponding .met text header files containing the associated file metadata.  The CFT data was recorded at 15 frames per second (fps) during the first Revelle cruise in 2016, and at 25 fps during the second in 2017.  Matlab CFT reader software are provided by UW/APL and distributed here with the CFT data files.",
+        "has_granules": true,
+        "time_end": "2017-11-11T07:48:41.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647540309-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 742,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/ReadmeCFT_2017.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/ReadmeCFT_2016.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab/CFTdatasetReaders"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_CFT.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/cft"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:43.308Z"
+            }
+          }
+        },
+        "boxes": [
+          "5.06 -157.88 21.26 -118.32"
+        ],
+        "time_start": "2016-08-16T20:29:02.000Z",
+        "version_id": "1.0",
+        "updated": "2019-02-25T23:03:53.107Z",
+        "dataset_id": "SPURS-2 research vessel CTD profile data for E. Tropical Pacific R/V Revelle cruises",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_CTD",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 research vessel CTD profile data for E. Tropical Pacific R/V Revelle cruises",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. CTD (Conductivity, Temperature, Depth) casts were undertaken at stations on each of the two R/V Revelle cruises during SPURS-2. These shipboard lowered CTD probes provide continuous conductivity, salinity, and temperature vertical profile observations at fixed sampling locations. There were a total of 50 and 14 CTD casts made during the first and second R/V Revelle cruises respectively, and the data files available here are for continuous CTD profile data for each of the individual casts deployed.  All CTD data were calibrated using shipboard salinometers using IAPSO standard seawater.",
+        "has_granules": true,
+        "time_end": "2017-11-17T04:49:30.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647540312-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 64,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_CTD.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/ctd"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/ctd/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:42.611Z"
+            }
+          }
+        },
+        "boxes": [
+          "-10.074 -179.999 32.283 -124.78"
+        ],
+        "time_start": "2016-06-20T05:57:00.000Z",
+        "version_id": "1.0",
+        "updated": "2019-05-30T21:06:05.146Z",
+        "dataset_id": "SPURS-2 Drifter data for the E. Tropical Pacific field campaign",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_DRIFTER",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Drifter data for the E. Tropical Pacific field campaign",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. A drifter is a passive Lagrangian sensor platform consisting of a surface buoy and tethered subsurface drogue. Drifter buoys contain GPS/ARGOS and satellite data transmitters, with sensors measuring temperature and other properties. For SPURS-2, a range of drifters were deployed during both Revelle SPURS-2 cruises. These included: standard Surface Velocity Program (SVP) drifters with salinity sensors added (SVP/S), Surface Contact Salinity drifters, CODE, SADOS, AOML and CARTHE-SUPRACT drifters.  For each series, drifter data have been aggregrated within single netCDF data files with their corresponding drifter-IDs and associated near-surface salinity, temperature georeferenced (GPS and ARGOS) trajectory series data.",
+        "has_granules": true,
+        "time_end": "2019-03-14T12:04:00.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647542101-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 17,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_DRIFTER.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/drifter"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/drifter/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:42.681Z"
+            }
+          }
+        },
+        "boxes": [
+          "7.855 -125.015 11.891 -108.951"
+        ],
+        "time_start": "2016-08-26T17:43:36.000Z",
+        "version_id": "1.0",
+        "updated": "2019-08-14T23:39:01.925Z",
+        "dataset_id": "SPURS-2 Neutrally buoyant float data for the E. Tropical Pacific field campaign",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_FLOAT_NEUTRALLYBUOYANT",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Neutrally buoyant float data for the E. Tropical Pacific field campaign",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. Neutrally buoyant floats (also known as Mixed Layer Floats - MLF) drift and move through the water column providing continuous CTD temperature and salinity profiles and GPS surface position location data. One float was deployed in SPURS-2 during the first Revelle cruise in August 2016 and recovered in December 2016 after 3.5 months about 1800 km east of the central mooring.  The MLF data are provided in netCDF file format with standards compliant metadata.",
+        "has_granules": true,
+        "time_end": "2016-12-29T08:04:45.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541652-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 1,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_FLOAT_NEUTRALLYBUOYANT.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/neutrallybuoyantfloat/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/neutrallybuoyantfloat"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:43.873Z"
+            }
+          }
+        },
+        "boxes": [
+          "0.085 -163.925 35.627 -126.978"
+        ],
+        "time_start": "2016-08-29T00:00:01.000Z",
+        "version_id": "1.0",
+        "updated": "2019-09-26T21:17:58.663Z",
+        "dataset_id": "SPURS-2 S/V Lady Amber underway Thermosalinograph and Sea Snake data for the E. Tropical Pacific field campaign",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_LADYAMBER",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 S/V Lady Amber underway Thermosalinograph and Sea Snake data for the E. Tropical Pacific field campaign",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. Underway physical data from 6 cruises undertaken by the schooner Lady Amber during the SPURS-2 field campaign include along-track meteorological, salinity snake and fixed-hull CTD measurements at 1m and 2 m intake depths. Comparisons with nearby Revelle data facilitate evaluation of uncertainties arising from collecting data from a sailboat, and the characterization of small-scale spatial variability in the ocean and atmosphere. Data files are in netCDF CD/ACDD standards compliant format.",
+        "has_granules": true,
+        "time_end": "2018-04-30T23:59:45.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541881-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 6,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_LADYAMBER.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/ladyamber/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/ladyamber"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:43.456Z"
+            }
+          }
+        },
+        "boxes": [
+          "5.055 -144.874 24.203 -119.886"
+        ],
+        "time_start": "2016-08-20T00:00:30.000Z",
+        "version_id": "1.0",
+        "updated": "2019-10-16T01:05:23.044Z",
+        "dataset_id": "SPURS-2 Research vessel Meteorological series data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_METEO",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Research vessel Meteorological series data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. A ship mast meteorological sensor package with an additional set of sophisticated sensors, including a direct covariance flux package was set up on both SPURS-2 Revelle cruises.  These provided georeferenced, along-track atmospheric pressure, temperature, humidity, IR/visible radiation, rain, and wind speed and air-sea flux measurements.  Resulting data are packaged in netCDF files (one per cruise) with standards compliant metadata.",
+        "has_granules": true,
+        "time_end": "2017-11-15T00:00:00.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541774-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 2,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_METEO.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/meteo/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/meteo"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:42.457Z"
+            }
+          }
+        },
+        "boxes": [
+          "10.05 -125.03 10.05 -125.03"
+        ],
+        "time_start": "2016-08-16T07:22:00.000Z",
+        "version_id": "1.0",
+        "updated": "2019-05-30T22:06:51.000Z",
+        "dataset_id": "SPURS-2 Central mooring CTD, surface flux and meterorological data for the E. Tropical Pacific field campaign",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_MOORING_CENTRAL",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Central mooring CTD, surface flux and meterorological data for the E. Tropical Pacific field campaign",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project involves two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and countercurrent. The SPURS central mooring consisted of a surface meteorological package, surface oceanographic instruments, and subsurface, non-real time oceanographic instruments including CTD, ADCP sensors and point current meters providing continuous series of temperature, salinity and current profile data. Meteorological observations included wind speed, air temperature, precipitation, and radiative flux. The mooring was deployed in 4769 m depth of water on 24 August 2016, at N10:03.0481, W125:01.939, and was recovered on November 11, 2017. WHOI mooring netCDF data files include surface and subsurface time series  of sea temperature, skin temperature, salinity, conductivity, wind velocity, air temperature, relative humidity, precipitation rate, barometric pressure, shortwave and longwave radiation, short/longwave flux, heat Flux, wind Speed and direction.",
+        "has_granules": true,
+        "time_end": "2017-11-16T22:45:16.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1742100792-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 5,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/ghrsst/sw/generic_nc_readers/python"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_MOORING_CENTRAL.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/ghrsst/sw/generic_nc_readers/idl"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/mooring/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/mooring"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:42.901Z"
+            }
+          }
+        },
+        "boxes": [
+          "9.047 -125 11 -124.958"
+        ],
+        "time_start": "2016-08-22T16:00:00.000Z",
+        "version_id": "1.0",
+        "updated": "2019-05-30T21:37:57.034Z",
+        "dataset_id": "SPURS-2 PICO mooring data for the E. Tropical Pacific field campaign",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_MOORING_PICO",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 PICO mooring data for the E. Tropical Pacific field campaign",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. Two PICO moorings (PMEL 9N and 11N) were deployed on the Revelle cruise in September 2016 in northern and southern domain quadrants at 9deg2.830N, 124deg59.833W and N10:59.0498, W124:57.531 respectively. These moorings contained a surface meteorological package and a \"prawler\", a CTD that crawls up and down the mooring line from 4-450m, yielding time series of salinity and temperature profile data at fixed locations (nominally 8 profiles per day). The moorings were recovered on the second Revelle cruise (Oct. 22 & Nov. 2, 2017). PICO mooring netCDF files contain georeferenced CTD profile data including salinity, temperature, potential temperature, pressure, depth, surface meteorological package data, GPS-Lat/Lon, and profile ID.",
+        "has_granules": true,
+        "time_end": "2017-10-24T12:00:00.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541698-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 4,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_MOORING_PICO.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/mooring/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/mooring"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:42.751Z"
+            }
+          }
+        },
+        "boxes": [
+          "8.861 -129.129 12.106 -116.57"
+        ],
+        "time_start": "2016-08-30T15:10:13.000Z",
+        "version_id": "1.0",
+        "updated": "2019-09-18T19:59:52.514Z",
+        "dataset_id": "SPURS-2 Passive Accoustic Listener (PAL) data from  ARGO float deployments during the E. Tropical Pacific field campaign",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_PALS",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Passive Accoustic Listener (PAL) data from  ARGO float deployments during the E. Tropical Pacific field campaign",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. Part of the Argo global network of autonomous, self-reporting samplers, Argo floats drift horizontally and move vertically through the water column generally on 10 day cycles, collecting high-quality temperature, conductivity and salinity depth (CTD) profiles from the upper 2000m. Four of the Twenty five floats deployed during SPURS-2 within the campaign spatial domain and time period were additionally equipped with acoustic rain gauges (PAL - Passive Acoustic Listeners). SPURS-2 ARGO-PAL data files are in netCDF/CF-compliant data format and organized per float.  Float identifiers associated with ARGO CTD data are referenced in the metadata of the related PAL files.",
+        "has_granules": true,
+        "time_end": "2018-08-22T01:58:35.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541603-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 4,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_PALS.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/pals/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/pals"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:43.154Z"
+            }
+          }
+        },
+        "boxes": [
+          "5.06 -125.57 24.2 -119.89"
+        ],
+        "time_start": "2017-10-22T00:05:04.000Z",
+        "version_id": "1.0",
+        "updated": "2019-03-12T05:06:46.047Z",
+        "dataset_id": "SPURS-2 research vessel along track SEA-POL rain radar imaging data for E. Tropical Pacific R/V Revelle-2 cruise",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_RAINRADAR",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 research vessel along track SEA-POL rain radar imaging data for E. Tropical Pacific R/V Revelle-2 cruise",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project involves two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. The SEA-POL rain radar instrument was employed over the period 22 Oct.-10 Nov. 2017 during the second SPURS-2 R/V Revelle cruise. SEA-POL (seagoing-polarimetric radar) is a C-band, Doppler polarimetric radar system providing 240-degree sector coverage centered on the ships bow via its 1-degree beam width antenna. SEA-POL was used primarily to map rainfall in SPURS-2. The resulting dataset is a series of gridded netCDF data files for a 20 day period at 5-20 minute intervals comprised of rain rate and rain accumulation fields.",
+        "has_granules": true,
+        "time_end": "2017-11-10T23:00:03.000Z",
+        "orbit_parameters": {
+          "swath_width": "1.0",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647544127-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 5019,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_RAINRADAR.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/rainradar"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/rainradar/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:42.981Z"
+            }
+          }
+        },
+        "boxes": [
+          "5.139 -133.216 12.35 -123.32"
+        ],
+        "time_start": "2016-08-20T01:56:45.000Z",
+        "version_id": "1.0",
+        "updated": "2019-04-24T22:25:21.470Z",
+        "dataset_id": "SPURS-2 Rawinsonde meteorological data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_RAWINSONDE",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Rawinsonde meteorological data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project involves two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. A Rawinsonde is a helium balloon carrying meteorological instruments and a radar target, enabling the velocity of atmospheric parameters to be measured.  During the first Revelle cruise, rawinsondes were launched every 6-hours, providing a total of 85 profiles of temperature, humidity, wind speed and direction through the marine atmospheric boundary layer within the SPURS-2 domain. Similarly, during the second Revelle cruise, rawinsondes were deployed four-times daily within the study area over the 3-week period.  SPURS2 rawinsonde data are available as netCDF, CF-compliant data files.",
+        "has_granules": true,
+        "time_end": "2017-11-10T21:16:04.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.001",
+          "inclination_angle": "0.001",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541493-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 2,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_RAWINSONDE.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/sonde/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sonde"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:43.965Z"
+            }
+          }
+        },
+        "boxes": [
+          "8.5 -125 10.9 -124.5"
+        ],
+        "time_start": "2017-10-16T00:00:00.000Z",
+        "version_id": "1.0",
+        "updated": "2019-03-26T23:17:11.249Z",
+        "dataset_id": "SPURS-2 Saildrone data for the E. Tropical Pacific field campaign",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_SAILDRONE",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Saildrone data for the E. Tropical Pacific field campaign",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. Two saildrones were deployed over a month period during the second SPURS-2 R/V Revelle cruise in 2017. Saildrone is a state-of-the-art, remotely guided, wind and solar powered unmanned surface vehicle (USV) capable of long distance deployments lasting up to 12 months. It is equipped with a suite of instruments and sensors providing high quality, georeferenced, near real-time, multi-parameter surface ocean and atmospheric observations while transiting at typical speeds of 3-5 knots. Saildrone data files are in netCDF format and CF/ACDD/NCEI compliant. They contain the saildrone platform telemetry and near-surface observational data (air temperature, sea surface skin and bulk temperatures, salinity, oxygen and chlorophyll-a concentrations, barometric pressure, wind speed and direction) for the entire cruise at 1 minute temporal resolution.",
+        "has_granules": true,
+        "time_end": "2017-11-17T00:00:00.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541556-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 2,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_SAILDRONE.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/saildrone/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/saildrone"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:44.284Z"
+            }
+          }
+        },
+        "boxes": [
+          "5.06 -155.8 32.3 -117.3"
+        ],
+        "time_start": "2016-08-16T07:22:00.000Z",
+        "version_id": "1.0",
+        "updated": "2019-07-23T01:01:49.912Z",
+        "dataset_id": "SPURS-2 Surface Salinity Snake data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_SALINITYSNAKE",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Surface Salinity Snake data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. The Salinity Snake (SS) measures sea surface salinity in the top 1 - 2 cm of the water column, which is the radiometric depth of L-Band satellite radiometers such as on Aquarius/SAC-D, SMAP and SMOS satellites that measure salinity remotely.  The SS consists of four key components: a 10m boom mast, a hose, which is deployed from this boom, a powerful self-priming peristaltic pump which transports a constant stream of a seawater/air emulsion, and a shipboard apparatus, which filters, de-bubbles, sterilizes and analyses the salinity of the water.  The SS was deployed during both SPURS-2 Revelle cruises.  SS data series are provided in netCDF file format, one per cruise.",
+        "has_granules": true,
+        "time_end": "2017-11-16T22:45:15.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.01",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1733654020-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 2,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_SALINITYSNAKE.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/salinitysnake"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/salinitysnake/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:44.032Z"
+            }
+          }
+        },
+        "boxes": [
+          "8.994 -126.122 12.022 -122.128"
+        ],
+        "time_start": "2016-08-24T16:18:24.000Z",
+        "version_id": "1.0",
+        "updated": "2019-08-14T23:41:10.817Z",
+        "dataset_id": "SPURS-2 Seaglider data for the E. Tropical Pacific field campaign",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_SEAGLIDER",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Seaglider data for the E. Tropical Pacific field campaign",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. The Seaglider is an autonomous profiler measuring salinity and temperature. A total of five Seagliders were deployed over the two SPURS2 cruises. Three Seagliders were deployed on the first Revelle cruise in August 2016, recovered by the Lady Amber after 7 months and redeployed, to be retrieved finally during the second cruise in November 2017. One of the Seagliders was deployed alongside and tracked the Lagrangian array across the study region, diving to depths of 1000m. All Seaglider data files are in netCDF format with standards compliant metadata.",
+        "has_granules": true,
+        "time_end": "2017-11-07T00:03:55.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647542032-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 5,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_SEAGLIDER.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/seaglider/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/seaglider"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:14:44.365Z"
+            }
+          }
+        },
+        "boxes": [
+          "6.546 -140.969 16.502 -123.203"
+        ],
+        "time_start": "2016-08-27T07:52:23.000Z",
+        "version_id": "1.0",
+        "updated": "2019-10-09T04:02:34.554Z",
+        "dataset_id": "SPURS-2 Towed surface salinity profile (SSP) data for the E. Tropical Pacific R/V Revelle cruises",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_SSP",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Towed surface salinity profile (SSP) data for the E. Tropical Pacific R/V Revelle cruises",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. The towed Surface Salinity Profiler (SSP) platform is a converted paddleboard with a keel and surfboard outrigger that is tethered to the ship and skims the sea surface beyond the ships wake. Below the paddleboard are salinity and temperature sensors at depths of 10, 30, 50 and 100cm, and microstructure sensors that measure turbulence. The SSP was deployed 19 times throughout the first SPURS-2 cruise, totaling over 200 hours of measurements, and a further 15 times during the 2017 cruise.  SSP deployment is most informative when there is a rain event leading to near-surface ocean stratification. The SSP then measures how the ocean changes over the periods before, during, and after rain, and how rainwater mixes into the ocean during recovery. All SSP data files are in netCDF format with standards compliant metadata.",
+        "has_granules": true,
+        "time_end": "2017-11-11T07:35:01.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541467-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 2,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_SSP.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/ssp/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/ssp"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:43.536Z"
+            }
+          }
+        },
+        "boxes": [
+          "5.09 -126.51 13.97 -123.51"
+        ],
+        "time_start": "2016-08-21T21:50:36.000Z",
+        "version_id": "1.0",
+        "updated": "2019-07-22T23:34:56.051Z",
+        "dataset_id": "SPURS-2 research vessel Underway CTD (uCTD) data for the E. Tropical Pacific R/V Revelle cruises",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_UCTD",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 research vessel Underway CTD (uCTD) data for the E. Tropical Pacific R/V Revelle cruises",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent.  An underway-CTD (uCTD) is a towed profiling CTD instrument providing salinity and temperature observations from the surface to 500m while underway at up to 12 kts. A total of 262 and 501 uCTD casts were performed during the first and second Revelle cruises respectively. uCTD data files (1 per cruise) are in netCDF format and each contain the observational data for multiple deployments, binned in 6 or 8m depth intervals.",
+        "has_granules": true,
+        "time_end": "2017-11-11T07:29:14.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1661292849-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 2,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_UCTD.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/uctd/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/uctd"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:44.464Z"
+            }
+          }
+        },
+        "boxes": [
+          "1.383 -125.572 16.411 -121.545"
+        ],
+        "time_start": "2017-10-21T20:26:57.000Z",
+        "version_id": "1.0",
+        "updated": "2020-04-21T22:58:18.704Z",
+        "dataset_id": "SPURS-2 underway surface pCO2, DIC and pH data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_UNDERWAY_pCO2_DIC_pH",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 underway surface pCO2, DIC and pH data for the E. Tropical Pacific field campaign R/V Revelle cruises",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. During both Revelle cruises, continuous measurements of the partial pressure of CO2 (pCO2), dissolved inorganic carbon (DIC), and pH at surface (0m) and 5m depths were made on water pumped continuously from the Salinity Snake and the ship's intake port.  In addition to these measurements, observational data from the salinity snake and thermosalinograph also include water temperature and salinity time series at the same depths. The temporal resolution of the observations range from 3 seconds (pH) to 3 minutes (DIC). All pCO2 and associated underway data comprising this dataset are in netCDF file format with standards compliant metadata.  Due to issues with the quality of the 2016 underway data, only the data file for the 2017 cruise is available.",
+        "has_granules": true,
+        "time_end": "2017-11-13T00:00:00.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.01",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1742099643-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 1,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_UNDERWAY_pCO2_DIC_pH.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/ghrsst/sw/generic_nc_readers/idl"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/ghrsst/sw/generic_nc_readers/python"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/pCO2/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files//allData/insitu/L2/spurs2/pCO2"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:43.639Z"
+            }
+          }
+        },
+        "boxes": [
+          "5.06 -157 25.84 -119.5"
+        ],
+        "time_start": "2016-08-15T00:00:00.000Z",
+        "version_id": "1.0",
+        "updated": "2019-07-22T23:59:56.065Z",
+        "dataset_id": "SPURS-2 research vessel Underway Salinity Profiling System (USPS) data for the E. Tropical Pacific R/V Revelle cruises",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_USPS",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 research vessel Underway Salinity Profiling System (USPS) data for the E. Tropical Pacific R/V Revelle cruises",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. Underway surface profiling systems (USPS) are automated measurement systems coupled to a research vessels water intake and GPS systems. They provide continuous, along-track surface temperature and salinity measurements at depths of 2, 3 and 5 m using through-hull ports in the bow of the ship. Both SPURS-2 cruises had USPS and associated thermosalinograph (TSG) instrumentation, with measurements calibrated against onboard salinometers. There is one USPS netCDF containing the complete series for each of the 2 cruises.",
+        "has_granules": true,
+        "time_end": "2017-11-15T23:59:55.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.01",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1661292865-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 2,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_USPS.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/usps/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/usps"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:43.239Z"
+            }
+          }
+        },
+        "boxes": [
+          "5.06 -125.57 24.2 -119.89"
+        ],
+        "time_start": "2017-10-05T20:13:15.000Z",
+        "version_id": "1.0",
+        "updated": "2019-02-26T00:11:38.274Z",
+        "dataset_id": "SPURS-2 research vessel along track WAMOS wave radar data for the second R/V Revelle cruise in the E. Tropical Pacific",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_WAMOS",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 research vessel along track WAMOS wave radar data for the second R/V Revelle cruise in the E. Tropical Pacific",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project involves two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent.  The WaMoS wave radar instrument was available during the second R/V Revelle cruise of SPURS-2.  WaMoS is a radar-based wave and surface current monitoring system providing wave field imagery and station time series or along track data series for key wave parameter in near near-real time. The single resulting SPURS-2 WaMos data file contains along track wave measurement from the R/V Revelle over the duration of this cruise (5 Oct. to 16 Nov. 2017) for the following essential wave field parameters: wave period, wave length, and wave direction, as well as surface current speed and direction.",
+        "has_granules": true,
+        "time_end": "2017-11-16T23:26:01.000Z",
+        "orbit_parameters": {
+          "swath_width": "11.0",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541351-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 1,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_WAMOS.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/wamos/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/wamos"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:14:44.556Z"
+            }
+          }
+        },
+        "boxes": [
+          "6.1 -126.4 13.8 -108.8"
+        ],
+        "time_start": "2016-08-24T00:00:00.000Z",
+        "version_id": "1.0",
+        "updated": "2019-07-23T00:31:58.143Z",
+        "dataset_id": "SPURS-2 Waveglider data for the  E. Tropical Pacific field campaign",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "PODAAC",
+        "short_name": "SPURS2_WAVEGLIDER",
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "SPURS Project"
+        ],
+        "title": "SPURS-2 Waveglider data for the  E. Tropical Pacific field campaign",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is a NASA-funded oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project is comprised of two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes. SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D, SMAP and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales. The SPURS-2 campaign involved two month-long cruises by the R/V Revelle in August 2016 and October 2017 combined with complementary sampling on a more continuous basis over this period by the schooner Lady Amber. Focused around a central mooring located near 10N,125W, the objective of SPURS-2 was to study the dynamics of the rainfall-dominated surface ocean at the western edge of the eastern Pacific fresh pool subject to high seasonal variability and strong zonal flows associated with the North Equatorial Current and Countercurrent. A Waveglider is an autonomous platform propelled by the conversion of ocean wave energy into forward thrust and employing solar panels to power instrumentation. For SPURS-2, sensors included a CTD at the near-surface and another at 6 m depth, providing continuous salinity and temperature observations plus air temperature and wind measurements.  Three wavegliders (ASL22, 32, 42) were deployed from the Revelle in August 2016 and again in November 2017 before final retrieval at the conclusion on the second cruise. Waveglider trajectories followed a 20x20km square loop around the moorings and a butterfly pattern around the neutrally-buoyant float. NetCDF waveglider data files here (one per platform) contain hour averaged, georeferenced  trajectory data for those parameters and depths.",
+        "has_granules": true,
+        "time_end": "2017-11-10T21:30:00.000Z",
+        "orbit_parameters": {
+          "swath_width": "0.001",
+          "period": "0.0",
+          "inclination_angle": "0.0",
+          "number_of_orbits": "1"
+        },
+        "id": "C1647541957-PODAAC",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "granule_count": 3,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/R"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/DataDocumentation/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://spurs.jpl.nasa.gov/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://podaac.jpl.nasa.gov/spurs"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/docs/CruiseReports/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS2_WAVEGLIDER.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/sw/matlab"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs2/waveglider/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs2/waveglider"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          }
+        ]
+      }
+    ],
+    "facets": {
+      "title": "Browse Collections",
+      "type": "group",
+      "has_children": true,
+      "children": [
+        {
+          "title": "Keywords",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Atmosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Atmosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Cryosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Cryosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Land Surface",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Oceans",
+              "type": "filter",
+              "applied": false,
+              "count": 37,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Instruments",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "ADCP",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=ADCP&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Anemometer",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Anemometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Barometer",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Barometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CTD",
+              "type": "filter",
+              "applied": false,
+              "count": 22,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=CTD&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CURRENT METERS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=CURRENT+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "FLUOROMETERS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=FLUOROMETERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GLISTIN-A",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=GLISTIN-A&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Headwall",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Headwall&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Humidity Sensor",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Humidity+Sensor&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MMS",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=MMS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OXYGEN METERS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=OXYGEN+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Pyrometers",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Pyrometers&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Riegl Airborne Lidar",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Riegl+Airborne+Lidar&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SEAPOL",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SEAPOL&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SPURS_METEO",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SPURS_METEO&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Temperature Sensor",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Temperature+Sensor&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "THERMOSALINOGRAPHS",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=THERMOSALINOGRAPHS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "TURBIDITY METERS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=TURBIDITY+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "UCTD",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=UCTD&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "USPS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=USPS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "WAMOS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=WAMOS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Wind Profiler",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Wind+Profiler&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "XBT",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=XBT&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Data Format",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "GeoTIFF",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=GeoTIFF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "KML",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=KML&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NetCDF",
+              "type": "filter",
+              "applied": false,
+              "count": 38,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=NetCDF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "RAW",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=RAW&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Organizations",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Land Process Distributed Active Archive Center (LPDAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Land+Process+Distributed+Active+Archive+Center+%28LPDAAC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA Earth Sciences Division (ESD)",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA+Earth+Sciences+Division+%28ESD%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/JPL/OMG",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FJPL%2FOMG&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Physical Oceanography Distributed Active Archive Center (PO.DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 39,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Physical+Oceanography+Distributed+Active+Archive+Center+%28PO.DAAC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Salinity Processes in the Upper Ocean Regional Study (SPURS)",
+              "type": "filter",
+              "applied": false,
+              "count": 38,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Salinity+Processes+in+the+Upper+Ocean+Regional+Study+%28SPURS%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Projects",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "G-LiHT",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=G-LiHT&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OMG",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=OMG&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SPURS",
+              "type": "filter",
+              "applied": false,
+              "count": 38,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=SPURS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Platforms",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Airborne",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Airborne"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ARGO",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=ARGO"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Drifter",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Drifter"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Ecomapper",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Ecomapper"
+              },
+              "has_children": false
+            },
+            {
+              "title": "G-LiHT",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=G-LiHT"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Mooring",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Mooring"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NeutrallyBuoyantFloat",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=NeutrallyBuoyantFloat"
+              },
+              "has_children": false
+            },
+            {
+              "title": "R/V Endeavor",
+              "type": "filter",
+              "applied": false,
+              "count": 6,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Endeavor"
+              },
+              "has_children": false
+            },
+            {
+              "title": "R/V Knorr",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Knorr"
+              },
+              "has_children": false
+            },
+            {
+              "title": "R/V Revelle",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Revelle"
+              },
+              "has_children": false
+            },
+            {
+              "title": "R/V Sarmiento",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Sarmiento"
+              },
+              "has_children": false
+            },
+            {
+              "title": "R/V Thalassa",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Thalassa"
+              },
+              "has_children": false
+            },
+            {
+              "title": "RAWINSONDES",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=RAWINSONDES"
+              },
+              "has_children": false
+            },
+            {
+              "title": "S/V Lady Amber",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=S%2FV+Lady+Amber"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Saildrone",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Saildrone"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Seaglider",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Seaglider"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Seasoar",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Seasoar"
+              },
+              "has_children": false
+            },
+            {
+              "title": "TenuseGlider",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=TenuseGlider"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Waveglider",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Waveglider"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Processing Levels",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "2 - Geophys. Variables, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 40,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=2+-+Geophys.+Variables%2C+Sensor+Coordinates&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "3 - Gridded Observations",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=3+-+Gridded+Observations&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Horizontal Data Resolution",
+          "type": "group",
+          "applied": true,
+          "has_children": true,
+          "children": [
+            {
+              "title": "0 to 1 meter",
+              "type": "filter",
+              "applied": true,
+              "count": 41,
+              "links": {
+                "remove": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1 to 30 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 40,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1+to+30+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "30 to 100 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=30+to+100+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "100 to 250 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=100+to+250+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "250 to 500 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "500 to 1000 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=500+to+1000+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1 to 10 km",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1+to+10+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "10 to 50 km",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=10+to+50+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "50 to 100 km",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=50+to+100+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "100 to 250 km",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=100+to+250+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "250 to 500 km",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "500 to 1000 km",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=500+to+1000+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1000 km & beyond",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1000+km+%26+beyond&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

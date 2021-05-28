@@ -1,0 +1,3424 @@
+{
+  "feed": {
+    "updated": "2021-05-27T01:59:48.909Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&collection_data_type%5B%5D=NEAR_REAL_TIME&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score",
+    "title": "ECHO dataset metadata",
+    "entry": [
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:15:05.108Z"
+            }
+          }
+        },
+        "boxes": [
+          "-80 -180 80 180"
+        ],
+        "time_start": "2016-01-01T00:00:00.000Z",
+        "version_id": "2",
+        "dataset_id": "VIIRS (S-NPP) I Band 375 m Active Fire Product NRT (Vector data)",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "VNP14IMGTDL_NRT",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCE MODIS"
+        ],
+        "title": "VIIRS (S-NPP) I Band 375 m Active Fire Product NRT (Vector data)",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Near real-time (NRT) Suomi National Polar-orbiting Partnership (Suomi NPP) Visible Infrared Imaging Radiometer Suite (VIIRS) Active Fire detection product is based on that instrument's 375 m nominal resolution data. Compared to other coarser resolution (≥1km) satellite fire detection products, the improved 375 m data provide greater response over fires of relatively small areas, as well as improved mapping of large fire perimeters. Consequently, the data are well suited for use in support of fire management (e.g., near real-time alert systems), as well as other science applications requiring improved fire mapping fidelity. The 375 m product complements the baseline Suomi NPP/VIIRS 750 m active fire detection and characterization data, which was originally designed to provide continuity to the existing 1 km Earth Observing System Moderate Resolution Imaging Spectroradiometer (EOS/MODIS) active fire data record. Due to frequent data saturation issues, the current 375 m fire product provides detection information only with no sub-pixel fire characterization.\r\n\r\nVNP14IMGTDL_NRT are available in the following formats: TXT, SHP, KML, WMS. These data are also provided through the LANCE FIRMS Fire Email Alerts. Please note only the TXT and SHP files contain all the attributes.",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1942970257-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 7,
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "length": "500.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS/suomi-npp-viirs-c2"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/firms/active-fire-data"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://firms.modaps.eosdis.nasa.gov/map/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://firms.modaps.eosdis.nasa.gov/alerts/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://firms.modaps.eosdis.nasa.gov/web-services/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:08:57.870Z"
+            }
+          }
+        },
+        "boxes": [
+          "-80 -180 80 180"
+        ],
+        "time_start": "2002-05-04T00:00:00.000Z",
+        "version_id": "6NRT",
+        "dataset_id": "MODIS/Aqua Terra Thermal Anomalies/Fire locations 1km FIRMS V006 NRT (Vector data)",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MCD14DL",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCE MODIS FIRMS"
+        ],
+        "title": "MODIS/Aqua Terra Thermal Anomalies/Fire locations 1km FIRMS V006 NRT (Vector data)",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Near Real-Time (NRT) MODIS Thermal Anomalies / Fire locations processed by FIRMS (Fire Information for Resource Management System) - Land Atmosphere Near real time Capability for EOS (LANCE), using swath products (MOD14/MYD14) rather than the tiled MOD14A1 and MYD14A1 products. The thermal anomalies / active fire represent the center of a 1km pixel that is flagged by the MODIS MOD14/MYD14 Fire and Thermal Anomalies algorithm (Giglio 2003) as containing one or more fires within the pixel. This is the most basic fire product in which active fires and other thermal anomalies, such as volcanoes, are identified.MCD14DL are available in the following formats: TXT, SHP, KML, WMS. These data are also provided through the FIRMS Fire Email Alerts. Please note only the TXT and SHP files contain all the attributes.",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1227495594-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "UMM_JSON",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 7,
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "length": "1.5MB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://firms.modaps.eosdis.nasa.gov/active_fire/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/firms/active-fire-data"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2G",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "http://cwic.wgiss.ceos.org/opensearch/datasets/C1219249665-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:21.327Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2015-12-06T00:00:00.000Z",
+        "dif_ids": [
+          "MOD09GQ_6NRT"
+        ],
+        "version_id": "6NRT",
+        "updated": "2016-02-04T00:00:00.000Z",
+        "dataset_id": "MODIS/Terra Near Real Time (NRT) Surface Reflectance Daily L2G Global 250m SIN Grid",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD09GQ",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Near Real Time (NRT) Surface Reflectance Daily L2G Global 250m SIN Grid",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS Near Real Time (NRT) Surface Reflectance products are an estimate of the surface spectral reflectance as it would be measured at ground level in the absence of atmospheric scattering or absorption. Low-level data are corrected for atmospheric gases and aerosols, yielding a level-2 basis for several higher-order gridded level-2 (L2G) and level-3 products. MOD09GQ provides Bands 1 and 2 at a 250-meter resolution in a daily gridded L2G product in the Sinusoidal projection. Science Data Sets provided for this product include reflectance for Bands 1 and 2 a quality rating observation coverage and observation number. This product is meant to be used in conjunction with MOD09GA where important quality and viewing geometry information is stored.Additional information at LPDAAC:https://lpdaac.usgs.gov/dataset_discovery/modis/modis_products_table",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1219249665-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2137,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/6/MOD09GQ"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426792823-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.gibs": {
+            "data": [
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Water Vapor (Night)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Water_Vapor_5km_Night",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "NIGHT"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Water Vapor (Day)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Water_Vapor_5km_Day",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "DAY"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Water Vapor (Day)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Water_Vapor_5km_Day",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Water Vapor (Night)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Water_Vapor_5km_Night",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "night"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:00.315Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-20T00:00:00.000Z",
+        "dif_ids": [
+          "MYD05_L2_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Aqua Total Precipitable Water Vapor 5-Min L2 Swath 1km and 5km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MYD05_L2",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Aqua Total Precipitable Water Vapor 5-Min L2 Swath 1km and 5km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS Adaptive Processing System (MODAPS) is currently generating an improved Collection 6.1 (061) for all MODIS Level-1 (L1) and higher-level Level-2 (L2) and Level-3 (L3) Atmosphere products.  This decision to create a new improved Collection 6.1 (061) was driven by the need to address a number of issues in the current Collection 6 (006) Level-1B (L1B) data.  These L1B issues had a negative impact in varying degrees in downstream products.\n\nThe MODIS level-2 atmospheric precipitable water product consists of total atmospheric column water vapor amounts (and ancillary parameters) over clear land areas of the globe, over extended clear oceanic areas with the Sun glint, and above clouds over both land and ocean. The shortname for this level-2 MODIS total precipitable water vapor product is MYD05_L2. In Collection 6, MODIS column water vapor (MYD05) datasets continue to be separately available from infrared and near-infrared methods.\n\nThe estimates based on a near-infrared algorithm uses only daytime measurements with solar zenith angle less than 72 degrees. The retrieval algorithm relies on observations of water vapor attenuation of near-infrared solar radiation reflected by surfaces and clouds. The product is produced only over areas that have reflective surfaces in the near-infrared. The near-infrared algorithm refinement for this product is no longer being supported by NASA and as such there has been no update to this algorithm for C6.1.\nFor more information visit MODIS Atmosphere product website at:\n\nhttps://modis-atmos.gsfc.nasa.gov/products/water-vapor",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426792823-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2041,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/61/MYD05_L2/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426442798-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.gibs": {
+            "data": [
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Water Vapor (Day)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Water_Vapor_5km_Day",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "DAY"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Water Vapor (Night)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Water_Vapor_5km_Night",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "NIGHT"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Water Vapor (Day)",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Water_Vapor_5km_Day",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Water Vapor (Night)",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Water_Vapor_5km_Night",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "night"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:41.008Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-11T00:00:00.000Z",
+        "dif_ids": [
+          "MOD05_L2_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Terra Total Precipitable Water Vapor 5-Min L2 Swath 1km and 5km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD05_L2",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Total Precipitable Water Vapor 5-Min L2 Swath 1km and 5km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS Adaptive Processing System (MODAPS) is currently generating an improved Collection 6.1 (061) for all MODIS Level-1 (L1) and higher-level Level-2 (L2) & Level-3 (L3) Atmosphere Team products.  This decision to create a new improved Collection 6.1 (061) was driven by the need to address a number of issues in the current Collection 6 (006) Level-1B (L1B) data.  These L1B issues had a negative impact in varying degrees in downstream products,\n\nThe MODIS level-2 atmospheric precipitable water product consists of total atmospheric column water vapor amounts (and ancillary parameters) over clear land areas of the globe, over extended clear oceanic areas with the Sun glint, and above clouds over both land and ocean. The shortname for this level-2 MODIS total precipitable water vapor product is MOD05_L2. In Collection 6, MODIS column water vapor (MOD05) datasets continue to be separately available from infrared and near-infrared methods.\n\nThe estimates based on a near-infrared algorithm uses only daytime measurements with solar zenith angle less than 72 degrees. The retrieval algorithm relies on observations of water vapor attenuation of near-infrared solar radiation reflected by surfaces and clouds. The product is produced only over areas that have reflective surfaces in the near-infrared. The near-infrared algorithm refinement for this product is no longer being supported by NASA and as such there has been no update to this algorithm for C6.1",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426442798-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2040,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/61/MOD05_L2/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2G",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "http://cwic.wgiss.ceos.org/opensearch/datasets/C1219248410-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "jpeg",
+                "antarctic": false,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "500m",
+                "arctic_resolution": null,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Land Surface Reflectance (L2G, Daily, True Color)",
+                "updated_at": "2021-05-26T12:00:15.799Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_L2G_SurfaceReflectance_Bands143_Daily",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:21.231Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2015-12-06T00:00:00.000Z",
+        "dif_ids": [
+          "MOD09GA_6NRT"
+        ],
+        "version_id": "6NRT",
+        "updated": "2016-02-04T00:00:00.000Z",
+        "dataset_id": "MODIS/Terra Near Real Time (NRT) Surface Reflectance Daily L2G Global 1km and 500m SIN Grid",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD09GA",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Near Real Time (NRT) Surface Reflectance Daily L2G Global 1km and 500m SIN Grid",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS Near Real Time (NRT) Surface Reflectance products are an estimate of the surface spectral reflectance as it would be measured at ground level in the absence of atmospheric scattering or absorption. Low-level data are corrected for atmospheric gases and aerosols, yielding a level-2 basis for several higher-order gridded level-2 (L2G) and level-3 products. MOD09GA provides Bands 1-7 in a daily gridded L2G product in the Sinusoidal projection, which includes 500-meter reflectance values and 1-kilometer observation and geolocation statistics. 500-meter Science Data Sets provided by this product include reflectance for Bands 1-7, a quality rating, observation coverage, observation number, and 250-meter scan information. 1-kilometer Science Data Sets provided include number of observations, quality state, sensor angles, solar angles, geolocation flags, and orbit pointers.Additional information at LPDAAC:https://lpdaac.usgs.gov/dataset_discovery/modis/modis_products_table",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1219248410-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2187,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/6/MOD09GA"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2G",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "http://cwic.wgiss.ceos.org/opensearch/datasets/C1219247757-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "jpeg",
+                "antarctic": false,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "500m",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Land Surface Reflectance (L2G, Daily, True Color)",
+                "updated_at": "2021-05-26T12:00:15.875Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_L2G_SurfaceReflectance_Bands143_Daily",
+                "match": {
+                  "time_start": ">=2002-07-04T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:08:44.283Z"
+            }
+          }
+        },
+        "boxes": [
+          "-80 -180 80 180"
+        ],
+        "time_start": "2015-12-06T00:00:00.000Z",
+        "dif_ids": [
+          "MYD09GA_6NRT"
+        ],
+        "version_id": "6NRT",
+        "updated": "2016-02-04T00:00:00.000Z",
+        "dataset_id": "MODIS/Aqua Near Real Time (NRT) Surface Reflectance Daily L2G Global 1km and 500m SIN Grid",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MYD09GA",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Aqua Near Real Time (NRT) Surface Reflectance Daily L2G Global 1km and 500m SIN Grid",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS Near Real Time (NRT) Surface Reflectance products are an estimate of the surface spectral reflectance as it would be measured at ground level in the absence of atmospheric scattering or absorption. Low-level data are corrected for atmospheric gases and aerosols, yielding a level-2 basis for several higher-order gridded level-2 (L2G) and level-3 products.MYD09GA provides Bands 1-7 in a daily gridded L2G product in the Sinusoidalprojection, which includes 500-meter reflectance values and 1-kilometerobservation and geolocation statistics. 500-meter Science Data Sets providedby this product include reflectance for Bands 1-7, a quality rating,observation coverage, observation number, and 250-meter scan information.1-kilometer Science Data Sets provided include number of observations, qualitystate, sensor angles, solar angles, geolocation flags, and orbit pointers.Additional information at LPDAAC:https://lpdaac.usgs.gov/dataset_discovery/modis/modis_products_table",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1219247757-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2182,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/6/MYD09GA"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1B",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426414410-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.gibs": {
+            "data": [
+              {
+                "geo_resolution": "1km",
+                "format": "png",
+                "antarctic": true,
+                "group": "overlays",
+                "arctic_resolution": "1km",
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Brightness Temperature (Band 31-Day)",
+                "resolution": "1km",
+                "antarctic_resolution": "1km",
+                "product": "MODIS_Terra_Brightness_Temp_Band31_Day",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "1km",
+                "format": "png",
+                "antarctic": true,
+                "group": "overlays",
+                "arctic_resolution": "1km",
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Brightness Temperature (Band 31-Night)",
+                "resolution": "1km",
+                "antarctic_resolution": "1km",
+                "product": "MODIS_Terra_Brightness_Temp_Band31_Night",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": true,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "1km",
+                "arctic_resolution": "1km",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Brightness Temperature (Band 31-Day)",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": "1km",
+                "product": "MODIS_Terra_Brightness_Temp_Band31_Day",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": true,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "1km",
+                "arctic_resolution": "1km",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Brightness Temperature (Band 31-Night)",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": "1km",
+                "product": "MODIS_Terra_Brightness_Temp_Band31_Night",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "night"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (True Color)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_TrueColor",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 3-6-7)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands367",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 7-2-1)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands721",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:07.684Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-11T00:00:00.000Z",
+        "dif_ids": [
+          "MOD021KM_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 1km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD021KM",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 1km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS Level 1B Near Real Time (NRT) data set contains calibrated and geolocated at-aperture radiances for 36 discrete bands located in the 0.4 to 14.4 micron region of \n\nelectromagentic spectrum. These data are generated from the MODIS Level 1A scans of raw radiance and in the process converted to geophysical units of W/(m^2 um sr). Additional data are provided including quality flags, error estimates and calibration data.\n\nVisible, shortwave infrared, and near infrared measurements are only made during the daytime (except band 26), while radiances for the thermal infrared region (bands 20-25, 27-36) are measured continuously.\n\nThe Shortname for this product is MOD021KM and is stored in the Earth Observing System Hierarchical Data Format (HDF-EOS). A typical file size would be approximately 110 MB (a day granule around 150MB and a night granule around 70 MB).\n\nIn this new version (Collection 6.1) of MOD021KM, an advanced technique is introduced to mitigate the crosstalk contamination issue among the LWIR PV bands  \nusing data from lunar calibration events. \n\nThe electronic crosstalk contamination issue in the Terra long-wave infrared photovoltaic (LWIR PV) bands (27 -30), has existed since the beginning of the mission but become more noticeable during later half of the mission. The electronic crosstalk is where signal from each of the detectors among the LWIR PV bands can leak to the other detectors, producing a false signal contribution. This contamination has had a noticeable effect on the MODIS science products since 2010 for band 27, and since 2012 for bands 28 and 29.\n\nEnvironmental information derived from MODIS L1B measurements will offer a comprehensive and unprecedented look at terrestrial, atmospheric, and ocean phenomenology for a wide and diverse community of users throughout the world.\n\nSee the MODIS Characterization Support Team webpage for more C6 product information at:\n\nhttp://mcst.gsfc.nasa.gov/l1b/product-information\n\nor visit Science Team homepage at:\nhttp://modis.gsfc.nasa.gov/data/dataprod/",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426414410-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2043,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/61/MOD021KM/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2G",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:08:44.355Z"
+            }
+          },
+          "opensearch.granule.osdd": {
+            "data": "http://cwic.wgiss.ceos.org/opensearch/datasets/C1219247758-LANCEMODIS/osdd.xml?clientId=foo"
+          }
+        },
+        "boxes": [
+          "-80 -180 80 180"
+        ],
+        "time_start": "2015-12-06T00:00:00.000Z",
+        "dif_ids": [
+          "MYD09GQ_6NRT"
+        ],
+        "version_id": "6NRT",
+        "updated": "2016-02-04T00:00:00.000Z",
+        "dataset_id": "MODIS/Aqua Near Real Time (NRT) Surface Reflectance Daily L2G Global 250m SIN Grid",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MYD09GQ",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Aqua Near Real Time (NRT) Surface Reflectance Daily L2G Global 250m SIN Grid",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS Near Real Time (NRT) Surface Reflectance products are an estimate of the surface spectral reflectance as it would be measured at ground level in the absence of atmospheric scattering or absorption. Low-level data are corrected for atmospheric gases and aerosols, yielding a level-2 basis for several higher-order gridded level-2 (L2G) and level-3 products.MYD09GQ provides Bands 1 and 2 at a 250-meter resolution in a daily gridded L2G product in the Sinusoidal projection. Science Data Sets provided for this product include reflectance for Bands 1 and 2 a quality rating observation coverage and observation number. This product is meant to be used in conjunction with MYD09GA where important quality and viewing geometry information is stored.Additional information at LPDAAC:https://lpdaac.usgs.gov/dataset_discovery/modis/modis_products_table",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1219247758-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2133,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/6/MYD09GQ"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1A",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:11.753Z"
+            }
+          },
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426422512-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (True Color)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_TrueColor",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 3-6-7)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands367",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 7-2-1)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands721",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-11T00:00:00.000Z",
+        "dif_ids": [
+          "MOD03_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Terra Geolocation Fields 5-Min L1A Swath 1km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD03",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Geolocation Fields 5-Min L1A Swath 1km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The Near Real Time (NRT) geolocation fields are calculated for each 1 km MODIS Instantaneous Field of Views (IFOV) for all orbits daily.  The locations and ancillary information corresponds to the intersection of the centers of each IFOV from 10 detectors in an ideal 1 km band on the Earth's surface. A digital terrain model is used to model the Earth's surface. The main inputs are the spacecraft attitude and orbit, the instrument telemetry and the digital elevation model. The geolocation fields include geodetic Latitude, Longitude, surface height above geoid, solar zenith and azimuth angles, satellite zenith and azimuth angles, and a land/sea mask for each 1 km sample. Additional information is included in the header to enable the calculation of the approximate location of the center of the detectors of any of the 36 MODIS bands. This product is used as input by a large number of subsequent MODIS products, particularly the products produced by the Land team.The shortname for this product is MOD03.",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426422512-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2043,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/61/MOD03/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1B",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426616847-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.gibs": {
+            "data": [
+              {
+                "geo_resolution": "1km",
+                "format": "png",
+                "antarctic": true,
+                "group": "overlays",
+                "arctic_resolution": "1km",
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": true,
+                "title": "Brightness Temperature (Band 31-Night)",
+                "resolution": "1km",
+                "antarctic_resolution": "1km",
+                "product": "MODIS_Aqua_Brightness_Temp_Band31_Night",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "1km",
+                "format": "png",
+                "antarctic": true,
+                "group": "overlays",
+                "arctic_resolution": "1km",
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": true,
+                "title": "Brightness Temperature (Band 31-Day)",
+                "resolution": "1km",
+                "antarctic_resolution": "1km",
+                "product": "MODIS_Aqua_Brightness_Temp_Band31_Day",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": true,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "1km",
+                "arctic_resolution": "1km",
+                "source": "Aqua / MODIS",
+                "arctic": true,
+                "title": "Brightness Temperature (Band 31-Day)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "1km",
+                "product": "MODIS_Aqua_Brightness_Temp_Band31_Day",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": true,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "1km",
+                "arctic_resolution": "1km",
+                "source": "Aqua / MODIS",
+                "arctic": true,
+                "title": "Brightness Temperature (Band 31-Night)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "1km",
+                "product": "MODIS_Aqua_Brightness_Temp_Band31_Night",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "night"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Aqua / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (True Color)",
+                "updated_at": "2021-05-26T12:00:15.876Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Aqua / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 7-2-1)",
+                "updated_at": "2021-05-26T12:00:15.876Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Aqua_CorrectedReflectance_Bands721",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:08:30.477Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-20T00:00:00.000Z",
+        "dif_ids": [
+          "MYD021KM_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MYD021KM",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS Level 1B Near Real Time (NRT) data set contains calibrated and geolocated at-aperture radiances for 36 discrete bands located in the 0.4 to 14.4 micron region of electromagentic spectrum. These data are generated from the MODIS Level 1A scans of raw radiance and in the process converted to geophysical units of W/(m^2 um sr). In addition, the Earth Bi-directional Reflectance Distribution Function (BRDF) may be determined for the solar reflective bands (1-19, 26) through knowledge of the solar irradiance (e.g., determined from MODIS solar diffuser data, and from the target illumination geometry).  Additional data are provided including quality flags, error estimates and calibration data.               Visible, shortwave infrared, and near infrared measurements are only made during the daytime, while radiances for the thermal infrared region (bands 20-25, 27-36) are measured continuously.                                    Channel locations for MODIS are as follows:                                         Band   Center Wavelength (um)    Primary Use----   ----------------------    -----------1          0.620  - 0.670        Land/Cloud Boundaries2          0.841  - 0.876        Land/Cloud Boundaries3          0.459  - 0.479        Land/Cloud Properties4          0.545  - 0.565        Land/Cloud Properties5          1.230  - 1.250        Land/Cloud Properties6          1.628  - 1.652        Land/Cloud Properties7          2.105  - 2.155        Land/Cloud Properties8          0.405  - 0.420        Ocean Color/Phytoplankton9          0.438  - 0.448        Ocean Color/Phytoplankton10         0.483  - 0.493        Ocean Color/Phytoplankton11         0.526  - 0.536        Ocean Color/Phytoplankton12         0.546  - 0.556        Ocean Color/Phytoplankton13         0.662  - 0.672        Ocean Color/Phytoplankton14         0.673  - 0.683        Ocean Color/Phytoplankton15         0.743  - 0.753        Ocean Color/Phytoplankton16         0.862  - 0.877        Ocean Color/Phytoplankton17         0.890  - 0.920        Atmospheric Water Vapor18         0.931  - 0.941        Atmospheric Water Vapor19         0.915  - 0.965        Atmospheric Water Vapor20         3.660  - 3.840        Surface/Cloud Temperature21         3.929  - 3.989        Surface/Cloud Temperature22         3.929  - 3.989        Surface/Cloud Temperature23         4.020  - 4.080        Surface/Cloud Temperature24         4.433  - 4.498        Atmospheric Temperature25         4.482  - 4.549        Atmospheric Temperature26         1.360  - 1.390        Cirrus Clouds27         6.535  - 6.895        Water Vapor Profile28         7.175  - 7.475        Water Vapor Profile29         8.400  - 8.700        Water Vapor Profile30         9.580  - 9.880        Ozone Overburden31         10.780 - 11.280       Surface/Cloud Temperature32         11.770 - 12.270       Surface/Cloud Temperature33         13.185 - 13.485       Cloud Top Altitude34         13.485 - 13.785       Cloud Top Altitude35         13.785 - 14.085       Cloud Top Altitude36         14.085 - 14.385       Cloud Top Altitude                                         Channels 1 and 2 have 250 m resolution, channels 3 through 7 have 500m resolution, and the rest have 1 km resolution. However, for the MODIS L1B 1 km product, the 250 m and 500 m band radiance data and their associated uncertainties have been aggregated to 1km resolution. Thus the entire channel data set is referenced to the same spatial and geolocation scales. Separate L1B products are available for the 250 m channels (MYD02QKM) and 500 m channels (MYD02HKM) that preserve the original resolution of the data.                                         Spatial resolution for pixels at nadir is 1 km, degrading to 4.8 km in the along-scan direction at the scan extremes. However, thanks to the overlapping of consecutive swaths and respectively pixels there, the resulting resolution at the scan extremes is about 2km.  A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330km orbital swath width and provides global coverage every one to two days. A single MODIS Level 1B granule will nominally contain a scene built from 203 scans (or swaths) sampled 1354 times in the cross-track direction, corresponding to approximately 5 minutes worth of data. Since an individual MODIS scan (or swath) will contain 10 along-track spatial elements, the scene will be composed of (1354 x 2030) pixels, resulting in a spatial coverage of (2330 km x 2030 km). Due to the  MODIS scan geometry, there will be increasing overlap occurring beyond about 25 degrees scan angle.                                         To summarize, the MODIS L1B 1 km data product consists of:                                          1. Calibrated radiances and uncertainties for (2) 250 m reflected solar bands aggregated to 1km resolution                                          2. Calibrated radiances and uncertainties for (5) 500 m reflected solar bands aggregated to 1 km resolution                                          3. Calibrated radiances and uncertainties for (13) 1 km reflected solar bands and (16) infrared emissive bands                                          4. Geolocation subsampled at every 5th pixel across and along track                                          5. Satellite and solar angles subsampled at the above frequency                                          6. Comprehensive set of file-level metadata summarizing the spatial, temporal and parameter attributes of the data, as well as auxiliary information pertaining to instrument status and data quality characterization.                                         The MODIS L1B data are stored in the Earth Observing System Hierarchical Data Format (HDF-EOS) which is an extension of HDF as developed by the National Center for Supercomputer Applications (NCSA) at the University of Illinois. A typical file size will be approximately 260 MB.                                         Environmental information derived from MODIS L1B measurements will offer a comprehensive and unprecedented look at terrestrial, atmospheric, and ocean phenomenology for a wide and diverse community of users throughout the world.                                         The Shortname for this product is MYD021KM",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426616847-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2040,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/allData/61/MYD021KM/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426426499-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.gibs": {
+            "data": [
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Aerosol Optical Depth 3km (3km, Land and Ocean)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Aerosol_Optical_Depth_3km",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Aerosol Optical Depth 3km (3km, Land and Ocean)",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Aerosol_Optical_Depth_3km",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:05.078Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-11T00:00:00.000Z",
+        "dif_ids": [
+          "MOD04_3K_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Terra Aerosol 5-Min L2 Swath 3km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD04_3K",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Aerosol 5-Min L2 Swath 3km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The new Collection 6.1 (C61) MOD04_3K product is an improved version based on algorithm changes in Dark Target (DT) Aerosol retrieval over urban areas and uncertainty estimates for Deep Blue (DB) Aerosol retrievals.\n\nThe MODIS level-2 atmospheric aerosol product provides retrieved ambient aerosol optical properties, quality assurance, and other parameters, globally over ocean and land. In Collection 5, and earlier collections, there was only one aerosol product (MOD04_L2) at 10km (at nadir) spatial resolution. Starting from C6, the Dark Target (DT) Aerosol algorithm team provided a new 3 km spatial resolution product (MOD04_3k) intended for the air quality community.\n\nThe MOD04_3K product is based on the same algorithm and Look up Tables as the standard Dark Target aerosol product. Because of finer resolution, subtle differences are made in selecting pixels for retrieval and in determining QA. The only differences between the existing 10km algorithm and the new 3km algorithm are: 1) the size of the pixel-arrays defining each retrieval box ( 6x6 retrieval boxes of 36 pixels at 0.5km resolution for 3km algorithm as oppose to 20x20 retrieval boxes of 400 pixels at 0.5km resolution for 10km product); 2) the minimum percentage of good&#226;&#8364;&#157; pixels required for a retrieval (a minimum of 5 pixels over ocean and 6 pixels over land instead of a minimum of 10 pixels over ocean or 12 pixels over land for 10km product retrieval); 3) the 10km algorithm attemptes a poor quality retrieval while 3km algorithm does not. Everything else is same in two products.\n\nFor more information on C6.1 changes and updates, visit the MODIS Atmosphere website at:\nhttps://modis-atmosphere.gsfc.nasa.gov/documentation/collection-61",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426426499-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 996,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1A",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:08:35.040Z"
+            }
+          },
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426640814-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Aqua / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 7-2-1)",
+                "updated_at": "2021-05-26T12:00:15.876Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Aqua_CorrectedReflectance_Bands721",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-20T00:00:00.000Z",
+        "dif_ids": [
+          "MYD03_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Aqua Geolocation Fields 5-Min L1A Swath 1km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MYD03",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Aqua Geolocation Fields 5-Min L1A Swath 1km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The Near Real Time (NRT) geolocation fields are calculated for each 1 km MODIS Instantaneous Field of Views (IFOV) for all orbits daily.  The locations and ancillary information corresponds to the intersection of the centers of each IFOV from 10 detectors in an ideal 1 km band on the Earth's surface. A digital terrain model is used to model the Earth's surface. The main inputs are the spacecraft attitude and orbit, the instrument telemetry and the digital elevation model. The geolocation fields include geodetic Latitude, Longitude, surface height above geoid, solar zenith and azimuth angles, satellite zenith and azimuth angles, and a land/sea mask for each 1 km sample. Additional information is included in the header to enable the calculation of the approximate location of the center of the detectors of any of the 36 MODIS bands. This product is used as input by a large number of subsequent MODIS products, particularly the products produced by the Land team.The shortname for this product is MYD03.",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426640814-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2040,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/allData/61/MYD03/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.gibs": {
+            "data": [
+              {
+                "geo_resolution": "1km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Land Surface Temperature (Night)",
+                "resolution": "1km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Land_Surface_Temp_Night",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "NIGHT"
+                }
+              },
+              {
+                "geo_resolution": "1km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Land Surface Temperature (Day)",
+                "resolution": "1km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Land_Surface_Temp_Day",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "DAY"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "1km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Land Surface Temperature (Day)",
+                "updated_at": "2021-05-26T12:00:15.876Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Land_Surface_Temp_Day",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "1km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Land Surface Temperature (Night)",
+                "updated_at": "2021-05-26T12:00:15.876Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Land_Surface_Temp_Night",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "night"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:08:44.018Z"
+            }
+          }
+        },
+        "boxes": [
+          "-80 -180 80 180"
+        ],
+        "time_start": "2002-05-04T00:00:00.000Z",
+        "dif_ids": [
+          "MYD11_L2_6NRT"
+        ],
+        "version_id": "6NRT",
+        "dataset_id": "MODIS/Aqua Near Real Time (NRT) Land Surface Temperature/Emissivity 5-Min L2 Swath 1km",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MYD11_L2",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+          "NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"
+        ],
+        "title": "MODIS/Aqua Near Real Time (NRT) Land Surface Temperature/Emissivity 5-Min L2 Swath 1km",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS/Aqua Near Real Time (NRT) level-2 Land Surface Temperature and Emissivity (LST/E) data (Shortname: MYD11_L2) incorporate 1 km pixels, which are produced daily at 5-minute increments using the generalized split-window algorithm. This algorithm is optimally used to separate ranges of atmospheric column water vapor and lower boundary air surface temperatures into tractable sub-ranges. The surface emissivities in bands 31 and 32 are estimated from land cover types. The data inputs include the MODIS L1B calibrated and geolocated radiances, geolocation, cloud mask, atmospheric profiles, land and snow cover.The MYD11_L2 data set comprises swath data obtained in 5-minute sensor collection periods, and includes the following Science Data Set (SDS) layers:- LST- Quality control assessment- Error estimates- Bands 31 and 32 emissivities- Zenith angle of the pixel view- Observation time- Geographic coordinates for every five scan lines and samples.Produced daily, MYD11_L2 is an unprojected level-2 product, which provides the input for the level-3 products.",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1219248235-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 1731,
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/6/MYD11_L2/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426436561-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.gibs": {
+            "data": [
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Deep Blue Aerosol Optical Depth (Land)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_AOD_Deep_Blue_Land",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Aerosol Optical Depth",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Aerosol",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Dark Target Aerosol Angstrom Exponent (Ocean)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Angstrom_Exponent_Ocean",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Deep Blue Aerosol Angstrom Exponent (Land)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Angstrom_Exponent_Land",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Merged DT/DB Aerosol Optical Depth (Land and Ocean)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_AOD_Deep_Blue_Combined",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Deep Blue Aerosol Angstrom Exponent (Land)",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Angstrom_Exponent_Land",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Dark Target Aerosol Angstrom Exponent (Ocean)",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Angstrom_Exponent_Ocean",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Deep Blue Aerosol Optical Depth (Land)",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_AOD_Deep_Blue_Land",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Merged DT/DB Aerosol Optical Depth (Land and Ocean)",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_AOD_Deep_Blue_Combined",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Terra / MODIS",
+                "arctic": false,
+                "title": "Aerosol Optical Depth",
+                "updated_at": "2021-05-26T12:00:15.798Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Terra_Aerosol",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:04.730Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-11T00:00:00.000Z",
+        "dif_ids": [
+          "MOD04_L2_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Terra Aerosol 5-Min L2 Swath 10km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD04_L2",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Aerosol 5-Min L2 Swath 10km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The new Collection 6.1 (C61) MOD04_L2 product is an improved version based on algorithm changes in Dark Target (DT) Aerosol retrieval over urban areas and uncertainty estimates for Deep Blue (DB) Aerosol retrievals.\n\nThe MODIS level-2 atmospheric aerosol product provides retrieved ambient aerosol optical properties, quality assurance, and other parameters, globally over ocean and land. In Collection 5, and earlier collections, there was only one aerosol product (MOD04_L2) at 10km (at nadir) spatial resolution. Starting from C6, the Dark Target (DT) Aerosol algorithm team provided a new 3 km spatial resolution product (MOD04_3k) intended for the air quality community.\n\nFor more information visit the MODIS Atmosphere website at:\nhttps://modis-atmos.gsfc.nasa.gov/products/aerosol\n\nAnd, for C6.1 changes and updates, visit:\nhttps://modis-atmosphere.gsfc.nasa.gov/documentation/collection-61",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426436561-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 996,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/61/MOD04_L2/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1B",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426416980-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (True Color)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_TrueColor",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 3-6-7)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands367",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 7-2-1)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands721",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:08.027Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-11T00:00:00.000Z",
+        "dif_ids": [
+          "MOD02QKM_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD02QKM",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The 250 meter MODIS Level 1B Near Real Time (NRT) data set contains calibrated and geolocated at-aperture radiances for 2 discrete bands located in the 0.62 to 0.88 micron region of the electromagnetic spectrum. These data are generated from the MODIS Level 1A scans of raw radiance and in the process converted to geophysical units of W / (m^2 um sr). Additional data are provided including quality flags, error estimates and calibration data. \nChannel locations for the MODIS 250 meter data are as follows:\n\nBand   Center Wavelength (um)    Primary Use\n----   ----------------------    -----------\n1        0.620  - 0.670        Land/Cloud Boundaries\n\n2        0.841  - 0.876        Land/Cloud Boundaries\n\nSeparate L1B products are available for the five 500m resolution channels (MOD02HKM) and the twenty-nine 1km resolution channels (MOD021KM). For the 500m product, there are actually seven channels available since the data from the two 250 m channels have been aggregated to 500m resolution.  Similarly, for the 1km product, all 36 MODIS channels are available since the data from the two 250m and five 500m channels have been aggregated into equivalent 1km\npixel values.\n\nSpatial resolution for pixels at nadir is 250 m, degrading to 1.2 km in the along-scan direction and 0.5 km in the along-track direction for pixels located at the scan extremes. A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330 km orbital swath width and provides global coverage every one to two days. A single MODIS Level 1B 250 m granule will contain a scene built from 203 scans sampled 5416 times in the cross-track direction, corresponding to approximately 5 minutes worth of data; thus 288 granules will be produced per day. Since an individual MODIS scan will contain 40 along-track spatial elements for the 250 m channels, the scene will be composed of (5416 x 8120) pixels, resulting in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry, there will be increasing scan overlap beyond about 17 degrees scan angle.\n\nThe Shortname for this product is MOD02QKM and is stored in the Earth Observing System Hierarchical\nData Format (HDF-EOS). A typical file size will be approximately 140 MB and the total daily volume is around 22GB.\n\nEnvironmental information derived from MODIS L1B measurements will offer a comprehensive and unprecedented look at terrestrial, atmospheric, and ocean phenomenology for a wide and diverse community of users throughout the world.\n\nSee the MODIS Characterization Support Team webpage for more C6 product information at:\n\nhttp://mcst.gsfc.nasa.gov/l1b/product-information\n\n\nor visit Science Team homepage at: \nhttp://modis.gsfc.nasa.gov/data/dataprod/",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426416980-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 1004,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/61/MOD02QKM/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426717545-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.gibs": {
+            "data": [
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Aerosol Optical Depth 3km (3km, Land and Ocean)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Aerosol_Optical_Depth_3km",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Aerosol Optical Depth 3km (3km, Land and Ocean)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Aerosol_Optical_Depth_3km",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:08:28.463Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-20T00:00:00.000Z",
+        "dif_ids": [
+          "MYD04_3K_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Aqua Aerosol 5-Min L2 Swath 3km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MYD04_3K",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Aqua Aerosol 5-Min L2 Swath 3km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The new Collection 6.1 (C61) MYD04_3K product is an improved version based on algorithm changes in Dark Target (DT) Aerosol retrieval over urban areas and uncertainty estimates for Deep Blue (DB) Aerosol retrievals.\n\nThe MODIS level-2 atmospheric aerosol product provides retrieved ambient aerosol optical properties, quality assurance, and other parameters, globally over ocean and land. In Collection 5, and earlier collections, there was only one aerosol product (MOD04_L2) at 10km (at nadir) spatial resolution. Starting from C6, the Dark Target (DT) Aerosol algorithm team provided a new 3 km spatial resolution product (MOD04_3k) intended for the air quality community.\n\nThe MOD04_3K product is based on the same algorithm and Look up Tables as the standard Dark Target aerosol product. Because of finer resolution, subtle differences are made in selecting pixels for retrieval and in determining QA. The only differences between the existing 10km algorithm and the 3km algorithm are: 1) the size of the pixel-arrays defining each retrieval box (6x6 retrieval boxes of 36 pixels at 0.5km resolution for 3km algorithm as oppose to 20x20 retrieval boxes of 400 pixels at 0.5km resolution for 10km product); 2) the minimum percentage of good pixels required for a retrieval (a minimum of 5 pixels over ocean and 6 pixels over land instead of a minimum of 10 pixels over ocean or 12 pixels over land for 10km product retrieval); 3) the 10km algorithm attempts a poor quality retrieval while 3km algorithm does not. Everything else is same in two products.\n\nFor more information on C6.1 changes and updates, visit the MODIS Atmosphere website at:\nhttps://modis-atmosphere.gsfc.nasa.gov/documentation/collection-61",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426717545-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 1096,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/allData/61/MYD04_3K/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426751946-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.gibs": {
+            "data": [
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Dark Target Aerosol Angstrom Exponent (Ocean)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Angstrom_Exponent_Ocean",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Deep Blue Aerosol Angstrom Exponent (Land)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Angstrom_Exponent_Land",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Aerosol Optical Depth",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Aerosol",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Merged DT/DB Aerosol Optical Depth (Land and Ocean)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_AOD_Deep_Blue_Combined",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z"
+                }
+              },
+              {
+                "geo_resolution": "2km",
+                "format": "png",
+                "antarctic": false,
+                "group": "overlays",
+                "arctic_resolution": null,
+                "geo": true,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Deep Blue Aerosol Optical Depth (Land)",
+                "resolution": "2km",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_AOD_Deep_Blue_Land",
+                "maxNativeZoom": 5,
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Deep Blue Aerosol Angstrom Exponent (Land)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Angstrom_Exponent_Land",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Dark Target Aerosol Angstrom Exponent (Ocean)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Angstrom_Exponent_Ocean",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Deep Blue Aerosol Optical Depth (Land)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_AOD_Deep_Blue_Land",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Merged DT/DB Aerosol Optical Depth (Land and Ocean)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_AOD_Deep_Blue_Combined",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Aqua / MODIS",
+                "arctic": false,
+                "title": "Aerosol Optical Depth",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": null,
+                "product": "MODIS_Aqua_Aerosol",
+                "match": {
+                  "time_start": ">=2002-07-03T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:08:28.024Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-20T00:00:00.000Z",
+        "dif_ids": [
+          "MYD04_L2_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Aqua Aerosol 5-Min L2 Swath 10km - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MYD04_L2",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Aqua Aerosol 5-Min L2 Swath 10km - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The new Collection 6.1 (C61) MYD04_L2 product is an improved version based on algorithm changes in Dark Target (DT) Aerosol retrieval over urban areas and uncertainty estimates for Deep Blue (DB) Aerosol retrievals.\n\nThe MODIS level-2 atmospheric aerosol product provides retrieved ambient aerosol optical properties, quality assurance, and other parameters, globally over ocean and land. In Collection 5, and earlier collections, there was only one aerosol product (MYD04_L2) at 10km (at nadir) spatial resolution. Starting from C6, the Dark Target (DT) Aerosol algorithm team provided a new 3 km spatial resolution product (MYD04_3k) intended for the air quality community.\n\nFor more information visit the MODIS Atmosphere website at:\nhttps://modis-atmos.gsfc.nasa.gov/products/aerosol\n\nAnd, for C6.1 changes and updates, visit:\nhttps://modis-atmosphere.gsfc.nasa.gov/documentation/collection-61",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426751946-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 1096,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/allData/61/MYD04_L2/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "http://modis.gsfc.nasa.gov/sci_team/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1B",
+        "tags": {
+          "opensearch.granule.osdd": {
+            "data": "https://cwic.wgiss.ceos.org/opensearch/datasets/C1426415307-LANCEMODIS/osdd.xml?clientId=foo"
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (True Color)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_TrueColor",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 3-6-7)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands367",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "jpeg",
+                "antarctic": true,
+                "geographic": true,
+                "group": "baselayers",
+                "geographic_resolution": "250m",
+                "arctic_resolution": "250m",
+                "source": "Terra / MODIS",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 7-2-1)",
+                "updated_at": "2021-05-26T12:00:15.858Z",
+                "antarctic_resolution": "250m",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands721",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:09:08.358Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2017-10-11T00:00:00.000Z",
+        "dif_ids": [
+          "MOD02HKM_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 500m - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD02HKM",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 500m - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The 500 meter MODIS Level 1B Near Real Time (NRT) data set contains calibrated and geolocated at-aperture radiances for 7 discrete bands located in the 0.45 to 2.20 micron region of the electromagnetic spectrum. These data are generated from the MODIS Level 1A scans of raw radiance and in the process converted to geophysical units of W/(m^2 um sr). Additional data are provided including quality flags, error estimates and calibration data.\n\nVisible, shortwave infrared, and near infrared measurements are only made during the daytime (except band 26), while radiances for the thermal infrared region (bands 20-25, 27-36) are measured continuously.\nChannel locations for the MODIS 500 meter data are as follows:\n            \n            Band   Center Wavelength (um)    Primary Use\n            ----   ----------------------    -----------\n            1          0.620  - 0.670        Land/Cloud Boundaries\n            2          0.841  - 0.876        Land/Cloud Boundaries\n            3          0.459  - 0.479        Land/Cloud Properties\n            4          0.545  - 0.565        Land/Cloud Properties\n            5          1.230  - 1.250        Land/Cloud Properties\n            6          1.628  - 1.652        Land/Cloud Properties\n            7          2.105  - 2.155        Land/Cloud Properties\n            \nChannels 1 and 2 have 250 m resolution, channels 3 through 7 have 500 m resolution. However, for the MODIS L1B 500 m product, the 250 m band radiance data and their associated uncertainties have been aggregated to 500m resolution. Thus the entire channel data set has been co-registered to the same spatial scale in the 500 m product. Separate L1B products are available for the 250 m resolution channels (MOD02QKM) and 1 km resolution channels (MOD021KM). For the latter product, the 250 m and 500 m channel data (bands 1 through 7) have been aggregated into equivalent 1 km pixel values.\n            \nSpatial resolution for pixels at nadir is 500 km, degrading to 2.4 km in the along-scan direction at the scan extremes. However, thanks to the overlapping of consecutive swaths and respectively pixels there, the resulting resolution at the scan extremes is about 1 km. A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330 km orbital swath width and provides global coverage every one to two days. A single MODIS Level 1B 500 m granule will contain a scene built from 203 scans sampled 2708 times in the cross-track direction, corresponding to approximately 5 minutes worth of data; thus 288 granules will be produced per day. Since an individual MODIS scan will contain 20 along-track spatial elements for the 500 m channels, the scene will be composed of (2708 x 4060) pixels, resulting in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry, there will be increasing scan overlap beyond about 20 degrees scan angle.      \n\nTo summarize, the MODIS L1B 500 m data product consists of:\n            \n1. Calibrated radiances, uncertainties and number of samples for (2) 250 m reflected solar bands aggregated to 500 m resolution\n            \n2. Calibrated radiances and uncertainties for (5) 500 m reflected solar bands\n            \n3. Geolocation for 1km pixels, that must be interpolated to get 500 m pixel locations. For the relationship of 1km pixels to 500m pixels, see the Geolocation ATBD ttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod28_v3.pdf .\n            \n4. Calibration data for all channels (scale and offset) \n            \n5. Comprehensive set of file-level metadata summarizing the spatial, temporal and parameter attributes of the data, as well as auxiliary information pertaining to instrument status and data quality characterization Users requiring all geolocation and solar/satellite geometry fields at 1km resolution can obtain the separate MODIS Level 1 Geolocation product (MOD03) from LAADS  http://ladsweb.nascom.nasa.gov/ . \n            \nThe Shortname for this product is MOD02HKM and is stored in the Earth Observing System Hierarchical Data Format (HDF-EOS). A typical MOD02HKM file size is approximately 135 MB.\n            \nEnvironmental information derived from MODIS L1B measurements will offer a comprehensive and unprecedented look at terrestrial, atmospheric, and ocean phenomenology for a wide and diverse community of users throughout the world.\n\nSee the MODIS Characterization Support Team webpage for more C6 product information at:\n\nhttp://mcst.gsfc.nasa.gov/l1b/product-information\n\n\nor visit Science Team homepage at:\nhttp://modis.gsfc.nasa.gov/data/dataprod/",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1426415307-LANCEMODIS",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 1004,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/61/MOD02HKM/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "3",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-26T18:00:57.542Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2002-07-04T00:00:00.000Z",
+        "version_id": "2018",
+        "updated": "2018-10-10T00:00:00.000Z",
+        "dataset_id": "Aqua Moderate Resolution Imaging Spectroradiometer (MODIS) Global Mapped Chlorophyll (CHL) - NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "OB_DAAC",
+        "short_name": "MODISA_L3m_CHL_NRT",
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC"
+        ],
+        "title": "Aqua Moderate Resolution Imaging Spectroradiometer (MODIS) Global Mapped Chlorophyll (CHL) - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The Ocean Biology DAAC produces near real-time (quicklook) products using the best-available combination of\nancillary data from meteorological and ozone data. As such, the inputs and the calibration used are less than\noptimal. Quicklook products provide a snapshot of the data during a short time period within a single orbit.",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1449861405-OB_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 10300,
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://oceandata.sci.gsfc.nasa.gov/MODIS-Aqua/L3SMI/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://oceancolor.gsfc.nasa.gov/data/aqua"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://oceancolor.gsfc.nasa.gov/atbd/chlor_a"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://oceancolor.gsfc.nasa.gov/reprocessing"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://oceancolor.gsfc.nasa.gov/data/10.5067/AQUA/MODIS/L3M/CHL/2018"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://oceancolor.gsfc.nasa.gov/forum/oceancolor/forum_show.pl"
+          }
+        ]
+      }
+    ],
+    "facets": {
+      "title": "Browse Collections",
+      "type": "group",
+      "has_children": true,
+      "children": [
+        {
+          "title": "Keywords",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Aerosols",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Atmosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 41,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Atmosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Biosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Biosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Cryosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 13,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Cryosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Land Surface",
+              "type": "filter",
+              "applied": false,
+              "count": 46,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Oceans",
+              "type": "filter",
+              "applied": false,
+              "count": 88,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Spectral/Engineering",
+              "type": "filter",
+              "applied": false,
+              "count": 49,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Terrestrial Hydrosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Terrestrial+Hydrosphere"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Instruments",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "AIRS",
+              "type": "filter",
+              "applied": false,
+              "count": 12,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AIRS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AMSR2",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AMSR2&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AMSU-A",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AMSU-A&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LIS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=LIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MLS",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=MLS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MODIS",
+              "type": "filter",
+              "applied": false,
+              "count": 125,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=MODIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MOPITT",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=MOPITT&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OMI",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=OMI&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OMPS",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=OMPS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "VIIRS",
+              "type": "filter",
+              "applied": false,
+              "count": 64,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=VIIRS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Data Format",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Binary",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=Binary&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "BUFR",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=BUFR&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "E-mail",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=E-mail&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GeoTIFF",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=GeoTIFF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "HDF",
+              "type": "filter",
+              "applied": false,
+              "count": 97,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=HDF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "HDF-4 - netCDF-4",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=HDF-4+-+netCDF-4&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "KML",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=KML&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NetCDF",
+              "type": "filter",
+              "applied": false,
+              "count": 74,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=NetCDF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "netCDF-4/CF - HDF-EOS-5",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=netCDF-4%2FCF+-+HDF-EOS-5&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SHP",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=SHP&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Text",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=Text&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "WMS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&granule_data_format_h%5B%5D=WMS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Organizations",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Global Hydrology Resource Center (GHRC)",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Global+Hydrology+Resource+Center+%28GHRC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Goddard Earth Sciences Data and Information Services Center (GES DISC)",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Goddard+Earth+Sciences+Data+and+Information+Services+Center+%28GES+DISC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LANCE-MODIS Data Center (LANCE-MODIS)",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=LANCE-MODIS+Data+Center+%28LANCE-MODIS%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MODIS Adaptive Processing System (MODAPS)",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=MODIS+Adaptive+Processing+System+%28MODAPS%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MODIS Characterization Support Team (MCST)",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=MODIS+Characterization+Support+Team+%28MCST%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/EOS/ESDIS/LANCE MODIS",
+              "type": "filter",
+              "applied": false,
+              "count": 22,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FEOS%2FESDIS%2FLANCE+MODIS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/OMISIPS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FOMISIPS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/BSL/VCST",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FBSL%2FVCST&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/HBSL/BISB/LANCEMODIS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FHBSL%2FBISB%2FLANCEMODIS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/TISL/MODAPS",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FTISL%2FMODAPS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/MSFC/AMSR SIPS/LANCE",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FMSFC%2FAMSR+SIPS%2FLANCE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Ocean Biology Distributed Active Archive Center (OB.DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 78,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Ocean+Biology+Distributed+Active+Archive+Center+%28OB.DAAC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Ocean Biology Processing Group (OBPG)",
+              "type": "filter",
+              "applied": false,
+              "count": 24,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Ocean+Biology+Processing+Group+%28OBPG%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OMI SIPS",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=OMI+SIPS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "UCAR/NCAR",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=UCAR%2FNCAR&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "UWI-MAD/SSEC/ASIPS",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=UWI-MAD%2FSSEC%2FASIPS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Projects",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "CWIC",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=CWIC&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "EOS",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=EOS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ESDIS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ESDIS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "FIRMS",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=FIRMS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "JPSS1",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=JPSS1&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LANCE",
+              "type": "filter",
+              "applied": false,
+              "count": 74,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=LANCE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NPP-JPSS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=NPP-JPSS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Platforms",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Aqua",
+              "type": "filter",
+              "applied": false,
+              "count": 82,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Aqua"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Aura",
+              "type": "filter",
+              "applied": false,
+              "count": 12,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Aura"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GCOM-W1",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=GCOM-W1"
+              },
+              "has_children": false
+            },
+            {
+              "title": "International Space Station",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=International+Space+Station"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NOAA-20 (JPSS-1)",
+              "type": "filter",
+              "applied": false,
+              "count": 26,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=NOAA-20+%28JPSS-1%29"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Suomi-NPP",
+              "type": "filter",
+              "applied": false,
+              "count": 42,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Suomi-NPP"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Terra",
+              "type": "filter",
+              "applied": false,
+              "count": 72,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Terra"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Processing Levels",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "0 - Raw Data",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=0+-+Raw+Data&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1 - Radiance",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=1+-+Radiance&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1A - Radiance",
+              "type": "filter",
+              "applied": false,
+              "count": 6,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=1A+-+Radiance&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1B - Radiance, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 30,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=1B+-+Radiance%2C+Sensor+Coordinates&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "2 - Geophys. Variables, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 60,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=2+-+Geophys.+Variables%2C+Sensor+Coordinates&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "3 - Gridded Observations",
+              "type": "filter",
+              "applied": false,
+              "count": 102,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=3+-+Gridded+Observations&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Horizontal Data Resolution",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "0 to 1 meter",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1 to 30 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1+to+30+meters&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "30 to 100 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=30+to+100+meters&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "100 to 250 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=100+to+250+meters&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "250 to 500 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 21,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+meters&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "500 to 1000 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 24,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=500+to+1000+meters&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1 to 10 km",
+              "type": "filter",
+              "applied": false,
+              "count": 31,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1+to+10+km&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "10 to 50 km",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=10+to+50+km&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "50 to 100 km",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=50+to+100+km&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "100 to 250 km",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=100+to+250+km&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "250 to 500 km",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+km&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "500 to 1000 km",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=500+to+1000+km&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1000 km & beyond",
+              "type": "filter",
+              "applied": false,
+              "count": 0,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&collection_data_type%5B%5D=NEAR_REAL_TIME&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1000+km+%26+beyond&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

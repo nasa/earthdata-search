@@ -321,7 +321,7 @@ class SearchForm extends Component {
               shouldRenderSuggestions={this.shouldRenderSuggestions}
               inputProps={{
                 name: 'keywordSearch',
-                'data-test-id': 'keywordSearchInput',
+                'data-test-id': 'keyword-search-input',
                 className: 'search-form__input',
                 placeholder: 'Search for collections or topics',
                 value: keywordSearch,

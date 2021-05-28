@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { uniqueId } from 'lodash'
+import { kebabCase, uniqueId } from 'lodash'
 import classNames from 'classnames'
 
 import { generateFacetArgs } from '../../util/facets'
@@ -91,6 +91,7 @@ class FacetsItem extends Component {
           <input
             id={uid}
             className="facets-item__checkbox"
+            data-test-id={`facet_item-${kebabCase(facet.title)}`}
             type="checkbox"
             checked={applied}
             onChange={this.onFacetChange.bind(this, changeHandlerArgs)}

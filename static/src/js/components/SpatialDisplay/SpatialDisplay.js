@@ -586,6 +586,7 @@ class SpatialDisplay extends Component {
               <Col className="spatial-display__form-column">
                 <Form.Control
                   className="spatial-display__text-input"
+                  data-test-id="spatial-display_southwest-point"
                   sm="auto"
                   type="text"
                   placeholder="lat, lon (e.g. 44.2, 130)"
@@ -610,6 +611,7 @@ class SpatialDisplay extends Component {
               <Col className="spatial-display__form-column">
                 <Form.Control
                   className="spatial-display__text-input"
+                  data-test-id="spatial-display_northeast-point"
                   sm="auto"
                   type="text"
                   placeholder="lat, lon (e.g. 50, 133.24)"
