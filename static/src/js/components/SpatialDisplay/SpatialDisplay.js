@@ -481,10 +481,17 @@ class SpatialDisplay extends Component {
             {
               shapefileName && (
                 <>
-                  <span className="spatial-display__text-primary">{shapefileName}</span>
+                  <span
+                    className="spatial-display__text-primary"
+                    data-test-id="spatial-display_shapefile-name"
+                  >
+                    {shapefileName}
+                  </span>
                   {
                     shapefileSize && (
-                      <span className="spatial-display__text-secondary">{`(${shapefileSize})`}</span>
+                      <span className="spatial-display__text-secondary">
+                        {`(${shapefileSize})`}
+                      </span>
                     )
                   }
                   {
@@ -546,6 +553,7 @@ class SpatialDisplay extends Component {
               >
                 <Form.Control
                   className="spatial-display__text-input"
+                  data-test-id="spatial-display_point"
                   type="text"
                   placeholder="lat, lon (e.g. 44.2, 130)"
                   sm="auto"
@@ -654,6 +662,7 @@ class SpatialDisplay extends Component {
               <Col className="spatial-display__form-column">
                 <Form.Control
                   className="spatial-display__text-input"
+                  data-test-id="spatial-display_circle-center"
                   sm="auto"
                   type="text"
                   placeholder="lat, lon (e.g. 44.2, 130)"
@@ -678,6 +687,7 @@ class SpatialDisplay extends Component {
               <Col className="spatial-display__form-column">
                 <Form.Control
                   className="spatial-display__text-input"
+                  data-test-id="spatial-display_circle-radius"
                   sm="auto"
                   type="text"
                   placeholder="meters (e.g. 200)"
@@ -714,7 +724,12 @@ class SpatialDisplay extends Component {
           {
             pointCount > 2 && (
               <Row className="spatial-display__form-row">
-                <span className="spatial-display__text-primary">{`${pointCount} ${pluralize('Point', pointCount)}`}</span>
+                <span
+                  className="spatial-display__text-primary"
+                  data-test-id="spatial-display_polygon"
+                >
+                  {`${pointCount} ${pluralize('Point', pointCount)}`}
+                </span>
               </Row>
             )
           }

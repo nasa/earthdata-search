@@ -1,4 +1,4 @@
-import { getByTestId } from '../../support/getByTestId'
+import { getByTestId } from '../../../support/getByTestId'
 
 import awsCloudBody from './__mocks__/aws_cloud.body.json'
 import commonBody from './__mocks__/common.body.json'
@@ -82,7 +82,7 @@ describe('Path /search', () => {
   })
 
   describe('When the path is loaded with a keyword query', () => {
-    it('loads correctly', () => {
+    it('loads with the keyword query populated', () => {
       cy.intercept({
         method: 'POST',
         url: '**/search/collections.json'
@@ -107,9 +107,8 @@ describe('Path /search', () => {
   })
 
   describe('When the path is loaded with a temporal query', () => {
-    // TODO: Add test for recurring temporal range
     describe('When the temporal range is not recurring', () => {
-      it('loads correctly', () => {
+      it('loads with the temporal query applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -138,15 +137,143 @@ describe('Path /search', () => {
         cy.get('.filter-stack-contents__body').last().should('have.text', '2021-01-01 23:59:59')
       })
     })
+
+    describe('When the temporal range is recurring', () => {
+      it('loads with the temporal query applied', () => {
+        cy.intercept({
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&temporal=2000-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z%2C1%2C31&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+
+          req.reply({
+            body: temporalBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '2434'
+            }
+          })
+        })
+
+        cy.visit('/search?qt=2000-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z%2C1%2C31')
+
+        // Keyword input is empty
+        getByTestId('keyword-search-input').should('have.value', '')
+
+        // Ensure facet group bodies are shown correctly
+        testFacetGroupExistence('features')
+
+        cy.get('.filter-stack-contents__body').first().should('have.text', '01-01 00:00:00')
+        cy.get('.filter-stack-contents__body').eq(1).should('have.text', '01-31 23:59:59')
+        cy.get('.filter-stack-contents__body').last().should('have.text', '2000 - 2021')
+      })
+    })
   })
 
   describe('When the path is loaded with a spatial query', () => {
-    // TODO: Add test for point
-    // TODO: Add test for polygon
-    // TODO: Add test for circle
-    // TODO: Add test for shapefile
+    describe('When the spatial query is a point', () => {
+      it('loads with the spatial query applied', () => {
+        cy.intercept({
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&point%5B%5D=65.44171%2C4.33676&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+
+          req.reply({
+            body: spatialBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '5079'
+            }
+          })
+        })
+
+        cy.visit('/search?sp[0]=65.44171%2C4.33676')
+
+        // Keyword input is empty
+        getByTestId('keyword-search-input').should('have.value', '')
+
+        // Ensure facet group bodies are shown correctly
+        testFacetGroupExistence('features')
+
+        getByTestId('spatial-display_point').should('have.value', '4.33676,65.44171')
+
+        // Test leaflet has drawn the shape correctly
+        cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1165px, 402px, 0px); z-index: 402;')
+      })
+    })
+
+    describe('When the spatial query is a polygon', () => {
+      it('loads with the spatial query applied', () => {
+        cy.intercept({
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&polygon%5B%5D=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+
+          req.reply({
+            body: spatialBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '5133'
+            }
+          })
+        })
+
+        cy.visit('/search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704')
+
+        // Keyword input is empty
+        getByTestId('keyword-search-input').should('have.value', '')
+
+        // Ensure facet group bodies are shown correctly
+        testFacetGroupExistence('features')
+
+        getByTestId('spatial-display_polygon').should('have.text', '3 Points')
+
+        // Test leaflet has drawn the shape correctly
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 423L1122 499L1257 518L1161 423z')
+      })
+    })
+
+    describe('When the spatial query is a circle', () => {
+      it('loads with the spatial query applied', () => {
+        cy.intercept({
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&circle%5B%5D=62.18209%2C2.22154%2C100000&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+
+          req.reply({
+            body: spatialBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '5080'
+            }
+          })
+        })
+
+        cy.visit('/search?circle[0]=62.18209%2C2.22154%2C100000')
+
+        // Keyword input is empty
+        getByTestId('keyword-search-input').should('have.value', '')
+
+        // Ensure facet group bodies are shown correctly
+        testFacetGroupExistence('features')
+
+        getByTestId('spatial-display_circle-center').should('have.value', '2.22154,62.18209')
+        getByTestId('spatial-display_circle-radius').should('have.value', '100000')
+
+        // Test leaflet has drawn the shape correctly
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1136.1837511111112,417.20238222222224a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 ')
+      })
+    })
+
     describe('When the spatial query is a bounding box', () => {
-      it('loads correctly', () => {
+      it('loads with the spatial query applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -173,13 +300,66 @@ describe('Path /search', () => {
 
         getByTestId('spatial-display_southwest-point').should('have.value', '0.99949,5.02679')
         getByTestId('spatial-display_northeast-point').should('have.value', '26.17555,32.8678')
+
+        // Test leaflet has drawn the shape correctly
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M736 426L736 247L934 247L934 426L736 426z')
+      })
+    })
+
+    describe('When the spatial query is a shapefile', () => {
+      it('loads with the spatial query applied', () => {
+        // Retrieve the shapefile from lambda
+        cy.intercept('**/shapefiles/123', {
+          body: {
+            file: {
+              type: 'FeatureCollection',
+              features: [{
+                type: 'Feature', id: 'simple-id', properties: { id: 'simple-id', prop0: 'value0', prop1: { this: 'that' } }, geometry: { type: 'Polygon', coordinates: [[[64.87748, 1.3704], [59.34354, -9.21839], [78.35163, -11.89902], [64.87748, 1.3704]]] }
+              }]
+            },
+            shapefileName: 'test.geojson'
+          }
+        })
+        cy.intercept({
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          // TODO: This intercept is called twice, the first time is cancelled because a new request is launched after the shapefile polygon is added. How do we only run this expect on the second run?
+          // expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&polygon%5B%5D=59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704%2C59.34354%2C-9.21839&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+
+          req.reply({
+            body: spatialBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '5133'
+            }
+          })
+        })
+
+        cy.visit('/search?sf=123')
+
+        // URL has the polygon added from the shapefile
+        cy.url().should('include', '?polygon[0]=59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704%2C59.34354%2C-9.21839&sf=123&sfs[0]=0')
+
+        // Keyword input is empty
+        getByTestId('keyword-search-input').should('have.value', '')
+
+        // Ensure facet group bodies are shown correctly
+        testFacetGroupExistence('features')
+
+        getByTestId('spatial-display_shapefile-name').should('have.text', 'test.geojson')
+        getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
+
+        // Test leaflet has drawn the shape correctly
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 423L1122 499L1257 518L1161 423z')
       })
     })
   })
 
   describe('Feature Facets Group', () => {
     describe('When the path is loaded with the `Available from AWS Cloud` feature facet param', () => {
-      it('loads correctly', () => {
+      it('loads with the feature facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -213,7 +393,7 @@ describe('Path /search', () => {
     })
 
     describe('When the path is loaded with the `Customizable` feature facet param', () => {
-      it('loads correctly', () => {
+      it('loads with the feature facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -247,7 +427,7 @@ describe('Path /search', () => {
     })
 
     describe('When the path is loaded with the `Map Imagery` feature facet param', () => {
-      it('loads correctly', () => {
+      it('loads with the feature facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -281,7 +461,7 @@ describe('Path /search', () => {
     })
 
     describe('When the path is loaded with the `Near Real Time` feature facet param', () => {
-      it('loads correctly', () => {
+      it('loads with the feature facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -317,7 +497,7 @@ describe('Path /search', () => {
 
   describe('Keywords Facets Group', () => {
     describe('When the path is loaded with the `Aerosols` keywords param', () => {
-      it('loads correctly', () => {
+      it('loads with the facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -350,13 +530,17 @@ describe('Path /search', () => {
 
         // Ensure facet group bodies are shown correctly
         testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-keywords').click()
+        cy.contains('Aerosols').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
 
   describe('Platforms Facets Group', () => {
     describe('When the path is loaded with the `AIRCRAFT` platforms param', () => {
-      it('loads correctly', () => {
+      it('loads with the facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -389,13 +573,17 @@ describe('Path /search', () => {
 
         // Ensure facet group bodies are shown correctly
         testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-platforms').click()
+        cy.contains('AIRCRAFT').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
 
   describe('Instruments Facets Group', () => {
     describe('When the path is loaded with the `AIRS` instruments param', () => {
-      it('loads correctly', () => {
+      it('loads with the facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -428,13 +616,17 @@ describe('Path /search', () => {
 
         // Ensure facet group bodies are shown correctly
         testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-instruments').click()
+        cy.contains('AIRS').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
 
   describe('Organizations Facets Group', () => {
     describe('When the path is loaded with the `Alaska Satellite Facility` organizations param', () => {
-      it('loads correctly', () => {
+      it('loads with the facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -467,13 +659,17 @@ describe('Path /search', () => {
 
         // Ensure facet group bodies are shown correctly
         testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-organizations').click()
+        cy.contains('Alaska Satellite Facility').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
 
   describe('Projects Facets Group', () => {
     describe('When the path is loaded with the `ABoVE` projects param', () => {
-      it('loads correctly', () => {
+      it('loads with the facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -506,13 +702,17 @@ describe('Path /search', () => {
 
         // Ensure facet group bodies are shown correctly
         testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-projects').click()
+        cy.contains('ABoVE').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
 
   describe('Processing Levels Facets Group', () => {
     describe('When the path is loaded with the `0 - Raw Data` processing levels param', () => {
-      it('loads correctly', () => {
+      it('loads with the facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -545,13 +745,17 @@ describe('Path /search', () => {
 
         // Ensure facet group bodies are shown correctly
         testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-processing-levels').click()
+        cy.contains('0 - Raw Data').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
 
   describe('Data Format Facets Group', () => {
     describe('When the path is loaded with the `ArcGIS` data format param', () => {
-      it('loads correctly', () => {
+      it('loads with the facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -584,13 +788,17 @@ describe('Path /search', () => {
 
         // Ensure facet group bodies are shown correctly
         testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-data-format').click()
+        cy.contains('ArcGIS').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
 
   describe('Tiling System Facets Group', () => {
     describe('When the path is loaded with the `CALIPSO` tiling system param', () => {
-      it('loads correctly', () => {
+      it('loads with the facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -623,13 +831,17 @@ describe('Path /search', () => {
 
         // Ensure facet group bodies are shown correctly
         testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-tiling-system').click()
+        cy.contains('CALIPSO').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
 
   describe('Horizontal Data Resolution Facets Group', () => {
     describe('When the path is loaded with the `0 - 1 meter` horizontal data resolution param', () => {
-      it('loads correctly', () => {
+      it('loads with the facet applied', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -662,13 +874,17 @@ describe('Path /search', () => {
 
         // Ensure facet group bodies are shown correctly
         testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-horizontal-data-resolution').click()
+        cy.contains('0 to 1 meter').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
 
   describe('Collections without granules', () => {
     describe('When the path is loaded with the ac param', () => {
-      it('loads correctly', () => {
+      it('loads with the checkbox selected', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -707,7 +923,7 @@ describe('Path /search', () => {
 
   describe('EOSDIS only collections', () => {
     describe('When the path is loaded with the tag_key param', () => {
-      it('loads correctly', () => {
+      it('loads with the checkbox selected', () => {
         cy.intercept({
           method: 'POST',
           url: '**/search/collections.json'
@@ -741,6 +957,31 @@ describe('Path /search', () => {
         // Ensure the correct checkbox is checked
         getByTestId('input_non-eosdis').should('be.checked')
       })
+    })
+  })
+
+  describe('When the path is loaded with an ee parameter', () => {
+    it('loads in the correct environment', () => {
+      cy.intercept({
+        method: 'POST',
+        url: '**/search/collections.json'
+      },
+      (req) => {
+        expect(req.headers.host).to.eq('cmr.uat.earthdata.nasa.gov')
+
+        req.reply({
+          body: commonBody,
+          headers: commonHeaders
+        })
+      })
+
+      cy.visit('/search?ee=uat')
+
+      // Keyword input is empty
+      getByTestId('keyword-search-input').should('have.value', '')
+
+      // Ensure facet group bodies are shown correctly
+      testFacetGroupExistence('features')
     })
   })
 })
