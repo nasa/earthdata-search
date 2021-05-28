@@ -1,0 +1,1055 @@
+{
+  "feed": {
+    "updated": "2021-05-27T13:42:07.256Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&granule_data_format_h%5B%5D=ArcGIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score",
+    "title": "ECHO dataset metadata",
+    "entry": [
+      {
+        "processing_level_id": "3",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:08:03.801Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "1992-01-01T00:00:00.000Z",
+        "dif_ids": [
+          "CIESIN_SEDAC_LWP_LW_GEOG_1.0"
+        ],
+        "version_id": "1.0",
+        "updated": "2002-12-31T00:00:00.000Z",
+        "dataset_id": "Last of the Wild Project, Version 1, 2002 (LWP-1): Last of the Wild Dataset (Geographic)",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "SEDAC",
+        "short_name": "CIESIN_SEDAC_LWP_LW_GEOG",
+        "organizations": [
+          "SEDAC"
+        ],
+        "title": "Last of the Wild Project, Version 1, 2002 (LWP-1): Last of the Wild Dataset (Geographic)",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The Last of the Wild Dataset of the Last of the Wild Project, Version 1, 2002 (LWP-1) is derived from the LWP-1 Human Footprint Dataset. The gridded data are classified according to their raster value (wild = 0-10; not wild > 10). The ten largest polygons of more than 5 square kilometers within each biome by realm are selected and identified. The dataset is produced by the Wildlife Conservation Society (WCS) and the Columbia University Center for International Earth Science Information Network (CIESIN).",
+        "has_granules": true,
+        "time_end": "1995-12-31T23:59:59.999Z",
+        "orbit_parameters": {},
+        "id": "C179001936-SEDAC",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "SCIENCE_QUALITY",
+        "granule_count": 1,
+        "archive_center": "SEDAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://sedac.ciesin.columbia.edu/downloads/maps/wildareas-v1/wildareas-v1-last-of-the-wild-geographic/sedac-logo.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.7927/H4445JDG"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://sedac.ciesin.columbia.edu/data/set/wildareas-v1-last-of-the-wild-geographic/data-download"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "3",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:08:03.879Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "1992-01-01T00:00:00.000Z",
+        "dif_ids": [
+          "CIESIN_SEDAC_LWP_LW_IGHP_1.0"
+        ],
+        "version_id": "1.0",
+        "updated": "2002-12-31T00:00:00.000Z",
+        "dataset_id": "Last of the Wild Project, Version 1, 2002 (LWP-1): Last of the Wild Dataset (IGHP)",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "SEDAC",
+        "short_name": "CIESIN_SEDAC_LWP_LW_IGHP",
+        "organizations": [
+          "SEDAC"
+        ],
+        "title": "Last of the Wild Project, Version 1, 2002 (LWP-1): Last of the Wild Dataset (IGHP)",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The Last of the Wild Dataset of the Last of the Wild Project, Version 1, 2002 (LWP-1) is derived from the LWP-1 Human Footprint Dataset. The gridded data are classified according to their raster value (wild = 0-10; not wild > 10). The ten largest polygons of more than 5 square kilometers within each biome by realm are selected and identified. The dataset is produced by the Wildlife Conservation Society (WCS) and the Columbia University Center for International Earth Science Information Network (CIESIN) and is available in the Interrupted Goode Homolosine Projection (IGHP) system.",
+        "has_granules": true,
+        "time_end": "1995-12-31T23:59:59.999Z",
+        "orbit_parameters": {},
+        "id": "C179001937-SEDAC",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "SCIENCE_QUALITY",
+        "granule_count": 1,
+        "archive_center": "SEDAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://sedac.ciesin.columbia.edu/downloads/maps/wildareas-v1/wildareas-v1-last-of-the-wild-ighp/sedac-logo.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.7927/H40C4SPR"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://sedac.ciesin.columbia.edu/data/set/wildareas-v1-last-of-the-wild-ighp/data-download"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "3",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:08:04.007Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "1992-01-01T00:00:00.000Z",
+        "dif_ids": [
+          "CIESIN_SEDAC_LWP_TOPWA_GEOG_1.0"
+        ],
+        "version_id": "1.0",
+        "updated": "2002-12-31T00:00:00.000Z",
+        "dataset_id": "Last of the Wild Project, Version 1, 2002 (LWP-1): Top One Percent Wild Areas Dataset (Geographic)",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "SEDAC",
+        "short_name": "CIESIN_SEDAC_LWP_TOPWA_GEOG",
+        "organizations": [
+          "SEDAC"
+        ],
+        "title": "Last of the Wild Project, Version 1, 2002 (LWP-1): Top One Percent Wild Areas Dataset (Geographic)",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The Top One Percent Wild Areas Dataset of the Last of the Wild Project, Version 1, 2002 (LWP-1) is derived from the LWP-1 Human Footprint Dataset. The gridded data are classified according to their raster value (wild = 0-1; not wild > 1). The top 1% of the wild areas within each biome by realm are selected and identified. This dataset is produced by the Wildlife Conservation Society (WCS) and Columbia University Center for International Earth Science Information Network (CIESIN).",
+        "has_granules": true,
+        "time_end": "1995-12-31T23:59:59.999Z",
+        "orbit_parameters": {},
+        "id": "C179001938-SEDAC",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "SCIENCE_QUALITY",
+        "granule_count": 1,
+        "archive_center": "SEDAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://sedac.ciesin.columbia.edu/downloads/maps/wildareas-v1/wildareas-v1-top-one-percent-wild-areas-geographic/sedac-logo.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.7927/H4VM496V"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://sedac.ciesin.columbia.edu/data/set/wildareas-v1-top-one-percent-wild-areas-geographic/data-download"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "3",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:08:04.247Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "1992-01-01T00:00:00.000Z",
+        "dif_ids": [
+          "CIESIN_SEDAC_LWP_TOPWA_IGHP_1.0"
+        ],
+        "version_id": "1.0",
+        "updated": "2002-12-31T00:00:00.000Z",
+        "dataset_id": "Last of the Wild Project, Version 1, 2002 (LWP-1): Top One Percent Wild Areas Dataset (IGHP)",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "SEDAC",
+        "short_name": "CIESIN_SEDAC_LWP_TOPWA_IGHP",
+        "organizations": [
+          "SEDAC"
+        ],
+        "title": "Last of the Wild Project, Version 1, 2002 (LWP-1): Top One Percent Wild Areas Dataset (IGHP)",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The Top One Percent Wild Areas Dataset of the Last of the Wild Project, Version 1, 2002 (LWP-1) is derived from the LWP-1 Human Footprint Dataset. The   gridded data are classified according to their raster value (wild = 0-1; not wild >1). The top 1% of the wild areas within each biome by realm are selected and identified. This dataset   is produced by the Wildlife Conservation Society (WCS) and Columbia University Center for International Earth Science Information Network (CIESIN), and is available in the Interrupted Goode   Homolosine Projection (IGHP) system.",
+        "has_granules": true,
+        "time_end": "1995-12-31T23:59:59.999Z",
+        "orbit_parameters": {},
+        "id": "C179001939-SEDAC",
+        "has_formats": false,
+        "original_format": "DIF10",
+        "collection_data_type": "SCIENCE_QUALITY",
+        "granule_count": 1,
+        "archive_center": "SEDAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://sedac.ciesin.columbia.edu/downloads/maps/wildareas-v1/wildareas-v1-top-one-percent-wild-areas-ighp/sedac-logo.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.7927/H4QV3JG4"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://sedac.ciesin.columbia.edu/data/set/wildareas-v1-top-one-percent-wild-areas-ighp/data-download"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "NA",
+        "tags": {
+          "edsc.extra.serverless.subset_service.echo_orders": {
+            "data": {
+              "updated_at": "2021-05-27T12:01:15.010Z",
+              "id": "S1568899363-NSIDC_ECS",
+              "type": "ECHO ORDERS",
+              "url": "https://n5eil02u.ecs.nsidc.org/EWOC/services/OrderFulfillmentPort",
+              "option_definitions": [
+                {
+                  "id": "4C25BD8A-6E35-7071-9B73-CEF5FAE11DE9",
+                  "name": "Without Browse"
+                }
+              ]
+            }
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:14:22.811Z"
+            }
+          }
+        },
+        "boxes": [
+          "49.358546 -98.130123 49.797634 -97.737866"
+        ],
+        "time_start": "2016-06-01T00:00:00.000Z",
+        "version_id": "1",
+        "dataset_id": "SMAPVEX16 Manitoba Soils Geodatabase V001",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "associations": {
+          "services": [
+            "S1568899363-NSIDC_ECS",
+            "S1613689509-NSIDC_ECS"
+          ]
+        },
+        "has_variables": false,
+        "data_center": "NSIDC_ECS",
+        "short_name": "SV16M_SDB",
+        "organizations": [
+          "NASA NSIDC DAAC",
+          "CA/AGR"
+        ],
+        "title": "SMAPVEX16 Manitoba Soils Geodatabase V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This data set contains detailed soil survey data used for the Soil Moisture Active Passive Validation Experiment 2016 Manitoba (SMAPVEX16 Manitoba) campaign. Data are provided in a relational geodatabase.",
+        "has_granules": true,
+        "time_end": "2016-07-31T23:59:59.999Z",
+        "orbit_parameters": {},
+        "id": "C1456732223-NSIDC_ECS",
+        "has_formats": false,
+        "original_format": "ISO19115",
+        "granule_count": 1,
+        "archive_center": "NASA NSIDC DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://n5eil01u.ecs.nsidc.org/SMAP_VAL/SV16M_SDB.001/"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1456732223-NSIDC_ECS&m=45.6064453125!-98.0771484375!5!1!0!0%2C2&q=sv16m_sdb&ok=sv16m_sdb"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/OLKTT40AC6OL"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/OLKTT40AC6OL"
+          }
+        ]
+      }
+    ],
+    "facets": {
+      "title": "Browse Collections",
+      "type": "group",
+      "has_children": true,
+      "children": [
+        {
+          "title": "Processing Levels",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "3 - Gridded Observations",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=3+-+Gridded+Observations&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Data Format",
+          "type": "group",
+          "applied": true,
+          "has_children": true,
+          "children": [
+            {
+              "title": "ArcGIS",
+              "type": "filter",
+              "applied": true,
+              "count": 5,
+              "links": {
+                "remove": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ASCII",
+              "type": "filter",
+              "applied": false,
+              "count": 414,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ASCII&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ASCII - netCDF-4",
+              "type": "filter",
+              "applied": false,
+              "count": 14,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ASCII+-+netCDF-4&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ASCII-ict",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ASCII-ict&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ASCII; ASCII-IWG1",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ASCII%3B+ASCII-IWG1&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ASCII; Binary",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ASCII%3B+Binary&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "BIL",
+              "type": "filter",
+              "applied": false,
+              "count": 12,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=BIL&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Binary",
+              "type": "filter",
+              "applied": false,
+              "count": 219,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Binary&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Binary - netCDF-4",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Binary+-+netCDF-4&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Binary - Universal Format (UF)",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Binary+-+Universal+Format+%28UF%29&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "BUFR",
+              "type": "filter",
+              "applied": false,
+              "count": 14,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=BUFR&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CSV",
+              "type": "filter",
+              "applied": false,
+              "count": 98,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=CSV&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "DBF",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=DBF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Excel",
+              "type": "filter",
+              "applied": false,
+              "count": 68,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Excel&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Geodatabase",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Geodatabase&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GeoTIFF",
+              "type": "filter",
+              "applied": false,
+              "count": 211,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=GeoTIFF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GeoTiff",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=GeoTiff&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GIF",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=GIF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GRIB",
+              "type": "filter",
+              "applied": false,
+              "count": 33,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=GRIB&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Grid",
+              "type": "filter",
+              "applied": false,
+              "count": 40,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Grid&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GRID",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=GRID&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "HDF",
+              "type": "filter",
+              "applied": false,
+              "count": 2445,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=HDF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "hdf4",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=hdf4&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "HDF-4 - netCDF-4",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=HDF-4+-+netCDF-4&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "HDF-4 - netCDF-4/CF",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=HDF-4+-+netCDF-4%2FCF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "HGT",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=HGT&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ICARTT",
+              "type": "filter",
+              "applied": false,
+              "count": 126,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ICARTT&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ICARTT, NetCDF",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ICARTT%2C+NetCDF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Image",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Image&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "JPEG",
+              "type": "filter",
+              "applied": false,
+              "count": 50,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=JPEG&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "KML",
+              "type": "filter",
+              "applied": false,
+              "count": 19,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=KML&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "McIDAS",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=McIDAS&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NetCDF",
+              "type": "filter",
+              "applied": false,
+              "count": 1437,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=NetCDF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "netcdf4",
+              "type": "filter",
+              "applied": false,
+              "count": 75,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=netcdf4&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NETCDF4",
+              "type": "filter",
+              "applied": false,
+              "count": 6,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=NETCDF4&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NETCDF 4.7.4",
+              "type": "filter",
+              "applied": false,
+              "count": 6,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=NETCDF+4.7.4&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NETCDF-4",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=NETCDF-4&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NIDS (binary)",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=NIDS+%28binary%29&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Other (pdf)",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Other+%28pdf%29&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Other (zip)",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Other+%28zip%29&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "PDF",
+              "type": "filter",
+              "applied": false,
+              "count": 147,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=PDF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "PNG",
+              "type": "filter",
+              "applied": false,
+              "count": 172,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=PNG&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "RAW",
+              "type": "filter",
+              "applied": false,
+              "count": 28,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=RAW&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SHP",
+              "type": "filter",
+              "applied": false,
+              "count": 57,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=SHP&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Text",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Text&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "TIFF",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=TIFF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "UF",
+              "type": "filter",
+              "applied": false,
+              "count": 10,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=UF&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "WMS",
+              "type": "filter",
+              "applied": false,
+              "count": 110,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=WMS&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "XML",
+              "type": "filter",
+              "applied": false,
+              "count": 34,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=XML&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ZIP",
+              "type": "filter",
+              "applied": false,
+              "count": 10,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ZIP&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Keywords",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Biosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Biosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Land Surface",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Platforms",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "AERIAL PHOTOGRAPHS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=AERIAL+PHOTOGRAPHS"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Field Survey",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Field+Survey"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Model",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Model"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Instruments",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Camera",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Camera&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Computer",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Computer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Visual Observations",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Visual+Observations&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Organizations",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Agriculture and Agri-Food Canada (AAFC)",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Agriculture+and+Agri-Food+Canada+%28AAFC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=National+Snow+and+Ice+Data+Center+Distributed+Active+Archive+Center+%28NSIDC+DAAC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Socioeconomic Data and Applications Center (SEDAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Socioeconomic+Data+and+Applications+Center+%28SEDAC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Projects",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "LWP",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=LWP&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SMAPVEX",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ArcGIS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=SMAPVEX&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

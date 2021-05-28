@@ -1,0 +1,366 @@
+{
+  "feed": {
+    "updated": "2021-05-27T01:05:35.307Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score",
+    "title": "ECHO dataset metadata",
+    "entry": [
+      {
+        "processing_level_id": "L2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-26T18:11:31.940Z"
+            }
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Suomi NPP / OMPS",
+                "arctic": false,
+                "title": "Aerosol Index",
+                "updated_at": "2021-05-26T12:00:15.877Z",
+                "antarctic_resolution": null,
+                "product": "OMPS_Aerosol_Index",
+                "match": {
+                  "time_start": ">=2012-01-26T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              },
+              {
+                "format": "png",
+                "antarctic": false,
+                "geographic": true,
+                "group": "overlays",
+                "geographic_resolution": "2km",
+                "arctic_resolution": null,
+                "source": "Suomi NPP / OMPS",
+                "arctic": false,
+                "title": "Aerosol Index (PyroCumuloNimbus)",
+                "updated_at": "2021-05-26T12:00:15.877Z",
+                "antarctic_resolution": null,
+                "product": "OMPS_Aerosol_Index_PyroCumuloNimbus",
+                "match": {
+                  "time_start": ">=2012-01-26T00:00:00Z",
+                  "day_night_flag": "day"
+                }
+              }
+            ]
+          }
+        },
+        "time_start": "2011-11-07T00:00:00.000Z",
+        "version_id": "2",
+        "updated": "2019-11-14T18:40:46.753Z",
+        "dataset_id": "OMPS-NPP L2 NM Aerosol Index swath orbital NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "OMINRT",
+        "short_name": "NMMIEAI-L2-NRT",
+        "organizations": [
+          "NASA/GSFC/OMISIPS"
+        ],
+        "title": "OMPS-NPP L2 NM Aerosol Index swath orbital NRT",
+        "summary": "The OMPS-NPP L2 NM Aerosol Index swath orbital V2 for Near Real Time. For the standard product see the OMPS_NPP_NMMIEAI_L2  product in CMR .The aerosol index is derived from normalized radiances using 2 wavelength pairs at 340 and 378.5 nm. Additionally, this data product contains measurements of normalized radiances, reflectivity, cloud fraction, reflectivity, and other ancillary variables.   ",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1657477341-OMINRT",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 112,
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://omisips1.omisips.eosdis.nasa.gov/outgoing/OMPS/LANCE/NMMIEAI-L2-NRT"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datasets/OMPS_NPP_NMMIEAI_L2_2/summary"
+          }
+        ]
+      }
+    ],
+    "facets": {
+      "title": "Browse Collections",
+      "type": "group",
+      "has_children": true,
+      "children": [
+        {
+          "title": "Data Format",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "HDF",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=HDF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Processing Levels",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "2 - Geophys. Variables, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=2+-+Geophys.+Variables%2C+Sensor+Coordinates&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Keywords",
+          "type": "group",
+          "applied": true,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Aerosols",
+              "type": "filter",
+              "applied": true,
+              "count": 1,
+              "links": {
+                "remove": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": true,
+              "children": [
+                {
+                  "title": "Atmosphere",
+                  "type": "filter",
+                  "applied": false,
+                  "count": 1,
+                  "links": {
+                    "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&science_keywords_h%5B0%5D%5Bterm%5D=Atmosphere&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+                  },
+                  "has_children": true
+                }
+              ]
+            },
+            {
+              "title": "Agriculture",
+              "type": "filter",
+              "applied": false,
+              "count": 189,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Agriculture&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Atmosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 3368,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Atmosphere&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Biological Classification",
+              "type": "filter",
+              "applied": false,
+              "count": 17,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Biological+Classification&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Biosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 1186,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Biosphere&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Climate Indicators",
+              "type": "filter",
+              "applied": false,
+              "count": 99,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Climate+Indicators&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Cryosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 397,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Cryosphere&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Environmental Advisories",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Environmental+Advisories&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Human Dimensions",
+              "type": "filter",
+              "applied": false,
+              "count": 337,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Human+Dimensions&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Land Surface",
+              "type": "filter",
+              "applied": false,
+              "count": 1881,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Land+Surface&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Oceans",
+              "type": "filter",
+              "applied": false,
+              "count": 1571,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Oceans&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Solid Earth",
+              "type": "filter",
+              "applied": false,
+              "count": 260,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Solid+Earth&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Spectral/Engineering",
+              "type": "filter",
+              "applied": false,
+              "count": 1233,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Spectral%2FEngineering&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Sun-Earth Interactions",
+              "type": "filter",
+              "applied": false,
+              "count": 44,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Sun-Earth+Interactions&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Terrestrial Hydrosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 358,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&science_keywords_h%5B1%5D%5Btopic%5D=Terrestrial+Hydrosphere&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Platforms",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Suomi-NPP",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Suomi-NPP&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Instruments",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "OMPS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=OMPS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Organizations",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "NASA/GSFC/OMISIPS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FOMISIPS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols"
+              },
+              "has_children": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

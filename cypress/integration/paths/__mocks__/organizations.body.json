@@ -1,0 +1,2808 @@
+{
+  "feed": {
+    "updated": "2021-05-27T13:11:12.364Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&data_center_h%5B%5D=Alaska%20Satellite%20Facility&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score",
+    "title": "ECHO dataset metadata",
+    "entry": [
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:51.487Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-18T21:13:23.000Z",
+        "dataset_id": "SENTINEL-1A_SLC",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_SLC",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1A_SLC",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1A slant-range product",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214470488-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 1056503,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:52.812Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2016-04-25T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T18:56:48.000Z",
+        "dataset_id": "SENTINEL-1B_SLC",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1B_SLC",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1B_SLC",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1B slant-range product",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1327985661-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 693264,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:50.161Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:02:49.000Z",
+        "dataset_id": "SENTINEL-1A_DUAL_POL_GRD_HIGH_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_DP_GRD_HIGH",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1A_DUAL_POL_GRD_HIGH_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1A Dual-pol ground projected high and full resolution images",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214470533-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 895901,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:51.558Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2016-04-25T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:09:25.000Z",
+        "dataset_id": "SENTINEL-1B_DUAL_POL_GRD_HIGH_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1B_DP_GRD_HIGH",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1B_DUAL_POL_GRD_HIGH_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1B Dual-pol ground projected high and full resolution images",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1327985645-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 611970,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:51.625Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2016-04-25T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:09:42.000Z",
+        "dataset_id": "SENTINEL-1B_DUAL_POL_GRD_MEDIUM_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1B_DP_GRD_MEDIUM",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1B_DUAL_POL_GRD_MEDIUM_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1B Dual-pol ground projected medium resolution images",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1327985660-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 177108,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:50.244Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:03:15.000Z",
+        "dataset_id": "SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_DP_GRD_MEDIUM",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1A Dual-pol ground projected medium resolution images",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214471521-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 157740,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:50.887Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:05:59.000Z",
+        "dataset_id": "SENTINEL-1A_OCN",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_OCN",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1A_OCN",
+        "coordinate_system": "CARTESIAN",
+        "summary": "SENTINEL-1A Level 2 Ocean wind, wave and current data",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214472977-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 429199,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:00:42.781Z"
+            }
+          },
+          "edsc.extra.serverless.collection_details": {
+            "data": {
+              "data_centers": [
+                {
+                  "shortname": "ASF",
+                  "roles": [
+                    "PROCESSOR"
+                  ]
+                },
+                {
+                  "shortname": "ASF",
+                  "roles": [
+                    "ARCHIVER"
+                  ],
+                  "contactInformation": {
+                    "ContactMechanisms": [
+                      {
+                        "Type": "Telephone",
+                        "Value": "907-474-5041"
+                      },
+                      {
+                        "Type": "Email",
+                        "Value": "uso@asf.alaska.edu"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "shortname": "ASF",
+                  "roles": [
+                    "DISTRIBUTOR"
+                  ],
+                  "contactInformation": {
+                    "ContactMechanisms": [
+                      {
+                        "Type": "Telephone",
+                        "Value": "907-474-5041"
+                      },
+                      {
+                        "Type": "Email",
+                        "Value": "uso@asf.alaska.edu"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "relatedUrls": [],
+              "scienceKeywords": [
+                [
+                  "Earth Science",
+                  "Agriculture",
+                  "Forest Science"
+                ],
+                [
+                  "Earth Science",
+                  "Biosphere",
+                  "Terrestrial Ecosystems"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Frozen Ground"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Glaciers Ice Sheets"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Sea Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Snow Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Erosion Sedimentation"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Geomorphic Landforms Processes"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Land Use Land Cover"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Landscape"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Topography"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Coastal Processes"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Ocean Waves"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Ocean Winds"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Sea Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Solid Earth",
+                  "Geomorphic Landforms Processes"
+                ],
+                [
+                  "Earth Science",
+                  "Solid Earth",
+                  "Tectonics"
+                ],
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Glaciers Ice Sheets"
+                ],
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Snow Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Surface Water"
+                ]
+              ],
+              "temporal": [
+                "2006-05-16 to 2011-04-22"
+              ],
+              "spatial": [
+                "Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)"
+              ]
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2006-03-23T16:10:55.000Z",
+        "version_id": "1",
+        "updated": "2019-08-21T05:58:52.000Z",
+        "dataset_id": "ALOS_PALSAR_RTC_HIGH_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "associations": {
+          "variables": [
+            "V2031457708-ASF",
+            "V2031459787-ASF",
+            "V2031491617-ASF",
+            "V2031493656-ASF",
+            "V2031508411-ASF",
+            "V2031510486-ASF",
+            "V2031511125-ASF"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ASF",
+        "short_name": "ALOS_PSR_RTC_HIGH",
+        "organizations": [
+          "ASF"
+        ],
+        "title": "ALOS_PALSAR_RTC_HIGH_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "PALSAR_Radiometric_Terrain_Corrected_high_res",
+        "has_granules": true,
+        "time_end": "2011-04-22T20:23:36.000Z",
+        "orbit_parameters": {},
+        "id": "C1206487504-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 506657,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:52.251Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2016-04-25T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:11:57.000Z",
+        "dataset_id": "SENTINEL-1B_OCN",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1B_OCN",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1B_OCN",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1B Level 2 Ocean wind, wave and current data",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1327985579-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 310407,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:51.049Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:07:17.000Z",
+        "dataset_id": "SENTINEL-1A_SINGLE_POL_GRD_HIGH_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_SP_GRD_HIGH",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1A_SINGLE_POL_GRD_HIGH_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1A Single-pol ground projected high and full resolution images",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214470682-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 144069,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.269Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:54.000Z",
+        "dataset_id": "UAVSAR_POLSAR_METADATA",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_META",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_METADATA",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Metadata",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214353986-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8336,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:50.799Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:05:36.000Z",
+        "dataset_id": "SENTINEL-1A_METADATA_SLC",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_META_SLC",
+        "organizations": [
+          "ASF"
+        ],
+        "title": "SENTINEL-1A_METADATA_SLC",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Metadata for Sentinel-1A slant-range product",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214470496-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 1056357,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:50.977Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:06:27.000Z",
+        "dataset_id": "SENTINEL-1A_RAW",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_RAW",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1A_RAW",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1A level zero product",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214470561-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 1208866,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:52.181Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2016-04-25T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:11:42.000Z",
+        "dataset_id": "SENTINEL-1B_METADATA_SLC",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1B_META_SLC",
+        "organizations": [
+          "ASF"
+        ],
+        "title": "SENTINEL-1B_METADATA_SLC",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Metadata for Sentinel-1B slant-range product",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1327985617-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 692966,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:51.204Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:07:35.000Z",
+        "dataset_id": "SENTINEL-1A_SINGLE_POL_GRD_MEDIUM_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_SP_GRD_MEDIUM",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1A_SINGLE_POL_GRD_MEDIUM_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1A Single-pol ground projected medium resolution images",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214472994-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 58186,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:52.571Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2016-04-25T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:14:35.000Z",
+        "dataset_id": "SENTINEL-1B_SINGLE_POL_GRD_MEDIUM_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1B_SP_GRD_MEDIUM",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1B_SINGLE_POL_GRD_MEDIUM_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1B Single-pol ground projected medium resolution images",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1327985740-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 19239,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:52.510Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2016-04-25T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:13:41.000Z",
+        "dataset_id": "SENTINEL-1B_SINGLE_POL_GRD_HIGH_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1B_SP_GRD_HIGH",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1B_SINGLE_POL_GRD_HIGH_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1B Single-pol ground projected high and full resolution images",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1327985571-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 38722,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:52.426Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2016-04-25T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:12:38.000Z",
+        "dataset_id": "SENTINEL-1B_RAW",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1B_RAW",
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
+        "title": "SENTINEL-1B_RAW",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1B level zero product",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1327985647-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 828982,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:13:50.433Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:04:05.000Z",
+        "dataset_id": "SENTINEL-1A_DUAL_POL_METADATA_GRD_HIGH_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_DP_META_GRD_HIGH",
+        "organizations": [
+          "ASF"
+        ],
+        "title": "SENTINEL-1A_DUAL_POL_METADATA_GRD_HIGH_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1A Dual-pol ground projected high and full resolution metadata",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214470576-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 895898,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:00:42.422Z"
+            }
+          },
+          "edsc.extra.serverless.collection_details": {
+            "data": {
+              "data_centers": [
+                {
+                  "shortname": "ASF",
+                  "roles": [
+                    "PROCESSOR"
+                  ]
+                },
+                {
+                  "shortname": "ASF",
+                  "roles": [
+                    "ARCHIVER"
+                  ],
+                  "contactInformation": {
+                    "ContactMechanisms": [
+                      {
+                        "Type": "Telephone",
+                        "Value": "907-474-5041"
+                      },
+                      {
+                        "Type": "Email",
+                        "Value": "uso@asf.alaska.edu"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "shortname": "ASF",
+                  "roles": [
+                    "DISTRIBUTOR"
+                  ],
+                  "contactInformation": {
+                    "ContactMechanisms": [
+                      {
+                        "Type": "Telephone",
+                        "Value": "907-474-5041"
+                      },
+                      {
+                        "Type": "Email",
+                        "Value": "uso@asf.alaska.edu"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "relatedUrls": [],
+              "scienceKeywords": [
+                [
+                  "Earth Science",
+                  "Agriculture",
+                  "Forest Science"
+                ],
+                [
+                  "Earth Science",
+                  "Biosphere",
+                  "Terrestrial Ecosystems"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Frozen Ground"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Glaciers Ice Sheets"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Sea Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Snow Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Erosion Sedimentation"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Geomorphic Landforms Processes"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Land Use Land Cover"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Landscape"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Topography"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Coastal Processes"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Ocean Waves"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Ocean Winds"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Sea Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Solid Earth",
+                  "Geomorphic Landforms Processes"
+                ],
+                [
+                  "Earth Science",
+                  "Solid Earth",
+                  "Tectonics"
+                ],
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Glaciers Ice Sheets"
+                ],
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Snow Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Surface Water"
+                ]
+              ],
+              "temporal": [
+                "2006-05-16 to 2011-04-22"
+              ],
+              "spatial": [
+                "Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)"
+              ]
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2006-01-23T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-25T18:49:56.000Z",
+        "dataset_id": "ALOS_PALSAR_LEVEL1.1",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "ALOS_PSR_L1.1",
+        "organizations": [
+          "ASF"
+        ],
+        "title": "ALOS_PALSAR_LEVEL1.1",
+        "coordinate_system": "CARTESIAN",
+        "summary": "ALOS PALSAR Level 1.1",
+        "has_granules": true,
+        "time_end": "2011-05-23T00:00:00.000Z",
+        "orbit_parameters": {},
+        "id": "C1206485527-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 642394,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      }
+    ],
+    "facets": {
+      "title": "Browse Collections",
+      "type": "group",
+      "has_children": true,
+      "children": [
+        {
+          "title": "Data Format",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "GeoTIFF",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=GeoTIFF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "JPEG",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=JPEG&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SHP",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=SHP&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "XML",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=XML&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Processing Levels",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "0 - Raw Data",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=0+-+Raw+Data&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1 - Radiance",
+              "type": "filter",
+              "applied": false,
+              "count": 69,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=1+-+Radiance&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "2 - Geophys. Variables, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=2+-+Geophys.+Variables%2C+Sensor+Coordinates&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "3 - Gridded Observations",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=3+-+Gridded+Observations&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Keywords",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Agriculture",
+              "type": "filter",
+              "applied": false,
+              "count": 45,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Agriculture"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Biosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 51,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Biosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Cryosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 49,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Cryosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Land Surface",
+              "type": "filter",
+              "applied": false,
+              "count": 70,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Oceans",
+              "type": "filter",
+              "applied": false,
+              "count": 52,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Solid Earth",
+              "type": "filter",
+              "applied": false,
+              "count": 70,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Solid+Earth"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Spectral/Engineering",
+              "type": "filter",
+              "applied": false,
+              "count": 35,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Terrestrial Hydrosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 45,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Terrestrial+Hydrosphere"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Platforms",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "ALOS",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=ALOS"
+              },
+              "has_children": false
+            },
+            {
+              "title": "DC-8",
+              "type": "filter",
+              "applied": false,
+              "count": 10,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=DC-8"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ERS-1",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=ERS-1"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ERS-2",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=ERS-2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "G-III",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=G-III"
+              },
+              "has_children": false
+            },
+            {
+              "title": "JERS-1",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=JERS-1"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Landsat-8",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Landsat-8"
+              },
+              "has_children": false
+            },
+            {
+              "title": "RADARSAT-1",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=RADARSAT-1"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SEASAT-1",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=SEASAT-1"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SENTINEL-1A",
+              "type": "filter",
+              "applied": false,
+              "count": 27,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=SENTINEL-1A"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SENTINEL-1B",
+              "type": "filter",
+              "applied": false,
+              "count": 25,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=SENTINEL-1B"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SMAP",
+              "type": "filter",
+              "applied": false,
+              "count": 33,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=SMAP"
+              },
+              "has_children": false
+            },
+            {
+              "title": "STS-59",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=STS-59"
+              },
+              "has_children": false
+            },
+            {
+              "title": "STS-68",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=STS-68"
+              },
+              "has_children": false
+            },
+            {
+              "title": "TDX",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=TDX"
+              },
+              "has_children": false
+            },
+            {
+              "title": "TSX",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=TSX"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Instruments",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "AIRSAR",
+              "type": "filter",
+              "applied": false,
+              "count": 10,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AIRSAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AVNIR-2",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AVNIR-2&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "C-SAR",
+              "type": "filter",
+              "applied": false,
+              "count": 35,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=C-SAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OLI",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=OLI&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "PALSAR",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=PALSAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SAR",
+              "type": "filter",
+              "applied": false,
+              "count": 46,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SENTINEL-1A C-Band SAR",
+              "type": "filter",
+              "applied": false,
+              "count": 6,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SENTINEL-1A+C-Band+SAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SENTINEL-1B C-Band SAR",
+              "type": "filter",
+              "applied": false,
+              "count": 6,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SENTINEL-1B+C-Band+SAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SIR-C",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SIR-C&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "UAVSAR",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=UAVSAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "X-SAR",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=X-SAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Organizations",
+          "type": "group",
+          "applied": true,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Agriculture and Agri-Food Canada (AAFC)",
+              "type": "filter",
+              "applied": false,
+              "count": 14,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Agriculture+and+Agri-Food+Canada+%28AAFC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Alaska Satellite Facility",
+              "type": "filter",
+              "applied": true,
+              "count": 128,
+              "links": {
+                "remove": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AMSR-E Science Investigator-Led Processing System (AMSR-E SIPS)",
+              "type": "filter",
+              "applied": false,
+              "count": 22,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=AMSR-E+Science+Investigator-Led+Processing+System+%28AMSR-E+SIPS%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Aquarius Project NASA/OBPG, Reynolds & Smith NOAA/NCDC",
+              "type": "filter",
+              "applied": false,
+              "count": 23,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Aquarius+Project+NASA%2FOBPG%2C+Reynolds+%26+Smith+NOAA%2FNCDC&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Atmospheric Science Data Center (ASDC)",
+              "type": "filter",
+              "applied": false,
+              "count": 1161,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Atmospheric+Science+Data+Center+%28ASDC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "BR/INPE/DGI",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=BR%2FINPE%2FDGI&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CN/Global change data center",
+              "type": "filter",
+              "applied": false,
+              "count": 23,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=CN%2FGlobal+change+data+center&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Comision Nacional de Actividades Espaciales (CONAE)",
+              "type": "filter",
+              "applied": false,
+              "count": 160,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Comision+Nacional+de+Actividades+Espaciales+%28CONAE%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "DE/DLR",
+              "type": "filter",
+              "applied": false,
+              "count": 43,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=DE%2FDLR&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Earth Resources Observation and Science Center (EROS)",
+              "type": "filter",
+              "applied": false,
+              "count": 33,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Earth+Resources+Observation+and+Science+Center+%28EROS%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ESA/CS1CGS",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=ESA%2FCS1CGS&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ESA/ESRIN",
+              "type": "filter",
+              "applied": false,
+              "count": 144,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=ESA%2FESRIN&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "EUMETSAT Ocean and Sea Ice Satellite Application Facility (OSI SAF)",
+              "type": "filter",
+              "applied": false,
+              "count": 28,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=EUMETSAT+Ocean+and+Sea+Ice+Satellite+Application+Facility+%28OSI+SAF%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "European Organisation for the Exploitation of Meteorological Satellites (EUMETSAT)",
+              "type": "filter",
+              "applied": false,
+              "count": 21,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=European+Organisation+for+the+Exploitation+of+Meteorological+Satellites+%28EUMETSAT%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Global Hydrology Resource Center (GHRC)",
+              "type": "filter",
+              "applied": false,
+              "count": 569,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Global+Hydrology+Resource+Center+%28GHRC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Goddard Earth Sciences Data and Information Services Center (GES DISC)",
+              "type": "filter",
+              "applied": false,
+              "count": 1481,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Goddard+Earth+Sciences+Data+and+Information+Services+Center+%28GES+DISC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "IN/ISRO/MOSDAC",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=IN%2FISRO%2FMOSDAC&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Jet Propulsion Laboratory (JPL)",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Jet+Propulsion+Laboratory+%28JPL%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Laboratory for Atmospheric and Space Physics (LASP)",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Laboratory+for+Atmospheric+and+Space+Physics+%28LASP%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Land Process Distributed Active Archive Center (LPDAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 550,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Land+Process+Distributed+Active+Archive+Center+%28LPDAAC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Land Science Investigator-Led Processing System (LandSIPS)",
+              "type": "filter",
+              "applied": false,
+              "count": 125,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Land+Science+Investigator-Led+Processing+System+%28LandSIPS%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Level-1 and Atmosphere Archive & Distribution System (LAADS)",
+              "type": "filter",
+              "applied": false,
+              "count": 99,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Level-1+and+Atmosphere+Archive+%26+Distribution+System+%28LAADS%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MODIS Adaptive Processing System (MODAPS)",
+              "type": "filter",
+              "applied": false,
+              "count": 105,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=MODIS+Adaptive+Processing+System+%28MODAPS%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA Earth Sciences Division (ESD)",
+              "type": "filter",
+              "applied": false,
+              "count": 23,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA+Earth+Sciences+Division+%28ESD%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/ESSP/UMICH/CYGNSS",
+              "type": "filter",
+              "applied": false,
+              "count": 17,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FESSP%2FUMICH%2FCYGNSS&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/EOS/EO",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FEOS%2FEO&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/EOS/ESDIS",
+              "type": "filter",
+              "applied": false,
+              "count": 27,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FEOS%2FESDIS&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/EOS/ESDIS/LANCE MODIS",
+              "type": "filter",
+              "applied": false,
+              "count": 22,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FEOS%2FESDIS%2FLANCE+MODIS&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/BSL/VCST",
+              "type": "filter",
+              "applied": false,
+              "count": 27,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FBSL%2FVCST&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/GGL/CDDIS",
+              "type": "filter",
+              "applied": false,
+              "count": 128,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FGGL%2FCDDIS&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/LRSL",
+              "type": "filter",
+              "applied": false,
+              "count": 23,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FLRSL&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/TISL/MODAPS",
+              "type": "filter",
+              "applied": false,
+              "count": 341,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FTISL%2FMODAPS&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/JPL/ESSD",
+              "type": "filter",
+              "applied": false,
+              "count": 19,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FJPL%2FESSD&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/JPL/GRACE-TELLUS-0001",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FJPL%2FGRACE-TELLUS-0001&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/Wallops Observational Sciences Branch (OSB)",
+              "type": "filter",
+              "applied": false,
+              "count": 14,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FWallops+Observational+Sciences+Branch+%28OSB%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "National Snow and Ice Data Center (NSIDC)",
+              "type": "filter",
+              "applied": false,
+              "count": 14,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=National+Snow+and+Ice+Data+Center+%28NSIDC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 452,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=National+Snow+and+Ice+Data+Center+Distributed+Active+Archive+Center+%28NSIDC+DAAC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NOAA National Centers for Environmental Information",
+              "type": "filter",
+              "applied": false,
+              "count": 88,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NOAA+National+Centers+for+Environmental+Information&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Oak Ridge National Laboratory Distributed Active Archive Center (ORNL DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 1528,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Oak+Ridge+National+Laboratory+Distributed+Active+Archive+Center+%28ORNL+DAAC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Ocean Biology Distributed Active Archive Center (OB.DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 556,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Ocean+Biology+Distributed+Active+Archive+Center+%28OB.DAAC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Ocean Biology Processing Group (OBPG)",
+              "type": "filter",
+              "applied": false,
+              "count": 99,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Ocean+Biology+Processing+Group+%28OBPG%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Physical Oceanography Distributed Active Archive Center (PO.DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 639,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Physical+Oceanography+Distributed+Active+Archive+Center+%28PO.DAAC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Remote Sensing Systems (RSS)",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Remote+Sensing+Systems+%28RSS%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Salinity Processes in the Upper Ocean Regional Study (SPURS)",
+              "type": "filter",
+              "applied": false,
+              "count": 38,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Salinity+Processes+in+the+Upper+Ocean+Regional+Study+%28SPURS%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Scatterometer Climate Record Pathfinder (SCP)",
+              "type": "filter",
+              "applied": false,
+              "count": 23,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Scatterometer+Climate+Record+Pathfinder+%28SCP%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Shuttle Radar Topography Mission (SRTM)",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Shuttle+Radar+Topography+Mission+%28SRTM%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Socioeconomic Data and Applications Center (SEDAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 227,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Socioeconomic+Data+and+Applications+Center+%28SEDAC%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Soil Moisture Active Passive (SMAP)",
+              "type": "filter",
+              "applied": false,
+              "count": 68,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Soil+Moisture+Active+Passive+%28SMAP%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "University of Texas Institute for Geophysics (UTIG)",
+              "type": "filter",
+              "applied": false,
+              "count": 17,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=University+of+Texas+Institute+for+Geophysics+%28UTIG%29&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "VITO",
+              "type": "filter",
+              "applied": false,
+              "count": 44,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=VITO&data_center_h%5B%5D=Alaska+Satellite+Facility&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Projects",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Aklavik Highway",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Aklavik+Highway&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Aleutians, AK",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Aleutians%2C+AK&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Ambler Legacy Line",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Ambler+Legacy+Line&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Anaktuvuk Burn Scar East",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Anaktuvuk+Burn+Scar+East&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Anaktuvuk Burn Scar West",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Anaktuvuk+Burn+Scar+West&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Antuco Volcano, Chile",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Antuco+Volcano%2C+Chile&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Atqasuk Legacy Line",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Atqasuk+Legacy+Line&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Baker Creek, Canada",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Baker+Creek%2C+Canada&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Barrier Islands, MS",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Barrier+Islands%2C+MS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Barrow Legacy Line",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Barrow+Legacy+Line&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Bartlett/Hubbard Brook, NH",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Bartlett%2FHubbard+Brook%2C+NH&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Behchoko, Canada",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Behchoko%2C+Canada&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Berms TomoSAR reference line",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Berms+TomoSAR+reference+line&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Big Island, HI",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Big+Island%2C+HI&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Bonanza Creek LTER",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Bonanza+Creek+LTER&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Brazos River, TX",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Brazos+River%2C+TX&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cape Fear River, East Fork, SC",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cape+Fear+River%2C+East+Fork%2C+SC&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cape Fear River, NC",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cape+Fear+River%2C+NC&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cascade Volcanoes, CA",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cascade+Volcanoes%2C+CA&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cascade Volcanoes, CA/OR/WA",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cascade+Volcanoes%2C+CA%2FOR%2FWA&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cascade Volcanoes, OR",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cascade+Volcanoes%2C+OR&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cascade Volcanoes, WA",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cascade+Volcanoes%2C+WA&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cayambe Volcano, Ecuador",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cayambe+Volcano%2C+Ecuador&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Central San Andreas Fault, CA",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Central+San+Andreas+Fault%2C+CA&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Central Valley, CA",
+              "type": "filter",
+              "applied": false,
+              "count": 25,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Central+Valley%2C+CA&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cerro El Condor Volcano, Argentina",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cerro+El+Condor+Volcano%2C+Argentina&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Chilean Volcanoes, Chile",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Chilean+Volcanoes%2C+Chile&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cochise County, AZ",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cochise+County%2C+AZ&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Coldfoot Legacy Line",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Coldfoot+Legacy+Line&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Colorado River, TX",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Colorado+River%2C+TX&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Congaree River at Lake Marion, SC",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Congaree+River+at+Lake+Marion%2C+SC&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Copahue Volcano, Chile",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Copahue+Volcano%2C+Chile&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Corcovado National Park, Costa Rica",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Corcovado+National+Park%2C+Costa+Rica&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Cordon del Azufre Volcano, Chile/Argenti",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Cordon+del+Azufre+Volcano%2C+Chile%2FArgenti&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Council NGEE Legacy Line",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Council+NGEE+Legacy+Line&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Croatan National Forest, NC",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Croatan+National+Forest%2C+NC&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Daring Lake, Canada",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Daring+Lake%2C+Canada&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Deadhorse Legacy Line",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Deadhorse+Legacy+Line&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Delta Junction Greeley",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Delta+Junction+Greeley&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Delta Junction NEON site",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Delta+Junction+NEON+site&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Delta Junction to Fairbanks",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Delta+Junction+to+Fairbanks&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Dempster Highway Fort McPherson",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Dempster+Highway+Fort+McPherson&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Denali NEON EML, Alaska",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Denali+NEON+EML%2C+Alaska&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Dominican Republic",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Dominican+Republic&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Duke Forest, NC",
+              "type": "filter",
+              "applied": false,
+              "count": 15,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Duke+Forest%2C+NC&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Fraser, CO",
+              "type": "filter",
+              "applied": false,
+              "count": 25,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Fraser%2C+CO&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Galapagos Islands, Ecuador",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Galapagos+Islands%2C+Ecuador&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Gulf of Fonseca, Honduras",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Gulf+of+Fonseca%2C+Honduras&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Hayward Fault, CA",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Hayward+Fault%2C+CA&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Howland Forest, ME",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=Howland+Forest%2C+ME&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
