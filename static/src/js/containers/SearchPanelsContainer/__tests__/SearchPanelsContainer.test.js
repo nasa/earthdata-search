@@ -109,6 +109,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith('panelId')
   })
 
+  test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleAboutCSDAModal')
+
+    mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(true)
+  })
+
   test('onToggleAboutCwicModal calls actions.toggleAboutCwicModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleAboutCwicModal')
