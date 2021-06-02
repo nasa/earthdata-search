@@ -338,7 +338,7 @@ describe('Path /search/granules', () => {
           url: '**/search/granules.json'
         },
         (req) => {
-          expect(req.body).to.eq('cloud_cover=&echo_collection_id=C1214470488-ASF&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&temporal=2001-01-01T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31')
+          expect(req.body).to.eq('cloud_cover=&echo_collection_id=C1214470488-ASF&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&temporal=2000-01-20T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31')
 
           req.reply({
             body: recurringTemporalGranulesBody,
@@ -375,7 +375,7 @@ describe('Path /search/granules', () => {
           })
         })
 
-        cy.visit('/search/granules?p=C1214470488-ASF&pg[0][qt]=2001-01-01T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31')
+        cy.visit('/search/granules?p=C1214470488-ASF&pg[0][qt]=2000-01-20T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31')
 
         // Ensure the correct number of results were loaded
         testResultsSize(cmrHits)
@@ -384,7 +384,7 @@ describe('Path /search/granules', () => {
         getByTestId('granule-filters__readable-granule-name').should('have.value', '')
 
         // Temporal is populated
-        cy.get('#granule-filters__temporal-selection__temporal-form__start-date').should('have.value', '01-01 00:00:00')
+        cy.get('#granule-filters__temporal-selection__temporal-form__start-date').should('have.value', '01-20 00:00:00')
         cy.get('#granule-filters__temporal-selection__temporal-form__end-date').should('have.value', '01-31 23:59:59')
         cy.get('#granule-filters__temporal-selection__recurring').should('be.checked')
         cy.get('.temporal-selection__range-label').should('have.text', '2000 - 2020')
