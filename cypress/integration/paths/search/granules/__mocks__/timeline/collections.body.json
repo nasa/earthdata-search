@@ -16,9 +16,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-18T21:13:23.000Z",
@@ -28,10 +26,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_SLC",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1A_SLC",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A slant-range product",
@@ -65,9 +60,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2016-04-25T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T18:56:48.000Z",
@@ -77,10 +70,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1B_SLC",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1B_SLC",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1B slant-range product",
@@ -114,9 +104,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T19:02:49.000Z",
@@ -126,10 +114,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_DP_GRD_HIGH",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1A_DUAL_POL_GRD_HIGH_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A Dual-pol ground projected high and full resolution images",
@@ -163,9 +148,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2016-04-25T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T19:09:25.000Z",
@@ -175,10 +158,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1B_DP_GRD_HIGH",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1B_DUAL_POL_GRD_HIGH_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1B Dual-pol ground projected high and full resolution images",
@@ -213,9 +193,7 @@
             }
           }
         },
-        "boxes": [
-          "-80 -180 80 180"
-        ],
+        "boxes": ["-80 -180 80 180"],
         "time_start": "2016-01-01T00:00:00.000Z",
         "version_id": "2",
         "dataset_id": "VIIRS (S-NPP) I Band 375 m Active Fire Product NRT (Vector data)",
@@ -224,9 +202,7 @@
         "has_variables": false,
         "data_center": "LANCEMODIS",
         "short_name": "VNP14IMGTDL_NRT",
-        "organizations": [
-          "NASA/GSFC/EOS/ESDIS/LANCE MODIS"
-        ],
+        "organizations": ["NASA/GSFC/EOS/ESDIS/LANCE MODIS"],
         "title": "VIIRS (S-NPP) I Band 375 m Active Fire Product NRT (Vector data)",
         "coordinate_system": "CARTESIAN",
         "summary": "Near real-time (NRT) Suomi National Polar-orbiting Partnership (Suomi NPP) Visible Infrared Imaging Radiometer Suite (VIIRS) Active Fire detection product is based on that instrument's 375 m nominal resolution data. Compared to other coarser resolution (≥1km) satellite fire detection products, the improved 375 m data provide greater response over fires of relatively small areas, as well as improved mapping of large fire perimeters. Consequently, the data are well suited for use in support of fire management (e.g., near real-time alert systems), as well as other science applications requiring improved fire mapping fidelity. The 375 m product complements the baseline Suomi NPP/VIIRS 750 m active fire detection and characterization data, which was originally designed to provide continuity to the existing 1 km Earth Observing System Moderate Resolution Imaging Spectroradiometer (EOS/MODIS) active fire data record. Due to frequent data saturation issues, the current 375 m fire product provides detection information only with no sub-pixel fire characterization.\r\n\r\nVNP14IMGTDL_NRT are available in the following formats: TXT, SHP, KML, WMS. These data are also provided through the LANCE FIRMS Fire Email Alerts. Please note only the TXT and SHP files contain all the attributes.",
@@ -282,9 +258,7 @@
             }
           }
         },
-        "boxes": [
-          "-80 -180 80 180"
-        ],
+        "boxes": ["-80 -180 80 180"],
         "time_start": "2002-05-04T00:00:00.000Z",
         "version_id": "6NRT",
         "dataset_id": "MODIS/Aqua Terra Thermal Anomalies/Fire locations 1km FIRMS V006 NRT (Vector data)",
@@ -293,9 +267,7 @@
         "has_variables": false,
         "data_center": "LANCEMODIS",
         "short_name": "MCD14DL",
-        "organizations": [
-          "NASA/GSFC/EOS/ESDIS/LANCE MODIS FIRMS"
-        ],
+        "organizations": ["NASA/GSFC/EOS/ESDIS/LANCE MODIS FIRMS"],
         "title": "MODIS/Aqua Terra Thermal Anomalies/Fire locations 1km FIRMS V006 NRT (Vector data)",
         "coordinate_system": "CARTESIAN",
         "summary": "Near Real-Time (NRT) MODIS Thermal Anomalies / Fire locations processed by FIRMS (Fire Information for Resource Management System) - Land Atmosphere Near real time Capability for EOS (LANCE), using swath products (MOD14/MYD14) rather than the tiled MOD14A1 and MYD14A1 products. The thermal anomalies / active fire represent the center of a 1km pixel that is flagged by the MODIS MOD14/MYD14 Fire and Thermal Anomalies algorithm (Giglio 2003) as containing one or more fires within the pixel. This is the most basic fire product in which active fires and other thermal anomalies, such as volcanoes, are identified.MCD14DL are available in the following formats: TXT, SHP, KML, WMS. These data are also provided through the FIRMS Fire Email Alerts. Please note only the TXT and SHP files contain all the attributes.",
@@ -390,9 +362,7 @@
             ]
           }
         },
-        "boxes": [
-          "-83 -180 82 180"
-        ],
+        "boxes": ["-83 -180 82 180"],
         "time_start": "2000-03-01T00:00:00.000Z",
         "version_id": "003",
         "updated": "2015-09-30T10:42:35.418Z",
@@ -402,10 +372,7 @@
         "has_variables": false,
         "data_center": "LPCLOUD",
         "short_name": "ASTGTM",
-        "organizations": [
-          "LP DAAC",
-          "NASA/JPL/ASTER"
-        ],
+        "organizations": ["LP DAAC", "NASA/JPL/ASTER"],
         "title": "ASTER Global Digital Elevation Model V003",
         "coordinate_system": "CARTESIAN",
         "summary": "The ASTER Global Digital Elevation Model (GDEM) Version 3 (ASTGTM) provides a global digital elevation model (DEM) of land areas on Earth at a spatial resolution of 1 arc second (approximately 30 meter horizontal posting at the equator).\r\n\r\nThe development of the ASTER GDEM data products is a collaborative effort between National Aeronautics and Space Administration (NASA) and Japan’s Ministry of Economy, Trade, and Industry (METI). The ASTER GDEM data products are created by the Sensor Information Laboratory Corporation (SILC) in Tokyo. \r\n\r\nThe ASTER GDEM Version 3 data product was created from the automated processing of the entire ASTER Level 1A (https://doi.org/10.5067/ASTER/AST_L1A.003) archive of scenes acquired between March 1, 2000, and November 30, 2013. Stereo correlation was used to produce over one million individual scene based ASTER DEMs, to which cloud masking was applied. All cloud screened DEMs and non-cloud screened DEMs were stacked. Residual bad values and outliers were removed. In areas with limited data stacking, several existing reference DEMs were used to supplement ASTER data to correct for residual anomalies. Selected data were averaged to create final pixel values before partitioning the data into 1 degree latitude by 1 degree longitude tiles with a one pixel overlap. To correct elevation values of water body surfaces, the ASTER Global Water Bodies Database (ASTWBD) (https://doi.org/10.5067/ASTER/ASTWBD.001) Version 1 data product was also generated. \r\n\r\nThe geographic coverage of the ASTER GDEM extends from 83° North to 83° South. Each tile is distributed in GeoTIFF format and projected on the 1984 World Geodetic System (WGS84)/1996 Earth Gravitational Model (EGM96) geoid. Each of the 22,912 tiles in the collection contain at least 0.01% land area. \r\n\r\nProvided in the ASTER GDEM product are layers for DEM and number of scenes (NUM). The NUM layer indicates the number of scenes that were processed for each pixel and the source of the data.\r\n\r\nWhile the ASTER GDEM Version 3 data products offer substantial improvements over Version 2, users are advised that the products still may contain anomalies and artifacts that will reduce its usability for certain applications. \r\n\r\nImprovements/Changes from Previous Versions \r\n• Expansion of acquisition coverage to increase the amount of cloud-free input scenes from about 1.5 million in Version 2 to about 1.88 million scenes in Version 3.\r\n• Separation of rivers from lakes in the water body processing. \r\n• Minimum water body detection size decreased from 1 km2 to 0.2 km2. ",
@@ -465,9 +432,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2016-04-25T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T19:09:42.000Z",
@@ -477,10 +442,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1B_DP_GRD_MEDIUM",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1B_DUAL_POL_GRD_MEDIUM_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1B Dual-pol ground projected medium resolution images",
@@ -514,9 +476,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T19:03:15.000Z",
@@ -526,10 +486,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_DP_GRD_MEDIUM",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A Dual-pol ground projected medium resolution images",
@@ -563,9 +520,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T19:05:59.000Z",
@@ -575,10 +530,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_OCN",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1A_OCN",
         "coordinate_system": "CARTESIAN",
         "summary": "SENTINEL-1A Level 2 Ocean wind, wave and current data",
@@ -617,15 +569,11 @@
               "data_centers": [
                 {
                   "shortname": "ASF",
-                  "roles": [
-                    "PROCESSOR"
-                  ]
+                  "roles": ["PROCESSOR"]
                 },
                 {
                   "shortname": "ASF",
-                  "roles": [
-                    "ARCHIVER"
-                  ],
+                  "roles": ["ARCHIVER"],
                   "contactInformation": {
                     "ContactMechanisms": [
                       {
@@ -641,9 +589,7 @@
                 },
                 {
                   "shortname": "ASF",
-                  "roles": [
-                    "DISTRIBUTOR"
-                  ],
+                  "roles": ["DISTRIBUTOR"],
                   "contactInformation": {
                     "ContactMechanisms": [
                       {
@@ -660,119 +606,47 @@
               ],
               "relatedUrls": [],
               "scienceKeywords": [
-                [
-                  "Earth Science",
-                  "Agriculture",
-                  "Forest Science"
-                ],
-                [
-                  "Earth Science",
-                  "Biosphere",
-                  "Terrestrial Ecosystems"
-                ],
-                [
-                  "Earth Science",
-                  "Cryosphere",
-                  "Frozen Ground"
-                ],
-                [
-                  "Earth Science",
-                  "Cryosphere",
-                  "Glaciers Ice Sheets"
-                ],
-                [
-                  "Earth Science",
-                  "Cryosphere",
-                  "Sea Ice"
-                ],
-                [
-                  "Earth Science",
-                  "Cryosphere",
-                  "Snow Ice"
-                ],
-                [
-                  "Earth Science",
-                  "Land Surface",
-                  "Erosion Sedimentation"
-                ],
+                ["Earth Science", "Agriculture", "Forest Science"],
+                ["Earth Science", "Biosphere", "Terrestrial Ecosystems"],
+                ["Earth Science", "Cryosphere", "Frozen Ground"],
+                ["Earth Science", "Cryosphere", "Glaciers Ice Sheets"],
+                ["Earth Science", "Cryosphere", "Sea Ice"],
+                ["Earth Science", "Cryosphere", "Snow Ice"],
+                ["Earth Science", "Land Surface", "Erosion Sedimentation"],
                 [
                   "Earth Science",
                   "Land Surface",
                   "Geomorphic Landforms Processes"
                 ],
-                [
-                  "Earth Science",
-                  "Land Surface",
-                  "Land Use Land Cover"
-                ],
-                [
-                  "Earth Science",
-                  "Land Surface",
-                  "Landscape"
-                ],
-                [
-                  "Earth Science",
-                  "Land Surface",
-                  "Topography"
-                ],
-                [
-                  "Earth Science",
-                  "Oceans",
-                  "Coastal Processes"
-                ],
-                [
-                  "Earth Science",
-                  "Oceans",
-                  "Ocean Waves"
-                ],
-                [
-                  "Earth Science",
-                  "Oceans",
-                  "Ocean Winds"
-                ],
-                [
-                  "Earth Science",
-                  "Oceans",
-                  "Sea Ice"
-                ],
+                ["Earth Science", "Land Surface", "Land Use Land Cover"],
+                ["Earth Science", "Land Surface", "Landscape"],
+                ["Earth Science", "Land Surface", "Topography"],
+                ["Earth Science", "Oceans", "Coastal Processes"],
+                ["Earth Science", "Oceans", "Ocean Waves"],
+                ["Earth Science", "Oceans", "Ocean Winds"],
+                ["Earth Science", "Oceans", "Sea Ice"],
                 [
                   "Earth Science",
                   "Solid Earth",
                   "Geomorphic Landforms Processes"
                 ],
-                [
-                  "Earth Science",
-                  "Solid Earth",
-                  "Tectonics"
-                ],
+                ["Earth Science", "Solid Earth", "Tectonics"],
                 [
                   "Earth Science",
                   "Terrestrial Hydrosphere",
                   "Glaciers Ice Sheets"
                 ],
-                [
-                  "Earth Science",
-                  "Terrestrial Hydrosphere",
-                  "Snow Ice"
-                ],
-                [
-                  "Earth Science",
-                  "Terrestrial Hydrosphere",
-                  "Surface Water"
-                ]
+                ["Earth Science", "Terrestrial Hydrosphere", "Snow Ice"],
+                ["Earth Science", "Terrestrial Hydrosphere", "Surface Water"]
               ],
-              "temporal": [
-                "2006-05-16 to 2011-04-22"
-              ],
+              "temporal": ["2006-05-16 to 2011-04-22"],
               "spatial": [
                 "Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)"
               ]
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2006-03-23T16:10:55.000Z",
         "version_id": "1",
         "updated": "2019-08-21T05:58:52.000Z",
@@ -793,9 +667,7 @@
         "has_variables": true,
         "data_center": "ASF",
         "short_name": "ALOS_PSR_RTC_HIGH",
-        "organizations": [
-          "ASF"
-        ],
+        "organizations": ["ASF"],
         "title": "ALOS_PALSAR_RTC_HIGH_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "PALSAR_Radiometric_Terrain_Corrected_high_res",
@@ -842,9 +714,7 @@
             ]
           },
           "edsc.extra.subset_service.esi": {
-            "data": [
-              "S1568897222-LPDAAC_ECS"
-            ]
+            "data": ["S1568897222-LPDAAC_ECS"]
           },
           "edsc.extra.serverless.gibs": {
             "data": [
@@ -875,9 +745,7 @@
             }
           }
         },
-        "boxes": [
-          "-56 -180 60 180"
-        ],
+        "boxes": ["-56 -180 60 180"],
         "time_start": "2000-02-11T00:00:00.000Z",
         "version_id": "003",
         "updated": "2015-09-02T10:31:05.569Z",
@@ -887,10 +755,7 @@
         "has_variables": false,
         "data_center": "LPDAAC_ECS",
         "short_name": "SRTMGL1",
-        "organizations": [
-          "LP DAAC",
-          "NASA/JPL/SRTM"
-        ],
+        "organizations": ["LP DAAC", "NASA/JPL/SRTM"],
         "title": "NASA Shuttle Radar Topography Mission Global 1 arc second V003",
         "coordinate_system": "CARTESIAN",
         "summary": "The Land Processes Distributed Active Archive Center (LP DAAC) is responsible for the archive and distribution of the NASA Making Earth System Data Records for Use in Research Environments (MEaSUREs) (https://earthdata.nasa.gov/community/community-data-system-programs/measures-projects) version SRTM, which includes the global 1 arc second (~30 meter) product.\r\n\r\nNASA Shuttle Radar Topography Mission (SRTM) datasets result from a collaborative effort by the National Aeronautics and Space Administration (NASA) and the National Geospatial-Intelligence Agency (NGA - previously known as the National Imagery and Mapping Agency, or NIMA), as well as the participation of the German and Italian space agencies. The purpose of SRTM was to generate a near-global digital elevation model (DEM) of the Earth using radar interferometry. SRTM was a primary component of the payload on the Space Shuttle Endeavour during its STS-99 mission. Endeavour launched February 11, 2000 and ﬂew for 11 days.\r\n\r\nEach SRTMGL1 data tile contains a mosaic and blending of elevations generated by averaging all \"data takes\" that fall within that tile. These elevation files use the extension “.HGT”, meaning height (such as N37W105.SRTMGL1.HGT). The primary goal of creating the Version 3 data was to eliminate voids that were present in earlier versions of SRTM data. In areas with limited data, existing topographical data were used to supplement the SRTM data to fill the voids. The source of each elevation pixel is identified in the corresponding (SRTMGL1N) (http://dx.doi.org/10.5067/MEaSUREs/SRTM/SRTMGL1N.003) product (such as N37W105.SRTMGL1N.NUM).\r\n\r\nSRTM collected data in swaths, which extend from ~30 degrees off-nadir to ~58 degrees off-nadir from an altitude of 233 kilometers (km). These swaths are ~225 km wide, and consisted of all land between 60° N and 56° S latitude. This accounts for about 80% of Earth’s total landmass. \r\n\r\n",
@@ -1008,9 +873,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2000-02-16T00:00:00.000Z",
         "version_id": "061",
         "updated": "2015-09-30T10:46:34.663Z",
@@ -1020,10 +883,7 @@
         "has_variables": false,
         "data_center": "LPDAAC_ECS",
         "short_name": "MCD43A3",
-        "organizations": [
-          "LP DAAC",
-          "NASA/GSFC/SED/ESD/TISL/MODAPS"
-        ],
+        "organizations": ["LP DAAC", "NASA/GSFC/SED/ESD/TISL/MODAPS"],
         "title": "MODIS/Terra+Aqua BRDF/Albedo Albedo Daily L3 Global - 500m V061",
         "coordinate_system": "CARTESIAN",
         "summary": "The Moderate Resolution Imaging Spectroradiometer (MODIS) MCD43A3 Version 6.1 Albedo Model dataset is produced daily using 16 days of Terra and Aqua MODIS data at 500 meter (m) resolution. Data are temporally weighted to the ninth day of the 16 day which is reflected in the Julian date in the file name.\r\n\r\nThe MCD43A3 provides black-sky albedo (directional hemispherical reflectance) and white-sky albedo (bihemispherical reflectance) data at local solar noon for MODIS bands 1 through 7 and the visible, near infrared (NIR), and shortwave bands. Along with the albedo layers are the quality layers for each of the 10 bands. \r\n\r\nThe MODIS BRDF/ALBEDO products have achieved stage 3 (https://modis-land.gsfc.nasa.gov/MODLAND_val.html) validation.\r\n\r\n* The Version 6.1 Level-1B (L1B) products have been improved by undergoing various calibration changes that include: changes to the response-versus-scan angle (RVS) approach that affects reflectance bands for Aqua and Terra MODIS, corrections to adjust for the optical crosstalk in Terra MODIS infrared (IR) bands, and corrections to the Terra MODIS forward look-up table (LUT) update for the period 2012 - 2017.\r\n* A polarization correction has been applied to the L1B Reflective Solar Bands (RSB).",
@@ -1111,9 +971,7 @@
             ]
           },
           "edsc.extra.subset_service.esi": {
-            "data": [
-              "S1568897222-LPDAAC_ECS"
-            ]
+            "data": ["S1568897222-LPDAAC_ECS"]
           },
           "edsc.extra.serverless.gibs": {
             "data": [
@@ -1147,9 +1005,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2000-02-16T00:00:00.000Z",
         "version_id": "006",
         "updated": "2015-09-30T10:46:34.663Z",
@@ -1159,10 +1015,7 @@
         "has_variables": false,
         "data_center": "LPDAAC_ECS",
         "short_name": "MCD43A3",
-        "organizations": [
-          "LP DAAC",
-          "NASA/GSFC/SED/ESD/TISL/MODAPS"
-        ],
+        "organizations": ["LP DAAC", "NASA/GSFC/SED/ESD/TISL/MODAPS"],
         "title": "MODIS/Terra+Aqua BRDF/Albedo Albedo Daily L3 Global - 500m V006",
         "coordinate_system": "CARTESIAN",
         "summary": "The Moderate Resolution Imaging Spectroradiometer (MODIS) MCD43A3 Version 6 Albedo Model dataset is produced daily using 16 days of Terra and Aqua MODIS data at 500 meter (m) resolution. Data are temporally weighted to the ninth day of the 16 day which is reflected in the Julian date in the file name.\r\n\r\nThe MCD43A3 provides black-sky albedo (directional hemispherical reflectance) and white-sky albedo (bihemispherical reflectance) data at local solar noon for MODIS bands 1 through 7 and the visible, near infrared (NIR), and shortwave bands. Along with the albedo layers are the quality layers for each of the 10 bands. \r\n\r\nUsers are urged to use the band specific quality flags to isolate the highest quality full inversion results for their own science applications (https://www.umb.edu/spectralmass/terra_aqua_modis/v006).\r\n\r\nImprovements/Changes from Previous Versions\r\n\r\n*\tObservations are weighted to estimate the BRDF/Albedo on the ninth day of the 16-day period.\r\n*\tMCD43 products use the snow status weighted to the ninth day instead of the majority snow/no-snow observations from the 16-day period.\r\n*\tBetter quality at high latitudes from use of all available observations for the acquisition period. Collection 5 used only four observations per day.\r\n*\tThe MCD43 products use L2G-lite surface reflectance as input.\r\n*\tWhen there are insufficient high quality reflectances, a database with archetypal BRDF parameters is used to supplement the observational data and perform a lower quality magnitude inversion. This database is continually updated with the latest full inversion retrieval for each pixel.\r\n\r\nImportant Quality Information\r\nThe incorrect representation of the aerosol quantities (low average high) in the C6 MYD09 and MOD09 surface reflectance products may have impacted down stream products particularly over arid bright surfaces (https://landweb.modaps.eosdis.nasa.gov/cgi-bin/QA_WWW/displayCase.cgi?esdt=MOD09&caseNum=PM_MOD09_20010&caseLocation=cases_data&type=C6). This (and a few other issues) have been corrected for C6.1. Therefore users should avoid substantive use of the C6 MCD43 products and wait for the C6.1 products. In any event, users are always strongly encouraged to download and use the extensive QA data provided in MCD43A2, in addition to the briefer mandatory QAs provided as part of the MCD43A1, 3, and 4 products.\r\n\r\n",
@@ -1251,9 +1104,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2016-04-25T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T19:11:57.000Z",
@@ -1263,10 +1114,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1B_OCN",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1B_OCN",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1B Level 2 Ocean wind, wave and current data",
@@ -1300,9 +1148,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T19:07:17.000Z",
@@ -1312,10 +1158,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_SP_GRD_HIGH",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1A_SINGLE_POL_GRD_HIGH_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A Single-pol ground projected high and full resolution images",
@@ -1372,9 +1215,7 @@
             ]
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1.5",
         "updated": "2020-03-04T07:19:53.396Z",
@@ -1384,10 +1225,7 @@
         "has_variables": false,
         "data_center": "LPCLOUD",
         "short_name": "HLSS30",
-        "organizations": [
-          "LP DAAC",
-          "NASA/IMPACT"
-        ],
+        "organizations": ["LP DAAC", "NASA/IMPACT"],
         "title": "HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5",
         "coordinate_system": "CARTESIAN",
         "summary": "PROVISIONAL - The Harmonized Landsat and Sentinel-2 (HLS)  data have not been validated for their science quality and should not be used in science research or applications. The HLS project provides consistent surface reflectance data from the Operational Land Imager (OLI) aboard the joint NASA/USGS Landsat 8 satellite and the Multi-Spectral Instrument (MSI) aboard the European Union’s Copernicus Sentinel-2A and Sentinel-2B satellites. The combined measurement enables global observations of the land every 2-3 days at 30 meter (m) spatial resolution. The HLS project uses a set of algorithms to obtain seamless products from OLI and MSI that include atmospheric correction, cloud and cloud-shadow masking, spatial co-registration and common gridding, illumination and view angle normalization, and spectral bandpass adjustment. \r\n\r\nThe HLSS30 product provides 30 m Nadir Bidirectional Reflectance Distribution Function (BRDF)-Adjusted Reflectance (NBAR) and is derived from Sentinel-2A and Sentinel-2B MSI data products. The HLSS30 and HLSL30 products are gridded to the same resolution and MGRS tiling system, and thus are “stackable” for time series analysis.\r\nThe HLSS30 product is provided in Cloud Optimized GeoTIFF (COG) format, and each band is distributed as a separate COG. There are 13 bands included in the HLSS30 product along with four angle bands and a quality assessment (QA) band. For a more detailed description of the individual bands provided in the HLSS30 product, please see the User Guide (https://lpdaac.usgs.gov/documents/878/HLS_User_Guide_V15_provisional.pdf).",
@@ -1472,10 +1310,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "UAVSAR_POL_META",
-        "organizations": [
-          "ASF",
-          "NASA/JPL/ESSD"
-        ],
+        "organizations": ["ASF", "NASA/JPL/ESSD"],
         "title": "UAVSAR_POLSAR_METADATA",
         "coordinate_system": "GEODETIC",
         "summary": "UAVSAR PolSAR Scene Metadata",
@@ -1514,9 +1349,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T19:05:36.000Z",
@@ -1526,9 +1359,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_META_SLC",
-        "organizations": [
-          "ASF"
-        ],
+        "organizations": ["ASF"],
         "title": "SENTINEL-1A_METADATA_SLC",
         "coordinate_system": "CARTESIAN",
         "summary": "Metadata for Sentinel-1A slant-range product",
@@ -1562,9 +1393,7 @@
             }
           }
         },
-        "boxes": [
-          "-90 -180 90 180"
-        ],
+        "boxes": ["-90 -180 90 180"],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-24T19:06:27.000Z",
@@ -1574,10 +1403,7 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_RAW",
-        "organizations": [
-          "ASF",
-          "ESA/CS1CGS"
-        ],
+        "organizations": ["ASF", "ESA/CS1CGS"],
         "title": "SENTINEL-1A_RAW",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A level zero product",
