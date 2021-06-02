@@ -67,6 +67,7 @@ const GranuleResultsActions = ({
   const removeFromProjectButton = (
     <Button
       className="granule-results-actions__proj-action granule-results-actions__proj-action--remove"
+      dataTestId="granule-results-actions__proj-action--remove"
       onClick={() => onRemoveCollectionFromProject(focusedCollectionId)}
       icon={FaFolderMinus}
       label="Remove collection from the current project"
@@ -134,7 +135,10 @@ const GranuleResultsActions = ({
               />
             ) : (
               <div className="granule-results-actions__granule-count-wrapper">
-                <span className="granule-results-actions__granule-count">
+                <span
+                  className="granule-results-actions__granule-count"
+                  data-test-id="granule-results-actions__granule-count"
+                >
                   <span className="granule-results-actions__granule-num">
                     {`${commafy(searchGranuleCount)} `}
                   </span>
@@ -146,6 +150,7 @@ const GranuleResultsActions = ({
                       <PortalLinkContainer
                         type="button"
                         className="granule-results-actions__project-pill"
+                        dataTestId="granule-results-actions__project-pill"
                         label="View granules in project"
                         onClick={() => {
                           onSetActivePanelSection('1')
@@ -184,6 +189,7 @@ const GranuleResultsActions = ({
                 type="button"
                 icon={FaBell}
                 className={subscriptionButtonClassnames}
+                dataTestId="granule-results-actions__subscriptions-button"
                 label="View subscriptions"
                 to={{
                   pathname: '/search/granules/subscriptions',
