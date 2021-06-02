@@ -266,6 +266,7 @@ export const GranuleFiltersForm = (props) => {
                   >
                     <Form.Control
                       name="readableGranuleName"
+                      data-test-id="granule-filters__readable-granule-name"
                       size="sm"
                       type="text"
                       placeholder="Search Single or Multiple Granule IDs..."
@@ -297,6 +298,7 @@ export const GranuleFiltersForm = (props) => {
                   </Form.Label>
                   <Form.Control
                     name="tilingSystem"
+                    data-test-id="granule-filters__tiling-system"
                     size="sm"
                     as="select"
                     value={tilingSystem}
@@ -327,6 +329,7 @@ export const GranuleFiltersForm = (props) => {
                     >
                       <Form.Control
                         name="gridCoords"
+                        data-test-id="granule-filters__grid-coordinates"
                         size="sm"
                         type="text"
                         placeholder="Coordinates..."
@@ -476,6 +479,7 @@ export const GranuleFiltersForm = (props) => {
                         <Form.Group controlId="granule-filters__day-night-flag">
                           <Form.Control
                             name="dayNightFlag"
+                            data-test-id="granule-filters__day-night-flag"
                             as="select"
                             value={dayNightFlag}
                             onChange={submitOnChange}
@@ -498,6 +502,7 @@ export const GranuleFiltersForm = (props) => {
                 <Form.Group controlId="granule-filters__data-access">
                   <Form.Check
                     id="input__browse-only"
+                    data-test-id="granule-filters__browse-only"
                     name="browseOnly"
                     label="Find only granules that have browse images"
                     checked={browseOnly}
@@ -506,6 +511,7 @@ export const GranuleFiltersForm = (props) => {
                   />
                   <Form.Check
                     id="input__online-only"
+                    data-test-id="granule-filters__online-only"
                     name="onlineOnly"
                     label="Find only granules that are available online"
                     checked={onlineOnly}
@@ -531,6 +537,7 @@ export const GranuleFiltersForm = (props) => {
                       <Col sm={7}>
                         <Form.Control
                           name="cloudCover.min"
+                          data-test-id="granule-filters__cloud-cover-min"
                           type="text"
                           size="sm"
                           placeholder="Example: 10"
@@ -559,6 +566,7 @@ export const GranuleFiltersForm = (props) => {
                       <Col sm={7}>
                         <Form.Control
                           name="cloudCover.max"
+                          data-test-id="granule-filters__cloud-cover-max"
                           type="text"
                           size="sm"
                           placeholder="Example: 50"
@@ -596,6 +604,7 @@ export const GranuleFiltersForm = (props) => {
                         <Col sm={7}>
                           <Form.Control
                             name="orbitNumber.min"
+                            data-test-id="granule-filters__orbit-number-min"
                             type="text"
                             size="sm"
                             placeholder="Example: 30000"
@@ -626,6 +635,7 @@ export const GranuleFiltersForm = (props) => {
                         <Col sm={7}>
                           <Form.Control
                             name="orbitNumber.max"
+                            data-test-id="granule-filters__orbit-number-max"
                             type="text"
                             size="sm"
                             placeholder="Example: 30009"
@@ -660,6 +670,7 @@ export const GranuleFiltersForm = (props) => {
                         <Col sm={7}>
                           <Form.Control
                             name="equatorCrossingLongitude.min"
+                            data-test-id="granule-filters__equatorial-crossing-longitude-min"
                             type="text"
                             size="sm"
                             placeholder="Example: -45"
@@ -690,6 +701,7 @@ export const GranuleFiltersForm = (props) => {
                         <Col sm={7}>
                           <Form.Control
                             name="equatorCrossingLongitude.max"
+                            data-test-id="granule-filters__equatorial-crossing-longitude-max"
                             type="text"
                             size="sm"
                             placeholder="Example: 45"

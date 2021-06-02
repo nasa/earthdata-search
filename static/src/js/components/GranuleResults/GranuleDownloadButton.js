@@ -49,6 +49,7 @@ export const GranuleDownloadButton = (props) => {
         <div>
           <Button
             className="granule-results-actions__download-all-button"
+            dataTestId="granule-results-actions__download-all-button"
             badge={badge}
             bootstrapVariant="secondary"
             icon={FaDownload}
@@ -118,6 +119,7 @@ export const GranuleDownloadButton = (props) => {
         badge={badge}
         bootstrapVariant="success"
         className="granule-results-actions__download-all-button"
+        dataTestId="granule-results-actions__download-all-button"
         disabled={granuleCount === 0 || initialLoading}
         icon={FaDownload}
         label={buttonText}

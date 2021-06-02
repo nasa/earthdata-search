@@ -402,6 +402,7 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="granule-results-panel"
+        dataTestId="panel-group_granule-results"
         handoffLinks={handoffLinks}
         headerMessage={(
           <>
