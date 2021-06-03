@@ -36,6 +36,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'params',
       'bounding_box',
       'circle',
+      'cloud_hosted',
       'collection_data_type',
       'concept_id',
       'data_center_h',

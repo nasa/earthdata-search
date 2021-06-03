@@ -19,7 +19,6 @@
     },
     "orderStatusRefreshTime": 60000,
     "eosdisTagKey": "gov.nasa.eosdis",
-    "availableFromAwsCloudTagKey": "gov.nasa.earthdatacloud.s3",
     "defaultCmrPageSize": 20,
     "maxCmrPageSize": 2000,
     "defaultCmrSearchTags": [
