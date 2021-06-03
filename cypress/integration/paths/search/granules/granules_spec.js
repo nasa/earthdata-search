@@ -1,7 +1,8 @@
 import { getByTestId } from '../../../../support/getByTestId'
+import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { commafy } from '../../../../../static/src/js/util/commafy'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { pluralize } from '../../../../../static/src/js/util/pluralize'
 
 import browseOnlyGranulesBody from './__mocks__/browse_only/granules.body.json'
@@ -102,11 +103,7 @@ import timelineTimelineHeaders from './__mocks__/timeline/timeline.headers.json'
 
 const { defaultCmrPageSize } = getApplicationConfig()
 
-/**
- * Return the GraphQl query for verifying the request is what we expect inside of cy.intercept
- * @param {String} conceptId conceptId to retrieve
- */
-const graphQlQuery = conceptId => `{"query":"\\n    query GetCollection(\\n      $id: String!\\n      $includeHasGranules: Boolean\\n      $includeTags: String\\n      $subscriberId: String\\n    ) {\\n      collection (\\n        conceptId: $id\\n        includeHasGranules: $includeHasGranules\\n        includeTags: $includeTags\\n      ) {\\n        abstract\\n        archiveAndDistributionInformation\\n        associatedDois\\n        boxes\\n        conceptId\\n        coordinateSystem\\n        dataCenter\\n        dataCenters\\n        directDistributionInformation\\n        doi\\n        hasGranules\\n        lines\\n        nativeDataFormats\\n        points\\n        polygons\\n        relatedUrls\\n        scienceKeywords\\n        shortName\\n        spatialExtent\\n        tags\\n        temporalExtents\\n        tilingIdentificationSystems\\n        title\\n        versionId\\n        services {\\n          count\\n          items {\\n            conceptId\\n            longName\\n            name\\n            type\\n            url\\n            serviceOptions\\n            supportedOutputProjections\\n            supportedReformattings\\n          }\\n        }\\n        granules {\\n          count\\n          items {\\n            conceptId\\n            onlineAccessFlag\\n          }\\n        }\\n        subscriptions (\\n          subscriberId: $subscriberId\\n        ) {\\n          count\\n          items {\\n            collectionConceptId\\n            conceptId\\n            name\\n            nativeId\\n            query\\n          }\\n        }\\n        variables {\\n          count\\n          items {\\n            conceptId\\n            definition\\n            longName\\n            name\\n            nativeId\\n            scienceKeywords\\n          }\\n        }\\n      }\\n    }","variables":{"id":"${conceptId}","includeHasGranules":true,"includeTags":"edsc.*,opensearch.granule.osdd"}}`
+
 
 const interceptCollections = () => {
   // Intercept collections call before every test, its generic and doesn't change between tests
@@ -185,7 +182,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: noParamsGraphQlBody,
@@ -244,7 +241,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: readableGranuleNameGraphQlBody,
@@ -304,7 +301,7 @@ describe('Path /search/granules', () => {
           url: '**/api'
         },
         (req) => {
-          expect(req.body).to.eq(graphQlQuery(conceptId))
+          expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
           req.reply({
             body: temporalGraphQlBody,
@@ -367,7 +364,7 @@ describe('Path /search/granules', () => {
           url: '**/api'
         },
         (req) => {
-          expect(req.body).to.eq(graphQlQuery(conceptId))
+          expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
           req.reply({
             body: temporalGraphQlBody,
@@ -433,7 +430,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: browseOnlyGraphQlBody,
@@ -493,7 +490,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: onlineOnlyGraphQlBody,
@@ -553,7 +550,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: orbitNumberGraphQlBody,
@@ -613,7 +610,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: equatorialCrossingLongitudeGraphQlBody,
@@ -673,7 +670,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: equatorialCrossingDateGraphQlBody,
@@ -733,7 +730,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: sortKeyGraphQlBody,
@@ -793,7 +790,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: cloudCoverGraphQlBody,
@@ -853,7 +850,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: dayNightGraphQlBody,
@@ -912,7 +909,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: gridCoordsGraphQlBody,
@@ -983,7 +980,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlQuery(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: timelineGraphQlBody,
@@ -1048,7 +1045,7 @@ describe('Path /search/granules', () => {
       },
       (req) => {
         // If these requests change and are failing tests, console.log req.body to see the actual request being called
-        if (req.body === graphQlQuery(conceptId)) {
+        if (req.body === graphQlGetCollection(conceptId)) {
           req.alias = 'graphQlCollectionQuery'
           req.reply({
             body: focusedGranuleCollectionGraphQlBody,
@@ -1131,7 +1128,7 @@ describe('Path /search/granules', () => {
       },
       (req) => {
         // If these requests change and are failing tests, console.log req.body to see the actual request being called
-        if (req.body === graphQlQuery(conceptId)) {
+        if (req.body === graphQlGetCollection(conceptId)) {
           req.alias = 'graphQlCollectionQuery'
           req.reply({
             body: projectGranuleCollectionGraphQlBody,
@@ -1205,7 +1202,7 @@ describe('Path /search/granules', () => {
       },
       (req) => {
         // If these requests change and are failing tests, console.log req.body to see the actual request being called
-        if (req.body === graphQlQuery(conceptId)) {
+        if (req.body === graphQlGetCollection(conceptId)) {
           req.alias = 'graphQlCollectionQuery'
           req.reply({
             body: projectCollectionCollectionGraphQlBody,
@@ -1309,7 +1306,7 @@ describe('Path /search/granules', () => {
         url: '**/graphql'
       },
       (req) => {
-        expect(JSON.parse(req.body).data).to.eql(JSON.parse(graphQlQuery(conceptId)))
+        expect(JSON.parse(req.body).data).to.eql(JSON.parse(graphQlGetCollection(conceptId)))
 
         req.reply({
           body: subscriptionGraphQlBody,
