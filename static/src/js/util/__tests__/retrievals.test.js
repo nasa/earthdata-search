@@ -128,7 +128,7 @@ describe('retrievals', () => {
           boundingBox: undefined,
           browseOnly: undefined,
           circle: undefined,
-          cloudCover: '',
+          cloudCover: undefined,
           conceptId: [],
           dayNightFlag: undefined,
           echoCollectionId: 'C100000-EDSC',

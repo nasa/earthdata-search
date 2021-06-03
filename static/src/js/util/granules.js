@@ -232,7 +232,7 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
       return `${val.min || ''},${val.max || ''}`
     }
 
-    return ''
+    return undefined
   }
 
   const cloudCoverString = encodeCloudCover(cloudCover)
