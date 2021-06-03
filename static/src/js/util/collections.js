@@ -75,10 +75,8 @@ export const prepareCollectionParams = (state) => {
     serviceType.push('harmony')
   }
   if (featureFacets.mapImagery) tagKey.push(tagName('gibs'))
-  if (featureFacets.availableFromAwsCloud) {
-    const { availableFromAwsCloudTagKey } = getApplicationConfig()
-    tagKey.push(availableFromAwsCloudTagKey)
-  }
+  let cloudHosted
+  if (featureFacets.availableFromAwsCloud) cloudHosted = true
 
   const { query: portalQuery = {} } = portal
 
@@ -86,6 +84,7 @@ export const prepareCollectionParams = (state) => {
     authToken,
     boundingBox,
     circle,
+    cloudHosted,
     cmrFacets,
     featureFacets,
     hasGranulesOrCwic,
@@ -135,6 +134,7 @@ export const buildCollectionSearchParams = (params) => {
   const {
     boundingBox,
     circle,
+    cloudHosted,
     cmrFacets,
     conceptId,
     dataCenter,
@@ -196,6 +196,7 @@ export const buildCollectionSearchParams = (params) => {
     ...defaultParams,
     boundingBox,
     circle,
+    cloudHosted,
     collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
     concept_id: conceptId,
     dataCenterH: facetsToSend.data_center_h,
