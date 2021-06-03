@@ -750,6 +750,8 @@ export const GranuleFiltersForm = (props) => {
                                 ? startDate.toISOString() : startDate._i
                               setFieldValue('equatorCrossingDate.startDate', value)
                               setFieldTouched('equatorCrossingDate.startDate')
+
+                              handleSubmit()
                             }}
                             onSubmitEnd={(endDate) => {
                               const value = endDate.isValid()
@@ -757,6 +759,8 @@ export const GranuleFiltersForm = (props) => {
                                 ? endDate.toISOString() : endDate._i
                               setFieldValue('equatorCrossingDate.endDate', value)
                               setFieldTouched('equatorCrossingDate.endDate')
+
+                              handleSubmit()
                             }}
                           />
                         </Form.Control>
