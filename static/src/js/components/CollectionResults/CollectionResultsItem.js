@@ -7,6 +7,7 @@ import {
   FaSlidersH,
   FaFileAlt,
   FaClock,
+  FaLock,
   FaMinus,
   FaPlus,
   FaInfoCircle
@@ -51,6 +52,7 @@ export const CollectionResultsItem = forwardRef(({
     hasTransforms,
     hasVariables,
     hasMapImagery,
+    isCSDA,
     isOpenSearch,
     isCollectionInProject,
     isNrt,
@@ -334,6 +336,36 @@ export const CollectionResultsItem = forwardRef(({
                     className="collection-results-item__badge collection-results-item__badge--cwic"
                   >
                     CWIC
+                  </Badge>
+                </OverlayTrigger>
+              )
+            }
+            {
+              isCSDA && (
+                <OverlayTrigger
+                  placement="top"
+                  overlay={(
+                    <Tooltip
+                      id="tooltip__csda-badge"
+                      className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--csda"
+                    >
+                      Commercial Smallsat Data Acquisition Program
+                      <span className="collection-results-item__badge-tooltip-secondary">
+                        (Additional authentication required)
+                      </span>
+                    </Tooltip>
+                  )}
+                >
+                  <Badge
+                    className="collection-results-item__badge collection-results-item__badge--csda badge--purple"
+                  >
+                    {/* <FaLock className="d-inline-block align-middle mr-1" size="0.75em" /> */}
+                    <EDSCIcon
+                      className="collection-results-item__badge-icon collection-results-item__badge-icon--csda d-inline-block mr-1"
+                      icon={FaLock}
+                      size="0.55rem"
+                    />
+                    <span className="d-inline-block">CSDA</span>
                   </Badge>
                 </OverlayTrigger>
               )

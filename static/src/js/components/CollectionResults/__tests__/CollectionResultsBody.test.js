@@ -25,6 +25,7 @@ function setup(overrideProps) {
         granuleCount: 42,
         hasMapImagery: false,
         id: 'collectionId',
+        isCSDA: false,
         isOpenSearch: false,
         isNrt: false,
         organizations: ['test/org'],

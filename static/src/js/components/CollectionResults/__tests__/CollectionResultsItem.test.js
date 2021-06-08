@@ -232,6 +232,40 @@ describe('CollectionResultsList component', () => {
       })
     })
 
+    describe('CSDA badge', () => {
+      test('does not render when isCSDA is not set', () => {
+        const { enzymeWrapper } = setup()
+        expect(enzymeWrapper.find('.collection-results-item__badge--cwic').length).toEqual(0)
+      })
+
+      describe('renders correctly when set', () => {
+        test('renders the badge correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collection,
+              isCSDA: true
+            }
+          })
+          expect(enzymeWrapper.find('.collection-results-item__badge--csda').length).toEqual(1)
+          expect(enzymeWrapper.find('.collection-results-item__badge--csda').text()).toContain('CSDA')
+        })
+
+        test('renders a tooltip correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collection,
+              isCSDA: true
+            }
+          })
+
+          const tooltipProps = enzymeWrapper.find(OverlayTrigger).props().overlay.props
+          expect(enzymeWrapper.find(OverlayTrigger).length).toEqual(1)
+          expect(tooltipProps.children[0]).toEqual('Commercial Smallsat Data Acquisition Program Data')
+          expect(shallow(tooltipProps.children[1]).text()).toEqual('(Additional authentication required)')
+        })
+      })
+    })
+
     describe('map imagery badge', () => {
       test('does not render when hasMapImagery not set', () => {
         const { enzymeWrapper } = setup()

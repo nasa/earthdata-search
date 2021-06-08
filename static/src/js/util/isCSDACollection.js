@@ -7,7 +7,10 @@ import { isArray } from 'lodash'
  */
 export const isCSDACollection = dataCenters => !!(
   isArray(dataCenters)
-  && dataCenters.some(({ shortName = '' }) => shortName === 'NASA/CSDA')
+  && (
+    dataCenters.some(({ shortName = '' }) => shortName === 'NASA/CSDA')
+    || dataCenters.some(dataCenter => dataCenter === 'NASA/CSDA')
+  )
 )
 
 export default isCSDACollection

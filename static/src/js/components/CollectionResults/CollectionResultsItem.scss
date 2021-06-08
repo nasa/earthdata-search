@@ -24,6 +24,11 @@
     display: flex;
   }
 
+  &__body-secondary {
+    display: block;
+    line-height: 1;
+  }
+
   &__thumb {
     display: none;
     align-items: center;
@@ -189,13 +194,13 @@
   }
 
   &__badge-icon {
-    margin-right: $spacer/3;
-    font-size: 0.75rem;
-    line-height: 0.625rem;
-    text-transform: none;
-
     &:last-child {
       margin-right: 0;
+    }
+
+    &--csda {
+      position: relative;
+      top: -0.05rem;
     }
   }
 
@@ -218,5 +223,17 @@
 
   &__badge-tooltip {
     font-size: 0.75rem;
+
+    &--csda {
+      .tooltip-inner {
+        max-width: 14rem;
+      }
+    }
+  }
+
+  &__badge-tooltip-secondary {
+    font-size: 0.675rem;
+    color: $color__black--300;
+    display: block;
   }
 }

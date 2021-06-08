@@ -34,12 +34,12 @@ import GranuleResultsActionsContainer
 import SubscriptionsBodyContainer
   from '../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
 
-
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import { isDefaultPortal } from '../../util/portals'
 
 import './SearchPanels.scss'
@@ -464,9 +464,11 @@ class SearchPanels extends PureComponent {
         secondaryHeading={
           collectionIsCSDA && (
             <Badge className="panel-group-header__heading-badge badge--purple">
-              <span className="mr-1">
-                <FaLock />
-              </span>
+              <EDSCIcon
+                className="collection-results-item__badge-icon collection-results-item__badge-icon--csda d-inline-block mr-1"
+                icon={FaLock}
+                size="0.55rem"
+              />
               CSDA
             </Badge>
           )

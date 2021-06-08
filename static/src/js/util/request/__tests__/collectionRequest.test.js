@@ -193,6 +193,38 @@ describe('CollectionRequest#transformResponse', () => {
     expect(result).toEqual(expectedResult)
   })
 
+  test('return data with isCSDA flag correctly', () => {
+    const request = new CollectionRequest(undefined, 'prod')
+
+    const data = {
+      feed: {
+        id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=1',
+        title: 'ECHO collection metadata',
+        updated: '2019-05-21T01:08:02.143Z',
+        entry: [{
+          id: 'collectionId',
+          organizations: ['NASA/CSDA']
+        }]
+      }
+    }
+
+    const result = request.transformResponse(data)
+
+    const expectedResult = {
+      feed: {
+        ...data.feed,
+        entry: [{
+          id: 'collectionId',
+          isCSDA: true,
+          organizations: ['NASA/CSDA'],
+          thumbnail: 'test-file-stub'
+        }]
+      }
+    }
+
+    expect(result).toEqual(expectedResult)
+  })
+
   describe('return data with has_map_imagery flag correctly', () => {
     test('when an image is defined', () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
