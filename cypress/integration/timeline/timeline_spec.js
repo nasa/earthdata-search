@@ -80,6 +80,6 @@ describe('Timeline spec', () => {
     getByTestId('collection-result-item_C1443528505-LAADS').click()
 
     // Confirm the leaflet tools are the correct
-    cy.get('.leaflet-control-container').should('have.css', 'height', '754px')
+    cy.get('.leaflet-control-container').should('have.css', 'height', '755px')
   })
 })
