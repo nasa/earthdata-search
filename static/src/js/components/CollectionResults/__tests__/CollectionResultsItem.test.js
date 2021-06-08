@@ -260,7 +260,7 @@ describe('CollectionResultsList component', () => {
 
           const tooltipProps = enzymeWrapper.find(OverlayTrigger).props().overlay.props
           expect(enzymeWrapper.find(OverlayTrigger).length).toEqual(1)
-          expect(tooltipProps.children[0]).toEqual('Commercial Smallsat Data Acquisition Program Data')
+          expect(tooltipProps.children[0]).toEqual('Commercial Smallsat Data Acquisition Program')
           expect(shallow(tooltipProps.children[1]).text()).toEqual('(Additional authentication required)')
         })
       })
