@@ -13,23 +13,43 @@ describe('isCSDACollection', () => {
     })
   })
 
-  describe('when provided an array with no matching data center', () => {
-    test('returns false', () => {
-      expect(isCSDACollection([
-        {
-          shortName: 'Some Short Name'
-        }
-      ])).toEqual(false)
+  describe('when provided an array of objects', () => {
+    describe('when no data center matches', () => {
+      test('returns false', () => {
+        expect(isCSDACollection([
+          {
+            shortName: 'Some Short Name'
+          }
+        ])).toEqual(false)
+      })
+    })
+
+    describe('when provided a matching data center', () => {
+      test('returns true', () => {
+        expect(isCSDACollection([
+          {
+            shortName: 'NASA/CSDA'
+          }
+        ])).toEqual(true)
+      })
     })
   })
 
-  describe('when provided an array with a matching data center', () => {
-    test('returns true', () => {
-      expect(isCSDACollection([
-        {
-          shortName: 'NASA/CSDA'
-        }
-      ])).toEqual(true)
+  describe('when provided an array of strings', () => {
+    describe('when no data center matches', () => {
+      test('returns false', () => {
+        expect(isCSDACollection([
+          'test/org'
+        ])).toEqual(false)
+      })
+    })
+
+    describe('when provided a matching data center', () => {
+      test('returns true', () => {
+        expect(isCSDACollection([
+          'NASA/CSDA'
+        ])).toEqual(true)
+      })
     })
   })
 })

@@ -17,6 +17,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       datasetId = null,
       granuleCount = 0,
       hasMapImagery = false,
+      isCSDA = false,
       isOpenSearch = false,
       isNrt = false,
       organizations = [],
@@ -91,6 +92,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
     let hasTemporalSubsetting = false
     let hasTransforms = false
     let hasVariables = false
+
     Object.keys(serviceFeatures).forEach((key) => {
       const service = serviceFeatures[key]
 
@@ -121,8 +123,10 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       hasTransforms,
       hasVariables,
       hasMapImagery,
+      isCSDA,
       isOpenSearch,
       isNrt,
+      organizations,
       shortName,
       temporalEnd,
       temporalRange,

@@ -6,6 +6,8 @@ import {
 } from '../../../../../sharedUtils/config'
 
 import { hasTag } from '../../../../../sharedUtils/tags'
+import { isCSDACollection } from '../isCSDACollection'
+
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 
 /**
@@ -147,6 +149,10 @@ export default class CollectionRequest extends CmrRequest {
 
       if (collection && collection.collection_data_type) {
         transformedCollection.is_nrt = !!(collection.collection_data_type === 'NEAR_REAL_TIME')
+      }
+
+      if (collection && collection.organizations) {
+        transformedCollection.isCSDA = isCSDACollection(collection.organizations)
       }
 
       const h = getApplicationConfig().thumbnailSize.height
