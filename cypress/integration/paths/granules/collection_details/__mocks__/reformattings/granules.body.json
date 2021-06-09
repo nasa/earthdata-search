@@ -1,0 +1,2229 @@
+{
+  "feed": {
+    "updated": "2021-06-08T12:43:02.281Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C1996546500-GHRC_DAAC&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "entry": [
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-24T01:00:00.000Z",
+        "updated": "2021-05-25T05:52:51.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210524v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-24T02:00:00.000Z",
+        "id": "G2057913185-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.16",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210524v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210524v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-23T01:00:00.000Z",
+        "updated": "2021-05-25T05:52:53.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210523v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-23T02:00:00.000Z",
+        "id": "G2057913183-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.67",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210523v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210523v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-22T01:00:00.000Z",
+        "updated": "2021-05-25T05:52:50.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210522v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-22T02:00:00.000Z",
+        "id": "G2057913184-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.57",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210522v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210522v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-21T01:00:00.000Z",
+        "updated": "2021-05-25T05:52:46.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210521v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-21T02:00:00.000Z",
+        "id": "G2057913181-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.7",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210521v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210521v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-20T01:00:00.000Z",
+        "updated": "2021-05-25T05:52:48.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210520v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-20T02:00:00.000Z",
+        "id": "G2056116521-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.71",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210520v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210520v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-19T01:00:00.000Z",
+        "updated": "2021-05-21T23:52:46.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210519v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-19T02:00:00.000Z",
+        "id": "G2056116576-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.45",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210519v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210519v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-18T01:00:00.000Z",
+        "updated": "2021-05-21T05:52:48.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210518v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-18T02:00:00.000Z",
+        "id": "G2056116550-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.69",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210518v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210518v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-17T01:00:00.000Z",
+        "updated": "2021-05-21T05:52:49.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210517v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-17T02:00:00.000Z",
+        "id": "G2054478468-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.67",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210517v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210517v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-16T01:00:00.000Z",
+        "updated": "2021-05-18T05:51:46.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210516v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-16T02:00:00.000Z",
+        "id": "G2054478552-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.66",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210516v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210516v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-15T01:00:00.000Z",
+        "updated": "2021-05-18T05:51:40.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210515v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-15T02:00:00.000Z",
+        "id": "G2054478461-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.64",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210515v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210515v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-14T01:00:00.000Z",
+        "updated": "2021-05-18T05:51:42.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210514v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-14T02:00:00.000Z",
+        "id": "G2052787768-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.65",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210514v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210514v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-13T01:00:00.000Z",
+        "updated": "2021-05-14T23:51:42.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210513v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-13T02:00:00.000Z",
+        "id": "G2051848415-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.67",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210513v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210513v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-12T01:00:00.000Z",
+        "updated": "2021-05-14T23:51:41.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210512v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-12T02:00:00.000Z",
+        "id": "G2051399426-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.58",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210512v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210512v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-11T01:00:00.000Z",
+        "updated": "2021-05-12T23:51:40.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210511v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-11T02:00:00.000Z",
+        "id": "G2050982318-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.69",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210511v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210511v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-10T01:00:00.000Z",
+        "updated": "2021-05-11T23:51:42.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210510v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-10T02:00:00.000Z",
+        "id": "G2049991078-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.72",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210510v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210510v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-09T01:00:00.000Z",
+        "updated": "2021-05-10T17:51:41.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210509v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-09T02:00:00.000Z",
+        "id": "G2049681128-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.7",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210509v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210509v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-08T01:00:00.000Z",
+        "updated": "2021-05-09T17:51:40.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210508v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-08T02:00:00.000Z",
+        "id": "G2049328954-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.67",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210508v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210508v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-07T01:00:00.000Z",
+        "updated": "2021-05-08T17:51:41.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210507v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-07T02:00:00.000Z",
+        "id": "G2048876073-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.68",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210507v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210507v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-06T01:00:00.000Z",
+        "updated": "2021-05-07T17:51:40.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210506v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-06T02:00:00.000Z",
+        "id": "G2048281357-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.7",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210506v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210506v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      },
+      {
+        "boxes": [
+          "-89.875 0.125 89.875 -0.125"
+        ],
+        "time_start": "2021-05-05T01:00:00.000Z",
+        "updated": "2021-05-06T17:51:43.000Z",
+        "dataset_id": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+        "data_center": "GHRC_DAAC",
+        "title": "f16_ssmis_20210505v7.nc",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2021-05-05T02:00:00.000Z",
+        "id": "G2047231702-GHRC_DAAC",
+        "original_format": "ECHO10",
+        "granule_size": "2.68",
+        "browse_flag": false,
+        "collection_concept_id": "C1996546500-GHRC_DAAC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Files may be downloaded directly to your workstation from this link",
+            "hreflang": "en-US",
+            "href": "https://data.ghrc.earthdata.nasa.gov/ghrcw-protected/rss/rssmif16d__7/f16_ssmis_20210505v7.nc"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1996546500-GHRC_DAAC/granules/f16_ssmis_20210505v7.nc"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+          }
+        ]
+      }
+    ]
+  }
+}

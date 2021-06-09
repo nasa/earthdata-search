@@ -30,27 +30,31 @@ export const GranuleResultsHighlights = ({
   visibleGranules
 }) => (
   <div className="granule-results-highlights">
-    <div className="granule-results-highlights__count">
-      {
-        (!isLoaded) && (
-          <Skeleton
-            shapes={granuleListTotal}
-            containerStyle={granuleListTotalStyle}
-            variant="dark"
-          />
-        )
-      }
-      {
-        (isLoaded && !isLoading) && (
-          `Showing ${commafy(visibleGranules)} of ${commafy(
-            granuleCount
-          )} matching ${pluralize('granule', granuleCount)}`
-        )
-      }
-    </div>
+    {
+      granuleCount > 0 && (
+        <div className="granule-results-highlights__count">
+          {
+            (!isLoaded) && (
+              <Skeleton
+                shapes={granuleListTotal}
+                containerStyle={granuleListTotalStyle}
+                variant="dark"
+              />
+            )
+          }
+          {
+            (isLoaded && !isLoading) && (
+              `Showing ${commafy(visibleGranules)} of ${commafy(
+                granuleCount
+              )} matching ${pluralize('granule', granuleCount)}`
+            )
+          }
+        </div>
+      )
+    }
     <ul className="granule-results-highlights__list">
       {
-        (!isLoaded) && (
+        !isLoaded && (
           <>
             {
               [1, 2, 3].map((item, i) => {
@@ -73,59 +77,70 @@ export const GranuleResultsHighlights = ({
         (isLoaded && !isLoading) && (
           <>
             {
-              granules.map((granule, i) => {
-                const {
-                  id,
-                  title,
-                  formattedTemporal
-                } = granule
+              granuleCount > 0
+                ? (
+                  granules.map((granule, i) => {
+                    const {
+                      id,
+                      title,
+                      formattedTemporal
+                    } = granule
 
-                const [
-                  timeStart,
-                  timeEnd
-                ] = formattedTemporal
+                    const [
+                      timeStart,
+                      timeEnd
+                    ] = formattedTemporal
 
-                const key = `${id}_${i}`
+                    const key = `${id}_${i}`
 
-                return (
-                  <li key={key} className="granule-results-highlights__item">
-                    <header className="granule-results-highlights__item-header">
-                      <h4 className="granule-results-highlights__item-title">{title}</h4>
-                    </header>
-                    <div className="granule-results-highlights__item-body">
-                      <div className="granule-results-highlights__temporal-row">
-                        <h5 className="granule-results-highlights__temporal-label">
-                          Start
-                        </h5>
-                        <p className="granule-results-highlights__temporal-value">{timeStart}</p>
-                      </div>
-                      <div className="granule-results-highlights__temporal-row">
-                        <h5 className="granule-results-highlights__temporal-label">
-                          End
-                        </h5>
-                        <p className="granule-results-highlights__temporal-value">{timeEnd}</p>
-                      </div>
-                    </div>
+                    return (
+                      <li key={key} className="granule-results-highlights__item">
+                        <header className="granule-results-highlights__item-header">
+                          <h4 className="granule-results-highlights__item-title">{title}</h4>
+                        </header>
+                        <div className="granule-results-highlights__item-body">
+                          <div className="granule-results-highlights__temporal-row">
+                            <h5 className="granule-results-highlights__temporal-label">
+                              Start
+                            </h5>
+                            <p className="granule-results-highlights__temporal-value">{timeStart}</p>
+                          </div>
+                          <div className="granule-results-highlights__temporal-row">
+                            <h5 className="granule-results-highlights__temporal-label">
+                              End
+                            </h5>
+                            <p className="granule-results-highlights__temporal-value">{timeEnd}</p>
+                          </div>
+                        </div>
+                      </li>
+                    )
+                  })
+                ) : (
+                  <li className="granule-results-highlights__empty">
+                    No Granules
                   </li>
                 )
-              })
             }
           </>
         )
       }
     </ul>
-    <div className="granule-results-highlights__footer">
-      <PortalLinkContainer
-        className="granule-results-header__title-link granule-results-header__title-link-icon"
-        to={{
-          pathname: '/search/granules',
-          search: location.search
-        }}
-      >
-        <EDSCIcon icon={FaMap} />
-        {' View Granules'}
-      </PortalLinkContainer>
-    </div>
+    {
+      granuleCount > 0 && (
+        <div className="granule-results-highlights__footer">
+          <PortalLinkContainer
+            className="granule-results-header__title-link granule-results-header__title-link-icon"
+            to={{
+              pathname: '/search/granules',
+              search: location.search
+            }}
+          >
+            <EDSCIcon icon={FaMap} />
+            {' View Granules'}
+          </PortalLinkContainer>
+        </div>
+      )
+    }
   </div>
 )
 

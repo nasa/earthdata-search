@@ -9,11 +9,15 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
     as="li"
     bg="light"
     className="collection-details-data-center"
+    data-test-id={`collection-details-data-center-${item}`}
   >
     <Card.Body>
       {
         dataCenter.shortname && (
-          <h5 className="collection-details-data-center__title">
+          <h5
+            className="collection-details-data-center__title"
+            data-test-id="collection-details-data-center__title"
+          >
             {dataCenter.shortname}
           </h5>
         )
@@ -23,7 +27,12 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
           dataCenter.roles.map((role, i) => {
             const key = `data_center_role_${item}-${i}`
             return (
-              <Badge key={key} variant="primary" className="collection-details-data-center__badge">
+              <Badge
+                key={key}
+                variant="primary"
+                className="collection-details-data-center__badge"
+                data-test-id="collection-details-data-center__role"
+              >
                 {role}
               </Badge>
             )
@@ -35,7 +44,10 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
           <>
             {
               dataCenter.contactInstruction && (
-                <p className="collection-details-data-center__description">
+                <p
+                  className="collection-details-data-center__description"
+                  data-test-id="collection-details-data-center__description"
+                >
                   {dataCenter.contactInstruction}
                 </p>
               )
@@ -46,7 +58,11 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
                   const key = `data_center_email_${item}-${i}`
                   if (contact.type === 'Email') {
                     return (
-                      <p key={key} className="collection-details-data-center__email">
+                      <p
+                        key={key}
+                        className="collection-details-data-center__email"
+                        data-test-id="collection-details-data-center__email"
+                      >
                         <a href={`mailto:${contact.value}`}>
                           {contact.value}
                         </a>
@@ -79,7 +95,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
                         return (
                           <React.Fragment key={key}>
                             <dt>{`${contact.type}:`}</dt>
-                            <dd>
+                            <dd data-test-id={`collection-details-data-center__${contact.type.toLowerCase()}`}>
                               {contact.value}
                             </dd>
                           </React.Fragment>
@@ -95,7 +111,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
         )
       }
       {
-        !dataCenter.contactInformation && <p>No contact information for this data center.</p>
+        !dataCenter.contactInformation && <p data-test-id="collection-details-data-center__no-contact-info">No contact information for this data center.</p>
       }
     </Card.Body>
   </Card>

@@ -207,15 +207,18 @@ export const CollectionDetailsBody = ({
           <div className="row collection-details-body__row">
             <div className="col col-12">
               <div className="collection-details-body__tags">
-                <Badge className="collection-details-header__short-name mr-2" variant="light">{shortName}</Badge>
-                <Badge className="collection-details-header__version-id mr-2" variant="info">{`Version ${versionId}`}</Badge>
+                <Badge className="collection-details-header__short-name mr-2" variant="light" data-test-id="collection-details-header__short-name">{shortName}</Badge>
+                <Badge className="collection-details-header__version-id mr-2" variant="info" data-test-id="collection-details-header__version-id">{`Version ${versionId}`}</Badge>
                 {
                   doiText && buildDoiLink(doiLink, doiText)
                 }
               </div>
               {
                 associatedDois && associatedDois.length > 0 && (
-                  <dl className="collection-details-body__info">
+                  <dl
+                    className="collection-details-body__info"
+                    data-test-id="collection-details-body__info-additional-dois"
+                  >
                     <dt>Associated DOIs</dt>
                     <dd className="collection-details-body__links">
                       {
@@ -244,7 +247,10 @@ export const CollectionDetailsBody = ({
                   </dl>
                 )
               }
-              <dl className="collection-details-body__info">
+              <dl
+                className="collection-details-body__info"
+                data-test-id="collection-details-body__info-related-urls"
+              >
                 {
                   <>
                     <dt>Related URLs</dt>
@@ -277,88 +283,109 @@ export const CollectionDetailsBody = ({
                     </dd>
                   </>
                 }
-                {
-                  temporal && (
-                    <>
-                      <dt>Temporal Extent</dt>
-                      <dd>
-                        {temporal.map((entry, i) => {
-                          const key = `temporal_entry_${i}`
-                          return <span key={key}>{entry}</span>
-                        })}
-                      </dd>
-                    </>
-                  )
-                }
-                {
-                  nativeDataFormats && nativeDataFormats.length > 0 && (
-                    <>
-                      <dt>{`Native ${pluralize('Format', nativeDataFormats.length)}`}</dt>
-                      <dd>
-                        {
-                          nativeDataFormats.length > 0 && buildNativeFormatList(nativeDataFormats)
-                        }
-                      </dd>
-                    </>
-                  )
-                }
-                {
-                  Object.keys(reformattings).length > 0 && (
-                    <>
-                      <dt>
-                        Reformatting Options
-                        <span className="collection-details-body__heading-tooltip">
-                          <OverlayTrigger
-                            placement="right"
-                            overlay={(
-                              <Tooltip
-                                id="tooltip_supported-reformatting"
-                                className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
-                              >
-                                In addition to their native format, some data products can be
-                                reformatted to additional formats. If reformatting is desired,
-                                reformatting options can be set prior to downloading the data.
-                              </Tooltip>
-                            )}
-                          >
-                            <EDSCIcon icon={FaQuestionCircle} />
-                          </OverlayTrigger>
-                        </span>
-                      </dt>
-                      <dd>
-                        {
-                          // Using an array index in a key to prevent any duplicate keys when
-                          // there are duplicate supported input formats
-                          Object.keys(reformattings).map((supportedInputFormat, i) => {
-                            const {
-                              [supportedInputFormat]: supportedOutputFormats
-                            } = reformattings
+              </dl>
+              {
+                temporal && (
+                  <dl
+                    className="collection-details-body__info"
+                    data-test-id="collection-details-body__info-temporal"
+                  >
+                    <dt>Temporal Extent</dt>
+                    <dd>
+                      {temporal.map((entry, i) => {
+                        const key = `temporal_entry_${i}`
+                        return <span key={key}>{entry}</span>
+                      })}
+                    </dd>
+                  </dl>
+                )
+              }
+              {
+                nativeDataFormats && nativeDataFormats.length > 0 && (
+                  <dl
+                    className="collection-details-body__info"
+                    data-test-id="collection-details-body__info-native-data-formats"
+                  >
+                    <dt>{`Native ${pluralize('Format', nativeDataFormats.length)}`}</dt>
+                    <dd>
+                      {
+                        nativeDataFormats.length > 0 && buildNativeFormatList(nativeDataFormats)
+                      }
+                    </dd>
+                  </dl>
+                )
+              }
+              {
+                Object.keys(reformattings).length > 0 && (
+                  <dl
+                    className="collection-details-body__info"
+                    data-test-id="collection-details-body__info-reformattings"
+                  >
+                    <dt>
+                      Reformatting Options
+                      <span className="collection-details-body__heading-tooltip">
+                        <OverlayTrigger
+                          placement="right"
+                          overlay={(
+                            <Tooltip
+                              id="tooltip_supported-reformatting"
+                              className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
+                            >
+                              In addition to their native format, some data products can be
+                              reformatted to additional formats. If reformatting is desired,
+                              reformatting options can be set prior to downloading the data.
+                            </Tooltip>
+                          )}
+                        >
+                          <EDSCIcon icon={FaQuestionCircle} />
+                        </OverlayTrigger>
+                      </span>
+                    </dt>
+                    <dd>
+                      {
+                        // Using an array index in a key to prevent any duplicate keys when
+                        // there are duplicate supported input formats
+                        Object.keys(reformattings).map((supportedInputFormat, i) => {
+                          const {
+                            [supportedInputFormat]: supportedOutputFormats
+                          } = reformattings
 
-                            const key = `input-format__${supportedInputFormat}-${i}`
-                            return (
-                              <dl
-                                key={key}
-                                className="collection-details-body__reformatting-item"
-                              >
-                                <dt className="collection-details-body__reformatting-item-heading">
-                                  {supportedInputFormat}
-                                  <EDSCIcon icon={FaArrowRight} className="collection-details-body__reformatting-item-icon" />
-                                </dt>
-                                <dd className="collection-details-body__reformatting-item-body">
-                                  {supportedOutputFormats.join(', ')}
-                                </dd>
-                              </dl>
-                            )
-                          })
-                        }
-                      </dd>
-                    </>
-                  )
-                }
+                          const key = `input-format__${supportedInputFormat}-${i}`
+                          return (
+                            <dl
+                              key={key}
+                              className="collection-details-body__reformatting-item"
+                            >
+                              <dt className="collection-details-body__reformatting-item-heading">
+                                {supportedInputFormat}
+                                <EDSCIcon icon={FaArrowRight} className="collection-details-body__reformatting-item-icon" />
+                              </dt>
+                              <dd className="collection-details-body__reformatting-item-body">
+                                {supportedOutputFormats.join(', ')}
+                              </dd>
+                            </dl>
+                          )
+                        })
+                      }
+                    </dd>
+                  </dl>
+                )
+              }
+
+              <dl
+                className="collection-details-body__info"
+                data-test-id="collection-details-body__info-gibs-projections"
+              >
                 <dt>GIBS Imagery Projection Availability</dt>
                 <dd>
                   {gibsLayers && gibsLayers}
                 </dd>
+              </dl>
+
+              <dl
+                className="collection-details-body__info"
+                data-test-id="collection-details-body__info-science-keywords"
+              >
                 <dt>Science Keywords</dt>
                 <dd>
                   {
@@ -395,7 +422,7 @@ export const CollectionDetailsBody = ({
           <div className="row collection-details-body__row">
             {
               dataCenters.length && (
-                <ul className="col collection-details-body__provider-list">
+                <ul className="col collection-details-body__provider-list" data-test-id="collection-details-body__provider-list">
                   {
                     dataCenters.map((dataCenter, i) => {
                       const key = `data_center_${i}`
@@ -418,7 +445,10 @@ export const CollectionDetailsBody = ({
                   </div>
                   <dl className="collection-details-body__info">
                     <dt>Region</dt>
-                    <dd className="collection-details-body__cloud-access__region">
+                    <dd
+                      className="collection-details-body__cloud-access__region"
+                      data-test-id="collection-details-body__cloud-access__region"
+                    >
                       {region}
                     </dd>
 
@@ -432,6 +462,7 @@ export const CollectionDetailsBody = ({
                             <dd
                               key={key}
                               className="collection-details-body__cloud-access__bucket-name"
+                              data-test-id="collection-details-body__cloud-access__bucket-name"
                             >
                               {name}
                             </dd>
@@ -444,6 +475,7 @@ export const CollectionDetailsBody = ({
                     <dd className="collection-details-body__links collection-details-body__links--horizontal">
                       <a
                         className="link link--external collection-details-body__link collection-details-body__cloud-access__api-link"
+                        data-test-id="collection-details-body__cloud-access__api-link"
                         href={s3CredentialsApiEndpoint}
                         rel="noopener noreferrer"
                         target="_blank"
@@ -452,6 +484,7 @@ export const CollectionDetailsBody = ({
                       </a>
                       <a
                         className="link link--separated link--external collection-details-body__link collection-details-body__cloud-access__documentation-link"
+                        data-test-id="collection-details-body__cloud-access__documentation-link"
                         href={s3CredentialsApiDocumentationUrl}
                         rel="noopener noreferrer"
                         target="_blank"
