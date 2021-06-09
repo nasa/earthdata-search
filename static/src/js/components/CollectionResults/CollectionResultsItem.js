@@ -359,7 +359,6 @@ export const CollectionResultsItem = forwardRef(({
                   <Badge
                     className="collection-results-item__badge collection-results-item__badge--csda badge--purple"
                   >
-                    {/* <FaLock className="d-inline-block align-middle mr-1" size="0.75em" /> */}
                     <EDSCIcon
                       className="collection-results-item__badge-icon collection-results-item__badge-icon--csda d-inline-block mr-1"
                       icon={FaLock}
