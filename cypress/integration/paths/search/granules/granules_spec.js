@@ -1,5 +1,7 @@
 import { getByTestId } from '../../../../support/getByTestId'
 import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
+import { interceptUnauthenticatedCollections }
+  from '../../../../support/interceptUnauthenticatedCollections'
 
 import { commafy } from '../../../../../static/src/js/util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -103,24 +105,6 @@ import timelineTimelineHeaders from './__mocks__/timeline/timeline.headers.json'
 
 const { defaultCmrPageSize } = getApplicationConfig()
 
-
-
-const interceptCollections = () => {
-  // Intercept collections call before every test, its generic and doesn't change between tests
-  cy.intercept({
-    method: 'POST',
-    url: '**/search/collections.json'
-  },
-  (req) => {
-    expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
-
-    req.reply({
-      body: collectionsBody,
-      headers: collectionsHeaders
-    })
-  })
-}
-
 /**
  * Tests the search panel header and meta text for results size
  * @param {Integer} cmrHits Total number of collections that match the query
@@ -146,7 +130,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1059170
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -205,7 +189,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -265,7 +249,7 @@ describe('Path /search/granules', () => {
         const conceptId = 'C1214470488-ASF'
         const cmrHits = 17231
 
-        interceptCollections()
+        interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
         cy.intercept({
           method: 'POST',
@@ -328,7 +312,7 @@ describe('Path /search/granules', () => {
         const conceptId = 'C1214470488-ASF'
         const cmrHits = 72946
 
-        interceptCollections()
+        interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
         cy.intercept({
           method: 'POST',
@@ -394,7 +378,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 0
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -454,7 +438,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1059331
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -514,7 +498,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 227
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -574,7 +558,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C1251101828-GES_DISC'
       const cmrHits = 6078
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -634,7 +618,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C1251101828-GES_DISC'
       const cmrHits = 31
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -694,7 +678,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1059866
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -754,7 +738,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 15600
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -814,7 +798,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275357
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -873,7 +857,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 868
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -1008,7 +992,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275361
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -1080,7 +1064,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275361
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -1165,7 +1149,7 @@ describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275361
 
-      interceptCollections()
+      interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
       cy.intercept({
         method: 'POST',
@@ -1244,7 +1228,31 @@ describe('Path /search/granules', () => {
       },
       (req) => {
         expect(JSON.parse(req.body).params).to.eql({
-          has_granules_or_cwic: true, include_facets: 'v2', include_granule_counts: true, include_has_granules: true, include_tags: 'edsc.extra.*,opensearch.granule.osdd', options: { science_keywords_h: { or: true }, spatial: { or: true }, temporal: { limit_to_granules: true } }, page_num: 1, page_size: 20, point: ['-77.04119,38.80585'], service_type: [], sort_key: ['has_granules_or_cwic', '-usage_score'], tag_key: []
+          has_granules_or_cwic: true,
+          include_facets: 'v2',
+          include_granule_counts: true,
+          include_has_granules: true,
+          include_tags: 'edsc.extra.*,opensearch.granule.osdd',
+          options: {
+            science_keywords_h: {
+              or: true
+            },
+            spatial: {
+              or: true
+            },
+            temporal: {
+              limit_to_granules: true
+            }
+          },
+          page_num: 1,
+          page_size: 20,
+          point: ['-77.04119,38.80585'],
+          service_type: [],
+          sort_key: [
+            'has_granules_or_cwic',
+            '-usage_score'
+          ],
+          tag_key: []
         })
 
         req.reply({

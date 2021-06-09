@@ -84,7 +84,10 @@ export const PanelGroupHeader = ({
     <header className={panelGroupHeaderClasses}>
       {
         breadcrumbs.length > 0 && (
-          <nav className="panel-group-header__breadcrumbs">
+          <nav
+            className="panel-group-header__breadcrumbs"
+            data-test-id="panel-group-header__breadcrumbs"
+          >
             {
               breadcrumbs.map((crumb, i) => {
                 const key = `breadcrumb__${i}`

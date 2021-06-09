@@ -500,6 +500,7 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="collection-details-panel"
+        dataTestId="panel-group_granules-collections-results"
         primaryHeading={collectionTitle}
         headerLoading={initialCollectionsLoading}
         breadcrumbs={[
