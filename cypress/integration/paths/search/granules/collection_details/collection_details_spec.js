@@ -1,12 +1,11 @@
-import { getByTestId } from '../../../../support/getByTestId'
-import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
+import { getByTestId } from '../../../../../support/getByTestId'
+import { graphQlGetCollection } from '../../../../../support/graphQlGetCollection'
 
-import { commafy } from '../../../../../static/src/js/util/commafy'
-import { pluralize } from '../../../../../static/src/js/util/pluralize'
+import { commafy } from '../../../../../../static/src/js/util/commafy'
+import { pluralize } from '../../../../../../static/src/js/util/pluralize'
 
 import assocatedDoisGraphQlBody from './__mocks__/associated_dois/graphql.body.json'
 import collectionsBody from './__mocks__/common/collections.body.json'
-import collectionsHeaders from './__mocks__/common/collections.headers.json'
 import commonHeaders from './__mocks__/common/common.headers.json'
 import granulesBody from './__mocks__/associated_dois/granules.body.json'
 import graphQlHeaders from './__mocks__/common/graphql.headers.json'
@@ -196,7 +195,7 @@ describe('Path /search/granules/collection-details', () => {
         req.reply({
           body: collectionsBody,
           headers: {
-            ...collectionsHeaders,
+            ...commonHeaders,
             'cmr-hits': cmrHits.toString()
           }
         })
@@ -308,7 +307,7 @@ describe('Path /search/granules/collection-details', () => {
         req.reply({
           body: collectionsBody,
           headers: {
-            ...collectionsHeaders,
+            ...commonHeaders,
             'cmr-hits': cmrHits.toString()
           }
         })
