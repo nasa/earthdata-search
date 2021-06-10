@@ -3,6 +3,8 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import ProjectPanels from '../ProjectPanels'
+import PanelGroup from '../../Panels/PanelGroup'
+import PanelSection from '../../Panels/PanelSection'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -85,6 +87,7 @@ function setup(overrideProps) {
     overrideTemporal: {},
     onChangePath: jest.fn(),
     onSelectAccessMethod: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
@@ -448,6 +451,52 @@ describe('ProjectPanels component', () => {
           rawModel: undefined
         }
       }
+    })
+  })
+
+  describe('when on the access method panel', () => {
+    describe('when viewing a CSDA collection', () => {
+      test('shows a message and opens a modal for more information about the CSDA program', () => {
+        const { enzymeWrapper, props } = setup({
+          projectCollectionsMetadata: {
+            collectionId: {
+              isCSDA: true
+            }
+          }
+        })
+
+        const accessMethodPanelGroup = enzymeWrapper.find(PanelSection).at(1).find(PanelGroup).at(0)
+        const moreInfoButton = accessMethodPanelGroup.props()
+          .headerMessage.props.children.props.children[3]
+
+        moreInfoButton.props.onClick()
+
+        expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
+      })
+    })
+  })
+
+  describe('when on the collection panel', () => {
+    describe('when viewing a CSDA collection', () => {
+      test('shows a message and opens a modal for more information about the CSDA program', () => {
+        const { enzymeWrapper, props } = setup({
+          projectCollectionsMetadata: {
+            collectionId: {
+              isCSDA: true
+            }
+          }
+        })
+
+        const infoPanelGroup = enzymeWrapper.find(PanelSection).at(1).find(PanelGroup).at(0)
+        const moreInfoButton = infoPanelGroup.props()
+          .headerMessage.props.children.props.children[3]
+
+        moreInfoButton.props.onClick()
+
+        expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
+      })
     })
   })
 })

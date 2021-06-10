@@ -19,6 +19,7 @@ function setup() {
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
     onChangeProjectGranulePageNum: jest.fn(),
     onSetActivePanelGroup: jest.fn(),
@@ -185,6 +186,16 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onToggleAboutCSDAModal calls actions.viewCollectionGranules', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleAboutCSDAModal')
+
+    mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(true)
   })
 })
 
