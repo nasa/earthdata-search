@@ -113,6 +113,7 @@
   &__more-actions-dropdown {
     padding: $spacer/2;
     padding-left: 0;
+    align-items: flex-start;
 
     .more-actions-dropdown__toggle {
       padding: 0 0.325rem;
@@ -131,11 +132,12 @@
     justify-content: center;
     align-self: flex-end;
     padding: 0.25rem;
-    height: 5.2rem;
-    width: 5.2rem;
+    height: 5rem;
+    width: 5rem;
     background-color: #1a1a1a;
     overflow: hidden;
     font-size: 0.5rem;
+    border-bottom-left-radius: 0.25rem;
 
     .panels--sm & {
       display: flex;
