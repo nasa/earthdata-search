@@ -5,5 +5,16 @@
   "viewportHeight": 900,
   "testFiles": "**/*_spec.js",
   "fixturesFolder": "cypress/fixtures",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "ignoreTestFiles": [
+    "**/__snapshots__/*",
+    "**/__image_snapshots__/*"
+  ],
+  "env": {
+    "cypress-plugin-snapshots": {
+      "imageConfig": {
+        "threshold": 0.01
+      }
+    }
+  }
 }

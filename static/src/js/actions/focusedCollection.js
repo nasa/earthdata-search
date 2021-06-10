@@ -354,6 +354,8 @@ export const changeFocusedCollection = collectionId => (dispatch, getState) => {
   if (collectionId === '') {
     // If clearing the focused collection, also clear the focused granule
     dispatch(actions.changeFocusedGranule(''))
+    // And clear the spatial polygon warning if there is no focused collection
+    dispatch(actions.toggleSpatialPolygonWarning(false))
 
     eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: null })
 

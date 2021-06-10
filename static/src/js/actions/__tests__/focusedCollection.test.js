@@ -624,6 +624,10 @@ describe('changeFocusedCollection', () => {
         type: UPDATE_FOCUSED_GRANULE,
         payload: ''
       })
+      expect(storeActions[2]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
 
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(changeUrlMock).toHaveBeenCalledTimes(1)

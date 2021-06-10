@@ -10,6 +10,7 @@ import './FilterStackItem.scss'
 
 const FilterStackItem = (props) => {
   const {
+    dataTestId,
     children,
     error,
     hint,
@@ -38,7 +39,10 @@ const FilterStackItem = (props) => {
   ])
 
   return (
-    <li className={filterStackItemClasses}>
+    <li
+      className={filterStackItemClasses}
+      data-test-id={dataTestId}
+    >
       <div className="filter-stack-item__content">
         <div className="filter-stack-item__body">
           {
@@ -99,6 +103,7 @@ const FilterStackItem = (props) => {
 }
 
 FilterStackItem.defaultProps = {
+  dataTestId: null,
   error: null,
   hint: null,
   icon: null,
@@ -108,6 +113,7 @@ FilterStackItem.defaultProps = {
 }
 
 FilterStackItem.propTypes = {
+  dataTestId: PropTypes.string,
   children: PropTypes.node.isRequired,
   error: PropTypes.oneOfType([
     PropTypes.string,
