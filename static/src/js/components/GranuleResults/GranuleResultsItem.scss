@@ -231,6 +231,10 @@
     width: auto;
     background: $color__black--100;
     border-radius: 0 0 $border-radius $border-radius;
+
+    .granule-results-item--has-thumbnail & {
+      border-bottom-left-radius: 0;
+    }
   }
 
   &__button,
