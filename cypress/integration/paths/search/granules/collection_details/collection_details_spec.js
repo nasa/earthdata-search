@@ -275,34 +275,10 @@ describe('Path /search/granules/collection-details', () => {
 
       cy.intercept({
         method: 'POST',
-        url: '**/collections'
+        url: '**/search/collections.json'
       },
       (req) => {
-        expect(JSON.parse(req.body).params).to.eql({
-          include_facets: 'v2',
-          include_granule_counts: true,
-          include_has_granules: true,
-          include_tags: 'edsc.extra.*,opensearch.granule.osdd',
-          options: {
-            science_keywords_h: {
-              or: true
-            },
-            spatial: {
-              or: true
-            },
-            temporal: {
-              limit_to_granules: true
-            }
-          },
-          page_num: 1,
-          page_size: 20,
-          service_type: [],
-          sort_key: [
-            'has_granules_or_cwic',
-            '-usage_score'
-          ],
-          tag_key: []
-        })
+        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
         req.reply({
           body: collectionsBody,
@@ -315,30 +291,10 @@ describe('Path /search/granules/collection-details', () => {
 
       cy.intercept({
         method: 'POST',
-        url: '**/granules'
+        url: '**/search/granules.json'
       },
       (req) => {
-        expect(JSON.parse(req.body).params).to.eql({
-          concept_id: [],
-          echo_collection_id: 'C1996546500-GHRC_DAAC',
-          exclude: {},
-          options: {
-            spatial: {
-              or: true
-            }
-          },
-          page_num: 1,
-          page_size: 20,
-          two_d_coordinate_system: {}
-        })
-
-        req.reply({
-          body: granulesBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': granuleHits.toString()
-          }
-        })
+        expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20')
       })
 
       cy.intercept({

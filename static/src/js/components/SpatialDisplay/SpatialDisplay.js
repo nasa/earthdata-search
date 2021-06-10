@@ -769,6 +769,7 @@ class SpatialDisplay extends Component {
       items.push((
         <FilterStackItem
           key="item__spatial"
+          dataTestId="filter-stack__spatial"
           icon={FaCrop}
           title="Spatial"
           secondaryTitle={secondaryTitle}

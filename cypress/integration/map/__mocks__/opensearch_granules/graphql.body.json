@@ -1,0 +1,163 @@
+{
+  "data": {
+    "collection": {
+      "abstract": "This Global LAnd Surface Satellite (GLASS) Fraction of Absorbed Photosynthetically Active Radiation (FAPAR)  product was generated using MODIS products.",
+      "archiveAndDistributionInformation": {
+        "fileArchiveInformation": [
+          {
+            "format": "hdf4",
+            "formatDescription": "HDF-4",
+            "averageFileSize": 4.26,
+            "averageFileSizeUnit": "MB",
+            "totalCollectionFileSize": 4.3,
+            "totalCollectionFileSizeUnit": "GB"
+          }
+        ],
+        "fileDistributionInformation": [
+          {
+            "format": "hdf4",
+            "formatType": "Native",
+            "averageFileSize": 4.26,
+            "averageFileSizeUnit": "MB",
+            "totalCollectionFileSize": 4.3,
+            "totalCollectionFileSizeUnit": "GB"
+          }
+        ]
+      },
+      "associatedDois": null,
+      "boxes": ["-90 -180 90 180"],
+      "conceptId": "C1972468359-SCIOPS",
+      "coordinateSystem": "GEODETIC",
+      "dataCenter": "SCIOPS",
+      "dataCenters": [
+        {
+          "roles": ["ARCHIVER"],
+          "shortName": "CN/Global change data center",
+          "longName": "Global change data processing and Analysis Center",
+          "contactInformation": {
+            "serviceHours": "8:30-18:00",
+            "contactMechanisms": [
+              { "type": "Email", "value": "datacenter@bnu.edu.cn" }
+            ],
+            "addresses": [
+              {
+                "country": "China",
+                "streetAddresses": ["No.19, XinJieKouWai Street"],
+                "city": "Beijing",
+                "stateProvince": "Beijing",
+                "postalCode": "100084"
+              }
+            ],
+            "relatedUrls": [
+              {
+                "description": "BNU Center for Global Change Data Processing and Analysis",
+                "urlContentType": "DataCenterURL",
+                "type": "HOME PAGE",
+                "url": "https://glass.bnu.edu.cn/gk/lsyg/lsyg.html"
+              }
+            ]
+          },
+          "contactPersons": [
+            {
+              "roles": ["Data Center Contact"],
+              "firstName": "Liulin",
+              "lastName": "Song",
+              "contactInformation": {
+                "serviceHours": "8:30-18:00",
+                "contactMechanisms": [
+                  { "type": "Email", "value": "datacenter@bnu.edu.cn" }
+                ],
+                "addresses": [
+                  {
+                    "country": "China",
+                    "streetAddresses": ["No.19, XinJieKouWai Street"],
+                    "city": "Beijing",
+                    "stateProvince": "Beijing",
+                    "postalCode": "100084"
+                  }
+                ],
+                "relatedUrls": [
+                  {
+                    "urlContentType": "DataContactURL",
+                    "type": "HOME PAGE",
+                    "url": "https://glass.bnu.edu.cn/gk/lsyg/lsyg.html"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "directDistributionInformation": null,
+      "doi": { "missingReason": "Not Applicable" },
+      "hasGranules": false,
+      "lines": null,
+      "nativeDataFormats": ["hdf4"],
+      "points": null,
+      "polygons": null,
+      "relatedUrls": [
+        {
+          "description": "product description",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "url": "https://journals.ametsoc.org/bams/article/doi/10.1175/BAMS-D-18-0341.1/354710/The-Global-LAnd-Surface-Satellite-GLASS-product"
+        },
+        {
+          "description": "A landing page for all the GLASS data products",
+          "urlContentType": "CollectionURL",
+          "type": "DATA SET LANDING PAGE",
+          "url": " http://glass-product.bnu.edu.cn/englishpage.html"
+        }
+      ],
+      "scienceKeywords": [
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "SURFACE RADIATIVE PROPERTIES",
+          "variableLevel1": "REFLECTANCE"
+        }
+      ],
+      "shortName": "NRSCC_GLASS_ FAPAR_MODIS_0.05D",
+      "spatialExtent": {
+        "spatialCoverageType": "HORIZONTAL",
+        "horizontalSpatialDomain": {
+          "geometry": {
+            "coordinateSystem": "GEODETIC",
+            "boundingRectangles": [
+              {
+                "northBoundingCoordinate": 90,
+                "westBoundingCoordinate": -180,
+                "eastBoundingCoordinate": 180,
+                "southBoundingCoordinate": -90
+              }
+            ]
+          }
+        },
+        "granuleSpatialRepresentation": "GEODETIC"
+      },
+      "tags": {
+        "opensearch.granule.osdd": {
+          "data": "http://47.90.244.40/glass/osdd/fapar_modis_0.05d.xml"
+        }
+      },
+      "temporalExtents": [
+        {
+          "endsAtPresentFlag": true,
+          "rangeDateTimes": [
+            {
+              "beginningDateTime": "2010-02-18T00:00:00.000Z",
+              "endingDateTime": "2015-12-31T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "tilingIdentificationSystems": null,
+      "title": "NRSCC_GLASS_ FAPAR_MODIS_0.05D",
+      "versionId": "11",
+      "services": { "count": 0, "items": null },
+      "granules": { "count": 0, "items": [] },
+      "subscriptions": { "count": 0, "items": [] },
+      "variables": { "count": 0, "items": null }
+    }
+  }
+}
