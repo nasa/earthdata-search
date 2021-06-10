@@ -28,34 +28,61 @@ export const mapStateToProps = state => ({
 })
 
 export const mapDispatchToProps = dispatch => ({
+  onAddGranuleToProjectCollection:
+    data => dispatch(actions.addGranuleToProjectCollection(data)),
   onChangePath:
     path => dispatch(actions.changePath(path)),
+  onChangeProjectGranulePageNum:
+      data => dispatch(actions.changeProjectGranulePageNum(data)),
+  onFetchDataQualitySummaries:
+    conceptId => dispatch(actions.fetchDataQualitySummaries(conceptId)),
+  onFocusedGranuleChange:
+    granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
+  onRemoveGranuleFromProjectCollection:
+    data => dispatch(actions.removeGranuleFromProjectCollection(data)),
   onSelectAccessMethod:
     method => dispatch(actions.selectAccessMethod(method)),
-  onTogglePanels:
-    value => dispatch(actions.togglePanels(value)),
   onSetActivePanel:
     panelId => dispatch(actions.setActivePanel(panelId)),
   onSetActivePanelGroup:
     panelId => dispatch(actions.setActivePanelGroup(panelId)),
+  onToggleAboutCSDAModal:
+    state => dispatch(actions.toggleAboutCSDAModal(state)),
+  onTogglePanels:
+    value => dispatch(actions.togglePanels(value)),
   onUpdateAccessMethod:
     data => dispatch(actions.updateAccessMethod(data)),
-  onFetchDataQualitySummaries:
-    conceptId => dispatch(actions.fetchDataQualitySummaries(conceptId)),
-  onAddGranuleToProjectCollection:
-    data => dispatch(actions.addGranuleToProjectCollection(data)),
-  onRemoveGranuleFromProjectCollection:
-    data => dispatch(actions.removeGranuleFromProjectCollection(data)),
   onUpdateFocusedCollection:
     collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
-  onFocusedGranuleChange:
-    granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
-  onChangeProjectGranulePageNum:
-    data => dispatch(actions.changeProjectGranulePageNum(data)),
   onViewCollectionGranules:
     collectionId => dispatch(actions.viewCollectionGranules(collectionId))
 })
 
+/**
+ * Renders ProjectPanelsContainer.
+ * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
+ * @param {String} focusedCollectionId - The focused collection ID.
+ * @param {String} focusedGranuleId - The focused granule ID.
+ * @param {Object} collection - The current collection.
+ * @param {String} collectionId - The current collection ID.
+ * @param {Object} location - The location from the store.
+ * @param {Object} panels - The current panels state.
+ * @param {Object} portal - The portal from the store.
+ * @param {Object} project - The project from the store.
+ * @param {Object} spatial - The spatial from the store.
+ * @param {Object} shapefileId - The shapefileId from the store.
+ * @param {Object} projectCollection - The project collection.
+ * @param {Function} onSetActivePanelGroup - Callback to set the page number.
+ * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
+ * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
+ * @param {Function} onUpdateAccessMethod - Callback to update the access method.
+ * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
+ * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
+ * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
+ * @param {Function} onTogglePanels - Toggles the panels opened or closed.
+ * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
+ * @param {Function} onSetActivePanel - Switches the currently active panel.
+ */
 export const ProjectPanelsContainer = ({
   dataQualitySummaries,
   focusedCollectionId,
@@ -70,6 +97,7 @@ export const ProjectPanelsContainer = ({
   onSelectAccessMethod,
   onSetActivePanel,
   onSetActivePanelGroup,
+  onToggleAboutCSDAModal,
   onTogglePanels,
   onUpdateAccessMethod,
   onUpdateFocusedCollection,
@@ -97,6 +125,7 @@ export const ProjectPanelsContainer = ({
     onSelectAccessMethod={onSelectAccessMethod}
     onSetActivePanel={onSetActivePanel}
     onSetActivePanelGroup={onSetActivePanelGroup}
+    onToggleAboutCSDAModal={onToggleAboutCSDAModal}
     onTogglePanels={onTogglePanels}
     onUpdateAccessMethod={onUpdateAccessMethod}
     onUpdateFocusedCollection={onUpdateFocusedCollection}
@@ -132,6 +161,7 @@ ProjectPanelsContainer.propTypes = {
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelGroup: PropTypes.func.isRequired,
+  onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,

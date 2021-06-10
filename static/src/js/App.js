@@ -153,6 +153,9 @@ class App extends Component {
                       <AboutCSDAModalContainer />
                       <AboutCwicModalContainer />
                     </Route>
+                    <Route path={this.portalPaths('/projects')}>
+                      <AboutCSDAModalContainer />
+                    </Route>
                   </Switch>
                 </UrlQueryContainer>
               </AuthTokenContainer>

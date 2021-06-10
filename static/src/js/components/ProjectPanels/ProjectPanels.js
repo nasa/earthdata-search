@@ -5,8 +5,10 @@ import {
   FaCheckCircle,
   FaCog,
   FaExclamationCircle,
-  FaMap
+  FaMap,
+  FaQuestionCircle
 } from 'react-icons/fa'
+import { Col } from 'react-bootstrap'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
@@ -49,6 +51,7 @@ import './ProjectPanels.scss'
  * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
  * @param {Function} onTogglePanels - Toggles the panels opened or closed.
+ * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
  * @param {Function} onSetActivePanel - Switches the currently active panel.
  */
 class ProjectPanels extends PureComponent {
@@ -275,6 +278,7 @@ class ProjectPanels extends PureComponent {
       onRemoveGranuleFromProjectCollection,
       onSelectAccessMethod,
       onSetActivePanel,
+      onToggleAboutCSDAModal,
       onTogglePanels,
       onUpdateAccessMethod,
       panels,
@@ -327,7 +331,8 @@ class ProjectPanels extends PureComponent {
       const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
 
       const {
-        title
+        title,
+        isCSDA: collectionIsCSDA
       } = collectionMetadata
 
       const { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
@@ -435,6 +440,30 @@ class ProjectPanels extends PureComponent {
         <PanelGroup
           key={`${collectionId}_edit-options`}
           primaryHeading="Edit Options"
+          headerMessage={(
+            <>
+              {
+                collectionIsCSDA && (
+                  <Col className="search-panels__note">
+                    {'This collection is made available through the '}
+                    <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                    {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                    <Button
+                      className="search-panels__header-message-link"
+                      dataTestId="search-panels__csda-modal-button"
+                      onClick={() => onToggleAboutCSDAModal(true)}
+                      variant="link"
+                      bootstrapVariant="link"
+                      icon={FaQuestionCircle}
+                      label="More details"
+                    >
+                      More Details
+                    </Button>
+                  </Col>
+                )
+              }
+            </>
+          )}
           breadcrumbs={[
             {
               title,
@@ -505,6 +534,30 @@ class ProjectPanels extends PureComponent {
           ]}
           primaryHeading={title}
           headerMetaPrimaryText={projectGranulesHeaderMetaPrimaryText}
+          headerMessage={(
+            <>
+              {
+                collectionIsCSDA && (
+                  <Col className="search-panels__note">
+                    {'This collection is made available through the '}
+                    <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                    {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                    <Button
+                      className="search-panels__header-message-link"
+                      dataTestId="search-panels__csda-modal-button"
+                      onClick={() => onToggleAboutCSDAModal(true)}
+                      variant="link"
+                      bootstrapVariant="link"
+                      icon={FaQuestionCircle}
+                      label="More details"
+                    >
+                      More Details
+                    </Button>
+                  </Col>
+                )
+              }
+            </>
+          )}
         >
           <PanelItem scrollable={false}>
             <CollectionDetails
@@ -562,6 +615,7 @@ ProjectPanels.propTypes = {
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelGroup: PropTypes.func.isRequired,
+  onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
