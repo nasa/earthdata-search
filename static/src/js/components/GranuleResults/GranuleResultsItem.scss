@@ -118,6 +118,8 @@
     .more-actions-dropdown__toggle {
       padding: 0 0.325rem;
       height: 1.5rem;
+      display: flex;
+      align-items: center;
     }
 
     i {
