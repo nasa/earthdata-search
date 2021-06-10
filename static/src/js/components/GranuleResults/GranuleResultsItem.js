@@ -156,7 +156,8 @@ const GranuleResultsItem = forwardRef(({
     {
       'granule-results-item--active': isFocusedGranule || isHoveredGranule,
       'granule-results-item--emphisized': isCollectionInProject && isInProject,
-      'granule-results-item--deemphisized': isCollectionInProject && !isInProject
+      'granule-results-item--deemphisized': isCollectionInProject && !isInProject,
+      'granule-results-item--has-thumbnail': browseFlag
     }
   ])
 

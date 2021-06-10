@@ -469,7 +469,8 @@ describe('GranuleResultsItem component', () => {
   describe('when no granules are in the project', () => {
     test('does not have an emphisized or deepmphisized class', () => {
       const { enzymeWrapper } = setup('cmr')
-      expect(enzymeWrapper.props().className).toEqual('granule-results-item')
+      expect(enzymeWrapper.props().className).not.toContain('granule-results-item--emphisized')
+      expect(enzymeWrapper.props().className).not.toContain('granule-results-item--deemphisized')
     })
 
     test('displays the add button', () => {
@@ -574,6 +575,12 @@ describe('GranuleResultsItem component', () => {
 
       expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(0)
     })
+
+    test('does not add the modifier class name', () => {
+      const { enzymeWrapper } = setup('no-thumb')
+
+      expect(enzymeWrapper.props().className).not.toContain('granule-results-item--has-thumbnail')
+    })
   })
 
   describe('with a granuleThumbnail', () => {
@@ -588,6 +595,12 @@ describe('GranuleResultsItem component', () => {
       const { enzymeWrapper } = setup('with-browse')
       expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(1)
       expect(enzymeWrapper.find('.granule-results-item__thumb').type()).toEqual('a')
+    })
+
+    test('adds the modifier class name', () => {
+      const { enzymeWrapper } = setup('with-browse')
+
+      expect(enzymeWrapper.props().className).toContain('granule-results-item--has-thumbnail')
     })
   })
 
