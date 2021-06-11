@@ -679,7 +679,7 @@ describe('Map interactions', () => {
               headers: { 'content-type': 'application/json; charset=utf-8' }
             }
           )
-        })
+        }).as('shapefileConvertRequest')
 
         cy.intercept(
           'POST',
@@ -688,7 +688,7 @@ describe('Map interactions', () => {
             body: { shapefile_id: '1' },
             headers: { 'content-type': 'application/json; charset=utf-8' }
           }
-        )
+        ).as('shapefilesApiRequest')
 
         cy.visit('/')
 
@@ -701,6 +701,9 @@ describe('Map interactions', () => {
           },
           { subjectType: 'drag-n-drop' }
         )
+
+        cy.wait('@shapefileConvertRequest')
+        cy.wait('@shapefilesApiRequest')
 
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
@@ -748,7 +751,7 @@ describe('Map interactions', () => {
               headers: { 'content-type': 'application/json; charset=utf-8' }
             }
           )
-        })
+        }).as('shapefileConvertRequest')
 
         cy.intercept(
           'POST',
@@ -757,7 +760,7 @@ describe('Map interactions', () => {
             body: { shapefile_id: '1' },
             headers: { 'content-type': 'application/json; charset=utf-8' }
           }
-        )
+        ).as('shapefilesApiRequest')
 
         cy.visit('/')
 
@@ -770,6 +773,9 @@ describe('Map interactions', () => {
           },
           { subjectType: 'drag-n-drop' }
         )
+
+        cy.wait('@shapefileConvertRequest')
+        cy.wait('@shapefilesApiRequest')
 
         // Select the line
         cy.get('.leaflet-interactive').eq(2).click({ force: true })
@@ -823,7 +829,7 @@ describe('Map interactions', () => {
               headers: { 'content-type': 'application/json; charset=utf-8' }
             }
           )
-        })
+        }).as('shapefileConvertRequest')
 
         cy.intercept(
           'POST',
@@ -832,7 +838,7 @@ describe('Map interactions', () => {
             body: { shapefile_id: '1' },
             headers: { 'content-type': 'application/json; charset=utf-8' }
           }
-        )
+        ).as('shapefilesApiRequest')
 
         cy.visit('/')
 
@@ -845,6 +851,9 @@ describe('Map interactions', () => {
           },
           { subjectType: 'drag-n-drop' }
         )
+
+        cy.wait('@shapefileConvertRequest')
+        cy.wait('@shapefilesApiRequest')
 
         // Select the circle
         cy.get('.leaflet-interactive').eq(3).click({ force: true })
@@ -898,7 +907,7 @@ describe('Map interactions', () => {
               headers: { 'content-type': 'application/json; charset=utf-8' }
             }
           )
-        })
+        }).as('shapefileConvertRequest')
 
         cy.intercept(
           'POST',
@@ -907,7 +916,7 @@ describe('Map interactions', () => {
             body: { shapefile_id: '1' },
             headers: { 'content-type': 'application/json; charset=utf-8' }
           }
-        )
+        ).as('shapefilesApiRequest')
 
         cy.visit('/')
 
@@ -920,6 +929,9 @@ describe('Map interactions', () => {
           },
           { subjectType: 'drag-n-drop' }
         )
+
+        cy.wait('@shapefileConvertRequest')
+        cy.wait('@shapefilesApiRequest')
 
         // Select the point
         cy.get('.leaflet-marker-icon.leaflet-interactive').click({ force: true })
@@ -973,7 +985,7 @@ describe('Map interactions', () => {
               headers: { 'content-type': 'application/json; charset=utf-8' }
             }
           )
-        })
+        }).as('shapefileConvertRequest')
 
         cy.intercept(
           'POST',
@@ -982,7 +994,7 @@ describe('Map interactions', () => {
             body: { shapefile_id: '1' },
             headers: { 'content-type': 'application/json; charset=utf-8' }
           }
-        )
+        ).as('shapefilesApiRequest')
 
         cy.visit('/')
 
@@ -995,6 +1007,9 @@ describe('Map interactions', () => {
           },
           { subjectType: 'drag-n-drop' }
         )
+
+        cy.wait('@shapefileConvertRequest')
+        cy.wait('@shapefilesApiRequest')
 
         // Select two shapes
         cy.get('.geojson-svg.leaflet-interactive').eq(0).click({ force: true })
@@ -1082,7 +1097,7 @@ describe('Map interactions', () => {
         cy.wait('@shapefilesApiRequest')
         // Wait for the large shape to be drawn
         // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(1000)
+        cy.wait(2000)
 
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
