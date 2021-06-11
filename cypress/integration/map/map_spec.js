@@ -704,6 +704,9 @@ describe('Map interactions', () => {
 
         cy.wait('@shapefileConvertRequest')
         cy.wait('@shapefilesApiRequest')
+        // Wait for the large shape to be drawn
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
 
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
@@ -776,6 +779,9 @@ describe('Map interactions', () => {
 
         cy.wait('@shapefileConvertRequest')
         cy.wait('@shapefilesApiRequest')
+        // Wait for the large shape to be drawn
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
 
         // Select the line
         cy.get('.leaflet-interactive').eq(2).click({ force: true })
@@ -854,6 +860,9 @@ describe('Map interactions', () => {
 
         cy.wait('@shapefileConvertRequest')
         cy.wait('@shapefilesApiRequest')
+        // Wait for the large shape to be drawn
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
 
         // Select the circle
         cy.get('.leaflet-interactive').eq(3).click({ force: true })
@@ -932,6 +941,9 @@ describe('Map interactions', () => {
 
         cy.wait('@shapefileConvertRequest')
         cy.wait('@shapefilesApiRequest')
+        // Wait for the large shape to be drawn
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
 
         // Select the point
         cy.get('.leaflet-marker-icon.leaflet-interactive').click({ force: true })
@@ -1010,6 +1022,9 @@ describe('Map interactions', () => {
 
         cy.wait('@shapefileConvertRequest')
         cy.wait('@shapefilesApiRequest')
+        // Wait for the large shape to be drawn
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
 
         // Select two shapes
         cy.get('.geojson-svg.leaflet-interactive').eq(0).click({ force: true })
