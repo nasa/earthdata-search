@@ -26,7 +26,6 @@ import { getJwtToken } from './getJwtToken'
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import 'cypress-plugin-snapshots/commands'
 import 'cypress-file-upload'
 
 Cypress.Commands.add('login', () => {

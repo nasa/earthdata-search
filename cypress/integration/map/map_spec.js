@@ -1577,10 +1577,7 @@ describe('Map interactions', () => {
         cy.wait('@granulesRequest')
       })
 
-      it('matches the snapshot', () => {
-        // Only record this snapshot using `npm run cypress:run`
-        cy.get('body').toMatchImageSnapshot()
-      })
+      // TODO find a way to verify the granules are drawn on the map
 
       describe('When hovering over a granule', () => {
         before(() => {
@@ -1734,11 +1731,6 @@ describe('Map interactions', () => {
           cy.wait(`@${alias}`)
         })
         cy.wait('@granulesRequest')
-      })
-
-      it('matches the snapshot', () => {
-        // Only record this snapshot using `npm run cypress:run`
-        cy.get('body').toMatchImageSnapshot()
       })
 
       it('displays an outline of the minimum bounding rectangle', () => {
