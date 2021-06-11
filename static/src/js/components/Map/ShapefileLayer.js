@@ -4,6 +4,7 @@ import {
   MapLayer
 } from 'react-leaflet'
 import forge from 'node-forge'
+import { isEqual } from 'lodash'
 
 import { eventEmitter } from '../../events/events'
 import { colorOptions } from '../SpatialSelection/SpatialSelection'
@@ -341,30 +342,38 @@ class ShapefileLayerExtended extends L.Layer {
     let newLatLngs = latlngs
     if (!L.LineUtil.isFlat(newLatLngs)) { [newLatLngs] = newLatLngs }
 
-    if (newLatLngs.length > MAX_POLYGON_SIZE) {
-      const { map } = this
-      const points = ((() => {
-        const result1 = []
-        newLatLngs.forEach((latlng) => {
-          result1.push(map.latLngToLayerPoint(latlng))
-        })
-
-        return result1
-      })())
-      let tolerance = 1
-      result = points
-      while (result.length > MAX_POLYGON_SIZE) {
-        result = L.LineUtil.simplify(points, tolerance += 1)
-      }
-
-      newLatLngs = (result.map(point => map.layerPointToLatLng(point)))
-    }
-
     // Remove redundancies
     result = []
     let prev = newLatLngs[newLatLngs.length - 1]
     newLatLngs.forEach((latlng) => {
-      if (!latlng.equals(prev)) { result.push(latlng) }
+      if (!isEqual(latlng, prev)) { result.push(latlng) }
+      prev = latlng
+    })
+
+    newLatLngs = result
+
+    if (newLatLngs.length > MAX_POLYGON_SIZE) {
+      const points = ((() => {
+        const result1 = []
+        newLatLngs.forEach(latlng => result1.push({ x: latlng.lng, y: latlng.lat }))
+
+        return result1
+      })())
+
+      let tolerance = 0
+      result = points
+      while (result.length > MAX_POLYGON_SIZE) {
+        result = L.LineUtil.simplify(points, tolerance += 0.01)
+      }
+
+      newLatLngs = (result.map(point => ({ lat: point.y, lng: point.x })))
+    }
+
+    // Remove redundancies
+    result = []
+    prev = newLatLngs[newLatLngs.length - 1]
+    newLatLngs.forEach((latlng) => {
+      if (!isEqual(latlng, prev)) { result.push(latlng) }
       prev = latlng
     })
 
