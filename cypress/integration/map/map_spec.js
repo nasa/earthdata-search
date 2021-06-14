@@ -31,7 +31,7 @@ import tooManyPointsShapefileBody from './__mocks__/too_many_points_shapefile_co
 describe('Map interactions', () => {
   describe('When drawing point spatial', () => {
     describe('When drawing a new point from the spatial selection', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -60,23 +60,20 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?sp[0]=42.1875%2C-2.40647')
-      })
 
-      it('draws a point on the map', () => {
+        // draws a point on the map
         cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1000px, 450px, 0px); z-index: 450;')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_point').should('have.value', '-2.40647,42.1875')
       })
     })
 
     describe('When drawing a new point from the leaflet controls', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -102,23 +99,20 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?sp[0]=42.1875%2C-2.40647')
-      })
 
-      it('draws a point on the map', () => {
+        // draws a point on the map
         cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1000px, 450px, 0px); z-index: 450;')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_point').should('have.value', '-2.40647,42.1875')
       })
     })
 
     describe('When typing a new point in the spatial display', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -147,24 +141,21 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?sp[0]=42.1875%2C-2.40647&m=-2.406005859375!42.1875!7!1!0!0%2C2')
-      })
 
-      it('draws a point on the map', () => {
+        // draws a point on the map
         cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(700px, 434px, 0px); z-index: 434;')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_point').should('have.value', '-2.40647,42.1875')
       })
     })
 
     // This isn't working because cypress is unable to drag the edit icons for the leaflet-draw shape
     describe.skip('When editing a point', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -226,17 +217,14 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?sp[0]=42%2C-2')
-      })
 
-      it('draws a point on the map', () => {
+        // draws a point on the map
         cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(700px, 433px, 0px); z-index: 433;')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_point').should('have.value', '-2,42')
       })
     })
@@ -244,7 +232,7 @@ describe('Map interactions', () => {
 
   describe('When drawing circle spatial', () => {
     describe('When drawing a new circle from the spatial selection', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -286,24 +274,21 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?circle[0]=42.1875%2C2.2329%2C156326')
-      })
 
-      it('draws a circle on the map', () => {
+        // draws a circle on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M990,417.12161504783523a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_circle-center').should('have.value', '2.2329,42.1875')
         getByTestId('spatial-display_circle-radius').should('have.value', '156326')
       })
     })
 
     describe('When drawing a new circle from the leaflet controls', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -342,24 +327,21 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?circle[0]=42.1875%2C2.2329%2C156326')
-      })
 
-      it('draws a circle on the map', () => {
+        // draws a circle on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M990,417.12161504783523a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_circle-center').should('have.value', '2.2329,42.1875')
         getByTestId('spatial-display_circle-radius').should('have.value', '156326')
       })
     })
 
     describe('When typing a new circle in the spatial display', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -389,17 +371,14 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?circle[0]=42.1875%2C2.2329%2C156326&m=2.23681640625!42.1875!6!1!0!0%2C2')
-      })
 
-      it('draws a circle on the map', () => {
+        // draws a circle on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M540,433.9455999999991a160,160 0 1,0 320,0 a160,160 0 1,0 -320,0 ')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_circle-center').should('have.value', '2.2329,42.1875')
         getByTestId('spatial-display_circle-radius').should('have.value', '156326')
       })
@@ -410,7 +389,7 @@ describe('Map interactions', () => {
 
   describe('When drawing bounding box spatial', () => {
     describe('When drawing a new bounding box from the spatial selection', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -441,24 +420,21 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?sb[0]=42.1875%2C-16.46517%2C56.25%2C-2.40647')
-      })
 
-      it('draws a bounding box on the map', () => {
+        // draws a bounding box on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1000 550L1000 450L1100 450L1100 550L1000 550z')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_southwest-point').should('have.value', '-16.46517,42.1875')
         getByTestId('spatial-display_northeast-point').should('have.value', '-2.40647,56.25')
       })
     })
 
     describe('When drawing a new bounding box from the leaflet controls', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -486,24 +462,21 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?sb[0]=42.1875%2C-16.46517%2C56.25%2C-2.40647')
-      })
 
-      it('draws a bounding box on the map', () => {
+        // draws a bounding box on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1000 550L1000 450L1100 450L1100 550L1000 550z')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_southwest-point').should('have.value', '-16.46517,42.1875')
         getByTestId('spatial-display_northeast-point').should('have.value', '-2.40647,56.25')
       })
     })
 
     describe('When typing a new bounding box in the spatial display', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -533,17 +506,14 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?sb[0]=42.1875%2C-16.46517%2C56.25%2C-2.40647&m=-9.439453125!49.21875!4!1!0!0%2C2')
-      })
 
-      it('draws a bounding box on the map', () => {
+        // draws a bounding box on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M500 633L500 233L900 233L900 633L500 633z')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('spatial-display_southwest-point').should('have.value', '-16.46517,42.1875')
         getByTestId('spatial-display_northeast-point').should('have.value', '-2.40647,56.25')
       })
@@ -554,7 +524,7 @@ describe('Map interactions', () => {
 
   describe('When drawing polygon spatial', () => {
     describe('When drawing a new polygon from the spatial selection', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -587,24 +557,21 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?polygon[0]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647')
-      })
 
-      it('draws a polygon on the map', () => {
+        // draws a polygon on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1000 450L1049 501L1100 550L1000 550L1000 450z')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Polygon')
         getByTestId('spatial-display_polygon').should('have.text', '3 Points')
       })
     })
 
     describe('When drawing a new polygon from the leaflet controls', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -634,17 +601,14 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?polygon[0]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647')
-      })
 
-      it('draws a polygon on the map', () => {
+        // draws a polygon on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1000 450L1049 501L1100 550L1000 550L1000 450z')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Polygon')
         getByTestId('spatial-display_polygon').should('have.text', '3 Points')
       })
@@ -1129,7 +1093,7 @@ describe('Map interactions', () => {
 
   describe('When moving the map', () => {
     describe('When dragging the map', () => {
-      before(() => {
+      it('updates the URL with the new map parameter', () => {
         const aliases = interceptUnauthenticatedCollections(commonBody, commonHeaders)
 
         cy.visit('/')
@@ -1142,15 +1106,13 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL with the new map parameter', () => {
         cy.url().should('include', '?m=14.410148015647792!0!2!1!0!0%2C2')
       })
     })
 
     describe('When zooming the map', () => {
-      before(() => {
+      it('updates the URL with the new map parameter', () => {
         const aliases = interceptUnauthenticatedCollections(commonBody, commonHeaders)
 
         cy.visit('/')
@@ -1161,9 +1123,7 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL with the new map parameter', () => {
         // Ignoring the lat!lon in this param, because it doesn't always end up at 0,0
         cy.url().should('include', '!3!1!0!0%2C2')
       })
