@@ -17,6 +17,7 @@ import { hasTag } from '../../../../sharedUtils/tags'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { isCSDACollection } from '../util/isCSDACollection'
+import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -194,6 +195,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           dataCenters,
           granules,
           hasGranules,
+          links,
           nativeDataFormats,
           services,
           shortName,
@@ -212,6 +214,10 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           earthdataEnvironment
         )
 
+        // Check for an OpenSearch link, but fallback to the tag data
+        const hasOpenSearchTag = hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', '')
+        const isOpenSearch = !!getOpenSearchOsddLink(links) || hasOpenSearchTag
+
         payload.push({
           abstract,
           archiveAndDistributionInformation,
@@ -224,7 +230,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           hasGranules,
           id: conceptId,
           isCSDA: isCSDACollection(dataCenters),
-          isOpenSearch: hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', ''),
+          isOpenSearch,
           nativeDataFormats,
           services,
           shortName,

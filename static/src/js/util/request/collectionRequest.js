@@ -7,6 +7,7 @@ import {
 
 import { hasTag } from '../../../../../sharedUtils/tags'
 import { isCSDACollection } from '../isCSDACollection'
+import { getOpenSearchOsddLink } from '../getOpenSearchLink'
 
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 
@@ -142,9 +143,12 @@ export default class CollectionRequest extends CmrRequest {
     entry.map((collection) => {
       const transformedCollection = collection
 
-      if (collection && collection.tags) {
-        transformedCollection.isOpenSearch = Object.keys(collection.tags).includes('opensearch.granule.osdd')
+      if (collection && (collection.tags || collection.links)) {
+        // Check for an OpenSearch link, but fallback to the tag data
+        const hasOpenSearchTags = hasTag(collection, 'opensearch.granule.osdd', '')
           && collection.has_granules === false
+        transformedCollection.isOpenSearch = !!getOpenSearchOsddLink(collection.links) || hasOpenSearchTags
+
         transformedCollection.has_map_imagery = hasTag(collection, 'gibs')
       }
 

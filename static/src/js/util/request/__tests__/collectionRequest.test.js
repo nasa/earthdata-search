@@ -160,12 +160,12 @@ describe('CollectionRequest#transformResponse', () => {
         updated: '2019-05-21T01:08:02.143Z',
         entry: [{
           id: 'collectionId',
-          has_granules: false,
-          tags: {
-            'opensearch.granule.osdd': {
-              data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
-            }
-          }
+          links: [{
+            length: '0.0KB',
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
+            hreflang: 'en-US',
+            href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+          }]
         }]
       }
     }
@@ -177,13 +177,13 @@ describe('CollectionRequest#transformResponse', () => {
         ...data.feed,
         entry: [{
           id: 'collectionId',
-          has_granules: false,
           has_map_imagery: false,
-          tags: {
-            'opensearch.granule.osdd': {
-              data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
-            }
-          },
+          links: [{
+            length: '0.0KB',
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
+            hreflang: 'en-US',
+            href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+          }],
           isOpenSearch: true,
           thumbnail: 'test-file-stub'
         }]
