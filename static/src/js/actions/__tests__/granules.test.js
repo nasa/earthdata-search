@@ -270,12 +270,12 @@ describe('getSearchGranules', () => {
       metadata: {
         collections: {
           collectionId: {
-            hasGranules: false,
-            tags: {
-              'opensearch.granule.osdd': {
-                data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
-              }
-            }
+            links: [{
+              length: '0.0KB',
+              rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
+              hreflang: 'en-US',
+              href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+            }]
           }
         }
       },
@@ -375,12 +375,12 @@ describe('getSearchGranules', () => {
       metadata: {
         collections: {
           collectionId: {
-            hasGranules: false,
-            tags: {
-              'opensearch.granule.osdd': {
-                data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
-              }
-            }
+            links: [{
+              length: '0.0KB',
+              rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
+              hreflang: 'en-US',
+              href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+            }]
           }
         }
       },
@@ -745,12 +745,12 @@ describe('getProjectGranules', () => {
       metadata: {
         collections: {
           'C10000000000-EDSC': {
-            hasGranules: false,
-            tags: {
-              'opensearch.granule.osdd': {
-                data: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
-              }
-            }
+            links: [{
+              length: '0.0KB',
+              rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
+              hreflang: 'en-US',
+              href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
+            }]
           }
         }
       },
