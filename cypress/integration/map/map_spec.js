@@ -655,7 +655,7 @@ describe('Map interactions', () => {
 
   describe('When uploading a shapefile', () => {
     describe('When the shapefile has a single polygon shape', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -711,18 +711,15 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?polygon[0]=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&sf=1&sfs[0]=0&m=-9.4306640625!49.21875!5!1!0!0%2C2')
-      })
 
-      it('draws a polygon on the map', () => {
+        // draws a polygon on the map
         cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M300 34L300 834L600 840L900 839L1100 834L996 736L792 538L692 438L300 34z')
         cy.get('.leaflet-interactive').last().should('have.attr', 'd', 'M300 834L600 840L900 839L1100 834L996 736L792 538L692 438L300 34L300 834z')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
         getByTestId('spatial-display_shapefile-name').should('have.text', 'simple.geojson')
         getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
@@ -730,7 +727,7 @@ describe('Map interactions', () => {
     })
 
     describe('When the shapefile has a line shape', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -789,21 +786,18 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?line[0]=31%2C-15%2C36%2C-17%2C41%2C-15&sf=1&sfs[0]=2&m=-8.279296875!44.61328125!4!1!0!0%2C2')
-      })
 
-      it('draws the shapes on the map', () => {
+        // draws the shapes on the map
         // Line
         cy.get('.leaflet-interactive').eq(2).should('have.attr', 'd', 'M313 625L455 682L597 625')
 
         // Selected Line
         cy.get('.leaflet-interactive').eq(4).should('have.attr', 'd', 'M313 625L455 682L597 625')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
         getByTestId('spatial-display_shapefile-name').should('have.text', 'multiple_shapes.geojson')
         getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
@@ -811,7 +805,7 @@ describe('Map interactions', () => {
     })
 
     describe('When the shapefile has a circle shape', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -870,21 +864,18 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?circle[0]=35%2C-5%2C50000&sf=1&sfs[0]=3&m=-8.279296875!44.61328125!4!1!0!0%2C2')
-      })
 
-      it('draws the shapes on the map', () => {
+        // draws the shapes on the map
         // Circle
         cy.get('.leaflet-interactive').eq(3).should('have.attr', 'd', 'M413.55555555555566,340.2222222222222a13,13 0 1,0 26,0 a13,13 0 1,0 -26,0 ')
 
         // Selected Circle
         cy.get('.leaflet-interactive').eq(4).should('have.attr', 'd', 'M413.55555555555566,340.2222222222222a13,13 0 1,0 26,0 a13,13 0 1,0 -26,0 ')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
         getByTestId('spatial-display_shapefile-name').should('have.text', 'multiple_shapes.geojson')
         getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
@@ -892,7 +883,7 @@ describe('Map interactions', () => {
     })
 
     describe('When the shapefile has a point shape', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -951,21 +942,18 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?sp[0]=35%2C0&sf=1&sfs[0]=4&m=-8.279296875!44.61328125!4!1!0!0%2C2')
-      })
 
-      it('draws the shapes on the map', () => {
+        // draws the shapes on the map
         // Point
         cy.get('.leaflet-marker-icon.leaflet-interactive').eq(0).should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 198px, 0px); z-index: 198; outline: none;')
 
         // Selected point
         cy.get('.leaflet-marker-icon.leaflet-interactive').eq(1).should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 198px, 0px); z-index: 198;')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
         getByTestId('spatial-display_shapefile-name').should('have.text', 'multiple_shapes.geojson')
         getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
@@ -973,7 +961,7 @@ describe('Map interactions', () => {
     })
 
     describe('When the shapefile has multiple shapes selected', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -1033,13 +1021,11 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?polygon[0]=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&polygon[1]=58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647%2C58.25%2C-14.46517&sf=1&sfs[0]=0&sfs[1]=1&m=-8.279296875!44.61328125!4!1!0!0%2C2')
-      })
 
-      it('draws the shapes on the map', () => {
+        // draws the shapes on the map
         // First polygon
         cy.get('.leaflet-interactive').eq(0).should('have.attr', 'd', 'M631 266L631 666L831 670L1031 666L877 518L728 368L631 266z')
 
@@ -1051,9 +1037,8 @@ describe('Map interactions', () => {
 
         // Selected second polygon
         cy.get('.leaflet-interactive').eq(5).should('have.attr', 'd', 'M1088 609L1088 186L688 186L786 293L985 505L1088 609z')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
         getByTestId('spatial-display_shapefile-name').should('have.text', 'multiple_shapes.geojson')
         getByTestId('filter-stack-item__hint').should('have.text', '2 shapes selected')
@@ -1061,7 +1046,7 @@ describe('Map interactions', () => {
     })
 
     describe('When the shapefile has a polygon with too many points', () => {
-      before(() => {
+      it('renders correctly', () => {
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -1117,28 +1102,24 @@ describe('Map interactions', () => {
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
         })
-      })
 
-      it('updates the URL', () => {
+        // updates the URL
         cy.url().should('include', '?polygon[0]=-114.04999%2C36.95777%2C-114.0506%2C37.0004%2C-114.04826%2C41.99381%2C-119.99917%2C41.99454%2C-120.00101%2C38.99957%2C-118.71431%2C38.10218%2C-117.50012%2C37.22038%2C-116.0936%2C36.15581%2C-114.63667%2C35.00881%2C-114.63689%2C35.02837%2C-114.60362%2C35.06423%2C-114.64435%2C35.1059%2C-114.57852%2C35.12875%2C-114.56924%2C35.18348%2C-114.60431%2C35.35358%2C-114.67764%2C35.48974%2C-114.65431%2C35.59759%2C-114.68941%2C35.65141%2C-114.68321%2C35.68939%2C-114.70531%2C35.71159%2C-114.69571%2C35.75599%2C-114.71211%2C35.80618%2C-114.67742%2C35.87473%2C-114.73116%2C35.94392%2C-114.74376%2C35.9851%2C-114.73043%2C36.03132%2C-114.75562%2C36.08717%2C-114.57203%2C36.15161%2C-114.51172%2C36.15096%2C-114.50217%2C36.1288%2C-114.45837%2C36.13859%2C-114.44661%2C36.12597%2C-114.40547%2C36.14737%2C-114.37211%2C36.14311%2C-114.30843%2C36.08244%2C-114.31403%2C36.05817%2C-114.25265%2C36.02019%2C-114.14819%2C36.02801%2C-114.11416%2C36.09698%2C-114.12086%2C36.1146%2C-114.09987%2C36.12165%2C-114.04684%2C36.19407%2C-114.04999%2C36.95777&sf=1&sfs[0]=0&m=38.50048828125!-117.02636718749999!6!1!0!0%2C2')
-      })
 
-      it('displays the too many points modal', () => {
+        // displays the too many points modal
         cy.get('.edsc-modal__too-many-points-modal').within(() => {
           cy.get('.modal-title').should('have.text', 'Shape file has too many points')
         })
-      })
 
-      it('draws a polygon on the map', () => {
+        // draws a polygon on the map
         cy.get('.edsc-modal__too-many-points-modal').within(() => {
           cy.get('.close').click()
         })
 
         cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M1039 604L1039 696L1037 696L1033 704L1030 706L1031 707L1029 713L1027 715L1016 716L1009 711L1010 709L1000 701L994 704L992 702L988 703L986 701L979 701L975 703L973 702L968 705L962 706L958 709L961 711L961 724L967 731L963 740L965 742L964 751L967 754L966 757L970 762L969 771L967 775L969 781L973 785L976 792L976 798L980 811L979 817L973 818L971 820L976 824L972 828L972 832L834 721L831 720L644 577L441 431L362 377L362 36L1039 36L1039 604z')
         cy.get('.leaflet-interactive').last().should('have.attr', 'd', 'M1039 609L1039 36L785 32L531 33L362 36L362 377L508 479L687 609L890 765L972 831L976 824L971 820L979 817L980 811L976 792L967 776L970 764L966 758L967 753L964 751L965 746L963 740L967 732L960 722L961 714L958 708L979 701L986 701L990 703L992 702L994 704L1000 701L1006 705L1012 714L1016 716L1027 715L1031 705L1039 696L1039 609z')
-      })
 
-      it('populates the spatial display field', () => {
+        // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
         getByTestId('spatial-display_shapefile-name').should('have.text', 'too_many_points.geojson')
         getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
