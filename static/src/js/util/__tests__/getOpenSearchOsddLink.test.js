@@ -1,11 +1,11 @@
 const { getOpenSearchOsddLink } = require('../getOpenSearchLink')
 
 describe('getOpenSearchOsddLink', () => {
-  test('returns false if no links exist', () => {
-    expect(getOpenSearchOsddLink()).toBeFalsy()
+  test('returns undefined if no links exist', () => {
+    expect(getOpenSearchOsddLink({})).toBe(undefined)
   })
 
-  test('returns false if no link exists', () => {
+  test('returns undefined if no link exists', () => {
     const links = [
       {
         length: '0.0KB',
@@ -27,10 +27,10 @@ describe('getOpenSearchOsddLink', () => {
       }
     ]
 
-    expect(getOpenSearchOsddLink(links)).toBeFalsy()
+    expect(getOpenSearchOsddLink(links)).toBe(undefined)
   })
 
-  test('returns the OSDD link', () => {
+  test('returns the OSDD link from the links', () => {
     const links = [
       {
         length: '0.0KB',
@@ -58,6 +58,16 @@ describe('getOpenSearchOsddLink', () => {
       }
     ]
 
-    expect(getOpenSearchOsddLink(links)).toEqual('https://fedeo.esa.int/opensearch/description.xml?parentIdentifier=EOP:ESA:EARTH-ONLINE:CryoSat.products')
+    expect(getOpenSearchOsddLink({ links })).toEqual('https://fedeo.esa.int/opensearch/description.xml?parentIdentifier=EOP:ESA:EARTH-ONLINE:CryoSat.products')
+  })
+
+  test('returns the OSDD link from the tags', () => {
+    const tags = {
+      'opensearch.granule.osdd': {
+        data: 'https://fedeo.esa.int/opensearch/description.xml?parentIdentifier=EOP:ESA:EARTH-ONLINE:CryoSat.products'
+      }
+    }
+
+    expect(getOpenSearchOsddLink({ tags })).toEqual('https://fedeo.esa.int/opensearch/description.xml?parentIdentifier=EOP:ESA:EARTH-ONLINE:CryoSat.products')
   })
 })

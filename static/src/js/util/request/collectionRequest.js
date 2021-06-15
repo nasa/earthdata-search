@@ -144,10 +144,7 @@ export default class CollectionRequest extends CmrRequest {
       const transformedCollection = collection
 
       if (collection && (collection.tags || collection.links)) {
-        // Check for an OpenSearch link, but fallback to the tag data
-        const hasOpenSearchTags = hasTag(collection, 'opensearch.granule.osdd', '')
-          && collection.has_granules === false
-        transformedCollection.isOpenSearch = !!getOpenSearchOsddLink(collection.links) || hasOpenSearchTags
+        transformedCollection.isOpenSearch = !!getOpenSearchOsddLink(collection)
 
         transformedCollection.has_map_imagery = hasTag(collection, 'gibs')
       }

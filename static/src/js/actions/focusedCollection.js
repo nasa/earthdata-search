@@ -13,7 +13,6 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
-import { hasTag } from '../../../../sharedUtils/tags'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { isCSDACollection } from '../util/isCSDACollection'
@@ -195,7 +194,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           dataCenters,
           granules,
           hasGranules,
-          links,
           nativeDataFormats,
           services,
           shortName,
@@ -214,10 +212,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           earthdataEnvironment
         )
 
-        // Check for an OpenSearch link, but fallback to the tag data
-        const hasOpenSearchTag = hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', '')
-        const isOpenSearch = !!getOpenSearchOsddLink(links) || hasOpenSearchTag
-
         payload.push({
           abstract,
           archiveAndDistributionInformation,
@@ -230,7 +224,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           hasGranules,
           id: conceptId,
           isCSDA: isCSDACollection(dataCenters),
-          isOpenSearch,
+          isOpenSearch: !!getOpenSearchOsddLink(collection),
           nativeDataFormats,
           services,
           shortName,
