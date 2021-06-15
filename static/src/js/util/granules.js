@@ -2,7 +2,6 @@ import { convertSize } from './project'
 import { encodeGridCoords } from './url/gridEncoders'
 import { encodeTemporal } from './url/temporalEncoders'
 import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
-import { getValueForTag, hasTag } from '../../../../sharedUtils/tags'
 import { withAdvancedSearch } from './withAdvancedSearch'
 import { getOpenSearchOsddLink } from './getOpenSearchLink'
 
@@ -166,13 +165,6 @@ export const extractProjectCollectionGranuleParams = (state, collectionId) => {
  * @returns {Object} Parameters used in Granules request
  */
 export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
-  // Metadata to help determine if and how to make our granule request
-  const {
-    hasGranules,
-    links,
-    tags
-  } = collectionMetadata
-
   // Default added and removed granuld ids because they will only be provided for project granule requests
   const {
     addedGranuleIds = [],
@@ -247,15 +239,7 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     temporalString = encodeTemporal(temporal)
   }
 
-  // Check for an OpenSearch link, but fallback to the tag data
-  const hasOpenSearchTag = hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', '')
-  const isOpenSearch = !!getOpenSearchOsddLink(links) || hasOpenSearchTag
-
-  let openSearchOsdd
-  if (isOpenSearch) {
-    // Use an OpenSearch link if it exists, but fallback to the tag data
-    openSearchOsdd = getOpenSearchOsddLink(links) || getValueForTag('', tags, 'opensearch.granule.osdd')
-  }
+  const isOpenSearch = !!getOpenSearchOsddLink(collectionMetadata)
 
   const options = {}
   if (readableGranuleName) {
@@ -279,7 +263,7 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     isOpenSearch,
     line,
     onlineOnly,
-    openSearchOsdd,
+    openSearchOsdd: getOpenSearchOsddLink(collectionMetadata),
     options,
     orbitNumber,
     pageNum,

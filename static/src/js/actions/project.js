@@ -30,7 +30,6 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getUsername } from '../selectors/user'
-import { hasTag } from '../../../../sharedUtils/tags'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
 import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
@@ -296,7 +295,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           dataCenters,
           granules,
           hasGranules,
-          links,
           services,
           shortName,
           subscriptions,
@@ -313,10 +311,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           earthdataEnvironment
         )
 
-        // Check for an OpenSearch link, but fallback to the tag data
-        const hasOpenSearchTag = hasGranules === false && hasTag({ tags }, 'opensearch.granule.osdd', '')
-        const isOpenSearch = !!getOpenSearchOsddLink(links) || hasOpenSearchTag
-
         payload.push({
           abstract,
           archiveAndDistributionInformation,
@@ -329,7 +323,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           hasGranules,
           id: conceptId,
           isCSDA: isCSDACollection(dataCenters),
-          isOpenSearch,
+          isOpenSearch: !!getOpenSearchOsddLink(metadata),
           services,
           shortName,
           subscriptions,
