@@ -19,16 +19,17 @@ describe('url#decodeUrlParams', () => {
           byId: {
             collectionId1: {
               granules: {},
-              isVisible: false
+              isVisible: true
             },
             collectionId2: {
               granules: {},
-              isVisible: false
+              isVisible: true
             }
           }
         }
       }
     }
+
     expect(decodeUrlParams('?p=!collectionId1!collectionId2')).toEqual(expectedResult)
   })
 
@@ -42,11 +43,11 @@ describe('url#decodeUrlParams', () => {
           byId: {
             collectionId1: {
               granules: {},
-              isVisible: false
+              isVisible: true
             },
             collectionId2: {
               granules: {},
-              isVisible: false
+              isVisible: true
             }
           }
         }
@@ -64,6 +65,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
     }
+
     expect(decodeUrlParams('?p=collectionId1!collectionId1!collectionId2')).toEqual(expectedResult)
   })
 
@@ -77,7 +79,7 @@ describe('url#decodeUrlParams', () => {
           byId: {
             collectionId1: {
               granules: {},
-              isVisible: false
+              isVisible: true
             },
             collectionId2: {
               granules: {},
@@ -100,6 +102,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
     }
+
     expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[2][v]=t')).toEqual(expectedResult)
   })
 
@@ -113,7 +116,7 @@ describe('url#decodeUrlParams', () => {
           byId: {
             collectionId1: {
               granules: {},
-              isVisible: false,
+              isVisible: true,
               accessMethods: {
                 opendap: {
                   selectedOutputFormat: undefined,
@@ -125,7 +128,7 @@ describe('url#decodeUrlParams', () => {
             },
             collectionId2: {
               granules: {},
-              isVisible: false,
+              isVisible: true,
               selectedAccessMethod: undefined
             }
           }
@@ -145,6 +148,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
     }
+
     expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC')).toEqual(expectedResult)
   })
 })
@@ -166,6 +170,7 @@ describe('url#encodeUrlQuery', () => {
         }
       }
     }
+
     expect(encodeUrlQuery(props)).toEqual('/path/here')
   })
 
@@ -185,6 +190,7 @@ describe('url#encodeUrlQuery', () => {
         }
       }
     }
+
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2')
   })
 
@@ -200,6 +206,7 @@ describe('url#encodeUrlQuery', () => {
         }
       }
     }
+
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId1!collectionId1!collectionId2')
   })
 
@@ -226,7 +233,8 @@ describe('url#encodeUrlQuery', () => {
         }
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[2][v]=t')
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[2][v]=t')
   })
 
   test('correctly encodes selected variables', () => {
@@ -255,6 +263,7 @@ describe('url#encodeUrlQuery', () => {
         }
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC')
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC&pg[2][v]=f')
   })
 })
