@@ -63,6 +63,7 @@ const PreferencesForm = (props) => {
   return (
     <div className="preferences-form">
       <Form
+        idPrefix="preferences-form"
         fields={fields}
         formData={formData}
         liveValidate
