@@ -271,6 +271,7 @@ export const encodeCollections = (props) => {
     if (encodedRemovedGranules) pg[removedKey] = encodedRemovedGranules
 
     // Collection visible, don't encode the focusedCollection
+    pg.v = 'f'
     if (isVisible) pg.v = 't'
 
     // Add the granule encoded granule filters
@@ -344,7 +345,7 @@ export const decodeCollections = (params) => {
     // Project
     let addedGranuleIds = []
     let addedIsOpenSearch
-    let isVisible = false
+    let isVisible = true
     let removedGranuleIds = []
     let removedIsOpenSearch
     let selectedAccessMethod
@@ -403,7 +404,7 @@ export const decodeCollections = (params) => {
 
       // Collection visibility on the project page
       const { v: visible = '' } = pCollection
-      isVisible = (visible === 't')
+      isVisible = (visible !== 'f')
 
       // Decode selected variables
       variableIds = decodedSelectedVariables(pCollection)
