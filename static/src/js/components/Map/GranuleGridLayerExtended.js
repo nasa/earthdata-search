@@ -1086,11 +1086,13 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
     let excludeHtml = ''
 
-    excludeHtml = `
-      <button class="granule-grid-layer-extended__panel-list-remove" data-granule-id="${granuleId}" title="Filter granule">
-        ${timesIconSvg}
-      </button>
-    `
+    if (!this.isProjectPage) {
+      excludeHtml = `
+        <button class="granule-grid-layer-extended__panel-list-remove" data-granule-id="${granuleId}" title="Filter granule">
+          ${timesIconSvg}
+        </button>
+      `
+    }
 
     const icon = new L.DivIcon({
       className: 'granule-spatial-label',
