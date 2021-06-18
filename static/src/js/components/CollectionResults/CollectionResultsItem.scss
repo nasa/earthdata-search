@@ -194,13 +194,12 @@
   }
 
   &__badge-icon {
+    margin-right: 0.25rem;
+    position: relative;
+    top: -0.05rem;
+
     &:last-child {
       margin-right: 0;
-    }
-
-    &--csda {
-      position: relative;
-      top: -0.05rem;
     }
   }
 
