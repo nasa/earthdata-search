@@ -7,9 +7,10 @@ import { pluralize } from '../../../../../../static/src/js/util/pluralize'
 import assocatedDoisGraphQlBody from './__mocks__/associated_dois/graphql.body.json'
 import collectionsBody from './__mocks__/common/collections.body.json'
 import commonHeaders from './__mocks__/common/common.headers.json'
-import granulesBody from './__mocks__/associated_dois/granules.body.json'
+import associatedDoisGranulesBody from './__mocks__/associated_dois/granules.body.json'
 import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 import reformattingGraphQlBody from './__mocks__/reformattings/graphql.body.json'
+import reformattingsGranulesBody from './__mocks__/reformattings/granules.body.json'
 
 /**
  * Tests the search panel header and meta text for results size
@@ -221,7 +222,7 @@ describe('Path /search/granules/collection-details', () => {
         })
 
         req.reply({
-          body: granulesBody,
+          body: associatedDoisGranulesBody,
           headers: {
             ...commonHeaders,
             'cmr-hits': granuleHits.toString()
@@ -295,6 +296,14 @@ describe('Path /search/granules/collection-details', () => {
       },
       (req) => {
         expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20')
+
+        req.reply({
+          body: reformattingsGranulesBody,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': granuleHits.toString()
+          }
+        })
       })
 
       cy.intercept({
