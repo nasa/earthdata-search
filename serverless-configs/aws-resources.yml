@@ -144,16 +144,6 @@ Resources:
     Properties:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
-      PermissionsBoundary:
-        Fn::Join: [
-          "", [
-            "arn:aws:iam::",
-            {
-              "Ref": "AWS::AccountId"
-            },
-            ":policy/NGAPShRoleBoundary"
-          ]
-        ]
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:

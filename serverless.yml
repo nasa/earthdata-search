@@ -6,7 +6,7 @@ provider:
   versionFunctions: false
   stage: ${opt:stage, 'dev'}
   region: us-east-1
-  endpointType: PRIVATE
+  endpointType: REGIONAL
   memorySize: 128
   environment:
     dbEndpoint:
@@ -91,9 +91,9 @@ package:
   individually: true
 
 custom:
-  siteName: earthdata-search-${self:provider.stage}
+  siteName: ncis-earthdata-search-${self:provider.stage}
 
-  infrastructureStackName: earthdata-search-infrastructure-${self:provider.stage}
+  infrastructureStackName: ncis-earthdata-search-${self:provider.stage}
 
   variables:
     # Default values for environment variables used to set environment variables
@@ -141,6 +141,4 @@ custom:
   splitStacks:
     perFunction: true
 
-  logSubscription:
-    enabled: true
-    destinationArn: ${env:LOG_DESTINATION_ARN}
+
