@@ -68,8 +68,9 @@
       "cmrHost": "https://cmr.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
+      "csdaHost": "https://auth.csdap.uat.earthdatacloud.nasa.gov",
       "graphQlHost": "https://graphql.earthdata.nasa.gov",
-      "regionHost": "https://fts.podaac.earthdata.nasa.gov/",
+      "regionHost": "https://fts.podaac.earthdata.nasa.gov",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
@@ -77,8 +78,9 @@
       "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
+      "csdaHost": "https://auth.csdap.uat.earthdatacloud.nasa.gov",
       "graphQlHost": "https://graphql.sit.earthdata.nasa.gov",
-      "regionHost": "https://d2dwjhzkooeayk.cloudfront.net/",
+      "regionHost": "https://d2dwjhzkooeayk.cloudfront.net",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
@@ -86,8 +88,9 @@
       "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://uat.urs.earthdata.nasa.gov",
+      "csdaHost": "https://auth.csdap.uat.earthdatacloud.nasa.gov",
       "graphQlHost": "https://graphql.uat.earthdata.nasa.gov",
-      "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/",
+      "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov",
       "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
@@ -95,8 +98,9 @@
       "cmrHost": "https://cmr.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
+      "csdaHost": "https://auth.csdap.uat.earthdatacloud.nasa.gov",
       "graphQlHost": "https://graphql.earthdata.nasa.gov",
-      "regionHost": "https://fts.podaac.earthdata.nasa.gov/",
+      "regionHost": "https://fts.podaac.earthdata.nasa.gov",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     }

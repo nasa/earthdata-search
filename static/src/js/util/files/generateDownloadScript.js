@@ -9,15 +9,23 @@ import { getEarthdataConfig } from '../../../../../sharedUtils/config'
  */
 export const generateDownloadScript = (granuleLinks, retrievalCollection, earthdataEnvironment) => {
   const {
+    collection_metadata: collectionMetadata = {},
     urs_id: username
   } = retrievalCollection
+
+  const { isCSDA = false } = collectionMetadata
 
   // The script uses a single link to ensure the files are accessible before
   // it attempts to download all of the files
   const [firstGranuleLink] = granuleLinks
 
-  let { edlHost } = getEarthdataConfig(earthdataEnvironment)
-  edlHost = url.parse(edlHost).host
+  const { edlHost, csdaHost } = getEarthdataConfig(earthdataEnvironment)
+
+  let authHost = url.parse(edlHost).host
+
+  if (isCSDA) {
+    authHost = url.parse(csdaHost).host
+  }
 
   return `#!/bin/bash
 
@@ -38,7 +46,7 @@ prompt_credentials() {
     read -p "Username (${username}): " username
     username=$\{username:-${username}}
     read -s -p "Password: " password
-    echo "machine ${edlHost} login $username password $password" >> $netrc
+    echo "machine ${authHost} login $username password $password" >> $netrc
     echo
 }
 
@@ -76,7 +84,7 @@ setup_auth_wget() {
     # if login is unsuccessful
     touch ~/.netrc
     chmod 0600 ~/.netrc
-    credentials=$(grep 'machine ${edlHost}' ~/.netrc)
+    credentials=$(grep 'machine ${authHost}' ~/.netrc)
     if [ -z "$credentials" ]; then
         cat "$netrc" >> ~/.netrc
     fi

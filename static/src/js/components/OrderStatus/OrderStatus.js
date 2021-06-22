@@ -48,6 +48,7 @@ export class OrderStatus extends Component {
       onFetchRetrievalCollection,
       onFetchRetrievalCollectionGranuleLinks
     } = this.props
+
     const { jsondata = {}, links = [] } = retrieval
     const { source } = jsondata
 
