@@ -421,7 +421,7 @@
   cmrGranuleSearch:
     handler: serverless/src/cmrGranuleSearch/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}
-    memorySize: 192
+    memorySize: 256
     events:
       - http:
           method: post
