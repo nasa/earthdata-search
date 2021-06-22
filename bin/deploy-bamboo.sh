@@ -15,6 +15,7 @@ config="`jq '.application.env = $newValue' --arg newValue $bamboo_STAGE_NAME <<<
 config="`jq '.application.defaultPortal = $newValue' --arg newValue $bamboo_DEFAULT_PORTAL <<< $config`"
 config="`jq '.application.feedbackApp = $newValue' --arg newValue $bamboo_FEEDBACK_APP <<< $config`"
 config="`jq '.application.analytics.gtmPropertyId = $newValue' --arg newValue $bamboo_GTM_ID <<< $config`"
+config="`jq '.application.granuleLinksPageSize = $newValue' --arg newValue $bamboo_GRANULE_LINKS_PAGE_SIZE <<< $config`"
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
 config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
 

@@ -54,6 +54,9 @@ import { getProjectCollectionsIds } from '../selectors/project'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { eventEmitter } from '../events/events'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+
+const { granuleLinksPageSize } = getApplicationConfig()
 
 export const addMoreGranuleResults = payload => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -162,7 +165,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
   } = retrievalCollectionData
 
   // The number of granules to request per page from CMR
-  const pageSize = 500
+  const pageSize = granuleLinksPageSize
 
   // Determine how many pages we will need to load to display all granules
   const totalPages = Math.ceil(granuleCount / pageSize)

@@ -1037,7 +1037,7 @@ describe('fetchLinks', () => {
         echo_collection_id: 'C10000005-EDSC',
         bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
       },
-      granule_count: 888
+      granule_count: 388
     }
 
     await store.dispatch(fetchLinks(params))
@@ -1154,7 +1154,7 @@ describe('fetchLinks', () => {
           echo_collection_id: 'C10000005-EDSC',
           bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
         },
-        granule_count: 888
+        granule_count: 388
       }
 
       await store.dispatch(fetchLinks(params))
