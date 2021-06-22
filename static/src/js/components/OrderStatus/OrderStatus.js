@@ -49,6 +49,7 @@ export class OrderStatus extends Component {
       onFetchRetrievalCollectionGranuleLinks,
       onToggleAboutCSDAModal
     } = this.props
+
     const { jsondata = {}, links = [] } = retrieval
     const { source } = jsondata
 
