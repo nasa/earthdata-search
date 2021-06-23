@@ -35,7 +35,6 @@ const edlCallback = async (event, context) => {
   }
 
   const { code, state } = event.queryStringParameters
-
   const [, queryString] = state.split('?')
 
   const params = parse(queryString)
@@ -62,7 +61,6 @@ const edlCallback = async (event, context) => {
   try {
     // Retrieve the Earthdata Login token
     const oauthToken = await oauth2.authorizationCode.getToken(tokenConfig)
-
     const oauthTokenResponse = oauth2.accessToken.create(oauthToken)
 
     const { token } = oauthTokenResponse
@@ -118,7 +116,7 @@ const edlCallback = async (event, context) => {
     }
   } catch (e) {
     parseError(e)
-
+    console.log(e)
     const queryParams = {
       ee: earthdataEnvironment,
       state

@@ -41,7 +41,7 @@ const edlLogin = async (event) => {
   return {
     statusCode: 307,
     headers: {
-      Location: `${edlHost}/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${encodeURIComponent(`${path}?${stringify(paramsObj)}`)}`
+      Location: `${edlHost}/oauth/authorize?response_type=code&client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${encodeURIComponent(`${path}?${stringify(paramsObj)}`)}`
     }
   }
 }
