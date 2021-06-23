@@ -13,29 +13,27 @@ import { parseError } from '../../../../sharedUtils/parseError'
  */
 export const validateToken = async (jwtToken, earthdataEnvironment) => {
   const decodedJwtToken = jwt.decode(jwtToken)
-  console.log(`validateToken:earthdataEnvironment ${earthdataEnvironment}`)
-  console.log(`validateToken:JwtToken ${decodedJwtToken}`)
-  console.log('validateToken 1')
+
   if (!decodedJwtToken) {
     return false
   }
 
   const { earthdataEnvironment: decodedEarthdataEnvironment = '' } = decodedJwtToken
-  console.log('validateToken 2')
+
   const edlConfig = await getEdlConfig(earthdataEnvironment)
-  console.log('validateToken 3')
+
   try {
     // If the environment in the jwtToken doesn't match the environment provided in the header
     if (earthdataEnvironment.toLowerCase() !== decodedEarthdataEnvironment.toLowerCase()) {
       return false
     }
-    console.log('validateToken 4')
+
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
-    console.log('validateToken 5')
+
     // Pull the secret used to encrypt our jwtTokens
     const { secret } = getSecretEarthdataConfig(earthdataEnvironment)
-    console.log('validateToken 6')
+
     return jwt.verify(jwtToken, secret, async (verifyError, decodedJwtToken) => {
       if (verifyError) {
         // This suggests that the token has been tampered with
@@ -43,7 +41,7 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
 
         return false
       }
-      console.log('validateToken 7')
+
       const {
         id: userId,
         username
@@ -63,7 +61,6 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
       if (existingUserTokens.length === 0) {
         return false
       }
-      console.log('validateToken 8')
 
       // In the off chance there are more than one, return the most recent token
       const [mostRecentToken] = existingUserTokens
@@ -75,17 +72,16 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
       } = mostRecentToken
 
       const oauth2 = simpleOAuth2.create(edlConfig)
-      console.log('validateToken 9')
+
       const oauthToken = oauth2.accessToken.create({
         access_token: accessToken,
         refresh_token: refreshToken,
         expires_at: expiresAt
       })
-      console.log('validateToken 10')
+
 
       if (oauthToken.expired()) {
         try {
-          console.log('Refreshing access token')
           // Remove all tokens for this user in the current environment
           await dbConnection('user_tokens')
             .where({ user_id: userId, environment: earthdataEnvironment })
@@ -115,7 +111,7 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
           return false
         }
       }
-      console.log('validateToken 11')
+
       // If successful, return the username associated with the token
       return username
     })

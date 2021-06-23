@@ -116,7 +116,7 @@ const edlCallback = async (event, context) => {
     }
   } catch (e) {
     parseError(e)
-    console.log(e)
+
     const queryParams = {
       ee: earthdataEnvironment,
       state

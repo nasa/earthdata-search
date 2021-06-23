@@ -21,8 +21,6 @@ const edlAuthorizer = async (event) => {
   const tokenParts = authorizationToken.split(' ')
   const jwtToken = tokenParts[1]
 
-  console.log(`edlAuthorizer:jwtToken ${jwtToken}`)
-
   const username = await validateToken(jwtToken, earthdataEnvironment)
 
   if (username) {
