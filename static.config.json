@@ -1,7 +1,7 @@
 {
   "application": {
-    "version": "sit",
-    "env": "sit",
+    "version": "uat",
+    "env": "uat",
     "defaultPortal": "edsc",
     "feedbackApp": "",
     "analytics": {
@@ -58,9 +58,17 @@
       "apiHost": "http://localhost:3001/dev",
       "edscHost": "http://localhost:8080"
     },
+    "sit": {
+      "apiHost": "https://5imtz03hoj.execute-api.us-east-1.amazonaws.com/sit",
+      "edscHost": "http://ncis-earthdata-search-sit.s3-website-us-east-1.amazonaws.com"
+    },
+    "uat": {
+      "apiHost": "https://5imtz03hoj.execute-api.us-east-1.amazonaws.com/uat",
+      "edscHost": "http://ncis-earthdata-search-sit.s3-website-us-east-1.amazonaws.com"
+    },
     "production": {
-      "apiHost": "http://localhost:3001/dev",
-      "edscHost": "http://localhost:8080"
+      "apiHost": "https://5imtz03hoj.execute-api.us-east-1.amazonaws.com/prod",
+      "edscHost": "http://ncis-earthdata-search-sit.s3-website-us-east-1.amazonaws.com"
     }
   },
   "earthdata": {
@@ -75,12 +83,12 @@
       "redirectUriPath": "/urs_callback"
     },
     "sit": {
-      "cmrHost": "http://internal-cmr-services-prod-577659398.us-east-1.elb.amazonaws.com",
-      "echoRestRoot": "http://internal-cmr-services-prod-577659398.us-east-1.elb.amazonaws.com/legacy-services/rest",
+      "cmrHost": "https://ncis-cmr.nesdis-hq.noaa.gov",
+      "echoRestRoot": "https://ncis-cmr.nesdis-hq.noaa.gov/legacy-services/rest",
       "edlHost": "https://uat.urs.earthdata.nasa.gov",
       "graphQlHost": "https://mw55oskky5.execute-api.us-east-1.amazonaws.com/prod",
       "regionHost": "https://d2dwjhzkooeayk.cloudfront.net/",
-      "opensearchRoot": "http://internal-cmr-services-prod-577659398.us-east-1.elb.amazonaws.com/opensearch",
+      "opensearchRoot": "https://ncis-cmr.nesdis-hq.noaa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
     "uat": {

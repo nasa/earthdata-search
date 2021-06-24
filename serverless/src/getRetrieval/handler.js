@@ -1,11 +1,11 @@
 import { keyBy } from 'lodash'
 
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+// import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getJwtToken } from '../util/getJwtToken'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+// import { getJwtToken } from '../util/getJwtToken'
+// import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { isLinkType } from '../../../static/src/js/util/isLinkType'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -22,18 +22,18 @@ export default async function getRetrieval(event, context) {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const { headers, pathParameters } = event
+    const { /* headers, */ pathParameters } = event
 
-    const earthdataEnvironment = determineEarthdataEnvironment(headers)
+    // const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
     const { id: providedRetrieval } = pathParameters
 
     // Decode the provided retrieval id
     const decodedRetrievalId = deobfuscateId(providedRetrieval)
 
-    const jwtToken = getJwtToken(event)
+    // const jwtToken = getJwtToken(event)
 
-    const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+    // const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
@@ -56,7 +56,7 @@ export default async function getRetrieval(event, context) {
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
         'retrievals.id': decodedRetrievalId,
-        'users.id': userId
+        'users.id': 'guest'
       })
 
     if (retrievalResponse !== null && retrievalResponse.length > 0) {

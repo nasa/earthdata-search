@@ -7,17 +7,17 @@ import {
   FormControl,
   InputGroup
 } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+// import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
 import {
   FaArrowCircleLeft,
   FaFolder,
-  FaLock,
-  FaSave,
-  FaUser
+  // FaLock,
+  FaSave // ,
+  // FaUser
 } from 'react-icons/fa'
 
-import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
+// import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { isDownloadPathWithId } from '../../util/isDownloadPathWithId'
 import { isPath } from '../../util/isPath'
@@ -29,7 +29,7 @@ import { stringify } from '../../util/url/url'
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
+// import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './SecondaryToolbar.scss'
 
@@ -118,14 +118,14 @@ class SecondaryToolbar extends Component {
       location,
       portal,
       retrieval = {},
-      onChangePath,
-      ursProfile
+      onChangePath // ,
+      // ursProfile
     } = this.props
 
-    const { first_name: firstName = '' } = ursProfile
+    // const { first_name: firstName = '' } = ursProfile
 
     const loggedIn = authToken !== ''
-    const returnPath = window.location.href
+    // const returnPath = window.location.href
 
     const { apiHost } = getEnvironmentConfig()
 
@@ -211,7 +211,7 @@ class SecondaryToolbar extends Component {
 
     const projectLink = buildProjectLink(loggedIn)
 
-    const loginLink = (
+    /* const loginLink = (
       <Button
         className="secondary-toolbar__login"
         bootstrapVariant="light"
@@ -221,88 +221,7 @@ class SecondaryToolbar extends Component {
       >
         Earthdata Login
       </Button>
-    )
-
-    const loggedInDropdown = (
-      <Dropdown className="secondary-toolbar__user-dropdown">
-        <Dropdown.Toggle
-          label="User menu"
-          className="secondary-toolbar__user-dropdown-toggle"
-          variant="light"
-          as={Button}
-        >
-          {
-            firstName && (
-              <span className="secondary-toolbar__username">
-                {firstName}
-              </span>
-            )
-          }
-          <EDSCIcon size="0.825rem" icon={FaUser} />
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <LinkContainer
-            to={`${portalPath(portal)}/preferences`}
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__preferences"
-              active={false}
-            >
-              Preferences
-            </Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer
-            to={`${portalPath(portal)}/contact_info`}
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__contact-info"
-              active={false}
-            >
-              Contact Information
-            </Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer
-            to={{
-              pathname: `${portalPath(portal)}/downloads`,
-              search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-            }}
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__downloads"
-              active={false}
-            >
-              Download Status &amp; History
-            </Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer
-            to={`${portalPath(portal)}/projects`}
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__saved-projects"
-              active={false}
-            >
-              Saved Projects
-            </Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer
-            to={`${portalPath(portal)}/subscriptions`}
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__saved-subscriptions"
-              active={false}
-            >
-              Subscriptions
-            </Dropdown.Item>
-          </LinkContainer>
-          <Dropdown.Item
-            className="secondary-toolbar__logout"
-            onClick={this.handleLogout}
-          >
-            Logout
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    )
+    ) */
 
     const saveProjectDropdown = (
       <Dropdown
@@ -349,7 +268,6 @@ class SecondaryToolbar extends Component {
         </Dropdown.Menu>
       </Dropdown>
     )
-
     const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
     const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
 
@@ -368,9 +286,6 @@ class SecondaryToolbar extends Component {
             }
             {
               showSaveProjectDropdown && saveProjectDropdown
-            }
-            {
-              !loggedIn ? loginLink : loggedInDropdown
             }
           </>
         </PortalFeatureContainer>
