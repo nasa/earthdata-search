@@ -46,7 +46,8 @@ export class OrderStatus extends Component {
       onChangePath,
       onFetchRetrieval,
       onFetchRetrievalCollection,
-      onFetchRetrievalCollectionGranuleLinks
+      onFetchRetrievalCollectionGranuleLinks,
+      onToggleAboutCSDAModal
     } = this.props
     const { jsondata = {}, links = [] } = retrieval
     const { source } = jsondata
@@ -71,11 +72,11 @@ export class OrderStatus extends Component {
 
     const collectionsById = Object.values(byId)
 
-    downloads = collectionsById.filter(collection => downloads.includes(collection.id))
-    opendapOrders = collectionsById.filter(collection => opendapOrders.includes(collection.id))
-    echoOrders = collectionsById.filter(collection => echoOrders.includes(collection.id))
-    esiOrders = collectionsById.filter(collection => esiOrders.includes(collection.id))
-    harmonyOrders = collectionsById.filter(collection => harmonyOrders.includes(collection.id))
+    downloads = collectionsById.filter(({ id }) => downloads.includes(id))
+    opendapOrders = collectionsById.filter(({ id }) => opendapOrders.includes(id))
+    echoOrders = collectionsById.filter(({ id }) => echoOrders.includes(id))
+    esiOrders = collectionsById.filter(({ id }) => esiOrders.includes(id))
+    harmonyOrders = collectionsById.filter(({ id }) => harmonyOrders.includes(id))
 
     const { edscHost } = getEnvironmentConfig()
 
@@ -134,6 +135,7 @@ export class OrderStatus extends Component {
                   onFetchRetrieval={onFetchRetrieval}
                   onFetchRetrievalCollection={onFetchRetrievalCollection}
                   onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+                  onToggleAboutCSDAModal={onToggleAboutCSDAModal}
                   retrievalCollection={retrievalCollection}
                 />
               )
@@ -259,7 +261,8 @@ OrderStatus.propTypes = {
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
-  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired
+  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
+  onToggleAboutCSDAModal: PropTypes.func.isRequired
 }
 
 export default OrderStatus

@@ -48,6 +48,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
+  test('onToggleAboutCSDAModal calls actions.onToggleAboutCSDAModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleAboutCSDAModal')
+
+    mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(true)
+  })
+
   test('onChangePath calls actions.changePath', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'changePath')
@@ -102,6 +112,7 @@ describe('OrderStatusContainer component', () => {
         onFetchRetrieval: jest.fn(),
         onFetchRetrievalCollection: jest.fn(),
         onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+        onToggleAboutCSDAModal: jest.fn(),
         retrieval: {
           id: 7,
           collections: {

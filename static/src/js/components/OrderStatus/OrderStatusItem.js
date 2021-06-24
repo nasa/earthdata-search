@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Tab } from 'react-bootstrap'
+import { Col, Tab } from 'react-bootstrap'
 import { upperFirst } from 'lodash'
 import {
   FaChevronUp,
-  FaChevronDown
+  FaChevronDown,
+  FaQuestionCircle
 } from 'react-icons/fa'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -135,10 +136,11 @@ export class OrderStatusItem extends PureComponent {
     } = this.state
 
     const {
-      granuleDownload,
+      collection,
       earthdataEnvironment,
+      granuleDownload,
       onChangePath,
-      collection
+      onToggleAboutCSDAModal
     } = this.props
 
     const {
@@ -162,7 +164,8 @@ export class OrderStatusItem extends PureComponent {
       const {
         browseFlag,
         directDistributionInformation = {},
-        title
+        title,
+        isCSDA: collectionIsCSDA
       } = collectionMetadata
 
       const orderStatus = aggregatedOrderStatus(orders)
@@ -511,6 +514,26 @@ export class OrderStatusItem extends PureComponent {
                       )
                     }
                   </div>
+                  {
+                    collectionIsCSDA && (
+                      <Col className="order-status-item__note mb-3">
+                        {'This collection is made available through the '}
+                        <span className="order-status-item__note-emph order-status-item__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                        {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                        <Button
+                          className="order-status-item__header-message-link"
+                          dataTestId="order-status-item__csda-modal-button"
+                          onClick={() => onToggleAboutCSDAModal(true)}
+                          variant="link"
+                          bootstrapVariant="link"
+                          icon={FaQuestionCircle}
+                          label="More details"
+                        >
+                          More Details
+                        </Button>
+                      </Col>
+                    )
+                  }
                   <div className="order-status-item__additional-info">
                     {
                       messages.length > 0 && (
@@ -697,7 +720,8 @@ OrderStatusItem.propTypes = {
   match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
-  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired
+  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
+  onToggleAboutCSDAModal: PropTypes.func.isRequired
 }
 
 export default OrderStatusItem

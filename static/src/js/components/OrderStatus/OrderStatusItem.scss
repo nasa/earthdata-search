@@ -192,6 +192,25 @@ $item-height: 3rem;
     font-size: 0.875rem;
   }
 
+  &__note {
+    display: block;
+    margin-bottom: $spacer/2;
+    color: $color__black--500;
+    font-size: 0.875rem;
+  }
+
+  &__note-emph {
+    font-weight: 500;
+
+    &--opensearch {
+      color: $color__yellow;
+    }
+
+    &--csda {
+      color: $color__purple;
+    }
+  }
+
   &__message {
     padding: 0.875rem $spacer;
     background-color: $color__pale-yellow;
