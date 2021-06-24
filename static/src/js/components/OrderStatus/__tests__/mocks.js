@@ -5,6 +5,7 @@ export const retrievalStatusProps = {
   onFetchRetrieval: jest.fn(),
   onFetchRetrievalCollection: jest.fn(),
   onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+  onToggleAboutCSDAModal: jest.fn(),
   match: {
     search: {
       id: 7

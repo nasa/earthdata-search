@@ -29,7 +29,9 @@ export const mapDispatchToProps = dispatch => ({
       actions.fetchRetrievalCollectionGranuleLinks(retrievalCollection)
     ),
   onChangePath:
-    path => dispatch(actions.changePath(path))
+    path => dispatch(actions.changePath(path)),
+  onToggleAboutCSDAModal:
+    state => dispatch(actions.toggleAboutCSDAModal(state))
 })
 
 export const OrderStatusContainer = ({
@@ -42,6 +44,7 @@ export const OrderStatusContainer = ({
   onFetchRetrieval,
   onFetchRetrievalCollection,
   onFetchRetrievalCollectionGranuleLinks,
+  onToggleAboutCSDAModal,
   retrieval
 }) => (
   <OrderStatus
@@ -54,6 +57,7 @@ export const OrderStatusContainer = ({
     onFetchRetrieval={onFetchRetrieval}
     onFetchRetrievalCollection={onFetchRetrievalCollection}
     onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+    onToggleAboutCSDAModal={onToggleAboutCSDAModal}
     retrieval={retrieval}
   />
 )
@@ -68,6 +72,7 @@ OrderStatusContainer.propTypes = {
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
+  onToggleAboutCSDAModal: PropTypes.func.isRequired,
   retrieval: PropTypes.shape({}).isRequired
 }
 

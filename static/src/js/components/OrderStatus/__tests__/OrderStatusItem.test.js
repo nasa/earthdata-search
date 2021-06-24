@@ -43,6 +43,7 @@ function setup(overrideProps, mockRefresh) {
     onFetchRetrieval: jest.fn(),
     onFetchRetrievalCollection: jest.fn(),
     onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn(),
     orders: [{
       type: 'download'
     }],
@@ -57,11 +58,6 @@ function setup(overrideProps, mockRefresh) {
     shouldRefreshMock
   }
 }
-
-
-
-
-
 
 describe('OrderStatusItem', () => {
   describe('Auto-refresh', () => {
@@ -327,6 +323,68 @@ describe('OrderStatusItem', () => {
       expect(scriptTab.props().title).toEqual('Download Script')
       expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
       expect(scriptTab.childAt(0).props().downloadLinks).toEqual([])
+    })
+  })
+
+  describe.only('CSDA', () => {
+    test('renders the CSDA information', () => {
+      const { enzymeWrapper } = setup({
+        type: 'download',
+        collection: {
+          id: 1,
+          collection_id: 'TEST_COLLECTION_111',
+          retrieval_id: '54',
+          collection_metadata: {
+            id: 'TEST_COLLECTION_111',
+            title: 'Test Dataset ID',
+            isCSDA: true
+          },
+          access_method: {
+            type: 'download'
+          },
+          granule_count: 100,
+          orders: [],
+          isLoaded: true
+        }
+      })
+
+      enzymeWrapper.find('.order-status-item__button').simulate('click')
+
+      const message = enzymeWrapper.find('.order-status-item__note')
+
+      expect(message.text()).toContain('This collection is made available through the NASA Commercial Smallsat Data Acquisition (CSDA) Program')
+    })
+
+    test('more details triggers modal on click', () => {
+      const { enzymeWrapper, props } = setup({
+        type: 'download',
+        collection: {
+          id: 1,
+          collection_id: 'TEST_COLLECTION_111',
+          retrieval_id: '54',
+          collection_metadata: {
+            id: 'TEST_COLLECTION_111',
+            title: 'Test Dataset ID',
+            isCSDA: true
+          },
+          access_method: {
+            type: 'download'
+          },
+          granule_count: 100,
+          orders: [],
+          isLoaded: true
+        }
+      })
+
+      enzymeWrapper.find('.order-status-item__button').simulate('click')
+
+      const message = enzymeWrapper.find('.order-status-item__note')
+      const moreDetailsButton = message.find('.order-status-item__header-message-link')
+
+      moreDetailsButton.simulate('click')
+
+      expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
     })
   })
 

@@ -31,7 +31,8 @@ function setup() {
     onChangePath: jest.fn(),
     onFetchRetrieval: jest.fn(),
     onFetchRetrievalCollection: jest.fn(),
-    onFetchRetrievalCollectionGranuleLinks: jest.fn()
+    onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn()
   }
 
   const enzymeWrapper = shallow(<OrderStatusList {...props} />)
@@ -107,7 +108,8 @@ describe('OrderStatus component', () => {
         onChangePath: props.onChangePath,
         onFetchRetrieval: props.onFetchRetrieval,
         onFetchRetrievalCollection: props.onFetchRetrievalCollection,
-        onFetchRetrievalCollectionGranuleLinks: props.onFetchRetrievalCollectionGranuleLinks
+        onFetchRetrievalCollectionGranuleLinks: props.onFetchRetrievalCollectionGranuleLinks,
+        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal
       })
     })
   })

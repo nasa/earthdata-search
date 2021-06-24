@@ -156,6 +156,9 @@ class App extends Component {
                     <Route path={this.portalPaths('/projects')}>
                       <AboutCSDAModalContainer />
                     </Route>
+                    <Route path={this.portalPaths('/downloads')}>
+                      <AboutCSDAModalContainer />
+                    </Route>
                   </Switch>
                 </UrlQueryContainer>
               </AuthTokenContainer>
