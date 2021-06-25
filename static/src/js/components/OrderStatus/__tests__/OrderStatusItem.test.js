@@ -326,7 +326,7 @@ describe('OrderStatusItem', () => {
     })
   })
 
-  describe.only('CSDA', () => {
+  describe('CSDA', () => {
     test('renders the CSDA information', () => {
       const { enzymeWrapper } = setup({
         type: 'download',
