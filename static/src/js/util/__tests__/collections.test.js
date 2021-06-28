@@ -1,4 +1,4 @@
-import { prepareCollectionParams } from '../collections'
+import { buildCollectionSearchParams, prepareCollectionParams } from '../collections'
 
 describe('#prepareCollectionParams', () => {
   describe('when the customize facet is selected', () => {
@@ -20,6 +20,38 @@ describe('#prepareCollectionParams', () => {
           ]
         })
       )
+    })
+  })
+})
+
+describe('#buildCollectionParams', () => {
+  describe('when the keyword does not have a quoted string', () => {
+    test('the wildcard character is added between words', () => {
+      const params = buildCollectionSearchParams({
+        featureFacets: {},
+        keyword: 'modis terra',
+        sortKey: [],
+        viewAllFacets: {}
+      })
+
+      expect(params).toEqual(expect.objectContaining({
+        keyword: 'modis* terra*'
+      }))
+    })
+  })
+
+  describe('when the keyword has a quoted string', () => {
+    test('the wildcard character is not added between words', () => {
+      const params = buildCollectionSearchParams({
+        featureFacets: {},
+        keyword: '"modis" terra',
+        sortKey: [],
+        viewAllFacets: {}
+      })
+
+      expect(params).toEqual(expect.objectContaining({
+        keyword: '"modis" terra'
+      }))
     })
   })
 })

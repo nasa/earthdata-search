@@ -169,7 +169,13 @@ export const buildCollectionSearchParams = (params) => {
   }
 
   // If there is a keyword, add the wildcard character between words and following the final character
-  const keywordWithWildcard = !keyword ? undefined : `${keyword.replace(/\s+/g, '* ')}*`
+  // If the user types a quoted string, don't add the wildcard character
+  let keywordWithWildcard
+  if (keyword && keyword.match(/(".*")/)) {
+    keywordWithWildcard = keyword
+  } else if (keyword) {
+    keywordWithWildcard = `${keyword.replace(/\s+/g, '* ')}*`
+  }
 
   // Set up params that are not driven by the URL
   const defaultParams = {
