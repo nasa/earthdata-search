@@ -6,3 +6,5 @@ headers:
   - Earthdata-ENV
   - Origin
   - User-Agent
+  - cmr-request-id
+  - Client-Id
