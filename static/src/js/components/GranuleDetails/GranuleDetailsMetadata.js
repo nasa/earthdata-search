@@ -28,7 +28,10 @@ export const GranuleDetailsMetadata = ({
             ? (
               <>
                 <h4 className="granule-details-metadata__heading">Download Metadata:</h4>
-                <ul className="granule-details-metadata__list">
+                <ul
+                  className="granule-details-metadata__list"
+                  data-test-id="granule-details-metadata__list"
+                >
                   {
                     metdataUrlKeys.length && metdataUrlKeys.map((key) => {
                       const metadataUrl = metadataUrls[key]

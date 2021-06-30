@@ -50,7 +50,10 @@ export const CollectionDetailsHighlights = ({
           </h4>
         </header>
         <div className="collection-details-highlights__item-body">
-          <div className="collection-details-highlights__item-value">
+          <div
+            className="collection-details-highlights__item-value"
+            data-test-id="collection-details-highlights__version-id"
+          >
             {
               (isLoading && !isLoaded) ? (
                 <Skeleton
@@ -112,7 +115,10 @@ export const CollectionDetailsHighlights = ({
           </h4>
         </header>
         <div className="collection-details-highlights__item-body">
-          <div className="collection-details-highlights__item-value">
+          <div
+            className="collection-details-highlights__item-value"
+            data-test-id="collection-details-highlights__temporal"
+          >
             {
               (isLoading && !isLoaded) ? (
                 <Skeleton
@@ -139,7 +145,10 @@ export const CollectionDetailsHighlights = ({
                 </h4>
               </header>
               <div className="collection-details-highlights__item-body">
-                <div className="collection-details-highlights__item-value collection-details-highlights__item-value--desc">
+                <div
+                  className="collection-details-highlights__item-value collection-details-highlights__item-value--desc"
+                  data-test-id="collection-details-highlights__description"
+                >
                   {
                     (isLoading && !isLoaded) ? (
                       <Skeleton
