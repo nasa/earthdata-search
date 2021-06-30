@@ -1,4 +1,5 @@
 import parser from 'fast-xml-parser'
+import snakecaseKeys from 'snakecase-keys'
 
 import { uniq } from 'lodash'
 
@@ -16,6 +17,7 @@ import { parseError } from '../../../sharedUtils/parseError'
 import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
 import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
 import { supportsVariableSubsetting } from './supportsVariableSubsetting'
+import { getCollectionCapabilities } from '../../../sharedUtils/getCollectionCapabilities'
 
 /**
  * Retrieve access methods for a provided collection
@@ -79,9 +81,12 @@ const getAccessMethods = async (event, context) => {
     let onlineAccessFlag = false
     if (associatedGranules) {
       const { items: granuleItems } = associatedGranules
-      const [firstGranule] = granuleItems;
-
-      ({ onlineAccessFlag = false } = firstGranule)
+      onlineAccessFlag = getCollectionCapabilities({
+        collection: {
+          id: collectionId
+        },
+        granules: snakecaseKeys(granuleItems)
+      })
     }
 
     const accessMethods = {}

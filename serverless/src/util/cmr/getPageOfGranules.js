@@ -15,20 +15,21 @@ const wrappedAxios = wrapAxios(axios)
 axiosRetry(axios, { retries: 4 })
 
 /**
- * Returns tags for a collection based on a single granule sample
+ * Returns a single page of CMR granules
  * @param {String} cmrToken The CMR token used to authenticate the request
  * @param {String} collectionId CMR Collection ID
+ * @param {Integer} pageSize Now many granules to return (max: 2000, default: 20)
  */
-export const getSingleGranule = async (cmrToken, collectionId) => {
+export const getPageOfGranules = async (cmrToken, collectionId, pageSize = 20) => {
   const cmrParams = {
     echo_collection_id: collectionId,
     page_num: 1,
-    page_size: 1
+    page_size: pageSize
   }
 
   const granuleSearchUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/granules.json`
 
-  console.log(`Retrieving a single granule for ${collectionId}`)
+  console.log(`Retrieving a page of ${pageSize} granule(s) for ${collectionId}`)
 
   // Using an extension of request promise that supports retries
   const cmrResponse = await wrappedAxios({
@@ -45,9 +46,7 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
   const { config } = cmrResponse
   const { elapsedTime } = config
 
-  console.log(`Request for a single cmr granule successfully completed in ${elapsedTime} ms`)
+  console.log(`Request for a page of cmr granule(s) successfully completed in ${elapsedTime} ms`)
 
-  const responseBody = readCmrResults('search/granules.json', cmrResponse)
-
-  return responseBody[0]
+  return readCmrResults('search/granules.json', cmrResponse)
 }
