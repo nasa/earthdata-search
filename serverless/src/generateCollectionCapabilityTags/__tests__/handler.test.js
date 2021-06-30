@@ -3,7 +3,7 @@ import nock from 'nock'
 import MockDate from 'mockdate'
 
 import * as getSystemToken from '../../util/urs/getSystemToken'
-import * as getSingleGranule from '../../util/cmr/getSingleGranule'
+import * as getPageOfGranules from '../../util/cmr/getPageOfGranules'
 
 import generateCollectionCapabilityTags from '../handler'
 
@@ -46,13 +46,13 @@ describe('generateCollectionCapabilityTags', () => {
       // Set the necessary ENV variables to ensure all values are tested
       process.env.tagQueueUrl = 'http://example.com/tagQueue'
 
-      jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({
+      jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
         id: 'G100000-EDSC'
-      }))
+      }]))
 
       nock(/cmr/)
         .matchHeader('Echo-Token', 'mocked-system-token')
-        .post(/collections/)
+        .post(/collections/, 'has_granules=true&page_num=1&page_size=300&include_granule_counts=true&include_tags=edsc.extra.serverless.%2A')
         .reply(200, {
           feed: {
             entry: [{
@@ -98,13 +98,13 @@ describe('generateCollectionCapabilityTags', () => {
       // Set the necessary ENV variables to ensure all values are tested
       process.env.tagQueueUrl = 'http://example.com/tagQueue'
 
-      jest.spyOn(getSingleGranule, 'getSingleGranule').mockImplementationOnce(() => ({
+      jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
         id: 'G100000-EDSC'
-      }))
+      }]))
 
       nock(/cmr/)
         .matchHeader('Echo-Token', 'mocked-system-token')
-        .post(/collections/)
+        .post(/collections/, 'has_granules=true&page_num=4&page_size=300&include_granule_counts=true&include_tags=edsc.extra.serverless.%2A')
         .reply(200, {
           feed: {
             entry: [{
@@ -141,6 +141,58 @@ describe('generateCollectionCapabilityTags', () => {
       expect(response).toEqual({
         hasMoreCollections: true,
         pageNumber: 5
+      })
+    })
+  })
+
+  describe('when a concept id is provided', () => {
+    test('requests collections to tag by concept id', async () => {
+      // Set the necessary ENV variables to ensure all values are tested
+      process.env.tagQueueUrl = 'http://example.com/tagQueue'
+
+      jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+        id: 'G100000-EDSC'
+      }]))
+
+      nock(/cmr/)
+        .matchHeader('Echo-Token', 'mocked-system-token')
+        .post(/collections/, 'has_granules=true&page_num=1&page_size=300&include_granule_counts=true&include_tags=edsc.extra.serverless.%2A&collection_concept_id=C100000-EDSC')
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'C100000-EDSC',
+              granule_count: 1
+            }]
+          }
+        }, {
+          'cmr-hits': 1
+        })
+
+      const response = await generateCollectionCapabilityTags({ conceptId: 'C100000-EDSC' })
+
+      expect(sqsCollectionCapabilities).toBeCalledTimes(1)
+
+      expect(sqsCollectionCapabilities.mock.calls[0]).toEqual([{
+        MessageBody: JSON.stringify({
+          tagName: 'edsc.extra.serverless.collection_capabilities',
+          action: 'ADD',
+          tagData: [{
+            'concept-id': 'C100000-EDSC',
+            data: {
+              cloud_cover: false,
+              day_night_flag: false,
+              granule_online_access_flag: false,
+              orbit_calculated_spatial_domains: false,
+              updated_at: '1988-09-03T10:00:00.000Z'
+            }
+          }]
+        }),
+        QueueUrl: 'http://example.com/tagQueue'
+      }])
+
+      expect(response).toEqual({
+        hasMoreCollections: false,
+        pageNumber: 2
       })
     })
   })

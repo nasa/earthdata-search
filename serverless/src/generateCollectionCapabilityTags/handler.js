@@ -7,7 +7,7 @@ import { stringify } from 'qs'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
-import { getCollectionCapabilities } from './getCollectionCapabilities'
+import { getCollectionCapabilities } from '../../../sharedUtils/getCollectionCapabilities'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getSystemToken } from '../util/urs/getSystemToken'
@@ -41,6 +41,14 @@ const generateCollectionCapabilityTags = async (input) => {
     include_tags: tagName('*')
   }
 
+  const { conceptId } = input
+
+  // eslint-disable-next-line no-param-reassign
+  delete input.conceptId
+
+  // If a concept id was provided add it to the request params to scope it down
+  if (conceptId) cmrParams.collection_concept_id = conceptId
+
   const { cmrHost } = getEarthdataConfig(deployedEnvironment())
   const collectionSearchUrl = `${cmrHost}/search/collections.json`
 
@@ -73,7 +81,7 @@ const generateCollectionCapabilityTags = async (input) => {
   await collectionsWithGranules.forEachAsync(async (collection) => {
     const { id } = collection
 
-    const tagData = await getCollectionCapabilities(cmrToken, collection)
+    const tagData = await getCollectionCapabilities({ cmrToken, collection })
 
     associationPayload.push({
       'concept-id': id,
