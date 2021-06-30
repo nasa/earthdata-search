@@ -22,7 +22,10 @@ const GranuleDetailsBody = ({
   const { metadataUrls } = granuleMetadata
 
   return (
-    <div className="granule-details-body">
+    <div
+      className="granule-details-body"
+      data-test-id="granule-details-body"
+    >
       <Tabs defaultActiveKey="information">
         <Tab eventKey="information" title="Information">
           <GranuleDetailsInfo granuleMetadata={granuleMetadata} />

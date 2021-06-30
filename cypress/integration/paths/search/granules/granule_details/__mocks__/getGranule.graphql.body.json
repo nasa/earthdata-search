@@ -1,0 +1,81 @@
+{
+  "data": {
+    "granule": {
+      "granuleUr": "S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1-SLC",
+      "granuleSize": 3989.2002868652344,
+      "title": "S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1-SLC",
+      "onlineAccessFlag": true,
+      "dayNightFlag": "UNSPECIFIED",
+      "timeStart": "2014-06-15T03:44:44.000Z",
+      "timeEnd": "2014-06-15T03:45:12.000Z",
+      "dataCenter": "ASF",
+      "originalFormat": "ECHO10",
+      "conceptId": "G1287941210-ASF",
+      "collectionConceptId": "C1214470488-ASF",
+      "spatialExtent": {
+        "horizontalSpatialDomain": {
+          "geometry": {
+            "gPolygons": [
+              {
+                "boundary": {
+                  "points": [
+                    { "longitude": 25.048717, "latitude": -31.438196 },
+                    { "longitude": 25.543564, "latitude": -29.763071 },
+                    { "longitude": 24.667177, "latitude": -29.560961 },
+                    { "longitude": 24.155773, "latitude": -31.232344 },
+                    { "longitude": 25.048717, "latitude": -31.438196 }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "temporalExtent": {
+        "rangeDateTime": {
+          "beginningDateTime": "2014-06-15T03:44:44.000Z",
+          "endingDateTime": "2014-06-15T03:45:12.000Z"
+        }
+      },
+      "relatedUrls": [
+        {
+          "description": "This link provides direct download access to the granule.",
+          "type": "GET DATA",
+          "url": "https://datapool.asf.alaska.edu/SLC/SA/S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1.zip"
+        },
+        {
+          "description": "ASF DAAC Sentinel-1 data set landing page",
+          "type": "VIEW RELATED INFORMATION",
+          "url": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
+        },
+        {
+          "description": "ASF DAAC Sentinel-1 User Guide and Technical Documentation",
+          "type": "VIEW RELATED INFORMATION",
+          "url": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
+        }
+      ],
+      "dataGranule": {
+        "dayNightFlag": "Unspecified",
+        "identifiers": [
+          {
+            "identifier": "S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1",
+            "identifierType": "ProducerGranuleId"
+          }
+        ],
+        "productionDateTime": "2014-06-15T03:44:44.000Z",
+        "archiveAndDistributionInformation": [
+          {
+            "name": "Not provided",
+            "size": 3989.2002868652344,
+            "sizeUnit": "MB"
+          }
+        ]
+      },
+      "measuredParameters": null,
+      "providerDates": [
+        { "date": "2020-03-01T01:22:31.000Z", "type": "Insert" },
+        { "date": "2020-03-01T01:22:31.000Z", "type": "Update" }
+      ]
+    }
+  }
+}

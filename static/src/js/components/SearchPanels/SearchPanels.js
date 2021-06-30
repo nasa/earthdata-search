@@ -538,6 +538,7 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="granule-details-panel"
+        dataTestId="panel-group_granule-details"
         primaryHeading={granuleTitle}
         headerLoading={!granuleTitle}
         breadcrumbs={[
