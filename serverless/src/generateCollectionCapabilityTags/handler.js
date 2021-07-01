@@ -7,7 +7,7 @@ import { stringify } from 'qs'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
-import { getCollectionCapabilities } from '../../../sharedUtils/getCollectionCapabilities'
+import { getCollectionCapabilities } from './getCollectionCapabilities'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getSystemToken } from '../util/urs/getSystemToken'
