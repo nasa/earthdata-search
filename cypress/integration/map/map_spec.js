@@ -1453,6 +1453,8 @@ describe('Map interactions', () => {
       before(() => {
         const conceptId = 'C1214470488-ASF'
 
+        cy.clock(new Date(2021, 5, 1, 0, 0, 0), ['Date'])
+
         const aliases = interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
@@ -1592,6 +1594,8 @@ describe('Map interactions', () => {
 
     describe('When viewing OpenSearch granules with polygon spatial', () => {
       before(() => {
+        cy.clock(new Date(2021, 5, 1, 0, 0, 0), ['Date'])
+
         const conceptId = 'C1972468359-SCIOPS'
 
         const aliases = interceptUnauthenticatedCollections(
