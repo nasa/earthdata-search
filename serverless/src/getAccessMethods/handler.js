@@ -1,5 +1,4 @@
 import parser from 'fast-xml-parser'
-import snakecaseKeys from 'snakecase-keys'
 
 import { uniq } from 'lodash'
 
@@ -17,7 +16,6 @@ import { parseError } from '../../../sharedUtils/parseError'
 import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
 import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
 import { supportsVariableSubsetting } from './supportsVariableSubsetting'
-import { getCollectionCapabilities } from '../../../sharedUtils/getCollectionCapabilities'
 
 /**
  * Retrieve access methods for a provided collection
@@ -79,14 +77,18 @@ const getAccessMethods = async (event, context) => {
     const hasHarmony = harmonyServices.length > 0
 
     let onlineAccessFlag = false
+
     if (associatedGranules) {
+      // If the collection has granules, check their online access flags to
+      // determine if this collection is downloadable
       const { items: granuleItems } = associatedGranules
-      onlineAccessFlag = getCollectionCapabilities({
-        collection: {
-          id: collectionId
-        },
-        granules: snakecaseKeys(granuleItems)
-      })
+
+      if (granuleItems) {
+        onlineAccessFlag = granuleItems.some((granule) => {
+          const { onlineAccessFlag = false } = granule
+          return onlineAccessFlag
+        })
+      }
     }
 
     const accessMethods = {}

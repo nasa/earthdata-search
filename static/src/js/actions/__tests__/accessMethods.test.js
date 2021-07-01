@@ -59,12 +59,12 @@ describe('fetchAccessMethods', () => {
               count: 0,
               items: null
             },
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
-                }
-              }
+            granules: {
+              count: 1,
+              items: [{
+                id: 'G100000-EDSC',
+                onlineAccessFlag: true
+              }]
             }
           }
         }
@@ -139,11 +139,6 @@ describe('fetchAccessMethods', () => {
                     }
                   ]
                 }
-              },
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
-                }
               }
             }
           }
@@ -203,12 +198,12 @@ describe('fetchAccessMethods', () => {
               count: 0,
               items: null
             },
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
-                }
-              }
+            granules: {
+              count: 1,
+              items: [{
+                id: 'G100000-EDSC',
+                onlineAccessFlag: true
+              }]
             }
           }
         }
@@ -266,6 +261,7 @@ describe('fetchAccessMethods', () => {
       isValid: true,
       type: 'download'
     }
+
     const echoOrder0 = {
       id: 'service_id',
       type: 'ECHO ORDERS',
@@ -313,11 +309,6 @@ describe('fetchAccessMethods', () => {
                       name: 'Delivery Option'
                     }
                   ]
-                }
-              },
-              'edsc.extra.serverless.collection_capabilities': {
-                data: {
-                  granule_online_access_flag: true
                 }
               }
             }

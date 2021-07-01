@@ -1,7 +1,7 @@
 import nock from 'nock'
 import MockDate from 'mockdate'
 
-import * as getPageOfGranules from '../../serverless/src/util/cmr/getPageOfGranules'
+import * as getPageOfGranules from '../../util/cmr/getPageOfGranules'
 
 import { getCollectionCapabilities } from '../getCollectionCapabilities'
 

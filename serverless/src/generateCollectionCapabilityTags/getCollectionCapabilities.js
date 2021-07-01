@@ -1,5 +1,5 @@
-import { getPageOfGranules } from '../serverless/src/util/cmr/getPageOfGranules'
-import { parseError } from './parseError'
+import { getPageOfGranules } from '../util/cmr/getPageOfGranules'
+import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Returns a small object related to collection capabilities based on the granules provided or those retrieved using the token and collection id

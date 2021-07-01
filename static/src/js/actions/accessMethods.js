@@ -3,7 +3,6 @@ import actions from './index'
 
 import { buildPromise } from '../util/buildPromise'
 import { findProvider } from '../util/findProvider'
-import { getValueForTag } from '../../../../sharedUtils/tags'
 import { parseError } from '../../../../sharedUtils/parseError'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
@@ -93,12 +92,23 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
         return response
       }
 
-      // If the collection has tag data, retrieve the access methods from lambda
-      const capabilitiesData = getValueForTag('collection_capabilities', tags)
-      const { granule_online_access_flag: downloadable } = capabilitiesData || {}
+      let onlineAccessFlag = false
+
+      if (granules) {
+        // If the collection has granules, check their online access flags to
+        // determine if this collection is downloadable
+        const { items: granuleItems } = granules
+
+        if (granuleItems) {
+          onlineAccessFlag = granuleItems.some((granule) => {
+            const { onlineAccessFlag = false } = granule
+            return onlineAccessFlag
+          })
+        }
+      }
 
       // If the collection is online downloadable, add the download method
-      if (downloadable) {
+      if (onlineAccessFlag) {
         dispatch(actions.addAccessMethods({
           collectionId,
           methods: {
