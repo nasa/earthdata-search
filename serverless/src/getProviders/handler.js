@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
@@ -29,8 +29,8 @@ const getProviders = async (event) => {
       method: 'get',
       url,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Client-Id': getClientId().lambda
+        Authorization: `Bearer ${accessToken}` // ,
+        // 'Client-Id': getClientId().lambda
       }
     })
 

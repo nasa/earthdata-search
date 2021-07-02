@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Converts a single color component to hex
@@ -58,10 +58,10 @@ const processColorMap = async (event, context) => {
 
     const gibsResponse = await axios({
       method: 'get',
-      url: providedColorMap.url,
-      headers: {
+      url: providedColorMap.url // ,
+      /* headers: {
         'Client-Id': getClientId().background
-      }
+      } */
     })
 
     const parsedColorMap = parseXml(gibsResponse.data, {

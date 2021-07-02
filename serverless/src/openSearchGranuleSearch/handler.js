@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getOpenSearchGranulesUrl } from './getOpenSearchGranulesUrl'
 import { parseError } from '../../../sharedUtils/parseError'
 import { pick } from '../util/pick'
@@ -78,10 +78,10 @@ const openSearchGranuleSearch = async (event) => {
       url: renderedTemplate,
       timeout: requestTimeout({
         definedTimeout: 60
-      }),
-      headers: {
+      }) // ,
+      /* headers: {
         'Client-Id': getClientId().lambda
-      }
+      } */
     })
 
     const { config, data } = granuleResponse

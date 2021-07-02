@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -19,7 +19,7 @@ export const removeTag = async (tagName, searchCriteria, cmrToken) => {
       method: 'delete',
       url: tagRemovalUrl,
       headers: {
-        'Client-Id': getClientId().background,
+        // 'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
       },
       data: searchCriteria

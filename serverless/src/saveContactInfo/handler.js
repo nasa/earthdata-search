@@ -3,7 +3,7 @@ import AWS from 'aws-sdk'
 import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
@@ -60,8 +60,8 @@ const saveContactInfo = async (event) => {
       method: 'put',
       url,
       headers: {
-        Authorization: `Bearer ${echoToken}`,
-        'Client-Id': getClientId().lambda
+        Authorization: `Bearer ${echoToken}` // ,
+        // 'Client-Id': getClientId().lambda
       },
       data: params
     })

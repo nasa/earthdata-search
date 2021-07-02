@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { chunkArray } from '../util/chunkArray'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getRelevantServices } from './getRelevantServices'
 import { getServiceOptionDefinitionIdNamePairs } from './getServiceOptionDefinitionIdNamePairs'
@@ -57,7 +57,7 @@ const generateSubsettingTags = async (event, context) => {
       method: 'get',
       url: serviceOptionAssignmentUrl,
       headers: {
-        'Client-Id': getClientId().background,
+        // 'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
       }
     })

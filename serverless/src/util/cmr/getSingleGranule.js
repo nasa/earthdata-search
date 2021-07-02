@@ -4,7 +4,7 @@ import axiosRetry from 'axios-retry'
 import { stringify } from 'qs'
 
 import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
-import { getClientId } from '../../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { readCmrResults } from './readCmrResults'
 import { wrapAxios } from '../wrapAxios'
@@ -36,7 +36,7 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     url: granuleSearchUrl,
     data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {
-      'Client-Id': getClientId().background,
+      // 'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
       'Echo-Token': cmrToken
     }

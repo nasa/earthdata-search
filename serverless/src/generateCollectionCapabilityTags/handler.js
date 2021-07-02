@@ -6,7 +6,7 @@ import axios from 'axios'
 import { stringify } from 'qs'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getCollectionCapabilities } from './getCollectionCapabilities'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
@@ -49,7 +49,7 @@ const generateCollectionCapabilityTags = async (input) => {
     url: collectionSearchUrl,
     data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {
-      'Client-Id': getClientId().background,
+      // 'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
       'Echo-Token': cmrToken
     }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
-import { getClientId } from '../../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { getEdlConfig } from '../getEdlConfig'
 import { getUrsSystemCredentials } from './getUrsSystemCredentials'
@@ -43,10 +43,10 @@ export const getSystemToken = async () => {
       url: authenticationUrl,
       data: {
         token: authenticationParams
-      },
-      headers: {
+      } // ,
+      /* headers: {
         'Client-Id': getClientId().background
-      }
+      } */
     })
 
     const { data } = tokenResponse

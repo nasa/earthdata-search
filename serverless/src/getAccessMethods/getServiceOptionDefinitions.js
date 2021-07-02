@@ -6,7 +6,7 @@ import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { parseError } from '../../../sharedUtils/parseError'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { wrapAxios } from '../util/wrapAxios'
 
 const wrappedAxios = wrapAxios(axios)
@@ -38,8 +38,8 @@ export const getServiceOptionDefinitions = async (
           provider_guid: providerId
         },
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().lambda
+          Authorization: `Bearer ${accessToken}` // ,
+          // 'Client-Id': getClientId().lambda
         }
       })
 

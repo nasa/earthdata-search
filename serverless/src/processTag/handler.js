@@ -6,7 +6,7 @@ import { isEqual } from 'lodash'
 
 import { addTag } from './addTag'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getValueForTag } from '../../../sharedUtils/tags'
@@ -65,7 +65,7 @@ const processTag = async (event, context) => {
             include_tags: tagName
           }, { indices: false, arrayFormat: 'brackets' }),
           headers: {
-            'Client-Id': getClientId().background,
+            // 'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',
             'Echo-Token': cmrToken
           }

@@ -3,7 +3,7 @@ import 'array-foreach-async'
 import axios from 'axios'
 import { stringify } from 'qs'
 
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
@@ -53,8 +53,8 @@ const fetchLegacyServicesOrder = async (input) => {
       method: 'get',
       url: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Client-Id': getClientId().background
+        Authorization: `Bearer ${accessToken}`// ,
+        // 'Client-Id': getClientId().background
       },
       params: { id: orderNumber },
       paramsSerializer: params => stringify(params,

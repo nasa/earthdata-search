@@ -7,7 +7,7 @@ import { stringify } from 'qs'
 
 import { bboxToPolygon } from './bboxToPolygon'
 import { ccwShapefile } from './ccwShapefile'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 import { pointStringToLatLng } from './pointStringToLatLng'
@@ -33,8 +33,8 @@ export const constructOrderPayload = async ({
         arrayFormat: 'brackets'
       }),
     headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Client-Id': getClientId().background
+      Authorization: `Bearer ${accessToken}` // ,
+      // 'Client-Id': getClientId().background
     }
   })
 

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { parse as parseXml } from 'fast-xml-parser'
 
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { parseError } from '../../../sharedUtils/parseError'
 import { wrapAxios } from '../util/wrapAxios'
 
@@ -18,9 +18,9 @@ export const getOpenSearchGranulesUrl = async (collectionId, openSearchOsddUrl) 
 
   try {
     const osddResponse = await wrappedAxios.get(openSearchOsddUrl, {
-      headers: {
+      /* headers: {
         'Client-Id': getClientId().lambda
-      }
+      } */
     })
 
     const { config, data } = osddResponse

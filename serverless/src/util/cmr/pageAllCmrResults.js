@@ -3,7 +3,7 @@ import 'array-foreach-async'
 import { stringify } from 'qs'
 import axios from 'axios'
 
-import { getClientId } from '../../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { parseError } from '../../../../sharedUtils/parseError'
 import { readCmrResults } from './readCmrResults'
@@ -43,7 +43,7 @@ export const pageAllCmrResults = async ({
       url: `${cmrHost}/${path}`,
       data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
       headers: {
-        'Client-Id': getClientId().background,
+        // 'Client-Id': getClientId().background,
         'Content-Type': 'application/x-www-form-urlencoded',
         'Echo-Token': cmrToken,
         ...additionalHeaders
@@ -78,7 +78,7 @@ export const pageAllCmrResults = async ({
           url: `${cmrHost}/${path}`,
           data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
           headers: {
-            'Client-Id': getClientId().background,
+            // 'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',
             'Echo-Token': cmrToken,
             ...additionalHeaders

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { stringify } from 'qs'
 
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 import { readCmrResults } from '../util/cmr/readCmrResults'
@@ -38,8 +38,8 @@ export const constructOrderPayload = async (
         arrayFormat: 'brackets'
       }),
     headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Client-Id': getClientId().background
+      Authorization: `Bearer ${accessToken}` // ,
+      // 'Client-Id': getClientId().background
     }
   })
 
@@ -63,8 +63,8 @@ export const constructOrderPayload = async (
     }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Bearer ${accessToken}`,
-      'Client-Id': getClientId().background
+      Authorization: `Bearer ${accessToken}` // ,
+      // 'Client-Id': getClientId().background
     }
   })
 

@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -71,8 +71,8 @@ const submitLegacyServicesOrder = async (event, context) => {
         method: 'post',
         url: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
+          Authorization: `Bearer ${accessToken}` // ,
+          // 'Client-Id': getClientId().background
         },
         data: { order: {} }
       })
@@ -91,8 +91,8 @@ const submitLegacyServicesOrder = async (event, context) => {
         method: 'post',
         url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
+          Authorization: `Bearer ${accessToken}` // ,
+          // 'Client-Id': getClientId().background
         },
         data: orderItemPayload
       })
@@ -106,8 +106,8 @@ const submitLegacyServicesOrder = async (event, context) => {
         method: 'put',
         url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/user_information`,
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
+          Authorization: `Bearer ${accessToken}` // ,
+          // 'Client-Id': getClientId().background
         },
         data: userInformationPayload
       })
@@ -117,8 +117,8 @@ const submitLegacyServicesOrder = async (event, context) => {
         method: 'post',
         url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/submit`,
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
+          Authorization: `Bearer ${accessToken}` // ,
+          // 'Client-Id': getClientId().background
         }
       })
 

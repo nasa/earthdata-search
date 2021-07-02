@@ -1,7 +1,7 @@
 import axios from 'axios'
 import lowercaseKeys from 'lowercase-keys'
 
-import { getClientId } from '../../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
 import { getEchoToken } from '../urs/getEchoToken'
 import { parseError } from '../../../../sharedUtils/parseError'
@@ -33,7 +33,7 @@ export const doSearchRequest = async ({
   try {
     // Headers we'll send with every request
     const requestHeaders = {
-      'Client-Id': getClientId().lambda,
+      // 'Client-Id': getClientId().lambda,
       ...providedHeaders
     }
 
@@ -81,7 +81,7 @@ export const doSearchRequest = async ({
         ...lowercaseKeys(defaultResponseHeaders),
         'cmr-hits': headers['cmr-hits'],
         'cmr-took': headers['cmr-took'],
-        'cmr-request-id': headers['cmr-request-id'],
+        // 'cmr-request-id': headers['cmr-request-id'],
         'access-control-allow-origin': headers['access-control-allow-origin'],
         'access-control-expose-headers': prepareExposeHeaders(headers),
         'jwt-token': jwtToken,

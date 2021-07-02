@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 
 /**
@@ -16,8 +16,8 @@ export const getEchoProfileData = async (accessToken, environment) => {
     method: 'get',
     url: echoRestProfileUrl,
     headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Client-Id': getClientId().lambda
+      Authorization: `Bearer ${accessToken}` // ,
+      // 'Client-Id': getClientId().lambda
     }
   })
 

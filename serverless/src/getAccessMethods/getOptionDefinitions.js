@@ -3,7 +3,7 @@ import 'array-foreach-async'
 import axios from 'axios'
 
 import { generateFormDigest } from '../util/generateFormDigest'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -38,8 +38,8 @@ export const getOptionDefinitions = async (
           provider: providerId
         },
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().lambda
+          Authorization: `Bearer ${accessToken}` // ,
+          // 'Client-Id': getClientId().lambda
         }
       })
 

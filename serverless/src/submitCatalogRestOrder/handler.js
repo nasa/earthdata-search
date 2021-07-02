@@ -5,7 +5,7 @@ import { parse as parseXml } from 'fast-xml-parser'
 import { stringify } from 'qs'
 
 import { getBoundingBox } from '../util/echoForms/getBoundingBox'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEmail } from '../util/echoForms/getEmail'
 import {
@@ -99,8 +99,8 @@ const submitCatalogRestOrder = async (event, context) => {
             arrayFormat: 'brackets'
           }),
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
+          Authorization: `Bearer ${accessToken}` // ,
+          // 'Client-Id': getClientId().background
         }
       })
 
@@ -162,8 +162,8 @@ const submitCatalogRestOrder = async (event, context) => {
           arrayFormat: 'brackets'
         }),
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
+          Authorization: `Bearer ${accessToken}` // ,
+          // 'Client-Id': getClientId().background
         }
       })
 
