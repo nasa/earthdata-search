@@ -968,56 +968,60 @@ describe('fetchLinks', () => {
 
   test('calls lambda to get the granules from cmr', async () => {
     nock(/localhost/)
-      .post(/granules/)
+      .post(/graphql/)
       .reply(200, {
-        feed: {
-          entry: [
-            {
-              links: [
-                {
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                  type: 'application/x-hdfeos',
-                  title: 'This file may be downloaded directly from this link',
-                  hreflang: 'en-US',
-                  href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                },
-                {
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
-                  type: 'text/html',
-                  title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
-                  hreflang: 'en-US',
-                  href: 'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                },
-                {
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
-                  type: 'image/jpeg',
-                  title: 'This Browse file may be downloaded directly from this link (BROWSE)',
-                  hreflang: 'en-US',
-                  href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
-                }
-              ]
-            }
-          ]
+        data: {
+          granules: {
+            items: [
+              {
+                links: [
+                  {
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+                    type: 'application/x-hdfeos',
+                    title: 'This file may be downloaded directly from this link',
+                    hreflang: 'en-US',
+                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                  },
+                  {
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+                    type: 'text/html',
+                    title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+                    hreflang: 'en-US',
+                    href: 'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                  },
+                  {
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+                    type: 'image/jpeg',
+                    title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+                    hreflang: 'en-US',
+                    href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
+                  }
+                ]
+              }
+            ]
+          }
         }
       })
 
     nock(/localhost/)
-      .post(/granules/)
+      .post(/graphql/)
       .reply(200, {
-        feed: {
-          entry: [
-            {
-              links: [
-                {
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                  type: 'application/x-hdfeos',
-                  title: 'This file may be downloaded directly from this link',
-                  hreflang: 'en-US',
-                  href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
-                }
-              ]
-            }
-          ]
+        data: {
+          granules: {
+            items: [
+              {
+                links: [
+                  {
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+                    type: 'application/x-hdfeos',
+                    title: 'This file may be downloaded directly from this link',
+                    hreflang: 'en-US',
+                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+                  }
+                ]
+              }
+            ]
+          }
         }
       })
 
@@ -1035,9 +1039,9 @@ describe('fetchLinks', () => {
       collection_metadata: {},
       granule_params: {
         echo_collection_id: 'C10000005-EDSC',
-        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
-      granule_count: 388
+      granule_count: 588
     }
 
     await store.dispatch(fetchLinks(params))
@@ -1071,70 +1075,74 @@ describe('fetchLinks', () => {
   describe('when S3 links exist', () => {
     test('populates the S3 links', async () => {
       nock(/localhost/)
-        .post(/granules/)
+        .post(/graphql/)
         .reply(200, {
-          feed: {
-            entry: [
-              {
-                links: [
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                    type: 'application/x-hdfeos',
-                    title: 'This file may be downloaded directly from this link',
-                    hreflang: 'en-US',
-                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                  },
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
-                    type: 'application/x-hdfeos',
-                    title: 'This file may be downloaded directly from this link',
-                    hreflang: 'en-US',
-                    href: 's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                  },
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
-                    type: 'text/html',
-                    title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
-                    hreflang: 'en-US',
-                    href: 'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                  },
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
-                    type: 'image/jpeg',
-                    title: 'This Browse file may be downloaded directly from this link (BROWSE)',
-                    hreflang: 'en-US',
-                    href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
-                  }
-                ]
-              }
-            ]
+          data: {
+            granules: {
+              items: [
+                {
+                  links: [
+                    {
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+                      type: 'application/x-hdfeos',
+                      title: 'This file may be downloaded directly from this link',
+                      hreflang: 'en-US',
+                      href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                    },
+                    {
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+                      type: 'application/x-hdfeos',
+                      title: 'This file may be downloaded directly from this link',
+                      hreflang: 'en-US',
+                      href: 's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                    },
+                    {
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+                      type: 'text/html',
+                      title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+                      hreflang: 'en-US',
+                      href: 'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                    },
+                    {
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+                      type: 'image/jpeg',
+                      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+                      hreflang: 'en-US',
+                      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
+                    }
+                  ]
+                }
+              ]
+            }
           }
         })
 
       nock(/localhost/)
-        .post(/granules/)
+        .post(/graphql/)
         .reply(200, {
-          feed: {
-            entry: [
-              {
-                links: [
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                    type: 'application/x-hdfeos',
-                    title: 'This file may be downloaded directly from this link',
-                    hreflang: 'en-US',
-                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
-                  },
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
-                    type: 'application/x-hdfeos',
-                    title: 'This file may be downloaded directly from this link',
-                    hreflang: 'en-US',
-                    href: 's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                  }
-                ]
-              }
-            ]
+          data: {
+            granules: {
+              items: [
+                {
+                  links: [
+                    {
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+                      type: 'application/x-hdfeos',
+                      title: 'This file may be downloaded directly from this link',
+                      hreflang: 'en-US',
+                      href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+                    },
+                    {
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+                      type: 'application/x-hdfeos',
+                      title: 'This file may be downloaded directly from this link',
+                      hreflang: 'en-US',
+                      href: 's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                    }
+                  ]
+                }
+              ]
+            }
           }
         })
 
@@ -1154,7 +1162,7 @@ describe('fetchLinks', () => {
           echo_collection_id: 'C10000005-EDSC',
           bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
         },
-        granule_count: 388
+        granule_count: 588
       }
 
       await store.dispatch(fetchLinks(params))

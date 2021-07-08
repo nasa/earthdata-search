@@ -28,10 +28,10 @@ export default class GranuleRequest extends CmrRequest {
   permittedCmrKeys() {
     return [
       'bounding_box',
-      'circle',
       'browse_only',
-      'concept_id',
+      'circle',
       'cloud_cover',
+      'concept_id',
       'day_night_flag',
       'echo_collection_id',
       'equator_crossing_date',

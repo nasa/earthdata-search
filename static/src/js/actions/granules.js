@@ -1,5 +1,6 @@
 import { isCancel } from 'axios'
 import { isEmpty } from 'lodash'
+import camelcaseKeys from 'camelcase-keys'
 
 import actions from './index'
 import {
@@ -55,6 +56,7 @@ import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { eventEmitter } from '../events/events'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
+import GraphQlRequest from '../util/request/graphQlRequest'
 
 const { granuleLinksPageSize } = getApplicationConfig()
 
@@ -155,7 +157,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
 
   const { authToken } = state
 
-  const requestObject = new GranuleRequest(authToken, earthdataEnvironment)
+  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const {
     id,
@@ -170,23 +172,80 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
   // Determine how many pages we will need to load to display all granules
   const totalPages = Math.ceil(granuleCount / pageSize)
 
-  const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
+  const preparedGranuleParams = camelcaseKeys(prepareGranuleAccessParams(granuleParams))
+
+  const graphQuery = `
+    query GetGranuleLinks(
+      $browseOnly: Boolean
+      $circle: [String]
+      $cloudCover: JSON
+      $collectionConceptId: String
+      $conceptId: [String]
+      $dayNightFlag: String
+      $equatorCrossingDate: JSON
+      $equatorCrossingLongitude: JSON
+      $exclude: JSON
+      $limit: Int
+      $line: [String]
+      $linkTypes: [String]
+      $offset: Int
+      $onlineOnly: Boolean
+      $options: JSON
+      $orbitNumber: JSON
+      $point: [String]
+      $polygon: [String]
+      $readableGranuleName: String
+      $sortKey: [String]
+      $temporal: String
+      $twoDCoordinateSystem: JSON
+    ) {
+      granules(
+        browseOnly: $browseOnly
+        circle: $circle
+        cloudCover: $cloudCover
+        collectionConceptId: $collectionConceptId
+        conceptId: $conceptId
+        dayNightFlag: $dayNightFlag
+        equatorCrossingDate: $equatorCrossingDate
+        equatorCrossingLongitude: $equatorCrossingLongitude
+        exclude: $exclude
+        limit: $limit
+        line: $line
+        linkTypes: $linkTypes
+        offset: $offset
+        onlineOnly: $onlineOnly
+        options: $options
+        orbitNumber: $orbitNumber
+        point: $point
+        polygon: $polygon
+        readableGranuleName: $readableGranuleName
+        sortKey: $sortKey
+        temporal: $temporal
+        twoDCoordinateSystem: $twoDCoordinateSystem
+      ) {
+        items{
+          links
+        }
+      }
+    }`
 
   return Promise.all(Array.from(Array(totalPages)).map((_, pageNum) => {
-    const granuleResponse = requestObject.search({
+    const granuleResponse = graphRequestObject.search(graphQuery, {
       ...preparedGranuleParams,
-      pageSize,
-      pageNum: pageNum + 1,
-      echoCollectionId: collectionId
+      limit: pageSize,
+      offset: pageSize * pageNum,
+      linkTypes: ['data', 's3'],
+      collectionConceptId: collectionId
     })
       .then((response) => {
         const { data } = response
-        const { feed } = data
-        const { entry } = feed
+        const { data: granulesData } = data
+        const { granules } = granulesData
+        const { items } = granules
 
         // Fetch the download links from the granule metadata
-        const granuleDownloadLinks = getDownloadUrls(entry)
-        const granuleS3Links = getS3Urls(entry)
+        const granuleDownloadLinks = getDownloadUrls(items)
+        const granuleS3Links = getS3Urls(items)
 
         dispatch(updateGranuleLinks({
           id,
@@ -201,7 +260,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
           error,
           action: 'fetchLinks',
           resource: 'granule links',
-          requestObject
+          graphRequestObject
         }))
       })
 
