@@ -5,11 +5,13 @@ import { buildPromise } from '../util/buildPromise'
 import { findProvider } from '../util/findProvider'
 import { parseError } from '../../../../sharedUtils/parseError'
 
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionMetadata } from '../util/focusedCollection'
 import { getCollectionsMetadata } from '../selectors/collectionMetadata'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { isDownloadable } from '../../../../sharedUtils/isDownloadable'
 
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
+
 
 /**
  * Fetch available access methods
@@ -100,10 +102,7 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
         const { items: granuleItems } = granules
 
         if (granuleItems) {
-          onlineAccessFlag = granuleItems.some((granule) => {
-            const { onlineAccessFlag = false } = granule
-            return onlineAccessFlag
-          })
+          onlineAccessFlag = isDownloadable(granuleItems)
         }
       }
 

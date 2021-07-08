@@ -12,6 +12,7 @@ import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
 import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 import { getVariables } from './getVariables'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { isDownloadable } from '../../../sharedUtils/isDownloadable'
 import { parseError } from '../../../sharedUtils/parseError'
 import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
 import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
@@ -84,10 +85,7 @@ const getAccessMethods = async (event, context) => {
       const { items: granuleItems } = associatedGranules
 
       if (granuleItems) {
-        onlineAccessFlag = granuleItems.some((granule) => {
-          const { onlineAccessFlag = false } = granule
-          return onlineAccessFlag
-        })
+        onlineAccessFlag = isDownloadable(granuleItems)
       }
     }
 
