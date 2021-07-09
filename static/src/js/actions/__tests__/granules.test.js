@@ -1072,6 +1072,41 @@ describe('fetchLinks', () => {
     })
   })
 
+  test('does not update granule links if no links exist', async () => {
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          granules: {
+            items: null
+          }
+        }
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'download'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
+      },
+      granule_count: 1
+    }
+
+    await store.dispatch(fetchLinks(params))
+    const storeActions = store.getActions()
+    expect(storeActions.length).toEqual(0)
+  })
+
   describe('when S3 links exist', () => {
     test('populates the S3 links', async () => {
       nock(/localhost/)
