@@ -51,7 +51,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   // If we already have the metadata for the focusedGranule, don't fetch it again
   if (hasAllMetadata) return null
 
-  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetGranule(
@@ -80,7 +80,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
       }
     }`
 
-  const response = graphRequestObject.search(graphQuery, {
+  const response = graphQlRequestObject.search(graphQuery, {
     id: focusedGranuleId
   })
     .then((response) => {
@@ -159,7 +159,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
         error,
         action: 'getFocusedGranule',
         resource: 'granule',
-        requestObject: graphRequestObject
+        requestObject: graphQlRequestObject
       }))
     })
 

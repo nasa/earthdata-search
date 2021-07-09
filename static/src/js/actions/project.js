@@ -178,7 +178,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     includeHasGranules
   } = searchParams
 
-  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetCollections(
@@ -264,7 +264,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       }
     }`
 
-  const response = graphRequestObject.search(graphQuery, {
+  const response = graphQlRequestObject.search(graphQuery, {
     ids: filteredIds,
     includeTags: defaultCmrSearchTags.join(','),
     includeGranuleCounts,
