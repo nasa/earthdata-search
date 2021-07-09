@@ -101,7 +101,7 @@ export const createSubscription = () => async (dispatch, getState) => {
   // Prune granuleParams and remove unused keys to create the subscription query
   const subscriptionQuery = prepareSubscriptionQuery(searchParams)
 
-  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     mutation CreateSubscription (
@@ -123,7 +123,7 @@ export const createSubscription = () => async (dispatch, getState) => {
   let response
 
   try {
-    response = await graphRequestObject.search(graphQuery, {
+    response = await graphQlRequestObject.search(graphQuery, {
       collectionConceptId: collectionId,
       name: subscriptionName,
       subscriberId: username,
@@ -143,7 +143,7 @@ export const createSubscription = () => async (dispatch, getState) => {
       error,
       action: 'createSubscription',
       resource: 'subscription',
-      requestObject: graphRequestObject,
+      requestObject: graphQlRequestObject,
       notificationType: displayNotificationType.toast
     }))
   }
@@ -168,7 +168,7 @@ export const getSubscriptions = () => async (dispatch, getState) => {
   dispatch(onSubscriptionsLoading())
   dispatch(startSubscriptionsTimer())
 
-  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetSubscriptions (
@@ -194,7 +194,7 @@ export const getSubscriptions = () => async (dispatch, getState) => {
   let response
 
   try {
-    response = await graphRequestObject.search(graphQuery, {
+    response = await graphQlRequestObject.search(graphQuery, {
       subscriberId: username
     })
 
@@ -224,7 +224,7 @@ export const getSubscriptions = () => async (dispatch, getState) => {
       error,
       action: 'fetchSubscriptions',
       resource: 'subscription',
-      requestObject: graphRequestObject,
+      requestObject: graphQlRequestObject,
       errorAction: onSubscriptionsErrored
     }))
   }
@@ -250,7 +250,7 @@ export const deleteSubscription = (
   const collectionsMetadata = getCollectionsMetadata(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
-  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     mutation DeleteSubscription (
@@ -268,7 +268,7 @@ export const deleteSubscription = (
   let response
 
   try {
-    response = await graphRequestObject.search(graphQuery, {
+    response = await graphQlRequestObject.search(graphQuery, {
       conceptId,
       nativeId
     })
@@ -296,7 +296,7 @@ export const deleteSubscription = (
       action: 'deleteSubscription',
       resource: 'subscription',
       verb: 'deleting',
-      graphRequestObject
+      graphQlRequestObject
     }))
   }
 
@@ -337,7 +337,7 @@ export const updateSubscription = (
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
-  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     mutation UpdateSubscription (
@@ -361,7 +361,7 @@ export const updateSubscription = (
   let response
 
   try {
-    response = await graphRequestObject.search(graphQuery, {
+    response = await graphQlRequestObject.search(graphQuery, {
       collectionConceptId: collectionId,
       name: subscriptionName,
       nativeId,
@@ -389,7 +389,7 @@ export const updateSubscription = (
       action: 'updateSubscription',
       resource: 'subscription',
       verb: 'updating',
-      graphRequestObject
+      graphQlRequestObject
     }))
   }
 

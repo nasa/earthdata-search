@@ -32,7 +32,7 @@ export const exportSearch = format => (dispatch, getState) => {
     authToken
   } = collectionParams
 
-  const graphRequestObject = new ExportSearchRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new ExportSearchRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query SearchCollections(
@@ -119,7 +119,7 @@ export const exportSearch = format => (dispatch, getState) => {
       }
     }`
 
-  const response = graphRequestObject.search(graphQuery, {
+  const response = graphQlRequestObject.search(graphQuery, {
     ...buildCollectionSearchParams(collectionParams),
     limit: 1000
   }, format)
@@ -158,7 +158,7 @@ export const exportSearch = format => (dispatch, getState) => {
         error,
         action: 'exportSearch',
         resource: 'collections',
-        graphRequestObject
+        graphQlRequestObject
       }))
     })
 

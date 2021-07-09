@@ -81,7 +81,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   // Retrieve the default CMR tags to provide to the collection request
   const { defaultCmrSearchTags } = getApplicationConfig()
 
-  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetCollection(
@@ -165,7 +165,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       }
     }`
 
-  const response = graphRequestObject.search(graphQuery, {
+  const response = graphQlRequestObject.search(graphQuery, {
     id: focusedCollectionId,
     includeHasGranules: true,
     includeTags: defaultCmrSearchTags.join(','),
@@ -262,7 +262,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         error,
         action: 'getFocusedCollection',
         resource: 'collection',
-        requestObject: graphRequestObject
+        requestObject: graphQlRequestObject
       }))
     })
 
@@ -289,7 +289,7 @@ export const getCollectionSubscriptions = collectionId => async (dispatch, getSt
   }
   const username = getUsername(state)
 
-  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetCollectionSubscriptions(
@@ -311,7 +311,7 @@ export const getCollectionSubscriptions = collectionId => async (dispatch, getSt
       }
     }`
 
-  const response = graphRequestObject.search(graphQuery, {
+  const response = graphQlRequestObject.search(graphQuery, {
     collectionConceptId,
     subscriberId: username
   })
@@ -337,7 +337,7 @@ export const getCollectionSubscriptions = collectionId => async (dispatch, getSt
         error,
         action: 'getCollectionSubscriptions',
         resource: 'subscription',
-        requestObject: graphRequestObject
+        requestObject: graphQlRequestObject
       }))
     })
 

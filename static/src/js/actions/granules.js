@@ -157,7 +157,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
 
   const { authToken } = state
 
-  const graphRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const {
     id,
@@ -230,7 +230,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
     }`
 
   return Promise.all(Array.from(Array(totalPages)).map((_, pageNum) => {
-    const granuleResponse = graphRequestObject.search(graphQuery, {
+    const granuleResponse = graphQlRequestObject.search(graphQuery, {
       ...preparedGranuleParams,
       limit: pageSize,
       offset: pageSize * pageNum,
@@ -262,7 +262,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
           error,
           action: 'fetchLinks',
           resource: 'granule links',
-          graphRequestObject
+          graphQlRequestObject
         }))
       })
 
