@@ -156,7 +156,7 @@ describe('generateCollectionCapabilityTags', () => {
 
       nock(/cmr/)
         .matchHeader('Echo-Token', 'mocked-system-token')
-        .post(/collections/, 'has_granules=true&page_num=1&page_size=300&include_granule_counts=true&include_tags=edsc.extra.serverless.%2A&collection_concept_id=C100000-EDSC')
+        .post(/collections/, 'has_granules=true&page_num=1&page_size=300&include_granule_counts=true&include_tags=edsc.extra.serverless.%2A&concept_id=C100000-EDSC')
         .reply(200, {
           feed: {
             entry: [{

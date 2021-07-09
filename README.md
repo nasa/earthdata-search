@@ -6,13 +6,8 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/nasa/earthdata-search/badge.svg)](https://snyk.io/test/github/nasa/earthdata-search)
 
 ## About
-Earthdata Search is a web application developed by [NASA](http://nasa.gov) [EOSDIS](https://earthdata.nasa.gov)
-to enable data discovery, search, comparison, visualization, and access across EOSDIS' Earth Science data holdings.
-It builds upon several public-facing services provided by EOSDIS, including
-the [Common Metadata Repository (CMR)](https://cmr.earthdata.nasa.gov/search/) for data discovery and access,
-EOSDIS [User Registration System (URS)](https://urs.earthdata.nasa.gov) authentication,
-the [Global Imagery Browse Services (GIBS)](https://earthdata.nasa.gov/gibs) for visualization,
-and a number of OPeNDAP services hosted by data providers.
+Earthdata Search is a web application developed by [NASA](http://nasa.gov) [EOSDIS](https://earthdata.nasa.gov) to enable data discovery, search, comparison, visualization, and access across EOSDIS' Earth Science data holdings.
+It builds upon several public-facing services provided by EOSDIS, including the [Common Metadata Repository (CMR)](https://cmr.earthdata.nasa.gov/search/) for data discovery and access, EOSDIS [User Registration System (URS)](https://urs.earthdata.nasa.gov) authentication, the [Global Imagery Browse Services (GIBS)](https://earthdata.nasa.gov/gibs) for visualization, and a number of OPeNDAP services hosted by data providers.
 
 ## License
 

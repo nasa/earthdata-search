@@ -47,7 +47,7 @@ const generateCollectionCapabilityTags = async (input) => {
   delete input.conceptId
 
   // If a concept id was provided add it to the request params to scope it down
-  if (conceptId) cmrParams.collection_concept_id = conceptId
+  if (conceptId) cmrParams.concept_id = conceptId
 
   const { cmrHost } = getEarthdataConfig(deployedEnvironment())
   const collectionSearchUrl = `${cmrHost}/search/collections.json`
@@ -71,7 +71,20 @@ const generateCollectionCapabilityTags = async (input) => {
   const collections = readCmrResults('search/collections.json', response)
 
   // Filter out collections that dont have any granules
-  const collectionsWithGranules = collections.filter(collection => collection.granule_count > 0)
+  const collectionsWithGranules = collections.filter((collection) => {
+    const {
+      id,
+      granule_count: granuleCount
+    } = collection
+
+    const hasGranules = granuleCount > 0
+
+    if (!hasGranules) {
+      console.log(`${id} has no granules, skipping ${tagName('collection_capabilities')} tag.`)
+    }
+
+    return hasGranules
+  })
 
   console.log(`Number of collections with granules: ${collectionsWithGranules.length}`)
 
