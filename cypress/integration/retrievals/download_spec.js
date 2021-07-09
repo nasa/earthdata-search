@@ -2,6 +2,7 @@ import { getByTestId } from '../../support/getByTestId'
 import collectionsGraphJson from './download_mocks/collections_graph'
 import timeline from './download_mocks/timeline'
 import granules from './download_mocks/granules'
+import granulesGraphqlBody from './download_mocks/granulesGraphqlBody.json'
 import providers from './download_mocks/providers'
 import accessMethods from './download_mocks/access_methods'
 import retrievals from './download_mocks/retrievals'
@@ -94,10 +95,10 @@ describe('Download project spec', () => {
 
     cy.intercept(
       'POST',
-      '**/granules',
+      '**/graphql',
       {
-        body: granules.body,
-        headers: granules.headers
+        body: granulesGraphqlBody,
+        headers: authHeaders
       }
     )
 
