@@ -243,17 +243,19 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
         const { granules } = granulesData
         const { items } = granules
 
-        // Fetch the download links from the granule metadata
-        const granuleDownloadLinks = getDownloadUrls(items)
-        const granuleS3Links = getS3Urls(items)
+        if (items) {
+          // Fetch the download links from the granule metadata
+          const granuleDownloadLinks = getDownloadUrls(items)
+          const granuleS3Links = getS3Urls(items)
 
-        dispatch(updateGranuleLinks({
-          id,
-          links: {
-            download: granuleDownloadLinks.map(lnk => lnk.href),
-            s3: granuleS3Links.map(lnk => lnk.href)
-          }
-        }))
+          dispatch(updateGranuleLinks({
+            id,
+            links: {
+              download: granuleDownloadLinks.map(lnk => lnk.href),
+              s3: granuleS3Links.map(lnk => lnk.href)
+            }
+          }))
+        }
       })
       .catch((error) => {
         dispatch(actions.handleError({
