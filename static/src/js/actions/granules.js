@@ -167,7 +167,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
   } = retrievalCollectionData
 
   // The number of granules to request per page from CMR
-  const pageSize = granuleLinksPageSize
+  const pageSize = parseInt(granuleLinksPageSize, 10)
 
   // Determine how many pages we will need to load to display all granules
   const totalPages = Math.ceil(granuleCount / pageSize)
