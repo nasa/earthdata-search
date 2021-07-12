@@ -5,7 +5,7 @@ import {
   getEnvironmentConfig,
   getEarthdataConfig
 } from '../../../../../sharedUtils/config'
-import { getClientId } from '../../../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 export default class GraphQlRequest extends Request {
   constructor(authToken, earthdataEnvironment) {
@@ -57,7 +57,7 @@ export default class GraphQlRequest extends Request {
 
       // Add the Client-Id header for requests directly to CMR
       // eslint-disable-next-line no-param-reassign
-      headers['Client-Id'] = getClientId().client
+      // headers['Client-Id'] = getClientId().client
 
       return JSON.stringify(data)
     }

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/getEdlConfig'
 
@@ -22,7 +22,7 @@ export const getUrsUserData = async (username, token, environment) => {
     method: 'get',
     url: ursProfileUrl,
     headers: {
-      'Client-Id': getClientId().lambda,
+      // 'Client-Id': getClientId().lambda,
       Authorization: `Bearer ${token}`
     }
   })

@@ -4,7 +4,7 @@ import { castArray, isEmpty } from 'lodash'
 import { stringify } from 'qs'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -45,7 +45,7 @@ export const addTag = async ({
         method: 'post',
         url: `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
         headers: {
-          'Client-Id': getClientId().background,
+          // 'Client-Id': getClientId().background,
           'Content-Type': 'application/x-www-form-urlencoded',
           'Echo-Token': cmrToken
         },
@@ -105,7 +105,7 @@ export const addTag = async ({
         method: 'post',
         url: addTagUrl,
         headers: {
-          'Client-Id': getClientId().background,
+          // 'Client-Id': getClientId().background,
           'Echo-Token': cmrToken
         },
         data: castArray(associationData)
@@ -135,7 +135,7 @@ export const addTag = async ({
       method: 'post',
       url: tagRemovalUrl,
       headers: {
-        'Client-Id': getClientId().background,
+        // 'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
       },
       data: searchCriteria

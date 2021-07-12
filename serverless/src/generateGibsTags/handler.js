@@ -5,7 +5,7 @@ import AWS from 'aws-sdk'
 import { constructLayerTagData } from './constructLayerTagData'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getSupportedGibsLayers } from './getSupportedGibsLayers'
 import { getSystemToken } from '../util/urs/getSystemToken'
@@ -84,7 +84,7 @@ const generateGibsTags = async (event, context) => {
           url: collectionJsonQlUrl,
           data: JSON.stringify(collection),
           headers: {
-            'Client-Id': getClientId().background,
+            // 'Client-Id': getClientId().background,
             'Content-Type': 'application/json',
             'Echo-Token': cmrToken
           }

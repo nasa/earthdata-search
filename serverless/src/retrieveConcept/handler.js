@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
@@ -46,7 +46,7 @@ const retrieveConcept = async (event) => {
       method: 'get',
       url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
       headers: {
-        'Client-Id': getClientId().lambda,
+        // 'Client-Id': getClientId().lambda,
         'Echo-Token': await getEchoToken(jwtToken, earthdataEnvironment),
         ...providedHeaders
       }
@@ -59,7 +59,7 @@ const retrieveConcept = async (event) => {
       headers: {
         'cmr-hits': headers['cmr-hits'],
         'cmr-took': headers['cmr-took'],
-        'cmr-request-id': headers['cmr-request-id'],
+        // 'cmr-request-id': headers['cmr-request-id'],
         'access-control-allow-origin': headers['access-control-allow-origin'],
         'access-control-expose-headers': prepareExposeHeaders(headers),
         'jwt-token': jwtToken

@@ -3,7 +3,7 @@ import snakeCaseKeys from 'snakecase-keys'
 
 import Request from './request'
 
-import { getClientId } from '../../../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 
@@ -65,7 +65,7 @@ export default class CmrRequest extends Request {
    */
   transformRequest(data, headers) {
     // If this request is not going to lambda, add headers that lambda would add for us
-    if (
+    /* if (
       !this.authenticated
       && !this.optionallyAuthenticated
       && !this.lambda
@@ -78,7 +78,7 @@ export default class CmrRequest extends Request {
       // Add the Client-Id header for requests directly to CMR
       // eslint-disable-next-line no-param-reassign
       headers['Client-Id'] = getClientId().client
-    }
+    } */
 
     return super.transformRequest(data, headers)
   }

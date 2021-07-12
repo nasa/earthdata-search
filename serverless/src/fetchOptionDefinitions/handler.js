@@ -6,7 +6,7 @@ import axios from 'axios'
 import { stringify } from 'qs'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
@@ -66,7 +66,7 @@ const fetchOptionDefinitions = async (event, context) => {
           'catalog_item_id[]': granuleId
         }, { indices: false, arrayFormat: 'brackets' }),
         headers: {
-          'Client-Id': getClientId().background,
+          // 'Client-Id': getClientId().background,
           'Content-Type': 'application/x-www-form-urlencoded',
           'Echo-Token': cmrToken
         }

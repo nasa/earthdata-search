@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import axios from 'axios'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -52,8 +52,8 @@ const fetchCatalogRestOrder = async (input) => {
       url: `${url}/${orderNumber}`,
       method: 'get',
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Client-Id': getClientId().background
+        Authorization: `Bearer ${accessToken}` // ,
+        // 'Client-Id': getClientId().background
       }
     })
 

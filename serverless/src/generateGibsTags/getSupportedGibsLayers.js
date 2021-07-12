@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import axios from 'axios'
 
 import customGibsProducts from '../static/gibs'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 
 /*
  * Retrieve the worldview configuration file and pull out products that Earthdata Search supports
@@ -11,10 +11,10 @@ export const getSupportedGibsLayers = async () => {
   const worldviewConfig = 'https://worldview.earthdata.nasa.gov/config/wv.json'
   const worldviewResponse = await axios({
     method: 'get',
-    url: worldviewConfig,
-    headers: {
+    url: worldviewConfig // ,
+    /* headers: {
       'Client-Id': getClientId().background
-    }
+    } */
   })
 
   const projectionMap = {

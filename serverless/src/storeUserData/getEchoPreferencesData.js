@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { getEarthdataConfig } from '../../../sharedUtils/config'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 
 /**
  * Retrieve ECHO preferences data for the provided username
@@ -17,8 +17,8 @@ export const getEchoPreferencesData = async (username, token, environment) => {
     method: 'get',
     url: echoRestPreferencesUrl,
     headers: {
-      Authorization: `Bearer ${token}`,
-      'Client-Id': getClientId().lambda
+      Authorization: `Bearer ${token}` // ,
+      // 'Client-Id': getClientId().lambda
     }
   })
 

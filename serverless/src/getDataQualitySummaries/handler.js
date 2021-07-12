@@ -4,7 +4,7 @@ import axios from 'axios'
 import uuidv4 from 'uuid/v4'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
@@ -45,9 +45,9 @@ const getDataQualitySummaries = async (event) => {
         catalog_item_id: catalogItemId
       },
       headers: {
-        Authorization: `Bearer ${echoToken}`,
-        'Client-Id': getClientId().background,
-        'CMR-Request-Id': requestId
+        Authorization: `Bearer ${echoToken}` // ,
+        // 'Client-Id': getClientId().background,
+        // 'CMR-Request-Id': requestId
       }
     })
 
@@ -78,9 +78,9 @@ const getDataQualitySummaries = async (event) => {
           method: 'get',
           url: `${echoRestRoot}/data_quality_summary_definitions/${dqsId}.json`,
           headers: {
-            Authorization: `Bearer ${echoToken}`,
-            'Client-Id': getClientId().background,
-            'CMR-Request-Id': dataQualitySummaryRequestId
+            Authorization: `Bearer ${echoToken}` // ,
+            // 'Client-Id': getClientId().background,
+            // 'CMR-Request-Id': dataQualitySummaryRequestId
           }
         })
 

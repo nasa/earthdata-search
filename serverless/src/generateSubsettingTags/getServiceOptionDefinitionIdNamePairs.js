@@ -6,7 +6,7 @@ import { stringify } from 'qs'
 
 import { chunkArray } from '../util/chunkArray'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
-import { getClientId } from '../../../sharedUtils/getClientId'
+// import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 import { wrapAxios } from '../util/wrapAxios'
@@ -40,7 +40,7 @@ export const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOpt
         method: 'get',
         url: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}`,
         headers: {
-          'Client-Id': getClientId().background,
+          // 'Client-Id': getClientId().background,
           'Echo-Token': cmrToken
         }
       })
