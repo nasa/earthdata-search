@@ -21,7 +21,7 @@ import { supportsVariableSubsetting } from './supportsVariableSubsetting'
 
 /**
  * Retrieve access methods for a provided collection
- * @param {Object} event Details about the HTTP request that it receizved
+ * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const getAccessMethods = async (event, context) => {

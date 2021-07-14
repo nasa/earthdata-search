@@ -138,96 +138,139 @@ describe('constructOrderPayload', () => {
   })
 
   describe('temporal', () => {
-    describe('with a start and end date', () => {
-      test('constructs a payload with a start and end subsetting', async () => {
-        nock(/cmr/)
-          .matchHeader('Authorization', 'Bearer access-token')
-          .get('/search/granules.json?temporal=2020-01-01T01%3A36%3A52.273Z%2C2020-01-01T06%3A18%3A19.482Z')
-          .reply(200, {
-            feed: {
-              entry: [{
-                id: 'G10000001-EDSC'
-              }, {
-                id: 'G10000005-EDSC'
-              }]
-            }
+    describe('when temporal subsetting is enabled', () => {
+      describe('with a start and end date', () => {
+        test('constructs a payload with a start and end subsetting', async () => {
+          nock(/cmr/)
+            .matchHeader('Authorization', 'Bearer access-token')
+            .get('/search/granules.json?temporal=2020-01-01T01%3A36%3A52.273Z%2C2020-01-01T06%3A18%3A19.482Z')
+            .reply(200, {
+              feed: {
+                entry: [{
+                  id: 'G10000001-EDSC'
+                }, {
+                  id: 'G10000005-EDSC'
+                }]
+              }
+            })
+
+          const accessMethod = {
+            enableTemporalSubsetting: true
+          }
+          const granuleParams = {
+            temporal: '2020-01-01T01:36:52.273Z,2020-01-01T06:18:19.482Z'
+          }
+          const accessToken = 'access-token'
+
+          const response = await constructOrderPayload({
+            accessMethod,
+            granuleParams,
+            accessToken
           })
 
-        const accessMethod = {}
-        const granuleParams = {
-          temporal: '2020-01-01T01:36:52.273Z,2020-01-01T06:18:19.482Z'
-        }
-        const accessToken = 'access-token'
-
-        const response = await constructOrderPayload({
-          accessMethod,
-          granuleParams,
-          accessToken
+          expect(response.getAll('subset')).toEqual(['time("2020-01-01T01:36:52.273Z":"2020-01-01T06:18:19.482Z")'])
         })
+      })
 
-        expect(response.getAll('subset')).toEqual(['time("2020-01-01T01:36:52.273Z":"2020-01-01T06:18:19.482Z")'])
+      describe('with only a start date', () => {
+        test('constructs a payload with an open ended start date', async () => {
+          nock(/cmr/)
+            .matchHeader('Authorization', 'Bearer access-token')
+            .get('/search/granules.json?temporal=2020-01-01T01%3A36%3A52.273Z%2C')
+            .reply(200, {
+              feed: {
+                entry: [{
+                  id: 'G10000001-EDSC'
+                }, {
+                  id: 'G10000005-EDSC'
+                }]
+              }
+            })
+
+          const accessMethod = {
+            enableTemporalSubsetting: true
+          }
+          const granuleParams = {
+            temporal: '2020-01-01T01:36:52.273Z,'
+          }
+          const accessToken = 'access-token'
+
+          const response = await constructOrderPayload({
+            accessMethod,
+            granuleParams,
+            accessToken
+          })
+
+          expect(response.getAll('subset')).toEqual(['time("2020-01-01T01:36:52.273Z":"*")'])
+        })
+      })
+
+      describe('with only a end date', () => {
+        test('constructs a payload with an open ended end date', async () => {
+          nock(/cmr/)
+            .matchHeader('Authorization', 'Bearer access-token')
+            .get('/search/granules.json?temporal=%2C2020-01-01T06%3A18%3A19.482Z')
+            .reply(200, {
+              feed: {
+                entry: [{
+                  id: 'G10000001-EDSC'
+                }, {
+                  id: 'G10000005-EDSC'
+                }]
+              }
+            })
+
+          const accessMethod = {
+            enableTemporalSubsetting: true
+          }
+          const granuleParams = {
+            temporal: ',2020-01-01T06:18:19.482Z'
+          }
+          const accessToken = 'access-token'
+
+          const response = await constructOrderPayload({
+            accessMethod,
+            granuleParams,
+            accessToken
+          })
+
+          expect(response.getAll('subset')).toEqual(['time("*":"2020-01-01T06:18:19.482Z")'])
+        })
       })
     })
 
-    describe('with only a start date', () => {
-      test('constructs a payload with an open ended start date', async () => {
-        nock(/cmr/)
-          .matchHeader('Authorization', 'Bearer access-token')
-          .get('/search/granules.json?temporal=2020-01-01T01%3A36%3A52.273Z%2C')
-          .reply(200, {
-            feed: {
-              entry: [{
-                id: 'G10000001-EDSC'
-              }, {
-                id: 'G10000005-EDSC'
-              }]
-            }
+    describe('when temporal subsetting is disabled', () => {
+      describe('with a start and end date', () => {
+        test('does not apply the temporal subset', async () => {
+          nock(/cmr/)
+            .matchHeader('Authorization', 'Bearer access-token')
+            .get('/search/granules.json?temporal=2020-01-01T01%3A36%3A52.273Z%2C2020-01-01T06%3A18%3A19.482Z')
+            .reply(200, {
+              feed: {
+                entry: [{
+                  id: 'G10000001-EDSC'
+                }, {
+                  id: 'G10000005-EDSC'
+                }]
+              }
+            })
+
+          const accessMethod = {
+            enableTemporalSubsetting: false
+          }
+          const granuleParams = {
+            temporal: '2020-01-01T01:36:52.273Z,2020-01-01T06:18:19.482Z'
+          }
+          const accessToken = 'access-token'
+
+          const response = await constructOrderPayload({
+            accessMethod,
+            granuleParams,
+            accessToken
           })
 
-        const accessMethod = {}
-        const granuleParams = {
-          temporal: '2020-01-01T01:36:52.273Z,'
-        }
-        const accessToken = 'access-token'
-
-        const response = await constructOrderPayload({
-          accessMethod,
-          granuleParams,
-          accessToken
+          expect(response.getAll('subset')).toEqual([])
         })
-
-        expect(response.getAll('subset')).toEqual(['time("2020-01-01T01:36:52.273Z":"*")'])
-      })
-    })
-
-    describe('with only a end date', () => {
-      test('constructs a payload with an open ended end date', async () => {
-        nock(/cmr/)
-          .matchHeader('Authorization', 'Bearer access-token')
-          .get('/search/granules.json?temporal=%2C2020-01-01T06%3A18%3A19.482Z')
-          .reply(200, {
-            feed: {
-              entry: [{
-                id: 'G10000001-EDSC'
-              }, {
-                id: 'G10000005-EDSC'
-              }]
-            }
-          })
-
-        const accessMethod = {}
-        const granuleParams = {
-          temporal: ',2020-01-01T06:18:19.482Z'
-        }
-        const accessToken = 'access-token'
-
-        const response = await constructOrderPayload({
-          accessMethod,
-          granuleParams,
-          accessToken
-        })
-
-        expect(response.getAll('subset')).toEqual(['time("*":"2020-01-01T06:18:19.482Z")'])
       })
     })
   })

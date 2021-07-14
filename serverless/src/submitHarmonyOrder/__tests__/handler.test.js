@@ -90,6 +90,7 @@ describe('submitHarmonyOrder', () => {
           jsondata: { source: '?sf=1', shapefileId: 1 },
           collection_id: 'C100000-EDSC',
           access_method: {
+            enableTemporalSubsetting: true,
             type: 'Harmony',
             selectedOutputFormat: 'NetCDF-4',
             selectedVariables: [
@@ -182,6 +183,7 @@ describe('submitHarmonyOrder', () => {
           jsondata: { source: '?sf=1&sfs[0]=1', shapefileId: 1, selectedFeatures: ['1'] },
           collection_id: 'C100000-EDSC',
           access_method: {
+            enableTemporalSubsetting: true,
             type: 'Harmony',
             selectedOutputFormat: 'NetCDF-4',
             selectedVariables: [
@@ -275,6 +277,7 @@ describe('submitHarmonyOrder', () => {
           jsondata: { source: '?sf=1', shapefileId: 1 },
           collection_id: 'C100000-EDSC',
           access_method: {
+            enableTemporalSubsetting: true,
             type: 'Harmony',
             selectedOutputFormat: 'NetCDF-4',
             selectedVariables: [
