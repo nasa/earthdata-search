@@ -9,7 +9,7 @@ import ProjectPanelSection from '../../ProjectPanels/ProjectPanelSection'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     accessMethods: {},
     index: 0,
@@ -22,7 +22,8 @@ function setup() {
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
-    selectedAccessMethod: ''
+    selectedAccessMethod: '',
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<AccessMethod {...props} />)
@@ -472,6 +473,422 @@ describe('AccessMethod component', () => {
               selectedOutputProjection: 'EPSG:4326'
             }
           }
+        })
+      })
+    })
+
+    describe('when temporal subsetting is not supported', () => {
+      describe('when a temporal range is not set', () => {
+        test('does not display the temporal subsetting input', () => {
+          const { enzymeWrapper } = setup()
+
+          const collectionId = 'collectionId'
+
+          enzymeWrapper.setProps({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: false
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0'
+          })
+
+          expect(enzymeWrapper.find('#input__temporal-subsetting').exists()).not.toBeTruthy()
+        })
+      })
+
+      describe('when a temporal range is set', () => {
+        test('does not display the temporal subsetting input', () => {
+          const { enzymeWrapper } = setup()
+
+          const collectionId = 'collectionId'
+
+          enzymeWrapper.setProps({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: false
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0',
+            temporal: {
+              startDate: '2008-06-27T00:00:00.979Z',
+              endDate: '2021-08-01T23:59:59.048Z',
+              isRecurring: false
+            }
+          })
+
+          expect(enzymeWrapper.find('#input__temporal-subsetting').exists()).not.toBeTruthy()
+        })
+      })
+    })
+
+    describe('when temporal subsetting is supported', () => {
+      describe('when a temporal range is not set', () => {
+        test('displays a message about temporal subsetting', () => {
+          const { enzymeWrapper } = setup()
+
+          const collectionId = 'collectionId'
+
+          enzymeWrapper.setProps({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: true
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0'
+          })
+
+          expect(enzymeWrapper.find('.access-method__section-status').text()).toContain('No temporal range selected.')
+        })
+      })
+
+      describe('when a temporal range is set', () => {
+        test('displays a checkbox input', () => {
+          const { enzymeWrapper } = setup()
+
+          const collectionId = 'collectionId'
+
+          enzymeWrapper.setProps({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: true
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0',
+            temporal: {
+              startDate: '2008-06-27T00:00:00.979Z',
+              endDate: '2021-08-01T23:59:59.048Z',
+              isRecurring: false
+            }
+          })
+
+          expect(enzymeWrapper.find('#input__temporal-subsetting').length).toEqual(1)
+        })
+
+        test('displays the correct selected temporal range', () => {
+          const { enzymeWrapper } = setup()
+
+          const collectionId = 'collectionId'
+
+          enzymeWrapper.setProps({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: true
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0',
+            temporal: {
+              startDate: '2008-06-27T00:00:00.979Z',
+              endDate: '2021-08-01T23:59:59.048Z',
+              isRecurring: false
+            }
+          })
+
+          expect(enzymeWrapper.find('.access-method__section-status').text()).toContain('Selected Range:2008-06-27 00:00:00 to 2021-08-01 23:59:59')
+        })
+
+        describe('when only an start date is set', () => {
+          test('displays the correct selected temporal range', () => {
+            const { enzymeWrapper } = setup()
+
+            const collectionId = 'collectionId'
+
+            enzymeWrapper.setProps({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsTemporalSubsetting: true
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony0',
+              temporal: {
+                startDate: '2008-06-27T00:00:00.979Z',
+                isRecurring: false
+              }
+            })
+
+            expect(enzymeWrapper.find('.access-method__section-status').text()).toContain('Selected Range:2008-06-27 00:00:00 ongoing')
+          })
+
+          describe('when only an end date is set', () => {
+            test('displays the correct selected temporal range', () => {
+              const { enzymeWrapper } = setup()
+
+              const collectionId = 'collectionId'
+
+              enzymeWrapper.setProps({
+                accessMethods: {
+                  harmony0: {
+                    isValid: true,
+                    type: 'Harmony',
+                    supportsTemporalSubsetting: true
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony0',
+                temporal: {
+                  endDate: '2008-06-27T00:00:00.979Z',
+                  isRecurring: false
+                }
+              })
+
+              expect(enzymeWrapper.find('.access-method__section-status').text()).toContain('Selected Range:Up to 2008-06-27 00:00:00')
+            })
+          })
+        })
+      })
+
+      describe('when enableTemporalSubsetting is not set', () => {
+        test('defaults the checkbox checked', () => {
+          const { enzymeWrapper } = setup()
+
+          const collectionId = 'collectionId'
+
+          enzymeWrapper.setProps({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: true
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0',
+            temporal: {
+              startDate: '2008-06-27T00:00:00.979Z',
+              endDate: '2021-08-01T23:59:59.048Z',
+              isRecurring: false
+            }
+          })
+
+          expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(true)
+        })
+      })
+
+      describe('when enableTemporalSubsetting is set to true', () => {
+        test('sets the checkbox checked', () => {
+          const { enzymeWrapper } = setup()
+
+          const collectionId = 'collectionId'
+
+          enzymeWrapper.setProps({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: true,
+                enableTemporalSubsetting: true
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0',
+            temporal: {
+              startDate: '2008-06-27T00:00:00.979Z',
+              endDate: '2021-08-01T23:59:59.048Z',
+              isRecurring: false
+            }
+          })
+
+          expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(true)
+        })
+
+        describe('when the user clicks the checkbox', () => {
+          test('sets the checkbox checked', () => {
+            const { enzymeWrapper } = setup()
+
+            const collectionId = 'collectionId'
+
+            enzymeWrapper.setProps({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsTemporalSubsetting: true,
+                  enableTemporalSubsetting: true
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony0',
+              temporal: {
+                startDate: '2008-06-27T00:00:00.979Z',
+                endDate: '2021-08-01T23:59:59.048Z',
+                isRecurring: false
+              }
+            })
+
+            const checkbox = enzymeWrapper.find('#input__temporal-subsetting')
+
+            checkbox.simulate('change', { target: { checked: false } })
+
+            enzymeWrapper.update()
+
+            expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(false)
+          })
+
+          test('calls onUpdateAccessMethod', () => {
+            const { enzymeWrapper, props } = setup({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsTemporalSubsetting: true,
+                  enableTemporalSubsetting: true
+                }
+              },
+              metadata: {
+                conceptId: 'collectionId'
+              },
+              selectedAccessMethod: 'harmony0',
+              temporal: {
+                startDate: '2008-06-27T00:00:00.979Z',
+                endDate: '2021-08-01T23:59:59.048Z',
+                isRecurring: false
+              }
+            })
+
+            const checkbox = enzymeWrapper.find('#input__temporal-subsetting')
+
+            checkbox.simulate('change', { target: { checked: false } })
+
+            enzymeWrapper.update()
+
+            expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+            expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({ collectionId: 'collectionId', method: { harmony0: { enableTemporalSubsetting: false } } })
+          })
+        })
+      })
+
+      describe('when enableTemporalSubsetting is set to false', () => {
+        test('sets the checkbox unchecked', () => {
+          const { enzymeWrapper } = setup({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: true,
+                enableTemporalSubsetting: false
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            temporal: {
+              startDate: '2008-06-27T00:00:00.979Z',
+              endDate: '2021-08-01T23:59:59.048Z',
+              isRecurring: false
+            }
+          })
+
+          expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(false)
+        })
+
+        describe('when the user clicks the checkbox', () => {
+          test('sets the checkbox unchecked', () => {
+            const { enzymeWrapper } = setup()
+
+            const collectionId = 'collectionId'
+
+            enzymeWrapper.setProps({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsTemporalSubsetting: true,
+                  enableTemporalSubsetting: true
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony0',
+              temporal: {
+                startDate: '2008-06-27T00:00:00.979Z',
+                endDate: '2021-08-01T23:59:59.048Z',
+                isRecurring: false
+              }
+            })
+
+            const checkbox = enzymeWrapper.find('#input__temporal-subsetting')
+
+            checkbox.simulate('change', { target: { checked: true } })
+
+            enzymeWrapper.update()
+
+            expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(true)
+          })
+
+          test('calls onUpdateAccessMethod', () => {
+            const { enzymeWrapper, props } = setup()
+
+            const collectionId = 'collectionId'
+
+            enzymeWrapper.setProps({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsTemporalSubsetting: true,
+                  enableTemporalSubsetting: true
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony0',
+              temporal: {
+                startDate: '2008-06-27T00:00:00.979Z',
+                endDate: '2021-08-01T23:59:59.048Z',
+                isRecurring: false
+              }
+            })
+
+            const checkbox = enzymeWrapper.find('#input__temporal-subsetting')
+
+            checkbox.simulate('change', { target: { checked: true } })
+
+            enzymeWrapper.update()
+
+            expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+            expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({ collectionId: 'collectionId', method: { harmony0: { enableTemporalSubsetting: true } } })
+          })
         })
       })
     })

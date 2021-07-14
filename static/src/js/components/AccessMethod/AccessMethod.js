@@ -43,6 +43,7 @@ export class AccessMethod extends Component {
     } = props
 
     const selectedMethod = accessMethods[selectedAccessMethod]
+
     const {
       selectedOutputFormat = '',
       selectedOutputProjection = '',
@@ -436,8 +437,9 @@ export class AccessMethod extends Component {
                       >
                         {
                           (startDate || endDate) && (
-                            <Form.Group controlId="temporal-subsetting" className="mb-0">
+                            <Form.Group controlId="input__temporal-subsetting" className="mb-0">
                               <Form.Check
+                                id="input__temporal-subsetting"
                                 type="checkbox"
                                 label={(
                                   <span className={`mb-1 d-block ${!enableTemporalSubsetting && 'text-muted'}`}>
