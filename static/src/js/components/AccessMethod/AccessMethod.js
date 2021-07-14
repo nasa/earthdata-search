@@ -1,7 +1,10 @@
 import React, { Component, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
+import { Form } from 'react-bootstrap'
+import moment from 'moment'
 
 import { pluralize } from '../../util/pluralize'
+import { getTemporalDateFormat } from '../../util/edscDate'
 
 import Button from '../Button/Button'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
@@ -42,17 +45,20 @@ export class AccessMethod extends Component {
     const selectedMethod = accessMethods[selectedAccessMethod]
     const {
       selectedOutputFormat = '',
-      selectedOutputProjection = ''
+      selectedOutputProjection = '',
+      enableTemporalSubsetting = true
     } = selectedMethod || {}
 
     this.state = {
       selectedOutputFormat,
-      selectedOutputProjection
+      selectedOutputProjection,
+      enableTemporalSubsetting
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
     this.handleOutputFormatSelection = this.handleOutputFormatSelection.bind(this)
     this.handleOutputProjectionSelection = this.handleOutputProjectionSelection.bind(this)
+    this.handleToggleTemporalSubsetting = this.handleToggleTemporalSubsetting.bind(this)
   }
 
   handleAccessMethodSelection(method) {
@@ -104,8 +110,32 @@ export class AccessMethod extends Component {
     })
   }
 
+  handleToggleTemporalSubsetting(event) {
+    const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
+    const { conceptId: collectionId } = metadata
+
+    const { target } = event
+    const { checked } = target
+
+    this.setState({ enableTemporalSubsetting: checked })
+
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          enableTemporalSubsetting: checked
+        }
+      }
+    })
+  }
+
   render() {
-    const { selectedOutputFormat, selectedOutputProjection } = this.state
+    const {
+      selectedOutputFormat,
+      selectedOutputProjection,
+      enableTemporalSubsetting
+    } = this.state
+
     const {
       accessMethods,
       index,
@@ -245,6 +275,7 @@ export class AccessMethod extends Component {
       selectedVariables = [],
       supportedOutputFormats = [],
       supportedOutputProjections = [],
+      supportsTemporalSubsetting = false,
       supportsVariableSubsetting = false
     } = selectedMethod || {}
 
@@ -295,9 +326,54 @@ export class AccessMethod extends Component {
     )
 
     const isCustomizationAvailable = supportsVariableSubsetting
+      || supportsTemporalSubsetting
       || supportedOutputFormatOptions.length > 0
       || supportedOutputProjectionOptions.length > 0
       || (form && isActive)
+
+    const {
+      startDate = '',
+      endDate = '',
+      isRecurring = false
+    } = temporal
+
+    const temporalDateFormat = getTemporalDateFormat(isRecurring)
+    const format = 'YYYY-MM-DDTHH:m:s.SSSZ'
+
+    let startDateObject
+    let endDateObject = moment.utc(endDate, format, true)
+    let startDateDisplay
+    let endDateDisplay
+
+    if (startDate) {
+      startDateObject = moment.utc(startDate, format, true)
+    }
+
+    if (endDate) {
+      endDateObject = moment.utc(endDate, format, true)
+    }
+
+    if (startDateObject) {
+      startDateDisplay = startDateObject.format(temporalDateFormat)
+    }
+
+    if (endDateObject) {
+      endDateDisplay = endDateObject.format(temporalDateFormat)
+    }
+
+    let selectedTemporalDisplay
+
+    if (startDate && endDate) {
+      selectedTemporalDisplay = `${startDateDisplay} to ${endDateDisplay}`
+    }
+
+    if (startDate && !endDate) {
+      selectedTemporalDisplay = `${startDateDisplay} ongoing`
+    }
+
+    if (endDate && !startDate) {
+      selectedTemporalDisplay = `Up to ${endDateDisplay}`
+    }
 
     return (
       <div className="access-method">
@@ -347,6 +423,51 @@ export class AccessMethod extends Component {
                         />
                       </Suspense>
                     </ProjectPanelSection>
+                  )
+                }
+                {
+                  supportsTemporalSubsetting && (
+                    <>
+                      <ProjectPanelSection
+                        customHeadingTag="h4"
+                        heading="Temporal Subsetting"
+                        intro="When enabled, temporal subsetting will trim the data to the selected temporal range."
+                        nested
+                      >
+                        {
+                          (startDate || endDate) && (
+                            <Form.Group controlId="temporal-subsetting" className="mb-0">
+                              <Form.Check
+                                type="checkbox"
+                                label={(
+                                  <span className={`mb-1 d-block ${!enableTemporalSubsetting && 'text-muted'}`}>
+                                    Trim output granules to the selected temporal constraint
+                                  </span>
+                                )}
+                                checked={enableTemporalSubsetting}
+                                onChange={this.handleToggleTemporalSubsetting}
+                              />
+                              {
+                                enableTemporalSubsetting && (
+                                  <p className="access-method__section-status ml-3">
+                                    Selected Range:
+                                    <br />
+                                    {selectedTemporalDisplay}
+                                  </p>
+                                )
+                              }
+                            </Form.Group>
+                          )
+                        }
+                        {
+                          !(startDate || endDate) && (
+                            <p className="access-method__section-status mb-0">
+                              No temporal range selected. Make a temporal selection to enable temporal subsetting.
+                            </p>
+                          )
+                        }
+                      </ProjectPanelSection>
+                    </>
                   )
                 }
                 {

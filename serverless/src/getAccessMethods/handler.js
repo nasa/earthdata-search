@@ -15,11 +15,12 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
 import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
+import { supportsTemporalSubsetting } from './supportsTemporalSubsetting'
 import { supportsVariableSubsetting } from './supportsVariableSubsetting'
 
 /**
  * Retrieve access methods for a provided collection
- * @param {Object} event Details about the HTTP request that it received
+ * @param {Object} event Details about the HTTP request that it receizved
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const getAccessMethods = async (event, context) => {
@@ -261,6 +262,7 @@ const getAccessMethods = async (event, context) => {
           supportedOutputProjections: outputProjections,
           supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceObject),
           supportsShapefileSubsetting: supportsShapefileSubsetting(serviceObject),
+          supportsTemporalSubsetting: supportsTemporalSubsetting(serviceObject),
           supportsVariableSubsetting: supportsVariableSubsetting(serviceObject),
           type,
           url: urlValue,

@@ -43,6 +43,7 @@ export const constructOrderPayload = async ({
   const granuleIds = granuleResponseBody.map(granuleMetadata => granuleMetadata.id).join(',')
 
   const {
+    enableTemporalSubsetting,
     mbr,
     selectedOutputFormat,
     selectedOutputProjection,
@@ -52,8 +53,8 @@ export const constructOrderPayload = async ({
 
   // OGC uses duplicate parameter names for subsetting and the
   // standard javascript object will not support that so we need to use
-  // the FormData object to avoid any language specific restrictions on
   // duplicate keys
+  // the FormData object to avoid any language specific restrictions on
   const orderPayload = new FormData()
 
   orderPayload.append('forceAsync', 'true')
@@ -194,7 +195,7 @@ export const constructOrderPayload = async ({
     }
   }
 
-  if (temporal) {
+  if (temporal && enableTemporalSubsetting) {
     const [
       timeStart,
       timeEnd
