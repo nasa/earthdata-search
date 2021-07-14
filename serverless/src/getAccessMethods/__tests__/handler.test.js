@@ -143,6 +143,7 @@ describe('getAccessMethods', () => {
             ],
             supportsBoundingBoxSubsetting: false,
             supportsShapefileSubsetting: false,
+            supportsTemporalSubsetting: false,
             supportsVariableSubsetting: false,
             type: 'Harmony',
             url: 'https://harmony.earthdata.nas.gov',
