@@ -1,4 +1,5 @@
 import axios from 'axios'
+import https from 'https'
 import axiosRetry from 'axios-retry'
 
 import { stringify } from 'qs'
@@ -33,6 +34,9 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
   // Using an extension of request promise that supports retries
   const cmrResponse = await wrappedAxios({
     method: 'post',
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false
+    }),
     url: granuleSearchUrl,
     data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {

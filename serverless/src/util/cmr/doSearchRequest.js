@@ -1,4 +1,5 @@
 import axios from 'axios'
+import https from 'https'
 import lowercaseKeys from 'lowercase-keys'
 
 // import { getClientId } from '../../../../sharedUtils/getClientId'
@@ -51,6 +52,9 @@ export const doSearchRequest = async ({
 
     const requestParams = {
       url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
       headers: requestHeaders
     }
 
