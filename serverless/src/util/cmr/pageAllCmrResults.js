@@ -2,6 +2,7 @@ import 'array-foreach-async'
 
 import { stringify } from 'qs'
 import axios from 'axios'
+import https from 'https'
 
 // import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
@@ -40,6 +41,9 @@ export const pageAllCmrResults = async ({
 
     const response = await wrappedAxios({
       method: 'post',
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
       url: `${cmrHost}/${path}`,
       data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
       headers: {

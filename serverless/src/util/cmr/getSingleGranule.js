@@ -1,4 +1,5 @@
 import axios from 'axios'
+import https from 'https'
 import axiosRetry from 'axios-retry'
 
 import { stringify } from 'qs'
@@ -39,7 +40,10 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
       // 'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
       'Echo-Token': cmrToken
-    }
+    },
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false
+    })
   })
 
   const { config } = cmrResponse
