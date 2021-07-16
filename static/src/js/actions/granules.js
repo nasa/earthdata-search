@@ -237,7 +237,8 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
   let response
 
   try {
-    await Array.from(Array(totalPages)).forEachAsync(async (_, currentPage) => {
+    // Request an additional page (totalPages + 1) when scrolling to force GraphQL to clear the scroll session
+    await Array.from(Array(totalPages + 1)).forEachAsync(async (_, currentPage) => {
       response = await graphQlRequestObject.search(graphQlQuery, {
         ...preparedGranuleParams,
         limit: pageSize,
