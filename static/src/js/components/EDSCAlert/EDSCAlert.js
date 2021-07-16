@@ -10,6 +10,7 @@ import './EDSCAlert.scss'
 export const EDSCAlert = ({
   bootstrapVariant,
   children,
+  className,
   icon,
   variant
 }) => {
@@ -18,7 +19,8 @@ export const EDSCAlert = ({
     {
       'edsc-alert--icon': icon,
       [`edsc-alert--${variant}`]: variant
-    }
+    },
+    className
   ])
   return (
     <Alert
@@ -38,6 +40,7 @@ export const EDSCAlert = ({
 }
 
 EDSCAlert.defaultProps = {
+  className: '',
   children: null,
   icon: null,
   variant: false
@@ -45,6 +48,7 @@ EDSCAlert.defaultProps = {
 
 EDSCAlert.propTypes = {
   bootstrapVariant: PropTypes.string.isRequired,
+  className: PropTypes.string,
   children: PropTypes.node,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   variant: PropTypes.oneOfType([

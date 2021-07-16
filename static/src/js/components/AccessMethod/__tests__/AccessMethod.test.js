@@ -669,6 +669,83 @@ describe('AccessMethod component', () => {
         })
       })
 
+      describe('when the temporal selection is recurring', () => {
+        test('sets the checkbox unchecked', () => {
+          const { enzymeWrapper } = setup({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: true
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            temporal: {
+              startDate: '2008-06-27T00:00:00.979Z',
+              endDate: '2021-08-01T23:59:59.048Z',
+              recurringDayStart: 0,
+              recurringDayEnd: 10,
+              isRecurring: true
+            }
+          })
+
+          expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(false)
+        })
+
+        test('sets the checkbox disabled', () => {
+          const { enzymeWrapper } = setup({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: true
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            temporal: {
+              startDate: '2008-06-27T00:00:00.979Z',
+              endDate: '2021-08-01T23:59:59.048Z',
+              recurringDayStart: 0,
+              recurringDayEnd: 10,
+              isRecurring: true
+            }
+          })
+
+          expect(enzymeWrapper.find('#input__temporal-subsetting').props().disabled).toEqual(true)
+        })
+
+        test('sets a warning in the section', () => {
+          const { enzymeWrapper } = setup({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                supportsTemporalSubsetting: true
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            temporal: {
+              startDate: '2008-06-27T00:00:00.979Z',
+              endDate: '2021-08-01T23:59:59.048Z',
+              recurringDayStart: 0,
+              recurringDayEnd: 10,
+              isRecurring: true
+            }
+          })
+
+          expect(enzymeWrapper.find(ProjectPanelSection).at(1).childAt(0).props().warning).toEqual('To prevent unexpected results, temporal subsetting is not supported for recurring dates.')
+        })
+      })
+
       describe('when enableTemporalSubsetting is not set', () => {
         test('defaults the checkbox checked', () => {
           const { enzymeWrapper } = setup()

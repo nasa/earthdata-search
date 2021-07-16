@@ -36,6 +36,14 @@
     }
   }
 
+  &__warning {
+    .project-panel-section--is-nested & {
+      margin-top: 1rem;
+      margin-bottom: 0;
+      font-size: 0.825rem;
+    }
+  }
+
   &__step {
     position: absolute;
     left: -1.75rem;

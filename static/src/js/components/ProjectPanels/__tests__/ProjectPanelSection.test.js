@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import ProjectPanelSection from '../ProjectPanelSection'
+import EDSCAlert from '../../EDSCAlert/EDSCAlert'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -143,6 +144,23 @@ describe('ProjectPanelSelection', () => {
       })
 
       expect(enzymeWrapper.find('.project-panel-section__intro').text()).toEqual(intro)
+    })
+  })
+
+  describe('when warning text is provided', () => {
+    test('displays an alert', () => {
+      const children = (
+        <div className="children-div">
+          children
+        </div>
+      )
+      const { enzymeWrapper } = setup({
+        warning: 'This is a test warning',
+        children
+      })
+
+      expect(enzymeWrapper.find(EDSCAlert).props().children).toEqual('This is a test warning')
+      expect(enzymeWrapper.find(EDSCAlert).props().bootstrapVariant).toEqual('warning')
     })
   })
 })
