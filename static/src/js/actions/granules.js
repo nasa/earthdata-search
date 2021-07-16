@@ -1,6 +1,7 @@
 import { isCancel } from 'axios'
 import { isEmpty } from 'lodash'
 import camelcaseKeys from 'camelcase-keys'
+import 'array-foreach-async'
 
 import actions from './index'
 import {
@@ -149,7 +150,7 @@ export const initializeCollectionGranulesQuery = payload => ({
  * @param {Object} retrievalCollectionData Retrieval Collection response from the database
  * @param {String} authToken The authenticated users' JWT token
  */
-export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
+export const fetchLinks = retrievalCollectionData => async (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -174,13 +175,14 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
 
   const preparedGranuleParams = camelcaseKeys(prepareGranuleAccessParams(granuleParams))
 
-  const graphQuery = `
+  const graphQlQuery = `
     query GetGranuleLinks(
       $browseOnly: Boolean
       $circle: [String]
       $cloudCover: JSON
       $collectionConceptId: String
       $conceptId: [String]
+      $cursor: String
       $dayNightFlag: String
       $equatorCrossingDate: JSON
       $equatorCrossingLongitude: JSON
@@ -205,6 +207,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
         cloudCover: $cloudCover
         collectionConceptId: $collectionConceptId
         conceptId: $conceptId
+        cursor: $cursor
         dayNightFlag: $dayNightFlag
         equatorCrossingDate: $equatorCrossingDate
         equatorCrossingLongitude: $equatorCrossingLongitude
@@ -223,51 +226,65 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
         temporal: $temporal
         twoDCoordinateSystem: $twoDCoordinateSystem
       ) {
-        items{
+        cursor
+        items {
           links
         }
       }
     }`
 
-  return Promise.all(Array.from(Array(totalPages)).map((_, pageNum) => {
-    const granuleResponse = graphQlRequestObject.search(graphQuery, {
-      ...preparedGranuleParams,
-      limit: pageSize,
-      offset: pageSize * pageNum,
-      linkTypes: ['data', 's3'],
-      collectionConceptId: collectionId
-    })
-      .then((response) => {
-        const { data } = response
-        const { data: granulesData } = data
-        const { granules } = granulesData
-        const { items } = granules
+  let cursor
+  let response
 
-        if (items) {
-          // Fetch the download links from the granule metadata
-          const granuleDownloadLinks = getDownloadUrls(items)
-          const granuleS3Links = getS3Urls(items)
-
-          dispatch(updateGranuleLinks({
-            id,
-            links: {
-              download: granuleDownloadLinks.map(lnk => lnk.href),
-              s3: granuleS3Links.map(lnk => lnk.href)
-            }
-          }))
-        }
+  try {
+    await Array.from(Array(totalPages)).forEachAsync(async (_, currentPage) => {
+      response = await graphQlRequestObject.search(graphQlQuery, {
+        ...preparedGranuleParams,
+        limit: pageSize,
+        linkTypes: ['data', 's3'],
+        collectionConceptId: collectionId,
+        cursor
       })
-      .catch((error) => {
-        dispatch(actions.handleError({
-          error,
-          action: 'fetchLinks',
-          resource: 'granule links',
-          graphQlRequestObject
+
+      const { data } = response
+      const { data: granulesData } = data
+      const { granules } = granulesData
+      const { cursor: responseCursor, items } = granules
+
+      // Set the cursor returned from GraphQl so the next loop will use it
+      cursor = responseCursor
+
+      if (!items) {
+        return
+      }
+
+      if (items.length) {
+        const percentDone = (currentPage + 1) / totalPages
+        console.log('🚀 ~ file: granules.js ~ line 250 ~ .then ~ percentDone', collectionId, percentDone)
+
+        // Fetch the download links from the granule metadata
+        const granuleDownloadLinks = getDownloadUrls(items)
+        const granuleS3Links = getS3Urls(items)
+
+        dispatch(updateGranuleLinks({
+          id,
+          links: {
+            download: granuleDownloadLinks.map(lnk => lnk.href),
+            s3: granuleS3Links.map(lnk => lnk.href)
+          }
         }))
-      })
+      }
+    })
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'fetchLinks',
+      resource: 'granule links',
+      requestObject: graphQlRequestObject
+    }))
+  }
 
-    return granuleResponse
-  }))
+  return response
 }
 
 /**
