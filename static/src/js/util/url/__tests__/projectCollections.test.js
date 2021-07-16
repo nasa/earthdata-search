@@ -151,6 +151,149 @@ describe('url#decodeUrlParams', () => {
 
     expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC')).toEqual(expectedResult)
   })
+
+  describe('enable temporal subsetting flag', () => {
+    test('decodes enable temporal subsetting correctly when false', () => {
+      const expectedResult = {
+        ...emptyDecodedResult,
+        focusedCollection: '',
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {},
+                isVisible: true,
+                accessMethods: {
+                  harmony: {
+                    enableTemporalSubsetting: false,
+                    selectedOutputFormat: undefined,
+                    selectedOutputProjection: undefined,
+                    selectedVariables: undefined
+                  }
+                },
+                selectedAccessMethod: 'harmony'
+              },
+              collectionId2: {
+                granules: {},
+                isVisible: true,
+                selectedAccessMethod: undefined
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId1: {
+                granules: {}
+              },
+              collectionId2: {
+                granules: {}
+              }
+            }
+          }
+        }
+      }
+
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f')).toEqual(expectedResult)
+    })
+
+    test('decodes enable temporal subsetting correctly when true', () => {
+      const expectedResult = {
+        ...emptyDecodedResult,
+        focusedCollection: '',
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {},
+                isVisible: true,
+                accessMethods: {
+                  harmony: {
+                    enableTemporalSubsetting: true,
+                    selectedOutputFormat: undefined,
+                    selectedOutputProjection: undefined,
+                    selectedVariables: undefined
+                  }
+                },
+                selectedAccessMethod: 'harmony'
+              },
+              collectionId2: {
+                granules: {},
+                isVisible: true,
+                selectedAccessMethod: undefined
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId1: {
+                granules: {}
+              },
+              collectionId2: {
+                granules: {}
+              }
+            }
+          }
+        }
+      }
+
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=t')).toEqual(expectedResult)
+    })
+
+    test('decodes enable temporal subsetting correctly when not encoded', () => {
+      const expectedResult = {
+        ...emptyDecodedResult,
+        focusedCollection: '',
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {},
+                isVisible: true,
+                accessMethods: {
+                  harmony: {
+                    enableTemporalSubsetting: true,
+                    selectedOutputFormat: undefined,
+                    selectedOutputProjection: undefined,
+                    selectedVariables: undefined
+                  }
+                },
+                selectedAccessMethod: 'harmony'
+              },
+              collectionId2: {
+                granules: {},
+                isVisible: true,
+                selectedAccessMethod: undefined
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId1: {
+                granules: {}
+              },
+              collectionId2: {
+                granules: {}
+              }
+            }
+          }
+        }
+      }
+
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony')).toEqual(expectedResult)
+    })
+  })
 })
 
 describe('url#encodeUrlQuery', () => {
@@ -265,5 +408,35 @@ describe('url#encodeUrlQuery', () => {
     }
 
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC&pg[2][v]=f')
+  })
+
+  test('correctly encodes enable temporal subsetting', () => {
+    const props = {
+      collectionsMetadata: {
+        collectionId1: {},
+        collectionId2: {}
+      },
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      focusedCollection: '',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              accessMethods: {
+                harmony: {
+                  enableTemporalSubsetting: false
+                }
+              },
+              selectedAccessMethod: 'harmony'
+            },
+            collectionId2: {}
+          }
+        }
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][ets]=f&pg[2][v]=f')
   })
 })
