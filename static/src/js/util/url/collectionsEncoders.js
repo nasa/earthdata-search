@@ -96,7 +96,7 @@ const encodeTemoralSubsetting = (projectCollection) => {
     enableTemporalSubsetting
   } = selectedMethod
 
-  return !!enableTemporalSubsetting
+  return enableTemporalSubsetting ? 't' : 'f'
 }
 
 const encodeOutputFormat = (projectCollection) => {
@@ -186,9 +186,9 @@ const decodedOutputProjection = (pgParam) => {
 }
 
 const decodedTemporalSubsetting = (pgParam) => {
-  const { ts: enableTemporalSubsetting } = pgParam
+  const { ets: enableTemporalSubsetting } = pgParam
 
-  return enableTemporalSubsetting
+  return enableTemporalSubsetting !== 'f'
 }
 
 /**
@@ -312,10 +312,13 @@ export const encodeCollections = (props) => {
     // Encode selected output format
     pg.of = encodeOutputFormat(projectCollection)
 
-    pg.ts = encodeTemoralSubsetting(projectCollection)
+    // Encode enable temporal subsetting for harmony collections
+    if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
+      pg.ets = encodeTemoralSubsetting(projectCollection)
+    }
 
     // Encode selected output projection
-    pg.of = encodeOutputProjection(projectCollection)
+    pg.op = encodeOutputProjection(projectCollection)
 
     pgParameter[collectionListIndex] = pg
   })
@@ -445,8 +448,10 @@ export const decodeCollections = (params) => {
       // Decode output projection
       selectedOutputProjection = decodedOutputProjection(pCollection)
 
-      // Decode temporal subsetting
-      enableTemporalSubsetting = decodedTemporalSubsetting(pCollection)
+      // Decode temporal subsetting for harmony collections
+      if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
+        enableTemporalSubsetting = decodedTemporalSubsetting(pCollection)
+      }
 
       // Determine if the collection is a CWIC collection
       isOpenSearch = excludedIsOpenSearch || addedIsOpenSearch || removedIsOpenSearch
@@ -471,7 +476,12 @@ export const decodeCollections = (params) => {
       }
 
       if (selectedAccessMethod) {
-        if (variableIds || selectedOutputFormat || selectedOutputProjection) {
+        if (
+          variableIds
+          || selectedOutputFormat
+          || selectedOutputProjection
+          || enableTemporalSubsetting !== undefined
+        ) {
           projectById[collectionId].accessMethods = {
             [selectedAccessMethod]: {
               enableTemporalSubsetting,
