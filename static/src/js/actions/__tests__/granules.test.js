@@ -972,6 +972,7 @@ describe('fetchLinks', () => {
       .reply(200, {
         data: {
           granules: {
+            cursor: 'mock-cursor',
             items: [
               {
                 links: [
@@ -1008,6 +1009,7 @@ describe('fetchLinks', () => {
       .reply(200, {
         data: {
           granules: {
+            cursor: 'mock-cursor',
             items: [
               {
                 links: [
@@ -1025,6 +1027,16 @@ describe('fetchLinks', () => {
         }
       })
 
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          granules: {
+            cursor: 'mock-cursor',
+            items: []
+          }
+        }
+      })
     const store = mockStore({
       authToken: 'token'
     })
@@ -1080,6 +1092,17 @@ describe('fetchLinks', () => {
       .reply(200, {
         data: {
           granules: {
+            cursor: 'mock-cursor',
+            items: null
+          }
+        }
+      })
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          granules: {
+            cursor: 'mock-cursor',
             items: null
           }
         }
@@ -1116,6 +1139,7 @@ describe('fetchLinks', () => {
         .reply(200, {
           data: {
             granules: {
+              cursor: 'mock-cursor',
               items: [
                 {
                   links: [
@@ -1159,6 +1183,7 @@ describe('fetchLinks', () => {
         .reply(200, {
           data: {
             granules: {
+              cursor: 'mock-cursor',
               items: [
                 {
                   links: [
@@ -1179,6 +1204,17 @@ describe('fetchLinks', () => {
                   ]
                 }
               ]
+            }
+          }
+        })
+
+      nock(/localhost/)
+        .post(/graphql/)
+        .reply(200, {
+          data: {
+            granules: {
+              cursor: 'mock-cursor',
+              items: []
             }
           }
         })
