@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { ProgressBar } from 'react-bootstrap'
 
 import { pluralize } from '../../../util/pluralize'
 import { commafy } from '../../../util/commafy'
@@ -14,14 +15,16 @@ import TextWindowActions from '../../TextWindowActions/TextWindowActions'
  * @param {String} arg0.retrievalId - The retrieval id.
  * @param {Number} arg0.granuleCount - The retrieval collection granule count.
  * @param {Boolean} arg0.granuleLinksIsLoading - A flag set when the granule links are loading.
+ * @param {Boolean} arg0.percentDoneDownloadLinks - Percentage of the download links that have been fetched.
  * @param {Boolean} arg0.showTextWindowActions - A flag set when the text window actions should be set.
 */
 export const DownloadFilesPanel = ({
   accessMethodType,
   downloadLinks,
-  retrievalId,
   granuleCount,
   granuleLinksIsLoading,
+  percentDoneDownloadLinks,
+  retrievalId,
   showTextWindowActions
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
@@ -33,9 +36,17 @@ export const DownloadFilesPanel = ({
           {
             granuleLinksIsLoading
               ? `Retrieving files for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
-              : `Retrieved ${downloadLinks.length} ${pluralize('file', downloadLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}`
+              : `Retrieved ${commafy(downloadLinks.length)} ${pluralize('file', downloadLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}`
           }
         </span>
+        {
+          percentDoneDownloadLinks && (
+            <ProgressBar
+              now={percentDoneDownloadLinks}
+              label={`${percentDoneDownloadLinks}%`}
+            />
+          )
+        }
       </div>
       <TextWindowActions
         id={`links-${retrievalId}`}
@@ -69,6 +80,7 @@ export const DownloadFilesPanel = ({
 }
 
 DownloadFilesPanel.defaultProps = {
+  percentDoneDownloadLinks: null,
   showTextWindowActions: true
 }
 
@@ -80,6 +92,7 @@ DownloadFilesPanel.propTypes = {
   retrievalId: PropTypes.string.isRequired,
   granuleCount: PropTypes.number.isRequired,
   granuleLinksIsLoading: PropTypes.bool.isRequired,
+  percentDoneDownloadLinks: PropTypes.string,
   showTextWindowActions: PropTypes.bool
 }
 

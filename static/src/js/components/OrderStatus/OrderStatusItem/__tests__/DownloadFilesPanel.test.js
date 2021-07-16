@@ -1,6 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { ProgressBar } from 'react-bootstrap'
 
 import { DownloadFilesPanel } from '../DownloadFilesPanel'
 import { TextWindowActions } from '../../../TextWindowActions/TextWindowActions'
@@ -42,10 +43,13 @@ describe('DownloadFilesPanel', () => {
           retrievalId="1"
           granuleCount={10}
           granuleLinksIsLoading
+          percentDoneDownloadLinks="25"
         />
       )
 
       expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('Retrieving files for 10 granules...')
+      expect(enzymeWrapper.find(ProgressBar).props().now).toEqual('25')
+      expect(enzymeWrapper.find(ProgressBar).props().label).toEqual('25%')
 
       const windowActions = enzymeWrapper.find(TextWindowActions)
       expect(windowActions.props().id).toEqual('links-1')

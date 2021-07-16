@@ -8,27 +8,33 @@ const initialState = {
 const updateGranuleDownloadParamsReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_GRANULE_LINKS: {
-      const { [action.payload.id]: currentLinks = {} } = state
+      const { [action.payload.id]: asdf = {} } = state
+      const { links: currentLinks = {} } = asdf
       const {
         download: currentDownloadLinks = [],
         s3: currentS3Links = []
       } = currentLinks
+
+      const { links = {}, percentDone } = action.payload
       const {
         download: newDownloadLinks = [],
         s3: newS3Links = []
-      } = action.payload.links
+      } = links
 
       return {
         ...state,
         [action.payload.id]: {
-          download: [
-            ...currentDownloadLinks,
-            ...newDownloadLinks
-          ],
-          s3: [
-            ...currentS3Links,
-            ...newS3Links
-          ]
+          percentDone,
+          links: {
+            download: [
+              ...currentDownloadLinks,
+              ...newDownloadLinks
+            ],
+            s3: [
+              ...currentS3Links,
+              ...newS3Links
+            ]
+          }
         }
       }
     }

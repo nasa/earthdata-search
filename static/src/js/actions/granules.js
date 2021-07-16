@@ -259,8 +259,7 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
       }
 
       if (items.length) {
-        const percentDone = (currentPage + 1) / totalPages
-        console.log('🚀 ~ file: granules.js ~ line 250 ~ .then ~ percentDone', collectionId, percentDone)
+        const percentDone = (((currentPage + 1) / totalPages) * 100).toFixed()
 
         // Fetch the download links from the granule metadata
         const granuleDownloadLinks = getDownloadUrls(items)
@@ -268,6 +267,7 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
 
         dispatch(updateGranuleLinks({
           id,
+          percentDone,
           links: {
             download: granuleDownloadLinks.map(lnk => lnk.href),
             s3: granuleS3Links.map(lnk => lnk.href)

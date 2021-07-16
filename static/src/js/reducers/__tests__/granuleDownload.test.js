@@ -22,6 +22,7 @@ describe('UPDATE_GRANULE_LINKS', () => {
       type: UPDATE_GRANULE_LINKS,
       payload: {
         id: 1,
+        percentDone: '100',
         links: {
           download: ['http://google.jp']
         }
@@ -30,8 +31,11 @@ describe('UPDATE_GRANULE_LINKS', () => {
 
     const expectedState = {
       1: {
-        download: ['http://google.jp'],
-        s3: []
+        percentDone: '100',
+        links: {
+          download: ['http://google.jp'],
+          s3: []
+        }
       },
       isLoaded: false,
       isLoading: false
@@ -45,6 +49,7 @@ describe('UPDATE_GRANULE_LINKS', () => {
       type: UPDATE_GRANULE_LINKS,
       payload: {
         id: 1,
+        percentDone: '100',
         links: {
           download: ['http://google.jp']
         }
@@ -53,20 +58,26 @@ describe('UPDATE_GRANULE_LINKS', () => {
 
     const initial = {
       1: {
-        download: [
-          'http://google.com'
-        ],
-        s3: []
+        percentDone: '50',
+        links: {
+          download: [
+            'http://google.com'
+          ],
+          s3: []
+        }
       }
     }
 
     const expectedState = {
       1: {
-        download: [
-          'http://google.com',
-          'http://google.jp'
-        ],
-        s3: []
+        percentDone: '100',
+        links: {
+          download: [
+            'http://google.com',
+            'http://google.jp'
+          ],
+          s3: []
+        }
       }
     }
 
@@ -79,6 +90,7 @@ describe('UPDATE_GRANULE_LINKS', () => {
         type: UPDATE_GRANULE_LINKS,
         payload: {
           id: 1,
+          percentDone: '100',
           links: {
             download: ['http://google.jp'],
             s3: ['s3://google.jp']
@@ -88,25 +100,31 @@ describe('UPDATE_GRANULE_LINKS', () => {
 
       const initial = {
         1: {
-          download: [
-            'http://google.com'
-          ],
-          s3: [
-            's3://google.com'
-          ]
+          percentDone: '50',
+          links: {
+            download: [
+              'http://google.com'
+            ],
+            s3: [
+              's3://google.com'
+            ]
+          }
         }
       }
 
       const expectedState = {
         1: {
-          download: [
-            'http://google.com',
-            'http://google.jp'
-          ],
-          s3: [
-            's3://google.com',
-            's3://google.jp'
-          ]
+          percentDone: '100',
+          links: {
+            download: [
+              'http://google.com',
+              'http://google.jp'
+            ],
+            s3: [
+              's3://google.com',
+              's3://google.jp'
+            ]
+          }
         }
       }
 

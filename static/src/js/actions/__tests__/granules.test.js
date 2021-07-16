@@ -1049,6 +1049,7 @@ describe('fetchLinks', () => {
     expect(storeActions[0]).toEqual({
       payload: {
         id: 3,
+        percentDone: '50',
         links: {
           download: [
             'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
@@ -1061,6 +1062,7 @@ describe('fetchLinks', () => {
     expect(storeActions[1]).toEqual({
       payload: {
         id: 3,
+        percentDone: '100',
         links: {
           download: [
             'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
@@ -1205,6 +1207,7 @@ describe('fetchLinks', () => {
       expect(storeActions[0]).toEqual({
         payload: {
           id: 3,
+          percentDone: '50',
           links: {
             download: [
               'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
@@ -1219,6 +1222,7 @@ describe('fetchLinks', () => {
       expect(storeActions[1]).toEqual({
         payload: {
           id: 3,
+          percentDone: '100',
           links: {
             download: [
               'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
