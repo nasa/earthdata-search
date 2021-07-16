@@ -30,6 +30,16 @@ describe('EDSCAlert component', () => {
     expect(enzymeWrapper.prop('className')).toContain('edsc-alert')
   })
 
+  describe('when an class name is provided', () => {
+    const { enzymeWrapper } = setup({
+      className: 'test-class-name'
+    })
+
+    test('should add the class name', () => {
+      expect(enzymeWrapper.props().className).toContain('test-class-name')
+    })
+  })
+
   describe('when a variant is declared', () => {
     const { enzymeWrapper } = setup({
       variant: 'test-variant'

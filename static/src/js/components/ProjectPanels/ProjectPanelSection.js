@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { FaExclamationCircle } from 'react-icons/fa'
+
+import EDSCAlert from '../EDSCAlert/EDSCAlert'
 
 import './ProjectPanelSection.scss'
 
@@ -21,7 +24,8 @@ export const ProjectPanelSection = ({
   headingLevel,
   intro,
   nested,
-  step
+  step,
+  warning
 }) => {
   const panelSectionClasses = classNames([
     'project-panel-section',
@@ -56,6 +60,17 @@ export const ProjectPanelSection = ({
         )
       }
       {children}
+      {
+        warning && (
+          <EDSCAlert
+            className="project-panel-section__warning"
+            bootstrapVariant="warning"
+            icon={FaExclamationCircle}
+          >
+            {warning}
+          </EDSCAlert>
+        )
+      }
     </div>
   )
 }
@@ -67,7 +82,8 @@ ProjectPanelSection.defaultProps = {
   headingLevel: 'h3',
   intro: null,
   nested: false,
-  step: null
+  step: null,
+  warning: ''
 }
 
 ProjectPanelSection.propTypes = {
@@ -77,7 +93,11 @@ ProjectPanelSection.propTypes = {
   headingLevel: PropTypes.string,
   intro: PropTypes.string,
   nested: PropTypes.bool,
-  step: PropTypes.number
+  step: PropTypes.number,
+  warning: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.string
+  ])
 }
 
 export default ProjectPanelSection

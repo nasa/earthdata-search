@@ -39,15 +39,19 @@ export class AccessMethod extends Component {
 
     const {
       accessMethods,
-      selectedAccessMethod
+      selectedAccessMethod,
+      temporal
     } = props
+
+    const { isRecurring } = temporal
 
     const selectedMethod = accessMethods[selectedAccessMethod]
 
+    // Disable temporal subsetting if the user has a recurring date selected
     const {
       selectedOutputFormat = '',
       selectedOutputProjection = '',
-      enableTemporalSubsetting = true
+      enableTemporalSubsetting = !isRecurring
     } = selectedMethod || {}
 
     this.state = {
@@ -60,6 +64,19 @@ export class AccessMethod extends Component {
     this.handleOutputFormatSelection = this.handleOutputFormatSelection.bind(this)
     this.handleOutputProjectionSelection = this.handleOutputProjectionSelection.bind(this)
     this.handleToggleTemporalSubsetting = this.handleToggleTemporalSubsetting.bind(this)
+  }
+
+  componentWillReceiveProps() {
+    const { temporal } = this.props
+
+    const { isRecurring } = temporal
+
+    // Disable temporal subsetting if the user has a recurring date selected
+    if (isRecurring) {
+      this.setState({
+        enableTemporalSubsetting: false
+      })
+    }
   }
 
   handleAccessMethodSelection(method) {
@@ -433,6 +450,7 @@ export class AccessMethod extends Component {
                         customHeadingTag="h4"
                         heading="Temporal Subsetting"
                         intro="When enabled, temporal subsetting will trim the data to the selected temporal range."
+                        warning={isRecurring && 'To prevent unexpected results, temporal subsetting is not supported for recurring dates.'}
                         nested
                       >
                         {
@@ -447,11 +465,12 @@ export class AccessMethod extends Component {
                                   </span>
                                 )}
                                 checked={enableTemporalSubsetting}
+                                disabled={isRecurring}
                                 onChange={this.handleToggleTemporalSubsetting}
                               />
                               {
                                 enableTemporalSubsetting && (
-                                  <p className="access-method__section-status ml-3">
+                                  <p className="access-method__section-status mt-2 mb-0">
                                     Selected Range:
                                     <br />
                                     {selectedTemporalDisplay}
