@@ -81,6 +81,24 @@ const encodeSelectedVariables = (projectCollection) => {
   return selectedVariables.join('!')
 }
 
+const encodeTemoralSubsetting = (projectCollection) => {
+  if (!projectCollection) return null
+
+  const {
+    accessMethods,
+    selectedAccessMethod
+  } = projectCollection
+
+  if (!accessMethods || !selectedAccessMethod) return null
+
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const {
+    enableTemporalSubsetting
+  } = selectedMethod
+
+  return !!enableTemporalSubsetting
+}
+
 const encodeOutputFormat = (projectCollection) => {
   if (!projectCollection) return null
 
@@ -165,6 +183,12 @@ const decodedOutputProjection = (pgParam) => {
   const { op: outputProjection } = pgParam
 
   return outputProjection
+}
+
+const decodedTemporalSubsetting = (pgParam) => {
+  const { ts: enableTemporalSubsetting } = pgParam
+
+  return enableTemporalSubsetting
 }
 
 /**
@@ -288,6 +312,8 @@ export const encodeCollections = (props) => {
     // Encode selected output format
     pg.of = encodeOutputFormat(projectCollection)
 
+    pg.ts = encodeTemoralSubsetting(projectCollection)
+
     // Encode selected output projection
     pg.of = encodeOutputProjection(projectCollection)
 
@@ -345,6 +371,7 @@ export const decodeCollections = (params) => {
     // Project
     let addedGranuleIds = []
     let addedIsOpenSearch
+    let enableTemporalSubsetting
     let isVisible = true
     let removedGranuleIds = []
     let removedIsOpenSearch
@@ -418,6 +445,9 @@ export const decodeCollections = (params) => {
       // Decode output projection
       selectedOutputProjection = decodedOutputProjection(pCollection)
 
+      // Decode temporal subsetting
+      enableTemporalSubsetting = decodedTemporalSubsetting(pCollection)
+
       // Determine if the collection is a CWIC collection
       isOpenSearch = excludedIsOpenSearch || addedIsOpenSearch || removedIsOpenSearch
 
@@ -444,6 +474,7 @@ export const decodeCollections = (params) => {
         if (variableIds || selectedOutputFormat || selectedOutputProjection) {
           projectById[collectionId].accessMethods = {
             [selectedAccessMethod]: {
+              enableTemporalSubsetting,
               selectedOutputFormat,
               selectedOutputProjection,
               selectedVariables: variableIds
