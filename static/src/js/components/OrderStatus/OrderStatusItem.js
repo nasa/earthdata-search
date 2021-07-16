@@ -200,6 +200,7 @@ export class OrderStatusItem extends PureComponent {
       let s3Urls = []
       let totalOrders = 0
       let totalCompleteOrders = 0
+      let percentDoneDownloadLinks
       let progressPercentage = 0
       let contactName = null
       let contactEmail = null
@@ -209,10 +210,12 @@ export class OrderStatusItem extends PureComponent {
       if (isDownload) {
         progressPercentage = 100
         orderInfo = 'Download your data directly from the links below, or use the provided download script.'
+        const { links: granuleDownloadLinks = {} } = granuleLinks
         const {
           download: downloadLinks = [],
           s3: s3Links = []
-        } = granuleLinks
+        } = granuleDownloadLinks;
+        ({ percentDone: percentDoneDownloadLinks } = granuleLinks)
         if (downloadLinks.length > 0) downloadUrls = [...downloadLinks]
         if (s3Links.length > 0) s3Urls = [...s3Links]
       }
@@ -570,9 +573,10 @@ export class OrderStatusItem extends PureComponent {
                         <DownloadFilesPanel
                           accessMethodType={accessMethodType}
                           downloadLinks={downloadUrls}
-                          retrievalId={retrievalId}
                           granuleCount={granuleCount}
                           granuleLinksIsLoading={granuleLinksIsLoading}
+                          percentDoneDownloadLinks={percentDoneDownloadLinks}
+                          retrievalId={retrievalId}
                           showTextWindowActions={!isEsi}
                         />
                       </Tab>
