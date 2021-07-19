@@ -182,7 +182,7 @@ export const buildCollectionSearchParams = (params) => {
     includeFacets: 'v2',
     includeGranuleCounts: true,
     includeHasGranules: true,
-    includeTags: `${tagName('*', 'edsc.extra')},opensearch.granule.osdd`,
+    includeTags: `${tagName('*', 'edsc')},opensearch.granule.osdd`,
     options: {
       science_keywords_h: {
         or: true
