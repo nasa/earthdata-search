@@ -171,7 +171,7 @@ describe('Path /search/granules/collection-details', () => {
           include_facets: 'v2',
           include_granule_counts: true,
           include_has_granules: true,
-          include_tags: 'edsc.extra.*,opensearch.granule.osdd',
+          include_tags: 'edsc.*,opensearch.granule.osdd',
           options: {
             science_keywords_h: {
               or: true
@@ -279,7 +279,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/search/collections.json'
       },
       (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
         req.reply({
           body: collectionsBody,
