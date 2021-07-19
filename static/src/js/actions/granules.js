@@ -235,10 +235,12 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
 
   let cursor
   let response
+  let finished = false
+  let currentPage = 0
 
   try {
-    // Request an additional page (totalPages + 1) when scrolling to force GraphQL to clear the scroll session
-    await Array.from(Array(totalPages + 1)).forEachAsync(async (_, currentPage) => {
+    while (!finished) {
+      // eslint-disable-next-line no-await-in-loop
       response = await graphQlRequestObject.search(graphQlQuery, {
         ...preparedGranuleParams,
         limit: pageSize,
@@ -255,27 +257,28 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
       // Set the cursor returned from GraphQl so the next loop will use it
       cursor = responseCursor
 
-      if (!items) {
-        return
+      if (!items || !items.length) {
+        finished = true
+        break
       }
 
-      if (items.length) {
-        const percentDone = (((currentPage + 1) / totalPages) * 100).toFixed()
+      const percentDone = (((currentPage + 1) / totalPages) * 100).toFixed()
 
-        // Fetch the download links from the granule metadata
-        const granuleDownloadLinks = getDownloadUrls(items)
-        const granuleS3Links = getS3Urls(items)
+      // Fetch the download links from the granule metadata
+      const granuleDownloadLinks = getDownloadUrls(items)
+      const granuleS3Links = getS3Urls(items)
 
-        dispatch(updateGranuleLinks({
-          id,
-          percentDone,
-          links: {
-            download: granuleDownloadLinks.map(lnk => lnk.href),
-            s3: granuleS3Links.map(lnk => lnk.href)
-          }
-        }))
-      }
-    })
+      dispatch(updateGranuleLinks({
+        id,
+        percentDone,
+        links: {
+          download: granuleDownloadLinks.map(lnk => lnk.href),
+          s3: granuleS3Links.map(lnk => lnk.href)
+        }
+      }))
+
+      currentPage += 1
+    }
   } catch (error) {
     dispatch(actions.handleError({
       error,

@@ -1093,17 +1093,7 @@ describe('fetchLinks', () => {
         data: {
           granules: {
             cursor: 'mock-cursor',
-            items: null
-          }
-        }
-      })
-    nock(/localhost/)
-      .post(/graphql/)
-      .reply(200, {
-        data: {
-          granules: {
-            cursor: 'mock-cursor',
-            items: null
+            items: []
           }
         }
       })
