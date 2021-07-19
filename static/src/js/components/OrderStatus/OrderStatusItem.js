@@ -223,10 +223,11 @@ export class OrderStatusItem extends PureComponent {
       if (isOpendap) {
         progressPercentage = 100
         orderInfo = 'Download your data directly from the links below, or use the provided download script.'
+        const { links: granuleDownloadLinks = {} } = granuleLinks
         const {
           download: downloadLinks = [],
           s3: s3Links = []
-        } = granuleLinks
+        } = granuleDownloadLinks
         if (downloadLinks.length > 0) downloadUrls = [...downloadLinks]
         if (s3Links.length > 0) s3Urls = [...s3Links]
       }

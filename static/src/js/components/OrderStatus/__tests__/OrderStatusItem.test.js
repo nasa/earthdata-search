@@ -414,6 +414,16 @@ describe('OrderStatusItem', () => {
           granule_count: 100,
           orders: [],
           isLoaded: true
+        },
+        granuleDownload: {
+          1: {
+            links: {
+              download: [
+                'http://example.com'
+              ]
+            }
+          },
+          isLoading: true
         }
       })
 
@@ -458,12 +468,12 @@ describe('OrderStatusItem', () => {
       const linksTab = tabs.childAt(0)
       expect(linksTab.props().title).toEqual('Download Files')
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+      expect(linksTab.childAt(0).props().downloadLinks).toEqual(['http://example.com'])
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
       expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(scriptTab.childAt(0).props().downloadLinks).toEqual([])
+      expect(scriptTab.childAt(0).props().downloadLinks).toEqual(['http://example.com'])
     })
   })
 

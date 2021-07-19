@@ -376,7 +376,9 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
 
       dispatch(updateGranuleLinks({
         id,
-        links: items
+        links: {
+          download: items
+        }
       }))
     })
     .catch((error) => {
