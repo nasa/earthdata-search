@@ -26,7 +26,7 @@ export const pageAllCmrResults = async ({
   additionalHeaders = {}
 }) => {
   const pageSize = 500
-
+  console.log(`CMR token: ${cmrToken}`)
   try {
     // Default parameters that we need to send CMR to ensure correct paging
     const cmrParams = {
@@ -49,7 +49,7 @@ export const pageAllCmrResults = async ({
       headers: {
         // 'Client-Id': getClientId().background,
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Echo-Token': cmrToken,
+        // 'Echo-Token': cmrToken,
         ...additionalHeaders
       }
     })
@@ -84,7 +84,7 @@ export const pageAllCmrResults = async ({
           headers: {
             // 'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Echo-Token': cmrToken,
+            // 'Echo-Token': cmrToken,
             ...additionalHeaders
           }
         })

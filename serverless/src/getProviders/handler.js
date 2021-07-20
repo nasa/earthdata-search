@@ -1,10 +1,11 @@
 import axios from 'axios'
+import https from 'https'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 // import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
-import { getEchoToken } from '../util/urs/getEchoToken'
-import { getJwtToken } from '../util/getJwtToken'
+// import { getEchoToken } from '../util/urs/getEchoToken'
+// import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -18,20 +19,23 @@ const getProviders = async (event) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const jwtToken = getJwtToken(event)
+  // const jwtToken = getJwtToken(event)
 
-  const accessToken = await getEchoToken(jwtToken, earthdataEnvironment)
+  // const accessToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
   const url = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/providers.json`
 
   try {
     const response = await axios({
       method: 'get',
-      url,
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
+      url/* ,
       headers: {
-        Authorization: `Bearer ${accessToken}` // ,
-        // 'Client-Id': getClientId().lambda
-      }
+        Authorization: `Bearer ${accessToken}`,
+        'Client-Id': getClientId().lambda
+      }  */
     })
 
     const { data } = response

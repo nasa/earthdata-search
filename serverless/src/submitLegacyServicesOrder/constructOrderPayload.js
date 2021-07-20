@@ -36,11 +36,11 @@ export const constructOrderPayload = async (
       {
         indices: false,
         arrayFormat: 'brackets'
-      }),
+      })/* ,
     headers: {
-      Authorization: `Bearer ${accessToken}` // ,
-      // 'Client-Id': getClientId().background
-    }
+      Authorization: `Bearer ${accessToken}`,
+      'Client-Id': getClientId().background
+    } */
   })
 
   const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
@@ -60,12 +60,12 @@ export const constructOrderPayload = async (
     }, {
       indices: false,
       arrayFormat: 'brackets'
-    }),
+    })/* ,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Bearer ${accessToken}` // ,
-      // 'Client-Id': getClientId().background
-    }
+      Authorization: `Bearer ${accessToken}`,
+      'Client-Id': getClientId().background
+    } */
   })
 
   const { data: orderInformationBody } = optionInformationResponse

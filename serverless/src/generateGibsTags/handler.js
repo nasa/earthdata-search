@@ -8,7 +8,7 @@ import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/c
 // import { getClientId } from '../../../sharedUtils/getClientId'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getSupportedGibsLayers } from './getSupportedGibsLayers'
-import { getSystemToken } from '../util/urs/getSystemToken'
+// import { getSystemToken } from '../util/urs/getSystemToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { tagName } from '../../../sharedUtils/tags'
 
@@ -28,7 +28,7 @@ const generateGibsTags = async (event, context) => {
   }
 
   // Retrieve a connection to the database
-  const cmrToken = await getSystemToken()
+  // const cmrToken = await getSystemToken()
 
   // The headers we'll send back regardless of our response
   const { defaultResponseHeaders } = getApplicationConfig()
@@ -85,8 +85,8 @@ const generateGibsTags = async (event, context) => {
           data: JSON.stringify(collection),
           headers: {
             // 'Client-Id': getClientId().background,
-            'Content-Type': 'application/json',
-            'Echo-Token': cmrToken
+            'Content-Type': 'application/json' // ,
+            // 'Echo-Token': cmrToken
           }
         })
 

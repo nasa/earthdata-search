@@ -13,15 +13,15 @@ import { parseError } from '../../../sharedUtils/parseError'
  */
 export const removeTag = async (tagName, searchCriteria, cmrToken) => {
   const tagRemovalUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/tags/${tagName}/associations/by_query`
-
+  console.log(`CMR token: ${cmrToken[0]}`)
   try {
     await axios({
       method: 'delete',
       url: tagRemovalUrl,
-      headers: {
+      /* headers: {
         // 'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
-      },
+      }, */
       data: searchCriteria
     })
   } catch (e) {

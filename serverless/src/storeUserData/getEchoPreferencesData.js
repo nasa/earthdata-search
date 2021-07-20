@@ -15,11 +15,11 @@ export const getEchoPreferencesData = async (username, token, environment) => {
 
   const echoRestPreferencesResponse = await axios({
     method: 'get',
-    url: echoRestPreferencesUrl,
+    url: echoRestPreferencesUrl/* ,
     headers: {
-      Authorization: `Bearer ${token}` // ,
-      // 'Client-Id': getClientId().lambda
-    }
+      Authorization: `Bearer ${token}`,
+      'Client-Id': getClientId().lambda
+    } */
   })
 
   const { data = {} } = echoRestPreferencesResponse

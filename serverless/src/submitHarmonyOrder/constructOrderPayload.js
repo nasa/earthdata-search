@@ -24,6 +24,7 @@ export const constructOrderPayload = async ({
   environment
 }) => {
   // Request granules from CMR
+  console.log(`access token: ${accessToken[0]}`)
   const granuleResponse = await axios({
     url: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
     params: granuleParams,
@@ -31,11 +32,11 @@ export const constructOrderPayload = async ({
       {
         indices: false,
         arrayFormat: 'brackets'
-      }),
+      })/* ,
     headers: {
-      Authorization: `Bearer ${accessToken}` // ,
-      // 'Client-Id': getClientId().background
-    }
+      Authorization: `Bearer ${accessToken}`,
+      'Client-Id': getClientId().background
+    } */
   })
 
   const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)

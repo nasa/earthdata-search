@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { generateFormDigest } from '../util/generateFormDigest'
-import { getEchoToken } from '../util/urs/getEchoToken'
+// import { getEchoToken } from '../util/urs/getEchoToken'
 import { parseError } from '../../../sharedUtils/parseError'
 // import { getClientId } from '../../../sharedUtils/getClientId'
 import { wrapAxios } from '../util/wrapAxios'
@@ -22,7 +22,7 @@ export const getServiceOptionDefinitions = async (
   const { provider } = collectionProvider
   const { id: providerId, organization_name: organizationName } = provider
 
-  const accessToken = await getEchoToken(jwtToken, earthdataEnvironment)
+  // const accessToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
   await serviceOptionDefinitions.forEachAsync(async (serviceOptionDefinition, index) => {
     const { name } = serviceOptionDefinition
@@ -36,11 +36,11 @@ export const getServiceOptionDefinitions = async (
         params: {
           name,
           provider_guid: providerId
-        },
+        }/* ,
         headers: {
-          Authorization: `Bearer ${accessToken}` // ,
-          // 'Client-Id': getClientId().lambda
-        }
+          Authorization: `Bearer ${accessToken}`,
+          'Client-Id': getClientId().lambda
+        } */
       })
 
       const { config } = response

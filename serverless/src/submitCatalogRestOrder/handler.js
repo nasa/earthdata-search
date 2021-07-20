@@ -97,11 +97,11 @@ const submitCatalogRestOrder = async (event, context) => {
           {
             indices: false,
             arrayFormat: 'brackets'
-          }),
+          })/* ,
         headers: {
-          Authorization: `Bearer ${accessToken}` // ,
-          // 'Client-Id': getClientId().background
-        }
+          Authorization: `Bearer ${accessToken}`,
+          'Client-Id': getClientId().background
+        } */
       })
 
       const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
@@ -160,11 +160,11 @@ const submitCatalogRestOrder = async (event, context) => {
         data: stringify(orderPayload, {
           indices: false,
           arrayFormat: 'brackets'
-        }),
+        })/* ,
         headers: {
-          Authorization: `Bearer ${accessToken}` // ,
+          Authorization: `Bearer ${accessToken}`,
           // 'Client-Id': getClientId().background
-        }
+        } */
       })
 
       const orderResponseBody = parseXml(orderResponse.data, {

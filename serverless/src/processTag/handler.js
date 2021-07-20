@@ -66,8 +66,8 @@ const processTag = async (event, context) => {
           }, { indices: false, arrayFormat: 'brackets' }),
           headers: {
             // 'Client-Id': getClientId().background,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Echo-Token': cmrToken
+            'Content-Type': 'application/x-www-form-urlencoded' // ,
+            // 'Echo-Token': cmrToken
           }
         })
 

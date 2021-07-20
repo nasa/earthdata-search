@@ -20,11 +20,11 @@ export const getUrsUserData = async (username, token, environment) => {
 
   const ursProfileResponse = await axios({
     method: 'get',
-    url: ursProfileUrl,
+    url: ursProfileUrl/* ,
     headers: {
-      // 'Client-Id': getClientId().lambda,
+      'Client-Id': getClientId().lambda,
       Authorization: `Bearer ${token}`
-    }
+    } */
   })
 
   const { data = {} } = ursProfileResponse

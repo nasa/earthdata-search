@@ -51,10 +51,10 @@ const fetchHarmonyOrder = async (input) => {
 
     const orderResponse = await axios({
       method: 'get',
-      url: orderStatusUrl,
+      url: orderStatusUrl/* ,
       headers: {
         Authorization: `Bearer ${accessToken}`
-      }
+      } */
     })
 
     const { data } = orderResponse

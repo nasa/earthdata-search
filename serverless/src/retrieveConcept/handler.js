@@ -3,7 +3,7 @@ import axios from 'axios'
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 // import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
-import { getEchoToken } from '../util/urs/getEchoToken'
+// import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { pick } from '../util/pick'
@@ -47,7 +47,7 @@ const retrieveConcept = async (event) => {
       url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
       headers: {
         // 'Client-Id': getClientId().lambda,
-        'Echo-Token': await getEchoToken(jwtToken, earthdataEnvironment),
+        // 'Echo-Token': await getEchoToken(jwtToken, earthdataEnvironment),
         ...providedHeaders
       }
     })

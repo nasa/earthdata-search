@@ -2,12 +2,13 @@ import 'array-foreach-async'
 
 import axios from 'axios'
 import uuidv4 from 'uuid/v4'
+import https from 'https'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 // import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
-import { getEchoToken } from '../util/urs/getEchoToken'
-import { getJwtToken } from '../util/getJwtToken'
+// import { getEchoToken } from '../util/urs/getEchoToken'
+// import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { wrapAxios } from '../util/wrapAxios'
 
@@ -24,9 +25,9 @@ const getDataQualitySummaries = async (event) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const jwtToken = getJwtToken(event)
+  // const jwtToken = getJwtToken(event)
 
-  const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
+  // const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
   const { echoRestRoot } = getEarthdataConfig(earthdataEnvironment)
 
@@ -43,12 +44,12 @@ const getDataQualitySummaries = async (event) => {
       url: `${echoRestRoot}/data_quality_summary_definitions.json`,
       params: {
         catalog_item_id: catalogItemId
-      },
+      }/* ,
       headers: {
-        Authorization: `Bearer ${echoToken}` // ,
-        // 'Client-Id': getClientId().background,
-        // 'CMR-Request-Id': requestId
-      }
+        Authorization: `Bearer ${echoToken}`,
+        'Client-Id': getClientId().background,
+        'CMR-Request-Id': requestId
+      } */
     })
 
     const { config, data } = dqsAssociationResponse
@@ -76,12 +77,15 @@ const getDataQualitySummaries = async (event) => {
       try {
         dqsResponse = await wrappedAxios({
           method: 'get',
-          url: `${echoRestRoot}/data_quality_summary_definitions/${dqsId}.json`,
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false
+          }),
+          url: `${echoRestRoot}/data_quality_summary_definitions/${dqsId}.json`/* ,
           headers: {
-            Authorization: `Bearer ${echoToken}` // ,
-            // 'Client-Id': getClientId().background,
-            // 'CMR-Request-Id': dataQualitySummaryRequestId
-          }
+            Authorization: `Bearer ${echoToken}`,
+            'Client-Id': getClientId().background,
+            'CMR-Request-Id': dataQualitySummaryRequestId
+          } */
         })
 
         const { config: dqsConfig, data: dqsData } = dqsResponse

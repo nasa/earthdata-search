@@ -14,11 +14,11 @@ export const getEchoProfileData = async (accessToken, environment) => {
 
   const echoRestProfileResponse = await axios({
     method: 'get',
-    url: echoRestProfileUrl,
+    url: echoRestProfileUrl/* ,
     headers: {
-      Authorization: `Bearer ${accessToken}` // ,
-      // 'Client-Id': getClientId().lambda
-    }
+      Authorization: `Bearer ${accessToken}`,
+      'Client-Id': getClientId().lambda
+    } */
   })
 
   const { data = {} } = echoRestProfileResponse

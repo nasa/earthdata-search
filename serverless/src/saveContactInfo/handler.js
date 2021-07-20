@@ -6,7 +6,7 @@ import { determineEarthdataEnvironment } from '../util/determineEarthdataEnviron
 // import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
-import { getEchoToken } from '../util/urs/getEchoToken'
+// import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
@@ -54,15 +54,15 @@ const saveContactInfo = async (event) => {
 
     const url = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
 
-    const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
+    // const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
     const response = await axios({
       method: 'put',
       url,
-      headers: {
-        Authorization: `Bearer ${echoToken}` // ,
-        // 'Client-Id': getClientId().lambda
-      },
+      /* headers: {
+        Authorization: `Bearer ${echoToken}`,
+        'Client-Id': getClientId().lambda
+      }, */
       data: params
     })
 

@@ -7,6 +7,7 @@ import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 // import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
+// import { getSystemToken } from '../util/urs/getSystemToken'
 
 /**
  * Adds a tag association to any collections meeting the provided search criteria
@@ -40,15 +41,17 @@ export const addTag = async ({
 
     let collections = []
 
+    console.log(`CMR token: ${cmrToken[0]}`)
+
     try {
       const collectionJsonResponse = await axios({
         method: 'post',
         url: `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
-        headers: {
+        /* headers: {
           // 'Client-Id': getClientId().background,
           'Content-Type': 'application/x-www-form-urlencoded',
           'Echo-Token': cmrToken
-        },
+        }, */
         data: searchCriteria
       })
 
@@ -104,10 +107,10 @@ export const addTag = async ({
       const taggingResponse = await axios({
         method: 'post',
         url: addTagUrl,
-        headers: {
+        /* headers: {
           // 'Client-Id': getClientId().background,
           'Echo-Token': cmrToken
-        },
+        }, */
         data: castArray(associationData)
       })
 
@@ -134,10 +137,10 @@ export const addTag = async ({
     await axios({
       method: 'post',
       url: tagRemovalUrl,
-      headers: {
+      /* headers: {
         // 'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
-      },
+      }, */
       data: searchCriteria
     })
   } catch (e) {

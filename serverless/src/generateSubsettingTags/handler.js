@@ -55,11 +55,11 @@ const generateSubsettingTags = async (event, context) => {
   try {
     const serviceOptionResponse = await wrappedAxios({
       method: 'get',
-      url: serviceOptionAssignmentUrl,
-      headers: {
+      url: serviceOptionAssignmentUrl // ,
+      /* headers: {
         // 'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
-      }
+      } */
     })
 
     const { config, data } = serviceOptionResponse

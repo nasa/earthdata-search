@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
-import { getEchoToken } from '../util/urs/getEchoToken'
+// import { getEchoToken } from '../util/urs/getEchoToken'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
@@ -21,7 +21,7 @@ const graphQl = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
-  const { data, requestId } = JSON.parse(body)
+  const { data } = JSON.parse(body)
 
   const { variables, query } = data
 
@@ -29,7 +29,7 @@ const graphQl = async (event, context) => {
 
   const jwtToken = getJwtToken(event)
 
-  const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
+  // const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
   const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
@@ -42,11 +42,11 @@ const graphQl = async (event, context) => {
       data: {
         query,
         variables
-      },
+      }/* ,
       headers: {
         Authorization: `Bearer ${echoToken}`,
         'X-Request-Id': requestId
-      }
+      } */
     })
 
     const {
