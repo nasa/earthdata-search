@@ -49,7 +49,7 @@ export const pageAllCmrResults = async ({
       headers: {
         // 'Client-Id': getClientId().background,
         'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Echo-Token': cmrToken,
+        'Echo-Token': '0000000000',
         ...additionalHeaders
       }
     })
@@ -84,7 +84,7 @@ export const pageAllCmrResults = async ({
           headers: {
             // 'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',
-            // 'Echo-Token': cmrToken,
+            'Echo-Token': '0000000000',
             ...additionalHeaders
           }
         })

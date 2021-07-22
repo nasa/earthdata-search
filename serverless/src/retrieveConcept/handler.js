@@ -47,7 +47,7 @@ const retrieveConcept = async (event) => {
       url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
       headers: {
         // 'Client-Id': getClientId().lambda,
-        // 'Echo-Token': await getEchoToken(jwtToken, earthdataEnvironment),
+        'Echo-Token': '0000000000',
         ...providedHeaders
       }
     })

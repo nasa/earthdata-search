@@ -80,10 +80,10 @@ export default class Request {
       headers['Earthdata-ENV'] = this.earthdataEnvironment
     }
 
-    /* if (this.authenticated || this.optionallyAuthenticated) {
+    if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
       headers.Authorization = `Bearer ${this.getAuthToken()}`
-    } */
+    }
 
     if (data) {
       // POST requests to Lambda use a JSON string
@@ -169,10 +169,10 @@ export default class Request {
     // applicable for request methods 'PUT', 'POST', and 'PATCH'
     if (this.authenticated) {
       requestOptions = {
-        ...requestOptions/* ,
+        ...requestOptions,
         headers: {
           Authorization: `Bearer ${this.getAuthToken()}`
-        } */
+        }
       }
     }
 
@@ -213,10 +213,10 @@ export default class Request {
     // applicable for request methods 'PUT', 'POST', and 'PATCH'
     if (this.authenticated) {
       requestOptions = {
-        ...requestOptions/* ,
+        ...requestOptions,
         headers: {
           Authorization: `Bearer ${this.getAuthToken()}`
-        } */
+        }
       }
     }
 

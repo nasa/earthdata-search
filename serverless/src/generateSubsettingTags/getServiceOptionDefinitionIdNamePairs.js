@@ -38,11 +38,11 @@ export const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOpt
       // Request the service option definitions from legacy services
       const serviceOptionDefinitionResponse = await wrappedAxios({
         method: 'get',
-        url: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}` // ,
-        /* headers: {
+        url: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}`,
+        headers: {
           // 'Client-Id': getClientId().background,
-          'Echo-Token': cmrToken
-        } */
+          'Echo-Token': '0000000000'
+        }
       })
 
       const { config, data } = serviceOptionDefinitionResponse

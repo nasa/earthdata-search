@@ -35,7 +35,7 @@ const getProviders = async (event) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Client-Id': getClientId().lambda
-      }  */
+      } */
     })
 
     const { data } = response

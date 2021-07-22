@@ -35,11 +35,10 @@ export default class GraphQlRequest extends Request {
       // eslint-disable-next-line no-param-reassign
       headers['Earthdata-ENV'] = this.earthdataEnvironment
     }
-
-    /* if (this.authenticated || this.optionallyAuthenticated) {
+    if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
       headers.Authorization = `Bearer ${this.getAuthToken()}`
-    } */
+    }
 
     if (data) {
       // POST requests to Lambda use a JSON string

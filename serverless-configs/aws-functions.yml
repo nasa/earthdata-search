@@ -376,10 +376,10 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: graphql
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   retrieveConcept:
@@ -390,10 +390,10 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: concepts/{id}
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
           request:
             parameters:
@@ -413,10 +413,10 @@
             parameters:
               paths:
                 format: true
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
   cmrGranuleSearch:
     handler: serverless/src/cmrGranuleSearch/handler.default
@@ -427,10 +427,10 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: granules
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
   timelineSearch:
     handler: serverless/src/timelineSearch/handler.default
@@ -440,10 +440,10 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: granules/timeline
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   submitRetrieval:
@@ -454,10 +454,10 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: retrievals
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   getRetrieval:
@@ -468,10 +468,10 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: retrievals/{id}
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   deleteRetrieval:
@@ -482,10 +482,10 @@
           method: delete
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: retrievals/{id}
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   getRetrievals:
@@ -496,10 +496,10 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: retrievals
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   getRetrievalCollection:
@@ -510,10 +510,10 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: retrieval_collections/{id}
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   getAccessMethods:
@@ -524,10 +524,10 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: access_methods
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   ousGranuleSearch:
@@ -538,10 +538,10 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: granules/ous
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   getProjects:
@@ -552,10 +552,10 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: projects
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   deleteProject:
@@ -566,10 +566,10 @@
           method: delete
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: projects/{id}
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   logout:
@@ -580,10 +580,10 @@
           method: delete
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: logout
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   getDataQualitySummaries:
@@ -594,10 +594,10 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: dqs
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   getProviders:
@@ -608,10 +608,10 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: providers
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   getContactInfo:
@@ -622,10 +622,10 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: contact_info
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   saveContactInfo:
@@ -636,10 +636,10 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: contact_info
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   updatePreferences:
@@ -650,10 +650,10 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: preferences
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
+          # authorizer:
+          #   name: edlAuthorizer
+          #   type: request
+          #   resultTtlInSeconds: 0
 
 
   # Admin

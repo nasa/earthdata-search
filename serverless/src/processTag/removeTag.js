@@ -18,10 +18,10 @@ export const removeTag = async (tagName, searchCriteria, cmrToken) => {
     await axios({
       method: 'delete',
       url: tagRemovalUrl,
-      /* headers: {
+      headers: {
         // 'Client-Id': getClientId().background,
-        'Echo-Token': cmrToken
-      }, */
+        'Echo-Token': '0000000000'
+      },
       data: searchCriteria
     })
   } catch (e) {

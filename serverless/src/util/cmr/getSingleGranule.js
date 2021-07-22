@@ -38,8 +38,8 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
     headers: {
       // 'Client-Id': getClientId().background,
-      'Content-Type': 'application/x-www-form-urlencoded' // ,
-      // 'Echo-Token': cmrToken
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Echo-Token': '0000000000'
     },
     httpsAgent: new https.Agent({
       rejectUnauthorized: false

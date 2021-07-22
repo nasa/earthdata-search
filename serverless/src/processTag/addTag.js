@@ -41,17 +41,17 @@ export const addTag = async ({
 
     let collections = []
 
-    console.log(`CMR token: ${cmrToken[0]}`)
+    console.log(`CMR token: ${cmrToken}`)
 
     try {
       const collectionJsonResponse = await axios({
         method: 'post',
         url: `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/collections.json?${stringify(cmrParams)}`,
-        /* headers: {
+        headers: {
           // 'Client-Id': getClientId().background,
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Echo-Token': cmrToken
-        }, */
+          'Echo-Token': '0000000000'
+        },
         data: searchCriteria
       })
 
@@ -107,10 +107,10 @@ export const addTag = async ({
       const taggingResponse = await axios({
         method: 'post',
         url: addTagUrl,
-        /* headers: {
+        headers: {
           // 'Client-Id': getClientId().background,
-          'Echo-Token': cmrToken
-        }, */
+          'Echo-Token': '0000000000'
+        },
         data: castArray(associationData)
       })
 
@@ -137,10 +137,10 @@ export const addTag = async ({
     await axios({
       method: 'post',
       url: tagRemovalUrl,
-      /* headers: {
+      headers: {
         // 'Client-Id': getClientId().background,
-        'Echo-Token': cmrToken
-      }, */
+        'Echo-Token': '0000000000'
+      },
       data: searchCriteria
     })
   } catch (e) {

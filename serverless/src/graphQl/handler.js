@@ -3,7 +3,7 @@ import axios from 'axios'
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
 // import { getEchoToken } from '../util/urs/getEchoToken'
-import { getJwtToken } from '../util/getJwtToken'
+// import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
@@ -27,7 +27,7 @@ const graphQl = async (event, context) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const jwtToken = getJwtToken(event)
+  // const jwtToken = getJwtToken(event)
 
   // const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
 
@@ -61,8 +61,8 @@ const graphQl = async (event, context) => {
       headers: {
         ...defaultResponseHeaders,
         'access-control-allow-origin': responseHeaders['access-control-allow-origin'],
-        'access-control-expose-headers': prepareExposeHeaders(responseHeaders),
-        'jwt-token': jwtToken
+        'access-control-expose-headers': prepareExposeHeaders(responseHeaders)/* ,
+        'jwt-token': jwtToken */
       },
       body: JSON.stringify(responseData)
     }

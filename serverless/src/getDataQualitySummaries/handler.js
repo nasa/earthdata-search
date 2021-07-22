@@ -42,6 +42,9 @@ const getDataQualitySummaries = async (event) => {
     const dqsAssociationResponse = await wrappedAxios({
       method: 'get',
       url: `${echoRestRoot}/data_quality_summary_definitions.json`,
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
       params: {
         catalog_item_id: catalogItemId
       }/* ,
