@@ -30,11 +30,9 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
   const collectionsMetadata = getCollectionsMetadata(state)
 
   // If the user is not logged in, don't fetch any methods
-  console.log('1')
   if (authToken === '') return buildPromise(null)
 
   // If there are no collections, do not continue
-  console.log('2')
   if (collectionIds.length === 0) return buildPromise(null)
 
   // The process of fetching access methods requires that we have providers retrieved
@@ -42,10 +40,8 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
   try {
     // Fetching access methods requires that providers be fetched and available
     await dispatch(actions.fetchProviders())
-    console.log('3')
 
     const accessMethodPromises = collectionIds.map((collectionId) => {
-      console.log('4')
       const collectionMetadata = getCollectionMetadata(collectionId, collectionsMetadata)
 
       const {
@@ -57,7 +53,6 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
       } = collectionMetadata
 
       const collectionProvider = findProvider(getState(), dataCenter)
-      console.log('5')
 
       const { count: servicesCount } = services
 
@@ -88,7 +83,6 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
             dispatch(actions.addAccessMethods(accessMethodPayload))
           })
           .catch((error) => {
-            console.log('Exception 1')
             dispatch(actions.handleError({
               error,
               action: 'fetchAccessMethods',
@@ -99,14 +93,12 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
 
         return response
       }
-      console.log('6')
       // If the collection has tag data, retrieve the access methods from lambda
       // const capabilitiesData = getValueForTag('collection_capabilities', tags)
       // const { granule_online_access_flag: downloadable } = capabilitiesData || {}
 
       // If the collection is online downloadable, add the download method
       // if (downloadable) {
-      console.log('7')
       dispatch(actions.addAccessMethods({
         collectionId,
         methods: {
@@ -118,17 +110,14 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
         selectedAccessMethod: 'download'
       }))
       // }
-      console.log('8')
       return buildPromise(null)
     })
 
     return Promise.all(accessMethodPromises)
       .catch((e) => {
-        console.log('Exception 2')
         parseError(e)
       })
   } catch (e) {
-    console.log('Exception 3')
     return buildPromise(
       parseError(e, { asJSON: false })
     )

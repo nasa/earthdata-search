@@ -26,7 +26,6 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     page_num: 1,
     page_size: 1
   }
-  console.log(`CMR token: ${cmrToken}`)
   const granuleSearchUrl = `${getEarthdataConfig(deployedEnvironment()).cmrHost}/search/granules.json`
 
   console.log(`Retrieving a single granule for ${collectionId}`)

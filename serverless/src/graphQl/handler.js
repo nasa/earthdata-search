@@ -28,9 +28,9 @@ const graphQl = async (event, context) => {
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   const jwtToken = getJwtToken(event)
-  console.log(`graphQl jwtToken: ${jwtToken}`)
+
   const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
-  console.log(`graphQl echoToken: ${echoToken}`)
+
   const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
   const graphQlUrl = `${graphQlHost}/api`

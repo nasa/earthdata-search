@@ -26,7 +26,7 @@ export const pageAllCmrResults = async ({
   additionalHeaders = {}
 }) => {
   const pageSize = 500
-  console.log(`CMR token: ${cmrToken}`)
+  console.log(`CMR token: ${cmrToken[0]}`)
   try {
     // Default parameters that we need to send CMR to ensure correct paging
     const cmrParams = {

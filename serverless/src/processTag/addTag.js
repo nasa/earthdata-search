@@ -25,6 +25,7 @@ export const addTag = async ({
   append,
   cmrToken
 }) => {
+  console.log(`CMR token: ${cmrToken[0]}`)
   let associationData = null
 
   // Avoid querying CMR if we were already able to generate the appropriate
@@ -40,8 +41,6 @@ export const addTag = async ({
     }
 
     let collections = []
-
-    console.log(`CMR token: ${cmrToken}`)
 
     try {
       const collectionJsonResponse = await axios({
