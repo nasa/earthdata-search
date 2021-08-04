@@ -2,9 +2,9 @@ import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
-// import { getJwtToken } from '../util/getJwtToken'
+import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
-// import { getEchoToken } from '../util/urs/getEchoToken'
+import { getEchoToken } from '../util/urs/getEchoToken'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 import { jsonToCsv } from './jsonToCsv'
 import { wrapAxios } from '../util/wrapAxios'
@@ -34,14 +34,14 @@ const exportSearch = async (event, context) => {
     'X-Request-Id': requestId
   }
 
-  /* const jwtToken = getJwtToken(event)
+  const jwtToken = getJwtToken(event)
   if (jwtToken) {
     // Support endpoints that have optional authentication
     const token = await getEchoToken(jwtToken, earthdataEnvironment)
 
     requestHeaders.Authorization = `Bearer ${token}`
   }
- */
+
   const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
   const graphQlUrl = `${graphQlHost}/api`
@@ -108,8 +108,8 @@ const exportSearch = async (event, context) => {
       headers: {
         ...defaultResponseHeaders,
         'access-control-allow-origin': responseHeaders['access-control-allow-origin'],
-        'access-control-expose-headers': prepareExposeHeaders(responseHeaders)/* ,
-        'jwt-token': jwtToken */
+        'access-control-expose-headers': prepareExposeHeaders(responseHeaders),
+        'jwt-token': jwtToken
       },
       body: returnBody
     }

@@ -99,10 +99,10 @@ const submitHarmonyOrder = async (event, context) => {
         method: 'post',
         url: constructedHarmonyUrl,
         data: orderPayload.stream, // Set internal stream as request body
-        /* headers: {
+        headers: {
           Authorization: `Bearer ${accessToken}`,
           ...orderPayload.headers // Set headers (Content-Type) of the current FormData instance include the Boundary
-        }, */
+        },
         maxRedirects: 1
       })
 

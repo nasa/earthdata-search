@@ -4,7 +4,7 @@ import lowercaseKeys from 'lowercase-keys'
 
 // import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
-import { getEchoToken } from '../urs/getEchoToken'
+// import { getEchoToken } from '../urs/getEchoToken'
 import { parseError } from '../../../../sharedUtils/parseError'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { wrapAxios } from '../wrapAxios'
@@ -30,7 +30,6 @@ export const doSearchRequest = async ({
   requestId
 }) => {
   const { defaultResponseHeaders } = getApplicationConfig()
-  // console.log(`JWT token: ${jwtToken[0]}`)
   try {
     // Headers we'll send with every request
     const requestHeaders = {
@@ -38,19 +37,18 @@ export const doSearchRequest = async ({
       ...providedHeaders
     }
 
-    if (jwtToken) {
+    /* if (jwtToken) {
       // Support endpoints that have optional authentication
       const token = await getEchoToken(jwtToken, earthdataEnvironment)
 
       requestHeaders.Authorization = `Bearer ${token}`
-    }
+    } */
 
-    if (requestId) {
+    /*  if (requestId) {
       // If the request doesnt come from the application, this is unlikely to be provided
       requestHeaders['CMR-Request-Id'] = requestId
-    }
-    console.log('Not adding echo token to headers!')
-    // requestHeaders['Echo-token'] = '0000000000'
+    } */
+    requestHeaders['Echo-token'] = '0000000000'
 
     const requestParams = {
       url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}${path}`,
@@ -79,7 +77,7 @@ export const doSearchRequest = async ({
     const { elapsedTime } = config
     const { 'cmr-took': cmrTook } = headers
 
-    console.log(`Request ${requestId} completed external request in [reported: ${cmrTook} ms, observed: ${elapsedTime} ms]`)
+    console.log(`Request ${requestId} completed external request in [reported: ${cmrTook} ms, observed: ${elapsedTime} ms] with code ${response.status}`)
 
     return {
       statusCode: response.status,
@@ -90,12 +88,13 @@ export const doSearchRequest = async ({
         // 'cmr-request-id': headers['cmr-request-id'],
         'access-control-allow-origin': headers['access-control-allow-origin'],
         'access-control-expose-headers': prepareExposeHeaders(headers),
-        // 'jwt-token': jwtToken,
+        'jwt-token': jwtToken,
         'access-control-allow-headers': '*'
       },
       body: JSON.stringify(data)
     }
   } catch (e) {
+    console.log(`Exception : ${JSON.stringify(e, null, 2)}`)
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,

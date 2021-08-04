@@ -131,10 +131,13 @@ export class AccessMethod extends Component {
       Harmony: []
     }
 
+    console.log(`No. of access methods: ${Object.keys(accessMethods).length}`)
+
     Object.keys(accessMethods).forEach((methodKey) => {
       const { [methodKey]: accessMethod = {} } = accessMethods
 
       const { type, name } = accessMethod
+      console.log(`Access methods: ${name}`)
 
       let id = null
       let title = null

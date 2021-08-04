@@ -36,11 +36,12 @@ export const getServiceOptionDefinitions = async (
         params: {
           name,
           provider_guid: providerId
-        }/* ,
+        },
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().lambda
-        } */
+          'Echo-Token': '0000000000'
+          /* Authorization: `Bearer ${accessToken}`,
+          'Client-Id': getClientId().lambda */
+        }
       })
 
       const { config } = response

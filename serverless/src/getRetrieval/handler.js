@@ -15,6 +15,7 @@ import { parseError } from '../../../sharedUtils/parseError'
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 export default async function getRetrieval(event, context) {
+  console.log('getRetrieval')
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false

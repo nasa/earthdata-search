@@ -1,21 +1,21 @@
-import parser from 'fast-xml-parser'
+// import parser from 'fast-xml-parser'
 
-import { uniq } from 'lodash'
+// import { uniq } from 'lodash'
 
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { generateFormDigest } from '../util/generateFormDigest'
+// import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+// import { generateFormDigest } from '../util/generateFormDigest'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { getDbConnection } from '../util/database/getDbConnection'
-import { getJwtToken } from '../util/getJwtToken'
-import { getOptionDefinitions } from './getOptionDefinitions'
-import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
-import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
-import { getVariables } from './getVariables'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+// import { getDbConnection } from '../util/database/getDbConnection'
+// import { getJwtToken } from '../util/getJwtToken'
+// import { getOptionDefinitions } from './getOptionDefinitions'
+// import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
+// import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
+// import { getVariables } from './getVariables'
+// import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
-import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
-import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
-import { supportsVariableSubsetting } from './supportsVariableSubsetting'
+// import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
+// import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
+// import { supportsVariableSubsetting } from './supportsVariableSubsetting'
 
 /**
  * Retrieve access methods for a provided collection
@@ -23,6 +23,7 @@ import { supportsVariableSubsetting } from './supportsVariableSubsetting'
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const getAccessMethods = async (event, context) => {
+  console.log('getAccessMethods')
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
@@ -30,70 +31,70 @@ const getAccessMethods = async (event, context) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const { body, headers } = event
+    // const { body, headers } = event
 
-    const { params = {} } = JSON.parse(body)
+    // const { params = {} } = JSON.parse(body)
 
-    const {
-      collectionId,
+    /* const {
+      collectionI,
       collectionProvider,
       granules: associatedGranules,
       services: associatedServices,
-      tags,
+      tags ,
       variables: associatedVariables
-    } = params
+    } = params */
 
-    const earthdataEnvironment = determineEarthdataEnvironment(headers)
+    // const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-    const jwtToken = getJwtToken(event)
+    // const jwtToken = getJwtToken(event)
 
-    const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+    // const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
-    const { count: servicesCount } = associatedServices
+    /* const { count: servicesCount } = associatedServices
 
     let items = []
     if (servicesCount > 0) {
       ({ items } = associatedServices)
-    }
+    } */
 
     // Fetch UMM-S records with type 'ECHO ORDERS'
-    const echoOrderServices = items.filter(service => service.type === 'ECHO ORDERS')
+    // const echoOrderServices = items.filter(service => service.type === 'ECHO ORDERS')
 
     // Ensure that we have both a UMM-S record and a matching tag because the tag contains echo form ids that UMM-S lacks
-    const hasEchoOrders = echoOrderServices.length > 0 && hasTag({ tags }, 'subset_service.echo_orders')
+    // const hasEchoOrders = echoOrderServices.length > 0 && hasTag({ tags }, 'subset_service.echo_orders')
 
     // Fetch UMM-S records with type 'ESI'
-    const esiServices = items.filter(service => service.type === 'ESI')
+    // const esiServices = items.filter(service => service.type === 'ESI')
 
     // Ensure that we have both a UMM-S record and a matching tag because the tag contains echo form ids that UMM-S lacks
-    const hasEsi = esiServices.length > 0 && hasTag({ tags }, 'subset_service.esi')
+    // const hasEsi = esiServices.length > 0 && hasTag({ tags }, 'subset_service.esi')
 
     // Fetch UMM-S records with type 'OPeNDAP'
-    const opendapServices = items.filter(service => service.type === 'OPeNDAP')
-    const hasOpendap = opendapServices.length > 0
+    // const opendapServices = items.filter(service => service.type === 'OPeNDAP')
+    // const hasOpendap = opendapServices.length > 0
 
     // Fetch UMM-S records with type 'Harmony'
-    const harmonyServices = items.filter(service => service.type === 'Harmony')
-    const hasHarmony = harmonyServices.length > 0
+    // const harmonyServices = items.filter(service => service.type === 'Harmony')
+    // const hasHarmony = harmonyServices.length > 0
 
-    let onlineAccessFlag = false
+    /* let onlineAccessFlag = false
     if (associatedGranules) {
       const { items: granuleItems } = associatedGranules
       const [firstGranule] = granuleItems;
 
       ({ onlineAccessFlag = false } = firstGranule)
-    }
+    } */
 
     const accessMethods = {}
 
-    if (onlineAccessFlag) {
-      accessMethods.download = {
-        isValid: true,
-        type: 'download'
-      }
+    // if (onlineAccessFlag) {
+    accessMethods.download = {
+      isValid: true,
+      type: 'download'
     }
+    // }
 
-    if (hasEchoOrders) {
+    /* if (hasEchoOrders) {
       const echoOrderData = getValueForTag('subset_service.echo_orders', tags)
       const { option_definitions: optionDefinitions } = echoOrderData
 
@@ -126,9 +127,9 @@ const getAccessMethods = async (event, context) => {
           }
         })
       }
-    }
+    } */
 
-    if (hasEsi) {
+    /* if (hasEsi) {
       const esiData = getValueForTag('subset_service.esi', tags)
       const { service_option_definitions: serviceOptionDefinitions } = esiData
 
@@ -161,9 +162,9 @@ const getAccessMethods = async (event, context) => {
           }
         })
       }
-    }
+    } */
 
-    if (hasOpendap) {
+    /* if (hasOpendap) {
       // EDSC only supports one OPeNDAP service right now
       const [fullServiceObject] = opendapServices
 
@@ -204,88 +205,78 @@ const getAccessMethods = async (event, context) => {
         type,
         variables
       }
-    }
-
-    if (hasHarmony) {
-      const {
-        hierarchyMappings,
-        keywordMappings,
-        variables
-      } = getVariables(associatedVariables)
-
-      harmonyServices.forEach((serviceObject, index) => {
-        const {
-          conceptId,
-          longName,
-          name,
-          supportedOutputProjections,
-          supportedReformattings,
-          type,
-          url
-        } = serviceObject
-
-        const outputFormats = []
-
-        if (supportedReformattings) {
-          supportedReformattings.forEach((reformatting) => {
-            const { supportedOutputFormats } = reformatting
-
-            // Collect all supported output formats from each mapping
-            outputFormats.push(...supportedOutputFormats)
+    } */
+    /*  if (hasHarmony) {
+          const {
+            hierarchyMappings,
+            keywordMappings,
+            variables
+          } = getVariables(associatedVariables)
+          harmonyServices.forEach((serviceObject, index) => {
+            const {
+              conceptId,
+              longName,
+              name,
+              supportedOutputProjections,
+              supportedReformattings,
+              type,
+              url
+            } = serviceObject
+            const outputFormats = []
+            if (supportedReformattings) {
+              supportedReformattings.forEach((reformatting) => {
+                const { supportedOutputFormats } = reformatting
+                // Collect all supported output formats from each mapping
+                outputFormats.push(...supportedOutputFormats)
+              })
+            }
+            const { urlValue } = url
+            let outputProjections = []
+            if (supportedOutputProjections) {
+              outputProjections = supportedOutputProjections.filter((projection) => {
+                const { projectionAuthority } = projection
+                 return projectionAuthority != null
+              }).map((projection) => {
+                const { projectionAuthority } = projection
+                return projectionAuthority
+              })
+            }
+            accessMethods[`harmony${index}`] = {
+              hierarchyMappings,
+              id: conceptId,
+              isValid: true,
+              keywordMappings,
+              longName,
+              name,
+              supportedOutputFormats: uniq(outputFormats),
+              supportedOutputProjections: outputProjections,
+              supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceObject),
+              supportsShapefileSubsetting: supportsShapefileSubsetting(serviceObject),
+              supportsVariableSubsetting: supportsVariableSubsetting(serviceObject),
+              type,
+              url: urlValue,
+              variables
+            }
           })
-        }
-
-        const { urlValue } = url
-
-        let outputProjections = []
-        if (supportedOutputProjections) {
-          outputProjections = supportedOutputProjections.filter((projection) => {
-            const { projectionAuthority } = projection
-
-            return projectionAuthority != null
-          }).map((projection) => {
-            const { projectionAuthority } = projection
-
-            return projectionAuthority
-          })
-        }
-
-        accessMethods[`harmony${index}`] = {
-          hierarchyMappings,
-          id: conceptId,
-          isValid: true,
-          keywordMappings,
-          longName,
-          name,
-          supportedOutputFormats: uniq(outputFormats),
-          supportedOutputProjections: outputProjections,
-          supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceObject),
-          supportsShapefileSubsetting: supportsShapefileSubsetting(serviceObject),
-          supportsVariableSubsetting: supportsVariableSubsetting(serviceObject),
-          type,
-          url: urlValue,
-          variables
-        }
-      })
-    }
+        } */
 
     // Retrive a connection to the database
-    const dbConnection = await getDbConnection()
+    // const dbConnection = await getDbConnection()
 
     // Retrieve the user record from the database
-    const accessConfigRecord = await dbConnection('access_configurations')
+    /* const accessConfigRecord = await dbConnection('access_configurations')
       .first('access_method')
-      .where({ user_id: userId, collection_id: collectionId })
+      .where({ user_id: userId, collection_id: collectionId }) */
 
     // Retrieve the savedAccessConfig for this user and collection
-    const authenticatedUser = await dbConnection('users')
+    /* const authenticatedUser = await dbConnection('users')
       .first('urs_profile')
       .where({ id: userId, environment: earthdataEnvironment })
-
+ */
     let selectedAccessMethod
 
     // Iterate through all the access methods
-    Object.keys(accessMethods).forEach((methodName) => {
+    /* Object.keys(accessMethods).forEach((methodName) => {
       const method = accessMethods[methodName]
 
       // Update the accessMethod that matches the savedAccessConfig
@@ -374,7 +365,7 @@ const getAccessMethods = async (event, context) => {
           method.form = form.replace('<ecs:email/>', `<ecs:email>${emailAddress}</ecs:email>`)
         }
       }
-    })
+    }) */
 
     // If there is only 1 access method, it should be selected
     if (Object.keys(accessMethods).length === 1) {

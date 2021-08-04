@@ -2,8 +2,8 @@ import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
-// import { getEchoToken } from '../util/urs/getEchoToken'
-// import { getJwtToken } from '../util/getJwtToken'
+import { getEchoToken } from '../util/urs/getEchoToken'
+import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
@@ -13,10 +13,10 @@ import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const graphQl = async (event, context) => {
+  console.info(`graphQl event: ${JSON.stringify(event, null, 2)}`)
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
-
   const { body, headers } = event
 
   const { defaultResponseHeaders } = getApplicationConfig()
@@ -27,10 +27,10 @@ const graphQl = async (event, context) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  // const jwtToken = getJwtToken(event)
-
-  // const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
-
+  const jwtToken = getJwtToken(event)
+  console.log(`graphQl jwtToken: ${jwtToken}`)
+  const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
+  console.log(`graphQl echoToken: ${echoToken}`)
   const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
   const graphQlUrl = `${graphQlHost}/api`
@@ -42,11 +42,11 @@ const graphQl = async (event, context) => {
       data: {
         query,
         variables
-      }/* ,
+      },
       headers: {
-        Authorization: `Bearer ${echoToken}`,
-        'X-Request-Id': requestId
-      } */
+        Authorization: `Bearer ${echoToken}`/* ,
+        'X-Request-Id': requestId */
+      }
     })
 
     const {
@@ -61,8 +61,8 @@ const graphQl = async (event, context) => {
       headers: {
         ...defaultResponseHeaders,
         'access-control-allow-origin': responseHeaders['access-control-allow-origin'],
-        'access-control-expose-headers': prepareExposeHeaders(responseHeaders)/* ,
-        'jwt-token': jwtToken */
+        'access-control-expose-headers': prepareExposeHeaders(responseHeaders),
+        'jwt-token': jwtToken
       },
       body: JSON.stringify(responseData)
     }

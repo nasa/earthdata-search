@@ -52,10 +52,10 @@ const fetchLegacyServicesOrder = async (input) => {
     const orderResponse = await axios({
       method: 'get',
       url: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
-      /* headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Client-Id': getClientId().background
-      }, */
+      headers: {
+        Authorization: `Bearer ${accessToken}`/* ,
+        'Client-Id': getClientId().background */
+      },
       params: { id: orderNumber },
       paramsSerializer: params => stringify(params,
         {

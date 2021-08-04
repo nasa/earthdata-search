@@ -50,11 +50,11 @@ const fetchCatalogRestOrder = async (input) => {
 
     const orderResponse = await axios({
       url: `${url}/${orderNumber}`,
-      method: 'get'/* ,
+      method: 'get',
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Client-Id': getClientId().background
-      } */
+        Authorization: `Bearer ${accessToken}`/* ,
+        'Client-Id': getClientId().background */
+      }
     })
 
     console.log('Order Response Body', orderResponse.data)

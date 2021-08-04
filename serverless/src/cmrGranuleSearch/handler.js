@@ -62,6 +62,7 @@ const cmrGranuleSearch = async (event) => {
   ]
 
   try {
+    console.log('CMR Granule Search')
     return doSearchRequest({
       jwtToken: getJwtToken(event),
       path: '/search/granules.json',

@@ -31,11 +31,12 @@ const getProviders = async (event) => {
       httpsAgent: new https.Agent({
         rejectUnauthorized: false
       }),
-      url/* ,
+      url,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Client-Id': getClientId().lambda
-      } */
+        'Echo-Token': '0000000000'
+        /* Authorization: `Bearer ${accessToken}`,
+        'Client-Id': getClientId().lambda */
+      }
     })
 
     const { data } = response

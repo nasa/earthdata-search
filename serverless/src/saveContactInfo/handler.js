@@ -59,10 +59,11 @@ const saveContactInfo = async (event) => {
     const response = await axios({
       method: 'put',
       url,
-      /* headers: {
-        Authorization: `Bearer ${echoToken}`,
-        'Client-Id': getClientId().lambda
-      }, */
+      headers: {
+        'Echo-Token': '0000000000'
+        /* Authorization: `Bearer ${echoToken}`,
+        'Client-Id': getClientId().lambda */
+      },
       data: params
     })
 

@@ -32,11 +32,11 @@ export const constructOrderPayload = async ({
       {
         indices: false,
         arrayFormat: 'brackets'
-      })/* ,
+      }),
     headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Client-Id': getClientId().background
-    } */
+      Authorization: `Bearer ${accessToken}`/* ,
+      'Client-Id': getClientId().background */
+    }
   })
 
   const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)

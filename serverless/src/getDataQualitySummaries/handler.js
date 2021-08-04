@@ -47,12 +47,13 @@ const getDataQualitySummaries = async (event) => {
       }),
       params: {
         catalog_item_id: catalogItemId
-      }/* ,
+      },
       headers: {
-        Authorization: `Bearer ${echoToken}`,
+        'Echo-Token': '0000000000'
+        /* Authorization: `Bearer ${echoToken}`  ,
         'Client-Id': getClientId().background,
-        'CMR-Request-Id': requestId
-      } */
+        'CMR-Request-Id': requestId */
+      }
     })
 
     const { config, data } = dqsAssociationResponse
@@ -83,12 +84,13 @@ const getDataQualitySummaries = async (event) => {
           httpsAgent: new https.Agent({
             rejectUnauthorized: false
           }),
-          url: `${echoRestRoot}/data_quality_summary_definitions/${dqsId}.json`/* ,
+          url: `${echoRestRoot}/data_quality_summary_definitions/${dqsId}.json`,
           headers: {
-            Authorization: `Bearer ${echoToken}`,
+            'Echo-Token': '0000000000'
+            /* Authorization: `Bearer ${echoToken}` ,
             'Client-Id': getClientId().background,
-            'CMR-Request-Id': dataQualitySummaryRequestId
-          } */
+            'CMR-Request-Id': dataQualitySummaryRequestId */
+          }
         })
 
         const { config: dqsConfig, data: dqsData } = dqsResponse

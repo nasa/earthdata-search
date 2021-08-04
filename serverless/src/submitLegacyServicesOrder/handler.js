@@ -70,10 +70,10 @@ const submitLegacyServicesOrder = async (event, context) => {
       const emptyOrderResponse = await axios({
         method: 'post',
         url: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
-        /* headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
-        }, */
+        headers: {
+          Authorization: `Bearer ${accessToken}`/* ,
+          'Client-Id': getClientId().background */
+        },
         data: { order: {} }
       })
 
@@ -90,10 +90,10 @@ const submitLegacyServicesOrder = async (event, context) => {
       await axios({
         method: 'post',
         url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
-        /* headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
-        }, */
+        headers: {
+          Authorization: `Bearer ${accessToken}`/* ,
+          'Client-Id': getClientId().background */
+        },
         data: orderItemPayload
       })
 
@@ -105,21 +105,21 @@ const submitLegacyServicesOrder = async (event, context) => {
       await axios({
         method: 'put',
         url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/user_information`,
-        /* headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
-        }, */
+        headers: {
+          Authorization: `Bearer ${accessToken}`/* ,
+          'Client-Id': getClientId().background */
+        },
         data: userInformationPayload
       })
 
       // 4. Submit the order
       await axios({
         method: 'post',
-        url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/submit`/* ,
+        url: `${getEarthdataConfig(environment).echoRestRoot}/orders/${orderId}/submit`,
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Client-Id': getClientId().background
-        } */
+          Authorization: `Bearer ${accessToken}`/* ,
+          'Client-Id': getClientId().background */
+        }
       })
 
       await dbConnection('retrieval_orders').update({ order_number: orderId, state: 'initialized' }).where({ id })
