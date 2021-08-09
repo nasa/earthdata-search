@@ -129,6 +129,7 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         accessMethods: {
           harmony0: {
+            enableTemporalSubsetting: true,
             hierarchyMappings: [],
             id: 'umm-s-record-1',
             isValid: true,
@@ -160,6 +161,53 @@ describe('getAccessMethods', () => {
       isBase64Encoded: false,
       statusCode: 200
     })
+  })
+
+  test('sets enableTemporalSubsetting to true for harmony access methods', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([])
+    })
+
+    const event = {
+      body: JSON.stringify({
+        params: {
+          collectionId: 'collectionId',
+          services: {
+            count: 1,
+            items: [{
+              conceptId: 'umm-s-record-1',
+              type: 'Harmony',
+              serviceOptions: {},
+              supportedReformattings: [{
+                supportedInputFormat: 'NETCDF-4',
+                supportedOutputFormats: ['GEOTIFF', 'PNG', 'GIF']
+              }, {
+                supportedInputFormat: 'GEOTIFF',
+                supportedOutputFormats: ['GEOTIFF', 'PNG', 'GIF']
+              }],
+              supportedOutputProjections: [{
+                projectionAuthority: 'EPSG:4326'
+              }],
+              url: {
+                urlValue: 'https://harmony.earthdata.nas.gov'
+              }
+            }]
+          },
+          variables: {
+            count: 0,
+            items: null
+          }
+        }
+      })
+    }
+
+    const result = await getAccessMethods(event, {})
+    const { body } = result
+    const { accessMethods } = JSON.parse(body)
+    const { harmony0: harmonyAccessMethod } = accessMethods
+    const { enableTemporalSubsetting } = harmonyAccessMethod
+
+    expect(enableTemporalSubsetting).toBe(true)
   })
 
   test('populates a echoOrder method', async () => {

@@ -257,6 +257,7 @@ const getAccessMethods = async (event, context) => {
         }
 
         accessMethods[`harmony${index}`] = {
+          enableTemporalSubsetting: true,
           hierarchyMappings,
           id: conceptId,
           isValid: true,
