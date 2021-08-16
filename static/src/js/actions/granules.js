@@ -177,6 +177,7 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
 
   const graphQlQuery = `
     query GetGranuleLinks(
+      $boundingBox: [String]
       $browseOnly: Boolean
       $circle: [String]
       $cloudCover: JSON
@@ -202,6 +203,7 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
       $twoDCoordinateSystem: JSON
     ) {
       granules(
+        boundingBox: $boundingBox
         browseOnly: $browseOnly
         circle: $circle
         cloudCover: $cloudCover
