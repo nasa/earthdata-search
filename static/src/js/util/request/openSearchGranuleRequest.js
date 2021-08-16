@@ -113,6 +113,10 @@ export default class OpenSearchGranuleRequest extends Request {
       const granuleResults = [].concat(entry)
 
       granuleResults.map((granule) => {
+        // Sometimes parseXml is returning a granule as "" when there should be no data.
+        // Return undefined if granule doesn't exist then filter granuleResults below
+        if (!granule) return undefined
+
         const updatedGranule = granule
 
         updatedGranule.isOpenSearch = true
@@ -214,7 +218,7 @@ export default class OpenSearchGranuleRequest extends Request {
 
       return {
         feed: {
-          entry: granuleResults,
+          entry: granuleResults.filter(Boolean),
           hits: totalResults
         }
       }
