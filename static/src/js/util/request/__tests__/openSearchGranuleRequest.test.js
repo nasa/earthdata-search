@@ -1,3 +1,5 @@
+import parser from 'fast-xml-parser'
+
 import OpenSearchGranuleRequest from '../openSearchGranuleRequest'
 import {
   multipleCwicGranulesResponse,
@@ -8,6 +10,7 @@ import {
 
 
 beforeEach(() => {
+  jest.restoreAllMocks()
   jest.clearAllMocks()
 })
 
@@ -78,6 +81,30 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
     const { entry } = feed
     expect(entry).toBeInstanceOf(Array)
     expect(entry.length).toEqual(2)
+  })
+
+  test('formats multi-granule results correctly when parseXml gives empty granules', () => {
+    const parseXmlMock = jest.spyOn(parser, 'parse').mockImplementation(() => ({
+      feed: {
+        entry: [
+          {},
+          {},
+          {},
+          ''
+        ]
+      }
+    }))
+    const cwicRequest = new OpenSearchGranuleRequest()
+
+    const transformedResponse = cwicRequest.transformResponse(multipleCwicGranulesResponse)
+
+    const { feed } = transformedResponse
+    expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'hits']))
+
+    const { entry } = feed
+    expect(parseXmlMock).toHaveBeenCalledTimes(1)
+    expect(entry).toBeInstanceOf(Array)
+    expect(entry.length).toEqual(3)
   })
 
   describe('sets the full browse image correctly', () => {
