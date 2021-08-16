@@ -196,7 +196,7 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
       $orbitNumber: JSON
       $point: [String]
       $polygon: [String]
-      $readableGranuleName: String
+      $readableGranuleName: [String]
       $sortKey: [String]
       $temporal: String
       $twoDCoordinateSystem: JSON
