@@ -183,7 +183,7 @@ export const prepareCMRFacetPayload = newParams => ({
  * @param {object} facets - An object containing the facets to sort.
  * @param {object} options - An object containing options to control sorting.
  * @param {boolean} options.liftSelectedFacets - Designates whether the selected facets should be separated
- * into their own category to be displayed separatly
+ * into their own category to be displayed separately
  * @return {{alphabetizedList: array, facetsToLift: array }} An object containing the organized facets.
  */
 export const buildOrganizedFacets = (facets, options) => {

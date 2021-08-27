@@ -77,7 +77,7 @@ export const buildRelatedUrls = (json) => {
     // Add the http protocol if none exists
     if (relatedUrl.url) relatedUrl.url = formatRelatedUrl(relatedUrl.url)
 
-    // Add the neccesary highlighed URLs
+    // Add the neccessary highlighed URLs
     if (relatedUrl.urlContentType === 'CollectionURL' && relatedUrl.type === 'DATA SET LANDING PAGE') {
       highlightedUrls.urls.push({ ...relatedUrl, highlightedType: 'Data Set Landing Page' })
     }

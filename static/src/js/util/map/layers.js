@@ -16,7 +16,7 @@ export function parseSpatial(str) {
   }
 
   let coords = newStr.split(' ')
-  // Sometimes OpenSearch granules come back with a comma-delimited list of coords intead of a space-delimited list
+  // Sometimes OpenSearch granules come back with a comma-delimited list of coords instead of a space-delimited list
   if (coords.length === 1) {
     coords = newStr.split(',')
   }

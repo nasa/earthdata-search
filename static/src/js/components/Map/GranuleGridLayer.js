@@ -154,7 +154,7 @@ export class GranuleGridLayer extends MapLayer {
   /**
    * Handles updating the granules in each GranuleGridLayerExtended layer on the map
    * @param {object} fromProps
-   * @param {obect} toProps
+   * @param {object} toProps
    */
   updateLeafletElement(fromProps, toProps) {
     const layers = this.leafletElement._layers // List of layers
@@ -273,7 +273,7 @@ export class GranuleGridLayer extends MapLayer {
         return
       }
 
-      // If the collecton is not visible, set the granuleData to an empty array
+      // If the collection is not visible, set the granuleData to an empty array
       const granuleData = isVisible ? Object.values(granulesById) : []
 
       this.addedGranuleIds = addedGranuleIds

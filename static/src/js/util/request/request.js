@@ -49,7 +49,7 @@ export default class Request {
 
   /**
    * Filter out any unwanted or non-permitted data
-   * @param {Objet} data - An object representing an HTTP request payload
+   * @param {Object} data - An object representing an HTTP request payload
    */
   filterData(data) {
     return data

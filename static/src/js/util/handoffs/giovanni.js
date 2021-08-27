@@ -31,7 +31,7 @@ export const fetchGiovanniHandoffUrl = (collectionMetadata, collectionSearch = {
   }
 
   if (spatial) {
-    // Giovanni only supports bounding box for spatial serach
+    // Giovanni only supports bounding box for spatial search
     const { boundingBox } = spatial
 
     if (boundingBox) {

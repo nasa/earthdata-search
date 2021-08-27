@@ -556,7 +556,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
       ctx.globalAlpha = 1
 
-      // Clear out existing pixels so any transparent deemphisized tranparent granules
+      // Clear out existing pixels so any transparent deemphisized transparent granules
       // opacities do not stack up.
       ctx.globalCompositeOperation = 'destination-out'
       ctx.fill()

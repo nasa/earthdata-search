@@ -295,7 +295,7 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
 
 /**
  * Fetch all relevant links from CMR Service Bridge (OPeNDAP) to the granules that are part of the provided collection
- * @param {Object} retrievalCollectionData Retreival Collection response from the database
+ * @param {Object} retrievalCollectionData Retrival Collection response from the database
  */
 export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState) => {
   const state = getState()
