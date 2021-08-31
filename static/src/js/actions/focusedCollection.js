@@ -151,6 +151,14 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             query
           }
         }
+        tools {
+          count
+          items {
+            conceptId
+            name
+            potentialAction
+          }
+        }
         variables {
           count
           items {
@@ -201,6 +209,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           tags,
           tilingIdentificationSystems,
           title,
+          tools,
           variables,
           versionId
         } = collection
@@ -232,6 +241,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           tags,
           tilingIdentificationSystems,
           title,
+          tools,
           variables,
           versionId,
           ...focusedMetadata
