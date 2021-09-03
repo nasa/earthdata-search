@@ -181,6 +181,7 @@ import {
 } from './subscriptions'
 import { setUserFromJwt } from './user'
 import { exportSearch } from './exportSearch'
+import { fetchSotoLayers } from './handoffs'
 
 const actions = {
   addAccessMethods,
@@ -234,6 +235,7 @@ const actions = {
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleLinks,
   fetchRetrievalHistory,
+  fetchSotoLayers,
   fetchSavedProjects,
   fetchShapefile,
   getCollections,

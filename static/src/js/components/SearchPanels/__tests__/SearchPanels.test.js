@@ -19,7 +19,6 @@ import Panels from '../../Panels/Panels'
 import PanelGroup from '../../Panels/PanelGroup'
 import PanelGroupHeader from '../../Panels/PanelGroupHeader'
 import GranuleResultsActionsContainer from '../../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
-import Button from '../../Button/Button'
 
 const store = configureStore()
 
@@ -74,6 +73,7 @@ function setup(overrideProps, location = '/search') {
       pageNum: 1,
       sortKey: '-start_date'
     },
+    handoffs: {},
     isExportRunning: {
       csv: false,
       json: false

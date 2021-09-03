@@ -180,3 +180,5 @@ export const SET_USER = 'SET_USER'
 
 export const EXPORT_STARTED = 'EXPORT_STARTED'
 export const EXPORT_FINISHED = 'EXPORT_FINISHED'
+
+export const SET_SOTO_LAYERS = 'SET_SOTO_LAYERS'

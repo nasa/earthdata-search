@@ -14,6 +14,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     collectionsQuery: {},
+    handoffs: {},
     mapProjection: projections.geographic,
     project: {
       collections: {
@@ -162,6 +163,7 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
+      handoffs: {},
       map: {
         projection: ''
       },
@@ -178,6 +180,7 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       collectionsQuery: {},
+      handoffs: {},
       mapProjection: '',
       panels: {},
       project: {},

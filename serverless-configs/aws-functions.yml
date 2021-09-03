@@ -353,6 +353,15 @@
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: relevancy_logger
 
+  fetchSotoLayers:
+    handler: serverless/src/fetchSotoLayers/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    events:
+      - http:
+          method: get
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: soto_layers
+
   edlOptionalAuthorizer:
     handler: serverless/src/edlOptionalAuthorizer/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}

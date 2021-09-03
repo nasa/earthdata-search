@@ -148,6 +148,7 @@ class SearchPanels extends PureComponent {
       granuleMetadata,
       granuleQuery,
       granuleSearchResults,
+      handoffs,
       location,
       match,
       mapProjection,
@@ -194,8 +195,12 @@ class SearchPanels extends PureComponent {
 
     const { title: granuleTitle = '' } = granuleMetadata
 
-    const handoffLinks = generateHandoffs(collectionMetadata, collectionQuery, mapProjection)
-
+    const handoffLinks = generateHandoffs({
+      collectionMetadata,
+      collectionQuery,
+      handoffs,
+      mapProjection
+    })
     const {
       allIds: allGranuleIds = [],
       hits: granuleHits = '0',
@@ -702,6 +707,7 @@ SearchPanels.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
+  handoffs: PropTypes.shape({}).isRequired,
   isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,

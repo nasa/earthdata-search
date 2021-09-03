@@ -9,7 +9,9 @@ describe('handoffs', () => {
       }
     }
 
-    const response = generateHandoffs(collectionMetadata, {})
+    const response = generateHandoffs({
+      collectionMetadata
+    })
 
     expect(response).toEqual([])
   })
@@ -22,7 +24,9 @@ describe('handoffs', () => {
       }
     }
 
-    const response = generateHandoffs(collectionMetadata, {})
+    const response = generateHandoffs({
+      collectionMetadata
+    })
 
     expect(response).toEqual([
       {
@@ -40,7 +44,9 @@ describe('handoffs', () => {
       }
     }
 
-    const response = generateHandoffs(collectionMetadata, {})
+    const response = generateHandoffs({
+      collectionMetadata
+    })
 
     expect(response).toEqual([
       {
@@ -119,7 +125,7 @@ describe('UMM-T handoffs', () => {
           name: 'SOTO',
           potentialAction: {
             target: {
-              urlTemplate: 'https://podaac-tools.jpl.nasa.gov/soto/#b=BlueMarble_ShadedRelief_Bathymetry&l={layers}&ve={bbox}&d={date}'
+              urlTemplate: 'https://podaac-tools.jpl.nasa.gov/soto/#b=BlueMarble_ShadedRelief_Bathymetry&l={+layers}&ve={+bbox}&d={+date}'
             },
             queryInput: [
               {
@@ -155,12 +161,20 @@ describe('UMM-T handoffs', () => {
       }
     }
 
-    const response = generateHandoffs(collectionMetadata, collectionQuery)
+    const handoffs = {
+      sotoLayers: ['GHRSST_L4_MUR_Sea_Surface_Temperature', 'GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies']
+    }
+
+    const response = generateHandoffs({
+      collectionMetadata,
+      collectionQuery,
+      handoffs
+    })
 
     expect(response).toEqual([
       {
         title: 'SOTO',
-        href: 'https://podaac-tools.jpl.nasa.gov/soto/#b=BlueMarble_ShadedRelief_Bathymetry&l=GHRSST_L4_MUR_Sea_Surface_Temperature,GHRSST_L4_MUR_Sea_Ice_Concentration,GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies&ve=-77.60234,37.00428,-75.15486,40.06987&d=2021-07-22T00:55:39.384Z'
+        href: 'https://podaac-tools.jpl.nasa.gov/soto/#b=BlueMarble_ShadedRelief_Bathymetry&l=GHRSST_L4_MUR_Sea_Surface_Temperature(la=true),GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies(la=true)&ve=-77.60234,37.00428,-75.15486,40.06987&d=2021-07-22T00:55:39.384Z'
       }
     ])
   })
@@ -209,7 +223,15 @@ describe('UMM-T handoffs', () => {
       }
     }
 
-    const response = generateHandoffs(collectionMetadata, collectionQuery)
+    const handoffs = {
+      sotoLayers: []
+    }
+
+    const response = generateHandoffs({
+      collectionMetadata,
+      collectionQuery,
+      handoffs
+    })
 
     expect(response).toEqual([])
   })
@@ -231,7 +253,10 @@ describe('UMM-T handoffs', () => {
       }
     }
 
-    const response = generateHandoffs(collectionMetadata, collectionQuery)
+    const response = generateHandoffs({
+      collectionMetadata,
+      collectionQuery
+    })
 
     expect(response).toEqual([])
   })
@@ -255,7 +280,10 @@ describe('UMM-T handoffs', () => {
       }
     }
 
-    const response = generateHandoffs(collectionMetadata, collectionQuery)
+    const response = generateHandoffs({
+      collectionMetadata,
+      collectionQuery
+    })
 
     expect(response).toEqual([])
   })

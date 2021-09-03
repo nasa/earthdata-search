@@ -18,6 +18,7 @@ function setup() {
     granuleMetadata: {},
     granuleSearchResults: {},
     granuleQuery: {},
+    handoffs: {},
     isExportRunning: {
       csv: false,
       json: false
@@ -162,6 +163,7 @@ describe('mapStateToProps', () => {
         }
       },
       focusedCollection: 'collectionId',
+      handoffs: {},
       map: {
         projection: ''
       },
@@ -196,6 +198,7 @@ describe('mapStateToProps', () => {
       granuleMetadata: {},
       granuleSearchResults: {},
       granuleQuery: {},
+      handoffs: {},
       isExportRunning: {
         csv: false,
         json: false

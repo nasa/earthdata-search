@@ -51,6 +51,7 @@ const ProjectCollectionItem = ({
   collectionId,
   collectionsQuery,
   color,
+  handoffs,
   index,
   isPanelActive,
   mapProjection,
@@ -96,7 +97,12 @@ const ProjectCollectionItem = ({
     }
   ])
 
-  const handoffLinks = generateHandoffs(collectionMetadata, collectionsQuery, mapProjection)
+  const handoffLinks = generateHandoffs({
+    collectionMetadata,
+    collectionQuery: collectionsQuery,
+    handoffs,
+    mapProjection
+  })
 
   return (
     <li style={{ borderLeftColor: color }} className={className}>
@@ -238,6 +244,7 @@ ProjectCollectionItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
   collectionsQuery: PropTypes.shape({}).isRequired,
   color: PropTypes.string.isRequired,
+  handoffs: PropTypes.shape({}).isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,
   mapProjection: PropTypes.string.isRequired,
