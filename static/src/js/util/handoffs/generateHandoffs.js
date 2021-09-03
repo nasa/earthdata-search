@@ -1,3 +1,6 @@
+import { isEmpty } from 'lodash'
+import template from 'url-template'
+
 import { hasTag } from '../../../../../sharedUtils/tags'
 import { getHandoffValue } from './getHandoffValue'
 import { fetchGiovanniHandoffUrl } from './giovanni'
@@ -5,10 +8,18 @@ import { fetchOpenAltimetryHandoffUrl } from './openAltimetry'
 
 /**
  * Generate an array of objects that will be used to render smart handoff links
- * @param {Object} collectionMetadata Collection metadata from CMR
- * @param {Object} collectionQuery Collection Search data from Redux
+ * @param {Object} params
+ * @param {Object} params.collectionMetadata Collection metadata from CMR
+ * @param {Object} params.collectionQuery Collection Search data from Redux
+ * @param {Object} params.handoffs Handoffs data from from Redux
+ * @param {Object} params.mapProjection Current map projection from Redux
  */
-export const generateHandoffs = (collectionMetadata, collectionQuery, mapProjection) => {
+export const generateHandoffs = ({
+  collectionMetadata,
+  collectionQuery,
+  handoffs,
+  mapProjection
+}) => {
   /*
    * UMM-T Handoffs
    */
@@ -41,7 +52,8 @@ export const generateHandoffs = (collectionMetadata, collectionQuery, mapProject
     } = potentialAction
 
     const { urlTemplate } = target
-    let handoffUrl = urlTemplate
+    const handoffUrl = template.parse(urlTemplate)
+    const urlValues = {}
 
     // Loop through each input and replace the input value in the urlTemplate to create the URL
     queryInput.forEach((input) => {
@@ -53,24 +65,23 @@ export const generateHandoffs = (collectionMetadata, collectionQuery, mapProject
       const value = getHandoffValue({
         collectionMetadata,
         collectionQuery,
-        handoffInput: input
+        handoffInput: input,
+        handoffs
       })
 
-      if (valueRequired && !value) {
+      if (valueRequired && isEmpty(value)) {
         allRequiredItemsPresent = false
       }
 
-      // Insert value into handoffUrl
-      const replaceRegex = `{${valueName}}`
-      const regex = new RegExp(replaceRegex, 'g')
-      handoffUrl = handoffUrl.replace(regex, value)
+      // Add the value to be expanded onto the urlTemplate later
+      urlValues[valueName] = value
     })
 
     // If all the required inputs are present, push the generated link onto handoffLinks to be returned
     if (allRequiredItemsPresent) {
       handoffLinks.push({
         title: name,
-        href: handoffUrl
+        href: handoffUrl.expand(urlValues)
       })
 
       // If Giovanni or Open Altimetry were generated with UMM-T, skip the tag based generation

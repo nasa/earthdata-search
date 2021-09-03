@@ -7,11 +7,13 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
  * @param {Object} params.collectionMetadata Collection metadata from CMR
  * @param {Object} params.collectionQuery Collection Query data from Redux
  * @param {Object} params.handoffInput UMM-T handoff query input
+ * @param {Object} params.handoffs Handoffs data from from Redux
  */
 export const getHandoffValue = ({
-  collectionMetadata,
-  collectionQuery,
-  handoffInput
+  collectionMetadata = {},
+  collectionQuery = {},
+  handoffInput,
+  handoffs
 }) => {
   const {
     valueType
@@ -31,7 +33,8 @@ export const getHandoffValue = ({
     const { boundingBox } = spatial
 
     if (boundingBox) {
-      [value] = boundingBox
+      const [firstBoundingBox] = boundingBox
+      value = firstBoundingBox
     }
   }
 
@@ -47,11 +50,16 @@ export const getHandoffValue = ({
 
   // Layers value
   if (valueType === 'https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-LayerNaming') {
+    const { sotoLayers = [] } = handoffs
     const { tags } = collectionMetadata
     const gibsOptions = getValueForTag('gibs', tags)
 
     if (gibsOptions) {
-      value = gibsOptions.map(data => data.product).join(',')
+      const gibsLayers = gibsOptions.map(data => data.product)
+
+      // Filter out layers that are not included in SOTO's capabilities
+      const includedSotoLayers = gibsLayers.filter(layer => sotoLayers.includes(layer))
+      value = includedSotoLayers.map(data => `${data}(la=true)`)
     }
   }
 

@@ -254,6 +254,12 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
         // Query CMR for granules belonging to the focused collection
         dispatch(actions.getSearchGranules())
+
+        // If any tools are SOTO, call fetchSotoLayers
+        const { items } = tools
+        if (items && items.filter(item => item.name.toLowerCase() === 'soto').length > 0) {
+          dispatch(actions.fetchSotoLayers())
+        }
       } else {
         // If no data was returned, clear the focused collection and redirect the user back to the search page
         dispatch(actions.updateFocusedCollection(''))

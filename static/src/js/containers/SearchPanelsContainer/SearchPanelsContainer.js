@@ -10,6 +10,7 @@ import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
+import { getHandoffs } from '../../selectors/handoffs'
 
 export const mapStateToProps = state => ({
   authToken: state.authToken,
@@ -19,6 +20,7 @@ export const mapStateToProps = state => ({
   granuleMetadata: getFocusedGranuleMetadata(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
+  handoffs: getHandoffs(state),
   mapProjection: state.map.projection,
   panels: state.panels,
   preferences: state.preferences.preferences,
@@ -79,6 +81,7 @@ export const SearchPanelsContainer = ({
   granuleMetadata,
   granuleSearchResults,
   granuleQuery,
+  handoffs,
   isExportRunning,
   location,
   mapProjection,
@@ -104,6 +107,7 @@ export const SearchPanelsContainer = ({
     granuleMetadata={granuleMetadata}
     granuleSearchResults={granuleSearchResults}
     granuleQuery={granuleQuery}
+    handoffs={handoffs}
     isExportRunning={isExportRunning}
     location={location}
     mapProjection={mapProjection}
@@ -131,6 +135,7 @@ SearchPanelsContainer.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
+  handoffs: PropTypes.shape({}).isRequired,
   isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,

@@ -159,6 +159,10 @@ describe('getHandoffValue', () => {
         }
       }
 
+      const handoffs = {
+        sotoLayers: ['GHRSST_L4_MUR_Sea_Surface_Temperature', 'GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies']
+      }
+
       const handoffInput = {
         valueType: 'https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-LayerNaming'
       }
@@ -166,11 +170,18 @@ describe('getHandoffValue', () => {
       expect(getHandoffValue({
         collectionMetadata,
         collectionQuery: {},
-        handoffInput
-      })).toEqual('GHRSST_L4_MUR_Sea_Surface_Temperature,GHRSST_L4_MUR_Sea_Ice_Concentration,GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies')
+        handoffInput,
+        handoffs
+      })).toEqual([
+        'GHRSST_L4_MUR_Sea_Surface_Temperature(la=true)',
+        'GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies(la=true)'
+      ])
     })
 
     test('returns an empty string when the value doesn\t exist', () => {
+      const handoffs = {
+        sotoLayers: []
+      }
       const handoffInput = {
         valueType: 'https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-LayerNaming'
       }
@@ -178,7 +189,8 @@ describe('getHandoffValue', () => {
       expect(getHandoffValue({
         collectionMetadata: {},
         collectionQuery: {},
-        handoffInput
+        handoffInput,
+        handoffs
       })).toEqual('')
     })
   })

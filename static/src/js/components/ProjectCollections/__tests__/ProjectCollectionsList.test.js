@@ -19,6 +19,7 @@ function setup() {
       }
     },
     collectionsQuery: {},
+    handoffs: {},
     location: {},
     mapProjection: projections.geographic,
     onRemoveCollectionFromProject: jest.fn(),
