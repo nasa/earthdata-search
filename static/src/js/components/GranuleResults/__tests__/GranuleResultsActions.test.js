@@ -48,7 +48,7 @@ describe('GranuleResultsActions component', () => {
     test('renders a Download All button', () => {
       const { enzymeWrapper } = setup()
       expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download All')
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge).toEqual('5,000 Granules')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('5,000')
     })
   })
 
@@ -60,7 +60,7 @@ describe('GranuleResultsActions component', () => {
         isCollectionInProject: true
       })
       expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download')
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge).toEqual('1 Granule')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('1')
     })
 
     test('renders a project indicator', () => {
@@ -70,36 +70,7 @@ describe('GranuleResultsActions component', () => {
         isCollectionInProject: true
       })
 
-      expect(enzymeWrapper.find('.granule-results-actions__project-pill')).toBeTruthy()
-      expect(enzymeWrapper.find('.granule-results-actions__project-pill').find('span').text()).toEqual('1 Granule')
-    })
-  })
-
-  describe('when the project indicator is clicked', () => {
-    test('sets the panel section', () => {
-      const { enzymeWrapper, props } = setup({
-        projectGranuleCount: 1,
-        isCollectionInProject: true
-      })
-
-      const button = enzymeWrapper.find('.granule-results-actions__project-pill')
-      button.props().onClick()
-
-      expect(props.onSetActivePanelSection).toHaveBeenCalledTimes(1)
-      expect(props.onSetActivePanelSection).toHaveBeenCalledWith('1')
-    })
-
-    test('changes the path', () => {
-      const { enzymeWrapper, props } = setup({
-        projectGranuleCount: 1,
-        isCollectionInProject: true
-      })
-
-      const button = enzymeWrapper.find('.granule-results-actions__project-pill')
-      button.props().onClick()
-
-      expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      expect(props.onChangePath).toHaveBeenCalledWith('/projects?p=collectionId')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('1')
     })
   })
 
@@ -110,26 +81,20 @@ describe('GranuleResultsActions component', () => {
         isCollectionInProject: true
       })
       expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download All')
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge).toEqual('5,000 Granules')
+      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('5,000')
     })
-  })
-
-  test('renders the granule count', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find('.granule-results-actions__granule-count').text()).toEqual('5,000 Granules')
   })
 
   test('renders a Download All button', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download All')
-    expect(enzymeWrapper.find(GranuleDownloadButton).props().badge).toEqual('5,000 Granules')
+    expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('5,000')
   })
 
   test('renders a link to add the collection to the project', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.exists('.granule-results-actions__proj-action--add')).toBeTruthy()
+    expect(enzymeWrapper.exists('.granule-results-actions__action--add')).toBeTruthy()
     expect(enzymeWrapper.exists('.remove-from-project')).toBeFalsy()
   })
 
@@ -137,14 +102,14 @@ describe('GranuleResultsActions component', () => {
     const { enzymeWrapper } = setup()
     enzymeWrapper.setProps({ isCollectionInProject: true })
 
-    expect(enzymeWrapper.exists('.granule-results-actions__proj-action--remove')).toBeTruthy()
-    expect(enzymeWrapper.exists('.granule-results-actions__proj-action--add')).toBeFalsy()
+    expect(enzymeWrapper.exists('.granule-results-actions__action--remove')).toBeTruthy()
+    expect(enzymeWrapper.exists('.granule-results-actions__action--add')).toBeFalsy()
   })
 
   describe('addToProjectButton', () => {
     test('calls onAddProjectCollection', () => {
       const { enzymeWrapper, props } = setup()
-      const button = enzymeWrapper.find('.granule-results-actions__proj-action--add')
+      const button = enzymeWrapper.find('.granule-results-actions__action--add')
 
       button.simulate('click')
       expect(props.onAddProjectCollection).toHaveBeenCalledTimes(1)
@@ -156,7 +121,7 @@ describe('GranuleResultsActions component', () => {
 
       const button = enzymeWrapper
         .find(PortalFeatureContainer)
-        .find('.granule-results-actions__proj-action--add')
+        .find('.granule-results-actions__action--add')
       const portalFeatureContainer = button.parents(PortalFeatureContainer)
 
       expect(button.exists()).toBeTruthy()
@@ -168,7 +133,7 @@ describe('GranuleResultsActions component', () => {
     test('calls onRemoveCollectionFromProject', () => {
       const { enzymeWrapper, props } = setup()
       enzymeWrapper.setProps({ isCollectionInProject: true })
-      const button = enzymeWrapper.find('.granule-results-actions__proj-action--remove')
+      const button = enzymeWrapper.find('.granule-results-actions__action--remove')
 
       button.simulate('click')
       expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
@@ -199,17 +164,17 @@ describe('GranuleResultsActions component', () => {
   })
 
   describe('when a user is not subscribed', () => {
-    test('renders a the correct subscription button', () => {
+    test('renders the correct subscription button', () => {
       const { enzymeWrapper } = setup()
 
-      const subscriptionButton = enzymeWrapper.find('.granule-results-actions__subscriptions-button')
+      const subscriptionButton = enzymeWrapper.find('.granule-results-actions__action--subscriptions')
 
-      expect(subscriptionButton.props().className).not.toContain('granule-results-actions__subscriptions-button--is-subscribed')
+      expect(subscriptionButton.props().className).not.toContain('granule-results-actions__action--is-active')
     })
   })
 
   describe('when a user is subscribed', () => {
-    test('renders a the correct subscription button', () => {
+    test('renders the correct subscription button', () => {
       const { enzymeWrapper } = setup({
         subscriptions: [
           {
@@ -218,9 +183,9 @@ describe('GranuleResultsActions component', () => {
         ]
       })
 
-      const subscriptionButton = enzymeWrapper.find('.granule-results-actions__subscriptions-button')
+      const subscriptionButton = enzymeWrapper.find('.granule-results-actions__action--subscriptions')
 
-      expect(subscriptionButton.props().className).toContain('granule-results-actions__subscriptions-button--is-subscribed')
+      expect(subscriptionButton.props().className).toContain('granule-results-actions__action--is-active')
     })
   })
 })

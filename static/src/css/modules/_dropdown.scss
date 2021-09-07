@@ -12,7 +12,11 @@
 
   &--carat-right {
     @include carat('topright');
-    left: 0.45rem !important;
+  }
+
+  &--carat-bottom-left {
+    @include carat('bottomleft');
+    bottom: 0.425rem !important;
   }
 }
 

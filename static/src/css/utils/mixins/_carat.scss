@@ -23,6 +23,15 @@
       border-top: 0;
     }
 
+    @if $location == 'bottomleft' {
+      bottom: -0.5rem;
+      left: 0.46rem;
+      border-left: 0.4375rem solid transparent;
+      border-right: 0.4375rem solid transparent;
+      border-bottom: 0;
+      border-top: 0.4375rem solid $color__black--200;
+    }
+
     @if $location == 'topright' {
       top: -0.5rem;
       right: 0.46rem;
@@ -55,6 +64,15 @@
       border-right: 0.375rem solid transparent;
       border-bottom: 0.375rem solid $color__white;
       border-top: 0;
+    }
+
+    @if $location == 'bottomleft' {
+      bottom: -0.35rem;
+      left: 0.54rem;
+      border-left: 0.375rem solid transparent;
+      border-right: 0.375rem solid transparent;
+      border-top: 0.375rem solid $color__white;
+      border-bottom: 0;
     }
 
     @if $location == 'topright' {
