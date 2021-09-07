@@ -38,6 +38,7 @@ export const generateHandoffs = ({
   toolItems.forEach((tool) => {
     const {
       name,
+      longName,
       potentialAction
     } = tool
 
@@ -80,7 +81,7 @@ export const generateHandoffs = ({
     // If all the required inputs are present, push the generated link onto handoffLinks to be returned
     if (allRequiredItemsPresent) {
       handoffLinks.push({
-        title: name,
+        title: longName,
         href: handoffUrl.expand(urlValues)
       })
 

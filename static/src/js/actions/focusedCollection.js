@@ -154,7 +154,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         tools {
           count
           items {
-            conceptId
+            longName
             name
             potentialAction
           }
