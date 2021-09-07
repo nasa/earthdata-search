@@ -115,8 +115,6 @@ const testResultsSize = (cmrHits) => {
   getByTestId('panel-group_granule-results').within(() => {
     getByTestId('panel-group-header__heading-meta-text').should('have.text', `Showing ${expectedSize} of ${commafy(cmrHits)} matching ${pluralize('granule', cmrHits)}`)
   })
-
-  getByTestId('granule-results-actions__granule-count').should('have.text', `${commafy(cmrHits)} ${pluralize('Granule', cmrHits)}`)
 }
 
 describe('Path /search/granules', () => {
@@ -1139,8 +1137,7 @@ describe('Path /search/granules', () => {
 
       // Project count is correct
       getByTestId('granule-results-actions__proj-action--remove').should('be.visible')
-      getByTestId('granule-results-actions__project-pill').should('have.text', '1 Granule')
-      getByTestId('granule-results-actions__download-all-button').get('.button__badge').should('have.text', '1 Granule')
+      getByTestId('granule-results-actions__download-all-button').get('.button__badge').should('have.text', '1')
     })
   })
 
@@ -1211,13 +1208,12 @@ describe('Path /search/granules', () => {
 
       // Project count is correct
       getByTestId('granule-results-actions__proj-action--remove').should('be.visible')
-      getByTestId('granule-results-actions__project-pill').should('have.text', 'All Granules')
-      getByTestId('granule-results-actions__download-all-button').get('.button__badge').should('have.text', `${commafy(cmrHits)} Granules`)
+      getByTestId('granule-results-actions__download-all-button').get('.button__badge').should('have.text', `${commafy(cmrHits)}`)
     })
   })
 
   describe('When the path is loaded with a collection with an active subscription', () => {
-    it('loads with the subscription indicator active', () => {
+    it.only('loads with the subscription indicator active', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1059170
       cy.login()
@@ -1328,7 +1324,7 @@ describe('Path /search/granules', () => {
       testResultsSize(cmrHits)
 
       // Subscription button is active
-      getByTestId('granule-results-actions__subscriptions-button').should('have.class', 'granule-results-actions__subscriptions-button--is-subscribed')
+      getByTestId('granule-results-actions__subscriptions-button').should('have.class', 'granule-results-actions__action--is-active')
     })
   })
 })
