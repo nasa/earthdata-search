@@ -122,6 +122,7 @@ describe('UMM-T handoffs', () => {
       },
       tools: {
         items: [{
+          longName: 'State of the Ocean',
           name: 'SOTO',
           potentialAction: {
             target: {
@@ -173,7 +174,7 @@ describe('UMM-T handoffs', () => {
 
     expect(response).toEqual([
       {
-        title: 'SOTO',
+        title: 'State of the Ocean',
         href: 'https://podaac-tools.jpl.nasa.gov/soto/#b=BlueMarble_ShadedRelief_Bathymetry&l=GHRSST_L4_MUR_Sea_Surface_Temperature(la=true),GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies(la=true)&ve=-77.60234,37.00428,-75.15486,40.06987&d=2021-07-22T00:55:39.384Z'
       }
     ])
