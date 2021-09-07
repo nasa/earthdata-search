@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {
@@ -7,16 +7,16 @@ import {
   FaFolderPlus,
   FaFolderMinus
 } from 'react-icons/fa'
+import { IoShare } from 'react-icons/io5'
+import { Dropdown } from 'react-bootstrap'
+
 
 import { commafy } from '../../util/commafy'
-import { granuleTotalCount } from './skeleton'
-import { pluralize } from '../../util/pluralize'
 import { locationPropType } from '../../util/propTypes/location'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import Button from '../Button/Button'
 import GranuleDownloadButton from './GranuleDownloadButton'
-import Skeleton from '../Skeleton/Skeleton'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -35,44 +35,49 @@ import './GranuleResultsActions.scss'
  * @param {Function} onAddProjectCollection - Callback to add the collection from the project.
  * @param {Function} onChangePath - Callback to change the path.
  * @param {Function} onRemoveCollectionFromProject - Callback to remove the collection from the project.
- * @param {Function} onSetActivePanelSection - Callback to set the active panel section on the project page.
  */
 const GranuleResultsActions = ({
   addedGranuleIds,
   focusedCollectionId,
   focusedProjectCollection,
   granuleLimit,
+  handoffLinks,
   initialLoading,
   isCollectionInProject,
   location,
   onAddProjectCollection,
   onChangePath,
   onRemoveCollectionFromProject,
-  onSetActivePanelSection,
   projectGranuleCount,
   removedGranuleIds,
   searchGranuleCount,
   subscriptions
 }) => {
+  const granuleResultsActionsContainer = useRef(null)
+
   const addToProjectButton = (
     <Button
-      className="granule-results-actions__proj-action granule-results-actions__proj-action--add"
+      className="granule-results-actions__action granule-results-actions__action--add"
       onClick={() => onAddProjectCollection(focusedCollectionId)}
       icon={FaFolderPlus}
       label="Add collection to the current project"
       title="Add collection to the current project"
-    />
+    >
+      Add
+    </Button>
   )
 
   const removeFromProjectButton = (
     <Button
-      className="granule-results-actions__proj-action granule-results-actions__proj-action--remove"
+      className="granule-results-actions__action granule-results-actions__action--remove"
       dataTestId="granule-results-actions__proj-action--remove"
       onClick={() => onRemoveCollectionFromProject(focusedCollectionId)}
       icon={FaFolderMinus}
       label="Remove collection from the current project"
       title="Remove collection from the current project"
-    />
+    >
+      Remove
+    </Button>
   )
 
   // When the collection has yet to be added to a project the granule count
@@ -82,7 +87,6 @@ const GranuleResultsActions = ({
   const tooManyGranules = granuleLimit && granuleCount > granuleLimit
 
   // TODO: Implement maxOrderSizeReached modal that currently exists in master @critical
-
   let buttonText = 'Download All'
 
   if (
@@ -93,7 +97,23 @@ const GranuleResultsActions = ({
     buttonText = 'Download'
   }
 
-  const badge = granuleCount === null ? undefined : `${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`
+  const badge = granuleCount === null
+    ? undefined
+    : (
+      <>
+        {
+          projectGranuleCount > 0 && isCollectionInProject && (
+            <EDSCIcon icon={FaFolder} className="granule-results-actions__project-pill-icon" />
+          )
+        }
+        { commafy(granuleCount) }
+      </>
+    )
+
+  const dropdownMenuClasses = classNames(
+    'dropdown-menu--carat-bottom-left',
+    'dropdown-menu--condensed',
+  )
 
   const downloadButton = (
     <GranuleDownloadButton
@@ -113,76 +133,17 @@ const GranuleResultsActions = ({
   )
 
   const subscriptionButtonClassnames = classNames([
-    'granule-results-actions__subscriptions-button',
+    'granule-results-actions__action',
+    'granule-results-actions__action--subscriptions',
     {
-      'granule-results-actions__subscriptions-button--is-subscribed': subscriptions.length > 0
+      'granule-results-actions__action--is-active': subscriptions.length > 0
     }
   ])
 
   return (
-    <div className="granule-results-actions">
-      <div className="granule-results-actions__info">
-        {
-          initialLoading
-            ? (
-              <Skeleton
-                className="granule-results-actions__granule-count"
-                shapes={granuleTotalCount}
-                containerStyle={{
-                  height: 21,
-                  width: 126
-                }}
-              />
-            ) : (
-              <div className="granule-results-actions__granule-count-wrapper">
-                <span
-                  className="granule-results-actions__granule-count"
-                  data-test-id="granule-results-actions__granule-count"
-                >
-                  <span className="granule-results-actions__granule-num">
-                    {`${commafy(searchGranuleCount)} `}
-                  </span>
-                  {`${pluralize('Granule', searchGranuleCount)}`}
-                </span>
-                <PortalFeatureContainer authentication>
-                  {
-                    projectGranuleCount > 0 && isCollectionInProject && (
-                      <PortalLinkContainer
-                        type="button"
-                        className="granule-results-actions__project-pill"
-                        dataTestId="granule-results-actions__project-pill"
-                        label="View granules in project"
-                        onClick={() => {
-                          onSetActivePanelSection('1')
-                          onChangePath(`/projects${location.search}`)
-                        }}
-                        to={{
-                          pathname: '/projects',
-                          search: location.search
-                        }}
-                      >
-                        <EDSCIcon icon={FaFolder} className="granule-results-actions__project-pill-icon" />
-                        {
-                          (!addedGranuleIds.length && !removedGranuleIds.length) && <span title="All granules in project">All Granules</span>
-                        }
-                        {
-                          (projectGranuleCount > 0
-                            && (addedGranuleIds.length > 0 || removedGranuleIds.length > 0)) && (
-                            <span
-                              title={`${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`}
-                            >
-                              {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
-                            </span>
-                          )
-                        }
-                      </PortalLinkContainer>
-                    )
-                  }
-                </PortalFeatureContainer>
-              </div>
-            )
-        }
-        <div className="granule-results-actions__primary-actions">
+    <div ref={granuleResultsActionsContainer} className="granule-results-actions">
+      <div className="granule-results-actions__secondary-actions">
+        <div className="granule-results-actions__collection-actions">
           <PortalFeatureContainer authentication>
             <AuthRequiredContainer noRedirect>
               <PortalLinkContainer
@@ -190,37 +151,83 @@ const GranuleResultsActions = ({
                 icon={FaBell}
                 className={subscriptionButtonClassnames}
                 dataTestId="granule-results-actions__subscriptions-button"
-                label="View subscriptions"
+                label={subscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+                title={subscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+                badge={subscriptions.length ? `${subscriptions.length}` : false}
+                naked
                 to={{
                   pathname: '/search/granules/subscriptions',
                   search: location.search
                 }}
-              />
+              >
+                Subscriptions
+              </PortalLinkContainer>
             </AuthRequiredContainer>
           </PortalFeatureContainer>
-          <PortalFeatureContainer authentication>
-            <>
-              {
-                isCollectionInProject && !tooManyGranules && removeFromProjectButton
-              }
-              {
-                !isCollectionInProject && !tooManyGranules && addToProjectButton
-              }
-            </>
-          </PortalFeatureContainer>
+          {
+            handoffLinks.length > 0 && (
+              <Dropdown
+                drop="up"
+                className="granule-results-actions__action granule-results-actions__action--explore"
+              >
+                <Dropdown.Toggle
+                  as={Button}
+                  type="button"
+                  naked
+                  icon={IoShare}
+                  className="granule-results-actions__explore-button"
+                  dataTestId="granule-results-actions__explore-button"
+                  label="Explore"
+                  title="Explore"
+                >
+                  Explore
+                </Dropdown.Toggle>
+                <Dropdown.Menu
+                  className={dropdownMenuClasses}
+                >
+                  <Dropdown.Header>Open search in:</Dropdown.Header>
+                  {
+                    handoffLinks.map(link => (
+                      <Dropdown.Item
+                        key={link.title}
+                        className="link link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
+                        href={link.href}
+                        target="_blank"
+                      >
+                        {link.title}
+                      </Dropdown.Item>
+                    ))
+                  }
+                </Dropdown.Menu>
+              </Dropdown>
+            )
+          }
         </div>
+        <PortalFeatureContainer authentication>
+          <>
+            {
+              isCollectionInProject && !tooManyGranules && removeFromProjectButton
+            }
+            {
+              !isCollectionInProject && !tooManyGranules && addToProjectButton
+            }
+          </>
+        </PortalFeatureContainer>
       </div>
-      <PortalFeatureContainer authentication>
-        {downloadButton}
-      </PortalFeatureContainer>
+      <div className="granule-results-actions__primary-actions">
+        <PortalFeatureContainer authentication>
+          {downloadButton}
+        </PortalFeatureContainer>
+      </div>
     </div>
   )
 }
 
 GranuleResultsActions.defaultProps = {
+  granuleLimit: undefined,
+  handoffLinks: [],
   projectGranuleCount: 0,
-  searchGranuleCount: 0,
-  granuleLimit: undefined
+  searchGranuleCount: 0
 }
 
 GranuleResultsActions.propTypes = {
@@ -228,13 +235,13 @@ GranuleResultsActions.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedProjectCollection: PropTypes.shape({}).isRequired,
   granuleLimit: PropTypes.number,
+  handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
   projectGranuleCount: PropTypes.number,
   removedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   searchGranuleCount: PropTypes.number,

@@ -138,7 +138,10 @@ GranuleDownloadButton.defaultProps = {
 }
 
 GranuleDownloadButton.propTypes = {
-  badge: PropTypes.string,
+  badge: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   buttonText: PropTypes.string.isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   granuleCount: PropTypes.number,

@@ -40,6 +40,8 @@
   }
 
   &__icon {
+    position: relative;
+    top: -1px;
     display: inline-block;
     line-height: 1.5em;
 
@@ -53,7 +55,7 @@
     }
 
     &--push {
-      margin-right: $spacer/2;
+      margin-right: 0.325rem;
     }
 
     .button--link & {
@@ -69,8 +71,7 @@
   }
 
   &__badge {
-    margin-left: $spacer/2;
-    font-weight: 300;
+    margin-left: $spacer/3;
     background-color: rgba($color__black, 0.5);
     border-radius: 1em;
     vertical-align: middle;

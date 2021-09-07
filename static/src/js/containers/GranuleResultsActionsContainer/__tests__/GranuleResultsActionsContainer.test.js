@@ -16,6 +16,7 @@ function setup() {
     collectionMetadata: {
       mock: 'data'
     },
+    collectionQuery: {},
     focusedCollectionId: 'focusedCollection',
     focusedProjectCollection: {
       accessMethods: {},
@@ -43,6 +44,7 @@ function setup() {
       allIds: [],
       excludledGranuleIds: []
     },
+    mapProjection: '',
     project: {
       collections: {
         allIds: ['focusedCollection'],
@@ -145,7 +147,12 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
-      query: {},
+      query: {
+        collection: {}
+      },
+      map: {
+        projection: 'TestProjection'
+      },
       project: {},
       shapefile: {}
     }
@@ -154,10 +161,12 @@ describe('mapStateToProps', () => {
       collectionMetadata: {
         subscriptions: []
       },
+      collectionQuery: {},
       focusedCollectionId: 'collectionId',
       focusedProjectCollection: {},
       granuleQuery: {},
       granuleSearchResults: {},
+      mapProjection: 'TestProjection',
       project: {},
       subscriptions: []
     }

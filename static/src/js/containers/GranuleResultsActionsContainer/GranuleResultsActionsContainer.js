@@ -13,6 +13,7 @@ import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata, getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 import { getFocusedProjectCollection } from '../../selectors/project'
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
+import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
@@ -31,10 +32,12 @@ export const mapDispatchToProps = dispatch => ({
 
 export const mapStateToProps = state => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
+  collectionQuery: state.query.collection,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedProjectCollection: getFocusedProjectCollection(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
+  mapProjection: state.map.projection,
   project: state.project,
   subscriptions: getFocusedCollectionSubscriptions(state)
 })
@@ -42,6 +45,7 @@ export const mapStateToProps = state => ({
 export const GranuleResultsActionsContainer = (props) => {
   const {
     collectionMetadata,
+    collectionQuery,
     focusedCollectionId,
     focusedProjectCollection,
     granuleQuery,
@@ -51,6 +55,7 @@ export const GranuleResultsActionsContainer = (props) => {
     onChangePath,
     onRemoveCollectionFromProject,
     onSetActivePanelSection,
+    mapProjection,
     project,
     subscriptions
   } = props
@@ -87,6 +92,8 @@ export const GranuleResultsActionsContainer = (props) => {
     removedGranuleIds = []
   } = projectCollectionGranules
 
+  const handoffLinks = generateHandoffs(collectionMetadata, collectionQuery, mapProjection)
+
   return (
     <>
       <GranuleResultsActions
@@ -94,6 +101,7 @@ export const GranuleResultsActionsContainer = (props) => {
         focusedCollectionId={focusedCollectionId}
         focusedProjectCollection={focusedProjectCollection}
         granuleLimit={granuleLimit}
+        handoffLinks={handoffLinks}
         initialLoading={initialLoading}
         isCollectionInProject={isCollectionInProject}
         location={location}
@@ -113,6 +121,7 @@ export const GranuleResultsActionsContainer = (props) => {
 
 GranuleResultsActionsContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionQuery: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedProjectCollection: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
@@ -122,6 +131,7 @@ GranuleResultsActionsContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
+  mapProjection: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
   subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
