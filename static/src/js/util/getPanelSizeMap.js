@@ -16,6 +16,7 @@
 export const getPanelSizeMap = width => ({
   xs: true,
   sm: width >= 500,
+  600: width >= 600,
   md: width >= 700,
   lg: width >= 900,
   xl: width >= 1100

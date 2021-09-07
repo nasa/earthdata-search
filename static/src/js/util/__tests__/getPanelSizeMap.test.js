@@ -8,6 +8,7 @@ describe('getPanelSizeMap', () => {
       expect(result).toEqual({
         xs: true,
         sm: false,
+        600: false,
         md: false,
         lg: false,
         xl: false
@@ -22,6 +23,22 @@ describe('getPanelSizeMap', () => {
       expect(result).toEqual({
         xs: true,
         sm: true,
+        600: false,
+        md: false,
+        lg: false,
+        xl: false
+      })
+    })
+  })
+
+  describe('when width is 600', () => {
+    test('returns the correct values', () => {
+      const result = getPanelSizeMap(600)
+
+      expect(result).toEqual({
+        xs: true,
+        sm: true,
+        600: true,
         md: false,
         lg: false,
         xl: false
@@ -36,6 +53,7 @@ describe('getPanelSizeMap', () => {
       expect(result).toEqual({
         xs: true,
         sm: true,
+        600: true,
         md: true,
         lg: false,
         xl: false
@@ -50,6 +68,7 @@ describe('getPanelSizeMap', () => {
       expect(result).toEqual({
         xs: true,
         sm: true,
+        600: true,
         md: true,
         lg: true,
         xl: false
@@ -64,6 +83,7 @@ describe('getPanelSizeMap', () => {
       expect(result).toEqual({
         xs: true,
         sm: true,
+        600: true,
         md: true,
         lg: true,
         xl: true

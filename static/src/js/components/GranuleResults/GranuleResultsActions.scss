@@ -87,8 +87,6 @@
     }
 
     .granule-results-actions__explore-button {
-      padding: 0;
-
       &.dropdown-toggle:after {
         display: none;
       }
@@ -105,7 +103,7 @@
       margin-right: 0;
     }
 
-    .granule-results-actions--expanded & {
+    .panels--600 & {
       .button__contents {
         visibility: visible;
         height: auto;
@@ -137,6 +135,17 @@
       &:active {
         color: $color__red--dark;
       }
+    }
+  }
+
+  &__explore-button {
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+    .edsc-icon {
+      position: relative;
+      top: -0.125rem;
     }
   }
 
