@@ -1213,7 +1213,7 @@ describe('Path /search/granules', () => {
   })
 
   describe('When the path is loaded with a collection with an active subscription', () => {
-    it.only('loads with the subscription indicator active', () => {
+    it('loads with the subscription indicator active', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1059170
       cy.login()
