@@ -855,15 +855,17 @@ describe('Panels component', () => {
 
       enzymeWrapper.instance().updateResponsiveClassNames()
 
-      expect(classListAddMock).toHaveBeenCalledTimes(4)
+      expect(classListAddMock).toHaveBeenCalledTimes(5)
       expect(classListAddMock.mock.calls).toEqual([
         ['panels--xs'],
+        ['panels--600'],
         ['panels--xs'],
         ['panels--sm'],
         ['panels--md']
       ])
-      expect(classListRemoveMock).toHaveBeenCalledTimes(6)
+      expect(classListRemoveMock).toHaveBeenCalledTimes(7)
       expect(classListRemoveMock.mock.calls).toEqual([
+        ['panels--600'],
         ['panels--sm'],
         ['panels--md'],
         ['panels--lg'],
