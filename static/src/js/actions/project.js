@@ -249,6 +249,14 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               query
             }
           }
+          tools {
+            count
+            items {
+              longName
+              name
+              potentialAction
+            }
+          }
           variables {
             count
             items {
@@ -301,6 +309,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           tags,
           tilingIdentificationSystems,
           title,
+          tools,
           variables,
           versionId
         } = metadata
@@ -330,12 +339,19 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           tags,
           tilingIdentificationSystems,
           title,
+          tools,
           variables,
           versionId,
           ...focusedMetadata
         })
 
         dispatch(actions.fetchDataQualitySummaries(conceptId))
+
+        // If any tools are SOTO, call fetchSotoLayers
+        const { items } = tools
+        if (items && items.some(item => item.name.toLowerCase() === 'soto')) {
+          dispatch(actions.fetchSotoLayers())
+        }
       })
 
       // Update metadata in the store

@@ -181,7 +181,10 @@ Button.defaultProps = {
 
 Button.propTypes = {
   as: PropTypes.string,
-  badge: PropTypes.string,
+  badge: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   badgeVariant: PropTypes.string,
   bootstrapSize: PropTypes.string,
   bootstrapVariant: PropTypes.string,

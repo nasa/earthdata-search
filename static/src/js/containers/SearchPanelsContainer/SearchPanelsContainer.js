@@ -7,10 +7,11 @@ import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionMetadata, getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
+import { getHandoffs } from '../../selectors/handoffs'
+
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
-import { getHandoffs } from '../../selectors/handoffs'
 
 export const mapStateToProps = state => ({
   authToken: state.authToken,
