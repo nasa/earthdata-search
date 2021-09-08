@@ -242,10 +242,18 @@ describe('getProjectCollections', () => {
         data: {
           collections: {
             items: [{
-              conceptId: 'collectionId1'
+              conceptId: 'collectionId1',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              }
             },
             {
-              conceptId: 'collectionId2'
+              conceptId: 'collectionId2',
+              tools: {
+                items: null
+              }
             }]
           }
         }
@@ -302,6 +310,9 @@ describe('getProjectCollections', () => {
       }
     })
 
+    const fetchSotoLayersMock = jest.spyOn(actions, 'fetchSotoLayers')
+    fetchSotoLayersMock.mockImplementationOnce(() => jest.fn())
+
     await store.dispatch(actions.getProjectCollections())
 
     const storeActions = store.getActions()
@@ -316,6 +327,7 @@ describe('getProjectCollections', () => {
         })
       ]
     })
+    expect(fetchSotoLayersMock).toHaveBeenCalledTimes(1)
   })
 
   test('does not call updateCollectionMetadata if no projectIds exist', () => {
@@ -416,10 +428,16 @@ describe('getProjectCollections', () => {
                   {
                     shortName: 'NASA/CSDA'
                   }
-                ]
+                ],
+                tools: {
+                  items: null
+                }
               },
               {
-                conceptId: 'collectionId2'
+                conceptId: 'collectionId2',
+                tools: {
+                  items: null
+                }
               }]
             }
           }

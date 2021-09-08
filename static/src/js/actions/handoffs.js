@@ -1,8 +1,12 @@
+import HandoffRequest from '../util/request/handoffRequest'
+
 import { SET_SOTO_LAYERS } from '../constants/actionTypes'
+
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getSotoLayers } from '../selectors/handoffs'
-import HandoffRequest from '../util/request/handoffRequest'
+
 import { handleError } from './errors'
+
 
 export const setSotoLayers = payload => ({
   type: SET_SOTO_LAYERS,

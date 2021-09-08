@@ -13,6 +13,7 @@ import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata, getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 import { getFocusedProjectCollection } from '../../selectors/project'
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
+import { getHandoffs } from '../../selectors/handoffs'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { locationPropType } from '../../util/propTypes/location'
 
@@ -37,6 +38,7 @@ export const mapStateToProps = state => ({
   focusedProjectCollection: getFocusedProjectCollection(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
+  handoffs: getHandoffs(state),
   mapProjection: state.map.projection,
   project: state.project,
   subscriptions: getFocusedCollectionSubscriptions(state)
@@ -50,6 +52,7 @@ export const GranuleResultsActionsContainer = (props) => {
     focusedProjectCollection,
     granuleQuery,
     granuleSearchResults,
+    handoffs,
     location,
     onAddProjectCollection,
     onChangePath,
@@ -92,7 +95,12 @@ export const GranuleResultsActionsContainer = (props) => {
     removedGranuleIds = []
   } = projectCollectionGranules
 
-  const handoffLinks = generateHandoffs(collectionMetadata, collectionQuery, mapProjection)
+  const handoffLinks = generateHandoffs({
+    collectionMetadata,
+    collectionQuery,
+    handoffs,
+    mapProjection
+  })
 
   return (
     <>
@@ -126,6 +134,7 @@ GranuleResultsActionsContainer.propTypes = {
   focusedProjectCollection: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
+  handoffs: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,

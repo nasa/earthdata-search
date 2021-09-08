@@ -7,9 +7,9 @@ import actions from '../../actions/index'
 import { metricsDataAccess } from '../../middleware/metrics/actions'
 
 import { getProjectCollectionsMetadata, getProjectCollectionsIds } from '../../selectors/project'
+import { getHandoffs } from '../../selectors/handoffs'
 
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
-import { getHandoffs } from '../../selectors/handoffs'
 
 export const mapDispatchToProps = dispatch => ({
   onRemoveCollectionFromProject:
