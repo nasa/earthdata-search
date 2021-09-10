@@ -89,6 +89,11 @@
     .granule-results-actions__explore-button {
       color: $color__black--500;
 
+      &:hover,
+      &:active {
+        color: $color__black--600;
+      }
+
       &.dropdown-toggle:after {
         display: none;
       }
