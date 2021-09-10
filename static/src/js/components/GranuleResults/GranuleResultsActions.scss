@@ -87,6 +87,8 @@
     }
 
     .granule-results-actions__explore-button {
+      color: $color__black--500;
+
       &.dropdown-toggle:after {
         display: none;
       }
