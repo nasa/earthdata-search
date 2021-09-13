@@ -1,10 +1,7 @@
 import { isEmpty } from 'lodash'
 import template from 'url-template'
 
-import { hasTag } from '../../../../../sharedUtils/tags'
 import { getHandoffValue } from './getHandoffValue'
-import { fetchGiovanniHandoffUrl } from './giovanni'
-import { fetchOpenAltimetryHandoffUrl } from './openAltimetry'
 
 /**
  * Generate an array of objects that will be used to render smart handoff links
@@ -20,24 +17,19 @@ export const generateHandoffs = ({
   handoffs,
   mapProjection
 }) => {
-  /*
-   * UMM-T Handoffs
-   */
   const { tools = {} } = collectionMetadata
   let { items: toolItems } = tools
 
   if (!toolItems) toolItems = []
 
   const handoffLinks = []
-  let allRequiredItemsPresent = true
-  // If Giovanni or Open Altimetry are generated with UMM-T, we will skip the tag based generation
-  let giovanniUmmTGenerated = false
-  let openAltimetryUmmTGenerated = false
 
   // Loop through each associated Tool to build a handoff link for each
   toolItems.forEach((tool) => {
+    let allRequiredItemsPresent = true
+
     const {
-      name,
+      // name,
       longName,
       potentialAction
     } = tool
@@ -60,14 +52,15 @@ export const generateHandoffs = ({
     queryInput.forEach((input) => {
       const {
         valueName,
-        valueRequired
+        valueRequired = false
       } = input
 
       const value = getHandoffValue({
         collectionMetadata,
         collectionQuery,
         handoffInput: input,
-        handoffs
+        handoffs,
+        mapProjection
       })
 
       if (valueRequired && isEmpty(value)) {
@@ -84,34 +77,8 @@ export const generateHandoffs = ({
         title: longName,
         href: handoffUrl.expand(urlValues)
       })
-
-      // If Giovanni or Open Altimetry were generated with UMM-T, skip the tag based generation
-      if (name.toLowerCase() === 'giovanni') {
-        giovanniUmmTGenerated = true
-      }
-      if (name.toLowerCase() === 'open altimetry') {
-        openAltimetryUmmTGenerated = true
-      }
     }
   })
-
-  /*
-   * Tag based Handoffs
-   */
-
-  // Giovanni Handoff
-  if (!giovanniUmmTGenerated && hasTag(collectionMetadata, 'handoff.giovanni', 'edsc.extra')) {
-    handoffLinks.push(
-      fetchGiovanniHandoffUrl(collectionMetadata, collectionQuery)
-    )
-  }
-
-  // Open Altimetry Handoff
-  if (!openAltimetryUmmTGenerated && hasTag(collectionMetadata, 'handoff.open_altimetry', 'edsc.extra')) {
-    handoffLinks.push(
-      fetchOpenAltimetryHandoffUrl(collectionMetadata, collectionQuery, mapProjection)
-    )
-  }
 
   return handoffLinks
 }
