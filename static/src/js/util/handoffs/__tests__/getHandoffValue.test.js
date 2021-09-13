@@ -19,7 +19,7 @@ describe('getHandoffValue', () => {
       })).toEqual('-77.60234,37.00428,-75.15486,40.06987')
     })
 
-    test('returns an empty string when the value doesn\t exist', () => {
+    test('returns undefined when the value doesn\t exist', () => {
       const handoffInput = {
         valueType: 'https://schema.org/box'
       }
@@ -28,11 +28,135 @@ describe('getHandoffValue', () => {
         collectionMetadata: {},
         collectionQuery: {},
         handoffInput
-      })).toEqual('')
+      })).toEqual(undefined)
     })
   })
 
-  describe('When the value is a start date', () => {
+  describe('When the value is minx', () => {
+    test('returns the value', () => {
+      const collectionQuery = {
+        spatial: {
+          boundingBox: ['-77.60234,37.00428,-75.15486,40.06987']
+        }
+      }
+
+      const handoffInput = {
+        valueType: 'minx'
+      }
+
+      expect(getHandoffValue({
+        collectionQuery,
+        handoffInput
+      })).toEqual(-77.60234)
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'minx'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is miny', () => {
+    test('returns the value', () => {
+      const collectionQuery = {
+        spatial: {
+          boundingBox: ['-77.60234,37.00428,-75.15486,40.06987']
+        }
+      }
+
+      const handoffInput = {
+        valueType: 'miny'
+      }
+
+      expect(getHandoffValue({
+        collectionQuery,
+        handoffInput
+      })).toEqual(37.00428)
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'miny'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is maxx', () => {
+    test('returns the value', () => {
+      const collectionQuery = {
+        spatial: {
+          boundingBox: ['-77.60234,37.00428,-75.15486,40.06987']
+        }
+      }
+
+      const handoffInput = {
+        valueType: 'maxx'
+      }
+
+      expect(getHandoffValue({
+        collectionQuery,
+        handoffInput
+      })).toEqual(-75.15486)
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'maxx'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is maxy', () => {
+    test('returns the value', () => {
+      const collectionQuery = {
+        spatial: {
+          boundingBox: ['-77.60234,37.00428,-75.15486,40.06987']
+        }
+      }
+
+      const handoffInput = {
+        valueType: 'maxy'
+      }
+
+      expect(getHandoffValue({
+        collectionQuery,
+        handoffInput
+      })).toEqual(40.06987)
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'maxy'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is a start time', () => {
     test('returns the value', () => {
       const collectionQuery = {
         temporal: {
@@ -50,7 +174,7 @@ describe('getHandoffValue', () => {
       })).toEqual('2021-07-22T00:55:39.384Z')
     })
 
-    test('returns an empty string when the value doesn\t exist', () => {
+    test('returns undefined when the value doesn\t exist', () => {
       const handoffInput = {
         valueType: 'https://schema.org/startDate'
       }
@@ -59,11 +183,42 @@ describe('getHandoffValue', () => {
         collectionMetadata: {},
         collectionQuery: {},
         handoffInput
-      })).toEqual('')
+      })).toEqual(undefined)
     })
   })
 
-  describe('When the value is an end date', () => {
+  describe('When the value is a start date', () => {
+    test('returns the value', () => {
+      const collectionQuery = {
+        temporal: {
+          startDate: '2021-07-22T00:55:39.384Z'
+        }
+      }
+
+      const handoffInput = {
+        valueType: 'startDate'
+      }
+
+      expect(getHandoffValue({
+        collectionQuery,
+        handoffInput
+      })).toEqual('2021-07-22')
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'startDate'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is an end time', () => {
     test('returns the value', () => {
       const collectionQuery = {
         temporal: {
@@ -81,7 +236,7 @@ describe('getHandoffValue', () => {
       })).toEqual('2021-07-22T00:55:39.384Z')
     })
 
-    test('returns an empty string when the value doesn\t exist', () => {
+    test('returns undefined when the value doesn\t exist', () => {
       const handoffInput = {
         valueType: 'https://schema.org/endDate'
       }
@@ -90,7 +245,38 @@ describe('getHandoffValue', () => {
         collectionMetadata: {},
         collectionQuery: {},
         handoffInput
-      })).toEqual('')
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is an end date', () => {
+    test('returns the value', () => {
+      const collectionQuery = {
+        temporal: {
+          endDate: '2021-07-22T00:55:39.384Z'
+        }
+      }
+
+      const handoffInput = {
+        valueType: 'endDate'
+      }
+
+      expect(getHandoffValue({
+        collectionQuery,
+        handoffInput
+      })).toEqual('2021-07-22')
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'endDate'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
     })
   })
 
@@ -178,7 +364,7 @@ describe('getHandoffValue', () => {
       ])
     })
 
-    test('returns an empty string when the value doesn\t exist', () => {
+    test('returns undefined when the value doesn\t exist', () => {
       const handoffs = {
         sotoLayers: []
       }
@@ -191,18 +377,18 @@ describe('getHandoffValue', () => {
         collectionQuery: {},
         handoffInput,
         handoffs
-      })).toEqual('')
+      })).toEqual(undefined)
     })
   })
 
-  describe('When the value is a dataKeyword', () => {
+  describe('When the value is a shortName', () => {
     test('returns the value', () => {
       const collectionMetadata = {
         shortName: 'Mock short name'
       }
 
       const handoffInput = {
-        valueType: 'dataKeyword'
+        valueType: 'shortName'
       }
 
       expect(getHandoffValue({
@@ -212,16 +398,69 @@ describe('getHandoffValue', () => {
       })).toEqual('Mock short name')
     })
 
-    test('returns an empty string when the value doesn\t exist', () => {
+    test('returns undefined when the value doesn\t exist', () => {
       const handoffInput = {
-        valueType: 'dataKeyword'
+        valueType: 'shortName'
       }
 
       expect(getHandoffValue({
         collectionMetadata: {},
         collectionQuery: {},
         handoffInput
-      })).toEqual('')
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is a mapProjection', () => {
+    test('returns antarctic when the project is epsg4326', () => {
+      const handoffInput = {
+        valueType: 'mapProjection'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        mapProjection: 'epsg4326'
+      })).toEqual('geographic')
+    })
+
+    test('returns antarctic when the project is epsg3413', () => {
+      const handoffInput = {
+        valueType: 'mapProjection'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        mapProjection: 'epsg3413'
+      })).toEqual('arctic')
+    })
+
+    test('returns antarctic when the project is epsg3031', () => {
+      const handoffInput = {
+        valueType: 'mapProjection'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        mapProjection: 'epsg3031'
+      })).toEqual('antarctic')
+    })
+
+    test('returns geographic when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'mapProjection'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual('geographic')
     })
   })
 })

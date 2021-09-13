@@ -1,6 +1,26 @@
+import { isEmpty } from 'lodash'
 import moment from 'moment'
+
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { mbr } from '../map/mbr'
+import projections from '../map/projections'
+
+const spatialMbr = (spatial) => {
+  const {
+    boundingBox = [],
+    circle = [],
+    point = [],
+    polygon = []
+  } = spatial
+
+  // Find the minimum bounding rectangle to use for spatial
+  return mbr({
+    boundingBox: boundingBox[0],
+    circle: circle[0],
+    point: point[0],
+    polygon: polygon[0]
+  })
+}
 
 /**
  * Returns the value for a given UMM-T handoff input
@@ -14,7 +34,8 @@ export const getHandoffValue = ({
   collectionMetadata = {},
   collectionQuery = {},
   handoffInput,
-  handoffs
+  handoffs,
+  mapProjection
 }) => {
   const {
     valueType
@@ -27,44 +48,54 @@ export const getHandoffValue = ({
 
   const { endDate, startDate } = temporal
 
-  let value = ''
+  let value
 
-  // Bounding Box value
-  if (valueType === 'https://schema.org/box') {
+  // Bounding box value
+  if (valueType === 'https://schema.org/box' && !isEmpty(spatial)) {
     const {
-      boundingBox = [],
-      circle = [],
-      point = [],
-      polygon = []
-    } = spatial
-    // Find the minimum bounding rectangle to use for spatial
-    const spatialMbr = mbr({
-      boundingBox: boundingBox[0],
-      circle: circle[0],
-      point: point[0],
-      polygon: polygon[0]
-    })
+      swLat,
+      swLng,
+      neLat,
+      neLng
+    } = spatialMbr(spatial)
 
-    if (spatialMbr) {
-      const {
-        swLat,
-        swLng,
-        neLat,
-        neLng
-      } = spatialMbr
-
-      value = `${swLng},${swLat},${neLng},${neLat}`
-    }
+    value = `${swLng},${swLat},${neLng},${neLat}`
   }
 
-  // Start Date value
+  // Bounding box values used in open altimetry
+  if (valueType === 'minx' && !isEmpty(spatial)) {
+    const { swLng } = spatialMbr(spatial)
+    value = swLng
+  }
+  if (valueType === 'miny' && !isEmpty(spatial)) {
+    const { swLat } = spatialMbr(spatial)
+    value = swLat
+  }
+  if (valueType === 'maxx' && !isEmpty(spatial)) {
+    const { neLng } = spatialMbr(spatial)
+    value = neLng
+  }
+  if (valueType === 'maxy' && !isEmpty(spatial)) {
+    const { neLat } = spatialMbr(spatial)
+    value = neLat
+  }
+
+  // Start Time value
   if (valueType === 'https://schema.org/startDate' && startDate) {
     value = moment.utc(startDate).toISOString()
   }
+  // Start date value
+  if (valueType === 'startDate' && startDate) {
+    value = moment.utc(startDate).format('YYYY-MM-DD')
+  }
 
-  // End Date value
+  // End Time value
   if (valueType === 'https://schema.org/endDate' && endDate) {
     value = moment.utc(endDate).toISOString()
+  }
+  // End Date value
+  if (valueType === 'endDate' && endDate) {
+    value = moment.utc(endDate).format('YYYY-MM-DD')
   }
 
   // Layers value
@@ -88,9 +119,23 @@ export const getHandoffValue = ({
   }
 
   // Data Keyword value (probably needs a different valueType after Giovanni UMM-T exists)
-  if (valueType === 'dataKeyword') {
-    const { shortName = '' } = collectionMetadata
+  if (valueType === 'shortName') {
+    const { shortName } = collectionMetadata
     value = shortName
+  }
+
+  // Map projection value, translate to descriptive name from epsg value
+  if (valueType === 'mapProjection') {
+    switch (mapProjection) {
+      case projections.arctic:
+        value = 'arctic'
+        break
+      case projections.antarctic:
+        value = 'antarctic'
+        break
+      default:
+        value = 'geographic'
+    }
   }
 
   return value
