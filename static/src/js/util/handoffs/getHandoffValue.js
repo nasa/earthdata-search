@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { filter } from 'lodash'
 import moment from 'moment'
 
 import { getValueForTag } from '../../../../../sharedUtils/tags'
@@ -51,7 +51,7 @@ export const getHandoffValue = ({
   let value
 
   // Bounding box value
-  if (valueType === 'https://schema.org/box' && !isEmpty(spatial)) {
+  if (valueType === 'https://schema.org/box' && filter(spatial).length > 0) {
     const {
       swLat,
       swLng,
@@ -63,19 +63,19 @@ export const getHandoffValue = ({
   }
 
   // Bounding box values used in open altimetry
-  if (valueType === 'minx' && !isEmpty(spatial)) {
+  if (valueType === 'minx' && filter(spatial).length > 0) {
     const { swLng } = spatialMbr(spatial)
     value = swLng
   }
-  if (valueType === 'miny' && !isEmpty(spatial)) {
+  if (valueType === 'miny' && filter(spatial).length > 0) {
     const { swLat } = spatialMbr(spatial)
     value = swLat
   }
-  if (valueType === 'maxx' && !isEmpty(spatial)) {
+  if (valueType === 'maxx' && filter(spatial).length > 0) {
     const { neLng } = spatialMbr(spatial)
     value = neLng
   }
-  if (valueType === 'maxy' && !isEmpty(spatial)) {
+  if (valueType === 'maxy' && filter(spatial).length > 0) {
     const { neLat } = spatialMbr(spatial)
     value = neLat
   }
