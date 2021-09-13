@@ -1,10 +1,13 @@
-import { filter } from 'lodash'
 import moment from 'moment'
 
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { mbr } from '../map/mbr'
 import projections from '../map/projections'
 
+/**
+ * Returns the MBR of the collection query spatial
+ * @param {Object} spatial Collection Query spatial
+ */
 const spatialMbr = (spatial) => {
   const {
     boundingBox = [],
@@ -45,13 +48,14 @@ export const getHandoffValue = ({
     temporal = {},
     spatial = {}
   } = collectionQuery
+  const spatialExists = Object.values(spatial).filter(Boolean).length > 0
 
   const { endDate, startDate } = temporal
 
   let value
 
   // Bounding box value
-  if (valueType === 'https://schema.org/box' && filter(spatial).length > 0) {
+  if (valueType === 'https://schema.org/box' && spatialExists) {
     const {
       swLat,
       swLng,
@@ -63,19 +67,19 @@ export const getHandoffValue = ({
   }
 
   // Bounding box values used in open altimetry
-  if (valueType === 'minx' && filter(spatial).length > 0) {
+  if (valueType === 'minx' && spatialExists) {
     const { swLng } = spatialMbr(spatial)
     value = swLng
   }
-  if (valueType === 'miny' && filter(spatial).length > 0) {
+  if (valueType === 'miny' && spatialExists) {
     const { swLat } = spatialMbr(spatial)
     value = swLat
   }
-  if (valueType === 'maxx' && filter(spatial).length > 0) {
+  if (valueType === 'maxx' && spatialExists) {
     const { neLng } = spatialMbr(spatial)
     value = neLng
   }
-  if (valueType === 'maxy' && filter(spatial).length > 0) {
+  if (valueType === 'maxy' && spatialExists) {
     const { neLat } = spatialMbr(spatial)
     value = neLat
   }
@@ -118,7 +122,7 @@ export const getHandoffValue = ({
     }
   }
 
-  // Data Keyword value (probably needs a different valueType after Giovanni UMM-T exists)
+  // Short name value
   if (valueType === 'shortName') {
     const { shortName } = collectionMetadata
     value = shortName

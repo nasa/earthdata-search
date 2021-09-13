@@ -29,7 +29,6 @@ export const generateHandoffs = ({
     let allRequiredItemsPresent = true
 
     const {
-      // name,
       longName,
       potentialAction
     } = tool
