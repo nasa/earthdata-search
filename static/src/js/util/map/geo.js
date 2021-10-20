@@ -392,7 +392,7 @@ export const dividePolygon = (latlngs) => {
   let end
   let j
   const interiors = []
-  const boundaries = []
+  let boundaries = []
   const holes = []
 
   // Handle a list containing holes
@@ -551,10 +551,11 @@ export const dividePolygon = (latlngs) => {
         }
       }
 
+      // If we needed to insert points at the antimeridian, and
       // If we joined the east and west side of the polygon by going across the pole
       // above, we want to keep adding to our current interior shape.  Otherwise,
       // we're stopping the interior at the antimeridian and adding it to our list.
-      if (!hasPole) {
+      if (hasInsertions && !hasPole) {
         if (!dir || (dir === (latlng.lng - next.lng))) {
           // We're crossing in the same direction we crossed last time, so the shape isn't complete
           interiorStack.push(interior)
@@ -592,6 +593,9 @@ export const dividePolygon = (latlngs) => {
     }
     interiors.unshift(interior)
   }
+
+  // If we didn't need to insert points at the antimeridian, boundries should match interiors
+  if (!hasInsertions) boundaries = interiors
 
   return {
     interiors,
