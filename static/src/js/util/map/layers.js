@@ -115,7 +115,7 @@ export const buildLayer = (options, metadata) => {
     castArray(polygons).forEach((polygon) => {
       let polyLayer
       if (cartesian) {
-        polyLayer = new L.sphericalPolygon(polygon)
+        polyLayer = new L.polygon(polygon)
         polyLayer._interpolationFn = 'cartesian'
       } else {
         polyLayer = new L.sphericalPolygon(polygon, options)

@@ -225,8 +225,8 @@ describe('layers util', () => {
     })
 
     describe('with polygon spatial', () => {
-      test('returns a sphericalPolygon layer when polygon spatial is cartesian', () => {
-        const sphericalPolygonMock = jest.spyOn(L, 'sphericalPolygon').mockImplementation(point => ({ ...point }))
+      test('returns a polygon layer when polygon spatial is cartesian', () => {
+        const polygon = jest.spyOn(L, 'polygon').mockImplementation(point => ({ ...point }))
 
         const metadata = {
           coordinateSystem: 'CARTESIAN',
@@ -235,8 +235,8 @@ describe('layers util', () => {
 
         buildLayer({}, metadata)
 
-        expect(sphericalPolygonMock).toBeCalledTimes(1)
-        expect(sphericalPolygonMock).toBeCalledWith([
+        expect(polygon).toBeCalledTimes(1)
+        expect(polygon).toBeCalledWith([
           [
             { lat: -10, lng: -162.4683 },
             { lat: -10.013, lng: -151.7155 },
