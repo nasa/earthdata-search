@@ -47,7 +47,7 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "jest": "^25.2.7",
     "jsdom": "^15.1.1",
-    "mock-knex": "^0.4.6",
+    "mock-knex": "^0.4.10",
     "mockdate": "^2.0.2",
     "nock": "^12.0.3",
     "nyc": "^15.1.0",
