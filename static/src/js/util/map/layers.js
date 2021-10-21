@@ -142,8 +142,13 @@ export const buildLayer = (options, metadata) => {
 
   if (rectangles.length) {
     castArray(rectangles).forEach((rect) => {
-      const shape = new L.sphericalPolygon(rect, options)
-      shape._interpolationFn = 'cartesian'
+      let shape
+      if (cartesian) {
+        shape = new L.polygon(rect, options)
+        shape._interpolationFn = 'cartesian'
+      } else {
+        shape = new L.sphericalPolygon(rect, options)
+      }
       layer.addLayer(shape)
 
       const bounds = L.latLngBounds(rect)
