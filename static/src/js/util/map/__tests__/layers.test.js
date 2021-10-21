@@ -284,10 +284,31 @@ describe('layers util', () => {
       ], {})
     })
 
-    test('returns a sphericalPolygon layer when boxes spatial is provided', () => {
+    test('returns a polygon layer when cartesian boxes spatial is provided', () => {
+      const polygonMock = jest.spyOn(L, 'polygon').mockImplementation(point => ({ ...point }))
+
+      const metadata = {
+        coordinateSystem: 'CARTESIAN',
+        boxes: ['-81.15 141.81 81.15 180']
+      }
+
+      buildLayer({}, metadata)
+
+      expect(polygonMock).toBeCalledTimes(1)
+      expect(polygonMock).toBeCalledWith([
+        { lat: -81.15, lng: 141.81 },
+        { lat: -81.15, lng: 180 },
+        { lat: 81.15, lng: 180 },
+        { lat: 81.15, lng: 141.81 },
+        { lat: -81.15, lng: 141.81 }
+      ], {})
+    })
+
+    test('returns a sphericalPolygon layer when geodetic boxes spatial is provided', () => {
       const sphericalPolygonMock = jest.spyOn(L, 'sphericalPolygon').mockImplementation(point => ({ ...point }))
 
       const metadata = {
+        coordinateSystem: 'GEODETIC',
         boxes: ['-81.15 141.81 81.15 180']
       }
 
