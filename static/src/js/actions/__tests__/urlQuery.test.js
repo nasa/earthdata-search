@@ -450,6 +450,163 @@ describe('changePath', () => {
       })
     })
   })
+
+  describe('when a portal path is provided', () => {
+    describe('when the path matches granule search', () => {
+      test('calls getFocusedCollection action', () => {
+        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
+
+        const newPath = '/portal/fakeportal/search/granules?p=C00001-EDSC'
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          providers: [],
+          query: {
+            collection: {
+              spatial: {}
+            }
+          },
+          router: {
+            location: {
+              pathname: '/search'
+            }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        store.dispatch(urlQuery.changePath(newPath))
+
+        expect(getCollectionsMock).toBeCalledTimes(1)
+        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+      })
+    })
+
+    describe('when the path matches collection details', () => {
+      test('calls getFocusedCollection action', () => {
+        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
+
+        const newPath = '/portal/fakeportal/search/granules/collection-details?p=C00001-EDSC'
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          providers: [],
+          query: {
+            collection: {
+              spatial: {}
+            }
+          },
+          router: {
+            location: {
+              pathname: '/search'
+            }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        store.dispatch(urlQuery.changePath(newPath))
+
+        expect(getCollectionsMock).toBeCalledTimes(1)
+        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+      })
+    })
+
+    describe('when the path matches subscription list', () => {
+      test('calls getFocusedCollection action', () => {
+        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
+
+        const newPath = '/portal/fakeportal/search/granules/subscriptions?p=C00001-EDSC'
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          providers: [],
+          query: {
+            collection: {
+              spatial: {}
+            }
+          },
+          router: {
+            location: {
+              pathname: '/search'
+            }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        store.dispatch(urlQuery.changePath(newPath))
+
+        expect(getCollectionsMock).toBeCalledTimes(1)
+        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+      })
+    })
+
+    describe('when the path matches granule details', () => {
+      test('calls getFocusedCollection action', () => {
+        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
+        const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule').mockImplementation(() => jest.fn())
+
+        const newPath = '/portal/fakeportal/search/granules/granule-details?p=C00001-EDSC'
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
+          focusedGranule: 'G00001-EDSC',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          providers: [],
+          query: {
+            collection: {
+              spatial: {}
+            }
+          },
+          router: {
+            location: {
+              pathname: '/search'
+            }
+          },
+          timeline: {
+            query: {}
+          }
+        })
+
+        store.dispatch(urlQuery.changePath(newPath))
+
+        expect(getCollectionsMock).toBeCalledTimes(1)
+        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+        expect(getFocusedGranuleMock).toBeCalledTimes(1)
+      })
+    })
+  })
 })
 
 describe('changeUrl', () => {
