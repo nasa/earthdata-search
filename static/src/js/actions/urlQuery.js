@@ -138,22 +138,34 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     dispatch(actions.getCollections())
 
     // Granules Search
-    if (pathname === '/search/granules') {
+    if (
+      pathname === '/search/granules'
+      || pathname.match(/\/portal\/\w*\/search\/granules$/)
+    ) {
       dispatch(actions.getFocusedCollection())
     }
 
     // Collection Details
-    if (pathname === '/search/granules/collection-details') {
+    if (
+      pathname === '/search/granules/collection-details'
+      || pathname.match(/\/portal\/\w*\/search\/granules\/collection-details$/)
+    ) {
       dispatch(actions.getFocusedCollection())
     }
 
     // Subscription Details
-    if (pathname === '/search/granules/subscriptions') {
+    if (
+      pathname === '/search/granules/subscriptions'
+      || pathname.match(/\/portal\/\w*\/search\/granules\/subscriptions$/)
+    ) {
       dispatch(actions.getFocusedCollection())
     }
 
     // Granule Details
-    if (pathname === '/search/granules/granule-details') {
+    if (
+      pathname === '/search/granules/granule-details'
+      || pathname.match(/\/portal\/\w*\/search\/granules\/granule-details$/)
+    ) {
       dispatch(actions.getFocusedCollection())
 
       dispatch(actions.getFocusedGranule())
