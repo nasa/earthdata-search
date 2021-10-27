@@ -14,7 +14,7 @@ const initialState = {
   collection: {
     byId: {},
     keyword: '',
-    hasGranulesOrCwic: true,
+    hasGranulesOrCwic: null,
     pageNum: 1,
     spatial: {},
     temporal: {},
