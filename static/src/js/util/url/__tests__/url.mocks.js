@@ -38,7 +38,7 @@ export const emptyDecodedResult = {
       },
       tagKey: undefined,
       temporal: {},
-      hasGranulesOrCwic: true
+      hasGranulesOrCwic: undefined
     }
   },
   shapefile: {
