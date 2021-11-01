@@ -147,9 +147,9 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
 })
 
 describe('OpenSearchGranuleRequest#search', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
+  // beforeEach(() => {
+  //   jest.clearAllMocks()
+  // })
 
   // TODO: Test that when we call our search method that the transformations actually get called
   // test('all transformations are called', async () => {

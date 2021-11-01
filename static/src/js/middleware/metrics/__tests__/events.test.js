@@ -133,8 +133,8 @@ describe('events', () => {
     })
 
     describe('data access completion', () => {
-      test('pushes to the dataLayer', () => {
-        describe('single collections', () => {
+      describe('single collections', () => {
+        test('pushes to the dataLayer', () => {
           const action = {
             type: METRICS_DATA_ACCESS,
             payload: {

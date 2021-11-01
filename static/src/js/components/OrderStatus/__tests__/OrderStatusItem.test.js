@@ -90,12 +90,16 @@ describe('OrderStatusItem', () => {
         },
         true)
 
+        jest.spyOn(window, 'setInterval')
+
         const { intervalId } = enzymeWrapper.instance()
+
         expect(intervalId).toBeDefined()
         expect(setInterval).toHaveBeenCalledTimes(1)
         expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
         expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith(1)
         expect(shouldRefreshMock).toHaveBeenCalledTimes(0)
+
         shouldRefreshMock.mockRestore()
       })
 
