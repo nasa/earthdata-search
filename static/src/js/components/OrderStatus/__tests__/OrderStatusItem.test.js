@@ -10,10 +10,13 @@ import { ProgressRing } from '../../ProgressRing/ProgressRing'
 
 const shouldRefreshCopy = OrderStatusItem.prototype.shouldRefresh
 
-jest.useFakeTimers()
-
 beforeEach(() => {
   jest.clearAllMocks()
+  jest.useFakeTimers('legacy')
+})
+
+afterEach(() => {
+  jest.useRealTimers()
 })
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -90,7 +93,7 @@ describe('OrderStatusItem', () => {
         },
         true)
 
-        jest.spyOn(window, 'setInterval')
+        jest.spyOn(global, 'setInterval')
 
         const { intervalId } = enzymeWrapper.instance()
 

@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { S3LinksPanel } from '../S3LinksPanel'
 import { TextWindowActions } from '../../../TextWindowActions/TextWindowActions'
 
-jest.useFakeTimers()
+jest.useFakeTimers('legacy')
 
 beforeEach(() => {
   jest.clearAllMocks()
