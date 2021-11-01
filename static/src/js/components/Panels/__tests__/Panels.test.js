@@ -15,7 +15,7 @@ const windowEventMap = {}
 const documentEventMap = {}
 
 beforeEach(() => {
-  jest.clearAllTimers()
+  jest.useRealTimers()
   jest.clearAllMocks()
 
   window.addEventListener = jest.fn((event, cb) => {
@@ -529,7 +529,7 @@ describe('Panels component', () => {
 
   describe('onMouseMove', () => {
     test('clears the click timeout', () => {
-      jest.useFakeTimers()
+      jest.useFakeTimers('legacy')
 
       const { enzymeWrapper } = setup()
 
@@ -884,6 +884,8 @@ describe('Panels component', () => {
             offsetWidth: 1200
           }
         }
+
+        return {}
       })
 
       document.querySelector = querySelectorMock
