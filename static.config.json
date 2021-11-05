@@ -30,7 +30,7 @@
     "defaultGranulesPerOrder": 2000,
     "defaultSpatialDecimalSize": 5,
     "ummGranuleVersion": "1.6.4",
-    "ummServiceVersion": "1.4.1",
+    "ummServiceVersion": "1.4",
     "temporalDateFormatFull": "YYYY-MM-DD HH:mm:ss",
     "temporalDateFormatRange": "MM-DD HH:mm:ss",
     "minimumTemporalDateString": "1960-01-01 00:00:00",
