@@ -31,6 +31,9 @@
   },
   "hasScripts": false,
   "hasStyles": false,
+  "query": {
+    "hasGranulesOrCwic": null
+  },
   "org": "Earthdata",
   "pageTitle": "Earthdata Search",
   "title": "Search",
