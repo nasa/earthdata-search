@@ -19,7 +19,7 @@ export const encodeHasGranulesOrCwic = (hasGranulesOrCwic) => {
  */
 export const decodeHasGranulesOrCwic = (value) => {
   // When we see true in the url, we do not store hasGranulesOrCwic in the store
-  if (value === 'true' || value === undefined) return undefined
+  if (value === 'true') return undefined
 
   // If we do not see the ac param in the store, we save hasGranulesOrCwic=true in the store
   return true
