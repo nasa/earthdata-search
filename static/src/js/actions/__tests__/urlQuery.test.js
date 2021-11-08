@@ -205,7 +205,7 @@ describe('changePath', () => {
                   }
                 }
               },
-              hasGranulesOrCwic: undefined,
+              hasGranulesOrCwic: true,
               overrideTemporal: {},
               pageNum: 1,
               spatial: {},
@@ -277,7 +277,7 @@ describe('changePath', () => {
                 }
               }
             },
-            hasGranulesOrCwic: undefined,
+            hasGranulesOrCwic: true,
             overrideTemporal: {},
             pageNum: 1,
             spatial: {},

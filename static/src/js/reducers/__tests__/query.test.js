@@ -15,7 +15,7 @@ const initialState = {
   collection: {
     byId: {},
     keyword: '',
-    hasGranulesOrCwic: null,
+    hasGranulesOrCwic: true,
     pageNum: 1,
     sortKey: ['-usage_score'],
     spatial: {},
@@ -53,7 +53,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
       collection: {
         ...payload,
         byId: {},
-        hasGranulesOrCwic: null,
+        hasGranulesOrCwic: true,
         sortKey: ['-usage_score']
       },
       region: {
