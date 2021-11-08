@@ -16,7 +16,7 @@ describe('url#decodeUrlParams', () => {
         ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
-          hasGranulesOrCwic: undefined
+          hasGranulesOrCwic: true
         }
       }
     }
