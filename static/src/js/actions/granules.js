@@ -16,6 +16,7 @@ import {
 import GranuleRequest from '../util/request/granuleRequest'
 import OusGranuleRequest from '../util/request/ousGranuleRequest'
 import OpenSearchGranuleRequest from '../util/request/openSearchGranuleRequest'
+import GraphQlRequest from '../util/request/graphQlRequest'
 import {
   ADD_GRANULE_METADATA,
   ADD_MORE_GRANULE_RESULTS,
@@ -57,7 +58,7 @@ import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { eventEmitter } from '../events/events'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
-import GraphQlRequest from '../util/request/graphQlRequest'
+import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
 
 const { granuleLinksPageSize } = getApplicationConfig()
 
@@ -395,16 +396,106 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   return response
 }
 
+/**
+ * Fetch all relevant links from OpenSearch to the granules that are part of the provided collection
+ * @param {Object} retrievalCollectionData Retreival Collection response from the database
+ */
+export const fetchOpenSearchLinks = retrievalCollectionData => async (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
+
+  // Format and structure data from Redux to be sent to CMR
+  const {
+    id,
+    collection_metadata: collectionMetadata,
+    granule_count: granuleCount,
+    granule_params: granuleParams
+  } = retrievalCollectionData
+
+  const { openSearchGranuleLinksPageSize } = getApplicationConfig()
+  const pageSize = parseInt(openSearchGranuleLinksPageSize, 10)
+
+  // granuleParams.echo_collection_id = collectionId
+  granuleParams.open_search_osdd = getOpenSearchOsddLink(collectionMetadata)
+  granuleParams.page_size = pageSize
+
+  const totalPages = Math.ceil(granuleCount / pageSize)
+
+  const requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment)
+
+  let response
+
+  try {
+    await Array.from(new Array(totalPages)).forEachAsync(async (_, index) => {
+      const currentPage = index + 1
+      granuleParams.pageNum = currentPage
+
+      response = await requestObject.search(camelcaseKeys(granuleParams))
+
+      const { data } = response
+      const { feed } = data
+      const { entry } = feed
+
+      const items = []
+
+      entry.forEach((granule) => {
+        const { link: links = [] } = granule
+
+        const [downloadLink] = links.filter(link => link.rel === 'enclosure')
+
+        const { href } = downloadLink
+        items.push(href)
+      })
+
+      const percentDone = (((currentPage) / totalPages) * 100).toFixed()
+
+      dispatch(updateGranuleLinks({
+        id,
+        percentDone,
+        links: {
+          download: items
+        }
+      }))
+
+      return response
+    })
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'fetchOpenSearchLinks',
+      resource: 'OpenSearch links',
+      requestObject
+    }))
+  }
+
+  return response
+}
+
 export const fetchRetrievalCollectionGranuleLinks = data => (dispatch) => {
-  const { access_method: accessMethod } = data
+  const {
+    access_method: accessMethod,
+    collection_metadata: collectionMetadata
+  } = data
   const { type } = accessMethod
 
   // Determine which action to take based on the access method type
   if (type === 'download') {
+    const { isOpenSearch } = collectionMetadata
     dispatch(setGranuleLinksLoading())
-    dispatch(fetchLinks(data)).then(() => {
-      dispatch(setGranuleLinksLoaded())
-    })
+
+    if (isOpenSearch) {
+      dispatch(fetchOpenSearchLinks(data)).then(() => {
+        dispatch(setGranuleLinksLoaded())
+      })
+    } else {
+      dispatch(fetchLinks(data)).then(() => {
+        dispatch(setGranuleLinksLoaded())
+      })
+    }
   } else if (type === 'OPeNDAP') {
     dispatch(setGranuleLinksLoading())
     dispatch(fetchOpendapLinks(data)).then(() => {

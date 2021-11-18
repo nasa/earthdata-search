@@ -22,6 +22,7 @@
     "defaultCmrPageSize": 20,
     "maxCmrPageSize": 2000,
     "granuleLinksPageSize": "500",
+    "openSearchGranuleLinksPageSize": "50",
     "defaultCmrSearchTags": [
       "edsc.*",
       "opensearch.granule.osdd"

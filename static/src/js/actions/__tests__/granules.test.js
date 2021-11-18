@@ -8,6 +8,7 @@ import {
   excludeGranule,
   fetchLinks,
   fetchOpendapLinks,
+  fetchOpenSearchLinks,
   getProjectGranules,
   getSearchGranules,
   undoExcludeGranule,
@@ -37,6 +38,7 @@ import {
 import OpenSearchGranuleRequest from '../../util/request/openSearchGranuleRequest'
 import * as EventEmitter from '../../events/events'
 import * as mbr from '../../util/map/mbr'
+import * as applicationConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
 
@@ -1519,6 +1521,145 @@ describe('fetchOpendapLinks', () => {
         }
       },
       type: UPDATE_GRANULE_LINKS
+    })
+  })
+})
+
+describe('fetchOpenSearchLinks', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('fetches all pages of opensearch links', async () => {
+    jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      openSearchGranuleLinksPageSize: '3'
+    }))
+
+    nock(/localhost/)
+      .post(/opensearch/)
+      .reply(200, `
+        <feed>
+          <opensearch:totalResults>5</opensearch:totalResults>
+          <entry>
+            <link href="https://example.com/granule1.zip" rel="enclosure" />
+            <link href="https://example.com" rel="alternate" />
+          </entry>
+          <entry>
+            <link href="https://example.com/granule2.zip" rel="enclosure" />
+            <link href="https://example.com" rel="alternate" />
+          </entry>
+          <entry>
+            <link href="https://example.com/granule3.zip" rel="enclosure" />
+            <link href="https://example.com" rel="alternate" />
+          </entry>
+        </feed>
+      `)
+    nock(/localhost/)
+      .post(/opensearch/)
+      .reply(200, `
+        <feed>
+          <opensearch:totalResults>5</opensearch:totalResults>
+          <entry>
+            <link href="https://example.com/granule4.zip" rel="enclosure" />
+            <link href="https://example.com" rel="alternate" />
+          </entry>
+          <entry>
+            <link href="https://example.com/granule5.zip" rel="enclosure" />
+            <link href="https://example.com" rel="alternate" />
+          </entry>
+        </feed>
+      `)
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'download'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {
+        links: [
+          {
+            href: 'http://exmple.com/mock-osdd',
+            rel: 'http://exmple.com/search#'
+          }
+        ]
+      },
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC'
+      },
+      granule_count: 5
+    }
+
+    await store.dispatch(fetchOpenSearchLinks(params))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: {
+        id: 3,
+        percentDone: '50',
+        links: {
+          download: [
+            'https://example.com/granule1.zip',
+            'https://example.com/granule2.zip',
+            'https://example.com/granule3.zip'
+          ]
+        }
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+    expect(storeActions[1]).toEqual({
+      payload: {
+        id: 3,
+        percentDone: '100',
+        links: {
+          download: [
+            'https://example.com/granule4.zip',
+            'https://example.com/granule5.zip'
+          ]
+        }
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+  })
+
+  test('does not update granule links on error', async () => {
+    nock(/localhost/)
+      .post(/opensearch/)
+      .reply(500)
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'download'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {
+        links: [
+          {
+            href: 'http://exmple.com/mock-osdd',
+            rel: 'http://exmple.com/search#'
+          }
+        ]
+      },
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC'
+      },
+      granule_count: 5
+    }
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    await store.dispatch(fetchOpenSearchLinks(params)).then(() => {
+      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

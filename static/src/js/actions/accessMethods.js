@@ -47,6 +47,7 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
       const {
         dataCenter,
         granules,
+        isOpenSearch,
         services,
         tags,
         variables
@@ -107,7 +108,7 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
       }
 
       // If the collection is online downloadable, add the download method
-      if (onlineAccessFlag) {
+      if (onlineAccessFlag || isOpenSearch) {
         dispatch(actions.addAccessMethods({
           collectionId,
           methods: {
