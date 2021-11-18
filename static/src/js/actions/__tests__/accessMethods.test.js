@@ -359,4 +359,72 @@ describe('fetchAccessMethods', () => {
       })
     })
   })
+
+  test('returns download method if it is an open search collection', async () => {
+    const collectionId = 'collectionId'
+
+    const store = mockStore({
+      authToken: '123',
+      metadata: {
+        collections: {
+          collectionId: {
+            isOpenSearch: true,
+            services: {
+              count: 0,
+              items: null
+            },
+            granules: {
+              count: 0,
+              items: []
+            }
+          }
+        }
+      },
+      project: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            collectionId: {
+              granules: {
+                hits: 100
+              }
+            }
+          }
+        }
+      },
+      providers: [
+        {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'EDSC-TEST',
+            provider_id: 'EDSC-TEST'
+          }
+        }, {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'NON-EDSC-TEST',
+            provider_id: 'NON-EDSC-TEST'
+          }
+        }
+      ]
+    })
+
+    // call the dispatch
+    await store.dispatch(fetchAccessMethods([collectionId])).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: ADD_ACCESS_METHODS,
+        payload: {
+          collectionId,
+          methods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
+        }
+      })
+    })
+  })
 })
