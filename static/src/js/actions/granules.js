@@ -430,7 +430,7 @@ export const fetchOpenSearchLinks = retrievalCollectionData => async (dispatch, 
   let response
 
   try {
-    await Array.from(new Array(totalPages)).forEachAsync(async (_, index) => {
+    await new Array(totalPages).forEachAsync(async (_, index) => {
       const currentPage = index + 1
       granuleParams.pageNum = currentPage
 

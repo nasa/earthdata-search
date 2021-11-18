@@ -107,7 +107,7 @@ export const fetchAccessMethods = collectionIds => async (dispatch, getState) =>
         }
       }
 
-      // If the collection is online downloadable, add the download method
+      // If the collection is online downloadable or if the collection isOpenSearch, add the download method
       if (onlineAccessFlag || isOpenSearch) {
         dispatch(actions.addAccessMethods({
           collectionId,
