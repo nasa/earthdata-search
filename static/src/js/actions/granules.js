@@ -419,7 +419,6 @@ export const fetchOpenSearchLinks = retrievalCollectionData => async (dispatch, 
   const { openSearchGranuleLinksPageSize } = getApplicationConfig()
   const pageSize = parseInt(openSearchGranuleLinksPageSize, 10)
 
-  // granuleParams.echo_collection_id = collectionId
   granuleParams.open_search_osdd = getOpenSearchOsddLink(collectionMetadata)
   granuleParams.page_size = pageSize
 
