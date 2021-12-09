@@ -13,16 +13,17 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
     const { [collectionId]: collectionMetadata = {} } = metadata
 
     const {
-      summary = '',
+      consortiums = [],
       datasetId = null,
       granuleCount = 0,
       hasMapImagery = false,
       isCSDA = false,
-      isOpenSearch = false,
       isNrt = false,
+      isOpenSearch = false,
       organizations = [],
       serviceFeatures = {},
       shortName,
+      summary = '',
       thumbnail = null,
       timeEnd = null,
       timeStart = null,
@@ -112,29 +113,30 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
     })
 
     return {
-      summary: truncatedAbstract,
+      consortiums,
       collectionId,
       datasetId,
       displayOrganization,
       granuleCount,
       hasFormats,
+      hasMapImagery,
       hasSpatialSubsetting,
       hasTemporalSubsetting,
       hasTransforms,
       hasVariables,
-      hasMapImagery,
+      isCollectionInProject,
       isCSDA,
-      isOpenSearch,
+      isLast,
       isNrt,
+      isOpenSearch,
       organizations,
       shortName,
+      summary: truncatedAbstract,
       temporalEnd,
       temporalRange,
       temporalStart,
       thumbnail,
-      versionId,
-      isCollectionInProject,
-      isLast
+      versionId
     }
   })
 }

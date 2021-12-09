@@ -20,6 +20,7 @@ function setup(overrideProps) {
     },
     collectionsMetadata: {
       collectionId: {
+        consortiums: [],
         summary: 'test summary',
         datasetId: 'test dataset id',
         granuleCount: 42,

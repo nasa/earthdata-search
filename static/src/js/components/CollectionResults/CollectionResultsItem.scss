@@ -193,6 +193,33 @@
     }
   }
 
+  &__badge-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__badge-list-text {
+    display: inline-block;
+  }
+
+  &__badge-list-item {
+    &:after {
+      display: inline-block;
+      content: '•';
+      margin-left: 0.125rem;
+      margin-right: 0.125rem;
+    }
+
+    &:last-child {
+      &:after {
+        display: none;
+      }
+    }
+  }
+
   &__badge-icon {
     margin-right: 0.25rem;
     position: relative;
@@ -208,7 +235,7 @@
     text-transform: none;
   }
 
-  &__badge--cwic {
+  &__badge--external-broker {
     background-color: $color__yellow;
   }
 

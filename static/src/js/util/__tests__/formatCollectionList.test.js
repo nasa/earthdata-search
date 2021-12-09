@@ -8,6 +8,7 @@ describe('formatCollectionList', () => {
     const metadata = {
       collectionId: {
         summary: 'test summary',
+        consortiums: [],
         datasetId: 'test dataset id',
         granuleCount: 42,
         hasMapImagery: false,
@@ -52,6 +53,7 @@ describe('formatCollectionList', () => {
     const expectedResult = {
       summary: 'test summary',
       collectionId: 'collectionId',
+      consortiums: [],
       datasetId: 'test dataset id',
       displayOrganization: 'test/org',
       granuleCount: 42,
@@ -94,6 +96,7 @@ describe('formatCollectionList', () => {
     const expectedResult = {
       summary: '',
       collectionId: 'collectionId',
+      consortiums: [],
       datasetId: null,
       displayOrganization: '',
       granuleCount: 0,
@@ -220,6 +223,7 @@ describe('formatCollectionList', () => {
     const expectedResult = {
       summary: 'test summary',
       collectionId: 'collectionId',
+      consortiums: [],
       datasetId: 'test dataset id',
       displayOrganization: 'test/org',
       granuleCount: 42,
