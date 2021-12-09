@@ -41,6 +41,7 @@ export const CollectionResultsItem = forwardRef(({
   onViewCollectionGranules
 }, ref) => {
   const {
+    consortiums = [],
     collectionId,
     datasetId,
     summary,
@@ -69,6 +70,21 @@ export const CollectionResultsItem = forwardRef(({
   } = thumbnailSize
 
   const customizeBadges = []
+
+  const consortiumMeta = {
+    GEOSS: 'Global Earth Observation System of Systems',
+    CWIC: 'CEOS WGISS Integrated Catalog',
+    FEDEO: 'Federated EO Gateway',
+    CEOS: 'Committee on Earth Observation Satellites'
+  }
+
+  const getConsortiumTooltipText = (consortium) => {
+    let tooltip = ''
+    if (consortiumMeta[consortium]) tooltip = consortiumMeta[consortium]
+    return tooltip
+  }
+
+  const filteredConsortiums = consortiums.filter(consortium => consortium !== 'EOSDIS')
 
   const popperOffset = {
     modifiers: [{
@@ -320,24 +336,46 @@ export const CollectionResultsItem = forwardRef(({
           </div>
           <div className="collection-results-item__body-secondary">
             {
-              isOpenSearch && (
-                <OverlayTrigger
-                  placement="top"
-                  overlay={(
-                    <Tooltip
-                      id="tooltip__quic-badge"
-                      className="collection-results-item__badge-tooltip"
-                    >
-                      Int&apos;l / Interagency Data
-                    </Tooltip>
-                  )}
+              !!(filteredConsortiums && filteredConsortiums.length) && (
+                <Badge
+                  className="collection-results-item__badge collection-results-item__badge--external-broker"
+                  variant="secondary"
                 >
-                  <Badge
-                    className="collection-results-item__badge collection-results-item__badge--cwic"
-                  >
-                    CWIC
-                  </Badge>
-                </OverlayTrigger>
+                  <ul className="collection-results-item__badge-list">
+                    {
+                      filteredConsortiums.map((consortium) => {
+                        let consortiumDisplay = consortium
+                        const consortiumTooltip = getConsortiumTooltipText(consortium)
+
+                        if (consortiumTooltip) {
+                          consortiumDisplay = (
+                            <OverlayTrigger
+                              placement="top"
+                              overlay={(
+                                <Tooltip
+                                  className={`collection-results-item__badge-tooltip collection-results-item__badge-tooltip--${consortium}`}
+                                >
+                                  {consortiumTooltip}
+                                </Tooltip>
+                              )}
+                            >
+                              <span className="collection-results-item__badge-list-text">{consortiumDisplay}</span>
+                            </OverlayTrigger>
+                          )
+                        }
+
+                        return (
+                          <li
+                            key={`${collectionId}__consortium--${consortium}`}
+                            className="collection-results-item__badge-list-item"
+                          >
+                            {consortiumDisplay}
+                          </li>
+                        )
+                      })
+                    }
+                  </ul>
+                </Badge>
               )
             }
             {

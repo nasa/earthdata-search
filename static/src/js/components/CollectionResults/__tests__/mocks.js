@@ -2,6 +2,7 @@ export const collectionListItemProps = {
   collectionMetadata: {
     summary: 'This is a short summary.',
     collectionId: 'collectionId1',
+    consortiums: [],
     datasetId: 'Test Collection',
     displayOrganization: 'TESTORG',
     granuleCount: 10,
@@ -30,6 +31,7 @@ export const longSummary = 'Lorem ipsum dolor sit amet, consectetur adipiscing e
 export const collectionResultsBodyData = {
   summary: 'test summary',
   collectionId: 'collectionId',
+  consortiums: [], 
   datasetId: 'test dataset id',
   displayOrganization: 'test/org',
   granuleCount: 42,

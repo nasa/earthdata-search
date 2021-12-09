@@ -421,7 +421,7 @@ export const CollectionDetailsBody = ({
           </div>
           <div className="row collection-details-body__row">
             {
-              dataCenters.length && (
+              !!(dataCenters && dataCenters.length) && (
                 <ul className="col collection-details-body__provider-list" data-test-id="collection-details-body__provider-list">
                   {
                     dataCenters.map((dataCenter, i) => {

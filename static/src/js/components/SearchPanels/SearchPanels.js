@@ -187,11 +187,15 @@ class SearchPanels extends PureComponent {
     const { panelState } = preferences
 
     const {
+      consortiums = [],
       hasAllMetadata: hasAllCollectionMetadata = false,
       title: collectionTitle = '',
       isCSDA: collectionIsCSDA,
       isOpenSearch: collectionIsOpenSearch
     } = collectionMetadata
+
+    // Do not display the international/interagency data message for EOSDIS or CWIC collections
+    const displayConsortiums = consortiums.filter(consortium => consortium !== 'EOSDIS' && consortium !== 'GEOSS')
 
     const { title: granuleTitle = '' } = granuleMetadata
 
@@ -404,6 +408,32 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    let consortiumInfo = null
+
+    if (displayConsortiums && displayConsortiums.length) {
+      consortiumInfo = (
+        <Col className="search-panels__note">
+          {'This is '}
+          <span className="search-panels__note-emph search-panels__note-emph--opensearch">Int&apos;l / Interagency Data</span>
+          {' data. Searches will be performed by external services which may vary in performance and available features. '}
+          {
+            displayConsortiums.indexOf('CWIC') > -1 && (
+              <Button
+                className="search-panels__header-message-link"
+                onClick={() => onToggleAboutCwicModal(true)}
+                variant="link"
+                bootstrapVariant="link"
+                icon={FaQuestionCircle}
+                label="More details"
+              >
+                More Details
+              </Button>
+            )
+          }
+        </Col>
+      )
+    }
+
     panelSection.push(
       <PanelGroup
         key="granule-results-panel"
@@ -411,25 +441,7 @@ class SearchPanels extends PureComponent {
         handoffLinks={handoffLinks}
         headerMessage={(
           <>
-            {
-              collectionIsOpenSearch && (
-                <Col className="search-panels__note">
-                  {'This is '}
-                  <span className="search-panels__note-emph search-panels__note-emph--opensearch">Int&apos;l / Interagency Data</span>
-                  {' data. Searches will be performed by external services which may vary in performance and available features. '}
-                  <Button
-                    className="search-panels__header-message-link"
-                    onClick={() => onToggleAboutCwicModal(true)}
-                    variant="link"
-                    bootstrapVariant="link"
-                    icon={FaQuestionCircle}
-                    label="More details"
-                  >
-                    More Details
-                  </Button>
-                </Col>
-              )
-            }
+            {consortiumInfo}
             {
               collectionIsCSDA && (
                 <Col className="search-panels__note">

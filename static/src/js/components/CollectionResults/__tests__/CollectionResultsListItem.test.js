@@ -13,6 +13,7 @@ const defaultProps = {
   data: {
     collectionsMetadata: [{
       collectionId: 'collectionId1',
+      consortiums: [],
       datasetId: 'Test Collection',
       description: 'This is a short summary.',
       displayOrganization: 'TESTORG',

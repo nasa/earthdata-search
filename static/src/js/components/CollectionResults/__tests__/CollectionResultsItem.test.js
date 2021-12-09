@@ -112,7 +112,7 @@ describe('CollectionResultsList component', () => {
     test('renders a cwic collection correctly', () => {
       const { enzymeWrapper } = setup({
         collectionMetadata: {
-          ...collectionListItemProps.collection,
+          ...collectionListItemProps.collectionMetadata,
           isOpenSearch: true
         }
       })
@@ -123,7 +123,7 @@ describe('CollectionResultsList component', () => {
     test('renders single granule correctly', () => {
       const { enzymeWrapper } = setup({
         collectionMetadata: {
-          ...collectionListItemProps.collection,
+          ...collectionListItemProps.collectionMetadata,
           granuleCount: 1
         }
       })
@@ -134,7 +134,7 @@ describe('CollectionResultsList component', () => {
     test('renders no granules correctly', () => {
       const { enzymeWrapper } = setup({
         collectionMetadata: {
-          ...collectionListItemProps.collection,
+          ...collectionListItemProps.collectionMetadata,
           granuleCount: 0
         }
       })
@@ -152,7 +152,7 @@ describe('CollectionResultsList component', () => {
       test('with no end time', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            ...collectionListItemProps.collection,
+            ...collectionListItemProps.collectionMetadata,
             temporalRange: '2010-10-10 ongoing'
           }
         })
@@ -163,7 +163,7 @@ describe('CollectionResultsList component', () => {
       test('with no start time', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            ...collectionListItemProps.collection,
+            ...collectionListItemProps.collectionMetadata,
             temporalRange: 'Up to 2011-10-10'
           }
         })
@@ -199,35 +199,191 @@ describe('CollectionResultsList component', () => {
       })
     })
 
-    describe('cwic badge', () => {
-      test('does not render when isOpenSearch is not set', () => {
+    describe('consortium badge', () => {
+      test('does not render when the consortium is not set', () => {
         const { enzymeWrapper } = setup()
         expect(enzymeWrapper.find('.collection-results-item__badge--cwic').length).toEqual(0)
       })
 
-      describe('renders correctly when set', () => {
+      describe('with a single consortium', () => {
+        describe('renders correctly when set', () => {
+          test('renders the badge correctly', () => {
+            const { enzymeWrapper } = setup({
+              collectionMetadata: {
+                ...collectionListItemProps.collectionMetadata,
+                consortiums: ['CWIC']
+              }
+            })
+  
+            const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+            expect(overlayWrapper.length).toEqual(1)
+            const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+            expect(overlay.text()).toEqual('CWIC')
+          })
+  
+          test('renders a tooltip correctly', () => {
+            const { enzymeWrapper } = setup({
+              collectionMetadata: {
+                ...collectionListItemProps.collectionMetadata,
+                consortiums: ['CWIC']
+              }
+            })
+  
+            const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+            const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+            expect(overlayText).toEqual('CEOS WGISS Integrated Catalog')
+          })
+        })
+      })
+
+      describe('with a multiple consortiums', () => {
+        describe('renders correctly when set', () => {
+          test('renders the badge correctly', () => {
+            const { enzymeWrapper } = setup({
+              collectionMetadata: {
+                ...collectionListItemProps.collectionMetadata,
+                consortiums: ['CWIC', 'GEOSS']
+              }
+            })
+  
+            const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+            expect(overlayWrapper.length).toEqual(1)
+            const consortiumOne = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+            const consortiumTwo = shallow(shallow(overlayWrapper.props().children.props.children[1]).props().children).childAt(0).childAt(0)
+            expect(consortiumOne.text()).toEqual('CWIC')
+            expect(consortiumTwo.text()).toEqual('GEOSS')
+          })
+  
+          test('renders a tooltips correctly', () => {
+            const { enzymeWrapper } = setup({
+              collectionMetadata: {
+                ...collectionListItemProps.collectionMetadata,
+                consortiums: ['CWIC', 'GEOSS']
+              }
+            })
+  
+            const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+            const overlayOneText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+            const overlayTwoText = shallow(shallow(overlay.props().children.props.children[1]).props().children).childAt(1).childAt(0).text()
+            expect(overlayOneText).toEqual('CEOS WGISS Integrated Catalog')
+            expect(overlayTwoText).toEqual('Global Earth Observation System of Systems')
+          })
+        })
+      })
+
+      describe('when CWIC is defined', () => {
         test('renders the badge correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              ...collectionListItemProps.collection,
-              isOpenSearch: true
+              ...collectionListItemProps.collectionMetadata,
+              consortiums: ['CWIC']
             }
           })
-          expect(enzymeWrapper.find('.collection-results-item__badge--cwic').length).toEqual(1)
-          expect(enzymeWrapper.find('.collection-results-item__badge--cwic').text()).toEqual('CWIC')
+
+          const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+          expect(overlayWrapper.length).toEqual(1)
+          const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+          expect(overlay.text()).toEqual('CWIC')
         })
 
         test('renders a tooltip correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              ...collectionListItemProps.collection,
-              isOpenSearch: true
+              ...collectionListItemProps.collectionMetadata,
+              consortiums: ['CWIC']
             }
           })
 
-          const tooltipProps = enzymeWrapper.find(OverlayTrigger).props().overlay.props
-          expect(enzymeWrapper.find(OverlayTrigger).length).toEqual(1)
-          expect(tooltipProps.children).toEqual('Int\'l / Interagency Data')
+          const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+          const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+          expect(overlayText).toEqual('CEOS WGISS Integrated Catalog')
+        })
+      })
+
+      describe('when GEOSS is defined', () => {
+        test('renders the badge correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              consortiums: ['GEOSS']
+            }
+          })
+
+          const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+          expect(overlayWrapper.length).toEqual(1)
+          const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+          expect(overlay.text()).toEqual('GEOSS')
+        })
+
+        test('renders a tooltip correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              consortiums: ['GEOSS']
+            }
+          })
+
+          const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+          const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+          expect(overlayText).toEqual('Global Earth Observation System of Systems')
+        })
+      })
+
+      describe('when FEDEO is defined', () => {
+        test('renders the badge correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              consortiums: ['FEDEO']
+            }
+          })
+
+          const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+          expect(overlayWrapper.length).toEqual(1)
+          const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+          expect(overlay.text()).toEqual('FEDEO')
+        })
+
+        test('renders a tooltip correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              consortiums: ['FEDEO']
+            }
+          })
+
+          const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+          const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+          expect(overlayText).toEqual('Federated EO Gateway')
+        })
+      })
+
+      describe('when CEOS is defined', () => {
+        test('renders the badge correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              consortiums: ['CEOS']
+            }
+          })
+
+          const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+          expect(overlayWrapper.length).toEqual(1)
+          const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+          expect(overlay.text()).toEqual('CEOS')
+        })
+
+        test('renders a tooltip correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              consortiums: ['CEOS']
+            }
+          })
+
+          const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
+          const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+          expect(overlayText).toEqual('Committee on Earth Observation Satellites')
         })
       })
     })
@@ -242,7 +398,7 @@ describe('CollectionResultsList component', () => {
         test('renders the badge correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              ...collectionListItemProps.collection,
+              ...collectionListItemProps.collectionMetadata,
               isCSDA: true
             }
           })
@@ -253,7 +409,7 @@ describe('CollectionResultsList component', () => {
         test('renders a tooltip correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              ...collectionListItemProps.collection,
+              ...collectionListItemProps.collectionMetadata,
               isCSDA: true
             }
           })
@@ -276,7 +432,7 @@ describe('CollectionResultsList component', () => {
         test('renders the badge correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              ...collectionListItemProps.collection,
+              ...collectionListItemProps.collectionMetadata,
               hasMapImagery: true
             }
           })
@@ -287,7 +443,7 @@ describe('CollectionResultsList component', () => {
         test('renders a tooltip correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              ...collectionListItemProps.collection,
+              ...collectionListItemProps.collectionMetadata,
               hasMapImagery: true
             }
           })
@@ -309,7 +465,7 @@ describe('CollectionResultsList component', () => {
         test('renders the badge correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
-              ...collectionListItemProps.collection,
+              ...collectionListItemProps.collectionMetadata,
               isNrt: true
             }
           })
@@ -321,7 +477,7 @@ describe('CollectionResultsList component', () => {
       test('renders a tooltip correctly', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            ...collectionListItemProps.collection,
+            ...collectionListItemProps.collectionMetadata,
             isNrt: true
           }
         })
@@ -335,7 +491,7 @@ describe('CollectionResultsList component', () => {
     describe('customize badge', () => {
       test('does not render when no customization flags are true', () => {
         const { enzymeWrapper } = setup({
-          collection: collectionListItemProps.collection
+          collection: collectionListItemProps.collectionMetadata
         })
         expect(enzymeWrapper.find('.collection-results-item__badge--customizable').length).toEqual(0)
       })
@@ -343,7 +499,7 @@ describe('CollectionResultsList component', () => {
       describe('spatial subsetting icon', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            ...collectionListItemProps.collection,
+            ...collectionListItemProps.collectionMetadata,
             hasSpatialSubsetting: true
           }
         })
@@ -370,7 +526,7 @@ describe('CollectionResultsList component', () => {
       describe('variables icon', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            ...collectionListItemProps.collection,
+            ...collectionListItemProps.collectionMetadata,
             hasVariables: true
           }
         })
@@ -397,7 +553,7 @@ describe('CollectionResultsList component', () => {
       describe('transforms icon', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            ...collectionListItemProps.collection,
+            ...collectionListItemProps.collectionMetadata,
             hasTransforms: true
           }
         })
@@ -424,7 +580,7 @@ describe('CollectionResultsList component', () => {
       describe('formats icon', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            ...collectionListItemProps.collection,
+            ...collectionListItemProps.collectionMetadata,
             hasFormats: true
           }
         })
@@ -451,7 +607,7 @@ describe('CollectionResultsList component', () => {
       describe('temporal subsetting icon', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
-            ...collectionListItemProps.collection,
+            ...collectionListItemProps.collectionMetadata,
             hasTemporalSubsetting: true
           }
         })
@@ -498,7 +654,7 @@ describe('CollectionResultsList component', () => {
     test('shows the remove button when the collection is in the project', () => {
       const { enzymeWrapper } = setup({
         collectionMetadata: {
-          ...collectionListItemProps.collection,
+          ...collectionListItemProps.collectionMetadata,
           isCollectionInProject: true
         }
       })
@@ -509,7 +665,7 @@ describe('CollectionResultsList component', () => {
     test('clicking the button removes the collection from the project', () => {
       const { enzymeWrapper, props } = setup({
         collectionMetadata: {
-          ...collectionListItemProps.collection,
+          ...collectionListItemProps.collectionMetadata,
           isCollectionInProject: true
         }
       })
