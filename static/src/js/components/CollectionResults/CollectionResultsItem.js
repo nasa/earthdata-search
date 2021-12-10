@@ -336,7 +336,7 @@ export const CollectionResultsItem = forwardRef(({
           </div>
           <div className="collection-results-item__body-secondary">
             {
-              !!(filteredConsortiums && filteredConsortiums.length) && (
+              filteredConsortiums && filteredConsortiums.length > 0 && (
                 <Badge
                   className="collection-results-item__badge collection-results-item__badge--external-broker"
                   variant="secondary"
