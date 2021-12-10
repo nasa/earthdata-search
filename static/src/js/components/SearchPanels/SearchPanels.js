@@ -195,7 +195,7 @@ class SearchPanels extends PureComponent {
     } = collectionMetadata
 
     // Do not display the international/interagency data message for EOSDIS or CWIC collections
-    const displayConsortiums = consortiums.filter(consortium => consortium !== 'EOSDIS' && consortium !== 'GEOSS')
+    const isInternationalInteragency = consortiums.filter(consortium => consortium !== 'EOSDIS' && consortium !== 'GEOSS').length > 0
 
     const { title: granuleTitle = '' } = granuleMetadata
 
@@ -410,14 +410,14 @@ class SearchPanels extends PureComponent {
 
     let consortiumInfo = null
 
-    if (displayConsortiums && displayConsortiums.length) {
+    if (isInternationalInteragency) {
       consortiumInfo = (
         <Col className="search-panels__note">
           {'This is '}
           <span className="search-panels__note-emph search-panels__note-emph--opensearch">Int&apos;l / Interagency Data</span>
           {' data. Searches will be performed by external services which may vary in performance and available features. '}
           {
-            displayConsortiums.indexOf('CWIC') > -1 && (
+            collectionIsOpenSearch && (
               <Button
                 className="search-panels__header-message-link"
                 onClick={() => onToggleAboutCwicModal(true)}

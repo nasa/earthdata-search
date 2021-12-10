@@ -612,9 +612,7 @@ describe('SearchPanels component', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
             hasAllMetadata: true,
-            title: 'Collection Title',
-            isCSDA: false,
-            isOpenSearch: false,
+            isOpenSearch: true,
             consortiums: ['CWIC']
           }
         }, '/search/granules')
@@ -631,7 +629,8 @@ describe('SearchPanels component', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
             hasAllMetadata: true,
-            consortiums: ['CWIC']
+            consortiums: ['CWIC'],
+            isOpenSearch: true
           }
         }, '/search/granules')
         const panels = enzymeWrapper.find(Panels)
@@ -647,7 +646,8 @@ describe('SearchPanels component', () => {
           const { enzymeWrapper, props } = setup({
             collectionMetadata: {
               hasAllMetadata: true,
-              consortiums: ['CWIC']
+              consortiums: ['CWIC'],
+              isOpenSearch: true
             }
           }, '/search/granules')
           const panels = enzymeWrapper.find(Panels)
@@ -676,6 +676,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanel = panels.find(PanelGroup).at(1)
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
+
   
         expect(messageProps.className).toEqual('search-panels__note')
         expect(shallow(messageProps.children[1]).text()).toContain('Int\'l / Interagency Data')
@@ -693,7 +694,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
   
-        expect(messageProps.children[3]).toBe(false)
+        expect(messageProps.children[3]).toBe(undefined)
       })
     })
 
@@ -709,7 +710,6 @@ describe('SearchPanels component', () => {
         const granuleResultsPanel = panels.find(PanelGroup).at(1)
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
-        console.log('enzymeWrapper', messageProps)
   
         expect(messageProps.className).toEqual('search-panels__note')
         expect(shallow(messageProps.children[1]).text()).toContain('Int\'l / Interagency Data')
@@ -727,7 +727,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
   
-        expect(messageProps.children[3]).toBe(false)
+        expect(messageProps.children[3]).toBe(undefined)
       })
     })
 
