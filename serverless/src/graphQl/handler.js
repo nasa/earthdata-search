@@ -45,6 +45,7 @@ const graphQl = async (event, context) => {
       },
       headers: {
         Authorization: `Bearer ${echoToken}`,
+        'Content-Type': 'application/json',
         'X-Request-Id': requestId
       }
     })
