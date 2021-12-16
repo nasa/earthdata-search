@@ -90,7 +90,10 @@ const Facets = (props) => {
   const platformsFacet = {
     ...cmrFacetDefaults,
     title: 'Platforms',
-    autocompleteType: 'platform'
+    autocompleteType: 'platform',
+    options: {
+      liftSelectedFacets: true
+    }
   }
 
   const instrumentsFacet = {
