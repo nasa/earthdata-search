@@ -1,9 +1,9 @@
-$color-loading-default__light: rgba($color__black--800, 0.0625);
-$color-loading-default__dark: rgba($color__black--300, 0.45);
-$color-loading-light__light: rgba($color__black--200, 0.0625);
-$color-loading-light__dark: rgba($color__black--900, 0.45);
-$color-loading-dark__light: rgba($color__black--800, 0.0625);
-$color-loading-dark__dark: rgba($color__black--300, 0.15);
+$color-loading-default__light: $color__black--500;
+$color-loading-default__dark: $color__black--600;
+$color-loading-light__light: $color__black--500;
+$color-loading-light__dark: $color__black--800;
+$color-loading-dark__light: $color__black--700;
+$color-loading-dark__dark: $color__black--100;
 
 .skeleton {
   position: relative;
@@ -15,11 +15,44 @@ $color-loading-dark__dark: rgba($color__black--300, 0.15);
     right: 0;
     bottom: 0;
     overflow: hidden;
+    background-color: #fff;
+
+    .skeleton--dark & {
+      background: transparent;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, $color-loading-default__dark 30%, $color-loading-default__light 50%, $color-loading-default__dark 70%);
+      background-size: 400% 400%;
+      animation: pulse 2s infinite;
+      z-index: 1;
+      mix-blend-mode: overlay;
+
+      .skeleton--light & {
+        background: linear-gradient(90deg, $color-loading-light__dark 30%, $color-loading-light__light 50%, $color-loading-light__dark 70%);
+        background-size: 300% 300%;
+        animation: pulse 2s infinite;
+      }
+
+      .skeleton--dark & {
+        background: linear-gradient(90deg, $color-loading-dark__dark 30%, $color-loading-dark__light 50%, $color-loading-dark__dark 70%);
+        background-size: 300% 300%;
+        animation: pulse 2s infinite;
+        mix-blend-mode: darken;
+      }
+    }
   }
 
   &__item {
     position: absolute;
     overflow: hidden;
+    max-width: 100%;
+    z-index: 1;
   }
 
   &__item-inner {
@@ -35,16 +68,24 @@ $color-loading-dark__dark: rgba($color__black--300, 0.15);
       position: absolute;
       height: 100%;
       width: 100%;
-      background: $color-loading-default__dark;
+      background: $color__black--200;
 
       .skeleton--light & {
         background: $color-loading-light__dark;
       }
 
       .skeleton--dark & {
-        background: $color-loading-dark__dark;
+        background: $color__black--600;
       }
     }
   }
 }
 
+@keyframes pulse {
+  0% {
+    background-position:100% 50%
+  }
+  100% {
+    background-position:0% 50%
+  }
+}

@@ -13,6 +13,8 @@ import CollectionDetailsDataCenter from './CollectionDetailsDataCenter'
 import CollectionDetailsMinimap from './CollectionDetailsMinimap'
 import SplitBadge from '../SplitBadge/SplitBadge'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import Skeleton from '../Skeleton/Skeleton'
+import { collectionDetailsSkeleton } from './skeleton'
 
 import { pluralize } from '../../util/pluralize'
 
@@ -131,12 +133,17 @@ export const CollectionDetailsBody = ({
     versionId
   } = collectionMetadata
 
-  // TODO: Implement and use a focused collection loading state
   if (!hasAllMetadata) {
     return (
       <div className="collection-details-body">
         <div className="collection-details-body__content">
-          <h4>Details Loading...</h4>
+          <Skeleton
+            shapes={collectionDetailsSkeleton}
+            containerStyle={{
+              height: '400px',
+              width: '100%'
+            }}
+          />
         </div>
       </div>
     )
@@ -337,7 +344,7 @@ export const CollectionDetailsBody = ({
                             </Tooltip>
                           )}
                         >
-                          <EDSCIcon icon={FaQuestionCircle} />
+                          <EDSCIcon icon={FaQuestionCircle} size="0.625rem" />
                         </OverlayTrigger>
                       </span>
                     </dt>
