@@ -28,13 +28,13 @@ export const GranuleResultsHighlights = ({
   isLoading,
   location,
   visibleGranules
-}) => (
+}) => console.log({ isLoaded, isLoading, granuleCount }) || (
   <div className="granule-results-highlights">
     {
-      granuleCount > 0 && (
+      (!granuleCount || granuleCount > 0) && (
         <div className="granule-results-highlights__count">
           {
-            (!isLoaded) && (
+            (isLoading) && (
               <Skeleton
                 shapes={granuleListTotal}
                 containerStyle={granuleListTotalStyle}

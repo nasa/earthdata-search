@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { isEmpty, min } from 'lodash'
+import { min } from 'lodash'
 
 import { getFocusedCollectionGranuleMetadata } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
@@ -36,6 +36,8 @@ export const GranuleResultsHighlightsContainer = ({
   const { [focusedCollectionId]: collectionSearchResults = {} } = collectionSearchById
   const { granules: collectionGranuleSearch = {} } = collectionSearchResults
 
+  console.log('collectionGranuleSearch', collectionGranuleSearch)
+
   const { [focusedCollectionId]: collectionQueryResults = {} } = collectionsQuery
   const { granules: collectionGranuleQuery = {} } = collectionQueryResults
   const { excludedGranuleIds = [] } = collectionGranuleQuery
@@ -46,8 +48,6 @@ export const GranuleResultsHighlightsContainer = ({
     isLoading,
     isLoaded
   } = collectionGranuleSearch
-
-  if (isEmpty(allIds) || allIds == null) return null
 
   // Limit the number of granules shown
   const limit = min([5, hits])
