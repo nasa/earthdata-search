@@ -1,5 +1,3 @@
-import { isEqual } from 'lodash'
-
 import { getByTestId } from '../../../../support/getByTestId'
 import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 import { graphQlGetCollections } from '../../../../support/graphQlGetCollections'
@@ -167,7 +165,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: noParamsGraphQlBody,
@@ -226,7 +224,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: readableGranuleNameGraphQlBody,
@@ -286,7 +284,7 @@ describe('Path /search/granules', () => {
           url: '**/api'
         },
         (req) => {
-          expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+          expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
           req.reply({
             body: temporalGraphQlBody,
@@ -349,7 +347,7 @@ describe('Path /search/granules', () => {
           url: '**/api'
         },
         (req) => {
-          expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+          expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
           req.reply({
             body: temporalGraphQlBody,
@@ -415,7 +413,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: browseOnlyGraphQlBody,
@@ -475,7 +473,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: onlineOnlyGraphQlBody,
@@ -535,7 +533,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: orbitNumberGraphQlBody,
@@ -595,7 +593,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: equatorialCrossingLongitudeGraphQlBody,
@@ -655,7 +653,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: equatorialCrossingDateGraphQlBody,
@@ -715,7 +713,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: sortKeyGraphQlBody,
@@ -775,7 +773,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: cloudCoverGraphQlBody,
@@ -835,7 +833,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: dayNightGraphQlBody,
@@ -894,7 +892,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: gridCoordsGraphQlBody,
@@ -965,7 +963,7 @@ describe('Path /search/granules', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: timelineGraphQlBody,
@@ -1030,23 +1028,20 @@ describe('Path /search/granules', () => {
       },
       (req) => {
         // If these requests change and are failing tests, console.log req.body to see the actual request being called
-        if (isEqual(req.body, graphQlGetCollection(conceptId))) {
-          console.log('graphQlCollectionQuery')
+        if (req.body === graphQlGetCollection(conceptId)) {
           req.alias = 'graphQlCollectionQuery'
           req.reply({
             body: focusedGranuleCollectionGraphQlBody,
             headers: focusedGranuleGraphQlHeaders
           })
         }
-        if (isEqual(req.body, { query: "\n    query GetGranule(\n      $id: String!\n    ) {\n      granule(\n        conceptId: $id\n      ) {\n        granuleUr\n        granuleSize\n        title\n        onlineAccessFlag\n        dayNightFlag\n        timeStart\n        timeEnd\n        dataCenter\n        originalFormat\n        conceptId\n        collectionConceptId\n        spatialExtent\n        temporalExtent\n        relatedUrls\n        dataGranule\n        measuredParameters\n        providerDates\n      }\n    }", variables:{id: "G2058417402-LPDAAC_ECS"}})) {
-          console.log('graphQlGranuleQuery')
+        if (req.body === '{"query":"\\n    query GetGranule(\\n      $id: String!\\n    ) {\\n      granule(\\n        conceptId: $id\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2058417402-LPDAAC_ECS"}}') {
           req.alias = 'graphQlGranuleQuery'
           req.reply({
             body: focusedGranuleGranuleGraphQlBody,
             headers: focusedGranuleGraphQlHeaders
           })
         }
-        console.log(req)
       })
 
       cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&pg[0][gsk]=-start_date&g=G2058417402-LPDAAC_ECS')
@@ -1116,14 +1111,14 @@ describe('Path /search/granules', () => {
       },
       (req) => {
         // If these requests change and are failing tests, console.log req.body to see the actual request being called
-        if (isEqual(req.body, graphQlGetCollection(conceptId))) {
+        if (req.body === graphQlGetCollection(conceptId)) {
           req.alias = 'graphQlCollectionQuery'
           req.reply({
             body: projectGranuleCollectionGraphQlBody,
             headers: projectGranuleGraphQlHeaders
           })
         }
-        if (isEqual(req.body, graphQlGetCollections('C194001210-LPDAAC_ECS'))) {
+        if (req.body === graphQlGetCollections('C194001210-LPDAAC_ECS')) {
           req.alias = 'graphQlCollectionsQuery'
           req.reply({
             body: projectGranuleCollectionsGraphQlBody,
@@ -1189,14 +1184,14 @@ describe('Path /search/granules', () => {
       },
       (req) => {
         // If these requests change and are failing tests, console.log req.body to see the actual request being called
-        if (isEqual(req.body, graphQlGetCollection(conceptId))) {
+        if (req.body === graphQlGetCollection(conceptId)) {
           req.alias = 'graphQlCollectionQuery'
           req.reply({
             body: projectCollectionCollectionGraphQlBody,
             headers: projectCollectionGraphQlHeaders
           })
         }
-        if (isEqual(req.body, graphQlGetCollections('C194001210-LPDAAC_ECS'))) {
+        if (req.body === graphQlGetCollections('C194001210-LPDAAC_ECS')) {
           req.alias = 'graphQlCollectionsQuery'
           req.reply({
             body: projectCollectionCollectionsGraphQlBody,
@@ -1229,7 +1224,6 @@ describe('Path /search/granules', () => {
         url: '**/collections'
       },
       (req) => {
-        console.log('req.body', req.body)
         expect(JSON.parse(req.body).params).to.eql({
           has_granules_or_cwic: true,
           include_facets: 'v2',
@@ -1317,7 +1311,7 @@ describe('Path /search/granules', () => {
         url: '**/graphql'
       },
       (req) => {
-        expect(req.body.data).to.eql(graphQlGetCollection(conceptId))
+        expect(JSON.parse(req.body).data).to.eql(JSON.parse(graphQlGetCollection(conceptId)))
 
         req.reply({
           body: subscriptionGraphQlBody,
