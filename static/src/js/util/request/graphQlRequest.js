@@ -41,8 +41,11 @@ export default class GraphQlRequest extends Request {
       headers.Authorization = `Bearer ${this.getAuthToken()}`
     }
 
-    // eslint-disable-next-line no-param-reassign
-    headers['Content-Type'] = 'application/json'
+    // If contacting GraphQL directly, add the content type
+    if (!this.authenticated && !this.optionallyAuthenticated && this.lambda) {
+      // eslint-disable-next-line no-param-reassign
+      headers['Content-Type'] = 'application/json'
+    }
 
     if (data) {
       // POST requests to Lambda use a JSON string
