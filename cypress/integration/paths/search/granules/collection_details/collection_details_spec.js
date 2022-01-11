@@ -167,7 +167,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/collections'
       },
       (req) => {
-        expect(JSON.parse(req.body).params).to.deep.equal({
+        expect(JSON.parse(req.body).params).to.eql({
           include_facets: 'v2',
           include_granule_counts: true,
           include_has_granules: true,
@@ -207,7 +207,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/granules'
       },
       (req) => {
-        expect(JSON.parse(req.body).params).to.deep.equal({
+        expect(JSON.parse(req.body).params).to.eql({
           concept_id: [],
           echo_collection_id: 'C1240222820-ECHO_REST',
           exclude: {},
@@ -235,7 +235,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/graphql'
       },
       (req) => {
-        expect(req.body.data).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(JSON.parse(req.body).data).to.eql(JSON.parse(graphQlGetCollection(conceptId)))
 
         req.reply({
           body: assocatedDoisGraphQlBody,
@@ -311,7 +311,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.deep.equal(graphQlGetCollection(conceptId))
+        expect(req.body).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: reformattingGraphQlBody,
