@@ -42,7 +42,7 @@ export default class GraphQlRequest extends Request {
     }
 
     // If contacting GraphQL directly, add the content type
-    if (!this.authenticated && !this.optionallyAuthenticated && this.lambda) {
+    if (!this.authenticated && !this.optionallyAuthenticated && !this.lambda) {
       // eslint-disable-next-line no-param-reassign
       headers['Content-Type'] = 'application/json'
     }
