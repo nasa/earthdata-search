@@ -311,7 +311,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/api'
       },
       (req) => {
-        expect(req.body).to.eq(graphQlGetCollection(conceptId))
+        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
         req.reply({
           body: reformattingGraphQlBody,
