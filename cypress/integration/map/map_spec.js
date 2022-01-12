@@ -1510,7 +1510,7 @@ describe('Map interactions', () => {
           url: '**/api'
         },
         (req) => {
-          expect(req.body).to.eq(graphQlGetCollection(conceptId))
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
           req.reply({
             body: cmrGranulesCollectionGraphQlBody,
@@ -1569,7 +1569,7 @@ describe('Map interactions', () => {
             url: '**/api'
           },
           (req) => {
-            expect(req.body).to.eq('{"query":"\\n    query GetGranule(\\n      $id: String!\\n    ) {\\n      granule(\\n        conceptId: $id\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2061183408-ASF"}}')
+            expect(JSON.stringify(req.body)).to.eq('{"query":"\\n    query GetGranule(\\n      $id: String!\\n    ) {\\n      granule(\\n        conceptId: $id\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2061183408-ASF"}}')
 
             req.reply({
               body: granuleGraphQlBody,
@@ -1668,7 +1668,7 @@ describe('Map interactions', () => {
           url: '**/api'
         },
         (req) => {
-          expect(req.body).to.eq(graphQlGetCollection(conceptId))
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
           req.reply({
             body: opensearchGranulesCollectionGraphQlBody,
