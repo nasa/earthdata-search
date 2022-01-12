@@ -28,30 +28,26 @@ export const GranuleResultsHighlights = ({
   isLoading,
   location,
   visibleGranules
-}) => console.log({ isLoaded, isLoading, granuleCount }) || (
+}) => (
   <div className="granule-results-highlights">
-    {
-      (!granuleCount || granuleCount > 0) && (
-        <div className="granule-results-highlights__count">
-          {
-            (isLoading) && (
-              <Skeleton
-                shapes={granuleListTotal}
-                containerStyle={granuleListTotalStyle}
-                variant="dark"
-              />
-            )
-          }
-          {
-            (isLoaded && !isLoading) && (
-              `Showing ${commafy(visibleGranules)} of ${commafy(
-                granuleCount
-              )} matching ${pluralize('granule', granuleCount)}`
-            )
-          }
-        </div>
-      )
-    }
+    <div className="granule-results-highlights__count">
+      {
+        (isLoading) && (
+          <Skeleton
+            shapes={granuleListTotal}
+            containerStyle={granuleListTotalStyle}
+            variant="dark"
+          />
+        )
+      }
+      {
+        (isLoaded && !isLoading) && (
+          `Showing ${commafy(visibleGranules)} of ${commafy(
+            granuleCount
+          )} matching ${pluralize('granule', granuleCount)}`
+        )
+      }
+    </div>
     <ul className="granule-results-highlights__list">
       {
         !isLoaded && (
