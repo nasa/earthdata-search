@@ -1,10 +1,3 @@
-$color-loading-default__light: $color__black--500;
-$color-loading-default__dark: $color__black--600;
-$color-loading-light__light: $color__black--500;
-$color-loading-light__dark: $color__black--800;
-$color-loading-dark__light: $color__black--700;
-$color-loading-dark__dark: $color__black--100;
-
 .skeleton {
   position: relative;
 
@@ -15,36 +8,11 @@ $color-loading-dark__dark: $color__black--100;
     right: 0;
     bottom: 0;
     overflow: hidden;
-    background-color: #fff;
+    background-color: transparent;
+    mix-blend-mode: multiply;
 
     .skeleton--dark & {
-      background: transparent;
-    }
-
-    &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(90deg, $color-loading-default__dark 30%, $color-loading-default__light 50%, $color-loading-default__dark 70%);
-      background-size: 400% 400%;
-      animation: pulse 2s infinite;
-      z-index: 1;
-      mix-blend-mode: overlay;
-
-      .skeleton--light & {
-        background: linear-gradient(90deg, $color-loading-light__dark 30%, $color-loading-light__light 50%, $color-loading-light__dark 70%);
-        background-size: 300% 300%;
-        animation: pulse 2s infinite;
-      }
-
-      .skeleton--dark & {
-        background: linear-gradient(90deg, $color-loading-dark__dark 30%, $color-loading-dark__light 50%, $color-loading-dark__dark 70%);
-        background-size: 300% 300%;
-        animation: pulse 2s infinite;
-        mix-blend-mode: darken;
-      }
+      mix-blend-mode: lighten;
     }
   }
 
@@ -53,6 +21,11 @@ $color-loading-dark__dark: $color__black--100;
     overflow: hidden;
     max-width: 100%;
     z-index: 1;
+    background-color: $color__black--300;
+
+    .skeleton--dark & {
+      background-color: $color__black--600;
+    }
   }
 
   &__item-inner {
@@ -61,6 +34,8 @@ $color-loading-dark__dark: $color__black--100;
     left: 0;
     right: 0;
     bottom: 0;
+    overflow: hidden;
+    border-radius: inherit;
 
     &:after {
       content: '';
@@ -68,14 +43,17 @@ $color-loading-dark__dark: $color__black--100;
       position: absolute;
       height: 100%;
       width: 100%;
-      background: $color__black--200;
+      background-color: $color__black--200;
+      animation: pulse 2s infinite;
 
       .skeleton--light & {
-        background: $color-loading-light__dark;
+        background-color: $color__black--300;
+        mix-blend-mode: multiply;
       }
 
       .skeleton--dark & {
-        background: $color__black--600;
+        background-color: $color__black--500;
+        mix-blend-mode: lighten;
       }
     }
   }
@@ -83,9 +61,12 @@ $color-loading-dark__dark: $color__black--100;
 
 @keyframes pulse {
   0% {
-    background-position:100% 50%
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
   }
   100% {
-    background-position:0% 50%
+    opacity: 0;
   }
 }
