@@ -256,14 +256,18 @@ OrderStatus.propTypes = {
   authToken: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
-  retrieval: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
-  onToggleAboutCSDAModal: PropTypes.func.isRequired
+  onToggleAboutCSDAModal: PropTypes.func.isRequired,
+  portal: PropTypes.shape({}).isRequired,
+  retrieval: PropTypes.shape({}).isRequired
 }
 
 export default OrderStatus

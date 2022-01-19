@@ -7,18 +7,18 @@ import actions from '../../actions'
 
 import CollectionDownloadDisplay from '../../components/CollectionDownloadDisplay/CollectionDownloadDisplay'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   retrieval: state.retrieval
 })
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onFetchRetrieval:
     (retrievalId, authToken) => dispatch(
       actions.fetchRetrieval(retrievalId, authToken)
     ),
   onFetchRetrievalCollectionGranuleLinks:
-    retrievalCollection => dispatch(
+    (retrievalCollection) => dispatch(
       actions.fetchRetrievalCollectionGranuleLinks(retrievalCollection)
     )
 })
@@ -89,8 +89,15 @@ export class CollectionContainer extends Component {
 }
 
 CollectionContainer.propTypes = {
-  retrieval: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
+  retrieval: PropTypes.shape({
+    collections: PropTypes.arrayOf(PropTypes.shape({}))
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    }),
+    path: PropTypes.string
+  }).isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired
 }

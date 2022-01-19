@@ -2,11 +2,11 @@ import L from 'leaflet'
 import 'proj4'
 import 'proj4leaflet'
 
-const ScaledLonLatProjection = scale => ({
-  project: latlng => (
+const ScaledLonLatProjection = (scale) => ({
+  project: (latlng) => (
     new L.Point(latlng.lng * scale, latlng.lat * scale)
   ),
-  unproject: point => (
+  unproject: (point) => (
     new L.LatLng(point.y / scale, point.x / scale)
   ),
   bounds: L.bounds([-180 * scale, -90 * scale], [180 * scale, 90 * scale])
@@ -77,7 +77,7 @@ const crsProjections = {
       ])
     }
   ),
-  simpleScaled: scale => (
+  simpleScaled: (scale) => (
     L.extend({}, L.CRS.Simple, { projection: ScaledLonLatProjection(scale) })
   )
 }

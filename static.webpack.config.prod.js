@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const TerserJsPlugin = require('terser-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const CSSNano = require('cssnano')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
@@ -15,8 +15,8 @@ const StaticCommonConfig = require('./static.webpack.config.common')
 const debug = false
 
 const defaultPlugins = [
-  new webpack.HashedModuleIdsPlugin(),
-  new CleanWebpackPlugin([path.resolve(__dirname, 'static/dist')]),
+  new webpack.ids.HashedModuleIdsPlugin({}),
+  new CleanWebpackPlugin(),
   new MiniCssExtractPlugin({
     filename: '[name].[contenthash].min.css',
     chunkFilename: '[id].[contenthash].min.css'
@@ -52,12 +52,7 @@ const Config = merge.smartStrategy({
         sourceMap: true,
         include: /\.js$/
       }),
-      new OptimizeCSSAssetsPlugin({
-        cssProcessor: CSSNano,
-        cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }]
-        }
-      })
+      new CssMinimizerPlugin()
     ],
     runtimeChunk: true,
     splitChunks: {
@@ -86,12 +81,8 @@ const Config = merge.smartStrategy({
         test: /\.(css|scss)$/,
         exclude: /portals/i,
         use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: MiniCssExtractPlugin.loader
-          }
+          MiniCssExtractPlugin.loader,
+          'css-loader'
         ]
       }
     ]

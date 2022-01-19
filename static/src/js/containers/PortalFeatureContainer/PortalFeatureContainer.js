@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   portal: state.portal
 })
 

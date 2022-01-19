@@ -12,7 +12,7 @@ const errorsReducer = (state = initialState, action) => {
     }
     case REMOVE_ERROR: {
       const id = action.payload
-      const errors = state.filter(error => error.id !== id)
+      const errors = state.filter((error) => error.id !== id)
 
       return errors
     }

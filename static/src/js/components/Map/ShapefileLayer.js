@@ -240,7 +240,7 @@ class ShapefileLayerExtended extends L.Layer {
       this.setConstraint(children[0])
     }
 
-    layersToSelect.forEach(layer => this.setConstraint(layer))
+    layersToSelect.forEach((layer) => this.setConstraint(layer))
 
     const fileHash = forge.md.md5.create()
     fileHash.update(JSON.stringify(response))
@@ -355,7 +355,7 @@ class ShapefileLayerExtended extends L.Layer {
     if (newLatLngs.length > MAX_POLYGON_SIZE) {
       const points = ((() => {
         const result1 = []
-        newLatLngs.forEach(latlng => result1.push({ x: latlng.lng, y: latlng.lat }))
+        newLatLngs.forEach((latlng) => result1.push({ x: latlng.lng, y: latlng.lat }))
 
         return result1
       })())
@@ -366,7 +366,7 @@ class ShapefileLayerExtended extends L.Layer {
         result = L.LineUtil.simplify(points, tolerance += 0.01)
       }
 
-      newLatLngs = (result.map(point => ({ lat: point.y, lng: point.x })))
+      newLatLngs = (result.map((point) => ({ lat: point.y, lng: point.x })))
     }
 
     // Remove redundancies

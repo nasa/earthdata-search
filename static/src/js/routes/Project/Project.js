@@ -21,14 +21,14 @@ import EdscMapContainer
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onSubmitRetrieval:
     () => dispatch(actions.submitRetrieval()),
   onToggleChunkedOrderModal:
-    isOpen => dispatch(actions.toggleChunkedOrderModal(isOpen))
+    (isOpen) => dispatch(actions.toggleChunkedOrderModal(isOpen))
 })
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   projectCollectionsRequiringChunking: getProjectCollectionsRequiringChunking(state)
 })
 

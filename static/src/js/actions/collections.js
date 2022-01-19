@@ -27,17 +27,17 @@ import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { pruneFilters } from '../util/pruneFilters'
 
-export const addMoreCollectionResults = payload => ({
+export const addMoreCollectionResults = (payload) => ({
   type: ADD_MORE_COLLECTION_RESULTS,
   payload
 })
 
-export const updateCollectionResults = payload => ({
+export const updateCollectionResults = (payload) => ({
   type: UPDATE_COLLECTION_RESULTS,
   payload
 })
 
-export const updateCollectionMetadata = payload => ({
+export const updateCollectionMetadata = (payload) => ({
   type: UPDATE_COLLECTION_METADATA,
   payload
 })
@@ -46,7 +46,7 @@ export const onCollectionsLoading = () => ({
   type: LOADING_COLLECTIONS
 })
 
-export const onCollectionsLoaded = payload => ({
+export const onCollectionsLoaded = (payload) => ({
   type: LOADED_COLLECTIONS,
   payload
 })
@@ -55,7 +55,7 @@ export const onCollectionsErrored = () => ({
   type: ERRORED_COLLECTIONS
 })
 
-export const updateFacets = payload => ({
+export const updateFacets = (payload) => ({
   type: UPDATE_FACETS,
   payload
 })
@@ -64,7 +64,7 @@ export const onFacetsLoading = () => ({
   type: LOADING_FACETS
 })
 
-export const onFacetsLoaded = payload => ({
+export const onFacetsLoaded = (payload) => ({
   type: LOADED_FACETS,
   payload
 })
@@ -87,7 +87,7 @@ export const finishCollectionsTimer = () => ({
  * @param {String} id - The id for the collection to update.
  * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
  */
-export const updateFocusedCollectionGranuleFilters = granuleFilters => (dispatch, getState) => {
+export const updateFocusedCollectionGranuleFilters = (granuleFilters) => (dispatch, getState) => {
   const state = getState()
 
   const focusedCollectionId = getFocusedCollectionId(state)

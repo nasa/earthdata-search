@@ -25,7 +25,7 @@ export const parseTemporal = (metadata, temporal) => {
   // If were not dealing with a SingleDateTime, we're dealing with
   // the metadata should have rangeDateTimes
   if (Array.isArray(rangeDateTimes)) {
-    return rangeDateTimes.map(range => castArray(range).map(
+    return rangeDateTimes.map((range) => castArray(range).map(
       (entry) => {
         const beginningDateTime = getDaysFromIsoDate(entry.beginningDateTime)
         const endingDateTime = getDaysFromIsoDate(entry.endingDateTime)
@@ -57,5 +57,5 @@ export const buildTemporal = (json) => {
   // Otherwise, parse the temporal information. If temporal is an object, castArray will wrap it
   // in an array to be mapped. We flattenDeep to make sure all temporal entries are on the top level of
   // the returned object
-  return flattenDeep(castArray(temporalExtents).map(entry => parseTemporal(entry)))
+  return flattenDeep(castArray(temporalExtents).map((entry) => parseTemporal(entry)))
 }

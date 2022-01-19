@@ -11,18 +11,18 @@ import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getProjectCollectionsIds } from '../selectors/project'
 import isPath from '../util/isPath'
 
-export const updateCollectionQuery = payload => ({
+export const updateCollectionQuery = (payload) => ({
   type: UPDATE_COLLECTION_QUERY,
   payload
 })
 
 // Updates the granule search query, keeping existing values
-export const updateGranuleSearchQuery = payload => ({
+export const updateGranuleSearchQuery = (payload) => ({
   type: UPDATE_GRANULE_SEARCH_QUERY,
   payload
 })
 
-export const updateRegionQuery = payload => ({
+export const updateRegionQuery = (payload) => ({
   type: UPDATE_REGION_QUERY,
   payload
 })
@@ -64,7 +64,7 @@ export const changeQuery = (queryOptions = {}) => async (dispatch, getState) => 
   }
 }
 
-export const changeProjectQuery = query => async (dispatch) => {
+export const changeProjectQuery = (query) => async (dispatch) => {
   const { collection } = query
 
   dispatch(updateCollectionQuery(collection))
@@ -72,12 +72,12 @@ export const changeProjectQuery = query => async (dispatch) => {
   dispatch(actions.getProjectGranules())
 }
 
-export const changeRegionQuery = query => (dispatch) => {
+export const changeRegionQuery = (query) => (dispatch) => {
   dispatch(updateRegionQuery(query))
   dispatch(actions.getRegions())
 }
 
-export const changeCollectionPageNum = pageNum => (dispatch) => {
+export const changeCollectionPageNum = (pageNum) => (dispatch) => {
   dispatch(updateCollectionQuery({ pageNum }))
   dispatch(actions.getCollections())
 }

@@ -5,9 +5,9 @@ import $ from 'jquery'
 
 import { metricsClick } from '../../middleware/metrics/actions'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onMetricsClick:
-    data => dispatch(metricsClick(data))
+    (data) => dispatch(metricsClick(data))
 })
 
 export class MetricsEventsContainer extends Component {

@@ -10,173 +10,160 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps = {}) {
   const props = {
-    facets: {
-      allIds: [
-        'Keywords',
-        'Platforms',
-        'Instruments',
-        'Organizations',
-        'Projects',
-        'Processing Levels',
-        'Data Format'
-      ],
-      byId: {
-        Keywords: {
+    facetsById: {
+      Keywords: {
+        applied: false,
+        children: [{
           applied: false,
-          children: [{
-            applied: false,
-            count: 1,
-            has_children: false,
-            links: {
-              apply: 'http://example.com/apply_keyword_link'
-            },
-            title: 'Mock Keyword Facet',
-            type: 'filter'
-          }],
-          hasChildren: true,
-          title: 'Keywords',
-          totalSelected: 0,
-          type: 'group'
-        },
-        Platforms: {
-          applied: false,
-          children: [{
-            applied: false,
-            count: 1,
-            has_children: false,
-            links: {
-              apply: 'http://example.com/apply_platform_link'
-            },
-            title: 'Mock Platform Facet',
-            type: 'filter'
-          }],
-          hasChildren: true,
-          title: 'Platforms',
-          totalSelected: 0,
-          type: 'group'
-        },
-        Instruments: {
-          applied: false,
-          children: [{
-            applied: false,
-            count: 1,
-            has_children: false,
-            links: {
-              apply: 'http://example.com/apply_instrument_link'
-            },
-            title: 'Mock Instrument Facet',
-            type: 'filter'
-          }],
-          hasChildren: true,
-          title: 'Instruments',
-          totalSelected: 0,
-          type: 'group'
-        },
-        Organizations: {
-          applied: false,
-          children: [{
-            applied: false,
-            count: 1,
-            has_children: false,
-            links: {
-              apply: 'http://example.com/apply_organization_link'
-            },
-            title: 'Mock Organization Facet',
-            type: 'filter'
-          }],
-          hasChildren: true,
-          title: 'Organizations',
-          totalSelected: 0,
-          type: 'group'
-        },
-        Projects: {
-          applied: false,
-          children: [{
-            applied: false,
-            count: 1,
-            has_children: false,
-            links: {
-              apply: 'http://example.com/apply_project_link'
-            },
-            title: 'Mock Project Facet',
-            type: 'filter'
-          }],
-          hasChildren: true,
-          title: 'Projects',
-          totalSelected: 0,
-          type: 'group'
-        },
-        'Processing Levels': {
-          applied: false,
-          children: [{
-            applied: false,
-            count: 1,
-            has_children: false,
-            links: {
-              apply: 'http://example.com/apply_processing_level_link'
-            },
-            title: 'Mock Processing Level Facet',
-            type: 'filter'
-          }],
-          hasChildren: true,
-          title: 'Processing Levels',
-          totalSelected: 0,
-          type: 'group'
-        },
-        'Data Format': {
-          applied: false,
-          children: [{
-            applied: false,
-            count: 1,
-            has_children: false,
-            links: {
-              apply: 'http://example.com/apply_data_format_link'
-            },
-            title: 'Mock Data Format Facet',
-            type: 'filter'
-          }],
-          hasChildren: true,
-          title: 'Data Format',
-          totalSelected: 0,
-          type: 'group'
-        },
-        'Tiling System': {
-          applied: false,
-          children: [{
-            applied: false,
-            count: 1,
-            has_children: false,
-            links: {
-              apply: 'http://example.com/apply_tiling_system_link'
-            },
-            title: 'Mock Tiling System Facet',
-            type: 'filter'
-          }],
-          hasChildren: true,
-          title: 'Tiling System',
-          totalSelected: 0,
-          type: 'group'
-        },
-        'Horizontal Data Resolution': {
-          applied: false,
-          children: [{
-            applied: false,
-            count: 1,
-            has_children: false,
-            links: {
-              apply: 'http://example.com/apply_horizontal_data_resolution_link'
-            },
-            title: 'Mock Horizontal Data Resolution Facet',
-            type: 'filter'
-          }],
-          hasChildren: true,
-          title: 'Horizontal Data Resolution',
-          totalSelected: 0,
-          type: 'group'
-        }
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_keyword_link'
+          },
+          title: 'Mock Keyword Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Keywords',
+        totalSelected: 0,
+        type: 'group'
       },
-      isLoaded: true,
-      isLoading: false
+      Platforms: {
+        applied: false,
+        children: [{
+          applied: false,
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_platform_link'
+          },
+          title: 'Mock Platform Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Platforms',
+        totalSelected: 0,
+        type: 'group'
+      },
+      Instruments: {
+        applied: false,
+        children: [{
+          applied: false,
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_instrument_link'
+          },
+          title: 'Mock Instrument Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Instruments',
+        totalSelected: 0,
+        type: 'group'
+      },
+      Organizations: {
+        applied: false,
+        children: [{
+          applied: false,
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_organization_link'
+          },
+          title: 'Mock Organization Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Organizations',
+        totalSelected: 0,
+        type: 'group'
+      },
+      Projects: {
+        applied: false,
+        children: [{
+          applied: false,
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_project_link'
+          },
+          title: 'Mock Project Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Projects',
+        totalSelected: 0,
+        type: 'group'
+      },
+      'Processing Levels': {
+        applied: false,
+        children: [{
+          applied: false,
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_processing_level_link'
+          },
+          title: 'Mock Processing Level Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Processing Levels',
+        totalSelected: 0,
+        type: 'group'
+      },
+      'Data Format': {
+        applied: false,
+        children: [{
+          applied: false,
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_data_format_link'
+          },
+          title: 'Mock Data Format Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Data Format',
+        totalSelected: 0,
+        type: 'group'
+      },
+      'Tiling System': {
+        applied: false,
+        children: [{
+          applied: false,
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_tiling_system_link'
+          },
+          title: 'Mock Tiling System Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Tiling System',
+        totalSelected: 0,
+        type: 'group'
+      },
+      'Horizontal Data Resolution': {
+        applied: false,
+        children: [{
+          applied: false,
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_horizontal_data_resolution_link'
+          },
+          title: 'Mock Horizontal Data Resolution Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Horizontal Data Resolution',
+        totalSelected: 0,
+        type: 'group'
+      }
     },
     featureFacets: {
       availableFromAwsCloud: false,
@@ -200,6 +187,7 @@ function setup(overrideProps = {}) {
     ...overrideProps
   }
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   const enzymeWrapper = shallow(<Facets {...props} />)
 
   return {
@@ -431,7 +419,6 @@ describe('Facets component', () => {
       type: 'filter'
     }])
   })
-
 
   test('featureFacetHandler calls changeFeatureFacet', () => {
     const mock = jest.spyOn(facetUtils, 'changeFeatureFacet').mockImplementationOnce(() => jest.fn())

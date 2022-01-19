@@ -127,7 +127,8 @@ export class PanelItem extends Component {
                 isActive,
                 panelScrollableNodeRef: this.scrollableNodeRef
               })
-            )}
+            )
+          }
         </>
       )
 

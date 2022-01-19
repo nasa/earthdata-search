@@ -6,12 +6,12 @@ import { withRouter } from 'react-router-dom'
 import actions from '../../actions'
 import AdminRetrieval from '../../components/AdminRetrieval/AdminRetrieval'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   retrievals: state.admin.retrievals.byId
 })
 
-export const mapDispatchToProps = dispatch => ({
-  onFetchAdminRetrieval: id => dispatch(actions.fetchAdminRetrieval(id))
+export const mapDispatchToProps = (dispatch) => ({
+  onFetchAdminRetrieval: (id) => dispatch(actions.fetchAdminRetrieval(id))
 })
 
 export class AdminRetrievalContainer extends Component {
@@ -51,7 +51,11 @@ AdminRetrievalContainer.defaultProps = {
 }
 
 AdminRetrievalContainer.propTypes = {
-  match: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }).isRequired,
   onFetchAdminRetrieval: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({})
 }

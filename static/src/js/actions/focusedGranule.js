@@ -12,12 +12,11 @@ import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
-
 /**
  * Sets the focused granule value in redux
  * @param {String} payload Concept ID of the granule to set as focused
  */
-export const updateFocusedGranule = payload => ({
+export const updateFocusedGranule = (payload) => ({
   type: UPDATE_FOCUSED_GRANULE,
   payload
 })
@@ -170,7 +169,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
  * Change the focusedGranule, and download that granule metadata
  * @param {String} granuleId
  */
-export const changeFocusedGranule = granuleId => (dispatch) => {
+export const changeFocusedGranule = (granuleId) => (dispatch) => {
   dispatch(updateFocusedGranule(granuleId))
 
   if (granuleId !== '') {

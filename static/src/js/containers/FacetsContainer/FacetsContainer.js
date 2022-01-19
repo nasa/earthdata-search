@@ -6,7 +6,7 @@ import actions from '../../actions/index'
 
 import Facets from '../../components/Facets/Facets'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onChangeCmrFacet:
     (e, facetLinkInfo, facet, applied) => dispatch(
       actions.changeCmrFacet(e, facetLinkInfo, facet, applied)
@@ -14,18 +14,18 @@ export const mapDispatchToProps = dispatch => ({
   onChangeFeatureFacet:
     (e, facetLinkInfo) => dispatch(actions.changeFeatureFacet(e, facetLinkInfo)),
   onTriggerViewAllFacets:
-    category => dispatch(actions.triggerViewAllFacets(category))
+    (category) => dispatch(actions.triggerViewAllFacets(category))
 })
 
-export const mapStateToProps = state => ({
-  facets: state.searchResults.facets,
+export const mapStateToProps = (state) => ({
+  facetsById: state.searchResults.facets.byId,
   featureFacets: state.facetsParams.feature,
   portal: state.portal
 })
 
 export const FacetsContainer = (props) => {
   const {
-    facets,
+    facetsById,
     featureFacets,
     portal,
     onChangeCmrFacet,
@@ -35,7 +35,7 @@ export const FacetsContainer = (props) => {
 
   return (
     <Facets
-      facets={facets}
+      facetsById={facetsById}
       featureFacets={featureFacets}
       portal={portal}
       onChangeCmrFacet={onChangeCmrFacet}
@@ -46,7 +46,7 @@ export const FacetsContainer = (props) => {
 }
 
 FacetsContainer.propTypes = {
-  facets: PropTypes.shape({}).isRequired,
+  facetsById: PropTypes.shape({}).isRequired,
   featureFacets: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,

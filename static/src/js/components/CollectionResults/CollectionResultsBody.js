@@ -70,7 +70,7 @@ const CollectionResultsBody = ({
   const loadMoreItems = isLoading || loadingFirstCollections ? () => {} : loadNextPage
 
   // Callback to check if a particular collection has loaded.
-  const isItemLoaded = index => !hasNextPage || index < collectionList.length
+  const isItemLoaded = (index) => !hasNextPage || index < collectionList.length
 
   return (
     <div className="collection-results-body">
@@ -119,8 +119,13 @@ const CollectionResultsBody = ({
 
 CollectionResultsBody.propTypes = {
   browser: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({}).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({
+    allIds: PropTypes.arrayOf(PropTypes.string),
+    hits: PropTypes.number,
+    isLoading: PropTypes.bool,
+    isLoaded: PropTypes.bool
+  }).isRequired,
   loadNextPage: PropTypes.func.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

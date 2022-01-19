@@ -109,7 +109,6 @@ export const Tree = ({
   )
 }
 
-
 Tree.propTypes = {
   collectionId: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,

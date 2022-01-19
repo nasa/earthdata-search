@@ -47,7 +47,11 @@ VariableDetailsPanel.defaultProps = {
 }
 
 VariableDetailsPanel.propTypes = {
-  variable: PropTypes.shape({})
+  variable: PropTypes.shape({
+    definition: PropTypes.string,
+    longName: PropTypes.string,
+    name: PropTypes.string
+  })
 }
 
 export default pure(VariableDetailsPanel)

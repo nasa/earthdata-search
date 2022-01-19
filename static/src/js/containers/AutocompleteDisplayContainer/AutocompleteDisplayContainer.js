@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 import actions from '../../actions'
 import AutocompleteDisplay from '../../components/AutocompleteDisplay/AutocompleteDisplay'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onRemoveAutocompleteValue:
-    data => dispatch(actions.removeAutocompleteValue(data))
+    (data) => dispatch(actions.removeAutocompleteValue(data))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   selected: state.autocomplete.selected
 })
 

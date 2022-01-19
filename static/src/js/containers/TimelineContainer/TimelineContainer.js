@@ -13,17 +13,20 @@ import { isPath } from '../../util/isPath'
 
 import Timeline from '../../components/Timeline/Timeline'
 
-export const mapDispatchToProps = dispatch => ({
-  onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onChangeTimelineQuery: query => dispatch(actions.changeTimelineQuery(query)),
+export const mapDispatchToProps = (dispatch) => ({
+  onChangeQuery:
+    (query) => dispatch(actions.changeQuery(query)),
+  onChangeTimelineQuery:
+    (query) => dispatch(actions.changeTimelineQuery(query)),
   onToggleOverrideTemporalModal:
-    open => dispatch(actions.toggleOverrideTemporalModal(open)),
+    (open) => dispatch(actions.toggleOverrideTemporalModal(open)),
   onMetricsTimeline:
-    type => dispatch(metricsTimeline(type)),
-  onToggleTimeline: open => dispatch(actions.toggleTimeline(open))
+    (type) => dispatch(metricsTimeline(type)),
+  onToggleTimeline:
+    (open) => dispatch(actions.toggleTimeline(open))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   browser: state.browser,
   collectionsMetadata: getCollectionsMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),

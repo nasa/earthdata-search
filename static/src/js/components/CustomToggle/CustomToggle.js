@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -44,7 +45,7 @@ export const CustomToggle = React.forwardRef(({
   )
 
   // Default the event handlers to the onClick
-  let buttonEventHandlers = { onClick: e => handleClick(e) }
+  let buttonEventHandlers = { onClick: (e) => handleClick(e) }
 
   // If openOnHover is set and the handler functions are defined, set the event handlers
   if (
@@ -53,8 +54,8 @@ export const CustomToggle = React.forwardRef(({
     && typeof handleClose === 'function'
   ) {
     buttonEventHandlers = {
-      onMouseIn: e => handleOpen(e),
-      onMouseOut: e => handleClose(e)
+      onMouseIn: (e) => handleOpen(e),
+      onMouseOut: (e) => handleClose(e)
     }
   }
 

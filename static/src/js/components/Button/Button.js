@@ -115,8 +115,7 @@ export const Button = React.forwardRef(({
               <Spinner type="dots" color="white" size="tiny" inline />
             </span>
           )
-          : children
-        }
+          : children}
       </span>
       {(!spinner && icon && iconPosition === 'right') && (
         <EDSCIcon

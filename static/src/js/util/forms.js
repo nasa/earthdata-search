@@ -26,7 +26,6 @@ export const buildValidationSchema = (fields, fieldName = '', schema = {}) => {
   return validation
 }
 
-
 /**
  * Build an object containing Yup validation for each of the fields
  * @param {Array} fields The field config

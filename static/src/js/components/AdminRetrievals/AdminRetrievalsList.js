@@ -158,7 +158,16 @@ AdminRetrievalsList.defaultProps = {
 
 AdminRetrievalsList.propTypes = {
   historyPush: PropTypes.func.isRequired,
-  retrievals: PropTypes.shape({}),
+  retrievals: PropTypes.shape({
+    allIds: PropTypes.arrayOf(PropTypes.string),
+    byId: PropTypes.shape({}),
+    pagination: PropTypes.shape({
+      pageNum: PropTypes.number,
+      pageSize: PropTypes.number,
+      totalResults: PropTypes.number
+    }),
+    sortKey: PropTypes.arrayOf(PropTypes.string)
+  }),
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired
 }

@@ -11,11 +11,12 @@ import Button from '../Button/Button'
 import CollapsePanel from '../CollapsePanel/CollapsePanel'
 import CollectionDetailsDataCenter from './CollectionDetailsDataCenter'
 import CollectionDetailsMinimap from './CollectionDetailsMinimap'
-import SplitBadge from '../SplitBadge/SplitBadge'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Skeleton from '../Skeleton/Skeleton'
 import { collectionDetailsSkeleton } from './skeleton'
+import SplitBadge from '../SplitBadge/SplitBadge'
 
+import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { pluralize } from '../../util/pluralize'
 
 import './CollectionDetailsBody.scss'
@@ -120,12 +121,12 @@ export const CollectionDetailsBody = ({
     dataCenters,
     directDistributionInformation,
     doi = {},
-    hasAllMetadata,
     gibsLayers,
+    hasAllMetadata,
     nativeDataFormats,
     relatedUrls,
-    services,
     scienceKeywords,
+    services,
     shortName,
     spatial,
     temporal,
@@ -258,38 +259,36 @@ export const CollectionDetailsBody = ({
                 className="collection-details-body__info"
                 data-test-id="collection-details-body__info-related-urls"
               >
-                {
-                  <>
-                    <dt>Related URLs</dt>
-                    <dd className="collection-details-body__links collection-details-body__links--horizontal">
-                      {
-                        formattedRelatedUrls.length > 0 && (
-                          <>
-                            {formattedRelatedUrls}
-                            <Button
-                              className="link link--separated collection-details-body__link"
-                              type="button"
-                              variant="link"
-                              bootstrapVariant="link"
-                              label="View All Related URLs"
-                              onClick={() => onToggleRelatedUrlsModal(true)}
-                            >
-                              View All Related URLs
-                            </Button>
-                          </>
-                        )
-                      }
-                      <a
-                        className="link link--separated link--external collection-details-body__link"
-                        href={urls.html.href}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        View More Info
-                      </a>
-                    </dd>
-                  </>
-                }
+                <>
+                  <dt>Related URLs</dt>
+                  <dd className="collection-details-body__links collection-details-body__links--horizontal">
+                    {
+                      formattedRelatedUrls.length > 0 && (
+                        <>
+                          {formattedRelatedUrls}
+                          <Button
+                            className="link link--separated collection-details-body__link"
+                            type="button"
+                            variant="link"
+                            bootstrapVariant="link"
+                            label="View All Related URLs"
+                            onClick={() => onToggleRelatedUrlsModal(true)}
+                          >
+                            View All Related URLs
+                          </Button>
+                        </>
+                      )
+                    }
+                    <a
+                      className="link link--separated link--external collection-details-body__link"
+                      href={urls.html.href}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      View More Info
+                    </a>
+                  </dd>
+                </>
               </dl>
               {
                 temporal && (
@@ -299,10 +298,12 @@ export const CollectionDetailsBody = ({
                   >
                     <dt>Temporal Extent</dt>
                     <dd>
-                      {temporal.map((entry, i) => {
-                        const key = `temporal_entry_${i}`
-                        return <span key={key}>{entry}</span>
-                      })}
+                      {
+                        temporal.map((entry, i) => {
+                          const key = `temporal_entry_${i}`
+                          return <span key={key}>{entry}</span>
+                        })
+                      }
                     </dd>
                   </dl>
                 )
@@ -540,7 +541,7 @@ export const CollectionDetailsBody = ({
 }
 
 CollectionDetailsBody.propTypes = {
-  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionMetadata: collectionMetadataPropType.isRequired,
   isActive: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

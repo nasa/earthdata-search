@@ -5,7 +5,9 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import Skeleton from '../Skeleton/Skeleton'
+
 import { collectionResultsItemSkeleton } from './skeleton'
+import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 
 import CollectionResultsItem from './CollectionResultsItem'
 
@@ -84,7 +86,19 @@ export const CollectionResultsListItem = memo(({
 CollectionResultsListItem.displayName = 'CollectionResultsListItem'
 
 CollectionResultsListItem.propTypes = {
-  data: PropTypes.shape({}).isRequired,
+  data: PropTypes.shape({
+    collectionsMetadata: PropTypes.arrayOf(
+      collectionMetadataPropType
+    ),
+    isItemLoaded: PropTypes.bool,
+    onAddProjectCollection: PropTypes.func,
+    onRemoveCollectionFromProject: PropTypes.func,
+    onViewCollectionDetails: PropTypes.func,
+    onViewCollectionGranules: PropTypes.func,
+    setSize: PropTypes.func,
+    windowWidth: PropTypes.number
+
+  }).isRequired,
   index: PropTypes.number.isRequired,
   style: PropTypes.shape({}).isRequired
 }

@@ -6,12 +6,12 @@ import actions from '../../actions'
 
 import SpatialDisplay from '../../components/SpatialDisplay/SpatialDisplay'
 
-export const mapDispatchToProps = dispatch => ({
-  onChangeQuery: query => dispatch(actions.changeQuery(query)),
+export const mapDispatchToProps = (dispatch) => ({
+  onChangeQuery: (query) => dispatch(actions.changeQuery(query)),
   onRemoveSpatialFilter: () => dispatch(actions.removeSpatialFilter())
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,

@@ -5,7 +5,6 @@ import {
   Switch
 } from 'react-router-dom'
 
-
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { isDefaultPortal } from '../../util/portals'
@@ -92,7 +91,12 @@ const AppLogo = ({
 }
 
 AppLogo.propTypes = {
-  portal: PropTypes.shape({}).isRequired
+  portal: PropTypes.shape({
+    logo: PropTypes.shape({}),
+    org: PropTypes.string,
+    portalId: PropTypes.string,
+    title: PropTypes.string
+  }).isRequired
 }
 
 export default AppLogo

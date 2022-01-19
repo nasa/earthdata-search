@@ -42,7 +42,7 @@ export const OrderProgressItem = ({
     if (totalGranulesInOrder === 0) {
       totalPercentProcessed = 0
     } else {
-      totalPercentProcessed = Math.floor(numGranulesProccessed / totalGranulesInOrder * 100)
+      totalPercentProcessed = Math.floor((numGranulesProccessed / totalGranulesInOrder) * 100)
     }
   }
 
@@ -96,7 +96,12 @@ export const OrderProgressItem = ({
 }
 
 OrderProgressItem.propTypes = {
-  order: PropTypes.shape({}).isRequired
+  order: PropTypes.shape({
+    order_number: PropTypes.string,
+    state: PropTypes.string,
+    order_information: PropTypes.shape({}),
+    type: PropTypes.string
+  }).isRequired
 }
 
 export default OrderProgressItem

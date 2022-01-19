@@ -20,7 +20,9 @@ const EDSCTableCell = ({ cell }) => {
 }
 
 EDSCTableCell.propTypes = {
-  cell: PropTypes.shape({}).isRequired
+  cell: PropTypes.shape({
+    value: PropTypes.string
+  }).isRequired
 }
 
 export default EDSCTableCell

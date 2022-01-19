@@ -139,7 +139,10 @@ SidebarSection.defaultProps = {
 SidebarSection.propTypes = {
   children: PropTypes.node.isRequired,
   footerButtonProps: PropTypes.shape({}),
-  headerAction: PropTypes.shape({}),
+  headerAction: PropTypes.shape({
+    onClick: PropTypes.func,
+    title: PropTypes.string
+  }),
   moreActionsDropdownItems: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -150,9 +153,9 @@ SidebarSection.propTypes = {
       })
     })
   ),
+  padded: PropTypes.bool,
   sectionTitle: PropTypes.string,
-  titleIcon: PropTypes.func,
-  padded: PropTypes.bool
+  titleIcon: PropTypes.func
 }
 
 export default SidebarSection

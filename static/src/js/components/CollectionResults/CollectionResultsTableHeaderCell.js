@@ -93,9 +93,20 @@ const CollectionResultsTableHeaderCell = (props) => {
 }
 
 CollectionResultsTableHeaderCell.propTypes = {
-  column: PropTypes.shape({}).isRequired,
-  cell: PropTypes.shape({}).isRequired,
-  row: PropTypes.shape({}).isRequired
+  cell: PropTypes.shape({
+    value: PropTypes.string
+  }).isRequired,
+  column: PropTypes.shape({
+    customProps: PropTypes.shape({
+      onViewCollectionGranules: PropTypes.func,
+      onAddProjectCollection: PropTypes.func,
+      onRemoveCollectionFromProject: PropTypes.func,
+      onViewCollectionDetails: PropTypes.func
+    })
+  }).isRequired,
+  row: PropTypes.shape({
+    original: PropTypes.shape({})
+  }).isRequired
 }
 
 export default CollectionResultsTableHeaderCell

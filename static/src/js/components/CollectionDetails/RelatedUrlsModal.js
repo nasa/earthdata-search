@@ -72,7 +72,9 @@ export class RelatedUrlsModal extends Component {
 }
 
 RelatedUrlsModal.propTypes = {
-  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({
+    relatedUrls: PropTypes.arrayOf(PropTypes.shape({}))
+  }).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

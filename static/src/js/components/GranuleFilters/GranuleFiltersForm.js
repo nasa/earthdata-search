@@ -158,7 +158,7 @@ export const GranuleFiltersForm = (props) => {
       } = selectedGrid)
 
       // Find the selected tiling system within the collection metadata
-      const systemFromMetadata = tilingIdentificationSystems.find(system => (
+      const systemFromMetadata = tilingIdentificationSystems.find((system) => (
         system.tilingIdentificationSystemName === tilingSystem
       ))
 
@@ -414,7 +414,6 @@ export const GranuleFiltersForm = (props) => {
                   setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
                   setFieldValue('temporal.recurringDayEnd', newEndDate.dayOfYear())
 
-
                   handleSubmit()
                 }}
                 onSubmitStart={(startDate) => {
@@ -665,7 +664,7 @@ export const GranuleFiltersForm = (props) => {
                         noGutters
                       >
                         <Form.Label column="sm" sm={5}>
-                            Minimum
+                          Minimum
                         </Form.Label>
                         <Col sm={7}>
                           <Form.Control
@@ -796,8 +795,21 @@ export const GranuleFiltersForm = (props) => {
 }
 
 GranuleFiltersForm.propTypes = {
-  collectionMetadata: PropTypes.shape({}).isRequired,
-  errors: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({
+    id: PropTypes.string,
+    isOpenSearch: PropTypes.bool,
+    tags: PropTypes.shape({}),
+    tilingIdentificationSystems: PropTypes.arrayOf(PropTypes.shape({}))
+  }).isRequired,
+  errors: PropTypes.shape({
+    cloudCover: PropTypes.shape({}),
+    gridCoords: PropTypes.string,
+    orbitNumber: PropTypes.shape({}),
+    equatorCrossingLongitude: PropTypes.shape({}),
+    equatorCrossingDate: PropTypes.shape({}),
+    temporal: PropTypes.shape({}),
+    readableGranuleName: PropTypes.string
+  }).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
@@ -805,8 +817,32 @@ GranuleFiltersForm.propTypes = {
   onUndoExcludeGranule: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
-  touched: PropTypes.shape({}).isRequired,
-  values: PropTypes.shape({}).isRequired
+  touched: PropTypes.shape({
+    cloudCover: PropTypes.shape({}),
+    gridCoords: PropTypes.string,
+    orbitNumber: PropTypes.shape({}),
+    equatorCrossingLongitude: PropTypes.shape({}),
+    equatorCrossingDate: PropTypes.shape({}),
+    temporal: PropTypes.shape({}),
+    readableGranuleName: PropTypes.string
+  }).isRequired,
+  values: PropTypes.shape({
+    browseOnly: PropTypes.bool,
+    cloudCover: PropTypes.shape({}),
+    dayNightFlag: PropTypes.string,
+    equatorCrossingDate: PropTypes.shape({}),
+    equatorCrossingLongitude: PropTypes.shape({}),
+    readableGranuleName: PropTypes.string,
+    gridCoords: PropTypes.string,
+    onlineOnly: PropTypes.bool,
+    orbitNumber: PropTypes.shape({}),
+    tilingSystem: PropTypes.string,
+    temporal: PropTypes.shape({
+      isRecurring: PropTypes.bool,
+      endDate: PropTypes.string,
+      startDate: PropTypes.string
+    })
+  }).isRequired
 }
 
 export default GranuleFiltersForm

@@ -52,7 +52,7 @@ export const EchoForm = ({
   }
 
   // Format dates in correct format for Echoforms
-  const formatDate = date => moment.utc(date).format('YYYY-MM-DDTHH:mm:ss')
+  const formatDate = (date) => moment.utc(date).format('YYYY-MM-DDTHH:mm:ss')
 
   // Get the temporal prepopulated values
   const getTemporalPrepopulateValues = (temporal, overrideTemporal) => {
@@ -165,12 +165,31 @@ EchoForm.propTypes = {
   collectionId: PropTypes.string.isRequired,
   form: PropTypes.string.isRequired,
   methodKey: PropTypes.string.isRequired,
+  onUpdateAccessMethod: PropTypes.func.isRequired,
+  overrideTemporal: PropTypes.shape({
+    endDate: PropTypes.string,
+    startDate: PropTypes.string
+  }).isRequired,
   rawModel: PropTypes.string,
   shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({}).isRequired,
-  temporal: PropTypes.shape({}).isRequired,
-  overrideTemporal: PropTypes.shape({}).isRequired,
-  onUpdateAccessMethod: PropTypes.func.isRequired
+  spatial: PropTypes.shape({
+    boundingBox: PropTypes.arrayOf(
+      PropTypes.string
+    ),
+    circle: PropTypes.arrayOf(
+      PropTypes.string
+    ),
+    point: PropTypes.arrayOf(
+      PropTypes.string
+    ),
+    polygon: PropTypes.arrayOf(
+      PropTypes.string
+    )
+  }).isRequired,
+  temporal: PropTypes.shape({
+    endDate: PropTypes.string,
+    startDate: PropTypes.string
+  }).isRequired
 }
 
 export default EchoForm

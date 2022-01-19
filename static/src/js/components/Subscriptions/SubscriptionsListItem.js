@@ -136,7 +136,13 @@ SubscriptionsListItem.propTypes = {
   hasExactlyMatchingGranuleQuery: PropTypes.bool.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
   onUpdateSubscription: PropTypes.func.isRequired,
-  subscription: PropTypes.shape({}).isRequired
+  subscription: PropTypes.shape({
+    collectionConceptId: PropTypes.string,
+    conceptId: PropTypes.string,
+    name: PropTypes.string,
+    nativeId: PropTypes.string,
+    query: PropTypes.string
+  }).isRequired
 }
 
 export default SubscriptionsListItem

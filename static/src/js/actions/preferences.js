@@ -13,17 +13,17 @@ import PreferencesRequest from '../util/request/preferencesRequest'
 import actions from './index'
 import { changeMap } from './map'
 
-export const setIsSubmitting = payload => ({
+export const setIsSubmitting = (payload) => ({
   type: SET_PREFERENCES_IS_SUBMITTING,
   payload
 })
 
-export const setPreferences = payload => ({
+export const setPreferences = (payload) => ({
   type: SET_PREFERENCES,
   payload
 })
 
-export const setPreferencesFromJwt = jwtToken => (dispatch) => {
+export const setPreferencesFromJwt = (jwtToken) => (dispatch) => {
   if (!jwtToken) return
 
   const decoded = jwt.decode(jwtToken)
@@ -64,7 +64,7 @@ export const setPreferencesFromJwt = jwtToken => (dispatch) => {
   }
 }
 
-export const updatePreferences = data => (dispatch, getState) => {
+export const updatePreferences = (data) => (dispatch, getState) => {
   const { formData: preferences } = data
 
   const state = getState()

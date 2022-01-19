@@ -308,11 +308,11 @@ export class AccessMethod extends Component {
     if (isOpendap) {
       // Filter the supportedOutputFormats to only those formats CMR supports
       supportedOutputFormatOptions = supportedOutputFormats.filter(
-        format => ousFormatMapping[format] !== undefined
+        (format) => ousFormatMapping[format] !== undefined
       )
 
       // Build options for supportedOutputFormats
-      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
+      supportedOutputFormatOptions = supportedOutputFormatOptions.map((format) => (
         <option key={format} value={ousFormatMapping[format]}>{format}</option>
       ))
     }
@@ -323,16 +323,16 @@ export class AccessMethod extends Component {
     if (isHarmony) {
       // Filter the supportedOutputFormats to only those formats Harmony supports
       supportedOutputFormatOptions = supportedOutputFormats.filter(
-        format => harmonyFormatMapping[format] !== undefined
+        (format) => harmonyFormatMapping[format] !== undefined
       )
 
       // Build options for supportedOutputFormats
-      supportedOutputFormatOptions = supportedOutputFormatOptions.map(format => (
+      supportedOutputFormatOptions = supportedOutputFormatOptions.map((format) => (
         <option key={format} value={harmonyFormatMapping[format]}>{format}</option>
       ))
 
       // Build options for supportedOutputFormats
-      supportedOutputProjectionOptions = supportedOutputProjections.map(format => (
+      supportedOutputProjectionOptions = supportedOutputProjections.map((format) => (
         <option key={format} value={format}>{format}</option>
       ))
     }
@@ -407,7 +407,7 @@ export class AccessMethod extends Component {
                 : (
                   <RadioList
                     defaultValue={selectedAccessMethod}
-                    onChange={methodName => this.handleAccessMethodSelection(methodName)}
+                    onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
                   >
                     {radioList}
                   </RadioList>
@@ -483,7 +483,7 @@ export class AccessMethod extends Component {
                         {
                           !(startDate || endDate) && (
                             <p className="access-method__section-status mb-0">
-                              {'No temporal range selected. Make a temporal selection to enable temporal subsetting.'}
+                              No temporal range selected. Make a temporal selection to enable temporal subsetting.
                             </p>
                           )
                         }
@@ -610,7 +610,11 @@ AccessMethod.propTypes = {
   accessMethods: PropTypes.shape({}),
   index: PropTypes.number,
   isActive: PropTypes.bool,
-  metadata: PropTypes.shape({}),
+  metadata: PropTypes.shape({
+    conceptId: PropTypes.string,
+    endDate: PropTypes.string,
+    startDate: PropTypes.string
+  }),
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
   onTogglePanels: PropTypes.func,
@@ -618,7 +622,11 @@ AccessMethod.propTypes = {
   selectedAccessMethod: PropTypes.string,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}),
-  temporal: PropTypes.shape({}).isRequired,
+  temporal: PropTypes.shape({
+    endDate: PropTypes.string,
+    isRecurring: PropTypes.bool,
+    startDate: PropTypes.string
+  }).isRequired,
   overrideTemporal: PropTypes.shape({}).isRequired
 }
 

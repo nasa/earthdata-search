@@ -6,16 +6,17 @@ import actions from '../../actions'
 
 import OverrideTemporalModal from '../../components/OverrideTemporalModal/OverrideTemporalModal'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   isOpen: state.ui.overrideTemporalModal.isOpen,
   temporalSearch: state.query.collection.temporal,
   timeline: state.timeline
 })
 
-export const mapDispatchToProps = dispatch => ({
-  onChangeProjectQuery: query => dispatch(actions.changeProjectQuery(query)),
+export const mapDispatchToProps = (dispatch) => ({
+  onChangeProjectQuery:
+    (query) => dispatch(actions.changeProjectQuery(query)),
   onToggleOverrideTemporalModal:
-    open => dispatch(actions.toggleOverrideTemporalModal(open))
+    (open) => dispatch(actions.toggleOverrideTemporalModal(open))
 })
 
 export const OverrideTemporalModalContainer = ({

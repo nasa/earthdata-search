@@ -92,7 +92,7 @@ export const CollectionResultsList = ({
 
   // At the default size, collection result items will render at 162px tall, so
   // that value is used as a default here.
-  const getSize = useCallback(index => sizeMap.current[index] || 162, [])
+  const getSize = useCallback((index) => sizeMap.current[index] || 162, [])
 
   return (
     <div className="collection-results-list">

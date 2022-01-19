@@ -41,7 +41,7 @@ export const getFocusedCollectionGranuleMetadata = createSelector(
 
     // Extract metadata for granules that are found in `allIds` of the current collection search
     return Object.keys(granulesMetadata)
-      .filter(key => collectionGranuleIds.includes(key))
+      .filter((key) => collectionGranuleIds.includes(key))
       .reduce((obj, key) => ({
         ...obj,
         [key]: granulesMetadata[key]

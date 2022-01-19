@@ -3,7 +3,7 @@ export const buildDataCenters = (json) => {
 
   if (!dataCenters || !dataCenters.length) return undefined
 
-  return dataCenters.map(dataCenter => ({
+  return dataCenters.map((dataCenter) => ({
     shortname: `${dataCenter.shortName.toLowerCase() === 'not provided' ? 'Name Not Provided' : dataCenter.shortName}`,
     longname: dataCenter.longName,
     roles: dataCenter.roles,

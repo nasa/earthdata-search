@@ -10,7 +10,6 @@ import {
 import { IoShare } from 'react-icons/io5'
 import { Dropdown } from 'react-bootstrap'
 
-
 import { commafy } from '../../util/commafy'
 import { locationPropType } from '../../util/propTypes/location'
 
@@ -112,7 +111,7 @@ const GranuleResultsActions = ({
 
   const dropdownMenuClasses = classNames(
     'dropdown-menu--carat-bottom-left',
-    'dropdown-menu--condensed',
+    'dropdown-menu--condensed'
   )
 
   const downloadButton = (
@@ -187,7 +186,7 @@ const GranuleResultsActions = ({
                 >
                   <Dropdown.Header>Open search in:</Dropdown.Header>
                   {
-                    handoffLinks.map(link => (
+                    handoffLinks.map((link) => (
                       <Dropdown.Item
                         key={link.title}
                         className="link link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"

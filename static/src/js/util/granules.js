@@ -421,10 +421,10 @@ export const isS3Link = (link) => {
  */
 export const createDataLinks = (links = []) => {
   // All 'http' data links
-  const httpDataLinks = links.filter(link => isDataLink(link, 'http'))
+  const httpDataLinks = links.filter((link) => isDataLink(link, 'http'))
 
   // Strip filenames from httpDataLinks
-  const filenames = httpDataLinks.map(link => link.href.substr(link.href.lastIndexOf('/') + 1).replace('.html', ''))
+  const filenames = httpDataLinks.map((link) => link.href.substr(link.href.lastIndexOf('/') + 1).replace('.html', ''))
 
   // Find any 'ftp' data links that have filenames not already included with 'http' links
   const ftpLinks = links.filter((link) => {
@@ -447,7 +447,7 @@ export const createDataLinks = (links = []) => {
  * @param {Array} links List of links from granule metadata
  * @returns {Array} List of s3 links filtered from input links
  */
-export const createS3Links = (links = []) => links.filter(link => isS3Link(link))
+export const createS3Links = (links = []) => links.filter((link) => isS3Link(link))
 
 /**
 * Pull out download links from within the granule metadata
@@ -470,7 +470,6 @@ export const getDownloadUrls = (granules) => {
   // need to flatten the result before we return it
   return [].concat(...urlArrays)
 }
-
 
 /**
 * Pull out S3 links from within the granule metadata

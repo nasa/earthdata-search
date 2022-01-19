@@ -19,7 +19,7 @@ const encodeGranules = (isOpenSearch, granuleIds) => {
   // CMR Granule Ids
   // G12345-PROVIDER
   const provider = granuleIds[0].split('-')[1]
-  const formattedGranuleIds = granuleIds.map(granuleId => granuleId.split('G')[1].split('-')[0])
+  const formattedGranuleIds = granuleIds.map((granuleId) => granuleId.split('G')[1].split('-')[0])
 
   return `${formattedGranuleIds.join('!')}!${provider}`
 }
@@ -41,7 +41,7 @@ const decodedGranules = (key, granules) => {
 
     const granulesList = decodedGranules.split('!')
     const provider = granulesList.pop()
-    const granuleIds = granulesList.map(granuleId => `G${granuleId}-${provider}`)
+    const granuleIds = granulesList.map((granuleId) => `G${granuleId}-${provider}`)
 
     result = {
       isOpenSearch: false,

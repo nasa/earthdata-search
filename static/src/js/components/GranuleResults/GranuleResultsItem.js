@@ -1,22 +1,27 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
+
 import { LinkContainer } from 'react-router-bootstrap'
 import {
-  FaPlus, FaMinus, FaInfoCircle, FaTimesCircle
+  FaInfoCircle,
+  FaMinus,
+  FaPlus,
+  FaTimesCircle
 } from 'react-icons/fa'
 
 import murmurhash3 from '../../util/murmurhash3'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { locationPropType } from '../../util/propTypes/location'
+import { portalPath } from '../../../../../sharedUtils/portalPath'
 
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleResultsItem.scss'
 
@@ -284,10 +289,33 @@ const GranuleResultsItem = forwardRef(({
   )
 })
 
+GranuleResultsItem.displayName = 'GranuleResultsItem'
+
 GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
-  granule: PropTypes.shape({}).isRequired,
+  granule: PropTypes.shape({
+    id: PropTypes.string,
+    isOpenSearch: PropTypes.bool,
+    browseFlag: PropTypes.bool,
+    browseUrl: PropTypes.string,
+    dataLinks: PropTypes.arrayOf(
+      PropTypes.shape({})
+    ),
+    granuleThumbnail: PropTypes.string,
+    handleClick: PropTypes.func,
+    handleMouseEnter: PropTypes.func,
+    handleMouseLeave: PropTypes.func,
+    isHoveredGranule: PropTypes.bool,
+    isFocusedGranule: PropTypes.bool,
+    onlineAccessFlag: PropTypes.bool,
+    s3Links: PropTypes.arrayOf(
+      PropTypes.shape({})
+    ),
+    timeEnd: PropTypes.string,
+    timeStart: PropTypes.string,
+    title: PropTypes.string
+  }).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
   location: locationPropType.isRequired,

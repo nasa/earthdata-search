@@ -32,7 +32,7 @@ export const getFocusedCollectionGranuleQuery = createSelector(
 )
 
 export const getFocusedGranuleQueryString = createSelector(
-  [state => state, getFocusedCollectionMetadata],
+  [(state) => state, getFocusedCollectionMetadata],
   (state, collectionMetadata) => {
     const { id: collectionId } = collectionMetadata
     // Extract granule search parameters from redux specific to the focused collection

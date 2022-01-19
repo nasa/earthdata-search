@@ -7,25 +7,26 @@ import actions from '../../actions/index'
 
 import SearchForm from '../../components/SearchForm/SearchForm'
 
-export const mapDispatchToProps = dispatch => ({
-  onChangeQuery: query => dispatch(actions.changeQuery(query)),
+export const mapDispatchToProps = (dispatch) => ({
+  onChangeQuery:
+    (query) => dispatch(actions.changeQuery(query)),
   onChangeFocusedCollection:
-    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onClearFilters:
     () => dispatch(actions.clearFilters()),
   onToggleAdvancedSearchModal:
-    state => dispatch(actions.toggleAdvancedSearchModal(state)),
+    (state) => dispatch(actions.toggleAdvancedSearchModal(state)),
   onCancelAutocomplete:
     () => dispatch(actions.cancelAutocomplete()),
   onClearAutocompleteSuggestions:
     () => dispatch(actions.clearAutocompleteSuggestions()),
   onFetchAutocomplete:
-    data => dispatch(actions.fetchAutocomplete(data)),
+    (data) => dispatch(actions.fetchAutocomplete(data)),
   onSelectAutocompleteSuggestion:
-    data => dispatch(actions.selectAutocompleteSuggestion(data))
+    (data) => dispatch(actions.selectAutocompleteSuggestion(data))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
   autocomplete: state.autocomplete,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
@@ -132,7 +133,9 @@ SearchFormContainer.defaultProps = {
 }
 
 SearchFormContainer.propTypes = {
-  advancedSearch: PropTypes.shape({}),
+  advancedSearch: PropTypes.shape({
+    regionSearch: PropTypes.shape({})
+  }),
   autocomplete: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
   circleSearch: PropTypes.arrayOf(PropTypes.string),
@@ -152,8 +155,16 @@ SearchFormContainer.propTypes = {
   onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
-  shapefile: PropTypes.shape({}),
-  temporalSearch: PropTypes.shape({})
+  shapefile: PropTypes.shape({
+    shapefileError: PropTypes.string,
+    shapefileId: PropTypes.string,
+    shapefileLoaded: PropTypes,
+    shapefileLoading: PropTypes.bool
+  }),
+  temporalSearch: PropTypes.shape({
+    endDate: PropTypes.string,
+    startDate: PropTypes.string
+  })
 }
 
 // Export redux-connected component for use in application

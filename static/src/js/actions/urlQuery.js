@@ -15,7 +15,7 @@ import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
 import ProjectRequest from '../util/request/projectRequest'
 
-const restoreFromUrl = payload => ({
+const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
   payload
 })
@@ -214,7 +214,7 @@ const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
  * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=false'
  * changeUrl({ pathname: '/a-new-url' })
  */
-export const changeUrl = options => (dispatch, getState) => {
+export const changeUrl = (options) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors

@@ -89,7 +89,6 @@ export function dateOutsideRange(value, startDate, endDate) {
   const momentStartVal = moment(startDate, dateFormat, true)
   const momentEndVal = moment(endDate, dateFormat, true)
 
-
   if (!endDate) {
     return momentVal.isSameOrAfter(momentStartVal)
   }

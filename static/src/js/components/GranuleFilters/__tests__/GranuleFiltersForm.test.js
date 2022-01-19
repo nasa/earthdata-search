@@ -32,6 +32,7 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   const enzymeWrapper = shallow(<GranuleFiltersForm {...props} />)
 
   return {

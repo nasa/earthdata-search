@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { AdminRetrievalDetails } from '../AdminRetrievalDetails/AdminRetrievalDetails'
 import { AdminPage } from '../AdminPage/AdminPage'
 
-
 export const AdminRetrieval = ({
   retrieval
 }) => (

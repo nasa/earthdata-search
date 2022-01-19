@@ -32,6 +32,7 @@ function setup() {
     onClearAutocompleteSuggestions: jest.fn()
   }
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   const enzymeWrapper = shallow(<SearchFormContainer {...props} />)
 
   return {

@@ -6,16 +6,16 @@ import { withRouter } from 'react-router-dom'
 import actions from '../../actions'
 import { SavedProjects } from '../../components/SavedProjects/SavedProjects'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   savedProjects: state.savedProjects.projects,
   savedProjectsIsLoading: state.savedProjects.isLoading,
   savedProjectsIsLoaded: state.savedProjects.isLoaded
 })
 
-export const mapDispatchToProps = dispatch => ({
-  onDeleteSavedProject: projectId => dispatch(actions.deleteSavedProject(projectId)),
+export const mapDispatchToProps = (dispatch) => ({
+  onDeleteSavedProject: (projectId) => dispatch(actions.deleteSavedProject(projectId)),
   onFetchSavedProjects: () => dispatch(actions.fetchSavedProjects()),
-  onChangePath: path => dispatch(actions.changePath(path))
+  onChangePath: (path) => dispatch(actions.changePath(path))
 })
 
 export class SavedProjectsContainer extends Component {

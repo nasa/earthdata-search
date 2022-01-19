@@ -152,7 +152,6 @@ const rotationDirection = (angles) => {
   return delta
 }
 
-
 // Returns a number indicating which pole(s) the given latlngs cross
 // North Pole: (containsPole(...) & NORTH_POLE) != 0
 // South Pole: (containsPole(...) & SOUTH_POLE) != 0
@@ -167,7 +166,7 @@ const containsPole = (latlngs) => {
   // Add second point to the end per the algorithm
   newLatLngs = ((() => {
     const result = []
-    newLatLngs.forEach(latlng => result.push(latLng(latlng)))
+    newLatLngs.forEach((latlng) => result.push(latLng(latlng)))
     return result
   })())
   newLatLngs.push(newLatLngs[1])
@@ -210,7 +209,7 @@ const containsPole = (latlngs) => {
   } if (delta < EPSILON) {
     const angles = ((() => {
       const result1 = []
-      newLatLngs.forEach(latlng => result1.push(latlng.lng))
+      newLatLngs.forEach((latlng) => result1.push(latlng.lng))
       return result1
     })())
     const dir = rotationDirection(angles)
@@ -227,7 +226,6 @@ const containsPole = (latlngs) => {
   }
   return 0
 }
-
 
 // Calculates the area within the given latlngs
 export const calculateArea = (origLatlngs) => {
@@ -346,9 +344,8 @@ function __guard__(value, transform) {
 const antimeridianCrossing = (latlng0, latlng1) => {
   const arc = new Arc(Coordinate.fromLatLng(latlng0),
     Coordinate.fromLatLng(latlng1))
-  return __guard__(arc.antimeridianCrossing(), x => x.toLatLng())
+  return __guard__(arc.antimeridianCrossing(), (x) => x.toLatLng())
 }
-
 
 // Ensures that latlngs is counterclockwise around its smallest area
 // This is an in-place operation modifying the original list.
@@ -579,7 +576,7 @@ export const dividePolygon = (latlngs) => {
     interiors.push(interior)
   }
   // for (interior of interiorStack) {
-  interiorStack.forEach(interior => interiors.push(interior))
+  interiorStack.forEach((interior) => interiors.push(interior))
 
   // Special case: If we contain both poles but do not have an edge crossing the meridian
   // as dealt with above, reverse our drawing.
@@ -606,9 +603,9 @@ export const dividePolygon = (latlngs) => {
 // Takes an array of lat/lon pairs and returns array of objects with lat/lon keys
 // input: ['10,0','20,10']
 // output: [{ lat: 0, lng: 10 }, { lat: 10, lng: 20 }]
-export const getShape = points => points.map(pointStr => L.latLng(pointStr.split(',').reverse()))
+export const getShape = (points) => points.map((pointStr) => L.latLng(pointStr.split(',').reverse()))
 
 // Splits a string of points on every other comma
 // input: '10,0,20,10'
 // output: ['10,0','20,10']
-export const splitListOfPoints = points => points.match(/[^,]+,[^,]+/g)
+export const splitListOfPoints = (points) => points.match(/[^,]+,[^,]+/g)

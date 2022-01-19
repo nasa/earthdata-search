@@ -17,12 +17,12 @@ import actions from '../index'
 import { handleError } from '../errors'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
-export const setAdminRetrieval = payload => ({
+export const setAdminRetrieval = (payload) => ({
   type: SET_ADMIN_RETRIEVAL,
   payload
 })
 
-export const setAdminRetrievals = retrievals => ({
+export const setAdminRetrievals = (retrievals) => ({
   type: SET_ADMIN_RETRIEVALS,
   payload: retrievals
 })
@@ -35,17 +35,17 @@ export const setAdminRetrievalsLoaded = () => ({
   type: SET_ADMIN_RETRIEVALS_LOADED
 })
 
-export const setAdminRetrievalLoading = id => ({
+export const setAdminRetrievalLoading = (id) => ({
   type: SET_ADMIN_RETRIEVAL_LOADING,
   payload: id
 })
 
-export const setAdminRetrievalLoaded = id => ({
+export const setAdminRetrievalLoaded = (id) => ({
   type: SET_ADMIN_RETRIEVAL_LOADED,
   payload: id
 })
 
-export const setAdminRetrievalsPagination = data => ({
+export const setAdminRetrievalsPagination = (data) => ({
   type: SET_ADMIN_RETRIEVALS_PAGINATION,
   payload: data
 })
@@ -53,7 +53,7 @@ export const setAdminRetrievalsPagination = data => ({
 /**
  * Fetch a retrieval from the database
  */
-export const fetchAdminRetrieval = id => (dispatch, getState) => {
+export const fetchAdminRetrieval = (id) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -133,13 +133,13 @@ export const fetchAdminRetrievals = () => (dispatch, getState) => {
   return response
 }
 
-export const adminViewRetrieval = retrievalId => (dispatch) => {
+export const adminViewRetrieval = (retrievalId) => (dispatch) => {
   dispatch(actions.changeUrl({
     pathname: `/admin/retrievals/${retrievalId}`
   }))
 }
 
-export const updateAdminRetrievalsSortKey = sortKey => (dispatch) => {
+export const updateAdminRetrievalsSortKey = (sortKey) => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
     payload: sortKey
@@ -148,7 +148,7 @@ export const updateAdminRetrievalsSortKey = sortKey => (dispatch) => {
   dispatch(actions.fetchAdminRetrievals())
 }
 
-export const updateAdminRetrievalsPageNum = pageNum => (dispatch) => {
+export const updateAdminRetrievalsPageNum = (pageNum) => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
     payload: pageNum

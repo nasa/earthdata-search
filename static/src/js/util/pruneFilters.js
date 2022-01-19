@@ -4,7 +4,7 @@ import { isPlainObject } from 'lodash'
  * Prunes the provided filters of empty values
  * @param {Object} filters CMR filters
  */
-export const pruneFilters = filters => (
+export const pruneFilters = (filters) => (
   Object.keys(filters).reduce((obj, key) => {
     const newObj = obj
 
@@ -14,7 +14,7 @@ export const pruneFilters = filters => (
       if (filters[key]) {
         newObj[key] = filters[key]
       }
-    } else if (Object.values(filters[key]).some(key => !!key)) {
+    } else if (Object.values(filters[key]).some((key) => !!key)) {
       // Otherwise, only add an object if it contains at least one truthy value
       newObj[key] = filters[key]
     }

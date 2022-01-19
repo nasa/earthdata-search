@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { Badge, Card } from 'react-bootstrap'
 
 import './CollectionDetailsDataCenter.scss'
@@ -118,7 +119,16 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
 )
 
 CollectionDetailsDataCenter.propTypes = {
-  dataCenter: PropTypes.shape({}).isRequired,
+  dataCenter: PropTypes.shape({
+    shortname: PropTypes.string,
+    contactInformation: PropTypes.shape({
+      contactMechanisms: PropTypes.arrayOf(
+        PropTypes.shape({})
+      )
+    }),
+    contactInstruction: PropTypes.string,
+    roles: PropTypes.arrayOf(PropTypes.string)
+  }).isRequired,
   item: PropTypes.number.isRequired
 }
 

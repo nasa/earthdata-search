@@ -34,7 +34,7 @@ const savedProjectsReducer = (state = initialState, action) => {
     case REMOVE_SAVED_PROJECT: {
       const { projects } = state
 
-      const index = findIndex(projects, project => project.id === action.payload)
+      const index = findIndex(projects, (project) => project.id === action.payload)
 
       return {
         ...state,

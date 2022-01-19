@@ -38,6 +38,7 @@ function setup() {
     }
   }
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   const enzymeWrapper = shallow(<CollectionResultsBodyContainer {...props} />)
 
   return {

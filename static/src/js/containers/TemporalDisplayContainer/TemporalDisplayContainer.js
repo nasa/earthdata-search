@@ -6,11 +6,11 @@ import actions from '../../actions'
 
 import TemporalDisplay from '../../components/TemporalDisplay/TemporalDisplay'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onRemoveTimelineFilter: () => dispatch(actions.removeTemporalFilter())
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   temporalSearch: state.query.collection.temporal
 })
 

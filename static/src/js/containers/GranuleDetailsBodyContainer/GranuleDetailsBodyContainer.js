@@ -8,7 +8,7 @@ import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleDetailsBody from '../../components/GranuleDetails/GranuleDetailsBody'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   earthdataEnvironment: getEarthdataEnvironment(state),
   granuleMetadata: getFocusedGranuleMetadata(state)

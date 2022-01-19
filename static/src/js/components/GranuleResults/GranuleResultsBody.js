@@ -169,7 +169,7 @@ const GranuleResultsBody = ({
   const loadMoreItems = isLoading || loadingFirstGranules ? () => {} : loadNextPage
 
   // Callback to check if a particular granule has loaded.
-  const isItemLoaded = index => !hasNextPage || index < granulesList.length
+  const isItemLoaded = (index) => !hasNextPage || index < granulesList.length
 
   return (
     <div className="granule-results-body">
@@ -264,8 +264,16 @@ GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
-  granuleQuery: PropTypes.shape({}).isRequired,
-  granuleSearchResults: PropTypes.shape({}).isRequired,
+  granuleQuery: PropTypes.shape({
+    excludedGranuleIds: PropTypes.arrayOf(PropTypes.string)
+  }).isRequired,
+  granuleSearchResults: PropTypes.shape({
+    allIds: PropTypes.arrayOf(PropTypes.shape({})),
+    hits: PropTypes.number,
+    isLoaded: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    loadTime: PropTypes.number
+  }).isRequired,
   granulesMetadata: PropTypes.objectOf(
     PropTypes.shape({
       browseFlag: PropTypes.bool,
@@ -298,7 +306,9 @@ GranuleResultsBody.propTypes = {
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired
+  project: PropTypes.shape({
+    collections: PropTypes.arrayOf(PropTypes.shape({}))
+  }).isRequired
 }
 
 export default GranuleResultsBody

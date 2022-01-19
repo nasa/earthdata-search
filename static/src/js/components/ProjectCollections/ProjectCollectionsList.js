@@ -125,8 +125,12 @@ ProjectCollectionsList.propTypes = {
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired
+  panels: PropTypes.shape({
+    activePanel: PropTypes.string
+  }).isRequired,
+  project: PropTypes.shape({
+    collections: PropTypes.shape({})
+  }).isRequired
 }
 
 export default withRouter(ProjectCollectionsList)

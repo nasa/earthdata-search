@@ -23,7 +23,7 @@ const findSimpleMbr = (latlngs) => {
   let minLng = 181
   let maxLng = -181
 
-  const coords = (latlngs.map(latlng => Coordinate.fromLatLng(latlng)))
+  const coords = (latlngs.map((latlng) => Coordinate.fromLatLng(latlng)))
 
   const len = coords.length
   const latLngsWithInflections = []
@@ -153,7 +153,7 @@ const CIRCUMFERENCE = 40075017
 // Earth circumference (40075017m) is hardcoded in this formula which isn't good for leaflet, but works for EDSC
 
 // Find the difference in latitude for the circle radius
-const getLatRadius = radius => (radius / CIRCUMFERENCE) * 360
+const getLatRadius = (radius) => (radius / CIRCUMFERENCE) * 360
 
 // Find the difference in longitude for the circle radius
 const getLngRadius = (lat, radius) => getLatRadius(radius) / Math.cos((Math.PI / 180) * lat)
@@ -182,7 +182,7 @@ export const mbr = (spatial) => {
   }
 
   if (circle) {
-    const [lng, lat, radius] = circle.split(',').map(num => parseFloat(num, 10))
+    const [lng, lat, radius] = circle.split(',').map((num) => parseFloat(num, 10))
 
     // Find the difference in the lat and lng
     const lngRadius = getLngRadius(lat, radius)
@@ -220,7 +220,7 @@ export const mbr = (spatial) => {
     if (points[0] === points[points.length - 1]) points.pop()
 
     const { interiors } = dividePolygon(getShape(points))
-    const mbrs = (interiors.map(lls => findSimpleMbr(lls)))
+    const mbrs = (interiors.map((lls) => findSimpleMbr(lls)))
     return mergeMbrs(mbrs)
   }
 

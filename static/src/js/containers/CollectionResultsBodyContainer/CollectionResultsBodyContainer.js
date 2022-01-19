@@ -10,7 +10,7 @@ import { getProjectCollectionsIds } from '../../selectors/project'
 
 import CollectionResultsBody from '../../components/CollectionResults/CollectionResultsBody'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   browser: state.browser,
   collectionsSearch: state.searchResults.collections,
   collectionsMetadata: state.metadata.collections,
@@ -19,17 +19,17 @@ export const mapStateToProps = state => ({
   query: state.query.collection
 })
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onAddProjectCollection:
-    collectionId => dispatch(actions.addProjectCollection(collectionId)),
+    (collectionId) => dispatch(actions.addProjectCollection(collectionId)),
   onRemoveCollectionFromProject:
-    collectionId => dispatch(actions.removeCollectionFromProject(collectionId)),
+    (collectionId) => dispatch(actions.removeCollectionFromProject(collectionId)),
   onViewCollectionGranules:
-    collectionId => dispatch(actions.viewCollectionGranules(collectionId)),
+    (collectionId) => dispatch(actions.viewCollectionGranules(collectionId)),
   onViewCollectionDetails:
-    collectionId => dispatch(actions.viewCollectionDetails(collectionId)),
+    (collectionId) => dispatch(actions.viewCollectionDetails(collectionId)),
   onChangeCollectionPageNum:
-    data => dispatch(actions.changeCollectionPageNum(data))
+    (data) => dispatch(actions.changeCollectionPageNum(data))
 })
 
 export const CollectionResultsBodyContainer = (props) => {
@@ -86,7 +86,9 @@ CollectionResultsBodyContainer.propTypes = {
   panelView: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  query: PropTypes.shape({}).isRequired
+  query: PropTypes.shape({
+    pageNum: PropTypes.number
+  }).isRequired
 }
 
 export default withRouter(

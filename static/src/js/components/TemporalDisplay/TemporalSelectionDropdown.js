@@ -342,5 +342,11 @@ TemporalSelectionDropdown.defaultProps = {
 
 TemporalSelectionDropdown.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
-  temporalSearch: PropTypes.shape({})
+  temporalSearch: PropTypes.shape({
+    endDate: PropTypes.string,
+    isRecurring: PropTypes.bool,
+    recurringDayEnd: PropTypes.string,
+    recurringDayStart: PropTypes.string,
+    startDate: PropTypes.string
+  })
 }

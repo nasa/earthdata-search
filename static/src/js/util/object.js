@@ -5,6 +5,6 @@
  * @return {string} A key in the object
  */
 const getObjectKeyByValue = (object, value) => Object.keys(object)
-  .find(key => object[key] === value)
+  .find((key) => object[key] === value)
 
 export default getObjectKeyByValue

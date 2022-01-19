@@ -360,16 +360,26 @@ export const Timeline = ({
 Timeline.propTypes = {
   browser: PropTypes.shape({}).isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
-  pathname: PropTypes.string.isRequired,
-  showOverrideModal: PropTypes.bool.isRequired,
-  temporalSearch: PropTypes.shape({}).isRequired,
-  timeline: PropTypes.shape({}).isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,
-  onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   onMetricsTimeline: PropTypes.func.isRequired,
+  onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   onToggleTimeline: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired
+  pathname: PropTypes.string.isRequired,
+  showOverrideModal: PropTypes.bool.isRequired,
+  temporalSearch: PropTypes.shape({
+    endDate: PropTypes.string,
+    startDate: PropTypes.string
+  }).isRequired,
+  timeline: PropTypes.shape({
+    query: PropTypes.shape({
+      center: PropTypes.string,
+      interval: PropTypes.string,
+      start: PropTypes.string,
+      end: PropTypes.string
+    })
+  }).isRequired
 }
 
 export default Timeline

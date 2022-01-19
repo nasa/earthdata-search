@@ -21,7 +21,6 @@ export function parseSpatial(str) {
     coords = newStr.split(',')
   }
 
-
   const len = coords.length - 1
   return (() => {
     const result = []
@@ -47,7 +46,7 @@ export function getPolygons(metadata = {}) {
   const { polygons: metadataPolygons } = metadata
   let polygons = []
   if (metadataPolygons && metadataPolygons !== null) {
-    polygons = metadataPolygons.map(p => p.map(s => parseSpatial(s)))
+    polygons = metadataPolygons.map((p) => p.map((s) => parseSpatial(s)))
     return polygons
   }
   return polygons

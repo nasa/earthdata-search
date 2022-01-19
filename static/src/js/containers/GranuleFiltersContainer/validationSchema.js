@@ -55,7 +55,7 @@ export const ValidationSchema = (props) => {
     tilingSystem: Yup.string(),
     gridCoords: Yup.string()
       .when('tilingSystem', {
-        is: tilingSystemValue => !isEmpty(tilingSystemValue),
+        is: (tilingSystemValue) => !isEmpty(tilingSystemValue),
         then: Yup.string().required(errors.gridCoords.required)
       }),
     cloudCover: Yup.object().shape({
@@ -117,13 +117,13 @@ export const ValidationSchema = (props) => {
         .transform(nullableTemporal)
         .nullable()
         .test('start-before-end', errors.equatorCrossingDate.startBeforeEnd, startBeforeEnd)
-        .test('inside-global-equatorial-crossing-date', errors.equatorCrossingDate.outsideRange, value => dateOutsideRange(value, startDate, endDate)),
+        .test('inside-global-equatorial-crossing-date', errors.equatorCrossingDate.outsideRange, (value) => dateOutsideRange(value, startDate, endDate)),
       endDate: Yup.date()
         .label('End')
         .typeError(errors.equatorCrossingDate.invalidEndDate)
         .transform(nullableTemporal)
         .nullable()
-        .test('inside-global-equatorial-crossing-date', errors.equatorCrossingDate.outsideRange, value => dateOutsideRange(value, startDate, endDate))
+        .test('inside-global-equatorial-crossing-date', errors.equatorCrossingDate.outsideRange, (value) => dateOutsideRange(value, startDate, endDate))
     }),
     temporal: Yup.object().shape({
       startDate: Yup.date()
@@ -132,13 +132,13 @@ export const ValidationSchema = (props) => {
         .transform(nullableTemporal)
         .nullable()
         .test('start-before-end', errors.temporal.startBeforeEnd, startBeforeEnd)
-        .test('inside-global-temporal', errors.temporal.outsideRange, value => dateOutsideRange(value, startDate, endDate)),
+        .test('inside-global-temporal', errors.temporal.outsideRange, (value) => dateOutsideRange(value, startDate, endDate)),
       endDate: Yup.date()
         .label('End')
         .typeError(errors.temporal.invalidEndDate)
         .transform(nullableTemporal)
         .nullable()
-        .test('inside-global-temporal', errors.temporal.outsideRange, value => dateOutsideRange(value, startDate, endDate))
+        .test('inside-global-temporal', errors.temporal.outsideRange, (value) => dateOutsideRange(value, startDate, endDate))
     }),
     readableGranuleName: Yup.string()
   })

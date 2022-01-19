@@ -27,7 +27,6 @@ export const encodeFeatures = (features) => {
   return encodedString
 }
 
-
 /**
  * Decodes a Feature Facet parameter string into an object
  * @param {string} string A `!` delimited string of the Feature Facet values

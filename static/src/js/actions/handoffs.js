@@ -7,8 +7,7 @@ import { getSotoLayers } from '../selectors/handoffs'
 
 import { handleError } from './errors'
 
-
-export const setSotoLayers = payload => ({
+export const setSotoLayers = (payload) => ({
   type: SET_SOTO_LAYERS,
   payload
 })

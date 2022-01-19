@@ -22,12 +22,13 @@ import crsProjections from '../../util/map/crs'
 import projections from '../../util/map/projections'
 import murmurhash3 from '../../util/murmurhash3'
 
+import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 import { getMapPreferences } from '../../selectors/preferences'
 import { isPath } from '../../util/isPath'
+import { locationPropType } from '../../util/propTypes/location'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
 import GranuleGridLayer from '../../components/Map/GranuleGridLayer'
@@ -45,22 +46,28 @@ import './MapContainer.scss'
 
 const { BaseLayer, Overlay } = LayersControl
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
-    granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
-  onChangeMap: query => dispatch(actions.changeMap(query)),
+    (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
+  onChangeMap:
+    (query) => dispatch(actions.changeMap(query)),
   onExcludeGranule:
-    data => dispatch(actions.excludeGranule(data)),
-  onFetchShapefile: id => dispatch(actions.fetchShapefile(id)),
-  onSaveShapefile: data => dispatch(actions.saveShapefile(data)),
-  onShapefileErrored: data => dispatch(actions.shapefileErrored(data)),
-  onMetricsMap: type => dispatch(metricsMap(type)),
+    (data) => dispatch(actions.excludeGranule(data)),
+  onFetchShapefile:
+    (id) => dispatch(actions.fetchShapefile(id)),
+  onSaveShapefile:
+    (data) => dispatch(actions.saveShapefile(data)),
+  onShapefileErrored:
+    (data) => dispatch(actions.shapefileErrored(data)),
+  onMetricsMap:
+    (type) => dispatch(metricsMap(type)),
   onToggleTooManyPointsModal:
-    state => dispatch(actions.toggleTooManyPointsModal(state)),
-  onUpdateShapefile: data => dispatch(actions.updateShapefile(data))
+    (state) => dispatch(actions.toggleTooManyPointsModal(state)),
+  onUpdateShapefile:
+    (data) => dispatch(actions.updateShapefile(data))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   collectionsMetadata: state.metadata.collections,
   drawingNewLayer: state.ui.map.drawingNewLayer,
@@ -107,18 +114,6 @@ export class MapContainer extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeLeafletControls)
-  }
-
-  onMapReady(e) {
-    const { target: map } = e
-
-    this.controlContainer = map._controlContainer
-    const layersControl = this.controlContainer.querySelector('.leaflet-control-layers-list')
-
-    const attributionElement = document.createElement('footer')
-    attributionElement.classList.add('leaflet-control-layers-attribution')
-    attributionElement.innerHTML = '* © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    layersControl.appendChild(attributionElement)
   }
 
   handleMoveend(event) {
@@ -183,7 +178,7 @@ export class MapContainer extends Component {
       zoom: 2
     }
 
-    const Projection = Object.keys(projections).find((key => (
+    const Projection = Object.keys(projections).find(((key) => (
       projections[key] === projection
     )))
 
@@ -201,6 +196,18 @@ export class MapContainer extends Component {
 
     onMetricsMap(`Set Projection: ${Projection}`)
     onChangeMap({ ...map })
+  }
+
+  onMapReady(e) {
+    const { target: map } = e
+
+    this.controlContainer = map._controlContainer
+    const layersControl = this.controlContainer.querySelector('.leaflet-control-layers-list')
+
+    const attributionElement = document.createElement('footer')
+    attributionElement.classList.add('leaflet-control-layers-attribution')
+    attributionElement.innerHTML = '* © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    layersControl.appendChild(attributionElement)
   }
 
   /**
@@ -462,22 +469,37 @@ MapContainer.propTypes = {
   ]).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
-  granuleSearchResults: PropTypes.shape({}).isRequired,
+  granuleSearchResults: PropTypes.shape({
+    allIds: PropTypes.arrayOf(PropTypes.string),
+    excludedGranuleIds: PropTypes.arrayOf(PropTypes.string),
+    isOpenSearch: PropTypes.bool
+  }).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
-  map: PropTypes.shape({}),
-  mapPreferences: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
-  router: PropTypes.shape({}).isRequired,
-  shapefile: PropTypes.shape({}).isRequired,
+  map: PropTypes.shape({
+    overlays: PropTypes.shape({
+      coastlines: PropTypes.bool,
+      referenceFeatures: PropTypes.bool,
+      referenceLabels: PropTypes.bool
+    })
+  }),
+  mapPreferences: PropTypes.shape({
+    baseLayer: PropTypes.string,
+    overlayLayers: PropTypes.shape({})
+  }).isRequired,
   onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFetchShapefile: PropTypes.func.isRequired,
+  onMetricsMap: PropTypes.func.isRequired,
   onSaveShapefile: PropTypes.func.isRequired,
   onShapefileErrored: PropTypes.func.isRequired,
-  onMetricsMap: PropTypes.func.isRequired,
   onToggleTooManyPointsModal: PropTypes.func.isRequired,
-  onUpdateShapefile: PropTypes.func.isRequired
+  onUpdateShapefile: PropTypes.func.isRequired,
+  project: PropTypes.shape({}).isRequired,
+  router: PropTypes.shape({
+    location: locationPropType
+  }).isRequired,
+  shapefile: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

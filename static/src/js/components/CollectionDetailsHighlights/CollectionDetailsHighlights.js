@@ -6,6 +6,8 @@ import { collectionDetailsParagraph, collectionDetailsRow } from './skeleton'
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
+
+import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { locationPropType } from '../../util/propTypes/location'
 
 import './CollectionDetailsHighlights.scss'
@@ -183,8 +185,11 @@ export const CollectionDetailsHighlights = ({
 }
 
 CollectionDetailsHighlights.propTypes = {
-  collectionMetadata: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({}).isRequired,
+  collectionMetadata: collectionMetadataPropType.isRequired,
+  collectionsSearch: PropTypes.shape({
+    isLoaded: PropTypes.bool,
+    isLoading: PropTypes.bool
+  }).isRequired,
   location: locationPropType.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

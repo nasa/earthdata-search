@@ -91,12 +91,14 @@ PreferencesNumberField.defaultProps = {
 }
 
 PreferencesNumberField.propTypes = {
-  schema: PropTypes.shape({}).isRequired,
-  name: PropTypes.string.isRequired,
   formData: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
   ]),
+  name: PropTypes.string.isRequired,
+  schema: PropTypes.shape({
+    description: PropTypes.string
+  }).isRequired,
   onChange: PropTypes.func.isRequired
 }
 

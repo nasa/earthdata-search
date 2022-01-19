@@ -17,16 +17,17 @@ import {
   projectCollectionItemFooter
 } from './skeleton'
 
+import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { convertSize } from '../../util/project'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { pluralize } from '../../util/pluralize'
 
+import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
-import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './ProjectCollectionItem.scss'
 
@@ -182,24 +183,22 @@ const ProjectCollectionItem = ({
         isLoaded ? (
           <>
             <ul className="project-collections-item__stats-list">
-              {
-                <>
-                  <li
-                    className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
-                  >
-                    {`${abbreviate(granuleCount, 1)} ${pluralize('Granule', granuleCount)}`}
-                  </li>
-                  {
-                    !isOpenSearch && (granuleCount > 0 && size && unit) && (
-                      <li
-                        className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
-                      >
-                        {`Est. Size ${size} ${unit}`}
-                      </li>
-                    )
-                  }
-                </>
-              }
+              <>
+                <li
+                  className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
+                >
+                  {`${abbreviate(granuleCount, 1)} ${pluralize('Granule', granuleCount)}`}
+                </li>
+                {
+                  !isOpenSearch && (granuleCount > 0 && size && unit) && (
+                    <li
+                      className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
+                    >
+                      {`Est. Size ${size} ${unit}`}
+                    </li>
+                  )
+                }
+              </>
             </ul>
             <div className="project-collections-item__footer">
               {
@@ -239,9 +238,9 @@ const ProjectCollectionItem = ({
 
 ProjectCollectionItem.propTypes = {
   activePanelSection: PropTypes.string.isRequired,
-  collectionMetadata: PropTypes.shape({}).isRequired,
   collectionCount: PropTypes.number.isRequired,
   collectionId: PropTypes.string.isRequired,
+  collectionMetadata: collectionMetadataPropType.isRequired,
   collectionsQuery: PropTypes.shape({}).isRequired,
   color: PropTypes.string.isRequired,
   handoffs: PropTypes.shape({}).isRequired,
@@ -252,11 +251,18 @@ ProjectCollectionItem.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
-  projectCollection: PropTypes.shape({}).isRequired
+  onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
+  projectCollection: PropTypes.shape({
+    granules: PropTypes.shape({
+      hits: PropTypes.number,
+      isLoaded: PropTypes.bool,
+      singleGranuleSize: PropTypes.number
+    }),
+    isVisible: PropTypes.bool
+  }).isRequired
 }
 
 export default ProjectCollectionItem

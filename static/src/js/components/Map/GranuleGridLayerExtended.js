@@ -106,12 +106,12 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       removedGranuleIds
     })
 
-    eventEmitter.on('map.mousemove', e => this._onEdscMousemove(e))
-    eventEmitter.on('map.mouseout', e => this._onEdscMouseout(e))
-    eventEmitter.on('map.click', e => this._onClick(e))
-    eventEmitter.on(`map.layer.${collectionId}.focusgranule`, granule => this._onEdscFocusgranule(granule))
-    eventEmitter.on(`map.layer.${collectionId}.stickygranule`, granule => this._onEdscStickygranule(granule))
-    eventEmitter.on('map.excludestickygranule', granuleId => this._onExcludeGranule(granuleId))
+    eventEmitter.on('map.mousemove', (e) => this._onEdscMousemove(e))
+    eventEmitter.on('map.mouseout', (e) => this._onEdscMouseout(e))
+    eventEmitter.on('map.click', (e) => this._onClick(e))
+    eventEmitter.on(`map.layer.${collectionId}.focusgranule`, (granule) => this._onEdscFocusgranule(granule))
+    eventEmitter.on(`map.layer.${collectionId}.stickygranule`, (granule) => this._onEdscStickygranule(granule))
+    eventEmitter.on('map.excludestickygranule', (granuleId) => this._onExcludeGranule(granuleId))
 
     this.originalOptions = { tileSize: 512 }
     return super.initialize(this.originalOptions)
@@ -129,12 +129,12 @@ export class GranuleGridLayerExtended extends L.GridLayer {
   // Overwrite the leaflet onRemove function
   onRemove(map) {
     super.onRemove(map)
-    eventEmitter.off('map.mousemove', e => this._onEdscMousemove(e))
-    eventEmitter.off('map.mouseout', e => this._onEdscMouseout(e))
-    eventEmitter.off('map.click', e => this._onClick(e))
-    eventEmitter.off(`map.layer.${this.collectionId}.focusgranule`, granule => this._onEdscFocusgranule(granule))
-    eventEmitter.off(`map.layer.${this.collectionId}.stickygranule`, granule => this._onEdscStickygranule(granule))
-    eventEmitter.off('map.excludestickygranule', granuleId => this._onExcludeGranule(granuleId))
+    eventEmitter.off('map.mousemove', (e) => this._onEdscMousemove(e))
+    eventEmitter.off('map.mouseout', (e) => this._onEdscMouseout(e))
+    eventEmitter.off('map.click', (e) => this._onClick(e))
+    eventEmitter.off(`map.layer.${this.collectionId}.focusgranule`, (granule) => this._onEdscFocusgranule(granule))
+    eventEmitter.off(`map.layer.${this.collectionId}.stickygranule`, (granule) => this._onEdscStickygranule(granule))
+    eventEmitter.off('map.excludestickygranule', (granuleId) => this._onExcludeGranule(granuleId))
 
     this.granules = null
   }
@@ -686,7 +686,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       ctx.beginPath()
       addPath(ctx, path)
 
-      holes.forEach(hole => addPath(ctx, hole))
+      holes.forEach((hole) => addPath(ctx, hole))
 
       if (path.line != null) {
         ctx.lineWidth = 4
@@ -809,7 +809,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       if (focusedGranuleId === '') {
         this._onEdscStickygranule({ granule: null })
       } else {
-        const [granule] = defaultGranules.filter(g => g.id === focusedGranuleId)
+        const [granule] = defaultGranules.filter((g) => g.id === focusedGranuleId)
         this._onEdscStickygranule({ granule })
       }
     }
@@ -908,7 +908,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     return (() => {
       const result = []
       events.forEach((event) => {
-        const method = `_on${event.split('.').map(str => capitalize(str)).join('')}`
+        const method = `_on${event.split('.').map((str) => capitalize(str)).join('')}`
         result.push(obj[onOrOff](event, this[method]))
       })
       return result

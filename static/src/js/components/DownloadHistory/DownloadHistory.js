@@ -38,7 +38,7 @@ export class DownloadHistory extends Component {
    */
   retrievalDescription(collections) {
     // Get the first collection with a valid title
-    const firstCollection = collections.find(collection => (Object.values(collection) && 'title' in collection))
+    const firstCollection = collections.find((collection) => (Object.values(collection) && 'title' in collection))
 
     // If no collection exists with a valid title we'll just display how many collections there are
     if (firstCollection) {
