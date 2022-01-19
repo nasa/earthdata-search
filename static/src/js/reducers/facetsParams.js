@@ -58,7 +58,7 @@ export const cmrFacetsReducer = (state = initialCmrState, action) => {
       const [key] = Object.keys(payload)
       const value = payload[key]
 
-      const index = findIndex(state[key], item => isEqual(item, value))
+      const index = findIndex(state[key], (item) => isEqual(item, value))
 
       return {
         ...state,

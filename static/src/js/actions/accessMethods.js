@@ -1,4 +1,3 @@
-
 import actions from './index'
 
 import { buildPromise } from '../util/buildPromise'
@@ -12,12 +11,11 @@ import { isDownloadable } from '../../../../sharedUtils/isDownloadable'
 
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
 
-
 /**
  * Fetch available access methods
  * @param {Object} collectionIds Collections to retrieve access methods for
  */
-export const fetchAccessMethods = collectionIds => async (dispatch, getState) => {
+export const fetchAccessMethods = (collectionIds) => async (dispatch, getState) => {
   const state = getState()
 
   // Get the selected Access Method

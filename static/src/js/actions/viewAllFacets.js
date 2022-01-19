@@ -16,19 +16,19 @@ import {
 import { handleError } from './errors'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
-export const updateViewAllFacets = payload => ({
+export const updateViewAllFacets = (payload) => ({
   type: UPDATE_VIEW_ALL_FACETS,
   payload
 })
 
-export const onViewAllFacetsLoading = category => ({
+export const onViewAllFacetsLoading = (category) => ({
   type: LOADING_VIEW_ALL_FACETS,
   payload: {
     selectedCategory: category
   }
 })
 
-export const onViewAllFacetsLoaded = payload => ({
+export const onViewAllFacetsLoaded = (payload) => ({
   type: LOADED_VIEW_ALL_FACETS,
   payload
 })
@@ -50,11 +50,10 @@ export const copyCMRFacets = () => (dispatch, getState) => {
   })
 }
 
-export const updateViewAllFacet = newParams => ({
+export const updateViewAllFacet = (newParams) => ({
   type: UPDATE_SELECTED_VIEW_ALL_FACET,
   payload: prepareCMRFacetPayload(newParams)
 })
-
 
 /**
  * Perform a collections request based on the current redux state.
@@ -110,12 +109,12 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   return response
 }
 
-export const triggerViewAllFacets = category => (dispatch) => {
+export const triggerViewAllFacets = (category) => (dispatch) => {
   dispatch(copyCMRFacets())
   dispatch(getViewAllFacets(category))
 }
 
-export const changeViewAllFacet = data => (dispatch) => {
+export const changeViewAllFacet = (data) => (dispatch) => {
   const { params, selectedCategory } = data
   dispatch(updateViewAllFacet(params))
   dispatch(getViewAllFacets(selectedCategory))

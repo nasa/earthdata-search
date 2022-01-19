@@ -5,11 +5,11 @@ import { connect } from 'react-redux'
 import actions from '../../actions/index'
 import { Banner } from '../../components/Banner/Banner'
 
-export const mapDispatchToProps = dispatch => ({
-  onRemoveError: id => dispatch(actions.removeError(id))
+export const mapDispatchToProps = (dispatch) => ({
+  onRemoveError: (id) => dispatch(actions.removeError(id))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   errors: state.errors
 })
 

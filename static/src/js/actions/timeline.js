@@ -12,12 +12,12 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { prepareTimelineParams } from '../util/timeline'
 
-export const updateTimelineIntervals = payload => ({
+export const updateTimelineIntervals = (payload) => ({
   type: UPDATE_TIMELINE_INTERVALS,
   payload
 })
 
-export const updateTimelineQuery = payload => ({
+export const updateTimelineQuery = (payload) => ({
   type: UPDATE_TIMELINE_QUERY,
   payload
 })
@@ -97,7 +97,7 @@ export const getTimeline = () => (dispatch, getState) => {
   return response
 }
 
-export const changeTimelineQuery = query => (dispatch) => {
+export const changeTimelineQuery = (query) => (dispatch) => {
   dispatch(updateTimelineQuery(query))
   dispatch(actions.getTimeline())
 }

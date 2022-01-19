@@ -9,7 +9,6 @@ import { FaPlus, FaMinus, FaHome } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
-
 /*
  * Prevents the default events.
 */
@@ -59,7 +58,7 @@ class ZoomExtended extends Control.Zoom {
       options.zoomHomeTitle,
       'leaflet-control-zoom-home',
       container,
-      (_this => e => _this.zoomHome(e))(this)
+      ((_this) => (e) => _this.zoomHome(e))(this)
     )
     // eslint-disable-next-line no-underscore-dangle
     container.insertBefore(home, this._zoomOutButton)

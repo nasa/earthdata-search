@@ -142,14 +142,14 @@ export class ProjectCollections extends Component {
                 {
                   !isValid && !tooManyGranules && !noGranules && !needsCustomization && (
                     <>
-                      {'Select a data access method for each collection in your project before downloading.'}
+                      Select a data access method for each collection in your project before downloading.
                     </>
                   )
                 }
                 {
                   !isValid && needsCustomization && (
                     <>
-                      {'One or more collections in your project have an access method selected that requires customization options. Please select a customization option or choose a different access method.'}
+                      One or more collections in your project have an access method selected that requires customization options. Please select a customization option or choose a different access method.
                     </>
                   )
                 }
@@ -163,14 +163,14 @@ export class ProjectCollections extends Component {
                 {
                   !isValid && tooManyGranules && (
                     <>
-                      {'One or more collections in your project contains too many granules. Adjust temporal constraints or remove the collections before downloading.'}
+                      One or more collections in your project contains too many granules. Adjust temporal constraints or remove the collections before downloading.
                     </>
                   )
                 }
                 {
                   !isValid && noGranules && (
                     <>
-                      {'One or more collections in your project does not contain granules. Adjust temporal constraints or remove the collections before downloading.'}
+                      One or more collections in your project does not contain granules. Adjust temporal constraints or remove the collections before downloading.
                     </>
                   )
                 }
@@ -197,7 +197,9 @@ export class ProjectCollections extends Component {
 }
 
 ProjectCollections.propTypes = {
-  collectionsQuery: PropTypes.shape({}).isRequired,
+  collectionsQuery: PropTypes.shape({
+    byId: PropTypes.shape({})
+  }).isRequired,
   handoffs: PropTypes.shape({}).isRequired,
   mapProjection: PropTypes.string.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
@@ -211,9 +213,14 @@ ProjectCollections.propTypes = {
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
-  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({
+    collections: PropTypes.shape({
+      allIds: PropTypes.arrayOf(PropTypes.string)
+    }),
+    isSubmitting: PropTypes.bool
+  }).isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }
 

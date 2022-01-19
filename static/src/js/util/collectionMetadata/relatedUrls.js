@@ -26,7 +26,7 @@ export const sortRelatedUrls = (a, b) => {
 }
 
 export const buildRelatedUrls = (json) => {
-  const { relatedUrls: relatedUrls = [] } = json
+  const { relatedUrls = [] } = json
 
   // Build out an array of the categories in the correct order
   const collectionUrls = {
@@ -106,13 +106,13 @@ export const buildRelatedUrls = (json) => {
   })
 
   // Sort all url lists
-  allRelatedUrls = allRelatedUrls.map(relatedUrlCat => ({
+  allRelatedUrls = allRelatedUrls.map((relatedUrlCat) => ({
     ...relatedUrlCat,
     urls: relatedUrlCat.urls.sort(sortRelatedUrls)
   }))
 
   // Return an empty array if no related urls are defined
-  if (allRelatedUrls.every(relatedUrlCat => !relatedUrlCat.urls.length)) return []
+  if (allRelatedUrls.every((relatedUrlCat) => !relatedUrlCat.urls.length)) return []
 
   return allRelatedUrls
 }

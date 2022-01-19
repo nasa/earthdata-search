@@ -13,7 +13,7 @@ import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionQuery: state.query.collection,
@@ -30,24 +30,24 @@ export const mapStateToProps = state => ({
   isExportRunning: state.ui.export.isExportRunning
 })
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onApplyGranuleFilters:
-    values => dispatch(actions.applyGranuleFilters(values)),
+    (values) => dispatch(actions.applyGranuleFilters(values)),
   onChangeQuery:
-    query => dispatch(actions.changeQuery(query)),
+    (query) => dispatch(actions.changeQuery(query)),
   onFocusedCollectionChange:
-    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onMetricsCollectionSortChange:
-    data => dispatch(metricsCollectionSortChange(data)),
+    (data) => dispatch(metricsCollectionSortChange(data)),
   onSetActivePanel:
-    panelId => dispatch(actions.setActivePanel(panelId)),
+    (panelId) => dispatch(actions.setActivePanel(panelId)),
   onToggleAboutCSDAModal:
-    state => dispatch(actions.toggleAboutCSDAModal(state)),
+    (state) => dispatch(actions.toggleAboutCSDAModal(state)),
   onToggleAboutCwicModal:
-    state => dispatch(actions.toggleAboutCwicModal(state)),
+    (state) => dispatch(actions.toggleAboutCwicModal(state)),
   onTogglePanels:
-    value => dispatch(actions.togglePanels(value)),
-  onExport: format => dispatch(actions.exportSearch(format))
+    (value) => dispatch(actions.togglePanels(value)),
+  onExport: (format) => dispatch(actions.exportSearch(format))
 })
 
 /**
@@ -154,7 +154,6 @@ SearchPanelsContainer.propTypes = {
   preferences: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired
 }
-
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(SearchPanelsContainer)

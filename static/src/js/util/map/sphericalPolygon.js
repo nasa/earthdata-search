@@ -30,7 +30,7 @@ L.SphericalPolygon = L.Polygon.extend({
     } else {
       newLatLngs = latlngs
     }
-    const leafletLatLngs = (newLatLngs.map(latlng => L.latLng(latlng)))
+    const leafletLatLngs = (newLatLngs.map((latlng) => L.latLng(latlng)))
 
     this._latlngs = leafletLatLngs.concat()
 

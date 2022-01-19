@@ -49,7 +49,7 @@ export const orderStates = {
  * @param {String} status - The current order status
  * @returns {String} - The formatted order status.
  */
-export const formatOrderStatus = status => status.split('_').map(word => upperFirst(word)).join(' ')
+export const formatOrderStatus = (status) => status.split('_').map((word) => upperFirst(word)).join(' ')
 
 /**
  * Returns whether or not the order state is 'failed', 'complete', or 'in progress' based on its order status.
@@ -76,19 +76,19 @@ export const aggregatedOrderStatus = (orders = []) => {
   // If no orders exist the state should return the default, creating
   if (orders.length === 0) return orderStatus
 
-  if (orders.some(order => getStateFromOrderStatus(order.state) === 'in_progress')) {
+  if (orders.some((order) => getStateFromOrderStatus(order.state) === 'in_progress')) {
     orderStatus = 'in progress'
   }
 
-  if (orders.every(order => getStateFromOrderStatus(order.state) === 'failed')) {
+  if (orders.every((order) => getStateFromOrderStatus(order.state) === 'failed')) {
     orderStatus = 'failed'
   }
 
-  if (orders.every(order => getStateFromOrderStatus(order.state) === 'complete')) {
+  if (orders.every((order) => getStateFromOrderStatus(order.state) === 'complete')) {
     orderStatus = 'complete'
   }
 
-  if (orders.every(order => getStateFromOrderStatus(order.state) === 'canceled')) {
+  if (orders.every((order) => getStateFromOrderStatus(order.state) === 'canceled')) {
     orderStatus = 'canceled'
   }
 

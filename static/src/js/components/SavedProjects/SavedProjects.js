@@ -26,20 +26,18 @@ export class SavedProjects extends Component {
     this.handleDeleteSavedProject = this.handleDeleteSavedProject.bind(this)
   }
 
-  /**
-   * Returns the URL for a project
-   * @param {String} path Path field saved in the project
-   * @param {String} id The project Id
-   */
-  projectTo(path, id) {
-    const [pathname] = path.split('?')
-    return `${pathname}?projectId=${id}`
+  handleDeleteSavedProject(projectId) {
+    const { onDeleteSavedProject } = this.props
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure you want to remove this project? This action cannot be undone.')) {
+      onDeleteSavedProject(projectId)
+    }
   }
 
   /**
-   * Determines the number of collections saved in the project path
-   * @param {String} path Project path
-   */
+ * Determines the number of collections saved in the project path
+ * @param {String} path Project path
+ */
   projectContents(path) {
     const search = path.split('?')[1]
     const { p = '' } = parse(search)
@@ -50,12 +48,14 @@ export class SavedProjects extends Component {
     return `${count} ${pluralize('Collection', count)}`
   }
 
-  handleDeleteSavedProject(projectId) {
-    const { onDeleteSavedProject } = this.props
-    // eslint-disable-next-line no-alert
-    if (window.confirm('Are you sure you want to remove this project? This action cannot be undone.')) {
-      onDeleteSavedProject(projectId)
-    }
+  /**
+ * Returns the URL for a project
+ * @param {String} path Path field saved in the project
+ * @param {String} id The project Id
+ */
+  projectTo(path, id) {
+    const [pathname] = path.split('?')
+    return `${pathname}?projectId=${id}`
   }
 
   render() {

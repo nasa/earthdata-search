@@ -42,7 +42,9 @@ export const Downloads = ({
 }
 
 Downloads.propTypes = {
-  match: PropTypes.shape({}).isRequired
+  match: PropTypes.shape({
+    path: PropTypes.string
+  }).isRequired
 }
 
 export default withRouter(Downloads)

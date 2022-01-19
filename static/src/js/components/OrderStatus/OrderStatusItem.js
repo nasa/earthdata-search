@@ -324,10 +324,10 @@ export class OrderStatusItem extends PureComponent {
             totalOrders += 1
           })
 
-          const currentPercentProcessed = Math.floor(totalProcessed / totalNumber * 100)
+          const currentPercentProcessed = Math.floor((totalProcessed / totalNumber) * 100)
 
           if (currentPercentProcessed) {
-            progressPercentage = Math.floor(totalProcessed / totalNumber * 100)
+            progressPercentage = Math.floor((totalProcessed / totalNumber) * 100)
           }
         }
 
@@ -377,10 +377,10 @@ export class OrderStatusItem extends PureComponent {
             totalOrders += 1
           })
 
-          const currentPercentProcessed = Math.floor(totalProgress / totalOrders * 100)
+          const currentPercentProcessed = Math.floor((totalProgress / totalOrders) * 100)
 
           if (currentPercentProcessed) {
-            progressPercentage = Math.floor(totalProgress / (totalOrders * 100) * 100)
+            progressPercentage = Math.floor((totalProgress / (totalOrders * 100)) * 100)
           }
 
           // Look at each order and pull the STAC catalog link
@@ -682,7 +682,7 @@ export class OrderStatusItem extends PureComponent {
                         {
                           orders.length > 1 && (
                             <div className="order-status-item__tab-intro">
-                              {'Due to the number of granules included in the request, it has been split into multiple orders. The data for each order will become available as they are processed.'}
+                              Due to the number of granules included in the request, it has been split into multiple orders. The data for each order will become available as they are processed.
                             </div>
                           )
                         }
@@ -718,10 +718,19 @@ OrderStatusItem.defaultProps = {
 }
 
 OrderStatusItem.propTypes = {
+  collection: PropTypes.shape({
+    access_method: PropTypes.shape({}),
+    collection_metadata: PropTypes.shape({}),
+    collection: PropTypes.shape({}),
+    granule_count: PropTypes.number,
+    id: PropTypes.string,
+    isLoaded: PropTypes.bool,
+    orders: PropTypes.arrayOf(PropTypes.shape({})),
+    retrieval_id: PropTypes.string
+  }).isRequired,
   defaultOpen: PropTypes.bool,
   earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
-  collection: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,

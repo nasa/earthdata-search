@@ -5,7 +5,7 @@ import { SET_DATA_QUALITY_SUMMARIES } from '../constants/actionTypes'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 
-export const setDataQualitySummaries = dqsData => ({
+export const setDataQualitySummaries = (dqsData) => ({
   type: SET_DATA_QUALITY_SUMMARIES,
   payload: dqsData
 })
@@ -13,7 +13,7 @@ export const setDataQualitySummaries = dqsData => ({
 /**
  * Fetch data quality summaries from echo rest
  */
-export const fetchDataQualitySummaries = catalogItemId => (dispatch, getState) => {
+export const fetchDataQualitySummaries = (catalogItemId) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors

@@ -62,37 +62,37 @@ import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
 
 const { granuleLinksPageSize } = getApplicationConfig()
 
-export const addMoreGranuleResults = payload => ({
+export const addMoreGranuleResults = (payload) => ({
   type: ADD_MORE_GRANULE_RESULTS,
   payload
 })
 
-export const updateGranuleResults = payload => ({
+export const updateGranuleResults = (payload) => ({
   type: UPDATE_GRANULE_RESULTS,
   payload
 })
 
-export const resetGranuleResults = payload => ({
+export const resetGranuleResults = (payload) => ({
   type: RESET_GRANULE_RESULTS,
   payload
 })
 
-export const updateGranuleMetadata = payload => ({
+export const updateGranuleMetadata = (payload) => ({
   type: UPDATE_GRANULE_METADATA,
   payload
 })
 
-export const addGranuleMetadata = payload => ({
+export const addGranuleMetadata = (payload) => ({
   type: ADD_GRANULE_METADATA,
   payload
 })
 
-export const onGranulesLoading = payload => ({
+export const onGranulesLoading = (payload) => ({
   type: LOADING_GRANULES,
   payload
 })
 
-export const onGranulesLoaded = payload => ({
+export const onGranulesLoaded = (payload) => ({
   type: LOADED_GRANULES,
   payload
 })
@@ -101,27 +101,27 @@ export const onGranulesErrored = () => ({
   type: ERRORED_GRANULES
 })
 
-export const startGranulesTimer = payload => ({
+export const startGranulesTimer = (payload) => ({
   type: STARTED_GRANULES_TIMER,
   payload
 })
 
-export const finishGranulesTimer = payload => ({
+export const finishGranulesTimer = (payload) => ({
   type: FINISHED_GRANULES_TIMER,
   payload
 })
 
-export const onExcludeGranule = payload => ({
+export const onExcludeGranule = (payload) => ({
   type: EXCLUDE_GRANULE_ID,
   payload
 })
 
-export const onUndoExcludeGranule = payload => ({
+export const onUndoExcludeGranule = (payload) => ({
   type: UNDO_EXCLUDE_GRANULE_ID,
   payload
 })
 
-export const updateGranuleLinks = payload => ({
+export const updateGranuleLinks = (payload) => ({
   type: UPDATE_GRANULE_LINKS,
   payload
 })
@@ -134,12 +134,12 @@ export const setGranuleLinksLoaded = () => ({
   type: SET_GRANULE_LINKS_LOADED
 })
 
-export const initializeCollectionGranulesResults = payload => ({
+export const initializeCollectionGranulesResults = (payload) => ({
   type: INITIALIZE_COLLECTION_GRANULES_RESULTS,
   payload
 })
 
-export const initializeCollectionGranulesQuery = payload => ({
+export const initializeCollectionGranulesQuery = (payload) => ({
   type: INITIALIZE_COLLECTION_GRANULES_QUERY,
   payload
 })
@@ -151,7 +151,7 @@ export const initializeCollectionGranulesQuery = payload => ({
  * @param {Object} retrievalCollectionData Retrieval Collection response from the database
  * @param {String} authToken The authenticated users' JWT token
  */
-export const fetchLinks = retrievalCollectionData => async (dispatch, getState) => {
+export const fetchLinks = (retrievalCollectionData) => async (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -275,8 +275,8 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
         id,
         percentDone,
         links: {
-          download: granuleDownloadLinks.map(lnk => lnk.href),
-          s3: granuleS3Links.map(lnk => lnk.href)
+          download: granuleDownloadLinks.map((lnk) => lnk.href),
+          s3: granuleS3Links.map((lnk) => lnk.href)
         }
       }))
 
@@ -298,7 +298,7 @@ export const fetchLinks = retrievalCollectionData => async (dispatch, getState) 
  * Fetch all relevant links from CMR Service Bridge (OPeNDAP) to the granules that are part of the provided collection
  * @param {Object} retrievalCollectionData Retreival Collection response from the database
  */
-export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState) => {
+export const fetchOpendapLinks = (retrievalCollectionData) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -400,7 +400,7 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
  * Fetch all relevant links from OpenSearch to the granules that are part of the provided collection
  * @param {Object} retrievalCollectionData Retreival Collection response from the database
  */
-export const fetchOpenSearchLinks = retrievalCollectionData => async (dispatch, getState) => {
+export const fetchOpenSearchLinks = (retrievalCollectionData) => async (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -444,7 +444,7 @@ export const fetchOpenSearchLinks = retrievalCollectionData => async (dispatch, 
       entry.forEach((granule) => {
         const { link: links = [] } = granule
 
-        const [downloadLink] = links.filter(link => link.rel === 'enclosure')
+        const [downloadLink] = links.filter((link) => link.rel === 'enclosure')
 
         const { href } = downloadLink
         items.push(href)
@@ -474,7 +474,7 @@ export const fetchOpenSearchLinks = retrievalCollectionData => async (dispatch, 
   return response
 }
 
-export const fetchRetrievalCollectionGranuleLinks = data => (dispatch) => {
+export const fetchRetrievalCollectionGranuleLinks = (data) => (dispatch) => {
   const {
     access_method: accessMethod,
     collection_metadata: collectionMetadata
@@ -631,7 +631,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
   return response
 }
 
-export const undoExcludeGranule = collectionId => (dispatch) => {
+export const undoExcludeGranule = (collectionId) => (dispatch) => {
   dispatch(onUndoExcludeGranule(collectionId))
   dispatch(actions.getSearchGranules())
 }
@@ -775,7 +775,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
  * gets the granules, and optionally closes the sidebar panel.
  * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
  */
-export const applyGranuleFilters = granuleFilters => (dispatch, getState) => {
+export const applyGranuleFilters = (granuleFilters) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -806,7 +806,7 @@ export const clearGranuleFilters = () => applyGranuleFilters({})
  * Excludes a single granule from search results and requests granules again
  * @param {Object} data Object containing the granule id and the collection that the granule belongs to
  */
-export const excludeGranule = data => (dispatch) => {
+export const excludeGranule = (data) => (dispatch) => {
   const { collectionId, granuleId } = data
 
   // Unfocus the granule on the map

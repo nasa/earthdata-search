@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -7,13 +6,13 @@ import actions from '../../actions'
 
 import AboutCSDAModal from '../../components/AboutCSDAModal/AboutCSDAModal'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   isOpen: state.ui.aboutCSDAModal.isOpen
 })
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onToggleAboutCSDAModal:
-    state => dispatch(actions.toggleAboutCSDAModal(state))
+    (state) => dispatch(actions.toggleAboutCSDAModal(state))
 })
 
 export const AboutCSDAModalContainer = ({

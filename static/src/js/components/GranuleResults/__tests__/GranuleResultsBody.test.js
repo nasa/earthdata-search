@@ -62,7 +62,7 @@ function setup(options = {
     granuleQuery: {},
     granuleSearchResults: {
       allIds: ['one', 'two'],
-      hits: '2',
+      hits: 2,
       isLoaded: true,
       isLoading: false,
       loadTime: 1123,
@@ -85,8 +85,10 @@ function setup(options = {
   let enzymeWrapper
 
   if (options.mount) {
+    // eslint-disable-next-line react/jsx-props-no-spreading
     enzymeWrapper = mount(<GranuleResultsBody {...props} />)
   } else {
+    // eslint-disable-next-line react/jsx-props-no-spreading
     enzymeWrapper = shallow(<GranuleResultsBody {...props} />)
   }
 
@@ -327,7 +329,7 @@ describe('GranuleResultsBody component', () => {
           },
           granuleSearchResults: {
             allIds: ['one'],
-            hits: '2',
+            hits: 2,
             isLoading: false,
             isLoaded: true,
             loadTime: 1150,

@@ -12,7 +12,7 @@ import Button from '../Button/Button'
 
 import './CollectionDownloadDisplay.scss'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   earthdataEnvironment: getEarthdataEnvironment(state),
   granuleDownload: state.granuleDownload,
   retrieval: state.retrieval
@@ -115,7 +115,7 @@ export class CollectionDownloadDisplay extends Component {
                   { 'You must first make the script an executable by running the line \'chmod 777 download.sh\' from the command line. After that is complete, the file can be executed by typing \'./download.sh\'. ' }
                   { 'For a detailed walk through of this process, please reference this ' }
                   <a href="https://wiki.earthdata.nasa.gov/display/EDSC/How+To%3A+Use+the+Download+Access+Script">How To guide</a>
-                  { '.' }
+                  .
                 </p>
                 <p>
                   <strong>Windows: </strong>
@@ -165,26 +165,29 @@ export class CollectionDownloadDisplay extends Component {
                 bg="light"
               >
                 <Card.Body>
-                  { granuleFormat === 'links' && (
-                    <ul className="collection-download-display__list">
-                      {
-                        granuleLinks.map((link, i) => {
-                          const key = `link_${i}`
-                          return (
-                            <li key={key}>
-                              <a href={link}>{link}</a>
-                            </li>
-                          )
-                        })
-                      }
-                    </ul>
-                  )}
-                  { granuleFormat === 'script' && (
-                    <pre className="collection-download-display__list">
-                      {downloadFileContents}
-                    </pre>
-                  )
-                }
+                  {
+                    granuleFormat === 'links' && (
+                      <ul className="collection-download-display__list">
+                        {
+                          granuleLinks.map((link, i) => {
+                            const key = `link_${i}`
+                            return (
+                              <li key={key}>
+                                <a href={link}>{link}</a>
+                              </li>
+                            )
+                          })
+                        }
+                      </ul>
+                    )
+                  }
+                  {
+                    granuleFormat === 'script' && (
+                      <pre className="collection-download-display__list">
+                        {downloadFileContents}
+                      </pre>
+                    )
+                  }
                 </Card.Body>
               </Card>
             )
@@ -198,9 +201,16 @@ export class CollectionDownloadDisplay extends Component {
 CollectionDownloadDisplay.propTypes = {
   earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({
+    path: PropTypes.string
+  }).isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
-  retrievalCollection: PropTypes.shape({}).isRequired
+  retrievalCollection: PropTypes.shape({
+    access_method: PropTypes.shape({}),
+    granule_count: PropTypes.number,
+    id: PropTypes.number,
+    retrieval_id: PropTypes.number
+  }).isRequired
 }
 
 export default withRouter(

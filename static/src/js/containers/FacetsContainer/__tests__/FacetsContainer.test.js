@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    facets: {},
+    facetsById: {},
     featureFacets: {},
     portal: {},
     onChangeCmrFacet: jest.fn(),
@@ -18,6 +18,7 @@ function setup() {
     onTriggerViewAllFacets: jest.fn()
   }
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   const enzymeWrapper = shallow(<FacetsContainer {...props} />)
 
   return {
@@ -65,13 +66,19 @@ describe('mapStateToProps', () => {
         feature: {}
       },
       searchResults: {
-        facets: {}
+        facets: {
+          byId: {}
+        }
       },
       portal: {}
     }
 
     const expectedState = {
-      facets: {},
+      searchResults: {
+        facets: {
+          byId: {}
+        }
+      },
       featureFacets: {},
       portal: {}
     }

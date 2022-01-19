@@ -1,15 +1,16 @@
 {
-  # Let eslint know were working as a browser to allow the standard globals (document, window, etc.)
+  // Let eslint know were working as a browser to allow the standard globals (document, window, etc.)
   "env": {
     "browser": true,
     "node": true,
     "jest": true,
     "cypress/globals": true
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "requireConfigFile": false
     }
   },
   "plugins": [
@@ -17,47 +18,47 @@
     "cypress"
   ],
   "rules": {
-    # Setting a max line-length
+    // Setting a max line-length
     "max-len": [1, 100, 2, {
       "ignoreComments": true,
       "ignoreStrings": true,
       "ignoreTemplateLiterals": true
     }],
 
-    # Disallow all semicolons on line endings
+    // Disallow all semicolons on line endings
     "semi": ["error", "never"],
 
-    # Allow both .js and .jsx extensions
+    // Allow both .js and .jsx extensions
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
 
-    # Allow shadow declarations
+    // Allow shadow declarations
     "no-shadow": "off",
 
-    # Disallow dangling commas
+    // Disallow dangling commas
     "comma-dangle": ["error", "never"],
 
-    # Require spacing in object literals
+    // Require spacing in object literals
     "object-curly-spacing": ["error", "always"],
 
-    # Allow class methods that dont use 'this'
+    // Allow class methods that dont use 'this'
     "class-methods-use-this": "off",
 
-    # Allow console log messages
+    // Allow console log messages
     "no-console": "off",
 
-    # Allow extranious dependencies
+    // Allow extranious dependencies
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
 
-    # Allow named default exports
+    // Allow named default exports
     "import/no-named-as-default": "off",
 
-    # Allow files with no default export
+    // Allow files with no default export
     "import/prefer-default-export": "off",
 
-    # Disable the depricated label-has-for rule
+    // Disable the depricated label-has-for rule
     "jsx-a11y/label-has-for": "off",
 
-    # Use the correct version of this rule, rather than label-has-for
+    // Use the correct version of this rule, rather than label-has-for
     "jsx-a11y/label-has-associated-control": [
       2,
       {
@@ -73,7 +74,7 @@
       }
     ],
 
-    # Allowing cyclic dependancies
+    // Allowing cyclic dependancies
     "import/no-cycle": "off"
   },
 
@@ -96,14 +97,14 @@
     }
   ],
 
-  # Use AirBnb settings as a base
+  // Use AirBnb settings as a base
   "extends": [
     "airbnb",
     "plugin:react/recommended",
     "plugin:cypress/recommended"
   ],
 
-  # Define version settings
+  // Define version settings
   "settings": {
     "react": {
       "pragma": "React",

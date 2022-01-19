@@ -1,4 +1,3 @@
-
 import PropTypes from 'prop-types'
 import React, { useRef, useState } from 'react'
 import { FaCopy, FaSave, FaExpand } from 'react-icons/fa'

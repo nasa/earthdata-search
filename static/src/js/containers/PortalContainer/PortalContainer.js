@@ -9,12 +9,12 @@ import actions from '../../actions/index'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { isDefaultPortal, getPortalConfig } from '../../util/portals'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onLoadPortalConfig:
-    portalId => dispatch(actions.loadPortalConfig(portalId))
+    (portalId) => dispatch(actions.loadPortalConfig(portalId))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   portal: state.portal
 })
 
@@ -60,8 +60,15 @@ export class PortalContainer extends Component {
 }
 
 PortalContainer.propTypes = {
-  match: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      portalId: PropTypes.string
+    })
+  }).isRequired,
+  portal: PropTypes.shape({
+    pageTitle: PropTypes.string,
+    portalId: PropTypes.string
+  }).isRequired,
   onLoadPortalConfig: PropTypes.func.isRequired
 }
 

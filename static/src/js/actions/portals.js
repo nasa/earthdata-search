@@ -3,7 +3,7 @@
 import { ADD_PORTAL } from '../constants/actionTypes'
 import { getPortalConfig } from '../util/portals'
 
-export const addPortal = payload => ({
+export const addPortal = (payload) => ({
   type: ADD_PORTAL,
   payload
 })
@@ -12,7 +12,7 @@ export const addPortal = payload => ({
  * Loads the portal config into the Redux Store.
  * @param {String} portalId Portal Name, must match the directory name in which the config is stored.
  */
-export const loadPortalConfig = portalId => (dispatch) => {
+export const loadPortalConfig = (portalId) => (dispatch) => {
   if (!portalId) return
   try {
     const json = getPortalConfig(portalId)

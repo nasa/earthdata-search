@@ -9,7 +9,7 @@ import {
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 
-export const setSavedProjects = payload => ({
+export const setSavedProjects = (payload) => ({
   type: SET_SAVED_PROJECTS,
   payload
 })
@@ -18,7 +18,7 @@ export const setSavedProjectsLoading = () => ({
   type: SET_SAVED_PROJECTS_LOADING
 })
 
-export const removeSavedProject = payload => ({
+export const removeSavedProject = (payload) => ({
   type: REMOVE_SAVED_PROJECT,
   payload
 })

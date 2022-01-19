@@ -15,4 +15,4 @@ export const decodeArray = (object) => {
  * Encodes an array parameter (returns the same value)
  * @param {Array} array
  */
-export const encodeArray = array => array || ''
+export const encodeArray = (array) => array || ''

@@ -37,24 +37,23 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
 
-
 import actions from '../../actions'
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onUpdateAdvancedSearch:
-    values => dispatch(actions.updateAdvancedSearch(values)),
+    (values) => dispatch(actions.updateAdvancedSearch(values)),
   onFocusedCollectionChange:
-    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onChangeQuery:
-    query => dispatch(actions.changeQuery(query)),
+    (query) => dispatch(actions.changeQuery(query)),
   onMetricsCollectionSortChange:
-    data => dispatch(metricsCollectionSortChange(data))
+    (data) => dispatch(metricsCollectionSortChange(data))
 })
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   collectionQuery: state.query.collection
 })
 
@@ -177,7 +176,7 @@ export const Search = ({
                           id="input__only-granules"
                           data-test-id="input_only-granules"
                           label="Include collections without granules"
-                          onChange={event => handleCheckboxCheck(event)}
+                          onChange={(event) => handleCheckboxCheck(event)}
                         />
                       </PortalFeatureContainer>
                       <PortalFeatureContainer nonEosdisCheckbox>
@@ -186,7 +185,7 @@ export const Search = ({
                           id="input__non-eosdis"
                           data-test-id="input_non-eosdis"
                           label="Include only EOSDIS collections"
-                          onChange={event => handleCheckboxCheck(event)}
+                          onChange={(event) => handleCheckboxCheck(event)}
                         />
                       </PortalFeatureContainer>
                     </Form.Group>
@@ -212,8 +211,13 @@ export const Search = ({
 }
 
 Search.propTypes = {
-  collectionQuery: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
+  collectionQuery: PropTypes.shape({
+    hasGranulesOrCwic: PropTypes.bool,
+    tagKey: PropTypes.string
+  }).isRequired,
+  match: PropTypes.shape({
+    path: PropTypes.string
+  }).isRequired,
   onUpdateAdvancedSearch: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired
 }

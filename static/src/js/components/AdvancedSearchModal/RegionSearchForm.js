@@ -50,12 +50,6 @@ export class RegionSearchForm extends Component {
     validateForm()
   }
 
-  getEndpointData(endpoint) {
-    return this.endpoints.find(({
-      value
-    }) => value === endpoint)
-  }
-
   handleKeypress(event) {
     const {
       regionSearchForm
@@ -71,6 +65,12 @@ export class RegionSearchForm extends Component {
       event.stopPropagation()
       event.preventDefault()
     }
+  }
+
+  getEndpointData(endpoint) {
+    return this.endpoints.find(({
+      value
+    }) => value === endpoint)
   }
 
   render() {
@@ -249,8 +249,27 @@ RegionSearchForm.defaultProps = {
 }
 
 RegionSearchForm.propTypes = {
-  regionSearchForm: PropTypes.shape({}).isRequired,
-  selectedRegion: PropTypes.shape({}),
+  regionSearchForm: PropTypes.shape({
+    errors: PropTypes.arrayOf(PropTypes.shape({})),
+    handleBlur: PropTypes.func,
+    handleChange: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    touched: PropTypes.shape({
+      keyword: PropTypes.string
+    }).isRequired,
+    values: PropTypes.shape({
+      endpoint: PropTypes.string,
+      keyword: PropTypes.string,
+      exact: PropTypes.bool
+    }).isRequired,
+    isValid: PropTypes.bool,
+    validateForm: PropTypes.func
+  }).isRequired,
+  selectedRegion: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string
+  }),
   onRemoveSelected: PropTypes.func.isRequired
 }
 

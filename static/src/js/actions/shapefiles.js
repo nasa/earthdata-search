@@ -13,17 +13,17 @@ export const clearShapefile = () => ({
   type: CLEAR_SHAPEFILE
 })
 
-export const updateShapefile = payload => ({
+export const updateShapefile = (payload) => ({
   type: UPDATE_SHAPEFILE,
   payload
 })
 
-export const shapefileLoading = payload => ({
+export const shapefileLoading = (payload) => ({
   type: LOADING_SHAPEFILE,
   payload
 })
 
-export const shapefileErrored = payload => ({
+export const shapefileErrored = (payload) => ({
   type: ERRORED_SHAPEFILE,
   payload
 })
@@ -32,7 +32,7 @@ export const shapefileErrored = payload => ({
  *  Sends a shapefile to be saved in the database
  * @param {Object} data The file to be saved, the filename and size of the file
  */
-export const saveShapefile = data => (dispatch, getState) => {
+export const saveShapefile = (data) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -76,7 +76,7 @@ export const saveShapefile = data => (dispatch, getState) => {
  * Retrieves a shapefile from lambda
  * @param {String} shapefileId Shapefile ID to retrieve
  */
-export const fetchShapefile = shapefileId => (dispatch, getState) => {
+export const fetchShapefile = (shapefileId) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors

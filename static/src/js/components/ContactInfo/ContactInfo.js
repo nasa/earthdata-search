@@ -149,7 +149,10 @@ class ContactInfo extends Component {
 }
 
 ContactInfo.propTypes = {
-  contactInfo: PropTypes.shape({}).isRequired,
+  contactInfo: PropTypes.shape({
+    echoPreferences: PropTypes.shape({}),
+    ursProfile: PropTypes.shape({})
+  }).isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
   onUpdateNotificationLevel: PropTypes.func.isRequired
 }

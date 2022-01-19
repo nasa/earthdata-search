@@ -9,16 +9,16 @@ import SubscriptionsList from '../../components/SubscriptionsList/SubscriptionsL
 
 import { getSubscriptions } from '../../selectors/subscriptions'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   subscriptions: getSubscriptions(state)
 })
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onDeleteSubscription:
     (conceptId, nativeId) => dispatch(actions.deleteSubscription(conceptId, nativeId)),
   onFetchSubscriptions: () => dispatch(actions.getSubscriptions()),
   onFocusedCollectionChange:
-    collectionId => dispatch(actions.changeFocusedCollection(collectionId))
+    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId))
 })
 
 export class SubscriptionsContainer extends Component {

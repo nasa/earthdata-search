@@ -6,8 +6,8 @@ import SpatialSelectionDropdown from '../../components/SpatialDisplay/SpatialSel
 
 import actions from '../../actions'
 
-export const mapDispatchToProps = dispatch => ({
-  onToggleShapefileUploadModal: state => dispatch(actions.toggleShapefileUploadModal(state))
+export const mapDispatchToProps = (dispatch) => ({
+  onToggleShapefileUploadModal: (state) => dispatch(actions.toggleShapefileUploadModal(state))
 })
 
 /**

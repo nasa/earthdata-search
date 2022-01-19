@@ -8,12 +8,12 @@ import { UPDATE_CONTACT_INFO } from '../constants/actionTypes'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 
-export const updateContactInfo = data => ({
+export const updateContactInfo = (data) => ({
   type: UPDATE_CONTACT_INFO,
   payload: data
 })
 
-export const setContactInfoFromJwt = jwtToken => (dispatch) => {
+export const setContactInfoFromJwt = (jwtToken) => (dispatch) => {
   if (!jwtToken) return
 
   const decoded = jwt.decode(jwtToken)
@@ -58,7 +58,7 @@ export const fetchContactInfo = () => (dispatch, getState) => {
  * Calls lambda to update Legacy Services with new ECHO preferences
  * @param {String} level New order notification level
  */
-export const updateNotificationLevel = level => (dispatch, getState) => {
+export const updateNotificationLevel = (level) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors

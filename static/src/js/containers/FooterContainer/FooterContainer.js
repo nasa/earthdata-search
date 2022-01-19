@@ -13,7 +13,7 @@ import { FooterLink } from '../../components/FooterLink/FooterLink'
 
 import './FooterContainer.scss'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   loadTime: state.searchResults.collections.loadTime,
   portal: state.portal
 })
@@ -31,6 +31,7 @@ export class FooterContainer extends Component {
       portal
     } = this.props
     const { footer = {} } = portal
+
     const searchTimeVisible = isPath(location.pathname, ['/search', '/projects'])
     const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
@@ -108,7 +109,7 @@ export class FooterContainer extends Component {
     })
 
     return (
-      <React.Fragment>
+      <>
         <TimelineContainer />
         <footer className="footer">
           <span className="footer__info footer__info--left">
@@ -130,7 +131,7 @@ export class FooterContainer extends Component {
             {secondaryLinks()}
           </span>
         </footer>
-      </React.Fragment>
+      </>
     )
   }
 }
@@ -142,7 +143,9 @@ FooterContainer.defaultProps = {
 FooterContainer.propTypes = {
   loadTime: PropTypes.number,
   location: locationPropType.isRequired,
-  portal: PropTypes.shape({}).isRequired
+  portal: PropTypes.shape({
+    footer: PropTypes.shape({})
+  }).isRequired
 }
 
 export default withRouter(

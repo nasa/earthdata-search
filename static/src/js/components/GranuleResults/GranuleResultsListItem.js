@@ -60,7 +60,6 @@ export const GranuleResultsListItem = memo(({
     setRowHeight(rowIndex, columnIndex, currentHeight)
   }, [windowWidth, element.current])
 
-
   // Tweak the position of the elements to simultate the correct margins
   const customStyle = {
     ...style,
@@ -120,9 +119,31 @@ GranuleResultsListItem.displayName = 'GranuleResultsListItem'
 
 GranuleResultsListItem.propTypes = {
   columnIndex: PropTypes.number.isRequired,
-  data: PropTypes.shape({}).isRequired,
+  data: PropTypes.shape({
+    collectionId: PropTypes.string,
+    directDistributionInformation: PropTypes.shape({}),
+    granules: PropTypes.arrayOf(PropTypes.shape({})),
+    isCollectionInProject: PropTypes.bool,
+    isGranuleInProject: PropTypes.bool,
+    isItemLoaded: PropTypes.bool,
+    location: PropTypes.shape({}),
+    numColumns: PropTypes.number,
+    onAddGranuleToProjectCollection: PropTypes.func,
+    onExcludeGranule: PropTypes.func,
+    onFocusedGranuleChange: PropTypes.func,
+    onMetricsDataAccess: PropTypes.func,
+    onRemoveGranuleFromProjectCollection: PropTypes.func,
+    portal: PropTypes.string,
+    setRowHeight: PropTypes.func,
+    windowWidth: PropTypes.number
+  }).isRequired,
   rowIndex: PropTypes.number.isRequired,
-  style: PropTypes.shape({}).isRequired
+  style: PropTypes.shape({
+    height: PropTypes.number,
+    left: PropTypes.number,
+    top: PropTypes.number,
+    width: PropTypes.number
+  }).isRequired
 }
 
 export default GranuleResultsListItem

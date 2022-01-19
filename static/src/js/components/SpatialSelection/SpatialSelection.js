@@ -15,13 +15,12 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import icon from 'leaflet-draw/dist/images/marker-icon.png'
 import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 
-
 import { eventEmitter } from '../../events/events'
-import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
-import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
-import { mbr } from '../../util/map/mbr'
-import { limitLatLngDecimalPoints } from '../../util/limitDecimalPoints'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { limitLatLngDecimalPoints } from '../../util/limitDecimalPoints'
+import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
+import { mbr } from '../../util/map/mbr'
+import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 
@@ -178,7 +177,7 @@ class SpatialSelection extends Component {
     const { featureGroupRef = {} } = this
     const { leafletElement = {} } = featureGroupRef
 
-    const newDrawingFound = drawnLayers.some(layer => layer.layerPoints === newDrawing)
+    const newDrawingFound = drawnLayers.some((layer) => layer.layerPoints === newDrawing)
 
     if (oldDrawing !== newDrawing && !newDrawingFound) {
       if (drawnLayers.length > 0) {
@@ -191,9 +190,9 @@ class SpatialSelection extends Component {
           })
 
           // remove the layerMbr from all drawnLayers
-          this.setState(prevState => ({
+          this.setState((prevState) => ({
             ...prevState,
-            drawnLayers: prevState.drawnLayers.map(layer => ({
+            drawnLayers: prevState.drawnLayers.map((layer) => ({
               ...layer,
               layerMbr: null
             }))
@@ -205,7 +204,7 @@ class SpatialSelection extends Component {
       this.renderShape(nextProps, true)
     }
 
-    const drawnMbrFound = drawnLayers.filter(layer => layer.layerMbr != null)
+    const drawnMbrFound = drawnLayers.filter((layer) => layer.layerMbr != null)
 
     // If a polygon is drawn for a CWIC collection, render the MBR to show the user what is being sent
     // to CWIC as their spatial
@@ -218,12 +217,12 @@ class SpatialSelection extends Component {
         this.renderMbr(nextProps.polygonSearch[0])
       } else if (drawnMbrFound.length > 0 && !nextProps.isOpenSearch) {
         if (leafletElement.removeLayer) {
-          drawnMbrFound.forEach(drawnMbr => leafletElement.removeLayer(drawnMbr.layerMbr))
+          drawnMbrFound.forEach((drawnMbr) => leafletElement.removeLayer(drawnMbr.layerMbr))
           if (drawnLayers.length > 0) {
             // remove the layerMbr from all drawnLayers
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
               ...prevState,
-              drawnLayers: prevState.drawnLayers.map(layer => ({
+              drawnLayers: prevState.drawnLayers.map((layer) => ({
                 ...layer,
                 layerMbr: null
               }))
@@ -233,12 +232,12 @@ class SpatialSelection extends Component {
       }
     } else if (drawnMbrFound.length > 0) {
       if (leafletElement.removeLayer) {
-        drawnMbrFound.forEach(drawnMbr => leafletElement.removeLayer(drawnMbr.layerMbr))
+        drawnMbrFound.forEach((drawnMbr) => leafletElement.removeLayer(drawnMbr.layerMbr))
 
         // remove the layerMbr from all drawnLayers
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
           ...prevState,
-          drawnLayers: prevState.drawnLayers.map(layer => ({
+          drawnLayers: prevState.drawnLayers.map((layer) => ({
             ...layer,
             layerMbr: null
           }))
@@ -281,7 +280,7 @@ class SpatialSelection extends Component {
       layerType = 'Shape File'
 
       // Clear any drawnLayers that aren't shapefiles
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
         drawnLayers: prevState.drawnLayers.filter((drawnLayer) => {
           const { layer } = drawnLayer
@@ -327,12 +326,12 @@ class SpatialSelection extends Component {
   }
 
   onEditStart() {
-    this.preEditBounds = this.layers.map(layer => this.boundsToPoints(layer))
+    this.preEditBounds = this.layers.map((layer) => this.boundsToPoints(layer))
   }
 
   onEditStop() {
     const { onMetricsSpatialEdit } = this.props
-    const postEditBounds = this.layers.map(layer => this.boundsToPoints(layer))
+    const postEditBounds = this.layers.map((layer) => this.boundsToPoints(layer))
 
     this.preEditBounds.forEach((bounds, index) => {
       const { type: layerType } = this.layers[index]
@@ -410,7 +409,7 @@ class SpatialSelection extends Component {
     if (isShapefile) {
       // Find the layer that needs to be removed
       const { drawnLayers } = this.state
-      const layerIndex = drawnLayers.findIndex(layer => layer.layer.feature.edscId === layerId)
+      const layerIndex = drawnLayers.findIndex((layer) => layer.layer.feature.edscId === layerId)
 
       const drawnLayer = drawnLayers[layerIndex]
       const {
@@ -425,7 +424,7 @@ class SpatialSelection extends Component {
       leafletElement.removeLayer(layer)
       leafletElement.removeLayer(layerMbr)
 
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
         drawnLayers: [
           ...prevState.drawnLayers.slice(0, layerIndex),
@@ -501,22 +500,22 @@ class SpatialSelection extends Component {
     let latLngs
     switch (type) {
       case 'point':
-        latLngs = limitLatLngDecimalPoints([layer.getLatLng()].map(p => `${p.lng},${p.lat}`))
+        latLngs = limitLatLngDecimalPoints([layer.getLatLng()].map((p) => `${p.lng},${p.lat}`))
         break
       case 'boundingBox':
-        latLngs = limitLatLngDecimalPoints([layer.getLatLngs()[0][0], layer.getLatLngs()[0][2]].map(p => `${p.lng},${p.lat}`))
+        latLngs = limitLatLngDecimalPoints([layer.getLatLngs()[0][0], layer.getLatLngs()[0][2]].map((p) => `${p.lng},${p.lat}`))
         break
       case 'polygon':
         ([originalLatLngs] = layer.getLatLngs())
-        latLngs = limitLatLngDecimalPoints(makeCounterClockwise(originalLatLngs).map(p => `${p.lng},${p.lat}`))
+        latLngs = limitLatLngDecimalPoints(makeCounterClockwise(originalLatLngs).map((p) => `${p.lng},${p.lat}`))
         break
       case 'line':
-        latLngs = limitLatLngDecimalPoints(Array.from(layer.getLatLngs()).map(p => `${p.lng},${p.lat}`))
+        latLngs = limitLatLngDecimalPoints(Array.from(layer.getLatLngs()).map((p) => `${p.lng},${p.lat}`))
         break
       case 'circle': {
         const center = layer.getLatLng()
         const radius = layer.getRadius()
-        latLngs = limitLatLngDecimalPoints([center].map(p => `${p.lng},${p.lat}`))
+        latLngs = limitLatLngDecimalPoints([center].map((p) => `${p.lng},${p.lat}`))
         latLngs.push(parseFloat(radius).toFixed(0))
         break
       }
@@ -591,7 +590,7 @@ class SpatialSelection extends Component {
       layerPoints: points
     }
     if (isShapefile) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
         drawnLayers: [
           ...prevState.drawnLayers,
@@ -644,7 +643,7 @@ class SpatialSelection extends Component {
       ([bounds] = layer.getLatLngs())
     }
 
-    return bounds.map(latLng => map.latLngToLayerPoint(latLng))
+    return bounds.map((latLng) => map.latLngToLayerPoint(latLng))
   }
 
   // Draws a leaflet shape based on provided props
@@ -829,8 +828,8 @@ class SpatialSelection extends Component {
 
       rect.addTo(featureGroup)
 
-      const foundLayerIndex = drawnLayers.findIndex(layer => layer.layerPoints === drawnPoints)
-      this.setState(prevState => ({
+      const foundLayerIndex = drawnLayers.findIndex((layer) => layer.layerPoints === drawnPoints)
+      this.setState((prevState) => ({
         ...prevState,
         drawnLayers: [
           ...prevState.drawnLayers.slice(0, foundLayerIndex),
@@ -1014,13 +1013,18 @@ SpatialSelection.defaultProps = {
 }
 
 SpatialSelection.propTypes = {
-  advancedSearch: PropTypes.shape({}).isRequired,
+  advancedSearch: PropTypes.shape({
+    regionSearch: PropTypes.shape({})
+  }).isRequired,
   boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
   circleSearch: PropTypes.arrayOf(PropTypes.string),
   isOpenSearch: PropTypes.bool.isRequired,
   isProjectPage: PropTypes.bool.isRequired,
   lineSearch: PropTypes.arrayOf(PropTypes.string),
-  mapRef: PropTypes.shape({}),
+  mapRef: PropTypes.shape({
+    leafletElement: PropTypes.node,
+    props: PropTypes.shape({})
+  }),
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),

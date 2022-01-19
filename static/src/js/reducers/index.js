@@ -43,7 +43,7 @@ import uiReducer from './ui'
 import userReducer from './user'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 
-export default history => combineReducers({
+export default (history) => combineReducers({
   admin: combineReducers({
     isAuthorized: adminIsAuthorizedReducer,
     retrievals: adminRetrievalsReducer

@@ -60,7 +60,7 @@ export class TemporalSelection extends Component {
       validation
     })
 
-    if (Object.values(validation).some(value => value) && onInvalid) {
+    if (Object.values(validation).some((value) => value) && onInvalid) {
       onInvalid()
     } else if (onValid) {
       onValid()
@@ -144,7 +144,7 @@ export class TemporalSelection extends Component {
       validation
     } = this.state
 
-    const enableRecurring = Object.values(validation).some(isInvalid => isInvalid === true)
+    const enableRecurring = Object.values(validation).some((isInvalid) => isInvalid === true)
     if (enableRecurring) {
       isRecurring = false
     }
@@ -189,7 +189,7 @@ export class TemporalSelection extends Component {
                 </Form.Label>
                 <DatepickerContainer
                   id={`${controlId}__temporal-form__start-date`}
-                  onSubmit={value => onSubmitStart(value)}
+                  onSubmit={(value) => onSubmitStart(value)}
                   type="start"
                   size={size}
                   format={format}
@@ -208,7 +208,7 @@ export class TemporalSelection extends Component {
                 </Form.Label>
                 <DatepickerContainer
                   id={`${controlId}__temporal-form__end-date`}
-                  onSubmit={value => onSubmitEnd(value)}
+                  onSubmit={(value) => onSubmitEnd(value)}
                   type="end"
                   size={size}
                   format={format}
@@ -281,7 +281,7 @@ export class TemporalSelection extends Component {
                   min: sliderStartDate.year(),
                   max: moment(temporal.endDate || undefined).year()
                 }}
-                onChange={value => onChangeRecurring(value)}
+                onChange={(value) => onChangeRecurring(value)}
               />
             </Form.Group>
           )
@@ -313,7 +313,11 @@ TemporalSelection.propTypes = {
   onSubmitStart: PropTypes.func.isRequired,
   onValid: PropTypes.func,
   size: PropTypes.string,
-  temporal: PropTypes.shape({}).isRequired,
+  temporal: PropTypes.shape({
+    endDate: PropTypes.instanceOf(Date),
+    isRecurring: PropTypes.bool,
+    startDate: PropTypes.instanceOf(Date)
+  }).isRequired,
   validate: PropTypes.bool
 }
 

@@ -27,7 +27,7 @@ import { prepareSubscriptionQuery } from '../util/subscriptions'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
-export const updateSubscriptionResults = payload => ({
+export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
   payload
 })
@@ -36,12 +36,12 @@ export const onSubscriptionsLoading = () => ({
   type: LOADING_SUBSCRIPTIONS
 })
 
-export const onSubscriptionsLoaded = payload => ({
+export const onSubscriptionsLoaded = (payload) => ({
   type: LOADED_SUBSCRIPTIONS,
   payload
 })
 
-export const onSubscriptionsErrored = payload => ({
+export const onSubscriptionsErrored = (payload) => ({
   type: ERRORED_SUBSCRIPTIONS,
   payload
 })
@@ -54,17 +54,17 @@ export const finishSubscriptionsTimer = () => ({
   type: FINISHED_SUBSCRIPTIONS_TIMER
 })
 
-export const removeSubscription = payload => ({
+export const removeSubscription = (payload) => ({
   type: REMOVE_SUBSCRIPTION,
   payload
 })
 
-export const updateCollectionSubscription = payload => ({
+export const updateCollectionSubscription = (payload) => ({
   type: UPDATE_COLLECTION_SUBSCRIPTION,
   payload
 })
 
-export const deleteCollectionSubscription = payload => ({
+export const deleteCollectionSubscription = (payload) => ({
   type: DELETE_COLLECTION_SUBSCRIPTION,
   payload
 })

@@ -11,7 +11,7 @@ import { getProjectCollectionsMetadata } from '../../selectors/project'
 
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   dataQualitySummaries: state.dataQualitySummaries,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
@@ -27,35 +27,35 @@ export const mapStateToProps = state => ({
   overrideTemporal: state.query.collection.overrideTemporal
 })
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onAddGranuleToProjectCollection:
-    data => dispatch(actions.addGranuleToProjectCollection(data)),
+    (data) => dispatch(actions.addGranuleToProjectCollection(data)),
   onChangePath:
-    path => dispatch(actions.changePath(path)),
+    (path) => dispatch(actions.changePath(path)),
   onChangeProjectGranulePageNum:
-      data => dispatch(actions.changeProjectGranulePageNum(data)),
+    (data) => dispatch(actions.changeProjectGranulePageNum(data)),
   onFetchDataQualitySummaries:
-    conceptId => dispatch(actions.fetchDataQualitySummaries(conceptId)),
+    (conceptId) => dispatch(actions.fetchDataQualitySummaries(conceptId)),
   onFocusedGranuleChange:
-    granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
+    (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
   onRemoveGranuleFromProjectCollection:
-    data => dispatch(actions.removeGranuleFromProjectCollection(data)),
+    (data) => dispatch(actions.removeGranuleFromProjectCollection(data)),
   onSelectAccessMethod:
-    method => dispatch(actions.selectAccessMethod(method)),
+    (method) => dispatch(actions.selectAccessMethod(method)),
   onSetActivePanel:
-    panelId => dispatch(actions.setActivePanel(panelId)),
+    (panelId) => dispatch(actions.setActivePanel(panelId)),
   onSetActivePanelGroup:
-    panelId => dispatch(actions.setActivePanelGroup(panelId)),
+    (panelId) => dispatch(actions.setActivePanelGroup(panelId)),
   onToggleAboutCSDAModal:
-    state => dispatch(actions.toggleAboutCSDAModal(state)),
+    (state) => dispatch(actions.toggleAboutCSDAModal(state)),
   onTogglePanels:
-    value => dispatch(actions.togglePanels(value)),
+    (value) => dispatch(actions.togglePanels(value)),
   onUpdateAccessMethod:
-    data => dispatch(actions.updateAccessMethod(data)),
+    (data) => dispatch(actions.updateAccessMethod(data)),
   onUpdateFocusedCollection:
-    collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
+    (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
   onViewCollectionGranules:
-    collectionId => dispatch(actions.viewCollectionGranules(collectionId))
+    (collectionId) => dispatch(actions.viewCollectionGranules(collectionId))
 })
 
 /**

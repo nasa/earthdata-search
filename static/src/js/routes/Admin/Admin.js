@@ -12,11 +12,11 @@ import AdminRetrievalContainer from '../../containers/AdminRetrievalContainer/Ad
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import actions from '../../actions'
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onAdminIsAuthorized: () => dispatch(actions.adminIsAuthorized())
 })
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthorized: state.admin.isAuthorized
 })
 
@@ -59,7 +59,9 @@ export class Admin extends Component {
 
 Admin.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
-  match: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({
+    path: PropTypes.string
+  }).isRequired,
   onAdminIsAuthorized: PropTypes.func.isRequired
 }
 

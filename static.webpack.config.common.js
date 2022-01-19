@@ -4,6 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 
 const config = require('./sharedUtils/config')
 const { getPortalConfig } = require('./static/src/js/util/portals')
@@ -39,6 +40,10 @@ const StaticCommonConfig = {
       'react-dom': '@hot-loader/react-dom',
       Fonts: path.join(__dirname, 'static/src/assets/fonts'),
       Images: path.join(__dirname, 'static/src/assets/images')
+    },
+    fallback: {
+      "crypto": require.resolve("crypto-browserify"),
+      "stream": require.resolve("stream-browserify")
     }
   },
   module: {
@@ -54,8 +59,7 @@ const StaticCommonConfig = {
             options: {
               presets: ['@babel/preset-env', '@babel/react']
             }
-          },
-          { loader: 'eslint-loader' }
+          }
         ]
       },
       {
@@ -160,7 +164,7 @@ const StaticCommonConfig = {
           showTophat: ui.showTophat
         }
       }]),
-    new webpack.HashedModuleIdsPlugin(),
+    new webpack.ids.HashedModuleIdsPlugin({}),
     new CopyWebpackPlugin({
       patterns: [
         { from: './static/src/public', to: './' }
@@ -170,9 +174,13 @@ const StaticCommonConfig = {
       jQuery: 'jquery',
       $: 'jquery'
     }),
+    // new ESLintPlugin(),
     // Prevent importing of all moment locales. Moment includes and uses en-us by default.
     // https://medium.com/@michalozogan/how-to-split-moment-js-locales-to-chunks-with-webpack-de9e25caccea
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    })
   ]
 }
 

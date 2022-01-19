@@ -7,16 +7,22 @@ import actions from '../../actions'
 import { eventEmitter } from '../../events/events'
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
-export const mapDispatchToProps = dispatch => ({
-  onRemoveSpatialFilter: () => dispatch(actions.removeSpatialFilter()),
-  onSaveShapefile: options => dispatch(actions.saveShapefile(options)),
-  onShapefileErrored: options => dispatch(actions.shapefileErrored(options)),
-  onShapefileLoading: file => dispatch(actions.shapefileLoading(file)),
-  onToggleShapefileUploadModal: state => dispatch(actions.toggleShapefileUploadModal(state)),
-  onUpdateShapefile: options => dispatch(actions.updateShapefile(options))
+export const mapDispatchToProps = (dispatch) => ({
+  onRemoveSpatialFilter:
+    () => dispatch(actions.removeSpatialFilter()),
+  onSaveShapefile:
+    (options) => dispatch(actions.saveShapefile(options)),
+  onShapefileErrored:
+    (options) => dispatch(actions.shapefileErrored(options)),
+  onShapefileLoading:
+    (file) => dispatch(actions.shapefileLoading(file)),
+  onToggleShapefileUploadModal:
+    (state) => dispatch(actions.toggleShapefileUploadModal(state)),
+  onUpdateShapefile:
+    (options) => dispatch(actions.updateShapefile(options))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   authToken: state.authToken
 })
 

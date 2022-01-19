@@ -15,7 +15,7 @@ import { prepareRegionParams } from '../util/regions'
 
 import RegionRequest from '../util/request/regionRequest'
 
-export const updateRegionResults = payload => ({
+export const updateRegionResults = (payload) => ({
   type: UPDATE_REGION_RESULTS,
   payload
 })
@@ -24,12 +24,12 @@ export const onRegionsLoading = () => ({
   type: LOADING_REGIONS
 })
 
-export const onRegionsLoaded = payload => ({
+export const onRegionsLoaded = (payload) => ({
   type: LOADED_REGIONS,
   payload
 })
 
-export const onRegionsErrored = payload => ({
+export const onRegionsErrored = (payload) => ({
   type: ERRORED_REGIONS,
   payload
 })

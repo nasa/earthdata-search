@@ -11,14 +11,14 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onLogout: () => dispatch(actions.logout()),
-  onUpdateProjectName: name => dispatch(actions.updateProjectName(name)),
-  onChangePath: path => dispatch(actions.changePath(path)),
+  onUpdateProjectName: (name) => dispatch(actions.updateProjectName(name)),
+  onChangePath: (path) => dispatch(actions.changePath(path)),
   onFetchContactInfo: () => dispatch(actions.fetchContactInfo())
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   earthdataEnvironment: getEarthdataEnvironment(state),
   portal: state.portal,
@@ -73,14 +73,16 @@ SecondaryToolbarContainer.propTypes = {
   earthdataEnvironment: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
+  onFetchContactInfo: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  onFetchContactInfo: PropTypes.func.isRequired,
   portal: PropTypes.shape({}).isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  savedProject: PropTypes.shape({}).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
-  ursProfile: PropTypes.shape({}).isRequired
+  savedProject: PropTypes.shape({}).isRequired,
+  ursProfile: PropTypes.shape({
+    first_name: PropTypes.string
+  }).isRequired
 }
 
 export default withRouter(

@@ -13,14 +13,14 @@ import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getMapPreferences } from '../../selectors/preferences'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
-    path => dispatch(actions.changePath(path)),
+    (path) => dispatch(actions.changePath(path)),
   onChangeUrl:
-    query => dispatch(actions.changeUrl(query))
+    (query) => dispatch(actions.changeUrl(query))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
   autocompleteSelected: state.autocomplete.selected,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,

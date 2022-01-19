@@ -59,7 +59,7 @@ export class CollapsePanel extends Component {
         <button
           className={buttonClassNames}
           type="button"
-          onClick={e => this.onToggleClick(e)}
+          onClick={(e) => this.onToggleClick(e)}
           aria-controls="collapse-text"
           aria-expanded={open}
         >

@@ -59,7 +59,7 @@ export const TreeItem = ({
   const getChildValues = (item) => {
     const values = []
 
-    Array.from(item.children).forEach(child => values.push(...getChildValues(child)))
+    Array.from(item.children).forEach((child) => values.push(...getChildValues(child)))
 
     return [
       ...values,
@@ -208,10 +208,24 @@ export const TreeItem = ({
 
 TreeItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   isFirst: PropTypes.bool.isRequired,
   isLast: PropTypes.bool.isRequired,
-  index: PropTypes.number.isRequired,
-  item: PropTypes.shape({}).isRequired,
+  item: PropTypes.shape({
+    checked: PropTypes.bool,
+    children: PropTypes.arrayOf(PropTypes.node),
+    expanded: PropTypes.bool,
+    fullValue: PropTypes.string,
+    getName: PropTypes.func,
+    isLeaf: PropTypes.bool,
+    isParent: PropTypes.bool,
+    level: PropTypes.string,
+    selectedVariables: PropTypes.arrayOf(PropTypes.string),
+    setChecked: PropTypes.func,
+    setExpanded: PropTypes.func,
+    value: PropTypes.string,
+    variable: PropTypes.shape({})
+  }).isRequired,
   onChange: PropTypes.func.isRequired,
   onUpdateSelectedVariables: PropTypes.func.isRequired,
   onViewDetails: PropTypes.func.isRequired

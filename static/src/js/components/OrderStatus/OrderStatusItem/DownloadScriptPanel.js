@@ -38,7 +38,7 @@ export const DownloadScriptPanel = ({
             { 'You must first make the script an executable by running the line \'chmod 777 download.sh\' from the command line. After that is complete, the file can be executed by typing \'./download.sh\'. ' }
             { 'For a detailed walk through of this process, please reference this ' }
             <a href="https://wiki.earthdata.nasa.gov/display/EDSC/How+To%3A+Use+the+Download+Access+Script">How To guide</a>
-            { '.' }
+            .
           </p>
           <p>
             <strong>Windows: </strong>

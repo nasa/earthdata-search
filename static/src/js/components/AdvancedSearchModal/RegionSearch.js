@@ -100,11 +100,11 @@ export class RegionSearch extends Component {
       <Formik
         initialValues={initialValues}
         validationSchema={() => Yup.object().shape(validation)}
-        onSubmit={values => this.onSearchSubmit(values)}
+        onSubmit={(values) => this.onSearchSubmit(values)}
       >
         {
           // eslint-disable-next-line arrow-body-style
-          regionSearchForm => (
+          (regionSearchForm) => (
             <RegionSearchForm
               regionSearchForm={regionSearchForm}
               selectedRegion={selectedRegion}
@@ -123,13 +123,20 @@ RegionSearch.defaultProps = {
 
 RegionSearch.propTypes = {
   errors: PropTypes.shape({}).isRequired,
-  field: PropTypes.shape({}).isRequired,
+  field: PropTypes.shape({
+    fields: PropTypes.arrayOf(
+      PropTypes.shape({})
+    ),
+    name: PropTypes.string
+  }).isRequired,
+  onChangeRegionQuery: PropTypes.func.isRequired,
   regionSearchResults: PropTypes.shape({}).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setModalOverlay: PropTypes.func,
   touched: PropTypes.shape({}).isRequired,
-  values: PropTypes.shape({}).isRequired,
-  onChangeRegionQuery: PropTypes.func.isRequired
+  values: PropTypes.shape({
+    regionSearch: PropTypes.shape({})
+  }).isRequired
 }
 
 export default RegionSearch

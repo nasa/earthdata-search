@@ -11,7 +11,11 @@ import './AutocompleteSuggestion.scss'
 const AutocompleteSuggestion = ({ suggestion }) => {
   if (isEmpty(suggestion)) return null
 
-  const { type, value, fields = '' } = suggestion
+  const {
+    type,
+    value,
+    fields = ''
+  } = suggestion
 
   const title = buildHierarchicalAutocompleteTitle(suggestion)
   const hierarchy = buildHierarchy({ fields })
@@ -21,14 +25,14 @@ const AutocompleteSuggestion = ({ suggestion }) => {
       <div className="autocomplete-suggestion__suggestions-primary">
         <div className="autocomplete-suggestion__suggestions-type">
           {startCase(type)}
-          {':'}
+          :
         </div>
         {
           (hierarchy && hierarchy.length > 0) && (
             <div className="autocomplete-suggestion__suggestions-hierarchy">
               <span>
                 {
-                  hierarchy.map(parent => (
+                  hierarchy.map((parent) => (
                     <React.Fragment key={`${value}-${parent}`}>
                       {parent}
                       <EDSCIcon icon={FaChevronRight} />
@@ -49,7 +53,11 @@ const AutocompleteSuggestion = ({ suggestion }) => {
 }
 
 AutocompleteSuggestion.propTypes = {
-  suggestion: PropTypes.shape({}).isRequired
+  suggestion: PropTypes.shape({
+    fields: PropTypes.string,
+    type: PropTypes.string,
+    value: PropTypes.string
+  }).isRequired
 }
 
 export default AutocompleteSuggestion

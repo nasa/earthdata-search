@@ -13,7 +13,7 @@ import actions from './index'
 import { updateCollectionQuery } from './search'
 import { scienceKeywordTypes } from '../util/scienceKeywordTypes'
 
-export const updateFeatureFacet = facetInfo => ({
+export const updateFeatureFacet = (facetInfo) => ({
   type: UPDATE_SELECTED_FEATURE_FACET,
   payload: { ...facetInfo }
 })
@@ -23,14 +23,14 @@ export const updateFeatureFacet = facetInfo => ({
  * @param {object} facetInfo - An object containing information about the selected facet.
  * @param {function} dispatch - A dispatch function provided by redux.
  */
-export const changeFeatureFacet = facetInfo => (dispatch) => {
+export const changeFeatureFacet = (facetInfo) => (dispatch) => {
   // Reset collection pageNum to 1 when facets are changing
   dispatch(updateCollectionQuery({ pageNum: 1 }))
   dispatch(updateFeatureFacet(facetInfo))
   dispatch(actions.getCollections())
 }
 
-export const updateCmrFacet = newParams => ({
+export const updateCmrFacet = (newParams) => ({
   type: UPDATE_SELECTED_CMR_FACET,
   payload: prepareCMRFacetPayload(newParams)
 })
@@ -57,7 +57,6 @@ export const changeCmrFacet = (newParams, facet, applied) => (dispatch, getState
       // If the facet param is { level: 1, type: 'science_keywords', value: 'Atmospheric Temperature' }
       // We need to build { topic: Atmosphere } in order to delete the parent facet
 
-
       // Find a selected autocomplete that matches the facet that was removed
       const autocompleteItem = find(selected, (item) => {
         const {
@@ -82,7 +81,7 @@ export const changeCmrFacet = (newParams, facet, applied) => (dispatch, getState
 
         // Remove the facetToRemove from newParams, so the facet gets removed on the next getCollections
         const { science_keywords_h: scienceKeywordsH } = newParams
-        remove(scienceKeywordsH, item => (isEqual(item, facetToRemove)))
+        remove(scienceKeywordsH, (item) => (isEqual(item, facetToRemove)))
       }
     }
 
@@ -98,7 +97,7 @@ export const changeCmrFacet = (newParams, facet, applied) => (dispatch, getState
 /**
  * Used when an autocomplete suggestion is selected to add the matching CMR Facet
  */
-export const addCmrFacet = payload => ({
+export const addCmrFacet = (payload) => ({
   type: ADD_CMR_FACET,
   payload
 })
@@ -106,7 +105,7 @@ export const addCmrFacet = payload => ({
 /**
  * Used when an autocomplete suggestion is removed to remove the matching CMR Facet
  */
-export const removeCmrFacet = payload => ({
+export const removeCmrFacet = (payload) => ({
   type: REMOVE_CMR_FACET,
   payload
 })

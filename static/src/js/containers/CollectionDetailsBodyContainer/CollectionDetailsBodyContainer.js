@@ -14,14 +14,14 @@ import CollectionDetailsBody from '../../components/CollectionDetails/Collection
 
 export const mapDispatchToProps = dispatch => ({
   onFocusedCollectionChange:
-    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onToggleRelatedUrlsModal:
-    state => dispatch(actions.toggleRelatedUrlsModal(state)),
+    (state) => dispatch(actions.toggleRelatedUrlsModal(state)),
   onMetricsRelatedCollection:
-    data => dispatch(metricsRelatedCollection(data))
+    (data) => dispatch(metricsRelatedCollection(data))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   collectionMetadata: getFocusedCollectionMetadata(state)
 })
 
