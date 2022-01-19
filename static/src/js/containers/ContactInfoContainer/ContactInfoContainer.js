@@ -9,14 +9,16 @@ import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
 import ContactInfo from '../../components/ContactInfo/ContactInfo'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   contactInfo: state.contactInfo,
   earthdataEnvironment: getEarthdataEnvironment(state)
 })
 
-export const mapDispatchToProps = dispatch => ({
-  onFetchContactInfo: () => dispatch(actions.fetchContactInfo()),
-  onUpdateNotificationLevel: level => dispatch(actions.updateNotificationLevel(level))
+export const mapDispatchToProps = (dispatch) => ({
+  onFetchContactInfo:
+    () => dispatch(actions.fetchContactInfo()),
+  onUpdateNotificationLevel:
+    (level) => dispatch(actions.updateNotificationLevel(level))
 })
 
 export class ContactInfoContainer extends Component {

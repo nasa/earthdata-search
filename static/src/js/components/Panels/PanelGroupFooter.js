@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import './PanelGroupFooter.scss'
 
-
 /**
  * Renders PanelGroupFooter.
  * @param {object} props - The props passed into the component.

@@ -31,7 +31,6 @@ export const encodeScienceKeywords = (scienceKeywords) => {
   return encoded
 }
 
-
 /**
  * Decodes a parameter object into a Science Keyword object
  * @param {object} params URL parameter object from parsing the URL parameter string

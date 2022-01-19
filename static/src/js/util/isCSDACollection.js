@@ -5,11 +5,11 @@ import { isArray } from 'lodash'
  * @param {Array} dataCenters - The data centers from the collection metadata
  * @return {Boolean}
  */
-export const isCSDACollection = dataCenters => !!(
+export const isCSDACollection = (dataCenters) => !!(
   isArray(dataCenters)
   && (
     dataCenters.some(({ shortName = '' }) => shortName === 'NASA/CSDA')
-    || dataCenters.some(dataCenter => dataCenter === 'NASA/CSDA')
+    || dataCenters.some((dataCenter) => dataCenter === 'NASA/CSDA')
   )
 )
 

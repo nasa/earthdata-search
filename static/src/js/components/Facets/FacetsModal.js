@@ -82,22 +82,22 @@ export class FacetsModal extends Component {
 
     return (
       <EDSCModalContainer
-        className="facets-modal"
-        title={`Filter collections by ${selectedCategory}`}
-        isOpen={isOpen}
-        id="facets"
-        size="lg"
-        fixedHeight="lg"
-        spinner={isFirstLoad}
-        bodyPadding={false}
-        onClose={this.onModalClose}
-        innerHeader={innerHeader}
-        footerMeta={footerMeta}
         body={body}
-        primaryAction="Apply"
+        bodyPadding={false}
+        className="facets-modal"
+        fixedHeight="lg"
+        footerMeta={footerMeta}
+        id="facets"
+        innerHeader={innerHeader}
+        isOpen={isOpen}
+        onClose={this.onModalClose}
         onPrimaryAction={this.onApplyClick}
-        secondaryAction="Cancel"
         onSecondaryAction={this.onModalClose}
+        primaryAction="Apply"
+        secondaryAction="Cancel"
+        size="lg"
+        spinner={isFirstLoad}
+        title={`Filter collections by ${selectedCategory}`}
       />
     )
   }
@@ -109,11 +109,16 @@ FacetsModal.defaultProps = {
 
 FacetsModal.propTypes = {
   collectionHits: PropTypes.number,
-  viewAllFacets: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onApplyViewAllFacets: PropTypes.func.isRequired,
   onChangeViewAllFacet: PropTypes.func.isRequired,
-  onToggleFacetsModal: PropTypes.func.isRequired
+  onToggleFacetsModal: PropTypes.func.isRequired,
+  viewAllFacets: PropTypes.shape({
+    allIds: PropTypes.arrayOf(PropTypes.string),
+    byId: PropTypes.shape({}),
+    isLoading: PropTypes.bool,
+    selectedCategory: PropTypes.string
+  }).isRequired
 }
 
 export default FacetsModal

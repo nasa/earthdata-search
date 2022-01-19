@@ -62,7 +62,7 @@ function setup(overrideProps) {
     },
     collectionsSearch: {
       allIds: ['collectionId'],
-      hits: '181',
+      hits: 181,
       isLoaded: true,
       isLoading: false,
       loadTime: 1150,
@@ -84,6 +84,7 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   const enzymeWrapper = shallow(<CollectionResultsBody {...props} />)
 
   return {
@@ -300,7 +301,7 @@ describe('CollectionResultsBody component', () => {
           },
           collectionsSearch: {
             allIds: ['collectionId'],
-            hits: '2',
+            hits: 2,
             isLoaded: true,
             isLoading: false,
             loadTime: 1150,

@@ -45,8 +45,8 @@ export const MoreActionsDropdown = ({
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
     <div
       className={moreActionClasses}
-      onClick={e => e.stopPropagation()}
-      onKeyPress={e => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
+      onKeyPress={(e) => e.stopPropagation()}
     >
       <Dropdown className="more-actions-dropdown__dropdown">
         <Dropdown.Toggle
@@ -65,7 +65,7 @@ export const MoreActionsDropdown = ({
                   <>
                     <Dropdown.Header>Open collection in:</Dropdown.Header>
                     {
-                      handoffLinks.map(link => (
+                      handoffLinks.map((link) => (
                         <Dropdown.Item
                           key={link.title}
                           className="link link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"

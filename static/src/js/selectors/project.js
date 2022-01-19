@@ -34,7 +34,7 @@ export const getProjectCollections = (state) => {
 export const getProjectCollectionsMetadata = createSelector(
   [getProjectCollectionsIds, getCollectionsMetadata],
   (projectCollectionsIds, collectionsMetadata) => Object.keys(collectionsMetadata)
-    .filter(key => projectCollectionsIds.includes(key))
+    .filter((key) => projectCollectionsIds.includes(key))
     .reduce((obj, key) => ({
       ...obj,
       [key]: collectionsMetadata[key]
@@ -58,7 +58,7 @@ export const getFocusedProjectCollection = createSelector(
  */
 export const getProjectCollectionsRequiringChunking = createSelector(
   [getProjectCollections],
-  projectCollections => Object.keys(projectCollections)
+  (projectCollections) => Object.keys(projectCollections)
     .filter((key) => {
       const { [key]: projectCollection } = projectCollections
 

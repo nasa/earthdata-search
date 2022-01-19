@@ -13,7 +13,7 @@
  * @param {Number} width The width of the panel.
  * @returns {PanelSizeMap} A map of panel sizes.
  */
-export const getPanelSizeMap = width => ({
+export const getPanelSizeMap = (width) => ({
   xs: true,
   sm: width >= 500,
   600: width >= 600,

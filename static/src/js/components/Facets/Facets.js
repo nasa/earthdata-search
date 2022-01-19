@@ -10,7 +10,7 @@ import './Facets.scss'
 
 const Facets = (props) => {
   const {
-    facets,
+    facetsById,
     featureFacets,
     portal,
     onChangeCmrFacet,
@@ -156,7 +156,7 @@ const Facets = (props) => {
   const facetsGroups = facetsTemplate.map((group) => {
     const facet = {
       ...group,
-      ...facets.byId[group.title]
+      ...facetsById[group.title]
     }
 
     return (
@@ -177,9 +177,16 @@ const Facets = (props) => {
 }
 
 Facets.propTypes = {
-  facets: PropTypes.shape({}).isRequired,
-  featureFacets: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
+  facetsById: PropTypes.shape({}).isRequired,
+  featureFacets: PropTypes.shape({
+    availableFromAwsCloud: PropTypes.bool,
+    customizable: PropTypes.bool,
+    mapImagery: PropTypes.bool,
+    nearRealTime: PropTypes.bool
+  }).isRequired,
+  portal: PropTypes.shape({
+    features: PropTypes.shape({})
+  }).isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,
   onChangeFeatureFacet: PropTypes.func.isRequired,
   onTriggerViewAllFacets: PropTypes.func.isRequired

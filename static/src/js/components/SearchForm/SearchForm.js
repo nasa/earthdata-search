@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash'
@@ -403,17 +404,25 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-  advancedSearch: PropTypes.shape({}).isRequired,
+  advancedSearch: PropTypes.shape({
+    regionSearch: PropTypes.shape({})
+  }).isRequired,
+  autocomplete: PropTypes.shape({
+    isLoaded: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    suggestions: PropTypes.arrayOf(
+      PropTypes.shape({})
+    )
+  }).isRequired,
   keywordSearch: PropTypes.string.isRequired,
-  autocomplete: PropTypes.shape({}).isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
-  onChangeFocusedCollection: PropTypes.func.isRequired,
-  onClearFilters: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
   onCancelAutocomplete: PropTypes.func.isRequired,
+  onChangeFocusedCollection: PropTypes.func.isRequired,
+  onChangeQuery: PropTypes.func.isRequired,
   onClearAutocompleteSuggestions: PropTypes.func.isRequired,
+  onClearFilters: PropTypes.func.isRequired,
   onFetchAutocomplete: PropTypes.func.isRequired,
   onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
   showFilterStackToggle: PropTypes.bool.isRequired
 }
 

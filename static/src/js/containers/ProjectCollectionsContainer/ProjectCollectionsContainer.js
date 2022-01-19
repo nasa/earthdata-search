@@ -11,30 +11,30 @@ import { getHandoffs } from '../../selectors/handoffs'
 
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onRemoveCollectionFromProject:
-    collectionId => dispatch(actions.removeCollectionFromProject(collectionId)),
+    (collectionId) => dispatch(actions.removeCollectionFromProject(collectionId)),
   onToggleCollectionVisibility:
-    collectionId => dispatch(actions.toggleCollectionVisibility(collectionId)),
+    (collectionId) => dispatch(actions.toggleCollectionVisibility(collectionId)),
   onSetActivePanel:
-    panelId => dispatch(actions.setActivePanel(panelId)),
+    (panelId) => dispatch(actions.setActivePanel(panelId)),
   onTogglePanels:
-    isOpen => dispatch(actions.togglePanels(isOpen)),
+    (isOpen) => dispatch(actions.togglePanels(isOpen)),
   onSetActivePanelSection:
-    sectionId => dispatch(actions.setActivePanelSection(sectionId)),
+    (sectionId) => dispatch(actions.setActivePanelSection(sectionId)),
   onUpdateProjectName:
-    name => dispatch(actions.updateProjectName(name)),
+    (name) => dispatch(actions.updateProjectName(name)),
   onMetricsDataAccess:
-    data => dispatch(metricsDataAccess(data)),
+    (data) => dispatch(metricsDataAccess(data)),
   onUpdateFocusedCollection:
-    collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
+    (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
   onViewCollectionDetails:
-    data => dispatch(actions.viewCollectionDetails(data)),
+    (data) => dispatch(actions.viewCollectionDetails(data)),
   onViewCollectionGranules:
-    data => dispatch(actions.viewCollectionGranules(data))
+    (data) => dispatch(actions.viewCollectionGranules(data))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   collectionsQuery: state.query.collection,
   handoffs: getHandoffs(state),
   mapProjection: state.map.projection,

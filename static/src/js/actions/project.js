@@ -44,32 +44,32 @@ export const submittedProject = () => ({
   type: SUBMITTED_PROJECT
 })
 
-export const addCollectionToProject = payload => ({
+export const addCollectionToProject = (payload) => ({
   type: ADD_COLLECTION_TO_PROJECT,
   payload
 })
 
-export const removeCollectionFromProject = payload => ({
+export const removeCollectionFromProject = (payload) => ({
   type: REMOVE_COLLECTION_FROM_PROJECT,
   payload
 })
 
-export const toggleCollectionVisibility = payload => ({
+export const toggleCollectionVisibility = (payload) => ({
   type: TOGGLE_COLLECTION_VISIBILITY,
   payload
 })
 
-export const restoreProject = payload => ({
+export const restoreProject = (payload) => ({
   type: RESTORE_PROJECT,
   payload
 })
 
-export const addAccessMethods = payload => ({
+export const addAccessMethods = (payload) => ({
   type: ADD_ACCESS_METHODS,
   payload
 })
 
-export const updateAccessMethod = payload => ({
+export const updateAccessMethod = (payload) => ({
   type: UPDATE_ACCESS_METHOD,
   payload: {
     ...payload,
@@ -77,47 +77,47 @@ export const updateAccessMethod = payload => ({
   }
 })
 
-export const addMoreProjectGranuleResults = payload => ({
+export const addMoreProjectGranuleResults = (payload) => ({
   type: ADD_MORE_PROJECT_GRANULE_RESULTS,
   payload
 })
 
-export const updateProjectGranuleResults = payload => ({
+export const updateProjectGranuleResults = (payload) => ({
   type: UPDATE_PROJECT_GRANULE_RESULTS,
   payload
 })
 
-export const startProjectGranulesTimer = payload => ({
+export const startProjectGranulesTimer = (payload) => ({
   type: STARTED_PROJECT_GRANULES_TIMER,
   payload
 })
 
-export const finishProjectGranulesTimer = payload => ({
+export const finishProjectGranulesTimer = (payload) => ({
   type: FINISHED_PROJECT_GRANULES_TIMER,
   payload
 })
 
-export const projectGranulesLoaded = payload => ({
+export const projectGranulesLoaded = (payload) => ({
   type: PROJECT_GRANULES_LOADED,
   payload
 })
 
-export const projectGranulesLoading = payload => ({
+export const projectGranulesLoading = (payload) => ({
   type: PROJECT_GRANULES_LOADING,
   payload
 })
 
-export const projectGranulesErrored = payload => ({
+export const projectGranulesErrored = (payload) => ({
   type: ERRORED_PROJECT_GRANULES,
   payload
 })
 
-export const selectAccessMethod = payload => ({
+export const selectAccessMethod = (payload) => ({
   type: SELECT_ACCESS_METHOD,
   payload
 })
 
-export const updateProjectGranuleParams = payload => ({
+export const updateProjectGranuleParams = (payload) => ({
   type: UPDATE_PROJECT_GRANULE_PARAMS,
   payload
 })
@@ -358,7 +358,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
 
         // If any tools are SOTO, call fetchSotoLayers
         const { items } = tools
-        if (items && items.some(item => item.name.toLowerCase() === 'soto')) {
+        if (items && items.some((item) => item.name.toLowerCase() === 'soto')) {
           dispatch(actions.fetchSotoLayers())
         }
       })
@@ -381,7 +381,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
  * Adds a single collection to the project
  * @param {String} collectionId The CMR concept id of the collection to add to the project
  */
-export const addProjectCollection = collectionId => async (dispatch) => {
+export const addProjectCollection = (collectionId) => async (dispatch) => {
   dispatch(actions.addCollectionToProject(collectionId))
 
   dispatch(actions.getProjectGranules())
@@ -391,7 +391,7 @@ export const addProjectCollection = collectionId => async (dispatch) => {
  * Adds a single single granule to a project. If the collection is not in the
  * project, it will be added first.
 */
-export const addGranuleToProjectCollection = payload => (dispatch, getState) => {
+export const addGranuleToProjectCollection = (payload) => (dispatch, getState) => {
   const { project } = getState()
   const { collections: projectCollections } = project
   const { allIds } = projectCollections
@@ -418,7 +418,7 @@ export const addGranuleToProjectCollection = payload => (dispatch, getState) => 
  * Removes a single granule from a project. If the collection would not have any granules
  * after removal, the collection is removed from the project.
 */
-export const removeGranuleFromProjectCollection = payload => (dispatch, getState) => {
+export const removeGranuleFromProjectCollection = (payload) => (dispatch, getState) => {
   const { collectionId, granuleId } = payload
 
   const { project } = getState()

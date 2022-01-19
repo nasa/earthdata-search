@@ -21,17 +21,17 @@ import { isPath } from '../isPath'
  * @param {String} url - A string containing both a path and query string
  * @return {String} A string containing only query parameter values
  */
-export const queryParamsFromUrlString = url => url.split(/[?#]/)[1]
+export const queryParamsFromUrlString = (url) => url.split(/[?#]/)[1]
 
 /**
  * Stringify a URL parameter object
  * @param {Object} params Object with encoded URL parameters
  */
-export const stringify = params => qs.stringify(
+export const stringify = (params) => qs.stringify(
   cleanDeep(params, { emptyObjects: false, undefinedValues: false }),
   {
     addQueryPrefix: true,
-    encoder: str => str.toString().replace(/ /g, '%20').replace(/,/g, '%2C').replace(/:/g, '%3A')
+    encoder: (str) => str.toString().replace(/ /g, '%20').replace(/,/g, '%2C').replace(/:/g, '%3A')
   }
 )
 

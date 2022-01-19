@@ -3,6 +3,7 @@ const slsw = require('serverless-webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
 const CopyPlugin = require('copy-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 
 // Allow for conditionally copying files into the output for a defined entry
 const ConditionalPlugin = (condition, plugin) => ({
@@ -46,8 +47,7 @@ const ServerlessWebpackConfig = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
-          { loader: 'babel-loader' },
-          { loader: 'eslint-loader' }
+          { loader: 'babel-loader' }
         ]
       }
     ]
@@ -61,7 +61,8 @@ const ServerlessWebpackConfig = {
           { from: 'migrations', to: 'migrations' }
         ]
       })
-    )
+    ),
+    // new ESLintPlugin()
   ]
 }
 

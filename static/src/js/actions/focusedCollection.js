@@ -20,12 +20,11 @@ import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
-
 /**
  * Sets the focused collection value in redux
  * @param {String} payload Concept ID of the collection to set as focused
  */
-export const updateFocusedCollection = payload => ({
+export const updateFocusedCollection = (payload) => ({
   type: UPDATE_FOCUSED_COLLECTION,
   payload
 })
@@ -268,7 +267,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
         // If any tools are SOTO, call fetchSotoLayers
         const { items } = tools
-        if (items && items.some(item => item.name.toLowerCase() === 'soto')) {
+        if (items && items.some((item) => item.name.toLowerCase() === 'soto')) {
           dispatch(actions.fetchSotoLayers())
         }
       } else {
@@ -296,11 +295,10 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   return response
 }
 
-
 /**
  * Request subscriptions for the focused collection
  */
-export const getCollectionSubscriptions = collectionId => async (dispatch, getState) => {
+export const getCollectionSubscriptions = (collectionId) => async (dispatch, getState) => {
   const state = getState()
 
   const {
@@ -375,7 +373,7 @@ export const getCollectionSubscriptions = collectionId => async (dispatch, getSt
  * Change the focusedCollection, and get the focusedCollection metadata.
  * @param {String} collectionId The collection id the user has requested to focus
  */
-export const changeFocusedCollection = collectionId => (dispatch, getState) => {
+export const changeFocusedCollection = (collectionId) => (dispatch, getState) => {
   dispatch(actions.updateFocusedCollection(collectionId))
 
   if (collectionId === '') {
@@ -414,7 +412,7 @@ export const changeFocusedCollection = collectionId => (dispatch, getState) => {
  * Changes the focused collection and redirects the user to the focused collection route
  * @param {String} collectionId The collection id the user has requested to view details of
  */
-export const viewCollectionDetails = collectionId => (dispatch, getState) => {
+export const viewCollectionDetails = (collectionId) => (dispatch, getState) => {
   // Update the focused collection in redux and retrieve its metadata
   dispatch(actions.changeFocusedCollection(collectionId))
 
@@ -432,7 +430,7 @@ export const viewCollectionDetails = collectionId => (dispatch, getState) => {
  * Changes the focused collection and redirects the user to the collection granules route
  * @param {String} collectionId The collection id the user has requested to view granules for
  */
-export const viewCollectionGranules = collectionId => (dispatch, getState) => {
+export const viewCollectionGranules = (collectionId) => (dispatch, getState) => {
   // Update the focused collection in redux and retrieve its metadata
   dispatch(actions.changeFocusedCollection(collectionId))
 

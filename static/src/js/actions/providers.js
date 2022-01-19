@@ -7,7 +7,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getProviders } from '../selectors/providers'
 import { handleError } from './errors'
 
-export const setProviders = providerData => ({
+export const setProviders = (providerData) => ({
   type: SET_PROVIDERS,
   payload: providerData
 })

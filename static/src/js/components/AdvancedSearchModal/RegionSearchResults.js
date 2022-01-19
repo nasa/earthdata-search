@@ -179,7 +179,14 @@ RegionSearch.defaultProps = {
 }
 
 RegionSearch.propTypes = {
-  regionSearchResults: PropTypes.shape({}).isRequired,
+  regionSearchResults: PropTypes.shape({
+    keyword: PropTypes.string,
+    allIds: PropTypes.arrayOf(PropTypes.string),
+    error: PropTypes.shape({}),
+    byId: PropTypes.shape({}),
+    isLoading: PropTypes.bool,
+    isLoaded: PropTypes.bool
+  }).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setModalOverlay: PropTypes.func
 }

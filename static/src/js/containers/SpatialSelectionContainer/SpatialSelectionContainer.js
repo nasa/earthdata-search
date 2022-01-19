@@ -12,15 +12,15 @@ import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata
 
 import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
 
-export const mapDispatchToProps = dispatch => ({
-  onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onMetricsMap: type => dispatch(metricsMap(type)),
-  onMetricsSpatialEdit: data => dispatch(metricsSpatialEdit(data)),
+export const mapDispatchToProps = (dispatch) => ({
+  onChangeQuery: (query) => dispatch(actions.changeQuery(query)),
+  onMetricsMap: (type) => dispatch(metricsMap(type)),
+  onMetricsSpatialEdit: (data) => dispatch(metricsSpatialEdit(data)),
   onRemoveSpatialFilter: () => dispatch(actions.removeSpatialFilter()),
-  onToggleDrawingNewLayer: state => dispatch(actions.toggleDrawingNewLayer(state))
+  onToggleDrawingNewLayer: (state) => dispatch(actions.toggleDrawingNewLayer(state))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
@@ -97,18 +97,26 @@ SpatialSelectionContainer.propTypes = {
   advancedSearch: PropTypes.shape({}).isRequired,
   boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
   circleSearch: PropTypes.arrayOf(PropTypes.string),
-  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({
+    isOpenSearch: PropTypes.bool
+  }).isRequired,
   lineSearch: PropTypes.arrayOf(PropTypes.string),
-  mapRef: PropTypes.shape({}),
+  mapRef: PropTypes.shape({
+    leafletElement: PropTypes.shape({})
+  }),
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onMetricsSpatialEdit: PropTypes.func.isRequired,
+  onRemoveSpatialFilter: PropTypes.func.isRequired,
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
-  router: PropTypes.shape({}).isRequired,
-  shapefile: PropTypes.shape({}),
-  onRemoveSpatialFilter: PropTypes.func.isRequired
+  router: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string
+    })
+  }).isRequired,
+  shapefile: PropTypes.shape({})
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SpatialSelectionContainer)

@@ -385,7 +385,7 @@ class SpatialDisplay extends Component {
     return boundingBoxCoordinates
       ? boundingBoxCoordinates
         .match(/[^,]+,[^,]+/g)
-        .map(pointStr => this.transformSingleCoordinate(pointStr))
+        .map((pointStr) => this.transformSingleCoordinate(pointStr))
       : ['', '']
   }
 

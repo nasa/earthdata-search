@@ -5,15 +5,15 @@ import { connect } from 'react-redux'
 
 import actions from '../../actions/index'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onSetContactInfoFromJwt:
-    token => dispatch(actions.setContactInfoFromJwt(token)),
+    (token) => dispatch(actions.setContactInfoFromJwt(token)),
   onSetPreferencesFromJwt:
-    token => dispatch(actions.setPreferencesFromJwt(token)),
+    (token) => dispatch(actions.setPreferencesFromJwt(token)),
   onSetUserFromJwt:
-    token => dispatch(actions.setUserFromJwt(token)),
+    (token) => dispatch(actions.setUserFromJwt(token)),
   onUpdateAuthToken:
-    token => dispatch(actions.updateAuthToken(token))
+    (token) => dispatch(actions.updateAuthToken(token))
 })
 
 export class AuthTokenContainer extends Component {

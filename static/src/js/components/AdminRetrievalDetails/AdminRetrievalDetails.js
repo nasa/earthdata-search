@@ -154,7 +154,12 @@ AdminRetrievalDetails.defaultProps = {
 }
 
 AdminRetrievalDetails.propTypes = {
-  retrieval: PropTypes.shape({})
+  retrieval: PropTypes.shape({
+    collections: PropTypes.arrayOf(PropTypes.shape({})),
+    jsondata: PropTypes.shape({}),
+    obfuscated_id: PropTypes.string,
+    username: PropTypes.string
+  })
 }
 
 export default withRouter(

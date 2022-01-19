@@ -15,7 +15,6 @@ export const encodeFacets = (facets) => {
   return encoded.join('!')
 }
 
-
 /**
  * Decodes a Facet parameter string into an object
  * @param {string} string A `!` delimited string of the facet values
@@ -26,7 +25,7 @@ export const decodeFacets = (string) => {
     return undefined
   }
 
-  const decodedValues = string.split('!').map(value => decodeURIComponent(value))
+  const decodedValues = string.split('!').map((value) => decodeURIComponent(value))
 
   return decodedValues
 }

@@ -21,7 +21,7 @@ export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING
 })
 
-export const updateRetrieval = retrievalData => ({
+export const updateRetrieval = (retrievalData) => ({
   type: UPDATE_RETRIEVAL,
   payload: retrievalData
 })
@@ -115,7 +115,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
  * Fetch a retrieval from the database
  * @param {Integer} id Database ID of the retrieval to lookup
  */
-export const fetchRetrieval = id => (dispatch, getState) => {
+export const fetchRetrieval = (id) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -171,7 +171,7 @@ export const fetchRetrieval = id => (dispatch, getState) => {
  * Delete a retrieval from the database
  * @param {Integer} id Database ID of the retrieval to lookup
  */
-export const deleteRetrieval = id => (dispatch, getState) => {
+export const deleteRetrieval = (id) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors

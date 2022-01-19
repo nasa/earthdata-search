@@ -69,7 +69,9 @@ export const GranuleResultsBrowseImageCell = ({ row }) => {
 }
 
 GranuleResultsBrowseImageCell.propTypes = {
-  row: PropTypes.shape({}).isRequired
+  row: PropTypes.shape({
+    original: PropTypes.shape({})
+  }).isRequired
 }
 
 export default GranuleResultsBrowseImageCell

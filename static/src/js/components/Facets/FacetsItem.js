@@ -113,7 +113,12 @@ FacetsItem.defaultProps = {
 FacetsItem.propTypes = {
   autocompleteType: PropTypes.string,
   changeHandler: PropTypes.func.isRequired,
-  facet: PropTypes.shape({}).isRequired,
+  facet: PropTypes.shape({
+    applied: PropTypes.bool,
+    children: PropTypes.arrayOf(PropTypes.node),
+    count: PropTypes.number,
+    title: PropTypes.string
+  }).isRequired,
   facetCategory: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
   uid: PropTypes.string

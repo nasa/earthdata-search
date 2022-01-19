@@ -59,12 +59,18 @@ export const PanelGroup = ({
 }) => {
   const renderPanels = (child, index) => {
     if (!child) return null
+
     const childProps = { ...child.props }
+
     if (!childProps.panelId) childProps.panelId = `${index}`
+
     const isPanelActive = !!(isActive && childProps.panelId === activePanelId)
+
     childProps.onChangePanel = onChangePanel
     childProps.isActive = isPanelActive
     childProps.footer = childProps.footer ? childProps.footer : footer
+
+    // eslint-disable-next-line react/jsx-props-no-spreading
     return <PanelItem {...childProps} />
   }
 
@@ -85,21 +91,21 @@ export const PanelGroup = ({
     >
       <PanelGroupHeader
         activePanelId={activePanelId}
-        activeView={activeView}
         activeSort={activeSort}
+        activeView={activeView}
         breadcrumbs={breadcrumbs}
-        primaryHeading={primaryHeading}
-        secondaryHeading={secondaryHeading}
+        exportsArray={exportsArray}
+        handoffLinks={handoffLinks}
         headerLoading={headerLoading}
         headerMessage={headerMessage}
-        handoffLinks={handoffLinks}
         headerMetaPrimaryLoading={headerMetaPrimaryLoading}
         headerMetaPrimaryText={headerMetaPrimaryText}
         isExportRunning={isExportRunning}
+        moreActionsDropdownItems={moreActionsDropdownItems}
         panelGroupId={panelGroupId}
         panelGroupIsActive={isActive}
-        moreActionsDropdownItems={moreActionsDropdownItems}
-        exportsArray={exportsArray}
+        primaryHeading={primaryHeading}
+        secondaryHeading={secondaryHeading}
         sortsArray={sortsArray}
         viewsArray={viewsArray}
       />

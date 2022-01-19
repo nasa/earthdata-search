@@ -11,7 +11,6 @@ export const encodeHasGranulesOrCwic = (hasGranulesOrCwic) => {
   return ''
 }
 
-
 /**
  * Decodes hasGranulesOrCwic
  * @param {string} value Encoded value for hasGranulesOrCwic

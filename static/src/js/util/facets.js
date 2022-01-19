@@ -4,7 +4,6 @@ import { isNumber } from './isNumber'
 import { queryParamsFromUrlString } from './url/url'
 import { alphabet, createEmptyAlphabeticListObj } from './alphabetic-list'
 
-
 /**
  * Counts the selected facets in a facet group provided from CMR.
  * @param {object} groupToCheck - An object representing the facet to be checked.
@@ -16,7 +15,7 @@ export const countSelectedFacets = (groupToCheck, startingValue = 0) => {
   let selected = []
 
   if (groupToCheck.children && groupToCheck.children.length) {
-    selected = groupToCheck.children.filter(child => child.applied)
+    selected = groupToCheck.children.filter((child) => child.applied)
   }
 
   selected.forEach((selectedFacet) => {
@@ -41,7 +40,6 @@ export const getStartingLetters = (facets) => {
   })
   return firstLetters
 }
-
 
 /**
  * Takes a facet and returns the arguments to be passed to it's changeHandler function.
@@ -148,7 +146,7 @@ export const categoryNameToCMRParam = (name) => {
  * @param {object} newParams - An object containing the next facet params to set.
  * @return {object} An object with the values to be sent to a facets reducer.
  */
-export const prepareCMRFacetPayload = newParams => ({
+export const prepareCMRFacetPayload = (newParams) => ({
   data_center_h: newParams.data_center_h
     ? newParams.data_center_h
     : undefined,
@@ -193,8 +191,8 @@ export const buildOrganizedFacets = (facets, options) => {
   // Populate the arrays based on the applied property if liftSelectedFacets is set,
   // otherwise put all facets on facetsToSort
   if (options.liftSelectedFacets) {
-    facetsToLift = facets.filter(facet => facet.applied)
-    facetsToSort = facets.filter(facet => !facet.applied)
+    facetsToLift = facets.filter((facet) => facet.applied)
+    facetsToSort = facets.filter((facet) => !facet.applied)
   } else {
     facetsToSort = [...facets]
   }

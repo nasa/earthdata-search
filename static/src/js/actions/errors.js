@@ -8,7 +8,7 @@ import { parseError } from '../../../../sharedUtils/parseError'
 
 import LoggerRequest from '../util/request/loggerRequest'
 
-export const addError = payload => (dispatch) => {
+export const addError = (payload) => (dispatch) => {
   // Default the notificationType to none
   const { notificationType = 'none' } = payload
 
@@ -28,7 +28,7 @@ export const addError = payload => (dispatch) => {
   }
 }
 
-export const removeError = payload => ({
+export const removeError = (payload) => ({
   type: REMOVE_ERROR,
   payload
 })

@@ -32,7 +32,6 @@ export const encodeTimeline = (timelineQuery, pathname) => {
   }
 }
 
-
 /**
  * Decodes a parameter object into a Timeline object
  * @param {object} params URL parameter object from parsing the URL parameter string

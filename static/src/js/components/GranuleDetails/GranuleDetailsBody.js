@@ -49,7 +49,9 @@ GranuleDetailsBody.defaultProps = {
 GranuleDetailsBody.propTypes = {
   authToken: PropTypes.string,
   earthdataEnvironment: PropTypes.string.isRequired,
-  granuleMetadata: PropTypes.shape({}).isRequired
+  granuleMetadata: PropTypes.shape({
+    metadataUrls: PropTypes.shape({})
+  }).isRequired
 }
 
 export default GranuleDetailsBody

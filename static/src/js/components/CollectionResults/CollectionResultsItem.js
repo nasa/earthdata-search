@@ -1,26 +1,28 @@
 import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
+
 import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import {
-  FaGlobe,
-  FaTags,
-  FaSlidersH,
-  FaFileAlt,
   FaClock,
+  FaFileAlt,
+  FaGlobe,
+  FaInfoCircle,
   FaLock,
   FaMinus,
   FaPlus,
-  FaInfoCircle
+  FaSlidersH,
+  FaTags
 } from 'react-icons/fa'
 
+import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'
-import SplitBadge from '../SplitBadge/SplitBadge'
-import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import SplitBadge from '../SplitBadge/SplitBadge'
 
 import './CollectionResultsItem.scss'
 
@@ -483,7 +485,7 @@ export const CollectionResultsItem = forwardRef(({
 CollectionResultsItem.displayName = 'CollectionResultsItem'
 
 CollectionResultsItem.propTypes = {
-  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionMetadata: collectionMetadataPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,

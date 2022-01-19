@@ -51,7 +51,7 @@ const PreferencesForm = (props) => {
     return errors
   }
 
-  const transformErrors = errors => errors.map((error) => {
+  const transformErrors = (errors) => errors.map((error) => {
     // eslint-disable-next-line no-param-reassign
     error.message = error.message.replace('<=', 'less than or equal to')
     // eslint-disable-next-line no-param-reassign
@@ -91,8 +91,11 @@ const PreferencesForm = (props) => {
 }
 
 PreferencesForm.propTypes = {
-  preferences: PropTypes.shape({}).isRequired,
-  onUpdatePreferences: PropTypes.func.isRequired
+  onUpdatePreferences: PropTypes.func.isRequired,
+  preferences: PropTypes.shape({
+    isSubmitting: PropTypes.bool,
+    preferences: PropTypes.shape({})
+  }).isRequired
 }
 
 export default PreferencesForm

@@ -19,19 +19,20 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onAddProjectCollection:
-    collectionId => dispatch(actions.addProjectCollection(collectionId)),
+    (collectionId) => dispatch(actions.addProjectCollection(collectionId)),
   onRemoveCollectionFromProject:
-    collectionId => dispatch(actions.removeCollectionFromProject(collectionId)),
+    (collectionId) => dispatch(actions.removeCollectionFromProject(collectionId)),
   onSetActivePanelSection:
-    panelId => dispatch(actions.setActivePanelSection(panelId)),
+    (panelId) => dispatch(actions.setActivePanelSection(panelId)),
   onUpdateFocusedCollection:
-    collectionId => dispatch(actions.updateFocusedCollection(collectionId)),
-  onChangePath: path => dispatch(actions.changePath(path))
+    (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
+  onChangePath:
+    (path) => dispatch(actions.changePath(path))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionQuery: state.query.collection,
   focusedCollectionId: getFocusedCollectionId(state),
@@ -131,17 +132,29 @@ GranuleResultsActionsContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
-  focusedProjectCollection: PropTypes.shape({}).isRequired,
-  granuleQuery: PropTypes.shape({}).isRequired,
-  granuleSearchResults: PropTypes.shape({}).isRequired,
+  focusedProjectCollection: PropTypes.shape({
+    granules: PropTypes.arrayOf(PropTypes.shape({}))
+  }).isRequired,
+  granuleQuery: PropTypes.shape({
+    pageNum: PropTypes.number
+  }).isRequired,
+  granuleSearchResults: PropTypes.shape({
+    hits: PropTypes.number,
+    isLoaded: PropTypes.bool,
+    isLoading: PropTypes.bool
+  }).isRequired,
   handoffs: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
+  mapProjection: PropTypes.string.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
-  mapProjection: PropTypes.string.isRequired,
-  project: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({
+    collections: PropTypes.shape({
+      allIds: PropTypes.arrayOf(PropTypes.string)
+    })
+  }).isRequired,
   subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 

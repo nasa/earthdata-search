@@ -9,7 +9,7 @@ import {
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 
-export const setRetrievalHistory = retrievalHistoryData => ({
+export const setRetrievalHistory = (retrievalHistoryData) => ({
   type: SET_RETRIEVAL_HISTORY,
   payload: retrievalHistoryData
 })
@@ -18,7 +18,7 @@ export const setRetrievalHistoryLoading = () => ({
   type: SET_RETRIEVAL_HISTORY_LOADING
 })
 
-export const removeRetrievalHistory = retrievalId => ({
+export const removeRetrievalHistory = (retrievalId) => ({
   type: REMOVE_RETRIEVAL_HISTORY,
   payload: retrievalId
 })

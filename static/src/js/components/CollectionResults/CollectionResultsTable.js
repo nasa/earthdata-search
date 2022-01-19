@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { commafy } from '../../util/commafy'
 
+import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
+
 import Cell from '../EDSCTable/EDSCTableCell'
 import CollectionResultsTableHeaderCell from './CollectionResultsTableHeaderCell'
 import EDSCTable from '../EDSCTable/EDSCTable'
@@ -139,7 +141,9 @@ CollectionResultsTable.defaultProps = {
 }
 
 CollectionResultsTable.propTypes = {
-  collectionsMetadata: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  collectionsMetadata: PropTypes.arrayOf(
+    collectionMetadataPropType
+  ).isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,

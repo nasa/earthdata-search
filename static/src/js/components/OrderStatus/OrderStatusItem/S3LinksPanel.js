@@ -46,7 +46,7 @@ export const S3LinksPanel = ({
               <p>{`Direct cloud access for this collection is available in the ${region} region in AWS S3.`}</p>
               <div className="order-status-item__direct-distribution-information">
                 <div className="order-status-item__direct-distribution-item">
-                  {'Region'}
+                  Region
                   <CopyableText
                     className="order-status-item__direct-distribution-item-value"
                     text={region}
@@ -56,7 +56,7 @@ export const S3LinksPanel = ({
                   />
                 </div>
                 <div className="order-status-item__direct-distribution-item">
-                  {'Bucket/Object Prefix'}
+                  Bucket/Object Prefix
                   {s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
                     <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
                       <CopyableText
@@ -71,7 +71,7 @@ export const S3LinksPanel = ({
                   ))}
                 </div>
                 <div className="order-status-item__direct-distribution-item">
-                  {'AWS S3 Credentials'}
+                  AWS S3 Credentials
                   <span className="order-status-item__direct-distribution-item-value">
                     <a
                       className="link link--external"
@@ -147,7 +147,12 @@ S3LinksPanel.defaultProps = {
 
 S3LinksPanel.propTypes = {
   accessMethodType: PropTypes.string.isRequired,
-  directDistributionInformation: PropTypes.shape({}).isRequired,
+  directDistributionInformation: PropTypes.shape({
+    region: PropTypes.string,
+    s3BucketAndObjectPrefixNames: PropTypes.string,
+    s3CredentialsApiEndpoint: PropTypes.string,
+    s3CredentialsApiDocumentationUrl: PropTypes.string
+  }).isRequired,
   s3Links: PropTypes.arrayOf(
     PropTypes.string
   ).isRequired,

@@ -111,14 +111,14 @@ export const getHandoffValue = ({
     const gibsOptions = getValueForTag('gibs', tags)
 
     if (gibsOptions) {
-      const gibsLayers = gibsOptions.map(data => data.product)
+      const gibsLayers = gibsOptions.map((data) => data.product)
 
       // Filter out layers that are not included in SOTO's capabilities
-      const includedSotoLayers = gibsLayers.filter(layer => sotoLayers.includes(layer))
+      const includedSotoLayers = gibsLayers.filter((layer) => sotoLayers.includes(layer))
 
       // In order for the layers in SOTO to be active when the user is handed off, `(la=true)` needs to be
       // added to each layer in the URL
-      value = includedSotoLayers.map(data => `${data}(la=true)`)
+      value = includedSotoLayers.map((data) => `${data}(la=true)`)
     }
   }
 

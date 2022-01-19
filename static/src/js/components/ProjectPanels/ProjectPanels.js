@@ -174,7 +174,7 @@ class ProjectPanels extends PureComponent {
         ]
       } else {
         // Remove the selected variable if it exists in the selectedForCollection
-        newVariables = selectedForCollection.filter(selectedVariable => (
+        newVariables = selectedForCollection.filter((selectedVariable) => (
           Object.keys(variables).indexOf(selectedVariable) === -1
         ))
       }
@@ -186,7 +186,7 @@ class ProjectPanels extends PureComponent {
           variableId
         ]
       } else {
-        newVariables = selectedForCollection.filter(variable => variable !== variableId)
+        newVariables = selectedForCollection.filter((variable) => variable !== variableId)
       }
     }
 
@@ -619,14 +619,19 @@ ProjectPanels.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired,
+  overrideTemporal: PropTypes.shape({}).isRequired,
+  panels: PropTypes.shape({
+    activePanel: PropTypes.string,
+    isOpen: PropTypes.bool
+  }).isRequired,
   portal: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({
+    collections: PropTypes.shape({})
+  }).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
-  temporal: PropTypes.shape({}).isRequired,
-  overrideTemporal: PropTypes.shape({}).isRequired
+  temporal: PropTypes.shape({}).isRequired
 }
 
 export default ProjectPanels

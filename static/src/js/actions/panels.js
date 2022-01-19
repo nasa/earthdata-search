@@ -5,23 +5,22 @@ import {
   PANELS_SET_PANEL_SECTION
 } from '../constants/actionTypes'
 
-
-export const togglePanels = value => ({
+export const togglePanels = (value) => ({
   type: PANELS_TOGGLE,
   payload: value
 })
 
-export const setActivePanel = panelId => ({
+export const setActivePanel = (panelId) => ({
   type: PANELS_SET_PANEL,
   payload: panelId
 })
 
-export const setActivePanelGroup = panelId => ({
+export const setActivePanelGroup = (panelId) => ({
   type: PANELS_SET_PANEL_GROUP,
   payload: panelId
 })
 
-export const setActivePanelSection = panelId => ({
+export const setActivePanelSection = (panelId) => ({
   type: PANELS_SET_PANEL_SECTION,
   payload: panelId
 })

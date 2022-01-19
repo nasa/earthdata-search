@@ -9,7 +9,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { removeSavedProject } from './savedProjects'
 
-export const updateSavedProject = payload => ({
+export const updateSavedProject = (payload) => ({
   type: UPDATE_SAVED_PROJECT,
   payload
 })
@@ -18,7 +18,7 @@ export const updateSavedProject = payload => ({
  * Action called when the project name is being updated
  * @param {String} name New project name
  */
-export const updateProjectName = name => (dispatch, getState) => {
+export const updateProjectName = (name) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -83,7 +83,7 @@ export const updateProjectName = name => (dispatch, getState) => {
  * Action called when deleting a saved project
  * @param {String} projectId Project Id to delete
  */
-export const deleteSavedProject = projectId => (dispatch, getState) => {
+export const deleteSavedProject = (projectId) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors

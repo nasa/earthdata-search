@@ -24,7 +24,7 @@ const projectLatLngPath = (latLngs, proj, interpolateFn, tolerance = 1, maxDepth
 
   const points = ((() => {
     const result = []
-    newLatLngs.forEach(ll => result.push(proj(ll)))
+    newLatLngs.forEach((ll) => result.push(proj(ll)))
     return result
   })())
   // for ll in latLngs
@@ -99,7 +99,6 @@ const projectPath = (map, latlngs, fn = 'geodetic', tolerance = 1, maxDepth = 10
 
   return projectLatLngPath(latlngs, proj, newFn, tolerance, maxDepth)
 }
-
 
 // Overrides the default projectLatLngs in Polyline to project and interpolate the
 // path instead of just projecting it

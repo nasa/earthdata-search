@@ -24,7 +24,6 @@ PanelSection.defaultProps = {
   isOpen: false
 }
 
-
 PanelSection.propTypes = {
   children: PropTypes.node.isRequired,
   isOpen: PropTypes.bool,

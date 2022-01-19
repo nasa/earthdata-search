@@ -19,7 +19,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { scienceKeywordTypes } from '../util/scienceKeywordTypes'
 
-export const onAutocompleteLoaded = payload => ({
+export const onAutocompleteLoaded = (payload) => ({
   type: LOADED_AUTOCOMPLETE,
   payload
 })
@@ -36,17 +36,17 @@ export const clearAutocompleteSuggestions = () => ({
   type: CLEAR_AUTOCOMPLETE_SUGGESTIONS
 })
 
-export const updateAutocompleteSuggestions = payload => ({
+export const updateAutocompleteSuggestions = (payload) => ({
   type: UPDATE_AUTOCOMPLETE_SUGGESTIONS,
   payload
 })
 
-export const updateAutocompleteSelected = payload => ({
+export const updateAutocompleteSelected = (payload) => ({
   type: UPDATE_AUTOCOMPLETE_SELECTED,
   payload
 })
 
-export const deleteAutocompleteValue = payload => ({
+export const deleteAutocompleteValue = (payload) => ({
   type: DELETE_AUTOCOMPLETE_VALUE,
   payload
 })
@@ -68,7 +68,7 @@ export const cancelAutocomplete = () => (dispatch) => {
   return buildPromise(null)
 }
 
-export const fetchAutocomplete = data => (dispatch, getState) => {
+export const fetchAutocomplete = (data) => (dispatch, getState) => {
   if (!data) return null
 
   if (cancelToken) {
@@ -161,7 +161,7 @@ const mapAutocompleteToFacets = (autocomplete) => {
  * Action for selecting an autocomplete suggestion
  * @param {Object} data Autocomplete suggestion
  */
-export const selectAutocompleteSuggestion = data => (dispatch) => {
+export const selectAutocompleteSuggestion = (data) => (dispatch) => {
   const cmrFacet = mapAutocompleteToFacets(data)
   if (cmrFacet) dispatch(actions.addCmrFacet(cmrFacet))
 
@@ -173,7 +173,7 @@ export const selectAutocompleteSuggestion = data => (dispatch) => {
  * Action for removing an autocomplete suggestion
  * @param {Object} data Autocomplete suggestion
  */
-export const removeAutocompleteValue = data => (dispatch) => {
+export const removeAutocompleteValue = (data) => (dispatch) => {
   const cmrFacet = mapAutocompleteToFacets({ suggestion: data })
   if (cmrFacet) dispatch(actions.removeCmrFacet(cmrFacet))
 

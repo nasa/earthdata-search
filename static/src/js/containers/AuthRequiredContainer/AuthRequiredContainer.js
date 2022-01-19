@@ -6,7 +6,7 @@ import { get } from 'tiny-cookie'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   earthdataEnvironment: getEarthdataEnvironment(state)
 })
 

@@ -10,7 +10,6 @@ export const getContactInfo = (state) => {
   return contactInfo
 }
 
-
 /**
  * Retrieve current URS Profile from Redux
  */

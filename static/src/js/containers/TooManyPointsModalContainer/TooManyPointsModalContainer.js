@@ -6,13 +6,13 @@ import actions from '../../actions'
 
 import TooManyPointsModal from '../../components/TooManyPointsModal/TooManyPointsModal'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   isOpen: state.ui.tooManyPointsModal.isOpen
 })
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onToggleTooManyPointsModal:
-    state => dispatch(actions.toggleTooManyPointsModal(state))
+    (state) => dispatch(actions.toggleTooManyPointsModal(state))
 })
 
 export const TooManyPointsModalContainer = ({

@@ -26,4 +26,4 @@ export const availableSystems = config.map((item) => {
   }
 })
 
-export const findGridByName = name => availableSystems.find(grid => grid.name === name)
+export const findGridByName = (name) => availableSystems.find((grid) => grid.name === name)

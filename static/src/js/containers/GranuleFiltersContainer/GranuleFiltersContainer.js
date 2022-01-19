@@ -15,22 +15,22 @@ import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata
 import GranuleFiltersForm
   from '../../components/GranuleFilters/GranuleFiltersForm'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   temporal: state.query.collection.temporal
 })
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onApplyGranuleFilters:
     (values, closePanel) => dispatch(
       actions.applyGranuleFilters(values, closePanel)
     ),
-  onClearGranuleFilters: collectionId => dispatch(
+  onClearGranuleFilters: (collectionId) => dispatch(
     actions.clearGranuleFilters(collectionId)
   ),
   onUndoExcludeGranule:
-    collectionId => dispatch(actions.undoExcludeGranule(collectionId))
+    (collectionId) => dispatch(actions.undoExcludeGranule(collectionId))
 })
 
 /**
@@ -144,18 +144,20 @@ const EnhancedGranuleFiltersContainer = withFormik({
 GranuleFiltersContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   dirty: PropTypes.bool.isRequired,
-  granuleQuery: PropTypes.shape({}).isRequired,
-  granuleFiltersNeedsReset: PropTypes.bool.isRequired,
   errors: PropTypes.shape({}).isRequired,
+  granuleFiltersNeedsReset: PropTypes.bool.isRequired,
+  granuleQuery: PropTypes.shape({
+    excludedGranuleIds: PropTypes.arrayOf(PropTypes.string)
+  }).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onClearGranuleFilters: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
-  setGranuleFiltersNeedReset: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
+  setGranuleFiltersNeedReset: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired
 }

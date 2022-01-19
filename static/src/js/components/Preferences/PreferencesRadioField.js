@@ -78,10 +78,14 @@ class PreferencesRadioField extends Component {
 }
 
 PreferencesRadioField.propTypes = {
-  schema: PropTypes.shape({}).isRequired,
-  name: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  schema: PropTypes.shape({
+    enum: PropTypes.shape({}),
+    enumNames: PropTypes.shape({}),
+    description: PropTypes.string
+  }).isRequired
 }
 
 export default PreferencesRadioField

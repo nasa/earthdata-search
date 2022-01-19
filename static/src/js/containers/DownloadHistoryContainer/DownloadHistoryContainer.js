@@ -6,18 +6,19 @@ import { withRouter } from 'react-router-dom'
 import actions from '../../actions'
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   earthdataEnvironment: state.earthdataEnvironment,
   retrievalHistory: state.retrievalHistory.history,
   retrievalHistoryLoading: state.retrievalHistory.isLoading,
   retrievalHistoryLoaded: state.retrievalHistory.isLoaded
 })
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onFetchRetrievalHistory: (earthdataEnvironment) => {
     dispatch(actions.fetchRetrievalHistory(earthdataEnvironment))
   },
-  onDeleteRetrieval: retrievalId => dispatch(actions.deleteRetrieval(retrievalId))
+  onDeleteRetrieval:
+    (retrievalId) => dispatch(actions.deleteRetrieval(retrievalId))
 })
 
 export class DownloadHistoryContainer extends Component {

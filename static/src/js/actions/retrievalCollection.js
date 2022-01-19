@@ -8,7 +8,7 @@ import {
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 
-export const setRetrievalCollectionLoading = retrievalCollection => ({
+export const setRetrievalCollectionLoading = (retrievalCollection) => ({
   type: SET_RETRIEVAL_COLLECTION_LOADING,
   payload: retrievalCollection
 })
@@ -21,7 +21,7 @@ export const updateRetrievalCollection = (id, retrievalCollectionData) => ({
 /**
  * Fetch order data for an order
  */
-export const fetchRetrievalCollection = id => (dispatch, getState) => {
+export const fetchRetrievalCollection = (id) => (dispatch, getState) => {
   const state = getState()
 
   const { authToken } = state

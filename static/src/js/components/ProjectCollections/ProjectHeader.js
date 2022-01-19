@@ -68,12 +68,6 @@ export class ProjectHeader extends Component {
     }
   }
 
-  onInputChange(event) {
-    this.setState({
-      projectName: event.target.value
-    }, () => this.renderInput())
-  }
-
   handleNameSubmit() {
     const { onUpdateProjectName } = this.props
     const { projectName } = this.state
@@ -111,6 +105,12 @@ export class ProjectHeader extends Component {
 
   handleOnFocus() {
     this.setState({ isEditingName: true })
+  }
+
+  onInputChange(event) {
+    this.setState({
+      projectName: event.target.value
+    }, () => this.renderInput())
   }
 
   focusTextField() {
@@ -241,7 +241,7 @@ export class ProjectHeader extends Component {
           }
         </div>
         {
-          granuleLoadingStates.every(isLoaded => isLoaded === true) ? (
+          granuleLoadingStates.every((isLoaded) => isLoaded === true) ? (
             <ul className="project-header__stats-list">
               <>
                 <li
@@ -304,9 +304,13 @@ export class ProjectHeader extends Component {
 
 ProjectHeader.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
-  savedProject: PropTypes.shape({}).isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired
+  onUpdateProjectName: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    collections: PropTypes.shape({})
+  }).isRequired,
+  savedProject: PropTypes.shape({
+    name: PropTypes.string
+  }).isRequired
 }
 
 export default ProjectHeader

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, {
   createContext,
   forwardRef,
@@ -204,7 +205,7 @@ const EDSCTable = ({
     lastRowStyle = lastRowProps.style
   }
 
-  const buildSkeletonRow = style => (
+  const buildSkeletonRow = (style) => (
     <>
       <div
         className="edsc-table__tr"
@@ -306,18 +307,18 @@ const EDSCTable = ({
       // These events will be spread on to the row div element, ommiting the events
       // where callbacks have not been defined.
       const rowEvents = {
-        onClick: (onRowClick ? e => enhancedOnRowClick(e, row) : undefined),
-        onMouseLeave: (onRowMouseLeave ? e => onRowMouseLeave(e, row) : undefined),
-        onMouseEnter: (onRowMouseEnter ? e => onRowMouseEnter(e, row) : undefined),
-        onMouseUp: (onRowMouseUp || onRowClick ? e => enhancedOnRowMouseUp(e, row) : undefined),
-        onFocus: (onRowFocus ? e => onRowFocus(e, row) : undefined),
-        onBlur: (onRowBlur ? e => onRowBlur(e, row) : undefined)
+        onClick: (onRowClick ? (e) => enhancedOnRowClick(e, row) : undefined),
+        onMouseLeave: (onRowMouseLeave ? (e) => onRowMouseLeave(e, row) : undefined),
+        onMouseEnter: (onRowMouseEnter ? (e) => onRowMouseEnter(e, row) : undefined),
+        onMouseUp: (onRowMouseUp || onRowClick ? (e) => enhancedOnRowMouseUp(e, row) : undefined),
+        onFocus: (onRowFocus ? (e) => onRowFocus(e, row) : undefined),
+        onBlur: (onRowBlur ? (e) => onRowBlur(e, row) : undefined)
       }
 
       const focusableProps = onRowClick
         ? {
           tabIndex: 0,
-          onKeyPress: e => onRowClick(e, row)
+          onKeyPress: (e) => onRowClick(e, row)
         } : {}
 
       return (

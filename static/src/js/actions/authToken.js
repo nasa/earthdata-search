@@ -7,12 +7,12 @@ import LogoutRequest from '../util/request/logoutRequest'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
-export const updateAuthToken = payload => ({
+export const updateAuthToken = (payload) => ({
   type: UPDATE_AUTH,
   payload
 })
 
-export const updateAuthTokenFromHeaders = headers => (dispatch) => {
+export const updateAuthTokenFromHeaders = (headers) => (dispatch) => {
   const { 'jwt-token': jwtToken = '' } = headers || {}
 
   // Prevent optional authorizers from logging users out because they don't return an auth token

@@ -59,8 +59,8 @@ const TemporalSelectionDropdownMenu = ({
         onRecurringToggle={onRecurringToggle}
         onChangeRecurring={onChangeRecurring}
         onChangeQuery={onChangeQuery}
-        onSubmitStart={value => setStartDate(value)}
-        onSubmitEnd={value => setEndDate(value)}
+        onSubmitStart={(value) => setStartDate(value)}
+        onSubmitEnd={(value) => setEndDate(value)}
         onValid={onValid}
         onInvalid={onInvalid}
       />

@@ -178,7 +178,9 @@ CollectionDetails.propTypes = {
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   portal: PropTypes.shape({}).isRequired,
-  projectCollection: PropTypes.shape({}).isRequired
+  projectCollection: PropTypes.shape({
+    granules: PropTypes.shape({})
+  }).isRequired
 }
 
 export default CollectionDetails

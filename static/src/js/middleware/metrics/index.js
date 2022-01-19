@@ -23,8 +23,7 @@ import {
   METRICS_TIMING
 } from './constants'
 
-
-const createMetricsMiddleware = () => ({ getState }) => next => (action) => {
+const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
   if (action.type === LOCATION_CHANGE) {
     virtualPageview(action, getState())
   }

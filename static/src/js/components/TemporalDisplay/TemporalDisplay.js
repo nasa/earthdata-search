@@ -113,7 +113,11 @@ TemporalDisplay.defaultProps = {
 
 TemporalDisplay.propTypes = {
   onRemoveTimelineFilter: PropTypes.func.isRequired,
-  temporalSearch: PropTypes.shape({})
+  temporalSearch: PropTypes.shape({
+    endDate: PropTypes.string,
+    isRecurring: PropTypes.bool,
+    startDate: PropTypes.string
+  })
 }
 
 export default TemporalDisplay

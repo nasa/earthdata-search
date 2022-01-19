@@ -17,22 +17,22 @@ import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onChangeGranulePageNum:
-    data => dispatch(actions.changeGranulePageNum(data)),
+    (data) => dispatch(actions.changeGranulePageNum(data)),
   onExcludeGranule:
-    data => dispatch(actions.excludeGranule(data)),
+    (data) => dispatch(actions.excludeGranule(data)),
   onFocusedGranuleChange:
-    granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
+    (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
   onMetricsDataAccess:
-    data => dispatch(metricsDataAccess(data)),
+    (data) => dispatch(metricsDataAccess(data)),
   onAddGranuleToProjectCollection:
-    data => dispatch(actions.addGranuleToProjectCollection(data)),
+    (data) => dispatch(actions.addGranuleToProjectCollection(data)),
   onRemoveGranuleFromProjectCollection:
-    data => dispatch(actions.removeGranuleFromProjectCollection(data))
+    (data) => dispatch(actions.removeGranuleFromProjectCollection(data))
 })
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
@@ -103,10 +103,15 @@ export const GranuleResultsBodyContainer = (props) => {
 }
 
 GranuleResultsBodyContainer.propTypes = {
-  collectionMetadata: PropTypes.shape({}).isRequired,
+  collectionMetadata: PropTypes.shape({
+    directDistributionInformation: PropTypes.shape({}),
+    isOpenSearch: PropTypes.bool
+  }).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
-  granuleQuery: PropTypes.shape({}).isRequired,
+  granuleQuery: PropTypes.shape({
+    pageNum: PropTypes.number
+  }).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,

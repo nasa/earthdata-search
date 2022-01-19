@@ -61,7 +61,7 @@ export class KeyboardShortcutsModal extends Component {
         body={(
           <Container>
             {
-              Object.entries(keyboardShortcutsList).map(shortcut => (
+              Object.entries(keyboardShortcutsList).map((shortcut) => (
                 <Row key={shortcut[0]} className="mb-1">
                   <Col xs={1}>
                     <kbd>{shortcut[0]}</kbd>

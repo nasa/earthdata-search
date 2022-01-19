@@ -62,18 +62,6 @@ class SecondaryToolbar extends Component {
     if (name !== nextName) this.setState({ projectName: nextName })
   }
 
-  onToggleProjectDropdown() {
-    const { projectDropdownOpen } = this.state
-
-    this.setState({
-      projectDropdownOpen: !projectDropdownOpen
-    })
-  }
-
-  onInputChange(event) {
-    this.setState({ newProjectName: event.target.value })
-  }
-
   /**
    * Log the user out by calling the onLogout action
    */
@@ -102,6 +90,18 @@ class SecondaryToolbar extends Component {
       event.stopPropagation()
       event.preventDefault()
     }
+  }
+
+  onInputChange(event) {
+    this.setState({ newProjectName: event.target.value })
+  }
+
+  onToggleProjectDropdown() {
+    const { projectDropdownOpen } = this.state
+
+    this.setState({
+      projectDropdownOpen: !projectDropdownOpen
+    })
   }
 
   render() {
@@ -389,8 +389,12 @@ SecondaryToolbar.propTypes = {
   portal: PropTypes.shape({}).isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
-  savedProject: PropTypes.shape({}).isRequired,
-  ursProfile: PropTypes.shape({}).isRequired
+  savedProject: PropTypes.shape({
+    name: PropTypes.string
+  }).isRequired,
+  ursProfile: PropTypes.shape({
+    first_name: PropTypes.string
+  }).isRequired
 }
 
 export default SecondaryToolbar

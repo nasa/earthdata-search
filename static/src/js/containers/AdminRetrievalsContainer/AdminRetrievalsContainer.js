@@ -6,21 +6,25 @@ import { withRouter } from 'react-router-dom'
 import actions from '../../actions'
 import AdminRetrievals from '../../components/AdminRetrievals/AdminRetrievals'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   retrievals: state.admin.retrievals,
   retrievalsLoading: state.admin.retrievals.isLoading,
   retrievalsLoaded: state.admin.retrievals.isLoaded
 })
 
-export const mapDispatchToProps = dispatch => ({
-  onAdminViewRetrieval: retrievalId => dispatch(actions.adminViewRetrieval(retrievalId)),
-  onFetchAdminRetrievals: () => dispatch(actions.fetchAdminRetrievals()),
-  onUpdateAdminRetrievalsSortKey: sortKey => dispatch(
-    actions.updateAdminRetrievalsSortKey(sortKey)
-  ),
-  onUpdateAdminRetrievalsPageNum: pageNum => dispatch(
-    actions.updateAdminRetrievalsPageNum(pageNum)
-  )
+export const mapDispatchToProps = (dispatch) => ({
+  onAdminViewRetrieval:
+    (retrievalId) => dispatch(actions.adminViewRetrieval(retrievalId)),
+  onFetchAdminRetrievals:
+    () => dispatch(actions.fetchAdminRetrievals()),
+  onUpdateAdminRetrievalsSortKey:
+    (sortKey) => dispatch(
+      actions.updateAdminRetrievalsSortKey(sortKey)
+    ),
+  onUpdateAdminRetrievalsPageNum:
+    (pageNum) => dispatch(
+      actions.updateAdminRetrievalsPageNum(pageNum)
+    )
 })
 
 export class AdminRetrievalsContainer extends Component {
@@ -64,11 +68,13 @@ AdminRetrievalsContainer.defaultProps = {
 }
 
 AdminRetrievalsContainer.propTypes = {
-  history: PropTypes.shape({}).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }).isRequired,
   onAdminViewRetrieval: PropTypes.func.isRequired,
   onFetchAdminRetrievals: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({})
 }
 

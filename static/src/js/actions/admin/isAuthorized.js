@@ -4,7 +4,7 @@ import { SET_ADMIN_IS_AUTHORIZED } from '../../constants/actionTypes'
 
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
-export const updateIsAuthorized = isAuthorized => ({
+export const updateIsAuthorized = (isAuthorized) => ({
   type: SET_ADMIN_IS_AUTHORIZED,
   payload: isAuthorized
 })

@@ -302,7 +302,7 @@ export const GranuleResultsDataLinksButton = ({
       icon={FaDownload}
       label="No download link available"
       disabled
-      onClick={e => e.preventDefault()}
+      onClick={(e) => e.preventDefault()}
     />
   )
 }
@@ -316,8 +316,15 @@ GranuleResultsDataLinksButton.defaultProps = {
 GranuleResultsDataLinksButton.propTypes = {
   buttonVariant: PropTypes.string,
   collectionId: PropTypes.string.isRequired,
-  directDistributionInformation: PropTypes.shape({}).isRequired,
-  dataLinks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  directDistributionInformation: PropTypes.shape({
+    region: PropTypes.string,
+    s3BucketAndObjectPrefixNames: PropTypes.arrayOf(PropTypes.string),
+    s3CredentialsApiDocumentationUrl: PropTypes.string,
+    s3CredentialsApiEndpoint: PropTypes.string
+  }).isRequired,
+  dataLinks: PropTypes.arrayOf(PropTypes.shape({
+    href: PropTypes.string
+  })).isRequired,
   s3Links: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired
 }

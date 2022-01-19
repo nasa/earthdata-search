@@ -8,7 +8,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../../components/Button/Button'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   portal: state.portal
 })
 
@@ -61,6 +61,7 @@ export const PortalLinkContainer = (props) => {
     return (
       <Button
         type="button"
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
         onClick={(event) => {
           if (onClick) onClick(event)
@@ -97,22 +98,24 @@ PortalLinkContainer.defaultProps = {
 }
 
 PortalLinkContainer.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
-  match: PropTypes.shape({}).isRequired,
-  staticContext: PropTypes.shape({}),
   children: PropTypes.node,
   className: PropTypes.string,
+  dataTestId: PropTypes.string,
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }).isRequired,
+  location: locationPropType.isRequired,
+  match: PropTypes.shape({}).isRequired,
   onClick: PropTypes.func,
   portal: PropTypes.shape({}),
+  staticContext: PropTypes.shape({}),
+  target: PropTypes.string,
   to: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({})
   ]),
-  type: PropTypes.string,
-  target: PropTypes.string,
-  dataTestId: PropTypes.string
+  type: PropTypes.string
 }
 
 export default withRouter(

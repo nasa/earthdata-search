@@ -155,9 +155,28 @@ const GranuleResultsTableHeaderCell = (props) => {
 }
 
 GranuleResultsTableHeaderCell.propTypes = {
-  column: PropTypes.shape({}).isRequired,
-  cell: PropTypes.shape({}).isRequired,
-  row: PropTypes.shape({}).isRequired
+  cell: PropTypes.shape({
+    value: PropTypes.string
+  }).isRequired,
+  column: PropTypes.shape({
+    customProps: PropTypes.shape({
+      collectionId: PropTypes.string,
+      directDistributionInformation: PropTypes.shape({}),
+      isGranuleInProject: PropTypes.bool,
+      location: PropTypes.shape({
+        search: PropTypes.string
+      }),
+      onAddGranuleToProjectCollection: PropTypes.func,
+      onExcludeGranule: PropTypes.func,
+      onFocusedGranuleChange: PropTypes.func,
+      onMetricsDataAccess: PropTypes.func,
+      onRemoveGranuleFromProjectCollection: PropTypes.func,
+      portal: PropTypes.shape({})
+    })
+  }).isRequired,
+  row: PropTypes.shape({
+    original: PropTypes.shape({})
+  }).isRequired
 }
 
 export default GranuleResultsTableHeaderCell

@@ -12,7 +12,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   collectionsQuery: state.query.collection,
   collectionsSearch: state.searchResults.collections,
   focusedCollectionGranuleMetadata: getFocusedCollectionGranuleMetadata(state),
@@ -59,7 +59,7 @@ export const GranuleResultsHighlightsContainer = ({
     limit
   })
 
-  const granuleList = granuleIds.map(granuleId => (
+  const granuleList = granuleIds.map((granuleId) => (
     focusedCollectionGranuleMetadata[granuleId]
   ))
 
@@ -80,10 +80,14 @@ export const GranuleResultsHighlightsContainer = ({
 
 GranuleResultsHighlightsContainer.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({
+    byId: PropTypes.shape({})
+  }).isRequired,
   focusedCollectionGranuleMetadata: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
-  focusedCollectionMetadata: PropTypes.shape({}).isRequired,
+  focusedCollectionMetadata: PropTypes.shape({
+    isOpenSearch: PropTypes.bool
+  }).isRequired,
   location: locationPropType.isRequired
 }
 

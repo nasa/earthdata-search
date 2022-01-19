@@ -25,7 +25,7 @@ class FacetsGroup extends Component {
   }
 
   onToggle() {
-    this.setState(state => ({ isOpen: !state.isOpen }))
+    this.setState((state) => ({ isOpen: !state.isOpen }))
   }
 
   onViewAllClick() {
@@ -124,7 +124,15 @@ class FacetsGroup extends Component {
 }
 
 FacetsGroup.propTypes = {
-  facet: PropTypes.shape({}).isRequired,
+  facet: PropTypes.shape({
+    applied: PropTypes.bool,
+    autocompleteType: PropTypes.string,
+    changeHandler: PropTypes.func,
+    children: PropTypes.arrayOf(PropTypes.shape({})),
+    options: PropTypes.shape({}),
+    title: PropTypes.string,
+    totalSelected: PropTypes.number
+  }).isRequired,
   facetCategory: PropTypes.string.isRequired,
   onTriggerViewAllFacets: PropTypes.func.isRequired
 }

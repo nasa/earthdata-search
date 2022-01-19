@@ -155,7 +155,6 @@ export class TreeNode {
     return uniq(checked)
   }
 
-
   /**
    * Builds the item's fullValue based on the parent
    * @param {String} parentValue parent item's fullValue
@@ -231,14 +230,14 @@ export class TreeNode {
    * Determines if all the items children are checked
    */
   allChildrenChecked() {
-    return this.children.every(child => child.checked === true)
+    return this.children.every((child) => child.checked === true)
   }
 
   /**
    * Determines if some the items children are checked
    */
   someChildrenChecked() {
-    return this.children.some(child => child.checked === true || child.checked === 'indeterminate')
+    return this.children.some((child) => child.checked === true || child.checked === 'indeterminate')
   }
 
   /**
