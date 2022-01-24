@@ -1,5 +1,5 @@
-// #root is required here to allow for dropdowns rendered in a portal,
-// which would be done to overcome overflow issues.
+/* #root is required here to allow for dropdowns rendered in a portal,
+which would be done to overcome overflow issues. */
 #root,
 .dropdown-menu {
   box-shadow: 0 0 1rem rgba($color__black, 0.15);

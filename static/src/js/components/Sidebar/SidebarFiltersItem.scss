@@ -18,7 +18,7 @@
 
     > .form-group {
       > .form-control {
-        // Target only direct decendants of a form-group, as is the case with the temporal selection
+        /* Target only direct decendants of a form-group, as is the case with the temporal selection */
         background-color: transparent;
         border: none;
       }

@@ -3,8 +3,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import 'proj4'
+
+import proj4 from 'proj4'
 import 'proj4leaflet'
+
 import {
   Map,
   LayersControl,

@@ -12,7 +12,7 @@
     background-color: transparent;
   }
 
-  // Hides the default text inside the dropzone container
+  /* Hides the default text inside the dropzone container */
   .dz-default {
     @include invisible(hidden)
   }
