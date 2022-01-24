@@ -1,17 +1,17 @@
 /*
 * Custom Variables
 */
-// Gutter width
+/* Gutter width */
 $grid-gutter-width: 2rem;
 
-// Font
+/* Font */
 $font-size-base: 0.875rem;
 
-// Body
+/* Body */
 $body-bg: #000;
 $body-color: #333;
 
-// Theme Colors
+/* Theme Colors */
 $theme-colors: (
   "primary": $color__theme--blue,
   "light": $color__theme--light,
@@ -21,22 +21,22 @@ $theme-colors: (
 
 $border-color: $color__black--200;
 
-// Buttons
+/* Buttons */
 $btn-border-radius: 0.125rem;
 
-// Links
+/* Links */
 $color__link: $color__blue;
 $link-hover-color: $color__blue--dark;
 $link-decoration: none;
 $link-hover-decoration: none;
 
-// Badges
+/* Badges */
 $badge-padding-y: 0.3125rem;
 $badge-padding-x: 0.5rem;
 $badge-font-size: 0.6875rem;
 $badge-border-radius: 0.125rem;
 
-// Custom Breakpoints
+/* Custom Breakpoints */
 
 $grid-breakpoints: (
   xs: 0,

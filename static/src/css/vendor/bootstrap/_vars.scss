@@ -4,10 +4,10 @@
  * The default bootstrap variables are loaded in via the 'sass-resources-loader'
 */
 
-// Override default Bootstrap variables
+/* Override default Bootstrap variables */
 @import "overrides";
 
-// Import default Bootstrap functions, variables, and mixins
+/* Import default Bootstrap functions, variables, and mixins */
 @import "~bootstrap/scss/_functions";
 @import "~bootstrap/scss/_variables";
 @import "~bootstrap/scss/_mixins";

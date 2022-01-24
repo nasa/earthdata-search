@@ -55,7 +55,7 @@
       left: 0;
     }
 
-    // Set baseline styles for icons
+    /* Set baseline styles for icons */
     .leaflet-control-container {
       .edsc-icon {
         font-size: 12px;
@@ -69,21 +69,21 @@
       }
     }
 
-    // Positions the layers list and scale elements outside of the default container
-    // to allow the layers list to not affect position of the rest of the controls while
-    // its in its expanded state
+    /* Positions the layers list and scale elements outside of the default container
+    to allow the layers list to not affect position of the rest of the controls while
+    its in its expanded state */
     .leaflet-control-layers {
       bottom: 0;
       right: 0px;
       position: absolute;
     }
 
-    // Reduce the font size on the scale elements
+    Reduce the font size on the scale elements
     .leaflet-control-scale-line {
       font-weight: 400;
     }
 
-    // Force the layers toggle to be the same size as the other elements
+    /* Force the layers toggle to be the same size as the other elements */
     .leaflet-control-layers-toggle,
     .leaflet-touch .leaflet-control-layers-toggle,
     .leaflet-retina .leaflet-control-layers-toggle {
@@ -150,7 +150,7 @@
       text-align: right;
     }
 
-    // Force the horizontal toolbar and adjust button radius
+    /* Force the horizontal toolbar and adjust button radius */
     .leaflet-bar a,
     .leaflet-bar button,
     .leaflet-touch .leaflet-bar a,
@@ -199,7 +199,7 @@
       margin-bottom: 10px;
     }
 
-    // Leaflet draw section
+    /* Leaflet draw section */
     .leaflet-draw-section {
       &:last-child {
         margin: 0;
@@ -257,7 +257,7 @@
       background-color: #e6e6e6;
       overflow: hidden;
 
-      // A little trickery to make the background image look faded to match the other disabled styles
+      /* A little trickery to make the background image look faded to match the other disabled styles */
       &:before {
         content: '';
         position: absolute;

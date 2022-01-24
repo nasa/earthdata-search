@@ -1,5 +1,5 @@
 import L from 'leaflet'
-import 'proj4'
+import proj4 from 'proj4'
 import 'proj4leaflet'
 
 const ScaledLonLatProjection = (scale) => ({

@@ -1,4 +1,5 @@
 require('@babel/register')
+
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
@@ -57,7 +58,7 @@ const StaticCommonConfig = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', '@babel/react']
+              presets: ['@babel/preset-env']
             }
           }
         ]
@@ -92,10 +93,12 @@ const StaticCommonConfig = {
             }
           },
           {
-            loader: 'sass-resources-loader',
+            loader: 'style-resources-loader',
             options: {
-              // eslint-disable-next-line
-              resources: require(path.join(process.cwd(), "/static/src/css/globalUtils.js")),
+              patterns: [
+                path.resolve(__dirname, 'static/src/css/utils/utils.scss'),
+                path.resolve(__dirname, 'static/src/css/vendor/bootstrap/_vars.scss')
+              ]
             }
           }
         ]
@@ -136,6 +139,7 @@ const StaticCommonConfig = {
     ]
   },
   plugins: [
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
     new HtmlWebPackPlugin({
       template: path.join(__dirname, './static/src/partials/wrapper.html')
     }),
@@ -174,7 +178,7 @@ const StaticCommonConfig = {
       jQuery: 'jquery',
       $: 'jquery'
     }),
-    // new ESLintPlugin(),
+    new ESLintPlugin(),
     // Prevent importing of all moment locales. Moment includes and uses en-us by default.
     // https://medium.com/@michalozogan/how-to-split-moment-js-locales-to-chunks-with-webpack-de9e25caccea
     new webpack.IgnorePlugin({

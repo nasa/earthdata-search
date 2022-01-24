@@ -1,6 +1,6 @@
 .split-badge {
-  // If the .split-badge__inner is empty, we want to use the normal padding. Otherwise,
-  // the height of the .split-badge__inner will provide the padding
+  /* If the .split-badge__inner is empty, we want to use the normal padding. Otherwise,
+  the height of the .split-badge__inner will provide the padding */
   &:not(&--empty) {
     padding: 0;
     padding-left: 0.5rem;
