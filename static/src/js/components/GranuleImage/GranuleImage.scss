@@ -4,7 +4,7 @@
   right: 1.5rem;
   width: 0;
   height: 0;
-  z-index: 401; // Sits above .leaflet-map-pane at index 400
+  z-index: 401; /* Sits above .leaflet-map-pane at index 400 */
   color: $color__white;
   background-color: $color__black;
   transition: all 0.2s ease;

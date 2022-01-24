@@ -1,37 +1,58 @@
 const path = require('path')
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+
+const {
+  customizeObject,
+  mergeWithCustomize,
+  mergeWithRules
+} = require('webpack-merge')
+
+const {
+  BundleAnalyzerPlugin
+} = require('webpack-bundle-analyzer')
+
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const TerserJsPlugin = require('terser-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const CSSNano = require('cssnano')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserJsPlugin = require('terser-webpack-plugin')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
-const debug = false
-
 const defaultPlugins = [
+  // This plugin will cause hashes to be based on the relative path of the module, generating a four character string as the module id.
   new webpack.ids.HashedModuleIdsPlugin({}),
+
+  // Remove/clean your build folder(s).
   new CleanWebpackPlugin(),
+
+  // Creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
   new MiniCssExtractPlugin({
     filename: '[name].[contenthash].min.css',
     chunkFilename: '[id].[contenthash].min.css'
   })
 ]
 
+const debug = false
+
 const debugPlugins = [
-  new DuplicatePackageCheckerPlugin(),
+  // Visualize size of webpack output files with an interactive zoomable treemap.
   new BundleAnalyzerPlugin(),
-  new CompressionPlugin()
+
+  // Prepare compressed versions of assets to serve them with Content-Encoding.
+  new CompressionPlugin(),
+
+  // Provides warning when your bundle contains multiple versions of the same package.
+  new DuplicatePackageCheckerPlugin()
 ]
 
-const Config = merge.smartStrategy({
-  devtool: 'replace',
-  'module.rules.use': 'prepend'
+let Config = mergeWithCustomize({
+  customizeObject: customizeObject({
+    devtool: 'replace',
+    'module.rules.use': 'prepend'
+  })
 })(StaticCommonConfig, {
   mode: 'production',
   devtool: 'cheap-module-source-map',
@@ -46,12 +67,14 @@ const Config = merge.smartStrategy({
     concatenateModules: true,
     minimize: true,
     minimizer: [
+      // Use terser to minify/minimize your JavaScript
       new TerserJsPlugin({
         cache: true,
         parallel: true,
         sourceMap: true,
         include: /\.js$/
       }),
+      // Use cssnano to optimize and minify your CSS
       new CssMinimizerPlugin()
     ],
     runtimeChunk: true,
@@ -78,7 +101,7 @@ const Config = merge.smartStrategy({
   module: {
     rules: [
       {
-        test: /\.(css|scss)$/,
+        test: /\.(css)$/,
         exclude: /portals/i,
         use: [
           MiniCssExtractPlugin.loader,
