@@ -18,6 +18,7 @@ import { buildPromise } from '../util/buildPromise'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { scienceKeywordTypes } from '../util/scienceKeywordTypes'
+import { platformTypes } from '../util/platformTypes'
 
 export const onAutocompleteLoaded = (payload) => ({
   type: LOADED_AUTOCOMPLETE,
@@ -135,6 +136,21 @@ const mapScienceKeywords = (value) => {
 }
 
 /**
+ * Maps a platform string into individual parts
+ * @param {String} value Colon-separated string of a science keyword
+ */
+const mapPlatforms = (value) => {
+  const values = value.split(':')
+  const returnValue = {}
+
+  values.forEach((keywordValue, index) => {
+    returnValue[platformTypes[index]] = keywordValue
+  })
+
+  return returnValue
+}
+
+/**
  * Map an autocomplete suggestion into a CMR Facet
  * @param {Object} autocomplete autocomplete suggestion
  */
@@ -152,6 +168,10 @@ const mapAutocompleteToFacets = (autocomplete) => {
 
   if (mappedType === 'science_keywords_h') {
     facets.science_keywords_h = mapScienceKeywords(fields)
+  }
+
+  if (mappedType === 'platforms_h') {
+    facets.platforms_h = mapPlatforms(fields)
   }
 
   return facets

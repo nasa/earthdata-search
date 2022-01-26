@@ -90,7 +90,7 @@ describe('mapStateToProps', () => {
           horizontal_data_resolution_range: [],
           instrument_h: [],
           data_center_h: [],
-          platform_h: [],
+          platforms_h: [],
           processing_level_id_h: [],
           project_h: [],
           science_keywords_h: [],

@@ -42,7 +42,7 @@ export const mapStateToProps = (state) => ({
   organizationFacets: state.facetsParams.cmr.data_center_h,
   overrideTemporalSearch: state.query.collection.overrideTemporal,
   pathname: state.router.location.pathname,
-  platformFacets: state.facetsParams.cmr.platform_h,
+  platformFacets: state.facetsParams.cmr.platforms_h,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
   processingLevelFacets: state.facetsParams.cmr.processing_level_id_h,

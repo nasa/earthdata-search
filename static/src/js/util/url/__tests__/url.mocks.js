@@ -5,7 +5,7 @@ export const emptyDecodedResult = {
     data_center_h: undefined,
     granule_data_format_h: undefined,
     instrument_h: undefined,
-    platform_h: undefined,
+    platforms_h: undefined,
     processing_level_id_h: undefined,
     project_h: undefined,
     science_keywords_h: undefined,

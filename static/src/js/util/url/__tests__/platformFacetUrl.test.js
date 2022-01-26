@@ -13,17 +13,22 @@ describe('url#decodeUrlParams', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       cmrFacets: {
-        platform_h: ['facet 1', 'facet 2']
+        platforms_h: [{
+          category: 'Jet',
+          sub_category: 'Not Provided',
+          short_name: 'NASA DC-8',
+          basis: 'Air-based Platforms'
+        }]
       }
     }
-    expect(decodeUrlParams('?fp=facet%201!facet%202')).toEqual(expectedResult)
+    expect(decodeUrlParams('?fpc0=Jet&fpsc0=Not%20Provided&fps0=NASA%20DC-8&fpb0=Air-based%20Platforms')).toEqual(expectedResult)
   })
 
   test('decodes platformFacets correctly if no values existed', () => {
     const expectedResult = {
       ...emptyDecodedResult
     }
-    expect(decodeUrlParams('?fp=')).toEqual(expectedResult)
+    expect(decodeUrlParams('?fpb=')).toEqual(expectedResult)
   })
 })
 
@@ -32,8 +37,13 @@ describe('url#encodeUrlQuery', () => {
     const props = {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      platformFacets: ['facet 1', 'facet 2']
+      platformFacets: [{
+        category: 'Jet',
+        sub_category: 'Not Provided',
+        short_name: 'NASA DC-8',
+        basis: 'Air-based Platforms'
+      }]
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?fp=facet%201!facet%202')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?fpc0=Jet&fpsc0=Not%20Provided&fps0=NASA%20DC-8&fpb0=Air-based%20Platforms')
   })
 })
