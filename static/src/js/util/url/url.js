@@ -6,6 +6,7 @@ import { decodeFacets, encodeFacets } from './facetEncoders'
 import { decodeFeatures, encodeFeatures } from './featureFacetEncoders'
 import { decodeHasGranulesOrCwic, encodeHasGranulesOrCwic } from './hasGranulesOrCwicEncoders'
 import { decodeMap, encodeMap } from './mapEncoders'
+import { decodePlatforms, encodePlatforms } from './platformEncoders'
 import { decodeScienceKeywords, encodeScienceKeywords } from './scienceKeywordEncoders'
 import { decodeString, encodeString } from './stringEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
@@ -50,7 +51,6 @@ const urlDefs = {
   temporalSearch: { shortKey: 'qt', encode: encodeTemporal, decode: decodeTemporal },
   overrideTemporalSearch: { shortKey: 'ot', encode: encodeTemporal, decode: decodeTemporal },
   featureFacets: { shortKey: 'ff', encode: encodeFeatures, decode: decodeFeatures },
-  platformFacets: { shortKey: 'fp', encode: encodeFacets, decode: decodeFacets },
   twoDCoordinateSystemNameFacets: { shortKey: 's2n', encode: encodeFacets, decode: decodeFacets },
   horizontalDataResolutionRangeFacets: { shortKey: 'hdr', encode: encodeFacets, decode: decodeFacets },
   instrumentFacets: { shortKey: 'fi', encode: encodeFacets, decode: decodeFacets },
@@ -146,18 +146,18 @@ export const decodeUrlParams = (paramString) => {
   const granuleDataFormats = decodeHelp(params, 'granuleDataFormatFacets')
   const instruments = decodeHelp(params, 'instrumentFacets')
   const organizations = decodeHelp(params, 'organizationFacets')
-  const platforms = decodeHelp(params, 'platformFacets')
   const processingLevels = decodeHelp(params, 'processingLevelFacets')
   const projects = decodeHelp(params, 'projectFacets')
   const twoDCoordinateSystemName = decodeHelp(params, 'twoDCoordinateSystemNameFacets')
   const horizontalDataResolutionRange = decodeHelp(params, 'horizontalDataResolutionRangeFacets')
   const scienceKeywords = decodeScienceKeywords(params)
+  const platforms = decodePlatforms(params)
 
   const cmrFacets = {
     data_center_h: organizations,
     instrument_h: instruments,
     granule_data_format_h: granuleDataFormats,
-    platform_h: platforms,
+    platforms_h: platforms,
     processing_level_id_h: processingLevels,
     project_h: projects,
     science_keywords_h: scienceKeywords,
@@ -213,6 +213,7 @@ export const encodeUrlQuery = (props) => {
 
   const mapParams = encodeMap(props.map, props.mapPreferences)
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
+  const platformQuery = encodePlatforms(props.platformFacets)
   const collectionsQuery = encodeCollections(props)
   const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
   const advancedQuery = encodeAdvancedSearch(props.advancedSearch)
@@ -222,6 +223,7 @@ export const encodeUrlQuery = (props) => {
     ...query,
     ...timelineQuery,
     ...scienceKeywordQuery,
+    ...platformQuery,
     ...advancedQuery,
     ...mapParams
   }

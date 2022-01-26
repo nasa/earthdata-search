@@ -187,6 +187,9 @@ export const buildCollectionSearchParams = (params) => {
       science_keywords_h: {
         or: true
       },
+      platforms_h: {
+        or: true
+      },
       spatial: {
         or: true
       },
@@ -218,7 +221,7 @@ export const buildCollectionSearchParams = (params) => {
     line,
     pageNum,
     platform,
-    platformH: facetsToSend.platform_h,
+    platformsH: facetsToSend.platforms_h,
     point,
     polygon,
     processingLevelIdH: facetsToSend.processing_level_id_h,
