@@ -101,7 +101,7 @@ describe('createSubscription', () => {
 
         const expectedQuery = stringify({
           browseOnly: true,
-          options: { spatial: { or: true } },
+          options: {},
           polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'],
           temporal: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
         }, { encode: false, indices: false, arrayFormat: 'brackets' })
@@ -195,7 +195,7 @@ describe('createSubscription', () => {
 
           const expectedQuery = stringify({
             browseOnly: true,
-            options: { spatial: { or: true } },
+            options: {},
             polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78',
             temporal: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
           }, { encode: false })
@@ -753,7 +753,7 @@ describe('updateSubscription', () => {
         payload: {
           collectionConceptId: 'collectionId',
           conceptId: 'SUB1000-EDSC',
-          query: 'browseOnly=true&options[spatial][or]=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
+          query: 'browseOnly=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
         }
       })
 

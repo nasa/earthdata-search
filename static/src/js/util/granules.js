@@ -246,7 +246,17 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     options.readableGranuleName = { pattern: true }
   }
 
-  options.spatial = { or: true }
+  // Only add the spatial[or] option if there are more than a single spatial
+  if ([]
+    .concat(boundingBox)
+    .concat(circle)
+    .concat(line)
+    .concat(point)
+    .concat(polygon)
+    .filter(Boolean)
+    .length > 1) {
+    options.spatial = { or: true }
+  }
 
   return {
     boundingBox,

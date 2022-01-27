@@ -183,22 +183,33 @@ export const buildCollectionSearchParams = (params) => {
     includeGranuleCounts: true,
     includeHasGranules: true,
     includeTags: `${tagName('*', 'edsc')},opensearch.granule.osdd`,
-    options: {
-      science_keywords_h: {
-        or: true
-      },
-      platforms_h: {
-        or: true
-      },
-      spatial: {
-        or: true
-      },
-      temporal: {
-        limit_to_granules: true
-      }
-    },
+    options: {},
     pageSize: defaultCmrPageSize,
     sortKey: ['has_granules_or_cwic', ...selectedSortKey]
+  }
+
+  if (facetsToSend.science_keywords_h && facetsToSend.science_keywords_h.length > 1) {
+    defaultParams.options.science_keywords_h = { or: true }
+  }
+
+  if (facetsToSend.platforms_h && facetsToSend.platforms_h.length > 1) {
+    defaultParams.options.platforms_h = { or: true }
+  }
+
+  // Only add the spatial[or] option if there are more than a single spatial
+  if ([]
+    .concat(boundingBox)
+    .concat(circle)
+    .concat(line)
+    .concat(point)
+    .concat(polygon)
+    .filter(Boolean)
+    .length > 1) {
+    defaultParams.options.spatial = { or: true }
+  }
+
+  if (temporalString) {
+    defaultParams.options.temporal = { limit_to_granules: true }
   }
 
   return {

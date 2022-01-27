@@ -92,7 +92,7 @@ describe('Path /search', () => {
         url: '**/search/collections.json'
       },
       (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
         req.reply({
           body: commonBody,
@@ -125,7 +125,7 @@ describe('Path /search', () => {
         url: '**/search/collections.json'
       },
       (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&keyword=modis%2A&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&keyword=modis%2A&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
         req.reply({
           body: keywordBody,
@@ -159,7 +159,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&temporal=2020-01-01T00%3A00%3A00.000Z%2C2021-01-01T23%3A59%3A59.999Z&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&temporal=2020-01-01T00%3A00%3A00.000Z%2C2021-01-01T23%3A59%3A59.999Z&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: temporalBody,
@@ -195,7 +195,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&temporal=2000-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z%2C1%2C31&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&temporal=2000-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z%2C1%2C31&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: temporalRecurringBody,
@@ -234,7 +234,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&point%5B%5D=65.44171%2C4.33676&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&point%5B%5D=65.44171%2C4.33676&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: spatialPointBody,
@@ -272,7 +272,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&polygon%5B%5D=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&polygon%5B%5D=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: spatialPolygonBody,
@@ -310,7 +310,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&circle%5B%5D=62.18209%2C2.22154%2C100000&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&circle%5B%5D=62.18209%2C2.22154%2C100000&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: spatialCircleBody,
@@ -349,7 +349,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&bounding_box%5B%5D=5.02679%2C0.99949%2C32.8678%2C26.17555&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&bounding_box%5B%5D=5.02679%2C0.99949%2C32.8678%2C26.17555&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: spatialBoundingBoxBody,
@@ -402,7 +402,7 @@ describe('Path /search', () => {
         },
         (req) => {
           // TODO: This intercept is called twice, the first time is cancelled because a new request is launched after the shapefile polygon is added. How do we only run this expect on the second run?
-          // expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&polygon%5B%5D=59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704%2C59.34354%2C-9.21839&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          // expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&polygon%5B%5D=59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704%2C59.34354%2C-9.21839&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: spatialPolygonBody,
@@ -446,7 +446,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('cloud_hosted=true&has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('cloud_hosted=true&has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: awsCloudBody,
@@ -485,7 +485,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&service_type%5B%5D=esi&service_type%5B%5D=opendap&service_type%5B%5D=harmony')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&service_type%5B%5D=esi&service_type%5B%5D=opendap&service_type%5B%5D=harmony')
 
           req.reply({
             body: customizableBody,
@@ -524,7 +524,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&tag_key%5B%5D=edsc.extra.serverless.gibs')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&tag_key%5B%5D=edsc.extra.serverless.gibs')
 
           req.reply({
             body: mapImageryBody,
@@ -563,7 +563,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&collection_data_type%5B%5D=NEAR_REAL_TIME&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&collection_data_type%5B%5D=NEAR_REAL_TIME&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: nearRealTimeBody,
@@ -604,7 +604,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&science_keywords_h%5B0%5D%5Btopic%5D=Aerosols&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: keywordsBody,
@@ -652,7 +652,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&platform_h%5B%5D=AIRCRAFT&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&platforms_h%5B0%5D%5Bbasis%5D=Aircraft&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: platformsBody,
@@ -663,7 +663,7 @@ describe('Path /search', () => {
           })
         })
 
-        cy.visit('/search?fp=AIRCRAFT')
+        cy.visit('/search?fpb0=Aircraft')
 
         // Ensure the correct number of results were loaded
         testResultsSize(cmrHits)
@@ -700,7 +700,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: instrumentsBody,
@@ -748,7 +748,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&data_center_h%5B%5D=Alaska%20Satellite%20Facility&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&data_center_h%5B%5D=Alaska%20Satellite%20Facility&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: organizationsBody,
@@ -796,7 +796,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&project_h%5B%5D=ABoVE&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&project_h%5B%5D=ABoVE&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: projectsBody,
@@ -844,7 +844,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&processing_level_id_h%5B%5D=0%20-%20Raw%20Data&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&processing_level_id_h%5B%5D=0%20-%20Raw%20Data&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: processingLevelsBody,
@@ -892,7 +892,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&granule_data_format_h%5B%5D=ArcGIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&granule_data_format_h%5B%5D=ArcGIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: dataFormatBody,
@@ -940,7 +940,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&two_d_coordinate_system_name%5B%5D=CALIPSO')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&two_d_coordinate_system_name%5B%5D=CALIPSO')
 
           req.reply({
             body: tilingSystemBody,
@@ -988,7 +988,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&horizontal_data_resolution_range%5B%5D=0%20to%201%20meter&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&horizontal_data_resolution_range%5B%5D=0%20to%201%20meter&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: horizontalDataResolutionBody,
@@ -1036,7 +1036,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+          expect(req.body).to.eq('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: noGranulesBody,
@@ -1080,7 +1080,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&tag_key%5B%5D=gov.nasa.eosdis')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&tag_key%5B%5D=gov.nasa.eosdis')
 
           req.reply({
             body: nonEosdisBody,

@@ -63,7 +63,7 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      granuleQueryString: 'options[spatial][or]=true',
+      granuleQueryString: '',
       subscriptions: []
     }
 
