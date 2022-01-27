@@ -59,7 +59,7 @@
     "regenerator-runtime": "^0.13.3",
     "snyk": "^1.744.0",
     "start-server-and-test": "^1.12.1",
-    "three": "^0.127.0",
+    "three": "^0.137.0",
     "webpack-dev-server": "^3.11.0",
     "why-did-you-update": "^1.0.6"
   },
