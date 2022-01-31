@@ -380,8 +380,8 @@ export class MapContainer extends Component {
           >
             <LayerBuilder
               projection={projection}
-              product="Reference_Features"
-              resolution="250m"
+              product="Reference_Features_15m"
+              resolution="15.625m"
               format="png"
             />
           </Overlay>
@@ -391,8 +391,8 @@ export class MapContainer extends Component {
           >
             <LayerBuilder
               projection={projection}
-              product="Coastlines"
-              resolution="250m"
+              product="Coastlines_15m"
+              resolution="15.625m"
               format="png"
             />
           </Overlay>
@@ -402,8 +402,8 @@ export class MapContainer extends Component {
           >
             <LayerBuilder
               projection={projection}
-              product="Reference_Labels"
-              resolution="250m"
+              product="Reference_Labels_15m"
+              resolution="15.625m"
               format="png"
             />
           </Overlay>
