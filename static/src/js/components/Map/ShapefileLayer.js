@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 import L from 'leaflet'
 import {
   withLeaflet,

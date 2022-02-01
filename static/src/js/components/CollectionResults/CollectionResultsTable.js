@@ -82,12 +82,13 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Granules',
-      // eslint-disable-next-line react/display-name,react/prop-types
+      /* eslint-disable react/display-name,react/prop-types */
       Cell: ({ cell }) => (
         <div className="edsc-table-cell" title={commafy(cell.value)}>
           {commafy(cell.value)}
         </div>
       ),
+      /* eslint-enable */
       accessor: 'granuleCount',
       width: '100',
       customProps: {

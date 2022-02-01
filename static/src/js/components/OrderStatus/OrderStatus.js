@@ -27,7 +27,7 @@ export class OrderStatus extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { onFetchRetrieval, match, authToken } = this.props
     if (authToken !== nextProps.authToken && nextProps.authToken !== '') {
       const { params } = match

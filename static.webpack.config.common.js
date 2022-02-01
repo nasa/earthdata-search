@@ -139,7 +139,10 @@ const StaticCommonConfig = {
     ]
   },
   plugins: [
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+      DEBUG: false,
+    }),
     new HtmlWebPackPlugin({
       template: path.join(__dirname, './static/src/partials/wrapper.html')
     }),

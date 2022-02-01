@@ -29,7 +29,7 @@ class GranuleImage extends Component {
     this.handleImageErrored = this.handleImageErrored.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { imageSrc } = this.props
     const { imageSrc: nextImageSrc } = nextProps
     if (nextImageSrc && imageSrc !== nextImageSrc) {

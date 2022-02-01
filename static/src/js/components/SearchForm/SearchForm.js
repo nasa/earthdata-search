@@ -62,7 +62,7 @@ class SearchForm extends Component {
     window.addEventListener('keyup', this.onWindowKeyUp)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { keywordSearch } = this.props
 
     if (keywordSearch !== nextProps.keywordSearch) {

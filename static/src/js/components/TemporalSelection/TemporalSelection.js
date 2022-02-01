@@ -44,7 +44,7 @@ export class TemporalSelection extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       onValid,
       onInvalid

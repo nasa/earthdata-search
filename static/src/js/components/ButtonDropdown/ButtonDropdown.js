@@ -25,7 +25,7 @@ export default class ButtonDropdown extends PureComponent {
     this.onDropdownToggle = this.onDropdownToggle.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { open: openState } = this.state
     if (nextProps.open !== openState) {
       this.setState({

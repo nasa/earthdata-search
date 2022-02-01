@@ -81,7 +81,7 @@ export class UrlQueryContainer extends PureComponent {
     onChangePath([pathname, search].filter(Boolean).join(''))
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       location: nextLocation
     } = nextProps
