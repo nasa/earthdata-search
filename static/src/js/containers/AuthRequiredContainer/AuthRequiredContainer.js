@@ -19,7 +19,7 @@ export class AuthRequiredContainer extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { noRedirect } = this.props
     const { apiHost } = getEnvironmentConfig()
 

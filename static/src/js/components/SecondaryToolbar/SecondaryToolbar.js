@@ -52,7 +52,7 @@ class SecondaryToolbar extends Component {
     this.handleKeypress = this.handleKeypress.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { savedProject } = this.props
     const { name } = savedProject
 

@@ -16,7 +16,7 @@ export const mapStateToProps = (state) => ({
  * in.
  */
 export class AuthCallbackContainer extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // Pull the jwt and redirect params out of the URL
     const { location } = this.props
     const { search } = location

@@ -32,7 +32,7 @@ export class CollectionDownloadDisplay extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       onFetchRetrievalCollectionGranuleLinks,
       retrievalCollection

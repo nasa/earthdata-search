@@ -75,7 +75,7 @@ class ProjectPanels extends PureComponent {
     this.resetForm = this.resetForm.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       focusedCollectionId,
       onSetActivePanelGroup,

@@ -6,7 +6,7 @@ import LoggerRequest from '../../util/request/loggerRequest'
 import { locationPropType } from '../../util/propTypes/location'
 
 class NotFound extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     eventEmitter.emit('error.global', true)
   }
 

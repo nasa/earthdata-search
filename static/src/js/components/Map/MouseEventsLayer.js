@@ -1,4 +1,5 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable max-classes-per-file, no-underscore-dangle */
+
 import L from 'leaflet'
 import {
   withLeaflet,

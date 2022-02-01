@@ -61,7 +61,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
     this.onInvalid = this.onInvalid.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       temporalSearch
     } = this.props

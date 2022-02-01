@@ -17,7 +17,7 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export class AuthTokenContainer extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const {
       onSetContactInfoFromJwt,
       onSetPreferencesFromJwt,
