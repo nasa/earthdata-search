@@ -134,7 +134,7 @@ class SpatialSelection extends Component {
     eventEmitter.on('map.drawCancel', this.onDrawCancel)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       advancedSearch = {},
       boundingBoxSearch,

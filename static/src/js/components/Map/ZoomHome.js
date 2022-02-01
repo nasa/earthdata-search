@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { Control } from 'leaflet'

@@ -67,7 +67,7 @@ class SpatialDisplay extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       boundingBoxSearch,
       circleSearch,

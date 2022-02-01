@@ -38,7 +38,7 @@ export class CollectionContainer extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       match,
       onFetchRetrieval

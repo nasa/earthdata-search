@@ -35,7 +35,7 @@ class TemporalDisplay extends PureComponent {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       temporalSearch
     } = this.props

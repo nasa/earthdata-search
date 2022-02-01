@@ -66,7 +66,7 @@ export class AccessMethod extends Component {
     this.handleToggleTemporalSubsetting = this.handleToggleTemporalSubsetting.bind(this)
   }
 
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
     const { temporal } = this.props
 
     const { isRecurring } = temporal

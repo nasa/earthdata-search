@@ -54,7 +54,7 @@ export class ProjectHeader extends Component {
     this.renderInput()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { savedProject } = this.props
     const { name = '' } = savedProject
 

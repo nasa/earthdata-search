@@ -19,7 +19,7 @@ export const mapStateToProps = (state) => ({
 })
 
 export class PortalContainer extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { match, onLoadPortalConfig } = this.props
     const { params } = match
     const { portalId = getApplicationConfig().defaultPortal } = params
