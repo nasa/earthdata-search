@@ -1,4 +1,4 @@
-const ProdStaticWebpackConfig = require('./static.webpack.config.dev.js')
+const ProdStaticWebpackConfig = require('./static.webpack.config.dev')
 
 module.exports = [
   ProdStaticWebpackConfig
