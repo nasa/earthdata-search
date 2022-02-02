@@ -3,8 +3,8 @@ const webpack = require('webpack')
 
 const {
   customizeObject,
-  mergeWithCustomize,
-  mergeWithRules
+  mergeWithCustomize
+  // mergeWithRules
 } = require('webpack-merge')
 
 const {
@@ -14,7 +14,7 @@ const {
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const CSSNano = require('cssnano')
+// const CSSNano = require('cssnano')
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserJsPlugin = require('terser-webpack-plugin')
@@ -48,7 +48,7 @@ const debugPlugins = [
   new DuplicatePackageCheckerPlugin()
 ]
 
-let Config = mergeWithCustomize({
+const Config = mergeWithCustomize({
   customizeObject: customizeObject({
     devtool: 'replace',
     'module.rules.use': 'prepend'
@@ -104,8 +104,7 @@ let Config = mergeWithCustomize({
         test: /\.(css)$/,
         exclude: /portals/i,
         use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader'
+          MiniCssExtractPlugin.loader
         ]
       }
     ]
