@@ -1,3 +1,5 @@
+const webpack = require('webpack')
+
 const {
   mergeWithCustomize,
   mergeWithRules,
@@ -12,12 +14,24 @@ let Config = mergeWithCustomize({
   customizeObject: customizeObject({
     devtool: 'replace',
     'module.rules.use': 'prepend'
-  })}
-)(StaticCommonConfig, {
+  })
+})({
   mode: 'development',
   devtool: 'inline-cheap-module-source-map',
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false
+      }
+    },
+    open: true,
+    compress: true,
+    hot: true
   },
   module: {
     rules: [
@@ -33,9 +47,10 @@ let Config = mergeWithCustomize({
     ]
   },
   plugins: [
-    new WebpackBar()
+    new WebpackBar(),
+    new webpack.HotModuleReplacementPlugin()
   ]
-})
+}, StaticCommonConfig)
 
 Config = mergeWithRules({
   module: {
@@ -59,6 +74,5 @@ Config = mergeWithRules({
     ]
   }
 })
-
 
 module.exports = Config

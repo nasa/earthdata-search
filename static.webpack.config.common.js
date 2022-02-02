@@ -6,6 +6,7 @@ const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const config = require('./sharedUtils/config')
 const { getPortalConfig } = require('./static/src/js/util/portals')
@@ -40,17 +41,18 @@ const StaticCommonConfig = {
     alias: {
       'react-dom': '@hot-loader/react-dom',
       Fonts: path.join(__dirname, 'static/src/assets/fonts'),
-      Images: path.join(__dirname, 'static/src/assets/images')
+      Images: path.join(__dirname, 'static/src/assets/images'),
+      process: 'process/browser'
     },
     fallback: {
-      "crypto": require.resolve("crypto-browserify"),
-      "stream": require.resolve("stream-browserify")
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('stream-browserify')
     }
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: [
           /node_modules\/(?!(map-obj|snakecase-keys|strict-uri-encode|qs|fast-xml-parser)\/).*/
         ],
@@ -71,19 +73,21 @@ const StaticCommonConfig = {
             loader: 'css-loader',
             options: {
               sourceMap: true,
-              importLoaders: 1
-            }
-          },
-          {
-            loader: 'resolve-url-loader',
-            options: {
-              sourceMap: true
+              importLoaders: 2,
+              modules: false,
+              url: false
             }
           },
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: true
+              sourceMap: true,
+              postcssOptions: {
+                // postcss plugins, can be exported to postcss.config.js
+                plugins: [
+                  'autoprefixer'
+                ]
+              }
             }
           },
           {
@@ -91,27 +95,48 @@ const StaticCommonConfig = {
             options: {
               sourceMap: true
             }
-          },
-          {
-            loader: 'style-resources-loader',
-            options: {
-              patterns: [
-                path.resolve(__dirname, 'static/src/css/utils/utils.scss'),
-                path.resolve(__dirname, 'static/src/css/vendor/bootstrap/_vars.scss')
-              ]
-            }
           }
+          // {
+          //   loader: 'resolve-url-loader',
+          //   options: {
+          //     sourceMap: true
+          //   }
+          // },
+          // {
+          //   loader: 'style-resources-loader',
+          //   options: {
+          //     patterns: [
+          //       path.resolve(__dirname, 'static/src/css/utils/utils.scss'),
+          //       path.resolve(__dirname, 'static/src/css/vendor/bootstrap/_vars.scss')
+          //     ]
+          //   }
+          // }
         ]
       },
+      // Fonts and SVGs
       {
-        test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: 'assets/[path][name].[hash].[ext]'
-          }
-        }
+        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+        type: 'asset/inline'
       },
+
+      // Images
+      {
+        test: /\.(?:ico|gif|png|jpe?g)$/i,
+        type: 'asset/resource'
+      },
+      // {
+      //   test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+      //   type: 'asset/resource'
+      // },
+      // {
+      //   test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+      //   use: {
+      //     loader: 'file-loader',
+      //     options: {
+      //       name: 'assets/[path][name].[hash].[ext]'
+      //     }
+      //   }
+      // },
       {
         test: /portals.*styles\.s?css$/i,
         use: [
@@ -139,9 +164,13 @@ const StaticCommonConfig = {
     ]
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
-      DEBUG: false,
+      DEBUG: false
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser'
     }),
     new HtmlWebPackPlugin({
       template: path.join(__dirname, './static/src/partials/wrapper.html')
@@ -186,7 +215,7 @@ const StaticCommonConfig = {
     // https://medium.com/@michalozogan/how-to-split-moment-js-locales-to-chunks-with-webpack-de9e25caccea
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
-      contextRegExp: /moment$/,
+      contextRegExp: /moment$/
     })
   ]
 }
