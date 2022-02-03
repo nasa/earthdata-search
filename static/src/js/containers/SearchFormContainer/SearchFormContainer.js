@@ -158,7 +158,7 @@ SearchFormContainer.propTypes = {
   shapefile: PropTypes.shape({
     shapefileError: PropTypes.string,
     shapefileId: PropTypes.string,
-    shapefileLoaded: PropTypes,
+    shapefileLoaded: PropTypes.bool,
     shapefileLoading: PropTypes.bool
   }),
   temporalSearch: PropTypes.shape({

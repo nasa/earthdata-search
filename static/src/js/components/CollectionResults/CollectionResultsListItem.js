@@ -90,7 +90,7 @@ CollectionResultsListItem.propTypes = {
     collectionsMetadata: PropTypes.arrayOf(
       collectionMetadataPropType
     ),
-    isItemLoaded: PropTypes.bool,
+    isItemLoaded: PropTypes.func,
     onAddProjectCollection: PropTypes.func,
     onRemoveCollectionFromProject: PropTypes.func,
     onViewCollectionDetails: PropTypes.func,

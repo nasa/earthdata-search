@@ -1,4 +1,3 @@
-
 import axios from 'axios'
 import { parse as parseXml } from 'fast-xml-parser'
 
@@ -35,7 +34,7 @@ const fetchSotoLayers = async (event, context) => {
     const { Contents: contents = {} } = capabilities
     let { Layer: capabilityLayers = [] } = contents
 
-    capabilityLayers = [].concat(capabilityLayers).filter(Boolean).map(layer => layer['ows:Identifier'])
+    capabilityLayers = [].concat(capabilityLayers).filter(Boolean).map((layer) => layer['ows:Identifier'])
 
     return {
       isBase64Encoded: false,

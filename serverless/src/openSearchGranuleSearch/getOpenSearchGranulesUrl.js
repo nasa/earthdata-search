@@ -42,7 +42,7 @@ export const getOpenSearchGranulesUrl = async (collectionId, openSearchOsddUrl) 
 
     return {
       statusCode: osddResponse.status,
-      body: granuleUrls.find(url => url.type === 'application/atom+xml')
+      body: granuleUrls.find((url) => url.type === 'application/atom+xml')
     }
   } catch (e) {
     return parseError(e)

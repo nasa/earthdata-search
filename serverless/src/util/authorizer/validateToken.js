@@ -79,7 +79,6 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
         expires_at: expiresAt
       })
 
-
       if (oauthToken.expired()) {
         try {
           // Remove all tokens for this user in the current environment

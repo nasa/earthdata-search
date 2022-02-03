@@ -44,7 +44,7 @@ const fetchHarmonyOrder = async (input) => {
     // the payload in this job. Part of the response is a list of links, a link with rel equal
     // to 'self' is the order status endpoint -- we'll use that to request the status
     const { links } = orderInformation
-    const selfLink = links.find(link => link.rel === 'self')
+    const selfLink = links.find((link) => link.rel === 'self')
     const { href: orderStatusUrl } = selfLink
 
     console.log(`Requesting order data from Harmony at ${orderStatusUrl}`)

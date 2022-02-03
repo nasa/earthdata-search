@@ -77,7 +77,7 @@ export const addTag = async ({
 
         // If the product already exists in the collections tag data
         // overwrite it with the newer data otherwise append it
-        const existingTagDataIndex = data.findIndex(data => data.product === tagData.product)
+        const existingTagDataIndex = data.findIndex((data) => data.product === tagData.product)
         if (existingTagDataIndex !== -1) {
           collectionTagData[existingTagDataIndex] = tagData
         } else {
@@ -89,9 +89,9 @@ export const addTag = async ({
     } else if (tagData) {
       const collectionTagData = [].concat(tagData)
 
-      associationData = collections.map(collection => ({ 'concept-id': collection.id, data: collectionTagData }))
+      associationData = collections.map((collection) => ({ 'concept-id': collection.id, data: collectionTagData }))
     } else {
-      associationData = collections.map(collection => ({ 'concept-id': collection.id }))
+      associationData = collections.map((collection) => ({ 'concept-id': collection.id }))
     }
   } else {
     associationData = tagData
@@ -117,7 +117,7 @@ export const addTag = async ({
         const { errors = [] } = tagResponse
 
         // Log each (potential) error
-        errors.forEach(error => console.log(error))
+        errors.forEach((error) => console.log(error))
       })
     } catch (e) {
       parseError(e, { reThrowError: true })

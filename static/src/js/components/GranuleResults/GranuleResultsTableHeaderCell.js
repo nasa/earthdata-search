@@ -162,7 +162,7 @@ GranuleResultsTableHeaderCell.propTypes = {
     customProps: PropTypes.shape({
       collectionId: PropTypes.string,
       directDistributionInformation: PropTypes.shape({}),
-      isGranuleInProject: PropTypes.bool,
+      isGranuleInProject: PropTypes.func,
       location: PropTypes.shape({
         search: PropTypes.string
       }),

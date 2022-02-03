@@ -52,6 +52,8 @@ export class RegionSearch extends Component {
       isLoaded: regionSearchIsLoaded
     } = regionSearchResults
 
+    console.log('regionResultsKeyword', regionResultsKeyword)
+
     const containerClasses = classNames([
       'region-search-results',
       {

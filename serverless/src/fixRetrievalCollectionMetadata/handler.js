@@ -1,4 +1,3 @@
-
 import 'array-foreach-async'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'

@@ -485,7 +485,9 @@ MapContainer.propTypes = {
   }),
   mapPreferences: PropTypes.shape({
     baseLayer: PropTypes.string,
-    overlayLayers: PropTypes.shape({})
+    overlayLayers: PropTypes.arrayOf(
+      PropTypes.string
+    )
   }).isRequired,
   onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,

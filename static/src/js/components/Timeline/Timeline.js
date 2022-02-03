@@ -374,10 +374,10 @@ Timeline.propTypes = {
   }).isRequired,
   timeline: PropTypes.shape({
     query: PropTypes.shape({
-      center: PropTypes.string,
+      center: PropTypes.number,
       interval: PropTypes.string,
-      start: PropTypes.string,
-      end: PropTypes.string
+      start: PropTypes.number,
+      end: PropTypes.number
     })
   }).isRequired
 }
