@@ -1006,7 +1006,9 @@ SpatialSelection.defaultProps = {
   boundingBoxSearch: [],
   circleSearch: [],
   lineSearch: [],
-  mapRef: {},
+  mapRef: {
+    leafletElement: undefined
+  },
   pointSearch: [],
   polygonSearch: [],
   shapefile: {}
@@ -1022,7 +1024,10 @@ SpatialSelection.propTypes = {
   isProjectPage: PropTypes.bool.isRequired,
   lineSearch: PropTypes.arrayOf(PropTypes.string),
   mapRef: PropTypes.shape({
-    leafletElement: PropTypes.node,
+    leafletElement: PropTypes.shape({
+      removeLayer: PropTypes.func,
+      latLngToLayerPoint: PropTypes.func
+    }),
     props: PropTypes.shape({})
   }),
   onChangeQuery: PropTypes.func.isRequired,

@@ -14,5 +14,5 @@ export const supportsShapefileSubsetting = (service) => {
     shapefile = []
   } = spatialSubset
 
-  return shapefile.find(shapefile => shapefile.format === 'GeoJSON') != null
+  return shapefile.find((shapefile) => shapefile.format === 'GeoJSON') != null
 }

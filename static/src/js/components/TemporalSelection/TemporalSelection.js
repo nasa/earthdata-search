@@ -314,9 +314,9 @@ TemporalSelection.propTypes = {
   onValid: PropTypes.func,
   size: PropTypes.string,
   temporal: PropTypes.shape({
-    endDate: PropTypes.instanceOf(Date),
+    endDate: PropTypes.string,
     isRecurring: PropTypes.bool,
-    startDate: PropTypes.instanceOf(Date)
+    startDate: PropTypes.string
   }).isRequired,
   validate: PropTypes.bool
 }

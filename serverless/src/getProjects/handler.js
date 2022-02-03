@@ -41,7 +41,6 @@ const getProjects = async (event, context) => {
         'users.urs_id': username
       })
 
-
     // Return the name and path
     return {
       isBase64Encoded: false,

@@ -1,7 +1,6 @@
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 
-
 /**
  * Decodes an obfuscated id
  * @param {Object} event Details about the HTTP request that it received

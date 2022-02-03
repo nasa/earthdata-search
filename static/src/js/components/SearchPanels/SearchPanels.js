@@ -720,7 +720,9 @@ SearchPanels.propTypes = {
   }).isRequired,
   collectionQuery: PropTypes.shape({
     pageNum: PropTypes.number,
-    sortKey: PropTypes.string
+    sortKey: PropTypes.arrayOf(
+      PropTypes.string
+    )
   }).isRequired,
   collectionsSearch: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),

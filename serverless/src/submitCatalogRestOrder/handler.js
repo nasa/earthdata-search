@@ -93,7 +93,7 @@ const submitCatalogRestOrder = async (event, context) => {
       const granuleResponse = await axios({
         url: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
         params: preparedGranuleParams,
-        paramsSerializer: params => stringify(params,
+        paramsSerializer: (params) => stringify(params,
           {
             indices: false,
             arrayFormat: 'brackets'
@@ -135,7 +135,7 @@ const submitCatalogRestOrder = async (event, context) => {
       }
 
       const orderPayload = {
-        FILE_IDS: granuleResponseBody.map(granuleMetadata => granuleMetadata.title).join(','),
+        FILE_IDS: granuleResponseBody.map((granuleMetadata) => granuleMetadata.title).join(','),
         CLIENT_STRING: `To view the status of your request, please see: ${edscStatusUrl}`,
 
         // Add echo forms keys to the order payload
@@ -151,7 +151,7 @@ const submitCatalogRestOrder = async (event, context) => {
 
       // Remove any empty keys
       Object.keys(orderPayload)
-        .forEach(key => (orderPayload[key] == null
+        .forEach((key) => (orderPayload[key] == null
           || orderPayload[key].length === 0) && delete orderPayload[key])
 
       const orderResponse = await axios({

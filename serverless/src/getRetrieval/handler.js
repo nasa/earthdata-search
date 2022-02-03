@@ -79,18 +79,18 @@ export default async function getRetrieval(event, context) {
 
         // Prevent redundant links
         const uniqueMetadataLinks = metadataLinks.filter(
-          (thing, index, self) => index === self.findIndex(t => t.href === thing.href)
+          (thing, index, self) => index === self.findIndex((t) => t.href === thing.href)
         )
 
         return {
           dataset_id: datasetId,
           links: uniqueMetadataLinks
         }
-      }).filter(linkList => linkList.links.length > 0)
+      }).filter((linkList) => linkList.links.length > 0)
 
       const collections = {}
       if (id) {
-        collections.byId = keyBy(retrievalResponse, row => row.id)
+        collections.byId = keyBy(retrievalResponse, (row) => row.id)
 
         // Strip the body of each collection down to only necessary data instead of the entire result row
         Object.keys(collections.byId).forEach((collection) => {

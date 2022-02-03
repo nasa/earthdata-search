@@ -57,7 +57,7 @@ const fetchLegacyServicesOrder = async (input) => {
         'Client-Id': getClientId().background
       },
       params: { id: orderNumber },
-      paramsSerializer: params => stringify(params,
+      paramsSerializer: (params) => stringify(params,
         {
           indices: false,
           arrayFormat: 'brackets'

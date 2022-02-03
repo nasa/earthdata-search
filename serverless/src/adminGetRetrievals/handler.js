@@ -57,7 +57,7 @@ const adminGetRetrievals = async (event, context) => {
       total_results: parseInt(total, 10)
     }
 
-    const results = retrievalResponse.map(retrieval => ({
+    const results = retrievalResponse.map((retrieval) => ({
       ...retrieval,
       obfuscated_id: obfuscateId(retrieval.id)
     }))

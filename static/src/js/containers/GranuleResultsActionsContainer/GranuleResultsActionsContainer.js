@@ -133,7 +133,7 @@ GranuleResultsActionsContainer.propTypes = {
   collectionQuery: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedProjectCollection: PropTypes.shape({
-    granules: PropTypes.arrayOf(PropTypes.shape({}))
+    granules: PropTypes.shape({})
   }).isRequired,
   granuleQuery: PropTypes.shape({
     pageNum: PropTypes.number

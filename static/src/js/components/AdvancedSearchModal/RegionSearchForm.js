@@ -255,11 +255,11 @@ RegionSearchForm.propTypes = {
     handleChange: PropTypes.func,
     handleSubmit: PropTypes.func,
     touched: PropTypes.shape({
-      keyword: PropTypes.string
+      keyword: PropTypes.bool
     }).isRequired,
     values: PropTypes.shape({
       endpoint: PropTypes.string,
-      keyword: PropTypes.string,
+      keyword: PropTypes.bool,
       exact: PropTypes.bool
     }).isRequired,
     isValid: PropTypes.bool,
