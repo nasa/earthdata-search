@@ -77,7 +77,7 @@ const regionSearch = async (event) => {
         formattedResponseObject = {
           id,
           name: id,
-          spatial: uniq(coordinates.map(point => point.join(','))).join(','),
+          spatial: uniq(coordinates.map((point) => point.join(','))).join(','),
           type: 'reach'
         }
       }

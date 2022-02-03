@@ -8,7 +8,7 @@ import {
 } from '../constants/actionTypes'
 
 const initialState = {
-  keyword: false,
+  keyword: '',
   hits: null,
   byId: {},
   allIds: [],

@@ -142,9 +142,10 @@ const generateSubsettingTags = async (event, context) => {
         const { id: collectionId } = collection
 
         // We're adding to the provided object so we use assign to prevent eslint issues
-        const data = Object.assign({
-          updated_at: new Date().toISOString()
-        }, tagData)
+        const data = {
+          updated_at: new Date().toISOString(),
+          ...tagData
+        }
 
         // Retrieve the service option definition (Echo Form Association) for ESI collections
         if (tagPostFix === 'esi') {
@@ -183,7 +184,7 @@ const generateSubsettingTags = async (event, context) => {
 
       // Only tag opendap and esi collections, echo_orders will be tagged using the option definition queue
       if (['opendap', 'esi', 'echo_orders'].includes(tagPostFix)) {
-        const collectionCriteria = collections.map(collection => ({ concept_id: collection.id }))
+        const collectionCriteria = collections.map((collection) => ({ concept_id: collection.id }))
 
         // Construct an array that we'll negate and use for removing the tag from collections that don't appear here
         collectionsToTag[tagPostFix].push(...collectionCriteria)

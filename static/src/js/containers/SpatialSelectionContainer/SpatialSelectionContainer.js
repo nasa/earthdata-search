@@ -102,7 +102,10 @@ SpatialSelectionContainer.propTypes = {
   }).isRequired,
   lineSearch: PropTypes.arrayOf(PropTypes.string),
   mapRef: PropTypes.shape({
-    leafletElement: PropTypes.shape({})
+    leafletElement: PropTypes.shape({
+      removeLayer: PropTypes.func,
+      latLngToLayerPoint: PropTypes.func
+    })
   }),
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,

@@ -13,7 +13,7 @@ let secretsmanager
 /**
  * Configuration object used by the simple-oauth2 plugin
  */
-const oAuthConfig = earthdataEnvironment => ({
+const oAuthConfig = (earthdataEnvironment) => ({
   auth: {
     tokenHost: getEarthdataConfig(earthdataEnvironment).edlHost
   }

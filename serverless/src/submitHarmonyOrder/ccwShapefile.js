@@ -13,7 +13,7 @@ export const ccwShapefile = (shapefile) => {
       const { geometry } = feature
       const { coordinates, type } = geometry
 
-      const latLngCoordinates = coordinates[0].map(coordinate => (
+      const latLngCoordinates = coordinates[0].map((coordinate) => (
         {
           lng: coordinate[0],
           lat: coordinate[1]

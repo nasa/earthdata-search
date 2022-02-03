@@ -59,23 +59,23 @@ const getAccessMethods = async (event, context) => {
     }
 
     // Fetch UMM-S records with type 'ECHO ORDERS'
-    const echoOrderServices = items.filter(service => service.type === 'ECHO ORDERS')
+    const echoOrderServices = items.filter((service) => service.type === 'ECHO ORDERS')
 
     // Ensure that we have both a UMM-S record and a matching tag because the tag contains echo form ids that UMM-S lacks
     const hasEchoOrders = echoOrderServices.length > 0 && hasTag({ tags }, 'subset_service.echo_orders')
 
     // Fetch UMM-S records with type 'ESI'
-    const esiServices = items.filter(service => service.type === 'ESI')
+    const esiServices = items.filter((service) => service.type === 'ESI')
 
     // Ensure that we have both a UMM-S record and a matching tag because the tag contains echo form ids that UMM-S lacks
     const hasEsi = esiServices.length > 0 && hasTag({ tags }, 'subset_service.esi')
 
     // Fetch UMM-S records with type 'OPeNDAP'
-    const opendapServices = items.filter(service => service.type === 'OPeNDAP')
+    const opendapServices = items.filter((service) => service.type === 'OPeNDAP')
     const hasOpendap = opendapServices.length > 0
 
     // Fetch UMM-S records with type 'Harmony'
-    const harmonyServices = items.filter(service => service.type === 'Harmony')
+    const harmonyServices = items.filter((service) => service.type === 'Harmony')
     const hasHarmony = harmonyServices.length > 0
 
     let onlineAccessFlag = false
@@ -117,7 +117,7 @@ const getAccessMethods = async (event, context) => {
 
           // Extract the correct UMM-S record from the metadata
           const ummRecord = echoOrderServices.find(
-            service => service.conceptId === echoOrderData.id
+            (service) => service.conceptId === echoOrderData.id
           )
 
           if (ummRecord) {
@@ -152,7 +152,7 @@ const getAccessMethods = async (event, context) => {
 
           // Extract the correct UMM-S record from the metadata
           const ummRecord = esiServices.find(
-            service => service.conceptId === esiData.id
+            (service) => service.conceptId === esiData.id
           )
 
           if (ummRecord) {

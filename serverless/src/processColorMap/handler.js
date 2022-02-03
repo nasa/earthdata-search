@@ -22,7 +22,7 @@ const componentToHex = (component) => {
  * @param {String} ref The ref to lookup in the list of legendshaha.
  * @return {Object} The requested legend containing a tooltip
  */
-const getLegendTooltip = (legends, ref) => legends.find(legend => legend.id === ref)
+const getLegendTooltip = (legends, ref) => legends.find((legend) => legend.id === ref)
 
 /**
  * Accepts a ColorMap (or array of ColorMaps) from SQS to process and store in our database

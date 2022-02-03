@@ -95,22 +95,22 @@ const StaticCommonConfig = {
             options: {
               sourceMap: true
             }
-          }
+          },
           // {
           //   loader: 'resolve-url-loader',
           //   options: {
           //     sourceMap: true
           //   }
           // },
-          // {
-          //   loader: 'style-resources-loader',
-          //   options: {
-          //     patterns: [
-          //       path.resolve(__dirname, 'static/src/css/utils/utils.scss'),
-          //       path.resolve(__dirname, 'static/src/css/vendor/bootstrap/_vars.scss')
-          //     ]
-          //   }
-          // }
+          {
+            loader: 'style-resources-loader',
+            options: {
+              patterns: [
+                path.resolve(__dirname, 'static/src/css/utils/utils.scss'),
+                path.resolve(__dirname, 'static/src/css/vendor/bootstrap/_vars.scss')
+              ]
+            }
+          }
         ]
       },
       // Fonts and SVGs

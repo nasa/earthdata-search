@@ -45,10 +45,10 @@ export default async function getRetrievals(event, context) {
         'users.id': userId
       })
 
-    const groupedRetrievals = groupBy(retrievalResponse.map(retrieval => ({
+    const groupedRetrievals = groupBy(retrievalResponse.map((retrieval) => ({
       ...retrieval,
       id: obfuscateId(retrieval.id)
-    })), row => row.id)
+    })), (row) => row.id)
 
     const retrievalsResponse = []
     Object.values(groupedRetrievals).forEach((retrievalRecord) => {
@@ -66,7 +66,7 @@ export default async function getRetrievals(event, context) {
         created_at: createdAt,
         jsondata,
         environment,
-        collections: retrievalRecord.map(record => record.collection_metadata)
+        collections: retrievalRecord.map((record) => record.collection_metadata)
       })
     })
 

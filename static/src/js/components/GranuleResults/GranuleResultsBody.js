@@ -268,7 +268,7 @@ GranuleResultsBody.propTypes = {
     excludedGranuleIds: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   granuleSearchResults: PropTypes.shape({
-    allIds: PropTypes.arrayOf(PropTypes.shape({})),
+    allIds: PropTypes.arrayOf(PropTypes.string),
     hits: PropTypes.number,
     isLoaded: PropTypes.bool,
     isLoading: PropTypes.bool,
@@ -307,7 +307,7 @@ GranuleResultsBody.propTypes = {
   panelView: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({
-    collections: PropTypes.arrayOf(PropTypes.shape({}))
+    collections: PropTypes.shape({})
   }).isRequired
 }
 

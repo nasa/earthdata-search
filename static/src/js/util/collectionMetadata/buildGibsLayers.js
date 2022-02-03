@@ -13,7 +13,7 @@ export const buildGibsLayers = (collectionJson) => {
   const gibsTag = getValueForTag('gibs', tags)
 
   // If there is no gibs tag, return a human readable string
-  if (!gibsTag) return ['None']
+  if (!gibsTag) return 'None'
 
   if (gibsTag[0].antarctic) availableLayers.push('Antarctic')
   if (gibsTag[0].arctic) availableLayers.push('Arctic')

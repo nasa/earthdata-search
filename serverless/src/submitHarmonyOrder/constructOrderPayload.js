@@ -27,7 +27,7 @@ export const constructOrderPayload = async ({
   const granuleResponse = await axios({
     url: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
     params: granuleParams,
-    paramsSerializer: params => stringify(params,
+    paramsSerializer: (params) => stringify(params,
       {
         indices: false,
         arrayFormat: 'brackets'
@@ -40,7 +40,7 @@ export const constructOrderPayload = async ({
 
   const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
 
-  const granuleIds = granuleResponseBody.map(granuleMetadata => granuleMetadata.id).join(',')
+  const granuleIds = granuleResponseBody.map((granuleMetadata) => granuleMetadata.id).join(',')
 
   const {
     enableTemporalSubsetting,

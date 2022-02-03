@@ -32,7 +32,7 @@ export const constructOrderPayload = async (
   const granuleResponse = await axios({
     url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
     params: preparedGranuleParams,
-    paramsSerializer: params => stringify(params,
+    paramsSerializer: (params) => stringify(params,
       {
         indices: false,
         arrayFormat: 'brackets'
@@ -45,7 +45,7 @@ export const constructOrderPayload = async (
 
   const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
 
-  console.log(`Asking ECHO Rest for order information pertaining to ${JSON.stringify(granuleResponseBody.map(granule => granule.id), null, 4)}`)
+  console.log(`Asking ECHO Rest for order information pertaining to ${JSON.stringify(granuleResponseBody.map((granule) => granule.id), null, 4)}`)
 
   // Array to hold granules that belong to the order, that we'll return from this method
   const granuleOrderOptions = []
@@ -56,7 +56,7 @@ export const constructOrderPayload = async (
     method: 'post',
     url: optionInformationUrl,
     data: stringify({
-      catalog_item_id: granuleResponseBody.map(granule => granule.id)
+      catalog_item_id: granuleResponseBody.map((granule) => granule.id)
     }, {
       indices: false,
       arrayFormat: 'brackets'
@@ -80,7 +80,7 @@ export const constructOrderPayload = async (
     } = orderInformation
 
     // Get the name of all the option definitions associated with this granule
-    const supportedOptionDefinitions = optionDefinitions.map(optionDef => optionDef.name)
+    const supportedOptionDefinitions = optionDefinitions.map((optionDef) => optionDef.name)
 
     // If this granule is assocated with the requested option definition add to the response array
     if (supportedOptionDefinitions.includes(optionDefinition.name)) {

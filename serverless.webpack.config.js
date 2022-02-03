@@ -3,7 +3,7 @@ const slsw = require('serverless-webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
 const CopyPlugin = require('copy-webpack-plugin')
-const ESLintPlugin = require('eslint-webpack-plugin')
+// const ESLintPlugin = require('eslint-webpack-plugin')
 
 // Allow for conditionally copying files into the output for a defined entry
 const ConditionalPlugin = (condition, plugin) => ({
@@ -18,8 +18,10 @@ const ConditionalPlugin = (condition, plugin) => ({
       fileName = name.pop()
     }
 
-    const config = Object.assign({ webpack: {} },
-      slsw.lib.serverless.service.getFunction(fileName))
+    const config = {
+      webpack: {},
+      ...slsw.lib.serverless.service.getFunction(fileName)
+    }
 
     if (condition(config)) {
       plugin.apply(compiler)
@@ -32,15 +34,26 @@ const ServerlessWebpackConfig = {
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   entry: slsw.lib.entries,
   target: 'node',
-  output: {
-    path: path.resolve(__dirname, 'serverless/dist'),
-    filename: '[name].js',
-    libraryTarget: 'commonjs2',
-    library: '[name]'
+  // output: {
+  //   path: path.resolve(__dirname, 'serverless/dist'),
+  //   filename: '[name].js',
+  //   libraryTarget: 'commonjs',
+  //   library: '[name]',
+  //   clean: true // Replaces CleanWebpackPlugin in Webpack 5
+  // },
+  externalsPresets: {
+    node: true
   },
   externals: [
     nodeExternals()
   ],
+  // optimization: {
+  //   minimize: false
+  // },
+  // performance: {
+  //   // Turn off size warnings for entry points
+  //   hints: false
+  // },
   module: {
     rules: [
       {
@@ -55,13 +68,13 @@ const ServerlessWebpackConfig = {
   plugins: [
     new CleanWebpackPlugin([path.resolve(__dirname, 'serverless/dist')]),
     ConditionalPlugin(
-      (config => config.webpack.includeMigrations),
+      ((config) => config.webpack.includeMigrations),
       new CopyPlugin({
         patterns: [
           { from: 'migrations', to: 'migrations' }
         ]
       })
-    ),
+    )
     // new ESLintPlugin()
   ]
 }

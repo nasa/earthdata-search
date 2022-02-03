@@ -28,7 +28,7 @@ export const computeKeywordMappings = (items) => {
     const variableIds = calculatedMappings[key]
 
     orderedKeywords.push({
-      children: variableIds.map(id => ({ id })),
+      children: variableIds.map((id) => ({ id })),
       label: key
     })
   })

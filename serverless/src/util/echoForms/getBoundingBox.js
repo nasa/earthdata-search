@@ -1,4 +1,5 @@
 import xpath from 'xpath'
+
 import { DOMParser } from 'xmldom'
 import { namespaces } from './namespaces'
 
@@ -27,7 +28,7 @@ export const getBoundingBox = (xmlDocument) => {
     if (Object.keys(box).length >= 4) {
       // Ensure the bounding box is in the correct order
       boundingBoxes.push(
-        ['ullon', 'lrlat', 'lrlon', 'ullat'].map(key => box[key]).join(',')
+        ['ullon', 'lrlat', 'lrlon', 'ullat'].map((key) => box[key]).join(',')
       )
     }
   })

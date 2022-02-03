@@ -64,11 +64,11 @@ provider:
 
 plugins:
   - serverless-finch
-  - serverless-offline
   - serverless-webpack
   - serverless-step-functions
   - serverless-plugin-split-stacks
   - serverless-plugin-log-subscription
+  - serverless-offline
 
 #
 # Lambda Functions

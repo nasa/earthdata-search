@@ -36,7 +36,7 @@ export const computeHierarchyMappings = (variables) => {
       if (nameIndex === 0) objectToSearch = calculatedMappings
 
       // Search for a object with a label matching the current name
-      const foundIndex = objectToSearch.findIndex(mapping => (
+      const foundIndex = objectToSearch.findIndex((mapping) => (
         mapping.label === name
       ))
 
@@ -72,7 +72,7 @@ export const computeHierarchyMappings = (variables) => {
           workingObject.children = workingObject.children.concat({ id: variableId })
         } else {
           // Check to see if the next name is found in the current workingObject.children
-          const nextFound = workingObject.children.findIndex(mapping => (
+          const nextFound = workingObject.children.findIndex((mapping) => (
             mapping.label === nameParts[nameIndex + 1]
           ))
 

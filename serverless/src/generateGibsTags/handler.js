@@ -149,7 +149,7 @@ const generateGibsTags = async (event, context) => {
               },
               {
                 not: {
-                  or: Object.keys(conceptIdLayers).map(conceptId => ({ concept_id: conceptId }))
+                  or: Object.keys(conceptIdLayers).map((conceptId) => ({ concept_id: conceptId }))
                 }
               }
             ]
