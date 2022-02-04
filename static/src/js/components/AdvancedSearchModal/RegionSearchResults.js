@@ -52,8 +52,6 @@ export class RegionSearch extends Component {
       isLoaded: regionSearchIsLoaded
     } = regionSearchResults
 
-    console.log('regionResultsKeyword', regionResultsKeyword)
-
     const containerClasses = classNames([
       'region-search-results',
       {
@@ -184,7 +182,7 @@ RegionSearch.propTypes = {
   regionSearchResults: PropTypes.shape({
     keyword: PropTypes.string,
     allIds: PropTypes.arrayOf(PropTypes.string),
-    error: PropTypes.shape({}),
+    error: PropTypes.string,
     byId: PropTypes.shape({}),
     isLoading: PropTypes.bool,
     isLoaded: PropTypes.bool
