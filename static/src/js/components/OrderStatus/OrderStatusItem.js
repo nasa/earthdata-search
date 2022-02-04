@@ -723,7 +723,7 @@ OrderStatusItem.propTypes = {
     collection_metadata: PropTypes.shape({}),
     collection: PropTypes.shape({}),
     granule_count: PropTypes.number,
-    id: PropTypes.string,
+    id: PropTypes.number,
     isLoaded: PropTypes.bool,
     orders: PropTypes.arrayOf(PropTypes.shape({})),
     retrieval_id: PropTypes.string
