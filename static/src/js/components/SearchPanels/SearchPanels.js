@@ -195,7 +195,7 @@ class SearchPanels extends PureComponent {
     } = collectionMetadata
 
     // Do not display the international/interagency data message for EOSDIS or CWIC collections
-    const isInternationalInteragency = consortiums.filter(consortium => consortium !== 'EOSDIS' && consortium !== 'GEOSS').length > 0
+    const isInternationalInteragency = consortiums.filter((consortium) => consortium !== 'EOSDIS' && consortium !== 'GEOSS').length > 0
 
     const { title: granuleTitle = '' } = granuleMetadata
 
@@ -713,6 +713,7 @@ class SearchPanels extends PureComponent {
 SearchPanels.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({
+    consortiums: PropTypes.arrayOf(PropTypes.string),
     hasAllMetadata: PropTypes.bool,
     isCSDA: PropTypes.bool,
     isOpenSearch: PropTypes.bool,
