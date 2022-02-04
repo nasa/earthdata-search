@@ -250,7 +250,9 @@ RegionSearchForm.defaultProps = {
 
 RegionSearchForm.propTypes = {
   regionSearchForm: PropTypes.shape({
-    errors: PropTypes.arrayOf(PropTypes.shape({})),
+    errors: PropTypes.shape({
+      keyword: PropTypes.string
+    }),
     handleBlur: PropTypes.func,
     handleChange: PropTypes.func,
     handleSubmit: PropTypes.func,
@@ -259,7 +261,7 @@ RegionSearchForm.propTypes = {
     }).isRequired,
     values: PropTypes.shape({
       endpoint: PropTypes.string,
-      keyword: PropTypes.bool,
+      keyword: PropTypes.string,
       exact: PropTypes.bool
     }).isRequired,
     isValid: PropTypes.bool,
