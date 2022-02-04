@@ -10,7 +10,7 @@ export const collectionMetadataPropType = PropTypes.shape({
   ),
   directDistributionInformation: PropTypes.shape({
     region: PropTypes.string,
-    s3BucketAndObjectPrefixNames: PropTypes.string,
+    s3BucketAndObjectPrefixNames: PropTypes.arrayOf(PropTypes.string),
     s3CredentialsApiEndpoint: PropTypes.string,
     s3CredentialsApiDocumentationUrl: PropTypes.string
   }),

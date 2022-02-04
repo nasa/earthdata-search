@@ -45,10 +45,8 @@ const TemporalSelectionDropdownMenu = ({
     <Dropdown.Menu
       className="temporal-selection-dropdown-menu dropdown-menu-dark"
       popperConfig={{
-        modifiers: {
-          preventOverflow: {
-            boundariesElement: 'window'
-          }
+        preventOverflow: {
+          boundariesElement: 'window'
         }
       }}
     >
