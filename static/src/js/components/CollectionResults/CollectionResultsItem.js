@@ -86,7 +86,7 @@ export const CollectionResultsItem = forwardRef(({
     return tooltip
   }
 
-  const filteredConsortiums = consortiums.filter(consortium => consortium !== 'EOSDIS')
+  const filteredConsortiums = consortiums.filter((consortium) => consortium !== 'EOSDIS')
 
   const popperOffset = {
     modifiers: [{
