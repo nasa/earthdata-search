@@ -143,7 +143,10 @@ OverrideTemporalModal.propTypes = {
   }).isRequired,
   timeline: PropTypes.shape({
     endDate: PropTypes.string,
-    query: PropTypes.string,
+    query: PropTypes.shape({
+      end: PropTypes.number,
+      start: PropTypes.number
+    }),
     startDate: PropTypes.string
   }).isRequired
 }
