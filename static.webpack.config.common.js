@@ -83,7 +83,6 @@ const StaticCommonConfig = {
             options: {
               sourceMap: true,
               postcssOptions: {
-                // postcss plugins, can be exported to postcss.config.js
                 plugins: [
                   'autoprefixer'
                 ]
@@ -96,12 +95,12 @@ const StaticCommonConfig = {
               sourceMap: true
             }
           },
-          // {
-          //   loader: 'resolve-url-loader',
-          //   options: {
-          //     sourceMap: true
-          //   }
-          // },
+          {
+            loader: 'resolve-url-loader',
+            options: {
+              sourceMap: true
+            }
+          },
           {
             loader: 'style-resources-loader',
             options: {
