@@ -96,8 +96,8 @@ PreferencesMultiSelectField.propTypes = {
   onChange: PropTypes.func.isRequired,
   schema: PropTypes.shape({
     items: PropTypes.shape({
-      enum: PropTypes.shape({}),
-      enumNames: PropTypes.shape({}),
+      enum: PropTypes.arrayOf(PropTypes.string),
+      enumNames: PropTypes.arrayOf(PropTypes.string),
       description: PropTypes.string
     })
   }).isRequired

@@ -25,4 +25,4 @@ const errorLogger = async (event) => {
   }
 }
 
-export { errorLogger }
+export default errorLogger

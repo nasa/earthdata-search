@@ -682,6 +682,7 @@ export class OrderStatusItem extends PureComponent {
                         {
                           orders.length > 1 && (
                             <div className="order-status-item__tab-intro">
+                              { /* eslint-disable-next-line max-len */ }
                               Due to the number of granules included in the request, it has been split into multiple orders. The data for each order will become available as they are processed.
                             </div>
                           )
