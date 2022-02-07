@@ -1,7 +1,7 @@
 import { getByTestId } from '../../support/getByTestId'
 import { getJwtToken } from '../../support/getJwtToken'
 
-import collectionFixture from './authenticated_collections'
+import collectionFixture from './authenticated_collections.json'
 
 // At the default size, react-window will render 7 items
 const expectedCollectionCount = 7

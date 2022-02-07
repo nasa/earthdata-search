@@ -52,7 +52,7 @@ const testFacetGroupExistence = (facetGroup) => {
     'horizontal-data-resolution'
   ]
 
-  facetGroups.filter(group => group !== facetGroup).forEach((collapsedFacetGroup) => {
+  facetGroups.filter((group) => group !== facetGroup).forEach((collapsedFacetGroup) => {
     getByTestId(`facet-${collapsedFacetGroup}`).should('not.exist')
   })
 }
