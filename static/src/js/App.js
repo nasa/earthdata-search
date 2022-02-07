@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { Switch, Route, Redirect } from 'react-router-dom'
-// import { hot } from 'react-hot-loader/root'
 import { ToastProvider } from 'react-toast-notifications'
 
 import configureStore from './store/configureStore'
@@ -169,11 +168,5 @@ class App extends Component {
     )
   }
 }
-
-// Conditionally export the app wrapped in the react-hot-loader HOC if in the development
-// environment and hot module reloading is enabled.
-// const ExportedApp = process.env.NODE_ENV === 'development' && module.hot
-//   ? hot(App)
-//   : App
 
 export default App
