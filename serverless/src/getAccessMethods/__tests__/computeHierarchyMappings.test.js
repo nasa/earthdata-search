@@ -202,7 +202,6 @@ describe('computeHierarchyMappings', () => {
       }
     ]
 
-
     const hierarchyMappings = computeHierarchyMappings(items)
 
     expect(hierarchyMappings).toEqual(expectedResult)

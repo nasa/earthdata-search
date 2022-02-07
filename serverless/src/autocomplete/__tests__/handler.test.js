@@ -131,7 +131,6 @@ describe('autocomplete', () => {
 
         const response = await autocomplete(event, {})
 
-
         const { body } = response
         const parsedBody = JSON.parse(body)
         const { errors } = parsedBody

@@ -31,7 +31,6 @@ describe('ContactInfoRequest#fetch', () => {
   })
 })
 
-
 describe('ContactInfoRequest#updateNotificationLevel', () => {
   test('calls Request#post', () => {
     const token = '123'

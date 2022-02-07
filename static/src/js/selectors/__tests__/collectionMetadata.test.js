@@ -28,7 +28,6 @@ describe('getFocusedCollectionMetadata selector', () => {
   })
 })
 
-
 describe('getFocusedCollectionSubscriptions', () => {
   test('returns the subscriptions', () => {
     const state = {

@@ -8,7 +8,6 @@ import {
   singleCwicGranuleResponseWithImageStringLink
 } from './mocks'
 
-
 beforeEach(() => {
   jest.restoreAllMocks()
   jest.clearAllMocks()
@@ -32,7 +31,6 @@ describe('OpenSearchGranuleRequest#transformRequest', () => {
     test('returns a basic example result correctly transformed', () => {
       const cwicRequest = new OpenSearchGranuleRequest('authToken')
       cwicRequest.startTime = 1576855756
-
 
       const transformedData = cwicRequest.transformRequest({
         echoCollectionId: 'TEST_COLLECTION_ID'

@@ -132,7 +132,8 @@ describe('GranuleFiltersContainer component', () => {
       expect(granuleFiltersFormProps.setFieldValue).toEqual(props.setFieldValue)
       expect(granuleFiltersFormProps.setFieldTouched).toEqual(props.setFieldTouched)
       expect(granuleFiltersFormProps.portal).toEqual(props.portal)
-      expect(granuleFiltersFormProps.excludedGranuleIds).toEqual(props.granuleQuery.excludedGranuleIds)
+      expect(granuleFiltersFormProps.excludedGranuleIds)
+        .toEqual(props.granuleQuery.excludedGranuleIds)
       expect(granuleFiltersFormProps.onUndoExcludeGranule).toEqual(props.onUndoExcludeGranule)
     })
 
@@ -143,7 +144,6 @@ describe('GranuleFiltersContainer component', () => {
           const { enzymeWrapper } = setup()
 
           enzymeWrapper.instance().onClearGranuleFilters = onClearGranuleFiltersMock
-
 
           enzymeWrapper.setProps({ granuleFiltersNeedsReset: true })
           enzymeWrapper.update()
@@ -168,7 +168,6 @@ describe('GranuleFiltersContainer component', () => {
           const { enzymeWrapper } = setup()
 
           enzymeWrapper.instance().onClearGranuleFilters = onClearGranuleFiltersMock
-
 
           enzymeWrapper.setProps({ granuleFiltersNeedsReset: false })
           enzymeWrapper.update()

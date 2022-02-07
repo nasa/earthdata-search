@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -65,8 +64,10 @@ export const CustomToggle = React.forwardRef(({
       type="button"
       ref={ref}
       title={title}
+      /* eslint-disable react/jsx-props-no-spreading */
       {...buttonEventHandlers}
       {...props}
+      /* eslint-enable */
     >
       {icon && (
         <EDSCIcon

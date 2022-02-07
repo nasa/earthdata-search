@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash'
@@ -209,6 +208,7 @@ class SearchForm extends Component {
       query
     } = opts
     return (
+      // eslint-disable-next-line react/jsx-props-no-spreading
       <div {...containerProps} className="search-form__suggestions-container">
         {
           query && query.length > 2 && (

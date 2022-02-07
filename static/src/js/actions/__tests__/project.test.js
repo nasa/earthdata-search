@@ -349,7 +349,7 @@ describe('getProjectCollections', () => {
     })
 
     expect(store.dispatch(actions.getProjectCollections())).toEqual(
-      new Promise(resolve => resolve(null))
+      new Promise((resolve) => resolve(null))
     )
   })
 
@@ -357,7 +357,6 @@ describe('getProjectCollections', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))
-
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 

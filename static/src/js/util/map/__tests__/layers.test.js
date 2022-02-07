@@ -12,7 +12,6 @@ import {
   parseSpatial
 } from '../layers'
 
-
 beforeEach(() => {
   jest.clearAllMocks()
 })
@@ -207,12 +206,12 @@ describe('layers util', () => {
   describe('buildLayer', () => {
     beforeEach(() => {
       jest.spyOn(L, 'FeatureGroup').mockImplementation(() => ({
-        addLayer: layer => ({ ...layer })
+        addLayer: (layer) => ({ ...layer })
       }))
     })
 
     test('returns a point layer when point spatial is provided', () => {
-      const circleMarkerMock = jest.spyOn(L, 'circleMarker').mockImplementation(point => ({ ...point }))
+      const circleMarkerMock = jest.spyOn(L, 'circleMarker').mockImplementation((point) => ({ ...point }))
 
       const metadata = {
         points: ['-77 34']
@@ -226,7 +225,7 @@ describe('layers util', () => {
 
     describe('with polygon spatial', () => {
       test('returns a polygon layer when polygon spatial is cartesian', () => {
-        const polygon = jest.spyOn(L, 'polygon').mockImplementation(point => ({ ...point }))
+        const polygon = jest.spyOn(L, 'polygon').mockImplementation((point) => ({ ...point }))
 
         const metadata = {
           coordinateSystem: 'CARTESIAN',
@@ -247,7 +246,7 @@ describe('layers util', () => {
       })
 
       test('returns a sphericalPolygon layer when polygon spatial is not cartesian', () => {
-        const sphericalPolygonMock = jest.spyOn(L, 'sphericalPolygon').mockImplementation(point => ({ ...point }))
+        const sphericalPolygonMock = jest.spyOn(L, 'sphericalPolygon').mockImplementation((point) => ({ ...point }))
 
         const metadata = {
           polygons: [['-10 -162.4683 -10.013 -151.7155 -0.0009 -149.4309 0.015 -160.0162 -10 -162.4683']]
@@ -268,7 +267,7 @@ describe('layers util', () => {
     })
 
     test('returns a line layer when line spatial is provided', () => {
-      const polylineMock = jest.spyOn(L, 'polyline').mockImplementation(point => ({ ...point }))
+      const polylineMock = jest.spyOn(L, 'polyline').mockImplementation((point) => ({ ...point }))
 
       const metadata = {
         lines: ['-10 -162.4683 -10.013 -151.7155 -0.0009 -149.4309']
@@ -285,7 +284,7 @@ describe('layers util', () => {
     })
 
     test('returns a polygon layer when cartesian boxes spatial is provided', () => {
-      const polygonMock = jest.spyOn(L, 'polygon').mockImplementation(point => ({ ...point }))
+      const polygonMock = jest.spyOn(L, 'polygon').mockImplementation((point) => ({ ...point }))
 
       const metadata = {
         coordinateSystem: 'CARTESIAN',
@@ -305,7 +304,7 @@ describe('layers util', () => {
     })
 
     test('returns a sphericalPolygon layer when geodetic boxes spatial is provided', () => {
-      const sphericalPolygonMock = jest.spyOn(L, 'sphericalPolygon').mockImplementation(point => ({ ...point }))
+      const sphericalPolygonMock = jest.spyOn(L, 'sphericalPolygon').mockImplementation((point) => ({ ...point }))
 
       const metadata = {
         coordinateSystem: 'GEODETIC',

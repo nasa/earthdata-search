@@ -380,7 +380,7 @@ describe('Panels component', () => {
       //  we want to check against will show up in an array of possibly unknown size.
       // Here we filter out the event based on its name, and inspect the arguments
       // that were passed.
-      const resizeEvent = window.removeEventListener.mock.calls.filter(evt => evt[0] === 'resize')[0]
+      const resizeEvent = window.removeEventListener.mock.calls.filter((evt) => evt[0] === 'resize')[0]
 
       expect(resizeEvent.length).toEqual(2)
       expect(resizeEvent[0]).toEqual('resize')

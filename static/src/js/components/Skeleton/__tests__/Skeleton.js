@@ -56,7 +56,6 @@ function setup(options) {
     border: '1px solid green'
   }
 
-
   const props = {
     className: 'test-class',
     containerStyle: testStyles,

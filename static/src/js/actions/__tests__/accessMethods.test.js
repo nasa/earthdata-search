@@ -19,7 +19,7 @@ describe('fetchAccessMethods', () => {
 
     // call the dispatch
     expect(store.dispatch(fetchAccessMethods(['collectionId']))).toEqual(
-      new Promise(resolve => resolve(null))
+      new Promise((resolve) => resolve(null))
     )
   })
 
@@ -30,7 +30,7 @@ describe('fetchAccessMethods', () => {
 
     // call the dispatch
     expect(store.dispatch(fetchAccessMethods())).toEqual(
-      new Promise(resolve => resolve(null))
+      new Promise((resolve) => resolve(null))
     )
   })
 
