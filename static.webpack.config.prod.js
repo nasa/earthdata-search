@@ -4,7 +4,6 @@ const webpack = require('webpack')
 const {
   customizeObject,
   mergeWithCustomize
-  // mergeWithRules
 } = require('webpack-merge')
 
 const {
@@ -14,7 +13,6 @@ const {
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-// const CSSNano = require('cssnano')
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserJsPlugin = require('terser-webpack-plugin')
@@ -53,7 +51,7 @@ const Config = mergeWithCustomize({
     devtool: 'replace',
     'module.rules.use': 'prepend'
   })
-})(StaticCommonConfig, {
+})({
   mode: 'production',
   devtool: 'cheap-module-source-map',
   output: {
@@ -85,7 +83,7 @@ const Config = mergeWithCustomize({
       cacheGroups: {
         vendor: {
           name(module) {
-            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // Get the name. E.g. node_modules/packageName/not/this/part.js
             // or node_modules/packageName
             const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
 
@@ -113,6 +111,6 @@ const Config = mergeWithCustomize({
     ...defaultPlugins,
     ...(debug ? debugPlugins : [])
   ]
-})
+}, StaticCommonConfig)
 
 module.exports = Config
