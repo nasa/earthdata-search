@@ -1,5 +1,3 @@
-const webpack = require('webpack')
-
 const {
   mergeWithCustomize,
   mergeWithRules,
@@ -29,8 +27,7 @@ let Config = mergeWithCustomize({
         warnings: false
       }
     },
-    compress: true,
-    hot: true
+    compress: true
   },
   module: {
     rules: [
@@ -46,8 +43,7 @@ let Config = mergeWithCustomize({
     ]
   },
   plugins: [
-    new WebpackBar(),
-    new webpack.HotModuleReplacementPlugin()
+    new WebpackBar()
   ]
 }, StaticCommonConfig)
 
