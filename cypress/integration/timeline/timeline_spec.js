@@ -1,10 +1,10 @@
 import { getByTestId } from '../../support/getByTestId'
-import collectionsGraphJson from './timeline_mocks/collections_graph'
-import timeline from './timeline_mocks/timeline'
-import granules from './timeline_mocks/granules'
-import providers from './timeline_mocks/providers'
-import accessMethods from './timeline_mocks/access_methods'
-import collectionFixture from './timeline_mocks/authenticated_collections'
+import collectionsGraphJson from './timeline_mocks/collections_graph.json'
+import timeline from './timeline_mocks/timeline.json'
+import granules from './timeline_mocks/granules.json'
+import providers from './timeline_mocks/providers.json'
+import accessMethods from './timeline_mocks/access_methods.json'
+import collectionFixture from './timeline_mocks/authenticated_collections.json'
 
 import { getAuthHeaders } from '../utils/getAuthHeaders'
 

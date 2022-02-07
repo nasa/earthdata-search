@@ -1,6 +1,6 @@
 import { getByTestId } from '../../support/getByTestId'
 
-import singleCollection from './single_collection'
+import singleCollection from './single_collection.json'
 
 describe('Collection List Behavior', () => {
   beforeEach(() => {

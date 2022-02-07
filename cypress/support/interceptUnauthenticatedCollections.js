@@ -41,5 +41,5 @@ export const interceptUnauthenticatedCollections = (body, headers, additionalReq
     })
   })
 
-  return [defaultAlias, ...additionalRequests.map(additionalRequest => additionalRequest.alias)]
+  return [defaultAlias, ...additionalRequests.map((additionalRequest) => additionalRequest.alias)]
 }
