@@ -27,7 +27,6 @@ const StaticCommonConfig = {
     client: [
       'core-js/stable',
       'regenerator-runtime/runtime',
-      'react-hot-loader/patch',
       path.resolve(__dirname, './static/src/index.js')
     ]
   },
@@ -40,7 +39,6 @@ const StaticCommonConfig = {
   },
   resolve: {
     alias: {
-      // 'react-dom': '@hot-loader/react-dom',
       Fonts: path.join(__dirname, 'static/src/assets/fonts'),
       Images: path.join(__dirname, 'static/src/assets/images'),
       process: 'process/browser'
