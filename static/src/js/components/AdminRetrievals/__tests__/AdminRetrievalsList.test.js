@@ -44,7 +44,7 @@ describe('AdminRetrievalsList component', () => {
   test('renders the collections table when collections are provided', () => {
     const { enzymeWrapper } = setup({
       retrievals: {
-        allIds: [1109324645],
+        allIds: ['1109324645'],
         byId: {
           1109324645: {
             id: 64,

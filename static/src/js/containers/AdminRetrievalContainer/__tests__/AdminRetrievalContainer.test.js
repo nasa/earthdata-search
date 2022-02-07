@@ -13,7 +13,7 @@ function setup() {
   const props = {
     match: {
       params: {
-        id: 1
+        id: '1'
       }
     },
     onFetchAdminRetrieval: jest.fn(),

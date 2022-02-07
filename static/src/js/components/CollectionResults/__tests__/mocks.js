@@ -31,7 +31,7 @@ export const longSummary = 'Lorem ipsum dolor sit amet, consectetur adipiscing e
 export const collectionResultsBodyData = {
   summary: 'test summary',
   collectionId: 'collectionId',
-  consortiums: [], 
+  consortiums: [],
   datasetId: 'test dataset id',
   displayOrganization: 'test/org',
   granuleCount: 42,
@@ -52,7 +52,7 @@ export const collectionResultsBodyData = {
   temporalRange: '2019-01-14 to 2019-01-15',
   temporalStart: '2019-01-14',
   thumbnail: 'http://some.test.com/thumbnail/url.jpg',
-  versionId: 2
+  versionId: '2'
 }
 
 export const collectionData = [{

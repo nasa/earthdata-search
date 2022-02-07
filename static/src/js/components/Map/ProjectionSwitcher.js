@@ -4,8 +4,6 @@ import Control from 'react-leaflet-control'
 
 import projections from '../../util/map/projections'
 
-import './ProjectionSwitcher.scss'
-
 const ProjectionSwitcher = (props) => {
   const { onChangeProjection } = props
 

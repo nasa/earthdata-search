@@ -120,7 +120,7 @@
     "html-webpack-plugin": "^5.5.0",
     "jquery": "^3.5.0",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^1.0.2",
+    "knex": "^0.95.15",
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
     "lodash": "^4.17.21",
