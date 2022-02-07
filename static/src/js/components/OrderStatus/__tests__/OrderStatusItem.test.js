@@ -37,8 +37,8 @@ function setup(overrideProps, mockRefresh) {
     key: 'TEST_COLLECTION_111',
     match: {
       params: {
-        retrieval_id: 2,
-        id: 1
+        retrieval_id: '2',
+        id: '1'
       },
       path: '/downloads/2/collections/1'
     },
@@ -69,7 +69,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper, props, shouldRefreshMock } = setup({
           type: 'echo_orders',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -100,7 +100,7 @@ describe('OrderStatusItem', () => {
         expect(intervalId).toBeDefined()
         expect(setInterval).toHaveBeenCalledTimes(1)
         expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
-        expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith(1)
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith('1')
         expect(shouldRefreshMock).toHaveBeenCalledTimes(0)
 
         shouldRefreshMock.mockRestore()
@@ -228,7 +228,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'echo_orders',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -267,7 +267,7 @@ describe('OrderStatusItem', () => {
       const { enzymeWrapper } = setup({
         type: 'download',
         collection: {
-          id: 1,
+          id: '1',
           collection_id: 'TEST_COLLECTION_111',
           retrieval_id: '54',
           collection_metadata: {
@@ -346,7 +346,7 @@ describe('OrderStatusItem', () => {
       const { enzymeWrapper } = setup({
         type: 'download',
         collection: {
-          id: 1,
+          id: '1',
           collection_id: 'TEST_COLLECTION_111',
           retrieval_id: '54',
           collection_metadata: {
@@ -374,7 +374,7 @@ describe('OrderStatusItem', () => {
       const { enzymeWrapper, props } = setup({
         type: 'download',
         collection: {
-          id: 1,
+          id: '1',
           collection_id: 'TEST_COLLECTION_111',
           retrieval_id: '54',
           collection_metadata: {
@@ -408,7 +408,7 @@ describe('OrderStatusItem', () => {
       const { enzymeWrapper } = setup({
         type: 'OPeNDAP',
         collection: {
-          id: 1,
+          id: '1',
           collection_id: 'TEST_COLLECTION_111',
           retrieval_id: '54',
           collection_metadata: {
@@ -490,7 +490,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -562,7 +562,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -633,7 +633,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -729,7 +729,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -836,7 +836,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -931,7 +931,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1035,7 +1035,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1097,7 +1097,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1159,7 +1159,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1242,7 +1242,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1325,7 +1325,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper } = setup({
           type: 'esi',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1415,7 +1415,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1490,7 +1490,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1582,7 +1582,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1700,7 +1700,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1819,7 +1819,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
@@ -1911,7 +1911,7 @@ describe('OrderStatusItem', () => {
         const { enzymeWrapper, props } = setup({
           type: 'harmony',
           collection: {
-            id: 1,
+            id: '1',
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {

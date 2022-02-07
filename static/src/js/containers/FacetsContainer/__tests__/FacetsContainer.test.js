@@ -18,7 +18,6 @@ function setup() {
     onTriggerViewAllFacets: jest.fn()
   }
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
   const enzymeWrapper = shallow(<FacetsContainer {...props} />)
 
   return {
@@ -74,11 +73,7 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      searchResults: {
-        facets: {
-          byId: {}
-        }
-      },
+      facetsById: {},
       featureFacets: {},
       portal: {}
     }
@@ -92,7 +87,7 @@ describe('FacetsContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(Facets).length).toBe(1)
-    expect(enzymeWrapper.find(Facets).props().facets).toEqual({})
+    expect(enzymeWrapper.find(Facets).props().facetsById).toEqual({})
     expect(enzymeWrapper.find(Facets).props().featureFacets).toEqual({})
     expect(enzymeWrapper.find(Facets).props().portal).toEqual({})
     expect(typeof enzymeWrapper.find(Facets).props().onChangeCmrFacet).toEqual('function')

@@ -166,7 +166,7 @@ AdminRetrievalsList.propTypes = {
       pageSize: PropTypes.number,
       totalResults: PropTypes.number
     }),
-    sortKey: PropTypes.arrayOf(PropTypes.string)
+    sortKey: PropTypes.string
   }),
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired

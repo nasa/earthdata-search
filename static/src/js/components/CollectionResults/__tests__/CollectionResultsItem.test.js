@@ -214,13 +214,15 @@ describe('CollectionResultsList component', () => {
                 consortiums: ['CWIC']
               }
             })
-  
+
             const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
             expect(overlayWrapper.length).toEqual(1)
-            const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+            const overlay = shallow(
+              shallow(overlayWrapper.props().children.props.children[0]).props().children
+            ).childAt(0).childAt(0)
             expect(overlay.text()).toEqual('CWIC')
           })
-  
+
           test('renders a tooltip correctly', () => {
             const { enzymeWrapper } = setup({
               collectionMetadata: {
@@ -228,9 +230,11 @@ describe('CollectionResultsList component', () => {
                 consortiums: ['CWIC']
               }
             })
-  
+
             const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-            const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+            const overlayText = shallow(
+              shallow(overlay.props().children.props.children[0]).props().children
+            ).childAt(1).childAt(0).text()
             expect(overlayText).toEqual('CEOS WGISS Integrated Catalog')
           })
         })
@@ -245,15 +249,19 @@ describe('CollectionResultsList component', () => {
                 consortiums: ['CWIC', 'GEOSS']
               }
             })
-  
+
             const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
             expect(overlayWrapper.length).toEqual(1)
-            const consortiumOne = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
-            const consortiumTwo = shallow(shallow(overlayWrapper.props().children.props.children[1]).props().children).childAt(0).childAt(0)
+            const consortiumOne = shallow(
+              shallow(overlayWrapper.props().children.props.children[0]).props().children
+            ).childAt(0).childAt(0)
+            const consortiumTwo = shallow(
+              shallow(overlayWrapper.props().children.props.children[1]).props().children
+            ).childAt(0).childAt(0)
             expect(consortiumOne.text()).toEqual('CWIC')
             expect(consortiumTwo.text()).toEqual('GEOSS')
           })
-  
+
           test('renders a tooltips correctly', () => {
             const { enzymeWrapper } = setup({
               collectionMetadata: {
@@ -261,10 +269,14 @@ describe('CollectionResultsList component', () => {
                 consortiums: ['CWIC', 'GEOSS']
               }
             })
-  
+
             const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-            const overlayOneText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
-            const overlayTwoText = shallow(shallow(overlay.props().children.props.children[1]).props().children).childAt(1).childAt(0).text()
+            const overlayOneText = shallow(
+              shallow(overlay.props().children.props.children[0]).props().children
+            ).childAt(1).childAt(0).text()
+            const overlayTwoText = shallow(
+              shallow(overlay.props().children.props.children[1]).props().children
+            ).childAt(1).childAt(0).text()
             expect(overlayOneText).toEqual('CEOS WGISS Integrated Catalog')
             expect(overlayTwoText).toEqual('Global Earth Observation System of Systems')
           })
@@ -282,7 +294,9 @@ describe('CollectionResultsList component', () => {
 
           const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
           expect(overlayWrapper.length).toEqual(1)
-          const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+          const overlay = shallow(
+            shallow(overlayWrapper.props().children.props.children[0]).props().children
+          ).childAt(0).childAt(0)
           expect(overlay.text()).toEqual('CWIC')
         })
 
@@ -295,7 +309,9 @@ describe('CollectionResultsList component', () => {
           })
 
           const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+          const overlayText = shallow(
+            shallow(overlay.props().children.props.children[0]).props().children
+          ).childAt(1).childAt(0).text()
           expect(overlayText).toEqual('CEOS WGISS Integrated Catalog')
         })
       })
@@ -311,7 +327,9 @@ describe('CollectionResultsList component', () => {
 
           const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
           expect(overlayWrapper.length).toEqual(1)
-          const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+          const overlay = shallow(
+            shallow(overlayWrapper.props().children.props.children[0]).props().children
+          ).childAt(0).childAt(0)
           expect(overlay.text()).toEqual('GEOSS')
         })
 
@@ -324,7 +342,9 @@ describe('CollectionResultsList component', () => {
           })
 
           const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+          const overlayText = shallow(
+            shallow(overlay.props().children.props.children[0]).props().children
+          ).childAt(1).childAt(0).text()
           expect(overlayText).toEqual('Global Earth Observation System of Systems')
         })
       })
@@ -340,7 +360,9 @@ describe('CollectionResultsList component', () => {
 
           const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
           expect(overlayWrapper.length).toEqual(1)
-          const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+          const overlay = shallow(
+            shallow(overlayWrapper.props().children.props.children[0]).props().children
+          ).childAt(0).childAt(0)
           expect(overlay.text()).toEqual('FEDEO')
         })
 
@@ -353,7 +375,9 @@ describe('CollectionResultsList component', () => {
           })
 
           const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+          const overlayText = shallow(
+            shallow(overlay.props().children.props.children[0]).props().children
+          ).childAt(1).childAt(0).text()
           expect(overlayText).toEqual('Federated EO Gateway')
         })
       })
@@ -369,7 +393,9 @@ describe('CollectionResultsList component', () => {
 
           const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
           expect(overlayWrapper.length).toEqual(1)
-          const overlay = shallow(shallow(overlayWrapper.props().children.props.children[0]).props().children).childAt(0).childAt(0)
+          const overlay = shallow(
+            shallow(overlayWrapper.props().children.props.children[0]).props().children
+          ).childAt(0).childAt(0)
           expect(overlay.text()).toEqual('CEOS')
         })
 
@@ -382,7 +408,9 @@ describe('CollectionResultsList component', () => {
           })
 
           const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          const overlayText = shallow(shallow(overlay.props().children.props.children[0]).props().children).childAt(1).childAt(0).text()
+          const overlayText = shallow(
+            shallow(overlay.props().children.props.children[0]).props().children
+          ).childAt(1).childAt(0).text()
           expect(overlayText).toEqual('Committee on Earth Observation Satellites')
         })
       })
@@ -519,7 +547,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
         })
       })
 
@@ -546,7 +574,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
         })
       })
 
@@ -573,7 +601,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
         })
       })
 
@@ -600,7 +628,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
         })
       })
 
@@ -627,7 +655,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[1]).toEqual(popperOffset)
+          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
         })
       })
     })
