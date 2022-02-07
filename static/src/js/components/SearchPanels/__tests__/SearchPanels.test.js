@@ -413,7 +413,6 @@ describe('SearchPanels component', () => {
           }
         }, '/search/granules')
 
-
         const panels = enzymeWrapper.find(Panels)
         expect(panels.props().show).toBeTruthy()
         expect(panels.props().activePanel).toEqual('0.1.0')
@@ -560,11 +559,11 @@ describe('SearchPanels component', () => {
         const granuleResultsPanel = panels.find(PanelGroup).at(1)
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[1].props
-  
+
         expect(messageProps.className).toEqual('search-panels__note')
         expect(shallow(messageProps.children[1]).text()).toContain('NASA Commercial Smallsat Data Acquisition (CSDA) Program')
       })
-  
+
       test('displays a link to open a modal for more information', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
@@ -578,7 +577,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanel = panels.find(PanelGroup).at(1)
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[1].props
-  
+
         expect(shallow(messageProps.children[3]).text()).toContain('More Details')
       })
 
@@ -596,11 +595,11 @@ describe('SearchPanels component', () => {
           const granuleResultsPanel = panels.find(PanelGroup).at(1)
           const granuleResultsPanelProps = granuleResultsPanel.props()
           const messageProps = granuleResultsPanelProps.headerMessage.props.children[1].props
-    
+
           const moreDetailsButton = shallow(messageProps.children[3])
-    
+
           moreDetailsButton.simulate('click')
-    
+
           expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
           expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
         })
@@ -620,7 +619,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanel = panels.find(PanelGroup).at(1)
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
-  
+
         expect(messageProps.className).toEqual('search-panels__note')
         expect(shallow(messageProps.children[1]).text()).toContain('Int\'l / Interagency Data')
       })
@@ -637,10 +636,10 @@ describe('SearchPanels component', () => {
         const granuleResultsPanel = panels.find(PanelGroup).at(1)
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
-  
+
         expect(shallow(messageProps.children[3]).text()).toContain('More Details')
       })
-  
+
       describe('when the modal button is clicked', () => {
         test('opens the modal', () => {
           const { enzymeWrapper, props } = setup({
@@ -655,9 +654,9 @@ describe('SearchPanels component', () => {
           const granuleResultsPanelProps = granuleResultsPanel.props()
           const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
           const moreDetailsButton = shallow(messageProps.children[3])
-    
+
           moreDetailsButton.simulate('click')
-    
+
           expect(props.onToggleAboutCwicModal).toHaveBeenCalledTimes(1)
           expect(props.onToggleAboutCwicModal).toHaveBeenCalledWith(true)
         })
@@ -677,11 +676,10 @@ describe('SearchPanels component', () => {
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
 
-  
         expect(messageProps.className).toEqual('search-panels__note')
         expect(shallow(messageProps.children[1]).text()).toContain('Int\'l / Interagency Data')
       })
-  
+
       test('does not display a link to open a modal for more information', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
@@ -693,7 +691,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanel = panels.find(PanelGroup).at(1)
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
-  
+
         expect(messageProps.children[3]).toBe(undefined)
       })
     })
@@ -710,11 +708,11 @@ describe('SearchPanels component', () => {
         const granuleResultsPanel = panels.find(PanelGroup).at(1)
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
-  
+
         expect(messageProps.className).toEqual('search-panels__note')
         expect(shallow(messageProps.children[1]).text()).toContain('Int\'l / Interagency Data')
       })
-  
+
       test('does not display a link to open a modal for more information', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
@@ -726,7 +724,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanel = panels.find(PanelGroup).at(1)
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
-  
+
         expect(messageProps.children[3]).toBe(undefined)
       })
     })

@@ -75,7 +75,6 @@ describe('getOptionDefinitions', () => {
         }
       }])
 
-
     const collectionProvider = {
       provider: {
         id: 'abcd-1234-efgh-5678',

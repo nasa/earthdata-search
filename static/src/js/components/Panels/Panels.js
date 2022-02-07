@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { PureComponent, Children } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'

@@ -2,7 +2,6 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Downloads from '../Downloads'
-import AppLogoContainer from '../../../containers/AppLogoContainer/AppLogoContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 

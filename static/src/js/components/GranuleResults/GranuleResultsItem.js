@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
@@ -178,6 +177,7 @@ const GranuleResultsItem = forwardRef(({
       ref={ref}
       role="button"
       tabIndex={0}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...itemTitle}
     >
       <header

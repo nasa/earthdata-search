@@ -93,7 +93,6 @@ describe('CopyableText', () => {
       })
     })
 
-
     describe('when the browser supports navigator.clipboard.writeText', () => {
       describe('when a success message is not defined', () => {
         test('does not display a toast', async () => {

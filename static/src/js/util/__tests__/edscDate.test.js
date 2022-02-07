@@ -53,7 +53,6 @@ describe('getTemporal', () => {
   })
 })
 
-
 describe('getTemporalRange', () => {
   describe('when passed two dates with appropriate distance between them', () => {
     test('returns a valid range of dates in array form', () => {

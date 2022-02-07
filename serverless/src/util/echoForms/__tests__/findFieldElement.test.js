@@ -6,6 +6,6 @@ describe('findFieldElement', () => {
 
     const response = findFieldElement(xmlDocument, 'band_subset_flag')
 
-    expect(response.map(e => e.toString().replace(/\w/, ''))).toEqual(['<cs:band_subset_flag xmlns:ecs="http://ecs.nasa.gov/options">true</ecs:band_subset_flag>'])
+    expect(response.map((e) => e.toString().replace(/\w/, ''))).toEqual(['<cs:band_subset_flag xmlns:ecs="http://ecs.nasa.gov/options">true</ecs:band_subset_flag>'])
   })
 })

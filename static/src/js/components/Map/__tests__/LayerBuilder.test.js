@@ -6,7 +6,6 @@ import moment from 'moment'
 import LayerBuilder from '../LayerBuilder'
 import projections from '../../../util/map/projections'
 
-
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
