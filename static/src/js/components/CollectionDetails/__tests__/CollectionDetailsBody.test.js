@@ -436,9 +436,7 @@ describe('CollectionDetails component', () => {
       test('renders correctly', () => {
         const { enzymeWrapper } = setup({
           overrideMetadata: {
-            gibsLayers: [
-              'None'
-            ]
+            gibsLayers: 'None'
           }
         })
 

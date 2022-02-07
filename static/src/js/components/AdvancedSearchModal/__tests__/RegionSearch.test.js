@@ -49,9 +49,8 @@ describe('RegionSearch component', () => {
     const { enzymeWrapper } = setup()
 
     const wrapper = enzymeWrapper.renderProp('children')({
-      regionSearchForm: {
-        test: 'test'
-      }
+      touched: {},
+      values: {}
     })
 
     expect(wrapper.find(RegionSearchForm).length).toEqual(1)
@@ -85,7 +84,7 @@ describe('RegionSearch component', () => {
           endpoint: 'huc'
         },
         touched: {
-          keyword: {}
+          keyword: true
         }
       })
 
@@ -113,7 +112,7 @@ describe('RegionSearch component', () => {
           endpoint: 'huc'
         },
         touched: {
-          keyword: {}
+          keyword: true
         }
       })
 
@@ -148,7 +147,7 @@ describe('RegionSearch component', () => {
           endpoint: 'huc'
         },
         touched: {
-          keyword: {}
+          keyword: true
         }
       })
 

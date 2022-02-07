@@ -124,7 +124,6 @@ describe('getAccessMethods', () => {
 
     const result = await getAccessMethods(event, {})
 
-
     expect(result).toEqual({
       body: JSON.stringify({
         accessMethods: {

@@ -11,7 +11,7 @@ export const retrievalStatusProps = {
       id: 7
     },
     params: {
-      id: 7
+      id: '7'
     }
   },
   onChangePath: jest.fn(),
