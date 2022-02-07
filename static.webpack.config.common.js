@@ -35,11 +35,12 @@ const StaticCommonConfig = {
     filename: '[name].bundle.js',
     chunkFilename: '[name].bundle.js',
     path: path.resolve(__dirname, 'static/dist'),
-    publicPath: '/'
+    publicPath: '/',
+    assetModuleFilename: 'assets/[path][name].[hash].[ext]'
   },
   resolve: {
     alias: {
-      'react-dom': '@hot-loader/react-dom',
+      // 'react-dom': '@hot-loader/react-dom',
       Fonts: path.join(__dirname, 'static/src/assets/fonts'),
       Images: path.join(__dirname, 'static/src/assets/images'),
       process: 'process/browser'
@@ -73,11 +74,15 @@ const StaticCommonConfig = {
             loader: 'css-loader',
             options: {
               sourceMap: true,
-              importLoaders: 2,
-              modules: false,
-              url: false
+              importLoaders: 1
             }
           },
+          // {
+          //   loader: 'resolve-url-loader',
+          //   options: {
+          //     sourceMap: true
+          //   }
+          // },
           {
             loader: 'resolve-url-loader',
             options: {
@@ -123,10 +128,6 @@ const StaticCommonConfig = {
         test: /\.(?:ico|gif|png|jpe?g)$/i,
         type: 'asset/resource'
       },
-      // {
-      //   test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
-      //   type: 'asset/resource'
-      // },
       // {
       //   test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
       //   use: {

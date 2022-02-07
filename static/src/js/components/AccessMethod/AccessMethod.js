@@ -483,6 +483,7 @@ export class AccessMethod extends Component {
                         {
                           !(startDate || endDate) && (
                             <p className="access-method__section-status mb-0">
+                              { /* eslint-disable-next-line max-len */}
                               No temporal range selected. Make a temporal selection to enable temporal subsetting.
                             </p>
                           )
